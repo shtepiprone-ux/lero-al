@@ -9,7 +9,8 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
-import { Badge } from '@/components/ui/badge'
+import { UnstyledButton } from '@mantine/core'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import {
@@ -316,17 +317,16 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
       key: 'is_active',
       header: t('is_active'),
       cell: pt => (
-        <button
+        <UnstyledButton
           type="button"
           onClick={e => { e.stopPropagation(); handleToggleActive(pt) }}
           disabled={isPending}
           title={pt.is_active ? t('deactivate') : t('activate')}
-          className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
         >
-          <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
+          <MantineBadge variant="status" entity="propertyType" value={pt.is_active ? 'active' : 'inactive'}>
             {pt.is_active ? t('is_active') : t('deactivate')}
-          </Badge>
-        </button>
+          </MantineBadge>
+        </UnstyledButton>
       ),
     },
     {
@@ -387,17 +387,16 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
           subtitle: <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{pt.slug}</code>,
           meta: (
             <div className="flex items-center gap-2 mt-1 flex-wrap">
-              <button
+              <UnstyledButton
                 type="button"
                 onClick={e => { e.stopPropagation(); handleToggleActive(pt) }}
                 disabled={isPending}
                 title={pt.is_active ? t('deactivate') : t('activate')}
-                className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
               >
-                <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
+                <MantineBadge variant="status" entity="propertyType" value={pt.is_active ? 'active' : 'inactive'}>
                   {pt.is_active ? t('is_active') : t('deactivate')}
-                </Badge>
-              </button>
+                </MantineBadge>
+              </UnstyledButton>
               {(pt.name_en || pt.name_uk || pt.name_it) && (
                 <span className="text-xs text-muted-foreground">
                   {[pt.name_en, pt.name_uk, pt.name_it].filter(Boolean).join(' · ')}

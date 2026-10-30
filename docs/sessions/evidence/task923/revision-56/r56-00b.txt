@@ -1,0 +1,15 @@
+# r56-00b: sha256 of every path written by Revision 56 after its last edit
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-56/r56-hash.mjs docs/sessions/evidence/task923/revision-56/r56-00b.txt "r56-00b: sha256 of every path written by Revision 56 after its last edit"
+started: 2026-10-29T13:33:54.204Z
+--- output ---
+8e66aa9927fd111292c8a15db89f305d8326e8baead0480c2ffa60d87fef39a1  src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts
+74e3344ab9d75880a6ca5fd3f1cfcb640aabb823863b50d61c6ad30bf272c0a8  src/tests/integration/accessHardening.integration.test.ts
+8f74e20f8dc673dbb39a4bbd1b2148c981db00590a5787282a6e20fccf98e1d0  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+865e26aaa637eaccda78a05884c8c4a29d902cc56e3a37c480a59e429cdd3e2c  docs/sessions/evidence/task923/security/sensitivity.mjs
+9c248a40047b4e1dd1a912ac7ed3612411ac0f18681d73985620dd6134262c12  docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-VIEW-DENY.json
+72eb8b597db8e049d924498461399858a1a9e346fcdc9eb9916313b89a3be6c0  docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-PROFILE-PROTECTED-DENY.json
+534b8d2d12d832404af26ce37305fd082d3e0285c12fa3e0023ea4df4c66e169  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+2780ca0072ef4115788b75710277f03466330264fa48d714258e41b33950ada8  docs/sessions/evidence/task923/security/d8-d9-report.json
+9be1ae6f83c0f38f0629d75aef92d7d5bc036b624c012e866913cf53abc38dc0  docs/sessions/2026-10-10-task923-rendered-state-census.md
+--- exit code: 0 ---

@@ -1,0 +1,45 @@
+platform win32 v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: npm run check:rendered-state-census:discover -- --jobs 8 --out docs/sessions/evidence/task923/r2-81-discover
+
+> lero-al@0.1.0 check:rendered-state-census:discover
+> node scripts/check-rendered-state-census.mjs --discover --jobs 8 --out docs/sessions/evidence/task923/r2-81-discover
+
+discovery: 456 in-scope Stories closed at 390 / en; 557 registry rows over 260 Stories; 4091 candidate trigger(s) clicked (no cap)
+registry rows: 557; per Story family: Mantine/Primitives 78, Patterns/Mantine 479
+  per open kind: click 459, mount 98; per focus mode: inside 113, trap 259, trigger 185; with widths: 185 ({"max":1023} 67, {"max":639} 14, {"max":767} 12, {"min":1024} 67, {"min":640} 18, {"min":768} 7)
+(a) in-scope Stories showing a portal on mount with no "mount" row: 0
+(b) in-scope Stories whose file imports an overlay component, with no registry row, one of whose triggers opens a portal: 0
+    (informational, not a violation: 26 of the 26 Stories that import an overlay component and have no row render no trigger that opens a portal - every candidate was clicked)
+  - patterns-mantine-dashboardbarchart--empty  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--error  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--grouped  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--horizontal  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--one-series-hidden  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--empty  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--error  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--one-segment-hidden  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--with-counts  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--empty  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--error  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--loading  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--one-series-hidden  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--single-mode  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--empty  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--error  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--one-series-hidden  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--empty  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--error  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--loading  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardsemidonut--multiple-segments-hidden  (./src/stories/patterns/mantine/DashboardSemiDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardsemidonut--one-segment-hidden  (./src/stories/patterns/mantine/DashboardSemiDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dialogfooter--default  (./src/stories/patterns/mantine/DialogFooter.stories.tsx imports MantineDialogFooter)
+  - patterns-mantine-dialogfooter--single-button  (./src/stories/patterns/mantine/DialogFooter.stories.tsx imports MantineDialogFooter)
+  - patterns-mantine-dialogsections--default  (./src/stories/patterns/mantine/DialogSections.stories.tsx imports MantineDialogSections)
+  - patterns-mantine-dialogsections--single-section  (./src/stories/patterns/mantine/DialogSections.stories.tsx imports MantineDialogSections)
+(c) candidate triggers that open a portal and are not the trigger of an in-range row, at 390 / 1440 / each widths bound: 0 Stories
+Stories that failed to render: 2
+  - patterns-mantine-dashboardperiodcontrol--custom-range-too-long  (render finished, sb-show-errordisplay=true)
+  - patterns-mantine-dashboardperiodcontrol--custom-range-too-long  (render finished, sb-show-errordisplay=true)
+discovery runtime 764s
+EXIT_CODE=0

@@ -27,7 +27,7 @@ import { tiraneAbsoluteLabel, serializePeriod, type PeriodSelection } from '@/li
 import type { BlockResult } from '@/lib/dashboard/blockResult'
 import { AdminDashboardRecentListings } from '@/components/admin/AdminDashboardRecentListings'
 import { LISTING_STATUS_COLOR, VISIBILITY_TONE_COLOR } from '@/modules/listings/lib/listingStatusTone'
-import { formatCount, formatDateOnly, formatShortDate } from '@/lib/formatters'
+import { formatCount, formatDateOnly, formatDateRange, formatDayNumber, formatShortDate } from '@/lib/formatters'
 import {
   listingPreviewHref,
   pendingListingsHref,
@@ -119,6 +119,8 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
     router.replace(`${pathname}?${new URLSearchParams(serializePeriod(next)).toString()}`, { scroll: false })
   const fc = (n: number) => formatCount(n, locale)
   const shortDate = (d: string) => formatShortDate(d, locale)
+  // Task 923 Revision 7: a time-axis tick is the bare day (the month is never repeated per tick); the period is stated ONCE under the card title.
+  const rangeOf = (points: ReadonlyArray<{ date: string }>) => formatDateRange(points[0]?.date, points[points.length - 1]?.date, locale)
   const absoluteLabel = (iso: string) => tiraneAbsoluteLabel(iso, locale)
 
   const periodLabels: DashboardPeriodControlLabels = {
@@ -261,7 +263,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           row.listingTitle ?? '—',
           <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} focusable={false} />,
         ],
-        status: { label: trep(`status_${row.status}` as Parameters<typeof trep>[0]), color: VISIBILITY_TONE_COLOR.warning },
+        status: { label: trep(`status_${row.status}` as Parameters<typeof trep>[0]), tone: 'warning' },
         ctaLabel: t('worklist_cta_review'),
       }))
     : []
@@ -272,9 +274,10 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         href: unassignedSupportHref(),
         primary: tsup(row.ticketType === 'user_complaint' ? 'type_user_complaint' : 'type_support'),
         meta: [<RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} focusable={false} />],
+        // R57(a): the ticket's registered meaning, so "Open" / "In progress" look here as they do on /admin/support.
         status: {
           label: tsup(row.status === 'in_progress' ? 'support_status_in_progress' : 'support_status_open'),
-          color: row.status === 'in_progress' ? VISIBILITY_TONE_COLOR.warning : VISIBILITY_TONE_COLOR.neutral,
+          meaning: { variant: 'status', entity: 'ticket', value: row.status },
         },
         ctaLabel: t('worklist_cta_review'),
       }))
@@ -311,7 +314,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
           value={data.adm08.ok ? fc(data.adm08.data.visible) : ''}
           secondaryLine={
             <Group gap="tight" wrap="nowrap">
-              <Text size="xs" c="white" lineClamp={2}>
+              <Text size="xs" c="white" miw={0}>
                 {t('adm08_tooltip')}
               </Text>
               <MantineTooltip label={t('adm08_tooltip')}>
@@ -378,6 +381,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         main={
           <MantineDashboardCard
             title={t('activity_card_title', { period: periodLabel })}
+            scopeLabel={rangeOf(activityChartData)}
             state={activityCardState}
             errorMessage={t('error_generic')}
             retryLabel={tCommon('retry')}
@@ -417,7 +421,8 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
                   { key: 'formInquiries', label: t('activity_series_form'), color: theme.other.chartSeries.formInquiries },
                 ]}
                 mode="multi"
-                dateLabel={shortDate}
+                dateLabel={formatDayNumber}
+                tooltipDateLabel={shortDate}
                 valueLabel={fc}
                 state={activityChartState}
                 emptyDescription={t('activity_empty')}
@@ -479,6 +484,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         main={
           <MantineDashboardCard
             title={t('trends_card_title', { period: periodLabel })}
+            scopeLabel={trendsOk ? formatDateRange(trendsData[0]?.category, trendsData[trendsData.length - 1]?.category, locale) : undefined}
             state={trendsOk ? 'ready' : 'error'}
             errorMessage={t('error_generic')}
             retryLabel={tCommon('retry')}
@@ -491,7 +497,8 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
                 { key: 'newListings', label: t('trends_series_listings'), color: 'brand.4' },
                 { key: 'newUsers', label: t('trends_series_users'), color: 'gray.4' },
               ]}
-              categoryLabel={shortDate}
+              categoryLabel={formatDayNumber}
+              tooltipCategoryLabel={shortDate}
               valueLabel={fc}
               state="ready"
               allHiddenHint={t('activity_all_hidden')}

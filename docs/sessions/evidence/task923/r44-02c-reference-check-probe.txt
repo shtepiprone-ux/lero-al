@@ -1,0 +1,20 @@
+# R141-R144 AC141 r44-02c (finding for Opus): the eight reads of checkIsReferenced (src/lib/cloudinaryDelete.ts:89-103), each run once read-only through PostgREST; a read that answers an error makes deleteAsset answer 'reference lookup failed' and keep the file
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/probe-reference-check.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T11:59:30.357Z
+--- stdout ---
+listing_images.public_id   HTTP 400  ERROR  42703 column listing_images.public_id does not exist
+listing_images.url         HTTP 200  ok  rows 0
+users.avatar_url           HTTP 200  ok  rows 0
+users.company_logo_url     HTTP 200  ok  rows 0
+companies.logo_url         HTTP 200  ok  rows 0
+locations.image_url        HTTP 200  ok  rows 0
+site_settings.value        HTTP 200  ok  rows 0
+pages.content              HTTP 200  ok  rows 3
+
+--- stderr ---
+
+--- exit code: 0 ---

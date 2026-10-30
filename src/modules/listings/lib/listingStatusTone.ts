@@ -1,42 +1,7 @@
-import type { MantineColor } from '@mantine/core'
-import type { ListingStatus } from '@/types/database'
-
 /**
- * One shared source for the theme colour every listing-status badge uses (spec v3.3 §3.3, §17.1).
- *
- * Site-wide canonical colours win where they already exist — copied verbatim from
- * `ListingCard.tsx:85-106`'s `getBadges()`, the current single source of truth for these four:
- * `sold` → `blueLight` (matches `--status-info`), `rented` → `purple`, `archived` → `gray`,
- * `expired` → `yellow` (matches `--status-warning`). The remaining three statuses take the spec's
- * semantic bucket (§17.1: visible/published → positive; pending/expiring → warning;
- * neutral/inactive/archived → neutral): `active` → `green`, `pending` → `yellow`,
- * `inactive` → `gray`.
- *
- * This is the ONE source: `ListingCard.tsx` (`getBadges`) and `ListingStatusBanner.tsx` both read
- * it since Task 741 Revision 3, and neither keeps a local copy. Owner D46-1 (2026-10-04): `inactive`
- * is `gray` on the listing-page banner too.
+ * Listing-status badge colours. The maps live in the one badge registry
+ * (`src/design-system/mantine/badgeTones.ts`, Task 859 R24); this module re-exports them so Task 741's consumers
+ * (`ListingCard`, `ListingStatusBanner`) and `listingStatusTone.test.ts` keep their import path.
  */
-export const LISTING_STATUS_COLOR: Record<ListingStatus, MantineColor> = {
-  active: 'green',
-  inactive: 'gray',
-  sold: 'blueLight',
-  rented: 'purple',
-  archived: 'gray',
-  pending: 'yellow',
-  expired: 'yellow',
-}
-
-export type VisibilityTone = 'positive' | 'warning' | 'danger' | 'neutral'
-
-/**
- * The spec's four semantic visibility buckets (§17.1), for callers that classify by meaning
- * rather than by raw `ListingStatus` (e.g. a diagnostics/error row that isn't a listing status
- * at all). Same theme colour names as `LISTING_STATUS_COLOR`'s values, named by role instead of
- * by status so a caller never has to invent its own mapping for a non-status tone.
- */
-export const VISIBILITY_TONE_COLOR: Record<VisibilityTone, MantineColor> = {
-  positive: 'green',
-  warning: 'yellow',
-  danger: 'red',
-  neutral: 'gray',
-}
+export { LISTING_STATUS_COLOR, VISIBILITY_TONE_COLOR } from '@/design-system/mantine/badgeTones'
+export type { VisibilityTone } from '@/design-system/mantine/badgeTones'

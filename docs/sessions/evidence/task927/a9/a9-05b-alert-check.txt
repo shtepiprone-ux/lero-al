@@ -1,0 +1,14 @@
+# a9-05 part 2: what rises in the AuthSheet Login dialog after Google's button settled
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a9/a9-05-alert-check.mjs
+
+320 en: early h=524.1 alerts=[] | late h=614.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":74,"text":"Security verification failed. Please try again."}] | rise=90
+320 uk: early h=524.1 alerts=[] | late h=634.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":94,"text":"Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз."}] | rise=110
+390 en: early h=524.1 alerts=[] | late h=594.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":54,"text":"Security verification failed. Please try again."}] | rise=70
+390 uk: early h=524.1 alerts=[] | late h=614.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":74,"text":"Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз."}] | rise=90
+639 en: early h=524.1 alerts=[] | late h=594.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":54,"text":"Security verification failed. Please try again."}] | rise=70
+639 uk: early h=524.1 alerts=[] | late h=594.1 alerts=[{"cls":"light/var(--mantine-color-red-light)","h":54,"text":"Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз."}] | rise=70
+
+exit code: 0

@@ -1,0 +1,71 @@
+# Task 923 Review 49 (Opus): read-only verification of the applied deletion v4, after the owner's apply (reported 2026-10-24: Success. No rows returned; check f1 account_display_name(uuid), f2 set_actor_name(), f3 lower_views_count_on_view_delete(), cols 2), 2026-10-24T10:43:27Z, HEAD 36c030802, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-07-post-apply.cjs
+ok   transaction is read only
+ok   public.account_display_name(uuid) exists, security definer, search_path fixed: secdef true, config {"search_path=public, pg_temp"}
+ok   public.account_display_name(uuid) not executable by anon / authenticated: anon false, authenticated false
+ok   public.set_actor_name() exists, security definer, search_path fixed: secdef true, config {"search_path=public, pg_temp"}
+ok   public.set_actor_name() not executable by anon / authenticated: anon false, authenticated false
+ok   public.lower_views_count_on_view_delete() exists, security definer, search_path fixed: secdef true, config {"search_path=public, pg_temp"}
+ok   public.lower_views_count_on_view_delete() not executable by anon / authenticated: anon false, authenticated false
+ok   account_display_name executable by service_role
+ok   contact_inquiries.handled_by_name text, trigger enabled with set_actor_name('handled_by', 'handled_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 3, rows missing one 0
+ok   contact_inquiry_replies.replied_by_name text, trigger enabled with set_actor_name('replied_by', 'replied_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 5, rows missing one 0
+ok   email_templates.updated_by_name text, trigger enabled with set_actor_name('updated_by', 'updated_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 1, rows missing one 0
+ok   history_clear_events.actor_user_id_name text, trigger enabled with set_actor_name('actor_user_id', 'actor_user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 10, rows missing one 0
+ok   pages.updated_by_name text, trigger enabled with set_actor_name('updated_by', 'updated_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   report_actions.actor_id_name text, trigger enabled with set_actor_name('actor_id', 'actor_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   role_permission_events.actor_user_id_name text, trigger enabled with set_actor_name('actor_user_id', 'actor_user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 7, rows missing one 0
+ok   role_permissions.updated_by_user_id_name text, trigger enabled with set_actor_name('updated_by_user_id', 'updated_by_user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 5, rows missing one 0
+ok   site_footer.updated_by_name text, trigger enabled with set_actor_name('updated_by', 'updated_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 1, rows missing one 0
+ok   support_ticket_events.actor_user_id_name text, trigger enabled with set_actor_name('actor_user_id', 'actor_user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   support_tickets.assigned_to_name text, trigger enabled with set_actor_name('assigned_to', 'assigned_to_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   support_tickets.created_by_admin_id_name text, trigger enabled with set_actor_name('created_by_admin_id', 'created_by_admin_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   user_change_log.changed_by_name text, trigger enabled with set_actor_name('changed_by', 'changed_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 7, rows missing one 0
+ok   user_status_history.changed_by_name text, trigger enabled with set_actor_name('changed_by', 'changed_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   verification_requests.reviewed_by_name text, trigger enabled with set_actor_name('reviewed_by', 'reviewed_by_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   listing_reports.user_id_name text, trigger enabled with set_actor_name('user_id', 'user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   support_tickets.reported_user_id_name text, trigger enabled with set_actor_name('reported_user_id', 'reported_user_id_name'), backfill complete: type text, trigger O set_actor_name, rows with a name 0, rows missing one 0
+ok   trg_email_templates_updated_at enabled again: O
+info email_templates: rows with updated_at in the last 3 hours 0 (latest null)
+ok   trg_support_tickets_updated_at enabled again: O
+info support_tickets: rows with updated_at in the last 3 hours 0 (latest null)
+ok   listing_views_lower_count: AFTER DELETE FOR EACH ROW, enabled, lower_views_count_on_view_delete: tgtype 9
+ok   contact_inquiries.contact_inquiries_handled_by_fkey delete rule n: n
+ok   contact_inquiry_replies.contact_inquiry_replies_replied_by_fkey delete rule n: n
+ok   email_templates.email_templates_updated_by_fkey delete rule n: n
+ok   history_clear_events.history_clear_events_actor_user_id_fkey delete rule n: n
+ok   pages.pages_updated_by_fkey delete rule n: n
+ok   report_actions.report_actions_actor_id_fkey delete rule n: n
+ok   role_permission_events.role_permission_events_actor_user_id_fkey delete rule n: n
+ok   role_permissions.role_permissions_updated_by_user_id_fkey delete rule n: n
+ok   site_footer.site_footer_updated_by_fkey delete rule n: n
+ok   support_ticket_events.support_ticket_events_actor_user_id_fkey delete rule n: n
+ok   support_tickets.support_tickets_assigned_to_fkey delete rule n: n
+ok   support_tickets.support_tickets_created_by_admin_id_fkey delete rule n: n
+ok   user_change_log.user_change_log_changed_by_fkey delete rule n: n
+ok   user_status_history.user_status_history_changed_by_fkey delete rule n: n
+ok   verification_requests.verification_requests_reviewed_by_fkey delete rule n: n
+ok   listing_reports.listing_reports_user_id_fkey delete rule n: n
+ok   support_tickets.support_tickets_reported_user_id_fkey delete rule n: n
+ok   listing_views.listing_views_user_id_fkey delete rule c: c
+ok   listing_contact_events.listing_contact_events_actor_user_id_fkey delete rule c: c
+ok   contact_inquiry_replies_replied_by_fkey definition: FOREIGN KEY (replied_by) REFERENCES auth.users(id) ON DELETE SET NULL
+ok   email_templates_updated_by_fkey definition: FOREIGN KEY (updated_by) REFERENCES auth.users(id) ON DELETE SET NULL
+ok   report_actions_actor_id_fkey definition: FOREIGN KEY (actor_id) REFERENCES users(id) ON DELETE SET NULL
+ok   user_change_log_changed_by_fkey definition: FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
+ok   user_status_history_changed_by_fkey definition: FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
+ok   listing_views_user_id_fkey definition: FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+ok   listing_contact_events_actor_user_id_fkey definition: FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE CASCADE
+ok   contact_inquiry_replies.replied_by nullable: YES
+ok   report_actions.actor_id nullable: YES
+ok   companies.created_by uuid nullable, cascade key to users, index: uuid YES; FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE CASCADE; index true; rows with a creator 0
+info foreign keys from public tables to a user: 44 (43 before the apply, plus companies.created_by)
+ok   anon on pages: no table SELECT, no SELECT of updated_by_name, SELECT of the 7 other columns: table false, updated_by_name false, others true
+ok   authenticated on pages: no table SELECT, no SELECT of updated_by_name, SELECT of the 7 other columns: table false, updated_by_name false, others true
+info pages relacl {postgres=arwdDxtm/postgres,anon=m/postgres,authenticated=m/postgres,service_role=arwdDxtm/postgres}
+ok   anon on site_footer: no table SELECT, no SELECT of updated_by_name, SELECT of the 12 other columns: table false, updated_by_name false, others true
+ok   authenticated on site_footer: no table SELECT, no SELECT of updated_by_name, SELECT of the 12 other columns: table false, updated_by_name false, others true
+info site_footer relacl {postgres=arwdDxtm/postgres,anon=awdxtm/postgres,authenticated=awdxtm/postgres,service_role=arwdDxtm/postgres}
+ok   service_role reads both updated_by_name columns
+failing 0
+exit 0

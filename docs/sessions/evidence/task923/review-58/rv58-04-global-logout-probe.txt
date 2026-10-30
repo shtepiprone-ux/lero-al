@@ -1,0 +1,14 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv58-04-global-logout-probe.mjs
+date: 2026-10-25T12:33:42.584Z
+case 1, today's code: controls before the sign-out: browser alive, phone alive, check alive
+case 1: verify client signOut others ok
+case 1: browser POST /auth/v1/logout?scope=global with its ended session: preflight 200 allow-origin=*; answer 403 session_not_found allow-origin=http://localhost:3000
+case 1: after both: browser ended, phone ended, check alive
+case 2, verify client signOut global instead: controls before: browser alive, phone alive, check alive
+case 2: verify client signOut global ok
+case 2: after: browser ended, phone ended, check ended
+clean-up: zz_synth_rv58g_ users left 0
+exit code: 0

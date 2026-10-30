@@ -1,0 +1,34 @@
+[
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+  "pageScrollW": [
+   390,
+   390
+  ],
+  "afterOpen": {
+   "active": "DIV.modal",
+   "dialogs": 7
+  },
+  "afterEsc": {
+   "active": "BUTTON",
+   "dialogs": 0
+  }
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/modals",
+  "pageScrollW": [
+   390,
+   390
+  ],
+  "afterOpen": {
+   "active": "BUTTON.bg-brand-500",
+   "dialogs": 0
+  },
+  "afterEsc": {
+   "active": "BUTTON",
+   "dialogs": 0
+  }
+ }
+]

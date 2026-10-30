@@ -1,0 +1,113 @@
+# HEAD 513783a24 lines cited by Task 923 claim rows whose working-tree source changed (Revision 41, rev41-06-refresh-locators.mjs)
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 333-333
+        const tableExempt = tableBox && !(pcs.display === 'table-cell' && fixedLayoutTable(parent) && isMediaOrControl(e));
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 371-371
+      if (fl.sheet) return { details: [], closed: false, na: { [rule]: 'a bottom sheet renders no close control of its own (Mantine Drawer withCloseButton=false)' } };
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 809-809
+  // each with a structural path from the app root. NO cap: discovery clicks every one (Task 923 R14). Used by
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 255-255
+        if (holdsContent(e) && !e.matches(OVERLAY_PANEL)) {
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 306-306
+    if (open.kind === 'click') await loc.click({ timeout: 4000 });
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 256-256
+          const bound = positionedBound(e, root);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 321-321
+        //    region or the element rides a transformed track (a carousel slide); inside a plain overflow:hidden box it is
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 248-248
+      if (phase === 'timeout') return { ok: false, reason: 'render did not reach finished/errored within 20s' };
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 614-614
+const isTransientLoad = (d) => /^navigation failed|net::ERR_/.test(d) || RENDER_TIMEOUT.test(d) || RESOURCE_FAILED.test(d);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 285-285
+              const exemptSlide = slideShape && !slideBreak;
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 684-684
+          if (!ok && !reachable) add('action-covered', `${name} centre ${px(cx)},${px(cy)} is covered by ${describe(hit)}`);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 657-657
+        if (!region && !(outsideY && !outsideX && pageScrollable)) add('action-hidden', `${name} centre ${px(cx)},${px(cy)} outside the ${vw}x${vh} viewport and no scroll region holds it`);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 344-344
+            addOverflow(e, `${describe(e)} "${clip(e.textContent, 28)}" x ${px(er.left)}..${px(er.right)} past ${describe(parent)} ${px(left)}..${px(right)}`);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 330-330
+          clippedAway = wholly && (/auto|scroll/.test(csOf(clipper).overflowX) || transformedBetween(e, clipper));
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 592-592
+        for (const key of state.open.keys) await page.keyboard.press(key);
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 269-269
+ *   (b) no finite animation runs (R26 (a): an infinite one, a loader, never settles and is not counted);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 706-706
+      if (counts[key] > rules[key].length) rules[key].push(`…+${counts[key] - rules[key].length} more (${counts[key]} in total)`);
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 264-264
+export const DISMISS_BOUND_MS = 5000;
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 656-656
+  return { rows: second, page: next };
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 442-442
+  if (first.stage === 'open') app.rules['open-failed'].push(first.reason);
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 446-446
+  const appInert = first.stage === 'ok' && count > 0 && (await page.evaluate(() => window.__census.flavor('x').modal));
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 641-641
+ * closed, non-inert page), and nothing of it - no rule, no root - is carried into the result. Every row of the retried job
+== scripts/rendered-state-census/verify.mjs in the working tree (uncommitted Task 923 code), lines 145-145
+  { name: 'open-flaky-once', flaky: true, retry: true, fail: {}, green: ['app', 'portal:0'] },
+== scripts/__tests__/rendered-state-census.test.ts in the working tree (uncommitted Task 923 code), lines 271-271
+  it('a retry replaces the first attempt: nothing it measured on a page that never opened is carried over (R29)', async () => {
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 290-290
+    same = last && s.n === last.n && s.sig === last.sig && s.running === 0 && inflight === 0 ? same + 1 : 0;
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 321-321
+  await waitStable(page, null); // R31: what the page loads late has arrived before anything is opened
+== scripts/rendered-state-census/verify.mjs in the working tree (uncommitted Task 923 code), lines 142-142
+  { name: 'infinite-spinner-toast', fail: {}, green: ['app', 'portal:0'] },
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 613-613
+export const RESOURCE_FAILED = /^resource failed: /;
+== scripts/rendered-state-census/runner.mjs in the working tree (uncommitted Task 923 code), lines 672-672
+        ({ rows, page } = await runWithRetry(job.run, page, freshPage));
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 263-263
+  const { error: authError } = await db.auth.admin.deleteUser(userId)
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 446-446
+    // is `el` hidden at (x, y) by an opaque box that lies above it and is PINNED or FLOATING over it (a sticky header over text that scrolled beneath it, a dialog or a menu over the page)?
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 544-544
+    .is('consumed_at', null)
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 546-546
+  if (consumeErr) return { error: 'confirmation_failed', errorCode: 'invalid' }
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 358-358
+  const { error: tokenError } = await db.from('email_change_tokens').insert({
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 396-396
+export async function resendEmailVerification(data: {
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 430-434
+  const newEmail: string = (token as { new_email: string }).new_email
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
+  // Albanian-only policy (Task 251): CTA link routes to /sq/ regardless of user's app locale.
+  const verificationUrl = `${siteUrl}/sq/auth/confirm-email?token=${rawToken}`
+
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 457-457
+  currentPassword: string
+== src/modules/cabinet/actions/index.ts in the working tree (uncommitted Task 923 code), lines 712-712
+      const { error: signOutError } = await verifyClient.auth.signOut({ scope: 'others' })
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 217-219
+    .from('saved_searches')
+    .update({ notify_email: notifyEmail })
+    .eq('id', id)
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 255-255
+  const { error: profileError } = await db.from('users').delete().eq('id', userId)
+== src/modules/cabinet/actions/index.ts in the working tree (uncommitted Task 923 code), lines 732-732
+    if (!othersEnded) return { ok: false, reason: 'sessions_not_ended' }
+== src/modules/cabinet/actions/index.ts in the working tree (uncommitted Task 923 code), lines 56-56
+  const { error } = await verifyClient.auth.signInWithPassword({ email, password })
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 513783a24, lines 376-376
+              className="h-11 rounded-xl flex-1"
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 513783a24, lines 375-375
+              placeholder={t('email_change_hint')}
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 513783a24, lines 364-364
+              className="text-sm text-primary hover:underline disabled:opacity-50 w-fit"
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 276-276
+const EMAIL_ERRORS: Record<string, Record<string, string>> = {
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 513783a24, lines 204-204
+      setEmailError(result.error)
+== src/modules/cabinet/actions/index.ts in the working tree (uncommitted Task 923 code), lines 485-485
+}): Promise<{ error?: string; reason?: 'invalid_password' | 'reauth_required' | 'rate_limited'; pendingEmail?: string }> {
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 43-43
+  // Without this, an admin-added currency would fail with raw Postgres 23514.
+== src/modules/cabinet/actions/index.ts at HEAD 513783a24, lines 56-56
+      name: data.name.trim() || null,
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 242-242
+          else add('text-ellipsis', `${describe(e)} "${clip(e.textContent)}" ellipsis ${e.scrollWidth}>${e.clientWidth}`);
+== scripts/rendered-state-census/in-page.mjs in the working tree (uncommitted Task 923 code), lines 699-699
+          if (exempt && a.matches(exempt)) exemptedControls++;
+== scripts/rendered-interaction-states.json in the working tree (uncommitted Task 923 code), lines 6099-6099
+      "id": "patterns-mantine-authsheet--login-validation-error",

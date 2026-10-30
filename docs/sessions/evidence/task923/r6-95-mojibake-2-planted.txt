@@ -1,0 +1,30 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: bash -c node docs/sessions/evidence/task923/r6-95-mojibake-tools.mjs plant && npm run check:mojibake
+start 2026-10-15T15:31:35.420Z
+platform win32 node v22.22.3
+wrote docs/sessions/evidence/task923/r6-planted-mojibake.md (U+00E2 U+20AC U+201C)
+
+> lero-al@0.1.0 check:mojibake
+> node scripts/check-mojibake.mjs
+
+check:mojibake — scanning 12133 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 4 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  src/components/admin/AdminSupportManager.stories.tsx
+  src/components/ui/badge.stories.tsx
+  src/components/ui/badge.tsx
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+
+check:mojibake FAILED — 1 artifact(s), 0 invalid-UTF-8 file(s):
+
+  docs/sessions/evidence/task923/r6-planted-mojibake.md
+    docs/sessions/evidence/task923/r6-planted-mojibake.md:3:9  CP1252-of-UTF-8 for "–" (en dash)  "...A pause <U+00E2 U+20AC U+201C> planted...."
+      -> Re-encode as UTF-8 (intended: – U+2013).
+
+  Remediation: re-save the offending file as UTF-8 (no BOM). If the artifact is
+  intentional documentation, add the path to scripts/mojibake-allowlist.json.
+  Rule: docs/agent-contract.md clause 14, docs/qa-rules.md -> "Encoding hygiene"
+note: the checker printed the planted text; this file keeps it as the code-point marker <U+00E2 U+20AC U+201C> (1 replacement(s)) so that the transcript itself holds no mojibake
+end 2026-10-15T15:31:53.574Z
+EXIT_CODE=1

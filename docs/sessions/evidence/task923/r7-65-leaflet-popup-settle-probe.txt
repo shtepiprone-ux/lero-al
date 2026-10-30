@@ -1,0 +1,43 @@
+command: node docs/sessions/evidence/task923/r7-65-leaflet-popup-settle-probe.mjs
+platform win32 node v22.22.3; state patterns-mantine-listingdetailview--archived-listing~all-photos @ sq 390
+throttle 1x trial 1: open ok; settle {"ms":664,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 1x trial 2: open ok; settle {"ms":651,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 1x trial 3: open ok; settle {"ms":648,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 1x trial 4: open ok; settle {"ms":647,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 1x trial 5: open ok; settle {"ms":666,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 38..385 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 4x trial 1: open ok; settle {"ms":671,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 4x trial 2: open ok; settle {"ms":667,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 4x trial 3: open ok; settle {"ms":667,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 4x trial 4: open ok; settle {"ms":666,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+throttle 4x trial 5: open ok; settle {"ms":672,"bounded":false}
+   at return: map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   3s later:  map 37..353 x 1535..1791; popup 49..343 x 1571..1616; pane translate3d(0px, 0px, 0px); mapPane anims 0
+   unchanged
+EXIT_CODE=0

@@ -3,7 +3,7 @@ name: executor
 description: Sonnet implementation executor for one saved Lero.al task. Implements and returns factual evidence to Opus; does not design, review, approve, or issue Git handoffs.
 model: sonnet
 effort: high
-tools: Read, Grep, Glob, Bash, Edit, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Edit, Write
 skills:
   - execute-task
 ---

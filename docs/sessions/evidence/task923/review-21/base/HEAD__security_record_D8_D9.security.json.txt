@@ -1,0 +1,3264 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "kind": "product",
+  "qaProfile": "Q4",
+  "task": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md",
+  "taskSha256": "151f402d05638833c212adb41cbf383f4546a863da97429f37acab474e1a0fc8",
+  "scope": [
+    "src/modules/listings/domain/listingTransitionEngine.ts",
+    "src/modules/listings/domain/index.ts",
+    "src/modules/listings/domain/listingTransitionEngine.test.ts",
+    "src/modules/listings/actions/applyListingTransition.ts",
+    "src/modules/listings/actions/applyListingTransition.test.ts",
+    "src/modules/listings/components/ListingFormShellView.tsx",
+    "src/modules/listings/components/ListingFormShellView.stories.tsx",
+    "src/modules/listings/components/ListingFormShell.tsx",
+    "src/modules/listings/components/ListingFormLoader.tsx",
+    "src/app/[locale]/listings/[slug]/edit/page.tsx",
+    "src/lib/auth/accountAccess.ts",
+    "src/lib/auth/blockCheck.ts",
+    "src/modules/admin/actions/index.ts",
+    "src/modules/auth/components/AuthSheet.tsx",
+    "messages/sq.json",
+    "messages/en.json",
+    "messages/uk.json",
+    "messages/it.json",
+    "src/app/[locale]/listings/[slug]/page.tsx",
+    "src/modules/listings/actions/contactEvents.ts",
+    "src/modules/listings/actions/submitListingInquiry.ts",
+    "src/modules/listings/components/ListingContact.tsx",
+    "src/lib/auth/requireViewer.ts",
+    "src/modules/listings/components/ListingInquiryDialog.tsx",
+    "src/modules/listings/actions/submitListingInquiry.test.ts",
+    "src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts",
+    "src/modules/listings/actions/__tests__/contactEvents.test.ts",
+    "src/modules/listings/actions/__tests__/visitorActions.security.test.ts",
+    "src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts",
+    "src/modules/admin/actions/__tests__/userAdministration.security.test.ts",
+    "src/modules/admin/actions/__tests__/userWebsite.security.test.ts",
+    "src/__tests__/security/staffActions.test.ts",
+    "src/__tests__/security/serverEntryGuards.test.ts",
+    "src/modules/listings/actions/__tests__/reStampExpiresAt.smoke.test.ts",
+    "vitest.config.ts",
+    "vitest.integration.config.ts",
+    "package.json",
+    "src/tests/integration/environment.ts",
+    "src/tests/integration/fixtures.ts",
+    "src/tests/integration/setup.ts",
+    "src/modules/listings/domain/ownerStatusRules.security.test.ts",
+    "src/modules/listings/actions/ownerPublish.security.test.ts",
+    "src/lib/auth/accountAccess.security.test.ts",
+    "src/modules/admin/actions/accountBan.security.test.ts",
+    "src/lib/auth/blockCheck.security.test.ts",
+    "src/modules/auth/components/AuthSheet.banned.security.test.tsx",
+    "src/modules/listings/actions/contactSession.security.test.ts",
+    "src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx",
+    "src/modules/listings/actions/ownerPublish.integration.test.ts",
+    "src/lib/auth/accountAccess.integration.test.ts",
+    "src/modules/admin/actions/accountBan.integration.test.ts",
+    "src/modules/listings/actions/contactSession.integration.test.ts",
+    "src/lib/security/inputs.ts",
+    "src/lib/security/safeUrl.ts",
+    "src/lib/postgrest/escape.ts",
+    "src/modules/listings/components/listingStatusOptions.ts",
+    "src/modules/listings/components/listingStatusOptions.security.test.tsx",
+    "src/modules/listings/components/ListingInquiryDialogView.tsx",
+    "src/stories/patterns/mantine/ListingInquiryDialogView.stories.tsx",
+    "src/components/admin/StatusChangeControl.tsx",
+    "src/components/admin/StatusChangeControl.stories.tsx",
+    "supabase/migrations/20261018000000_task923_access_hardening.sql",
+    "src/tests/integration/accessHardening.integration.test.ts",
+    "src/app/admin/email-templates/page.tsx",
+    "src/app/admin/layout.tsx",
+    "src/app/admin/listings/[id]/preview/page.tsx",
+    "src/app/admin/users/[id]/page.tsx",
+    "src/app/admin/users/new/page.tsx",
+    "src/app/api/upload-avatar/route.ts",
+    "src/lib/auth/permissions.ts",
+    "src/lib/auth/staff.ts",
+    "src/modules/admin/actions/currencies.ts",
+    "src/modules/admin/actions/exchangeProviders.ts",
+    "src/modules/admin/actions/footer.ts",
+    "src/modules/admin/actions/permissions.ts",
+    "src/modules/admin/actions/propertyTypes.ts",
+    "src/modules/cabinet/statistics/access.ts",
+    "src/modules/companies/actions.ts",
+    "src/modules/contacts/actions/index.ts",
+    "src/modules/listings/actions/changeListingStatus.ts",
+    "src/modules/listings/actions/reportListing.ts",
+    "src/modules/listings/actions/updateListing.ts",
+    "src/modules/locations/actions/popularLocationActions.ts",
+    "src/modules/notifications/actions/emailTemplates.ts",
+    "src/app/api/auth/me/route.ts",
+    "src/app/api/exchange-rate/route.ts",
+    "src/app/api/listings/[slug]/view/route.ts",
+    "src/app/api/listings/route.ts",
+    "src/app/api/presence/route.ts",
+    "src/app/api/property-types/route.ts",
+    "src/app/api/upload-cms-image/route.ts",
+    "src/app/api/upload-company-logo/route.ts",
+    "src/app/api/upload-popular-location-photo/route.ts",
+    "src/app/auth/callback/route.ts",
+    "src/app/auth/confirm/route.ts",
+    "src/modules/admin/actions/clearHistory.ts",
+    "src/modules/admin/actions/locale.ts",
+    "src/modules/auth/actions/captcha.ts",
+    "src/modules/auth/actions/recovery.ts",
+    "src/modules/listings/actions/getListingOwnerContact.ts",
+    "src/modules/listings/actions/recentlyViewedActions.ts",
+    "src/modules/notifications/lib/mutations.ts",
+    "src/lib/auth/staffAccess.security.test.ts",
+    "src/lib/auth/requireViewer.security.test.ts",
+    "src/lib/auth/roleReads.security.test.ts",
+    "src/lib/auth/staffAccess.integration.test.ts",
+    "src/lib/auth/middleware.ts",
+    "src/app/api/cron/inactivity/route.ts",
+    "src/middleware.ts",
+    "src/lib/auth/middleware.security.test.ts",
+    "src/lib/auth/sessionEnd.integration.test.ts",
+    "src/components/layout/__tests__/sessionEnded.security.test.tsx",
+    "src/lib/account/deleteAccount.ts",
+    "src/lib/account/deleteAccount.security.test.ts",
+    "src/lib/account/deleteAccount.integration.test.ts",
+    "src/modules/cabinet/components/__tests__/deleteAccount.security.test.tsx",
+    "src/modules/cabinet/actions/index.ts",
+    "src/modules/cabinet/components/ProfileTab.tsx",
+    "supabase/migrations/20261018010000_task923_account_deletion.sql",
+    "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx",
+    "src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx",
+    "src/stories/mantine/primitives/Modal.stories.tsx",
+    "scripts/rendered-interaction-states.json",
+    "src/components/admin/AdminUserProfileDialogsView.tsx",
+    "src/components/admin/__tests__/adminDeleteDialog.security.test.tsx",
+    "src/lib/auth/__tests__/authCore.security.test.ts",
+    "src/lib/auth/__tests__/permissions.test.ts",
+    "src/modules/__tests__/rls-write-guards.smoke.test.ts",
+    "src/modules/admin/actions/__tests__/adminLocale.test.ts",
+    "src/modules/admin/actions/__tests__/adminOperations.security.test.ts",
+    "src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts",
+    "src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+    "src/modules/admin/actions/__tests__/permissions.security.test.ts",
+    "src/modules/cabinet/statistics/__tests__/access.test.ts",
+    "src/modules/companies/__tests__/companyActions.security.test.ts",
+    "src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts",
+    "src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts",
+    "src/modules/listings/actions/__tests__/reportListing.smoke.test.ts",
+    "src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts",
+    "src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts",
+    "src/modules/notifications/lib/__tests__/mutations.smoke.test.ts",
+    "src/lib/cloudinaryDelete.ts",
+    "src/modules/listings/actions/createListing.ts",
+    "src/modules/listings/components/SimilarListings.tsx",
+    "src/app/api/auth-email-hook/route.ts",
+    "src/modules/notifications/lib/emails/send.ts",
+    "src/app/api/cron/saved-searches/route.ts",
+    "src/app/api/cron/price-alerts/route.ts",
+    "src/app/api/cron/listings-expiry/route.ts",
+    "src/lib/security/sentryScrub.ts",
+    "sentry.server.config.ts",
+    "sentry.edge.config.ts",
+    "src/instrumentation-client.ts",
+    "src/modules/listings/domain/filterEngine.ts",
+    "src/app/[locale]/listings/page.tsx",
+    "src/lib/auth/controller.ts",
+    "src/modules/auth/components/ResetPasswordClient.tsx",
+    "src/components/layout/Footer.tsx",
+    "src/tests/setup.ts",
+    "src/modules/admin/actions/__tests__/adminActorRank.security.test.ts",
+    "src/modules/admin/actions/__tests__/adminPermissions.security.test.ts",
+    "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+    "src/lib/cloudinaryDelete.security.test.ts",
+    "src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts",
+    "src/modules/contacts/actions/__tests__/contactFormLimit.security.test.ts",
+    "src/modules/listings/components/SimilarListings.security.test.tsx",
+    "src/app/api/auth-email-hook/authEmailHook.security.test.ts",
+    "src/modules/admin/actions/__tests__/createAdminUser.security.test.ts",
+    "src/lib/security/sentryScrub.security.test.ts",
+    "src/modules/admin/actions/__tests__/footerContent.security.test.ts",
+    "src/modules/listings/actions/__tests__/updateListingGallery.security.test.ts",
+    "src/lib/auth/controller.signout.security.test.ts",
+    "src/modules/auth/components/ResetPasswordClient.security.test.tsx",
+    "src/modules/admin/actions/adminPermissions.integration.test.ts",
+    "src/modules/cabinet/actions/emailChange.integration.test.ts",
+    "src/modules/listings/actions/contactLifecycle.integration.test.ts",
+    "src/modules/listings/actions/listingSlugGuard.integration.test.ts",
+    "src/app/api/upload-avatar/uploadAvatar.security.test.ts",
+    "src/app/api/upload-avatar/uploadAvatar.integration.test.ts",
+    "src/app/admin/page.tsx",
+    "src/app/admin/companies/page.tsx",
+    "src/app/admin/currency/page.tsx",
+    "src/app/admin/footer/page.tsx",
+    "src/app/admin/inquiries/page.tsx",
+    "src/app/admin/legal/page.tsx",
+    "src/app/admin/listings/page.tsx",
+    "src/app/admin/locations/page.tsx",
+    "src/app/admin/pages/page.tsx",
+    "src/app/admin/permissions/page.tsx",
+    "src/app/admin/popular-locations/page.tsx",
+    "src/app/admin/property-types/page.tsx",
+    "src/app/admin/reports/page.tsx",
+    "src/app/admin/settings/page.tsx",
+    "src/app/admin/support/page.tsx",
+    "src/app/admin/users/page.tsx",
+    "src/app/admin/inquiries/sales/page.tsx",
+    "src/app/admin/inquiries/support/page.tsx",
+    "src/proxy.ts",
+    "src/app/page.tsx",
+    "src/modules/admin/lib/settings.ts",
+    "src/modules/listings/actions/deleteListing.ts",
+    "src/lib/security/headers.ts",
+    "src/modules/cms/lib/sanitizeCmsHtml.ts",
+    "src/lib/uploads/imageUrl.ts",
+    "src/modules/listings/validations/index.ts",
+    "src/app/sitemap.ts",
+    "src/app/robots.ts",
+    "next.config.ts",
+    "src/modules/auth/components/__tests__/AuthSheet.test.tsx",
+    "src/modules/auth/components/__tests__/authClientParts.test.tsx",
+    "src/lib/auth/__tests__/staffPage.security.test.ts",
+    "src/modules/cabinet/actions/__tests__/reauth.security.test.ts",
+    "src/modules/listings/actions/__tests__/deleteListing.security.test.ts",
+    "src/lib/auth/__tests__/middlewareScope.security.test.ts",
+    "src/modules/cabinet/actions/__tests__/changePassword.security.test.ts",
+    "src/modules/listings/actions/__tests__/submitListingInquiry.security.test.ts",
+    "src/modules/auth/actions/__tests__/recovery.security.test.ts",
+    "src/app/auth/confirm/__tests__/confirm.security.test.ts",
+    "src/lib/security/__tests__/headers.security.test.ts",
+    "src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts",
+    "src/modules/listings/actions/__tests__/rateLimits.security.test.ts",
+    "src/modules/admin/actions/__tests__/adminResults.security.test.ts",
+    "src/modules/__tests__/noDbMessage.security.test.ts",
+    "src/app/api/cron/inactivity/__tests__/inactivity.security.test.ts",
+    "src/tests/integration/adminPage.integration.test.ts",
+    "src/modules/cabinet/actions/reauth.integration.test.ts",
+    "src/modules/listings/actions/deleteListing.integration.test.ts",
+    "src/lib/auth/permissionKeys.ts",
+    "src/components/admin/AdminPermissionsView.tsx",
+    "src/modules/listings/actions/__tests__/updateListing.security.test.ts",
+    "src/modules/listings/actions/updateListing.integration.test.ts",
+    "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+    "src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx",
+    "src/lib/auth/__tests__/moderatorKeys.security.test.ts",
+    "src/tests/integration/moderatorKeys.integration.test.ts",
+    "src/lib/getExchangeRateServer.ts",
+    "src/app/api/cron/__tests__/jobsPaused.security.test.ts",
+    "src/lib/auth/__tests__/noAutoRestore.security.test.ts",
+    "src/lib/__tests__/exchangeRates.security.test.ts",
+    "src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/security-test-quality.md",
+    ".claude/rules/shared/security-test-environment.md",
+    ".claude/rules/shared/security-test-boundaries.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "report": "docs/sessions/evidence/task923/security/d8-d9-report.json",
+  "cases": [
+    {
+      "id": "SEC-D8-SRV-DOMAIN-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An owner (non-staff) can never reach the status active; the rule is one shared domain function used by the UI list and the gateway",
+      "actor": "listing owner without an administrator or moderator role",
+      "resource": "a listing in each of the seven statuses",
+      "input": "canOwnerSetStatus(from, to) and getOwnerTargetStatuses(from) for every from/to pair; getAllowedTargetStatuses with canPublish false and true",
+      "response": "false / absent for active from every status; true for every other distinct status; staff keeps the full list",
+      "forbiddenEffects": [
+        "a code path where the owner list contains active",
+        "getAllowedTargetStatuses callable without an explicit canPublish"
+      ],
+      "testFile": "src/modules/listings/domain/ownerStatusRules.security.test.ts",
+      "testName": "owner status rules [SEC-D8-SRV-DOMAIN-DENY] the owner may set every status except active, from every current status, and active is the only staff-only status"
+    },
+    {
+      "id": "SEC-D8-SRV-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Staff keep the privileged any-status path including active; the write re-stamps the expiry and notifies the owner",
+      "actor": "administrator, moderator",
+      "resource": "a pending listing owned by another person",
+      "input": "applyListingTransitionByStatus(listingId, active, staff actor)",
+      "response": "{ ok: true, nextStatus: active }, one listings update with status active and a new expires_at, one owner notification",
+      "forbiddenEffects": [
+        "a refusal of a legitimate staff publication",
+        "a missing owner notification"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified"
+    },
+    {
+      "id": "SEC-D8-SRV-OWNER-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The owner keeps every non-publishing status change on their own listing",
+      "actor": "listing owner (role user)",
+      "resource": "own listing in status active or pending",
+      "input": "applyListingTransitionByStatus to inactive, archived, sold, rented, pending and expired",
+      "response": "{ ok: true, nextStatus } for each, one status write each, no expiry re-stamp for non-public statuses",
+      "forbiddenEffects": [
+        "a refusal of a legitimate owner action",
+        "an expiry re-stamp for a non-public status"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing"
+    },
+    {
+      "id": "SEC-D8-SRV-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Publishing for general view is reserved to administrator / moderator (owner decision D8, 2026-10-17); pending -> inactive -> active is closed too",
+      "actor": "listing owner (role user), owner with null role",
+      "resource": "own listing in each non-active status",
+      "input": "applyListingTransitionByStatus(listingId, active, owner actor) for pending, inactive, expired, sold, rented, archived",
+      "response": "{ ok: false, reason: forbidden } for every status",
+      "forbiddenEffects": [
+        "listings update call",
+        "expires_at re-stamp",
+        "owner notification",
+        "site cache revalidation"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified"
+    },
+    {
+      "id": "SEC-D8-SRV-DENY-OTHER",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The existing ownership check still precedes everything: a stranger cannot change any status, including to a non-publishing one",
+      "actor": "unrelated signed-in user, user with null role",
+      "resource": "listing owned by another person",
+      "input": "applyListingTransitionByStatus to active and to sold",
+      "response": "{ ok: false, reason: forbidden }",
+      "forbiddenEffects": [
+        "listings update call",
+        "owner notification"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all"
+    },
+    {
+      "id": "SEC-D8-SRV-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Failures are explicit and never read as success; a failed write does not notify or revalidate",
+      "actor": "administrator and owner",
+      "resource": "missing listing id; listing already in the requested status; database that rejects the update",
+      "input": "applyListingTransitionByStatus with each failing condition",
+      "response": "not_found, invalid_transition, db_error respectively",
+      "forbiddenEffects": [
+        "owner notification after a failed write",
+        "cache revalidation after a failed write"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects"
+    },
+    {
+      "id": "SEC-D8-FE-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The status control offers staff the full any-status list",
+      "actor": "administrator or moderator editing a listing",
+      "resource": "the edit form status control of a pending listing",
+      "input": "buildListingStatusOptions(current, { canPublish: true }) rendered by the real StatusChangeSelect",
+      "response": "active is among the selectable statuses",
+      "forbiddenEffects": [
+        "a status list without active for staff"
+      ],
+      "testFile": "src/modules/listings/components/listingStatusOptions.security.test.tsx",
+      "testName": "listing status options [SEC-D8-FE-ALLOW] staff can pick active as the new status of a non-active listing"
+    },
+    {
+      "id": "SEC-D8-FE-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The form shows an owner only what the gateway will accept; the control is presentation, the gateway is the authority",
+      "actor": "listing owner editing their own listing",
+      "resource": "the edit form status control for each of the seven current statuses",
+      "input": "buildListingStatusOptions(current, { canPublish: false }) for each of the seven statuses, rendered by the real StatusChangeSelect",
+      "response": "active is offered only when it is the current status; every other allowed status is offered",
+      "forbiddenEffects": [
+        "active present in the owner list",
+        "a request to change status sent from the form for a status that is not offered"
+      ],
+      "testFile": "src/modules/listings/components/listingStatusOptions.security.test.tsx",
+      "testName": "listing status options [SEC-D8-FE-DENY] the owner is never offered active, for every status the listing can have"
+    },
+    {
+      "id": "SEC-D8-FE-ERR",
+      "layer": "frontend",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A forbidden answer from the server is shown to the person and does not look like a saved change",
+      "actor": "listing owner",
+      "resource": "the status control after the server answers forbidden",
+      "input": "the onSubmit of the real StatusChangeSelect rejects with forbidden after the person confirms a change",
+      "response": "the current status stays selected and an error is shown",
+      "forbiddenEffects": [
+        "the control showing the refused status as saved"
+      ],
+      "testFile": "src/modules/listings/components/listingStatusOptions.security.test.tsx",
+      "testName": "listing status options [SEC-D8-FE-ERR] a refused status change keeps the current status and shows the error"
+    },
+    {
+      "id": "SEC-D9-SRV-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A status that removes access bans the account in Supabase Auth (stops sign-in, token refresh and auth.getUser); a dated suspension bans until that date",
+      "actor": "server code acting for staff",
+      "resource": "one user id with status blocked (permanent), blocked until a future date, inactive",
+      "input": "syncAccountAccess(userId, status, suspendedUntil)",
+      "response": "updateUserById called once with ban_duration permanent / hours until the date / permanent; { ok: true }",
+      "forbiddenEffects": [
+        "an account with status blocked that is not banned",
+        "a ban for an unrelated user id"
+      ],
+      "testFile": "src/lib/auth/accountAccess.security.test.ts",
+      "testName": "account access sync [SEC-D9-SRV-DENY] a blocked, suspended or inactive account is banned in Auth with the matching duration"
+    },
+    {
+      "id": "SEC-D9-SRV-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Unblocking restores access in Auth in the same operation",
+      "actor": "server code acting for staff",
+      "resource": "a user with status active, or blocked with a suspension date in the past",
+      "input": "syncAccountAccess(userId, active | blocked-with-past-date)",
+      "response": "updateUserById called with ban_duration none; { ok: true }",
+      "forbiddenEffects": [
+        "an active account left banned"
+      ],
+      "testFile": "src/lib/auth/accountAccess.security.test.ts",
+      "testName": "account access sync [SEC-D9-SRV-ALLOW] an active account, or one whose suspension has ended, is not banned and an existing ban is lifted"
+    },
+    {
+      "id": "SEC-D9-SRV-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Failing to ban is an error the caller can see; hostile or malformed input never reaches Auth",
+      "actor": "server code acting for staff",
+      "resource": "Auth admin API that errors or throws; ids and statuses that are not valid",
+      "input": "syncAccountAccess with a rejecting dependency, a non-uuid id, an unknown status, a suspended_until that is not a date",
+      "response": "{ ok: false, error } for each; no call for invalid input; no secret in the log",
+      "forbiddenEffects": [
+        "{ ok: true } after a failed Auth call",
+        "an Auth call for an invalid id",
+        "a token or key in the console output"
+      ],
+      "testFile": "src/lib/auth/accountAccess.security.test.ts",
+      "testName": "account access sync [SEC-D9-SRV-ERR] an Auth failure is reported and is never read as success; bad ids and statuses are refused before any call"
+    },
+    {
+      "id": "SEC-D9-SRV-ADMIN-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Only an authorised staff member can change an account's access, and ranks are respected (a moderator cannot block an administrator)",
+      "actor": "anonymous, user without the permission, moderator targeting an administrator",
+      "resource": "a target user account",
+      "input": "updateUserProfileFull / deactivateUser / reactivateUser with status blocked or inactive",
+      "response": "forbidden / Unauthorized; no status write; no Auth call",
+      "forbiddenEffects": [
+        "users update",
+        "Auth ban call",
+        "user_status_history insert"
+      ],
+      "testFile": "src/modules/admin/actions/accountBan.security.test.ts",
+      "testName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody"
+    },
+    {
+      "id": "SEC-D9-SRV-ADMIN-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The status is saved first (the database cuts access at once), then the Auth ban follows; unblock reverses both",
+      "actor": "administrator with the permission",
+      "resource": "a user account",
+      "input": "updateUserProfileFull blocked (permanent and dated), deactivateUser, reactivateUser",
+      "response": "status written, then syncAccountAccess called with the saved status and date, in that order",
+      "forbiddenEffects": [
+        "a ban before the status write",
+        "no Auth call after a successful block"
+      ],
+      "testFile": "src/modules/admin/actions/accountBan.security.test.ts",
+      "testName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban"
+    },
+    {
+      "id": "SEC-D9-SRV-ADMIN-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The admin is told when access could not be fully removed; a failed first step stops the second",
+      "actor": "administrator",
+      "resource": "a user account being blocked",
+      "input": "status update fails; status update succeeds but the Auth ban fails",
+      "response": "an access_sync_failed / update_failed error respectively; the Auth call is absent in the first case",
+      "forbiddenEffects": [
+        "{} (success) after a failed ban",
+        "an Auth ban after a failed status write"
+      ],
+      "testFile": "src/modules/admin/actions/accountBan.security.test.ts",
+      "testName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban"
+    },
+    {
+      "id": "SEC-D9-SRV-LIFT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "When getBlockedError restores a suspended account to active it removes the Auth ban in the same step",
+      "actor": "the suspended person calling a guarded action",
+      "resource": "users row with status blocked and suspended_until in the past",
+      "input": "getBlockedError(userId)",
+      "response": "null; users updated to active; syncAccountAccess called to lift the ban",
+      "forbiddenEffects": [
+        "status restored to active while the ban stays"
+      ],
+      "testFile": "src/lib/auth/blockCheck.security.test.ts",
+      "testName": "automatic lifting of an ended suspension [SEC-D9-SRV-LIFT-ALLOW] the automatic lift of an ended suspension also lifts the ban"
+    },
+    {
+      "id": "SEC-D9-FE-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The new banned-account mapping does not disturb a normal sign-in",
+      "actor": "visitor with valid credentials",
+      "resource": "the sign-in sheet",
+      "input": "submit the login form; signIn answers without error",
+      "response": "signIn called with the typed values, the sheet closes, no error shown",
+      "forbiddenEffects": [
+        "an error alert after a successful sign-in"
+      ],
+      "testFile": "src/modules/auth/components/AuthSheet.banned.security.test.tsx",
+      "testName": "sign-in sheet and a blocked account [SEC-D9-FE-ALLOW] a person who is not blocked signs in and the sheet closes"
+    },
+    {
+      "id": "SEC-D9-FE-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A banned account cannot sign in, and the answer does not reveal that the account exists or is banned (owner decision D21, OWASP ASVS 5.0 6.3.8)",
+      "actor": "person whose account is blocked",
+      "resource": "the sign-in sheet",
+      "input": "signIn answers with the Auth \"User is banned\" error (400 user_banned)",
+      "response": "the same text as for invalid credentials, in the page language; the sheet stays open; no redirect",
+      "forbiddenEffects": [
+        "any wording that names a block or a ban",
+        "the sheet closing",
+        "a redirect to the stored destination"
+      ],
+      "testFile": "src/modules/auth/components/AuthSheet.banned.security.test.tsx",
+      "testName": "sign-in sheet and a blocked account [SEC-D9-FE-DENY] a banned answer shows the wrong-credentials text, stays signed out and the sheet stays open"
+    },
+    {
+      "id": "SEC-D9-FE-ERR",
+      "layer": "frontend",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Only the banned answer is folded into the wrong-credentials text; every other error keeps its own message",
+      "actor": "anonymous visitor who tries to sign in",
+      "resource": "the sign-in sheet",
+      "input": "signIn answers with an unknown error text, an empty text and a rate-limit text",
+      "response": "the generic or the rate-limit message, as before",
+      "forbiddenEffects": [
+        "the wrong-credentials text for an unknown, empty or rate-limit error"
+      ],
+      "testFile": "src/modules/auth/components/AuthSheet.banned.security.test.tsx",
+      "testName": "sign-in sheet and a blocked account [SEC-D9-FE-ERR] any other error keeps its generic or rate-limit message"
+    },
+    {
+      "id": "SEC-CS-SRV-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "The Server Actions that reach the owner (submitListingInquiry, trackListingContactEvent) serve only a signed-in person whose account is active; a direct call by a guest is refused like the hidden button",
+      "actor": "guest without a session, session of a deleted profile, blocked account, inactive account",
+      "resource": "an open listing of another person",
+      "input": "submitListingInquiry({ listingId, name, email, message }) and trackListingContactEvent({ listingId, channel whatsapp }) with each caller state",
+      "response": "submitListingInquiry -> { error: unauthenticated }; trackListingContactEvent -> { ok: false, reason: unauthenticated }",
+      "forbiddenEffects": [
+        "listing_inquiries insert",
+        "owner e-mail",
+        "owner notification",
+        "listing_contact_events insert",
+        "owner e-mail address lookup"
+      ],
+      "testFile": "src/modules/listings/actions/contactSession.security.test.ts",
+      "testName": "contact actions need a signed-in active person [SEC-CS-SRV-DENY] a guest, a session without a profile and a blocked or inactive account get nothing from the inquiry and contact-event actions"
+    },
+    {
+      "id": "SEC-CS-SRV-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The session requirement does not break the legitimate path for a signed-in person",
+      "actor": "signed-in person with an active profile, not the owner",
+      "resource": "an open listing of another person",
+      "input": "submitListingInquiry with valid fields; trackListingContactEvent for whatsapp",
+      "response": "inquiry row inserted with the session user as requester, owner e-mailed, owner notified; contact event recorded with actor_user_id",
+      "forbiddenEffects": [
+        "a refusal of a legitimate signed-in request",
+        "an event row without the actor id"
+      ],
+      "testFile": "src/modules/listings/actions/contactSession.security.test.ts",
+      "testName": "contact actions need a signed-in active person [SEC-CS-SRV-ALLOW] a signed-in active person who is not the owner sends an inquiry and a WhatsApp tap is recorded"
+    },
+    {
+      "id": "SEC-CS-SRV-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Fail closed: a failing session or profile lookup is not treated as a guest who may proceed and not as a signed-in person",
+      "actor": "signed-in person during an Auth or database outage",
+      "resource": "an open listing of another person",
+      "input": "getUser throws; profile query returns an error; profile query throws",
+      "response": "unauthenticated / session_error as the contract of each action says; no write, no e-mail, no notification",
+      "forbiddenEffects": [
+        "listing_inquiries insert",
+        "owner e-mail",
+        "owner notification",
+        "listing_contact_events insert"
+      ],
+      "testFile": "src/modules/listings/actions/contactSession.security.test.ts",
+      "testName": "contact actions need a signed-in active person [SEC-CS-SRV-ERR] when the session or profile lookup fails the request is refused and nothing is written"
+    },
+    {
+      "id": "SEC-CS-FE-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "If the session ended while the dialog was open, the person is asked to sign in and keeps what they typed, one sheet at a time",
+      "actor": "signed-in person whose session expired",
+      "resource": "the message dialog with a typed name, e-mail and message",
+      "input": "submitListingInquiry answers unauthenticated",
+      "response": "error toast inquiry_error_unauthenticated; the dialog closes; openAuthSheet is called once with login; reopening the dialog shows the typed name, e-mail and message; no success toast",
+      "forbiddenEffects": [
+        "the success toast",
+        "the typed text lost on reopen",
+        "the dialog and the sign-in sheet open at the same time"
+      ],
+      "testFile": "src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx",
+      "testName": "message dialog and an ended session [SEC-CS-FE-DENY] an ended session closes the dialog, opens sign-in and keeps the typed message"
+    },
+    {
+      "id": "SEC-CS-FE-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "A message the server accepted is reported as sent",
+      "actor": "signed-in person with an active account",
+      "resource": "the message dialog of a listing contact card",
+      "input": "a valid name, e-mail and message; submitListingInquiry answers without an error",
+      "response": "success toast inquiry_success; the dialog closes; the message is cleared",
+      "forbiddenEffects": [
+        "an error toast after success",
+        "openAuthSheet called"
+      ],
+      "testFile": "src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx",
+      "testName": "message dialog and an ended session [SEC-CS-FE-ALLOW] a sent message shows success and closes the dialog empty"
+    },
+    {
+      "id": "SEC-CS-FE-ERR",
+      "layer": "frontend",
+      "outcome": "error",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "An answer other than success is never shown as a sent message",
+      "actor": "signed-in person with an active account",
+      "resource": "the message dialog of a listing contact card",
+      "input": "submitListingInquiry answers save_failed, and then an error code the dialog does not know",
+      "response": "error toast inquiry_error_save_failed for both; the dialog stays open with its values",
+      "forbiddenEffects": [
+        "the success toast",
+        "openAuthSheet called",
+        "the typed values cleared"
+      ],
+      "testFile": "src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx",
+      "testName": "message dialog and an ended session [SEC-CS-FE-ERR] a failed or unknown answer shows an error and keeps the dialog open"
+    },
+    {
+      "id": "SEC-D8-INT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Publishing for general view is reserved to administrator / moderator (owner decision D8, 2026-10-17); pending -> inactive -> active is closed too",
+      "actor": "synthetic listing owner (role user)",
+      "resource": "a synthetic pending listing of that owner in the development database",
+      "input": "the real applyListingTransitionByStatus(listingId, active, owner actor) with the real admin client",
+      "response": "{ ok: false, reason: forbidden }; the row still has status pending and its old expires_at; no notification row for the owner",
+      "forbiddenEffects": [
+        "listings.status changed",
+        "listings.expires_at changed",
+        "notifications row created"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.integration.test.ts",
+      "testName": "status gateway against the real database [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged"
+    },
+    {
+      "id": "SEC-D8-INT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Publishing for general view is reserved to administrator / moderator (owner decision D8, 2026-10-17); pending -> inactive -> active is closed too",
+      "actor": "synthetic administrator",
+      "resource": "the same synthetic pending listing",
+      "input": "the real applyListingTransitionByStatus(listingId, active, administrator actor)",
+      "response": "{ ok: true }; the row has status active and a new expires_at; one listing_status_change notification for the owner",
+      "forbiddenEffects": [
+        "a refusal of the administrator",
+        "a missing owner notification"
+      ],
+      "testFile": "src/modules/listings/actions/ownerPublish.integration.test.ts",
+      "testName": "status gateway against the real database [SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database"
+    },
+    {
+      "id": "SEC-D9-INT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A status that removes access bans the account in Supabase Auth (stops sign-in, token refresh and auth.getUser); a dated suspension bans until that date",
+      "actor": "synthetic user with a live session",
+      "resource": "that user in the real Supabase Auth of the development project",
+      "input": "the real syncAccountAccess(userId, blocked, null); then password sign-in, refreshSession and auth.getUser(old access token)",
+      "response": "all three answered with user_banned (400 / 400 / 403)",
+      "forbiddenEffects": [
+        "a successful sign-in",
+        "a refreshed session",
+        "auth.getUser returning the user"
+      ],
+      "testFile": "src/lib/auth/accountAccess.integration.test.ts",
+      "testName": "account access against real Auth [SEC-D9-INT-DENY] a blocked account is really banned: sign-in, refresh and the old access token are refused by Auth"
+    },
+    {
+      "id": "SEC-D9-INT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A status that removes access bans the account in Supabase Auth (stops sign-in, token refresh and auth.getUser); a dated suspension bans until that date",
+      "actor": "the same synthetic user",
+      "resource": "that user in the real Supabase Auth",
+      "input": "the real syncAccountAccess(userId, active, null); then password sign-in",
+      "response": "sign-in succeeds and auth.getUser answers with the user",
+      "forbiddenEffects": [
+        "a user left banned after an unblock"
+      ],
+      "testFile": "src/lib/auth/accountAccess.integration.test.ts",
+      "testName": "account access against real Auth [SEC-D9-INT-ALLOW] the unblock really lifts the ban: the same user signs in again"
+    },
+    {
+      "id": "SEC-D9-INT-ADMIN-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Only an authorised staff member can change an account's access, and ranks are respected (a moderator cannot block an administrator)",
+      "actor": "synthetic user with role user (session injected as the cookie-bound client)",
+      "resource": "a synthetic target user",
+      "input": "the real updateUserProfileFull(targetId, status blocked) with the real hasPermission / actorMayActOn",
+      "response": "{ error: forbidden }; the target row keeps status active; the target can still sign in",
+      "forbiddenEffects": [
+        "users.status changed",
+        "the target banned in Auth",
+        "user_status_history row"
+      ],
+      "testFile": "src/modules/admin/actions/accountBan.integration.test.ts",
+      "testName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth"
+    },
+    {
+      "id": "SEC-D9-INT-ADMIN-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Only an authorised staff member can change an account's access, and ranks are respected (a moderator cannot block an administrator)",
+      "actor": "synthetic administrator",
+      "resource": "a synthetic target user",
+      "input": "the real updateUserProfileFull blocked, then active",
+      "response": "status written, then the target is refused by Auth; after the unblock the target signs in again",
+      "forbiddenEffects": [
+        "a block that leaves the target able to sign in",
+        "an unblock that leaves the ban"
+      ],
+      "testFile": "src/modules/admin/actions/accountBan.integration.test.ts",
+      "testName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows"
+    },
+    {
+      "id": "SEC-CS-INT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "The Server Actions that reach the owner (submitListingInquiry, trackListingContactEvent) serve only a signed-in person whose account is active; a direct call by a guest is refused like the hidden button",
+      "actor": "guest client without a session; synthetic blocked account",
+      "resource": "a synthetic active listing of another synthetic user",
+      "input": "the real submitListingInquiry with the cookie-bound client replaced by an anonymous client / by the blocked user's client",
+      "response": "{ error: unauthenticated }; no listing_inquiries row for the run; the e-mail sink and notifications table untouched",
+      "forbiddenEffects": [
+        "listing_inquiries row",
+        "e-mail sink call",
+        "notifications row"
+      ],
+      "testFile": "src/modules/listings/actions/contactSession.integration.test.ts",
+      "testName": "contact actions against real Auth and database [SEC-CS-INT-DENY] on the real database a guest and a blocked account create no inquiry, e-mail or notification"
+    },
+    {
+      "id": "SEC-CS-INT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "The Server Actions that reach the owner (submitListingInquiry, trackListingContactEvent) serve only a signed-in person whose account is active; a direct call by a guest is refused like the hidden button",
+      "actor": "synthetic signed-in active user, not the owner",
+      "resource": "the same synthetic listing",
+      "input": "the real submitListingInquiry with that user's client",
+      "response": "no error; exactly one listing_inquiries row; one e-mail to the e-mail sink; one owner notification",
+      "forbiddenEffects": [
+        "a refusal of a legitimate request",
+        "more than one row, e-mail or notification"
+      ],
+      "testFile": "src/modules/listings/actions/contactSession.integration.test.ts",
+      "testName": "contact actions against real Auth and database [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry"
+    },
+    {
+      "id": "SEC-DB-S59-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+      "actor": "a synthetic signed-in user with role user",
+      "resource": "their own users row and another synthetic user row",
+      "input": "PATCH role admin, status active, is_verified true, suspended_until null through the REST API with the user token",
+      "response": "error 42501; both rows unchanged",
+      "forbiddenEffects": [
+        "role, status or verification changed",
+        "another user row changed"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id"
+    },
+    {
+      "id": "SEC-DB-S59-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+      "actor": "a synthetic signed-in user with role user",
+      "resource": "their own users row",
+      "input": "PATCH a new name through the REST API with the user token",
+      "response": "the name is stored",
+      "forbiddenEffects": [
+        "the permitted change refused"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id"
+    },
+    {
+      "id": "SEC-DB-S61-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A session cannot write a listing status, premium, counters, expiry, public id or owner",
+      "actor": "the synthetic owner of a synthetic listing",
+      "resource": "their own listing",
+      "input": "PATCH status active, is_premium true, views_count 9999, expires_at in a year and user_id of another user; INSERT with status active",
+      "response": "error 42501 for each; nothing changed or inserted",
+      "forbiddenEffects": [
+        "a status, premium, counter, expiry or owner change by a session",
+        "an inserted listing that is not pending"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner"
+    },
+    {
+      "id": "SEC-DB-S61-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A session cannot write a listing status, premium, counters, expiry, public id or owner",
+      "actor": "the synthetic owner of a synthetic listing",
+      "resource": "their own listing",
+      "input": "PATCH a new title; INSERT a pending listing with a 30-day expiry",
+      "response": "both succeed",
+      "forbiddenEffects": [
+        "the owner refused an ordinary edit or a pending insert"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner"
+    },
+    {
+      "id": "SEC-DB-S62-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "Only the server records a listing view",
+      "actor": "an anonymous client and a synthetic signed-in user",
+      "resource": "record_listing_view",
+      "input": "an RPC call with a forged user id",
+      "response": "permission denied; views_count unchanged",
+      "forbiddenEffects": [
+        "a view counted from a client call"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-S62-DENY] Only the server records a listing view"
+    },
+    {
+      "id": "SEC-DB-ACCESS-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+      "actor": "a synthetic account blocked, then one soft-deleted, then one whose session was signed out, each with a still-valid access token",
+      "resource": "their own users row, their listings and their favourites",
+      "input": "SELECT and UPDATE through the REST API right after the staff action or the sign-out",
+      "response": "no row returned and error 42501 on write, on the first request",
+      "forbiddenEffects": [
+        "a row returned",
+        "a row written",
+        "access until the token expires"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request"
+    },
+    {
+      "id": "SEC-DB-ACCESS-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+      "actor": "a synthetic active account with a live session",
+      "resource": "their own users row and listings",
+      "input": "SELECT and an allowed UPDATE through the REST API",
+      "response": "the rows are returned and the allowed update is stored",
+      "forbiddenEffects": [
+        "an active account refused"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request"
+    },
+    {
+      "id": "SEC-DB-ERR",
+      "layer": "database",
+      "outcome": "error",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "A refused write answers 42501 and leaves the row as it was",
+      "actor": "a synthetic signed-in user",
+      "resource": "their own users row",
+      "input": "PATCH role admin",
+      "response": "error code 42501; the row is byte-for-byte unchanged when re-read through the service role",
+      "forbiddenEffects": [
+        "a partial write",
+        "a success answer"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was"
+    },
+    {
+      "id": "SEC-D9-SRV-MISSING-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The block check reads the status through the service role, and a missing profile row means no access",
+      "actor": "server code checking a signed-in person",
+      "resource": "getBlockedError",
+      "input": "the service-role client answers no row for the person; the session client is never used for this read",
+      "response": "getBlockedError answers blocked",
+      "forbiddenEffects": [
+        "a missing row treated as not blocked",
+        "the status read through the session client"
+      ],
+      "testFile": "src/lib/auth/blockCheck.security.test.ts",
+      "testName": "[SEC-D9-SRV-MISSING-DENY] The block check reads the status through the service role, and a missing profile row means no access"
+    },
+    {
+      "id": "SEC-D27-SRV-STAFF-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+      "actor": "a caller whose profile has role admin, then moderator",
+      "resource": "getStaffRole, hasPermission, assertPermission and each local role guard of role-guard-inventory.json (assertAdmin, assertAdminUser, assertAdminOrMod, assertAdminOrModerator, requireAdminOrModerator, the inline checks)",
+      "input": "the profile is deleted (deleted_at set), blocked permanently, blocked until a future date, inactive, or has no row",
+      "response": "each guard gives its existing refusal (forbidden, unauthenticated or redirect)",
+      "forbiddenEffects": [
+        "a staff answer",
+        "a service-role write, upload, e-mail or notification after the refusal"
+      ],
+      "testFile": "src/lib/auth/staffAccess.security.test.ts",
+      "testName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role"
+    },
+    {
+      "id": "SEC-D27-SRV-STAFF-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+      "actor": "a caller whose profile has role admin, then moderator",
+      "resource": "getStaffRole, hasPermission, assertPermission and each local role guard of role-guard-inventory.json (assertAdmin, assertAdminUser, assertAdminOrMod, assertAdminOrModerator, requireAdminOrModerator, the inline checks)",
+      "input": "the profile is active, or blocked with a suspension that has ended",
+      "response": "each guard gives its existing staff answer for that role",
+      "forbiddenEffects": [
+        "an active staff member refused",
+        "a moderator given an administrator-only right"
+      ],
+      "testFile": "src/lib/auth/staffAccess.security.test.ts",
+      "testName": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role"
+    },
+    {
+      "id": "SEC-D27-SRV-STAFF-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+      "actor": "a caller with role admin",
+      "resource": "getStaffRole, hasPermission, assertPermission and each local role guard of role-guard-inventory.json (assertAdmin, assertAdminUser, assertAdminOrMod, assertAdminOrModerator, requireAdminOrModerator, the inline checks)",
+      "input": "requireViewer answers lookup_failed (the profile read errors or throws)",
+      "response": "each guard gives its existing failure answer",
+      "forbiddenEffects": [
+        "a staff answer on a failed read",
+        "any write after a failed read"
+      ],
+      "testFile": "src/lib/auth/staffAccess.security.test.ts",
+      "testName": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role"
+    },
+    {
+      "id": "SEC-D27-SRV-VIEWER-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+      "actor": "a caller whose profile has role user, then agent",
+      "resource": "requireViewer and getBlockedError",
+      "input": "the profile is deleted, blocked permanently, blocked until a future date, inactive, or has no row",
+      "response": "requireViewer answers not ok; getBlockedError answers account_blocked or account_suspended, and account_blocked for a set deleted_at",
+      "forbiddenEffects": [
+        "ok for a deleted or blocked account",
+        "null from getBlockedError for a deleted account"
+      ],
+      "testFile": "src/lib/auth/requireViewer.security.test.ts",
+      "testName": "[SEC-D27-SRV-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked"
+    },
+    {
+      "id": "SEC-D27-SRV-VIEWER-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+      "actor": "a caller with role user, agent, moderator, admin",
+      "resource": "requireViewer",
+      "input": "an active profile",
+      "response": "ok with the userId and the role read in the same query",
+      "forbiddenEffects": [
+        "a second role read",
+        "an active account refused"
+      ],
+      "testFile": "src/lib/auth/requireViewer.security.test.ts",
+      "testName": "[SEC-D27-SRV-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked"
+    },
+    {
+      "id": "SEC-D27-SRV-STATIC-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "No product code decides by the caller's role except through requireViewer",
+      "actor": "product source under src (tests and Stories excluded)",
+      "resource": "every .select('role') on public.users",
+      "input": "a scan of src for a role read",
+      "response": "none outside src/lib/auth/requireViewer.ts",
+      "forbiddenEffects": [
+        "a role read anywhere else"
+      ],
+      "testFile": "src/lib/auth/roleReads.security.test.ts",
+      "testName": "[SEC-D27-SRV-STATIC-DENY] No product code decides by the caller's role except through requireViewer"
+    },
+    {
+      "id": "SEC-D27-INT-STAFF-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+      "actor": "a synthetic moderator and a synthetic administrator, each with a real session",
+      "resource": "getStaffRole and hasPermission on the approved development project",
+      "input": "a synthetic administrator blocks the moderator through the real updateUserProfileFull; the second administrator gets the inactivity mark (deleted_at and status inactive written through the service role exactly as cron/inactivity writes them); each then calls with their still-valid session",
+      "response": "no staff role and no permission for either",
+      "forbiddenEffects": [
+        "a staff answer after the block or the deletion"
+      ],
+      "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+      "testName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role"
+    },
+    {
+      "id": "SEC-D27-INT-STAFF-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+      "actor": "a synthetic active moderator with a real session",
+      "resource": "getStaffRole and hasPermission on the approved development project",
+      "input": "the active moderator calls with their session",
+      "response": "role moderator and the permissions role_permissions grants",
+      "forbiddenEffects": [
+        "an active moderator refused"
+      ],
+      "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+      "testName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role"
+    },
+    {
+      "id": "SEC-DB-STORAGE-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked or deleted account writes no file through the Storage API on its next request",
+      "actor": "a synthetic moderator blocked by staff, then a synthetic administrator deleted through the real hardDeleteUser, each with the still-valid access token",
+      "resource": "the avatars bucket (storage.objects)",
+      "input": "an upload, a replace and a delete in the avatars bucket through the Storage API right after the staff action",
+      "response": "refused; storage.objects unchanged",
+      "forbiddenEffects": [
+        "an object written, replaced or removed"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-STORAGE-DENY] A blocked or deleted account writes no file through the Storage API on its next request"
+    },
+    {
+      "id": "SEC-DB-STORAGE-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "A blocked or deleted account writes no file through the Storage API on its next request",
+      "actor": "a synthetic active moderator",
+      "resource": "the avatars bucket (storage.objects)",
+      "input": "an upload to the avatars bucket, which the existing moderator policy allows",
+      "response": "it succeeds and the synthetic object is removed in clean-up",
+      "forbiddenEffects": [
+        "an active account refused"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-STORAGE-ALLOW] A blocked or deleted account writes no file through the Storage API on its next request"
+    },
+    {
+      "id": "SEC-DB-REALTIME-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked account receives no further realtime change after the block",
+      "actor": "a synthetic account subscribed to postgres_changes on its own notifications",
+      "resource": "Supabase Realtime on the approved development project",
+      "input": "the service role inserts a notification for the account before and after a staff block",
+      "response": "the event before the block arrives; none after it",
+      "forbiddenEffects": [
+        "an event delivered after the block"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block"
+    },
+    {
+      "id": "SEC-D27-INT-VIEWER-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+      "actor": "a synthetic user and a synthetic agent, each with a real session",
+      "resource": "requireViewer and getBlockedError on the approved development project",
+      "input": "a synthetic administrator blocks the user through the real updateUserProfileFull; the agent gets the inactivity mark (deleted_at and status inactive written through the service role exactly as cron/inactivity writes them); each then calls with their still-valid session",
+      "response": "requireViewer answers not ok and getBlockedError answers account_blocked for both",
+      "forbiddenEffects": [
+        "ok or null for either"
+      ],
+      "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+      "testName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked"
+    },
+    {
+      "id": "SEC-D27-INT-VIEWER-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+      "actor": "a synthetic active user and a synthetic active agent with real sessions",
+      "resource": "requireViewer and getBlockedError on the approved development project",
+      "input": "each calls with their session",
+      "response": "requireViewer answers ok with their role; getBlockedError answers null",
+      "forbiddenEffects": [
+        "an active account refused"
+      ],
+      "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+      "testName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked"
+    },
+    {
+      "id": "SEC-DB-REALTIME-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A blocked account receives no further realtime change after the block",
+      "actor": "a synthetic active account subscribed to postgres_changes on its own notifications",
+      "resource": "Supabase Realtime on the approved development project",
+      "input": "the service role inserts a notification for the account",
+      "response": "the event arrives",
+      "forbiddenEffects": [
+        "an active account receiving nothing"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block"
+    },
+    {
+      "id": "SEC-D29-SRV-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+      "actor": "a request with auth cookies",
+      "resource": "refreshSession (src/lib/auth/middleware.ts)",
+      "input": "getUser answers an AuthApiError with code user_banned, then user_not_found; then getUser returns a user and the rpc caller_access_state answers none",
+      "response": "supabase.auth.signOut({ scope: 'local' }) is called once and the response carries the cleared auth cookies",
+      "forbiddenEffects": [
+        "the auth cookies kept",
+        "a restore attempted for a banned or deleted account"
+      ],
+      "testFile": "src/lib/auth/middleware.security.test.ts",
+      "testName": "[SEC-D29-SRV-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest"
+    },
+    {
+      "id": "SEC-D29-SRV-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+      "actor": "a request with auth cookies",
+      "resource": "refreshSession",
+      "input": "getUser returns a user and caller_access_state answers active; then getUser fails with a network error; then caller_access_state errors",
+      "response": "no signOut; the session and its cookies stay as they are",
+      "forbiddenEffects": [
+        "an active person signed out",
+        "a session ended on a transient failure"
+      ],
+      "testFile": "src/lib/auth/middleware.security.test.ts",
+      "testName": "[SEC-D29-SRV-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest"
+    },
+    {
+      "id": "SEC-D29-INT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+      "actor": "a synthetic user with a real session cookie",
+      "resource": "the real refreshSession against the approved development project",
+      "input": "a synthetic administrator blocks the user through the real updateUserProfileFull; then a synthetic agent is deleted through the real hardDeleteUser; each old cookie set is sent to refreshSession",
+      "response": "the response clears the auth cookies for both",
+      "forbiddenEffects": [
+        "an auth cookie kept after the block or the deletion"
+      ],
+      "testFile": "src/lib/auth/sessionEnd.integration.test.ts",
+      "testName": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest"
+    },
+    {
+      "id": "SEC-D29-INT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+      "actor": "a synthetic active user with a real session cookie",
+      "resource": "the real refreshSession against the approved development project",
+      "input": "the cookie set is sent to refreshSession",
+      "response": "the auth cookies are kept (refreshed or unchanged)",
+      "forbiddenEffects": [
+        "an active person signed out"
+      ],
+      "testFile": "src/lib/auth/sessionEnd.integration.test.ts",
+      "testName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest"
+    },
+    {
+      "id": "SEC-D29-FE-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "After the server ends the session the header offers sign-in and no personal entry",
+      "actor": "a page rendered after the server ended the session",
+      "resource": "the real Header container with AuthProvider initialUser null",
+      "input": "mount the Header container under AuthProvider initialUser null, as the locale layout does when resolveSession returns no user",
+      "response": "sign-in and register are offered; no favorites link, no user menu, no cabinet or admin entry",
+      "forbiddenEffects": [
+        "any personal entry rendered"
+      ],
+      "testFile": "src/components/layout/__tests__/sessionEnded.security.test.tsx",
+      "testName": "[SEC-D29-FE-DENY] After the server ends the session the header offers sign-in and no personal entry"
+    },
+    {
+      "id": "SEC-D29-FE-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "After the server ends the session the header offers sign-in and no personal entry",
+      "actor": "a page rendered for an active signed-in person",
+      "resource": "the real Header container with AuthProvider initialUser set",
+      "input": "mount the Header container under AuthProvider initialUser = an active user with role user",
+      "response": "the user menu and the favorites link render as today",
+      "forbiddenEffects": [
+        "the active person shown as a guest"
+      ],
+      "testFile": "src/components/layout/__tests__/sessionEnded.security.test.tsx",
+      "testName": "[SEC-D29-FE-ALLOW] After the server ends the session the header offers sign-in and no personal entry"
+    },
+    {
+      "id": "SEC-DEL-SRV-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+      "actor": "hardDeleteUser, deleteOwnAccount and the inactivity cron calling deleteAccount",
+      "resource": "deleteAccount (src/lib/account/deleteAccount.ts)",
+      "input": "a profile with an avatar, two listings with three images, and one company with created_by = the person; the Auth admin double succeeds",
+      "response": "auth.admin.deleteUser is called once; then deleteAsset is called once per collected public id with reason account_deleted; the result is ok with filesNotRemoved 0",
+      "forbiddenEffects": [
+        "a listing archived first",
+        "a deleteAsset call before the Auth deletion",
+        "a public id left out"
+      ],
+      "testFile": "src/lib/account/deleteAccount.security.test.ts",
+      "testName": "[SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction"
+    },
+    {
+      "id": "SEC-DEL-SRV-ERR",
+      "layer": "server",
+      "outcome": "error",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+      "actor": "deleteAccount",
+      "resource": "deleteAccount",
+      "input": "auth.admin.deleteUser answers an error; then it succeeds but one deleteAsset call throws",
+      "response": "delete_failed with no deleteAsset call; then ok with filesNotRemoved 1",
+      "forbiddenEffects": [
+        "a deleteAsset call after a failed deletion",
+        "a failed file reported as a failed deletion"
+      ],
+      "testFile": "src/lib/account/deleteAccount.security.test.ts",
+      "testName": "[SEC-DEL-SRV-ERR] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction"
+    },
+    {
+      "id": "SEC-DEL-SRV-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "unit",
+      "invariant": "Only the person or a staff member whose rank allows it can delete an account",
+      "actor": "a moderator without users.hard_delete, a moderator against an administrator, an anonymous caller, a blocked administrator",
+      "resource": "hardDeleteUser and deleteOwnAccount",
+      "input": "each calls the action",
+      "response": "forbidden or Unauthorized as today; deleteAccount is never called",
+      "forbiddenEffects": [
+        "deleteAccount called",
+        "any row read before the refusal"
+      ],
+      "testFile": "src/lib/account/deleteAccount.security.test.ts",
+      "testName": "[SEC-DEL-SRV-DENY] Only the person or a staff member whose rank allows it can delete an account"
+    },
+    {
+      "id": "SEC-DEL-INT-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+      "actor": "a synthetic administrator",
+      "resource": "the real hardDeleteUser on the approved development project after the deletion SQL is applied",
+      "input": "a synthetic agent with a listing and image rows, a favourite, a counted view and a phone click on another synthetic owner's listing, a report and an inquiry on it, and a company with created_by = the agent plus a second synthetic agent in it",
+      "response": "Auth user, profile, listing, image rows and favourite gone; view and click gone and the other listing views_count one lower; report kept with user_id null and user_id_name = the name of the agent (D35); inquiry kept; company gone; second agent company_id null",
+      "forbiddenEffects": [
+        "a row of the person left",
+        "the report or the inquiry deleted",
+        "the second agent deleted"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction"
+    },
+    {
+      "id": "SEC-DEL-INT-STAFF",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "A deleted staff member leaves the records of their actions with their name and without their id",
+      "actor": "a synthetic administrator deleting a synthetic moderator",
+      "resource": "the real hardDeleteUser after the deletion SQL is applied",
+      "input": "the moderator changed another synthetic user's status and replied to a synthetic inquiry before",
+      "response": "the deletion succeeds; the status history row and the reply keep the moderator's name in their _name column and a null id",
+      "forbiddenEffects": [
+        "the deletion refused by a foreign key",
+        "the history row or the reply deleted",
+        "the name lost"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id"
+    },
+    {
+      "id": "SEC-DEL-INT-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "Only the person or a staff member whose rank allows it can delete an account",
+      "actor": "a synthetic moderator, an anonymous client",
+      "resource": "the real hardDeleteUser and deleteOwnAccount on the approved development project",
+      "input": "the moderator deletes a synthetic administrator; the anonymous client calls deleteOwnAccount",
+      "response": "forbidden and Unauthorized; both accounts and every row unchanged",
+      "forbiddenEffects": [
+        "any row deleted"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account"
+    },
+    {
+      "id": "SEC-DEL-INT-CRON",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+      "actor": "the inactivity cron with its secret",
+      "resource": "the real cron route after the deletion SQL is applied",
+      "input": "one synthetic account with the inactivity mark 100 days old and one 10 days old",
+      "response": "the 100-day account is deleted completely; the 10-day account is untouched",
+      "forbiddenEffects": [
+        "a 10-day account deleted",
+        "a 100-day account kept"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-CRON] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction"
+    },
+    {
+      "id": "SEC-DEL-FE-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted",
+      "actor": "a signed-in person in the cabinet",
+      "resource": "the real ProfileTab deletion dialog",
+      "input": "open the dialog and press confirm before typing, and after typing delet",
+      "response": "the confirm button is disabled and deleteOwnAccount is not called; the dialog shows the R43 (e) text",
+      "forbiddenEffects": [
+        "deleteOwnAccount called without DELETE typed",
+        "the old archive text shown"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/deleteAccount.security.test.tsx",
+      "testName": "[SEC-DEL-FE-DENY] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted"
+    },
+    {
+      "id": "SEC-DEL-FE-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted",
+      "actor": "a signed-in person in the cabinet",
+      "resource": "the real ProfileTab deletion dialog",
+      "input": "type DELETE and confirm; the action answers ok, then delete_failed",
+      "response": "deleteOwnAccount is called once; ok shows the delete_account_success toast and signs out to the home page; delete_failed shows the error_deleting toast and the canonical dialog stays open",
+      "forbiddenEffects": [
+        "a success toast on delete_failed",
+        "a sign-out on delete_failed"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/deleteAccount.security.test.tsx",
+      "testName": "[SEC-DEL-FE-ALLOW] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted"
+    },
+    {
+      "id": "SEC-DEL-INT-OTHERS",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+      "actor": "a synthetic administrator",
+      "resource": "the real hardDeleteUser after the deletion SQL is applied",
+      "input": "the same fixture as SEC-DEL-INT-ALLOW",
+      "response": "the other owner, their listing, its other views and the second agent with their own listings and favourites are unchanged",
+      "forbiddenEffects": [
+        "a row of another person deleted",
+        "another listing count lowered for a view that was not the person's"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction"
+    },
+    {
+      "id": "SEC-DEL-INT-SELF",
+      "layer": "database",
+      "outcome": "allow",
+      "critical": true,
+      "boundary": "integration",
+      "invariant": "Only the person or a staff member whose rank allows it can delete an account",
+      "actor": "a synthetic user with a real session",
+      "resource": "the real deleteOwnAccount on the approved development project",
+      "input": "the user deletes their own account",
+      "response": "ok; the Auth user, the profile and the user's rows are gone",
+      "forbiddenEffects": [
+        "the account kept",
+        "another account touched"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account"
+    },
+    {
+      "id": "SEC-DEL-INT-STAFF-KEEP",
+      "layer": "database",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "integration",
+      "invariant": "A deleted staff member leaves the records of their actions with their name and without their id",
+      "actor": "a synthetic administrator deleting a synthetic moderator",
+      "resource": "the real hardDeleteUser after the deletion SQL is applied",
+      "input": "the same fixture as SEC-DEL-INT-STAFF",
+      "response": "the other user, their status history row and the inquiry the reply belongs to are not deleted",
+      "forbiddenEffects": [
+        "a record of the moderator's action deleted",
+        "the other user changed"
+      ],
+      "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+      "testName": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id"
+    },
+    {
+      "id": "SEC-DEL-FE-OWNER-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted",
+      "actor": "any consumer of MantineDeleteConfirmModal with typedConfirm",
+      "resource": "MantineDeleteConfirmModal",
+      "input": "open it and press the red primary with the field empty, with delet and with DELETED; close and reopen after typing DELETE",
+      "response": "onConfirm is not called and the primary is disabled each time; the field is empty after reopening",
+      "forbiddenEffects": [
+        "onConfirm called without the word",
+        "the typed word kept across openings"
+      ],
+      "testFile": "src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx",
+      "testName": "[SEC-DEL-FE-OWNER-DENY] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted"
+    },
+    {
+      "id": "SEC-DEL-FE-OWNER-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted",
+      "actor": "any consumer of MantineDeleteConfirmModal",
+      "resource": "MantineDeleteConfirmModal",
+      "input": "type delete, Delete, a spaced DELETE and DELETE with typedConfirm set; render it without typedConfirm",
+      "response": "the primary is enabled and onConfirm called once each time; without typedConfirm no field renders and the primary behaves as today",
+      "forbiddenEffects": [
+        "a consumer without typedConfirm changed"
+      ],
+      "testFile": "src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx",
+      "testName": "[SEC-DEL-FE-OWNER-ALLOW] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted"
+    },
+    {
+      "id": "SEC-DEL-FE-ADMIN",
+      "layer": "frontend",
+      "outcome": "deny",
+      "critical": false,
+      "boundary": "unit",
+      "invariant": "The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted",
+      "actor": "a staff member on a user profile",
+      "resource": "the real AdminUserProfileDialogsView delete dialog",
+      "input": "press Delete permanently before typing, then type DELETE and press it",
+      "response": "onConfirm is not called before the word and called once after it; the dialog shows the R43 (e) points",
+      "forbiddenEffects": [
+        "a deletion without the word",
+        "the archive text shown"
+      ],
+      "testFile": "src/components/admin/__tests__/adminDeleteDialog.security.test.tsx",
+      "testName": "[SEC-DEL-FE-ADMIN] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted"
+    },
+    {
+      "id": "SEC-X-SRV-RANK-FAILCLOSED",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A staff action on an account is refused when the target's rank cannot be read",
+      "actor": "moderator holding the permission of each action",
+      "resource": "an administrator account whose role read fails or returns no row",
+      "input": "updateUserProfile, updateUserProfileFull, toggleUserVerified, deactivateUser, reactivateUser, hardDeleteUser, removeUserAvatar with the rank read returning an error, then no row",
+      "response": "forbidden for every action",
+      "forbiddenEffects": [
+        "a service-role write to the target after a failed or empty rank read"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminActorRank.security.test.ts",
+      "testName": "adminActorRank [SEC-X-SRV-RANK-FAILCLOSED] a failed or empty rank read refuses every staff action on the account"
+    },
+    {
+      "id": "SEC-X-SRV-STATUS-PERM",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Deactivating or reactivating an account needs users.soft_delete on every path",
+      "actor": "moderator without users.soft_delete",
+      "resource": "an active and an inactive non-admin account",
+      "input": "updateUserProfileFull with status inactive, then with status active on the inactive account",
+      "response": "forbidden; status unchanged",
+      "forbiddenEffects": [
+        "a status write or an Auth ban change without users.soft_delete"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminPermissions.security.test.ts",
+      "testName": "adminPermissions [SEC-X-SRV-STATUS-PERM] the full profile form cannot deactivate or reactivate without users.soft_delete"
+    },
+    {
+      "id": "SEC-X-SRV-LOCATIONS-PERM",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Every write to locations needs locations.manage",
+      "actor": "moderator without locations.manage",
+      "resource": "the locations table and a popular-location photo",
+      "input": "addLocation, each popular-location action and POST /api/upload-popular-location-photo",
+      "response": "forbidden / 403",
+      "forbiddenEffects": [
+        "a locations insert or update",
+        "an upload to Cloudinary"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminPermissions.security.test.ts",
+      "testName": "adminPermissions [SEC-X-SRV-LOCATIONS-PERM] every locations write path requires locations.manage"
+    },
+    {
+      "id": "SEC-X-SRV-EMAIL-TOKEN-ONCE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "One e-mail-change link changes the e-mail at most once",
+      "actor": "two concurrent requests with the same valid link",
+      "resource": "one email_change_tokens row",
+      "input": "consumeEmailChangeToken twice where the second claim matches no row",
+      "response": "the second answers link_already_used",
+      "forbiddenEffects": [
+        "a second auth.admin.updateUserById"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+      "testName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing"
+    },
+    {
+      "id": "SEC-X-SRV-EMAIL-TOKEN-LATEST",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Only the latest e-mail-change request can complete",
+      "actor": "account owner who requested first@ then second@",
+      "resource": "the two links",
+      "input": "initiateEmailChange twice, then the first link",
+      "response": "invalid; the e-mail stays; the second link still works",
+      "forbiddenEffects": [
+        "the e-mail set to an address other than pending_email"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+      "testName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists"
+    },
+    {
+      "id": "SEC-X-SRV-EMAIL-SESSIONS-END",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A completed e-mail change ends every session of the account",
+      "actor": "account owner completing a change",
+      "resource": "the account's sessions",
+      "input": "consumeEmailChangeToken success",
+      "response": "end_user_sessions called once with the user id after the Auth update; a failed Auth update releases the claim and ends nothing",
+      "forbiddenEffects": [
+        "success returned while sessions remain",
+        "a burned link after a failed Auth update"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+      "testName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable"
+    },
+    {
+      "id": "SEC-X-SRV-EMAIL-RESEND-LIMIT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Resending counts toward the same hourly limit, and a failed count refuses",
+      "actor": "account owner",
+      "resource": "the e-mail-change limit of 3 per hour",
+      "input": "resendEmailVerification four times in an hour; then a count read that errors",
+      "response": "the fourth and the failed-count call answer rate_limit",
+      "forbiddenEffects": [
+        "a fourth e-mail sent",
+        "an e-mail sent after a failed count"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+      "testName": "emailChange [SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses"
+    },
+    {
+      "id": "SEC-X-SRV-CLEANUP-FAILCLOSED",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A file is never deleted when any reference read fails",
+      "actor": "any deletion caller",
+      "resource": "a Cloudinary public id",
+      "input": "deleteAsset with each reference read returning an error in turn, and with the id present only in pages.content, users.company_logo_url, site_settings",
+      "response": "skipped, logged, deleted=false",
+      "forbiddenEffects": [
+        "a destroy call"
+      ],
+      "testFile": "src/lib/cloudinaryDelete.security.test.ts",
+      "testName": "cloudinaryDelete [SEC-X-SRV-CLEANUP-FAILCLOSED] a failed or matching reference read keeps the file"
+    },
+    {
+      "id": "SEC-X-SRV-CONTACT-LIFECYCLE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "Contact paths serve only an active listing of a live owner (owner F2)",
+      "actor": "signed-in visitor",
+      "resource": "a listing in each status: pending, archived, expired, sold, rented, active of a deleted owner",
+      "input": "submitListingInquiry, the contact-event action and get_listing_owner_contact",
+      "response": "validation / no row / no event",
+      "forbiddenEffects": [
+        "an inquiry row, an e-mail or a notification",
+        "a phone or WhatsApp number returned",
+        "a contact event stored"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts",
+      "testName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked"
+    },
+    {
+      "id": "SEC-X-SRV-CONTACT-LIMIT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The contact-form limit never fails open",
+      "actor": "anonymous visitor",
+      "resource": "the contact form",
+      "input": "submit with an unknown IP six times; submit with a count read that errors",
+      "response": "rate_limited on the sixth and on the failed count",
+      "forbiddenEffects": [
+        "a sixth inquiry or e-mail from the unknown bucket",
+        "an inquiry after a failed count"
+      ],
+      "testFile": "src/modules/contacts/actions/__tests__/contactFormLimit.security.test.ts",
+      "testName": "contactFormLimit [SEC-X-SRV-CONTACT-LIMIT] an unknown IP shares one bucket and a failed count refuses"
+    },
+    {
+      "id": "SEC-X-SRV-SLUG-SCRIPT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A stored slug cannot close or add a script in the speculation rules",
+      "actor": "listing owner who stored a hostile slug",
+      "resource": "the similar-listings block of another listing's page",
+      "input": "SimilarListings rendered to HTML with a slug holding </script><script>",
+      "response": "exactly one script element of type speculationrules whose JSON parses to the slug; no other script",
+      "forbiddenEffects": [
+        "a second script element",
+        "executed markup"
+      ],
+      "testFile": "src/modules/listings/components/SimilarListings.security.test.tsx",
+      "testName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON"
+    },
+    {
+      "id": "SEC-X-SRV-HOOK-DELIVERY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The Auth e-mail hook reports a failed delivery",
+      "actor": "Supabase Auth with a valid signature",
+      "resource": "each e-mail type",
+      "input": "the mail adapter returning an error; RESEND_API_KEY missing outside development",
+      "response": "HTTP 500",
+      "forbiddenEffects": [
+        "HTTP 200 for an e-mail that was not sent"
+      ],
+      "testFile": "src/app/api/auth-email-hook/authEmailHook.security.test.ts",
+      "testName": "authEmailHook [SEC-X-SRV-HOOK-DELIVERY] a failed or impossible delivery is not acknowledged"
+    },
+    {
+      "id": "SEC-X-SRV-ADMIN-INVITE",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A staff-created account receives a way to set its password, and no guessable password exists",
+      "actor": "administrator with users.create",
+      "resource": "a new account",
+      "input": "createAdminUser with a valid profile; then with the invitation failing",
+      "response": "one invitation e-mail through the project mailer; an error returned when it fails",
+      "forbiddenEffects": [
+        "a Math.random password",
+        "success returned without an invitation"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/createAdminUser.security.test.ts",
+      "testName": "createAdminUser [SEC-X-SRV-ADMIN-INVITE] the new account is invited and a failed invitation is reported"
+    },
+    {
+      "id": "SEC-X-SRV-SENTRY-SCRUB",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "No credential leaves in an error report",
+      "actor": "any error report",
+      "resource": "event.extra, contexts, exception values, spans, breadcrumbs at any depth, logs",
+      "input": "synthetic markers: token field, nested password, percent-encoded token_hash, span URL, extra refresh_token, log message with access_token",
+      "response": "every marker removed",
+      "forbiddenEffects": [
+        "a marker in the scrubbed event or log",
+        "sendDefaultPii true in any of the three configs"
+      ],
+      "testFile": "src/lib/security/sentryScrub.security.test.ts",
+      "testName": "sentryScrub [SEC-X-SRV-SENTRY-SCRUB] every credential shape is removed"
+    },
+    {
+      "id": "SEC-X-SRV-AUTOLIFT-CAS",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An ended suspension never erases a newer block",
+      "actor": "blocked account whose suspension ended",
+      "resource": "the account row changed by staff between the read and the write",
+      "input": "getBlockedError with a permanent block written after its read",
+      "response": "the write matches no row; no unban; account_blocked",
+      "forbiddenEffects": [
+        "status active",
+        "an Auth unban"
+      ],
+      "testFile": "src/lib/auth/blockCheck.security.test.ts",
+      "testName": "blockCheck [SEC-X-SRV-AUTOLIFT-CAS] a block written after the read survives the auto-lift"
+    },
+    {
+      "id": "SEC-X-SRV-FOOTER-SHAPE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The public footer read returns display fields only and is not a Server Action",
+      "actor": "anonymous caller",
+      "resource": "the site_footer row",
+      "input": "the footer read with a row holding updated_by and updated_by_name; the module boundary",
+      "response": "only the display fields; the function lives in a server-only module, not a use-server one",
+      "forbiddenEffects": [
+        "updated_by or any *_name in the result",
+        "an exported use-server footer read"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/footerContent.security.test.ts",
+      "testName": "footerContent [SEC-X-SRV-FOOTER-SHAPE] the footer read returns display fields only"
+    },
+    {
+      "id": "SEC-X-SRV-GALLERY-ATOMIC",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A failed image write never empties a gallery or deletes its files",
+      "actor": "listing owner",
+      "resource": "a listing with two images",
+      "input": "updateListing with the image insert failing; with the image delete failing; createListing with the image insert failing",
+      "response": "an error; the previous rows restored; no cleanup call",
+      "forbiddenEffects": [
+        "an empty gallery",
+        "a deleteAsset call",
+        "success returned"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/updateListingGallery.security.test.ts",
+      "testName": "updateListingGallery [SEC-X-SRV-GALLERY-ATOMIC] a failed image write keeps the gallery and its files"
+    },
+    {
+      "id": "SEC-X-FE-SIGNOUT-CLEARS",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Signing out leaves no session in the browser even when the logout request fails",
+      "actor": "signed-in user",
+      "resource": "the browser session",
+      "input": "the real AuthController.signOut with the installed SDK and the logout endpoint answering 500",
+      "response": "no session in storage; status unauthenticated",
+      "forbiddenEffects": [
+        "a session left after the controller reports signed out"
+      ],
+      "testFile": "src/lib/auth/controller.signout.security.test.ts",
+      "testName": "controller.signout [SEC-X-FE-SIGNOUT-CLEARS] a failed logout request still clears the browser session"
+    },
+    {
+      "id": "SEC-X-FE-RESET-RETRY",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A retry after a failed password update completes with the live recovery session",
+      "actor": "user on the reset page",
+      "resource": "the recovery session",
+      "input": "the real ResetPasswordClient: verify succeeds, update fails once, retry",
+      "response": "the retry calls only updatePassword and ends on success, then signs out",
+      "forbiddenEffects": [
+        "a second verifyOtp",
+        "the expired page while the recovery session exists"
+      ],
+      "testFile": "src/modules/auth/components/ResetPasswordClient.security.test.tsx",
+      "testName": "ResetPasswordClient [SEC-X-FE-RESET-RETRY] a retry after a failed update succeeds"
+    },
+    {
+      "id": "SEC-X-FE-SPECULATION-ESCAPE",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The rendered page holds one speculation-rules script whatever the slug",
+      "actor": "anonymous visitor of a listing page",
+      "resource": "a listing page with similar listings",
+      "input": "the server-rendered HTML parsed by the DOM parser with a hostile slug among the similar listings",
+      "response": "one script element of that type; no element injected after it",
+      "forbiddenEffects": [
+        "a parsed second script",
+        "a marker written by injected script"
+      ],
+      "testFile": "src/modules/listings/components/SimilarListings.security.test.tsx",
+      "testName": "SimilarListings [SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script"
+    },
+    {
+      "id": "SEC-X-INT-STATUS-PERM-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Deactivating or reactivating an account needs users.soft_delete on every path",
+      "actor": "moderator granted users.soft_delete",
+      "resource": "the approved development project",
+      "input": "updateUserProfileFull sets an active test account inactive",
+      "response": "saved; Auth ban set",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/admin/actions/adminPermissions.integration.test.ts",
+      "testName": "adminPermissions [SEC-X-INT-STATUS-PERM-ALLOW] status-perm allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-STATUS-PERM-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Deactivating or reactivating an account needs users.soft_delete on every path",
+      "actor": "moderator without users.soft_delete",
+      "resource": "the approved development project",
+      "input": "updateUserProfileFull sets an active test account inactive",
+      "response": "forbidden; row and Auth unchanged",
+      "forbiddenEffects": [
+        "a status change without users.soft_delete"
+      ],
+      "testFile": "src/modules/admin/actions/adminPermissions.integration.test.ts",
+      "testName": "adminPermissions [SEC-X-INT-STATUS-PERM-DENY] status-perm refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-LOCATIONS-PERM-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Every write to locations needs locations.manage",
+      "actor": "moderator granted locations.manage",
+      "resource": "the approved development project",
+      "input": "addLocation with a test name",
+      "response": "one locations row, removed by the test",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/admin/actions/adminPermissions.integration.test.ts",
+      "testName": "adminPermissions [SEC-X-INT-LOCATIONS-PERM-ALLOW] locations-perm allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-LOCATIONS-PERM-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Every write to locations needs locations.manage",
+      "actor": "moderator without locations.manage",
+      "resource": "the approved development project",
+      "input": "addLocation and setLocationFeatured",
+      "response": "forbidden; no row written",
+      "forbiddenEffects": [
+        "a locations write without locations.manage"
+      ],
+      "testFile": "src/modules/admin/actions/adminPermissions.integration.test.ts",
+      "testName": "adminPermissions [SEC-X-INT-LOCATIONS-PERM-DENY] locations-perm refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "One e-mail-change link changes the e-mail at most once",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "one valid link consumed once",
+      "response": "success; e-mail changed",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-TOKEN-ONCE-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "One e-mail-change link changes the e-mail at most once",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "the same link consumed by two concurrent calls",
+      "response": "exactly one success",
+      "forbiddenEffects": [
+        "two Auth e-mail updates from one link"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Only the latest e-mail-change request can complete",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "two requests, then the second link",
+      "response": "success to the second address",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-TOKEN-LATEST-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Only the latest e-mail-change request can complete",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "two requests, then the first link",
+      "response": "invalid; e-mail unchanged",
+      "forbiddenEffects": [
+        "the e-mail set to the first address"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-SESSIONS-END-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A completed e-mail change ends every session of the account",
+      "actor": "test account owner with a second signed-in session",
+      "resource": "the approved development project",
+      "input": "a completed change, then a request with the new session after signing in again",
+      "response": "the new session works",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-EMAIL-SESSIONS-END-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A completed e-mail change ends every session of the account",
+      "actor": "the second signed-in session of that account",
+      "resource": "the approved development project",
+      "input": "a database read after the change completes",
+      "response": "refused: the session no longer exists",
+      "forbiddenEffects": [
+        "an old session still reading data after the change"
+      ],
+      "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+      "testName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-CONTACT-LIFECYCLE-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Contact paths serve only an active listing of a live owner (owner F2)",
+      "actor": "signed-in test visitor",
+      "resource": "the approved development project",
+      "input": "inquiry, contact event and owner-contact RPC on an active test listing",
+      "response": "accepted; numbers returned",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/listings/actions/contactLifecycle.integration.test.ts",
+      "testName": "contactLifecycle [SEC-X-INT-CONTACT-LIFECYCLE-ALLOW] contact-lifecycle allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-CONTACT-LIFECYCLE-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Contact paths serve only an active listing of a live owner (owner F2)",
+      "actor": "signed-in test visitor",
+      "resource": "the approved development project",
+      "input": "the same three on archived, expired, sold, rented and pending test listings",
+      "response": "refused; no row, no number",
+      "forbiddenEffects": [
+        "an inquiry, an event or a number for a locked listing"
+      ],
+      "testFile": "src/modules/listings/actions/contactLifecycle.integration.test.ts",
+      "testName": "contactLifecycle [SEC-X-INT-CONTACT-LIFECYCLE-DENY] contact-lifecycle refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-SLUG-SCRIPT-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A stored slug cannot close or add a script in the speculation rules",
+      "actor": "listing owner session",
+      "resource": "the approved development project",
+      "input": "createListing with a normal title",
+      "response": "the generated slug is stored",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/listings/actions/listingSlugGuard.integration.test.ts",
+      "testName": "listingSlugGuard [SEC-X-INT-SLUG-SCRIPT-ALLOW] slug-script allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-SLUG-SCRIPT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A stored slug cannot close or add a script in the speculation rules",
+      "actor": "listing owner session",
+      "resource": "the approved development project",
+      "input": "PATCH of the own listing's slug through the Data API to a value holding </script>, and an insert with such a slug",
+      "response": "refused 42501; slug unchanged",
+      "forbiddenEffects": [
+        "a stored slug outside the generator's alphabet"
+      ],
+      "testFile": "src/modules/listings/actions/listingSlugGuard.integration.test.ts",
+      "testName": "listingSlugGuard [SEC-X-INT-SLUG-SCRIPT-DENY] slug-script refused on the real project"
+    },
+    {
+      "id": "SEC-X-SRV-AVATAR-RANK",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A staff upload of another account's avatar obeys the same rank rule as removing it",
+      "actor": "moderator",
+      "resource": "an administrator account and a user id with no row",
+      "input": "POST /api/upload-avatar with userId of the administrator, then of the missing id",
+      "response": "403 and 404; nothing uploaded",
+      "forbiddenEffects": [
+        "an upload to Cloudinary",
+        "a users.avatar_url write",
+        "a deleteAsset of the old avatar"
+      ],
+      "testFile": "src/app/api/upload-avatar/uploadAvatar.security.test.ts",
+      "testName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar"
+    },
+    {
+      "id": "SEC-X-INT-AVATAR-RANK-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A staff upload of another account's avatar obeys the same rank rule as removing it",
+      "actor": "moderator",
+      "resource": "the approved development project",
+      "input": "POST /api/upload-avatar for a test user account",
+      "response": "200; the user avatar_url set, restored by the test",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/app/api/upload-avatar/uploadAvatar.integration.test.ts",
+      "testName": "uploadAvatar [SEC-X-INT-AVATAR-RANK-ALLOW] avatar-rank allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-AVATAR-RANK-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A staff upload of another account's avatar obeys the same rank rule as removing it",
+      "actor": "moderator",
+      "resource": "the approved development project",
+      "input": "POST /api/upload-avatar for a test administrator account",
+      "response": "403; avatar_url unchanged",
+      "forbiddenEffects": [
+        "an administrator avatar changed by a moderator"
+      ],
+      "testFile": "src/app/api/upload-avatar/uploadAvatar.integration.test.ts",
+      "testName": "uploadAvatar [SEC-X-INT-AVATAR-RANK-DENY] avatar-rank refused on the real project"
+    },
+    {
+      "id": "SEC-X-SRV-ADMINPAGE-GUARD",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "An admin page or its metadata reads nothing for a viewer who is not an active administrator or moderator",
+      "actor": "guest, signed-in user, blocked moderator",
+      "resource": "every src/app/admin page and generateMetadata",
+      "input": "each page and metadata function called with that viewer and a counting database double",
+      "response": "notFound or the login redirect before the first read",
+      "forbiddenEffects": [
+        "a service-role read",
+        "an Auth admin read",
+        "a row field in the result"
+      ],
+      "testFile": "src/lib/auth/__tests__/staffPage.security.test.ts",
+      "testName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer"
+    },
+    {
+      "id": "SEC-X-SRV-REAUTH-EMAIL",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "The sign-in e-mail changes only after the current password, or a recent Google sign-in, is proven",
+      "actor": "signed-in account owner",
+      "resource": "their account e-mail",
+      "input": "initiateEmailChange without a password, with a wrong one, and for a Google-only account signed in 11 minutes ago",
+      "response": "reauth_required / invalid_password; no token row",
+      "forbiddenEffects": [
+        "an email_change_tokens insert",
+        "a sent e-mail"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/reauth.security.test.ts",
+      "testName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication"
+    },
+    {
+      "id": "SEC-X-SRV-REAUTH-DELETE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "An account is deleted by its owner only after the current password, or a recent Google sign-in, is proven",
+      "actor": "signed-in account owner",
+      "resource": "their account",
+      "input": "deleteOwnAccount without a password and with a wrong one",
+      "response": "reauth_required / invalid_password; account unchanged",
+      "forbiddenEffects": [
+        "a users write",
+        "an Auth ban or deletion"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/reauth.security.test.ts",
+      "testName": "reauth [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication"
+    },
+    {
+      "id": "SEC-X-SRV-OWNER-DELETE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A listing delete reports success only when exactly that listing was deleted",
+      "actor": "listing owner",
+      "resource": "their listing",
+      "input": "deleteListingAction where the delete matches zero rows",
+      "response": "delete_failed; no file clean-up, no cache refresh",
+      "forbiddenEffects": [
+        "a deleteAsset call",
+        "a revalidation",
+        "a success answer"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/deleteListing.security.test.ts",
+      "testName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure"
+    },
+    {
+      "id": "SEC-X-SRV-SESSION-REFRESH-SCOPE",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The session is refreshed on admin and API requests except the routes that carry no session",
+      "actor": "any request",
+      "resource": "src/middleware.ts",
+      "input": "requests to /admin/users, /api/presence, /api/cron/inactivity and /api/auth-email-hook",
+      "response": "refreshSession runs for the first two and not for the last two; no locale redirect on /admin or /api",
+      "forbiddenEffects": [
+        "a locale prefix on /admin or /api"
+      ],
+      "testFile": "src/lib/auth/__tests__/middlewareScope.security.test.ts",
+      "testName": "middlewareScope [SEC-X-SRV-SESSION-REFRESH-SCOPE] admin and API requests refresh the session"
+    },
+    {
+      "id": "SEC-X-SRV-SIGNOUT-OTHERS",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A password change never reports other devices signed out when that call failed",
+      "actor": "signed-in account owner",
+      "resource": "their other sessions",
+      "input": "changeCabinetPassword where signOut others returns an error",
+      "response": "sessions_not_ended",
+      "forbiddenEffects": [
+        "a plain success answer"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/changePassword.security.test.ts",
+      "testName": "changePassword [SEC-X-SRV-SIGNOUT-OTHERS] a failed sign-out of other devices is reported"
+    },
+    {
+      "id": "SEC-X-SRV-INQUIRY-SENDER",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A signed-in inquiry carries the account e-mail and is limited per person and per IP",
+      "actor": "signed-in visitor",
+      "resource": "an active listing",
+      "input": "submitListingInquiry with another address in the e-mail field, then 11 inquiries with no IP header",
+      "response": "the stored and mailed address is the Auth e-mail; the 11th is rate_limited",
+      "forbiddenEffects": [
+        "a Reply-To of the typed address",
+        "an unlimited unknown IP"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/submitListingInquiry.security.test.ts",
+      "testName": "submitListingInquiry [SEC-X-SRV-INQUIRY-SENDER] the inquiry sender is the account"
+    },
+    {
+      "id": "SEC-X-SRV-RECOVERY-MAIL",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The password-changed e-mail follows only a recovery",
+      "actor": "signed-in person with a password session",
+      "resource": "the password-changed e-mail",
+      "input": "logPasswordRecoveryCompletion with amr password, then twice with amr recovery",
+      "response": "nothing for password; one e-mail for recovery",
+      "forbiddenEffects": [
+        "a second e-mail",
+        "an e-mail without a recovery"
+      ],
+      "testFile": "src/modules/auth/actions/__tests__/recovery.security.test.ts",
+      "testName": "recovery [SEC-X-SRV-RECOVERY-MAIL] only a recovery sends the notice"
+    },
+    {
+      "id": "SEC-X-SRV-CONFIRM-GET-INERT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Opening a confirmation link consumes no token",
+      "actor": "a mail scanner",
+      "resource": "every token type of /auth/confirm",
+      "input": "GET with a valid token_hash for each type",
+      "response": "a page with a confirm button; verifyOtp not called",
+      "forbiddenEffects": [
+        "a verifyOtp call on GET"
+      ],
+      "testFile": "src/app/auth/confirm/__tests__/confirm.security.test.ts",
+      "testName": "confirm [SEC-X-SRV-CONFIRM-GET-INERT] a GET leaves the token unused"
+    },
+    {
+      "id": "SEC-X-SRV-CSP-REPORT-ONLY",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Admin, cabinet and auth answers carry a nonce script policy in report-only mode",
+      "actor": "any request",
+      "resource": "the response headers",
+      "input": "a request to /admin, /sq/cabinet and /sq/auth/login",
+      "response": "Content-Security-Policy-Report-Only with script-src nonce and strict-dynamic; the baseline policy unchanged",
+      "forbiddenEffects": [
+        "a missing script-src"
+      ],
+      "testFile": "src/lib/security/__tests__/headers.security.test.ts",
+      "testName": "headers [SEC-X-SRV-CSP-REPORT-ONLY] dynamic routes carry the report-only script policy"
+    },
+    {
+      "id": "SEC-X-SRV-CMS-OWN-CLOUD",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "CMS images come only from the project Cloudinary account",
+      "actor": "staff member editing a page",
+      "resource": "CMS HTML",
+      "input": "an img from res.cloudinary.com/other-cloud and one from the project cloud",
+      "response": "the first removed, the second kept",
+      "forbiddenEffects": [
+        "an image of another account in the output"
+      ],
+      "testFile": "src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts",
+      "testName": "sanitizeCmsHtml [SEC-X-SRV-CMS-OWN-CLOUD] another Cloudinary account is refused"
+    },
+    {
+      "id": "SEC-X-SRV-CREATE-STAFF-ROLE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Creating a moderator or administrator account needs users.change_role",
+      "actor": "moderator with users.create and without users.change_role",
+      "resource": "a new account",
+      "input": "createAdminUser with profileType moderator",
+      "response": "forbidden; no Auth user",
+      "forbiddenEffects": [
+        "an Auth user or users row created"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminPermissions.security.test.ts",
+      "testName": "adminPermissions [SEC-X-SRV-CREATE-STAFF-ROLE] users.create alone cannot make a staff account"
+    },
+    {
+      "id": "SEC-X-SRV-STAFF-WRITE-RESULT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A staff write never reports success when the database refused it",
+      "actor": "administrator",
+      "resource": "a user row and a listing",
+      "input": "updateUserProfile, toggleUserVerified and deleteListing with the write returning an error",
+      "response": "update_failed / delete_failed",
+      "forbiddenEffects": [
+        "an empty success answer"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminResults.security.test.ts",
+      "testName": "adminResults [SEC-X-SRV-STAFF-WRITE-RESULT] a failed staff write is reported"
+    },
+    {
+      "id": "SEC-X-SRV-NO-DB-MESSAGE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "No database message reaches the browser",
+      "actor": "signed-in person",
+      "resource": "every Server Action and route the executor lists",
+      "input": "each with the database returning an error whose message is a marker string",
+      "response": "a fixed code",
+      "forbiddenEffects": [
+        "the marker string in the answer"
+      ],
+      "testFile": "src/modules/__tests__/noDbMessage.security.test.ts",
+      "testName": "noDbMessage [SEC-X-SRV-NO-DB-MESSAGE] database messages stay on the server"
+    },
+    {
+      "id": "SEC-X-SRV-SELF-DELETE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A staff member cannot delete their own account from the admin panel",
+      "actor": "administrator with both delete permissions",
+      "resource": "their own account",
+      "input": "hardDeleteUser and softDeleteUser with their own id",
+      "response": "forbidden",
+      "forbiddenEffects": [
+        "a users write",
+        "an Auth deletion"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminActorRank.security.test.ts",
+      "testName": "adminActorRank [SEC-X-SRV-SELF-DELETE] no self-deletion from the panel"
+    },
+    {
+      "id": "SEC-X-SRV-SUSPEND-FUTURE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A dated block is saved only with a future end",
+      "actor": "administrator",
+      "resource": "a user account",
+      "input": "updateUserProfileFull with status blocked and suspendedUntil yesterday, then an unparsable value",
+      "response": "invalid_suspension; row unchanged",
+      "forbiddenEffects": [
+        "a users write",
+        "an Auth ban change"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/adminPermissions.security.test.ts",
+      "testName": "adminPermissions [SEC-X-SRV-SUSPEND-FUTURE] a past or invalid suspension end is refused"
+    },
+    {
+      "id": "SEC-X-SRV-UPLOAD-SIZE-FIRST",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An image of the wrong size is refused before any upload",
+      "actor": "signed-in person",
+      "resource": "the avatar and company logo routes",
+      "input": "a 300 by 300 PNG",
+      "response": "invalid_dimensions; uploadToCloudinary not called",
+      "forbiddenEffects": [
+        "an upload"
+      ],
+      "testFile": "src/app/api/upload-avatar/uploadAvatar.security.test.ts",
+      "testName": "uploadAvatar [SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload"
+    },
+    {
+      "id": "SEC-X-SRV-INACTIVITY-DRYRUN",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The inactivity job changes nothing in dry run and stops on a read error",
+      "actor": "the cron caller with the secret",
+      "resource": "inactive test accounts",
+      "input": "a dry run, then a real run whose read fails",
+      "response": "counts and ids only; 500 on the failed read",
+      "forbiddenEffects": [
+        "a users write in dry run",
+        "a sent e-mail in dry run",
+        "a 200 after a failed read"
+      ],
+      "testFile": "src/app/api/cron/inactivity/__tests__/inactivity.security.test.ts",
+      "testName": "inactivity [SEC-X-SRV-INACTIVITY-DRYRUN] dry run writes nothing and a read error stops the job"
+    },
+    {
+      "id": "SEC-DB-X-STAFF-LISTING-WRITE-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Staff change other people's listings only through the Server Actions",
+      "actor": "moderator holding listings.delete",
+      "resource": "a synthetic listing of another user",
+      "input": "the staff deleteListing Server Action",
+      "response": "the listing deleted",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-STAFF-LISTING-WRITE-ALLOW] the Server Action deletes"
+    },
+    {
+      "id": "SEC-DB-X-STAFF-LISTING-WRITE-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Staff change other people's listings only through the Server Actions",
+      "actor": "moderator session token",
+      "resource": "a synthetic listing of another user",
+      "input": "REST DELETE, then PATCH of the title",
+      "response": "zero rows or 42501; the row unchanged",
+      "forbiddenEffects": [
+        "a deleted or changed listing"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-STAFF-LISTING-WRITE-DENY] a staff session cannot write a listing through the Data API"
+    },
+    {
+      "id": "SEC-DB-X-LISTING-CHECKS-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A listing row always holds a valid title, description, price and position",
+      "actor": "listing owner session token",
+      "resource": "their synthetic listing",
+      "input": "REST PATCH with valid values",
+      "response": "the row updated",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted"
+    },
+    {
+      "id": "SEC-DB-X-LISTING-CHECKS-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A listing row always holds a valid title, description, price and position",
+      "actor": "listing owner session token",
+      "resource": "their synthetic listing",
+      "input": "REST PATCH with price 0, a description over the limit, latitude 200",
+      "response": "23514 for each; the row unchanged",
+      "forbiddenEffects": [
+        "an out-of-range value stored"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused"
+    },
+    {
+      "id": "SEC-DB-X-IMAGE-URL-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A listing image URL is always the project Cloudinary account",
+      "actor": "listing owner session token",
+      "resource": "listing_images of their synthetic listing",
+      "input": "REST insert with a project Cloudinary URL",
+      "response": "the row inserted",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted"
+    },
+    {
+      "id": "SEC-DB-X-IMAGE-URL-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A listing image URL is always the project Cloudinary account",
+      "actor": "listing owner session token",
+      "resource": "listing_images of their synthetic listing",
+      "input": "REST insert with https://example.com/x.jpg and another Cloudinary account",
+      "response": "23514; no row",
+      "forbiddenEffects": [
+        "a foreign image URL stored"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused"
+    },
+    {
+      "id": "SEC-DB-X-PROFILE-FIELDS-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Profile URLs, phones and names always meet the profile rules",
+      "actor": "synthetic user session token",
+      "resource": "their own users row",
+      "input": "REST PATCH with a project avatar URL, an E.164 phone and an https website",
+      "response": "the row updated",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-PROFILE-FIELDS-ALLOW] valid profile fields are accepted"
+    },
+    {
+      "id": "SEC-DB-X-PROFILE-FIELDS-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Profile URLs, phones and names always meet the profile rules",
+      "actor": "synthetic user session token",
+      "resource": "their own users row",
+      "input": "REST PATCH with a foreign avatar URL, phone 12345, website javascript:x, a 300-character name",
+      "response": "23514 for each; the row unchanged",
+      "forbiddenEffects": [
+        "an invalid profile value stored"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-PROFILE-FIELDS-DENY] invalid profile fields are refused"
+    },
+    {
+      "id": "SEC-DB-X-AVATARS-STORAGE-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Staff avatars go only through the upload route, not through Storage",
+      "actor": "moderator",
+      "resource": "a synthetic user account",
+      "input": "POST /api/upload-avatar",
+      "response": "200; avatar_url set, restored by the test",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works"
+    },
+    {
+      "id": "SEC-DB-X-AVATARS-STORAGE-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Staff avatars go only through the upload route, not through Storage",
+      "actor": "moderator session token",
+      "resource": "the avatars bucket",
+      "input": "a Storage upload of a small PNG",
+      "response": "refused; no object",
+      "forbiddenEffects": [
+        "an object stored in avatars"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage"
+    },
+    {
+      "id": "SEC-X-INT-ADMINPAGE-GUARD-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An admin page or its metadata reads nothing for a viewer who is not an active administrator or moderator",
+      "actor": "moderator",
+      "resource": "the approved development project",
+      "input": "an RSC request for /admin/users/<synthetic id> on a production build",
+      "response": "the page with the synthetic row",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/tests/integration/adminPage.integration.test.ts",
+      "testName": "adminPage [SEC-X-INT-ADMINPAGE-GUARD-ALLOW] adminpage-guard allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-ADMINPAGE-GUARD-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An admin page or its metadata reads nothing for a viewer who is not an active administrator or moderator",
+      "actor": "signed-in test user without a staff role",
+      "resource": "the approved development project",
+      "input": "the same request with a router-state header naming the admin layout",
+      "response": "not found; no field of the synthetic row in the body",
+      "forbiddenEffects": [
+        "the synthetic phone or e-mail in the answer"
+      ],
+      "testFile": "src/tests/integration/adminPage.integration.test.ts",
+      "testName": "adminPage [SEC-X-INT-ADMINPAGE-GUARD-DENY] adminpage-guard refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-REAUTH-EMAIL-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "The sign-in e-mail changes only after the current password, or a recent Google sign-in, is proven",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "initiateEmailChange with the right password",
+      "response": "a pending change",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/cabinet/actions/reauth.integration.test.ts",
+      "testName": "reauth [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-REAUTH-EMAIL-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "The sign-in e-mail changes only after the current password, or a recent Google sign-in, is proven",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "initiateEmailChange with no password and with a wrong one",
+      "response": "reauth_required / invalid_password; no token",
+      "forbiddenEffects": [
+        "an e-mail change started"
+      ],
+      "testFile": "src/modules/cabinet/actions/reauth.integration.test.ts",
+      "testName": "reauth [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-REAUTH-DELETE-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An account is deleted by its owner only after the current password, or a recent Google sign-in, is proven",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "deleteOwnAccount with the right password",
+      "response": "the account deleted (synthetic)",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/cabinet/actions/reauth.integration.test.ts",
+      "testName": "reauth [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-REAUTH-DELETE-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An account is deleted by its owner only after the current password, or a recent Google sign-in, is proven",
+      "actor": "test account owner",
+      "resource": "the approved development project",
+      "input": "deleteOwnAccount with a wrong password",
+      "response": "invalid_password; account unchanged",
+      "forbiddenEffects": [
+        "an account deleted"
+      ],
+      "testFile": "src/modules/cabinet/actions/reauth.integration.test.ts",
+      "testName": "reauth [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project"
+    },
+    {
+      "id": "SEC-X-INT-OWNER-DELETE-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A listing delete reports success only when exactly that listing was deleted",
+      "actor": "listing owner",
+      "resource": "the approved development project",
+      "input": "deleteListingAction for their synthetic listing",
+      "response": "the row gone; success",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/listings/actions/deleteListing.integration.test.ts",
+      "testName": "deleteListing [SEC-X-INT-OWNER-DELETE-ALLOW] owner-delete allowed on the real project"
+    },
+    {
+      "id": "SEC-X-INT-OWNER-DELETE-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A listing delete reports success only when exactly that listing was deleted",
+      "actor": "another signed-in test user",
+      "resource": "the approved development project",
+      "input": "deleteListingAction for that listing",
+      "response": "forbidden; the row remains",
+      "forbiddenEffects": [
+        "a success answer while the row remains",
+        "a deleted listing of another person"
+      ],
+      "testFile": "src/modules/listings/actions/deleteListing.integration.test.ts",
+      "testName": "deleteListing [SEC-X-INT-OWNER-DELETE-DENY] owner-delete refused on the real project"
+    },
+    {
+      "id": "SEC-X-SRV-RATE-REPORT",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Reports are limited per person and fail closed",
+      "actor": "signed-in person",
+      "resource": "reportListing",
+      "input": "the 11th report in an hour, and a failed count",
+      "response": "rate_limited",
+      "forbiddenEffects": [
+        "a report past the limit",
+        "a report after a failed count"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/rateLimits.security.test.ts",
+      "testName": "rateLimits [SEC-X-SRV-RATE-REPORT] reports are limited"
+    },
+    {
+      "id": "SEC-X-SRV-EDIT-MODERATION",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)",
+      "actor": "listing owner",
+      "resource": "their active, sold, rented, inactive and expired listings",
+      "input": "updateListing with valid content and a database double that records the order of calls; once more on the active one with the transition failing",
+      "response": "active: the transition to pending before the content write, the answer pending; transition_failed and no write when it fails; other statuses: no transition, status unchanged",
+      "forbiddenEffects": [
+        "a content write while an active listing is still visible",
+        "a content write after a failed transition",
+        "a transition for a non-active listing"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/updateListing.security.test.ts",
+      "testName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written"
+    },
+    {
+      "id": "SEC-X-INT-EDIT-MODERATION-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)",
+      "actor": "moderator",
+      "resource": "the approved development project",
+      "input": "updateListing on a synthetic active listing, then a guest read",
+      "response": "the listing stays active; the guest reads the new content",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/modules/listings/actions/updateListing.integration.test.ts",
+      "testName": "updateListing [SEC-X-INT-EDIT-MODERATION-ALLOW] a staff edit keeps the listing public"
+    },
+    {
+      "id": "SEC-X-INT-EDIT-MODERATION-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)",
+      "actor": "listing owner",
+      "resource": "the approved development project",
+      "input": "updateListing on their synthetic active listing, then a guest read, then a staff approval",
+      "response": "pending; the guest reads no row until the approval, then the new content",
+      "forbiddenEffects": [
+        "the edited content readable by a guest before the approval"
+      ],
+      "testFile": "src/modules/listings/actions/updateListing.integration.test.ts",
+      "testName": "updateListing [SEC-X-INT-EDIT-MODERATION-DENY] an owner edit hides the listing until staff approve"
+    },
+    {
+      "id": "SEC-X-SRV-CLOSED-PAGE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A visitor reads sold and rented listings and their photos, and never an archived, pending, inactive or expired one",
+      "actor": "guest, signed-in visitor, the listing owner, moderator",
+      "resource": "the listing page and its metadata",
+      "input": "an archived, a sold and a rented listing, with updated_at before and after archived_noindex_days",
+      "response": "not found for a visitor on archived and the page for its owner and staff; noindex on sold and rented only after the days",
+      "forbiddenEffects": [
+        "an archived listing shown to a visitor",
+        "archived among the requested statuses",
+        "noindex before the days"
+      ],
+      "testFile": "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+      "testName": "closedListing [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived"
+    },
+    {
+      "id": "SEC-X-FE-EDIT-MODERATION",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)",
+      "actor": "listing owner saving an active listing",
+      "resource": "the real ListingFormShell after a save",
+      "input": "the save action answering status pending",
+      "response": "the pending status shown and the redirect for pending",
+      "forbiddenEffects": [
+        "active shown after the save",
+        "the redirect for an active listing"
+      ],
+      "testFile": "src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx",
+      "testName": "ListingFormShell.moderation [SEC-X-FE-EDIT-MODERATION] the owner sees the listing went to moderation"
+    },
+    {
+      "id": "SEC-DB-X-CLOSED-READ-ALLOW",
+      "layer": "database",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A visitor reads sold and rented listings and their photos, and never an archived, pending, inactive or expired one",
+      "actor": "anon key, no session",
+      "resource": "synthetic sold and rented listings and their listing_images",
+      "input": "REST select by id",
+      "response": "one row each and their photos",
+      "forbiddenEffects": [
+        "a refusal"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented"
+    },
+    {
+      "id": "SEC-DB-X-CLOSED-READ-DENY",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "A visitor reads sold and rented listings and their photos, and never an archived, pending, inactive or expired one",
+      "actor": "anon key, no session",
+      "resource": "synthetic archived, pending, inactive and expired listings and their listing_images",
+      "input": "REST select by id",
+      "response": "zero rows and zero photos for each",
+      "forbiddenEffects": [
+        "a hidden listing or its photo read by a guest"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo"
+    },
+    {
+      "id": "SEC-X-SRV-MOD-KEYS",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "invariant": "A moderator does only what the administrator allowed through a key",
+      "actor": "moderator with the key off, moderator with the key on, administrator",
+      "resource": "every Server Action and route that admits a moderator",
+      "input": "each action called with a permission double answering false, then true; the administrator with no row",
+      "response": "forbidden before any read or write when the key is off; the action runs when it is on, and for the administrator",
+      "forbiddenEffects": [
+        "a read or write with the key off",
+        "an action admitting a moderator without a key check"
+      ],
+      "testFile": "src/lib/auth/__tests__/moderatorKeys.security.test.ts",
+      "testName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key"
+    },
+    {
+      "id": "SEC-X-INT-MOD-KEYS-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A moderator does only what the administrator allowed through a key",
+      "actor": "synthetic moderator, users.edit allowed",
+      "resource": "the approved development project",
+      "input": "updateUserProfile on a synthetic user",
+      "response": "the profile changed (restored by the test)",
+      "forbiddenEffects": [
+        "a refusal of the permitted request"
+      ],
+      "testFile": "src/tests/integration/moderatorKeys.integration.test.ts",
+      "testName": "moderatorKeys [SEC-X-INT-MOD-KEYS-ALLOW] a moderator with the key acts"
+    },
+    {
+      "id": "SEC-X-INT-MOD-KEYS-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "A moderator does only what the administrator allowed through a key",
+      "actor": "synthetic moderator, users.edit refused",
+      "resource": "the approved development project",
+      "input": "updateUserProfile on a synthetic user",
+      "response": "forbidden; the row unchanged",
+      "forbiddenEffects": [
+        "a changed profile"
+      ],
+      "testFile": "src/tests/integration/moderatorKeys.integration.test.ts",
+      "testName": "moderatorKeys [SEC-X-INT-MOD-KEYS-DENY] a moderator without the key is refused"
+    },
+    {
+      "id": "SEC-X-SRV-INACTIVITY-REMIND",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An inactive person is reminded once per absence at 3 months, and the job changes no account",
+      "actor": "the cron caller with the secret",
+      "resource": "accounts absent 2, 3 and 4 months, one reminded and back since",
+      "input": "a real run with a database double and an e-mail double",
+      "response": "one reminder for the 3-month account, one for the returned and again absent one; no account changed",
+      "forbiddenEffects": [
+        "a second reminder in the same absence",
+        "an account changed by the job",
+        "a reminder before 3 months"
+      ],
+      "testFile": "src/app/api/cron/inactivity/__tests__/inactivity.security.test.ts",
+      "testName": "inactivity [SEC-X-SRV-INACTIVITY-REMIND] one reminder per absence and no account change"
+    },
+    {
+      "id": "SEC-X-SRV-PERMS-ADMIN-ONLY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Only an administrator reads or changes the moderator switches (D55)",
+      "actor": "moderator, signed-in user, guest; administrator",
+      "resource": "getModeratorPermissions, getPermissionEvents, setModeratorPermission and the /admin/permissions page",
+      "input": "each called by each viewer with a database double",
+      "response": "forbidden / not found for all but the administrator; the administrator reads and sets",
+      "forbiddenEffects": [
+        "a switch value or event returned to a moderator",
+        "a write by anyone but the administrator",
+        "an unknown key written"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/permissions.security.test.ts",
+      "testName": "permissions [SEC-X-SRV-PERMS-ADMIN-ONLY] the switches are for the administrator only"
+    },
+    {
+      "id": "SEC-X-SRV-JOBS-PAUSED",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Until the lifecycle tasks ship, no job deactivates, deletes or expires anything (D56, D58)",
+      "actor": "the cron caller with the secret",
+      "resource": "an account absent 13 months and an active listing past expires_at",
+      "input": "a real run of the inactivity job and of the listing expiry job with database and e-mail doubles",
+      "response": "counts only; no users, listings or auth write and no e-mail for the 12-month step or the expiry",
+      "forbiddenEffects": [
+        "a deactivated, deleted or archived account",
+        "an expired listing",
+        "a final e-mail"
+      ],
+      "testFile": "src/app/api/cron/__tests__/jobsPaused.security.test.ts",
+      "testName": "jobsPaused [SEC-X-SRV-JOBS-PAUSED] the 12-month step and the expiry only count"
+    },
+    {
+      "id": "SEC-X-SRV-NO-AUTO-RESTORE",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A marked account is never restored by its own return (D58)",
+      "actor": "a person whose account carries the inactivity mark, with a live session",
+      "resource": "api/presence and refreshSession",
+      "input": "a presence ping and a page request",
+      "response": "no restore write; the session ends as for any account without access",
+      "forbiddenEffects": [
+        "deleted_at cleared",
+        "status set to active",
+        "a restore RPC call"
+      ],
+      "testFile": "src/lib/auth/__tests__/noAutoRestore.security.test.ts",
+      "testName": "noAutoRestore [SEC-X-SRV-NO-AUTO-RESTORE] a return does not restore a marked account"
+    },
+    {
+      "id": "SEC-X-SRV-RATES-LAST-GOOD",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "Rates come from iliria98.com only, and a failed read never removes the rates visitors see (D57)",
+      "actor": "any visitor",
+      "resource": "getExchangeRates",
+      "input": "a successful read, then a failed read; a currency iliria98 does not publish",
+      "response": "the stored set after the failure; the unpublished currency without a rate; no other host fetched",
+      "forbiddenEffects": [
+        "a request to open.er-api.com",
+        "null rates after one failed read",
+        "a cached failure"
+      ],
+      "testFile": "src/lib/__tests__/exchangeRates.security.test.ts",
+      "testName": "exchangeRates [SEC-X-SRV-RATES-LAST-GOOD] one source and the last good rates"
+    },
+    {
+      "id": "SEC-X-FE-DELETE-PASSWORD",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An account is deleted by its owner only after the current password, or a recent Google sign-in, is proven",
+      "actor": "signed-in account owner",
+      "resource": "the real cabinet deletion dialog",
+      "input": "the dialog opened, a wrong password, then the right one; a Google-only account",
+      "response": "the password field instead of the DELETE word; invalid_password shown; the action called with the password; Google confirmation offered",
+      "forbiddenEffects": [
+        "a deletion sent without a password",
+        "the DELETE word as the only check"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx",
+      "testName": "ProfileTab.deletePassword [SEC-X-FE-DELETE-PASSWORD] the cabinet deletion asks for the password"
+    },
+    {
+      "id": "SEC-DB-X-PERMS-NO-SESSION",
+      "layer": "database",
+      "outcome": "deny",
+      "boundary": "integration",
+      "critical": true,
+      "invariant": "Only an administrator reads or changes the moderator switches (D55)",
+      "actor": "anon key with no session; moderator session token",
+      "resource": "role_permissions and role_permission_events",
+      "input": "REST select, insert and update",
+      "response": "42501 for each; no row changed",
+      "forbiddenEffects": [
+        "a switch read or written by a session"
+      ],
+      "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+      "testName": "accessHardening [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches"
+    },
+    {
+      "id": "SEC-X-INT-PERMS-ADMIN-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "integration",
+      "critical": false,
+      "invariant": "Only an administrator reads or changes the moderator switches (D55)",
+      "actor": "synthetic administrator",
+      "resource": "the approved development project",
+      "input": "setModeratorPermission(users.edit, false), then true",
+      "response": "both values stored, two event rows; the value restored by the test",
+      "forbiddenEffects": [
+        "a refusal of the administrator",
+        "a change without its event row"
+      ],
+      "testFile": "src/tests/integration/moderatorKeys.integration.test.ts",
+      "testName": "moderatorKeys [SEC-X-INT-PERMS-ADMIN-ALLOW] the administrator changes a switch on the real project"
+    }
+  ],
+  "inputs": [
+    "src/lib/auth/server.ts",
+    "src/lib/auth/permissions.ts",
+    "src/lib/supabase/admin.ts",
+    "src/lib/supabase/server.ts",
+    "src/lib/auth/authSheet.ts",
+    "src/components/admin/StatusChangeSelect.tsx",
+    "src/design-system/mantine/patterns/MantineModal.tsx",
+    "src/design-system/mantine/patterns/MantineDialogFooter.tsx",
+    "src/design-system/mantine/patterns/MantineDialogSections.tsx"
+  ]
+}

@@ -27,6 +27,7 @@
  */
 
 import { onAuthStateChange, signOut as coreSignOut } from './browser'
+import { createClient } from '@/lib/supabase/client'
 import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import type { User } from '@/types/database'
 
@@ -57,6 +58,37 @@ async function fetchServerUser(signal: AbortSignal): Promise<User | null> {
   return body.user ?? null
 }
 
+// ── Internal: local session removal ───────────────────────────────────────────
+//
+// Task 923 R66 (l). `auth.signOut()` removes the browser session only when the
+// logout request succeeded or was answered 401 / 403 / 404; on any other answer
+// (a 5xx, a network failure) it returns `{ error }` and leaves the session in
+// storage, so a person who pressed "sign out" stayed signed in. The SDK's own
+// local removal (`_removeSession`, version 2.105.4 of @supabase/auth-js) deletes
+// the stored session without a request; it is private in the type definitions,
+// so it is reached through a narrow cast, with a cookie fallback if a later SDK
+// version renames it.
+
+async function removeLocalSession(): Promise<void> {
+  try {
+    const auth = createClient().auth as unknown as { _removeSession?: () => Promise<void> }
+    if (typeof auth._removeSession === 'function') {
+      await auth._removeSession()
+      return
+    }
+  } catch {
+    // fall through to the cookie fallback
+  }
+  if (typeof document === 'undefined') return
+  for (const pair of document.cookie.split(';')) {
+    const name = pair.split('=')[0]?.trim()
+    // the SDK stores the session as `sb-<project>-auth-token`, split into `.0`, `.1`, … parts when it is long
+    if (name && /^sb-.+-auth-token(\.\d+)?$/.test(name)) {
+      document.cookie = `${name}=; Max-Age=0; Path=/`
+    }
+  }
+}
+
 // ── Auth Controller ───────────────────────────────────────────────────────────
 
 export class AuthController {
@@ -73,10 +105,11 @@ export class AuthController {
   // AbortController for the in-flight /api/auth/me request, if any.
   private inflight: AbortController | null = null
 
-  // Timestamp of the last visibility-triggered sync. Auth events (SIGNED_IN,
-  // SIGNED_OUT) bypass this interval and always sync immediately. Only the
-  // tab-restore path is rate-limited to prevent /api/auth/me spam when the
-  // user switches tabs rapidly or has multiple monitors.
+  // Timestamp of the last visibility- or navigation-triggered sync (the two share it).
+  // Auth events (SIGNED_IN, SIGNED_OUT) bypass this interval and always sync
+  // immediately. Only the tab-restore and client-navigation paths are rate-limited
+  // to prevent /api/auth/me spam when the user switches tabs or pages rapidly or
+  // has multiple monitors.
   private lastVisibilitySync = 0
   private static readonly VISIBILITY_SYNC_MIN_MS = 30_000
 
@@ -216,6 +249,25 @@ export class AuthController {
     this.syncFromServer()
   }
 
+  // ── Public: client navigation sync (Task 923 R147, F18) ───────────────────
+  //
+  // An open tab keeps the state it was given when the page first loaded, and a
+  // token refresh does not re-check it, so an account the server has since
+  // refused (deleted, banned, deactivated) would still look signed in after a
+  // client navigation. A signed-in tab therefore re-checks with the server when
+  // the page changes, at most once per VISIBILITY_SYNC_MIN_MS together with the
+  // tab-restore sync. A guest has nothing to confirm and fetches nothing.
+
+  handleNavigation(): void {
+    if (this.state.status !== 'authenticated') return
+
+    const now = Date.now()
+    if (now - this.lastVisibilitySync < AuthController.VISIBILITY_SYNC_MIN_MS) return
+    this.lastVisibilitySync = now
+
+    this.syncFromServer()
+  }
+
   // ── Public: manual refresh ────────────────────────────────────────────────
   //
   // Triggers a server sync without a Supabase auth event — used after profile
@@ -239,12 +291,16 @@ export class AuthController {
 
     this.commit({ status: 'signing_out', user: null })
 
+    let failed = false
     try {
-      await coreSignOut()
+      // The SDK reports a failed logout request through the returned `{ error }`, it does not throw (Task 923 R66 (l)).
+      const result = await coreSignOut()
+      failed = !!result?.error
     } catch {
-      // The Supabase client clears its local session regardless of API errors.
-      // The user is effectively signed out from the browser's perspective.
+      failed = true
     }
+    // A failed logout request must not leave the session in the browser: remove it locally before reporting `unauthenticated`.
+    if (failed) await removeLocalSession()
 
     this.commit({ status: 'unauthenticated', user: null })
   }
@@ -262,6 +318,12 @@ export class AuthController {
 
     const onVisibility = () => this.handleVisibilityChange()
     document.addEventListener('visibilitychange', onVisibility)
+
+    // React Strict Mode mounts, cleans up and mounts again in development, and the cleanup below
+    // aborts a re-check in flight without committing a state (Task 923 R148, F19). Without a new
+    // re-check the status would stay `refreshing`. A first mount from the constructor's state
+    // (`authenticated` or `unauthenticated`) has nothing to restart.
+    if (this.state.status === 'refreshing' && this.inflight === null) this.syncFromServer()
 
     return () => {
       subscription.unsubscribe()

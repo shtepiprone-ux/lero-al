@@ -1,0 +1,9 @@
+# rv14-07 (Opus) 2026-10-28T19:23:11.509Z win32 node v22.22.3 cwd C:\Claude_Code_Projects\lero-al
+catalog row: [{"sig":"account_has_password(uuid)","owner":"postgres","prosecdef":true,"provolatile":"s","lanname":"sql","proconfig":["search_path=public, pg_temp"],"result":"boolean","acl":"{postgres=X/postgres,service_role=X/postgres}"}]
+body: [{"prosrc":"\r\n  select coalesce(u.encrypted_password, '') <> '' from auth.users u where u.id = p_user\r\n"}]
+execute privilege: [{"role":"anon","can_execute":false},{"role":"authenticated","can_execute":false},{"role":"service_role","can_execute":true},{"role":"public","can_execute":false}]
+functions of that name: [{"sig":"account_has_password(uuid)"}]
+disagreements with auth.users (expect 0): [{"n":0}]
+answers over all accounts: [{"answer":false,"n":2},{"answer":true,"n":7}]
+transaction rolled back; nothing written
+exit code: 0

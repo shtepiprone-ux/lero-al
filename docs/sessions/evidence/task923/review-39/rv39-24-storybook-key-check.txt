@@ -1,0 +1,5 @@
+# Task 923 Review 39 (Opus), 2026-10-23T12:29:56Z: does the built storybook-static (index.html 2026-10-23 11:10:25.570090000 +0200) hold a value of .env.local? Values are never printed.
+NEXT_PUBLIC_TURNSTILE_SITE_KEY: files holding its value: 0
+TURNSTILE_SECRET_KEY: files holding its value: 0
+SUPABASE_SERVICE_ROLE_KEY: files holding its value: 0
+CI (.github/workflows) lines naming TURNSTILE: 0

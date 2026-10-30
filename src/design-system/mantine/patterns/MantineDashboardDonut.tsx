@@ -7,7 +7,7 @@ import { Box, Stack, Group, Text, useMantineTheme } from '@mantine/core'
 import { MantineDashboardChartStateFrame, type DashboardChartState } from './MantineDashboardChartStateFrame'
 import { MantineDashboardChartLegend } from './MantineDashboardChartLegend'
 import { resolveThemeColor } from './dashboardChartTheme'
-import { useApexTooltipMirror } from './useApexTooltipMirror'
+import { useApexFluidBox } from './useApexFluidBox'
 
 // ApexCharts reads `window` at import time — never safe to render during SSR (same pattern as
 // `MantineDashboardLineChart.tsx`/`MapWrapper.tsx`).
@@ -125,7 +125,7 @@ export function MantineDashboardDonut({
   showCounts = false,
 }: MantineDashboardDonutProps) {
   const theme = useMantineTheme()
-  const mirrorRef = useApexTooltipMirror()
+  const { ref: mirrorRef, boxWidth } = useApexFluidBox()
   const {
     donutSize,
     donutHoleSize,
@@ -141,8 +141,11 @@ export function MantineDashboardDonut({
   // side or the expanded slice clips at the edge (the original owner-reported bug); `customScale`
   // shrinks the pie back down inside that bigger canvas so the RESTING ring still renders at the
   // already-measured `donutSize` diameter.
-  const canvasSize = donutSize + expandOffset * 2
-  const canvasScale = donutSize / canvasSize
+  const fixedCanvasSize = donutSize + expandOffset * 2
+  // the ring never exceeds the card it sits in: the canvas is the smaller of its fixed size and the measured width of its box
+  // (`maw="100%"`), and the ring keeps its proportion through `canvasScale` (Task 923 R33, the Story 059 finding at 1024px)
+  const canvasSize = boxWidth > 0 ? Math.min(fixedCanvasSize, Math.floor(boxWidth)) : fixedCanvasSize
+  const canvasScale = donutSize / fixedCanvasSize
   const [hiddenKeys, setHiddenKeys] = useState<Set<string>>(new Set())
   const distinctColors = useMemo(
     () => resolveDistinctSegmentColors(segments, defaultShade, shadeCollisionStep),
@@ -219,7 +222,7 @@ export function MantineDashboardDonut({
           the legend fall below the ring at mobile widths (Pass 12's own fix for this exact chart
           family). */}
       <Group justify="space-between" align="center" gap="xl" wrap="wrap">
-        <Box ref={mirrorRef} pos="relative" w={canvasSize} h={canvasSize}>
+        <Box ref={mirrorRef} pos="relative" w={fixedCanvasSize} maw="100%" h={canvasSize}>
           <ReactApexChart options={options} series={apexSeries} type="donut" height={canvasSize} width={canvasSize} aria-label={ariaLabel} />
           <Stack pos="absolute" inset={0} align="center" justify="center" gap={0} styles={{ root: { pointerEvents: 'none' } }}>
             <Text fw={700} size="xl" c="gray.8">

@@ -1,0 +1,57 @@
+# Working-tree lines cited by Task 923 Revision 42 (Opus, 2026-10-24), copied by rev42-01-lines.mjs
+== src/app/admin/users/[id]/page.tsx line 40, working tree, file sha256 1ce31b2a97e28bac217ca04ac4edb525800c6396b236478d75773c591eb36a53
+  if (!user) notFound()
+== src/app/admin/users/[id]/page.tsx line 43, working tree, file sha256 1ce31b2a97e28bac217ca04ac4edb525800c6396b236478d75773c591eb36a53
+  if (user.deleted_at) notFound()
+== src/app/admin/users/[id]/page.tsx line 14, working tree, file sha256 1ce31b2a97e28bac217ca04ac4edb525800c6396b236478d75773c591eb36a53
+  await requireStaffPage()
+== src/app/admin/users/[id]/page.tsx line 24, working tree, file sha256 1ce31b2a97e28bac217ca04ac4edb525800c6396b236478d75773c591eb36a53
+  await requireStaffPage()
+== src/app/admin/users/page.tsx line 28, working tree, file sha256 fe51f87aaaa16b6d53828e14859e723b3f5c472f3bdf271ced4c54230c404e73
+  const t = await getTranslations('admin.pages')
+== src/app/admin/users/page.tsx line 29, working tree, file sha256 fe51f87aaaa16b6d53828e14859e723b3f5c472f3bdf271ced4c54230c404e73
+  const sp = await searchParams
+== src/app/admin/users/page.tsx line 89, working tree, file sha256 fe51f87aaaa16b6d53828e14859e723b3f5c472f3bdf271ced4c54230c404e73
+        title={t('users_title')}
+== src/components/admin/AdminPageHeader.tsx line 20, working tree, file sha256 91b347d8382c1c5cfcdccb57f629eed6e891ac1ebbda1803b86a3a858a02a4c8
+    <Box mb="xl">
+== src/components/admin/AdminPageHeader.tsx line 10, working tree, file sha256 91b347d8382c1c5cfcdccb57f629eed6e891ac1ebbda1803b86a3a858a02a4c8
+  action?: ReactNode
+== src/design-system/mantine/patterns/MantineDashboardHeader.tsx line 55, working tree, file sha256 37afa27a4c31df4b3ffdfececbede828ee4003f57de01c81d72b1bfa0ee1c2c9
+      gap="md"
+== src/design-system/mantine/theme.ts line 1749, working tree, file sha256 9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5
+    // warning→yellow, error→red, info→blueLight. `props.color` styles callback (same pattern as
+== src/design-system/mantine/theme.ts line 1755, working tree, file sha256 9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5
+      defaultProps: { radius: 'xl', variant: 'light' }, // §6l — 12px (was 'lg'/8px)
+== src/components/admin/AdminPagesView.tsx line 175, working tree, file sha256 6981fe5c8708ebcf8d67f734f83f996c45836ae1a99d15c3a824a21b0ea3ecb0
+          icon={<AlertTriangle size={theme.other.iconSize.standard} />}
+== src/stories/mantine/primitives/Alert.stories.tsx line 42, working tree, file sha256 7db63ab8770f1785d2bf14775d2cc105b67b47a288d2ff603443d17879345abe
+              <Alert color="blueLight" icon={<Info size={20} />} title={t('alert_info_title')}>
+== src/stories/patterns/mantine/AdminPageHeader.stories.tsx line 12, working tree, file sha256 3820a6279bcb2224d86eccc9efecb2a9fc267d67ee260e6e5bfec85f38ba42e0
+  title: 'Patterns/Mantine/AdminPageHeader',
+== src/lib/auth/__tests__/staffPage.security.test.ts line 88, working tree, file sha256 fbd05c37d2d0ae01afe24de1b1cf3b3e34f4d1ca29a29abe03a120f0a636263e
+    else if (entry.name === 'page.tsx') out.push(full)
+== node_modules/@mantine/core/esm/components/Alert/Alert.mjs line 88, working tree, file sha256 c2e53e252987b34d8b36b32d991cf0510720831b2869fecc7313f5ae8d181745
+      role: role || "alert",
+== scope of tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json (329 paths)
+scope has src/app/admin/users/[id]/page.tsx: true
+scope has src/app/admin/users/page.tsx: true
+scope has messages/en.json: true
+scope has src/components/admin/AdminPageHeader.tsx: false
+scope has src/stories/patterns/mantine/AdminPageHeader.stories.tsx: false
+case SEC-X-SRV-ADMINPAGE-GUARD in tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: true
+== scripts/mobile-adaptation-patterns.json, family structural-layout-and-feedback
+patternIds linear-flow, toolbar-priority, inline-control; mantineMechanismIds responsive-props, visibility-props, app-shell-responsive
+members has MantineDashboardHeader.tsx: true
+== scripts/mantine-migration-scope.json
+lists src/components/admin/AdminPageHeader.tsx: true
+== scripts/ui-contract-registry.json
+names AdminPageHeader: false
+== messages/sq.json admin.pages
+users_title: Përdorues; has users_gone_notice: false
+== messages/en.json admin.pages
+users_title: Users; has users_gone_notice: false
+== messages/uk.json admin.pages
+users_title: Користувачі; has users_gone_notice: false
+== messages/it.json admin.pages
+users_title: Utenti; has users_gone_notice: false

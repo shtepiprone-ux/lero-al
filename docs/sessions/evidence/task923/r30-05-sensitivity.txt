@@ -1,0 +1,30 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T13:20:59.734Z
+command: node docs/sessions/evidence/task923/r30-50-sensitivity.cjs
+env: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn
+---- output ----
+proved     M1-drop-owner-filter (SEC-X-SRV-RESTRICTED-PAGE-DENY)
+           -> AssertionError: stranger on inactive: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality
+proved     M2-listing-in-restricted-branch (SEC-X-SRV-RESTRICTED-PAGE-DENY)
+           -> AssertionError: guest on inactive: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality
+proved     M3-hidden-for-missing-slug (SEC-X-SRV-RESTRICTED-PAGE-DENY)
+           -> AssertionError: guest: a slug that does not exist is not found: expected undefined to be 'NEXT_NOT_FOUND' // Object.is equality
+proved     M4-one-ceiling-for-both-currencies (SEC-X-SRV-LISTING-BOUNDS-DENY, SEC-X-FE-LISTING-BOUNDS)
+           -> AssertionError: create: a euro price above the euro ceiling: expected { slug: 'a-flat-in-tirana-mvjkl0fn' } to deeply equal { error: 'validation_failed' }
+           -> AssertionError: EUR 10000000001: expected '' to be 'error_price' // Object.is equality
+proved     M5-guest-redirect-before-state-check (SEC-X-SRV-RESTRICTED-EDIT)
+           -> AssertionError: slug-archived: the page rendered an element and threw nothing: expected 'NEXT_REDIRECT /en/auth/login?next=%2F…' to be undefined
+proved     M6-action-rendered-twice (SEC-X-FE-RESTRICTED-VIEW)
+           -> AssertionError: sq guest: one action: expected [ [ 'Hyr', …(1) ], [ 'Hyr', …(1) ] ] to deeply equal [ [ 'Hyr', …(1) ] ]
+proved     M7-drop-parsePriceDigits (SEC-X-FE-PRICE-DIGITS)
+           -> AssertionError: pasted with ordinary spaces: one patch with the exact price: expected [ { price: NaN } ] to deeply equal [ { price: 20000000000 } ]
+proved     C1-closed-read (SEC-DB-X-CLOSED-READ-DENY)
+           -> AssertionError: a guest (anon, no session): the archived listing is not readable: expected [ { …(3) } ] to deeply equal []
+proved     C2-listing-checks (SEC-DB-X-LISTING-CHECKS-DENY)
+           -> AssertionError: a title of 4 characters: refused with a check violation: expected undefined to be '23514' // Object.is equality
+9 of 9 proved.
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,29 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T13:55:40.054Z
+command: npx eslint src/modules/listings/validations/index.ts src/modules/listings/domain/priceDigits.ts src/modules/listings/domain/__tests__/priceDigits.test.ts src/modules/listings/lib/listingAccessState.ts src/modules/listings/components/ListingAccessRestrictedView.tsx src/modules/listings/components/ListingFormShell.tsx src/modules/listings/components/ListingFormShellView.tsx src/stories/patterns/mantine/ListingAccessRestrictedView.stories.tsx src/app/**/listings/**/*.tsx src/app/**/listings/**/*.ts src/modules/listings/actions/__tests__ src/modules/listings/components/__tests__ src/tests/integration
+---- output ----
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\listingImages.security.test.ts
+  34:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\updateListing.security.test.ts
+  32:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\updateListingGallery.security.test.ts
+  24:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  54:105  warning  '_c' is defined but never used                @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\components\__tests__\ListingGallery.portal.smoke.test.tsx
+  216:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\tests\integration\accessHardening.integration.test.ts
+  59:5  warning  Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax')
+
+✖ 6 problems (0 errors, 6 warnings)
+  0 errors and 2 warnings potentially fixable with the `--fix` option.
+
+
+---- end ----
+EXIT_CODE=0

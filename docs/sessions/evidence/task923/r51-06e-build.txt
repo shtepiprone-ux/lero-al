@@ -1,0 +1,298 @@
+# r51-06e-build.txt: Task 923 Revision 51, R156
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm run build
+started: 2026-10-25T12:53:55.466Z
+--- stdout ---
+
+> lero-al@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.18
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · clientTraceMetadata
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 82s
+   Linting and checking validity of types ...
+
+./src/components/admin/AdminUsersTableView.tsx
+139:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+287:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+93:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+94:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+95:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+98:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+102:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+106:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+110:69  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+114:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+118:62  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+122:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+126:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+127:49  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+133:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+139:66  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+142:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+153:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+161:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+165:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+169:48  Warning: '_component' is defined but never used.  @typescript-eslint/no-unused-vars
+169:71  Warning: '_underline' is defined but never used.  @typescript-eslint/no-unused-vars
+169:86  Warning: '_c' is defined but never used.  @typescript-eslint/no-unused-vars
+169:98  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+197:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+198:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+200:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+201:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+207:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/auth/__tests__/CaptchaWidget.language.test.tsx
+36:75  Warning: '_ref' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/layout/__tests__/headerFooterContainers.test.tsx
+180:53  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+193:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+194:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+195:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+221:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+223:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/design-system/mantine/patterns/MantinePagination.tsx
+285:5  Warning: Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps').
+
+./src/design-system/mantine/patterns/__tests__/MantineDashboardDonut.size.test.tsx
+7:10  Warning: 'theme' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/lib/auth/safeRedirect.ts
+12:3  Warning: Unused eslint-disable directive (no problems were reported from 'no-control-regex').
+
+./src/lib/auth/staffAccess.integration.test.ts
+47:3  Warning: Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax').
+
+./src/lib/security/safeUrl.ts
+9:1  Warning: Unused eslint-disable directive (no problems were reported from 'no-control-regex').
+
+./src/modules/admin/actions/index.ts
+495:3  Warning: Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax').
+
+./src/modules/auth/actions/recovery.ts
+45:3  Warning: Unused eslint-disable directive (no problems were reported from 'no-control-regex').
+
+./src/modules/auth/components/ResetPasswordClient.tsx
+24:10  Warning: 'userEmail' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/modules/auth/components/__tests__/authClientParts.test.tsx
+7:24  Warning: 'fireEvent' is defined but never used.  @typescript-eslint/no-unused-vars
+16:76  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:80  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+32:10  Warning: 'LISTING_STATUS_COLOR' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/modules/listings/actions/__tests__/listingImages.security.test.ts
+34:130  Warning: '_images' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/modules/listings/actions/__tests__/updateListing.security.test.ts
+32:130  Warning: '_images' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/modules/listings/actions/__tests__/updateListingGallery.security.test.ts
+24:130  Warning: '_images' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+54:105  Warning: '_c' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx
+216:5  Warning: Unused eslint-disable directive (no problems were reported from 'no-bitwise').
+
+./src/modules/listings/lib/__tests__/visibility.test.ts
+3:32  Warning: 'vi' is defined but never used.  @typescript-eslint/no-unused-vars
+4:13  Warning: 'visibilityModule' is defined but never used.  @typescript-eslint/no-unused-vars
+184:11  Warning: 'original' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/tests/integration/accessHardening.integration.test.ts
+59:5  Warning: Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax').
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/43) ...
+   Generating static pages (10/43) 
+   Generating static pages (21/43) 
+   Generating static pages (32/43) 
+ ✓ Generating static pages (43/43)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                      385 B         186 kB
+├ ƒ /_not-found                          1.16 kB         187 kB
+├ ƒ /[locale]                            6.75 kB         687 kB
+├ ƒ /[locale]/[slug]                       349 B         363 kB
+├ ƒ /[locale]/auth/confirm-email         2.02 kB         193 kB
+├ ƒ /[locale]/auth/login                 1.34 kB         278 kB
+├ ƒ /[locale]/auth/register              1.34 kB         278 kB
+├ ƒ /[locale]/auth/reset-password        2.79 kB         604 kB
+├ ƒ /[locale]/auth/verified               3.1 kB         260 kB
+├ ƒ /[locale]/cabinet                     151 kB         835 kB
+├ ƒ /[locale]/cabinet/statistics         8.38 kB         509 kB
+├ ƒ /[locale]/ci/click-shield-modal      9.09 kB         276 kB
+├ ƒ /[locale]/contact                    7.18 kB         232 kB
+├ ƒ /[locale]/favorites                  5.99 kB         622 kB
+├ ƒ /[locale]/listings                   12.3 kB         697 kB
+├ ƒ /[locale]/listings/[slug]            3.29 kB         728 kB
+├ ƒ /[locale]/listings/[slug]/edit       6.68 kB         281 kB
+├ ƒ /[locale]/listings/create            1.47 kB         253 kB
+├ ƒ /admin                               14.5 kB         490 kB
+├ ƒ /admin/companies                       13 kB         333 kB
+├ ƒ /admin/currency                      7.28 kB         411 kB
+├ ƒ /admin/email-templates               13.2 kB         272 kB
+├ ƒ /admin/footer                        16.3 kB         254 kB
+├ ƒ /admin/inquiries                       384 B         186 kB
+├ ƒ /admin/inquiries/sales                 394 B         626 kB
+├ ƒ /admin/inquiries/support               393 B         626 kB
+├ ƒ /admin/legal                           384 B         186 kB
+├ ƒ /admin/listings                      12.2 kB         638 kB
+├ ƒ /admin/listings/[id]/preview         2.19 kB         726 kB
+├ ƒ /admin/locations                     8.77 kB         281 kB
+├ ƒ /admin/pages                          166 kB         792 kB
+├ ƒ /admin/permissions                   4.64 kB         624 kB
+├ ƒ /admin/popular-locations             12.3 kB         280 kB
+├ ƒ /admin/property-types                  13 kB         320 kB
+├ ƒ /admin/reports                       7.12 kB         411 kB
+├ ƒ /admin/settings                       6.5 kB         245 kB
+├ ƒ /admin/support                       11.1 kB         630 kB
+├ ƒ /admin/users                         6.48 kB         625 kB
+├ ƒ /admin/users/[id]                      398 B         692 kB
+├ ƒ /admin/users/new                       398 B         692 kB
+├ ƒ /api/auth-email-hook                   385 B         186 kB
+├ ƒ /api/auth/me                           384 B         186 kB
+├ ƒ /api/cron/inactivity                   385 B         186 kB
+├ ƒ /api/cron/listing-activity             384 B         186 kB
+├ ƒ /api/cron/listings-expiry              385 B         186 kB
+├ ƒ /api/cron/price-alerts                 385 B         186 kB
+├ ƒ /api/cron/saved-searches               384 B         186 kB
+├ ○ /api/exchange-rate                     384 B         186 kB          1h      1y
+├ ƒ /api/listings                          385 B         186 kB
+├ ƒ /api/listings/[slug]/view              385 B         186 kB
+├ ƒ /api/presence                          384 B         186 kB
+├ ƒ /api/property-types                    385 B         186 kB
+├ ƒ /api/upload-avatar                     385 B         186 kB
+├ ƒ /api/upload-cms-image                  385 B         186 kB
+├ ƒ /api/upload-company-logo               385 B         186 kB
+├ ƒ /api/upload-popular-location-photo     385 B         186 kB
+├ ƒ /auth/callback                         385 B         186 kB
+├ ƒ /auth/confirm                          385 B         186 kB
+├ ○ /robots.txt                            384 B         186 kB
+└ ● /sitemap/[__metadata_id__]             385 B         186 kB
+    └ /sitemap/0.xml
++ First Load JS shared by all             185 kB
+  ├ chunks/3434-884ccdf58d0b8301.js       126 kB
+  ├ chunks/4bd1b696-bc62c0f5edf56f0e.js  54.4 kB
+  └ other shared chunks (total)          5.37 kB
+
+
+ƒ Middleware                              167 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+--- stderr ---
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (103kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (105kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+
+--- exit code: 0 ---

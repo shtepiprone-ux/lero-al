@@ -125,11 +125,14 @@ Forbidden: arbitrary spacing values (`p-[13px]`, `gap-[7px]`, `mt-[22px]`) for l
 ## §6 — Typography + text-wrapping rules
 
 1. Type scale is the Tailwind default plus a `2xl:` step for large headings: e.g. section H2 = `text-xl sm:text-2xl 2xl:text-3xl`. Older pages that stop at `sm:text-2xl` are to be extended, not forked.
-2. **Every flex row containing an icon + a translatable label MUST carry `min-w-0`** on the text element (and the row), so labels can shrink/ellipsize rather than push siblings off-screen. This is the #1 recurring overflow defect.
+2. **Every flex row containing an icon + a translatable label MUST carry `min-w-0`** on the text element (and the row), so labels can wrap/reflow rather than push siblings off-screen. This does not authorize ellipsis.
 3. Truncation vs wrapping:
-   - **`truncate`** — single-line labels in dense rows (table cells, chips, nav). Must always sit in a `min-w-0` parent or it does nothing.
-   - **`line-clamp-N`** — multi-line summaries (card descriptions, listing titles in grids).
-   - **Never** use `truncate`/`overflow-hidden` to mask a layout-overflow bug; fix the layout (`min-w-0`, `flex-wrap`).
+   - **Semantic user content** — names, titles, labels, values, summaries, translated copy and actions — wraps in
+     full; use `min-w-0`, `break-words`/`break-all` where a token requires it, `flex-wrap`, or the selected GR-3j
+     presentation. Do not use `truncate`, `line-clamp-N`, ellipsis or hidden overflow.
+   - **Compact controls/tokens** — follow GR-3j's `inline-control` profile and need an explicit owner decision if
+     their complete text is not always visible/reachable. A dense row is not an exception.
+   - **Never** use clipping to mask a layout-overflow bug; reflow, stack or change the presentation.
 4. Longest-locale rule: **uk** (Ukrainian) is the overflow stress locale; **sq/it** also run long. A label that fits in `en` is not proof. Verify uk at 320.
 5. Numbers/prices/dates: never truncate a price or status; wrap the row instead (`flex-wrap`) so the value stays fully visible.
 
@@ -341,7 +344,8 @@ Every `Select` trigger and `Combobox` button-variant trigger MUST display its se
 1. Card = the Card primitive (or a `MantineDataTableToCards` `CardConfig` card). Padding `p-4` (or `p-3` compact). No inline ad-hoc card `<div>` patterns (`admin/page.tsx`, `CabinetShell` inline cards are migration targets).
 2. Grid = `grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 lg:gap-6` for catalog/listing surfaces; tune columns to content but ALWAYS define a `2xl:` step.
 3. Cards must not fix a pixel width; they fill their grid track (`w-full min-w-0`).
-4. Card internal rows obey §6 (`min-w-0` + truncate/line-clamp).
+4. Card internal rows obey §6 and GR-3j: full semantic text wraps and the compact record presentation reflows; it
+   never clamps or truncates to preserve a desktop row.
 
 ---
 
@@ -372,8 +376,9 @@ Every `Select` trigger and `Combobox` button-variant trigger MUST display its se
 ❌ Arbitrary breakpoints: md:[min-width:900px], min-[940px]:                                 (use canonical tokens)
 ❌ Arbitrary layout widths: w-[937px], max-w-[1100px], min-w-[640px] on content columns      (use a container)
 ❌ Arbitrary spacing for rhythm: p-[13px], gap-[7px], mt-[22px]
-❌ overflow-hidden / truncate used to hide a layout-overflow bug (fix min-w-0 / flex-wrap)
-❌ overflow-x-auto on toolbars/filter rows (acceptable ONLY for tables)
+❌ overflow-hidden / truncate used to hide a layout-overflow bug (reflow/stack via GR-3j)
+❌ overflow-x-auto on toolbars/filter rows or data tables on compact screens (a genuinely two-dimensional object needs
+  the documented GR-3j owner exception)
 ❌ Raw <table> or card-imitating <div> rows outside AdminTable in admin
 ❌ Hand-rolled fixed inset-0 mobile overlay instead of Sheet/Dialog
 ❌ Emergency z-index: z-[999], z-[9999]
@@ -536,7 +541,7 @@ ANY of the following = FAIL (route back, do not approve):
 
 1. Every user-facing string exists in all four locales with an identical key set (no key present in one locale only).
 2. Layout is verified against the **longest** rendered locale per string, not the shortest.
-3. Icon+label rows carry `min-w-0`; labels `truncate`/`line-clamp`, never push siblings.
+3. Icon+label rows carry `min-w-0`; semantic labels wrap/reflow and never push siblings or get clipped.
 4. No fixed-width content column that cannot accommodate a longer locale (use containers + fluid widths).
 5. Numeric/price/status values are never truncated; their rows wrap.
 6. Buttons/chips with translatable labels size to content with a sane `min-w` only where needed (badges), and wrap in their toolbar rather than overflow.
@@ -544,7 +549,7 @@ ANY of the following = FAIL (route back, do not approve):
 8. Form labels and helper text wrap; inputs keep ≥44px touch height in every locale.
 9. Tabs labels in long locales collapse/scroll within the Tabs primitive, never break the row.
 10. Table headers in long locales use the column-visibility tokens (§10) to drop non-critical columns rather than overflow.
-11. Card titles use `line-clamp`; meta rows use `min-w-0`.
+11. Card titles and meta rows use full-content reflow; compact meta uses label → value stacking under GR-3j.
 12. Empty/error/loading copy is localized in all four and verified for wrapping at 320.
 13. Date/number formatting follows locale; layout tolerates the longest format.
 14. RTL is not in scope (all four locales are LTR) — but no rule may assume a fixed text direction width.
@@ -1788,8 +1793,8 @@ section adds the complete, enforceable rule for every form of responsive hardcod
 
 - `overflow-hidden` applied to hide a responsive layout defect — fix the root cause (`min-w-0`,
   `flex-wrap`, `flex-1`, or a §4 container).
-- `whitespace-nowrap` on localized labels unless paired with an approved `truncate`/`line-clamp`
-  AND a `min-w-0` parent (§6.3).
+- `whitespace-nowrap`, `truncate` or `line-clamp` on semantic/localized text to make a responsive layout fit. Use
+  `min-w-0` plus wrapping/reflow or the selected GR-3j presentation instead.
 
 ### 24.5 — Capability shrinkage and silent removal
 

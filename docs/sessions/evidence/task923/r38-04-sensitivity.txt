@@ -1,0 +1,12 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T15:53:45.678Z
+command: node docs/sessions/evidence/task923/r38-04-sensitivity.cjs
+---- output ----
+proved     S1-contact-card-key-removed (SEC-X-FE-CONTACT-SESSION-RESET)
+           -> SEC-X-FE-CONTACT-SESSION-RESET: AssertionError: the new session shows no number link: expected <a …(6)><span …(2)>…(2)</span></a> to be null
+1 of 1 proved.
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,16 @@
+# Review 12: Opus's run of AC39's files plus clientSinks.test.ts
+platform: MINGW64_NT-10.0-26300 / node v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+command: npx vitest run src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/modules/auth/components/AuthSheet.banned.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx src/components/layout/__tests__/Header.google.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/lib/auth/__tests__/googleIdentity.test.ts src/lib/auth/__tests__/rememberedGoogleAccount.test.ts src/lib/auth/__tests__/googlePopup.test.ts src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts src/app/api/auth/me/__tests__/route.security.test.ts src/__tests__/security/clientSinks.test.ts
+     × every window.open passes noopener 10ms
+   × [SEC-S11-SRV-DENY] No component opens a new tab without rel noopener 11ms
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/__tests__/security/clientSinks.test.ts > new-tab links > every window.open passes noopener
+AssertionError: src/lib/auth/googlePopup.ts: window.open(url, POPUP_NAME, POPUP_FEATURES): expected [ Array(1) ] to deeply equal []
++   "src/lib/auth/googlePopup.ts: window.open(url, POPUP_NAME, POPUP_FEATURES)",
+ FAIL  src/__tests__/security/clientSinks.test.ts > [SEC-S11-SRV-DENY] No component opens a new tab without rel noopener
+AssertionError: src/lib/auth/googlePopup.ts: window.open: expected [ Array(1) ] to deeply equal []
++   "src/lib/auth/googlePopup.ts: window.open",
+ Test Files  1 failed | 13 passed (14)
+      Tests  2 failed | 157 passed (159)
+exit code: 1

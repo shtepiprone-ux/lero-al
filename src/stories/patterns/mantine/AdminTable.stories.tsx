@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Badge, Group, Text, useMantineTheme } from '@mantine/core'
+import { Group, useMantineTheme } from '@mantine/core'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import { storyT } from '@/stories/_storyI18n'
 import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 import { FIXTURE_CURRENCIES, FIXTURE_LISTINGS } from '@/stories/fixtures/admin.fixtures'
-import type { DBCurrency } from '@/types/database'
+import type { DBCurrency, ListingStatus } from '@/types/database'
 
 // Task 877 — the shared admin data list, a thin adapter over the canonical `MantineDataTableToCards`
 // (GR-3a: CREATE — the legacy `Admin/AdminTable` Story was deleted with the legacy card list). Cards below 640px,
@@ -36,36 +37,36 @@ function localeOf(context: { globals?: Record<string, unknown> } | undefined): s
 function columnsFor(l: string): AdminTableColumn<DBCurrency>[] {
   const t = (key: string) => storyT(l, `admin.currency.currencies.${key}`)
   return [
-    { key: 'code', header: t('code'), cell: c => <Text size="sm" fw={600} ff="monospace">{c.code}</Text> },
-    { key: 'symbol', header: t('symbol'), cell: c => <Text size="sm" c="gray.7">{c.symbol}</Text> },
-    { key: 'name', header: t('name_en'), cell: c => <Text size="sm" c="gray.7">{c.name_en || c.name_sq}</Text> },
+    { key: 'code', header: t('code'), cell: c => c.code },
+    { key: 'symbol', header: t('symbol'), cell: c => c.symbol },
+    { key: 'name', header: t('name_en'), cell: c => c.name_en || c.name_sq },
     {
       key: 'is_active',
       header: t('is_active'),
       cell: c => (
         <Group gap="xs" wrap="nowrap">
-          {c.is_default && <Badge size="sm" variant="light" color="brand">{t('default_badge')}</Badge>}
-          <Badge size="sm" variant="light" color={c.is_active ? 'green' : 'gray'}>
+          {c.is_default && <MantineBadge variant="tone" tone="brand">{t('default_badge')}</MantineBadge>}
+          <MantineBadge variant="status" entity="currency" value={c.is_active ? 'active' : 'inactive'}>
             {c.is_active ? t('is_active') : t('deactivate')}
-          </Badge>
+          </MantineBadge>
         </Group>
       ),
     },
-    { key: 'decimals', header: t('decimals'), visibility: 'lg', cell: c => <Text size="sm" c="gray.7">{c.decimals}</Text> },
+    { key: 'decimals', header: t('decimals'), visibility: 'lg', cell: c => c.decimals },
   ]
 }
 
 function cardFor(l: string) {
   const t = (key: string) => storyT(l, `admin.currency.currencies.${key}`)
   return (c: DBCurrency) => ({
-    title: <Text size="sm" fw={600} ff="monospace" component="span">{c.code}</Text>,
-    subtitle: <Text size="sm" c="dimmed" component="span">{c.symbol} · {c.name_en || c.name_sq}</Text>,
+    title: c.code,
+    subtitle: `${c.symbol} · ${c.name_en || c.name_sq}`,
     meta: (
       <Group gap="xs" wrap="wrap">
-        {c.is_default && <Badge size="sm" variant="light" color="brand">{t('default_badge')}</Badge>}
-        <Badge size="sm" variant="light" color={c.is_active ? 'green' : 'gray'}>
+        {c.is_default && <MantineBadge variant="tone" tone="brand">{t('default_badge')}</MantineBadge>}
+        <MantineBadge variant="status" entity="currency" value={c.is_active ? 'active' : 'inactive'}>
           {c.is_active ? t('is_active') : t('deactivate')}
-        </Badge>
+        </MantineBadge>
       </Group>
     ),
   })
@@ -174,10 +175,10 @@ export const WrappedTitleColumn: Story = {
         header: t('col_listing'),
         width: theme.other.layout.tableTitleColumnWidth,
         wrap: true,
-        cell: r => <Text size="sm" fw={500} lineClamp={2}>{r.title}</Text>,
+        cell: r => r.title,
       },
-      { key: 'status', header: t('col_status'), cell: r => <Badge size="sm" variant="light" color="gray">{statusLabel(r.status)}</Badge> },
-      { key: 'agent', header: t('col_agent'), visibility: 'lg', cell: r => <Text size="xs" c="dimmed">{r.agent}</Text> },
+      { key: 'status', header: t('col_status'), cell: r => <MantineBadge variant="status" entity="listing" value={r.status as ListingStatus}>{statusLabel(r.status)}</MantineBadge> },
+      { key: 'agent', header: t('col_agent'), visibility: 'lg', cell: r => r.agent },
     ]
     return (
       <StoryPageGutter>
@@ -188,9 +189,9 @@ export const WrappedTitleColumn: Story = {
           onRowClick={() => {}}
           ariaLabel={t('col_listing')}
           cardRow={r => ({
-            title: <Text size="sm" fw={500} lineClamp={2}>{r.title}</Text>,
-            subtitle: <Badge size="sm" variant="light" color="gray">{statusLabel(r.status)}</Badge>,
-            meta: <Text size="xs" c="dimmed">{r.agent}</Text>,
+            title: r.title,
+            badges: <MantineBadge variant="status" entity="listing" value={r.status as ListingStatus}>{statusLabel(r.status)}</MantineBadge>,
+            meta: r.agent,
           })}
           emptyState={t('empty')}
         />

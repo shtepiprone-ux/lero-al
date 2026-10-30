@@ -1,0 +1,12 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al
+command: npx vitest run
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  155 passed (155)
+      Tests  2556 passed (2556)
+   Start at  10:32:47
+   Duration  59.82s (transform 14.53s, setup 25.56s, import 359.47s, tests 225.07s, environment 260.02s)
+
+EXIT_CODE=0

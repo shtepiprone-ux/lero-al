@@ -1,0 +1,18 @@
+{
+ "mantine-primitives-modal--delete-confirm-password~delete-google-ready": {
+  "rows": 32,
+  "controls": 12,
+  "text": 32
+ },
+ "patterns-mantine-authsheet--login-validation-error": {
+  "rows": 32,
+  "controls": 12,
+  "text": 32
+ },
+ "patterns-mantine-authsheet--login": {
+  "rows": 32,
+  "controls": 12,
+  "text": 32
+ }
+}
+failing rows 0 total 390

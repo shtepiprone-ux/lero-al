@@ -1,5 +1,10 @@
 # Reference research gate (GR-7)
 
+**Opus precedence, owner decision 2026-10-20:** first apply `canonical-component-reuse.md` and inspect ready Mantine
+components/Stories. Covered canonical design is inherited without a fresh external audit, measurement, or GR-7
+audit receipt. The research requirements below apply to uncovered decisions/reproduced defects; scope mixed tasks
+accordingly. A ready component is not an excuse to skip evidence of changed task behavior or integration.
+
 Before task design, implementation, or review can rely on a UI/reference claim, complete the current-session GR-7
 audit. Start with `docs/research/references/<newest date>/`, then live-check every relied-on page for change.
 
@@ -16,4 +21,4 @@ the required GR-7 retraction and restart the affected preflight. Detailed mandat
 For a visible responsive/adaptive decision, this standing product-reference audit is not sufficient. Also inspect the
 applicable primary source in `shared/mobile-adaptation-contract.md`: W3C Reflow, Apple HIG Layout, and Android Adapt
 layouts are the default basis. Record the source URL, literal guidance, selected pattern ID, and why the product
-surface fits it. Current Stories/repository code can reveal a bug but cannot be cited as the pattern authority.
+surface fits it. Inherited ready adaptations follow the Opus exception above; a newly selected pattern needs this basis.

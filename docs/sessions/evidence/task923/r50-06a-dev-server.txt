@@ -1,0 +1,14 @@
+# R150-R155 AC150 r50-06a-dev-server: read-only server check, counts printed, before the full vitest run (the two commands of rv50-06-dev-server.txt, in r50-06-dev-server.ps1)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: powershell -NoProfile -ExecutionPolicy Bypass -File docs/sessions/evidence/task923/r50-06-dev-server.ps1
+NODE_PATH: (unset)
+started: 2026-10-25T12:00:05.195Z
+--- stdout ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

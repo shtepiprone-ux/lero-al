@@ -1,0 +1,6 @@
+platform: win32 10.0.26300; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-42/rev42-04-header-notice-probe.mjs self-test
+{"variant":"on","notice":{"rhythm":16,"gap":16,"width":358,"parentWidth":358},"off":false,"narrow":false}
+{"variant":"off","notice":{"rhythm":16,"gap":20,"width":358,"parentWidth":358},"off":true,"narrow":false}
+{"variant":"narrow","notice":{"rhythm":16,"gap":16,"width":179,"parentWidth":358},"off":false,"narrow":true}
+self-test: PASS
+exit code: 0

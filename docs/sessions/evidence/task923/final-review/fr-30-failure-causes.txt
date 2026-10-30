@@ -1,0 +1,82 @@
+# fr-30 (Opus) 2026-10-28T22:15:02.281Z win32 node v22.22.3; total 489, failed 222, passed 267
+
+3 src/__tests__/instrumentation.test.ts
+   3x AssertionError: expected false to be true // Object.is equality
+
+4 src/modules/__tests__/rls-write-guards.smoke.test.ts
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { id: 1 }
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'unique violation' }
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal {}
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+
+7 src/components/layout/__tests__/headerFooterContainers.test.tsx
+   7x Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+
+4 src/lib/auth/__tests__/authCore.security.test.ts
+   2x AssertionError: expected 'account_blocked' to be null
+   1x AssertionError: expected null to be 'admin' // Object.is equality
+   1x AssertionError: expected null to be 'moderator' // Object.is equality
+
+1 src/lib/auth/__tests__/controller.test.ts
+   1x Error: The test made 1 unexpected fetch call(s) that it did not mock: /api/auth/me
+
+2 src/lib/auth/__tests__/sessionMiddleware.test.ts
+   2x AssertionError: expected true to be false // Object.is equality
+
+16 src/modules/companies/__tests__/companyActions.security.test.ts
+   6x AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'forbidden' }
+   6x AssertionError: expected 'unauthorized' to match /company_name_too_/
+   4x AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+1 src/modules/admin/actions/__tests__/adminLocale.test.ts
+   1x AssertionError: expected 'sq' to be 'uk' // Object.is equality
+
+53 src/modules/admin/actions/__tests__/adminOperations.security.test.ts
+   24x Error: unauthenticated
+   20x Error: forbidden
+   3x Error: expected [Function] to throw error including 'forbidden' but got 'unauthenticated'
+   2x AssertionError: expected { error: 'forbidden' } to deeply equal { ok: true }
+
+8 src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+   4x AssertionError: expected { error: 'forbidden' } to deeply equal {}
+   2x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'invalid_internal_link' }
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'transient' }
+   1x AssertionError: expected "vi.fn()" to be called at least once
+
+34 src/modules/admin/actions/__tests__/permissions.security.test.ts
+   13x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'validation' }
+   4x Error: unauthenticated
+   4x AssertionError: expected 'never asked' to be 20 // Object.is equality
+   3x AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+5 src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts
+   4x AssertionError: expected { ok: false, reason: 'forbidden' } to deeply equal { ok: true }
+   1x TypeError: Cannot read properties of undefined (reading 'filters')
+
+10 src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts
+   5x AssertionError: expected { error: 'forbidden' } to deeply equal {}
+   2x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'invalid_status' }
+   1x AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'conflict' }
+
+8 src/modules/listings/actions/__tests__/reportListing.smoke.test.ts
+   7x AssertionError: expected { error: 'forbidden' } to deeply equal {}
+   1x AssertionError: expected true to be false // Object.is equality
+
+32 src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts
+   17x AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'validation' }
+   7x AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'forbidden' }
+   3x AssertionError: expected 'unauthorized' to be undefined
+   2x AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+26 src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts
+   18x AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'validation' }
+   4x AssertionError: expected { error: 'unauthenticated' } to deeply equal {}
+   2x AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'forbidden' }
+   1x AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'save_failed' }
+
+8 src/modules/notifications/lib/__tests__/mutations.smoke.test.ts
+   2x AssertionError: expected "vi.fn()" to be called with arguments: [ 'notifications' ]
+   2x AssertionError: expected "vi.fn()" to be called once, but got 0 times
+   2x AssertionError: expected "error" to be called once, but got 0 times
+   1x AssertionError: expected [] to deeply equal [ [ 'id', 'n-1' ], …(1) ]

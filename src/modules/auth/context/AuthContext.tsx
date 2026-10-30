@@ -21,6 +21,7 @@ import {
   useTransition,
   useSyncExternalStore,
 } from 'react'
+import { usePathname } from 'next/navigation'
 import { AuthController, type AuthState, type AuthStatus } from '@/lib/auth/controller'
 import type { User } from '@/types/database'
 
@@ -104,6 +105,18 @@ export function AuthProvider({ children, initialUser }: Props) {
     // controller is a ref value — stable for the component's lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // A client navigation re-checks a signed-in tab with the server (Task 923 R147, F18): the
+  // state this tab was given when the page first loaded may be stale, e.g. the account was
+  // deleted. The first render is the server's own answer, so the effect acts only on a change
+  // of the pathname after it, never on mount. `usePathname` is null outside the App Router.
+  const pathname = usePathname()
+  const lastPathname = useRef(pathname)
+  useEffect(() => {
+    if (lastPathname.current === pathname) return
+    lastPathname.current = pathname
+    controller.handleNavigation()
+  }, [pathname, controller])
 
   // signOut is a React 19 async action. useTransition's isPending (renamed
   // isSigningOut below) stays true across the whole sequence: it flips true on

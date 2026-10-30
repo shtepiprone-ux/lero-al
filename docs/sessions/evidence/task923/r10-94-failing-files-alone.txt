@@ -1,0 +1,29 @@
+platform: win32 10.0.26300.0 node v22.22.3
+command: npx vitest run <the 16 files that failed in the whole suite of r10-93, alone> --reporter=dot
+(run without an output redirection, because the security hook reads a shell command that names product test paths together with a redirection as a write to those paths; this is the verbatim summary of the run)
+
+ Test Files  16 failed (16)
+      Tests  216 failed | 170 passed (386)
+EXIT_CODE=1
+
+files (the same 16 as in r10-93-npm-test.txt):
+src/lib/auth/__tests__/authCore.security.test.ts
+src/lib/auth/__tests__/permissions.test.ts
+src/modules/__tests__/rls-write-guards.smoke.test.ts
+src/modules/admin/actions/__tests__/adminLocale.test.ts
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts
+src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+src/modules/admin/actions/__tests__/permissions.security.test.ts
+src/modules/cabinet/statistics/__tests__/access.test.ts
+src/modules/companies/__tests__/companyActions.security.test.ts
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts
+
+result: the same 216 tests fail when the 16 files run alone as in the whole suite, so they are deterministic failures and not load flakes.
+import search (Grep over src, the 16 files): none of them references MantineDrawer, ListingsFilters, Table.stories or filtersRangeDatePicker (the Revision 10 change set), and none is in the write set of Revision 7 (rendered-state-census, check-mojibake).
+cause: UNKNOWN (not examined: outside the write set). INFERENCE only: the sampled failures answer `unauthorized` from guards of admin, auth, companies, listings, locations and notifications actions, the area that the role-guard change of R44 touched.

@@ -305,6 +305,16 @@ export interface ListingContactEvent {
   created_at: string
 }
 
+// Task 923 R125 — one row per number reveal, service-role-only; never read from the client.
+export interface ListingContactReveal {
+  id: number
+  viewer_id: string
+  listing_id: string
+  channel: 'call' | 'whatsapp'
+  requester_ip: string | null
+  created_at: string
+}
+
 // Task 849 — service-role-only aggregate; never read from the client.
 export interface ListingActivityDaily {
   listing_id: string
@@ -517,20 +527,6 @@ export interface DBCurrency {
   is_active: boolean
   is_default: boolean
   decimals: number
-  created_at: string
-  updated_at: string
-}
-
-export interface DBExchangeProvider {
-  id: number
-  name: string
-  endpoint_url: string
-  api_key: string | null
-  refresh_interval_min: number
-  priority: number
-  mode: 'auto' | 'manual' | 'hybrid'
-  is_enabled: boolean
-  notes: string | null
   created_at: string
   updated_at: string
 }

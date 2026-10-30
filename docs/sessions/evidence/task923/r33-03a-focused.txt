@@ -1,0 +1,18 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T19:27:20.701Z
+command: npx vitest run src/lib/captcha/__tests__/verifyTurnstile.test.ts src/modules/auth/actions/__tests__/captcha.security.test.ts src/components/auth/__tests__/CaptchaWidget.language.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/__tests__/security/serverEntryGuards.test.ts src/modules/listings/actions/__tests__/visitorActions.security.test.ts src/modules/listings/actions/__tests__/contactEvents.test.ts src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts src/modules/listings/actions/contactSession.security.test.ts src/modules/listings/actions/submitListingInquiry.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.security.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  19 passed (19)
+      Tests  365 passed (365)
+   Start at  21:27:21
+   Duration  9.83s (transform 4.00s, setup 1.98s, import 22.64s, tests 8.64s, environment 11.76s)
+
+
+---- end ----
+EXIT_CODE=0

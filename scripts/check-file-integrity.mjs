@@ -130,9 +130,14 @@ function checkNulBytes(buf) {
   return `NUL bytes present (${count} byte${count !== 1 ? 's' : ''}) — file is corrupt`;
 }
 
+// Owner decision 2026-10-17 (Task 923 review 8): retained session evidence is a frozen record (as O790-1 for vitest),
+// so the BOM rule alone is not applied under docs/sessions/evidence/. NUL, JSON, node --check and truncation still are.
+const BOM_EXEMPT_PREFIX = 'docs/sessions/evidence/';
+
 function checkBom(filePath, buf) {
   const ext = extname(filePath).toLowerCase();
   if (!SOURCE_EXTS.has(ext)) return null;
+  if (relative(ROOT, filePath).replaceAll('\\', '/').startsWith(BOM_EXEMPT_PREFIX)) return null;
   if (buf.length >= 3 && buf[0] === 0xEF && buf[1] === 0xBB && buf[2] === 0xBF) {
     return 'Stray UTF-8 BOM (EF BB BF) at start of source file';
   }

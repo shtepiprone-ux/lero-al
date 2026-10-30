@@ -17,3 +17,14 @@ export function createHash(): never {
 export function randomBytes(): never {
   throw new Error('node:crypto is unavailable in Storybook — this stub should never execute (called only inside a server action body, never during render).')
 }
+
+// Task 923 R38 — `createHmac` and `timingSafeEqual` (`src/lib/uploads/uploadGrant.ts`) reach Vite's static module graph through the company-registration
+// Stories (`createCompanyAction` in `src/modules/companies/actions.ts` makes the upload grant). Both are called only inside the server action body, never at
+// module init or render time — same never-invoked rationale as above.
+export function createHmac(): never {
+  throw new Error('node:crypto is unavailable in Storybook — this stub should never execute (called only inside a server action body, never during render).')
+}
+
+export function timingSafeEqual(): never {
+  throw new Error('node:crypto is unavailable in Storybook — this stub should never execute (called only inside a server action body, never during render).')
+}

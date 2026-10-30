@@ -336,7 +336,11 @@ migrated table.
 1. **No horizontal scroll.** Wherever the table renders as a table, the `ScrollArea` viewport has
    `scrollWidth ≤ clientWidth` at the **production** container width, in every locale. A horizontal scroll is never
    the way to fit a table.
-2. **Cards below `md`.** A table renders as cards below 768px (`cardsBelow="md"`). From 768 it must fit.
+2. **Cards below `md`.** A table renders as cards below 768px (`cardsBelow="md"`, the `MantineDataTableToCards` default,
+   Mantine `hiddenFrom` / `visibleFrom`). From 768 it must fit. **Owner decision 2026-10-18 (Task 923 review 9, D36), verbatim:**
+   *"я пропоную лишити таблиці до 768px, а потім перемикати їх на картки, бо багато таблиць ламається, якщо їх перемикати на 640Px
+   на картки"*, confirmed *"підтверджую для всіх таблиць"*. It replaces D24 (2026-10-17, *"Таблиці теж з 640px"*) for tables;
+   every other compact presentation keeps the 640px (`sm`) gate. No table passes `sm`.
    **Named exception, owner decision 2026-10-02 (Task 857 review 4), verbatim option chosen:** *"Cards to 1024 + dates
    merged (Recommended)"*. The table uses `cardsBelow="lg"` (cards below 1024) and must fit from 1024. The list
    currently holds one table: `AgentStatisticsView`. At a 678px card, no layout of that table that shows every value
@@ -368,10 +372,10 @@ migrated table.
   the same `AdminPageFrame` its route uses, with no `StoryPageGutter`.
 - A cabinet or public View renders full-screen in its own production container.
 
-**Check, before handoff and at review.** Run Playwright at 768, 1024, 1280 and 1440 × sq/en/uk/it. Record the card
-width, the table's `scrollWidth`, the viewport's `clientWidth`, and the first and last insets.
+**Check, before handoff and at review.** Run Playwright at 640, 700, 767, 768, 1024, 1280 and 1440 × sq/en/uk/it (639 must
+show cards). Record the card width, the table's `scrollWidth`, the viewport's `clientWidth`, and the first and last insets.
 
-`TABLE FIT CHECK — <story id>: 768 <card>/<table> · 1024 … · 1280 … · 1440 …; scroll: NONE; clipped: NONE; first/last inset 24/24; card width = production: yes.`
+`TABLE FIT CHECK — <story id>: 640 <card>/<table> · 700 … · 767 … · 768 … · 1024 … · 1280 … · 1440 …; scroll: NONE; clipped: NONE; first/last inset 24/24; card width = production: yes.`
 
 **Existing tables.** Task 857 (kickoff §18) brings every Mantine table into line. Task 859 handles
 `AdminSupportManager`. Task 916 handles the five legacy admin tables when it migrates them (Legal, Locations, Popular

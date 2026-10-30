@@ -7,9 +7,10 @@ import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
   MapPin, FileText, Settings, LogOut, ExternalLink, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp, PanelBottom,
 } from 'lucide-react'
-import { Stack, Text, NavLink, Badge, Group, Anchor, ScrollArea, useMantineTheme } from '@mantine/core'
+import { Stack, Text, NavLink, Group, Anchor, ScrollArea, useMantineTheme } from '@mantine/core'
 import { signOut } from '@/lib/auth/browser'
 import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 interface AdminSidebarProps {
   /** Called after a nav item is activated (Task 852 — closes the AppShell drawer below `lg`). */
@@ -86,11 +87,20 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarP
       <ScrollArea flex={1} mih={0} type="auto">
         <Stack gap="lg">
           <Group gap="xs" px="xs" wrap="nowrap">
-            <Anchor component={Link} href="/admin" underline="never" fw={700} size="md" c="brand" onClick={onNavigate}>
+            <Anchor
+              component={Link}
+              href="/admin"
+              underline="never"
+              fw={700}
+              size="md"
+              c="brand"
+              onClick={onNavigate}
+              styles={{ root: { display: 'inline-flex', alignItems: 'center', minHeight: theme.other.touchTarget, minWidth: theme.other.touchTarget } }}
+            >
               {brand}
             </Anchor>
             <Text fw={700} size="md">{tld}</Text>
-            <Badge size="xs" variant="light" color="brand" radius="sm">Admin</Badge>
+            <MantineBadge variant="tone" tone="brand" size="xs">{t('admin_badge')}</MantineBadge>
           </Group>
 
           <Stack gap="md">
@@ -106,7 +116,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarP
                     href={item.href}
                     active={isActive(item.href)}
                     color="brand"
-                    label={<Text size="sm" fw={500} truncate="end">{item.label}</Text>}
+                    label={<Text size="sm" fw={500}>{item.label}</Text>}
                     leftSection={<item.icon size={theme.other.iconSize.standard} />}
                     onClick={onNavigate}
                     styles={{ root: { minHeight: theme.other.touchTarget } }}
@@ -124,6 +134,7 @@ export function AdminSidebar({ onNavigate, siteName = 'Lero.al' }: AdminSidebarP
           component="a"
           href="/"
           target="_blank"
+          rel="noopener noreferrer"
           label={t('open_site')}
           leftSection={<ExternalLink size={theme.other.iconSize.standard} />}
           styles={{ root: { minHeight: theme.other.touchTarget } }}

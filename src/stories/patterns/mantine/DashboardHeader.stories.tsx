@@ -34,7 +34,7 @@ function PeriodSlot({ locale }: { locale: string }) {
   );
 }
 
-// Stale state: warning badge (icon + text) next to the last valid refresh time.
+// Stale state: text-only warning badge (D78-29: no icon in any badge) next to the last valid refresh time.
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
@@ -53,11 +53,11 @@ export const Default: Story = {
     );
   },
   parameters: { throwPlayFunctionExceptions: true },
-  // AC2 — the stale state shows the badge with an icon and the label text.
+  // AC2 — the stale state shows the text-only badge: the label text and no icon (D78-29).
   play: async ({ canvasElement }) => {
     const badge = canvasElement.querySelector('[class*="Badge-root"]');
     expect(badge).not.toBeNull();
-    expect(badge!.querySelector('svg')).not.toBeNull();
+    expect(badge!.querySelector('svg')).toBeNull();
     expect((badge!.textContent ?? '').trim().length).toBeGreaterThan(0);
   },
 };

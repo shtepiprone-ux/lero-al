@@ -1,0 +1,10 @@
+# Task 923 Review 50 rv50-01: listing_images columns and the public_id read; 2026-10-24T12:23:21.747Z
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-50/rv50-01-schema-probe.mjs
+--- stdout ---
+openapi HTTP 200 listing_images columns: id, listing_id, url, order, is_cover
+openapi HTTP 200 listings columns: id, user_id, location_id, slug, title, description, price, price_old, currency, listing_type, property_type, condition, wall_type, heating, rooms, bedrooms, bathrooms, toilets, area_gross, area_net, floor, total_floors, year_built, address, lat, lng, views_count, is_premium, status, expires_at, search_vector, created_at, updated_at, land_legal_status, land_zoning, land_development_potential, multi_storey_building, offer_type, purchase_conditions, public_id, premium_until, market_type, price_initial
+openapi HTTP 200 users columns: id, name, phone, whatsapp, avatar_url, role, user_type, company_name, is_verified, social_provider, created_at, last_name, status, block_reason, location_id, position, year_started, website, company_logo_url, deleted_at, location_request, preferred_currency, pending_email, last_seen_at, company_id, preferred_locale, inactivity_warning_sent_at, suspended_until, public_id
+listing_images eq public_id HTTP 400 42703 column listing_images.public_id does not exist
+CLOUDINARY_DELETE_MODE in .env.local: enabled
+--- exit code: 0 ---

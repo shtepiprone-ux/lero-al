@@ -1,0 +1,46 @@
+Task 923 Review 62, owner follow-up (2026-10-29): does each of the 21 database breaks of R168 make ITS test fail by an assertion?
+Method: read every break in docs/sessions/evidence/task923/security/db-break.cjs:88-141, the mapped test body, its beforeAll/fixtures, and the live catalog
+(read-only, rv62-27-break-efficacy-catalog.json; rv62-28-price-rule.txt). A break is EFFECTIVE when the first assertion it reaches is the test's own assertion of the protection,
+and no other layer (a second policy, a column privilege, another trigger or CHECK) still gives the asserted answer.
+Platform: win32; cwd C:\Claude_Code_Projects\lero-al; catalog script exit 0. No DDL and no DML were run (READ ONLY transactions).
+
+Catalog facts used:
+- users, listings, listing_images: anon/authenticated hold UPDATE/INSERT on every column (users 29/29, listings 43/43, listing_images 5/5): no column privilege refuses.
+- UPDATE policies: "Users can update own profile" USING (auth.uid() = id); "Users can update own listings" USING (auth.uid() = user_id); restrictive blocked_account_* use caller_is_active().
+  So for an own row, only users_guard_protected / listings_guard_protected refuse the protected columns.
+- favorites, listings, listing_images, notifications, users: restrictive blocked_account_no_select/insert/update/delete = (select caller_is_active()).
+- "Listings viewable by everyone" USING (status in active/sold/rented OR auth.uid() = user_id); no other SELECT policy for anon on listings.
+- listing_contact_reveals, role_permissions, reauth_failures: anon/authenticated hold only REFERENCES, TRIGGER; RLS on, no policy.
+- storage.objects: no policy mentions the avatars bucket.
+- listings_price_rule() raises nothing (it sets price_initial / price_old only); listings_price_old_positive_check accepts price_old null.
+- notifications is in supabase_realtime with all its columns and no row filter, so the restore "add table" re-creates the same entry.
+- Supabase Storage docs, https://supabase.com/docs/guides/storage/security/access-control (read 2026-10-29): "the only RLS policy required for uploading objects is to grant the
+  INSERT permission to the storage.objects table." SELECT and UPDATE are needed only for upsert.
+- src/tests/integration/fixtures.ts:32 RUN starts with zz_synth_; :77-80 makeListing inserts slug `${RUN}-${tag}` and title `${RUN} ${tag}` and throws a plain Error on failure.
+
+| case | break | first assertion the break reaches | verdict |
+|---|---|---|---|
+| SEC-DB-S59-DENY | users_guard_protected disabled | 'role admin' update succeeds -> expect(own.error?.code).toBe('42501') fails | EFFECTIVE |
+| SEC-DB-S59-ALLOW | refuse UPDATE changing name to zz_synth_% | the session's rename (`${run.RUN} s59 renamed`) refused -> expect(update.error).toBeNull() fails; makeUser changes no name | EFFECTIVE |
+| SEC-DB-S61-DENY | listings_guard_protected disabled | 'status active' update succeeds -> toBe('42501') fails | EFFECTIVE |
+| SEC-DB-S61-ALLOW | refuse INSERT OR UPDATE of title zz_synth_% | run.makeListing(person.id,'pending','s61-allow') (test line 135) is itself refused: the fixture throws "fixture: could not create listing s61-allow", a plain Error, before line 138 | NOT EFFECTIVE (F29) |
+| SEC-DB-ACCESS-DENY | caller_is_active() true | the blocked account reads its own row -> toEqual([]) fails | EFFECTIVE |
+| SEC-DB-ACCESS-ALLOW | caller_is_active() false | the active account's own read is empty -> toEqual([{ id }]) fails | EFFECTIVE |
+| SEC-DB-REALTIME-DENY | caller_is_active() true | the blocked account receives the event after the block -> toEqual([first]) fails | EFFECTIVE |
+| SEC-DB-REALTIME-ALLOW | notifications dropped from supabase_realtime | no probe arrives -> expect(listening.ready).toBe(true) fails | EFFECTIVE |
+| SEC-DB-X-LISTING-CHECKS-DENY | listings_price_positive_check dropped | 'a price of 0' is stored -> toBe('23514') fails | EFFECTIVE |
+| SEC-DB-X-LISTING-CHECKS-ALLOW | refuse INSERT OR UPDATE of slug zz_synth_% | insertListing('chk-allow-long') refused -> expect(longest.error).toBeNull() fails (the test's first statement) | EFFECTIVE |
+| SEC-DB-X-IMAGE-URL-DENY | listing_images_url_prefix_check dropped | the session's example.com photo is stored -> toBe('23514') fails | EFFECTIVE |
+| SEC-DB-X-IMAGE-URL-ALLOW | refuse INSERT of url %zz-synth-% | makeListing adds no photo; the session's PHOTO_URL insert refused -> expect(added.error).toBeNull() fails | EFFECTIVE |
+| SEC-DB-X-AVATARS-STORAGE-DENY | permissive INSERT policy for avatars | the moderator's upload succeeds (INSERT is all an upload needs) -> expect(upload.error).not.toBeNull() fails | EFFECTIVE |
+| SEC-DB-X-CLOSED-READ-DENY | "Listings viewable by everyone" USING true | the guest reads the inactive listing -> toEqual([]) fails | EFFECTIVE |
+| SEC-DB-X-CLOSED-READ-ALLOW | restrictive anon SELECT USING false | the guest reads no sold listing -> toBe('sold') fails | EFFECTIVE |
+| SEC-DB-X-PERMS-NO-SESSION | SELECT granted on role_permissions | the select answers no error -> toBe('42501') fails | EFFECTIVE |
+| SEC-DB-X-REAUTH-FAILURES-NO-SESSION | SELECT granted on reauth_failures | the select answers no error -> toBe('42501') fails | EFFECTIVE |
+| SEC-DB-X-NO-SELF-RESTORE | empty restore_inactive_account() executable by authenticated | the rpc answers -> toBe('PGRST202') fails (settleSchema waits for the schema cache) | EFFECTIVE |
+| SEC-DEL-INT-STAFF | set_actor_name() returns new unchanged | changed_by_name is not stored -> toEqual({ changed_by: null, changed_by_name }) fails | EFFECTIVE |
+| SEC-X-INT-REVEAL-TABLE-DENY | SELECT granted on listing_contact_reveals | the select answers no error -> expect(answer.error).not.toBeNull() fails | EFFECTIVE |
+| SEC-X-INT-REVEAL-TABLE-SERVER | INSERT revoked from service_role | the service-role insert refused -> expect(inserted.error).toBeNull() fails | EFFECTIVE |
+
+Also checked: R166 (hardDeleteUser checks the key, then self, then rank: src/modules/admin/actions/index.ts:707-716) and R167 (page.tsx:47 and :165; the fake database applies `in`,
+src/tests/fakeSupabase.ts:32; the test's first assertion for a guest on `pending` is line 116) reach their assertions. Result: 20 of 21 effective; S61-ALLOW needs R170.

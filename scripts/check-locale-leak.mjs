@@ -37,6 +37,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { selectShard } from './workflow-gates/contract.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -45,15 +46,17 @@ const ROOT = resolve(__dirname, '..');
 
 const args = process.argv.slice(2);
 const FAST_MODE = args.includes('--fast');
+// Owner decision 2026-07-19: migration leaks are reported, not release blockers. Rendering must still complete.
+const REPORT_ONLY_LEAKS = args.includes('--report-only-leaks');
 // Task Q0R — restricts the scan to canonical Mantine stories only (scripts/lib/mantine-story-scope.mjs),
 // the same criterion check-stories-rendered.mjs enforces. Legacy stories are excluded entirely —
 // they never run this gate and can never block a PR on it.
 const MANTINE_ONLY = args.includes('--mantine-only');
+const SHARD = args.find(arg => arg.startsWith('--shard='))?.slice('--shard='.length) || '1/1';
 
 // ── Locales to compare (en = baseline; sq/uk/it = detection targets) ──────────
 
 const TARGET_LOCALES = ['sq', 'uk', 'it'];
-const ALL_LOCALES    = ['en', ...TARGET_LOCALES];
 
 // ── Viewport for leak detection (use standard mobile + desktop) ───────────────
 
@@ -375,6 +378,40 @@ function loadStoryIds(storybookStaticDir) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
+async function collectStoryTokens(browser, baseUrl, story, viewport, locale) {
+  const page = await browser.newPage();
+  let runtimeFailure = false;
+  // Storybook can log a failed play assertion and then report phase=finished. Retain that failure.
+  page.on('pageerror', () => { runtimeFailure = true; });
+  page.on('console', message => {
+    if (message.type() === 'error' && message.text().includes(`Error rendering story '${story.id}'`)) runtimeFailure = true;
+  });
+  try {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    const url = `${baseUrl}/iframe.html?id=${encodeURIComponent(story.id)}&globals=locale:${locale}&viewMode=story`;
+    const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    if (!response?.ok()) throw new Error('Story HTTP response failed');
+    // Network-idle waits on unrelated assets and cannot establish that Storybook actually rendered.
+    /* eslint-disable no-undef */
+    await page.waitForFunction(id => {
+      const render = window.__STORYBOOK_PREVIEW__?.currentRender;
+      return render?.id === id && ['finished', 'errored'].includes(render.phase);
+    }, story.id, { timeout: 15000 });
+    const failed = await page.evaluate(() => document.body.classList.contains('sb-show-errordisplay')
+      || window.__STORYBOOK_PREVIEW__?.currentRender?.phase === 'errored');
+    /* eslint-enable no-undef */
+    if (failed || runtimeFailure) throw new Error('Story render/play failed');
+    return await page.evaluate(COLLECT_TOKENS_FN);
+  } finally {
+    await page.close();
+  }
+}
+
+function renderErrorReason(error) {
+  // Retain actionable browser diagnostics without logging query strings or remote URLs.
+  return String(error?.message || 'render failed').split('\n')[0].replace(/https?:\/\/\S+/g, '(URL)').slice(0, 240);
+}
+
 async function run() {
   const storybookStaticDir = join(ROOT, 'storybook-static');
   if (!existsSync(storybookStaticDir)) {
@@ -405,32 +442,39 @@ async function run() {
     process.exit(1);
   }
 
-  const PORT = 6009;
-  const baseUrl = `http://127.0.0.1:${PORT}`;
-  const timestamp = new Date().toISOString().slice(0, 16).replace(':', '-');
-  const outputDir = join(ROOT, '.screenshots', 'locale-leak', timestamp);
+  let baseUrl;
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const outputDir = join(ROOT, '.screenshots', 'locale-leak', `${timestamp}-shard-${SHARD.replace('/', '-')}`);
   mkdirSync(outputDir, { recursive: true });
 
-  const scannable = scopedStories.filter(s => !DEMO_STORY_SKIP.test(s.id));
+  const eligible = scopedStories.filter(s => !DEMO_STORY_SKIP.test(s.id));
+  const scannable = selectShard(eligible, SHARD);
   console.log(`🔍  Locale leak detector — ${FAST_MODE ? 'fast' : 'full'} mode${MANTINE_ONLY ? ' (mantine-only)' : ''}`);
   if (MANTINE_ONLY) {
     console.log(`Mantine selected: ${scopedStories.length}; non-Mantine excluded: ${allStories.length - scopedStories.length}`);
   }
-  console.log(`    Stories: ${scannable.length} scanned (${scopedStories.length - scannable.length} multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: ${VIEWPORTS.length}`);
-  console.log(`    Output: .screenshots/locale-leak/${timestamp}/`);
+  console.log(`    Shard: ${SHARD} | Stories: ${scannable.length}/${eligible.length} | Locales: sq/uk/it | Viewports: ${VIEWPORTS.length}`);
+  console.log(`    Output: ${outputDir}`);
   console.log('');
 
   let server, browser;
   const leaks = [];
+  const errors = [];
   let scanned = 0;
+  const expected = scannable.length * VIEWPORTS.length * TARGET_LOCALES.length;
+  const reportPath = join(outputDir, 'report.json');
+  const persist = (complete = false) => writeFileSync(reportPath, JSON.stringify({
+    timestamp, shard: SHARD, complete, expected, scanned, errors, leaksBlocking: !REPORT_ONLY_LEAKS,
+    storyIds: scannable.map(s => s.id), leakCount: leaks.length, leaks,
+  }, null, 2), 'utf8');
+  persist();
 
   try {
-    server = await startStaticServer(storybookStaticDir, PORT);
+    server = await startStaticServer(storybookStaticDir, 0);
+    baseUrl = `http://127.0.0.1:${server.address().port}`;
     browser = await chromium.launch();
 
-    for (const story of scopedStories) {
-      // Skip multi-locale demo stories — excluded by ID, not by global allowlist
-      if (DEMO_STORY_SKIP.test(story.id)) continue;
+    for (const story of scannable) {
 
       const storyLeaks = [];
 
@@ -438,28 +482,18 @@ async function run() {
         // ── Step 1: render in `en` → collect baseline tokens ─────────────────
         let enTokens = new Set();
         try {
-          const page = await browser.newPage();
-          await page.setViewportSize({ width: viewport.width, height: viewport.height });
-          const url = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:en&viewMode=story`;
-          await page.goto(url, { waitUntil: 'networkidle', timeout: 20000 });
-          await page.waitForTimeout(300);
-          const tokens = await page.evaluate(COLLECT_TOKENS_FN);
+          const tokens = await collectStoryTokens(browser, baseUrl, story, viewport, 'en');
           enTokens = new Set(tokens);
-          await page.close();
-        } catch {
-          continue; // skip on error
+        } catch (error) {
+          errors.push({ storyId: story.id, viewport: viewport.name, locale: 'en', reason: renderErrorReason(error) });
+          persist();
+          continue;
         }
 
         // ── Step 2: render in each target locale, compare ─────────────────────
         for (const locale of TARGET_LOCALES) {
           try {
-            const page = await browser.newPage();
-            await page.setViewportSize({ width: viewport.width, height: viewport.height });
-            const url = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:${locale}&viewMode=story`;
-            await page.goto(url, { waitUntil: 'networkidle', timeout: 20000 });
-            await page.waitForTimeout(300);
-            const targetTokens = await page.evaluate(COLLECT_TOKENS_FN);
-            await page.close();
+            const targetTokens = await collectStoryTokens(browser, baseUrl, story, viewport, locale);
 
             // ── Step 3: diff — find leaks ─────────────────────────────────────
             for (const token of targetTokens) {
@@ -476,17 +510,19 @@ async function run() {
                 token,
               });
             }
+            scanned++;
 
-          } catch {
-            // skip on error
+          } catch (error) {
+            errors.push({ storyId: story.id, viewport: viewport.name, locale, reason: renderErrorReason(error) });
           }
 
           process.stdout.write('.');
-          scanned++;
         }
       }
 
       leaks.push(...storyLeaks);
+      persist();
+      console.log(` ${story.id}: ${scanned}/${expected} tuples, ${errors.length} render errors`);
     }
 
     console.log('\n');
@@ -503,22 +539,31 @@ async function run() {
     // ── Emit report.json ───────────────────────────────────────────────────────
     const report = {
       timestamp,
+      shard: SHARD,
+      complete: errors.length === 0 && scanned === expected,
+      expected,
+      scanned,
+      errors,
+      storyIds: scannable.map(s => s.id),
       mode: FAST_MODE ? 'fast' : 'full',
       mantineOnly: MANTINE_ONLY,
       storiesScanned: scannable.length,
-      storiesExcluded: scopedStories.length - scannable.length,
+      storiesExcluded: scopedStories.length - eligible.length,
       nonMantineExcluded: MANTINE_ONLY ? allStories.length - scopedStories.length : undefined,
       localesChecked: TARGET_LOCALES,
       leakCount: uniqueLeaks.length,
+      leaksBlocking: !REPORT_ONLY_LEAKS,
       leaks: uniqueLeaks,
     };
-    const reportPath = join(outputDir, 'report.json');
     writeFileSync(reportPath, JSON.stringify(report, null, 2), 'utf8');
 
     // ── Summary ────────────────────────────────────────────────────────────────
-    if (uniqueLeaks.length === 0) {
+    if (!report.complete) {
+      console.error(`Incomplete locale scan: ${scanned}/${expected} tuples; ${errors.length} render errors. Report: ${reportPath}`);
+      process.exitCode = 1;
+    } else if (uniqueLeaks.length === 0) {
       console.log(`✅  Locale leak detector: ZERO leaks across ${scannable.length} stories × sq/uk/it.`);
-      console.log(`    Report: .screenshots/locale-leak/${timestamp}/report.json`);
+      console.log(`    Report: ${reportPath}`);
     } else {
       console.error(`❌  Locale leak detector: ${uniqueLeaks.length} leak(s) found:`);
       // Group by story
@@ -533,13 +578,17 @@ async function run() {
           console.error(`    [${locale}] "${token}"`);
         }
       }
-      console.error(`\n    Report: .screenshots/locale-leak/${timestamp}/report.json`);
-      process.exit(1);
+      console.error(`\n    Report: ${reportPath}`);
+      process.exitCode = REPORT_ONLY_LEAKS ? 0 : 1;
     }
 
+  } catch (error) {
+    errors.push({ reason: 'scan runtime failed' });
+    persist();
+    throw error;
   } finally {
     await browser?.close();
-    server?.close();
+    if (server) await new Promise(done => server.close(done));
   }
 }
 

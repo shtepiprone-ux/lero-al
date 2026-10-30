@@ -1,0 +1,23 @@
+Task 923 Revision 59 (R177-R178), kickoff section 86, AC159
+File: r59-00b - sha256 of every path the revision wrote, taken after its last edit. Written last.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: 29acfb269
+Command: sha256sum <path> (Git Bash), one call over all paths below except this file
+Exit code: 0
+
+d144bcbcb8bbeb53c8b4ccb9fb3c7ed22c5ee73b82aa22dc9f583ea628a446a3  src/components/admin/AdminUserProfile.tsx
+d2e546625bc554e0b46986535b5e14a01e0d32dfd3441f84008e2f441b032453  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+750d3d916e1bae221dc35901231a0fcc729f6cc7e25c52e6c212936ebbcf9153  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+4bb339e0e761817b63b1bb834eaf92b59da68d4f96275bfd780216585fe9a393  docs/sessions/evidence/task923/security/d8-d9-report.json
+f497f0934d7815433b7806f082c712421511a4ce6a524b25f486a8f29aa1a990  docs/sessions/2026-10-10-task923-rendered-state-census.md
+9a48bf81a749c339837feb4186fcc38b546b0ff520ff3ace1f3ef9004340badd  docs/sessions/evidence/task923/revision-59/r59-00-hashes-before.txt
+f1b70111705e9a1aae0b5acdd1612f6eadbe528469990f6f817547588cf8da97  docs/sessions/evidence/task923/revision-59/r59-01-city-dirty-tests.txt
+3ffbdfb51d36692d0888655f0ed92fca6cc65caded6636fbd7968cdd72828ef7  docs/sessions/evidence/task923/revision-59/r59-02-planted-break-p7.txt
+1333eb6012e9ccb0b5826b9328b95b27df55ddb9a8214e58b05d125245b49f26  docs/sessions/evidence/task923/revision-59/r59-03-report-and-verify.txt
+7f9f58426a84e460495dc5435ec9ef01e64e5f1b241d02e0e9ec5309bb9f0afa  docs/sessions/evidence/task923/revision-59/r59-04-final-candidate.txt
+fb04a6cd43f6ee53c84cc7036360810104d33d3b0fc10e21d3800314e30d5f13  docs/sessions/evidence/task923/revision-59/r59-04a-unit-full.json
+b5ce34640a7c176dd1f708df0c323776ece364b48d5af9ef37f197e8970e8eea  docs/sessions/evidence/task923/revision-59/r59-04b-unit-compare.mjs
+
+Compared with r59-00: the container, the smoke test, the sidecar, the report and the session record changed; every other path is new.
+The container's sha256 equals the one taken after R177 (a) (r59-01, r59-02).

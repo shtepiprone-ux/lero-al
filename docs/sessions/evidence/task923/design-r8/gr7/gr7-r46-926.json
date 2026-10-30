@@ -1,0 +1,3203 @@
+{
+  "takenAt": "2026-10-18T08:25:43.288Z",
+  "results": [
+    {
+      "ref": "lahomes",
+      "name": "sweetalert",
+      "url": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "page": {
+        "title": "Sweet Alert | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Sweet Alerts",
+          "Overview Official Website",
+          "Usage",
+          "Basic#",
+          "A Title with a Text Under#",
+          "Message#",
+          "Long content Images Message#",
+          "Parameter#"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Official Website",
+          "Click me",
+          "Copy",
+          "Click me",
+          "Copy",
+          "Success",
+          "Warning",
+          "Info",
+          "Error",
+          "Copy",
+          "Click me",
+          "Copy",
+          "Click me",
+          "Copy"
+        ],
+        "keyed": [
+          "<button type=\"button\" class=\"btn btn-danger\" id=\"sweetalert-error\">",
+          "=\"btn btn-danger\""
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Warning",
+          "popup": {
+            "box": {
+              "w": 512,
+              "h": 393
+            },
+            "title": "Oops...",
+            "text": "Something went wrong!",
+            "inputs": [],
+            "buttons": [
+              "OK"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "lahomes",
+      "name": "sweetalert",
+      "url": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/extended-sweetalert.html",
+      "page": {
+        "title": "Sweet Alert | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Sweet Alerts",
+          "Overview Official Website",
+          "Usage",
+          "Basic#",
+          "A Title with a Text Under#",
+          "Message#",
+          "Long content Images Message#",
+          "Parameter#"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Official Website",
+          "Click me",
+          "Copy",
+          "Click me",
+          "Copy",
+          "Success",
+          "Warning",
+          "Info",
+          "Error",
+          "Copy",
+          "Click me",
+          "Copy",
+          "Click me",
+          "Copy"
+        ],
+        "keyed": [
+          "<button type=\"button\" class=\"btn btn-danger\" id=\"sweetalert-error\">",
+          "=\"btn btn-danger\""
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Warning",
+          "popup": {
+            "box": {
+              "w": 373,
+              "h": 393
+            },
+            "title": "Oops...",
+            "text": "Something went wrong!",
+            "inputs": [],
+            "buttons": [
+              "OK"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "lahomes",
+      "name": "agents-add",
+      "url": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "page": {
+        "title": "Add Agent | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Add Agent",
+          "Social Media :",
+          "Add Agent Photo",
+          "Drop your images here, or click to browse",
+          "Agent Information"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Agent Name"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Agent Email"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Agent Number"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Properties Number"
+          },
+          {
+            "tag": "textarea",
+            "type": "textarea",
+            "label": "Agent Address"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Zip-Code"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Facebook URL"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Instagram URL"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Twitter URL"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Add Agent",
+          "Cancel",
+          "Create Agent",
+          "Cancel"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "agents-add",
+      "url": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-add.html",
+      "page": {
+        "title": "Add Agent | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Add Agent",
+          "Social Media :",
+          "Add Agent Photo",
+          "Drop your images here, or click to browse",
+          "Agent Information"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Agent Name"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Agent Email"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Agent Number"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Properties Number"
+          },
+          {
+            "tag": "textarea",
+            "type": "textarea",
+            "label": "Agent Address"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Zip-Code"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Facebook URL"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Instagram URL"
+          },
+          {
+            "tag": "input",
+            "type": "url",
+            "label": "Twitter URL"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Add Agent",
+          "Cancel",
+          "Create Agent",
+          "Cancel"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "auth-signup",
+      "url": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "page": {
+        "title": "Sign Up | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Free Account"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Password"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "I accept Terms and Condition"
+          }
+        ],
+        "buttons": [
+          "Create Account"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "auth-signup",
+      "url": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/auth-signup.html",
+      "page": {
+        "title": "Sign Up | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Free Account"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Name"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Password"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "I accept Terms and Condition"
+          }
+        ],
+        "buttons": [
+          "Create Account"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "agents-details",
+      "url": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "page": {
+        "title": "Agent Overview | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Agent Overview",
+          "Agent",
+          "Social Media :",
+          "About Michael :",
+          "Property Status :",
+          "Reviews :",
+          "Esther Howard",
+          "Elbart Bant",
+          "Property File :",
+          "Property-File.pdf",
+          "Client-List.pdf",
+          "Property-Photo.pdf",
+          "Area-sqft.png",
+          "Michael A. Miner",
+          "19,343 Collected In This Month",
+          "Property Photos",
+          "Location",
+          "Walker Art Center"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Message",
+          "Work With Michael",
+          "Previous",
+          "Next"
+        ],
+        "keyed": [
+          "Agency:Universo Realtors",
+          "Agency"
+        ]
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "agents-details",
+      "url": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/agents-details.html",
+      "page": {
+        "title": "Agent Overview | Lahomes - Real Estate Management Admin Template",
+        "headings": [
+          "Theme Settings",
+          "Color Scheme",
+          "Topbar Color",
+          "Menu Color",
+          "Sidebar Size",
+          "Agent Overview",
+          "Agent",
+          "Social Media :",
+          "About Michael :",
+          "Property Status :",
+          "Reviews :",
+          "Esther Howard",
+          "Elbart Bant",
+          "Property File :",
+          "Property-File.pdf",
+          "Client-List.pdf",
+          "Property-Photo.pdf",
+          "Area-sqft.png",
+          "Michael A. Miner",
+          "19,343 Collected In This Month",
+          "Property Photos",
+          "Location",
+          "Walker Art Center"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Light"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Dark"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Default"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Condensed"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Hidden"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover Active"
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "label": "Small Hover"
+          }
+        ],
+        "buttons": [
+          "3unread messages",
+          "Reset",
+          "Dashboards",
+          "Property",
+          "Agents",
+          "Customers",
+          "Post",
+          "Pages",
+          "Authentication",
+          "Layouts",
+          "Base UI",
+          "Advanced UI",
+          "Charts",
+          "Forms",
+          "Tables",
+          "Icons",
+          "Maps",
+          "Menu Items",
+          "Message",
+          "Work With Michael",
+          "Previous",
+          "Next"
+        ],
+        "keyed": [
+          "Agency:Universo Realtors",
+          "Agency"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "add-agent",
+      "url": "https://omah.dexignzone.com/xhtml/add-agent.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/add-agent.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Add Agents",
+          "Add Agent",
+          "Drop files here or click to upload.",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search Here"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Property Type"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "For Rent",
+              "For Sale"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Property Price"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Area"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Price"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "Blue Sky",
+              "Zephyr",
+              "Premiere"
+            ]
+          },
+          {
+            "tag": "textarea",
+            "type": "textarea",
+            "label": "Description"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Address"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Zip Code"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "For Rent",
+          "1",
+          "1",
+          "1",
+          "Blue Sky",
+          "Submit",
+          "Cancel",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "add-agent",
+      "url": "https://omah.dexignzone.com/xhtml/add-agent.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/add-agent.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Add Agents",
+          "Add Agent",
+          "Drop files here or click to upload.",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Property Type"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "For Rent",
+              "For Sale"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Property Price"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Area"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Price"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "Blue Sky",
+              "Zephyr",
+              "Premiere"
+            ]
+          },
+          {
+            "tag": "textarea",
+            "type": "textarea",
+            "label": "Description"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Address"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Zip Code"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "For Rent",
+          "1",
+          "1",
+          "1",
+          "Blue Sky",
+          "Submit",
+          "Cancel",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "add-agent-wizard",
+      "url": "https://omah.dexignzone.com/xhtml/add-agent-wizard.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/add-agent-wizard.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Agents Wizard",
+          "Add Agent Wizard",
+          "Get started",
+          "Account information",
+          "Login details",
+          "Set your email",
+          "Upload files",
+          "Successfully submitted",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search Here"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name *"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name *"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "gender",
+            "options": [
+              "Gender",
+              "Male",
+              "Female"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Company Phone Number *"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Date of birth *"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Gender",
+          "Next",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Company Phone Number *",
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "add-agent-wizard",
+      "url": "https://omah.dexignzone.com/xhtml/add-agent-wizard.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/add-agent-wizard.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Agents Wizard",
+          "Add Agent Wizard",
+          "Get started",
+          "Account information",
+          "Login details",
+          "Set your email",
+          "Upload files",
+          "Successfully submitted",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name *"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name *"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "gender",
+            "options": [
+              "Gender",
+              "Male",
+              "Female"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "Company Phone Number *"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Date of birth *"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Gender",
+          "Next",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Company Phone Number *",
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "account-settings",
+      "url": "https://omah.dexignzone.com/xhtml/account/settings.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/account/settings.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Settings",
+          "Amelia Rose",
+          "$1,250",
+          "125",
+          "25",
+          "Basic Info",
+          "Connected Accounts",
+          "Google",
+          "Github",
+          "Slack",
+          "Notifications",
+          "Deactivate Account",
+          "You are about to deactivate your account.",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search Here"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "DexignZone"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "044 3276 454 935"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "https://dexignzone.com/"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "Please select",
+              "India",
+              "China",
+              "USA"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Confirm Account Deactivation"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Follow Following",
+          "Offer a Deal",
+          "Please select",
+          "Discard",
+          "Save Changes",
+          "Discard",
+          "Save Changes",
+          "Discard",
+          "Save Changes",
+          "Deactivate Account",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Company",
+          "Company Site",
+          "Deactivate Account",
+          "You are about to deactivate your account.",
+          "To enhance security, please confirm your email or phone number when resetting your password. Find Out More.",
+          "Confirm Account Deactivation",
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "account-settings",
+      "url": "https://omah.dexignzone.com/xhtml/account/settings.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/account/settings.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Settings",
+          "Amelia Rose",
+          "Basic Info",
+          "Connected Accounts",
+          "Google",
+          "Github",
+          "Slack",
+          "Notifications",
+          "Deactivate Account",
+          "You are about to deactivate your account.",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "DexignZone"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "label": "044 3276 454 935"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "https://dexignzone.com/"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "Please select",
+              "India",
+              "China",
+              "USA"
+            ]
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Phone"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "Confirm Account Deactivation"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Follow Following",
+          "Offer a Deal",
+          "Please select",
+          "Discard",
+          "Save Changes",
+          "Discard",
+          "Save Changes",
+          "Discard",
+          "Save Changes",
+          "Deactivate Account",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Company",
+          "Company Site",
+          "Deactivate Account",
+          "You are about to deactivate your account.",
+          "To enhance security, please confirm your email or phone number when resetting your password. Find Out More.",
+          "Confirm Account Deactivation",
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "account-security",
+      "url": "https://omah.dexignzone.com/xhtml/account/security.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/account/security.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Security",
+          "Amelia Rose",
+          "$1,250",
+          "125",
+          "25",
+          "Security Summary",
+          "36,899",
+          "72",
+          "291",
+          "Activity Chart",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Upgrade to Pro Create Limitless Deals",
+          "License Usage",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search Here"
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "All Time",
+              "Today",
+              "Weekly",
+              "Months"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Follow Following",
+          "Offer a Deal",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Upgrade Now",
+          "All Time",
+          "Export Report",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "account-security",
+      "url": "https://omah.dexignzone.com/xhtml/account/security.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/account/security.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Security",
+          "Amelia Rose",
+          "Security Summary",
+          "36,899",
+          "72",
+          "291",
+          "Activity Chart",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Login Attempt Failed",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Get Start Your Security",
+          "Upgrade to Pro Create Limitless Deals",
+          "License Usage",
+          "Pick your style Delete All Cookie",
+          "Select Preset Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6",
+          "Demo 7",
+          "Demo 8"
+        ],
+        "fields": [
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "English",
+              "Português",
+              "Français",
+              "Deutsch",
+              "Italiano",
+              "日本語",
+              "Español",
+              "العربية",
+              "Türkçe"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": null,
+            "options": [
+              "All Time",
+              "Today",
+              "Weekly",
+              "Months"
+            ]
+          },
+          {
+            "tag": "select",
+            "type": "select-one",
+            "label": "theme_version",
+            "options": [
+              "Choose Background",
+              "Light",
+              "Dark"
+            ]
+          }
+        ],
+        "buttons": [
+          "English",
+          "Henry Jr. Admin",
+          "Docs & Components",
+          "Follow Following",
+          "Offer a Deal",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Get Started",
+          "Upgrade Now",
+          "All Time",
+          "Export Report",
+          "Delete All Cookie",
+          "Choose Background",
+          "Delete All Cookie",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version",
+          "Default",
+          "RTL Version"
+        ],
+        "keyed": [
+          "Pick your style Delete All Cookie",
+          "Delete All Cookie"
+        ]
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "register",
+      "url": "https://omah.dexignzone.com/xhtml/pages/register.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/pages/register.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Sign up your account"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Username"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "label": "Enter your password"
+          }
+        ],
+        "buttons": [
+          "Sign up"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "register",
+      "url": "https://omah.dexignzone.com/xhtml/pages/register.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/pages/register.html",
+      "page": {
+        "title": "Omah - Real Estate Admin Dashboard Template",
+        "headings": [
+          "Sign up your account"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Username"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email"
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "label": "Enter your password"
+          }
+        ],
+        "buttons": [
+          "Sign up"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "signup",
+      "url": "https://demo.tailadmin.com/signup",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/signup",
+      "page": {
+        "title": "Sign Up | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Sign Up"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name*"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name*"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email*"
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "label": "Enter your password"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "By creating an account means you agree to the Terms and Conditions, and our Privacy Policy"
+          }
+        ],
+        "buttons": [
+          "Sign up with Google",
+          "Sign up with X",
+          "Sign Up"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "signup",
+      "url": "https://demo.tailadmin.com/signup",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/signup",
+      "page": {
+        "title": "Sign Up | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Sign Up"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "First Name*"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Last Name*"
+          },
+          {
+            "tag": "input",
+            "type": "email",
+            "label": "Email*"
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "label": "Enter your password"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": "By creating an account means you agree to the Terms and Conditions, and our Privacy Policy"
+          }
+        ],
+        "buttons": [
+          "Sign up with Google",
+          "Sign up with X",
+          "Sign Up"
+        ],
+        "keyed": []
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "profile",
+      "url": "https://demo.tailadmin.com/profile",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/profile",
+      "page": {
+        "title": "Profile | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Menu",
+          "Support",
+          "others",
+          "#1 Tailwind CSS Dashboard",
+          "User Profile",
+          "My Profile",
+          "Musharof Chowdhury",
+          "Address",
+          "Security",
+          "Danger Zone"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search or type command..."
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "⌘ K",
+          "Edit",
+          "Edit",
+          "Change Password",
+          "Change Password",
+          "Delete account"
+        ],
+        "keyed": [
+          "Danger Zone",
+          "Delete account"
+        ]
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "profile",
+      "url": "https://demo.tailadmin.com/profile",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/profile",
+      "page": {
+        "title": "Profile | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Menu",
+          "Support",
+          "others",
+          "#1 Tailwind CSS Dashboard",
+          "User Profile",
+          "My Profile",
+          "Musharof Chowdhury",
+          "Address",
+          "Security",
+          "Danger Zone"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "Edit",
+          "Edit",
+          "Change Password",
+          "Change Password",
+          "Delete account"
+        ],
+        "keyed": [
+          "Danger Zone",
+          "Delete account"
+        ]
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "modals",
+      "url": "https://demo.tailadmin.com/modals",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/modals",
+      "page": {
+        "title": "Modals | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Menu",
+          "Support",
+          "others",
+          "#1 Tailwind CSS Dashboard",
+          "Modals",
+          "Default Modal",
+          "Vertically Centered Modal",
+          "Form in Modal",
+          "Full Screen Modal",
+          "Modal Based Alerts"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search or type command..."
+          }
+        ],
+        "buttons": [
+          "⌘ K",
+          "Open Modal",
+          "Open Modal",
+          "Open Modal",
+          "Open Modal",
+          "Success Alert",
+          "Info Alert",
+          "Warning Alert",
+          "Danger Alert"
+        ],
+        "keyed": [
+          "Danger Alert"
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Open Modal",
+          "popup": null
+        }
+      ]
+    },
+    {
+      "ref": "tailadmin",
+      "name": "modals",
+      "url": "https://demo.tailadmin.com/modals",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/modals",
+      "page": {
+        "title": "Modals | TailAdmin - Tailwind CSS Admin Dashboard Template",
+        "headings": [
+          "Menu",
+          "Support",
+          "others",
+          "#1 Tailwind CSS Dashboard",
+          "Modals",
+          "Default Modal",
+          "Vertically Centered Modal",
+          "Form in Modal",
+          "Full Screen Modal",
+          "Modal Based Alerts"
+        ],
+        "fields": [],
+        "buttons": [
+          "Open Modal",
+          "Open Modal",
+          "Open Modal",
+          "Open Modal",
+          "Success Alert",
+          "Info Alert",
+          "Warning Alert",
+          "Danger Alert"
+        ],
+        "keyed": [
+          "Danger Alert"
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Open Modal",
+          "popup": null
+        }
+      ]
+    },
+    {
+      "ref": "kamr",
+      "name": "sweetalert",
+      "url": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "width": 1440,
+      "kamrLogin": "https://kamr-vite.vercel.app/dashboard",
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "page": {
+        "title": "Kamr : Vite Hotel Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "sweetalert",
+          "Alex Geovanny",
+          "Kamr Hotel Admin Dashboard © 2026 All Rights Reserved",
+          "Sweet Wrong",
+          "Sweet Message",
+          "Sweet Text",
+          "Sweet Success",
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel",
+          "Sweet Image Message",
+          "Sweet HTML",
+          "Sweet Auto Close",
+          "Sweet Prompt",
+          "Sweet Ajax",
+          "Pick your style",
+          "Select A Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search.."
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "Sweet Wrong",
+          "Sweet Message",
+          "Sweet Text",
+          "Sweet Success",
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel",
+          "Sweet Image Message",
+          "Sweet HTML",
+          "Sweet Auto btn-close",
+          "Sweet Prompt",
+          "Sweet Ajax",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default"
+        ],
+        "keyed": [
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel"
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Sweet Confirm",
+          "popup": {
+            "box": {
+              "w": 478,
+              "h": 333
+            },
+            "title": "Are you sure?",
+            "text": "Once deleted, you will not be able to recover this imaginary file!",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Confirm Or Cancel",
+          "popup": {
+            "box": {
+              "w": 478,
+              "h": 308
+            },
+            "title": "Are you sure?",
+            "text": "You will not be able to recover this imaginary file !",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Prompt",
+          "popup": {
+            "box": {
+              "w": 478,
+              "h": 147
+            },
+            "title": null,
+            "text": "Are you sure you want to do this?",
+            "inputs": [],
+            "buttons": [
+              "Oh noez!",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Ajax",
+          "popup": {
+            "box": {
+              "w": 478,
+              "h": 333
+            },
+            "title": "Are you sure?",
+            "text": "Once deleted, you will not be able to recover this imaginary file!",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "kamr",
+      "name": "sweetalert",
+      "url": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "page": {
+        "title": "Kamr : Vite Hotel Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Alex Geovanny",
+          "Kamr Hotel Admin Dashboard © 2026 All Rights Reserved",
+          "Sweet Wrong",
+          "Sweet Message",
+          "Sweet Text",
+          "Sweet Success",
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel",
+          "Sweet Image Message",
+          "Sweet HTML",
+          "Sweet Auto Close",
+          "Sweet Prompt",
+          "Sweet Ajax",
+          "Pick your style",
+          "Select A Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "Sweet Wrong",
+          "Sweet Message",
+          "Sweet Text",
+          "Sweet Success",
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel",
+          "Sweet Image Message",
+          "Sweet HTML",
+          "Sweet Auto btn-close",
+          "Sweet Prompt",
+          "Sweet Ajax",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default"
+        ],
+        "keyed": [
+          "Sweet Confirm",
+          "Sweet Confirm Or Cancel"
+        ]
+      },
+      "popups": [
+        {
+          "trigger": "Sweet Confirm",
+          "popup": {
+            "box": {
+              "w": 370,
+              "h": 333
+            },
+            "title": "Are you sure?",
+            "text": "Once deleted, you will not be able to recover this imaginary file!",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Confirm Or Cancel",
+          "popup": {
+            "box": {
+              "w": 370,
+              "h": 333
+            },
+            "title": "Are you sure?",
+            "text": "You will not be able to recover this imaginary file !",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Prompt",
+          "popup": {
+            "box": {
+              "w": 370,
+              "h": 147
+            },
+            "title": null,
+            "text": "Are you sure you want to do this?",
+            "inputs": [],
+            "buttons": [
+              "Oh noez!",
+              "OK"
+            ]
+          }
+        },
+        {
+          "trigger": "Sweet Ajax",
+          "popup": {
+            "box": {
+              "w": 370,
+              "h": 333
+            },
+            "title": "Are you sure?",
+            "text": "Once deleted, you will not be able to recover this imaginary file!",
+            "inputs": [],
+            "buttons": [
+              "Cancel",
+              "OK"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "kamr",
+      "name": "ui-modal",
+      "url": "https://kamr-vite.vercel.app/ui-modal",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+      "page": {
+        "title": "Kamr : Vite Hotel Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "modal",
+          "Alex Geovanny",
+          "Kamr Hotel Admin Dashboard © 2026 All Rights Reserved",
+          "Pick your style",
+          "Select A Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": "Search.."
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "Basic modal",
+          "Long content Modal",
+          "Modal centered",
+          "Modal with tooltip",
+          "Grid Inside Modal",
+          "Large modal",
+          "Small modal",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default"
+        ],
+        "keyed": []
+      },
+      "popups": [
+        {
+          "trigger": "Basic modal",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Long content Modal",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dol",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Modal centered",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Modal with tooltip",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Popover in a modalThis button triggers a popover on click.Tooltips in a modalThis link and that link have tooltips on hover.",
+            "inputs": [],
+            "buttons": [
+              "button",
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Grid Inside Modal",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": ".col-md-4.col-md-4 .ms-auto.col-md-3 .ms-auto.col-md-2 .ms-auto.col-md-6 .ms-autoLevel 1: .col-sm-9Level 2: .col-8 .col-sm-6Level 2: .col-4 .col-sm-6",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Large modal",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Small modal",
+          "popup": {
+            "box": {
+              "w": 1440,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "ref": "kamr",
+      "name": "ui-modal",
+      "url": "https://kamr-vite.vercel.app/ui-modal",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/ui-modal",
+      "page": {
+        "title": "Kamr : Vite Hotel Admin Dashboard Template",
+        "headings": [
+          "Chat List",
+          "Alex Geovanny",
+          "Kamr Hotel Admin Dashboard © 2026 All Rights Reserved",
+          "Pick your style",
+          "Select A Demo",
+          "Demo 1",
+          "Demo 2",
+          "Demo 3",
+          "Demo 4",
+          "Demo 5",
+          "Demo 6"
+        ],
+        "fields": [
+          {
+            "tag": "input",
+            "type": "text",
+            "label": null
+          }
+        ],
+        "buttons": [
+          "Basic modal",
+          "Long content Modal",
+          "Modal centered",
+          "Modal with tooltip",
+          "Grid Inside Modal",
+          "Large modal",
+          "Small modal",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default",
+          "Default"
+        ],
+        "keyed": []
+      },
+      "popups": [
+        {
+          "trigger": "Basic modal",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Long content Modal",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dol",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Modal centered",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Modal with tooltip",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Popover in a modalThis button triggers a popover on click.Tooltips in a modalThis link and that link have tooltips on hover.",
+            "inputs": [],
+            "buttons": [
+              "button",
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Grid Inside Modal",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": ".col-md-4.col-md-4 .ms-auto.col-md-3 .ms-auto.col-md-2 .ms-auto.col-md-6 .ms-autoLevel 1: .col-sm-9Level 2: .col-8 .col-sm-6Level 2: .col-4 .col-sm-6",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Large modal",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        },
+        {
+          "trigger": "Small modal",
+          "popup": {
+            "box": {
+              "w": 390,
+              "h": 900
+            },
+            "title": "Modal title",
+            "text": "Modal body text goes here.",
+            "inputs": [],
+            "buttons": [
+              "Close",
+              "Save changes"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

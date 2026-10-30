@@ -3,8 +3,9 @@
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { routing } from '@/i18n/routing'
+import { isUuid } from '@/lib/security/inputs'
 import { RECENTLY_VIEWED_CAP, RECENTLY_VIEWED_COOKIE } from '../lib/recentlyViewedConstants'
 
 /**
@@ -19,7 +20,11 @@ import { RECENTLY_VIEWED_CAP, RECENTLY_VIEWED_COOKIE } from '../lib/recentlyView
  * No PII is logged; listing content is never written.
  */
 export async function recordListingView(listingId: string): Promise<void> {
-  const user = await getUser()
+  // Only a real listing id is recorded (Task 923 Revision 7): it is written into a cookie and later used in a query, and a visitor can send anything.
+  if (!isUuid(listingId)) return
+  // A person whose account has no access (Task 923 R44) is a guest here: the cookie path touches nothing private.
+  const viewer = await requireViewer()
+  const user = viewer.ok ? { id: viewer.userId } : null
 
   if (user) {
     const supabase = await createClient()
@@ -36,7 +41,7 @@ export async function recordListingView(listingId: string): Promise<void> {
     let ids: string[] = []
     try {
       const parsed: unknown = JSON.parse(raw)
-      if (Array.isArray(parsed)) ids = parsed.filter((x): x is string => typeof x === 'string')
+      if (Array.isArray(parsed)) ids = parsed.filter(isUuid)
     } catch {
       ids = []
     }
@@ -62,7 +67,8 @@ export async function recordListingView(listingId: string): Promise<void> {
  * Revalidates the cabinet page so `RecentlyViewedSection` re-fetches on next render.
  */
 export async function clearRecentlyViewed(): Promise<void> {
-  const user = await getUser()
+  const viewer = await requireViewer()
+  const user = viewer.ok ? { id: viewer.userId } : null
 
   if (user) {
     const supabase = await createClient()

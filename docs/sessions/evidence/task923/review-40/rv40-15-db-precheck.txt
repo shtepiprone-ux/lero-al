@@ -1,0 +1,22 @@
+platform: MINGW64_NT-10.0-26300; node: v22.22.3; cwd: /c/Claude_Code_Projects/lero-al/docs/sessions/evidence/task923/review-40; pg 8.21.0 from a scratchpad prefix via NODE_PATH (not installed in the repository); command: node rv40-15-db-precheck.cjs (read only transaction, rolled back)
+== 01 the new table does not exist
+[{"absent":true}]
+== 02 public.users.is_verified
+[{"data_type":"boolean","is_nullable":"NO","column_default":"false"}]
+== 03 public.listings primary key
+[{"attname":"id","type":"uuid"}]
+== 04 public.users primary key and its reference to auth.users
+[{"conname":"users_company_id_fkey","def":"FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL"},{"conname":"users_id_fkey","def":"FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"},{"conname":"users_location_id_fkey","def":"FOREIGN KEY (location_id) REFERENCES locations(id)"},{"conname":"users_pkey","def":"PRIMARY KEY (id)"},{"conname":"users_preferred_currency_fkey","def":"FOREIGN KEY (preferred_currency) REFERENCES currencies(code) ON UPDATE CASCADE"}]
+== 05 the precedent table reauth_failures: RLS, policies, grantees
+[{"rls":true,"policies":"0","grants":"postgres:DELETE, postgres:INSERT, postgres:REFERENCES, postgres:SELECT, postgres:TRIGGER, postgres:TRUNCATE, postgres:UPDATE, service_role:DELETE, service_role:INSERT, service_role:REFERENCES, service_role:SELECT, service_role:TRIGGER, service_role:TRUNCATE"}]
+== 06 default privileges for new tables in public (who would receive grants)
+[{"owner":"supabase_admin","type":"r","acl":"{postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}"},{"owner":"postgres","type":"r","acl":"{postgres=arwdDxtm/postgres,service_role=Dxtm/postgres}"}]
+== 07 the role that runs the owner SQL editor apply is the table owner of reauth_failures
+[{"owner":"postgres"}]
+== 08 server version
+[{"v":"17.6"}]
+== 09 auth.users primary key (preflight 03 of the reveal-record SQL)
+[{"pk":"id:uuid"}]
+== 10 public.listings primary key in the form preflight 02 compares
+[{"pk":"id:uuid"}]
+EXIT_CODE=0

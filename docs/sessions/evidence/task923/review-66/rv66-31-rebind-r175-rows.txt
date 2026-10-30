@@ -1,0 +1,16 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-31-rebind-r175-rows.mjs --write
+C613: src/app/admin/users/[id]/page.tsx:34-34 -> src/app/admin/users/[id]/page.tsx:35-35
+C616: src/app/admin/users/[id]/page.tsx:17-17 -> src/app/admin/users/[id]/page.tsx:18-18
+C1450: src/app/admin/users/[id]/page.tsx:39-39 -> src/app/admin/users/[id]/page.tsx:40-40
+C1451: src/app/admin/users/[id]/page.tsx:41-41 -> src/app/admin/users/[id]/page.tsx:42-42
+C1452: src/app/admin/users/[id]/page.tsx:17-17 -> src/app/admin/users/[id]/page.tsx:18-18
+C1454: src/app/admin/users/__tests__/adminUserGone.security.test.ts:61-61 -> src/app/admin/users/__tests__/adminUserGone.security.test.ts:65-65
+C1455: src/app/admin/users/__tests__/adminUserGone.security.test.ts:119-119 -> src/app/admin/users/__tests__/adminUserGone.security.test.ts:133-133
+C1664: src/app/admin/users/[id]/page.tsx:34-34 -> src/app/admin/users/[id]/page.tsx:35-35
+C1665: src/app/admin/users/[id]/page.tsx:35-35 -> src/app/admin/users/[id]/page.tsx:36-36
+C1666: src/app/admin/users/[id]/page.tsx:97-97 -> docs/sessions/evidence/task923/review-66/rv66-32-retained/page.tsx.txt:97-97
+C1668: src/app/admin/users/__tests__/adminUserGone.security.test.ts:169-169 -> docs/sessions/evidence/task923/review-66/rv66-32-retained/adminUserGone.security.test.ts.txt:169-169
+C1669: src/app/admin/users/__tests__/adminUserGone.security.test.ts:73-73 -> docs/sessions/evidence/task923/review-66/rv66-32-retained/adminUserGone.security.test.ts.txt:73-73
+rebound 12, unresolved 0; written
+exit 0
+exit 0

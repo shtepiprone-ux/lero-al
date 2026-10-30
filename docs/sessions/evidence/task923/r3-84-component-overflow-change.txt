@@ -1,0 +1,11 @@
+component-overflow rows (Story x state x root x locale x width with the rule) per component: Revision 1 -> Revision 2; "from R15" = rows in which at least one detail is a positioned / transformed element
+
+  authsheet: 89 -> 100 (+11); from R15 0
+  favoritesshell: 0 -> 20 (+20); from R15 20
+  listingcard: 0 -> 32 (+32); from R15 32
+  listingcardpattern: 0 -> 36 (+36); from R15 36
+  listingcardtrack: 44 -> 140 (+96); from R15 140
+  listingdetailview: 145 -> 258 (+113); from R15 258
+
+components with a change: 6; components unchanged: 19
+total rows with component-overflow: 873 -> 1181 (+308); rows with a positioned / transformed detail in Revision 2: 670

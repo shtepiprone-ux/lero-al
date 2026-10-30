@@ -1,0 +1,14 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: npm run check:file-integrity
+start 2026-10-15T23:04:53Z
+
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs
+
+🔍  check:file-integrity — git-changed + untracked (default)
+    Checking 2727 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 2727 file(s) clean
+end 2026-10-15T23:05:02Z
+EXIT_CODE=0

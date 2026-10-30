@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "kind": "docs",
+  "qaProfile": "Q0",
+  "task": "tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.md",
+  "taskSha256": "0bf734389d708a04221e7b2624f2fcd55e9640b263353728e7cf15b2aa0368e2",
+  "scope": [
+    "tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.md"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "cases": [],
+  "notApplicable": "The Sprint 71 plan records task state, ordering and owner decisions only; it changes no runtime behavior, dependency, executable gate or deployment configuration. Each task's product work is governed by that task's own adjacent security contract."
+}

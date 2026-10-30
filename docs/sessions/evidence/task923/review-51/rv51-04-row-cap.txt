@@ -1,0 +1,16 @@
+# Task 923 Review 51 rv51-04: the row cap and the length of an in() filter; 2026-10-24T13:25:01.860Z
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-51/rv51-04-row-cap.mjs
+--- stdout ---
+listing_images: HTTP 200; content-range 0-84/85; rows returned 85
+listings: HTTP 200; content-range 0-20/21; rows returned 21
+listing_views: HTTP 200; content-range 0-94/95; rows returned 95
+in() with 100 ids: path+query 3750 chars; HTTP 200
+in() with 200 ids: path+query 7450 chars; HTTP 200
+in() with 300 ids: path+query 11150 chars; HTTP 200
+in() with 400 ids: path+query 14850 chars; fetch threw UND_ERR_HEADERS_OVERFLOW
+in() with 600 ids: path+query 22250 chars; fetch threw UND_ERR_HEADERS_OVERFLOW
+in() with 1000 ids: path+query 37050 chars; HTTP 400; body Bad Request
+inner embed listing_images -> listings filtered on user_id (a random uuid): HTTP 200; rows 0
+owners of a listing: 5; the embed and the two reads answer the same URLs for 5
+--- exit code: 0 ---

@@ -1,0 +1,16 @@
+Opus review 24, 2026-10-21, platform win32 10.0.26300.0 node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+cmd node node_modules/vitest/vitest.mjs run src/modules/listings/lib/__tests__/generateSlug.security.test.ts --reporter=verbose
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > [SEC-X-SRV-SLUG-PLAIN] every title gives a plain slug 304ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > an ordinary title keeps its words, hyphens collapse, and the slug ends with the creation time in base 36 (the control) 2ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > a title with no Latin letter or digit gets the base listing 1ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > the base is cut at 80 characters and the hyphens the cut leaves are trimmed 0ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > is a plain module, not a Server Action, and createListing uses it instead of a local copy 1ms
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+EXIT_CODE=0
+
+cmd npm run typecheck
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+EXIT_CODE=0

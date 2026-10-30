@@ -1,0 +1,20 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm run check:ui-contract:verify
+date: 2026-10-24T08:25:40.939Z
+--- output ---
+
+> lero-al@0.1.0 check:ui-contract:verify
+> node scripts/check-ui-contract.mjs --verify-gate
+
+GREEN style object (including a changed child property)
+GREEN className wrapper
+GREEN raw Mantine palette
+GREEN wrapper spacing prop
+GREEN clean named public state
+GREEN newly enrolled component without an explicit contract is rejected
+GREEN checked-in UI contract registry is structurally valid and each declared Story imports its component
+check:ui-contract self-test PASSED
+
+EXIT_CODE=0

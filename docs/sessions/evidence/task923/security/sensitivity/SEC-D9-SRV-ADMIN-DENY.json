@@ -1,0 +1,464 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-17T17:34:32.736Z",
+ "case": "SEC-D9-SRV-ADMIN-DENY",
+ "results": [
+  {
+   "id": "SEC-D9-SRV-ADMIN-DENY",
+   "testFile": "src/modules/admin/actions/accountBan.security.test.ts",
+   "testName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "the rank check (an administrator account is acted on only by an administrator) is removed from updateUserProfileFull",
+     "from": "  if (!(await actorMayActOn(me.id, userId))) return { error: 'Forbidden' }\n  if (data.profileType === 'admin' && myProfile.role !== 'admin') return { error: 'Forbidden' }\n",
+     "to": "  if (data.profileType === 'admin' && myProfile.role !== 'admin') return { error: 'Forbidden' }\n"
+    }
+   ],
+   "failureMessage": "AssertionError: moderator blocks an administrator -> {}: expected [ 'Unauthorized', 'Forbidden', …(2) ] to include undefined\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1319:15)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.security.test.ts:95:168\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258449369,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "status": "passed",
+         "title": "[SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "duration": 4.871600000000001,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258449979,
+       "endTime": 1792258449983.8716,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258451249,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "status": "failed",
+         "title": "[SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "duration": 9.383800000000008,
+         "failureMessages": [
+          "AssertionError: moderator blocks an administrator -> {}: expected [ 'Unauthorized', 'Forbidden', …(2) ] to include undefined\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1319:15)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.security.test.ts:95:168\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258451849,
+       "endTime": 1792258451858.3838,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258453120,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "status": "passed",
+         "title": "[SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+         "duration": 4.695499999999981,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ALLOW] blocking or deactivating bans the account after the status is saved, and unblocking lifts the ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin actions that change account access"
+         ],
+         "fullName": "admin actions that change account access [SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "status": "skipped",
+         "title": "[SEC-D9-SRV-ADMIN-ERR] a failed ban is reported to the admin and a failed status write is not followed by a ban",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258453724,
+       "endTime": 1792258453728.6956,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-D9-INT-ADMIN-DENY",
+   "testFile": "src/modules/admin/actions/accountBan.integration.test.ts",
+   "testName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "the rank check (an administrator account is acted on only by an administrator) is removed from updateUserProfileFull",
+     "from": "  if (!(await actorMayActOn(me.id, userId))) return { error: 'Forbidden' }\n  if (data.profileType === 'admin' && myProfile.role !== 'admin') return { error: 'Forbidden' }\n",
+     "to": "  if (data.profileType === 'admin' && myProfile.role !== 'admin') return { error: 'Forbidden' }\n"
+    }
+   ],
+   "failureMessage": "AssertionError: expected {} to deeply equal { error: 'Forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.integration.test.ts:58:73\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258455006,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "status": "passed",
+         "title": "[SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "duration": 2222.0442999999996,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "status": "skipped",
+         "title": "[SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258456789,
+       "endTime": 1792258459011.0442,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258461482,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "status": "failed",
+         "title": "[SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "duration": 2123.5163000000002,
+         "failureMessages": [
+          "AssertionError: expected {} to deeply equal { error: 'Forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.integration.test.ts:58:73\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "status": "skipped",
+         "title": "[SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258463113,
+       "endTime": 1792258465236.5164,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258467720,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "status": "passed",
+         "title": "[SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth",
+         "duration": 2078.5747,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "admin account actions against real Auth and database"
+         ],
+         "fullName": "admin account actions against real Auth and database [SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "status": "skipped",
+         "title": "[SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258469385,
+       "endTime": 1792258471463.5747,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/accountBan.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

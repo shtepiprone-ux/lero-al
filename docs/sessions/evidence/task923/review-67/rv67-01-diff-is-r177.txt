@@ -1,0 +1,5 @@
+# rv67-01: Revision 59's diff is exactly R177
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-01-diff-is-r177.mjs
+src/components/admin/AdminUserProfile.tsx: R177 undone sha256 d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b; r59-00 before d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b; equal true
+src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx: R177 undone sha256 b26d77ff7b50cfb0867dab3eda5c729fa69568e3b9b28a14ec44f3eeb6761827; r59-00 before b26d77ff7b50cfb0867dab3eda5c729fa69568e3b9b28a14ec44f3eeb6761827; equal true
+exit 0

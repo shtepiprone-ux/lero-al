@@ -209,7 +209,6 @@ async function extractTrackSelectors(staticDir, localNames) {
 
 // ── In-page evaluation. Classes are passed in as arguments — never a literal hashed name (R2). ──
 
-/* eslint-disable no-undef */
 function renderFailureCheck() {
   if (document.body.classList.contains('sb-show-errordisplay')) {
     const errEl = document.querySelector('#error-message') || document.body;
@@ -239,7 +238,6 @@ function evalTracks({ gridClass, railClass }) {
     return { mode: 'rail', value, width: el.getBoundingClientRect().width };
   });
 }
-/* eslint-enable no-undef */
 
 const SWEEP_READY_TIMEOUT_MS = 15000;
 
@@ -300,6 +298,7 @@ async function measureStoryAtWidth(page, baseUrl, storyId, width, height, locale
   const { gridClass, railClass } = selectors;
   await navigateStory(page, baseUrl, storyId, width, height, locale);
   await waitForReady(page, gridClass, railClass, SWEEP_READY_TIMEOUT_MS);
+  let plantAppliedPaddingPx = null;
   if (plant) {
     const trackSelector = plant.mode === 'grid' ? `.${gridClass}` : `.${railClass}`;
     const tag = await page.evaluate(tagParentPlant, trackSelector);
@@ -307,7 +306,15 @@ async function measureStoryAtWidth(page, baseUrl, storyId, width, height, locale
       return { failed: true, reason: `plant tag failed: ${tag.reason}` };
     }
     await page.addStyleTag({
-      content: `@media (min-width: ${plant.rung}px) { [data-task815-plant] { padding-inline: ${plant.paddingPx}px; } }`,
+      content: `@media (min-width: ${plant.rung}px) { [data-task815-plant] { padding-inline: ${plant.paddingPx}px !important; } }`,
+    });
+    // Task 790 (rest): the rule is !important because the story parent's own Mantine padding (32px at
+    // 1024) otherwise wins and the grid plant silently applies nothing. Read back what the plant actually changed — the tagged parent's computed
+    // inline padding — so a plant that did not apply is detected from geometry the arm owns, not
+    // from a track width the story may cap independently of its parent's padding.
+    plantAppliedPaddingPx = await page.evaluate(() => {
+      const el = document.querySelector('[data-task815-plant]');
+      return el ? parseFloat(getComputedStyle(el).paddingInlineStart) : null;
     });
   }
   const renderResult = await page.evaluate(renderFailureCheck);
@@ -318,7 +325,7 @@ async function measureStoryAtWidth(page, baseUrl, storyId, width, height, locale
   if (tracks.length === 0) {
     return { failed: true, reason: 'no track rendered' };
   }
-  return { failed: false, tracks };
+  return { failed: false, tracks, plantAppliedPaddingPx };
 }
 
 // ── §16.1 — the ONE sweep implementation. The real run (no plant) and the plant arms (with a
@@ -406,7 +413,7 @@ function evaluateSweep(storyId, cellsByWidth) {
       }
       prevByTrack.set(i, { width: cell.width, value: tr.value, trackWidth: tr.width });
     });
-    render.push({ width: cell.width, tracks: cell.tracks });
+    render.push({ width: cell.width, tracks: cell.tracks, plantAppliedPaddingPx: cell.plantAppliedPaddingPx ?? null });
   }
 
   return { pass: failures.length === 0, failures, render };
@@ -523,7 +530,6 @@ const PLANT_ARMS = [
     prevWidth: 1023,
     rung: 1024,
     paddingPx: 80,
-    expectedProducedWidth: 864,
   },
   {
     id: 'c-rail-1280',
@@ -535,11 +541,9 @@ const PLANT_ARMS = [
     prevWidth: 1279,
     rung: 1280,
     paddingPx: 140,
-    expectedProducedWidth: 1000,
   },
 ];
 
-/* eslint-disable no-undef */
 function tagParentPlant(sel) {
   const el = document.querySelector(sel);
   if (!el) return { applied: false, reason: 'track element not found' };
@@ -548,12 +552,11 @@ function tagParentPlant(sel) {
   parent.setAttribute('data-task815-plant', '1');
   return { applied: true };
 }
-/* eslint-enable no-undef */
 
 // §16.1 — the plant arm calls `sweepStory` (§16.1's single sweep implementation) with the plant
 // over the FULL 17-width list, so the trip is decided by the same `evaluateSweep` the real gate
-// uses — not a private comparison re-derived here. Passes only when, in order: (1) the cell at
-// `arm.rung` produced the expected track width (asserted first — a plant that silently did not
+// uses — not a private comparison re-derived here. Passes only when, in order: (1) the parent at
+// `arm.rung` has the planted computed inline padding (asserted first — a plant that silently did not
 // apply is an arm failure, not a pass, kickoff §10.4); (2) `evaluateSweep` reports EXACTLY one
 // failure; (3) that failure names this story, this track/mode, and the `prevWidth->rung` pair;
 // (4) an unplanted `sweepStory` of the same story afterwards returns `pass: true` (reload-clean).
@@ -581,13 +584,16 @@ async function runPlantArm(browser, baseUrl, selectors, arm) {
     result.notes.push(`expected exactly 1 track at ${arm.rung}px under the plant, found ${rungCell.tracks.length}`);
     return result;
   }
-  const producedWidth = rungCell.tracks[0].width;
-  if (Math.round(producedWidth) !== arm.expectedProducedWidth) {
+  // Task 790 (rest): the plant is proven applied by the tagged parent's computed inline padding at the
+  // rung (the geometry the plant changes). Rev 1 compared the track width with a constant; the grid
+  // track is width-capped independently of its parent's padding, so that constant went stale.
+  const appliedPadding = rungCell.plantAppliedPaddingPx;
+  if (appliedPadding !== arm.paddingPx) {
     result.pass = false;
-    result.notes.push(`plant did not apply: produced width ${producedWidth}px, expected ${arm.expectedProducedWidth}px`);
+    result.notes.push(`plant did not apply: parent padding-inline at ${arm.rung}px is ${appliedPadding}px, expected ${arm.paddingPx}px`);
     return result;
   }
-  result.notes.push(`produced width at ${arm.rung}px: ${producedWidth}px (expected ${arm.expectedProducedWidth}px) — plant applied`);
+  result.notes.push(`parent padding-inline at ${arm.rung}px: ${appliedPadding}px (expected ${arm.paddingPx}px) — plant applied (track width ${rungCell.tracks[0].width}px)`);
 
   if (sweep.failures.length !== 1) {
     result.pass = false;

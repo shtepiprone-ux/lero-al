@@ -1,0 +1,69 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T15:40:51.800Z
+command: npx vitest run --reporter=verbose src/modules/listings/actions/__tests__/contactGateway.security.test.ts src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check 17ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once 4ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed 2ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check 1ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id 2ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79 8ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket 3ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free 2ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses 6ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > renders right after the Call and WhatsApp grid and before the message trigger, in the normal state 199ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > renders when only one of the two buttons exists 42ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the guestCta state 23ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the ownerDeleted state 20ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the ownerUnavailable state 24ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the closedListing state 17ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render where the grid does not (neither a phone nor a WhatsApp number) 12ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > without the slot nothing extra is rendered 15ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > loading="call": only Call is disabled and holds the spinner; WhatsApp is enabled with its icon 40ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > loading="whatsapp": only WhatsApp is disabled and holds the spinner; Call is enabled with its icon 42ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > without loading neither button is disabled and neither shows a spinner 25ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > contactDisabled still disables both buttons, with no spinner 28ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > revealedPhone renders a link with that href and label, and no Show-number button 35ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > whatsappFallback renders a link with its href, target and rel, and the note as a status after the grid and before the human check 30ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > without the two props there is no link and no status 15ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > with contactDisabled neither link renders and both buttons are disabled 22ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure 20ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (b) without priceOld: nothing in the price block is struck, even with a disclosure 30ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (c) without originalPrice: no disclosure line 13ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > [SEC-X-FE-INQUIRY-BOT-DENY] a failed check sends nothing 405ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > a send with a verified token reaches the action once, resets the widget and closes the dialog on success 129ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > the widget is interaction-only for the inquiry action and sits after the message field inside the dialog 40ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > guest (no listingId, not a staff preview) sees the "Add to favorites" heart 210ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > staff preview shows no heart 54ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > guest sees no "Save to collection" control 40ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > [SEC-X-FE-CONTACT-BOT-DENY] a failed check reveals nothing 320ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > [SEC-X-FE-CONTACT-LIMIT] a refused reveal shows the limit text and nothing else 116ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > every other refusal and a failed request show the usual "could not load" text, and the widget is reset 103ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > [SEC-X-FE-CONTACT-BOT-ALLOW] a verified press reveals the number 122ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the number stays on the card, and a later press of the link needs no new request 83ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > a verified WhatsApp press opens WhatsApp and the browser records no contact event (the gateway does) 59ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > with an active click activation, a verified press calls window.open once and shows no fallback 63ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > with an expired click activation, window.open is not called; the card shows the link and the note 52ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > an expired activation shows nothing when the gateway refuses 42ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a focused Show number, after a verified reveal, leaves the focus on the tel: link 61ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a focused WhatsApp with an expired click activation leaves the focus on the Open WhatsApp link 124ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a refusal leaves the focus on the pressed button 95ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > when the focus has moved to another element before the answer, it stays there 172ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the card gives the widget the interaction-only appearance, the reveal action and a background token (prefetch) 15ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the first button reads Show number 30ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > pending state of a press of 'call' > while the check is pending only the call button is disabled and holds the spinner; both are enabled after the answer 84ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > pending state of a press of 'whatsapp' > while the check is pending only the whatsapp button is disabled and holds the spinner; both are enabled after the answer 78ms
+
+ Test Files  5 passed (5)
+      Tests  51 passed (51)
+   Start at  17:40:53
+   Duration  5.63s (transform 1.97s, setup 424ms, import 10.01s, tests 3.20s, environment 3.18s)
+
+
+---- end ----
+EXIT_CODE=0

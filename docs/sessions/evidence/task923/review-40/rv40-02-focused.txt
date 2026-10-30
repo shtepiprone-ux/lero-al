@@ -1,0 +1,212 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T14:29:18.088Z
+command: npx vitest run --reporter=verbose src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx src/components/auth/__tests__/CaptchaWidget.language.test.tsx src/modules/auth/components/__tests__/authClientParts.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > passes the invisible size and no appearance, action, execution or style, inside an absolutely positioned wrapper 149ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > ignores `action`: today's render has none 20ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > getToken returns the widget's response promise and never calls execute 15ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > reset resets the widget 11ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > without a site key it shows the development note, calls onSuccess once with the development token and resolves it from getToken 22ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="always" (the default) is unchanged > works without an onSuccess prop 10ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > renders the compact challenge in execute mode, bound to its action, inside a box that is hidden 13ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > renders right after the Call and WhatsApp grid and before the message trigger, in the normal state 202ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > renders when only one of the two buttons exists 49ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the guestCta state 21ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the ownerDeleted state 15ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > shows the box between the before- and after-interactive callbacks only 25ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > hides the box on an error or an expiry and still tells the consumer 18ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > without prefetch nothing executes on widget load; getToken starts one execution and resolves the token Cloudflare answers 12ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > with prefetch the widget executes as soon as it has rendered 7ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > a token that arrived before the call is returned without another execute, and once 8ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > a second getToken does not reuse a token that was handed out: it starts a new execution 9ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > a ready token the widget reports as expired is not handed out, and onExpire clears the ready token 10ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > getToken while a background execution is running waits for it and does not execute again 14ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > a request that receives no token rejects after 30 seconds, and the next request starts a new execution 13ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > an error of Cloudflare rejects the pending request at once with its code, sends the code to Sentry and tells the consumer 11ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > an error without an action is tagged `none` 10ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > reset resets the widget and hides the box; without prefetch it does not execute 13ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > with prefetch, reset resets the widget and executes again, in that order, and drops the ready token 9ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > passes onSuccess through to the widget 7ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx > appearance="interaction-only" > without a site key it renders nothing, never calls onSuccess, resolves the development token every time and reset does nothing 11ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the ownerUnavailable state 18ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render in the closedListing state 17ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > does not render where the grid does not (neither a phone nor a WhatsApp number) 13ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — humanCheck slot (Task 923 R113 (b)) > without the slot nothing extra is rendered 15ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > loading="call": only Call is disabled and holds the spinner; WhatsApp is enabled with its icon 46ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the app locale (Task 875) > locale=sq -> Turnstile options.language=auto 64ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the app locale (Task 875) > locale=en -> Turnstile options.language=en 30ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > loading="whatsapp": only WhatsApp is disabled and holds the spinner; Call is enabled with its icon 31ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > without loading neither button is disabled and neither shows a spinner 24ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — loading belongs to the pressed channel (Task 923 R116, owner D74) > contactDisabled still disables both buttons, with no spinner 25ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > revealedPhone renders a link with that href and label, and no Show-number button 28ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the app locale (Task 875) > locale=uk -> Turnstile options.language=uk 12ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the app locale (Task 875) > locale=it -> Turnstile options.language=it 14ms
+ ✓ src/components/auth/__tests__/CaptchaWidget.language.test.tsx > CaptchaWidget — Turnstile language follows the app locale (Task 875) > dev fallback is preserved when no site key is configured 28ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > with a site key it shows the Turnstile widget with the key, invisible size, a name and the default theme 70ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > the language en asks Turnstile for en 23ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > whatsappFallback renders a link with its href, target and rel, and the note as a status after the grid and before the human check 29ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > without the two props there is no link and no status 16ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — the revealed number and the WhatsApp fallback (Task 923 R118, owner D75, D78) > with contactDisabled neither link renders and both buttons are disabled 23ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (a) priceOld + originalPrice: old price struck, disclosure plain, DOM order old → main → disclosure 19ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (b) without priceOld: nothing in the price block is struck, even with a disclosure 31ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx > MantineListingContactPattern — price block (Task 912) > (c) without originalPrice: no disclosure line 16ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > the language it asks Turnstile for it 16ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > the language uk asks Turnstile for uk 9ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > the language sq asks Turnstile for auto 12ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > the language xx asks Turnstile for auto 9ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > a chosen theme is passed on, and success, error and expiry callbacks reach the widget 9ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > reset() from outside resets the widget 10ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > with no site key it shows a visible note and reports the placeholder token once, and there is no widget 86ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > CaptchaWidget > reset() without a widget does nothing 10ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > shows a polite loading spinner while it works 13ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > while the status is initializing nothing is stored, opened or redirected 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > while the status is refreshing nothing is stored, opened or redirected 9ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unauthenticated visitor: the destination is stored and the sheet opens once on the asked view 14ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > a safe ?next= is the destination for login 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="https://evil.example/x" is dropped and the person goes to their own cabinet 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="//evil.example/x" is dropped and the person goes to their own cabinet 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="/\\evil.example" is dropped and the person goes to their own cabinet 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="javascript:alert(1)" is dropped and the person goes to their own cabinet 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="data:text/html,x" is dropped and the person goes to their own cabinet 6ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="/en/../admin" is dropped and the person goes to their own cabinet 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="/en/%2e%2e/admin" is dropped and the person goes to their own cabinet 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="/a\nb" is dropped and the person goes to their own cabinet 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="evil" is dropped and the person goes to their own cabinet 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="" is dropped and the person goes to their own cabinet 6ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an unsafe ?next="/en/x\t:y" is dropped and the person goes to their own cabinet 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > the cabinet fallback is under the person's language 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > the session-lost flag is set only when asked for 13ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an authenticated person is sent on to the destination and the stored one is cleared; no sheet opens 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > an authenticated person with an unsafe next goes to the cabinet, never to the address 6ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > closing the sheet without signing in goes to the language home (never the gated cabinet) and clears the stored destination 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > closing the sheet goes back to a safe ?next= when there is one 9ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > a close that comes after a successful sign-in is left to the status watcher (one redirect, to the login destination) 7ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthRedirect > after it is gone, a sheet-closed event does nothing 8ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > without a provider the defaults say "initializing" and nothing is signed in 41ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > the provider starts from the server's answer: a user is authenticated, no user is unauthenticated, neither is loading 3ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > stops listening to the auth service when the provider goes away 1ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > signOut signs out first and only then runs the navigation, and the flag is on while it works 4ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > signOut with no navigation callback still signs out 2ms
+ ✓ src/modules/auth/components/__tests__/authClientParts.test.tsx > AuthContext > useUser is the same value as useAuth 3ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > closed, it shows nothing 71ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the login view is titled Login 142ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the register view is titled Register 57ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > [SEC-X-FE-INQUIRY-BOT-DENY] a failed check sends nothing 355ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > a send with a verified token reaches the action once, resets the widget and closes the dialog on success 130ms
+ ✓ src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx > ListingInquiryDialog.bot > the widget is interaction-only for the inquiry action and sits after the message field inside the dialog 42ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > guest (no listingId, not a staff preview) sees the "Add to favorites" heart 215ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > staff preview shows no heart 59ms
+ ✓ src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx > ListingDetailViewBody — favourite heart (Task 886 R38, O83-6 (a)) > guest sees no "Save to collection" control 42ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the register-agent view is titled Register as agent 57ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the forgot-password view is titled Reset password 32ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the agent view says which kind of registration it is 47ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > [SEC-X-FE-CONTACT-BOT-DENY] a failed check reveals nothing 314ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the views link to each other 248ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > every other refusal and a failed request show the usual "could not load" text, and the widget is reset 121ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > typed registration values survive a switch between the private and agent views 108ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > opening it again starts clean on the asked view 87ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > [SEC-X-FE-CONTACT-BOT-ALLOW] a verified press reveals the number 139ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the drawer's own close control reports the close 30ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > shows the session-recovery note once and removes the flag 27ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "" is refused before anything is sent 48ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the number stays on the card, and a later press of the link needs no new request 98ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > a verified WhatsApp press opens WhatsApp and the browser records no contact event (the gateway does) 56ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "   " is refused before anything is sent 40ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "no-at-sign" is refused before anything is sent 42ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a@b" is refused before anything is sent 51ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > with an active click activation, a verified press calls window.open once and shows no fallback 62ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > with an expired click activation, window.open is not called; the card shows the link and the note 61ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a b@c.com" is refused before anything is sent 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a@b.c" is refused before anything is sent 50ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an empty password is refused before anything is sent 43ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > WhatsApp and the click activation > an expired activation shows nothing when the gateway refuses 48ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a focused Show number, after a verified reveal, leaves the focus on the tel: link 48ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a focused WhatsApp with an expired click activation leaves the focus on the Open WhatsApp link 122ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > a refusal leaves the focus on the pressed button 79ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > a good login sends exactly the typed values, closes the sheet and refreshes the page 58ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > a safe stored destination is used once and removed 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "//evil.example" is never visited 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "https://evil.example" is never visited 62ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "/a/../admin" is never visited 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "javascript:alert(1)" is never visited 62ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "/\\evil" is never visited 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Invalid login credentials" is shown as "Incorrect email or password." and does not close the sheet 45ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > focus after the answer > when the focus has moved to another element before the answer, it stays there 170ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the card gives the widget the interaction-only appearance, the reveal action and a background token (prefetch) 14ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > the first button reads Show number 22ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > pending state of a press of 'call' > while the check is pending only the call button is disabled and holds the spinner; both are enabled after the answer 61ms
+ ✓ src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx > ListingContact.bot > pending state of a press of 'whatsapp' > while the check is pending only the whatsapp button is disabled and holds the spinner; both are enabled after the answer 77ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "invalid credentials" is shown as "Incorrect email or password." and does not close the sheet 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "User already registered" is shown as "This email is already registered." and does not close the sheet 38ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Password should be at least 6 characters" is shown as "Password must be at least 6 characters." and does not close the sheet 39ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Email not confirmed" is shown as "Please confirm your email before logging in." and does not close the sheet 33ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "email rate limit exceeded" is shown as "Too many attempts. Please wait about 60 minutes and try again." and does not close the sheet 34ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Too many requests" is shown as "Too many attempts. Please wait about 60 minutes and try again." and does not close the sheet 43ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "something the server invented" is shown as "An error occurred. Please try again." and does not close the sheet 34ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "" is shown as "An error occurred. Please try again." and does not close the sheet 45ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > while the request runs the button cannot be pressed again 34ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > Google sign-in sends the ID token with this attempt's nonce, closes the sheet and refreshes the page 44ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > Google sign-in opens the stored destination once, checks it, and does not keep it (Task 923 R72 (i), Task 927) 75ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the password field is current-password, the toggle is named, and the e-mail asks for an e-mail keyboard 48ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > cannot be sent without the captcha, and cannot be forced either 30ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > sends the typed address, the captcha token and a reset link that returns to this site's reset page in the person's language 43ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":true} always leads to the same neutral success (the page never tells whether the address is registered) 52ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"rate_limited"} always leads to the same neutral success (the page never tells whether the address is registered) 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"unknown_email"} always leads to the same neutral success (the page never tells whether the address is registered) 37ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"server_error"} always leads to the same neutral success (the page never tells whether the address is registered) 41ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > a failed captcha resets the widget, clears the token, shows the error, and needs a new token 51ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > a widget error shows the failure and takes the token away; an expiry only takes the token away; a new token recovers 73ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > "back to login" works from the form and from the success page 94ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the register button needs a strong password AND the captcha 102ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad name is refused before anything is sent 82ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad e-mail is refused before anything is sent 62ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad password is refused before anything is sent 51ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > without a captcha token a forced submit sends nothing and says nothing 33ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a phone that fails the country rules shows that rule and sends nothing 56ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a private registration sends the typed values, the token and this site's verification return path; no agent fields 67ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a valid phone is sent in E.164 94ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > an agent registration sends user_type agent with the chosen city (as a number) and company 101ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > an agent with no city and no company sends none of them 100ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a private registration never sends a city or company even if one was chosen before switching 124ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a failed captcha resets the widget, drops the token and shows the captcha error 68ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "User already registered" is shown as "This email is already registered.", the widget is reset and a new token is needed 61ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "Password should be at least 6 characters" is shown as "Password must be at least 6 characters.", the widget is reset and a new token is needed 78ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "email rate limit" is shown as "Too many attempts. Please wait about 60 minutes and try again.", the widget is reset and a new token is needed 66ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a failure with no message is the generic error 55ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the success page leads home by closing the sheet 57ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a captcha error from the widget blocks and shows the error; the next good token clears it 44ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a token that expires disables the button again 65ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the password field asks for a NEW password 17ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > lists the companies and the add panel opens and cancels 68ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > the add button needs a name; the name is limited to 120 characters 77ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > creates the company with the trimmed name, selects it and closes the panel 107ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > Enter in the name field creates it without submitting the registration form 65ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > an existing company is offered for selection instead of creating a second one 136ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > typing again withdraws the duplicate notice 101ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a refused name (no id) stops quietly and the panel stays open 88ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a refetch failure does not lose the new company 103ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file of another type is refused with its message and no preview 55ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a PDF is refused with its message and no preview 53ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file over 2 MB is refused with its message and no preview 44ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a picture over 256 px is refused and its temporary address is released 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file the browser cannot read as a picture is refused as the wrong type 48ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a good logo shows a preview, can be replaced, and cleared (releasing its address) 92ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > exactly the three picture types are accepted by the file chooser 51ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > the logo is uploaded with the company id and its grant after the company exists; the upload is a POST of form data 118ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > no grant means none is sent; an upload failure is ignored and the company is still selected 111ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > no logo means no upload request 102ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > choosing an existing company from the list sets it for the registration 114ms
+
+ Test Files  8 passed (8)
+      Tests  194 passed (194)
+   Start at  16:29:19
+   Duration  10.02s (transform 3.24s, setup 952ms, import 19.49s, tests 9.65s, environment 7.64s)
+
+
+---- end ----
+EXIT_CODE=0

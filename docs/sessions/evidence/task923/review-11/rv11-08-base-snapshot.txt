@@ -1,0 +1,5 @@
+# Task 923 review 11 - base-state lines copied from HEAD 564008e85cba60d3257d34b6f66fc568d35df6d8 for kickoff claims whose literal the session's changes removed
+
+## C403 - src/stories/mantine/primitives/Table.stories.tsx:81-81 at HEAD
+      width: '35%',
+

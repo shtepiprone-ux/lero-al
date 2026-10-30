@@ -1,0 +1,34 @@
+# HEAD 9769b1222 lines cited by Task 923 claim rows whose working-tree source changed (Revision 31, rv34-07-refresh-locators.mjs)
+== src/app/[locale]/listings/[slug]/edit/page.tsx at HEAD 9769b1222, lines 65-65
+  const canManageStatus = listing.user_id === user.id || canAdminEditListing(userRole)
+== src/modules/listings/components/ListingFormShellView.tsx at HEAD 9769b1222, lines 86-86
+  statusControl?: ListingFormStatusControlProps
+== messages/en.json at HEAD 9769b1222, lines 547-547
+    "delete_account_body": "This action is irreversible. All your listings will be archived and you will be logged out.",
+== messages/en.json at HEAD 9769b1222, lines 1516-1516
+        "delete_hard_point1": "• Account and profile data will be completely deleted",
+== messages/uk.json at HEAD 9769b1222, lines 548-548
+    "delete_account_type_confirm": "Введіть DELETE для підтвердження",
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD 9769b1222, lines 162-162
+  // public_user_profiles view is granted to authenticated only; anon returns null.
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD 9769b1222, lines 221-221
+  const isPriceReduced = listing.price_old && listing.price < listing.price_old
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD 9769b1222, lines 231-232
+    ? (needsConversion ? convertPrice(listing.price_old, listing.currency, preferredCurrency, exchangeRates) : listing.price_old)
+    : null
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD 9769b1222, lines 146-146
+  const supabase = await createClient()
+== src/modules/listings/validations/index.ts at HEAD 9769b1222, lines 12-12
+  property_type: z.enum(['apartment', 'house', 'room', 'land', 'commercial', 'office', 'garage', 'parking', 'warehouse', 'other']),
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD 9769b1222, lines 162-162
+  // public_user_profiles view is granted to authenticated only; anon returns null.
+== src/app/[locale]/listings/[slug]/page.tsx in the working tree (uncommitted Task 923 code), lines 238-238
+  // A guest (signed out, or a zombie session) is not served the owner's contact card at all (owner decision D9, Task 923): the card shows
+== messages/en.json at HEAD 9769b1222, lines 262-262
+    "error_price": "Please enter a valid price",
+== src/modules/listings/actions/__tests__/createListing.smoke.test.ts at HEAD 9769b1222, lines 55-57
+const mockFrom = vi.fn((table: string) => {
+  if (table === 'listings')      return { insert: mockListingsInsert }
+  if (table === 'listing_images') return { insert: mockListingImagesInsert }
+== src/modules/listings/actions/__tests__/createListing.smoke.test.ts at HEAD 9769b1222, lines 139-139
+    expect(result).toEqual({ error: 'constraint violation on listings' })

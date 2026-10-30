@@ -1,9 +1,11 @@
-'use server'
+import 'server-only'
 
-import { createHash } from 'crypto'
-import { headers } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
+import { isUuid } from '@/lib/security/inputs'
+import { isLiveAccount } from '@/lib/auth/accountAccess'
+
+const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 
 export type ListingContactChannel = 'whatsapp'
 export type ListingContactSource = 'listing_detail_contact_card'
@@ -23,31 +25,37 @@ type TrackResult =
   | { ok: true }
   | {
       ok: false
-      reason: 'self_click' | 'insert_failed' | 'session_error' | 'not_found' | 'deduplicated'
+      reason: 'unauthenticated' | 'self_click' | 'insert_failed' | 'session_error' | 'not_found' | 'deduplicated'
     }
 
+/**
+ * Records that a SIGNED-IN person tapped WhatsApp on a listing. Only a signed-in, active person can reach the contact card (owner correction 2026-10-17),
+ * so only such a person can produce this event: the action is a public endpoint, and a hidden button proves presentation only, therefore a guest, a session
+ * without a profile and a blocked or inactive account are refused before the listing is read and before anything is written.
+ */
 export async function trackListingContactEvent(args: TrackArgs): Promise<TrackResult> {
-  const { listingId, channel, source, locale } = args
+  // Task 923 Revision 7: the arguments come from a browser and their types are erased. Anything outside the known values is refused before a query, so a caller
+  // cannot write arbitrary channels, sources or locales into the analytics table.
+  const { listingId, channel, source, locale } = args ?? ({} as Partial<TrackArgs>)
+  if (!isUuid(listingId) || channel !== 'whatsapp' || source !== 'listing_detail_contact_card') return { ok: false, reason: 'not_found' }
+  const safeLocale = typeof locale === 'string' && (SUPPORTED_LOCALES as readonly string[]).includes(locale) ? locale : null
 
-  let actorUserId: string | null = null
-  try {
-    const user = await getUser()
-    actorUserId = user?.id ?? null
-  } catch {
-    return { ok: false, reason: 'session_error' }
-  }
+  const viewer = await requireViewer()
+  if (!viewer.ok) return { ok: false, reason: viewer.reason === 'unauthenticated' ? 'unauthenticated' : 'session_error' }
+  const actorUserId = viewer.userId
 
   try {
     // Every write goes through the service-role client, from this server action only (Task 850): the
     // authenticated INSERT grant is revoked, so this is the only way a row can be created.
     const db = createAdminClient()
 
-    // Same publicly-viewable status set as the detail page query and the view tracker.
+    // Only an ACTIVE listing of a LIVE owner has a contact card to tap (Task 923 R66 (f), owner F2): the contact of a sold, rented, archived, pending, inactive or
+    // expired listing is locked, and so is the contact of an owner who was deleted or has no access.
     const { data: listing, error: listingError } = await db
       .from('listings')
       .select('id, user_id')
       .eq('id', listingId)
-      .in('status', ['active', 'sold', 'rented', 'archived'])
+      .eq('status', 'active')
       .maybeSingle()
 
     if (listingError) {
@@ -55,42 +63,27 @@ export async function trackListingContactEvent(args: TrackArgs): Promise<TrackRe
       return { ok: false, reason: 'insert_failed' }
     }
     if (!listing) return { ok: false, reason: 'not_found' }
+    const ownerLive = await isLiveAccount(listing.user_id as string)
+    if (ownerLive === null) return { ok: false, reason: 'insert_failed' }
+    if (!ownerLive) return { ok: false, reason: 'not_found' }
 
-    // Guest fingerprint built exactly like api/listings/[slug]/view/route.ts: SHA-256(ip|ua[0..60]),
-    // 24 hex chars. No ip → '' , which disables de-dup for that guest (same "unknown IP" rule as the
-    // inquiry limiter).
-    let actorIpHash: string | null = null
-    if (!actorUserId) {
-      const hdrs = await headers()
-      const ua = hdrs.get('user-agent') ?? ''
-      const ip = hdrs.get('x-forwarded-for')?.split(',')[0].trim() ?? hdrs.get('x-real-ip') ?? ''
-      actorIpHash = ip
-        ? createHash('sha256').update(`${ip}|${ua.slice(0, 60)}`).digest('hex').slice(0, 24)
-        : ''
+    const since = new Date(Date.now() - DEDUP_WINDOW_MS).toISOString()
+    const { data: recent, error: dedupError } = await db
+      .from('listing_contact_events')
+      .select('id')
+      .eq('listing_id', listing.id)
+      .eq('actor_user_id', actorUserId)
+      .gte('created_at', since)
+      .limit(1)
+
+    // A failed look-up must not lose the click: log it and record the event.
+    if (dedupError) {
+      console.error('[contactEvents] dedup lookup failed', { code: dedupError.code, listingId })
+    } else if (recent && recent.length > 0) {
+      return { ok: false, reason: 'deduplicated' }
     }
 
-    if (actorUserId || actorIpHash) {
-      const since = new Date(Date.now() - DEDUP_WINDOW_MS).toISOString()
-      const base = db
-        .from('listing_contact_events')
-        .select('id')
-        .eq('listing_id', listing.id)
-      const { data: recent, error: dedupError } = await (actorUserId
-        ? base.eq('actor_user_id', actorUserId)
-        : base.eq('actor_ip_hash', actorIpHash as string)
-      )
-        .gte('created_at', since)
-        .limit(1)
-
-      // A failed look-up must not lose the click: log it and record the event.
-      if (dedupError) {
-        console.error('[contactEvents] dedup lookup failed', { code: dedupError.code, listingId })
-      } else if (recent && recent.length > 0) {
-        return { ok: false, reason: 'deduplicated' }
-      }
-    }
-
-    const isOwnerClick = actorUserId !== null && actorUserId === listing.user_id
+    const isOwnerClick = actorUserId === listing.user_id
 
     // listing_owner_id and is_owner_click are re-derived by the BEFORE INSERT trigger; the values here
     // come from the server-resolved listing, never from the caller.
@@ -98,10 +91,10 @@ export async function trackListingContactEvent(args: TrackArgs): Promise<TrackRe
       listing_id: listing.id,
       listing_owner_id: listing.user_id,
       actor_user_id: actorUserId,
-      actor_ip_hash: actorIpHash,
+      actor_ip_hash: null,
       channel,
       source,
-      locale: locale ?? null,
+      locale: safeLocale,
       is_owner_click: isOwnerClick,
     })
     if (error) {

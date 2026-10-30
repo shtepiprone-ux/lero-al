@@ -4,9 +4,12 @@
  *
  * Owner rule (2026-09-17, quoted in kickoff §5.1): "ми не покриваємо тестами TailWind Stories, ми
  * покриваємо лише Mantine" — legacy `System/*` Stories are excluded from every test. This gate now
- * measures ONLY `Patterns/Mantine/HomepageListingGrids` (`--default` / `--loading`), the canonical
+ * measures `Patterns/Mantine/HomepageListingGrids` (`--default` / `--loading`), the canonical
  * Mantine coverage story that statically imports the real production `FeaturedListingsView` and
  * `LatestListingsView` (`src/stories/patterns/mantine/HomepageListingGrids.stories.tsx`).
+ * I-F measures `Patterns/Mantine/HomeSection/Default`: the real homepage wraps Featured/Latest in
+ * MantineHomeSection, which owns `.container-wide`. The listing-view story supplies StoryPageGutter
+ * under GR-3d and has no production page container; measuring its cap caused twelve false failures.
  *
  * Task 701's original I-A (column-step) and I-B (grid-gap) invariants are REMOVED, not re-tuned:
  * owner decisions D74-1/D74-4 (`tasks/Sprints/Sprint_74_One_Card_Width_For_The_Whole_Site.md`,
@@ -28,7 +31,8 @@
  *   I-G  Rail mode                                both tracks are flex/overflow-x rails, never grid,
  *                                                  anywhere in their subtree (review 1/R13 below)
  *
- * None of the five invariants above locate anything by a Tailwind or CSS-Modules-hashed class name.
+ * No invariant locates a CSS-Modules-hashed class. I-F uses the production container's stable
+ * project-authored `.container-wide` identity and checks every variant rendered by its direct Story.
  * I-D's wrapper class (`featured-listings` / `latest-listings`, `FeaturedListingsView.tsx` /
  * `LatestListingsView.tsx` loading branches only) is the track's own stable, project-authored global
  * class — not a build artifact. I-G locates each rail/grid scroller structurally: a flex element
@@ -83,6 +87,7 @@ const LOCALES = ['sq', 'en', 'uk', 'it'];
 // ── Canonical Mantine targets (R1/R12) — the gate's ONLY story targets. ──
 const DEFAULT_ID = 'patterns-mantine-homepagelistinggrids--default';
 const LOADING_ID = 'patterns-mantine-homepagelistinggrids--loading';
+const PAGE_CAP_ID = 'patterns-mantine-homesection--default';
 
 // ── I-C — Featured header geometry (kickoff R3). Rules and epsilon are byte-identical to the
 // pre-828 gate; only the target story and locator changed (§5.2 — do not retune these). ──
@@ -182,7 +187,6 @@ function renderFailureCheck() {
 // legacy per-story render never had. Requiring the h2 to be a DIRECT child isolates the header
 // `Group` again (measured, I0 probe: 2 matches before the fix, 1 after, at every cell) — a locator
 // fix, not a rule change; `HEADER_EXPECTED_RULES` above is untouched. ──
-/* eslint-disable no-undef */
 async function evalHeaderCell({ plantGapPx }) {
   const root = document.querySelector('#storybook-root');
   if (!root) return { infra: false, reason: 'no-storybook-root' };
@@ -237,7 +241,7 @@ async function evalHeaderCell({ plantGapPx }) {
   // Plant (kickoff R8, I-C): force --group-gap to a non-zero value the row must not tolerate,
   // BEFORE the "live" measurement — so the plant is what "live" observes. Restored below.
   let plantRestore = null;
-  if (plantGapPx != null) {
+  if (plantGapPx !== null && plantGapPx !== undefined) {
     const prev = group.style.getPropertyValue('--group-gap');
     group.style.setProperty('--group-gap', `${plantGapPx}px`);
     plantRestore = () => {
@@ -272,7 +276,6 @@ async function evalHeaderCell({ plantGapPx }) {
 
   return { infra: true, live, synthetic };
 }
-/* eslint-enable no-undef */
 
 function rectDelta(a, b) {
   return {
@@ -337,7 +340,6 @@ function evaluateHeaderRow({ geometry, error, width }) {
 // (kickoff R8's "no other" requirement) within a single navigation. The wrapper class
 // (`featured-listings` / `latest-listings`) is on MantineListingCardTrack's WRAPPER Box, not its
 // scroller; the scroller (`.rail`, first element child) is what actually holds the item nodes. ──
-/* eslint-disable no-undef */
 function evalSkeletonCell({ plantComponent, wrapperClasses }) {
   function measure(wrapperClass, doPlant) {
     const wrapper = document.querySelector(`.${wrapperClass}`);
@@ -362,10 +364,8 @@ function evalSkeletonCell({ plantComponent, wrapperClasses }) {
     Latest: measure(wrapperClasses.Latest, plantComponent === 'Latest'),
   };
 }
-/* eslint-enable no-undef */
 
 // ── I-E evaluator. ──
-/* eslint-disable no-undef */
 function evalNoScrollCell({ plant }) {
   let restore = null;
   if (plant) {
@@ -382,17 +382,14 @@ function evalNoScrollCell({ plant }) {
   if (restore) restore();
   return { noHScroll, scrollWidth, clientWidth };
 }
-/* eslint-enable no-undef */
 
-// ── I-F evaluator — locates the element whose computed max-width resolves to 1408px
-// (`--width-page-max: 88rem`), independent of the Mantine style-prop mechanism that produced it. ──
-/* eslint-disable no-undef */
-function evalPageCapCell({ plant }) {
+// I-F measures the real production container by identity, rather than locating a passing style.
+export function evalPageCapCell({ plant }) {
   const root = document.querySelector('#storybook-root');
   if (!root) return { infra: false, reason: 'no-storybook-root' };
-  const all = [...root.querySelectorAll('*')];
-  const frame = all.find((el) => Math.abs(parseFloat(getComputedStyle(el).maxWidth) - 1408) < 1);
-  if (!frame) return { infra: true, found: false };
+  const frames = [...root.querySelectorAll('.container-wide')];
+  if (frames.length === 0) return { infra: true, found: false };
+  const frame = frames[0];
 
   let restore = null;
   if (plant) {
@@ -404,14 +401,15 @@ function evalPageCapCell({ plant }) {
     };
   }
 
-  const cs = getComputedStyle(frame);
-  const rect = frame.getBoundingClientRect();
-  const contentWidthPx = rect.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const contentWidthPx = Math.max(...frames.map(element => {
+    const cs = getComputedStyle(element);
+    const rect = element.getBoundingClientRect();
+    return rect.width - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  }));
   if (restore) restore();
 
-  return { infra: true, found: true, contentWidthPx };
+  return { infra: true, found: true, frameCount: frames.length, contentWidthPx };
 }
-/* eslint-enable no-undef */
 
 // ── I-G evaluator — locates BOTH tracks by structure (no class name): a flex element with
 // horizontal overflow containing a `.listing-card` descendant is a rail; a `display:grid` element
@@ -433,7 +431,6 @@ function evalPageCapCell({ plant }) {
 // R13 exists to catch. Both locate their target from the pre-plant top-level identity, so locating
 // is never plant-affected, matching the pre-828 gate's locate-then-plant-then-measure-then-restore
 // shape for I-A. ──
-/* eslint-disable no-undef */
 function evalRailCell({ plantIndex, plantNestedComponent }) {
   const root = document.querySelector('#storybook-root');
   if (!root) return { infra: false, reason: 'no-storybook-root' };
@@ -462,7 +459,7 @@ function evalRailCell({ plantIndex, plantNestedComponent }) {
   const tracked = topLevel; // index 0 -> Featured, index 1 -> Latest (DOM order preserved by the filter above)
 
   let restoreRegression = null;
-  if (plantIndex != null) {
+  if (plantIndex !== null && plantIndex !== undefined) {
     const target = tracked[plantIndex];
     const prevDisplay = target.style.getPropertyValue('display');
     const prevOverflowX = target.style.getPropertyValue('overflow-x');
@@ -477,7 +474,7 @@ function evalRailCell({ plantIndex, plantNestedComponent }) {
   }
 
   let restoreNested = null;
-  if (plantNestedComponent != null) {
+  if (plantNestedComponent !== null && plantNestedComponent !== undefined) {
     const idx = plantNestedComponent === 'Featured' ? 0 : 1;
     const rail = tracked[idx];
     const item = rail.lastElementChild;
@@ -518,7 +515,6 @@ function evalRailCell({ plantIndex, plantNestedComponent }) {
     tracks,
   };
 }
-/* eslint-enable no-undef */
 
 // ── Matrix runners ──
 
@@ -664,7 +660,7 @@ async function runPageCapMatrix(browser, baseUrl, { onlyWidths, onlyLocales, pla
       const page = await browser.newPage();
       try {
         const outcome = await navigateAndCheck(
-          page, baseUrl, DEFAULT_ID, locale, width, 900,
+          page, baseUrl, PAGE_CAP_ID, locale, width, 900,
           evalPageCapCell,
           { plant: plant ?? false }
         );
@@ -774,7 +770,7 @@ async function runFullGate(browser, baseUrl) {
 // ── R12 — printed scope, first block of every run. ──
 function printScope() {
   console.log('check-homepage-grid.mjs — canonical Mantine scope only\n');
-  console.log(`Targets: ${DEFAULT_ID}, ${LOADING_ID}`);
+  console.log(`Targets: ${DEFAULT_ID}, ${LOADING_ID}; page cap owner: ${PAGE_CAP_ID}`);
   console.log(
     'Invariants: I-C header geometry (12) · I-D loading skeleton count (24) · ' +
     'I-E no page-level horizontal scroll (44) · I-F 1408px page cap (12) · I-G rail mode (24, ' +
@@ -932,7 +928,7 @@ async function main() {
 
   // R9 — fail closed if the discovered index lacks either target ID; never a silent skip.
   const index = JSON.parse(await readFile(join(storybookStaticDir, 'index.json'), 'utf8'));
-  const missingIds = [DEFAULT_ID, LOADING_ID].filter((id) => !index.entries?.[id]);
+  const missingIds = [DEFAULT_ID, LOADING_ID, PAGE_CAP_ID].filter((id) => !index.entries?.[id]);
   if (missingIds.length > 0) {
     console.error(`storybook-static/index.json is missing required story id(s): ${missingIds.join(', ')}`);
     process.exit(1);
@@ -957,4 +953,6 @@ async function main() {
   process.exit(exitCode);
 }
 
-main().catch((err) => { console.error(err); process.exit(1); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => { console.error(err); process.exit(1); });
+}

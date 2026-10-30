@@ -1,0 +1,15 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv58-02-deleted-session-probe.mjs
+date: 2026-10-25T12:29:17.520Z
+deleted account: deleteUser ok
+deleted account, GET /auth/v1/user: preflight 200 allow-origin=*; answer 403 user_not_found allow-origin=http://localhost:3000
+deleted account, POST /auth/v1/token refresh: preflight 200 allow-origin=*; answer 400 refresh_token_not_found allow-origin=http://localhost:3000
+deleted account, POST /auth/v1/logout?scope=local: preflight 200 allow-origin=*; answer 403 user_not_found allow-origin=http://localhost:3000
+live account, POST /auth/v1/logout?scope=global: preflight 200 allow-origin=*; answer 204 empty body allow-origin=http://localhost:3000
+live account after a global sign-out, GET /auth/v1/user: preflight 200 allow-origin=*; answer 403 session_not_found allow-origin=http://localhost:3000
+live account after a global sign-out, POST /auth/v1/token refresh: preflight 200 allow-origin=*; answer 400 refresh_token_not_found allow-origin=http://localhost:3000
+live account after a global sign-out, POST /auth/v1/logout?scope=local: preflight 200 allow-origin=*; answer 403 session_not_found allow-origin=http://localhost:3000
+clean-up: zz_synth_rv58_ users left 0
+exit code: 0

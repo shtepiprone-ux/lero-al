@@ -91,6 +91,5 @@ when present; if absent, record that fact and use matching-version official Next
 another major version. Also consult [Next.js data security](https://nextjs.org/docs/15/app/guides/data-security)
 and [Vitest mocking guidance](https://vitest.dev/guide/mocking).
 
-These Markdown rules are workflow requirements. They do NOT by themselves install CI jobs, protect a branch or
-implement a machine-enforced task checker. Approval claims must distinguish a read/review obligation from an
-inspected, tested executable gate. Never claim a gate exists from its name in a document.
+The executable task/CI/release contract is in [workflow gates](workflow-gates.md). It does not configure remote
+branch/deployment protection or prove test semantics. Distinguish inspected machine checks from review obligations.

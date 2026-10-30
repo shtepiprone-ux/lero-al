@@ -1,0 +1,193 @@
+# R140 AC140 r43-03: read-only capture 3 (rev43-03-capture-r16.cjs)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "E=docs/sessions/evidence/task923; node $E/revision-43/rev43-03-capture-r16.cjs --i-confirm-dev-database; rc=$?; echo \"capture exit: $rc\"; sha256sum $E/r43-03-capture-r16.json; exit $rc"
+NODE_PATH: C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/node_modules
+started: 2026-10-24T09:39:24.219Z
+--- stdout ---
+captured 2026-10-24T09:39:23.298Z
+pages: owner postgres, rls true, force_rls false, relacl {postgres=arwdDxtm/postgres,anon=rm/postgres,authenticated=rm/postgres,service_role=arwdDxtm/postgres}
+  7 columns: id, title, slug, content, is_published, updated_by, updated_at
+  columns with a column-level ACL: none
+  policies: Admins can manage pages [ALL {public}] using (EXISTS ( SELECT 1
+   FROM users
+  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))) | blocked_account_no_select [SELECT {authenticated}] using ( SELECT caller_is_active() AS caller_is_active) | pages_select_public [SELECT {anon,authenticated}] using (is_published = true)
+site_footer: owner postgres, rls true, force_rls false, relacl {postgres=arwdDxtm/postgres,anon=arwdxtm/postgres,authenticated=arwdxtm/postgres,service_role=arwdDxtm/postgres}
+  12 columns: locale, brand_title, tagline, nav_section_title, nav_links, info_section_title, info_links, social_section_title, social_links, copyright_template, updated_at, updated_by
+  columns with a column-level ACL: none
+  policies: blocked_account_no_delete [DELETE {authenticated}] using ( SELECT caller_is_active() AS caller_is_active) | blocked_account_no_insert [INSERT {authenticated}] using null | blocked_account_no_select [SELECT {authenticated}] using ( SELECT caller_is_active() AS caller_is_active) | blocked_account_no_update [UPDATE {authenticated}] using ( SELECT caller_is_active() AS caller_is_active) | site_footer_admin_write [ALL {authenticated}] using (EXISTS ( SELECT 1
+   FROM users
+  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role)))) | site_footer_select_all [SELECT {public}] using true
+information_schema grants to anon / authenticated: pages.anon.SELECT pages.authenticated.SELECT site_footer.anon.DELETE site_footer.anon.INSERT site_footer.anon.REFERENCES site_footer.anon.SELECT site_footer.anon.TRIGGER site_footer.anon.UPDATE site_footer.authenticated.DELETE site_footer.authenticated.INSERT site_footer.authenticated.REFERENCES site_footer.authenticated.SELECT site_footer.authenticated.TRIGGER site_footer.authenticated.UPDATE
+RI triggers on auth.users in firing order:
+   1. RI_ConstraintTrigger_a_16692  RI_FKey_cascade_del  identities_user_id_fkey on auth.identities (delete rule c, enabled O)
+   2. RI_ConstraintTrigger_a_16720  RI_FKey_cascade_del  sessions_user_id_fkey on auth.sessions (delete rule c, enabled O)
+   3. RI_ConstraintTrigger_a_16757  RI_FKey_cascade_del  mfa_factors_user_id_fkey on auth.mfa_factors (delete rule c, enabled O)
+   4. RI_ConstraintTrigger_a_16948  RI_FKey_cascade_del  one_time_tokens_user_id_fkey on auth.one_time_tokens (delete rule c, enabled O)
+   5. RI_ConstraintTrigger_a_17027  RI_FKey_cascade_del  oauth_authorizations_user_id_fkey on auth.oauth_authorizations (delete rule c, enabled O)
+   6. RI_ConstraintTrigger_a_17046  RI_FKey_cascade_del  oauth_consents_user_id_fkey on auth.oauth_consents (delete rule c, enabled O)
+   7. RI_ConstraintTrigger_a_17141  RI_FKey_cascade_del  webauthn_credentials_user_id_fkey on auth.webauthn_credentials (delete rule c, enabled O)
+   8. RI_ConstraintTrigger_a_17158  RI_FKey_cascade_del  webauthn_challenges_user_id_fkey on auth.webauthn_challenges (delete rule c, enabled O)
+   9. RI_ConstraintTrigger_a_17575  RI_FKey_cascade_del  users_id_fkey on public.users (delete rule c, enabled O)
+  10. RI_ConstraintTrigger_a_19271  RI_FKey_noaction_del  email_templates_updated_by_fkey on public.email_templates (delete rule a, enabled O)
+  11. RI_ConstraintTrigger_a_19322  RI_FKey_cascade_del  collections_user_id_fkey on public.collections (delete rule c, enabled O)
+  12. RI_ConstraintTrigger_a_19354  RI_FKey_cascade_del  favorite_price_alerts_user_id_fkey on public.favorite_price_alerts (delete rule c, enabled O)
+  13. RI_ConstraintTrigger_a_19376  RI_FKey_cascade_del  recently_viewed_user_id_fkey on public.recently_viewed (delete rule c, enabled O)
+  14. RI_ConstraintTrigger_a_19605  RI_FKey_setnull_del  contact_inquiries_handled_by_fkey on public.contact_inquiries (delete rule n, enabled O)
+  15. RI_ConstraintTrigger_a_19630  RI_FKey_noaction_del  contact_inquiry_replies_replied_by_fkey on public.contact_inquiry_replies (delete rule a, enabled O)
+  16. RI_ConstraintTrigger_a_22028  RI_FKey_setnull_del  scim_users_user_id_fkey on auth.scim_users (delete rule n, enabled O)
+  17. RI_ConstraintTrigger_a_22077  RI_FKey_cascade_del  mfa_recovery_code_sets_user_id_fkey on auth.mfa_recovery_code_sets (delete rule c, enabled O)
+  18. RI_ConstraintTrigger_a_23857  RI_FKey_cascade_del  reauth_failures_user_id_fkey on public.reauth_failures (delete rule c, enabled O)
+  19. RI_ConstraintTrigger_a_23988  RI_FKey_cascade_del  listing_contact_reveals_viewer_id_fkey on public.listing_contact_reveals (delete rule c, enabled O)
+RI triggers on public.users in firing order:
+   1. RI_ConstraintTrigger_a_17715  RI_FKey_cascade_del  listings_user_id_fkey on public.listings (delete rule c, enabled O)
+   2. RI_ConstraintTrigger_a_17800  RI_FKey_setnull_del  listing_views_user_id_fkey on public.listing_views (delete rule n, enabled O)
+   3. RI_ConstraintTrigger_a_17816  RI_FKey_cascade_del  favorites_user_id_fkey on public.favorites (delete rule c, enabled O)
+   4. RI_ConstraintTrigger_a_17871  RI_FKey_setnull_del  listing_reports_user_id_fkey on public.listing_reports (delete rule n, enabled O)
+   5. RI_ConstraintTrigger_a_17889  RI_FKey_cascade_del  saved_searches_user_id_fkey on public.saved_searches (delete rule c, enabled O)
+   6. RI_ConstraintTrigger_a_17907  RI_FKey_cascade_del  conversations_buyer_id_fkey on public.conversations (delete rule c, enabled O)
+   7. RI_ConstraintTrigger_a_17912  RI_FKey_cascade_del  conversations_seller_id_fkey on public.conversations (delete rule c, enabled O)
+   8. RI_ConstraintTrigger_a_17933  RI_FKey_cascade_del  messages_sender_id_fkey on public.messages (delete rule c, enabled O)
+   9. RI_ConstraintTrigger_a_17960  RI_FKey_cascade_del  support_tickets_user_id_fkey on public.support_tickets (delete rule c, enabled O)
+  10. RI_ConstraintTrigger_a_17965  RI_FKey_setnull_del  support_tickets_assigned_to_fkey on public.support_tickets (delete rule n, enabled O)
+  11. RI_ConstraintTrigger_a_17987  RI_FKey_cascade_del  support_messages_sender_id_fkey on public.support_messages (delete rule c, enabled O)
+  12. RI_ConstraintTrigger_a_18026  RI_FKey_cascade_del  notifications_user_id_fkey on public.notifications (delete rule c, enabled O)
+  13. RI_ConstraintTrigger_a_18050  RI_FKey_cascade_del  notification_settings_user_id_fkey on public.notification_settings (delete rule c, enabled O)
+  14. RI_ConstraintTrigger_a_18087  RI_FKey_setnull_del  pages_updated_by_fkey on public.pages (delete rule n, enabled O)
+  15. RI_ConstraintTrigger_a_18112  RI_FKey_cascade_del  verification_requests_user_id_fkey on public.verification_requests (delete rule c, enabled O)
+  16. RI_ConstraintTrigger_a_18117  RI_FKey_setnull_del  verification_requests_reviewed_by_fkey on public.verification_requests (delete rule n, enabled O)
+  17. RI_ConstraintTrigger_a_18137  RI_FKey_cascade_del  agent_reviews_agent_id_fkey on public.agent_reviews (delete rule c, enabled O)
+  18. RI_ConstraintTrigger_a_18142  RI_FKey_cascade_del  agent_reviews_reviewer_id_fkey on public.agent_reviews (delete rule c, enabled O)
+  19. RI_ConstraintTrigger_a_18427  RI_FKey_cascade_del  user_change_log_user_id_fkey on public.user_change_log (delete rule c, enabled O)
+  20. RI_ConstraintTrigger_a_18432  RI_FKey_noaction_del  user_change_log_changed_by_fkey on public.user_change_log (delete rule a, enabled O)
+  21. RI_ConstraintTrigger_a_18727  RI_FKey_cascade_del  user_status_history_user_id_fkey on public.user_status_history (delete rule c, enabled O)
+  22. RI_ConstraintTrigger_a_18732  RI_FKey_noaction_del  user_status_history_changed_by_fkey on public.user_status_history (delete rule a, enabled O)
+  23. RI_ConstraintTrigger_a_18749  RI_FKey_cascade_del  email_change_tokens_user_id_fkey on public.email_change_tokens (delete rule c, enabled O)
+  24. RI_ConstraintTrigger_a_19170  RI_FKey_noaction_del  report_actions_actor_id_fkey on public.report_actions (delete rule a, enabled O)
+  25. RI_ConstraintTrigger_a_19507  RI_FKey_setnull_del  support_tickets_reported_user_id_fkey on public.support_tickets (delete rule n, enabled O)
+  26. RI_ConstraintTrigger_a_19512  RI_FKey_setnull_del  support_tickets_created_by_admin_id_fkey on public.support_tickets (delete rule n, enabled O)
+  27. RI_ConstraintTrigger_a_19538  RI_FKey_setnull_del  support_ticket_events_actor_user_id_fkey on public.support_ticket_events (delete rule n, enabled O)
+  28. RI_ConstraintTrigger_a_19716  RI_FKey_setnull_del  role_permissions_updated_by_user_id_fkey on public.role_permissions (delete rule n, enabled O)
+  29. RI_ConstraintTrigger_a_19736  RI_FKey_setnull_del  role_permission_events_actor_user_id_fkey on public.role_permission_events (delete rule n, enabled O)
+  30. RI_ConstraintTrigger_a_19775  RI_FKey_setnull_del  site_footer_updated_by_fkey on public.site_footer (delete rule n, enabled O)
+  31. RI_ConstraintTrigger_a_19845  RI_FKey_cascade_del  listing_contact_events_listing_owner_id_fkey on public.listing_contact_events (delete rule c, enabled O)
+  32. RI_ConstraintTrigger_a_19850  RI_FKey_setnull_del  listing_contact_events_actor_user_id_fkey on public.listing_contact_events (delete rule n, enabled O)
+  33. RI_ConstraintTrigger_a_20230  RI_FKey_cascade_del  listing_inquiries_listing_owner_id_fkey on public.listing_inquiries (delete rule c, enabled O)
+  34. RI_ConstraintTrigger_a_20250  RI_FKey_setnull_del  history_clear_events_actor_user_id_fkey on public.history_clear_events (delete rule n, enabled O)
+public.listings columns:
+  id uuid not null default gen_random_uuid()
+  user_id uuid not null
+  location_id integer
+  slug text not null
+  title text not null
+  description text
+  price numeric not null
+  price_old numeric
+  currency listing_currency not null default 'ALL'::listing_currency
+  listing_type listing_type not null
+  property_type property_type not null
+  condition listing_condition
+  wall_type wall_type
+  heating heating_type
+  rooms integer
+  bedrooms integer
+  bathrooms integer
+  toilets integer
+  area_gross numeric
+  area_net numeric
+  floor integer
+  total_floors integer
+  year_built integer
+  address text
+  lat double precision
+  lng double precision
+  views_count integer not null default 0
+  is_premium boolean not null default false
+  status listing_status not null default 'active'::listing_status
+  expires_at timestamp with time zone default (now() + '60 days'::interval)
+  search_vector tsvector
+  created_at timestamp with time zone default now()
+  updated_at timestamp with time zone default now()
+  land_legal_status text
+  land_zoning text
+  land_development_potential text
+  multi_storey_building boolean default false
+  offer_type text
+  purchase_conditions text[] not null default '{}'::text[]
+  public_id bigint not null default nextval('listings_public_id_seq'::regclass)
+  premium_until timestamp with time zone
+  market_type text
+  price_initial numeric
+public.listings triggers: listings_guard_protected[O] listings_price_rule[O] listings_search_vector[O] listings_updated_at[O]
+  CREATE TRIGGER listings_guard_protected BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION guard_listings_protected_columns()
+  CREATE TRIGGER listings_price_rule BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION listings_price_rule()
+  CREATE TRIGGER listings_search_vector BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_listing_search_vector()
+  CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_updated_at()
+public.listings constraints (check / unique / primary):
+  listings_description_length_check (c) CHECK (((description IS NULL) OR (char_length(description) <= 5000)))
+  listings_land_development_potential_check (c) CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))
+  listings_land_legal_status_check (c) CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))
+  listings_land_zoning_check (c) CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))
+  listings_lat_range_check (c) CHECK (((lat IS NULL) OR ((lat >= ('-90'::integer)::double precision) AND (lat <= (90)::double precision))))
+  listings_lng_range_check (c) CHECK (((lng IS NULL) OR ((lng >= ('-180'::integer)::double precision) AND (lng <= (180)::double precision))))
+  listings_offer_type_check (c) CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))
+  listings_pkey (p) PRIMARY KEY (id)
+  listings_price_old_positive_check (c) CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))
+  listings_price_positive_check (c) CHECK ((price > (0)::numeric))
+  listings_public_id_key (u) UNIQUE (public_id)
+  listings_slug_key (u) UNIQUE (slug)
+  listings_title_length_check (c) CHECK (((char_length(btrim(title)) >= 5) AND (char_length(btrim(title)) <= 150)))
+listings_public_id_seq: {"name":"listings_public_id_seq","owner":"postgres","type":"bigint","increment":"1","max":"9223372036854775807","cycle":false}
+currency-related columns:
+  currencies.id integer nullable=NO default nextval('currencies_id_seq'::regclass)
+  currencies.code character varying nullable=NO
+  currencies.symbol character varying nullable=NO default ''::character varying
+  currencies.name_sq text nullable=NO default ''::text
+  currencies.name_en text nullable=NO default ''::text
+  currencies.name_uk text nullable=NO default ''::text
+  currencies.name_it text nullable=NO default ''::text
+  currencies.is_active boolean nullable=NO default true
+  currencies.is_default boolean nullable=NO default false
+  currencies.decimals integer nullable=NO default 0
+  currencies.created_at timestamp with time zone nullable=NO default now()
+  currencies.updated_at timestamp with time zone nullable=NO default now()
+  currency_rates.id integer nullable=NO default nextval('currency_rates_id_seq'::regclass)
+  currency_rates.from_currency text nullable=NO
+  currency_rates.to_currency text nullable=NO
+  currency_rates.rate numeric nullable=NO
+  currency_rates.source_url text nullable=YES default 'https://iliria98.com/'::text
+  currency_rates.fetched_at timestamp with time zone nullable=YES default now()
+  exchange_providers.id integer nullable=NO default nextval('exchange_providers_id_seq'::regclass)
+  exchange_providers.name text nullable=NO
+  exchange_providers.endpoint_url text nullable=NO default ''::text
+  exchange_providers.api_key text nullable=YES
+  exchange_providers.refresh_interval_min integer nullable=NO default 60
+  exchange_providers.priority integer nullable=NO default 10
+  exchange_providers.mode text nullable=NO default 'auto'::text
+  exchange_providers.is_enabled boolean nullable=NO default true
+  exchange_providers.notes text nullable=YES
+  exchange_providers.created_at timestamp with time zone nullable=NO default now()
+  exchange_providers.updated_at timestamp with time zone nullable=NO default now()
+currency-related constraints:
+  currencies currencies_code_key (u) UNIQUE (code)
+  currencies currencies_pkey (p) PRIMARY KEY (id)
+  currency_rates currency_rates_from_currency_to_currency_key (u) UNIQUE (from_currency, to_currency)
+  currency_rates currency_rates_pkey (p) PRIMARY KEY (id)
+  exchange_providers exchange_providers_mode_check (c) CHECK ((mode = ANY (ARRAY['auto'::text, 'manual'::text, 'hybrid'::text])))
+  exchange_providers exchange_providers_name_key (u) UNIQUE (name)
+  exchange_providers exchange_providers_pkey (p) PRIMARY KEY (id)
+public.currency_rates: 1 rows (fetched_at 2026-04-18T21:17:06.291Z .. 2026-04-18T21:17:06.291Z)
+  EUR -> ALL rate 108.50 source https://iliria98.com/ fetched 2026-04-18T21:17:06.291Z
+listing_currency labels: ALL, EUR
+public.currencies: ALL[active=true,default=true] EUR[active=true,default=false] USD[active=true,default=false] GBP[active=true,default=false]
+keys that reference auth.sessions:
+  auth.mfa_amr_claims mfa_amr_claims_session_id_fkey delete rule c: FOREIGN KEY (session_id) REFERENCES auth.sessions(id) ON DELETE CASCADE
+  auth.refresh_tokens refresh_tokens_session_id_fkey delete rule c: FOREIGN KEY (session_id) REFERENCES auth.sessions(id) ON DELETE CASCADE
+the capture role may delete from auth.sessions: true; select: true
+capture exit: 0
+6391f7d5c51e26c9c43ab8bb1473f4b048186096137da3837ba59798076c200e *docs/sessions/evidence/task923/r43-03-capture-r16.json
+
+--- stderr ---
+
+--- exit code: 0 ---

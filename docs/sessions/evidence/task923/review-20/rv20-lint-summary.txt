@@ -1,0 +1,4 @@
+npx eslint . --format json, working tree at HEAD fe07bb62e, 2026-10-20
+error src/modules/auth/components/__tests__/AuthSheet.test.tsx:58 react/display-name
+error src/modules/auth/components/__tests__/authClientParts.test.tsx:20 react/display-name
+errors 2 warnings 252

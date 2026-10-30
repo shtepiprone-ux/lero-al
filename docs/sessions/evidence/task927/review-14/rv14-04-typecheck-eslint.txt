@@ -1,0 +1,9 @@
+# rv14-04 typecheck + eslint (Opus) 2026-10-28T19:16:37Z v22.22.3
+command: npm run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+exit code: 0
+command: npx eslint --quiet <changed code and test paths>
+exit code: 0

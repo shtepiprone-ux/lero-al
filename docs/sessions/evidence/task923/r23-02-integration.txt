@@ -1,0 +1,20 @@
+platform win32 10.0.26300 node v22.22.3 vitest vitest/4.1.6 win32-x64 node-v22.22.3; start 2026-10-21T17:42:40.000Z   (rerun on the final file state: the first capture preceded a type-only fix in listingSlugGuard.integration.test.ts)
+env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref derived from the host of the configured URL, length 20, value not printed>
+cmd npx vitest run --config vitest.integration.config.ts src/modules/listings/actions/listingSlugGuard.integration.test.ts src/tests/integration/accessHardening.integration.test.ts --reporter=verbose   (R95 (c))
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows 1547ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 2057ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access 1075ms
+ ✓ src/modules/listings/actions/listingSlugGuard.integration.test.ts > listingSlugGuard > [SEC-X-INT-SLUG-PLAIN-ALLOW] titles with hyphens or Cyrillic still create a listing 1073ms
+ ✓ src/modules/listings/actions/listingSlugGuard.integration.test.ts > listingSlugGuard > [SEC-X-INT-SLUG-PLAIN-DENY] the guard still refuses a slug that is not plain 478ms
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  19:42:41
+   Duration  12.95s (transform 122ms, setup 44ms, import 230ms, tests 12.35s, environment 0ms)
+
+clean-up: asserted inside each file's afterAll (run.cleanup() must equal { verified: true, remaining: 0, errors: [] }; listingSlugGuard also deletes and counts the owner's listings = 0); a failed assertion there fails the run
+post-run read-only check (service role, counts only): auth users with the zz_synth_ prefix=0; listings titled with that prefix=0; listings with slug a--b or -x=0
+EXIT_CODE=0

@@ -1,0 +1,32 @@
+# r53-01: literal lines for Task 923 Revision 53
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-53/r53-01-lines.mjs
+date: 2026-10-25T13:28:47.907Z
+--- lines ---
+src/modules/auth/components/AuthRedirect.tsx:72: () => validNext ?? `/${locale}`,
+src/modules/auth/components/AuthRedirect.tsx:121: openAuthSheet(view)
+src/modules/auth/components/AuthRedirect.tsx:134: router.replace(cancelDestination)
+src/modules/auth/components/AuthRedirect.tsx:19: *   3. Cancel/dismiss: when the AuthSheet closes without login (`lero:auth-sheet-closed`
+src/components/layout/Header.tsx:109: if (!open) window.dispatchEvent(new CustomEvent(AUTH_SHEET_CLOSED_EVENT))
+src/components/layout/Header.tsx:27: const [authOpen, setAuthOpen] = useState(false)
+src/app/[locale]/cabinet/page.tsx:45: if (!authUser) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/cabinet`)}&session=lost`)
+src/app/[locale]/auth/login/page.tsx:36: return <AuthRedirect view="login" next={next} sessionLost={session === 'lost'} />
+src/modules/auth/components/__tests__/authClientParts.test.tsx:268: it('closing the sheet goes back to a safe ?next= when there is one', () => {
+src/modules/auth/components/__tests__/authClientParts.test.tsx:271: expect(replace).toHaveBeenCalledWith('/en/listings')
+src/modules/auth/components/__tests__/authClientParts.test.tsx:219: it('a tab whose account the server refused is not sent on: the sheet opens once and the person is not redirected', () => {
+src/modules/auth/components/__tests__/authClientParts.test.tsx:230: it.each(['error', 'signing_out'])('any other answer than authenticated (%s) to the re-check opens the sheet and redirects nobody', (status) => {
+src/modules/auth/components/__tests__/authClientParts.test.tsx:239: it('a sign-in inside the sheet after the re-check still sends the person on', () => {
+src/modules/auth/components/__tests__/authClientParts.test.tsx:145: it('an unauthenticated visitor: the destination is stored and the sheet opens once on the asked view', () => {
+src/modules/auth/components/__tests__/staleSession.security.test.tsx:128: expect(boundary.replace).not.toHaveBeenCalled()                        // nor on the answer
+src/modules/auth/components/__tests__/staleSession.security.test.tsx:171: expect(boundary.replace).not.toHaveBeenCalled()
+SEC-D29-FE-STALE-DENY response: (i) no router.replace, the sheet opens once with the session-lost mark, the status is unauthenticated and the browser session is removed locally; (ii) the header offers sign-in with no user menu and no favorites link; (iii) no router.replace, the sheet opens once and the status is unauthenticated
+SEC-D29-FE-STALE-DENY forbiddenEffects: ["a navigation from the sign-in page on the stale state","a loop between the cabinet and the sign-in page","the refused person shown as signed in after a navigation","a bridge that waits forever because the re-check was aborted"]
+--- the owner's console, 2026-10-25 (the view after the password change and after the deletion) ---
+[Vercel Web Analytics] [view] http://localhost:3000/uk/auth/login?next=%2Fuk%2Fcabinet&session=lost
+--- write set ---
+src/modules/auth/components/AuthRedirect.tsx: scope yes; policy no; exists yes
+src/modules/auth/components/__tests__/authClientParts.test.tsx: scope yes; policy no; exists yes
+src/modules/auth/components/__tests__/staleSession.security.test.tsx: scope yes; policy no; exists yes
+exit code: 0

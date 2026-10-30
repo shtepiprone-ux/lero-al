@@ -10,7 +10,7 @@ import {
 } from '@/design-system/mantine/patterns/MantineDashboardBarChart';
 import { MantineDashboardCard } from '@/design-system/mantine/patterns/MantineDashboardCard';
 import { MantineCombobox } from '@/design-system/mantine/patterns/MantineCombobox';
-import { formatCount, formatShortDate, formatMonthAbbrev, formatMonthFull, formatWeekdayShort, formatFullDate } from '@/lib/formatters';
+import { formatCount, formatDayNumber, formatShortDate, formatMonthAbbrev, formatMonthFull, formatWeekdayShort, formatFullDate } from '@/lib/formatters';
 import { theme } from '@/design-system/mantine/theme';
 
 export type Period = 'week' | 'month' | 'year';
@@ -141,7 +141,9 @@ function buildSeries(l: string): DashboardBarChartSeries[] {
 function makeCategoryLabel(l: string, period: Period) {
   if (period === 'week') return (category: string) => formatWeekdayShort(category, l);
   if (period === 'year') return (category: string) => formatMonthAbbrev(category, l);
-  return (category: string) => formatShortDate(category, l);
+  // Task 923 Revision 7: the month is never repeated on every tick (owner correction 2026-09-19, as DashboardLineChart.stories.tsx): the tick is
+  // the bare day, and the card's `scopeLabel` states the month once.
+  return (category: string) => formatDayNumber(category);
 }
 // The tooltip needs a fuller, unambiguous label than the axis (Task 845 Pass 12, owner-requested):
 // `week` pairs the weekday with its full date ("Вт, 26 серпня"); `year` shows the full month name
@@ -218,7 +220,7 @@ export const OneSeriesHidden: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <Box p="md" maw={theme.other!.boxSize!.content}>
-        <MantineDashboardCard title={storyT(l, 'storybook.mantine.dashboard_bar_card_title')} state="ready">
+        <MantineDashboardCard title={storyT(l, 'storybook.mantine.dashboard_bar_card_title')} scopeLabel={makeScopeLabel(l, 'month')} state="ready">
           <MantineDashboardBarChart
             data={buildData('month')}
             series={buildSeries(l)}

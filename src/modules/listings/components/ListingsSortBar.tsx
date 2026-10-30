@@ -68,15 +68,14 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
         {/* Left: count + range. `miw={0}` lets this flex item shrink below its content size (a
             flex item's automatic min-width is otherwise its own content width, which is what
             silently forced this text to 0 rendered width with `overflow:visible` spilling
-            unclipped text instead of truncating — Task 781R, found via live measurement).
-            `truncate="end"` (Mantine's own Text prop, not a Tailwind/CSS-module addition) makes
-            that shrink degrade to a real ellipsis instead. */}
+            unclipped text instead of shrinking — Task 781R, found via live measurement). The text
+            wraps when it shrinks; it is never ended with an ellipsis (Task 923 R33, Story 203). */}
         <Stack gap="micro" miw={0}>
-          <Text fw={600} size="sm" c="gray.9" truncate="end" data-testid="listings-count-text">
+          <Text fw={600} size="sm" c="gray.9" data-testid="listings-count-text">
             {total === 1 ? t('found_results_one') : t('found_results', { count: total })}
           </Text>
           {total > 0 && (
-            <Text size="xs" c="gray.5" visibleFrom="sm" truncate="end">
+            <Text size="xs" c="gray.5" visibleFrom="sm">
               · {t('showing_results', { from, to, total })}
             </Text>
           )}

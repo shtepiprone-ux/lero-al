@@ -1,0 +1,10 @@
+listing_views relacl {postgres=arwdDxtm/postgres,anon=rxtm/postgres,authenticated=arwdxtm/postgres,service_role=arwdDxtm/postgres}; rls true; force false
+anon has DELETE privilege: false
+authenticated has DELETE privilege: true
+policy Listing views viewable by listing owner permissive true cmd r roles {-} using (EXISTS ( SELECT 1
+   FROM listings
+  WHERE ((listings.id = listing_views.listing_id) AND (listings.user_id = auth.uid()))))
+policy blocked_account_no_delete permissive false cmd d roles {authenticated} using ( SELECT caller_is_active() AS caller_is_active)
+policy blocked_account_no_insert permissive false cmd a roles {authenticated} using null
+policy blocked_account_no_select permissive false cmd r roles {authenticated} using ( SELECT caller_is_active() AS caller_is_active)
+policy blocked_account_no_update permissive false cmd w roles {authenticated} using ( SELECT caller_is_active() AS caller_is_active)

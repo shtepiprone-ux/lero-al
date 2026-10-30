@@ -1,0 +1,10 @@
+platform: MINGW64_NT-10.0-26300; node: v22.22.3; cwd: /c/Claude_Code_Projects/lero-al/docs/sessions/evidence/task923/review-40; plpgsql-parser 18.5.10 from a scratchpad prefix via NODE_PATH (not installed in the repository); no database connection; command: node rv40-16-sql-offline-proof.cjs
+1. proposed-contact-reveals.dryrun.sql written; lines 90 vs 90; differing line numbers [90] (expected [90])
+2. proposed-contact-reveals.sql: 12 statements, 2 DO-block bodies parsed OK
+2. proposed-contact-reveals-rollback.sql: 6 statements, 2 DO-block bodies parsed OK
+2. proposed-contact-reveals.dryrun.sql: 12 statements, 2 DO-block bodies parsed OK
+3. proposed-contact-reveals.sql: string literals 42, spanning lines 0; CR characters 0; sha256 BC00BF1BA6D91AD07ED6EC0F3AB7790AC7CD36360BF66323013DFE858F42779A
+3. proposed-contact-reveals.dryrun.sql: string literals 42, spanning lines 0; CR characters 0; sha256 76B5C6D8C051A8F2C7683E1D066180B47048FBC4A2500AD00234113083950E10
+3. proposed-contact-reveals-rollback.sql: string literals 5, spanning lines 0; CR characters 0; sha256 CFDF74F915FC631D0FDCDD94D3C1860C3EC200C6F707637A21F5E0F4082FDCB5
+ALL CHECKS PASSED
+EXIT_CODE=0

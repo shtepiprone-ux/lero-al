@@ -1,0 +1,5 @@
+cmd npx vitest run scripts/__tests__/rendered-state-census.test.ts
+ Test Files  1 passed (1)
+      Tests  38 passed (38)
+EXIT_CODE=0
+79c9935c750bba1e68fa55a129bd1420e8b84938fd766b519e7e392aea0e063a *scripts/rendered-state-census/in-page.mjs

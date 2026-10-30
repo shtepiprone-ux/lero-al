@@ -1,6 +1,5 @@
 import 'server-only'
-import { getUser } from '@/lib/auth/server'
-import { createClient } from '@/lib/supabase/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import type { AgentOwnerId, AgentStatisticsAccess } from './types'
 
 /**
@@ -13,21 +12,11 @@ import type { AgentOwnerId, AgentStatisticsAccess } from './types'
  * denied (`not_agent`), never granted.
  */
 export async function getAgentStatisticsAccess(): Promise<AgentStatisticsAccess> {
-  const authUser = await getUser()
-  if (!authUser) return { kind: 'unauthenticated' }
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated or deleted agent is `unauthenticated`, and a lookup that
+  // fails is denied (`not_agent`), never granted.
+  const viewer = await requireViewer()
+  if (!viewer.ok) return viewer.reason === 'lookup_failed' ? { kind: 'not_agent' } : { kind: 'unauthenticated' }
+  if (viewer.role !== 'agent') return { kind: 'not_agent' }
 
-  try {
-    const supabase = await createClient()
-    const { data, error } = await supabase.from('users').select('role').eq('id', authUser.id).single()
-    if (error) {
-      console.error('[AgentStatistics] access failed', { code: error.code ?? null })
-      return { kind: 'not_agent' }
-    }
-    if (data?.role !== 'agent') return { kind: 'not_agent' }
-  } catch (cause) {
-    console.error('[AgentStatistics] access failed', { code: null, cause })
-    return { kind: 'not_agent' }
-  }
-
-  return { kind: 'ok', ownerId: authUser.id as AgentOwnerId }
+  return { kind: 'ok', ownerId: viewer.userId as AgentOwnerId }
 }

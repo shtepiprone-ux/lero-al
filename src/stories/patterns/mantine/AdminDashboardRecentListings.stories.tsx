@@ -91,7 +91,12 @@ export const ModalOpen: Story = {
   play: async ({ canvasElement, context }) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const canvas = within(canvasElement)
-    const trigger = await canvas.findByText(listings(locale)[0]!.title)
+    // Task 859 R45: each row renders its title twice — the stacked layout (`hiddenFrom="sm"`) and the
+    // split layout (`visibleFrom="sm"`) — and CSS hides one of them per breakpoint, so `findByText`
+    // threw "multiple elements". Click the first match that is actually laid out.
+    const matches = await canvas.findAllByText(listings(locale)[0]!.title)
+    const trigger = matches.find((node) => node.getClientRects().length > 0)
+    if (!trigger) throw new Error('ModalOpen: no visible row title to click')
     await userEvent.click(trigger)
     const dialog = await within(document.body).findByRole('dialog')
     expect(dialog).toBeTruthy()

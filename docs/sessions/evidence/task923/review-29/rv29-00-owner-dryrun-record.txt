@@ -1,0 +1,4 @@
+Owner report, 2026-10-21 (Task 923, Review 29): the owner ran proposed-hardening-v8a.dryrun.sql (hash B384D2A4...D789, kickoff C841) in the Supabase SQL editor after copying it with Get-Content -Raw -Encoding UTF8 | Set-Clipboard. The editor answered:
+Failed to run sql query: ERROR:  P0001: preflight failed: the policy Admin/moderator delete avatars on storage.objects changed since the capture
+CONTEXT:  PL/pgSQL function inline_code_block line 12 at RAISE
+The preflight raises at the first check that fails and before any statement that changes the database, so nothing was changed. Preflight 01 and 02 (one-line policy texts) come before it in the same block and passed; preflight 03 is the first check that compares a policy text that spans several lines.

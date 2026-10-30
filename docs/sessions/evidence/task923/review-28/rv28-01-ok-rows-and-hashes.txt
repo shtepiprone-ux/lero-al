@@ -1,0 +1,9 @@
+Opus, Review 28 (Task 923), 2026-10-21: a read-only comparison of the harness rows that are ok in r22-01 and in r25-04, and the SHA-256 of the v8a files computed by Opus.
+cmd: grep -oE '^ ok  [A-Z0-9a-z]+' on each file, sorted, compared with comm; Get-FileHash -Algorithm SHA256 in PowerShell
+ok rows in r22-01-rls-harness-post-apply.txt: 212
+ok rows in r25-04-rls-harness-v8a-not-applied.txt: 215
+ok in r22-01 and not ok in r25-04: 0 (none lost)
+ok in r25-04 and not in r22-01: V813 V819 V820 
+Get-FileHash proposed-hardening-v8a.sql: DC32355CAFF0EDFBC5FDD2D35E32EF86E619B9815A1CBF05773DD74A67A4E490 (equals r25-03)
+Get-FileHash proposed-hardening-v8a-rollback.sql: A3BE2F976C154539042372EA98AA710023DD10AF2D0122B0DBC18A6C9554E9E1 (equals r25-03)
+Get-FileHash proposed-hardening-v8a.dryrun.sql: B384D2A466CEC533202C03E7EAB501C908F208BDD38A6A59093F5FE0CC40D789 (equals r25-03)

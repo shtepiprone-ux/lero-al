@@ -1,0 +1,3 @@
+PROVED     SEC-S44-INT-DENY [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.

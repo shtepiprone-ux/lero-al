@@ -1,0 +1,27 @@
+platform: win32 10.0.26300 node v22.22.3; cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/review-12/rv12-03-recount.mjs
+r8-full: rows 34369, failing 471
+  12 patterns-mantine-admincurrencytabs--default :: open-failed+portal-count
+  48 patterns-mantine-admincurrencytabs--default :: widths-mismatch
+  1 patterns-mantine-dashboardperiodcontrol--custom-range-too-long :: error-screen
+  4 patterns-mantine-listingdetailpattern--default :: component-overflow
+  36 patterns-mantine-listingdetailview--archived-listing :: text-overlap
+  1 patterns-mantine-listingdetailview--public-listing :: dismiss-escape
+  72 patterns-mantine-listingdetailview--public-listing :: text-overlap
+  1 patterns-mantine-listingdetailview--public-listing-converted :: dismiss-escape
+  72 patterns-mantine-listingdetailview--public-listing-converted :: text-overlap
+  72 patterns-mantine-listingdetailview--public-listing-not-reduced :: text-overlap
+  44 patterns-mantine-listingdetailview--staff-preview-published :: text-overlap
+  44 patterns-mantine-listingdetailview--staff-preview-unpublished :: text-overlap
+  32 patterns-mantine-listingpreviewdialogview--delete-confirm :: text-overlap
+  32 patterns-mantine-reportdetaildialogview--delete-confirm :: text-overlap
+r10-108-full-merged: rows 34417, failing 81
+  1 patterns-mantine-dashboardperiodcontrol--custom-range-too-long :: error-screen
+  4 patterns-mantine-listingdetailpattern--default :: component-overflow
+  4 patterns-mantine-listingdetailview--archived-listing :: text-overlap
+  16 patterns-mantine-listingdetailview--public-listing :: text-overlap
+  16 patterns-mantine-listingdetailview--public-listing-converted :: text-overlap
+  16 patterns-mantine-listingdetailview--public-listing-not-reduced :: text-overlap
+  12 patterns-mantine-listingdetailview--staff-preview-published :: text-overlap
+  12 patterns-mantine-listingdetailview--staff-preview-unpublished :: text-overlap
+EXIT_CODE=0

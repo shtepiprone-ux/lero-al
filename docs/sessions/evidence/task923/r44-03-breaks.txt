@@ -1,0 +1,153 @@
+# R141-R144 AC141 r44-03: five deliberate breaks, one at a time, each restored; after each restore the file's sha256 equals its after-edit hash
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r44-03-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T12:04:13.743Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B1: move the deleteAsset loop before auth.admin.deleteUser
+file: src/lib/account/deleteAccount.ts
+test: npx vitest run src/lib/account/deleteAccount.security.test.ts -t SEC-DEL-SRV-ALLOW
+after-edit sha256 (before the break): f22474817a6f92660f40cf2ba550c14670bbfb6e18239cce8f1af33531b820b1
+baseline run: exit 0
+broken sha256: 7aa1072b739eb21d9adc50e47edab6d957403043604643009c7292bf2e93d96f
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: staff: no file is released before the Auth deletion: expected 15 to be greater than 22
+ ❯ src/lib/account/deleteAccount.security.test.ts:183:94
+    181|     const deletion = index('deleteUser:')
+    182|     expect(lastIndex('from:'), `${reason}: every read comes before the…
+    183|     expect(index('deleteAsset:'), `${reason}: no file is released befo…
+       |                                                                                              ^
+    184|     expect(index('storage.list:'), `${reason}: the Storage objects are…
+    185|     expect(index('storage.remove:')).toBeGreaterThan(index('storage.li…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restored sha256: f22474817a6f92660f40cf2ba550c14670bbfb6e18239cce8f1af33531b820b1
+restored run: exit 0
+OK   B1: baseline passes
+OK   B1: the break fails on the intended assertion
+OK   B1: restored sha256 equals the after-edit hash
+OK   B1: restored run passes
+
+=== B2: drop the companies.logo_url read
+file: src/lib/account/deleteAccount.ts
+test: npx vitest run src/lib/account/deleteAccount.security.test.ts -t SEC-DEL-SRV-ALLOW
+after-edit sha256 (before the break): f22474817a6f92660f40cf2ba550c14670bbfb6e18239cce8f1af33531b820b1
+baseline run: exit 0
+broken sha256: bb4e5edfe2c755518f2dc0a094323e9bfe27ad84497f489e26075f928881c013
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: staff: the ids released: expected [ 'avatars/a1', 'listings/i1', …(4) ] to deeply equal [ 'avatars/a1', 'companies/c1', …(5) ]
+
+- Expected
++ Received
+
+@@ -1,8 +1,7 @@
+  [
+    "avatars/a1",
+-   "companies/c1",
+    "listings/i1",
+    "listings/i2",
+    "listings/i3",
+    "logos/own",
+restored sha256: f22474817a6f92660f40cf2ba550c14670bbfb6e18239cce8f1af33531b820b1
+restored run: exit 0
+OK   B2: baseline passes
+OK   B2: the break fails on the intended assertion
+OK   B2: restored sha256 equals the after-edit hash
+OK   B2: restored run passes
+
+=== B3: remove rankCheck from hardDeleteUser
+file: src/modules/admin/actions/index.ts
+test: npx vitest run src/lib/account/deleteAccount.security.test.ts -t SEC-DEL-SRV-DENY
+after-edit sha256 (before the break): 16324650c53d7fa6424dd2234f6b3fdcb489079858222668b9a0b5f474e06c30
+baseline run: exit 0
+broken sha256: bca81673b946baf6bb0282ad59e954160ac3d45255f8994d6416093bdc6877ef
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-DENY] Only the person or a staff member whose rank allows it can delete an account
+AssertionError: hardDeleteUser: a moderator deleting an administrator: expected {} to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+- {
+-   "error": "forbidden",
+- }
++ {}
+
+ ❯ src/lib/account/deleteAccount.security.test.ts:288:70
+    286|     world.tables.rank = []
+    287|     arrange()
+restored sha256: 16324650c53d7fa6424dd2234f6b3fdcb489079858222668b9a0b5f474e06c30
+restored run: exit 0
+OK   B3: baseline passes
+OK   B3: the break fails on the intended assertion
+OK   B3: restored sha256 equals the after-edit hash
+OK   B3: restored run passes
+
+=== B4: remove typedConfirm from the admin delete dialog
+file: src/components/admin/AdminUserProfileDialogsView.tsx
+test: npx vitest run src/components/admin/__tests__/adminDeleteDialog.security.test.tsx
+after-edit sha256 (before the break): 4dba9856f7722bbbc9997057c8f393f6f2316f59583aeb85c59c43d0b3bef21b
+baseline run: exit 0
+broken sha256: 400afb84c226dabb18662c0bc239553d7a49e3a7dc469d7b9742a6b37397ba7d
+broken run: exit 1
+ FAIL  src/components/admin/__tests__/adminDeleteDialog.security.test.tsx > [SEC-DEL-FE-ADMIN] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted
+AssertionError: sq: the dialog asks for the typed word: expected null not to be null
+ ❯ src/components/admin/__tests__/adminDeleteDialog.security.test.tsx:94:72
+     92|     // the typed word: the field, its placeholder and the primary that…
+     93|     const found = within(dialog).queryByLabelText(expected.label)
+     94|     expect(found, `${locale}: the dialog asks for the typed word`).not…
+       |                                                                        ^
+     95|     const field = found as HTMLInputElement
+     96|     expect(field.placeholder, `${locale}: the field shows the word`).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restored sha256: 4dba9856f7722bbbc9997057c8f393f6f2316f59583aeb85c59c43d0b3bef21b
+restored run: exit 0
+OK   B4: baseline passes
+OK   B4: the break fails on the intended assertion
+OK   B4: restored sha256 equals the after-edit hash
+OK   B4: restored run passes
+
+=== B5: make hardDeleteUser delete only the users row
+file: src/modules/admin/actions/index.ts
+test: npx vitest run --config vitest.integration.config.ts src/lib/account/deleteAccount.integration.test.ts -t SEC-DEL-INT-ALLOW
+after-edit sha256 (before the break): 16324650c53d7fa6424dd2234f6b3fdcb489079858222668b9a0b5f474e06c30
+baseline run: exit 0
+broken sha256: 430fb707f488ed715ce7697fe4d30ce1cdaa1878d82c14fec44d3d319b5b1914
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: the Auth user is gone: expected { …(14) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "app_metadata": {
+    "provider": "email",
+    "providers": [
+      "email",
+    ],
+  },
+restored sha256: 16324650c53d7fa6424dd2234f6b3fdcb489079858222668b9a0b5f474e06c30
+restored run: exit 0
+OK   B5: baseline passes
+OK   B5: the break fails on the intended assertion
+OK   B5: restored sha256 equals the after-edit hash
+OK   B5: restored run passes
+
+ALL FIVE BREAKS BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

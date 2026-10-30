@@ -1,0 +1,15 @@
+# working-tree lines, 2026-10-22T17:33:28.744Z, cwd C:/Claude_Code_Projects/lero-al
+src/modules/listings/domain/listingSemanticHelpers.ts:103: return `/${locale}/cabinet/listings`
+src/modules/listings/components/ListingFormShell.tsx:249: router.push(`/${activeLocale}/cabinet/listings`)
+src/modules/listings/components/ListingFormShell.tsx:259: setTimeout(() => { router.push(getPostSaveRedirect(result.status, result.slug, activeLocale)) }, 3000)
+src/modules/listings/domain/__tests__/listingDomain.test.ts:207: for (const s of ALL_STATUSES.filter((x) => x !== 'active')) expect(getPostSaveRedirect(s, 'flat-1', 'en')).toBe('/en/cabinet/listings')
+src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx:77: expect(push).toHaveBeenCalledWith('/sq/cabinet/listings')                                          // the redirect for pending, not the public page
+src/components/layout/UserMenu.tsx:31: { label: t('my_listings'), icon: <LayoutList size={theme.other.iconSize.standard} />, onClick: () => onNavigate(`/${locale}/cabinet?tab=listings`) },
+src/app/[locale]/cabinet/page.tsx:31: const tab = (typeof sp.tab === 'string' ? sp.tab : null) ?? 'profile'
+src/modules/cabinet/components/CabinetShell.tsx:132: {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} contactCountMap={contactCountMap} />}
+src/modules/listings/domain/listingSemanticHelpers.ts:98: * All other statuses: owner cabinet — prevents 404 on public-only route for
+src/app/[locale]/cabinet entries: page.tsx, statistics
+D8_D9 scope before Revision 32: src/modules/listings/domain/listingSemanticHelpers.ts not in scope
+D8_D9 scope before Revision 32: src/modules/listings/domain/__tests__/listingDomain.test.ts not in scope
+D8_D9 scope before Revision 32: src/modules/listings/components/ListingFormShell.tsx in scope
+D8_D9 scope before Revision 32: src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx in scope

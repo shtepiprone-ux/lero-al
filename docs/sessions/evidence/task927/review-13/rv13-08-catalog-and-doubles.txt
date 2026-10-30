@@ -1,0 +1,33 @@
+# rv13-08: Opus, read-only: the development project's catalog for the two functions, and the test doubles of accountHasPassword's read
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+date: 2026-10-28T18:52:04Z
+command 1: NODE_PATH=<scratchpad>/pgdeps/node_modules node -e <read-only query of pg_proc for end_user_sessions and account_has_password>
+function end_user_sessions security_definer true config ["search_path=public, pg_temp"] execute ["postgres","service_role"]
+account_has_password absent true
+exit code: 0
+
+command 2: grep -n "app_metadata: { providers" in the server test files
+src/lib/account/deleteAccount.security.test.ts:71:        getUserById: async (id: string) => ({ data: { user: { id, email: 'person@example.com', app_metadata: { providers: world.providers } } }, error
+src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts:32:      if (name === 'getUserById') return { data: { user: { id: args[0], email: args[0] === 'someone-else' ? 'taken@example.com'
+src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts:41:      if (name === 'getUserById') return { data: { user: { id: args[0], email: 'old@example.com', app_metadata: { providers: [
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:37:      if (name === 'getUserById') return { data: { user: { id: args[0], email: 'old@example.com', app_metadata: { providers: [
+src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts:171:  mockGetUserById.mockResolvedValue({ data: { user: { email: 'old@example.com', app_metadata: { providers: ['email'] } } } })
+src/modules/cabinet/actions/__tests__/emailChange.security.test.ts:65:          return { data: { user: { id, email: other ? other.email : 'old@example.com', app_metadata: { providers: ['email'] } } },
+src/modules/cabinet/actions/__tests__/reauth.security.test.ts:53:          : { data: { user: { id, email: 'old@example.com', app_metadata: { providers: state.providers } } }, error: null },
+src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:40:        getUserById: async (id: string) => ({ data: { user: { id, email: 'person@example.com', app_metadata: { providers: state.
+src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:41:        getUserById: async (id: string) => ({ data: { user: { id, email: 'one@example.com', app_metadata: { providers: state.provi
+exit code: 0
+
+command 3: grep -n "rpc: " in the same files
+src/lib/account/deleteAccount.security.test.ts:67:    rpc: async () => ({ data: [], error: null }),
+src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts:29:    rpc: async (name: string, args: { q?: string }) => ({ data: name === 'admin_search_users_by_email' && String(args?.q).inclu
+src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts:38:    rpc: async () => ({ data: [], error: null }),
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:34:    rpc: async () => ({ data: [], error: null }),
+src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts:81:    rpc: (...a: unknown[]) => mockRpc(...a),
+src/modules/cabinet/actions/__tests__/emailChange.security.test.ts:55:    rpc: async (name: string, args: unknown) => {
+src/modules/cabinet/actions/__tests__/reauth.security.test.ts:48:    rpc: async () => ({ data: [], error: null }),
+src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:37:    rpc: async () => ({ data: [], error: null }),
+src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:38:    rpc: async () => ({ data: [], error: null }),
+exit code: 0

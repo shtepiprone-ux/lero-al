@@ -1,0 +1,27 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-24T08:48:09.780Z
+command: npx vitest run --reporter=verbose src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx src/lib/auth/__tests__/staffPage.security.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 9403ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 0ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 1ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN] the redirect notice is shown 151ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED] an unknown notice is not shown 76ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT] no notice without the parameter 20ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer 26727ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > an active administrator and an active moderator pass the guard, and it returns who they are (the control) 2ms
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  10:48:22
+   Duration  29.55s (transform 2.39s, setup 4.35s, import 2.45s, tests 36.38s, environment 18.27s)
+
+
+---- end ----
+EXIT_CODE=0

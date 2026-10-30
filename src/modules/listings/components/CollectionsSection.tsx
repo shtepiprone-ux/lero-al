@@ -3,9 +3,12 @@
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderPlus, Folder, Pencil, Trash2 } from 'lucide-react'
-import { Group, Stack, SimpleGrid, Paper, Text, Title, Button, ActionIcon, ThemeIcon, TextInput, Flex, useMantineTheme } from '@mantine/core'
+import { Group, Stack, SimpleGrid, Paper, Text, Title, Button, ActionIcon, ThemeIcon, TextInput, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import {
   createCollection,
@@ -13,8 +16,6 @@ import {
   deleteCollection,
 } from '@/modules/listings/actions/collectionActions'
 import type { CollectionWithCount } from '@/types/database'
-
-const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 interface Props {
   initialCollections: CollectionWithCount[]
@@ -137,7 +138,7 @@ export function CollectionsSection({ initialCollections }: Props) {
                   <Folder size={theme.other.iconSize.roomy} />
                 </ThemeIcon>
                 <Stack gap={0} style={{ flex: 1, minWidth: 0 }}>
-                  <Text size="sm" fw={500} truncate>{col.name}</Text>
+                  <Text size="sm" fw={500}>{col.name}</Text>
                   <Text size="xs" c="dimmed">{t('item_count', { count: col.item_count })}</Text>
                 </Stack>
                 <Group gap="tight" wrap="nowrap">
@@ -170,76 +171,71 @@ export function CollectionsSection({ initialCollections }: Props) {
 
       {/* Create dialog */}
       <MantineModal
+        structured
         opened={createOpen}
         onClose={() => setCreateOpen(false)}
         title={t('new')}
         footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
-            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setCreateOpen(false)} disabled={isPending}>
-              {tc('cancel')}
-            </Button>
-            <Button w={FULL_BELOW_SM} onClick={handleCreate} disabled={isPending || !createName.trim()}>
-              {t('create')}
-            </Button>
-          </Flex>
+          <MantineDialogFooter
+            secondary={<Button type="button" variant="default" onClick={() => setCreateOpen(false)} disabled={isPending}>{tc('cancel')}</Button>}
+            primary={<Button type="button" onClick={handleCreate} disabled={isPending || !createName.trim()}>{t('create')}</Button>}
+          />
         }
       >
-        <TextInput
-          value={createName}
-          onChange={e => { setCreateName(e.target.value); setCreateError('') }}
-          placeholder={t('name_placeholder')}
-          maxLength={100}
-          onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
-          error={createError || undefined}
-          autoFocus
-        />
+        <MantineDialogSections>
+          <MantineDialogSection>
+            <TextInput
+              value={createName}
+              onChange={e => { setCreateName(e.target.value); setCreateError('') }}
+              placeholder={t('name_placeholder')}
+              maxLength={100}
+              onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
+              error={createError || undefined}
+              autoFocus
+            />
+          </MantineDialogSection>
+        </MantineDialogSections>
       </MantineModal>
 
       {/* Rename dialog */}
       <MantineModal
+        structured
         opened={renameOpen}
         onClose={() => setRenameOpen(false)}
         title={t('rename')}
         footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
-            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setRenameOpen(false)} disabled={isPending}>
-              {tc('cancel')}
-            </Button>
-            <Button w={FULL_BELOW_SM} onClick={handleRename} disabled={isPending || !renameName.trim()}>
-              {tc('save')}
-            </Button>
-          </Flex>
+          <MantineDialogFooter
+            secondary={<Button type="button" variant="default" onClick={() => setRenameOpen(false)} disabled={isPending}>{tc('cancel')}</Button>}
+            primary={<Button type="button" onClick={handleRename} disabled={isPending || !renameName.trim()}>{tc('save')}</Button>}
+          />
         }
       >
-        <TextInput
-          value={renameName}
-          onChange={e => { setRenameName(e.target.value); setRenameError('') }}
-          placeholder={t('new_name_placeholder')}
-          maxLength={100}
-          onKeyDown={e => { if (e.key === 'Enter') handleRename() }}
-          error={renameError || undefined}
-          autoFocus
-        />
+        <MantineDialogSections>
+          <MantineDialogSection>
+            <TextInput
+              value={renameName}
+              onChange={e => { setRenameName(e.target.value); setRenameError('') }}
+              placeholder={t('new_name_placeholder')}
+              maxLength={100}
+              onKeyDown={e => { if (e.key === 'Enter') handleRename() }}
+              error={renameError || undefined}
+              autoFocus
+            />
+          </MantineDialogSection>
+        </MantineDialogSections>
       </MantineModal>
 
       {/* Delete confirm dialog */}
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={deleteOpen}
         onClose={() => setDeleteOpen(false)}
         title={t('delete')}
-        footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
-            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setDeleteOpen(false)} disabled={isPending}>
-              {tc('cancel')}
-            </Button>
-            <Button color="red" w={FULL_BELOW_SM} onClick={handleDelete} disabled={isPending}>
-              {t('delete')}
-            </Button>
-          </Flex>
-        }
-      >
-        <Text size="sm" c="dimmed">{t('delete_confirm')}</Text>
-      </MantineModal>
+        message={t('delete_confirm')}
+        confirmLabel={t('delete')}
+        cancelLabel={tc('cancel')}
+        loading={isPending}
+        onConfirm={handleDelete}
+      />
     </Stack>
   )
 }

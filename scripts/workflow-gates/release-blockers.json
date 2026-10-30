@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "findings": [
+    { "id": "S59", "severity": "critical", "status": "resolved", "summary": "User can grant themselves admin and edit another account's listing", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json", "contract": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json", "caseIds": ["SEC-X-SRV-PROFILE-PROTECTED-DENY", "SEC-DB-S59-DENY", "SEC-DB-S59-ALLOW"] },
+    { "id": "S60", "severity": "high", "status": "resolved", "summary": "Self reactivation and self verification through profile writes", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json", "contract": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json", "caseIds": ["SEC-X-SRV-PROFILE-PROTECTED-DENY", "SEC-DB-S59-DENY", "SEC-DB-S59-ALLOW"] },
+    { "id": "S61", "severity": "high", "status": "resolved", "summary": "Listing owner controls moderation, premium and counters through database writes", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json", "contract": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json", "caseIds": ["SEC-D8-SRV-DENY", "SEC-DB-S61-DENY", "SEC-DB-S61-ALLOW"] },
+    { "id": "S62", "severity": "high", "status": "resolved", "summary": "Anonymous view recording accepts forged identity and pending listing views", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json", "contract": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json", "caseIds": ["SEC-X-SRV-VIEW-DENY", "SEC-DB-S62-DENY", "SEC-DB-S62-ALLOW"] }
+  ]
+}

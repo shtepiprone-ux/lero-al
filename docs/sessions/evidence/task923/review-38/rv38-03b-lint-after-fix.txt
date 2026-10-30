@@ -1,0 +1,7 @@
+# 2026-10-23T07:37:01Z node v22.22.3 cwd /c/Claude_Code_Projects/lero-al (after Opus added the CommonJS lint header to its rv37-31 probe)
+$ npm run lint
+
+✖ 261 problems (0 errors, 261 warnings)
+  0 errors and 45 warnings potentially fixable with the `--fix` option.
+
+exit 0

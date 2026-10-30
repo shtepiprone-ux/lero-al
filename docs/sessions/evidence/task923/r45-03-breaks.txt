@@ -1,0 +1,71 @@
+# R145 AC145 r45-03: two breaks (B6, B7), one at a time, each restored; after each restore the file's sha256 equals its after-edit hash
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r45-03-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T13:04:30.983Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B6: put the line of C1347 (the listing_images.public_id read) back before the listing_images.url read
+file: src/lib/cloudinaryDelete.ts
+test: npx vitest run --config vitest.integration.config.ts src/lib/account/deleteAccount.integration.test.ts -t SEC-DEL-INT-ALLOW
+after-edit sha256 (before the break): 263f632f49f3e10b6e770d4f135f2741658a2df2258fe36244b2c215824a4365
+baseline run: exit 0
+broken sha256: 8c9d1a7ee9fb4716f0b0cc87d1d66706f72f7da4ca78d460a839c875cf107bb9
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: zz_synth_mvmeu0il51da/verification: the reference check passed and the dry run was logged: expected 'SKIP_LOOKUP_FAILED' to be 'DRY_RUN' // Object.is equality
+
+Expected: "DRY_RUN"
+Received: "SKIP_LOOKUP_FAILED"
+
+ ❯ src/lib/account/deleteAccount.integration.test.ts:241:103
+    239|   expect(world.fileEntries.length, 'no other id was released').toBe(4)
+    240|   for (const entry of world.fileEntries) {
+    241|     expect(entry.outcome, `${entry.publicId}: the reference check pass…
+       |                                                                                                       ^
+    242|     expect(entry.lookup, `${entry.publicId}: no failed reference read`…
+    243|   }
+
+restored sha256: 263f632f49f3e10b6e770d4f135f2741658a2df2258fe36244b2c215824a4365
+restored run: exit 0
+OK   B6: baseline passes
+OK   B6: the break fails on the intended assertion
+OK   B6: restored sha256 equals the after-edit hash
+OK   B6: restored run passes
+
+=== B7: in check, replace the failed-read branch with `if (error) return`
+file: src/lib/cloudinaryDelete.ts
+test: npx vitest run src/lib/cloudinaryDelete.security.test.ts -t SEC-X-SRV-CLEANUP-FAILCLOSED
+after-edit sha256 (before the break): 263f632f49f3e10b6e770d4f135f2741658a2df2258fe36244b2c215824a4365
+baseline run: exit 0
+broken sha256: af0813e115fa931bfba3eb06c0379b9b334c61ee3947a61c09ed44c44e8f66a4
+broken run: exit 1
+ FAIL  src/lib/cloudinaryDelete.security.test.ts > cloudinaryDelete > [SEC-X-SRV-CLEANUP-FAILCLOSED] a failed or matching reference read keeps the file
+AssertionError: listing_images.url fails: expected { skipped: false, dryRun: false, …(1) } to match object { skipped: true, deleted: false }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "deleted": false,
+-   "skipped": true,
++   "deleted": true,
++   "skipped": false,
+  }
+
+restored sha256: 263f632f49f3e10b6e770d4f135f2741658a2df2258fe36244b2c215824a4365
+restored run: exit 0
+OK   B7: baseline passes
+OK   B7: the break fails on the intended assertion
+OK   B7: restored sha256 equals the after-edit hash
+OK   B7: restored run passes
+
+BOTH BREAKS BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

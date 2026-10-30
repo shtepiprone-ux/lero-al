@@ -1,0 +1,47 @@
+# r51-03: Task 923 Revision 51, R156, break B17
+platform: win32 10.0.26300 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r51-03-breaks.mjs
+started: 2026-10-25T12:46:22.491Z
+
+=== B17: the password change ends the other sessions through the verify client again (scope 'others'): the check's own session stays alive and the request's session client signs nobody out
+file: src/modules/cabinet/actions/index.ts
+test: npx vitest run src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts -t SEC-S55-SRV-DENY
+after-edit sha256 (before the break): 00c08c2b80e171978bff9940983003c76eb24818df1aea7f463a2e6b721a7baa
+baseline run: exit 0
+broken sha256: 1e243c19d9f368032a6697490631194f53d4000cac157b1bdb707b117e820ebe
+broken run: exit 1
+ FAIL  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > [SEC-S55-SRV-DENY] A password change ends every session of the account, the check's own included
+AssertionError: expected [] to deeply equal [ { scope: 'global' } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "scope": "global",
+-   },
+- ]
++ []
+
+ ❯ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:194:27
+    192|   expect(await changeCabinetPassword(good)).toEqual({ ok: true })
+    193|   expect(passwordUpdates).toEqual([{ password: good.newPassword }])
+    194|   expect(sessionSignOuts).toEqual([{ scope: 'global' }])              …
+       |                           ^
+    195|   expect(signOuts).toEqual([])                                        …
+    196|   sessionSignOuts.length = 0
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restored sha256: 00c08c2b80e171978bff9940983003c76eb24818df1aea7f463a2e6b721a7baa
+restored run: exit 0
+OK   B17: baseline passes
+OK   B17: the break fails on the intended assertion
+OK   B17: restored sha256 equals the after-edit hash
+OK   B17: restored run passes
+
+THE BREAK BEHAVED AS REQUIRED
+exit code: 0

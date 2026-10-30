@@ -1,0 +1,9 @@
+platform win32 x64 (Git Bash MINGW64_NT-10.0-26300); node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref, 20 characters> NEXT_PUBLIC_SUPABASE_URL=<not printed>
+before: the two read-only dev-server commands of review-50/rv50-06-dev-server.txt: 0 and 0
+output: discarded (verify prints no pass line); the exit code is the result
+21:33:44 command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+exit 0
+21:38:50 command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+exit 0
+21:39:05 command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+exit 0

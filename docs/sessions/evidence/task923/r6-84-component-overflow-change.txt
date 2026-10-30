@@ -1,0 +1,9 @@
+component-overflow rows (Story x state x root x locale x width with the rule) per component: Revision 4 -> Revision 5; "positioned" = rows in which at least one detail is a positioned / transformed element
+
+  admindashboardview: 31 -> 28 (-3); positioned 28
+  lightboxview: 52 -> 16 (-36); positioned 0
+  listingdetailview: 258 -> 114 (-144); positioned 114
+  listinggallerypattern: 24 -> 12 (-12); positioned 12
+
+components with a change: 4; components unchanged: 18
+total rows with component-overflow: 988 -> 793 (-195); rows with a positioned / transformed detail in Revision 5: 198

@@ -1,0 +1,68 @@
+# a10-09c the project sink test that scans window.open
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-26T07:37:33.954Z
+
+command: npx vitest run src/__tests__/security/clientSinks.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/__tests__/security/clientSinks.test.ts (9 tests | 2 failed) 46ms
+     × every window.open passes noopener 7ms
+   × [SEC-S11-SRV-DENY] No component opens a new tab without rel noopener 9ms
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  08:37:35
+   Duration  421ms (transform 51ms, setup 129ms, import 89ms, tests 46ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/__tests__/security/clientSinks.test.ts > new-tab links > every window.open passes noopener
+AssertionError: src/lib/auth/googlePopup.ts: window.open(url, POPUP_NAME, POPUP_FEATURES): expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/lib/auth/googlePopup.ts: window.open(url, POPUP_NAME, POPUP_FEATURES)",
++ ]
+
+ ❯ src/__tests__/security/clientSinks.test.ts:47:33
+     45|     const bad: string[] = []
+     46|     for (const f of files) for (const m of f.text.matchAll(/window\.op…
+     47|     expect(bad, bad.join('\n')).toEqual([])
+       |                                 ^
+     48|   })
+     49|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/__tests__/security/clientSinks.test.ts > [SEC-S11-SRV-DENY] No component opens a new tab without rel noopener
+AssertionError: src/lib/auth/googlePopup.ts: window.open: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/lib/auth/googlePopup.ts: window.open",
++ ]
+
+ ❯ src/__tests__/security/clientSinks.test.ts:122:31
+    120|     for (const m of f.text.matchAll(/window\.open\([^)]*\)/g)) if (!/n…
+    121|   }
+    122|   expect(bad, bad.join('\n')).toEqual([])
+       |                               ^
+    123|   // the control: the same rule flags a planted unsafe link, so an emp…
+    124|   expect(files.length).toBeGreaterThan(100)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+--- exit code: 1 ---
+
+finished: 2026-10-26T07:37:35.894Z
+exit code: 1

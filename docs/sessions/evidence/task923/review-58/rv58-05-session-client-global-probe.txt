@@ -1,0 +1,13 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv58-05-session-client-global-probe.mjs
+date: 2026-10-25T12:35:02.502Z
+case 1, live browser session: before: browser alive, phone alive, check alive
+case 1: session client signOut global ok
+case 1: after: browser ended, phone ended, check ended
+case 1: cookie writes: sb-<ref>-auth-token value empty maxAge 0; auth cookies left 0
+case 2, browser session already ended by 'others': before: browser ended, check alive
+case 2: session client signOut global ok; check alive; cookie writes: sb-<ref>-auth-token value empty maxAge 0
+clean-up: zz_synth_rv58s_ users left 0
+exit code: 0

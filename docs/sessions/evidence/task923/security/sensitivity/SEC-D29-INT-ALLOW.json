@@ -1,0 +1,207 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T12:05:00.271Z",
+ "case": "SEC-D29-INT-ALLOW",
+ "results": [
+  {
+   "id": "SEC-D29-INT-ALLOW",
+   "testFile": "src/lib/auth/sessionEnd.integration.test.ts",
+   "testName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/auth/middleware.ts",
+     "description": "refreshSession ends every session, active ones included",
+     "from": "  if (error && (error.code === 'user_banned' || error.code === 'user_not_found')) {\n",
+     "to": "  if (true) {\n"
+    }
+   ],
+   "failureMessage": "AssertionError: an active person is not signed out: nothing is cleared: expected [ { …(6) } ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/sessionEnd.integration.test.ts:82:84\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325090309,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "skipped",
+         "title": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "passed",
+         "title": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "duration": 587.8764,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325091429,
+       "endTime": 1792325092016.8765,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/sessionEnd.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325093878,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "skipped",
+         "title": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "failed",
+         "title": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "duration": 653.2982000000001,
+         "failureMessages": [
+          "AssertionError: an active person is not signed out: nothing is cleared: expected [ { …(6) } ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/sessionEnd.integration.test.ts:82:84\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325095010,
+       "endTime": 1792325095663.298,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/sessionEnd.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325097534,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "skipped",
+         "title": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "status": "passed",
+         "title": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+         "duration": 559.3857,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325098690,
+       "endTime": 1792325099249.3857,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/sessionEnd.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

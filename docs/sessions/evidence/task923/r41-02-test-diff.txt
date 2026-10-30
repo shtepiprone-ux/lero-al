@@ -1,0 +1,36 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r41-02-diff.mjs
+date: 2026-10-23T18:58:19.945Z
+--- output ---
+=== src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx against docs/sessions/evidence/task923/r41-00-googleReauth.txt (git diff exit 1; 1 means the files differ) ===
+diff --git a/docs/sessions/evidence/task923/r41-00-googleReauth.txt b/src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+index 605acee75..07cef53e2 100644
+--- a/docs/sessions/evidence/task923/r41-00-googleReauth.txt
++++ b/src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+@@ -95 +95 @@ async function askEmailChange(): Promise<GisDouble> {
+-  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
++  fireEvent.change(screen.getByRole('textbox', { name: new RegExp('^' + t.email_new_label) }), { target: { value: NEW_ADDRESS } })
+@@ -232 +232 @@ it('[SEC-927-FE-REAUTH-ERR] a failed Google confirmation or an unavailable Googl
+-  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
++  fireEvent.change(screen.getByRole('textbox', { name: new RegExp('^' + t.email_new_label) }), { target: { value: NEW_ADDRESS } })
+
+removed lines: 2; added lines: 2
+=== src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx against docs/sessions/evidence/task923/r41-00-deletePassword.txt (git diff exit 1; 1 means the files differ) ===
+diff --git a/docs/sessions/evidence/task923/r41-00-deletePassword.txt b/src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+index 1a0c71b63..3c2102f4f 100644
+--- a/docs/sessions/evidence/task923/r41-00-deletePassword.txt
++++ b/src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+@@ -164 +164 @@ describe('ProfileTab.deletePassword', () => {
+-    const address = screen.getByPlaceholderText(t.email_change_hint) as HTMLInputElement
++    const address = screen.getByRole('textbox', { name: new RegExp('^' + t.email_new_label) }) as HTMLInputElement
+@@ -188 +188 @@ describe('ProfileTab.deletePassword', () => {
+-    fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: 'new@example.com' } })
++    fireEvent.change(screen.getByRole('textbox', { name: new RegExp('^' + t.email_new_label) }), { target: { value: 'new@example.com' } })
+
+removed lines: 2; added lines: 2
+changed lines in total: 4
+
+
+EXIT_CODE=0

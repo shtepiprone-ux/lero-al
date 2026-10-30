@@ -1,479 +1,589 @@
-name: Governance Validation (PR)
-
-on:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'src/**'
-      - 'scripts/**'
-      - '.claude/**'
-      - 'CLAUDE.md'
-      - 'eslint.config.mjs'
-      - 'package.json'
-      - 'tasks/**'
-      - 'docs/agent-contract.md'
-      - 'docs/golden-rules.md'
-      - 'docs/rules/**'
-      - 'docs/orchestrator-procedures.md'
-      - 'docs/orchestrator-role.md'
-      - 'docs/review-ledger.schema.json'
-      - 'docs/review-ledger-template.json'
-      - 'docs/qa-profiles.md'
-      - 'docs/storybook-governance.md'
-      - 'docs/critical-flow-registry.md'
-      - 'docs/reviews/**'
-      - 'messages/**'
-      - '.github/workflows/**'
-  # Owner decision 2026-10-07: work reaches main by direct push, so the gate must run on every push
-  # to main, not only on PRs. No PR had been opened since 2026-08-16, which left this whole gate
-  # unexecuted for seven weeks while the weekly scan failed unseen (docs/governance-enforcement.md §9).
-  push:
-    branches: [main]
-    paths:
-      - 'src/**'
-      - 'scripts/**'
-      - '.claude/**'
-      - 'CLAUDE.md'
-      - 'eslint.config.mjs'
-      - 'package.json'
-      - 'tasks/**'
-      - 'docs/agent-contract.md'
-      - 'docs/golden-rules.md'
-      - 'docs/rules/**'
-      - 'docs/orchestrator-procedures.md'
-      - 'docs/orchestrator-role.md'
-      - 'docs/review-ledger.schema.json'
-      - 'docs/review-ledger-template.json'
-      - 'docs/qa-profiles.md'
-      - 'docs/storybook-governance.md'
-      - 'docs/critical-flow-registry.md'
-      - 'docs/reviews/**'
-      - 'messages/**'
-      - '.github/workflows/**'
-
-# A newer push to the same ref supersedes an older run: main's latest commit is what must be green.
-concurrency:
-  group: governance-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  governance:
-    name: Governance Check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: TypeScript check
-        run: npx tsc --noEmit
-
-      - name: ESLint (with governance rules)
-        run: npm run lint
-
-      - name: Review-ledger gate (fail-closed approval evidence)
-        if: github.event_name == 'pull_request'
-        env:
-          REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-        run: npm run check:review-ledger -- --ci
-
-      # On a direct push to main, task-design / NEEDS REVISION commits legitimately carry no ledger, so
-      # validate only the ledgers changed in the pushed range and require none. (Validating every retained
-      # ledger fails forever: historical ledgers cite paths later work moved or deleted.)
-      - name: Review-ledger gate (ledgers changed in the push)
-        if: github.event_name == 'push'
-        env:
-          REVIEW_LEDGER_BASE_SHA: ${{ github.event.before }}
-        run: npm run check:review-ledger -- --ci --push
-
-      - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
-        run: npm run check:review-ledger:verify
-
-      - name: Build production bundle for compiled-bundle unit tests
-        # overlay-dual-declaration.test.ts verifies the shipped CSS under .next/static/css; it
-        # is a compiled-bundle test, so the bundle must exist before the generic npm test step.
-        run: npm run build
-
-      - name: Gate unit tests (check-stories gate correctness)
-        run: npm test
-
-      - name: Auth lifecycle regression guard (Epic RS Slice 2)
-        run: npm run test:auth
-
-      - name: Listings lifecycle regression guard (Epic RS Slice 3)
-        run: npm run test:listings
-
-      - name: Admin lifecycle regression guard (Epic RS Slice 4)
-        run: npm run test:admin
-
-      - name: RLS write-path guard smoke (Epic RS Slice 5)
-        run: npm run test:rls-guards
-
-      - name: Admin data freshness regression guard (Epic KK)
-        run: npm run test:admin-freshness
-
-      - name: i18n/hydration regression guard (Epic RS Slice 6)
-        run: npm run test:i18n-hydration
-
-      - name: Static i18n parity gate (sq/en/uk/it key-set match)
-        run: npm run check:i18n
-
-      - name: Storybook governance gate
-        run: npm run check:stories
-
-      - name: Governance scan self-test (planted code violations fail, comment-only twins pass)
-        run: npm run governance:verify
-
-      - name: Primitive governance scan
-        run: npm run governance:primitives
-
-      - name: SSR/Hydration governance scan
-        run: npm run governance:ssr
-
-      - name: Responsive governance scan
-        run: npm run governance:responsive
-
-      - name: Tailwind entropy scan
-        run: npm run governance:tailwind
-
-      - name: Localization governance scan
-        run: npm run governance:localization
-
-      - name: Static i18n hardcode gate (fail-on-new, baseline-diff)
-        run: npm run check:i18n-hardcode
-
-      - name: Dynamic i18n key gate (resolved-key coverage, fail-on-new)
-        run: npm run check:i18n-dynamic
-
-      - name: File integrity gate (NUL bytes, BOM, parse errors, truncation)
-        run: npm run check:file-integrity:all
-
-      - name: Mojibake / encoding artifact gate (UTF-8 double-encoding, U+FFFD)
-        run: npm run check:mojibake
-
-      - name: Story coverage gate (fail-on-new; exemption allowlist)
-        run: npm run check:story-coverage
-
-      - name: Badge canonical gate (Task 859 R30 — one MantineBadge, one badgeTones registry)
-        run: npm run check:badge-canonical
-
-      - name: Badge canonical gate self-test (two planted violations, Task 859 R30)
-        run: npm run check:badge-canonical:verify
-
-      - name: Dialog canonical gate (Task 859 R30 — structured MantineModal, buttons only in MantineDialogFooter)
-        run: npm run check:dialog-canonical
-
-      - name: Dialog canonical gate self-test (two planted violations, Task 859 R30)
-        run: npm run check:dialog-canonical:verify
-
-      - name: Rendered-but-unenrolled component scope gate (Task 818 — blocking, baselined fail-on-new)
-        run: npm run check:rendered-scope
-
-      - name: Rendered-scope gate self-test (verifies gate detects violations — CI-safe, Task 818)
-        run: npm run check:rendered-scope:verify
-
-      - name: Enrolled-files Tailwind-utility gate (Task 829 — blocking, compiler-backed, remove-only baseline)
-        run: npm run check:enrolled-tailwind
-
-      - name: Enrolled-files Tailwind-utility gate self-test (verifies gate detects violations — CI-safe, Task 829)
-        run: npm run check:enrolled-tailwind:verify
-
-      - name: Diff-mapped per-surface GR-1 census gate (Task 819 — blocking, baselined fail-on-new)
-        env:
-          # PR: base/head of the PR. Push to main: the pushed range (previous tip → new tip).
-          SURFACE_CENSUS_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          SURFACE_CENSUS_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: npm run check:surface-census:changed
-
-      - name: Diff-mapped surface census gate self-test (verifies gate detects violations — CI-safe, Task 819)
-        run: npm run check:surface-census:changed:verify
-
-      - name: Pattern-directory enrolment gate (Task 820 — blocking, one rule for the pattern directory)
-        run: npm run check:pattern-enrolment
-
-      - name: Pattern-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 820)
-        run: npm run check:pattern-enrolment:verify
-
-      - name: Media-directory enrolment gate (Task 813 — blocking, one rule for the media directory)
-        run: npm run check:media-enrolment
-
-      - name: Media-directory enrolment gate self-test (verifies gate detects violations — CI-safe, Task 813)
-        run: npm run check:media-enrolment:verify
-
-      - name: Responsive-type gate (Task 886, GR-3c — blocking, no static large Title/fz/size or bare Tailwind text-2xl+)
-        run: npm run check:type-responsive
-
-      - name: Responsive-type gate self-test (verifies gate detects violations — CI-safe, Task 886)
-        run: npm run check:type-responsive:verify
-
-      - name: Design token strict gate (blocking — 0 unsuppressed raw values)
-        run: npm run check:design-tokens:strict
-
-      - name: UI contract gate (GR-12 — no changed Story-local styling; new components have token/Story/parity ownership)
-        env:
-          UI_CONTRACT_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          UI_CONTRACT_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: npm run check:ui-contract
-
-      - name: UI contract gate self-test (planted Story styling and missing contract must fail)
-        run: npm run check:ui-contract:verify
-
-      - name: Mobile adaptation contract gate (GR-3j — changed UI may not add text clipping; changed kickoffs need a source-backed record)
-        env:
-          MOBILE_ADAPTATION_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          MOBILE_ADAPTATION_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: node scripts/check-mobile-adaptation-contract.mjs
-
-      - name: Mobile adaptation contract gate self-test (planted clipping and missing record must fail)
-        run: node scripts/check-mobile-adaptation-contract.mjs --verify-gate
-
-      - name: Kickoff claim-evidence gate (blocking — changed kickoffs require traceable facts)
-        env:
-          KICKOFF_EVIDENCE_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          KICKOFF_EVIDENCE_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: npm run check:kickoff-evidence
-
-      - name: Kickoff claim-evidence gate self-test (planted unsupported fact must fail)
-        run: npm run check:kickoff-evidence:verify
-
-      - name: Tailwind runtime-token gate (blocking — CSS Module var() references owned by Tailwind, not this project)
-        run: npm run check:tailwind-runtime-tokens
-
-      - name: Install Chromium for hydration self-test
-        run: npx playwright install chromium --with-deps
-
-      - name: Hydration gate self-test (verifies gate detects violations — CI-safe, no server needed)
-        run: npm run check:hydration:verify
-
-      - name: Admin hydration config self-test (verifies admin branch wiring — no server, no auth)
-        run: npm run check:hydration:admin-config
-
-      - name: listing_reports authenticated grant check (Task 460 / Epic BB)
-        run: npm run check:listing-reports-grants
-
-      - name: notifications least-privilege grant check (Task 881 / Sprint 80)
-        run: npm run check:notifications-grants
-
-      - name: notification_type enum / NotificationType drift check (Task 880)
-        run: npm run check:notification-type-enum
-
-      - name: Listing public-visibility invariant gate (Epic LV / LV.4)
-        run: npm run check:listing-visibility
-
-      - name: Listing public-visibility gate self-test (verifies gate detects violations — CI-safe)
-        run: npm run check:listing-visibility:verify
-
-      - name: Full governance report (summary)
-        if: always()
-        run: npm run governance
-
-  # ── Homepage-grid and locale-leak run as independent jobs (no `needs`) ──
-  # `screenshots:assert` is retired by the owner decision dated 2026-09-03. Visual Storybook
-  # proof is an owner-reviewed matrix, so there is deliberately no rendered-proof CI job.
-
-  homepage-grid:
-    name: Homepage Grid Validation
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
-
-      - name: Build Storybook (runs check:stories pre-gate)
-        run: npm run build-storybook
-
-      - name: Card-track monotonicity gate (Task 815 — blocking, canonical-scope, owner decision 2026-09-16)
-        run: npm run check:card-track-monotonicity
-
-      - name: Card-track monotonicity gate self-test (verifies gate detects violations — CI-safe, Task 815)
-        run: npm run check:card-track-monotonicity:verify
-
-      - name: Homepage grid invariants gate (canonical Mantine HomepageListingGrids only, Task 828 — header, skeleton count, no page scroll, page cap, rail mode)
-        run: npm run check:homepage-grid
-
-      - name: Homepage grid invariants gate self-test (verifies gate detects violations — CI-safe, Task 828)
-        run: npm run check:homepage-grid:verify
-
-  locale-leak:
-    name: Locale Leak Detection
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
-
-      - name: Build Storybook (runs check:stories pre-gate)
-        run: npm run build-storybook
-
-      - name: Locale leak detection (Task Q0R — Mantine/Primitives/* + Patterns/Mantine/* only, legacy excluded)
-        # continue-on-error (Task 625, 2026-07-19): migration-window policy — the detector still runs and
-        # reports, but does not block the PR while legacy→Mantine story migration is active and newly
-        # migrated stories keep surfacing loanword/fixture leaks that would otherwise churn on every PR.
-        # Revert to blocking once migration completes (owner directive). The script's own exit code and
-        # check:locale-leak:mantine-only's definition are unchanged — only this CI job is non-blocking.
-        continue-on-error: true
-        run: npm run check:locale-leak:mantine-only
-
-      - name: Upload leak report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: locale-leak-report
-          path: .screenshots/locale-leak/
-          retention-days: 7
-
-  click-shield:
-    name: Click-Shield Gate (blocking)
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-    # Task 727 (Sprint 52, closing task) — owner decision 2026-08-09, quoted verbatim in the
-    # kickoff (tasks/Archive/Sprint_52_kickoff_prompt_Task_727_ClickShield_CI_And_Contextual_N6.md
-    # §3.1): "CI запускає gate на локальному production build і він blocking. Не на production
-    # URL. У PR CI: npm ci → Playwright Chromium → npm run build → npm start → wait-for-ready →
-    # check:click-shield. Команда має йти з BASE_URL=http://127.0.0.1:3000, без continue-on-error;
-    # ненульовий exit code блокує merge." No prior job in this file builds/starts the real Next.js
-    # app (all four existing jobs use build-storybook) — this is new infrastructure, not a copy of
-    # an existing job.
-    #
-    # The real app's middleware needs these public Supabase runtime values even for a local
-    # production server. They are supplied as repository secrets; `.env.local` is intentionally
-    # neither read nor committed by CI.
-    env:
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-      # Enables the otherwise-404 CI-only modal fixture used by check:click-shield. This avoids
-      # making a blocking interaction gate depend on a mutable database listing slug.
-      CLICK_SHIELD_CI_FIXTURE: '1'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Verify required Supabase CI configuration
-        # The app's default-locale resolver creates an admin client. Fail before the browser
-        # harness starts if a required secret is absent; otherwise every route becomes Next's
-        # error page and the gate can report only the secondary "zero candidates" symptom.
-        run: |
-          missing=0
-          for name in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY; do
-            if [ -z "${!name}" ]; then
-              echo "::error::Required GitHub Actions secret is unavailable: $name"
-              missing=1
-            fi
-          done
-          exit "$missing"
-
-      - name: Install Playwright Chromium
-        run: npx playwright install chromium --with-deps
-
-      - name: Build production bundle
-        run: npm run build
-
-      - name: CSS var() resolvability gate (Task 700 — blocking, no continue-on-error)
-        # Reads the just-built .next/static/css bundle (Arm A) and src/**/*.{css,tsx,ts}
-        # (Arm B), so it must run after "Build production bundle" and needs no server.
-        # Redirected to a file, exit code captured as its own statement — never trust a
-        # piped command's exit code (this project's evidence-capture rule).
-        run: |
-          # `|| exit_code=$?`: under the runner's `bash -e` a bare failing command aborts the step
-          # before `cat`, hiding the log (first push-triggered run 37661186435, 2026-10-07).
-          exit_code=0
-          npm run check:css-vars > css-vars.log 2>&1 || exit_code=$?
-          cat css-vars.log
-          exit $exit_code
-
-      - name: Start production server
-        # Backgrounded within the job's persistent shell so it stays alive into the next step
-        # (GitHub Actions runs every step's shell in the same process/session on the same runner).
-        # Logged to a file rather than left attached to the step's own stdout, which closes when
-        # the step returns.
-        run: nohup npm start > server.log 2>&1 &
-
-      - name: Wait for server readiness
-        # A real readiness probe (repeated HTTP check), not a fixed sleep (Task 727 §7.3) — a
-        # fixed sleep is exactly the kind of flakiness source that gets a blocking gate disabled.
-        run: |
-          for i in $(seq 1 30); do
-            if curl -sf -o /dev/null http://127.0.0.1:3000/; then
-              echo "server ready after ${i} attempt(s)"
-              exit 0
-            fi
-            sleep 2
-          done
-          echo "server did not become ready within 60s" >&2
-          cat server.log
-          exit 1
-
-      - name: Click-shield gate (blocking — base route, Drawer, and Modal scenarios, no continue-on-error)
-        env:
-          BASE_URL: http://127.0.0.1:3000
-        # Redirected to a file (as its own statement, per this project's evidence-capture rule —
-        # never trust a piped command's exit code) so the gate's own transcript survives as an
-        # artifact independent of the ephemeral job log; the shell's real exit code still fails
-        # the step because it is not piped through anything.
-        run: |
-          # `|| exit_code=$?`: under the runner's `bash -e` a bare failing command aborts the step
-          # before `cat`, hiding the log (first push-triggered run 37661186435, 2026-10-07).
-          exit_code=0
-          npm run check:click-shield > click-shield.log 2>&1 || exit_code=$?
-          cat click-shield.log
-          exit $exit_code
-
-      - name: Upload click-shield evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: click-shield-report
-          path: |
-            click-shield.log
-            server.log
-          retention-days: 7
+{
+  "name": "Governance Validation (PR)",
+  "on": {
+    "pull_request": {
+      "branches": [
+        "main"
+      ]
+    },
+    "push": {
+      "branches": [
+        "main"
+      ]
+    },
+    "merge_group": {
+      "types": [
+        "checks_requested"
+      ]
+    },
+    "workflow_dispatch": {
+      "inputs": {
+        "base_sha": {
+          "description": "Full base SHA to validate",
+          "required": true,
+          "type": "string"
+        }
+      }
+    }
+  },
+  "permissions": {
+    "contents": "read"
+  },
+  "concurrency": {
+    "group": "governance-${{ github.event_name }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}",
+    "cancel-in-progress": "${{ github.event_name == 'pull_request' }}"
+  },
+  "env": {
+    "GATES_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "GATES_HEAD_SHA": "${{ github.sha }}",
+    "REVIEW_LEDGER_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "SURFACE_CENSUS_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "SURFACE_CENSUS_HEAD_SHA": "${{ github.sha }}",
+    "UI_CONTRACT_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "UI_CONTRACT_HEAD_SHA": "${{ github.sha }}",
+    "MOBILE_ADAPTATION_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "MOBILE_ADAPTATION_HEAD_SHA": "${{ github.sha }}",
+    "KICKOFF_EVIDENCE_BASE_SHA": "${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_sha }}",
+    "KICKOFF_EVIDENCE_HEAD_SHA": "${{ github.sha }}"
+  },
+  "jobs": {
+    "governance": {
+      "name": "Governance Check",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 35,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Workflow gate regression tests",
+          "run": "node scripts/workflow-gates/selftests.mjs"
+        },
+        {
+          "name": "Inventory all rule and role documents",
+          "run": "node scripts/workflow-gates/cli.mjs inventory"
+        },
+        {
+          "name": "Review evidence",
+          "run": "node scripts/workflow-gates/review-evidence.mjs"
+        },
+        {
+          "name": "Install Chromium",
+          "run": "npx playwright install chromium --with-deps"
+        },
+        {
+          "name": "Run every registered static gate",
+          "if": "${{ !cancelled() && steps.install.outcome == 'success' }}",
+          "run": "node scripts/workflow-gates/run.mjs static"
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "static-governance",
+            "path": "test-results/workflow-gates/",
+            "retention-days": 14
+          }
+        }
+      ]
+    },
+    "unit": {
+      "name": "Unit and Component Tests",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 30,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Build compiled CSS required by existing regression tests",
+          "run": "npm run build"
+        },
+        {
+          "name": "Run complete regression suite without focused tests or retries",
+          "run": "npm test -- --allowOnly=false --passWithNoTests=false --retry=0 --reporter=default --reporter=json --outputFile=test-results/unit.json"
+        },
+        {
+          "name": "Validate nonempty unit collection and actual result",
+          "run": "node scripts/workflow-gates/cli.mjs unit-report"
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "unit-results",
+            "path": "test-results/unit.json",
+            "retention-days": 14
+          }
+        }
+      ]
+    },
+    "contracts": {
+      "name": "Task Security Contracts",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 25,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Install Chromium for mapped browser boundaries",
+          "run": "npx playwright install chromium --with-deps"
+        },
+        {
+          "name": "Validate changed tasks, both security layers, executed cases and fresh evidence",
+          "run": "node scripts/workflow-gates/cli.mjs diff --phase release",
+          "env": {
+            "NEXT_PUBLIC_SUPABASE_URL": "${{ secrets.SECURITY_CI_SUPABASE_URL }}",
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}",
+            "SUPABASE_SERVICE_ROLE_KEY": "${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}",
+            "DATABASE_URL": "${{ secrets.SECURITY_CI_DATABASE_URL }}",
+            "SUPABASE_CA_CERT": "${{ secrets.SECURITY_CI_SUPABASE_CA_CERT }}",
+            "SECURITY_TEST_TARGET": "${{ vars.SECURITY_TEST_TARGET }}",
+            "SECURITY_TEST_PROJECT_REF": "${{ vars.SECURITY_TEST_PROJECT_REF }}"
+          }
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "security-contract-results",
+            "path": "test-results/workflow-gates/",
+            "retention-days": 14
+          }
+        }
+      ],
+      "environment": "security-ci"
+    },
+    "hooks": {
+      "name": "Windows Hook Tests",
+      "runs-on": "windows-latest",
+      "timeout-minutes": 15,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "PowerShell 5.1 hook and recovery regressions",
+          "run": "node scripts/workflow-gates/selftests.mjs"
+        },
+        {
+          "name": "Existing phase hook negative and recovery tests",
+          "shell": "powershell",
+          "run": "& .\\.claude\\hooks\\phase-write-gate.ps1 -VerifyGate\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }"
+        }
+      ]
+    },
+    "storybook-build": {
+      "name": "Storybook Build",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 20,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Build Storybook",
+          "run": "npm run build-storybook"
+        },
+        {
+          "name": "Retain Storybook for this run",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "storybook-build",
+            "path": "storybook-static/",
+            "retention-days": 1
+          }
+        }
+      ]
+    },
+    "homepage-grid": {
+      "name": "Homepage Grid Validation",
+      "runs-on": "ubuntu-latest",
+      "needs": [
+        "storybook-build"
+      ],
+      "timeout-minutes": 45,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Install Chromium",
+          "run": "npx playwright install chromium --with-deps"
+        },
+        {
+          "name": "Download Storybook",
+          "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
+          "with": {
+            "name": "storybook-build",
+            "path": "storybook-static"
+          }
+        },
+        {
+          "name": "Run every homepage gate and deliberate-break self-test",
+          "run": "node scripts/workflow-gates/run.mjs homepage"
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "homepage-grid-results",
+            "path": "test-results/workflow-gates/",
+            "retention-days": 14
+          }
+        }
+      ]
+    },
+    "locale-leak": {
+      "name": "Locale Leak Detection (${{ matrix.shard }}/6)",
+      "runs-on": "ubuntu-latest",
+      "needs": [
+        "storybook-build"
+      ],
+      "timeout-minutes": 25,
+      "strategy": {
+        "fail-fast": false,
+        "matrix": {
+          "shard": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      },
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Install Chromium",
+          "run": "npx playwright install chromium --with-deps"
+        },
+        {
+          "name": "Download Storybook",
+          "uses": "actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
+          "with": {
+            "name": "storybook-build",
+            "path": "storybook-static"
+          }
+        },
+        {
+          "name": "Complete locale matrix; report leaks under the owner migration exception",
+          "run": "node scripts/check-locale-leak.mjs --mantine-only --report-only-leaks --shard=${{ matrix.shard }}/6"
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "locale-leak-${{ matrix.shard }}",
+            "path": ".screenshots/locale-leak/",
+            "retention-days": 14
+          }
+        }
+      ]
+    },
+    "click-shield": {
+      "name": "Click-Shield Gate (blocking)",
+      "runs-on": "ubuntu-latest",
+      "timeout-minutes": 30,
+      "environment": "security-ci",
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Install dependencies",
+          "id": "install",
+          "run": "npm ci"
+        },
+        {
+          "name": "Verify required approved development service configuration",
+          "run": "for name in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY; do\n  if [ -z \"${!name}\" ]; then echo \"::error::Missing protected security-ci secret: $name\"; exit 1; fi\ndone\nnode scripts/workflow-gates/cli.mjs target",
+          "env": {
+            "NEXT_PUBLIC_SUPABASE_URL": "${{ secrets.SECURITY_CI_SUPABASE_URL }}",
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}",
+            "SUPABASE_SERVICE_ROLE_KEY": "${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}",
+            "CLICK_SHIELD_CI_FIXTURE": "1",
+            "SECURITY_TEST_TARGET": "${{ vars.SECURITY_TEST_TARGET }}",
+            "SECURITY_TEST_PROJECT_REF": "${{ vars.SECURITY_TEST_PROJECT_REF }}"
+          }
+        },
+        {
+          "name": "Install Chromium",
+          "run": "npx playwright install chromium --with-deps"
+        },
+        {
+          "name": "Build production bundle",
+          "run": "npm run build",
+          "env": {
+            "NEXT_PUBLIC_SUPABASE_URL": "${{ secrets.SECURITY_CI_SUPABASE_URL }}",
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}",
+            "CLICK_SHIELD_CI_FIXTURE": "1"
+          }
+        },
+        {
+          "name": "CSS variable ownership and resolvability",
+          "run": "npm run check:css-vars"
+        },
+        {
+          "name": "Start local production server",
+          "run": "nohup npm start > server.log 2>&1 &",
+          "env": {
+            "NEXT_PUBLIC_SUPABASE_URL": "${{ secrets.SECURITY_CI_SUPABASE_URL }}",
+            "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}",
+            "SUPABASE_SERVICE_ROLE_KEY": "${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}",
+            "CLICK_SHIELD_CI_FIXTURE": "1"
+          }
+        },
+        {
+          "name": "Wait for local server",
+          "run": "for i in $(seq 1 30); do\n  if curl -sf -o /dev/null http://127.0.0.1:3000/; then exit 0; fi\n  sleep 2\ndone\ncat server.log\nexit 1"
+        },
+        {
+          "name": "Check actual local interactions",
+          "env": {
+            "BASE_URL": "http://127.0.0.1:3000"
+          },
+          "run": "npm run check:click-shield"
+        },
+        {
+          "name": "Upload evidence",
+          "if": "always()",
+          "uses": "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+          "with": {
+            "name": "click-shield-report",
+            "path": "server.log\ntest-results/",
+            "retention-days": 14
+          }
+        }
+      ]
+    },
+    "governance-required": {
+      "name": "Governance Required",
+      "runs-on": "ubuntu-latest",
+      "if": "${{ always() }}",
+      "needs": [
+        "governance",
+        "unit",
+        "contracts",
+        "hooks",
+        "storybook-build",
+        "homepage-grid",
+        "locale-leak",
+        "click-shield"
+      ],
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Require success from every mandatory job",
+          "env": {
+            "GATES_NEEDS_JSON": "${{ toJSON(needs) }}"
+          },
+          "run": "node scripts/workflow-gates/cli.mjs required"
+        }
+      ]
+    },
+    "release-security-required": {
+      "name": "Release Security Required",
+      "runs-on": "ubuntu-latest",
+      "if": "${{ always() && github.event_name != 'pull_request' }}",
+      "needs": [
+        "governance-required"
+      ],
+      "timeout-minutes": 5,
+      "steps": [
+        {
+          "name": "Checkout",
+          "uses": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "with": {
+            "fetch-depth": 0,
+            "persist-credentials": false
+          }
+        },
+        {
+          "name": "Setup Node",
+          "uses": "actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "with": {
+            "cache": "npm",
+            "node-version": "22.22.3"
+          }
+        },
+        {
+          "name": "Require green governance on this revision",
+          "env": {
+            "RESULT": "${{ needs.governance-required.result }}"
+          },
+          "run": "test \"$RESULT\" = success"
+        },
+        {
+          "name": "Require resolution and reviewed regression evidence for known security findings",
+          "run": "node scripts/workflow-gates/cli.mjs release"
+        }
+      ]
+    }
+  }
+}

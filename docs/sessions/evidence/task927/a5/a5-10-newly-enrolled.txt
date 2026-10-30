@@ -1,0 +1,23 @@
+# a5-10: components newly enrolled in the working tree (against HEAD) and their registry rows
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+
+OK  src/components/auth/GoogleSignInSlot.tsx -> row google-sign-in-slot; stories src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx; exports exist: true
+OK  src/components/auth/GoogleSignInButton.tsx -> row google-sign-in-button; stories src/stories/mantine/primitives/Modal.stories.tsx; exports exist: true
+OK  src/components/auth/GoogleWelcomeBack.tsx -> row google-welcome-back; stories src/stories/patterns/mantine/GoogleWelcomeBack.stories.tsx; exports exist: true
+OK  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx -> row cabinet-email-change-section-view; stories src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx; exports exist: true
+FAIL src/components/admin/AdminSupportView.tsx -> row MISSING; stories ; exports exist: true
+FAIL src/components/admin/TicketDetailDialogView.tsx -> row MISSING; stories ; exports exist: true
+FAIL src/components/admin/CreateTicketDialogView.tsx -> row MISSING; stories ; exports exist: true
+OK  src/modules/listings/components/ListingInquiryDialogView.tsx -> row listing-inquiry-dialog-view; stories src/stories/patterns/mantine/ListingInquiryDialogView.stories.tsx; exports exist: true
+OK  src/modules/listings/components/ListingAccessRestrictedView.tsx -> row listing-access-restricted-view; stories src/stories/patterns/mantine/ListingAccessRestrictedView.stories.tsx; exports exist: true
+FAIL src/components/admin/UserPickerFieldView.tsx -> row MISSING; stories ; exports exist: true
+OK  src/design-system/mantine/patterns/MantineBadge.tsx -> row mantine-badge-status; stories src/stories/mantine/primitives/Badge.stories.tsx; exports exist: true
+OK  src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx -> row mantine-delete-confirm-modal; stories src/stories/mantine/primitives/Modal.stories.tsx; exports exist: true
+OK  src/design-system/mantine/patterns/MantineFilterChips.tsx -> row mantine-filter-chips; stories src/stories/patterns/mantine/MantineFilterChips.stories.tsx; exports exist: true
+OK  src/design-system/mantine/patterns/MantineRadioCardOption.tsx -> row mantine-radio-card-option; stories src/stories/mantine/primitives/RadioCardOption.stories.tsx; exports exist: true
+OK  src/components/admin/AdminUsersTableView.tsx -> row admin-users-table-view; stories src/stories/patterns/mantine/AdminUsersTable.stories.tsx; exports exist: true
+
+newly enrolled: 15; without a complete row: 4
+exit code: 1

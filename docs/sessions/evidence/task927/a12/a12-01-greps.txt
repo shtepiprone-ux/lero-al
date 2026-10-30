@@ -1,0 +1,72 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a12/a12-01-greps.mjs
+
+## providers.includes('email') in src/modules/cabinet/actions/index.ts
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## rpc('account_has_password', { p_user: userId }) in src/modules/cabinet/actions/index.ts
+expected: exactly once
+hits: 1
+  src/modules/cabinet/actions/index.ts:127: const { data, error } = await createAdminClient().rpc('account_has_password', { p_user: userId })
+verdict: as expected
+
+## account_has_password in src/lib/account/deleteAccount.security.test.ts
+expected: at least once
+hits: 1
+  src/lib/account/deleteAccount.security.test.ts:67: rpc: async (name: string) => (name === 'account_has_password' ? { data: world.providers.includes('email'), error: null } : { data: [], error: null }),
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts:29: rpc: async (name: string, args: { q?: string }) => (name === 'account_has_password'
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts:38: rpc: async (name: string) => (name === 'account_has_password' ? { data: true, error: null } : { data: [], error: null }),
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:34: rpc: async (name: string) => (name === 'account_has_password' ? { data: true, error: null } : { data: [], error: null }),
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts:81: rpc: (...a: unknown[]) => (a[0] === 'account_has_password' ? { data: true, error: null } : mockRpc(...a)),
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/emailChange.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/emailChange.security.test.ts:58: if (name === 'account_has_password') return { data: true, error: null }
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/reauth.security.test.ts:49: if (name !== 'account_has_password') return { data: [], error: null }
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+expected: at least once
+hits: 2
+  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:12: /** what `public.account_has_password` answers: a boolean, or `'error'` for an answer that cannot be read */
+  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:40: if (name !== 'account_has_password') return { data: [], error: null }
+verdict: as expected
+
+## account_has_password in src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+expected: at least once
+hits: 1
+  src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:38: rpc: async (name: string) => (name === 'account_has_password' ? { data: state.providers.includes('email'), error: null } : { data: [], error: null }),
+verdict: as expected
+
+exit code: 0

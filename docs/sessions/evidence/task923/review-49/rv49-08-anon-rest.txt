@@ -1,0 +1,10 @@
+# Task 923 Review 49 (Opus): anon REST reads after the apply, 2026-10-24T10:44:33Z, HEAD 36c030802, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-08-anon-rest.cjs
+ok   the CMS page read (src/app/[locale]/[slug]/page.tsx:18): expected allowed, HTTP 200, rows 1
+ok   the CMS page metadata read (page.tsx:45): expected allowed, HTTP 200, rows 1
+ok   pages.updated_by_name: expected refused, HTTP 401, {"code":"42501","details":null,"hint":null,"message":"permission denied for table pages"}
+ok   pages *: expected refused, HTTP 401, {"code":"42501","details":null,"hint":null,"message":"permission denied for table pages"}
+ok   site_footer display columns: expected allowed, HTTP 200, rows 1
+ok   site_footer.updated_by_name: expected refused, HTTP 401, {"code":"42501","details":null,"hint":null,"message":"permission denied for table site_footer"}
+failing 0
+exit 0

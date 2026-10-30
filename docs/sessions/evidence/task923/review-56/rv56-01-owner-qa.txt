@@ -1,0 +1,26 @@
+# Task 923: the owner's check after Review 55, 2026-10-25 (the owner's message, translated faithfully from Ukrainian; the DevTools panel and the terminal log are quoted as pasted)
+After deleting the account, an error in DevTools:
+## Error Type
+Console Error
+## Error Message
+AdminUserProfilePage: user query failed {}
+    at AdminUserProfilePage (src\app\admin\users\[id]\page.tsx:39:26)
+> 39 |   if (userError) console.error('AdminUserProfilePage: user query failed', { error: userError, id })
+Next.js version: 15.5.18 (Turbopack)
+In PowerShell the following information:
+ GET /admin/users 200 in 514ms
+ GET /admin/users/39ebdf97-860d-4573-b4b3-2401a3d61589 200 in 3799ms
+[deleteAsset] {
+  reason: 'account_deleted',
+  dryRun: false,
+  outcome: 'DELETED'
+}
+AdminUserProfilePage: user query failed {
+  error: {
+    code: 'PGRST116',
+    details: 'The result contains 0 rows',
+    message: 'Cannot coerce the result to a single JSON object'
+  },
+ POST /admin/users/39ebdf97-860d-4573-b4b3-2401a3d61589 200 in 4609ms
+ GET /admin/users 200 in 702ms
+The photo in Cloudinary was deleted after the account was deleted.

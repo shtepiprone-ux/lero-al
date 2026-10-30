@@ -24,6 +24,9 @@ import type { ListingField } from './listingFields'
 
 export type ListingSort = 'newest' | 'price_asc' | 'price_desc' | 'area_desc' | 'area_asc'
 
+/** the highest results page that is served; further than this nobody pages, and a huge offset only costs the database time */
+const MAX_PAGE = 10_000
+
 const VALID_SORTS: readonly ListingSort[] = ['newest', 'price_asc', 'price_desc', 'area_desc', 'area_asc']
 
 // ── Enum allowlists (coerce-or-drop — prevents 22P02 from URL manipulation) ──
@@ -124,9 +127,13 @@ function raw(sp: RawParams, key: string): string {
   return Array.isArray(v) ? (v[0] ?? '') : (v ?? '')
 }
 
+// A number from the address bar is used only when it fits a 32-bit database integer (Task 923 Revision 7): `price_min=99999999999999999999` parses to 1e20, which
+// Postgres refuses (22003) and the page fails. A value outside the range is dropped, like any other value that is not usable.
+const MAX_PARAM_INT = 2_147_483_647
+
 function rawNum(sp: RawParams, key: string): number | undefined {
   const n = parseInt(raw(sp, key))
-  return isNaN(n) ? undefined : n
+  return Number.isNaN(n) || Math.abs(n) > MAX_PARAM_INT ? undefined : n
 }
 
 function rawMulti(sp: RawParams, key: string): string[] {
@@ -182,13 +189,14 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
     propertyType:       validEnum(sp, 'property_type', VALID_PROPERTY_TYPES),
     locationId:         n('location_id'),
     sort:               (VALID_SORTS.includes(sort as ListingSort) ? sort : 'newest') as ListingSort,
-    page:               Math.max(1, n('page') ?? 1),
+    page:               Math.min(MAX_PAGE, Math.max(1, n('page') ?? 1)),
     currency:           s('currency') === 'EUR' ? 'EUR' : 'ALL',
     dateFrom:           sanitizeDateParam(s('date_from')),
     dateTo:             sanitizeDateParam(s('date_to')),
     listingId:          s('listing_id'),
     isPremium:          s('premium') === 'true',
-    rooms:              m('rooms').map(Number).filter(v => !isNaN(v) && v > 0),
+    // whole numbers from 1 to 99 only: `1e999` is Infinity and `1.5` is not a room count, and the values are written into an .or() filter string
+    rooms:              m('rooms').map(Number).filter(v => Number.isInteger(v) && v > 0 && v < 100),
     priceMin:           n('price_min'),
     priceMax:           n('price_max'),
     areaMin:            n('area_min'),
@@ -341,8 +349,11 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
   // ── Listing ID search ─────────────────────────────────────────────────────
 
   if (listingId) {
-    const id = parseInt(listingId)
-    if (!isNaN(id)) q = q.eq('id', id)
+    // The number a person sees and types is the listing's public number (\`public_id\`, an integer), not its UUID primary key: comparing \`id\` with an integer never matched
+    // (Task 923 R67 (g)). A number outside the integer range is never sent as it is (the database would refuse it and the whole search would fail): no listing
+    // has such a number, so it becomes -1, which matches nothing. Text that is no number at all adds no condition, as before.
+    const publicId = parseInt(listingId)
+    if (Number.isInteger(publicId)) q = q.eq('public_id', publicId >= 1 && publicId <= 2147483647 ? publicId : -1)
   }
 
   return q as Q

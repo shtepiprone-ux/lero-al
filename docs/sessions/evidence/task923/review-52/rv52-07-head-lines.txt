@@ -1,0 +1,5 @@
+# HEAD 9a2302477 lines cited by Task 923 claim rows C346 and C347, before Opus rewrote them for R43 (f) at Review 52 (rv52-08-fix-rows.mjs)
+== docs/rls-rules.md at HEAD 9a2302477, lines 60-60
+- `deleteOwnAccount`: requires authenticated session; soft-deletes own row + archives own listings. Cannot delete another user's account.
+== docs/domain-rules.md at HEAD 9a2302477, lines 81-81
+A user with `deleted_at IS NOT NULL` is considered deleted. Their archived listings remain accessible by direct URL but:

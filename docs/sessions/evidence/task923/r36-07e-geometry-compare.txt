@@ -1,0 +1,4 @@
+gap probe: cells 16 gaps 16
+rows now 32 baseline 32 identical 24 captcha rows changed 8 other rows changed 0
+captcha moves ["12/0/0/0"]
+css {"inFlowZeroBoxGap":32,"absoluteZeroBoxGap":16} baseline css {"inFlowZeroBoxGap":32,"absoluteZeroBoxGap":16}

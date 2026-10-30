@@ -1,0 +1,5 @@
+# rv67-43: release gate after rv67-41/rv67-42
+platform MINGW64_NT-10.0-26300; node v22.22.3; command: node scripts/workflow-gates/cli.mjs release --contract <contract>
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: exit 0
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: exit 0
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: exit 0

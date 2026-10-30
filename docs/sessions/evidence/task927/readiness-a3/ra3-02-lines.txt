@@ -1,0 +1,17 @@
+# Lines cited by Task 927 claim rows, copied from the working tree on 2026-10-23 by ra3-02-refresh.mjs (Opus, Task 923 Review 43)
+== C42: scripts/rendered-interaction-states.json line 6085 (was 6385), working tree, file sha256 55c64c6bf0b8b58c4872c7e9830d21a7f8fe46b909be5f27dbdb993bca00745a
+      "id": "patterns-mantine-authsheet--login",
+== C43: .claude/rules/shared/rendered-state-census.md line 64 (was 59), working tree, file sha256 2a9d9b5d35edaa7d2d8c16cb9093637e32ca5872de7bb65658f33d43315fa74c
+Until 923 is approved, a consuming visible task whose surface opens an overlay
+== C52: messages/en.json line 345 (was 335), working tree, file sha256 9e20b24851cf1898be4f249cd06da8e0004b5457a6bc14a572e2a67fa29da88c
+    "error_invalid_credentials": "Incorrect email or password.",
+== C68: messages/en.json line 612 (was 601), working tree, file sha256 9e20b24851cf1898be4f249cd06da8e0004b5457a6bc14a572e2a67fa29da88c
+    "delete_account_google_required": "Your account has no password. Confirm with Google that it is you; the deletion then continues.",
+== C71: messages/en.json line 342 (was 332), working tree, file sha256 9e20b24851cf1898be4f249cd06da8e0004b5457a6bc14a572e2a67fa29da88c
+    "google_unavailable": "Google sign-in is not available right now. Sign in with your email and password or try again later.",
+== C80: src/modules/cabinet/components/ProfileTab.tsx line 502 (was 499), working tree, file sha256 82c604f81a9965d4d60a33d633b46fa5bf20d9e6e21c3120afc6df9773c1e599
+        {emailNeedsGoogle && (
+== C81: src/modules/cabinet/components/ProfileTab.tsx line 582 (was 579), working tree, file sha256 82c604f81a9965d4d60a33d633b46fa5bf20d9e6e21c3120afc6df9773c1e599
+        googleConfirm={deleteNeedsGoogle ? {
+== C88: messages/en.json line 613 (was 602), working tree, file sha256 9e20b24851cf1898be4f249cd06da8e0004b5457a6bc14a572e2a67fa29da88c
+    "reauth_google_wrong_account": "Confirm with the Google account of this profile ({email}).",

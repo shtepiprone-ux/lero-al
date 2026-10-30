@@ -1,0 +1,5 @@
+# fr-34 (Opus) 2026-10-28T22:26:17.726Z win32 node v22.22.3
+(1) .env.local NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME equals die7okukn: true
+(2) vitest.config.ts loads an env file (loadEnv or dotenv): false
+(2) vitest.integration.config.ts loads an env file (loadEnv or dotenv): false
+(3) owner-fixes-report.json SEC-S44-INT-DENY sensitivity artifact: docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S44-SRV-DENY.json; own artifact exists: false

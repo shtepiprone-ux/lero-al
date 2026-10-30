@@ -1,0 +1,42 @@
+# rv14-08 integration (Opus) 2026-10-28T19:23:23Z v22.22.3 cwd C:/Claude_Code_Projects/lero-al win32
+command: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref of .env.local> npx vitest run --config vitest.integration.config.ts --reporter=verbose src/lib/auth/googleSignIn.integration.test.ts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-ALLOW] a new Auth user with Google profile metadata gets exactly one ordinary profile row from the database trigger 1305ms
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-PRV-DENY] Supabase Auth refuses a forged Google ID token and creates neither a session nor a user 637ms
+ × src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-PASSWORD-ALLOW] public.account_has_password answers from auth.users, also after an address change 1299ms
+   → the account has no password although Auth lists the email provider: expected { data: true, error: null } to deeply equal { data: false, error: null }
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-PASSWORD-DENY] neither a user session nor the anonymous client can call public.account_has_password 913ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-PASSWORD-ALLOW] public.account_has_password answers from auth.users, also after an address change
+AssertionError: the account has no password although Auth lists the email provider: expected { data: true, error: null } to deeply equal { data: false, error: null }
+
+- Expected
++ Received
+
+  {
+-   "data": false,
++   "data": true,
+    "error": null,
+  }
+
+ ❯ src/lib/auth/googleSignIn.integration.test.ts:121:98
+    119|   const before = await run.admin.auth.admin.getUserById(id)
+    120|   expect(before.data.user?.app_metadata?.providers, 'Auth lists the em…
+    121|   expect(await answer(id), 'the account has no password although Auth …
+       |                                                                                                  ^
+    122|
+    123|   const changed = await run.admin.auth.admin.updateUserById(id, { emai…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  20:23:24
+   Duration  7.16s (transform 55ms, setup 37ms, import 67ms, tests 6.85s, environment 0ms)
+
+exit code: 1

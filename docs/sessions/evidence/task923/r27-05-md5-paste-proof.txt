@@ -1,0 +1,19 @@
+platform win32 node v22.22.3; pg 8.23.1 from the session scratchpad via NODE_PATH (not installed in the repository); connection via db-catalog/lib.cjs (connection details scrubbed); start 2026-10-21T18:56:22.802Z
+cmd node r27-05.cjs: every run is ONE connection: begin read only; one DO block; rollback. No statement that changes the database is sent. Blocks are cut byte for byte from the files.
+new apply file: aea42e62ed8d3aa5ac91e456d5c5d1a221d0cddcbd57bad9ecac40d59d15aba3 (preflight block 8967 chars); new rollback file: 31013a24069e6a7bf9a5958ba65f45006c30361cac93c422233dee9ee9fe9fc4 (end-check block 6122 chars); HEAD apply file: dc32355caff0edfbc5fdd2d35e32ef86e619b9815a1cbf05773dd74a67a4e490 (preflight block 10099 chars)
+A. new apply file, preflight block (do $pre$) — state today is the recorded one:
+  [apply preflight, LF] transaction_read_only = on; block 8967 chars, a63c6b35fcdc8a06… sha256, CR count 0, LF count 71
+  [apply preflight, LF] result: PASS (no error)   -> AS REQUIRED
+  [apply preflight, CRLF] transaction_read_only = on; block 9038 chars, f258d5627cee1e97… sha256, CR count 71, LF count 71
+  [apply preflight, CRLF] result: PASS (no error)   -> AS REQUIRED
+B. new rollback file, end-check block (do $chk$) — before v8a it describes today's state (recorded policies, no new constraint, function or row):
+  [rollback end checks, LF] transaction_read_only = on; block 6122 chars, 8c63acf4736d4990… sha256, CR count 0, LF count 41
+  [rollback end checks, LF] result: PASS (no error)   -> AS REQUIRED
+  [rollback end checks, CRLF] transaction_read_only = on; block 6163 chars, 8b7b745351e00c91… sha256, CR count 41, LF count 41
+  [rollback end checks, CRLF] result: PASS (no error)   -> AS REQUIRED
+C. control: preflight block of the HEAD apply file (multi-line literals):
+  [HEAD preflight, CRLF] transaction_read_only = on; block 10186 chars, 983ad444eecb6b3f… sha256, CR count 87, LF count 87
+  [HEAD preflight, CRLF] result: ERROR: preflight failed: the policy Admin/moderator delete avatars on storage.objects changed since the capture   -> AS REQUIRED
+  [HEAD preflight, LF] transaction_read_only = on; block 10099 chars, 111fd11859c1dac2… sha256, CR count 0, LF count 87
+  [HEAD preflight, LF] result: PASS (no error)   -> AS REQUIRED
+r27-05 verdict: all six runs as required (four new-block runs without error; the HEAD control stops with the owner's message under CRLF and passes under LF)

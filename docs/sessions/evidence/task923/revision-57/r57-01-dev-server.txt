@@ -1,0 +1,10 @@
+# r57-01: is a Next.js dev server or Storybook running? (Revision 57, R174, AC157; the two read-only commands of review-50/rv50-06-dev-server.txt)
+platform: Windows PowerShell 5.1.26100.9711 (Windows 11 Pro 10.0.26300); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command 1: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where-Object CommandLine -match 'next|storybook'
+command 2: Get-NetTCPConnection -State Listen | Where-Object LocalPort -in 3000,3001,3002,3003,6006
+started: 2026-10-29T16:23:14.3455896+01:00
+--- output ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+--- exit code: 0 ---
+decision: both counts 0, so the revision continues (AC157 r57-01).

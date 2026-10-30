@@ -1,0 +1,115 @@
+UX
+UI
+Usability
+Enterprise
+UI Design
+Designing a complex table for mobile consumption (nom)
+When faced with overwhelming content, focusing on user behavior can help define the design approach.
+Joe Winter
+Follow
+5 min read
+·
+Aug 2, 2018
+
+16
+
+Press enter or click to view image in full size
+She may not look like much, but she’s got it where it counts, kid.
+
+Enterprise applications are complex. They often contain large amounts of information from various sources, modules, and users. In order to present this wealth of information, these applications frequently make use of tables.
+
+Well-designed data tables allow users to scan, compare, and analyze information to take action. However, creating a mobile-friendly version of a complex web-based table is a challenge. For this particular engagement, I helped a client in the property insurance space consolidate a critical workflow by mobilizing a very large data table for their consultants.
+
+Context: This project was a Capriza engagement. Capriza’s technology mobilizes enterprise workflows. This is an example of such a project, mapping web-based controls to a mobile context.
+
+The User
+
+Loss-prevention consultants inspect residential and commercial buildings to help ensure systems (such as fire protection systems and fuel-fired equipment systems) meet local, national, and industry standards.
+
+Press enter or click to view image in full size
+
+These consultants compare different risk factors across multiple assigned locations. This comparison allows them to make recommendations to property owners of how to mitigate risks and thus reduce their insurance premiums. Using their web-based risk-logging system, they can view recommendation history, upload photos, and add comments specific to a site location.
+
+The client wanted this functionality available to their consultants on mobile, given their on-the-go workday and need for at-hand information while onsite at client locations.
+
+Enter: The Table 😱
+
+The data table I was tasked with mobilizing contained various locations distributed in 20 rows and risk categories distributed in 8 columns. The client informed us that the color-based risk score system was the critical UI element that users needed to make risk comparisons.
+
+Press enter or click to view image in full size
+
+On desktop, displaying a table this size is not a problem. With the benefit of excess screen space, users are free to scan left to right, top to bottom, and perhaps take advantage of filtering and sorting options. But in a mobile context, it’s important to remember that screen real estate is limited and the user’s attention is short.
+
+Get Joe Winter’s stories in your inbox
+
+Join Medium for free to get updates from this writer.
+
+Subscribe
+
+Remember me for faster sign in
+
+For this design to be successful, I knew that actionable content needed to be presented as soon as possible.
+
+Design Approach
+
+How do users consume this information?
+
+The first step was to understand how consultants used and interacted with this data in its native web-based form. The different ways that users consumed the data determined the design of its mobile counterpart. Insight from the client highlighted two different approaches:
+
+Use Case #1: Comparison of a single risk category score across multiple locations (i.e. vertical scanning, column-specific)
+Press enter or click to view image in full size
+Use Case #2: Comparison of multiple risk categories within a single location (i.e. horizontal scanning, row-specific)
+Press enter or click to view image in full size
+
+Our discussions with the client revealed that users didn’t need all information presented at once to achieve their goal. Limiting the display of this table by catering to these two use cases allowed us to ideate different layouts appropriate for a mobile form factor. I divided each use case into discrete steps to help guide the design.
+
+Press enter or click to view image in full size
+Press enter or click to view image in full size
+Flexible UI FTW
+
+After dissecting the two use cases, I realized the user would need a persistent, unique identifier to identify the table row. These were the first two columns, “Class” and “ID”.
+
+Press enter or click to view image in full size
+Satisfying Use Case #1
+
+Which risk category (column) does the user want to compare?
+
+Only after identifying a target risk category (column) would the user then compare down vertically across locations. To facilitate this comparison, a virtual dropdown was added that contained the column headings in the table. Selecting one would update a single colored value in each table row.
+
+Our engineering team nicknamed this mobile table implementation a “rotating table” given that columns are actively “rotated out” at the top level.
+
+Press enter or click to view image in full size
+Satisfying Use Case #2
+
+Which location (row) does the user want to investigate in detail?
+
+If the user wanted to view all risk categories within a single location, they would first locate the desired row and then tap it to view the location’s full report (i.e. all column values in the table row) in a separate page. This list-detail relationship, an established mobile design pattern, fit very well.
+
+Press enter or click to view image in full size
+A Mobile Design Pattern is Born
+
+This relationship of viewing data horizontally within a table row and vertically within a column is one that we at Capriza found in several workflows.
+
+Most notably, timesheet entry is a very common use case for companies with hourly contractors who need to log time against multiple projects. Using complex data tables with editable hour entry cells, some users diligently divided their eight hours by each project every day (vertically within a column), where others entered all their time at the end of the week within individual projects (horizontally within a row).
+
+Press enter or click to view image in full size
+Rather than a dropdown, column headings are represented in a swipeable bar of dates. In this case, the updating values are editable fields. Tapping a project row will display all days within the displayed pay period on a separate page.
+
+The design pattern born from this risk assessment engagement formed the foundation of Capriza’s timesheet entry app (full details on its design here!). The flexible table display catered to users of both habits and has since been applied to many more workflows and use cases.
+
+The game changer in this project was the realization that users don’t need to view a large data set all at once. By focusing on the discrete steps of how information is consumed, we were able to limit the presented content to the absolutely relevant. In the end, the client was pleased with the result as our engineers were with the new design pattern.
+
+Thanks for reading! If you enjoyed it, please take the time to 👏👏👏. Any questions or comments are welcome below. You can find this case study and a couple others at www.joemoe.win.
+--- FIGURES
+She may not look like much, but she’s got it where it counts, kid. | 
+ | 
+ | 
+ | 
+ | 
+ | 
+ | 
+ | 
+ | 
+ | 
+Rather than a dropdown, column headings are represented in a swipeable bar of dates. In this case, the updating values are editable fields. Tapping a project row will display all days within the displayed pay period on a separate page. | 
+ | 

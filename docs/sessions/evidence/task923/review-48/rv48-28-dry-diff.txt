@@ -1,0 +1,13 @@
+Task 923 Review 48 (Opus, 2026-10-24): diff of the saved deletion v3 against the dry regeneration from today's read-only captures (rv48-19, rv48-23, rv48-24; generator copy rv48-25-gen-dry.cjs).
+command: diff db-catalog/proposed-account-deletion.sql review-48/rv48-25-dry-deletion.sql; then the same for the rollback
+== apply
+121c121
+<   if (select c.relacl::text from pg_class c where c.oid = 'public.site_footer'::regclass) is distinct from '{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}' then
+---
+>   if (select c.relacl::text from pg_class c where c.oid = 'public.site_footer'::regclass) is distinct from '{postgres=arwdDxtm/postgres,anon=arwdxtm/postgres,authenticated=arwdxtm/postgres,service_role=arwdDxtm/postgres}' then
+== rollback
+104c104
+<   if (select c.relacl::text from pg_class c where c.oid = 'public.site_footer'::regclass) is distinct from '{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}' then
+---
+>   if (select c.relacl::text from pg_class c where c.oid = 'public.site_footer'::regclass) is distinct from '{postgres=arwdDxtm/postgres,anon=arwdxtm/postgres,authenticated=arwdxtm/postgres,service_role=arwdDxtm/postgres}' then
+== end of diff

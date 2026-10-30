@@ -1,0 +1,20 @@
+platform win32 node v22.22.3
+cwd C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/r5-72-chart-row-diff.mjs
+
+chart-class positioned/transformed details: r4-full 88 in 48 rows; r5-full 70 in 39 rows
+rows only in r4-full: 9; rows only in r5-full: 0; rows in both: 39
+rows in both with identical details (text ignored): 39 of 39
+  only r4: patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | en | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | it | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~en-english | app | uk | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~en-english | app | it | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~en-english | app | uk | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~en-english | app | sq | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | en | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | sq | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+  only r4: patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | sq | 1024 :: svg "<text>" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7 ; div.m_6d731127 "<text>" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+r5-full state of the r4-only rows: {"text-clamp,text-ellipsis":4,"text-clamp,text-ellipsis,text-hidden":5}
+r4-only rows by width: {"1024":9}
+r4-only rows by locale: {"en":2,"it":2,"uk":2,"sq":3}
+EXIT_CODE=0

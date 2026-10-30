@@ -1,0 +1,23 @@
+# R148 AC148 r48-00b: sha256 of the R148 paths after the edit, and of files this task left unchanged
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: sha256sum src/lib/auth/controller.ts src/modules/auth/components/AuthRedirect.tsx src/modules/auth/components/__tests__/staleSession.security.test.tsx src/modules/auth/context/AuthContext.tsx src/modules/auth/components/__tests__/authClientParts.test.tsx docs/sessions/evidence/task923/r48-02-breaks.mjs package.json package-lock.json tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md docs/sessions/2026-10-10-task923-rendered-state-census.md
+NODE_PATH: (unset)
+started: 2026-10-25T06:34:52.737Z
+--- stdout ---
+cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe *src/lib/auth/controller.ts
+8e2594c27e68435c19d02e6f3f8b8571ebddf0bed1bcfd1d807f7e416ad3b721 *src/modules/auth/components/AuthRedirect.tsx
+1a1ec6334dbe8b2c2f0defb96db070a84122a1977b131d9dd40a6890a6301ed3 *src/modules/auth/components/__tests__/staleSession.security.test.tsx
+275cf837531e86a1f43afc9018ccfc60ee54393af321dac17b07171392b44242 *src/modules/auth/context/AuthContext.tsx
+3d4808e06e59f2bc66666b938076508f9c01962c55c1037802a9f5a1e49215a0 *src/modules/auth/components/__tests__/authClientParts.test.tsx
+de90e774b4751c34dd01d853f91b8d5b1a1f56b15dabf47aac2f35f2885707ee *docs/sessions/evidence/task923/r48-02-breaks.mjs
+2d4954447f5f529060be09dcfd0f21b9d97d3f7cd75572618912a211c47eb0e8 *package.json
+994a7fb4f6140b124cd21a080a007eab2be9bb4f93bebdfd2114a2b0922183ba *package-lock.json
+deff8d59d1de52ed314b4d1cebba435f47f2f84c7461c8b8224478a5bb556e87 *tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+d725faa9bc1968bf09381e3e96e3c21700d73a855429f4c51997db6b6a5996f4 *tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+8f165fa69ab6bea35039d538dc692392e7c935a3cd86158b047cb273eb21d163 *docs/sessions/2026-10-10-task923-rendered-state-census.md
+
+--- stderr ---
+
+--- exit code: 0 ---

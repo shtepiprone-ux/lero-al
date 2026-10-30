@@ -2,7 +2,7 @@
  * Guard smoke — submitListingInquiry server action (Task 442 / Epic RS Slice 3).
  *
  * Covers registry row "Inquiry / send message":
- *   Happy: valid input, IP=unknown (never rate-limited) → insert + email → {}
+ *   Happy: valid input, IP=unknown (one shared bucket since Task 923 R70 (c)) → insert + email → {}
  *   Failures: validation (short message / bad email), rate_limited, not_found,
  *             save_failed (+ console.error diagnosable), email_transient (partial-success).
  *
@@ -39,9 +39,15 @@ vi.mock('next/headers', () => ({
   }),
 }))
 
+// The viewer: since 2026-10-17 only a signed-in, active person reaches the owner (a guest has no access to the contact card). The real session check is
+// `requireViewer`, proven in ../contactSession.security.test.ts; here it is a boundary double driven by `mockGetUser` (null = guest, a throw = lookup failure).
 const mockGetUser = vi.fn()
-vi.mock('@/lib/auth/server', () => ({
-  getUser: (...args: unknown[]) => mockGetUser(...args),
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: async () => {
+    let user: { id: string } | null
+    try { user = await mockGetUser() } catch { return { ok: false, reason: 'lookup_failed' } }
+    return user ? { ok: true, userId: user.id } : { ok: false, reason: 'unauthenticated' }
+  },
 }))
 
 const mockSendNotification = vi.fn()
@@ -50,7 +56,7 @@ vi.mock('@/modules/notifications/lib/emails/listingInquiry', () => ({
 }))
 
 const mockCreateNotification = vi.fn()
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: (...args: unknown[]) => mockCreateNotification(...args),
 }))
 
@@ -68,8 +74,10 @@ const mockAdminDb = {
   from: vi.fn((table: string) => {
     if (table === 'listing_inquiries') {
       return {
+        // rate-limit counts: per IP (`eq`, or `is null` for an unknown IP) and per person (`eq` on the e-mail), both ending in `gte`
         select: vi.fn().mockReturnValue({
           eq: vi.fn().mockReturnValue({ gte: mockRateLimitGte }),
+          is: vi.fn().mockReturnValue({ gte: mockRateLimitGte }),
         }),
         insert: mockInquiryInsert,
       }
@@ -80,6 +88,10 @@ const mockAdminDb = {
           eq: vi.fn().mockReturnValue({ maybeSingle: mockListingMaybeSingle }),
         }),
       }
+    }
+    // the owner's own row for the live-owner check (Task 923 R66 (f))
+    if (table === 'users') {
+      return { select: () => ({ eq: () => ({ maybeSingle: async () => ({ data: { status: 'active', suspended_until: null, deleted_at: null }, error: null }) }) }) }
     }
     return {}
   }),
@@ -96,19 +108,25 @@ vi.mock('@/lib/supabase/admin', () => ({
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 
-const LISTING_ID  = 'listing-inquiry-1'
+const LISTING_ID  = '6f1d2c3b-4a5e-4f60-8a7b-9c0d1e2f3a4b'
 const OWNER_ID    = 'owner-user-1'
 const OWNER_EMAIL = 'owner@example.al'
+const VIEWER_ID = 'viewer-1'
 
 const VALID_LISTING = {
   id: LISTING_ID, user_id: OWNER_ID, title: 'Apartament Tiranë', status: 'active', slug: 'apartament-tirane',
 }
+
+/** Auth e-mails by account: the inquiry carries the viewer's own (Task 923 R70 (c)), the owner's receives it */
+const authEmails: Record<string, string | null> = { [VIEWER_ID]: 'arben@example.al', [OWNER_ID]: OWNER_EMAIL }
 
 const VALID_INPUT = {
   listingId: LISTING_ID,
   name: 'Arben Hoxha',
   email: 'arben@example.al',
   message: 'Jam i interesuar për këtë apartament. Mund të takoj pronar?',
+  // no unit runner sets a Turnstile secret, so the development token is the verified human (Task 923 R112)
+  captchaToken: 'dev-noop-token',
 }
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
@@ -116,19 +134,22 @@ const VALID_INPUT = {
 beforeEach(() => {
   vi.clearAllMocks()
 
-  // IP='unknown' → isRateLimited immediately returns false (no rate-limit DB query)
+  // IP='unknown' → counted in the shared "no address" bucket (requester_ip is null)
   mockHeadersGet.mockReturnValue(null)
 
-  mockGetUser.mockResolvedValue(null) // viewer not logged in = not self-inquiry
+  mockGetUser.mockResolvedValue({ id: VIEWER_ID }) // a signed-in viewer who is not the owner = not self-inquiry
 
-  // Rate-limit check chain (only called when IP !== 'unknown')
-  mockRateLimitGte.mockResolvedValue({ count: 0 })
+  authEmails[VIEWER_ID] = 'arben@example.al'
+  authEmails[OWNER_ID] = OWNER_EMAIL
+
+  // Rate-limit count chain (per IP bucket and per person)
+  mockRateLimitGte.mockResolvedValue({ count: 0, error: null })
 
   // Listing lookup
   mockListingMaybeSingle.mockResolvedValue({ data: VALID_LISTING, error: null })
 
-  // Owner email lookup
-  mockGetUserById.mockResolvedValue({ data: { user: { email: OWNER_EMAIL } } })
+  // Auth e-mail lookups: the sender (the viewer) and the owner
+  mockGetUserById.mockImplementation(async (id: string) => ({ data: { user: authEmails[id] ? { email: authEmails[id] } : null }, error: null }))
 
   // Inquiry insert
   mockInquiryInsert.mockResolvedValue({ error: null })
@@ -181,13 +202,17 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
     expect(mockCreateNotification).not.toHaveBeenCalled()
   })
 
-  it('validation: bad email format → { error: "validation" }', async () => {
+  it('validation: no typed email → { error: "validation" }; a typed address is never used, the Auth e-mail of the account is (R70 (c))', async () => {
     const { submitListingInquiry } = await import('../submitListingInquiry')
-    const result = await submitListingInquiry({ ...VALID_INPUT, email: 'not-an-email' })
+    const result = await submitListingInquiry({ ...VALID_INPUT, email: '  ' })
 
     expect(result).toEqual({ error: 'validation' })
     expect(mockInquiryInsert).not.toHaveBeenCalled()
     expect(mockCreateNotification).not.toHaveBeenCalled()
+
+    expect(await submitListingInquiry({ ...VALID_INPUT, email: 'someone.else@example.org' })).toEqual({})
+    expect(mockInquiryInsert).toHaveBeenCalledWith(expect.objectContaining({ email: 'arben@example.al' }))
+    expect(mockSendNotification).toHaveBeenCalledWith(expect.objectContaining({ replyTo: 'arben@example.al', email: 'arben@example.al' }))
   })
 
   it('rate_limited: 5th+ request from real IP → { error: "rate_limited" }', async () => {
@@ -196,7 +221,7 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
       header === 'x-forwarded-for' ? '192.168.1.100' : null,
     )
     // 5 requests already in window → at limit
-    mockRateLimitGte.mockResolvedValue({ count: 5 })
+    mockRateLimitGte.mockResolvedValue({ count: 5, error: null })
 
     const { submitListingInquiry } = await import('../submitListingInquiry')
     const result = await submitListingInquiry(VALID_INPUT)
@@ -229,7 +254,7 @@ describe('submitListingInquiry — smoke tests (Task 442)', () => {
   })
 
   it('owner_unavailable: owner email cannot be resolved → { error: "owner_unavailable" }, no notification', async () => {
-    mockGetUserById.mockResolvedValue({ data: { user: null } })
+    authEmails[OWNER_ID] = null
 
     const { submitListingInquiry } = await import('../submitListingInquiry')
     const result = await submitListingInquiry(VALID_INPUT)

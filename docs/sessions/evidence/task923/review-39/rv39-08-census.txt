@@ -1,0 +1,60 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+started: 2026-10-23T11:22:01Z
+command: node scripts/check-rendered-state-census.mjs --out docs/sessions/evidence/task923/review-39/rv39-08-census --stories patterns-mantine-listingcontactpattern--default,patterns-mantine-listingdetailpattern--default
+---- output ----
+rendered state census: 5 registered state(s), 148 state job(s) + 12 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 2 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-39\rv39-08-census
+  100/162 jobs, 186 rows, 2 failing
+
+rendered state census — rows 310 (failing 4); {"statesRun":5,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,768,1023,1024,1440],"boundCells":0,"stateJobs":148,"rangeJobs":12,"closedJobs":2,"appRows":162,"portalRows":148,"runtimeSeconds":103,"ruleKeys":22}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  text-overlap           0
+  svg-text-clipped       0
+  viewport-overflow      0
+  component-overflow     4
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         52
+  action-hidden          52
+  dismiss-outside        20
+  target-small           52
+controls skipped by the action rules (R24 / R30: clipped away, out of the tab order, hidden from assistive technology): 1008 in 24 row(s)
+controls excused from target-small by a registry row's exemptTargets and its dated owner decision (Task 923 R33, D9): 0 in 0 row(s)
+boxes excused from component-overflow by a registry row's exemptOverflow and its dated owner decision (Task 923 R33, D10): 0 in 0 row(s)
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 5
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1023
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1024
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1440
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 640
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 768
+widths states: 1; each measured at its in-range bound and at the first width outside it (rows per locale): 1 complete, 0 with a missing cell
+  patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana {"min":640}: in-range 640px x4; first outside 639px x4
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+jobs that hit the settle bound (R31: 8000ms; the page was measured as it was), by Story x state: 0 job(s) in 0 Story x state
+Story x state x root with a violation: 4
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~share-listing | app :: component-overflow (1 cell(s))
+
+rows 310 = 162 app-root rows + 148 portal-root rows; 148 state jobs + 12 out-of-range widths jobs + 2 closed jobs; 0 retried job(s); runtime 103s
+---- end ----
+EXIT_CODE=1

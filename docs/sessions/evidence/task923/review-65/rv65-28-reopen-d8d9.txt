@@ -1,0 +1,4 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-65/rv65-28-reopen-d8d9.mjs
+stage planned; review removed; executionStatus ready; cases 231, critical 67; scope 598
+SEC-X-SRV-ADMIN-USER-PRESENT response: a returned element whose AdminUserProfile receives that row with location { id: 151, name_al: 'Adriatik - Durrës', region_id: null, parent: null }; no redirect
+exit 0

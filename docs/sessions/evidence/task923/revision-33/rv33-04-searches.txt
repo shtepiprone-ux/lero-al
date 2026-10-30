@@ -1,0 +1,20 @@
+# Task 923 Revision 30 design searches (Opus, 2026-10-22T11:53:53Z), working tree at HEAD a95d3fe4a
+== rg -c NumberInput src (files with a match)
+count: 0
+== HEAD:scripts/ui-contract-registry.json rows naming mantine-badge-status
+count: 1
+== HEAD:scripts/mantine-migration-scope.json entries naming MantineBadge.tsx
+count: 0
+== working tree scripts/mantine-migration-scope.json entries naming MantineBadge.tsx
+count: 1
+== git grep at HEAD: files importing ProviderFormDialogView (src)
+HEAD:src/components/admin/AdminExchangeProvidersManager.tsx
+HEAD:src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx
+== check-locale-leak.mjs lines matching exchange (case-insensitive)
+count: 0
+== R100 executor report d8-d9-report.json
+ls: ls: cannot access 'docs/sessions/evidence/task923/security/d8-d9-report.json': No such file or directory
+== consumers of listing.access_denied_title / access_denied_desc in src
+count: 0
+== not-found pages under src/app
+count: 0

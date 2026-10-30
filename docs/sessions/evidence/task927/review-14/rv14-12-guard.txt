@@ -1,0 +1,7 @@
+# rv14-12 (Opus) the integration file without SECURITY_TEST_* 2026-10-28T19:27:30Z v22.22.3
+command: npx vitest run --config vitest.integration.config.ts src/lib/auth/googleSignIn.integration.test.ts (no SECURITY_TEST_*)
+Error: Refusing to run: set SECURITY_TEST_TARGET=development. The suite creates and deletes users and must only ever run against the approved development target.
+     50|     throw new Error('Refusing to run: set SECURITY_TEST_TARGET=develop…
+ Test Files  1 failed (1)
+      Tests  no tests
+exit code: 1

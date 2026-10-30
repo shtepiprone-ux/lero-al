@@ -1,5 +1,10 @@
 ### Universal owner-provided reference-link audit — blocking
 
+**Applicability:** first apply the 2026-10-20 Opus exception in
+[canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md). For Opus, the audit, required
+receipt, and sanctions below apply to uncovered decisions/reproduced defects, not inherited ready-component design.
+An explicit owner request to revisit a design is handled as the named research scope, not a blanket re-audit.
+
 Every URL, site, page, interactive demo, screenshot, or embedded external example the owner supplies or names as a
 reference is an **owner-provided reference**. It joins the four standing references in every audit below. The audit
 runs at every task creation, execution and review ("When it runs" above), for UI and functional behaviour alike. The

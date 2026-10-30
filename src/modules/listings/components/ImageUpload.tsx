@@ -8,7 +8,7 @@ import type { CloudinaryUploadWidgetResults } from 'next-cloudinary'
 import {
   ImagePlus, Trash2, Star, ChevronUp, ChevronDown, Camera,
 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { cn } from '@/lib/utils'
 import styles from './ImageUpload.module.css'
 
@@ -108,10 +108,11 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
             >
               {/* Cover badge */}
               {img.is_cover && (
-                <Badge variant="default" className="absolute top-2 left-2 text-2xs px-1.5 py-0 h-5 gap-1">
-                  <Star className="h-2.5 w-2.5" />
-                  {t('cover_photo')}
-                </Badge>
+                <div className="absolute top-2 left-2">
+                  <MantineBadge variant="status" entity="photoMark" value="cover">
+                    {t('cover_photo')}
+                  </MantineBadge>
+                </div>
               )}
 
               {/* Hover overlay with actions */}
@@ -165,9 +166,9 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
               </div>
 
               {/* Order number */}
-              <span className={cn(styles.orderBadge, 'absolute bottom-2 left-2 h-5 w-5 rounded-full text-2xs font-bold flex items-center justify-center')}>
-                {index + 1}
-              </span>
+              <div className="absolute bottom-2 left-2">
+                <MantineBadge variant="count" circle>{index + 1}</MantineBadge>
+              </div>
             </AppImage>
           ))}
         </div>

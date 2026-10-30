@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-17",
+  "tool": "Playwright MCP, Chromium",
+  "url": "https://demo.tailadmin.com/task-list",
+  "action": "click 'Add New Task'",
+  "w1920": {
+    "title": "Add a new task",
+    "panel": [610, 159, 700, 692],
+    "labels": ["Task Title", "Due Date", "Status", "Tags", "Assignees", "Description"],
+    "fields": ["INPUT:text", "INPUT:date", "SELECT:select-one", "SELECT:select-one", "SELECT:select-one", "TEXTAREA:textarea", "INPUT:file"],
+    "buttons": [["(icon close)", 1246, 179, 44, 44], ["Cancel", 1063, 765, 77, 42], ["Create Task", 1152, 766, 106, 40]]
+  },
+  "w390": {
+    "panel": [20, 44, 350, 756],
+    "buttons": [["Cancel", 52, 734, 138, 42], ["Create Task", 202, 735, 136, 40]],
+    "note": "the two footer actions share one row at 390; this project's storybook-proof rule (two or more text actions in a popup stack one per row) takes precedence over the reference"
+  },
+  "signinWrongPassword": "gr7-r35.json: lahomes, omah, tailadmin and kamr show no specific wrong-credential message (kamr stays on /login with only the required-field asterisks; omah navigates to index; tailadmin stays on /signin)"
+}

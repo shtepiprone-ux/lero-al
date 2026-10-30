@@ -4,7 +4,9 @@ import { useState, useEffect, useTransition } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, Trash2, ArrowRight, Mail, Trash } from 'lucide-react'
+import { Box } from '@mantine/core'
 import { toast } from '@/lib/toast'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import type { SavedSearch } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
@@ -176,9 +178,10 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                     {search.name || tc('unnamed_search')}
                   </p>
                   {search.new_count > 0 && (
-                    <span className="shrink-0 bg-primary text-primary-foreground text-2xs font-bold px-1.5 py-0.5 rounded-full">
-                      {t('new_listings_badge', { count: search.new_count })}
-                    </span>
+                    // R58: the "N new" counter is the canonical brand count badge (GR-12); `flex="none"` keeps it from shrinking in the title row.
+                    <Box component="span" flex="none">
+                      <MantineBadge variant="count">{t('new_listings_badge', { count: search.new_count })}</MantineBadge>
+                    </Box>
                   )}
                 </div>
                 <FilterSummary filters={filters} />

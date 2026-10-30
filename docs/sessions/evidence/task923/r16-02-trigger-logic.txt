@@ -1,0 +1,53 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-20T07:24:56.863Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-trigger-logic.cjs --i-confirm-dev-database   (R62 (a)-(c): real function and grant texts of deletion v3 on temporary objects only (one rolled-back transaction))
+ ok  A1 name and last name joined by one space | observed: "Alice Staff"
+ ok  A2 name and last name are each trimmed ("  Tina " + " Padded  ") | observed: "Tina Padded"
+ ok  A2b only a name (the last name is null): the name alone, no stray space | observed: "Solo"
+ ok  A3 both names empty: null, although an Auth row with an e-mail address exists | observed: null
+ ok  A4 a person with an Auth row and no profile row: null, never the e-mail address | observed: null
+ ok  A5 an unknown id: null | observed: null
+ ok  A6 the generated function text never reads auth.users | observed: no auth.users in the code
+ ok  B1 INSERT with an id and a supplied name: the name is the trigger's | observed: "Alice Staff"
+ ok  B2 INSERT with a null id and a supplied name: the name is null | observed: null
+ ok  B3 INSERT with the id of a person whose names are empty: the name is null (an empty name stores null) | observed: null
+ ok  B4 UPDATE of the name alone (id unchanged): the old name stays | observed: "Alice Staff"
+ ok  B5 UPDATE of another column: the name stays | observed: "Alice Staff"
+ ok  B6 UPDATE changing the id to another person (with a supplied name): recomputed from the new id | observed: "Bob Staff"
+ ok  B7 UPDATE clearing the id of a LIVE account (a profile row exists): the name becomes null, Bob's name is not kept | observed: {"actor":null,"actor_name":null}
+ ok  B7a UPDATE changing the id to a person who has only an Auth row (X exists in the Auth-like table alone): the name is null (no profile, no name) | observed: null
+ ok  B7b-1 control: the id changes to Bob: his name | observed: "Bob Staff"
+ ok  B7b0 control: the id changes to X once X has a profile row: the name is recomputed | observed: "Xavier Auth"
+ ok  B7b UPDATE clearing the id of an account whose profile row is gone but whose Auth row still exists: the name becomes null (the account is live) | observed: null
+ ok  B8a control: Dora's row carries her name | observed: "Dora Staff"
+ ok  B8 UPDATE clearing the id once the old account is gone from both tables (the SET NULL of a deletion): the old name stays | observed: {"actor":null,"actor_name":"Dora Staff"}
+ ok  B9 UPDATE of the name alone while the id is null: the old name stays | observed: "Dora Staff"
+ ok  B10 UPDATE keeping the id null and supplying a name: the old name stays | observed: "Dora Staff"
+ ok  B11 UPDATE from a null id to a person: recomputed from the new id | observed: "Alice Staff"
+ ok  R0 control: both staff tables carry the names before the deletion | observed: ts_a 2, ts_u 2
+ ok  R1 deleting an auth.users-like parent (the profile row cascades first, as in the real database): the staff table with a key to the PROFILE keeps the name with a null id | observed: [{"actor":null,"actor_name":"Alice Staff"},{"actor":"22222222-2222-2222-2222-222222222222","actor_name":"Bob Staff"}]
+ ok  R2 the same deletion: the staff table with a key to the AUTH parent keeps the name with a null id | observed: [{"actor":null,"actor_name":"Alice Staff"},{"actor":"22222222-2222-2222-2222-222222222222","actor_name":"Bob Staff"}]
+ INFO R3 ORDER DEPENDENCE: the key to the Auth parent was created BEFORE the profile cascade, so its SET NULL fires while the profile row still exists | observed: name kept: null (null means the rule saw a live account); the real database has the cascade first: r16-00-capture.json, position 9 against 10, 14, 15
+ INFO R4 a PROFILE row deleted while its Auth row still exists (not the path of deleteAccount, which deletes the Auth user) | observed: name kept: null (null: the account still exists in the Auth-like table)
+ ok  O1 a backfill that runs BEFORE the trigger is created fills the names | observed: ["Alice Staff","Bob Staff"]
+ ok  O2 the same backfill AFTER the trigger exists is overridden by the trigger (names stay null): the order matters | observed: [null,null]
+ ok  U1 a backfill under the BEFORE UPDATE trigger rewrites updated_at (the hazard R59 (a) names) | observed: rows changed: 2
+ ok  U2 the same backfill with the trigger disabled around it leaves updated_at alone and still fills the names | observed: rows changed: 0; named: 2
+ ok  U3 the trigger is enabled again afterwards (tgenabled = O, as the preflight requires) | observed: "O"
+ ok  G1-anon-pages_t after the apply statements anon can SELECT every captured column of pages_t | observed: 7 of 7
+ ok  G2-anon-pages_t after the apply statements anon cannot SELECT updated_by_name of pages_t | observed: false
+ ok  G3-anon-pages_t after the apply statements anon holds no table-level SELECT on pages_t | observed: false
+ ok  G1-anon-footer_t after the apply statements anon can SELECT every captured column of footer_t | observed: 12 of 12
+ ok  G2-anon-footer_t after the apply statements anon cannot SELECT updated_by_name of footer_t | observed: false
+ ok  G3-anon-footer_t after the apply statements anon holds no table-level SELECT on footer_t | observed: false
+ ok  G1-authenticated-pages_t after the apply statements authenticated can SELECT every captured column of pages_t | observed: 7 of 7
+ ok  G2-authenticated-pages_t after the apply statements authenticated cannot SELECT updated_by_name of pages_t | observed: false
+ ok  G3-authenticated-pages_t after the apply statements authenticated holds no table-level SELECT on pages_t | observed: false
+ ok  G1-authenticated-footer_t after the apply statements authenticated can SELECT every captured column of footer_t | observed: 12 of 12
+ ok  G2-authenticated-footer_t after the apply statements authenticated cannot SELECT updated_by_name of footer_t | observed: false
+ ok  G3-authenticated-footer_t after the apply statements authenticated holds no table-level SELECT on footer_t | observed: false
+ ok  G4 the other privileges are untouched (footer INSERT / UPDATE of anon / authenticated; pages MAINTAIN) | observed: {"footerInsert":true,"footerUpdate":true,"pagesMaintain":true}
+ ok  G5 the rollback statements restore the table-level ACL text exactly (pages and footer) | observed: pages equal; footer equal
+ ok  G6 the rollback statements leave no column-level ACL | observed: 0 columns with an attacl
+ ok  G7 anon can SELECT updated_by_name again after the rollback (the pre-apply state, table-level) | observed: restored
+RESULT: all cases hold
+EXIT_CODE=0

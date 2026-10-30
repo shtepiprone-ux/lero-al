@@ -3,12 +3,13 @@
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { Plus, Search } from 'lucide-react'
-import { Badge, Button, Flex, Group, Stack, Text, TextInput, UnstyledButton, useMantineTheme } from '@mantine/core'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { Button, Flex, Group, Stack, Text, TextInput, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { CurrencyDetailDialogView } from '@/components/admin/CurrencyDetailDialogView'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import type { DBCurrency } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AdminCurrenciesViewProps {
   /** Already filtered by the container's search query. */
@@ -35,7 +36,7 @@ export interface AdminCurrenciesViewProps {
  * Presentational View for the currency list (Task 877, Container/Presentational split of
  * `AdminCurrenciesManager`). No server action, no `toast`, no hook beyond `useTranslations` /
  * `useMantineTheme`. The list renders through the shared `AdminTable` adapter (canonical
- * `MantineDataTableToCards`), the delete confirmation through `MantineModal`, and the row detail through
+ * `MantineDataTableToCards`), the delete confirmation through `MantineDeleteConfirmModal`, and the row detail through
  * `CurrencyDetailDialogView`. Badges follow TailAdmin §6: default = brand light, active/inactive = green/gray.
  */
 export function AdminCurrenciesView({
@@ -63,10 +64,10 @@ export function AdminCurrenciesView({
   function statusBadges(c: DBCurrency) {
     return (
       <Group gap="xs" wrap="wrap">
-        {c.is_default && <Badge size="sm" variant="light" color="brand">{t('default_badge')}</Badge>}
-        <Badge size="sm" variant="light" color={c.is_active ? 'green' : 'gray'}>
-          {c.is_active ? t('is_active') : t('deactivate')}
-        </Badge>
+        {c.is_default && <MantineBadge variant="tone" tone="brand">{t('default_badge')}</MantineBadge>}
+        <MantineBadge variant="status" entity="currency" value={c.is_active ? 'active' : 'inactive'}>
+          {c.is_active ? t('is_active') : t('status_inactive')}
+        </MantineBadge>
       </Group>
     )
   }
@@ -137,25 +138,16 @@ export function AdminCurrenciesView({
         })}
       />
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={deleteTarget !== null}
         onClose={onCancelDelete}
         title={t('delete_confirm')}
-        footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm" justify={{ base: 'stretch', sm: 'flex-end' }}>
-            <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} disabled={isPending} onClick={onCancelDelete}>
-              {tc('cancel')}
-            </Button>
-            <Button color="red" w={{ base: '100%', sm: 'auto' }} loading={isPending} onClick={onConfirmDelete}>
-              {tc('delete')}
-            </Button>
-          </Flex>
-        }
-      >
-        <Text size="sm" c="gray.7">
-          {deleteTarget ? `${deleteTarget.code} — ${deleteTarget.name_en || deleteTarget.name_sq}` : null}
-        </Text>
-      </MantineModal>
+        message={deleteTarget ? `${deleteTarget.code} — ${deleteTarget.name_en || deleteTarget.name_sq}` : null}
+        confirmLabel={tc('delete')}
+        cancelLabel={tc('cancel')}
+        loading={isPending}
+        onConfirm={onConfirmDelete}
+      />
 
       {detailTarget && (
         <CurrencyDetailDialogView

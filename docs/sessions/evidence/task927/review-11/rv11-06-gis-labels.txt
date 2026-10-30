@@ -1,0 +1,9 @@
+# Review 11: Google's own signin_with label per locale (GIS in-page button on localhost)
+platform: MINGW64_NT-10.0-26300 / node v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+command: GOOGLE_CLIENT_ID=<NEXT_PUBLIC_GOOGLE_CLIENT_ID from .env.local, not printed> node docs/sessions/evidence/task927/review-11/rv11-06-gis-labels.mjs
+sq: Identifikohu me Google
+en: Sign in with Google
+uk: Вхід через Google
+it: Accedi con Google
+exit code: 0

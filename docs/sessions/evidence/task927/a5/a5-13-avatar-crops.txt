@@ -1,0 +1,13 @@
+# a5-13: DPR-1 crops of the avatar
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a5/a5-13-avatar-crops.mjs
+started: 2026-10-25T09:41:47.248Z
+
+initials 320: docs/sessions/evidence/task927/a5/a5-13-avatar-initials-320.png {"w":64,"h":64,"radius":"9999px","dpr":1,"img":null}
+initials 1440: docs/sessions/evidence/task927/a5/a5-13-avatar-initials-1440.png {"w":64,"h":64,"radius":"9999px","dpr":1,"img":null}
+picture 320: docs/sessions/evidence/task927/a5/a5-13-avatar-picture-320.png {"w":64,"h":64,"radius":"9999px","dpr":1,"img":{"complete":true,"naturalWidth":1200,"src":"/og-default.png"}}
+picture 1440: docs/sessions/evidence/task927/a5/a5-13-avatar-picture-1440.png {"w":64,"h":64,"radius":"9999px","dpr":1,"img":{"complete":true,"naturalWidth":1200,"src":"/og-default.png"}}
+
+exit code: 0

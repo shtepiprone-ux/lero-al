@@ -1,0 +1,12 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-12-rebind-r177-rows.mjs --write
+src/components/admin/AdminUserProfile.tsx before R177: rebuilt sha256 d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b; r59-00 before d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b; equal true
+C1670: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:94-94 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:97-97
+C1678: src/components/admin/AdminUserProfile.tsx:98-98 -> docs/sessions/evidence/task923/review-67/rv67-12-retained/AdminUserProfile.tsx.txt:98-98
+C1681: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:235-235 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:238-238
+C1682: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:260-260 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:263-263
+C1683: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:352-352 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:355-355
+C1686: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:159-159 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:162-162
+C1692: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:25-25 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:27-27
+C1694: src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:381-381 -> src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:384-384
+rebound 8, unresolved 0; written
+exit 0

@@ -1,0 +1,39 @@
+# a10-00 sha256 before the first edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a10/a10-00-hashes.mjs docs/sessions/evidence/task927/a10/a10-00-before-hashes.txt "a10-00 sha256 before the first edit"
+date: 2026-10-26T07:11:24.973Z
+paths: 29
+
+ABSENT  public/brand/google-g.svg
+950218698674f3ddc9bbb7dec7dcef23c0099a357771c94dd7e9ca0bc08470e7  src/lib/auth/googleIdentity.ts
+ABSENT  src/lib/auth/googlePopup.ts
+ABSENT  src/app/auth/google/callback/page.tsx
+ABSENT  src/app/auth/google/callback/GoogleCallbackRelay.tsx
+cbc225624ab2de2066712f61496b1b5ddf1156b151b07e08fb98312781af5377  src/components/auth/GoogleSignInSlot.tsx
+39136f51de2fc0338fb6234b6d35e2aec169f94faccfa096c7e9d209378b9116  src/components/auth/GoogleSignInButton.tsx
+c05b100bef475f96913ebca68c325b3f76d8f9450f46ae102eb7c44f075bd8c6  src/components/auth/GoogleWelcomeBack.tsx
+aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f  src/modules/auth/components/AuthSheet.tsx
+fb8114359a3118a3d6b06e2929377dd31b5c073380b4cb3c612e4bfb3f65b3fe  src/modules/cabinet/components/ProfileTab.tsx
+f944f2d1e7a9415dc8093e36469d79dd26d8f4e6a59fc791b3db98774086d0ed  src/design-system/mantine/theme.ts
+09552d1c41c21afb722e5ca54056b0c6f09f8a8d6f2b6f9c6d746804b4348f00  src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx
+2fd85b3e28679a11a3fc69b7a6024f584bbf46d6aa82c94a9d883f1b770cb436  scripts/ui-contract-registry.json
+751343331710faf9c47d036d54d3a6a55b9ffbd13d4bf296fc726f66dee64154  scripts/rendered-interaction-states.json
+9fe055776c008f52a433247913d2ecba850d376147f61cb97de8f28b073356c8  messages/sq.json
+b4db6015f6afb633c1a5ce37a0d19b267389296088eb473a427e581f12240207  messages/en.json
+c72029e7c7c59bcb922c01c5985f845af517285f10022c0db2d28880747e50cc  messages/uk.json
+f5008c7a5b6c7164dff4b284ea823bb73676c59a66c4181f2f4f3712b2dd8048  messages/it.json
+bb604a7da8ba2426b07a653c47c6975dfb8a77d2fe20b4aea528dc543ae99945  docs/env.md
+d89e2976dd739886f46fd54356c69e6e13d805b43661cb2b5ac118f205c82bf3  src/lib/auth/__tests__/googleIdentity.test.ts
+ABSENT  src/lib/auth/__tests__/googlePopup.test.ts
+ABSENT  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+347f7865173a4a5223848374bdbda9d5a08cd9ad358912c04a202286ecec2d6f  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+94039ec638a53d21aab5b7e1022b6cf4b9bc5119f6ebc220481092df34a108cc  src/modules/auth/components/__tests__/AuthSheet.test.tsx
+e8b3d019e933c963db475370185b8725c2bac556e30e8cc07181853d1fbcb6c3  src/modules/auth/components/AuthSheet.banned.security.test.tsx
+7e0b838b563e7eaadf9272128c6f95ceca40e97219941f64df68761fc0ec756e  src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx
+c8a379cffcb8bd07bace2246e31c70b5621344127f6620b959e4e288291878ce  src/components/layout/__tests__/Header.google.security.test.tsx
+9b86d0b9c73dbd176cb6cbd1cd40001827d5d417044f082122be7115e541accf  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+3494dc35b21609a4f561f51f4ef79512bf30757f09c128d6fbd54a1a95f5371f  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+
+exit code: 0

@@ -1,0 +1,21 @@
+# R149 AC149 r49-04c-compare: compare of the full run with the pinned baseline r32-03d (r34-03c-compare.mjs)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r34-03c-compare.mjs test-results/r49-full-suite.json docs/sessions/evidence/task923/r49-04d-failing-ids.txt
+NODE_PATH: (unset)
+started: 2026-10-25T08:48:09.231Z
+--- stdout ---
+control: derivation on r33-full-suite.json gives 241 IDs; recorded r33-03d has 241; identical: true
+report test-results/r49-full-suite.json: total 5866, passed 5627, failed 239, failed suites 72
+failing IDs now: 237; baseline r32-03d: 241
+only in this run (not in the baseline): 0
+only in the baseline (not failing now): 4
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+
+--- stderr ---
+
+--- exit code: 0 ---

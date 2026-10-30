@@ -1,0 +1,23 @@
+# a12-03 mutation 1, baseline: index.ts after R60 (sha256 c3e6dfcd7be39b80fac6f844b51cb6dd4eaca98d660d2f6081aa84a7650bf771)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:06:56.655Z
+
+command: npx vitest run --reporter=verbose src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-ALLOW] the server lets a Google-only account change its e-mail and delete itself right after an id_token sign-in 5ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-DENY] the server refuses a Google-only account whose last Google sign-in is older than 10 minutes or absent 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-NOPASSWORD] an account without a password is asked for Google even when Auth lists the email provider, and an unreadable answer refuses 1ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:06:57
+   Duration  301ms (transform 76ms, setup 95ms, import 75ms, tests 7ms, environment 0ms)
+--- exit code: 0 ---
+
+finished: 2026-10-28T19:06:58.160Z
+exit code: 0

@@ -1,0 +1,24 @@
+# a12-99: sha256 after the last edit (Amendment 12, R59-R63)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a12/a12-00-hashes.mjs docs/sessions/evidence/task927/a12/a12-99-after-hashes.txt "a12-99: sha256 after the last edit (Amendment 12, R59-R63)"
+date: 2026-10-28T19:11:28.918Z
+paths: 14
+
+68870d9f27346e248968f0f92a06d2a9f7d3b930a540974eb9146eedb2ce9dfe  docs/sessions/evidence/task927/a12/a12-account-has-password.sql
+f33b7723da5d1d4a74f32f08ca613f8959d67b1e9270afe5f7d4478a0707f569  docs/sessions/evidence/task927/a12/a12-account-has-password.dryrun.sql
+1b7882a03fd44a3929c8aa543437cd770a9ef59da6363b40e059bfb326164a8f  docs/sessions/evidence/task927/a12/a12-account-has-password-rollback.sql
+c3e6dfcd7be39b80fac6f844b51cb6dd4eaca98d660d2f6081aa84a7650bf771  src/modules/cabinet/actions/index.ts
+34bb4f233009cccc2df3343ba4cd742a3617f44eab12a673c5ed25c94ee8b9aa  src/lib/account/deleteAccount.security.test.ts
+921083a93ea6b927641d568baad33a80d92acf5ecf55c92cd1890bb97a655c35  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+61044fbe9d6bdd8d143fe6f993a598ce1ed4c90c2f94ed143b51c522a74b3461  src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+5b448cb481e0c41241d88e300d96112600d29b3c345ac30ef558ace2ddc80fe7  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+1506ce55219e2c14dd2c1a3193b556fca8a910f27bb1045f1dd1ce02ac701832  src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts
+b18d15bb3223c831564a051fe60493a22ffb938eeb34df4f3b2d9eee4f28d4c0  src/modules/cabinet/actions/__tests__/emailChange.security.test.ts
+98b9472ea5b82da4e570b4c26912f40c0767a0b2662b5d6e7bde928f4fe0db9d  src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+7657feebc5ddd75b91e59e324904d2ec99f31d95c71879c540f26026768544d7  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+3f3aa1ed1e7e040f90c9ecc42c06e2de799fdf778052d8c4e500b9e2c171336c  src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+d061f1b31f8eb1f5ae96d3406cedb9a59d697bba65822666f605d4f11c5d0ad9  src/lib/auth/googleSignIn.integration.test.ts
+
+exit code: 0

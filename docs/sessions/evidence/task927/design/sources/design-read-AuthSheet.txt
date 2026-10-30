@@ -1,0 +1,299 @@
+=== Bash cat -n src/modules/auth/components/AuthSheet.tsx && echo ===== && cat -n src/lib/auth/browser.ts && ls src/app/auth src/app/auth/* 2>/dev/null; ls src/app/\[locale\]/auth 2>/dev/null at 2026-10-20T13:13:11.390Z
+<persisted-output>
+Output too large (40.3KB). Full output saved to: C:\Users\Nox\.claude-account2\projects\C--Claude-Code-Projects-lero-al\d80d2100-add4-4ad1-8705-6bc21932d5bb\tool-results\bcbtnwlvf.txt
+
+Preview (first 2KB):
+     1	'use client'
+     2	
+     3	import { useState, useEffect } from 'react'
+     4	import { useTranslations, useLocale } from 'next-intl'
+     5	import { useRouter } from 'next/navigation'
+     6	import { useRef } from 'react'
+     7	import { CheckCircle2, ImagePlus } from 'lucide-react'
+     8	import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+     9	import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
+    10	import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
+    11	import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
+    12	import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
+    13	import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
+    14	import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+    15	import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
+    16	import { allPasswordRulesMet } from '@/lib/passwordRules'
+    17	import { useLocations } from '@/modules/locations/hooks/useLocations'
+    18	import { LocationCombobox } from '@/components/shared/LocationCombobox'
+    19	import { useCompanies } from '@/modules/companies/hooks/useCompanies'
+    20	import { createCompanyAction } from '@/modules/companies/actions'
+    21	import { PhoneField } from '@/components/shared/PhoneField'
+    22	import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+    23	import { validateNationalPhone } from '@/lib/phone'
+    24	import { SITE_URL } from '@/lib/siteUrl'
+    25	
+    26	export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
+    27	
+    28	interface AuthSheetProps {
+    29	  open: boolean
+    30	  onOpenChange: (open: boolean) => void
+...
+</persisted-output>
+
+=== Read C:\Claude_Code_Projects\lero-al\src\modules\auth\components\AuthSheet.tsx offset=1 limit=260 at 2026-10-20T13:13:13.137Z
+1	'use client'
+2	
+3	import { useState, useEffect } from 'react'
+4	import { useTranslations, useLocale } from 'next-intl'
+5	import { useRouter } from 'next/navigation'
+6	import { useRef } from 'react'
+7	import { CheckCircle2, ImagePlus } from 'lucide-react'
+8	import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+9	import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
+10	import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
+11	import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
+12	import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
+13	import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
+14	import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+15	import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
+16	import { allPasswordRulesMet } from '@/lib/passwordRules'
+17	import { useLocations } from '@/modules/locations/hooks/useLocations'
+18	import { LocationCombobox } from '@/components/shared/LocationCombobox'
+19	import { useCompanies } from '@/modules/companies/hooks/useCompanies'
+20	import { createCompanyAction } from '@/modules/companies/actions'
+21	import { PhoneField } from '@/components/shared/PhoneField'
+22	import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+23	import { validateNationalPhone } from '@/lib/phone'
+24	import { SITE_URL } from '@/lib/siteUrl'
+25	
+26	export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
+27	
+28	interface AuthSheetProps {
+29	  open: boolean
+30	  onOpenChange: (open: boolean) => void
+31	  initialView?: AuthView
+32	}
+33	
+34	// Map Supabase error messages → stable i18n keys (Epic A error-code contract)
+35	function mapAuthError(message: string): string {
+36	  const m = message.toLowerCase()
+37	  // A banned account gets the wrong-credentials text (Task 923 R40, D21): Supabase Auth answers `user_banned` before it checks the
+38	  // password, so a distinct text would tell a visitor that an account exists and is blocked (OWASP ASVS 5.0 6.3.8).
+39	  if (m.includes('invalid login credentials') || m.includes('invalid credentials') || m.includes('user is banned')) return 'error_invalid_credentials'
+40	  if (m.includes('user already registered') || m.includes('already registered') || m.includes('already exists')) return 'error_email_exists'
+41	  if (m.includes('password should be at least') || m.includes('weak password')) return 'error_weak_password'
+42	  if (m.includes('email not confirmed') || m.includes('not confirmed')) return 'error_email_not_confirmed'
+43	  if (m.includes('rate limit') || m.includes('too many')) return 'error_rate_limit'
+44	  return 'error_generic'
+45	}
+46	
+47	// ── Login view ────────────────────────────────────────────────────────────────
+48	
+49	function LoginView({
+50	  onRegister,
+51	  onForgotPassword,
+52	  onClose,
+53	}: {
+54	  onRegister: () => void
+55	  onForgotPassword: () => void
+56	  onClose: () => void
+57	}) {
+58	  const t = useTranslations('auth')
+59	  const tc = useTranslations('common')
+60	  const theme = useMantineTheme()
+61	  const router = useRouter()
+62	  const [email, setEmail] = useState('')
+63	  const [password, setPassword] = useState('')
+64	  const [passwordVisible, setPasswordVisible] = useState(false)
+65	  const [errorKey, setErrorKey] = useState<string | null>(null)
+66	  const [loading, setLoading] = useState(false)
+67	  const [sessionLost, setSessionLost] = useState(false)
+68	
+69	  useEffect(() => {
+70	    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
+71	      setSessionLost(true)
+72	      sessionStorage.removeItem(AUTH_SESSION_LOST_KEY)
+73	    }
+74	  }, [])
+75	
+76	  async function handleSubmit(e: React.FormEvent) {
+77	    e.preventDefault()
+78	    setErrorKey(null)
+79	    if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
+80	    if (!password) { setErrorKey('error_weak_password'); return }
+81	    setLoading(true)
+82	    const { error } = await signIn(email, password)
+83	    setLoading(false)
+84	    if (error) { setErrorKey(mapAuthError(error.message)); return }
+85	    onClose()
+86	    // Redirect to the originally-requested route (set by AuthRedirect when gated routes redirect here).
+87	    // sanitizeReturnTo ensures the path is a safe same-origin relative path.
+88	    const next = sanitizeReturnTo(sessionStorage.getItem('auth_redirect_next'))
+89	    if (next) {
+90	      sessionStorage.removeItem('auth_redirect_next')
+91	      router.push(next)
+92	    } else {
+93	      router.refresh()
+94	    }
+95	  }
+96	
+97	  async function handleGoogle() {
+98	    // Task 923 R72 (i): Google sign-in leaves the site and returns through the callback, which cannot read this tab's storage. The destination a gated route stored
+99	    // is therefore handed over as `next` (checked as a same-origin path here and again by the callback), and removed from the storage so a later sign-in does not reuse it.
+100	    const next = sanitizeReturnTo(sessionStorage.getItem('auth_redirect_next'))
+101	    if (next) sessionStorage.removeItem('auth_redirect_next')
+102	    await signInWithOAuth('google', next ? `${SITE_URL}/auth/callback?next=${encodeURIComponent(next)}` : `${SITE_URL}/auth/callback`)
+103	  }
+104	
+105	  return (
+106	    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+107	      {sessionLost && (
+108	        <Alert color="blueLight">{t('session_recovery_message')}</Alert>
+109	      )}
+110	      {errorKey && (
+111	        <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>
+112	      )}
+113	
+114	      <TextInput
+115	        id="login-email"
+116	        label={t('email')}
+117	        type="email"
+118	        value={email}
+119	        onChange={e => setEmail(e.target.value)}
+120	        required
+121	        autoComplete="email"
+122	      />
+123	
+124	      <Stack gap="compact">
+125	        <Group justify="space-between" wrap="nowrap">
+126	          <InputLabel htmlFor="login-password">{t('password')}</InputLabel>
+127	          <Anchor component="button" type="button" size="sm" c="brand" onClick={onForgotPassword}>
+128	            {t('forgot_password')}
+129	          </Anchor>
+130	        </Group>
+131	        <PasswordInput
+132	          id="login-password"
+133	          value={password}
+134	          onChange={e => setPassword(e.target.value)}
+135	          required
+136	          autoComplete="current-password"
+137	          visible={passwordVisible}
+138	          onVisibilityChange={setPasswordVisible}
+139	          visibilityToggleButtonProps={{ 'aria-label': passwordVisible ? tc('hide_password') : tc('show_password') }}
+140	        />
+141	      </Stack>
+142	
+143	      <Button type="submit" fullWidth loading={loading} disabled={loading}>
+144	        {t('login')}
+145	      </Button>
+146	
+147	      <Divider label={<Text span size="sm" c="gray.4" tt="uppercase">{t('or')}</Text>} labelPosition="center" />
+148	
+149	      <Button
+150	        type="button"
+151	        variant="default"
+152	        fullWidth
+153	        onClick={handleGoogle}
+154	        leftSection={
+155	          <svg width={theme.other.iconSize.standard} height={theme.other.iconSize.standard} style={{ flexShrink: 0 }} viewBox="0 0 24 24" aria-hidden="true">
+156	            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+157	            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+158	            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+159	            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+160	          </svg>
+161	        }
+162	      >
+163	        Google
+164	      </Button>
+165	
+166	      <Text ta="center" size="sm" c="dimmed">
+167	        {t('no_account')}{' '}
+168	        <Anchor component="button" type="button" size="sm" c="brand" onClick={onRegister}>
+169	          {t('register')}
+170	        </Anchor>
+171	      </Text>
+172	    </Stack>
+173	  )
+174	}
+175	
+176	// ── Forgot-password view ──────────────────────────────────────────────────────
+177	
+178	function ForgotPasswordView({
+179	  onBack,
+180	}: {
+181	  onBack: () => void
+182	}) {
+183	  const t = useTranslations('auth')
+184	  const locale = useLocale()
+185	  const theme = useMantineTheme()
+186	  const [email, setEmail] = useState('')
+187	  const [submitted, setSubmitted] = useState(false)
+188	  const [loading, setLoading] = useState(false)
+189	  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+190	  const [captchaFailed, setCaptchaFailed] = useState(false)
+191	  const widgetRef = useRef<CaptchaWidgetHandle>(null)
+192	
+193	  async function handleSubmit(e: React.FormEvent) {
+194	    e.preventDefault()
+195	    if (!captchaToken) return
+196	    setCaptchaFailed(false)
+197	    setLoading(true)
+198	    const redirectTo = `${SITE_URL}/auth/callback?next=/${locale}/auth/reset-password`
+199	    const result = await requestPasswordResetWithCaptcha({ email, captchaToken, redirectTo })
+200	    void logPasswordRecoveryRequest(email)
+201	    setLoading(false)
+202	
+203	    if (!result.ok && result.reason === 'captcha_failed') {
+204	      widgetRef.current?.reset()
+205	      setCaptchaToken(null)
+206	      setCaptchaFailed(true)
+207	      return
+208	    }
+209	    // Always show neutral success — never reveal whether email is registered
+210	    setSubmitted(true)
+211	  }
+212	
+213	  if (submitted) {
+214	    return (
+215	      <Stack align="center" gap="md" pb="xl" pt="xs" ta="center">
+216	        <CheckCircle2 size={theme.other.iconSize.hero} color="var(--mantine-color-green-6)" style={{ flexShrink: 0 }} aria-hidden="true" />
+217	        <Text component="h3" fw={600} size="lg">{t('forgot_password_success_title')}</Text>
+218	        <Text size="sm" c="dimmed">{t('forgot_password_success_body')}</Text>
+219	        <Anchor component="button" type="button" size="sm" c="brand" onClick={onBack}>
+220	          {t('forgot_password_back')}
+221	        </Anchor>
+222	      </Stack>
+223	    )
+224	  }
+225	
+226	  return (
+227	    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+228	      <Text size="sm" c="dimmed">{t('forgot_password_body')}</Text>
+229	
+230	      <TextInput
+231	        id="forgot-email"
+232	        label={t('email')}
+233	        type="email"
+234	        value={email}
+235	        onChange={e => setEmail(e.target.value)}
+236	        required
+237	        autoComplete="email"
+238	        autoFocus
+239	      />
+240	
+241	      {captchaFailed && (
+242	        <Alert color="red">{t('captcha_error_failed')}</Alert>
+243	      )}
+244	
+245	      <Box my="sm">
+246	        <CaptchaWidget
+247	          ref={widgetRef}
+248	          onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
+249	          onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
+250	          onExpire={() => setCaptchaToken(null)}
+251	        />
+252	      </Box>
+253	
+254	      <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
+255	        {t('forgot_password_submit')}
+256	      </Button>
+257	
+258	      <Anchor component="button" type="button" size="sm" c="dimmed" ta="center" onClick={onBack}>
+259	        ← {t('forgot_password_back')}
+260	      </Anchor>

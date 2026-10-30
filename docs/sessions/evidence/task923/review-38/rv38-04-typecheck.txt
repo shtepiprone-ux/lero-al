@@ -1,0 +1,7 @@
+# 2026-10-23T07:37:28Z node v22.22.3 cwd /c/Claude_Code_Projects/lero-al
+$ npm run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+exit 0

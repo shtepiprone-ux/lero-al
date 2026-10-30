@@ -1,0 +1,38 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-20T13:11:25.930Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-currencyrates-capture.cjs --i-confirm-dev-database   (read-only capture of currency_rates (R79 (b)))
+## relation
+{"relname":"currency_rates","relkind":"r","rls":true,"force_rls":false,"acl":"{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}","owner":"postgres"}
+## columns
+{"num":1,"col":"id","type":"integer","not_null":true,"default":"nextval('currency_rates_id_seq'::regclass)"}
+{"num":2,"col":"from_currency","type":"text","not_null":true,"default":null}
+{"num":3,"col":"to_currency","type":"text","not_null":true,"default":null}
+{"num":4,"col":"rate","type":"numeric","not_null":true,"default":null}
+{"num":5,"col":"source_url","type":"text","not_null":false,"default":"'https://iliria98.com/'::text"}
+{"num":6,"col":"fetched_at","type":"timestamp with time zone","not_null":false,"default":"now()"}
+## constraints
+{"conname":"currency_rates_from_currency_to_currency_key","contype":"u","def":"UNIQUE (from_currency, to_currency)"}
+{"conname":"currency_rates_pkey","contype":"p","def":"PRIMARY KEY (id)"}
+## indexes
+{"indexname":"currency_rates_from_currency_to_currency_key","indexdef":"CREATE UNIQUE INDEX currency_rates_from_currency_to_currency_key ON public.currency_rates USING btree (from_currency, to_currency)"}
+{"indexname":"currency_rates_pkey","indexdef":"CREATE UNIQUE INDEX currency_rates_pkey ON public.currency_rates USING btree (id)"}
+## triggers
+(none)
+## policies
+{"name":"Currency rates viewable by everyone","cmd":"SELECT","roles":"{public}","qual":"true","with_check":null}
+{"name":"Only admins can manage currency rates","cmd":"ALL","roles":"{public}","qual":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))","with_check":null}
+## grants (information_schema)
+{"grantee":"service_role","privilege_type":"DELETE"}
+{"grantee":"service_role","privilege_type":"INSERT"}
+{"grantee":"service_role","privilege_type":"REFERENCES"}
+{"grantee":"service_role","privilege_type":"SELECT"}
+{"grantee":"service_role","privilege_type":"TRIGGER"}
+{"grantee":"service_role","privilege_type":"TRUNCATE"}
+{"grantee":"service_role","privilege_type":"UPDATE"}
+## rows
+{"from_currency":"EUR","to_currency":"ALL","rate":"108.50","source_url":"https://iliria98.com/","fetched_at":"2026-04-18T21:17:06.291Z"}
+## active currencies (code, is_active, is_default)
+{"code":"ALL","is_active":true,"is_default":true}
+{"code":"EUR","is_active":true,"is_default":false}
+{"code":"USD","is_active":true,"is_default":false}
+{"code":"GBP","is_active":true,"is_default":false}
+EXIT_CODE=0

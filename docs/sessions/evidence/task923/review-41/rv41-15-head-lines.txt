@@ -1,0 +1,17 @@
+# HEAD de2a93dae lines cited by Task 923 claim rows whose working-tree source changed (Review 41, rv41-15-refresh-locators.mjs)
+== src/modules/listings/actions/contactGateway.ts in the working tree (uncommitted Task 923 code), lines 99-99
+ * decides in a fixed order, and each step refuses before the next one runs:
+== src/modules/listings/actions/contactGateway.ts in the working tree (uncommitted Task 923 code), lines 135-135
+  if (!number) return { ok: false, reason: 'not_available' }
+== src/modules/listings/actions/contactGateway.ts in the working tree (uncommitted Task 923 code), lines 140-140
+  if (channel === 'whatsapp') {
+== src/modules/listings/actions/contactGateway.ts in the working tree (uncommitted Task 923 code), lines 20-20
+  | { ok: false; reason: 'unauthenticated' | 'bot_check_failed' | 'not_available' | 'load_failed' | 'rate_limited' }
+== src/tests/integration/fixtures.ts in the working tree (uncommitted Task 923 code), lines 142-142
+    await count('contact events', () => admin.from('listing_contact_events').select('id').in('listing_id', lids))
+== src/tests/integration/contactGateway.integration.test.ts in the working tree (uncommitted Task 923 code), lines 18-18
+const TEST_IP = vi.hoisted(() => `203.0.113.${1 + Math.floor(Math.random() * 253)}`)       // documentation range (TEST-NET-3): never a real visitor
+== src/modules/listings/actions/__tests__/contactGateway.security.test.ts in the working tree (uncommitted Task 923 code), lines 144-144
+      chain.insert = async (row: Row) => { (table === 'listing_contact_events' ? state.events : state.inquiries).push(row); return { error: null } }
+== src/modules/listings/components/ListingContact.tsx before R127 (working tree; Opus Read output, transcript c1f16c21-dbad-4f8c-94df-690a447a1510.jsonl entry 149, 2026-10-23T11:16:49.551Z), line 142 of that version
+      toast.error(t(result.reason === 'bot_check_failed' ? 'contact_bot_check_failed' : 'contact_load_failed'))

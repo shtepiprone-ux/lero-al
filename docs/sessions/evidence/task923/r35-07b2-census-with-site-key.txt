@@ -1,0 +1,49 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T08:10:12.832Z
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-listingcontactpattern--default
+---- output ----
+rendered state census: 1 registered state(s), 32 state job(s) + 0 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 1 closed job(s); 6 worker(s); out C:\Users\Nox\AppData\Local\Temp\rendered-state-census
+
+rendered state census — rows 33 (failing 32); {"statesRun":1,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,768,1023,1024,1440],"boundCells":0,"stateJobs":32,"rangeJobs":0,"closedJobs":1,"appRows":33,"portalRows":0,"runtimeSeconds":58,"ruleKeys":22}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  text-overlap           0
+  svg-text-clipped       0
+  viewport-overflow      0
+  component-overflow     0
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           32
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  (none)
+controls skipped by the action rules (R24 / R30: clipped away, out of the tab order, hidden from assistive technology): 0 in 0 row(s)
+controls excused from target-small by a registry row's exemptTargets and its dated owner decision (Task 923 R33, D9): 0 in 0 row(s)
+boxes excused from component-overflow by a registry row's exemptOverflow and its dated owner decision (Task 923 R33, D10): 0 in 0 row(s)
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 0
+widths states: 0; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 0 with a missing cell
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+jobs that hit the settle bound (R31: 8000ms; the page was measured as it was), by Story x state: 32 job(s) in 1 Story x state
+  patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp :: 32 job(s) (en 320, en 390, en 639, en 640, en 768, en 1023, en 1024, en 1440, it 320, it 390, it 639, it 640, it 768, it 1023, it 1024, it 1440, sq 320, sq 390, sq 639, sq 640, sq 768, sq 1023, sq 1024, sq 1440, uk 320, uk 390, uk 639, uk 640, uk 768, uk 1023, uk 1024, uk 1440)
+Story x state x root with a violation: 1
+  patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | app :: portal-count (32 cell(s))
+
+rows 33 = 33 app-root rows + 0 portal-root rows; 32 state jobs + 0 out-of-range widths jobs + 1 closed jobs; 0 retried job(s); runtime 58s
+
+---- end ----
+EXIT_CODE=1

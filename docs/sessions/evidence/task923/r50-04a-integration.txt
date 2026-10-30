@@ -1,0 +1,112 @@
+# R150-R155 AC150 r50-04a-integration: the 15 real-boundary suites of C1467 (SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF and the URL from .env.local; never printed)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref from .env.local, not printed> npx vitest run --config vitest.integration.config.ts --reporter=verbose <the 15 suites of C1467>
+NODE_PATH: (unset)
+started: 2026-10-25T11:58:44.382Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows 1019ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 1960ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access 1321ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented 2388ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo 4210ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted 545ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused 1419ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project 2769ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project 2667ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project 3919ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project 3394ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project 2715ms
+ ✓ src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project 2870ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project 2218ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project 1593ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project 2550ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project 1715ms
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvnrz5ne3fd4/company-logo',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvnrz5ne3fd4/listing-one',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvnrz5ne3fd4/listing-two',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvnrz5ne3fd4/verification',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 8835ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 977ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id 3876ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id 449ms
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account
+SEC-DEL-INT-DENY: the moderator role holds users.hard_delete: false
+
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account 2167ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account 3350ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function 261ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules 901ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify 2932ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies 1177ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record 1386ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record 1060ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing 4133ms
+ ✓ src/tests/integration/contactGateway.integration.test.ts > contactGateway > [SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit 3691ms
+ ✓ src/modules/listings/actions/contactSession.integration.test.ts > contact actions against real Auth and database > [SEC-CS-INT-DENY] on the real database a guest and a blocked account create no inquiry, e-mail or notification 3801ms
+ ✓ src/modules/listings/actions/contactSession.integration.test.ts > contact actions against real Auth and database > [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry 1930ms
+ ✓ src/modules/admin/actions/accountBan.integration.test.ts > admin account actions against real Auth and database > [SEC-D9-INT-ADMIN-DENY] a normal user cannot block anyone on the real database and Auth 3137ms
+ ✓ src/modules/admin/actions/accountBan.integration.test.ts > admin account actions against real Auth and database > [SEC-D9-INT-ADMIN-ALLOW] a real administrator blocks and unblocks a user and Auth follows 2939ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 3537ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 751ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-ALLOW] under the limit the right password works 2613ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-DENY] past the limit even the right password is refused 1380ms
+ ✓ src/modules/listings/actions/ownerPublish.integration.test.ts > status gateway against the real database > [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged 2238ms
+ ✓ src/modules/listings/actions/ownerPublish.integration.test.ts > status gateway against the real database > [SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database 693ms
+ ✓ src/lib/auth/accountAccess.integration.test.ts > account access against real Auth > [SEC-D9-INT-DENY] a blocked account is really banned: sign-in, refresh and the old access token are refused by Auth 2869ms
+ ✓ src/lib/auth/accountAccess.integration.test.ts > account access against real Auth > [SEC-D9-INT-ALLOW] the unblock really lifts the ban: the same user signs in again 2119ms
+ ✓ src/tests/integration/listingAccessState.integration.test.ts > listingAccessState > [SEC-X-INT-RESTRICTED-STATE-DENY] a hidden listing is only named hidden, and visitors read none of it 665ms
+ ✓ src/tests/integration/listingAccessState.integration.test.ts > listingAccessState > [SEC-X-INT-RESTRICTED-STATE-ALLOW] the owner reads their hidden listing and the helper tells public from missing 504ms
+ ✓ src/lib/auth/staffAccess.integration.test.ts > [SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role 7949ms
+ ✓ src/lib/auth/staffAccess.integration.test.ts > [SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role 6349ms
+ ✓ src/lib/auth/staffAccess.integration.test.ts > [SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked 2510ms
+ ✓ src/lib/auth/staffAccess.integration.test.ts > [SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked 1756ms
+ ✓ src/modules/listings/actions/listingSlugGuard.integration.test.ts > listingSlugGuard > [SEC-X-INT-SLUG-PLAIN-ALLOW] titles with hyphens or Cyrillic still create a listing 1092ms
+ ✓ src/modules/listings/actions/listingSlugGuard.integration.test.ts > listingSlugGuard > [SEC-X-INT-SLUG-PLAIN-DENY] the guard still refuses a slug that is not plain 401ms
+ ✓ src/modules/admin/actions/userProfileFields.integration.test.ts > [SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification 544ms
+ ✓ src/modules/admin/actions/userProfileFields.integration.test.ts > [SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification 453ms
+
+ Test Files  15 passed (15)
+      Tests  53 passed (53)
+   Start at  12:58:45
+   Duration  176.78s (transform 401ms, setup 137ms, import 1.78s, tests 173.08s, environment 1ms)
+
+
+--- stderr ---
+stderr | src/modules/listings/actions/contactSession.integration.test.ts > contact actions against real Auth and database > [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry
+[captcha] TURNSTILE_SECRET_KEY not set — captcha verification skipped (dev only).
+
+
+--- exit code: 0 ---

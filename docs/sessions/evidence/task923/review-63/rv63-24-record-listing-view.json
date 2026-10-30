@@ -1,0 +1,28 @@
+{
+ "functions": [
+  {
+   "sig": "record_listing_view(uuid,uuid,text)",
+   "def": "CREATE OR REPLACE FUNCTION public.record_listing_view(p_listing_id uuid, p_user_id uuid DEFAULT NULL::uuid, p_ip_hash text DEFAULT ''::text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_hash text := left(coalesce(p_ip_hash, ''), 64);\r\nbegin\r\n  -- same statuses as the view route (src/app/api/listings/[slug]/view/route.ts)\r\n  if not exists (select 1 from listings where id = p_listing_id and status in ('active', 'sold', 'rented', 'archived')) then return false; end if;\r\n  if p_user_id is null and v_hash = '' then return false; end if;   -- nothing to de-duplicate by: not counted\r\n  perform pg_advisory_xact_lock(hashtextextended(p_listing_id::text || '|' || coalesce(p_user_id::text, 'ip:' || v_hash), 0));\r\n  if exists (\r\n    select 1 from listing_views\r\n    where listing_id = p_listing_id and viewed_at >= now() - interval '24 hours'\r\n      and ((p_user_id is not null and user_id = p_user_id) or (p_user_id is null and ip_hash = v_hash))\r\n  ) then return false; end if;\r\n  insert into listing_views (listing_id, user_id, ip_hash, viewed_at) values (p_listing_id, p_user_id, v_hash, now());\r\n  update listings set views_count = views_count + 1 where id = p_listing_id;\r\n  return true;\r\nend $function$\n"
+  }
+ ],
+ "grants": [
+  {
+   "grantee": "postgres",
+   "privilege_type": "EXECUTE"
+  },
+  {
+   "grantee": "service_role",
+   "privilege_type": "EXECUTE"
+  }
+ ],
+ "foreignKeys": [
+  {
+   "conname": "listing_views_listing_id_fkey",
+   "def": "FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"
+  },
+  {
+   "conname": "listing_views_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+  }
+ ]
+}

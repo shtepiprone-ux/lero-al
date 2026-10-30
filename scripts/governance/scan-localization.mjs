@@ -101,12 +101,12 @@ for (const file of walkTsx(SRC)) {
       );
     }
 
-    // ── Rule L2: whitespace-nowrap without truncation safety ──────────────────
+    // ── Rule L2: whitespace-nowrap is a mobile/reflow risk ───────────────────
     if (/whitespace-nowrap/.test(line) && !/truncate|overflow-hidden/.test(line)) {
       finding(
         'LOW',
         file, lineNum,
-        'whitespace-nowrap without overflow-hidden+truncate. May cause horizontal overflow in long locales.',
+        'whitespace-nowrap may break mobile reflow in long locales. Reflow/stack the semantic content; do not add truncation.',
         'whitespace-nowrap unsafe'
       );
     }

@@ -9,7 +9,9 @@ not use.
 
 1. Classify the role and task type; read the matching compact parent and its current phase file.
 2. Read the Always Required bundle.
-3. For visible UI, tokens, Stories, or visual review, read `.claude/rules/shared/mobile-adaptation-contract.md` (its
+3. For visible UI, tokens, Stories, or visual review, Opus first reads
+   `.claude/rules/shared/canonical-component-reuse.md` and inspects ready components/Stories before external research.
+   Inherit covered design; research only named gaps. Then read `.claude/rules/shared/mobile-adaptation-contract.md` (its
    registry selects the compatible Mantine mechanism and canonical owner), then
    `.claude/rules/shared/ui-token-contract.md`; for Story
    work also read `.claude/rules/shared/storybook-proof.md`; for any surface that opens an overlay also read
@@ -19,6 +21,8 @@ not use.
 6. If a task spans multiple types, include each matching bundle and state the boundary.
 
 ## Always Required
+
+- `.claude/rules/shared/workflow-gates.md` - task contract, local write/handoff checks, required CI verdict and release stop.
 
 - `.claude/rules/shared/role-boundaries.md`
 - `docs/golden-rules.md` - open the exact GR section required by the role phase or selected task bundle; do not read
@@ -35,10 +39,13 @@ not use.
   (`docs/orchestrator-procedures.md`).
 - `docs/critical-flow-registry.md` - scan for affected critical flows only.
 
-For Opus orchestration or review, also read:
+For Opus orchestration or review:
 
-- `docs/orchestrator-role.md`
-- `docs/orchestrator-procedures.md`
+- Follow the selected `.claude/skills/create-task/SKILL.md` C1-C7 or `review-task/SKILL.md` R1-R7 in order.
+- Read `.claude/rules/shared/task-readiness.md` before new-task publication or a review correction handoff.
+- Read `.claude/rules/shared/orchestration-state.md` at draft promotion and review candidate/final checks.
+- Open only the sections of `docs/orchestrator-role.md` and `docs/orchestrator-procedures.md` required by the
+  current phase/bundle; they are detailed references, not a second default reading workflow.
 
 ## UI / Layout / Component
 

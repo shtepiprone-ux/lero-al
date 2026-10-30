@@ -1,0 +1,5 @@
+# a9-98 sha256 of the session record after the executor report
+platform: win32
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+9b10f46719b3b96a1b3a71befce76f349d9ccd94c839f8cbd22a7b936e92266a  docs/sessions/2026-10-10-task923-rendered-state-census.md

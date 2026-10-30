@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { expect } from 'storybook/test'
-import { Badge, Avatar, ActionIcon, Group, Text } from '@mantine/core'
+import { Avatar, ActionIcon, Group } from '@mantine/core'
 import { ShieldOff, ChevronRight } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineDataTableToCards, type CardConfig } from '@/design-system/mantine/patterns/MantineDataTableToCards'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import type { ListingStatus } from '@/types/database'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta<typeof MantineDataTableToCards> = {
@@ -21,12 +23,13 @@ type Story = StoryObj<typeof MantineDataTableToCards>
 
 type StoryRow = { id: string; name: string; company: string; status: string; date: string }
 
-// STATUS_COLOR: all on-palette (green/yellow/gray — no blue). Fix #4 confirmed.
-const STATUS_COLOR: Record<string, string> = {
-  Active: 'green', Pending: 'yellow', Archived: 'gray',
-  'Активний': 'green', 'На розгляді': 'yellow', 'Архів': 'gray',
-  Aktiv: 'green', 'Në pritë': 'yellow', Arkivuar: 'gray',
-  Attivo: 'green', 'In attesa': 'yellow', Archiviato: 'gray',
+// STATUS_VALUE: the fixture's localized status label -> the listing status it stands for. The badge look comes from the
+// registry (`MantineBadge`), never from a colour written here (Task 859 R50, D78-26).
+const STATUS_VALUE: Record<string, ListingStatus> = {
+  Active: 'active', Pending: 'pending', Archived: 'archived',
+  'Активний': 'active', 'На розгляді': 'pending', 'Архів': 'archived',
+  Aktiv: 'active', 'Në pritë': 'pending', Arkivuar: 'archived',
+  Attivo: 'active', 'In attesa': 'pending', Archiviato: 'archived',
 }
 
 const makeCardConfig = (l: string): CardConfig<StoryRow> => ({
@@ -48,48 +51,45 @@ const makeCardConfig = (l: string): CardConfig<StoryRow> => ({
     </Avatar>
   ),
   // Fix #5: no truncate. Badge has its own row above; name takes full Stack width and wraps freely.
-  title: (row) => <Text size="sm" fw={500} c="gray.7">{row.name}</Text>,
+  title: (row) => row.name,
   subtitle: (row) => row.company,
   badge: (row) => (
-    <Badge color={STATUS_COLOR[row.status] ?? 'gray'} variant="light" size="sm">
-      {row.status}
-    </Badge>
+    <MantineBadge variant="status" entity="listing" value={STATUS_VALUE[row.status] ?? 'archived'}>{row.status}</MantineBadge>
   ),
+  // The role badge is the card's badges row (one rhythm step under the title), not a meta row (Task 859 R69(f), GR-3h).
+  badges: () => <MantineBadge variant="status" entity="userRole" value="agent">{storyT(l, 'admin.users.role_agent')}</MantineBadge>,
   meta: [
     {
-      // Fix #1: on-palette badge for role (gray, not blue).
-      label: storyT(l, 'storybook.mantine.admin_table_col_role'),
-      value: () => <Badge color="gray" variant="light" size="sm">Agent</Badge>,
-    },
-    {
       label: storyT(l, 'storybook.mantine.admin_table_col_phone'),
-      value: () => <Text size="sm" c="gray.7">+355 69 123 4567</Text>,
+      value: () => '+355 69 123 4567',
     },
     {
       // Fix #3: long-uk label "Дата реєстрації" (15 chars) wraps in card at 320; desktop Th is nowrap.
       label: storyT(l, 'storybook.mantine.admin_table_col_registered'),
-      value: (row) => <Text size="sm" c="gray.7">{row.date}</Text>,
+      value: (row) => row.date,
+    },
+    {
+      // A long field value (GR-3j): it wraps under its label and the field grows; nothing is cut.
+      label: storyT(l, 'storybook.mantine.admin_table_col_name'),
+      value: () => storyT(l, 'storybook.listing.apartment_long'),
     },
   ],
 })
 
 const makeArgs = (l = 'en') => ({
+  // Task 923 R49: no percentage column shares, as in production — a share below its column's max-content divided by the card width makes the table scroll (uk at 768 / 769).
   columns: [
     {
       key: 'name',
       label: storyT(l, 'storybook.mantine.admin_table_col_name'),
-      width: '35%',
-      render: (row: StoryRow) => <Text fw={500} size="sm" c="gray.7">{row.name}</Text>,
+      render: (row: StoryRow) => row.name,
     },
     {
       key: 'status',
       label: storyT(l, 'storybook.mantine.admin_table_col_status'),
       align: 'center' as const,
-      width: '20%',
       render: (row: StoryRow) => (
-        <Badge color={STATUS_COLOR[row.status] ?? 'gray'} variant="light" size="sm">
-          {row.status}
-        </Badge>
+        <MantineBadge variant="status" entity="listing" value={STATUS_VALUE[row.status] ?? 'archived'}>{row.status}</MantineBadge>
       ),
     },
     {
@@ -97,15 +97,13 @@ const makeArgs = (l = 'en') => ({
       // Fix #1: role column uses gray badge (on-palette), not blue.
       label: storyT(l, 'storybook.mantine.admin_table_col_role'),
       align: 'center' as const,
-      width: '20%',
-      render: () => <Badge color="gray" variant="light" size="sm">Agent</Badge>,
+      render: () => <MantineBadge variant="status" entity="userRole" value="agent">{storyT(l, 'admin.users.role_agent')}</MantineBadge>,
     },
     {
       key: 'date',
       // Fix #3: long-uk desktop header "Дата реєстрації" — whiteSpace:nowrap (from theme) keeps it single-line.
       label: storyT(l, 'storybook.mantine.admin_table_col_registered'),
       align: 'right' as const,
-      width: '25%',
     },
   ],
   rows: [
@@ -144,8 +142,8 @@ const makeArgs = (l = 'en') => ({
   ] as StoryRow[],
 })
 
-// SSR caveat: useMediaQuery (inside MantineDataTableToCards) returns false on first render
-// → table renders server-side; hydration flips to cards on mobile. No flash — pattern is auth-gated.
+// Both layouts render and Mantine's CSS `hiddenFrom`/`visibleFrom` shows one: the record cards below 768px, the table from 768px
+// (Task 923 R47, D36). There is no media-query hook, so no first-paint flash.
 export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
@@ -162,8 +160,8 @@ export const Default: Story = {
 }
 
 // Task 854 (R6/AC7, GR-3a EXTEND): `cardsBelow="md"` — the CSS `hiddenFrom`/`visibleFrom` switch at
-// 768px, instead of the default `useMediaQuery` 640px path above. Both trees render; only one is
-// visible at a given viewport (checked at 700/800px — AC7).
+// 768px, which is also the pattern's default (Task 923 R47, D36), so `Default` above switches at the same width. Both trees
+// render; only one is visible at a given viewport (checked at 700/800px — AC7).
 //
 // Task 891 (R12/AC10, GR-3a EXTEND — no new export or string): the existing `date` column gets
 // `wrap: true` here only (not in `Default`), proving `TableColumn.wrap`'s desktop `Table.Th`/
@@ -292,8 +290,8 @@ export const CardDetail: Story = {
       ...cardWithoutMeta,
       detail: (row) => (
         <Group gap="xs" wrap="wrap">
-          <Badge color="gray" variant="light" size="sm">{storyT(l, 'storybook.mantine.admin_table_col_role')}</Badge>
-          <Text size="sm" c="gray.7">{row.date}</Text>
+          <MantineBadge variant="tone" tone="neutral">{storyT(l, 'storybook.mantine.admin_table_col_role')}</MantineBadge>
+          {row.date}
         </Group>
       ),
     }

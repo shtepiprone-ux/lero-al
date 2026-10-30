@@ -32,7 +32,14 @@ export function ListingStatusBanner({ status, message, similarLabel, href }: Pro
         <Text size="sm" fw={500}>
           {message}
         </Text>
-        <Anchor component={Link} href={href} size="xs" underline="always" fw={500}>
+        <Anchor
+          component={Link}
+          href={href}
+          size="xs"
+          underline="always"
+          fw={500}
+          styles={{ root: { display: 'inline-flex', alignItems: 'center', minHeight: theme.other!.touchTarget } }}
+        >
           {similarLabel}
         </Anchor>
       </Stack>

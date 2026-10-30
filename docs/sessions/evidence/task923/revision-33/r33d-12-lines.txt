@@ -1,0 +1,41 @@
+# Task 923 Revision 33 design: working-tree source lines cited by claim rows C978 onward (r33d-12-lines.cjs)
+src/modules/listings/actions/getListingOwnerContact.ts:1: 'use server'
+src/modules/listings/actions/getListingOwnerContact.ts:19: const { data, error } = await supabase.rpc('get_listing_owner_contact', {
+src/modules/listings/actions/contactEvents.ts:1: 'use server'
+src/modules/listings/actions/contactEvents.ts:36: export async function trackListingContactEvent(args: TrackArgs): Promise<TrackResult> {
+src/modules/listings/actions/contactEvents.ts:43: const viewer = await requireViewer()
+src/modules/listings/actions/submitListingInquiry.ts:79: const viewer = await requireViewer()
+src/modules/listings/actions/submitListingInquiry.ts:94: const ip = hdrs.get('x-forwarded-for')?.split(',')[0]?.trim()
+src/modules/listings/actions/submitListingInquiry.ts:63: ): Promise<{ error?: 'unauthenticated' | 'rate_limited' | 'validation' | 'not_found' | 'save_failed' | 'owner_unavailable' | 'email_transient' }> {
+src/lib/auth/requireViewer.ts:33: authUserId = (await getUser())?.id ?? null
+src/lib/captcha/verifyTurnstile.ts:30: return { success: data.success === true, errorCodes: data['error-codes'] }
+src/lib/captcha/verifyTurnstile.ts:13: if (process.env.NODE_ENV !== 'production' && token === 'dev-noop-token') {
+src/lib/siteUrl.ts:1: export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
+src/components/auth/CaptchaWidget.tsx:81: options={{ theme, size: 'flexible', language }}
+src/components/auth/CaptchaWidget.tsx:39: onSuccess('dev-noop-token')
+src/components/auth/CaptchaWidget.tsx:62: reset: () => widgetRef.current?.reset(),
+src/modules/listings/components/ListingContact.tsx:123: const result = await getListingOwnerContact(contactListingId)
+src/modules/listings/components/ListingContact.tsx:125: toast.error(t('contact_load_failed'))
+src/modules/listings/components/ListingContact.tsx:131: void trackListingContactEvent({ listingId: contactListingId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+src/modules/listings/components/ListingInquiryDialog.tsx:57: const result = await submitListingInquiry({ listingId, name, email, message })
+src/modules/listings/components/ListingInquiryDialog.tsx:92: toast.error(t('inquiry_error_save_failed'))
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:133: <Stack gap="md">
+src/design-system/mantine/patterns/MantineListingContactPattern.tsx:198: <SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="sm">
+src/design-system/mantine/patterns/MantineDialogSections.tsx:29: <Stack gap="sm">
+src/modules/listings/components/ListingInquiryDialogView.tsx:65: <MantineDialogSection>
+src/stories/patterns/mantine/AuthSheet.stories.tsx:134: export const Captcha: Story = {
+src/__tests__/security/serverEntryGuards.test.ts:93: 'src/modules/listings/actions/getListingOwnerContact.ts#getListingOwnerContact': 'reveals a listing owner contact the public page already offers; the database function get_listing_owner_contact decides what may be returned',
+src/__tests__/security/serverEntryGuards.test.ts:118: expect(stale, `allowlist entries without an entry point: ${stale.join(', ')}`).toEqual([])
+src/tests/integration/environment.ts:17: const NAMES = ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY', 'SUPABASE_SERVICE_ROLE_KEY'] as const
+vitest.config.ts:29: 'server-only': path.resolve(__dirname, './src/tests/server-only-stub.ts'),
+scripts/story-coverage-exempt.json:16: "src/components/listing/WhatsAppContactButton.tsx": "opens WhatsApp URL with external phone number; no meaningful UI state to document in Storybook",
+scripts/story-coverage-exempt.json:13: "src/components/auth/CaptchaWidget.tsx": "wraps Cloudflare Turnstile CAPTCHA; requires live third-party widget integration; cannot be safely mocked in Storybook",
+scripts/surface-census-baseline.json:604: "src/components/listing/WhatsAppContactButton.tsx :: src/components/listing/WhatsAppContactButton.tsx :: tier1-unenrolled-or-unstoried": {
+scripts/surface-census-baseline.json:808: "src/modules/listings/components/ListingMobileCTA.tsx :: src/modules/listings/components/ListingMobileCTA.tsx :: tier1-unenrolled-or-unstoried": {
+node_modules/@marsidev/react-turnstile/dist/index.d.ts:221: execute: () => ReturnType<Turnstile$1["execute"]>;
+node_modules/@marsidev/react-turnstile/dist/index.d.ts:237: getResponsePromise: (timeout?: number, retry?: number) => Promise<Exclude<ReturnType<Turnstile$1["getResponse"]>, undefined>>;
+node_modules/@marsidev/react-turnstile/dist/index.d.ts:348: onBeforeInteractive?: RenderParameters["before-interactive-callback"];
+node_modules/@marsidev/react-turnstile/package.json:3: "version": "1.5.2",
+docs/sessions/evidence/task923/db-catalog/proposed-hardening-v8a.sql:224: grant execute on function public.get_listing_owner_contact_as(uuid, uuid) to service_role;
+docs/sessions/evidence/task923/db-catalog/proposed-hardening-v8a.sql:213: raise exception 'account_blocked' using errcode = '42501';
+docs/sessions/evidence/task923/db-catalog/proposed-hardening-v8a.sql:206: if p_caller is null then raise exception 'unauthenticated' using errcode = '42501'; end if;

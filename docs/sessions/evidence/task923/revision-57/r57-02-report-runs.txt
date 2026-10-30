@@ -1,0 +1,24 @@
+# r57-02: R174 (a), the two report runs (Revision 57, AC157)
+platform: Windows PowerShell 5.1.26100.9711 (Windows 11 Pro 10.0.26300); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+environment (set in the process only, read from .env.local by name, values not printed): SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF (derived from the host of NEXT_PUBLIC_SUPABASE_URL, 20 characters); NEXT_PUBLIC_SUPABASE_URL (set)
+The output below is the literal stdout of each command, copied by hand (the commands wrote no file of their own besides the report each script writes).
+
+## Run 1 - owner-fixes
+command: node docs/sessions/evidence/task923/security/owner-fixes-report.mjs
+started: 2026-10-29T16:23:30.1807619+01:00
+--- output ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+report written: docs/sessions/evidence/task923/security/owner-fixes-report.json (60 cases, 9 with sensitivity)
+--- exit code: 0 ---
+finished: 2026-10-29T16:23:46.6858690+01:00
+
+## Run 2 - Task 927
+command: node docs/sessions/evidence/task927/security/make-report.mjs
+started: 2026-10-29T16:23:52.8715215+01:00
+--- output ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+report written: docs/sessions/evidence/task927/security/report.json (53 cases)
+--- exit code: 0 ---
+finished: 2026-10-29T16:24:18.3967036+01:00

@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { getExchangeRates } from '@/lib/getExchangeRateServer'
+import { jsonForScript } from '@/lib/security/inputs'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
 import {
@@ -218,8 +219,9 @@ export async function SimilarListings({
       {speculationUrls.length > 0 && (
         <script
           type="speculationrules"
+          // Task 923 R66 (g): the URLs hold a stored slug; `jsonForScript` keeps a slug with `</script>` inside the JSON (JSON.stringify alone would close the element)
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: jsonForScript({
               prerender: [{
                 source: 'list',
                 urls: speculationUrls,

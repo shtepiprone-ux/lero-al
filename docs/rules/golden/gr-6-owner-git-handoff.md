@@ -1,10 +1,17 @@
-## GR-6 — Every Opus task-design/review response that writes a task/doc artifact ends with the owner-run git block
+## GR-6 — Completed Opus task-design/review cycles provide the owner-run Git handoff
 
 Binds `CLAUDE.md` → Git policy. **Task design** ends with `git add` + `git commit`, explicit paths, **never** `git
 push`. **An approved review** ends with `git add` + `git commit` + `git push <verified-remote> <verified-branch>`.
 A **non-approved review** contains no git command **for the implementation** — and that does **not** suppress the
 task-design block for documents the same response authored. Conflating the two is how the block went missing on
 2026-09-10.
+
+**Review completion takes precedence:** follow `.claude/rules/shared/role-boundaries.md`. Acceptance of an
+intermediate stage still requires the next available Opus action, including designing and verifying the next
+assigned route. Do not stop with a state-only commit while that route remains to be designed. Progress writes do
+not complete the cycle. A genuine external dependency ends with plain `BLOCKED` and no Git handoff, even when
+investigation changed task/doc artifacts. Once the next route is verified, give its commit-only task-design block;
+whole-task approval retains the implementation handoff above. Never fabricate readiness to satisfy this rule.
 
 **Commit-identity ban:** an owner-run `git commit` handoff must contain only the intended commit subject and any
 task-required body. It must never append a `Co-Authored-By:` trailer. This explicitly forbids the Claude/Anthropic

@@ -1,0 +1,8 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-06-siteverify-test-keys.mjs
+pass secret, token XXXX.DUMMY.TOKEN.XXXX: HTTP 200 {"challenge_ts":"2026-10-22T18:27:46.196Z","error-codes":[],"hostname":"example.com","metadata":{"result_with_testing_key":true},"success":true}
+pass secret, token not-a-token: HTTP 200 {"challenge_ts":"2026-10-22T18:27:46.255Z","error-codes":[],"hostname":"example.com","metadata":{"result_with_testing_key":true},"success":true}
+fail secret, token XXXX.DUMMY.TOKEN.XXXX: HTTP 200 {"error-codes":["invalid-input-response"],"success":false,"messages":[],"metadata":{"result_with_testing_key":true}}
+fail secret, token not-a-token: HTTP 200 {"error-codes":["invalid-input-response"],"success":false,"messages":[],"metadata":{"result_with_testing_key":true}}
+spent secret, token XXXX.DUMMY.TOKEN.XXXX: HTTP 200 {"error-codes":["timeout-or-duplicate"],"success":false,"messages":[],"metadata":{"result_with_testing_key":true}}
+spent secret, token not-a-token: HTTP 200 {"error-codes":["timeout-or-duplicate"],"success":false,"messages":[],"metadata":{"result_with_testing_key":true}}
+EXIT_CODE=0

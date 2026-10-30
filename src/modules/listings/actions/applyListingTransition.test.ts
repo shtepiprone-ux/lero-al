@@ -13,12 +13,29 @@ import type { TransitionActorContext } from './applyListingTransition'
 type MockSelectResult = { data: { id: string; status: string; user_id?: string } | null; error: null }
 type MockUpdateResult = { error: null | { message: string } }
 
-function makeMockDb(selectResult: MockSelectResult, updateResult: MockUpdateResult = { error: null }) {
+/**
+ * The update behaves like the database (Task 923 R67 (e)): it applies its `.eq()` filters to the CURRENT row and reports the rows it changed through `.select()`.
+ * `statusAtWrite` is the status the row has when the write arrives, to stand for a change that landed between the read and the write.
+ */
+const writes: Array<{ payload: Record<string, unknown>; filters: Array<[string, unknown]> }> = []
+function makeMockDb(selectResult: MockSelectResult, updateResult: MockUpdateResult = { error: null }, statusAtWrite?: string) {
   const singleFn = () => Promise.resolve(selectResult)
   const eqSelectFn = () => ({ single: singleFn })
   const selectFn = () => ({ eq: eqSelectFn })
-  const eqUpdateFn = () => Promise.resolve(updateResult)
-  const updateFn = () => ({ eq: eqUpdateFn })
+  const updateFn = (payload: Record<string, unknown>) => {
+    const filters: Array<[string, unknown]> = []
+    const chain = {
+      eq: (column: string, value: unknown) => { filters.push([column, value]); return chain },
+      select: () => {
+        writes.push({ payload, filters: [...filters] })
+        if (updateResult.error) return Promise.resolve({ data: null, error: updateResult.error })
+        const row = selectResult.data ? { ...selectResult.data, status: statusAtWrite ?? selectResult.data.status } : null
+        const matches = !!row && filters.every(([column, value]) => (column === 'id' ? row.id === value : (row as Record<string, unknown>)[column] === value))
+        return Promise.resolve({ data: matches ? [{ id: row!.id }] : [], error: null })
+      },
+    }
+    return chain
+  }
   const fromFn = () => ({ select: selectFn, update: updateFn })
   return { from: fromFn } as unknown as NonNullable<Parameters<typeof applyListingTransition>[3]>
 }
@@ -212,6 +229,29 @@ describe('applyListingTransition — terminal status enforcement', () => {
   })
 })
 
+describe('applyListingTransition — compare-and-set (Task 923 R67 (e))', () => {
+  it('writes with the status it read, and reports one changed row as success', async () => {
+    writes.length = 0
+    const db = makeMockDb({ data: { id: 'l1', status: 'active' }, error: null })
+    expect(await applyListingTransition('l1', 'ARCHIVE', adminActor, db)).toEqual({ ok: true, nextStatus: 'archived', listingId: 'l1' })
+    expect(writes).toEqual([{ payload: { status: 'archived' }, filters: [['id', 'l1'], ['status', 'active']] }])
+  })
+
+  it('a listing whose status changed between the read and the write is a conflict, and the other change stands', async () => {
+    writes.length = 0
+    // read as pending, but a moderator archived it before the write arrived
+    const db = makeMockDb({ data: { id: 'l1', status: 'pending' }, error: null }, { error: null }, 'archived')
+    expect(await applyListingTransition('l1', 'APPROVE', modActor, db)).toEqual({ ok: false, reason: 'conflict' })
+    expect(writes[0].filters).toEqual([['id', 'l1'], ['status', 'pending']])
+    expect(await applyListingTransitionByStatus('l1', 'sold', adminActor, makeMockDb({ data: { id: 'l1', status: 'active' }, error: null }, { error: null }, 'inactive'))).toEqual({ ok: false, reason: 'conflict' })
+  })
+
+  it('a write that changes no row (the listing vanished) is a conflict, never a success', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active' }, error: null }, { error: null }, '__gone__')
+    expect(await applyListingTransition('l1', 'ARCHIVE', adminActor, db)).toEqual({ ok: false, reason: 'conflict' })
+  })
+})
+
 describe('applyListingTransition — DB error', () => {
   it('returns db_error when DB update fails', async () => {
     const failDb = makeMockDb(
@@ -333,10 +373,10 @@ describe('applyListingTransitionByStatus — admin restore flow', () => {
 // ── applyListingTransitionByStatus — privileged any-status (Task 427) ────────
 
 describe('applyListingTransitionByStatus — privileged any-status access', () => {
-  it('owner of own listing: sold → active (self-approve, no base-matrix path)', async () => {
+  it('owner of own listing: sold → active is refused (owner decision D8: only staff publish; full matrix in ownerPublish.security.test.ts)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'sold', user_id: 'user-1' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
-    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
   })
 
   it('owner of own listing: archived → pending (no base-matrix path)', async () => {

@@ -1,0 +1,27 @@
+# Review 56 rv56-03-baseline.txt: the three R149 test files on the current tree, before R149
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T06:57:20.447Z
+command: npx vitest run --reporter=verbose src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx src/lib/auth/__tests__/staffPage.security.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN] the redirect notice is shown 157ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED] an unknown notice is not shown 79ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT] no notice without the parameter 20ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 3076ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 2ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 2ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer 9410ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > an active administrator and an active moderator pass the guard, and it returns who they are (the control) 2ms
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  07:57:21
+   Duration  9.80s (transform 2.58s, setup 298ms, import 1.19s, tests 12.75s, environment 823ms)
+
+
+--- exit code: 0 ---

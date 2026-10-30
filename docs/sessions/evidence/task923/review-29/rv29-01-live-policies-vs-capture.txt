@@ -1,0 +1,14 @@
+Opus, Review 29 (Task 923), 2026-10-21: a read-only comparison of the nine policies v8a changes with catalog-post-v71.json. One connection: begin read only, two SELECTs, rollback. Values are compared in the script; no text is printed.
+cmd: node -e (inline) with db-catalog/lib.cjs and pg 8.21.0 from the session scratchpad
+transaction_read_only = on
+live policies read: 9
+public.listing_images policy Listing images viewable by everyone: equal to catalog-post-v71.json; text one line; carriage return in live text: no
+public.listings policy Listings viewable by everyone: equal to catalog-post-v71.json; text one line; carriage return in live text: no
+public.role_permissions policy role_permissions_admin_insert: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+public.role_permissions policy role_permissions_admin_select: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+public.role_permissions policy role_permissions_admin_update: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+public.role_permissions policy role_permissions_moderator_read: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+storage.objects policy Admin/moderator delete avatars: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+storage.objects policy Admin/moderator update avatars: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+storage.objects policy Admin/moderator upload avatars: equal to catalog-post-v71.json; text spans several lines (LF); carriage return in live text: no
+rollback; connection closed

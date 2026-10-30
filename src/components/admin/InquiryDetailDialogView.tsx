@@ -2,11 +2,12 @@
 
 import { Fragment, type ReactNode } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { Send } from 'lucide-react'
-import {
-  Alert, Button, Group, Paper, SimpleGrid, Stack, Text, Textarea, useMantineTheme,
-} from '@mantine/core'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { SendSquareIcon } from '@solar-icons/react/broken'
+import { Alert, Button, Group, Paper, Stack, Text, Textarea, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { StatusChangeSelect, type StatusSelectOption } from '@/components/admin/StatusChangeSelect'
 import { formatDate } from '@/lib/formatters'
 import type { InquiryRow, ReplyRow } from '@/components/admin/AdminInquiriesManager'
@@ -40,9 +41,12 @@ function renderLines(text: string): ReactNode {
 
 /**
  * Presentational View of the inquiry detail dialog (Task 894, Container/Presentational split of
- * `AdminInquiriesManager`). `useTranslations` / `useLocale` / `useMantineTheme` only: no state, no server
- * action, no toast (the status toasts belong to `StatusChangeSelect`). The dialog is the canonical
- * `MantineModal` (bottom sheet below 640px).
+ * `AdminInquiriesManager`; Task 859 Revision 2, R29: the canonical dialog anatomy, §23.7). A structured
+ * `MantineModal` (bottom sheet below 640px) with the topic as its description and sections: the facts as
+ * `MantineDetailList`, the status as `StatusChangeSelect`, the message, the replies and the reply composer, then a
+ * `MantineDialogFooter` pair — Close (secondary) and Send reply (the one primary). `useTranslations` /
+ * `useLocale` / `useMantineTheme` only: no state, no server action, no toast (the status toasts belong to
+ * `StatusChangeSelect`).
  */
 export function InquiryDetailDialogView({
   inquiry,
@@ -57,58 +61,65 @@ export function InquiryDetailDialogView({
   onClose,
 }: InquiryDetailDialogViewProps) {
   const t = useTranslations('admin.inquiries')
+  const tc = useTranslations('common')
   const locale = useLocale()
   const theme = useMantineTheme()
 
-  const caption = (text: string) => <Text size="xs" c="dimmed">{text}</Text>
-  const sectionLabel = (text: string) => (
-    <Text size="xs" fw={600} c="dimmed" tt="uppercase">{text}</Text>
-  )
-
   return (
-    <MantineModal opened onClose={onClose} title={t('detail_title')} size="lg">
-      <Stack gap="lg">
-        <Paper bg="gray.0" p="md" radius="md">
-          <SimpleGrid cols={{ base: 1, xs2: 2 }} spacing="md" verticalSpacing="md">
-            <Stack gap="tight">
-              {caption(t('from_label'))}
-              <Text size="sm" fw={500}>{inquiry.name}</Text>
-              {caption(inquiry.email)}
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('topic_label'))}
-              <Text size="sm" fw={500}>{subject}</Text>
-              <Text size="xs" c="dimmed" ff="monospace">{inquiry.target_mailbox}</Text>
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('received_label'))}
-              <Text size="sm">{formatDate(inquiry.created_at, locale)}</Text>
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('change_status'))}
-              <StatusChangeSelect<ContactStatus>
-                currentStatus={inquiry.status}
-                statuses={statusOptions}
-                onSubmit={onStatusSubmit}
-                disabled={isPending}
-                aria-label={t('change_status')}
-              />
-            </Stack>
-          </SimpleGrid>
-        </Paper>
+    <MantineModal
+      opened
+      onClose={onClose}
+      structured
+      size="lg"
+      title={t('detail_title')}
+      description={subject}
+      footer={
+        <MantineDialogFooter
+          secondary={<Button type="button" variant="default" onClick={onClose}>{tc('close')}</Button>}
+          primary={
+            <Button
+              type="button"
+              leftSection={isPending ? undefined : <SendSquareIcon size={theme.other.iconSize.compact} aria-hidden="true" />}
+              onClick={onSendReply}
+              disabled={isPending || replyBody.trim().length < 5}
+            >
+              {isPending ? t('sending_reply') : t('send_reply')}
+            </Button>
+          }
+        />
+      }
+    >
+      <MantineDialogSections>
+        <MantineDialogSection>
+          <MantineDetailList
+            items={[
+              { label: t('from_label'), value: `${inquiry.name} · ${inquiry.email}` },
+              { label: t('topic_label'), value: `${subject} · ${inquiry.target_mailbox}` },
+              { label: t('received_label'), value: formatDate(inquiry.created_at, locale) },
+            ]}
+          />
+        </MantineDialogSection>
 
-        <Stack gap="xs">
-          {sectionLabel(t('detail_message'))}
-          <Paper withBorder p="md" radius="md">
-            <Text size="sm">{renderLines(inquiry.message)}</Text>
-          </Paper>
-        </Stack>
+        <MantineDialogSection title={t('change_status')}>
+          <StatusChangeSelect<ContactStatus>
+            currentStatus={inquiry.status}
+            statuses={statusOptions}
+            onSubmit={onStatusSubmit}
+            disabled={isPending}
+            aria-label={t('change_status')}
+          />
+        </MantineDialogSection>
+
+        <MantineDialogSection title={t('detail_message')}>
+          <Text size="sm">{renderLines(inquiry.message)}</Text>
+        </MantineDialogSection>
 
         {replies.length === 0 && inquiry.reply_count > 0 ? (
-          <Alert color="yellow" variant="light">{t('reply_history_load_failed')}</Alert>
+          <MantineDialogSection title={t('detail_replies')}>
+            <Alert color="yellow" variant="light">{t('reply_history_load_failed')}</Alert>
+          </MantineDialogSection>
         ) : replies.length > 0 ? (
-          <Stack gap="xs">
-            {sectionLabel(t('detail_replies'))}
+          <MantineDialogSection title={t('detail_replies')}>
             <Stack gap="sm">
               {replies.map(r => (
                 <Paper key={r.id} withBorder p="md" radius="md">
@@ -122,11 +133,10 @@ export function InquiryDetailDialogView({
                 </Paper>
               ))}
             </Stack>
-          </Stack>
+          </MantineDialogSection>
         ) : null}
 
-        <Stack gap="xs">
-          {sectionLabel(t('reply_label'))}
+        <MantineDialogSection title={t('reply_label')}>
           <Textarea
             aria-label={t('reply_label')}
             placeholder={t('reply_placeholder')}
@@ -136,16 +146,8 @@ export function InquiryDetailDialogView({
             autosize
             minRows={4}
           />
-          <Button
-            w={{ base: '100%', sm: 'auto' }}
-            leftSection={<Send size={theme.other.iconSize.compact} />}
-            onClick={onSendReply}
-            disabled={isPending || replyBody.trim().length < 5}
-          >
-            {isPending ? t('sending_reply') : t('send_reply')}
-          </Button>
-        </Stack>
-      </Stack>
+        </MantineDialogSection>
+      </MantineDialogSections>
     </MantineModal>
   )
 }

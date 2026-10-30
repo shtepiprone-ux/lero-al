@@ -1,0 +1,26 @@
+# R140 AC140 r43-01: read-only capture 1 (rev43-01-account-references.cjs) and diff of the new facts file against review-48/rv48-19-deletion-schema-facts.txt
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "set -e; E=docs/sessions/evidence/task923\nnode $E/revision-43/rev43-01-account-references.cjs --i-confirm-dev-database; echo \"capture exit: $?\"\necho \"== diff review-48/rv48-19-deletion-schema-facts.txt vs r43-01-deletion-schema-facts.txt ==\"\nif diff $E/review-48/rv48-19-deletion-schema-facts.txt $E/r43-01-deletion-schema-facts.txt; then echo \"diff exit 0: no difference\"; else echo \"DIFFERENCE\"; exit 1; fi\nwc -l $E/r43-01-deletion-schema-facts.txt; sha256sum $E/r43-01-account-references.json $E/r43-01-deletion-schema-facts.txt"
+NODE_PATH: C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/node_modules
+started: 2026-10-24T09:39:12.480Z
+--- stdout ---
+columnsWithoutKey 31
+userKeys 43
+urlColumns 11
+storageBuckets 1
+storageObjects 1
+companiesCols 4
+triggersOnDeleted 11
+viewsCountSemantics 1
+capture exit: 0
+== diff review-48/rv48-19-deletion-schema-facts.txt vs r43-01-deletion-schema-facts.txt ==
+diff exit 0: no difference
+44 docs/sessions/evidence/task923/r43-01-deletion-schema-facts.txt
+e8b745185a4f10dbf51bc1d8c294122df486140312f0fc03d2483fa4a4385054 *docs/sessions/evidence/task923/r43-01-account-references.json
+3b7b6988a2762f06869e0320651ee996d91eee1924acae63b6b5ba8308b8aae2 *docs/sessions/evidence/task923/r43-01-deletion-schema-facts.txt
+
+--- stderr ---
+
+--- exit code: 0 ---

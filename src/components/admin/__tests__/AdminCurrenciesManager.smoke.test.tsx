@@ -212,8 +212,9 @@ describe('AdminCurrenciesManager (T1)', () => {
     const allDialog = await openDetail(ALL.code) // default: no "set default", no "delete"
     expect(within(allDialog).queryByRole('button', { name: t.set_default })).toBeNull()
     expect(within(allDialog).queryByRole('button', { name: t.delete })).toBeNull()
-    // Revision 5: the footer's "Close" button is gone; the dialog closes with Escape.
-    expect(within(allDialog).queryByRole('button', { name: messages.common.close })).toBeNull()
+    // Revision 5: the footer's "Close" button is gone; the dialog closes with Escape. Task 859 R29: the canonical
+    // structured header adds its round close button (aria-label "Close"), which is the only one.
+    expect(within(allDialog).queryAllByRole('button', { name: messages.common.close })).toHaveLength(1)
     fireEvent.keyDown(allDialog, { key: 'Escape' })
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
 

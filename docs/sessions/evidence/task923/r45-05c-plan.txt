@@ -1,0 +1,12 @@
+# R145 AC145 r45-05 (plan): cli.mjs plan of the D8_D9 contract
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+NODE_PATH: (unset)
+started: 2026-10-24T13:05:14.817Z
+--- stdout ---
+
+--- stderr ---
+
+--- exit code: 0 ---

@@ -1,0 +1,38 @@
+# rv50-05: production callers of deleteAsset; tests that expect the listing_images.public_id read; the legacy test's cases in the r32-03d baseline; the HEAD read
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-50/rv50-05-callers.mjs (git grep --untracked, git show; no shell)
+started: 2026-10-24T12:26:17.149Z
+--- output ---
+-- production callers (git grep exit 0) --
+src/app/api/upload-avatar/route.ts:9:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/app/api/upload-company-logo/route.ts:5:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/app/api/upload-popular-location-photo/route.ts:6:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/lib/account/deleteAccount.ts:4:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/modules/admin/actions/index.ts:23:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/modules/listings/actions/deleteListing.ts:11:import { deleteAsset } from '@/lib/cloudinaryDelete'
+src/modules/listings/actions/updateListing.ts:19:import { deleteAsset } from '@/lib/cloudinaryDelete'
+-- tests expecting the public_id read (git grep exit 0) --
+src/lib/__tests__/cloudinary.security.test.ts:103:    expect(eqAsked).toEqual([{ table: 'listing_images', column: 'public_id', value: 'listings/ab_cd%x' }])
+src/lib/__tests__/cloudinary.security.test.ts:108:  it.each([['listing_images.public_id'], ['listing_images.url'], ['users.avatar_url'], ['users.company_logo_url'], ['companies.logo_url'], ['locations.image_url'], ['site_settings.value']])('an asset used by %s is never deleted, even when deletion is on', async (where) => {
+src/lib/__tests__/cloudinaryDelete.test.ts:18:  referencedInPublicId: false,
+src/lib/__tests__/cloudinaryDelete.test.ts:29:              data: table === 'listing_images' && mockState.referencedInPublicId ? [{ id: 'img-1' }] : [],
+src/lib/__tests__/cloudinaryDelete.test.ts:55:  mockState.referencedInPublicId = false
+src/lib/__tests__/cloudinaryDelete.test.ts:68:    mockState.referencedInPublicId = true
+src/lib/__tests__/cloudinaryDelete.test.ts:76:    expect(result.skipReason).toContain('listing_images.public_id')
+src/lib/cloudinaryDelete.security.test.ts:22:const READS = ['listing_images.public_id', 'listing_images.url', 'users.avatar_url', 'users.company_logo_url', 'companies.logo_url', 'locations.image_url', 'site_settings.value', 'pages.content']
+-- src/lib/__tests__/cloudinaryDelete.test.ts in r32-03d-failing-ids.txt: 4 --
+src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+-- HEAD:src/lib/cloudinaryDelete.ts lines 66-74 (git exit 0): the read's error was not read --
+
+  // listing_images.public_id — direct match (most precise check)
+  const { data: byPublicId } = await db
+    .from('listing_images')
+    .select('id')
+    .eq('public_id', publicId)
+    .limit(1)
+  if (byPublicId?.length) tables.push('listing_images.public_id')
+
+--- exit code: 0 ---

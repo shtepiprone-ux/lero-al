@@ -1,0 +1,31 @@
+total: 6849 files, 498.5 MB
+by git state:
+  untracked: 4791 files, 457.3 MB
+  committed locally, not pushed: 1865 files, 39.3 MB
+  on GitHub already: 193 files, 1.8 MB
+by extension:
+  .jsonl: 715 files, 325.8 MB
+  .png: 858 files, 79.5 MB
+  .txt: 3436 files, 54.9 MB
+  .json: 916 files, 32.6 MB
+  .mjs: 593 files, 2.5 MB
+  .md: 140 files, 0.9 MB
+  .cjs: 141 files, 0.8 MB
+  .tsv: 1 files, 0.6 MB
+  .nul: 2 files, 0.4 MB
+  .bak: 3 files, 0.2 MB
+  .tsx: 10 files, 0.1 MB
+  .html: 18 files, 0.1 MB
+largest folders (first level):
+  docs/sessions/evidence/task923: 6849 files, 498.5 MB
+largest files:
+  28.6 MB docs/sessions/evidence/task923/r8-full/rows.jsonl
+  28.5 MB docs/sessions/evidence/task923/r12-full/rows.jsonl
+  28.5 MB docs/sessions/evidence/task923/r10-108-full-merged/rows.jsonl
+  22.6 MB docs/sessions/evidence/task923/r7-full-a/rows.jsonl
+  22.6 MB docs/sessions/evidence/task923/r7-full-b/rows.jsonl
+  20.9 MB docs/sessions/evidence/task923/r3-full/rows.jsonl
+  20.9 MB docs/sessions/evidence/task923/r5-full/rows.jsonl
+  20.9 MB docs/sessions/evidence/task923/r4-full/rows.jsonl
+  20.9 MB docs/sessions/evidence/task923/r6-full/rows.jsonl
+  20.8 MB docs/sessions/evidence/task923/full/rows.jsonl

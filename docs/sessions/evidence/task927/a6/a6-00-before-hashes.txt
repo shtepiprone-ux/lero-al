@@ -1,0 +1,12 @@
+# a6-00: sha256 before the first edit of Task 927 Amendment 6
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a6/a6-00-hashes.mjs docs/sessions/evidence/task927/a6/a6-00-before-hashes.txt "a6-00: sha256 before the first edit of Task 927 Amendment 6"
+date: 2026-10-25T13:53:38.805Z
+paths: 2
+
+b452e6c9a465322e2ed9a31487d5e1e97e397d3c044137e84d4141bef82ea767  messages/uk.json
+cc6b9ff4f58104e269f120ddcb444e151a373e4d4bbecbdc1b9f77c2a0110ebb  scripts/__tests__/check-stories.test.ts
+
+exit code: 0

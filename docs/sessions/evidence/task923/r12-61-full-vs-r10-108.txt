@@ -1,0 +1,111 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node docs/sessions/evidence/task923/r12-61-compare-full.mjs docs/sessions/evidence/task923/r12-full docs/sessions/evidence/task923/r10-108-full-merged
+platform win32 node v22.22.3
+new docs/sessions/evidence/task923/r12-full: 34417 rows; base docs/sessions/evidence/task923/r10-108-full-merged: 34417 rows; the base run started about 2026-10-19T11:30:31.787Z (rows.jsonl write time minus 11258s); 19 paths committed since
+rows only in the new run 0 (states / widths added since the base run); only in the base run 0
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~call | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~write-on-whatsapp | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~call | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | en | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | en | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | it | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | it | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | sq | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | uk | 00320 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app | uk | 00390 :: new text-overlap || base green :: NOT ALLOWED
+DIFF patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~write-on-whatsapp | app | sq | 00320 :: new text-overlap || base green :: NOT ALLOWED
+
+rows in both runs 34417; rows with a difference 100
+differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 100
+  of them, informational: only a rule the base run could not measure (svg-text-clipped, text-overlap): 100; a Story that renders a changed file and whose new row fails: 0; the rest: 0
+  NOT ALLOWED rows per Story (6 Stories): patterns-mantine-listingdetailview--public-listing 24; patterns-mantine-listingdetailview--public-listing-converted 24; patterns-mantine-listingdetailview--public-listing-not-reduced 24; patterns-mantine-listingdetailview--staff-preview-published 10; patterns-mantine-listingdetailview--staff-preview-unpublished 10; patterns-mantine-listingdetailview--archived-listing 8
+EXIT_CODE=1

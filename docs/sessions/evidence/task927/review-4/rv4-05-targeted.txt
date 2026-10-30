@@ -1,0 +1,27 @@
+v22.22.3
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:227:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed | 12 passed (13)
+      Tests  7 failed | 160 passed (167)
+   Start at  12:14:17
+   Duration  11.06s (transform 3.44s, setup 1.47s, import 24.60s, tests 17.40s, environment 12.61s)
+
+exit: 1

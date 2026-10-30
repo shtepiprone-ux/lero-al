@@ -1,0 +1,12 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:19:48.483Z
+command: node docs/sessions/evidence/task927/review-8/rv8-07-mobile-jump.mjs patterns-mantine-authsheet--welcome-back 390 en
+--- output ---
+@patterns-mantine-authsheet--welcome-back 390 en mobile: 413 frames
+t=373 top=366.8 h=433.2 loader=true btn=- iframes=0 vv=800 sy=0 focus=BODY
+t=376 top=366.8 h=433.2 loader=true btn=- iframes=0 vv=800 sy=0 focus=BUTTON:button
+t=619 top=366.8 h=433.2 loader=false btn=- iframes=0 vv=800 sy=0 focus=BUTTON:button
+t=655 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 vv=800 sy=0 focus=BUTTON:button
+--- exit code: 0 ---

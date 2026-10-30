@@ -1,0 +1,11 @@
+# r53-00b: sha256 of the 3 paths of C1526, after the last edit (Task 923 Revision 53, R158)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r53-00-hashes.mjs after
+date: 2026-10-25T13:39:13.140Z
+--- output ---
+19c09035b8b33dfb1d5e94d57a4f244d8e5bcf2081f1e0e8a52d585ec480ccec  src/modules/auth/components/AuthRedirect.tsx
+72ffa2169343b924f2c71477a8435a140f1e35d287f512de5dd308da4d10a61e  src/modules/auth/components/__tests__/authClientParts.test.tsx
+9d9208df012e3043383bb81a16e3a40215130c1242871e4d2ea5428300fc130e  src/modules/auth/components/__tests__/staleSession.security.test.tsx
+exit code: 0

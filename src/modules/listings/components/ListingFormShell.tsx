@@ -10,6 +10,7 @@ import { changeListingStatusAction } from '@/modules/listings/actions/changeList
 import { ListingFormShellView } from '@/modules/listings/components/ListingFormShellView'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
+import { isListingPriceWithinCeiling } from '@/modules/listings/validations'
 import { isEditMode } from '@/modules/listings/domain/listingFormMode'
 import { isListingVisible, getPostSaveRedirect } from '@/modules/listings/domain/listingSemanticHelpers'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
@@ -40,6 +41,7 @@ interface CreateModeProps extends BaseProps {
   listingId?: never
   initialValues?: never
   canManageStatus?: never
+  canPublish?: never
   currentStatus?: never
 }
 
@@ -49,6 +51,8 @@ interface EditModeProps extends BaseProps {
   initialValues: Partial<FormValues>
   /** Server-computed (canAdminEditListing) — only staff (admin/moderator) get the status control. */
   canManageStatus: boolean
+  /** Server-computed (canAdminEditListing) — only staff may set `active` (Task 923 R35, D6). */
+  canPublish: boolean
   currentStatus: ListingStatus
 }
 
@@ -59,6 +63,7 @@ export function ListingFormShell(props: Props) {
   const listingId  = isEditMode(mode) ? (props as EditModeProps).listingId  : undefined
   const initialValues = isEditMode(mode) ? (props as EditModeProps).initialValues : undefined
   const canManageStatus = isEditMode(mode) ? (props as EditModeProps).canManageStatus : false
+  const canPublish = isEditMode(mode) ? (props as EditModeProps).canPublish : false
 
   const t = useTranslations('listing')
   const router = useRouter()
@@ -173,7 +178,8 @@ export function ListingFormShell(props: Props) {
     if (!data.property_type) {
       newErrors.property_type = t('error_property_type')
     }
-    if (!data.price || data.price <= 0) {
+    // a price above the ceiling of its currency is refused with the same message as an invalid price (Task 923 R101): the server and the database refuse it too
+    if (!data.price || !isListingPriceWithinCeiling(data.price, data.currency)) {
       newErrors.price = t('error_price')
     }
     if (data.images.length === 0) {
@@ -240,7 +246,7 @@ export function ListingFormShell(props: Props) {
       const result = await updateListing(listingId!, submitPayload)
       if ('error' in result) {
         if (result.error === 'not_found') {
-          router.push(`/${activeLocale}/cabinet/listings`)
+          router.push(`/${activeLocale}/cabinet?tab=listings`)
           return
         }
         setSubmitError(t('error_updating'))
@@ -327,7 +333,7 @@ export function ListingFormShell(props: Props) {
       onConfirmCancel={navigateAway}
       statusControl={
         canManageStatus && isEditMode(mode) && currentStatus
-          ? { currentStatus, listingId: listingId!, onStatusChange }
+          ? { currentStatus, listingId: listingId!, canPublish, onStatusChange }
           : undefined
       }
     />

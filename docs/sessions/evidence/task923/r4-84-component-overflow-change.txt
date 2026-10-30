@@ -1,0 +1,10 @@
+component-overflow rows (Story x state x root x locale x width with the rule) per component: Revision 2 -> Revision 3; "positioned" = rows in which at least one detail is a positioned / transformed element
+
+  authsheet: 100 -> 99 (-1); positioned 0
+  favoritesshell: 20 -> 0 (-20); positioned 0
+  listingcard: 32 -> 0 (-32); positioned 0
+  listingcardpattern: 36 -> 0 (-36); positioned 0
+  listingcardtrack: 140 -> 44 (-96); positioned 0
+
+components with a change: 5; components unchanged: 20
+total rows with component-overflow: 1181 -> 996 (-185); rows with a positioned / transformed detail in Revision 3: 210

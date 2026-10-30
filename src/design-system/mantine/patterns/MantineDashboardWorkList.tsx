@@ -2,10 +2,11 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import type { MantineColor } from '@mantine/core'
-import { Stack, Group, UnstyledButton, Text, Badge, Skeleton, Button, Divider, useMantineTheme } from '@mantine/core'
+import { Stack, Group, UnstyledButton, Text, Skeleton, Button, Divider, useMantineTheme } from '@mantine/core'
 import { ChevronRight } from 'lucide-react'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
+import { MantineBadge, type MantineBadgeMeaning } from './MantineBadge'
+import type { BadgeSemanticTone } from '../badgeTones'
 
 export interface DashboardWorkListRow {
   id: string
@@ -18,10 +19,10 @@ export interface DashboardWorkListRow {
    * nested competing clickable" rule). `absoluteLabel`'s `aria-label` still reaches assistive
    * tech either way. */
   meta?: ReactNode[]
-  /** `color` is `MantineColor` (review G5) — the same type `listingStatusTone.ts`'s
-   * `LISTING_STATUS_COLOR`/`VISIBILITY_TONE_COLOR` export, so a caller passing either map's
-   * value type-checks directly, with no cast. */
-  status?: { label: string; color: MantineColor; icon?: ReactNode }
+  /** What the row's badge means. A caller passes either a bare semantic `tone` or, when the badge is a registered status
+   * of an entity (a ticket, a report, ...), its `meaning` (R57, Task 859: `{ variant: 'status', entity, value }`), so the
+   * badge carries the same colour it has everywhere else (text only, no icon: D78-29). The label is the caller's localized text. */
+  status?: { label: string } & ({ tone: BadgeSemanticTone; meaning?: never } | { meaning: MantineBadgeMeaning; tone?: never })
   ctaLabel: string
 }
 
@@ -40,10 +41,27 @@ export interface MantineDashboardWorkListProps {
   loadingAriaLabel?: string
 }
 
+/** The row's status badge: a registered `meaning` when the caller has one, otherwise the bare semantic `tone`. */
+function WorkListBadge({ status }: { status: NonNullable<DashboardWorkListRow['status']> }) {
+  if (status.meaning) {
+    return (
+      <MantineBadge {...status.meaning}>
+        {status.label}
+      </MantineBadge>
+    )
+  }
+  return (
+    <MantineBadge variant="tone" tone={status.tone}>
+      {status.label}
+    </MantineBadge>
+  )
+}
+
 /**
  * Canonical compact "work list" both dashboards use (spec v3.3 §16.2 third row, §17.2 ADM-01/
  * ADM-02/ADM-06). Each row is one `next/link` anchor (`UnstyledButton component={Link}`, spec
- * §17.1 — no nested competing clickable) with a primary line (`lineClamp={2}`), optional meta
+ * §17.1 — no nested competing clickable) with a primary line (wrapped in full, never clamped: Task 859 D6, GR-3j,
+ * GR-3i), optional meta
  * items, a status `Badge` (colour is never the only carrier — always paired with `label` text)
  * and a trailing CTA affordance (label + chevron). The footer is `Button variant="transparent"`
  * — the canonical `Mantine/Primitives/Button` story's own tertiary/link chrome ("transparent, no
@@ -139,12 +157,8 @@ export function MantineDashboardWorkList({
                 and the CTA row at their own natural width; `w="100%"` on the title/meta `Text`s
                 is what still lets them wrap their own full row width under that alignment. */}
             <Stack gap={theme.spacing.xs} align="flex-start" hiddenFrom="sm">
-              {row.status && (
-                <Badge color={row.status.color} leftSection={row.status.icon}>
-                  {row.status.label}
-                </Badge>
-              )}
-              <Text size="sm" fw={600} c="gray.8" lineClamp={2} w="100%">
+              {row.status && <WorkListBadge status={row.status} />}
+              <Text size="sm" fw={600} c="gray.8" w="100%">
                 {row.primary}
               </Text>
               {row.meta?.map((item, mi) => (
@@ -163,7 +177,7 @@ export function MantineDashboardWorkList({
             {/* >=640: unchanged horizontal split (title+meta left, badge+CTA right). */}
             <Group justify="space-between" wrap="nowrap" gap="sm" align="flex-start" visibleFrom="sm">
               <Stack gap={theme.spacing.xs} flex={1} miw={0}>
-                <Text size="sm" fw={600} c="gray.8" lineClamp={2}>
+                <Text size="sm" fw={600} c="gray.8">
                   {row.primary}
                 </Text>
                 {row.meta && row.meta.length > 0 && (
@@ -177,11 +191,7 @@ export function MantineDashboardWorkList({
                 )}
               </Stack>
               <Group gap="xs" wrap="nowrap" align="center">
-                {row.status && (
-                  <Badge color={row.status.color} leftSection={row.status.icon}>
-                    {row.status.label}
-                  </Badge>
-                )}
+                {row.status && <WorkListBadge status={row.status} />}
                 <Group gap={theme.spacing.micro} wrap="nowrap" align="center">
                   <Text size="xs" fw={500} c="brand">
                     {row.ctaLabel}

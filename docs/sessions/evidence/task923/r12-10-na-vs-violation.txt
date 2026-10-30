@@ -1,0 +1,6 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node docs/sessions/evidence/task923/r12-10-na-vs-violation.mjs docs/sessions/evidence/task923/r12-full/rows.jsonl
+== docs/sessions/evidence/task923/r12-full/rows.jsonl
+rows 34417 retried rows 5 rows with a rule both notApplicable and violated 0
+{}
+EXIT_CODE=0

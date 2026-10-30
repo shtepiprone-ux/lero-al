@@ -1,0 +1,259 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:36:45.224Z",
+ "case": "SEC-X-SRV-EDIT-MODERATION",
+ "results": [
+  {
+   "id": "SEC-X-SRV-EDIT-MODERATION",
+   "testFile": "src/modules/listings/actions/__tests__/updateListing.security.test.ts",
+   "testName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/updateListing.ts",
+     "description": "the owner's edit of an active listing no longer moves it to pending",
+     "from": "  if (isOwner && isListingVisible(existing.status as ListingStatus)) {\n",
+     "to": "  if (false && isOwner && isListingVisible(existing.status as ListingStatus)) {\n"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/listings/actions/updateListing.ts",
+     "originalSha256": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+     "restoredSha256": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d"
+    }
+   ],
+   "failureMessage": "AssertionError: expected { slug: 'flat', status: 'active' } to deeply equal { slug: 'flat', status: 'pending' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/updateListing.security.test.ts:97:55\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259401314,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "status": "passed",
+         "title": "[SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "duration": 6.300200000000018,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "status": "skipped",
+         "title": "a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259401819,
+       "endTime": 1793259401825.3003,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/updateListing.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259402932,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "status": "failed",
+         "title": "[SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "duration": 8.726199999999949,
+         "failureMessages": [
+          "AssertionError: expected { slug: 'flat', status: 'active' } to deeply equal { slug: 'flat', status: 'pending' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/updateListing.security.test.ts:97:55\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "status": "skipped",
+         "title": "a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259403450,
+       "endTime": 1793259403458.7263,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/updateListing.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259404651,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the listings.moderate key cannot edit the listing of another person (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "status": "passed",
+         "title": "[SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+         "duration": 5.898399999999981,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateListing"
+         ],
+         "fullName": "updateListing a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "status": "skipped",
+         "title": "a staff edit of another person's active listing keeps the status and requests no transition (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259405137,
+       "endTime": 1793259405142.8984,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/updateListing.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

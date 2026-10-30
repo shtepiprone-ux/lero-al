@@ -44,20 +44,27 @@ function isActiveKickoff(file) {
     && /kickoff.*\.md$/i.test(basename(normalized))
 }
 
-function section(content, headingPattern) {
+function sections(content, headingPattern) {
   const lines = content.split(/\r?\n/)
-  const start = lines.findIndex((line) => headingPattern.test(line))
-  if (start < 0) return null
-  const level = (lines[start].match(/^(#+)\s/) ?? [])[1]?.length ?? 1
-  let end = lines.length
-  for (let index = start + 1; index < lines.length; index += 1) {
-    const match = lines[index].match(/^(#+)\s/)
-    if (match && match[1].length <= level) {
-      end = index
-      break
+  const headings = [], fenced = new Set()
+  let fence = null
+  for (let index = 0; index < lines.length; index += 1) {
+    const marker = lines[index].match(/^ {0,3}(`{3,}|~{3,})(.*)$/)
+    if (fence) {
+      fenced.add(index)
+      if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length && !marker[2].trim()) fence = null
+    } else if (marker) {
+      fence = marker[1]
+      fenced.add(index)
+    } else {
+      const match = lines[index].match(/^(#+)\s/)
+      if (match) headings.push({ index, level: match[1].length })
     }
   }
-  return { heading: lines[start], lines: lines.slice(start + 1, end) }
+  return headings.filter(({ index }) => headingPattern.test(lines[index])).map(({ index: start, level }) => {
+    const end = headings.find(h => h.index > start && h.level <= level)?.index ?? lines.length
+    return { heading: lines[start], lines: lines.slice(start + 1, end).filter((_, i) => !fenced.has(start + 1 + i)) }
+  })
 }
 
 function normalize(value) {
@@ -93,35 +100,42 @@ function checkSourceEvidence(evidence, file, id) {
   return { ok: true }
 }
 
+function declaration(line, type) {
+  // A list/table entry or an unambiguous cited label is a declaration; prose references are not.
+  const match = line.match(new RegExp(`^\\s*(\\|\\s*|(?:[-*+]|\\d+[.)])\\s+)?(?:\\*\\*|__)?(${type}\\d+)\\b(?!['’])(?:\\*\\*|__)?(.*)$`))
+  if (!match || (!match[1] && !/^\s*\[/.test(match[3]))) return null
+  return { id: match[2], after: match[3] }
+}
+
 function claimReferences(sectionLines, type, file, ids, requirementIds = null) {
-  const expression = new RegExp(`\\b${type}(\\d+)\\b`, 'g')
   const messages = []
   let count = 0
   for (const line of sectionLines) {
-    const mentions = [...line.matchAll(expression)]
+    const entry = declaration(line, type)
+    const mentions = entry ? [entry.id] : []
     if (mentions.length === 0) continue
     for (const mention of mentions) {
       count += 1
-      const afterId = line.slice((mention.index ?? 0) + mention[0].length)
+      const afterId = entry.after
       const citation = afterId.match(/^\s*\[([^\]]+)\]/)
       if (!citation) {
-        messages.push(`${file}: ${mention[0]} must immediately cite its evidence as [C…; D…].`)
+        messages.push(`${file}: ${mention} must immediately cite its ${requirementIds ? 'requirement as [R…]' : 'evidence as [C…; D…]'}.`)
         continue
       }
       const referenced = [...citation[1].matchAll(/\b([CD]\d+)\b/g)].map((item) => item[1])
-      if (referenced.length === 0) {
-        messages.push(`${file}: ${mention[0]} has no C#/D# citation.`)
+      if (referenced.length === 0 && !requirementIds) {
+        messages.push(`${file}: ${mention} has no C#/D# citation.`)
       }
       for (const id of referenced) {
-        if (!ids.has(id)) messages.push(`${file}: ${mention[0]} cites unknown ${id}.`)
+        if (!ids.has(id)) messages.push(`${file}: ${mention} cites unknown ${id}.`)
       }
       if (requirementIds) {
         const requirements = [...citation[1].matchAll(/\b(R\d+)\b/g)].map((item) => item[1])
         if (requirements.length === 0) {
-          messages.push(`${file}: ${mention[0]} must cite the requirement it verifies as [R…; C…; D…].`)
+          messages.push(`${file}: ${mention} must cite the requirement it verifies as [R…].`)
         }
         for (const requirement of requirements) {
-          if (!requirementIds.has(requirement)) messages.push(`${file}: ${mention[0]} cites unknown ${requirement}.`)
+          if (!requirementIds.has(requirement)) messages.push(`${file}: ${mention} cites unknown ${requirement}.`)
         }
       }
     }
@@ -132,16 +146,17 @@ function claimReferences(sectionLines, type, file, ids, requirementIds = null) {
 
 function validateKickoff(file, content = null) {
   const markdown = content ?? readFileSync(resolve(root, file), 'utf8')
-  const ledgerCount = markdown.split(/\r?\n/).filter((line) => /^#{1,6}\s+(?:\d+(?:\.\d+)?[.)]\s*)?Claim ledger\b/i.test(line)).length
-  const ledger = section(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)?[.)]\s*)?Claim ledger\b/i)
-  const requirements = section(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)?[.)]\s*)?Requirements\b/i)
-  const acceptance = section(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)?[.)]\s*)?Acceptance criteria\b/i)
+  const ledgers = sections(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)?[.)]\s*)?Claim ledger\b/i)
+  const ledgerCount = ledgers.length
+  const ledger = ledgers[0] ?? null
+  const requirements = sections(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)*[.)]?\s+)?Requirements\b/i)
+  const acceptance = sections(markdown, /^#{1,6}\s+(?:\d+(?:\.\d+)*[.)]?\s+)?Acceptance criteria\b/i)
   const receipt = /^\s*KICKOFF EVIDENCE PREFLIGHT COMPLETE\s*[—-]\s*claims:\s*C\d+/im.test(markdown)
   const errors = []
   if (!ledger) errors.push(`${file}: missing required ## Claim ledger section.`)
   if (ledgerCount > 1) errors.push(`${file}: exactly one ## Claim ledger section is required; found ${ledgerCount}.`)
-  if (!requirements) errors.push(`${file}: missing required ## Requirements section.`)
-  if (!acceptance) errors.push(`${file}: missing required ## Acceptance criteria section.`)
+  if (!requirements.length) errors.push(`${file}: missing required ## Requirements section.`)
+  if (!acceptance.length) errors.push(`${file}: missing required ## Acceptance criteria section.`)
   if (!receipt) errors.push(`${file}: missing KICKOFF EVIDENCE PREFLIGHT COMPLETE receipt.`)
   if (errors.length > 0) return errors
 
@@ -172,13 +187,18 @@ function validateKickoff(file, content = null) {
     } else {
       if (status !== 'OWNER DECISION') errors.push(`${file}: ${id} must have status OWNER DECISION.`)
       if (!/owner:\s*\d{4}-\d{2}-\d{2};\s*decision:\s*`[^`]+`/i.test(evidence ?? '')) {
-        errors.push(`${file}: ${id} must use owner: YYYY-MM-DD; decision: \`verbatim owner choice\`.`)
+        errors.push(`${file}: ${id} must use owner: YYYY-MM-DD; decision: \`owner choice in English\`.`)
       }
     }
   }
-  const requirementIds = new Set(requirements.lines.flatMap((line) => [...line.matchAll(/\b(R\d+)\b/g)].map((item) => item[1])))
-  errors.push(...claimReferences(requirements.lines, 'R', file, ids))
-  errors.push(...claimReferences(acceptance.lines, 'AC', file, ids, requirementIds))
+  const requirementLines = requirements.flatMap(s => s.lines)
+  const acceptanceLines = acceptance.flatMap(s => s.lines)
+  const requirementIds = new Set(requirementLines.flatMap(line => {
+    const entry = declaration(line, 'R')
+    return entry ? [entry.id] : []
+  }))
+  errors.push(...claimReferences(requirementLines, 'R', file, ids))
+  errors.push(...claimReferences(acceptanceLines, 'AC', file, ids, requirementIds))
   return errors
 }
 
@@ -201,6 +221,27 @@ function runVerifyGate() {
       if (duplicateLedgerErrors.length === 0) {
         console.error('FAIL check:kickoff-evidence:verify — duplicate Claim ledger was accepted.')
         return 1
+      }
+      const revision = `${valid}\n## 52. Revision\n\n### 52.1 Requirements\n\n- R100 [C1; D1] Keep the revised handler.\n\n### 52.2 Acceptance criteria\n\n- AC100 [R100; C1] The revised handler remains exported.\n`
+      const probes = [
+        ['valid later revision', revision, false],
+        ['unsupported later requirement', revision.replace('R100 [C1; D1]', 'R100'), true],
+        ['unknown later AC requirement', revision.replace('AC100 [R100; C1]', 'AC100 [R999; C1]'), true],
+        ['later AC inherits its requirement evidence', revision.replace('AC100 [R100; C1]', 'AC100 [R100]'), false],
+        ['later AC must name its requirement', revision.replace('AC100 [R100; C1]', 'AC100 [C1]'), true],
+        ['numbered top-level revision', revision.replace('52.1 Requirements', '52. Requirements').replace('R100 [C1; D1]', 'R100'), true],
+        ['cross-reference in prose', valid.replace('Keep the handler route.', 'Keep the handler route; R1 is unchanged.'), false],
+        ['possessive AC references are prose, not declarations', `${valid}\n- AC1's existing checks still apply.\n- AC1’s earlier result is retained.\n`, false],
+        ['unbulleted AC reference is explanatory prose', `${valid}\nAC1 stands with these checks.\n`, false],
+        ['fenced example is not a live section', `${valid}\n\`\`\`markdown\n## Requirements\n- R999 No evidence in an example.\n\`\`\`\n`, false],
+        ['fenced ledger example is not a duplicate live ledger', `${valid}\n\`\`\`markdown\n## Claim ledger\n| C999 | FACT | Example only. | source: missing.ts:1; observed: literal |\n\`\`\`\n`, false],
+      ]
+      for (const [name, content, shouldFail] of probes) {
+        const errors = validateKickoff('kickoff.md', content)
+        if ((errors.length > 0) !== shouldFail) {
+          console.error(`FAIL check:kickoff-evidence:verify — ${name}: ${errors.join('; ') || 'invalid route accepted'}`)
+          return 1
+        }
       }
     } finally {
       process.chdir(originalCwd)

@@ -1,0 +1,134 @@
+# a8-01 vitest: Google tests, header, re-confirmation, identity, AuthSheet
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T18:54:41.472Z
+
+command: npx vitest run --reporter=verbose src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx src/components/layout/__tests__/Header.google.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/lib/auth/__tests__/googleIdentity.test.ts src/modules/auth/components/__tests__/AuthSheet.test.tsx
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/auth/__tests__/googleIdentity.test.ts > [SEC-927-FE-UNIT-NONCE] a nonce pair is 32 random bytes in base64 with its lowercase hex SHA-256, and two pairs differ 12ms
+ ✓ src/lib/auth/__tests__/googleIdentity.test.ts > [SEC-927-FE-UNIT-LOADER] concurrent loads share one script element, an error or a timeout rejects, and a later call retries with a new element 27ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ALLOW] a Google-only person who confirms with the Google account of the profile gets the e-mail change and the deletion they asked for, each once 559ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-DENY-ACCOUNT] a Google confirmation with another account or an unreadable credential is refused before Supabase and repeats nothing 341ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-DENY-SWITCH] when the confirmation returns another account's session the person is signed out and nothing is repeated 278ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > closed, it shows nothing 69ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the login view is titled Login 138ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the register view is titled Register 57ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ERR] a failed Google confirmation or an unavailable Google script shows an error and repeats nothing 233ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ALLOW] a visitor who picks a Google account is signed in with that credential and the raw nonce whose SHA-256 Google got, the sheet closes and the stored same-site destination opens 211ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-REDIRECT] after a Google sign-in a stored destination that is not a path of this site is not opened and the page refreshes instead 291ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the register-agent view is titled Register as agent 50ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the forgot-password view is titled Reset password 38ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the agent view says which kind of registration it is 45ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ONE-CONFIG] after the deletion dialog with its own Google button closes, a confirmation in the e-mail section still repeats the e-mail change once 479ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the views link to each other 227ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-ONETAP-ALLOW] a guest is offered Google's One Tap once on a page, and picking an account signs in with that prompt's raw nonce and opens the stored same-site destination 274ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > typed registration values survive a switch between the private and agent views 113ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > opening it again starts clean on the asked view 93ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-BANNED] a banned Google account gets the wrong-credentials text in every locale, stays signed out and the sheet stays open 345ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-REPLAY] a second credential during a pending sign-in is ignored and the next attempt uses a new nonce 64ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > the sheet itself > the drawer's own close control reports the close 32ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > shows the session-recovery note once and removes the flag 31ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "" is refused before anything is sent 48ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-NOAUTO] nothing signs a visitor in automatically: auto select is off, One Tap is never prompted and nothing is sent before an account is picked 43ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-SCRIPT] when the Google script fails to load the slot shows the unavailable alert, no loader remains and the e-mail sign-in still works 83ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "   " is refused before anything is sent 41ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "no-at-sign" is refused before anything is sent 42ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a@b" is refused before anything is sent 47ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-ONETAP-DENY-NOTGUEST] One Tap is never loaded or prompted unless the visitor is a guest 290ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-TIMEOUT] when the Google script never answers within 10 seconds the slot shows the unavailable alert 44ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-NOCLIENT] without a client ID no Google script is requested and the slot shows the unavailable alert 33ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a b@c.com" is refused before anything is sent 49ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the address "a@b.c" is refused before anything is sent 50ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an empty password is refused before anything is sent 45ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-NOLEAK] a failed Google sign-in writes neither the credential nor the raw nonce to the console, storage or the address 77ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > a good login sends exactly the typed values, closes the sheet and refreshes the page 79ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > a safe stored destination is used once and removed 65ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > the Google button is drawn with Google's own options and a width of at most 400 pixels 181ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > a rejected sign-in call shows the generic error and keeps the sheet open 63ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "//evil.example" is never visited 67ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "https://evil.example" is never visited 70ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "/a/../admin" is never visited 65ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "javascript:alert(1)" is never visited 71ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-ONETAP-DENY-SHEET] One Tap is cancelled when the sign-in sheet opens, ignores a late credential and is not raised again on a page where the sheet was open 622ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > an unsafe stored destination "/\\evil" is never visited 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Invalid login credentials" is shown as "Incorrect email or password." and does not close the sheet 48ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "invalid credentials" is shown as "Incorrect email or password." and does not close the sheet 45ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "User already registered" is shown as "This email is already registered." and does not close the sheet 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Password should be at least 6 characters" is shown as "Password must be at least 6 characters." and does not close the sheet 47ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Email not confirmed" is shown as "Please confirm your email before logging in." and does not close the sheet 42ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "email rate limit exceeded" is shown as "Too many attempts. Please wait about 60 minutes and try again." and does not close the sheet 51ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "Too many requests" is shown as "Too many attempts. Please wait about 60 minutes and try again." and does not close the sheet 47ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-ONETAP-DENY-REDIRECT] after a One Tap sign-in a hostile stored destination is never opened and the page refreshes instead 465ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "captcha protection: request disallowed (no captcha_token found)" is shown as "Security verification failed. Please try again." and does not close the sheet 59ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "something the server invented" is shown as "An error occurred. Please try again." and does not close the sheet 82ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the server message "" is shown as "An error occurred. Please try again." and does not close the sheet 63ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > while the request runs the button cannot be pressed again 82ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > Google sign-in sends the ID token with this attempt's nonce, closes the sheet and refreshes the page 43ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > Google sign-in opens the stored destination once, checks it, and does not keep it (Task 923 R72 (i), Task 927) 93ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > login > the password field is current-password, the toggle is named, and the e-mail asks for an e-mail keyboard 50ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > cannot be sent without the captcha, and cannot be forced either 28ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > sends the typed address, the captcha token and a reset link that returns to this site's reset page in the person's language 45ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":true} always leads to the same neutral success (the page never tells whether the address is registered) 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"rate_limited"} always leads to the same neutral success (the page never tells whether the address is registered) 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"unknown_email"} always leads to the same neutral success (the page never tells whether the address is registered) 39ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > the answer {"ok":false,"reason":"server_error"} always leads to the same neutral success (the page never tells whether the address is registered) 40ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > a failed captcha resets the widget, clears the token, shows the error, and needs a new token 52ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > a widget error shows the failure and takes the token away; an expiry only takes the token away; a new token recovers 64ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > forgot password > "back to login" works from the form and from the success page 73ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the register button needs a strong password AND the captcha 69ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad name is refused before anything is sent 74ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-ONETAP-ERR] a refused or failed One Tap sign-in shows its translated error and saves nothing, and a GIS load failure shows nothing 980ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad e-mail is refused before anything is sent 84ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a bad password is refused before anything is sent 86ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-REMEMBER-ALLOW] after a Google sign-in this device remembers only the account id, name, masked e-mail and Google picture, and the sheet opens on Welcome back with that account as the hint 170ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > without a captcha token a forced submit sends nothing and says nothing 57ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a phone that fails the country rules shows that rule and sends nothing 93ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a private registration sends the typed values, the token and this site's verification return path; no agent fields 89ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a valid phone is sent in E.164 80ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-REMEMBER-DENY-HOSTILE] a hostile or malformed remembered record is never rendered as markup or a foreign image and is removed 388ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > an agent registration sends user_type agent with the chosen city (as a number) and company 78ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > an agent with no city and no company sends none of them 62ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a private registration never sends a city or company even if one was chosen before switching 86ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a failed captcha resets the widget, drops the token and shows the captcha error 67ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-REMEMBER-FORGET] Forget this account erases the remembered account for good, while More sign-in options only shows the full sign-in 319ms
+ ✓ src/components/layout/__tests__/Header.google.security.test.tsx > [SEC-927-FE-WELCOME-DENY-BANNED] a banned account using Welcome back stays signed out with the wrong-credentials alert and the record unchanged 104ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "User already registered" is shown as "This email is already registered.", the widget is reset and a new token is needed 69ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "Password should be at least 6 characters" is shown as "Password must be at least 6 characters.", the widget is reset and a new token is needed 81ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a server message "email rate limit" is shown as "Too many attempts. Please wait about 60 minutes and try again.", the widget is reset and a new token is needed 89ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a failure with no message is the generic error 86ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the success page leads home by closing the sheet 86ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a captcha error from the widget blocks and shows the error; the next good token clears it 60ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > a token that expires disables the button again 99ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > registration > the password field asks for a NEW password 28ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > lists the companies and the add panel opens and cancels 75ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > the add button needs a name; the name is limited to 120 characters 76ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > creates the company with the trimmed name, selects it and closes the panel 80ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > Enter in the name field creates it without submitting the registration form 44ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > an existing company is offered for selection instead of creating a second one 88ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > typing again withdraws the duplicate notice 81ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a refused name (no id) stops quietly and the panel stays open 64ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a refetch failure does not lose the new company 87ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file of another type is refused with its message and no preview 54ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a PDF is refused with its message and no preview 50ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file over 2 MB is refused with its message and no preview 57ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a picture over 256 px is refused and its temporary address is released 60ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a file the browser cannot read as a picture is refused as the wrong type 59ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > a good logo shows a preview, can be replaced, and cleared (releasing its address) 90ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > exactly the three picture types are accepted by the file chooser 46ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > the logo is uploaded with the company id and its grant after the company exists; the upload is a POST of form data 96ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > no grant means none is sent; an upload failure is ignored and the company is still selected 116ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > no logo means no upload request 103ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.test.tsx > company picker (agent registration) > choosing an existing company from the list sets it for the registration 63ms
+
+ Test Files  5 passed (5)
+      Tests  114 passed (114)
+   Start at  19:54:42
+   Duration  9.35s (transform 2.09s, setup 453ms, import 9.17s, tests 12.81s, environment 4.11s)
+--- exit code: 0 ---
+
+finished: 2026-10-25T18:54:52.062Z
+exit code: 0

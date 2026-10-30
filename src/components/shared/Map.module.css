@@ -1,0 +1,39 @@
+/*
+ * Task 923 (R33, owner D6) - the Leaflet controls of the listing map reach the 44px touch-target floor below the mobile gate (640px) and keep
+ * Leaflet's own size from 640px up. Leaflet's stylesheet is loaded from unpkg by `Map.tsx`; these rules sit on the map's own class and use
+ * the project token `--homepage-runtime-space-11` (globals.css, 44px), so a control is never sized with a number of its own.
+ */
+.pin {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+}
+
+.map :global(.leaflet-control-zoom a),
+.map :global(.leaflet-popup-close-button),
+.map :global(.leaflet-control-attribution a) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--homepage-runtime-space-11);
+  min-height: var(--homepage-runtime-space-11);
+}
+
+.map :global(.leaflet-control-zoom a) {
+  line-height: var(--homepage-runtime-space-11);
+}
+
+@media (min-width: 40em) {
+  .map :global(.leaflet-control-zoom a),
+  .map :global(.leaflet-popup-close-button),
+  .map :global(.leaflet-control-attribution a) {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .map :global(.leaflet-control-zoom a) {
+    line-height: 30px; /* Leaflet's own */ /* design-tokens-allow: line-height: 30px - restores Leaflet's stylesheet value from 640px up */
+  }
+}

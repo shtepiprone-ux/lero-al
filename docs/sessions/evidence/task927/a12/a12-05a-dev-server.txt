@@ -1,0 +1,14 @@
+# a12-05a: dev-server check before npm run build
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:09:30.582Z
+
+command: powershell -NoProfile -File docs/sessions/evidence/task927/a12/a12-05a-dev-server.ps1
+--- output ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+--- exit code: 0 ---
+
+finished: 2026-10-28T19:09:31.337Z
+exit code: 0

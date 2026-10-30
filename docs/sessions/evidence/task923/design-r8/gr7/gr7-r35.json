@@ -1,0 +1,966 @@
+[
+  {
+    "ref": "lahomes",
+    "name": "inbox-compose",
+    "url": "https://techzaa.in/lahomes/admin/inbox.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:43:25.280Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/inbox.html",
+    "title": "Inbox | Lahomes - Real Estate Management Admin Template",
+    "triggerVisible": true,
+    "dialog": {
+      "found": true,
+      "title": "New Message",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 900
+      },
+      "viewport": 1440,
+      "fields": [
+        {
+          "tag": "input",
+          "type": "email",
+          "label": "To: ",
+          "box": {
+            "x": 351,
+            "y": 103,
+            "w": 738,
+            "h": 39
+          }
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "label": "Subject ",
+          "box": {
+            "x": 351,
+            "y": 152,
+            "w": 738,
+            "h": 39
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "text": "Close",
+          "box": {
+            "x": 1088,
+            "y": 35,
+            "w": 31,
+            "h": 31
+          }
+        },
+        {
+          "text": "",
+          "box": {
+            "x": 980,
+            "y": 411,
+            "w": 52,
+            "h": 45
+          }
+        },
+        {
+          "text": "",
+          "box": {
+            "x": 1037,
+            "y": 411,
+            "w": 52,
+            "h": 45
+          }
+        },
+        {
+          "text": "Send",
+          "box": {
+            "x": 351,
+            "y": 411,
+            "w": 66,
+            "h": 39
+          }
+        }
+      ]
+    },
+    "screenshot": "lahomes-inbox-compose-1440.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "inbox-compose",
+    "url": "https://techzaa.in/lahomes/admin/inbox.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:43:32.344Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/inbox.html",
+    "title": "Inbox | Lahomes - Real Estate Management Admin Template",
+    "triggerVisible": false,
+    "dialog": {
+      "found": false
+    },
+    "screenshot": "lahomes-inbox-compose-390.png"
+  },
+  {
+    "ref": "omah",
+    "name": "profile-send-message",
+    "url": "https://omah.dexignzone.com/xhtml/app-profile.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:43:35.185Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/app-profile.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "triggerVisible": true,
+    "dialog": {
+      "found": true,
+      "title": "Send Message",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 900
+      },
+      "viewport": 1440,
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "label": "Name *",
+          "box": {
+            "x": 488,
+            "y": 373,
+            "w": 218,
+            "h": 39
+          }
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "label": "Email *",
+          "box": {
+            "x": 735,
+            "y": 373,
+            "w": 218,
+            "h": 39
+          }
+        },
+        {
+          "tag": "textarea",
+          "type": null,
+          "label": "Comment",
+          "box": {
+            "x": 488,
+            "y": 452,
+            "w": 465,
+            "h": 98
+          }
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "label": null,
+          "box": {
+            "x": 488,
+            "y": 564,
+            "w": 129,
+            "h": 38
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "text": "",
+          "box": {
+            "x": 934,
+            "y": 293,
+            "w": 27,
+            "h": 24
+          }
+        }
+      ]
+    },
+    "screenshot": "omah-profile-send-message-1440.png"
+  },
+  {
+    "ref": "omah",
+    "name": "profile-send-message",
+    "url": "https://omah.dexignzone.com/xhtml/app-profile.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:43:40.120Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/app-profile.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "triggerVisible": true,
+    "dialog": {
+      "found": true,
+      "title": "Send Message",
+      "dialog": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 900
+      },
+      "viewport": 390,
+      "fields": [
+        {
+          "tag": "input",
+          "type": "text",
+          "label": "Name *",
+          "box": {
+            "x": 25,
+            "y": 334,
+            "w": 341,
+            "h": 39
+          }
+        },
+        {
+          "tag": "input",
+          "type": "text",
+          "label": "Email *",
+          "box": {
+            "x": 25,
+            "y": 412,
+            "w": 341,
+            "h": 39
+          }
+        },
+        {
+          "tag": "textarea",
+          "type": null,
+          "label": "Comment",
+          "box": {
+            "x": 25,
+            "y": 491,
+            "w": 341,
+            "h": 98
+          }
+        },
+        {
+          "tag": "input",
+          "type": "submit",
+          "label": null,
+          "box": {
+            "x": 25,
+            "y": 603,
+            "w": 129,
+            "h": 38
+          }
+        }
+      ],
+      "buttons": [
+        {
+          "text": "",
+          "box": {
+            "x": 347,
+            "y": 254,
+            "w": 27,
+            "h": 24
+          }
+        }
+      ]
+    },
+    "screenshot": "omah-profile-send-message-390.png"
+  },
+  {
+    "ref": "tailadmin",
+    "name": "task-list-add-task",
+    "url": "https://demo.tailadmin.com/task-list",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:43:44.179Z",
+    "status": 200,
+    "finalUrl": "https://demo.tailadmin.com/task-list",
+    "title": "Task List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+    "triggerVisible": true,
+    "dialog": {
+      "found": false
+    },
+    "screenshot": "tailadmin-task-list-add-task-1440.png"
+  },
+  {
+    "ref": "tailadmin",
+    "name": "task-list-add-task",
+    "url": "https://demo.tailadmin.com/task-list",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:43:47.065Z",
+    "status": 200,
+    "finalUrl": "https://demo.tailadmin.com/task-list",
+    "title": "Task List | TailAdmin - Tailwind CSS Admin Dashboard Template",
+    "triggerVisible": true,
+    "dialog": {
+      "found": false
+    },
+    "screenshot": "tailadmin-task-list-add-task-390.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "property-details",
+    "url": "https://techzaa.in/lahomes/admin/property-details.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:43:49.741Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/property-details.html",
+    "title": "Property Overview | Lahomes - Real Estate Management Admin Template",
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        },
+        {
+          "labels": [],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Theme Settings",
+        "Color Scheme",
+        "Topbar Color",
+        "Menu Color",
+        "Sidebar Size",
+        "Property Overview",
+        "Property Owner Details",
+        "Schedule A Tour",
+        "Some Facility :",
+        "Property Details :"
+      ]
+    },
+    "screenshot": "lahomes-property-details-1440.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "property-details",
+    "url": "https://techzaa.in/lahomes/admin/property-details.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:43:53.410Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/property-details.html",
+    "title": "Property Overview | Lahomes - Real Estate Management Admin Template",
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Theme Settings",
+        "Color Scheme",
+        "Topbar Color",
+        "Menu Color",
+        "Sidebar Size",
+        "Property Overview",
+        "Property Owner Details",
+        "Schedule A Tour",
+        "Some Facility :",
+        "Property Details :"
+      ]
+    },
+    "screenshot": "lahomes-property-details-390.png"
+  },
+  {
+    "ref": "omah",
+    "name": "property-details",
+    "url": "https://omah.dexignzone.com/xhtml/property-details.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:43:55.855Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/property-details.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Property Detsils",
+        "SALE",
+        "Samuel Rodriguez",
+        "Property Location",
+        "Owner History",
+        "James Humbly",
+        "Erico Lee",
+        "Cindy Samantha",
+        "Front View",
+        "Front View",
+        "Front View",
+        "Front View",
+        "98AB Alexander Court, London",
+        "$400.000 - $600.000",
+        "Description",
+        "Property Features",
+        "Pick your style Delete All Cookie",
+        "Select Preset Demo",
+        "Demo 1",
+        "Demo 2",
+        "Demo 3",
+        "Demo 4",
+        "Demo 5",
+        "Demo 6",
+        "Demo 7"
+      ]
+    },
+    "screenshot": "omah-property-details-1440.png"
+  },
+  {
+    "ref": "omah",
+    "name": "property-details",
+    "url": "https://omah.dexignzone.com/xhtml/property-details.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:03.371Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/property-details.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "page": {
+      "forms": [],
+      "statusSelects": [],
+      "headings": [
+        "Property Detsils",
+        "SALE",
+        "Samuel Rodriguez",
+        "Property Location",
+        "Owner History",
+        "James Humbly",
+        "Erico Lee",
+        "Cindy Samantha",
+        "Front View",
+        "Front View",
+        "Front View",
+        "Front View",
+        "98AB Alexander Court, London",
+        "$400.000 - $600.000",
+        "Description",
+        "Property Features",
+        "Pick your style Delete All Cookie",
+        "Select Preset Demo",
+        "Demo 1",
+        "Demo 2",
+        "Demo 3",
+        "Demo 4",
+        "Demo 5",
+        "Demo 6",
+        "Demo 7"
+      ]
+    },
+    "screenshot": "omah-property-details-390.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "property-add",
+    "url": "https://techzaa.in/lahomes/admin/property-add.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:44:07.241Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/property-add.html",
+    "title": "Add Property | Lahomes - Real Estate Management Admin Template",
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        },
+        {
+          "labels": [],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Name"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Categories"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Price"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property For"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Bedroom"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Bathroom"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Square Foot"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Floor"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Address"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Zip-Code"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "City"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Country"
+          ],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Theme Settings",
+        "Color Scheme",
+        "Topbar Color",
+        "Menu Color",
+        "Sidebar Size",
+        "Add Property",
+        "Dvilla Residences Batu(Residences)",
+        "Price :",
+        "$8,930.00",
+        "Add Property Photo",
+        "Drop your images here, or click to browse",
+        "Property Information"
+      ]
+    },
+    "screenshot": "lahomes-property-add-1440.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "property-add",
+    "url": "https://techzaa.in/lahomes/admin/property-add.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:09.601Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/property-add.html",
+    "title": "Add Property | Lahomes - Real Estate Management Admin Template",
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Name"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Categories"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Price"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property For"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Bedroom"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Bathroom"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Square Foot"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Floor"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Property Address"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Zip-Code"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "City"
+          ],
+          "buttons": []
+        },
+        {
+          "labels": [
+            "Country"
+          ],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Theme Settings",
+        "Color Scheme",
+        "Topbar Color",
+        "Menu Color",
+        "Sidebar Size",
+        "Add Property",
+        "Dvilla Residences Batu(Residences)",
+        "Price :",
+        "$8,930.00",
+        "Add Property Photo",
+        "Drop your images here, or click to browse",
+        "Property Information"
+      ]
+    },
+    "screenshot": "lahomes-property-add-390.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "signin",
+    "url": "https://techzaa.in/lahomes/admin/auth-signin.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:44:11.838Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/auth-signin.html",
+    "title": "Sign In | Lahomes - Real Estate Management Admin Template",
+    "hasForm": false,
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email",
+            "Password",
+            "Remember me"
+          ],
+          "buttons": [
+            "Sign In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign In"
+      ]
+    },
+    "screenshot": "lahomes-signin-1440.png"
+  },
+  {
+    "ref": "lahomes",
+    "name": "signin",
+    "url": "https://techzaa.in/lahomes/admin/auth-signin.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:14.033Z",
+    "status": 200,
+    "finalUrl": "https://techzaa.in/lahomes/admin/auth-signin.html",
+    "title": "Sign In | Lahomes - Real Estate Management Admin Template",
+    "hasForm": false,
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email",
+            "Password",
+            "Remember me"
+          ],
+          "buttons": [
+            "Sign In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign In"
+      ]
+    },
+    "screenshot": "lahomes-signin-390.png"
+  },
+  {
+    "ref": "omah",
+    "name": "signin",
+    "url": "https://omah.dexignzone.com/xhtml/pages/login.html",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:44:16.020Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/pages/login.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://omah.dexignzone.com/xhtml/index.html?",
+    "errorText": [
+      "*Note :",
+      "*Note :"
+    ],
+    "page": {
+      "forms": [
+        {
+          "labels": [],
+          "buttons": []
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Dashboard",
+        "Total Properties",
+        "2,356",
+        "2,206",
+        "Total Revenue",
+        "Overview",
+        "Properties Map Location",
+        "Customer Review",
+        "Recent Property",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "Pick your style Delete All Cookie",
+        "Select Preset Demo",
+        "Demo 1",
+        "Demo 2",
+        "Demo 3",
+        "Demo 4",
+        "Demo 5",
+        "Demo 6",
+        "Demo 7",
+        "Demo 8"
+      ]
+    },
+    "screenshot": "omah-signin-1440.png"
+  },
+  {
+    "ref": "omah",
+    "name": "signin",
+    "url": "https://omah.dexignzone.com/xhtml/pages/login.html",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:22.357Z",
+    "status": 200,
+    "finalUrl": "https://omah.dexignzone.com/xhtml/pages/login.html",
+    "title": "Omah - Real Estate Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://omah.dexignzone.com/xhtml/index.html?",
+    "errorText": [
+      "*Note :",
+      "*Note :"
+    ],
+    "page": {
+      "forms": [],
+      "statusSelects": [],
+      "headings": [
+        "Dashboard",
+        "Total Properties",
+        "2,356",
+        "2,206",
+        "Total Revenue",
+        "Overview",
+        "Properties Map Location",
+        "Customer Review",
+        "Recent Property",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "98AB Alexander Court, London",
+        "2AB Historical landmark, Paris",
+        "Pick your style Delete All Cookie",
+        "Select Preset Demo",
+        "Demo 1",
+        "Demo 2",
+        "Demo 3",
+        "Demo 4",
+        "Demo 5",
+        "Demo 6",
+        "Demo 7",
+        "Demo 8"
+      ]
+    },
+    "screenshot": "omah-signin-390.png"
+  },
+  {
+    "ref": "tailadmin",
+    "name": "signin",
+    "url": "https://demo.tailadmin.com/signin",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:44:27.981Z",
+    "status": 200,
+    "finalUrl": "https://demo.tailadmin.com/signin",
+    "title": "Sign In | TailAdmin - Tailwind CSS Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://demo.tailadmin.com/signin?email=demo%40example.com",
+    "errorText": [
+      "*",
+      "*"
+    ],
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email*",
+            "Password*",
+            "Keep me logged in"
+          ],
+          "buttons": [
+            "Sign In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign In"
+      ]
+    },
+    "screenshot": "tailadmin-signin-1440.png"
+  },
+  {
+    "ref": "tailadmin",
+    "name": "signin",
+    "url": "https://demo.tailadmin.com/signin",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:32.023Z",
+    "status": 200,
+    "finalUrl": "https://demo.tailadmin.com/signin",
+    "title": "Sign In | TailAdmin - Tailwind CSS Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://demo.tailadmin.com/signin?email=demo%40example.com",
+    "errorText": [
+      "*",
+      "*"
+    ],
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email*",
+            "Password*",
+            "Keep me logged in"
+          ],
+          "buttons": [
+            "Sign In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign In"
+      ]
+    },
+    "screenshot": "tailadmin-signin-390.png"
+  },
+  {
+    "ref": "kamr",
+    "name": "signin",
+    "url": "https://kamr-vite.vercel.app/login",
+    "width": 1440,
+    "checkedAt": "2026-10-17T21:44:36.030Z",
+    "status": 200,
+    "finalUrl": "https://kamr-vite.vercel.app/login",
+    "title": "Kamr : Vite Hotel Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://kamr-vite.vercel.app/login",
+    "errorText": [
+      "*",
+      "*"
+    ],
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email *",
+            "Password *",
+            "Remember my preference"
+          ],
+          "buttons": [
+            "Sign Me In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign in your account"
+      ]
+    },
+    "screenshot": "kamr-signin-1440.png"
+  },
+  {
+    "ref": "kamr",
+    "name": "signin",
+    "url": "https://kamr-vite.vercel.app/login",
+    "width": 390,
+    "checkedAt": "2026-10-17T21:44:40.890Z",
+    "status": 200,
+    "finalUrl": "https://kamr-vite.vercel.app/login",
+    "title": "Kamr : Vite Hotel Admin Dashboard Template",
+    "hasForm": true,
+    "afterUrl": "https://kamr-vite.vercel.app/login",
+    "errorText": [
+      "*",
+      "*"
+    ],
+    "page": {
+      "forms": [
+        {
+          "labels": [
+            "Email *",
+            "Password *",
+            "Remember my preference"
+          ],
+          "buttons": [
+            "Sign Me In"
+          ]
+        }
+      ],
+      "statusSelects": [],
+      "headings": [
+        "Sign in your account"
+      ]
+    },
+    "screenshot": "kamr-signin-390.png"
+  }
+]

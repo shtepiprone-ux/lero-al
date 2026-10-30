@@ -1,0 +1,18 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run scripts/__tests__/rendered-state-census.test.ts
+date: 2026-10-23T17:40:09.122Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  39 passed (39)
+   Start at  19:40:08
+   Duration  366ms (transform 93ms, setup 102ms, import 108ms, tests 24ms, environment 0ms)
+
+
+
+EXIT_CODE=0

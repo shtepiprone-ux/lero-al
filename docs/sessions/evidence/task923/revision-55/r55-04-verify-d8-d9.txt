@@ -1,0 +1,10 @@
+# r55-04 part 3 (R169 (c)): verify d8-d9
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>, NEXT_PUBLIC_SUPABASE_URL=<not printed>)
+started: 2026-10-29T11:57:19.8314010Z
+finished: 2026-10-29T12:02:22.3805522Z
+--- output (last 40 lines) ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+
+--- exit code: 0 ---

@@ -1,0 +1,6 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+docs/sessions/evidence/task923/security/db-break.cjs: current feca9511d0449e28702e8dc585c5bf882527acdd3ffb626e57b2acb3d271bf23; occurrences of the new entry 1; reverted c1acf32f63593bf38f6faf6e4db40c89fff58610f19e58b0510f86afcb8a201a; equals r55-00 before true
+docs/sessions/evidence/task923/security/sensitivity.mjs: current 48a18ca2ae700e2f7e9e9609666fdbbc2460fd446b17ffd762a8765347314f57; NO_PENDING_STATUS line 128:
+const NO_PENDING_STATUS = { file: LISTING_PAGE, describe: 'the listing page treats a pending listing as public', from: "const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented']", to: "const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented', 'pending']" }
+docs/sessions/evidence/task923/security/sensitivity.mjs: reverted 01b29eeb956b33ffaa665ea35a7863e313182f011f0191fbce84194d2de132fc; equals r55-00 before (01b29eeb…) true
+exit 0

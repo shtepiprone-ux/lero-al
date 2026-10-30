@@ -1,0 +1,16 @@
+# Task 923 Revision 30 design, 2026-10-22T11:52:26Z. Guest (no cookies) requests to the owner's local dev server http://localhost:3000 (git HEAD a95d3fe4a, working tree with R100). Archived test listing slug 35-mviht7po.
+== GET /uk/listings/35-mviht7po
+HTTP/1.1 200 OK
+title: <title>Lero.al — Real estate marketplace in Albania</title>
+markers: NEXT_HTTP_ERROR_FALLBACK;404 
+robots: name="robots" content="noindex"
+== GET /uk/listings/35-mviht7po/edit
+HTTP/1.1 200 OK
+title: <title>Редагувати оголошення | Lero.al</title>
+markers: NEXT_REDIRECT;replace;/uk/auth/login?next=%2Fuk%2Flistings%2F35-mviht7po%2Fedit\u0026session=lost;307 
+robots: 
+== GET /uk/listings/zz-no-such-slug-1
+HTTP/1.1 200 OK
+title: <title>Lero.al — Real estate marketplace in Albania</title>
+markers: NEXT_HTTP_ERROR_FALLBACK;404 
+robots: name="robots" content="noindex"

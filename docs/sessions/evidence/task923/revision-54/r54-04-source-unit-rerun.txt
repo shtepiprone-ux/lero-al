@@ -1,0 +1,6 @@
+PROVED     SEC-X-SRV-LOCATIONS-PERM [unit] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-X-SRV-MOD-KEYS [unit] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.

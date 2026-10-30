@@ -1,0 +1,70 @@
+# R145 AC145 r45-02: r44-02's command and environment rerun on the four real-boundary suites (D66, D67)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+environment: SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF derived from the host of NEXT_PUBLIC_SUPABASE_URL in .env.local (ref length 20, values not printed)
+command: npx vitest run --config vitest.integration.config.ts --reporter=verbose src/lib/account/deleteAccount.integration.test.ts src/modules/cabinet/actions/reauth.integration.test.ts src/modules/cabinet/actions/reauthLimit.integration.test.ts src/lib/auth/sessionEnd.integration.test.ts
+started: 2026-10-24T13:02:45.075Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvmerj68951e/listing-one',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvmerj68951e/listing-two',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvmerj68951e/company-logo',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvmerj68951e/verification',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 9339ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 931ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id 3362ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id 456ms
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account
+SEC-DEL-INT-DENY: the moderator role holds users.hard_delete: false
+
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account 2071ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account 3532ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project 2243ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project 1531ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project 1989ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project 1723ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 3295ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 776ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-ALLOW] under the limit the right password works 2662ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-DENY] past the limit even the right password is refused 1221ms
+
+ Test Files  4 passed (4)
+      Tests  14 passed (14)
+   Start at  15:01:56
+   Duration  48.23s (transform 336ms, setup 75ms, import 910ms, tests 46.56s, environment 0ms)
+
+
+--- stderr ---
+
+--- exit code: 0 ---

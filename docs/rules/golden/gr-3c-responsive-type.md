@@ -1,8 +1,8 @@
 ## GR-3c — Text size is responsive by construction; a fixed heading scale never reaches a phone
 
-**Owner rule, 2026-09-26.** Task 869: the owner returned `CmsPageView` at O79-5. Their words: *"Шрифти не адаптивні,
-на мобільних екранах вони просто величезні. Це тупо хардкод! Я вже казав не раз про адаптивність. Це величезна
-прогалина у правилах кікофів та виконавця!"*
+**Owner rule, 2026-09-26.** Task 869: the owner returned `CmsPageView` at O79-5. Their words: *"The fonts are not responsive, on mobile screens they are simply huge. This
+is plain hardcode! I have spoken about responsiveness more than once. This is
+a huge gap in the rules of the kickoffs and of the executor!"*
 
 The cause was structural. The theme's `headings.sizes` are one fixed value at every width: h1 48px, h2 36px, h3 30px,
 h4 24px (`src/design-system/mantine/theme.ts:581-584`). So `<Title order={1} size="h3">` rendered 30px at 320px.

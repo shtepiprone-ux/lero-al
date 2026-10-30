@@ -1,0 +1,8 @@
+# r54-01 grep of src/modules/admin/actions/index.ts
+platform win32; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: grep -c -E 'Math\.random|generateTempPassword|generateLink' src/modules/admin/actions/index.ts
+0
+grep exit 1 (1 = no match)
+command: grep -n inviteUserByEmail src/modules/admin/actions/index.ts
+601:  const { data: authData, error: authError } = await db.auth.admin.inviteUserByEmail(data.email, {
+grep -n exit 0

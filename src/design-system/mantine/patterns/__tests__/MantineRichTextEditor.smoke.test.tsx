@@ -8,6 +8,8 @@ import React, { useState } from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
+import { NextIntlClientProvider } from 'next-intl'
+import messages from '../../../../../messages/en.json'
 import type { Editor } from '@tiptap/react'
 import { theme } from '@/design-system/mantine/theme'
 import { MantineRichTextEditor, type RichTextEditorLabels } from '../MantineRichTextEditor'
@@ -49,9 +51,12 @@ function Harness({ initial = '', onUpload }: { initial?: string; onUpload?: (fil
 
 function renderEditor(props: React.ComponentProps<typeof Harness> = {}) {
   return render(
-    <MantineProvider theme={theme} env="test">
-      <Harness {...props} />
-    </MantineProvider>,
+    // Task 859 R29: the image dialog is a structured MantineModal, whose close button is labelled from `common.close`.
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <Harness {...props} />
+      </MantineProvider>
+    </NextIntlClientProvider>,
   )
 }
 

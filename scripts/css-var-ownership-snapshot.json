@@ -290,6 +290,7 @@
     "--tracking-wide",
     "--verified",
     "--whatsapp",
+    "--width-content",
     "--width-page-max",
     "--z-base",
     "--z-dropdown",

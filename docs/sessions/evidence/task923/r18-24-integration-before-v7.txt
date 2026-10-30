@@ -1,0 +1,306 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts (6 tests | 6 failed) 6513ms
+     × [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project 878ms
+     × [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project 712ms
+     × [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project 682ms
+     × [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project 653ms
+     × [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project 694ms
+     × [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project 1200ms
+ ❯ src/modules/cabinet/actions/reauth.integration.test.ts (4 tests | 4 failed) 4173ms
+     × [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project 805ms
+     × [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project 802ms
+     × [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project 666ms
+     × [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project 662ms
+ ❯ src/modules/cabinet/actions/reauthLimit.integration.test.ts (2 tests | 2 failed) 2204ms
+     × [SEC-X-INT-REAUTH-LIMIT-ALLOW] under the limit the right password works 658ms
+     × [SEC-X-INT-REAUTH-LIMIT-DENY] past the limit even the right password is refused 503ms
+ ❯ src/tests/integration/accessHardening.integration.test.ts (1 test | 1 failed) 1505ms
+     × [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows 66ms
+
+ Test Files  4 failed (4)
+      Tests  13 failed (13)
+   Start at  22:03:53
+   Duration  15.42s (transform 164ms, setup 62ms, import 398ms, tests 14.39s, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows
+AssertionError: the row was prepared (needs hardening v7: public.reauth_failures): expected { code: 'PGRST205', …(3) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "code": "PGRST205",
+  "details": null,
+  "hint": "Perhaps you meant the table 'public.report_actions'",
+  "message": "Could not find the table 'public.reauth_failures' in the schema cache",
+}
+
+ ❯ src/tests/integration/accessHardening.integration.test.ts:28:95
+     26|     // one row prepared by the service role, so that "no row changed" …
+     27|     const seeded = await run.admin.from('reauth_failures').insert({ us…
+     28|     expect(seeded.error, 'the row was prepared (needs hardening v7: pu…
+       |                                                                                               ^
+     29|     const countRows = async () => (await run.admin.from('reauth_failur…
+     30|     const before = await countRows()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_once-allow-new@…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_once-allow-new@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:53:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_once-deny-new@e…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_once-deny-new@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:61:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_latest-allow-fi…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_latest-allow-first@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:71:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_latest-deny-fir…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_latest-deny-first@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:79:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_sessions-allow-…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_sessions-allow-new@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:89:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/13]⎯
+
+ FAIL  src/modules/cabinet/actions/emailChange.integration.test.ts > emailChange > [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project
+AssertionError: the request is accepted: expected undefined to be 'zz_synth_mvh42qvie501_sessions-deny-n…' // Object.is equality
+
+- Expected:
+"zz_synth_mvh42qvie501_sessions-deny-new@example.com"
+
++ Received:
+undefined
+
+ ❯ requestChange src/modules/cabinet/actions/emailChange.integration.test.ts:43:58
+     41|   const before = acting.emails.length
+     42|   const result = await initiateEmailChange({ newEmail: address, locale…
+     43|   expect(result.pendingEmail, 'the request is accepted').toBe(address.…
+       |                                                          ^
+     44|   expect(acting.emails.length, 'one confirmation was mailed').toBe(bef…
+     45|   return new URL(acting.emails[before].verificationUrl).searchParams.g…
+ ❯ src/modules/cabinet/actions/emailChange.integration.test.ts:102:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project
+AssertionError: the right password starts the change: expected { Object (error) } to deeply equal { Object (pendingEmail) }
+
+- Expected
++ Received
+
+  {
+-   "pendingEmail": "zz_synth_mvh42w232844_changed@example.com",
++   "error": "Could not initiate email change. Please try again.",
+  }
+
+ ❯ src/modules/cabinet/actions/reauth.integration.test.ts:46:60
+     44|     const user = await person('email-allow')
+     45|     const result = await initiateEmailChange({ newEmail: `${run.RUN}_c…
+     46|     expect(result, 'the right password starts the change').toEqual({ p…
+       |                                                            ^
+     47|     expect((await tokensOf(user.id)).data, 'one token was stored').toH…
+     48|     expect(acting.emails, 'the confirmation went out once').toHaveLeng…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project
+AssertionError: a wrong password: expected undefined to be 'invalid_password' // Object.is equality
+
+- Expected:
+"invalid_password"
+
++ Received:
+undefined
+
+ ❯ src/modules/cabinet/actions/reauth.integration.test.ts:56:46
+     54|     expect(none.reason, 'no password').toBe('invalid_password')
+     55|     const wrong = await initiateEmailChange({ newEmail: `${run.RUN}_bl…
+     56|     expect(wrong.reason, 'a wrong password').toBe('invalid_password')
+       |                                              ^
+     57|     expect((await tokensOf(user.id)).data, 'no token').toEqual([])
+     58|     expect((await profileOf(user.id)).data?.pending_email ?? null, 'no…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project
+AssertionError: the right password deletes the synthetic account: expected { error: 'delete_failed' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "delete_failed",
++ }
+
+ ❯ src/modules/cabinet/actions/reauth.integration.test.ts:64:117
+     62|   it('[SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the rea…
+     63|     const user = await person('delete-allow')
+     64|     expect(await deleteOwnAccount({ password: user.password }), 'the r…
+       |                                                                                                                     ^
+     65|     expect((await profileOf(user.id)).data, 'the profile row is gone')…
+     66|     const auth = await run.admin.auth.admin.getUserById(user.id)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project
+AssertionError: a wrong password: expected { error: 'delete_failed' } to deeply equal { error: 'invalid_password' }
+
+- Expected
++ Received
+
+  {
+-   "error": "invalid_password",
++   "error": "delete_failed",
+  }
+
+ ❯ src/modules/cabinet/actions/reauth.integration.test.ts:72:91
+     70|   it('[SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real…
+     71|     const user = await person('delete-deny')
+     72|     expect(await deleteOwnAccount({ password: `${user.password}x` }), …
+       |                                                                                           ^
+     73|     expect(await deleteOwnAccount(), 'no password').toEqual({ error: '…
+     74|     expect((await profileOf(user.id)).data?.id, 'the profile row is st…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-ALLOW] under the limit the right password works
+AssertionError: the failure rows were prepared (needs hardening v7: public.reauth_failures): expected { code: 'PGRST205', …(3) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "code": "PGRST205",
+  "details": null,
+  "hint": "Perhaps you meant the table 'public.report_actions'",
+  "message": "Could not find the table 'public.reauth_failures' in the schema cache",
+}
+
+ ❯ personWithFailures src/modules/cabinet/actions/reauthLimit.integration.test.ts:38:103
+     36|   const rows = Array.from({ length: failures }, () => ({ user_id: user…
+     37|   const seeded = await run.admin.from('reauth_failures').insert(rows)
+     38|   expect(seeded.error, 'the failure rows were prepared (needs hardenin…
+       |                                                                                                       ^
+     39|   return user
+     40| }
+ ❯ src/modules/cabinet/actions/reauthLimit.integration.test.ts:45:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/13]⎯
+
+ FAIL  src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-DENY] past the limit even the right password is refused
+AssertionError: the failure rows were prepared (needs hardening v7: public.reauth_failures): expected { code: 'PGRST205', …(3) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "code": "PGRST205",
+  "details": null,
+  "hint": "Perhaps you meant the table 'public.report_actions'",
+  "message": "Could not find the table 'public.reauth_failures' in the schema cache",
+}
+
+ ❯ personWithFailures src/modules/cabinet/actions/reauthLimit.integration.test.ts:38:103
+     36|   const rows = Array.from({ length: failures }, () => ({ user_id: user…
+     37|   const seeded = await run.admin.from('reauth_failures').insert(rows)
+     38|   expect(seeded.error, 'the failure rows were prepared (needs hardenin…
+       |                                                                                                       ^
+     39|   return user
+     40| }
+ ❯ src/modules/cabinet/actions/reauthLimit.integration.test.ts:52:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/13]⎯
+
+EXIT_CODE=1

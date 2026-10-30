@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations } from 'next-intl'
-import { Badge } from '@mantine/core'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 import { StoryPageGutter } from '@/stories/_StoryPageGutter'
 
@@ -19,7 +19,7 @@ const meta: Meta<typeof MantineDetailList> = {
     docs: {
       description: {
         component:
-          'Facts panel of a dialog (§23.7): a tinted panel, one row per fact, the label on the left (14px dimmed) and the value on the right (14px/500). A long value wraps under its own column and never overflows the panel.',
+          'Labelled fields (Task 859 R78, GR-3j): each field is its label (12px gray-500) with its complete value below it (14px/500) at every width. `panel` (default) is the tinted facts panel of a dialog (§23.7); `plain` is the same fields inside a record card. A long value wraps and the field grows.',
       },
     },
   },
@@ -27,17 +27,17 @@ const meta: Meta<typeof MantineDetailList> = {
 export default meta
 type Story = StoryObj<typeof MantineDetailList>
 
-function DetailListDemo({ rows }: { rows: 1 | 4 }) {
+function DetailListDemo({ rows, variant }: { rows: 1 | 4; variant?: 'panel' | 'plain' }) {
   const t = useTranslations('admin.listings')
   const items = [
-    { label: t('visibility_label'), value: <Badge variant="light" size="sm" color="green">{t('visibility_visible')}</Badge> },
+    { label: t('visibility_label'), value: <MantineBadge variant="status" entity="listingVisibility" value="visible">{t('visibility_visible')}</MantineBadge> },
     { label: t('col_agent'), value: t('premium_dialog_title') },
     { label: t('col_status'), value: t('premium_error_db_schema') },
     { label: t('premium_badge'), value: t('premium_inactive') },
   ]
   return (
     <StoryPageGutter>
-      <MantineDetailList items={rows === 1 ? items.slice(3) : items} />
+      <MantineDetailList items={rows === 1 ? items.slice(3) : items} variant={variant} />
     </StoryPageGutter>
   )
 }
@@ -47,3 +47,6 @@ export const Default: Story = { render: () => <DetailListDemo rows={4} /> }
 
 // One row.
 export const SingleRow: Story = { render: () => <DetailListDemo rows={1} /> }
+
+// `variant="plain"` (Task 859 R78): the same items without the panel, as inside a record card.
+export const Plain: Story = { render: () => <DetailListDemo rows={4} variant="plain" /> }

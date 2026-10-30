@@ -1,0 +1,7 @@
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al
+command: npm run typecheck
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+EXIT_CODE=0

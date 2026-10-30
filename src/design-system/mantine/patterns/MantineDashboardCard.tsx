@@ -1,9 +1,9 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Card, Group, Stack, Title, Text, Badge, Skeleton, Button, useMantineTheme } from '@mantine/core'
-import { AlertTriangle } from 'lucide-react'
+import { Card, Group, Stack, Title, Text, Skeleton, Button, useMantineTheme } from '@mantine/core'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
+import { MantineBadge } from './MantineBadge'
 
 export type DashboardCardState = 'ready' | 'loading' | 'error' | 'stale'
 
@@ -98,12 +98,9 @@ export function MantineDashboardCard({
         {header}
 
         {state === 'stale' && staleLabel && (
-          <Badge
-            color="yellow"
-            leftSection={<AlertTriangle size={theme.other.iconSize.compact} aria-hidden="true" />}
-          >
+          <MantineBadge variant="tone" tone="warning">
             {staleLabel} {staleTime}
-          </Badge>
+          </MantineBadge>
         )}
 
         {state === 'loading' ? (

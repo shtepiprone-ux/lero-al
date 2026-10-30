@@ -1,9 +1,9 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { checkStaff } from '@/lib/auth/staff'
 import { revalidatePath } from 'next/cache'
+import { resolveLinkTarget } from '@/lib/security/safeUrl'
 import type { SiteFooter, FooterLink } from '@/types/database'
 import { isValidFooterUrl, normalizeInternalPath, STATIC_INTERNAL_PATHS } from '@/lib/footer-route-allowlist'
 
@@ -12,20 +12,18 @@ const VALID_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 // ── Auth guard ────────────────────────────────────────────────────────────────
 
 async function assertAdminUser(): Promise<string | null> {
-  const user = await getUser()
-  if (!user) return null
-  const supabase = await createClient()
-  const { data } = await supabase.from('users').select('role').eq('id', user.id).single()
-  return data?.role === 'admin' ? user.id : null
+  // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account, or a failed lookup, is not an administrator
+  const staff = await checkStaff({ adminOnly: true })
+  return staff.ok ? staff.userId : null
 }
 
 // ── URL validation ─────────────────────────────────────────────────────────────
 
+// An ALLOW-list (Task 923 Revision 7, S9): the old deny-list looked for the words javascript: and data:, and `java<TAB>script:` passed it because a browser
+// removes the tab. A link is saved only when it resolves to a path of the site, an http(s) address, mailto or tel.
 function isValidLinkUrl(url: string): boolean {
   if (!url) return true
-  const lower = url.trim().toLowerCase()
-  if (lower.startsWith('javascript:') || lower.startsWith('data:')) return false
-  return true
+  return resolveLinkTarget(url, 'sq') !== null
 }
 
 function validateLinks(links: FooterLink[]): boolean {
@@ -50,29 +48,8 @@ function collectCandidateCmsSlugs(links: FooterLink[]): Set<string> {
   return slugs
 }
 
-// ── Public: read footer for a locale (used by public footer SSR) ──────────────
-
-export async function getFooterContent(locale: string): Promise<SiteFooter | null> {
-  try {
-    const db = createAdminClient()
-    const { data, error } = await db
-      .from('site_footer')
-      .select('*')
-      .in('locale', locale !== 'sq' ? [locale, 'sq'] : ['sq'])
-    if (error) return null
-    if (!data?.length) return null
-    const row = data.find(r => r.locale === locale) ?? data.find(r => r.locale === 'sq') ?? null
-    if (!row) return null
-    return {
-      ...row,
-      nav_links:    (row.nav_links    as FooterLink[] | null) ?? [],
-      info_links:   (row.info_links   as FooterLink[] | null) ?? [],
-      social_links: (row.social_links as FooterLink[] | null) ?? [],
-    } as SiteFooter
-  } catch {
-    return null  // table not yet created — fallback to i18n in public footer
-  }
-}
+// The public footer read (`getFooterContent`) is NOT here: a `'use server'` export is callable by anyone, so it lives in the `server-only` module
+// `@/modules/admin/lib/settings` (Task 923 R66 (n)).
 
 // ── Admin: read all 4 locale rows ─────────────────────────────────────────────
 

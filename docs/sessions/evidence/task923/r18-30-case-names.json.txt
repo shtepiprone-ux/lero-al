@@ -1,0 +1,7 @@
+SEC-X-FE-SIGNOUT-OTHERS passed | CabinetPasswordSection.signOut [SEC-X-FE-SIGNOUT-OTHERS] a changed password with sessions left still signs out everywhere
+SEC-X-SRV-REAUTH-LIMIT passed | reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person
+SEC-X-SRV-RATES-BACKOFF passed | exchangeRates [SEC-X-SRV-RATES-BACKOFF] an outage asks the source once per 5 minutes
+SEC-DEL-FE-DENY passed | ProfileTab.deletePassword [SEC-DEL-FE-DENY] no deletion without the password
+SEC-DEL-FE-ALLOW passed | ProfileTab.deletePassword [SEC-DEL-FE-ALLOW] the password deletes the account and a failure is shown
+SEC-X-FE-DELETE-PASSWORD passed | ProfileTab.deletePassword [SEC-X-FE-DELETE-PASSWORD] the cabinet deletion asks for the password
+total 19 failed 0

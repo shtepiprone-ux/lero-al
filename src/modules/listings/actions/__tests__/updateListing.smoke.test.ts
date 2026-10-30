@@ -53,6 +53,25 @@ vi.mock('@/lib/cloudinaryDelete', () => ({
   deleteAsset: vi.fn().mockResolvedValue({}),
 }))
 
+// The viewer and the admin client (Task 923 R104 (a)): `updateListing` reads the role through `requireViewer` and writes a staff edit through the admin client. These
+// are recording doubles: a case that expects neither can assert they were not used.
+const mockRequireViewer = vi.fn()
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: (...args: unknown[]) => mockRequireViewer(...args),
+}))
+
+const mockCreateAdminClient = vi.fn()
+vi.mock('@/lib/supabase/admin', () => ({
+  createAdminClient: (...args: unknown[]) => mockCreateAdminClient(...args),
+}))
+
+// The status gateway (Task 923 R74, D53): an owner's edit of an ACTIVE listing moves it to `pending` through the gateway before the content is written. A recording double
+// that answers the way the real gateway does on success; the real one writes through the service role and is covered by its own tests.
+const mockApplyTransition = vi.fn()
+vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
+  applyListingTransitionByStatus: (...args: unknown[]) => mockApplyTransition(...args),
+}))
+
 // DB chains — listings table
 const mockListingsSingle   = vi.fn()
 const mockListingsUpdateEq = vi.fn()
@@ -62,7 +81,16 @@ const mockImagesSelectEq   = vi.fn()
 const mockImagesDeleteEq   = vi.fn()
 const mockImagesInsert     = vi.fn()
 
+// DB chains — the catalogues the action reads before any write (Task 923 R100, R104 (a)): from('property_types' | 'currencies').select(col).eq('is_active', true)
+const catalogueTables = (table: string) => {
+  if (table === 'property_types') return { select: () => ({ eq: () => Promise.resolve({ data: [{ slug: 'apartment' }], error: null }) }) }
+  if (table === 'currencies')     return { select: () => ({ eq: () => Promise.resolve({ data: [{ code: 'ALL' }, { code: 'EUR' }], error: null }) }) }
+  return undefined
+}
+
 const mockFrom = vi.fn((table: string) => {
+  const catalogue = catalogueTables(table)
+  if (catalogue) return catalogue
   if (table === 'listings') {
     return {
       select: vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ single: mockListingsSingle }) }),
@@ -121,17 +149,22 @@ beforeEach(() => {
   mockImagesDeleteEq.mockResolvedValue({ error: null })
   mockImagesInsert.mockResolvedValue({ error: null })
   mockCreateClient.mockResolvedValue({ from: mockFrom })
+  mockRequireViewer.mockResolvedValue({ ok: false, reason: 'unauthenticated' })
+  mockCreateAdminClient.mockReturnValue({ from: mockFrom })
+  mockApplyTransition.mockResolvedValue({ ok: true, nextStatus: 'pending', listingId: LISTING_ID })
 })
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
 describe('updateListing — smoke tests (Task 442)', () => {
-  it('happy path: owner edit → { slug, status } returned, update called once', async () => {
+  it("happy path: owner edit of an active listing → { slug, status: 'pending' } (D53), one gateway move, one update", async () => {
     const { updateListing } = await import('../updateListing')
     const result = await updateListing(LISTING_ID, { ...PARSED_DATA, images: [] } as unknown as Parameters<typeof updateListing>[1])
 
-    expect(result).toEqual({ slug: LISTING_SLUG, status: 'active' })
+    expect(result).toEqual({ slug: LISTING_SLUG, status: 'pending' })
     expect(mockListingsUpdateEq).toHaveBeenCalledTimes(1)
+    expect(mockApplyTransition).toHaveBeenCalledTimes(1)
+    expect(mockApplyTransition).toHaveBeenCalledWith(LISTING_ID, 'pending', expect.objectContaining({ source: 'cabinet' }))
   })
 
   it('not_found: listing does not exist → { error: "not_found" }, no DB update', async () => {
@@ -163,7 +196,7 @@ describe('updateListing — smoke tests (Task 442)', () => {
     expect(result).toEqual({ error: 'unauthenticated' })
   })
 
-  it('update DB error → { error: message } + console.error logged (Guard 4)', async () => {
+  it("update DB error → { error: 'update_failed' } + console.error logged (Guard 4)", async () => {
     const dbError = { message: 'update constraint violation' }
     mockListingsUpdateEq.mockResolvedValue({ error: dbError })
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -171,7 +204,7 @@ describe('updateListing — smoke tests (Task 442)', () => {
     const { updateListing } = await import('../updateListing')
     const result = await updateListing(LISTING_ID, { ...PARSED_DATA, images: [] } as unknown as Parameters<typeof updateListing>[1])
 
-    expect(result).toEqual({ error: 'update constraint violation' })
+    expect(result).toEqual({ error: 'update_failed' })
     expect(consoleSpy).toHaveBeenCalledWith(
       'Failed to update listing',
       expect.objectContaining({ error: dbError, listingId: LISTING_ID }),
@@ -184,6 +217,8 @@ describe('updateListing — server-owned price_old (Task 917)', () => {
   function capturedUpdate() {
     const updateMock = vi.fn().mockReturnValue({ eq: mockListingsUpdateEq })
     mockFrom.mockImplementation((table: string) => {
+      const catalogue = catalogueTables(table)
+      if (catalogue) return catalogue
       if (table === 'listings') {
         return {
           select: vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ single: mockListingsSingle }) }),

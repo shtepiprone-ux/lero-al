@@ -21,6 +21,11 @@ acceptance criteria, verification steps, report contract, and handoff together. 
 separate contracts. An existing multi-route or contradictory kickoff remains `DRAFT`/`BLOCKED` until replaced; a
 chat response, review summary, or self-label cannot reclassify that file as a decision note.
 
+For visible UI, the active route also includes the `## Mobile adaptation record` required by GR-3j: exact surface,
+source-backed pattern IDs, the `<640px` range and actual component switches, compact reading/action order,
+required-content treatment, direct Story, and `640px` transition proof. A current Story is evidence after
+implementation, not the source of that route.
+
 ## 2. Checkpoint matrix
 
 | Checkpoint | Preconditions and preserved inputs | Writes allowed through this checkpoint | Observable result | Producer and persisted artifact | Comparator and failure behavior |

@@ -1,0 +1,60 @@
+﻿# r56-01: R171 (a) and (c) - the new view route test, the anchors check and the sensitivity proof of SEC-X-SRV-VIEW-DENY
+platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+commands: (1) npx vitest run viewRoute.security --reporter=verbose  (2) node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --check-anchors  (3) node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --source SEC-X-SRV-VIEW-DENY
+started: 2026-10-29T13:08:44.7828043Z
+--- (1) verbose run ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts > [SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own 11ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  14:08:46
+   Duration  388ms (transform 63ms, setup 128ms, import 100ms, tests 12ms, environment 0ms)
+
+
+--- (1) exit code: 0 ---
+--- (2) check-anchors (lines of the two new cases and the summary) ---
+ok        SEC-D29-SRV-DENY src/lib/auth/middleware.ts (1)
+ok        SEC-D29-SRV-ALLOW src/lib/auth/middleware.ts (1)
+ok        SEC-DEL-SRV-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-SRV-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-INT-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-SELF src/modules/cabinet/actions/index.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-ALLOW src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-STATUS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-LOCATIONS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-CONTACT-LIFECYCLE src/modules/listings/actions/submitListingInquiry.ts (1)
+ok        SEC-X-SRV-SLUG-SCRIPT src/lib/security/inputs.ts (1)
+ok        SEC-X-SRV-AVATAR-RANK src/app/api/upload-avatar/route.ts (1)
+ok        SEC-X-SRV-ADMINPAGE-GUARD src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-OWNER-DELETE src/modules/listings/actions/deleteListing.ts (1)
+ok        SEC-X-SRV-EDIT-MODERATION src/modules/listings/actions/updateListing.ts (1)
+ok        SEC-X-SRV-MOD-KEYS src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-SLUG-PLAIN src/modules/listings/lib/generateSlug.ts (1)
+ok        SEC-X-SRV-CONTACT-BOT-DENY src/lib/captcha/verifyTurnstile.ts (1)
+ok        SEC-X-SRV-RESTRICTED-PAGE-DENY src/app/[locale]/listings/[slug]/page.tsx (1)
+ok        SEC-X-SRV-VIEW-DENY src/app/api/listings/[slug]/view/route.ts (1)
+ok        SEC-X-SRV-PROFILE-PROTECTED-DENY src/modules/cabinet/actions/index.ts (1)
+ok        SEC-X-SRV-CONTACT-SESSION-DENY src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-INT-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-IP src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-FAILCLOSED src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-DB-X-AVATARS-STORAGE-ALLOW src/app/api/upload-avatar/route.ts (1)
+database breaks (db-break.cjs): 21
+
+--- (2) exit code: 0 ---
+--- (3) sensitivity proof ---
+PROVED     SEC-X-SRV-VIEW-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+
+--- (3) exit code: 0 ---
+finished: 2026-10-29T13:08:52.3136712Z

@@ -1,0 +1,12 @@
+Task 923, R88 and R87: the owner's production run of hardening v7.1, 2026-10-21. Recorded by Opus from the owner's pasted results in the session.
+The owner ran every statement in the Supabase SQL editor of the one project (D66); no agent connected for these steps.
+
+R88 (a) dry-run file hash: matches C760 (16F0906FBEA2CDE90A814EA337B024EB49D56DC7900A9A7B5D4C04EA33D66F12)
+R88 (b) dry run: Success. No rows returned.
+R88 (d) check before the apply: t = null, f = null
+R87 (2) backup: Free Plan does not include project backups.
+R87 (2) replacement: price_old captured before the apply, n = 1 (docs/sessions/evidence/task923/db-catalog/price-old-before-v7.1.sql)
+R87 (3) apply file hash: 8C8BCB3D6B02B260E70A0FD8B48C56908AAF2604BC37D21A36654ABD9D2651C6 (C737), copied with Get-Content -Raw -Encoding UTF8
+R87 (3) apply: Success. No rows returned.
+post-apply check: t = reauth_failures, f = caller_is_active()
+Note: the dry run was pasted from a copy read without -Encoding UTF8. Opus checked that both files hold non-ASCII text only in comments (23 lines each, 0 outside comments), so the dry run ran the same statements.

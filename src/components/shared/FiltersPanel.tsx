@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { RotateCcw } from 'lucide-react'
-import { Button, TextInput, Group, Text, Badge, Stack, SimpleGrid, Flex, useMantineTheme } from '@mantine/core'
+import { Button, TextInput, Group, Text, Stack, SimpleGrid, Flex, useMantineTheme } from '@mantine/core'
 import { MantineDrawer, MantineCountButton, RangeDatePicker, MantineFilterSection } from '@/design-system/mantine/patterns'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
 export type { FilterValues }
@@ -18,6 +18,7 @@ import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
 import { useHomepageFilters } from '@/components/shared/useHomepageFilters'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export type FilterCurrency = string
 
@@ -98,9 +99,9 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
         <Group gap="xs">
           <Text component="span" fw={600} size="md">{t('advanced_filters')}</Text>
           {activeCount > 0 && (
-            <Badge size="sm" color="brand" variant="filled">
+            <MantineBadge variant="count">
               {activeCount}
-            </Badge>
+            </MantineBadge>
           )}
         </Group>
       }

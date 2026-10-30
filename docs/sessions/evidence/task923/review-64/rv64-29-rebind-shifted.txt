@@ -1,0 +1,6 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/review-64/rv64-29-rebind-shifted.mjs C795 C807 C1591 C1605
+C795: src/tests/integration/accessHardening.integration.test.ts:352-352 -> 364-364
+C807: src/tests/integration/accessHardening.integration.test.ts:373-373 -> 385-385
+C1591: src/tests/integration/accessHardening.integration.test.ts:492-492 -> 504-504
+C1605: docs/sessions/evidence/task923/security/sensitivity.mjs:257-257 -> 262-262
+exit 0

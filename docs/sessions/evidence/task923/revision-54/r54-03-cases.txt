@@ -1,0 +1,46 @@
+# r54-03 R162: the 39 never-written cases, each found once by its exact name
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-54/r54-03-cases.mjs (inputs r54-03-unit.json, r54-03-integration.json)
+
+id | status | found | test file
+SEC-DB-S59-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-S59-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-S61-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-S61-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-S62-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-ACCESS-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-ACCESS-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-ERR | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-REALTIME-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-REALTIME-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-D29-SRV-DENY | passed | 1 | src/lib/auth/middleware.security.test.ts
+SEC-D29-SRV-ALLOW | passed | 1 | src/lib/auth/middleware.security.test.ts
+SEC-X-SRV-ADMIN-INVITE | passed | 1 | src/modules/admin/actions/__tests__/createAdminUser.security.test.ts
+SEC-X-INT-STATUS-PERM-ALLOW | passed | 1 | src/modules/admin/actions/adminPermissions.integration.test.ts
+SEC-X-INT-STATUS-PERM-DENY | passed | 1 | src/modules/admin/actions/adminPermissions.integration.test.ts
+SEC-X-INT-LOCATIONS-PERM-ALLOW | passed | 1 | src/modules/admin/actions/adminPermissions.integration.test.ts
+SEC-X-INT-LOCATIONS-PERM-DENY | passed | 1 | src/modules/admin/actions/adminPermissions.integration.test.ts
+SEC-X-INT-CONTACT-LIFECYCLE-ALLOW | passed | 1 | src/modules/listings/actions/contactLifecycle.integration.test.ts
+SEC-X-INT-CONTACT-LIFECYCLE-DENY | passed | 1 | src/modules/listings/actions/contactLifecycle.integration.test.ts
+SEC-X-INT-SLUG-SCRIPT-ALLOW | passed | 1 | src/modules/listings/actions/listingSlugGuard.integration.test.ts
+SEC-X-INT-SLUG-SCRIPT-DENY | passed | 1 | src/modules/listings/actions/listingSlugGuard.integration.test.ts
+SEC-X-INT-AVATAR-RANK-ALLOW | passed | 1 | src/app/api/upload-avatar/uploadAvatar.integration.test.ts
+SEC-X-INT-AVATAR-RANK-DENY | passed | 1 | src/app/api/upload-avatar/uploadAvatar.integration.test.ts
+SEC-X-SRV-CMS-OWN-CLOUD | passed | 1 | src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts
+SEC-DB-X-IMAGE-URL-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-X-IMAGE-URL-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-X-AVATARS-STORAGE-ALLOW | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-DB-X-AVATARS-STORAGE-DENY | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-X-INT-ADMINPAGE-GUARD-ALLOW | passed | 1 | src/tests/integration/adminPage.integration.test.ts
+SEC-X-INT-ADMINPAGE-GUARD-DENY | passed | 1 | src/tests/integration/adminPage.integration.test.ts
+SEC-X-INT-OWNER-DELETE-ALLOW | passed | 1 | src/modules/listings/actions/deleteListing.integration.test.ts
+SEC-X-INT-OWNER-DELETE-DENY | passed | 1 | src/modules/listings/actions/deleteListing.integration.test.ts
+SEC-X-INT-EDIT-MODERATION-ALLOW | passed | 1 | src/modules/listings/actions/updateListing.integration.test.ts
+SEC-X-INT-EDIT-MODERATION-DENY | passed | 1 | src/modules/listings/actions/updateListing.integration.test.ts
+SEC-X-INT-MOD-KEYS-ALLOW | passed | 1 | src/tests/integration/moderatorKeys.integration.test.ts
+SEC-X-INT-MOD-KEYS-DENY | passed | 1 | src/tests/integration/moderatorKeys.integration.test.ts
+SEC-X-SRV-PERMS-ADMIN-ONLY | passed | 1 | src/modules/admin/actions/__tests__/permissions.security.test.ts
+SEC-DB-X-PERMS-NO-SESSION | passed | 1 | src/tests/integration/accessHardening.integration.test.ts
+SEC-X-INT-PERMS-ADMIN-ALLOW | passed | 1 | src/tests/integration/moderatorKeys.integration.test.ts
+
+cases 39; not ok 0

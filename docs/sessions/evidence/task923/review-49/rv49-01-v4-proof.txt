@@ -1,0 +1,22 @@
+# Task 923 Review 49 (Opus): independent proof on the deletion v4 pair, 2026-10-24T09:44:24Z, HEAD e68ecbfb1, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+NODE_PATH=C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/4aea61b5-08db-44eb-a396-61d7ff0c146f/scratchpad/node_modules (pg 8.21.0, plpgsql-parser 18.5.10)
+cdc690e47ced1e2c346f5ed1c2bdb1e0ac51b6c7aa3526b404b483d1cd4a6f23 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql
+9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+$ node docs/sessions/evidence/task923/db-catalog/r9-62-syntax-deletion.cjs
+proposed-account-deletion.sql: 83 statements, 3 plpgsql bodies parsed OK
+proposed-account-deletion-rollback.sql: 59 statements, 2 plpgsql bodies parsed OK
+exit 0
+$ node docs/sessions/evidence/task923/revision-43/rev43-04-blocks.cjs <v4 apply> <v4 rollback>
+proposed-account-deletion.sql sha256 cdc690e47ced1e2c346f5ed1c2bdb1e0ac51b6c7aa3526b404b483d1cd4a6f23; proposed-account-deletion-rollback.sql sha256 9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1
+apply preflight: 6727 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ok (read_only=on)
+apply preflight with CRLF: ok (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 0
+exit 0
+$ node docs/sessions/evidence/task923/revision-43/rev43-05-literal-scan.cjs <v4 pair>
+docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql: 174 literals, 0 spanning lines
+docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql: 36 literals, 0 spanning lines
+exit 0

@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { ScrollArea, Group, UnstyledButton, Paper, useMatches } from '@mantine/core'
+import { Box, ScrollArea, Group, UnstyledButton, Paper, useMantineTheme, useMatches } from '@mantine/core'
 import { AppImage } from '@/design-system/media/AppImage'
 import { Maximize2 } from 'lucide-react'
 import { LightboxView, type LightboxViewLabels } from '@/modules/listings/components/LightboxView'
 import { GalleryDesktopNavigation } from './GalleryDesktopNavigation'
 import { GalleryThumbnailButton } from './GalleryThumbnailButton'
+import { resolveGalleryOffsetValue } from './GalleryNavActionIcon'
+import { MantineBadge } from './MantineBadge'
 import { useSwipeTrackSync, buildWrappedSlides } from '@/hooks/useSwipeTrackSync'
-import { cn } from '@/lib/utils'
-import styles from './MantineListingGalleryPattern.module.css'
 
 export interface MantineListingGalleryImage {
   url: string
@@ -39,6 +39,7 @@ export interface MantineListingGalleryPatternProps {
  * photo alone.
  */
 export function MantineListingGalleryPattern({ images, title, labels }: MantineListingGalleryPatternProps) {
+  const theme = useMantineTheme()
   const [opened, setOpened] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const isMobile = useMatches({ base: true, sm: false })
@@ -82,6 +83,8 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
             the accessibility tree (a unique `aria-label`, focusable); every clone/off-screen slide
             is `aria-hidden` and untabbable, so the accessible name stays unambiguous. Desktop: the
             single static image tied to `activeIndex` plus arrow controls. */}
+        {/* The mobile frame is `overflow-clip`, not `overflow-hidden`: a hidden-overflow box is still a scroll container, and the browser scrolls
+            it to reveal a slide that takes focus before the track has moved (scrollLeft 288, the wrong slide in the frame; Task 923 R33, Story 197). */}
         {!isMobile ? (
           <UnstyledButton
             onClick={() => setOpened(true)}
@@ -92,7 +95,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
             <AppImage variant="gallery-main" src={images[activeIndex].url} alt={title} />
           </UnstyledButton>
         ) : (
-          <div ref={mobileContainerRef} {...containerA11yProps} className="h-full w-full overflow-hidden">
+          <div ref={mobileContainerRef} {...containerA11yProps} className="h-full w-full overflow-clip">
             <div ref={mobileTrackRef} style={mobileTrackStyle}>
               {buildWrappedSlides(images).map((img, i) => {
                 const isVisible = i === activeWrappedIndex
@@ -122,10 +125,15 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
           nextLabel={labels.next}
           hasMultiple={images.length > 1}
         />
+        {/* The photo counter is the card's photo-count badge (R58, GR-12): the same `MantineBadge` neutral tone, text only
+            (D78-29), placed with the theme's `xs` inset. `pointerEvents: 'none'` is behaviour, not look: the
+            counter sits over the main photo, whose click opens the lightbox. */}
         {images.length > 1 && (
-          <div className={cn(styles.photoCountBadge, 'pointer-events-none absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-xs')}>
-            {labels.counter(activeIndex + 1, images.length)}
-          </div>
+          <Box pos="absolute" bottom={resolveGalleryOffsetValue(theme, 'xs')} left={resolveGalleryOffsetValue(theme, 'xs')} style={{ pointerEvents: 'none' }}>
+            <MantineBadge variant="tone" tone="neutral">
+              {labels.counter(activeIndex + 1, images.length)}
+            </MantineBadge>
+          </Box>
         )}
       </div>
 

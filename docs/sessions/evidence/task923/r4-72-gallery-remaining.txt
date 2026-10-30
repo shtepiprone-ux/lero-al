@@ -1,0 +1,11 @@
+wholly-out, no-text transformed details (what R19(a) leaves failing when the slide holds a control): 156
+144 patterns-mantine-listingdetailpattern | app | bound div.h-full
+12 patterns-mantine-listinggallerypattern | app | bound div.h-full
+144 patterns-mantine-listingdetailpattern | app | wholly-out | div.h-full | no text
+144 patterns-mantine-listingdetailpattern | app | wholly-out | div.relative | text
+12 patterns-mantine-listinggallerypattern | app | wholly-out | div.h-full | no text
+12 patterns-mantine-listinggallerypattern | app | wholly-out | div.relative | text
+total 312
+patterns-mantine-listingdetailpattern--default add-to-favorites 320 en :: div "" (transformed) x -272..16 past div.h-full 16..304
+patterns-mantine-listingdetailpattern--default add-to-favorites 320 en :: div "1 / 5" (absolute) y 444..470 past div.relative 104..444
+patterns-mantine-listinggallerypattern--default  320 en :: div "1 / 9" (absolute) y 408..434 past div.relative 68..408

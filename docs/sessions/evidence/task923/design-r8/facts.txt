@@ -1,0 +1,25 @@
+Task 923 Revision 8 design facts (Opus, 2026-10-17), native Windows PowerShell 5.1, HEAD 1cb4ab2e5c0b36b701484a5ce15145829608bcb9
+---- rendered-interaction-states.json rows whose id contains 'inquirydialog'
+rows inquirydialog=0
+---- Story files that import the production ListingInquiryDialog
+stories importing ListingInquiryDialog=0
+---- D8/D9 contract cases by boundary (before the review-8 design amendment)
+boundary unit=23
+boundary integration=8
+---- git diff --stat of shared scope files: other tasks' hunks live in the same files
+ messages/en.json | 115 +++++
+ messages/it.json | 115 +++++
+ messages/sq.json | 115 +++++
+ messages/uk.json | 115 +++++
+ package.json     |   9 +++++
+ vitest.config.ts |  13 ++++++-
+---- package.json added lines (only the first belongs to the D8/D9 package)
++    "test:security-integration": "vitest run --config vitest.integration.config.ts",
++    "check:badge-canonical": "node scripts/check-badge-canonical.mjs",
++    "check:badge-canonical:verify": "node scripts/check-badge-canonical.mjs --verify-gate",
++    "check:dialog-canonical": "node scripts/check-dialog-canonical.mjs",
++    "check:dialog-canonical:verify": "node scripts/check-dialog-canonical.mjs --verify-gate",
++    "check:rendered-state-census": "node scripts/check-rendered-state-census.mjs",
++    "check:rendered-state-census:verify": "node scripts/check-rendered-state-census.mjs --verify-gate",
++    "check:rendered-state-census:discover": "node scripts/check-rendered-state-census.mjs --discover",
++    "@solar-icons/react": "2.3.2",

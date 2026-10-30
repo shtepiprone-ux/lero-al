@@ -1,0 +1,7 @@
+Primary sources for Task 923 Revision 8 (Opus design, 2026-10-17); literal text read in this session
+apple-hig-sheets https://developer.apple.com/design/human-interface-guidelines/sheets (rendered in Chromium, main text)
+Display only one sheet at a time from the main interface. When people close a sheet, they expect to return to the parent view or window. If closing a sheet takes people back to another sheet, they can lose track of where they are in your app. If something people do within a sheet results in another sheet appearing, close the first sheet before displaying the new one. If necessary, you can display the first sheet again after people dismiss the second one.
+The Cancel (or Close) button dismisses a sheet without saving any changes. This type of button is common in most sheets.
+w3c-labels-instructions https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions
+Labels or instructions are provided when content requires user input.
+selected patterns: overlay-adaptive (the inquiry dialog: one sheet at a time, the sign-in sheet replaces it and the dialog can be shown again with its text), form-stack (the inquiry fields and the status field keep a visible label above the control)

@@ -1,0 +1,21 @@
+# rv66-02: the three reports, the r58-00b recheck and the release mapping
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-02-reports.mjs
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: stage implemented; 231 cases, 67 critical, 598 paths
+  report docs/sessions/evidence/task923/security/d8-d9-report.json generatedAt 2026-10-29T17:59:38.117Z status passed; cases 231, passed 231
+  critical with proved sensitivity 67 of 67; cleanup verified true remaining 0; errors 0; vulnerabilities 0
+  scope hash equal true; validateReport issues 0
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: stage reviewed; 60 cases, 9 critical, 132 paths
+  report docs/sessions/evidence/task923/security/owner-fixes-report.json generatedAt 2026-10-29T15:23:46.575Z status passed; cases 60, passed 60
+  critical with proved sensitivity 9 of 9; cleanup verified true remaining 0; errors 0; vulnerabilities 0
+  scope hash equal true; validateReport issues 0
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: stage reviewed; 53 cases, 0 critical, 64 paths
+  report docs/sessions/evidence/task927/security/report.json generatedAt 2026-10-29T15:24:18.258Z status passed; cases 53, passed 53
+  critical with proved sensitivity 0 of 0; cleanup verified true remaining 0; errors 0; vulnerabilities 0
+  scope hash equal true; validateReport issues 0
+r58-00b (the session record left out): 13 paths, equal to the current file: 13
+S59: rows 3, passed in the report 3, critical server deny true, real-boundary deny true -> PASS
+S60: rows 3, passed in the report 3, critical server deny true, real-boundary deny true -> PASS
+S61: rows 3, passed in the report 3, critical server deny true, real-boundary deny true -> PASS
+S62: rows 3, passed in the report 3, critical server deny true, real-boundary deny true -> PASS
+SEC-X-SRV-ADMIN-USER-PRESENT: report status passed; contract response: a returned element whose AdminUserProfile receives that row with location { id: 151, name_al: 'Adriatik - Durrës', region_id: null, parent: null }; no redirect
+D8_D9 scope lists the helper true and its test true

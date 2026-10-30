@@ -3,7 +3,7 @@
  *
  * Covers:
  *   1. The `options` object passed to the mocked `Turnstile` equals
- *      `{ theme: 'auto', size: 'flexible', language: <expected> }` for each app locale —
+ *      `{ theme: 'auto', size: 'invisible', language: <expected> }` for each app locale (R123, owner D82) —
  *      en/it/uk get their own Turnstile code, sq keeps 'auto' (D81-6, Cloudflare has no sq).
  *      Asserting the whole object also proves `theme`/`size` are unchanged.
  *   2. The dev fallback (no site key) is unaffected: `Turnstile` is never rendered, `onSuccess`
@@ -98,7 +98,7 @@ describe('CaptchaWidget — Turnstile language follows the app locale (Task 875)
     const lastCall = mockTurnstile.mock.calls[mockTurnstile.mock.calls.length - 1][0] as {
       options: unknown
     }
-    expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible', language: expectedLanguage })
+    expect(lastCall.options).toEqual({ theme: 'auto', size: 'invisible', language: expectedLanguage })
   })
 
   it('dev fallback is preserved when no site key is configured', () => {

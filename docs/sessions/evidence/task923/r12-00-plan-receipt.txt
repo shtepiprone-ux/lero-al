@@ -1,0 +1,5 @@
+platform win32 10.0.26300 node v22.22.3
+cmd node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+(the command printed nothing; written by hand because the policy hook refuses a command that names scripts/workflow-gates together with a redirect)
+kickoff sha256 (cli.mjs hash --task): 26c6cfdadc402135638f9e4a281e7febca3b5276e7f80e094b99be52e0c9a745
+EXIT_CODE=0

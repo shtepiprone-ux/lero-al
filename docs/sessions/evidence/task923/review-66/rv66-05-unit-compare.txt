@@ -1,0 +1,34 @@
+platform: MINGW64_NT-10.0-26300; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-05-unit-compare.mjs
+run: total 5920 passed 5903 failed 17 pending 0 suites 1347 failedSuites 15
+baseline failing IDs (rv62-11): 17
+failing now but not in the baseline: 0
+in the baseline but not failing now: 0
+same failing IDs as the baseline: true
+R175 tests in this run: 9; not passed: 0
+  passed src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx :: AdminUserProfile (T1–T9) T11 — view mode shows the stored city and its region
+  passed src/app/admin/users/__tests__/adminUserGone.security.test.ts :: AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list
+  passed src/app/admin/users/__tests__/adminUserGone.security.test.ts :: AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list
+  passed src/app/admin/users/__tests__/adminUserGone.security.test.ts :: AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list
+  passed src/app/admin/users/__tests__/adminUserGone.security.test.ts :: AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile
+  passed src/modules/admin/lib/__tests__/userLocation.test.ts :: userLocation a city with a region carries the region as parent
+  passed src/modules/admin/lib/__tests__/userLocation.test.ts :: userLocation a city with no region has a null parent
+  passed src/modules/admin/lib/__tests__/userLocation.test.ts :: userLocation a city whose region is not in the list has a null parent
+  passed src/modules/admin/lib/__tests__/userLocation.test.ts :: userLocation no location id, or an id that is not in the list, gives null
+FAILED src/app/api/cron/listings-expiry/__tests__/route.test.ts :: GET /api/cron/listings-expiry (Vercel invocation) authorized, lapsed active listings → same result as POST
+FAILED src/app/api/cron/listings-expiry/__tests__/route.test.ts :: POST /api/cron/listings-expiry NULL-expiry active rows reported but NOT mutated
+FAILED src/app/api/cron/listings-expiry/__tests__/route.test.ts :: POST /api/cron/listings-expiry authorized, lapsed active listings → expired count matches
+FAILED src/app/api/cron/listings-expiry/__tests__/route.test.ts :: POST /api/cron/listings-expiry authorized, nothing lapsed → expired = 0, no updates
+FAILED src/app/api/cron/listings-expiry/__tests__/route.test.ts :: POST /api/cron/listings-expiry status set to engine-resolved value (expired), not raw string
+FAILED src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx :: AdminListingsPage — listing summary columns (T9) selects premium_until for the dialogs and does not select listing_images
+FAILED src/lib/auth/__tests__/permissions.test.ts :: hasPermission / assertPermission — moderator end-to-end hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+FAILED src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts :: getModeratorPermissions admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+FAILED src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts :: getModeratorPermissions admin client read error → resolves to the all-false map; console.error called
+FAILED src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts :: getModeratorPermissions regular user → rejects forbidden; admin client from(role_permissions) never called
+FAILED src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts :: signUpWithCaptcha — smoke tests (Task 441) captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase
+FAILED src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts :: signUpWithCaptcha — smoke tests (Task 441) happy path: valid captcha + email/password → { ok: true }
+FAILED src/modules/cabinet/statistics/__tests__/access.test.ts :: getAgentStatisticsAccess a role lookup error is denied (not_agent), never granted
+FAILED src/modules/cabinet/statistics/__tests__/access.test.ts :: getAgentStatisticsAccess reads the role of the session user only
+FAILED src/modules/cabinet/statistics/__tests__/access.test.ts :: getAgentStatisticsAccess role agent -> ok with the session user id
+FAILED src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts :: gateway — applyListingTransitionByStatus (smoke) admin: pending → active (privileged) → { ok: true, nextStatus: "active" }
+FAILED src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts :: gateway — applyListingTransitionByStatus (smoke) owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }
+exit code: 0

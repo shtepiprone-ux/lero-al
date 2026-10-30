@@ -1,0 +1,18 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-51-dismiss-throttle-probe.mjs patterns-mantine-adminuserstable--default~en-english uk 1024
+start 2026-10-15T17:53:34Z
+platform win32 node v22.22.3; state patterns-mantine-adminuserstable--default~en-english @ uk 1024
+throttle 1x trial 1: open ok, portals 1; gate CLOSED in 309ms 
+throttle 1x trial 2: open ok, portals 1; gate CLOSED in 295ms 
+throttle 1x trial 3: open ok, portals 1; gate CLOSED in 326ms 
+throttle 1x trial 4: open ok, portals 1; gate CLOSED in 293ms 
+throttle 4x trial 1: open ok, portals 1; gate CLOSED in 572ms 
+throttle 4x trial 2: open ok, portals 1; gate CLOSED in 597ms 
+throttle 4x trial 3: open ok, portals 1; gate CLOSED in 494ms 
+throttle 4x trial 4: open ok, portals 1; gate CLOSED in 482ms 
+throttle 8x trial 1: open ok, portals 1; gate CLOSED in 769ms 
+throttle 8x trial 2: open ok, portals 1; gate CLOSED in 694ms 
+throttle 8x trial 3: open ok, portals 1; gate CLOSED in 806ms 
+throttle 8x trial 4: open ok, portals 1; gate CLOSED in 734ms 
+end 2026-10-15T17:54:08Z
+EXIT_CODE=0

@@ -52,6 +52,9 @@ function PaginationLink({
       size={size}
       className={cn(className)}
       nativeButton={false}
+      // a pagination item is a link: Base UI Button gives a non-native element role="button", which would announce the page link as a
+      // button (WCAG 4.1.2) and make aria-current invalid on it (Task 923 Revision 7, found by the unit test of this primitive)
+      role="link"
       render={
         <a
           aria-current={isActive ? "page" : undefined}

@@ -1,0 +1,14 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T15:51:54.096Z
+command: node docs/sessions/evidence/task923/r31-50-sensitivity.cjs
+---- output ----
+proved     M5-guest-redirect-before-state-check (SEC-X-SRV-RESTRICTED-EDIT)
+           -> AssertionError: slug-archived: the page rendered an element and threw nothing: expected 'NEXT_REDIRECT /en/auth/login?next=%2F…' to be undefined
+proved     M8-drop-robots-from-edit-metadata (SEC-X-SRV-RESTRICTED-EDIT)
+           -> AssertionError: guest: the edit page metadata: expected { Object (title) } to deeply equal { …(2) }
+2 of 2 proved.
+
+---- end ----
+EXIT_CODE=0

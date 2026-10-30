@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { safeNextPath } from '@/lib/auth/safeRedirect'
 
 // Handles token-hash email confirmation for signup, recovery, and magic-link flows.
 // Supabase's Send Email Hook (Task 122) builds confirmation links pointing here
@@ -20,7 +21,8 @@ export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const token_hash = searchParams.get('token_hash')
   const rawType = searchParams.get('type')
-  const next = searchParams.get('next') ?? '/sq/auth/verified'
+  // only a path of THIS site may come out of `next` (open redirect, Task 923 Revision 7, S5)
+  const next = safeNextPath(searchParams.get('next'), origin, '/sq/auth/verified')
 
   const locale = deriveLocale(next)
   const failureRedirect = `${origin}/${locale}/auth/verified?error=confirm_failed`

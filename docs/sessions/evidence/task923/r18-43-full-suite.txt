@@ -1,0 +1,3334 @@
+platform win32 10.0.26300 node v22.22.3; pg n/a from a scratchpad prefix via NODE_PATH; start 2026-10-20T20:09:47.286Z
+cmd node node_modules/vitest/vitest.mjs run   (whole suite after Revision 17 R81 (a)-(f))
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+Warning: A vi.mock("next-intl/server") call in "C:/Claude_Code_Projects/lero-al/src/__tests__/instrumentation.test.ts" is not at the top level of the module. Although it appears nested, it will be hoisted and executed before any tests run. Move it to the top level to reflect its actual execution order. This will become an error in a future version.
+See: https://vitest.dev/guide/mocking/modules#how-it-works
+ ❯ src/__tests__/instrumentation.test.ts (27 tests | 3 failed) 209ms
+     × CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent 7ms
+     × CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent 3ms
+     × CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent 1ms
+ ❯ src/lib/auth/__tests__/sessionMiddleware.test.ts (31 tests | 2 failed) 177ms
+       × /api/auth/me is left alone 7ms
+       × /admin/users is left alone 1ms
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts (4 tests | 2 failed) 79ms
+     × happy path: valid captcha + email/password → { ok: true } 70ms
+     × captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase 6ms
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts (21 tests | 10 failed) 114ms
+     × allowlist transition (pending→reviewed) with reports.manage → passes 8ms
+     × allowlist transition (pending→resolved) with reports.manage → passes 2ms
+     × allowlist transition (pending→reviewed) with status_override only (no reports.manage) → passes 2ms
+     × allowlist transition (pending→resolved) with status_override only (no reports.manage) → passes 1ms
+     × out-of-allowlist with reports.status_override granted → passes 1ms
+     × same→same noop → invalid_status 1ms
+     × CAS conflict (status changed between read and write) → conflict 1ms
+     × successful status change → audit row inserted 1ms
+     × audit insert failure → status CAS-reverted + console.error + save_failed 1ms
+     × audit failure + CAS revert miss (concurrent change) → CRITICAL console.error + save_failed 2ms
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts (15 tests | 4 failed) 287ms
+     × positive — admin → insert via admin client → { id } 52ms
+     × diagnosability — insert failure → console.error with root cause 1ms
+     × positive — admin → permission upserted + audit event inserted → {} 21ms
+     × diagnosability — upsert failure → console.error with root cause 1ms
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts (8 tests | 5 failed) 275ms
+     × happy path: owner edit → { slug, status } returned, update called once 267ms
+     × update DB error → { error: message } + console.error logged (Guard 4) 1ms
+     × (a) lowered price: stored 100000/null → price 90000 writes price_old 100000 1ms
+     × (b) client price_old is ignored: unchanged price + payload price_old 5 writes null 1ms
+     × (c) currency change writes price_old null 1ms
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx (21 tests | 7 failed) 108ms
+     × splits the site name into brand and domain 17ms
+     × without database content every field comes from the translations and the built-in links 6ms
+     × a failing footer service gives the same page as no content, not an error 3ms
+     × database text wins field by field; an empty field falls back on its own 3ms
+     × the copyright template gets the current year in every place it is written 4ms
+     × only enabled links are shown; a list with none enabled falls back to the built-in ones 3ms
+     × a database record with no lists at all still renders 13ms
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts (40 tests | 8 failed) 365ms
+     × positive — a published CMS slug saves and its social_links reach the upsert 196ms
+     × negative — an unpublished slug rejects the whole payload, no upsert 2ms
+     × negative — a nonexistent slug rejects the whole payload, no upsert 2ms
+     × a disabled link with a bad URL does not block the save 1ms
+     × a pages lookup error returns transient, no upsert 2ms
+     × R7 — the upsert is issued through the service-role client, not the user client 1ms
+     × review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path 1ms
+     × accepts https, http, mailto and tel links 1ms
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts (9 tests | 8 failed) 67ms
+     × markNotificationRead — uses the user-scoped client, never the admin client 51ms
+     × markNotificationRead — update() payload keys are exactly [is_read]=true 1ms
+     × markNotificationRead — filters eq(id) and eq(is_read, false) 5ms
+     × markNotificationRead — { error } result logs once and resolves without throwing 1ms
+     × markAllNotificationsRead — uses the user-scoped client, never the admin client 1ms
+     × markAllNotificationsRead — update() payload keys are exactly [is_read]=true 1ms
+     × markAllNotificationsRead — filters eq(is_read, false) only 1ms
+     × markAllNotificationsRead — { error } result logs once and resolves without throwing 1ms
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts (17 tests | 8 failed) 78ms
+     × resolved: reporter AND listing owner both notified with the correct template ids 7ms
+     × dismissed: reporter AND listing owner both notified with the correct template ids 2ms
+     × owner equals reporter → only the reporter notification is sent 1ms
+     × reviewed (non-terminal) transition → no notification call 1ms
+     × reopen (resolved→pending) → no notification call 1ms
+     × ordering: the action does not resolve before both the reporter and owner notification promises resolve 1ms
+     × createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch) 1ms
+     × R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {} 1ms
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts (41 tests | 34 failed) 39ms
+     × an administrator switches a permission on and the change is audited with the old value and the actor 11ms
+     × switching an existing one off records the previous value and keeps one row for it 1ms
+     × asking for the value it already has is a no-op: no write, no audit row, no refresh 2ms
+     × the permission "users.hard_delete_everything" is refused and nothing is written 1ms
+     × the permission "" is refused and nothing is written 1ms
+     × the permission "__proto__" is refused and nothing is written 1ms
+     × the permission "listings.delete; drop" is refused and nothing is written 1ms
+     × the permission undefined is refused and nothing is written 1ms
+     × the permission 5 is refused and nothing is written 1ms
+     × the value "true" is not a boolean: refused 1ms
+     × the value "false" is not a boolean: refused 0ms
+     × the value 1 is not a boolean: refused 1ms
+     × the value 0 is not a boolean: refused 0ms
+     × the value null is not a boolean: refused 0ms
+     × the value undefined is not a boolean: refused 0ms
+     × the value {} is not a boolean: refused 0ms
+     × every known permission can be switched 1ms
+     × a failed write is "save_failed" and leaves no audit row 1ms
+     × a failed audit row does not undo the change that was made 1ms
+     × returns every permission, off unless a row says on, with who changed it 1ms
+     × ignores a row whose key is not a known permission 0ms
+     × does not take the admin's own switches for the moderator's 0ms
+     × an unreadable table shows every switch OFF 0ms
+     × a moderator may read, a plain user and an anonymous caller may not 2ms
+     × returns events with the actor's name; an event without an actor has none 2ms
+     × a moderator may read 0ms
+     × the limit 5 is asked as 5 1ms
+     × the limit 0 is asked as 1 0ms
+     × the limit -3 is asked as 1 0ms
+     × the limit 1000 is asked as 200 0ms
+     × the limit 2.5 is asked as 20 0ms
+     × the limit null is asked as 20 0ms
+     × the limit "10" is asked as 20 0ms
+     × the limit undefined is asked as 20 0ms
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts (38 tests | 4 failed) 32ms
+     × a person with no profile row is not blocked 5ms
+     × CHARACTERISATION (owner decision S32): a database error while reading the status is treated as "allowed" 1ms
+     × adm is staff (admin) 2ms
+     × mod is staff (moderator) 1ms
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts (60 tests | 53 failed) 53ms
+     × hands the change to the transition gateway with the staff member as the actor and refreshes the list 8ms
+     × a refusal by the gateway is returned, logged unless it is "not_found", and nothing is refreshed 1ms
+     × a plain user is refused before the gateway 5ms
+     × someone with no profile is refused before the gateway 1ms
+     × switches the flag on with an end date and refreshes the admin lists and the public pages in every language 4ms
+     × without an end date the old one is left alone; with null it is cleared 2ms
+     × an end date in the past is refused and nothing is written 3ms
+     × a listing that does not exist is "not_found" 1ms
+     × a database failure is "transient", or "db_missing_column" when the column is not there yet 1ms
+     × a moderator without the permission is refused; toggling goes through the same rules 1ms
+     × deletes one listing and refreshes the counters and the public lists 1ms
+     × a database failure deletes nothing and refreshes nothing 0ms
+     × create, update, feature and delete each change one row and refresh the page 1ms
+     × a database failure returns its message and refreshes nothing 0ms
+     × addLocation makes a city under its region with a unique, plain slug 0ms
+     × addLocation reports a failure 0ms
+     × approving a request sets the location and clears the request; rejecting only clears it 1ms
+     × a failed request decision returns a key and refreshes nothing 0ms
+     × create stores the Albanian title of the content, and refreshes the list 0ms
+     × create falls back to the given title when the Albanian one is empty 0ms
+     × create refuses the slug "Upper" 0ms
+     × create refuses the slug "a/b" 0ms
+     × create refuses the slug "with space" 0ms
+     × create refuses the slug "" 0ms
+     × create refuses the slug "auth" 0ms
+     × create refuses the slug "sq" 0ms
+     × create refuses the slug "cabinet" 0ms
+     × create reports a database failure 0ms
+     × update writes the known fields, the Albanian title and the time, and refreshes 1ms
+     × update refuses a slug that is not valid or is used by ANOTHER page, and accepts its own 0ms
+     × publishing needs an Albanian body: the supplied one, or the stored one when none is supplied 0ms
+     × update reports a failure; delete removes one page, or reports a failure 0ms
+     × a text shorter than two characters finds nobody and does not ask 0ms
+     × a whole id finds exactly that person, and not a deleted one 0ms
+     × a text search asks for the text as a VALUE: a comma or a bracket cannot add a condition 0ms
+     × a wildcard in the text is a literal character 0ms
+     × only staff may search 1ms
+     × creates a support ticket for an existing person, records the event and refreshes the list 1ms
+     × a complaint needs the reported person and a known complaint type, and the reported person is told 0ms
+     × refuses an unknown ticket type with "{ ticketType: 'chat' }" and writes nothing 0ms
+     × refuses a blank requester with "{ requesterUserId: '  ' }" and writes nothing 0ms
+     × refuses a complaint with no reported person with "{ ticketType: 'user_complaint', complaintType: 'spam' }" and writes nothing 0ms
+     × refuses a complaint with no type with "{ ticketType: 'user_complaint', reportedUserId: 'adm' }" and writes nothing 0ms
+     × refuses a complaint with an unknown type with "{ ticketType: 'user_complaint', reportedUserId: 'adm', complaintType: 'rude' }" and writes nothing 0ms
+     × refuses a blank subject with "{ subject: ' ' }" and writes nothing 0ms
+     × refuses a blank reason with "{ reason: ' ' }" and writes nothing 0ms
+     × refuses a requester who does not exist with "{ requesterUserId: 'nobody' }" and writes nothing 0ms
+     × refuses a reported person who does not exist with "{ ticketType: 'user_complaint', reportedUserId: 'nobody', complaintType: 'spam' }" and writes nothing 0ms
+     × a database failure is "create_failed" and tells nobody 0ms
+     × moves a ticket on, records who and why, and tells the reported person only when it is resolved or closed 1ms
+     × the same status again changes nothing 0ms
+     × a ticket with no reported person tells nobody 0ms
+     × an unknown ticket is "not_found"; a database failure is "update_failed" 0ms
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts (35 tests | 32 failed) 34ms
+     × an administrator saves a template; the key is normalised and the author is the session's user 6ms
+     × a moderator saves a template; the key is normalised and the author is the session's user 1ms
+     × saving the same key and language again updates one row 3ms
+     × a plain user is refused and nothing is saved 2ms
+     × an agent is refused and nothing is saved 1ms
+     × someone with no profile is refused and nothing is saved 1ms
+     × refuses an empty key and saves nothing 1ms
+     × refuses a key with a slash and saves nothing 1ms
+     × refuses a key with markup and saves nothing 1ms
+     × refuses a key over 64 characters and saves nothing 1ms
+     × refuses no key and saves nothing 1ms
+     × refuses a language that does not exist and saves nothing 1ms
+     × refuses a language in capitals and saves nothing 1ms
+     × refuses an empty subject and saves nothing 1ms
+     × refuses a subject over 300 characters and saves nothing 1ms
+     × refuses a body that is not text and saves nothing 1ms
+     × refuses a body over 200 000 characters and saves nothing 0ms
+     × refuses variables that are not a list and saves nothing 1ms
+     × refuses a variable with a space and saves nothing 0ms
+     × refuses a variable that is not text and saves nothing 0ms
+     × refuses more than 50 variables and saves nothing 1ms
+     × refuses a state that is not true / false and saves nothing 0ms
+     × accepts a body of exactly 200 000 characters and 50 variables 1ms
+     × refuses nothing at all 1ms
+     × a database failure is "save_failed" 1ms
+       × deleteEmailTemplateGroupAction is refused 1ms
+       × deleteEmailTemplateLocaleAction is refused 0ms
+       × deleteEmailTemplateGroupAction is refused 0ms
+       × deleteEmailTemplateLocaleAction is refused 0ms
+     × an administrator deletes every language of a key, and only that key 1ms
+     × an administrator deletes one language by id, and only that one 2ms
+     × a database failure is "delete_failed" 1ms
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts (27 tests | 26 failed) 32ms
+     × a moderator features one location and refreshes the home pages 11ms
+     × an administrator features one location and refreshes the home pages 1ms
+     × a plain user is refused 2ms
+     × someone with no profile is refused 1ms
+     × refuses location 1.5 with order 1 1ms
+     × refuses location "1" with order 1 1ms
+     × refuses location null with order 1 1ms
+     × refuses location undefined with order 1 1ms
+     × refuses location null with order 1 1ms
+     × refuses location 1 with order -1 1ms
+     × refuses location 1 with order 1.5 1ms
+     × refuses location 1 with order "2" 1ms
+     × refuses location 1 with order null 0ms
+     × refuses location 1 with order 10001 0ms
+     × refuses location 1 with order undefined 1ms
+     × refuses location {} with order 1 0ms
+     × accepts the order 0 and 10 000 1ms
+     × a database failure is "save_failed" and nothing is refreshed 1ms
+     × removes one location from the section and keeps its photo 1ms
+     × refuses the location 1.5 0ms
+     × refuses the location "1" 1ms
+     × refuses the location null 0ms
+     × refuses the location undefined 0ms
+     × refuses the location null 0ms
+     × refuses the location {} 0ms
+     × a database failure is "remove_failed" 1ms
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts (32 tests | 16 failed) 32ms
+       × updateCompanyAction is refused and nothing changes 8ms
+       × deleteCompanyAction is refused and nothing changes 1ms
+       × updateCompanyAction is refused and nothing changes 1ms
+       × deleteCompanyAction is refused and nothing changes 1ms
+       × updateCompanyAction is refused and nothing changes 1ms
+       × deleteCompanyAction is refused and nothing changes 0ms
+       × renames, trimmed 1ms
+       × refuses the name "" 0ms
+       × refuses the name "a" 0ms
+       × refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 0ms
+       × deletes only the named company 0ms
+       × renames, trimmed 0ms
+       × refuses the name "" 0ms
+       × refuses the name "a" 0ms
+       × refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 0ms
+       × deletes only the named company 0ms
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts (4 tests | 3 failed) 26ms
+     × admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present 18ms
+     × regular user → rejects forbidden; admin client from(role_permissions) never called 3ms
+     × admin client read error → resolves to the all-false map; console.error called 1ms
+ ❯ src/modules/admin/actions/__tests__/adminLocale.test.ts (22 tests | 1 failed) 15ms
+     × stores a supported language in an httpOnly, lax, year-long cookie and on the signed-in person's profile only 6ms
+ ❯ src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts (6 tests | 5 failed) 17ms
+     × usr reaches the gateway with the role "user" taken from the database and the source "cabinet" 8ms
+     × adm reaches the gateway with the role "admin" taken from the database and the source "cabinet" 1ms
+     × nul reaches the gateway with the role null taken from the database and the source "cabinet" 1ms
+     × ghost reaches the gateway with the role null taken from the database and the source "cabinet" 1ms
+     × the role comes from the row of the session's user, never from another 1ms
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts (5 tests | 1 failed) 52ms
+     × insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4) 6ms
+stderr | src/lib/auth/__tests__/controller.test.ts > Scenario 8 — UI state stability > valid state invariant — no unauthenticated state with a user
+AuthController: server sync failed {
+  error: Error: Unexpected fetch in a unit test: /api/auth/me. Give this test an answer: vi.mocked(global.fetch).mockResolvedValue(...)
+      at C:/Claude_Code_Projects/lero-al/src/tests/setup.ts:22:9
+      at Mock (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/spy/dist/index.js:332:34)
+      at fetchServerUser (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:55:21)
+      at AuthController.syncFromServer (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:164:26)
+      at AuthController.handleAuthEvent (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:223:12)
+      at Object.current (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:296:12)
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:751:21
+      at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+      at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+      at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+}
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts (10 tests | 1 failed) 31ms
+     × hasPermission → true for a moderator whose key is stored allowed:true (admin-client read) 5ms
+ ❯ src/lib/auth/__tests__/controller.test.ts (47 tests | 1 failed) 2025ms
+     × valid state invariant — no unauthenticated state with a user 5ms
+ ❯ src/lib/__tests__/cloudinaryDelete.test.ts (5 tests | 4 failed) 18ms
+     × skips when public_id is directly referenced in listing_images 9ms
+     × returns dryRun=true and does not call Cloudinary when unreferenced 3ms
+     × logs a structured DRY_RUN entry 1ms
+     × calls Cloudinary destroy when mode=enabled and asset is unreferenced 3ms
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts (9 tests | 5 failed) 22ms
+     × authorized, lapsed active listings → expired count matches 4ms
+     × authorized, nothing lapsed → expired = 0, no updates 1ms
+     × NULL-expiry active rows reported but NOT mutated 1ms
+     × status set to engine-resolved value (expired), not raw string 1ms
+     × authorized, lapsed active listings → same result as POST 1ms
+ ❯ src/modules/cabinet/statistics/__tests__/access.test.ts (9 tests | 3 failed) 20ms
+     × role agent -> ok with the session user id 8ms
+     × reads the role of the session user only 2ms
+     × a role lookup error is denied (not_agent), never granted 2ms
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts (13 tests | 2 failed) 15ms
+     × owner: active → sold (privileged) → { ok: true, nextStatus: "sold" } 5ms
+     × admin: pending → active (privileged) → { ok: true, nextStatus: "active" } 2ms
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (18 tests | 1 failed) 24777ms
+     × selects premium_until for the dialogs and does not select listing_images 25ms
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: navigation to another Document
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: Window's alert() method
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 249 ⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/__tests__/instrumentation.test.ts > sentry.server.config > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+ FAIL  src/__tests__/instrumentation.test.ts > sentry.edge.config > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+ FAIL  src/__tests__/instrumentation.test.ts > instrumentation-client > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/__tests__/instrumentation.test.ts:95:37
+     93|   it('CHARACTERISATION (owner decision S57): personal data such as the…
+     94|     await load()
+     95|     expect(inits[0].sendDefaultPii).toBe(true)
+       |                                     ^
+     96|   })
+     97| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/249]⎯
+
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+AssertionError: expected 'reference lookup failed' to contain 'listing_images.public_id'
+
+Expected: "listing_images.public_id"
+Received: "reference lookup failed"
+
+ ❯ src/lib/__tests__/cloudinaryDelete.test.ts:76:31
+     74|     expect(result.skipped).toBe(true)
+     75|     expect(result.deleted).toBe(false)
+     76|     expect(result.skipReason).toContain('listing_images.public_id')
+       |                               ^
+     77|     expect(fetchSpy).not.toHaveBeenCalled()
+     78|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/249]⎯
+
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/lib/__tests__/cloudinaryDelete.test.ts:99:28
+     97|     })
+     98|
+     99|     expect(result.skipped).toBe(false)
+       |                            ^
+    100|     expect(result.dryRun).toBe(true)
+    101|     expect(result.deleted).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/249]⎯
+
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+AssertionError: expected 'SKIP_LOOKUP_FAILED' to be 'DRY_RUN' // Object.is equality
+
+Expected: "DRY_RUN"
+Received: "SKIP_LOOKUP_FAILED"
+
+ ❯ src/lib/__tests__/cloudinaryDelete.test.ts:111:27
+    109|     expect(logCall).toBeDefined()
+    110|     const entry = logCall![1] as Record<string, unknown>
+    111|     expect(entry.outcome).toBe('DRY_RUN')
+       |                           ^
+    112|     expect(entry.publicId).toBe('avatars/orphan123')
+    113|     expect(entry.reason).toBe('avatar_replaced')
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/249]⎯
+
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/__tests__/cloudinaryDelete.test.ts:132:28
+    130|     })
+    131|
+    132|     expect(result.deleted).toBe(true)
+       |                            ^
+    133|     expect(result.dryRun).toBe(false)
+    134|     expect(fetchSpy).toHaveBeenCalledOnce()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/249]⎯
+
+ FAIL  src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype C — createCurrency (admin/moderator write, admin client) > positive — admin → insert via admin client → { id }
+AssertionError: expected { error: 'forbidden' } to deeply equal { id: 1 }
+
+- Expected
++ Received
+
+  {
+-   "id": 1,
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts:339:20
+    337|     const result = await createCurrency(VALID_CURRENCY)
+    338|
+    339|     expect(result).toEqual({ id: 1 })
+       |                    ^
+    340|     expect(mockCurrencyInsert).toHaveBeenCalled()
+    341|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/249]⎯
+
+ FAIL  src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype C — createCurrency (admin/moderator write, admin client) > diagnosability — insert failure → console.error with root cause
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'unique violation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "unique violation",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts:371:20
+    369|     const result = await createCurrency(VALID_CURRENCY)
+    370|
+    371|     expect(result).toEqual({ error: insertError.message })
+       |                    ^
+    372|     expect(consoleSpy).toHaveBeenCalledWith(
+    373|       'createCurrency failed',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/249]⎯
+
+ FAIL  src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype D — setModeratorPermission (admin-only, moderator rejected) > positive — admin → permission upserted + audit event inserted → {}
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts:433:20
+    431|     const result = await setModeratorPermission('listings.delete', tru…
+    432|
+    433|     expect(result).toEqual({})
+       |                    ^
+    434|     expect(mockPermissionUpsert).toHaveBeenCalledWith(
+    435|       expect.objectContaining({
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/249]⎯
+
+ FAIL  src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype D — setModeratorPermission (admin-only, moderator rejected) > diagnosability — upsert failure → console.error with root cause
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts:480:20
+    478|     const result = await setModeratorPermission('listings.delete', tru…
+    479|
+    480|     expect(result).toEqual({ error: 'save_failed' })
+       |                    ^
+    481|     expect(consoleSpy).toHaveBeenCalledWith(
+    482|       'setModeratorPermission upsert failed',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/249]⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsPage — listing summary columns (T9) > selects premium_until for the dialogs and does not select listing_images
+Error: `cookies` was called outside a request scope. Read more: https://nextjs.org/docs/messages/next-dynamic-api-wrong-context
+ ❯ throwForMissingRequestStore node_modules/next/src/server/app-render/work-unit-async-storage.external.ts:335:8
+ ❯ callingExpression node_modules/next/src/server/request/cookies.ts:177:30
+ ❯ requireStaffPage src/lib/auth/staff.ts:88:26
+     86|   if (!viewer.ok) {
+     87|     if (viewer.reason === 'unauthenticated') {
+     88|       const raw = (await cookies()).get(ADMIN_LOCALE_COOKIE)?.value
+       |                          ^
+     89|       const locale = (ADMIN_LOCALES as readonly string[]).includes(raw…
+     90|       redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admi…
+ ❯ Module.AdminListingsPage src/app/admin/listings/page.tsx:20:3
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:461:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > splits the site name into brand and domain
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:185:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > without database content every field comes from the translations and the built-in links
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:191:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a failing footer service gives the same page as no content, not an error
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:200:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > database text wins field by field; an empty field falls back on its own
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:206:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > the copyright template gets the current year in every place it is written
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:214:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > only enabled links are shown; a list with none enabled falls back to the built-in ones
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:220:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/249]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a database record with no lists at all still renders
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:227:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/249]⎯
+
+ FAIL  src/lib/auth/__tests__/authCore.security.test.ts > getBlockedError > a person with no profile row is not blocked
+AssertionError: expected 'account_blocked' to be null
+
+- Expected:
+null
+
++ Received:
+"account_blocked"
+
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts:111:45
+    109|
+    110|   it('a person with no profile row is not blocked', async () => {
+    111|     expect(await getBlockedError('nobody')).toBeNull()
+       |                                             ^
+    112|   })
+    113|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/249]⎯
+
+ FAIL  src/lib/auth/__tests__/authCore.security.test.ts > getBlockedError > CHARACTERISATION (owner decision S32): a database error while reading the status is treated as "allowed"
+AssertionError: expected 'account_blocked' to be null
+
+- Expected:
+null
+
++ Received:
+"account_blocked"
+
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts:116:43
+    114|   it('CHARACTERISATION (owner decision S32): a database error while re…
+    115|     lookupError = { code: 'XX000' }
+    116|     expect(await getBlockedError('perm')).toBeNull()
+       |                                           ^
+    117|   })
+    118| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/249]⎯
+
+ FAIL  src/lib/auth/__tests__/authCore.security.test.ts > getStaffRole > adm is staff (admin)
+AssertionError: expected null to be 'admin' // Object.is equality
+
+- Expected:
+"admin"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts:123:34
+    121|   it.each([['adm', 'admin'], ['mod', 'moderator']])('%s is staff (%s)'…
+    122|     sessionUser = { id }
+    123|     expect(await getStaffRole()).toBe(role)
+       |                                  ^
+    124|   })
+    125|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/249]⎯
+
+ FAIL  src/lib/auth/__tests__/authCore.security.test.ts > getStaffRole > mod is staff (moderator)
+AssertionError: expected null to be 'moderator' // Object.is equality
+
+- Expected:
+"moderator"
+
++ Received:
+null
+
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts:123:34
+    121|   it.each([['adm', 'admin'], ['mod', 'moderator']])('%s is staff (%s)'…
+    122|     sessionUser = { id }
+    123|     expect(await getStaffRole()).toBe(role)
+       |                                  ^
+    124|   })
+    125|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/249]⎯
+
+ FAIL  src/lib/auth/__tests__/controller.test.ts > Scenario 8 — UI state stability > valid state invariant — no unauthenticated state with a user
+Error: The test made 1 unexpected fetch call(s) that it did not mock: /api/auth/me
+ ❯ src/tests/setup.ts:27:30
+     25| afterEach(() => {
+     26|   const seen = unexpectedFetches.splice(0)
+     27|   if (seen.length > 0) throw new Error(`The test made ${seen.length} u…
+       |                              ^
+     28| })
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/249]⎯
+
+ FAIL  src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/lib/auth/__tests__/permissions.test.ts:179:20
+    177|     const result = await hasPermission('reports.delete')
+    178|
+    179|     expect(result).toBe(true)
+       |                    ^
+    180|     expect(mockCreateClient).toHaveBeenCalled()
+    181|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/249]⎯
+
+ FAIL  src/lib/auth/__tests__/sessionMiddleware.test.ts > middleware.ts > matcher > /api/auth/me is left alone
+ FAIL  src/lib/auth/__tests__/sessionMiddleware.test.ts > middleware.ts > matcher > /admin/users is left alone
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/lib/auth/__tests__/sessionMiddleware.test.ts:83:224
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/249]⎯
+
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a plain user > updateCompanyAction is refused and nothing changes
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a plain user > deleteCompanyAction is refused and nothing changes
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an agent > updateCompanyAction is refused and nothing changes
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an agent > deleteCompanyAction is refused and nothing changes
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a person with no profile > updateCompanyAction is refused and nothing changes
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a person with no profile > deleteCompanyAction is refused and nothing changes
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts:121:28
+    119|     beforeEach(() => { currentUser = { id } })
+    120|     it.each(calls)('%s is refused and nothing changes', async (_n, cal…
+    121|       expect(await call()).toEqual({ error: 'forbidden' })
+       |                            ^
+    122|       expect(db.tables.companies).toEqual([{ id: 'c1', name: 'Nova Rea…
+    123|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/249]⎯
+
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > renames, trimmed
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > renames, trimmed
+AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthorized",
++ }
+
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts:130:64
+    128|
+    129|     it('renames, trimmed', async () => {
+    130|       expect(await updateCompanyAction('c1', '  Renamed Co ')).toEqual…
+       |                                                                ^
+    131|       expect(db.tables.companies[0].name).toBe('Renamed Co')
+    132|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/249]⎯
+
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name ""
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name "a"
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name ""
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name "a"
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+AssertionError: expected 'unauthorized' to match /company_name_too_/
+
+- Expected:
+/company_name_too_/
+
++ Received:
+"unauthorized"
+
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts:135:61
+    133|
+    134|     it.each([[''], ['a'], ['x'.repeat(121)]])('refuses the name %j', a…
+    135|       expect((await updateCompanyAction('c1', name)).error).toMatch(/c…
+       |                                                             ^
+    136|       expect(db.tables.companies[0].name).toBe('Nova Real Estate')
+    137|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/249]⎯
+
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > deletes only the named company
+ FAIL  src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > deletes only the named company
+AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthorized",
++ }
+
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts:141:47
+    139|     it('deletes only the named company', async () => {
+    140|       db.tables.companies.push({ id: 'c2', name: 'Other' })
+    141|       expect(await deleteCompanyAction('c1')).toEqual({})
+       |                                               ^
+    142|       expect(db.tables.companies.map((c) => c.id)).toEqual(['c2'])
+    143|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/249]⎯
+
+ FAIL  src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > happy path: valid captcha + email/password → { ok: true }
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'valid-turnstile-token' ]
+
+Number of calls: 0
+
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts:58:33
+     56|
+     57|     expect(result).toEqual({ ok: true })
+     58|     expect(mockVerifyTurnstile).toHaveBeenCalledWith('valid-turnstile-…
+       |                                 ^
+     59|     expect(mockSignUp).toHaveBeenCalledWith(expect.objectContaining({
+     60|       email: 'new@example.com',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/249]⎯
+
+ FAIL  src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase
+AssertionError: expected { ok: true } to deeply equal { ok: false, reason: 'captcha_failed' }
+
+- Expected
++ Received
+
+  {
+-   "ok": false,
+-   "reason": "captcha_failed",
++   "ok": true,
+  }
+
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts:90:20
+     88|     })
+     89|
+     90|     expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
+       |                    ^
+     91|     expect(mockSignUp).not.toHaveBeenCalled()
+     92|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminLocale.test.ts > setAdminLocale > stores a supported language in an httpOnly, lax, year-long cookie and on the signed-in person's profile only
+AssertionError: expected 'sq' to be 'uk' // Object.is equality
+
+Expected: "uk"
+Received: "sq"
+
+ ❯ src/modules/admin/actions/__tests__/adminLocale.test.ts:50:74
+     48|     await setAdminLocale('uk')
+     49|     expect(setCookie).toHaveBeenCalledWith('admin-locale', 'uk', { htt…
+     50|     expect(db.tables.users.find((u) => u.id === 'u1')?.preferred_local…
+       |                                                                          ^
+     51|     expect(db.tables.users.find((u) => u.id === 'u2')?.preferred_local…
+     52|     expect(db.log.find((l) => l.op === 'update')?.filters).toEqual([['…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > hands the change to the transition gateway with the staff member as the actor and refreshes the list
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateListingStatus src/modules/admin/actions/index.ts:65:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:75:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > a refusal by the gateway is returned, logged unless it is "not_found", and nothing is refreshed
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateListingStatus src/modules/admin/actions/index.ts:65:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:82:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > a plain user is refused before the gateway
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > someone with no profile is refused before the gateway
+AssertionError: expected [Function] to throw error including 'forbidden' but got 'unauthenticated'
+
+Expected: "forbidden"
+Received: "unauthenticated"
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:92:55
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > switches the flag on with an end date and refreshes the admin lists and the public pages in every language
+AssertionError: expected { error: 'forbidden' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:101:60
+     99|
+    100|   it('switches the flag on with an end date and refreshes the admin li…
+    101|     expect(await setListingPremium('l1', true, NEXT_YEAR)).toEqual({ o…
+       |                                                            ^
+    102|     expect(db.tables.listings[0]).toMatchObject({ is_premium: true, pr…
+    103|     expect(paths).toEqual(expect.arrayContaining(['/admin/listings', '…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > without an end date the old one is left alone; with null it is cleared
+AssertionError: expected '2027-10-20T20:09:50.387Z' to be null
+
+- Expected:
+null
+
++ Received:
+"2027-10-20T20:09:50.387Z"
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:112:49
+    110|     expect(db.tables.listings[0]).toMatchObject({ is_premium: false, p…
+    111|     await setListingPremium('l1', true, null)
+    112|     expect(db.tables.listings[0].premium_until).toBeNull()
+       |                                                 ^
+    113|   })
+    114|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > an end date in the past is refused and nothing is written
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'date_in_past' }
+
+- Expected
++ Received
+
+  {
+-   "error": "date_in_past",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:116:73
+    114|
+    115|   it('an end date in the past is refused and nothing is written', asyn…
+    116|     expect(await setListingPremium('l1', true, '2020-01-01T00:00:00Z')…
+       |                                                                         ^
+    117|     expect(db.tables.listings[0].is_premium).toBe(false)
+    118|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a listing that does not exist is "not_found"
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'not_found' }
+
+- Expected
++ Received
+
+  {
+-   "error": "not_found",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:121:51
+    119|
+    120|   it('a listing that does not exist is "not_found"', async () => {
+    121|     expect(await setListingPremium('nope', true)).toEqual({ error: 'no…
+       |                                                   ^
+    122|   })
+    123|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a database failure is "transient", or "db_missing_column" when the column is not there yet
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'transient' }
+
+- Expected
++ Received
+
+  {
+-   "error": "transient",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:126:49
+    124|   it('a database failure is "transient", or "db_missing_column" when t…
+    125|     failTable = { table: 'listings', op: 'update', error: { message: '…
+    126|     expect(await setListingPremium('l1', true)).toEqual({ error: 'tran…
+       |                                                 ^
+    127|     failTable = { table: 'listings', op: 'update', error: { code: '427…
+    128|     expect(await setListingPremium('l1', true)).toEqual({ error: 'db_m…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a moderator without the permission is refused; toggling goes through the same rules
+AssertionError: expected { error: 'forbidden' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:137:52
+    135|     expect(await toggleListingPremium('l1', true)).toEqual({ error: 'f…
+    136|     db.tables.role_permissions = PERMISSIONS.map((permission_key) => (…
+    137|     expect(await toggleListingPremium('l1', true)).toEqual({ ok: true …
+       |                                                    ^
+    138|     expect(db.tables.listings[0].is_premium).toBe(true)
+    139|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > deleteListing > deletes one listing and refreshes the counters and the public lists
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.deleteListing src/modules/admin/actions/index.ts:140:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:145:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > deleteListing > a database failure deletes nothing and refreshes nothing
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.deleteListing src/modules/admin/actions/index.ts:140:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:153:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > create, update, feature and delete each change one row and refresh the page
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createLocation src/modules/admin/actions/index.ts:235:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:167:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > a database failure returns its message and refreshes nothing
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createLocation src/modules/admin/actions/index.ts:235:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:179:14
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > addLocation makes a city under its region with a unique, plain slug
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.addLocation src/modules/admin/actions/index.ts:816:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:185:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > addLocation reports a failure
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.addLocation src/modules/admin/actions/index.ts:816:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:195:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > approving a request sets the location and clears the request; rejecting only clears it
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.approveLocationRequest src/modules/admin/actions/index.ts:839:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:199:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > a failed request decision returns a key and refreshes nothing
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.approveLocationRequest src/modules/admin/actions/index.ts:839:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:209:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create stores the Albanian title of the content, and refreshes the list
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createPage src/modules/admin/actions/index.ts:325:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:217:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create falls back to the given title when the Albanian one is empty
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createPage src/modules/admin/actions/index.ts:325:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:223:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "Upper"
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "a/b"
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "with space"
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug ""
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "auth"
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "sq"
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "cabinet"
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createPage src/modules/admin/actions/index.ts:325:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:228:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create reports a database failure
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.createPage src/modules/admin/actions/index.ts:325:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:235:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update writes the known fields, the Albanian title and the time, and refreshes
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.updatePage src/modules/admin/actions/index.ts:351:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:239:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update refuses a slug that is not valid or is used by ANOTHER page, and accepts its own
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.updatePage src/modules/admin/actions/index.ts:351:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:245:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > publishing needs an Albanian body: the supplied one, or the stored one when none is supplied
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.updatePage src/modules/admin/actions/index.ts:351:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:251:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update reports a failure; delete removes one page, or reports a failure
+Error: forbidden
+ ❯ assertPermission src/lib/auth/permissions.ts:42:42
+     40|
+     41| export async function assertPermission(key: PermissionKey): Promise<vo…
+     42|   if (!(await hasPermission(key))) throw new Error('forbidden')
+       |                                          ^
+     43| }
+     44|
+ ❯ Module.updatePage src/modules/admin/actions/index.ts:351:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:258:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a text shorter than two characters finds nobody and does not ask
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.searchUsersForPicker src/modules/admin/actions/index.ts:881:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:276:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a whole id finds exactly that person, and not a deleted one
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.searchUsersForPicker src/modules/admin/actions/index.ts:881:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:282:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[58/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a text search asks for the text as a VALUE: a comma or a bracket cannot add a condition
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.searchUsersForPicker src/modules/admin/actions/index.ts:881:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:287:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[59/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a wildcard in the text is a literal character
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ assertAdminAccess src/modules/admin/actions/index.ts:38:3
+ ❯ Module.searchUsersForPicker src/modules/admin/actions/index.ts:881:3
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:297:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[60/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > only staff may search
+AssertionError: expected [Function] to throw error including 'forbidden' but got 'unauthenticated'
+
+Expected: "forbidden"
+Received: "unauthenticated"
+
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:305:46
+    303|   it('only staff may search', async () => {
+    304|     currentUser = { id: 'usr' }
+    305|     await expect(searchUsersForPicker('alba')).rejects.toThrow('forbid…
+       |                                              ^
+    306|   })
+    307| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[61/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > creates a support ticket for an existing person, records the event and refreshes the list
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.createSupportTicket src/modules/admin/actions/index.ts:941:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:313:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[62/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a complaint needs the reported person and a known complaint type, and the reported person is told
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.createSupportTicket src/modules/admin/actions/index.ts:941:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:323:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[63/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses an unknown ticket type with "{ ticketType: 'chat' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank requester with "{ requesterUserId: '  ' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with no reported person with "{ ticketType: 'user_complaint', complaintType: 'spam' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with no type with "{ ticketType: 'user_complaint', reportedUserId: 'adm' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with an unknown type with "{ ticketType: 'user_complaint', reportedUserId: 'adm', complaintType: 'rude' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank subject with "{ subject: ' ' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank reason with "{ reason: ' ' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a requester who does not exist with "{ requesterUserId: 'nobody' }" and writes nothing
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a reported person who does not exist with "{ ticketType: 'user_complaint', reportedUserId: 'nobody', complaintType: 'spam' }" and writes nothing
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.createSupportTicket src/modules/admin/actions/index.ts:941:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:338:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[64/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a database failure is "create_failed" and tells nobody
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.createSupportTicket src/modules/admin/actions/index.ts:941:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:345:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[65/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > moves a ticket on, records who and why, and tells the reported person only when it is resolved or closed
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateTicketStatus src/modules/admin/actions/index.ts:1025:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:350:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[66/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > the same status again changes nothing
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateTicketStatus src/modules/admin/actions/index.ts:1025:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:360:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[67/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a ticket with no reported person tells nobody
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateTicketStatus src/modules/admin/actions/index.ts:1025:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:365:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[68/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > an unknown ticket is "not_found"; a database failure is "update_failed"
+Error: unauthenticated
+ ❯ resolveAdminActor src/modules/admin/actions/index.ts:33:24
+     31|   // moderator names its key (Task 923 R75): an administrator holds ev…
+     32|   const staff = await checkStaff({ permission })
+     33|   if (!staff.ok) throw new Error(staff.reason)
+       |                        ^
+     34|   return { userId: staff.userId, role: staff.role as string, source: '…
+     35| }
+ ❯ Module.updateTicketStatus src/modules/admin/actions/index.ts:1025:17
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts:375:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[69/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+Error: forbidden
+ ❯ getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:93:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[70/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > regular user → rejects forbidden; admin client from(role_permissions) never called
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array []
+
+
+Number of calls: 1
+
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:121:39
+    119|     await expect(getModeratorPermissions()).rejects.toThrow('forbidden…
+    120|
+    121|     expect(mockCreateAdminClient).not.toHaveBeenCalled()
+       |                                       ^
+    122|   })
+    123|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[71/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin client read error → resolves to the all-false map; console.error called
+Error: forbidden
+ ❯ getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:139:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[72/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > positive — a published CMS slug saves and its social_links reach the upsert
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:170:20
+    168|     })
+    169|
+    170|     expect(result).toEqual({})
+       |                    ^
+    171|     expect(mockCmsBatchSelect).toHaveBeenCalled()
+    172|     expect(mockFooterUpsert).toHaveBeenCalledWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[73/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > negative — an unpublished slug rejects the whole payload, no upsert
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'invalid_internal_link' }
+
+- Expected
++ Received
+
+  {
+-   "error": "invalid_internal_link",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:188:20
+    186|     })
+    187|
+    188|     expect(result).toEqual({ error: 'invalid_internal_link' })
+       |                    ^
+    189|     expect(mockFooterUpsert).not.toHaveBeenCalled()
+    190|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[74/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > negative — a nonexistent slug rejects the whole payload, no upsert
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'invalid_internal_link' }
+
+- Expected
++ Received
+
+  {
+-   "error": "invalid_internal_link",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:201:20
+    199|     })
+    200|
+    201|     expect(result).toEqual({ error: 'invalid_internal_link' })
+       |                    ^
+    202|     expect(mockFooterUpsert).not.toHaveBeenCalled()
+    203|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[75/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > a disabled link with a bad URL does not block the save
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:213:20
+    211|     })
+    212|
+    213|     expect(result).toEqual({})
+       |                    ^
+    214|     expect(mockCmsBatchSelect).not.toHaveBeenCalled() // disabled link…
+    215|     expect(mockFooterUpsert).toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[76/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > a pages lookup error returns transient, no upsert
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'transient' }
+
+- Expected
++ Received
+
+  {
+-   "error": "transient",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:228:20
+    226|     })
+    227|
+    228|     expect(result).toEqual({ error: 'transient' })
+       |                    ^
+    229|     expect(mockFooterUpsert).not.toHaveBeenCalled()
+    230|     consoleSpy.mockRestore()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[77/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > R7 — the upsert is issued through the service-role client, not the user client
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:242:30
+    240|     })
+    241|
+    242|     expect(mockFooterUpsert).toHaveBeenCalled()
+       |                              ^
+    243|     // The user-scoped client (createClient) is used only for the role…
+    244|     expect(mockCreateClient).toHaveBeenCalledTimes(1)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[78/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:264:20
+    262|     })
+    263|
+    264|     expect(result).toEqual({})
+       |                    ^
+    265|     expect(mockCmsBatchIn).toHaveBeenCalledTimes(1)
+    266|     const [col, slugs] = mockCmsBatchIn.mock.calls[0] as [string, stri…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[79/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — link schemes (S9) > accepts https, http, mailto and tel links
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts:490:20
+    488|       social_links: [link({ id: 's1', url: 'https://instagram.com/lero…
+    489|     })
+    490|     expect(result).toEqual({})
+       |                    ^
+    491|     expect(mockFooterUpsert).toHaveBeenCalled()
+    492|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[80/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > an administrator switches a permission on and the change is audited with the old value and the actor
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:47:64
+     45| describe('setModeratorPermission', () => {
+     46|   it('an administrator switches a permission on and the change is audi…
+     47|     expect(await setModeratorPermission('users.create', true)).toEqual…
+       |                                                                ^
+     48|     expect(db.tables.role_permissions.find((r) => r.permission_key ===…
+     49|     expect(db.tables.role_permission_events).toMatchObject([{ role: 'm…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[81/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > switching an existing one off records the previous value and keeps one row for it
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:54:68
+     52|
+     53|   it('switching an existing one off records the previous value and kee…
+     54|     expect(await setModeratorPermission('listings.delete', false)).toE…
+       |                                                                    ^
+     55|     expect(db.tables.role_permissions.filter((r) => r.permission_key =…
+     56|     expect(db.tables.role_permissions[0].allowed).toBe(false)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[82/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > asking for the value it already has is a no-op: no write, no audit row, no refresh
+AssertionError: expected { error: 'forbidden' } to deeply equal { noOp: true, direction: 'grant' }
+
+- Expected
++ Received
+
+  {
+-   "direction": "grant",
+-   "noOp": true,
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:61:67
+     59|
+     60|   it('asking for the value it already has is a no-op: no write, no aud…
+     61|     expect(await setModeratorPermission('listings.delete', true)).toEq…
+       |                                                                   ^
+     62|     db.tables.role_permissions[0].allowed = false
+     63|     expect(await setModeratorPermission('listings.delete', false)).toE…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[83/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "users.hard_delete_everything" is refused and nothing is written
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "" is refused and nothing is written
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "__proto__" is refused and nothing is written
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "listings.delete; drop" is refused and nothing is written
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission undefined is refused and nothing is written
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission 5 is refused and nothing is written
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:76:62
+     74|
+     75|   it.each([['users.hard_delete_everything'], [''], ['__proto__'], ['li…
+     76|     expect(await setModeratorPermission(key as never, true)).toEqual({…
+       |                                                              ^
+     77|     expect(db.tables.role_permissions).toHaveLength(1)
+     78|     expect(db.tables.role_permission_events).toEqual([])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[84/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value "true" is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value "false" is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value 1 is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value 0 is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value null is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value undefined is not a boolean: refused
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value {} is not a boolean: refused
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:82:74
+     80|
+     81|   it.each([['true'], ['false'], [1], [0], [null], [undefined], [{}]])(…
+     82|     expect(await setModeratorPermission('users.create', value as never…
+       |                                                                          ^
+     83|     expect(db.tables.role_permissions).toHaveLength(1)
+     84|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[85/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > every known permission can be switched
+AssertionError: expected 'forbidden' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"forbidden"
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:87:96
+     85|
+     86|   it('every known permission can be switched', async () => {
+     87|     for (const key of PERMISSION_KEYS) expect((await setModeratorPermi…
+       |                                                                                                ^
+     88|     expect(db.tables.role_permissions.filter((r) => r.allowed === true…
+     89|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[86/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > a failed write is "save_failed" and leaves no audit row
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:93:64
+     91|   it('a failed write is "save_failed" and leaves no audit row', async …
+     92|     failing('role_permissions', 'upsert', { message: 'boom' })
+     93|     expect(await setModeratorPermission('users.create', true)).toEqual…
+       |                                                                ^
+     94|     expect(db.tables.role_permission_events).toEqual([])
+     95|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[87/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > a failed audit row does not undo the change that was made
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:99:64
+     97|   it('a failed audit row does not undo the change that was made', asyn…
+     98|     failing('role_permission_events', 'insert', { message: 'boom' })
+     99|     expect(await setModeratorPermission('users.create', true)).toEqual…
+       |                                                                ^
+    100|     expect(db.tables.role_permissions.find((r) => r.permission_key ===…
+    101|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[88/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > returns every permission, off unless a row says on, with who changed it
+Error: unauthenticated
+ ❯ Module.getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:106:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[89/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > ignores a row whose key is not a known permission
+Error: unauthenticated
+ ❯ Module.getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:114:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[90/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > does not take the admin's own switches for the moderator's
+Error: unauthenticated
+ ❯ Module.getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:119:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[91/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > an unreadable table shows every switch OFF
+Error: unauthenticated
+ ❯ Module.getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+     41| export async function getModeratorPermissions(): Promise<Record<Permis…
+     42|   const viewer = await requireViewer()
+     43|   if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? …
+       |                         ^
+     44|   // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only;…
+     45|   if (viewer.role !== 'admin') throw new Error('forbidden')
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:124:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[92/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > a moderator may read, a plain user and an anonymous caller may not
+AssertionError: promise rejected "Error: unauthenticated" instead of resolving
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:130:43
+    128|   it('a moderator may read, a plain user and an anonymous caller may n…
+    129|     currentUser = { id: 'mod' }
+    130|     await expect(getModeratorPermissions()).resolves.toBeDefined()
+       |                                           ^
+    131|     currentUser = { id: 'usr' }
+    132|     await expect(getModeratorPermissions()).rejects.toThrow('forbidden…
+
+Caused by: Error: unauthenticated
+ ❯ Module.getModeratorPermissions src/modules/admin/actions/permissions.ts:43:25
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:130:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[93/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > returns events with the actor's name; an event without an actor has none
+AssertionError: expected null to match object [ { id: 'e2', …(2) }, …(1) ]
+
+- Expected:
+[
+  {
+    "actor_name": null,
+    "actor_user_id": null,
+    "id": "e2",
+  },
+  {
+    "actor_name": "Admin A",
+    "id": "e1",
+    "old_allowed": null,
+  },
+]
+
++ Received:
+null
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:149:20
+    147|     const events = await getPermissionEvents()
+    148|     // newest first
+    149|     expect(events).toMatchObject([{ id: 'e2', actor_name: null, actor_…
+       |                    ^
+    150|   })
+    151|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[94/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > a moderator may read
+AssertionError: Target cannot be null or undefined.
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:159:41
+    157|   it('a moderator may read', async () => {
+    158|     currentUser = { id: 'mod' }
+    159|     expect(await getPermissionEvents()).toHaveLength(2)
+       |                                         ^
+    160|   })
+    161|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[95/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 5 is asked as 5
+AssertionError: expected 'never asked' to be 5 // Object.is equality
+
+- Expected:
+5
+
++ Received:
+"never asked"
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:171:24
+    169|     }) as never
+    170|     await getPermissionEvents(limit as never)
+    171|     expect(askedLimit).toBe(asked)
+       |                        ^
+    172|   })
+    173|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[96/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 0 is asked as 1
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit -3 is asked as 1
+AssertionError: expected 'never asked' to be 1 // Object.is equality
+
+- Expected:
+1
+
++ Received:
+"never asked"
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:171:24
+    169|     }) as never
+    170|     await getPermissionEvents(limit as never)
+    171|     expect(askedLimit).toBe(asked)
+       |                        ^
+    172|   })
+    173|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[97/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 1000 is asked as 200
+AssertionError: expected 'never asked' to be 200 // Object.is equality
+
+- Expected:
+200
+
++ Received:
+"never asked"
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:171:24
+    169|     }) as never
+    170|     await getPermissionEvents(limit as never)
+    171|     expect(askedLimit).toBe(asked)
+       |                        ^
+    172|   })
+    173|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[98/249]⎯
+
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 2.5 is asked as 20
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit null is asked as 20
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit "10" is asked as 20
+ FAIL  src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit undefined is asked as 20
+AssertionError: expected 'never asked' to be 20 // Object.is equality
+
+- Expected:
+20
+
++ Received:
+"never asked"
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts:171:24
+    169|     }) as never
+    170|     await getPermissionEvents(limit as never)
+    171|     expect(askedLimit).toBe(asked)
+       |                        ^
+    172|   })
+    173|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[99/249]⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > role agent -> ok with the session user id
+AssertionError: expected { kind: 'not_agent' } to deeply equal { kind: 'ok', …(1) }
+
+- Expected
++ Received
+
+  {
+-   "kind": "ok",
+-   "ownerId": "session-user-1",
++   "kind": "not_agent",
+  }
+
+ ❯ src/modules/cabinet/statistics/__tests__/access.test.ts:72:46
+     70|   it('role agent -> ok with the session user id', async () => {
+     71|     signInAs('agent')
+     72|     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'ok', own…
+       |                                              ^
+     73|   })
+     74|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[100/249]⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > reads the role of the session user only
+AssertionError: expected [] to deeply equal [ { table: 'users', …(2) } ]
+
+- Expected
++ Received
+
+- [
+-   {
+-     "columns": "role",
+-     "eq": [
+-       "id",
+-       "session-user-1",
+-     ],
+-     "table": "users",
+-   },
+- ]
++ []
+
+ ❯ src/modules/cabinet/statistics/__tests__/access.test.ts:78:29
+     76|     signInAs('agent')
+     77|     await getAgentStatisticsAccess()
+     78|     expect(roleLookup.seen).toEqual([{ table: 'users', columns: 'role'…
+       |                             ^
+     79|   })
+     80|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[101/249]⎯
+
+ FAIL  src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > a role lookup error is denied (not_agent), never granted
+AssertionError: expected "error" to be called with arguments: [ …(2) ]
+
+Number of calls: 0
+
+ ❯ src/modules/cabinet/statistics/__tests__/access.test.ts:85:22
+     83|     roleLookup.respond = () => ({ data: null, error: { code: 'PGRST116…
+     84|     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'not_agen…
+     85|     expect(errorSpy).toHaveBeenCalledWith('[AgentStatistics] access fa…
+       |                      ^
+     86|   })
+     87|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[102/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > usr reaches the gateway with the role "user" taken from the database and the source "cabinet"
+ FAIL  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > adm reaches the gateway with the role "admin" taken from the database and the source "cabinet"
+ FAIL  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > nul reaches the gateway with the role null taken from the database and the source "cabinet"
+ FAIL  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > ghost reaches the gateway with the role null taken from the database and the source "cabinet"
+AssertionError: expected { ok: false, reason: 'forbidden' } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "ok": false,
++   "reason": "forbidden",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts:36:63
+     34|   it.each([['usr', 'user'], ['adm', 'admin'], ['nul', null], ['ghost',…
+     35|     currentUser = { id }
+     36|     expect(await changeListingStatusAction('l1', 'archived')).toEqual(…
+       |                                                               ^
+     37|     expect(gatewayCalls).toEqual([{ listingId: 'l1', toStatus: 'archiv…
+     38|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[103/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > the role comes from the row of the session's user, never from another
+TypeError: Cannot read properties of undefined (reading 'filters')
+ ❯ src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts:42:22
+     40|   it('the role comes from the row of the session\'s user, never from a…
+     41|     await changeListingStatusAction('l1', 'active')
+     42|     expect(db.log[0].filters).toEqual([['id', 'eq', 'usr']])
+       |                      ^
+     43|     expect(gatewayCalls[0].actor.role).toBe('user')
+     44|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[104/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4)
+AssertionError: expected { error: 'insert_failed' } to deeply equal { Object (error) }
+
+- Expected
++ Received
+
+  {
+-   "error": "constraint violation on listings",
++   "error": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts:139:20
+    137|
+    138|     // Guard 4: DB failure must surface a typed error — never a silent…
+    139|     expect(result).toEqual({ error: 'constraint violation on listings'…
+       |                    ^
+    140|     expect(consoleSpy).toHaveBeenCalledWith(
+    141|       'Failed to create listing',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[105/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→reviewed) with reports.manage → passes
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:181:20
+    179|     const { updateReportStatusAction } = await import('../reportListin…
+    180|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    181|     expect(result).toEqual({})
+       |                    ^
+    182|     expect(mockUpdate).toHaveBeenCalledWith({ status: 'reviewed' })
+    183|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[106/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→resolved) with reports.manage → passes
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:190:20
+    188|     const { updateReportStatusAction } = await import('../reportListin…
+    189|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    190|     expect(result).toEqual({})
+       |                    ^
+    191|     expect(mockUpdate).toHaveBeenCalledWith({ status: 'resolved' })
+    192|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[107/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→reviewed) with status_override only (no reports.manage) → passes
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:199:20
+    197|     const { updateReportStatusAction } = await import('../reportListin…
+    198|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    199|     expect(result).toEqual({})
+       |                    ^
+    200|     expect(mockUpdate).toHaveBeenCalledWith({ status: 'reviewed' })
+    201|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[108/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→resolved) with status_override only (no reports.manage) → passes
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:208:20
+    206|     const { updateReportStatusAction } = await import('../reportListin…
+    207|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    208|     expect(result).toEqual({})
+       |                    ^
+    209|   })
+    210|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[109/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > out-of-allowlist with reports.status_override granted → passes
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:243:20
+    241|     const { updateReportStatusAction } = await import('../reportListin…
+    242|     const result = await updateReportStatusAction('r-1', 'pending', '')
+    243|     expect(result).toEqual({})
+       |                    ^
+    244|     expect(mockUpdate).toHaveBeenCalledWith({ status: 'pending' })
+    245|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[110/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > same→same noop → invalid_status
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'invalid_status' }
+
+- Expected
++ Received
+
+  {
+-   "error": "invalid_status",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:252:20
+    250|     const { updateReportStatusAction } = await import('../reportListin…
+    251|     const result = await updateReportStatusAction('r-1', 'pending', '')
+    252|     expect(result).toEqual({ error: 'invalid_status' })
+       |                    ^
+    253|     expect(mockUpdate).not.toHaveBeenCalled()
+    254|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[111/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > CAS conflict (status changed between read and write) → conflict
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'conflict' }
+
+- Expected
++ Received
+
+  {
+-   "error": "conflict",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:282:20
+    280|     const { updateReportStatusAction } = await import('../reportListin…
+    281|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    282|     expect(result).toEqual({ error: 'conflict' })
+       |                    ^
+    283|     expect(mockUpdate).toHaveBeenCalledWith({ status: 'reviewed' })
+    284|     expect(mockInsert).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[112/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > successful status change → audit row inserted
+AssertionError: expected "vi.fn()" to be called with arguments: [ ObjectContaining{…} ]
+
+Number of calls: 0
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:293:24
+    291|     const { updateReportStatusAction } = await import('../reportListin…
+    292|     await updateReportStatusAction('r-1', 'reviewed', 'test note')
+    293|     expect(mockInsert).toHaveBeenCalledWith(expect.objectContaining({
+       |                        ^
+    294|       report_id: 'r-1',
+    295|       actor_id: AUTH_USER.id,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[113/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > audit insert failure → status CAS-reverted + console.error + save_failed
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:315:20
+    313|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    314|
+    315|     expect(result).toEqual({ error: 'save_failed' })
+       |                    ^
+    316|     expect(consoleSpy).toHaveBeenCalledWith(
+    317|       '[updateReportStatus] audit insert failed, status reverted',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[114/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > audit failure + CAS revert miss (concurrent change) → CRITICAL console.error + save_failed
+AssertionError: expected { error: 'forbidden' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "forbidden",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts:340:20
+    338|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    339|
+    340|     expect(result).toEqual({ error: 'save_failed' })
+       |                    ^
+    341|     expect(consoleSpy).toHaveBeenCalledWith(
+    342|       '[updateReportStatus] CRITICAL: audit insert failed and status N…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[115/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }
+TypeError: db.from(...).update(...).eq(...).eq is not a function
+ ❯ writeListingStatus src/modules/listings/actions/applyListingTransition.ts:113:6
+    111|     .update(updatePayload)
+    112|     .eq('id', listingId)
+    113|     .eq('status', currentStatus)
+       |      ^
+    114|     .select('id')
+    115|
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:277:10
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts:113:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[116/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > admin: pending → active (privileged) → { ok: true, nextStatus: "active" }
+TypeError: db.from(...).update(...).eq(...).eq is not a function
+ ❯ writeListingStatus src/modules/listings/actions/applyListingTransition.ts:113:6
+    111|     .update(updatePayload)
+    112|     .eq('id', listingId)
+    113|     .eq('status', currentStatus)
+       |      ^
+    114|     .select('id')
+    115|
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:277:10
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts:119:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[117/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > resolved: reporter AND listing owner both notified with the correct template ids
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:295:20
+    293|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    294|
+    295|     expect(result).toEqual({})
+       |                    ^
+    296|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    297|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[118/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > dismissed: reporter AND listing owner both notified with the correct template ids
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:315:20
+    313|     const result = await updateReportStatusAction('r-1', 'dismissed', …
+    314|
+    315|     expect(result).toEqual({})
+       |                    ^
+    316|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    317|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[119/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > owner equals reporter → only the reporter notification is sent
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:339:20
+    337|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    338|
+    339|     expect(result).toEqual({})
+       |                    ^
+    340|     expect(mockCreateNotification).toHaveBeenCalledOnce()
+    341|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[120/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reviewed (non-terminal) transition → no notification call
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:357:20
+    355|     const { updateReportStatusAction } = await import('../reportListin…
+    356|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    357|     expect(result).toEqual({})
+       |                    ^
+    358|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    359|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[121/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reopen (resolved→pending) → no notification call
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:372:20
+    370|     const { updateReportStatusAction } = await import('../reportListin…
+    371|     const result = await updateReportStatusAction('r-1', 'pending', '')
+    372|     expect(result).toEqual({})
+       |                    ^
+    373|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    374|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[122/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > ordering: the action does not resolve before both the reporter and owner notification promises resolve
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:395:28
+    393|     // Flush microtasks so the reporter createNotification call has de…
+    394|     await flushMicrotasks()
+    395|     expect(actionResolved).toBe(false)
+       |                            ^
+    396|     expect(resolveReporterCall).toBeDefined()
+    397|     expect(resolveOwnerCall).toBeUndefined() // owner path is sequenti…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[123/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch)
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:424:20
+    422|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    423|
+    424|     expect(result).toEqual({})
+       |                    ^
+    425|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    426|     expect(consoleSpy).toHaveBeenCalledWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[124/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {}
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:443:20
+    441|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    442|
+    443|     expect(result).toEqual({})
+       |                    ^
+    444|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    445|     expect(consoleSpy).toHaveBeenCalledWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[125/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > happy path: owner edit → { slug, status } returned, update called once
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:131:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[126/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > update DB error → { error: message } + console.error logged (Guard 4)
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:172:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[127/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (a) lowered price: stored 100000/null → price 90000 writes price_old 100000
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:213:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[128/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (b) client price_old is ignored: unchanged price + payload price_old 5 writes null
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:226:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[129/249]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (c) currency change writes price_old null
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:239:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[130/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a moderator features one location and refreshes the home pages
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > an administrator features one location and refreshes the home pages
+AssertionError: expected { error: 'unauthenticated' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthenticated",
++ }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:30:45
+     28|   it.each([['a moderator', 'mod'], ['an administrator', 'adm']])('%s f…
+     29|     currentUser = { id }
+     30|     expect(await setLocationFeatured(1, 3)).toEqual({})
+       |                                             ^
+     31|     expect(db.tables.locations[0]).toMatchObject({ is_featured: true, …
+     32|     expect(db.tables.locations[1]).toMatchObject({ is_featured: false,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[131/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a plain user is refused
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > someone with no profile is refused
+AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "unauthenticated",
+  }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:38:45
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[132/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1.5 with order 1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location "1" with order 1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location null with order 1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location undefined with order 1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location null with order 1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order -1
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order 1.5
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order "2"
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order null
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order 10001
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order undefined
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location {} with order 1
+AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "unauthenticated",
+  }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:44:74
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[133/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > accepts the order 0 and 10 000
+AssertionError: expected { error: 'unauthenticated' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthenticated",
++ }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:49:45
+     47|
+     48|   it('accepts the order 0 and 10 000', async () => {
+     49|     expect(await setLocationFeatured(1, 0)).toEqual({})
+       |                                             ^
+     50|     expect(await setLocationFeatured(2, 10_000)).toEqual({})
+     51|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[134/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a database failure is "save_failed" and nothing is refreshed
+AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "unauthenticated",
+  }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:56:45
+     54|     const real = db.client.from
+     55|     db.client.from = ((t: string) => { const c = real(t) as Record<str…
+     56|     expect(await setLocationFeatured(1, 1)).toEqual({ error: 'save_fai…
+       |                                             ^
+     57|     expect(paths).toEqual([])
+     58|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[135/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > removes one location from the section and keeps its photo
+AssertionError: expected { error: 'unauthenticated' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthenticated",
++ }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:65:44
+     63|     db.tables.locations[0].is_featured = true
+     64|     db.tables.locations[1].is_featured = true
+     65|     expect(await setLocationUnfeatured(1)).toEqual({})
+       |                                            ^
+     66|     expect(db.tables.locations[0]).toMatchObject({ is_featured: false,…
+     67|     expect(db.tables.locations[1].is_featured).toBe(true)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[136/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location 1.5
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location "1"
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location null
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location undefined
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location null
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location {}
+AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "unauthenticated",
+  }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:72:60
+     70|
+     71|   it.each([[1.5], ['1'], [null], [undefined], [NaN], [{}]])('refuses t…
+     72|     expect(await setLocationUnfeatured(location as never)).toEqual({ e…
+       |                                                            ^
+     73|     expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
+     74|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[137/249]⎯
+
+ FAIL  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > a database failure is "remove_failed"
+AssertionError: expected { error: 'unauthenticated' } to deeply equal { error: 'remove_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "remove_failed",
++   "error": "unauthenticated",
+  }
+
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts:79:44
+     77|     const real = db.client.from
+     78|     db.client.from = ((t: string) => { const c = real(t) as Record<str…
+     79|     expect(await setLocationUnfeatured(1)).toEqual({ error: 'remove_fa…
+       |                                            ^
+     80|   })
+     81| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[138/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > an administrator saves a template; the key is normalised and the author is the session's user
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a moderator saves a template; the key is normalised and the author is the session's user
+AssertionError: expected 'unauthorized' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"unauthorized"
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:46:23
+     44|     currentUser = { id }
+     45|     const res = await upsertEmailTemplateAction(T)
+     46|     expect(res.error).toBeUndefined()
+       |                       ^
+     47|     expect(db.tables.email_templates.at(-1)).toMatchObject({ key: 'pri…
+     48|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[139/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > saving the same key and language again updates one row
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:53:106
+     51|     await upsertEmailTemplateAction(T)
+     52|     await upsertEmailTemplateAction({ ...T, subject: 'New' })
+     53|     expect(db.tables.email_templates.filter((t) => t.key === 'price_ch…
+       |                                                                                                          ^
+     54|   })
+     55|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[140/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a plain user is refused and nothing is saved
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > an agent is refused and nothing is saved
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > someone with no profile is refused and nothing is saved
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:58:48
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[141/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses an empty key and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key with a slash and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key with markup and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key over 64 characters and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses no key and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a language that does not exist and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a language in capitals and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses an empty subject and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a subject over 300 characters and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a body that is not text and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a body over 200 000 characters and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses variables that are not a list and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a variable with a space and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a variable that is not text and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses more than 50 variables and saves nothing
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a state that is not true / false and saves nothing
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:69:74
+     67|     ['a state that is not true / false', { is_active: 'yes' }],
+     68|   ])('refuses %s and saves nothing', async (_l, patch) => {
+     69|     expect(await upsertEmailTemplateAction({ ...T, ...patch } as never…
+       |                                                                          ^
+     70|     expect(db.tables.email_templates).toHaveLength(3)
+     71|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[142/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > accepts a body of exactly 200 000 characters and 50 variables
+AssertionError: expected 'unauthorized' to be undefined
+
+- Expected:
+undefined
+
++ Received:
+"unauthorized"
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:75:23
+     73|   it('accepts a body of exactly 200 000 characters and 50 variables', …
+     74|     const res = await upsertEmailTemplateAction({ ...T, html_body: 'x'…
+     75|     expect(res.error).toBeUndefined()
+       |                       ^
+     76|   })
+     77|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[143/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses nothing at all
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'validation' }
+
+- Expected
++ Received
+
+  {
+-   "error": "validation",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:79:65
+     77|
+     78|   it('refuses nothing at all', async () => {
+     79|     expect(await upsertEmailTemplateAction(undefined as never)).toEqua…
+       |                                                                 ^
+     80|   })
+     81|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[144/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a database failure is "save_failed"
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'save_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "save_failed",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:84:48
+     82|   it('a database failure is "save_failed"', async () => {
+     83|     failing('email_templates', 'upsert')
+     84|     expect(await upsertEmailTemplateAction(T)).toEqual({ error: 'save_…
+       |                                                ^
+     85|   })
+     86| })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[145/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a moderator > deleteEmailTemplateGroupAction is refused
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a moderator > deleteEmailTemplateLocaleAction is refused
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a plain user > deleteEmailTemplateGroupAction is refused
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a plain user > deleteEmailTemplateLocaleAction is refused
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'forbidden' }
+
+- Expected
++ Received
+
+  {
+-   "error": "forbidden",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:97:28
+     95|     beforeEach(() => { currentUser = who })
+     96|     it.each(calls)('%s is refused', async (_n, call) => {
+     97|       expect(await call()).toEqual({ error })
+       |                            ^
+     98|       expect(db.tables.email_templates).toHaveLength(3)
+     99|     })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[146/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > an administrator deletes every language of a key, and only that key
+AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthorized",
++ }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:103:55
+    101|
+    102|   it('an administrator deletes every language of a key, and only that …
+    103|     expect(await deleteEmailTemplateGroupAction('a')).toEqual({})
+       |                                                       ^
+    104|     expect(db.tables.email_templates.map((t) => t.id)).toEqual(['t3'])
+    105|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[147/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > an administrator deletes one language by id, and only that one
+AssertionError: expected { error: 'unauthorized' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "unauthorized",
++ }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:108:57
+    106|
+    107|   it('an administrator deletes one language by id, and only that one',…
+    108|     expect(await deleteEmailTemplateLocaleAction('t2')).toEqual({})
+       |                                                         ^
+    109|     expect(db.tables.email_templates.map((t) => t.id)).toEqual(['t1', …
+    110|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[148/249]⎯
+
+ FAIL  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a database failure is "delete_failed"
+AssertionError: expected { error: 'unauthorized' } to deeply equal { error: 'delete_failed' }
+
+- Expected
++ Received
+
+  {
+-   "error": "delete_failed",
++   "error": "unauthorized",
+  }
+
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts:114:55
+    112|   it('a database failure is "delete_failed"', async () => {
+    113|     failing('email_templates', 'delete')
+    114|     expect(await deleteEmailTemplateGroupAction('a')).toEqual({ error:…
+       |                                                       ^
+    115|     expect(await deleteEmailTemplateLocaleAction('t1')).toEqual({ erro…
+    116|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[149/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — uses the user-scoped client, never the admin client
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'notifications' ]
+
+Number of calls: 0
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:75:26
+     73|     expect(mockCreateClient).toHaveBeenCalledOnce()
+     74|     expect(mockCreateAdminClient).not.toHaveBeenCalled()
+     75|     expect(mockUserFrom).toHaveBeenCalledWith('notifications')
+       |                          ^
+     76|   })
+     77|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[150/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — update() payload keys are exactly [is_read]=true
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:86:24
+     84|     await markNotificationRead('n-1')
+     85|
+     86|     expect(mockUpdate).toHaveBeenCalledOnce()
+       |                        ^
+     87|     const payload = mockUpdate.mock.calls[0][0] as Record<string, unkn…
+     88|     expect(Object.keys(payload)).toEqual(['is_read'])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[151/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — filters eq(id) and eq(is_read, false)
+AssertionError: expected [] to deeply equal [ [ 'id', 'n-1' ], …(1) ]
+
+- Expected
++ Received
+
+- [
+-   [
+-     "id",
+-     "n-1",
+-   ],
+-   [
+-     "is_read",
+-     false,
+-   ],
+- ]
++ []
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:100:21
+     98|     await markNotificationRead('n-1')
+     99|
+    100|     expect(eqCalls).toEqual([['id', 'n-1'], ['is_read', false]])
+       |                     ^
+    101|   })
+    102|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[152/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — { error } result logs once and resolves without throwing
+AssertionError: expected "error" to be called once, but got 0 times
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:113:24
+    111|     await expect(markNotificationRead('n-1')).resolves.toBeUndefined()
+    112|
+    113|     expect(consoleSpy).toHaveBeenCalledOnce()
+       |                        ^
+    114|     expect(consoleSpy).toHaveBeenCalledWith(
+    115|       '[notifications] markNotificationRead failed',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[153/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — uses the user-scoped client, never the admin client
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'notifications' ]
+
+Number of calls: 0
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:131:26
+    129|     expect(mockCreateClient).toHaveBeenCalledOnce()
+    130|     expect(mockCreateAdminClient).not.toHaveBeenCalled()
+    131|     expect(mockUserFrom).toHaveBeenCalledWith('notifications')
+       |                          ^
+    132|   })
+    133|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[154/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — update() payload keys are exactly [is_read]=true
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:142:24
+    140|     await markAllNotificationsRead()
+    141|
+    142|     expect(mockUpdate).toHaveBeenCalledOnce()
+       |                        ^
+    143|     const payload = mockUpdate.mock.calls[0][0] as Record<string, unkn…
+    144|     expect(Object.keys(payload)).toEqual(['is_read'])
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[155/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — filters eq(is_read, false) only
+AssertionError: expected [] to deeply equal [ [ 'is_read', false ] ]
+
+- Expected
++ Received
+
+- [
+-   [
+-     "is_read",
+-     false,
+-   ],
+- ]
++ []
+
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:156:21
+    154|     await markAllNotificationsRead()
+    155|
+    156|     expect(eqCalls).toEqual([['is_read', false]])
+       |                     ^
+    157|   })
+    158|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[156/249]⎯
+
+ FAIL  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — { error } result logs once and resolves without throwing
+AssertionError: expected "error" to be called once, but got 0 times
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts:169:24
+    167|     await expect(markAllNotificationsRead()).resolves.toBeUndefined()
+    168|
+    169|     expect(consoleSpy).toHaveBeenCalledOnce()
+       |                        ^
+    170|     expect(consoleSpy).toHaveBeenCalledWith(
+    171|       '[notifications] markAllNotificationsRead failed',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[157/249]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > authorized, lapsed active listings → expired count matches
+TypeError: db.from(...).select(...).eq(...).lt(...).limit is not a function
+ ❯ handle src/app/api/cron/listings-expiry/route.ts:37:6
+     35|     .eq('status', 'active')
+     36|     .lt('expires_at', now)
+     37|     .limit(1000)
+       |      ^
+     38|   if (lapsedError) {
+     39|     console.error('[cron/listings-expiry] read failed', { code: lapsed…
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:91:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[158/249]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > authorized, nothing lapsed → expired = 0, no updates
+TypeError: db.from(...).select(...).eq(...).lt(...).limit is not a function
+ ❯ handle src/app/api/cron/listings-expiry/route.ts:37:6
+     35|     .eq('status', 'active')
+     36|     .lt('expires_at', now)
+     37|     .limit(1000)
+       |      ^
+     38|   if (lapsedError) {
+     39|     console.error('[cron/listings-expiry] read failed', { code: lapsed…
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:108:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[159/249]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > NULL-expiry active rows reported but NOT mutated
+TypeError: db.from(...).select(...).eq(...).lt(...).limit is not a function
+ ❯ handle src/app/api/cron/listings-expiry/route.ts:37:6
+     35|     .eq('status', 'active')
+     36|     .lt('expires_at', now)
+     37|     .limit(1000)
+       |      ^
+     38|   if (lapsedError) {
+     39|     console.error('[cron/listings-expiry] read failed', { code: lapsed…
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:120:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[160/249]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > status set to engine-resolved value (expired), not raw string
+TypeError: db.from(...).select(...).eq(...).lt(...).limit is not a function
+ ❯ handle src/app/api/cron/listings-expiry/route.ts:37:6
+     35|     .eq('status', 'active')
+     36|     .lt('expires_at', now)
+     37|     .limit(1000)
+       |      ^
+     38|   if (lapsedError) {
+     39|     console.error('[cron/listings-expiry] read failed', { code: lapsed…
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:133:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[161/249]⎯
+
+ FAIL  src/app/api/cron/listings-expiry/__tests__/route.test.ts > GET /api/cron/listings-expiry (Vercel invocation) > authorized, lapsed active listings → same result as POST
+TypeError: db.from(...).select(...).eq(...).lt(...).limit is not a function
+ ❯ handle src/app/api/cron/listings-expiry/route.ts:37:6
+     35|     .eq('status', 'active')
+     36|     .lt('expires_at', now)
+     37|     .limit(1000)
+       |      ^
+     38|   if (lapsedError) {
+     39|     console.error('[cron/listings-expiry] read failed', { code: lapsed…
+ ❯ src/app/api/cron/listings-expiry/__tests__/route.test.ts:150:23
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[162/249]⎯
+
+
+ Test Files  27 failed | 289 passed (316)
+      Tests  249 failed | 5513 passed (5762)
+   Start at  22:09:47
+   Duration  154.21s (transform 42.01s, setup 33.65s, import 480.26s, tests 729.44s, environment 202.90s)
+
+EXIT_CODE=1

@@ -1,0 +1,26 @@
+fatal: path 'src/modules/auth/components/__tests__/authClientParts.test.tsx' exists on disk, but not in 'HEAD'
+fatal: path 'src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx' exists on disk, but not in 'HEAD'
+C185 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1839-1839 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1871-1871
+C328 src/modules/auth/components/AuthSheet.tsx:370 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:3-3
+C436 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2180-2180 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2212-2212
+C437 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1847-1847 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1879-1879
+C446 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2448-2448 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2480-2480
+C709 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2943-2943 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2975-2975
+C810 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3212-3212 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3244-3244
+C811 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2847-2847 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2879-2879
+C812 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3392-3392 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3424-3424
+C813 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2847-2847 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2879-2879
+C814 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3439-3439 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3471-3471
+C895 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3741-3741 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3773-3773
+C1083 src/modules/listings/components/ListingContact.tsx:156-156 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:5-5
+C1084 src/modules/listings/components/ListingContact.tsx:183-183 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:7-7
+C1087 src/design-system/mantine/patterns/MantineListingContactPattern.tsx:214-214 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:9-9
+C1095 src/components/auth/CaptchaWidget.tsx:200-200 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:11-11
+C1098 src/modules/auth/components/AuthSheet.tsx:244-244 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:13-13
+C1099 src/modules/auth/components/AuthSheet.tsx:721-721 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:15-15
+C1101 src/modules/auth/components/AuthSheet.tsx:651-651 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:17-17
+C1105 src/components/auth/CaptchaWidget.tsx:77-77 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:19-19
+C1114 src/components/auth/__tests__/CaptchaWidget.language.test.tsx:101-101 -> docs/sessions/evidence/task923/review-40/rv40-21-head-lines.txt:21-21
+UNRESOLVED C1118 src/modules/auth/components/__tests__/authClientParts.test.tsx:63-63
+UNRESOLVED C1119 src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx:81-85
+changed 21, unresolved 2

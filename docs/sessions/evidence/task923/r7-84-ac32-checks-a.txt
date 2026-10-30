@@ -1,0 +1,22 @@
+command: node docs/sessions/evidence/task923/r7-84-ac32-checks.mjs docs/sessions/evidence/task923/r7-full-a
+platform win32 node v22.22.3; run docs/sessions/evidence/task923/r7-full-a
+rows 22739; app 12820; portal 9919; unique 22739
+distinct rule keys across rows 20
+rows without exactly 20 rule keys 0
+rows without notApplicable 0
+rows without numeric skippedActions 0
+rows without dismissMs object 0
+rows without settle {ms:number, bounded:boolean} 0
+rows with a retry key 50; retry not a string 0
+  NEITHER: patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | uk | 320 | portal-count :: declared 1 portal root(s), found 0
+gate-level cells by width and owner: {"open-failed @640 -> 924":24,"portal-count @640 -> 924":4,"portal-count @320 -> NEITHER":1,"widths-mismatch @640 -> 924":44,"error-screen @390 -> 925":1}
+gate-level cells owned by neither 924 nor 925 (must be 0): 1, of which at 639: 0
+rows with an image-layer detail (must be 0): 0
+AC4 patterns-mantine-ticketdetaildialogview--support @320: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support @390: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results @320: portal rows 4, failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active @320: portal rows 4, failing 4 [text-clamp, text-hidden]; app rows failing 0 of 4
+settle-bounded rows 5; Story x state: mantine-primitives-relativetime--default (en 640, it 640, sq 640, uk 640); patterns-mantine-admindashboardview--activity-error~about-visible-listings (uk 320)
+largest settle.ms 8071; rows with settle.ms > 8000: 5
+dismissMs: 16741 numeric, max 1983; never closed (null): 1
+EXIT_CODE=0

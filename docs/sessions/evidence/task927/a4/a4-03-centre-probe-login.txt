@@ -1,0 +1,43 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/amendment-4/a4-02-centre-probe.mjs login
+started: 2026-10-23T20:10:30.555Z
+--- stdout ---
+login en 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+login en 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+login en 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+login en 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+login en 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+login en 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login en 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login en 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login sq 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+login sq 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+login sq 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+login sq 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+login sq 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+login sq 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login sq 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login sq 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login uk 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+login uk 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+login uk 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+login uk 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+login uk 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+login uk 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login uk 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login uk 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login it 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+login it 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+login it 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+login it 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+login it 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+login it 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login it 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+login it 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+cells 32; Google button not centred: 0
+
+--- stderr ---
+
+exit code: 0

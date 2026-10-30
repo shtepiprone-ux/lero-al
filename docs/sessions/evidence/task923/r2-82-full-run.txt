@@ -1,0 +1,1466 @@
+platform win32 v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: npm run check:rendered-state-census -- --jobs 10 --out docs/sessions/evidence/task923/full
+
+> lero-al@0.1.0 check:rendered-state-census
+> node scripts/check-rendered-state-census.mjs --jobs 10 --out docs/sessions/evidence/task923/full
+
+rendered state census: 557 registered state(s), 9924 state job(s) + 2440 out-of-range widths job(s) (no cell is skipped; 1224 cell(s) are the added in-range bound / first out-of-range widths) + 456 closed job(s); 10 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\full
+  100/12820 jobs, 100 rows, 0 failing
+  200/12820 jobs, 200 rows, 0 failing
+  300/12820 jobs, 300 rows, 0 failing
+  400/12820 jobs, 400 rows, 1 failing
+  500/12820 jobs, 544 rows, 89 failing
+  600/12820 jobs, 744 rows, 269 failing
+  700/12820 jobs, 944 rows, 301 failing
+  800/12820 jobs, 1144 rows, 301 failing
+  900/12820 jobs, 1344 rows, 461 failing
+  1000/12820 jobs, 1524 rows, 540 failing
+  1100/12820 jobs, 1724 rows, 645 failing
+  1200/12820 jobs, 1924 rows, 745 failing
+  1300/12820 jobs, 2124 rows, 841 failing
+  1400/12820 jobs, 2324 rows, 841 failing
+  1500/12820 jobs, 2524 rows, 917 failing
+  1600/12820 jobs, 2724 rows, 941 failing
+  1700/12820 jobs, 2912 rows, 1009 failing
+  1800/12820 jobs, 3084 rows, 1065 failing
+  1900/12820 jobs, 3284 rows, 1109 failing
+  2000/12820 jobs, 3458 rows, 1163 failing
+  2100/12820 jobs, 3596 rows, 1209 failing
+  2200/12820 jobs, 3750 rows, 1281 failing
+  2300/12820 jobs, 3922 rows, 1363 failing
+  2400/12820 jobs, 4072 rows, 1421 failing
+  2500/12820 jobs, 4224 rows, 1485 failing
+  2600/12820 jobs, 4404 rows, 1573 failing
+  2700/12820 jobs, 4582 rows, 1653 failing
+  2800/12820 jobs, 4776 rows, 1825 failing
+  2900/12820 jobs, 4948 rows, 1937 failing
+  3000/12820 jobs, 5132 rows, 2061 failing
+  3100/12820 jobs, 5320 rows, 2229 failing
+  3200/12820 jobs, 5492 rows, 2329 failing
+  3300/12820 jobs, 5685 rows, 2474 failing
+  3400/12820 jobs, 5864 rows, 2625 failing
+  3500/12820 jobs, 6036 rows, 2721 failing
+  3600/12820 jobs, 6235 rows, 2884 failing
+  3700/12820 jobs, 6408 rows, 3017 failing
+  3800/12820 jobs, 6584 rows, 3121 failing
+  3900/12820 jobs, 6780 rows, 3289 failing
+  4000/12820 jobs, 6952 rows, 3409 failing
+  4100/12820 jobs, 7130 rows, 3519 failing
+  4200/12820 jobs, 7324 rows, 3695 failing
+  4300/12820 jobs, 7483 rows, 3764 failing
+  4400/12820 jobs, 7643 rows, 3851 failing
+  4500/12820 jobs, 7790 rows, 3931 failing
+  4600/12820 jobs, 7943 rows, 4024 failing
+  4700/12820 jobs, 8104 rows, 4095 failing
+  4800/12820 jobs, 8266 rows, 4150 failing
+  4900/12820 jobs, 8429 rows, 4207 failing
+  5000/12820 jobs, 8592 rows, 4264 failing
+  5100/12820 jobs, 8756 rows, 4321 failing
+  5200/12820 jobs, 8917 rows, 4375 failing
+  5300/12820 jobs, 9080 rows, 4428 failing
+  5400/12820 jobs, 9242 rows, 4481 failing
+  5500/12820 jobs, 9400 rows, 4517 failing
+  5600/12820 jobs, 9551 rows, 4568 failing
+  5700/12820 jobs, 9701 rows, 4618 failing
+  5800/12820 jobs, 9860 rows, 4681 failing
+  5900/12820 jobs, 10028 rows, 4761 failing
+  6000/12820 jobs, 10182 rows, 4819 failing
+  6100/12820 jobs, 10334 rows, 4875 failing
+  6200/12820 jobs, 10480 rows, 4921 failing
+  6300/12820 jobs, 10627 rows, 4968 failing
+  6400/12820 jobs, 10780 rows, 5041 failing
+  6500/12820 jobs, 10932 rows, 5121 failing
+  6600/12820 jobs, 11084 rows, 5173 failing
+  6700/12820 jobs, 11270 rows, 5259 failing
+  6800/12820 jobs, 11430 rows, 5343 failing
+  6900/12820 jobs, 11592 rows, 5429 failing
+  7000/12820 jobs, 11772 rows, 5533 failing
+  7100/12820 jobs, 11972 rows, 5633 failing
+  7200/12820 jobs, 12154 rows, 5700 failing
+  7300/12820 jobs, 12337 rows, 5742 failing
+  7400/12820 jobs, 12516 rows, 5809 failing
+  7500/12820 jobs, 12694 rows, 5852 failing
+  7600/12820 jobs, 12875 rows, 5900 failing
+  7700/12820 jobs, 13060 rows, 5953 failing
+  7800/12820 jobs, 13232 rows, 6045 failing
+  7900/12820 jobs, 13398 rows, 6115 failing
+  8000/12820 jobs, 13554 rows, 6164 failing
+  8100/12820 jobs, 13704 rows, 6221 failing
+  8200/12820 jobs, 13856 rows, 6297 failing
+  8300/12820 jobs, 14008 rows, 6385 failing
+  8400/12820 jobs, 14156 rows, 6465 failing
+  8500/12820 jobs, 14324 rows, 6548 failing
+  8600/12820 jobs, 14524 rows, 6648 failing
+  8700/12820 jobs, 14724 rows, 6748 failing
+  8800/12820 jobs, 14924 rows, 6848 failing
+  8900/12820 jobs, 15124 rows, 6948 failing
+  9000/12820 jobs, 15323 rows, 7048 failing
+  9100/12820 jobs, 15523 rows, 7148 failing
+  9200/12820 jobs, 15718 rows, 7244 failing
+  9300/12820 jobs, 15914 rows, 7330 failing
+  9400/12820 jobs, 16114 rows, 7430 failing
+  9500/12820 jobs, 16314 rows, 7530 failing
+  9600/12820 jobs, 16514 rows, 7630 failing
+  9700/12820 jobs, 16714 rows, 7670 failing
+  9800/12820 jobs, 16914 rows, 7758 failing
+  9900/12820 jobs, 17114 rows, 7878 failing
+  10000/12820 jobs, 17314 rows, 8078 failing
+  10100/12820 jobs, 17514 rows, 8257 failing
+  10200/12820 jobs, 17695 rows, 8341 failing
+  10300/12820 jobs, 17886 rows, 8417 failing
+  10400/12820 jobs, 18078 rows, 8521 failing
+  10500/12820 jobs, 18270 rows, 8629 failing
+  10600/12820 jobs, 18462 rows, 8743 failing
+  10700/12820 jobs, 18656 rows, 8855 failing
+  10800/12820 jobs, 18854 rows, 8980 failing
+  10900/12820 jobs, 19054 rows, 9078 failing
+  11000/12820 jobs, 19254 rows, 9138 failing
+  11100/12820 jobs, 19442 rows, 9166 failing
+  11200/12820 jobs, 19606 rows, 9250 failing
+  11300/12820 jobs, 19782 rows, 9350 failing
+  11400/12820 jobs, 19958 rows, 9466 failing
+  11500/12820 jobs, 20134 rows, 9566 failing
+  11600/12820 jobs, 20334 rows, 9666 failing
+  11700/12820 jobs, 20534 rows, 9754 failing
+  11800/12820 jobs, 20734 rows, 9854 failing
+  11900/12820 jobs, 20934 rows, 9954 failing
+  12000/12820 jobs, 21134 rows, 10054 failing
+  12100/12820 jobs, 21334 rows, 10154 failing
+  12200/12820 jobs, 21534 rows, 10263 failing
+  12300/12820 jobs, 21734 rows, 10396 failing
+  12400/12820 jobs, 21934 rows, 10525 failing
+  12500/12820 jobs, 22134 rows, 10625 failing
+  12600/12820 jobs, 22334 rows, 10685 failing
+  12700/12820 jobs, 22522 rows, 10717 failing
+  12800/12820 jobs, 22698 rows, 10737 failing
+
+rendered state census — rows 22738 (failing 10737); {"statesRun":557,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,1440],"boundCells":1224,"stateJobs":9924,"rangeJobs":2440,"closedJobs":456,"appRows":12820,"portalRows":9918,"runtimeSeconds":4767,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             5436
+  text-ellipsis          5620
+  text-hidden            1247
+  word-split             140
+  viewport-overflow      184
+  component-overflow     873
+  action-hidden          26
+  action-covered         52
+  target-small           2618
+  focus-open             85
+  focus-trigger          560
+  focus-trap             65
+  dismiss-escape         468
+  dismiss-close-control  59
+  dismiss-outside        476
+  open-failed            26
+  portal-count           6
+  error-screen           1
+  unregistered-portal    0
+  widths-mismatch        44
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         7762
+  action-hidden          7762
+  dismiss-close-control  876
+  dismiss-outside        1104
+  focus-trigger          2182
+  target-small           7762
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 432
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1440
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 320
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 390
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 639
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 640
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 1440
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 320
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 390
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 639
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 640
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 1440
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 320
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 390
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 639
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 640
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 1440
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 320
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 390
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 639
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 640
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 1440
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 320
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 390
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 639
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 640
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 1440
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 320
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 390
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 639
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 640
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 1440
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 320
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 390
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 639
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 640
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 1440
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 320
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 390
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 639
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 640
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 1440
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 320
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 390
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 639
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 640
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 1440
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 320
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 390
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 639
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 640
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 1440
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 320
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 390
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 639
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 640
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 1440
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 320
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 390
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 639
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 640
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 1440
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 320
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 390
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 639
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 640
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 1440
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 320
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 390
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 639
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 640
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 1440
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 320
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 390
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 639
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 640
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 1440
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 320
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 390
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 639
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 640
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 1440
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 320
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 390
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 639
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 640
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1440
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 320
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 390
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 639
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 640
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1440
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 320
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 390
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 639
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 640
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 1440
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 320
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 390
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 639
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 640
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 1440
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 320
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 390
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 639
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 640
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 1440
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 320
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 390
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 639
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 640
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 1440
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 320
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 390
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 639
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 640
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 1440
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 320
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 390
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 639
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 640
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 1440
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 320
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 390
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 639
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 640
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 1440
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 320
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 390
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 639
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 640
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 1440
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 320
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 390
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 639
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 640
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 1440
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 320
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 390
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 639
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 640
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 1440
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 320
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 390
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 639
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 640
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 1440
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 320
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 390
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 639
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 640
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 1440
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 320
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 390
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 639
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 640
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 1440
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 320
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 390
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 639
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 640
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 1440
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 320
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 390
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 639
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 640
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 1440
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 320
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 390
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 639
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 640
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 1440
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 320
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 390
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 639
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 640
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 1440
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 320
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 390
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 639
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 640
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 1440
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 320
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 390
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 639
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 640
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 1440
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 320
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 390
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 639
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 640
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 1440
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 320
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 390
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 639
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 640
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 1440
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 320
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 390
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 639
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 640
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1440
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 640
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 320
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 390
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 639
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 640
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 767
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 320
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 390
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 639
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 640
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 320
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 390
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 639
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 640
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 767
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 320
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 390
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 639
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 640
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 320
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 390
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 639
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 640
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 767
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 320
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 390
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 639
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 640
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 1440
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 320
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 390
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 639
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 640
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 1440
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 320
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 390
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 639
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 640
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 1440
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 320
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 390
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 639
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 640
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 1440
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 320
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 390
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 639
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 640
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 1440
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 320
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 390
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 639
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 640
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 1440
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 320
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 390
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 639
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 640
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1440
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 320
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 390
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 639
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 640
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 1440
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 320
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 390
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 639
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 640
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 1440
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 320
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 390
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 639
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 640
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 1440
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 320
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 390
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 639
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 640
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 1440
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 320
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 390
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 639
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 640
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 1440
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 320
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 390
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 639
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 640
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 1440
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 320
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 390
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 639
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 640
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 1440
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 320
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 390
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 639
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 640
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 1440
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 320
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 390
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 639
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 640
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 1440
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 320
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 390
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 639
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 640
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 1440
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 320
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 390
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 639
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 640
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 1440
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 320
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 390
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 639
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 640
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 1440
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 320
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 390
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 639
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 640
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 1440
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 320
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 390
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 639
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 640
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 1440
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 320
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 390
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 639
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 640
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 1440
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 320
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 390
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 639
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 640
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 1440
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 320
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 390
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 639
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 640
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 1440
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 320
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 390
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 639
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 640
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 1440
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 320
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 390
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 639
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 640
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 1440
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 320
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 390
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 639
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 640
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 1440
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 320
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 390
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 639
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 640
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 1440
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 320
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 390
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 639
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 640
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 1440
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 320
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 390
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 639
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 640
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 1440
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 320
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 390
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 639
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 640
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 1440
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 320
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 390
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 639
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 640
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 1440
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 320
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 390
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 639
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 640
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 1440
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 320
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 390
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 639
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 640
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 1440
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 320
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 390
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 639
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 640
+widths states: 185; each measured at its in-range bound and at the first width outside it (rows per locale): 185 complete, 0 with a missing cell
+  mantine-primitives-headerview--default~akalba-krasniqi {"min":768}: in-range 768px x4; first outside 767px x4
+  mantine-primitives-rangedatepicker--default~select-dates {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-rangedatepicker--single-date-selected~05-02-2026 {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-relativetime--default {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--default {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--default~bhblerim-hoxha {"max":639}: in-range 639px x4; first outside 640px x4
+  mantine-primitives-usermenu--default~dbdriton-berisha {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-admincurrenciesview--default~all {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--default~eur {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~eur-euroactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrenciesview--default~usd {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrencytabs--default~all {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~alll-albanian-lekdefaultacti {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrencytabs--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrencytabs--default~eur {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~eur-euroactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrencytabs--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrencytabs--default~usd {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~usd-us-dollarinactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admindashboardview--activity-empty-period~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-empty-period~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--activity-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--activity-stale~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-stale~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--adm-02-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--adm-02-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--adm-09-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--adm-09-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--all-queues-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--all-queues-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--cities-only-other~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--cities-only-other~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--no-location-requests~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--no-location-requests~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--trends-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--trends-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--long-subject~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--long-subject~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--unscoped~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--unscoped~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--audit-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--default~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--empty~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--filtered-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--filtered-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--filtered-pending~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--paginated~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--paginated~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--paginated~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--premium-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--premium-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--premium-tab~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--visible-filter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--visible-filter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--visible-filter~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminpageframe--form~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--form~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--narrow~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--narrow~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--page~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--page~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--panel~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--panel~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--shell-fixed-gutter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--shell-fixed-gutter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--shell~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--shell~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--deleting~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--deleting~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--migration-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--migration-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--all-allowed~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--all-allowed~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--audit-empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--audit-empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--audit-unavailable~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--audit-unavailable~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--saving~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--saving~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--all-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--all-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminshell--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--drawer-open {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--drawer-open~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--default~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminsupportview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--empty~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminsupportview--unassigned-landing~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--unassigned-landing~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--unassigned-landing~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminuserprofileview--create~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--create~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit-blocked~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit-blocked~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit-errors~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit-errors~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--saving~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--saving~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-agent~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-agent~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-blocked~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-blocked~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-location-request~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-location-request~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-no-history-controls~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-no-history-controls~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--location-filter-removed~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--location-filter-removed~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--location-filter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--location-filter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--paginated~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--paginated~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--verified-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--verified-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-appshellfoundation--default~toggle-navigation {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingdetailview--archived-listing~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing-converted~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--staff-preview-published~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingsshellview--closed-empty~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-empty~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-tab~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-tab~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--default~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--default~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--empty~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--empty~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--loading-more~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--loading-more~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--no-results~requester {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--results~requester {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--searching~requester {"min":640}: in-range 640px x4; first outside 639px x4
+Story x state x root with a violation: 677
+  mantine-primitives-collectionssection--create-dialog-open | mantine-primitives-collectionssection--create-dialog-open | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--create-dialog-open | mantine-primitives-collectionssection--create-dialog-open | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--create-error | mantine-primitives-collectionssection--create-error | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--create-error | mantine-primitives-collectionssection--create-error | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--delete-confirm-open | mantine-primitives-collectionssection--delete-confirm-open | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--delete-confirm-open | mantine-primitives-collectionssection--delete-confirm-open | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--empty | mantine-primitives-collectionssection--empty~new-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~delete-collection | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~delete-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~new-collection | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~new-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~rename | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--populated | mantine-primitives-collectionssection--populated~rename | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-collectionssection--rename-dialog-open | mantine-primitives-collectionssection--rename-dialog-open | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-collectionssection--rename-dialog-open | mantine-primitives-collectionssection--rename-dialog-open | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-favoritebutton--default | mantine-primitives-favoritebutton--default~add-to-favorites | app :: target-small (16 cell(s))
+  mantine-primitives-favoritebutton--default | mantine-primitives-favoritebutton--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  mantine-primitives-favoritebutton--default | mantine-primitives-favoritebutton--default~remove-from-favorites | app :: target-small (16 cell(s))
+  mantine-primitives-favoritebutton--default | mantine-primitives-favoritebutton--default~remove-from-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  mantine-primitives-favoritesshell--populated | mantine-primitives-favoritesshell--populated~new-collection | app :: text-clamp, text-ellipsis (20 cell(s))
+  mantine-primitives-favoritesshell--populated | mantine-primitives-favoritesshell--populated~new-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-favoritesshell--populated | mantine-primitives-favoritesshell--populated~remove-from-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  mantine-primitives-favoritesshell--populated | mantine-primitives-favoritesshell--populated~remove-from-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  mantine-primitives-favoritesshell--type-filter-no-matches | mantine-primitives-favoritesshell--type-filter-no-matches~new-collection | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-favoritesshell--type-filter-no-matches | mantine-primitives-favoritesshell--type-filter-no-matches~new-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | portal:0 :: target-small (16 cell(s))
+  mantine-primitives-headeractions--default | mantine-primitives-headeractions--default~notifications | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-headerview--default | mantine-primitives-headerview--default~akalba-krasniqi | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  mantine-primitives-headerview--default | mantine-primitives-headerview--default~en | app :: text-ellipsis, text-hidden (4 cell(s))
+  mantine-primitives-headerview--default | mantine-primitives-headerview--default~notifications | app :: text-ellipsis, text-hidden (4 cell(s))
+  mantine-primitives-headerview--default | mantine-primitives-headerview--default~notifications | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-headerview--signing-out | mantine-primitives-headerview--signing-out~en | app :: text-ellipsis, text-hidden (4 cell(s))
+  mantine-primitives-headerview--signing-out | mantine-primitives-headerview--signing-out~notifications | app :: text-ellipsis, text-hidden (4 cell(s))
+  mantine-primitives-headerview--signing-out | mantine-primitives-headerview--signing-out~notifications | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-herosearch--container | mantine-primitives-herosearch--container~advanced-filters | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-herosearch--container | mantine-primitives-herosearch--container~advanced-filters | portal:0 :: target-small (16 cell(s))
+  mantine-primitives-herosearch--container | mantine-primitives-herosearch--container~city-or-village | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-herosearch--container | mantine-primitives-herosearch--container~property-type | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-herosearch--default | mantine-primitives-herosearch--default~city-or-village | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-herosearch--default | mantine-primitives-herosearch--default~property-type | app :: text-ellipsis (20 cell(s))
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | portal:0 :: component-overflow (20 cell(s))
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | portal:0 :: component-overflow (12 cell(s))
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | portal:0 :: component-overflow (20 cell(s))
+  mantine-primitives-listingcard--default | mantine-primitives-listingcard--default~add-to-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  mantine-primitives-listingcard--default | mantine-primitives-listingcard--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  mantine-primitives-listingcard--favorites-composition | mantine-primitives-listingcard--favorites-composition~remove-from-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  mantine-primitives-listingcard--favorites-composition | mantine-primitives-listingcard--favorites-composition~remove-from-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  mantine-primitives-modal--delete-confirm | mantine-primitives-modal--delete-confirm~delete | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-modal--detail | mantine-primitives-modal--detail~open-modal | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-modal--form | mantine-primitives-modal--form~open-modal | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-modal--structured | mantine-primitives-modal--structured~open-modal | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-notificationbellview--default | mantine-primitives-notificationbellview--default~notifications | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  mantine-primitives-rangedatepicker--default | mantine-primitives-rangedatepicker--default | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  mantine-primitives-rangedatepicker--default | mantine-primitives-rangedatepicker--default~select-dates | app :: target-small, open-failed (4 cell(s))
+  mantine-primitives-rangedatepicker--default | mantine-primitives-rangedatepicker--default~select-dates | portal:0 :: target-small, text-ellipsis (8 cell(s))
+  mantine-primitives-rangedatepicker--open-bounded-no-value | mantine-primitives-rangedatepicker--open-bounded-no-value | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  mantine-primitives-rangedatepicker--single-date-selected | mantine-primitives-rangedatepicker--single-date-selected | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  mantine-primitives-rangedatepicker--single-date-selected | mantine-primitives-rangedatepicker--single-date-selected~05-02-2026 | app :: target-small, open-failed (4 cell(s))
+  mantine-primitives-rangedatepicker--single-date-selected | mantine-primitives-rangedatepicker--single-date-selected~05-02-2026 | portal:0 :: target-small, text-ellipsis (8 cell(s))
+  mantine-primitives-rangedatepicker--single-date | mantine-primitives-rangedatepicker--single-date | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  mantine-primitives-relativetime--default | mantine-primitives-relativetime--default | app :: target-small, portal-count (4 cell(s))
+  mantine-primitives-savetocollectionbutton--closed | mantine-primitives-savetocollectionbutton--closed~save-to-collection | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-savetocollectionbutton--dialog-open | mantine-primitives-savetocollectionbutton--dialog-open | portal:0 :: text-clamp (20 cell(s))
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | portal:0 :: text-clamp, target-small, focus-open, focus-trap (20 cell(s))
+  mantine-primitives-usermenu--default | mantine-primitives-usermenu--default | app :: text-ellipsis, text-hidden (8 cell(s))
+  mantine-primitives-usermenu--default | mantine-primitives-usermenu--default~akalba-krasniqi | app :: text-ellipsis, text-hidden, open-failed (20 cell(s))
+  mantine-primitives-usermenu--default | mantine-primitives-usermenu--default~akalba-krasniqi | portal:0 :: focus-open, focus-trap (4 cell(s))
+  mantine-primitives-usermenu--default | mantine-primitives-usermenu--default~bhblerim-hoxha | app :: text-ellipsis, text-hidden (12 cell(s))
+  mantine-primitives-usermenu--default | mantine-primitives-usermenu--default~dbdriton-berisha | app :: text-ellipsis, text-hidden (12 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur-euroactive | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admincurrenciesview--delete-confirm | patterns-mantine-admincurrenciesview--delete-confirm | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-admincurrenciesview--delete-confirm | patterns-mantine-admincurrenciesview--delete-confirm | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admincurrenciesview--detail | patterns-mantine-admincurrenciesview--detail | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-admincurrenciesview--detail | patterns-mantine-admincurrenciesview--detail | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admincurrenciesview--empty | patterns-mantine-admincurrenciesview--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrenciesview--empty | patterns-mantine-admincurrenciesview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~all | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~all | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~alll-albanian-lekdefaultacti | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~eur-euroactive | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~eur | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~eur | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~usd-us-dollarinactive | portal:0 :: text-clamp, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~usd | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admincurrencytabs--default | patterns-mantine-admincurrencytabs--default~usd | portal:0 :: text-clamp, dismiss-escape, dismiss-close-control, dismiss-outside (8 cell(s))
+  patterns-mantine-admindashboardrecentlistings--default | patterns-mantine-admindashboardrecentlistings--default~akcozy-studio-in-sauk-distri | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardrecentlistings--default | patterns-mantine-admindashboardrecentlistings--default~akmodern-apartment-in-tirana | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardrecentlistings--default | patterns-mantine-admindashboardrecentlistings--default~bhmodern-apartment-in-tirana | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardrecentlistings--modal-open | patterns-mantine-admindashboardrecentlistings--modal-open | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--activity-stale | patterns-mantine-admindashboardview--activity-stale~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-02-error | patterns-mantine-admindashboardview--adm-02-error~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~about-the-activity-series | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~about-visible-listings | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~akcozy-studio-in-sauk-district | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~akcozy-studio-in-sauk-district | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~akmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~akmodern-apartment-in-tirana-c | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~bhmodern-apartment-in-tirana-c | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~bhmodern-apartment-in-tirana-c | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~en-english | app :: text-clamp, text-ellipsis, component-overflow, text-hidden (8 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~open-menu | app :: text-clamp, text-ellipsis, text-hidden (20 cell(s))
+  patterns-mantine-admindashboardview--trends-error | patterns-mantine-admindashboardview--trends-error~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--default | patterns-mantine-adminexchangeprovidersview--default~delete | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminexchangeprovidersview--default | patterns-mantine-adminexchangeprovidersview--default~delete | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--default | patterns-mantine-adminexchangeprovidersview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminexchangeprovidersview--default | patterns-mantine-adminexchangeprovidersview--default~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminexchangeprovidersview--default | patterns-mantine-adminexchangeprovidersview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--delete-confirm | patterns-mantine-adminexchangeprovidersview--delete-confirm | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminexchangeprovidersview--delete-confirm | patterns-mantine-adminexchangeprovidersview--delete-confirm | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--empty | patterns-mantine-adminexchangeprovidersview--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminexchangeprovidersview--empty | patterns-mantine-adminexchangeprovidersview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | app :: text-hidden, text-ellipsis (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~delete | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~en-english | app :: text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~open-menu | app :: text-hidden, text-ellipsis (20 cell(s))
+  patterns-mantine-adminexchangeprovidersview--pending | patterns-mantine-adminexchangeprovidersview--pending~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admininquiriesview--default | patterns-mantine-admininquiriesview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admininquiriesview--default | patterns-mantine-admininquiriesview--default~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-admininquiriesview--default | patterns-mantine-admininquiriesview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admininquiriesview--empty | patterns-mantine-admininquiriesview--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admininquiriesview--empty | patterns-mantine-admininquiriesview--empty~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-admininquiriesview--empty | patterns-mantine-admininquiriesview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admininquiriesview--long-subject | patterns-mantine-admininquiriesview--long-subject~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admininquiriesview--long-subject | patterns-mantine-admininquiriesview--long-subject~open-menu | app :: text-ellipsis, word-split, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-admininquiriesview--long-subject | patterns-mantine-admininquiriesview--long-subject~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-admininquiriesview--unscoped | patterns-mantine-admininquiriesview--unscoped~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-admininquiriesview--unscoped | patterns-mantine-admininquiriesview--unscoped~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-admininquiriesview--unscoped | patterns-mantine-admininquiriesview--unscoped~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--audit-zero | patterns-mantine-adminlistingsview--audit-zero~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--audit-zero | patterns-mantine-adminlistingsview--audit-zero~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--audit-zero | patterns-mantine-adminlistingsview--audit-zero~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--audit-zero | patterns-mantine-adminlistingsview--audit-zero~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--audit-zero | patterns-mantine-adminlistingsview--audit-zero~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--default | patterns-mantine-adminlistingsview--default~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--default | patterns-mantine-adminlistingsview--default~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--default | patterns-mantine-adminlistingsview--default~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--default | patterns-mantine-adminlistingsview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--default | patterns-mantine-adminlistingsview--default~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--empty | patterns-mantine-adminlistingsview--empty~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--empty | patterns-mantine-adminlistingsview--empty~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--empty | patterns-mantine-adminlistingsview--empty~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--empty | patterns-mantine-adminlistingsview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--empty | patterns-mantine-adminlistingsview--empty~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--filtered-pending | patterns-mantine-adminlistingsview--filtered-pending~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--filtered-pending | patterns-mantine-adminlistingsview--filtered-pending~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--filtered-pending | patterns-mantine-adminlistingsview--filtered-pending~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--filtered-pending | patterns-mantine-adminlistingsview--filtered-pending~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--filtered-pending | patterns-mantine-adminlistingsview--filtered-pending~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--hidden-eligible | patterns-mantine-adminlistingsview--hidden-eligible~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--hidden-eligible | patterns-mantine-adminlistingsview--hidden-eligible~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--hidden-eligible | patterns-mantine-adminlistingsview--hidden-eligible~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--hidden-eligible | patterns-mantine-adminlistingsview--hidden-eligible~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--hidden-eligible | patterns-mantine-adminlistingsview--hidden-eligible~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--paginated | patterns-mantine-adminlistingsview--paginated~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--paginated | patterns-mantine-adminlistingsview--paginated~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--paginated | patterns-mantine-adminlistingsview--paginated~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--paginated | patterns-mantine-adminlistingsview--paginated~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--paginated | patterns-mantine-adminlistingsview--paginated~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--premium-tab | patterns-mantine-adminlistingsview--premium-tab~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--visible-filter | patterns-mantine-adminlistingsview--visible-filter~all | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--visible-filter | patterns-mantine-adminlistingsview--visible-filter~en-english | app :: text-ellipsis, action-covered (8 cell(s))
+  patterns-mantine-adminlistingsview--visible-filter | patterns-mantine-adminlistingsview--visible-filter~open-menu | app :: text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminlistingsview--visible-filter | patterns-mantine-adminlistingsview--visible-filter~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminlistingsview--visible-filter | patterns-mantine-adminlistingsview--visible-filter~public-visibility | app :: widths-mismatch, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminpageframe--form | patterns-mantine-adminpageframe--form~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--form | patterns-mantine-adminpageframe--form~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpageframe--narrow | patterns-mantine-adminpageframe--narrow~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--narrow | patterns-mantine-adminpageframe--narrow~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpageframe--page | patterns-mantine-adminpageframe--page~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--page | patterns-mantine-adminpageframe--page~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpageframe--panel | patterns-mantine-adminpageframe--panel~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--panel | patterns-mantine-adminpageframe--panel~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpageframe--shell-fixed-gutter | patterns-mantine-adminpageframe--shell-fixed-gutter~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--shell-fixed-gutter | patterns-mantine-adminpageframe--shell-fixed-gutter~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpageframe--shell | patterns-mantine-adminpageframe--shell~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpageframe--shell | patterns-mantine-adminpageframe--shell~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpagesview--default | patterns-mantine-adminpagesview--default~delete | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--default | patterns-mantine-adminpagesview--default~delete | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminpagesview--default | patterns-mantine-adminpagesview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpagesview--default | patterns-mantine-adminpagesview--default~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--default | patterns-mantine-adminpagesview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpagesview--delete-confirm | patterns-mantine-adminpagesview--delete-confirm | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--delete-confirm | patterns-mantine-adminpagesview--delete-confirm | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~delete | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--deleting | patterns-mantine-adminpagesview--deleting~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpagesview--empty | patterns-mantine-adminpagesview--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpagesview--empty | patterns-mantine-adminpagesview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpagesview--migration-pending | patterns-mantine-adminpagesview--migration-pending~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpagesview--migration-pending | patterns-mantine-adminpagesview--migration-pending~open-menu | app :: text-ellipsis (4 cell(s))
+  patterns-mantine-adminpagesview--migration-pending | patterns-mantine-adminpagesview--migration-pending~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpermissionsview--all-allowed | patterns-mantine-adminpermissionsview--all-allowed~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpermissionsview--all-allowed | patterns-mantine-adminpermissionsview--all-allowed~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpermissionsview--audit-empty | patterns-mantine-adminpermissionsview--audit-empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpermissionsview--audit-empty | patterns-mantine-adminpermissionsview--audit-empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpermissionsview--audit-unavailable | patterns-mantine-adminpermissionsview--audit-unavailable~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpermissionsview--audit-unavailable | patterns-mantine-adminpermissionsview--audit-unavailable~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpermissionsview--default | patterns-mantine-adminpermissionsview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpermissionsview--default | patterns-mantine-adminpermissionsview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminpermissionsview--saving | patterns-mantine-adminpermissionsview--saving~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminpermissionsview--saving | patterns-mantine-adminpermissionsview--saving~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminreportsview--all-tab | patterns-mantine-adminreportsview--all-tab~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminreportsview--all-tab | patterns-mantine-adminreportsview--all-tab~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminreportsview--all-tab | patterns-mantine-adminreportsview--all-tab~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminreportsview--default | patterns-mantine-adminreportsview--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminreportsview--default | patterns-mantine-adminreportsview--default~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminreportsview--default | patterns-mantine-adminreportsview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminreportsview--empty | patterns-mantine-adminreportsview--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminreportsview--empty | patterns-mantine-adminreportsview--empty~open-menu | app :: text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminreportsview--empty | patterns-mantine-adminreportsview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminshell--default | patterns-mantine-adminshell--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminshell--default | patterns-mantine-adminshell--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 :: text-ellipsis, target-small, focus-open (20 cell(s))
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminsidebar--content-active | patterns-mantine-adminsidebar--content-active~en-english | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-adminsidebar--default | patterns-mantine-adminsidebar--default~en-english | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-adminsidebar--management-active | patterns-mantine-adminsidebar--management-active~en-english | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-adminsidebar--system-active | patterns-mantine-adminsidebar--system-active~en-english | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-adminsupportview--default | patterns-mantine-adminsupportview--default~en-english | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-adminsupportview--default | patterns-mantine-adminsupportview--default~open-menu | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--default | patterns-mantine-adminsupportview--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminsupportview--default | patterns-mantine-adminsupportview--default~status | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--default | patterns-mantine-adminsupportview--default~unassigned | app :: text-clamp, widths-mismatch, text-hidden, component-overflow (16 cell(s))
+  patterns-mantine-adminsupportview--empty | patterns-mantine-adminsupportview--empty~en-english | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-adminsupportview--empty | patterns-mantine-adminsupportview--empty~open-menu | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--empty | patterns-mantine-adminsupportview--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminsupportview--empty | patterns-mantine-adminsupportview--empty~status | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--empty | patterns-mantine-adminsupportview--empty~unassigned | app :: text-clamp, widths-mismatch, text-hidden, component-overflow (16 cell(s))
+  patterns-mantine-adminsupportview--unassigned-landing | patterns-mantine-adminsupportview--unassigned-landing~en-english | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-adminsupportview--unassigned-landing | patterns-mantine-adminsupportview--unassigned-landing~open-menu | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--unassigned-landing | patterns-mantine-adminsupportview--unassigned-landing~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminsupportview--unassigned-landing | patterns-mantine-adminsupportview--unassigned-landing~status | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminsupportview--unassigned-landing | patterns-mantine-adminsupportview--unassigned-landing~unassigned | app :: text-clamp, widths-mismatch, text-hidden, component-overflow (16 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~country | app :: text-ellipsis, word-split (5 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~enter-city-name | app :: text-ellipsis, action-covered, word-split (5 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~open-menu | app :: word-split (1 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--create | patterns-mantine-adminuserprofileview--create~private-person | app :: text-ellipsis, word-split (5 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~31-12-2026 | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~31-12-2026 | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~blocked | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~country | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~enter-city-name | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~open-menu | app :: word-split, text-ellipsis, text-hidden, component-overflow (4 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--edit-blocked | patterns-mantine-adminuserprofileview--edit-blocked~private-person | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~active | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~agent | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~country | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~enter-city-name | app :: word-split, text-ellipsis, text-hidden, component-overflow (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~open-menu | app :: word-split, text-ellipsis, text-hidden, component-overflow (4 cell(s))
+  patterns-mantine-adminuserprofileview--edit-errors | patterns-mantine-adminuserprofileview--edit-errors~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~active | app :: word-split, text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~country | app :: word-split, text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~enter-city-name | app :: word-split, text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--edit | patterns-mantine-adminuserprofileview--edit~private-person | app :: word-split, text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~active | app :: text-hidden, word-split, text-ellipsis, component-overflow (20 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~agent | app :: text-hidden, word-split, text-ellipsis, component-overflow (20 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~country | app :: text-hidden, word-split, text-ellipsis, component-overflow (20 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~en-english | app :: text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~enter-city-name | app :: text-hidden, word-split, text-ellipsis, component-overflow (20 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~open-menu | app :: text-hidden, word-split, text-ellipsis, component-overflow (20 cell(s))
+  patterns-mantine-adminuserprofileview--saving | patterns-mantine-adminuserprofileview--saving~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--view-agent | patterns-mantine-adminuserprofileview--view-agent~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-agent | patterns-mantine-adminuserprofileview--view-agent~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--view-agent | patterns-mantine-adminuserprofileview--view-agent~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--view-blocked | patterns-mantine-adminuserprofileview--view-blocked~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-blocked | patterns-mantine-adminuserprofileview--view-blocked~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--view-blocked | patterns-mantine-adminuserprofileview--view-blocked~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~find-and-assign-city | app :: word-split, text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--view-location-request | patterns-mantine-adminuserprofileview--view-location-request~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--view-no-history-controls | patterns-mantine-adminuserprofileview--view-no-history-controls~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view-no-history-controls | patterns-mantine-adminuserprofileview--view-no-history-controls~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--view-no-history-controls | patterns-mantine-adminuserprofileview--view-no-history-controls~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserprofileview--view | patterns-mantine-adminuserprofileview--view~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserprofileview--view | patterns-mantine-adminuserprofileview--view~open-menu | app :: word-split (4 cell(s))
+  patterns-mantine-adminuserprofileview--view | patterns-mantine-adminuserprofileview--view~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--default | patterns-mantine-adminuserstable--default~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--default | patterns-mantine-adminuserstable--default~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminuserstable--default | patterns-mantine-adminuserstable--default~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--empty | patterns-mantine-adminuserstable--empty~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--empty | patterns-mantine-adminuserstable--empty~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminuserstable--empty | patterns-mantine-adminuserstable--empty~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--location-filter-removed | patterns-mantine-adminuserstable--location-filter-removed~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--location-filter-removed | patterns-mantine-adminuserstable--location-filter-removed~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminuserstable--location-filter-removed | patterns-mantine-adminuserstable--location-filter-removed~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--location-filter | patterns-mantine-adminuserstable--location-filter~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--location-filter | patterns-mantine-adminuserstable--location-filter~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminuserstable--location-filter | patterns-mantine-adminuserstable--location-filter~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--paginated | patterns-mantine-adminuserstable--paginated~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--paginated | patterns-mantine-adminuserstable--paginated~open-menu | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-adminuserstable--paginated | patterns-mantine-adminuserstable--paginated~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-adminuserstable--verified-tab | patterns-mantine-adminuserstable--verified-tab~en-english | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-adminuserstable--verified-tab | patterns-mantine-adminuserstable--verified-tab~open-menu | app :: text-hidden, component-overflow (3 cell(s))
+  patterns-mantine-adminuserstable--verified-tab | patterns-mantine-adminuserstable--verified-tab~open-menu | portal:0 :: text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-error | patterns-mantine-agentstatisticsview--activity-error~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-error | patterns-mantine-agentstatisticsview--activity-error~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-error | patterns-mantine-agentstatisticsview--activity-error~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-error | patterns-mantine-agentstatisticsview--activity-error~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-error | patterns-mantine-agentstatisticsview--activity-error~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-stale | patterns-mantine-agentstatisticsview--activity-stale~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-stale | patterns-mantine-agentstatisticsview--activity-stale~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-stale | patterns-mantine-agentstatisticsview--activity-stale~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-stale | patterns-mantine-agentstatisticsview--activity-stale~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--activity-stale | patterns-mantine-agentstatisticsview--activity-stale~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-01-all-zero | patterns-mantine-agentstatisticsview--agt-01-all-zero~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-01-all-zero | patterns-mantine-agentstatisticsview--agt-01-all-zero~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-01-all-zero | patterns-mantine-agentstatisticsview--agt-01-all-zero~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-01-all-zero | patterns-mantine-agentstatisticsview--agt-01-all-zero~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-01-all-zero | patterns-mantine-agentstatisticsview--agt-01-all-zero~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-empty | patterns-mantine-agentstatisticsview--agt-10-empty~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-filtered-empty | patterns-mantine-agentstatisticsview--agt-10-filtered-empty~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-filtered-empty | patterns-mantine-agentstatisticsview--agt-10-filtered-empty~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-filtered-empty | patterns-mantine-agentstatisticsview--agt-10-filtered-empty~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-filtered-empty | patterns-mantine-agentstatisticsview--agt-10-filtered-empty~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--agt-10-filtered-empty | patterns-mantine-agentstatisticsview--agt-10-filtered-empty~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~visibility | app :: text-clamp, text-ellipsis, action-hidden, target-small, open-failed, portal-count (20 cell(s))
+  patterns-mantine-agentstatisticsview--no-activity | patterns-mantine-agentstatisticsview--no-activity~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--no-activity | patterns-mantine-agentstatisticsview--no-activity~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--no-activity | patterns-mantine-agentstatisticsview--no-activity~sort-by | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--no-activity | patterns-mantine-agentstatisticsview--no-activity~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--no-activity | patterns-mantine-agentstatisticsview--no-activity~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~more-information | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~offer-type | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~sort-by | app :: text-clamp, text-ellipsis, action-hidden, target-small, open-failed, portal-count (20 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~status | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~visibility | app :: text-clamp, text-ellipsis (20 cell(s))
+  patterns-mantine-appshellfoundation--default | patterns-mantine-appshellfoundation--default~toggle-navigation | portal:0 :: target-small (12 cell(s))
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 :: target-small, component-overflow (18 cell(s))
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | portal:0 :: target-small (16 cell(s))
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | portal:0 :: target-small (16 cell(s))
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 :: component-overflow, target-small, focus-trap (20 cell(s))
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 :: component-overflow, target-small, focus-trap (20 cell(s))
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 :: component-overflow, target-small, focus-trap (20 cell(s))
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | portal:0 :: component-overflow, target-small (20 cell(s))
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | portal:0 :: text-clamp, text-hidden, focus-open (20 cell(s))
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-dashboardperiodcontrol--custom-open | patterns-mantine-dashboardperiodcontrol--custom-open | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-dashboardperiodcontrol--custom-open | patterns-mantine-dashboardperiodcontrol--custom-open | portal:0 :: target-small, text-ellipsis (20 cell(s))
+  patterns-mantine-dashboardperiodcontrol--custom-range-too-long | closed | app :: error-screen (1 cell(s))
+  patterns-mantine-dashboardsemidonut--default | patterns-mantine-dashboardsemidonut--default~period | app :: component-overflow (20 cell(s))
+  patterns-mantine-homepagelistinggrids--default | patterns-mantine-homepagelistinggrids--default~add-to-favorites | app :: text-clamp, text-ellipsis, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-homepagelistinggrids--default | patterns-mantine-homepagelistinggrids--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-homepagelistinggrids--default | patterns-mantine-homepagelistinggrids--default~remove-from-favorites | app :: text-clamp, text-ellipsis, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-homepagelistinggrids--default | patterns-mantine-homepagelistinggrids--default~remove-from-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | portal:0 :: text-clamp, component-overflow (20 cell(s))
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingcardpattern--default | patterns-mantine-listingcardpattern--default~add-to-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-listingcardpattern--default | patterns-mantine-listingcardpattern--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardpattern--default | patterns-mantine-listingcardpattern--default~remove-from-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-listingcardpattern--default | patterns-mantine-listingcardpattern--default~remove-from-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--grid-mixed-title-lengths | patterns-mantine-listingcardtrack--grid-mixed-title-lengths~add-to-favorites | app :: text-clamp, text-ellipsis, text-hidden, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--grid-mixed-title-lengths | patterns-mantine-listingcardtrack--grid-mixed-title-lengths~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--grid-single-item | patterns-mantine-listingcardtrack--grid-single-item~add-to-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--grid-single-item | patterns-mantine-listingcardtrack--grid-single-item~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--grid | patterns-mantine-listingcardtrack--grid~add-to-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--grid | patterns-mantine-listingcardtrack--grid~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-mixed-title-lengths | patterns-mantine-listingcardtrack--rail-mixed-title-lengths~add-to-favorites | app :: text-clamp, text-ellipsis, text-hidden, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-mixed-title-lengths | patterns-mantine-listingcardtrack--rail-mixed-title-lengths~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-no-overflow | patterns-mantine-listingcardtrack--rail-no-overflow~add-to-favorites | app :: text-clamp, text-ellipsis, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-no-overflow | patterns-mantine-listingcardtrack--rail-no-overflow~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-single-item | patterns-mantine-listingcardtrack--rail-single-item~add-to-favorites | app :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--rail-single-item | patterns-mantine-listingcardtrack--rail-single-item~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcardtrack--rail | patterns-mantine-listingcardtrack--rail~add-to-favorites | app :: text-clamp, text-ellipsis, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-listingcardtrack--rail | patterns-mantine-listingcardtrack--rail~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 :: target-small, focus-trigger, dismiss-close-control (20 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | app :: text-hidden, component-overflow, action-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | app :: text-hidden, component-overflow (12 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~share-listing | app :: text-hidden, component-overflow, action-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | app :: text-hidden, component-overflow (2 cell(s))
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | app :: text-hidden (2 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | app :: text-hidden (1 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | app :: text-hidden (3 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | app :: text-hidden (3 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app :: target-small, text-hidden (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | app :: text-hidden (3 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | app :: text-hidden (3 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | app :: text-hidden (4 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | app :: text-hidden (4 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~call | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~call | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app :: target-small, text-hidden (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~write-on-whatsapp | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | app :: text-hidden (1 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | app :: text-hidden (2 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~call | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~call | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~write-on-whatsapp | app :: text-hidden, target-small (16 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~write-on-whatsapp | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | app :: text-hidden, component-overflow (12 cell(s))
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | portal:0 :: component-overflow (12 cell(s))
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | portal:0 :: text-clamp, text-hidden, action-covered (20 cell(s))
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsactionrow--default | patterns-mantine-listingsactionrow--default~price-low-to-high | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingsactionrow--default | patterns-mantine-listingsactionrow--default~save-search | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingsactionrow--default | patterns-mantine-listingsactionrow--default~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | portal:0 :: target-small, focus-open, focus-trap (20 cell(s))
+  patterns-mantine-listingsshellview--closed-empty | patterns-mantine-listingsshellview--closed-empty~all-locations | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--closed-empty | patterns-mantine-listingsshellview--closed-empty~all-types | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--closed-empty | patterns-mantine-listingsshellview--closed-empty~newest-first | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--closed-empty | patterns-mantine-listingsshellview--closed-empty~save-search | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--closed-empty | patterns-mantine-listingsshellview--closed-empty~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsshellview--closed-tab | patterns-mantine-listingsshellview--closed-tab~all-locations | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--closed-tab | patterns-mantine-listingsshellview--closed-tab~all-types | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--closed-tab | patterns-mantine-listingsshellview--closed-tab~newest-first | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--closed-tab | patterns-mantine-listingsshellview--closed-tab~save-search | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--closed-tab | patterns-mantine-listingsshellview--closed-tab~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~all-locations | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~all-types | app :: text-clamp, text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~newest-first | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~newest-first | portal:0 :: focus-open, focus-trap, dismiss-outside (4 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~save-search | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--default | patterns-mantine-listingsshellview--default~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsshellview--empty | patterns-mantine-listingsshellview--empty~all-locations | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--empty | patterns-mantine-listingsshellview--empty~all-types | app :: text-ellipsis (8 cell(s))
+  patterns-mantine-listingsshellview--empty | patterns-mantine-listingsshellview--empty~newest-first | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--empty | patterns-mantine-listingsshellview--empty~save-search | app :: text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--empty | patterns-mantine-listingsshellview--empty~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~all-locations | app :: text-clamp, text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~all-types | app :: text-clamp, text-ellipsis, text-hidden (8 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~newest-first | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~newest-first | portal:0 :: focus-open, focus-trap, dismiss-outside (4 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~save-search | app :: text-clamp, text-ellipsis, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-listingsshellview--loading-more | patterns-mantine-listingsshellview--loading-more~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingssortbar--default | patterns-mantine-listingssortbar--default~newest-first | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--list-view-selected | patterns-mantine-listingssortbar--list-view-selected~newest-first | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--many-active-filters | patterns-mantine-listingssortbar--many-active-filters~price-low-to-high | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--one-active-filter | patterns-mantine-listingssortbar--one-active-filter~newest-first | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--sort-selected | patterns-mantine-listingssortbar--sort-selected~price-high-to-low | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--two-active-filters | patterns-mantine-listingssortbar--two-active-filters~newest-first | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-listingssortbar--zero-results | patterns-mantine-listingssortbar--zero-results~newest-first | app :: text-ellipsis (20 cell(s))
+  patterns-mantine-notificationpattern--default | patterns-mantine-notificationpattern--default~listing-published | portal:0 :: target-small (16 cell(s))
+  patterns-mantine-notificationpattern--default | patterns-mantine-notificationpattern--default~loading | portal:0 :: target-small (16 cell(s))
+  patterns-mantine-notificationpattern--default | patterns-mantine-notificationpattern--default~upload-failed | portal:0 :: target-small (16 cell(s))
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | portal:0 :: text-clamp, text-hidden, viewport-overflow, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | portal:0 :: text-clamp, text-hidden, component-overflow, target-small (20 cell(s))
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | portal:0 :: text-clamp, target-small (20 cell(s))
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | portal:0 :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | portal:0 :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | portal:0 :: text-clamp, text-ellipsis, target-small (20 cell(s))
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | portal:0 :: text-clamp, text-ellipsis, text-hidden, target-small (20 cell(s))
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | portal:0 :: text-clamp, action-covered (20 cell(s))
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | portal:0 :: text-clamp, text-hidden (20 cell(s))
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~add-link | app :: viewport-overflow, target-small (9 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~add-link | portal:0 :: viewport-overflow, target-small, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~history | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~insert | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~paragraph | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~text-format | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--image-uploading | patterns-mantine-richtexteditor--image-uploading | portal:0 :: text-clamp, text-hidden, target-small (20 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~add-link | app :: viewport-overflow, component-overflow, target-small (13 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~add-link | portal:0 :: viewport-overflow, target-small, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~history | app :: viewport-overflow, component-overflow (10 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~history | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~insert | app :: viewport-overflow, component-overflow (10 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~insert | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~paragraph | app :: viewport-overflow, component-overflow (10 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~paragraph | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~text-format | app :: viewport-overflow, component-overflow (10 cell(s))
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~text-format | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~add-link | app :: viewport-overflow, target-small (9 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~add-link | portal:0 :: viewport-overflow, target-small, dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~history | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~insert | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~paragraph | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-richtexteditor--with-error | patterns-mantine-richtexteditor--with-error~text-format | portal:0 :: dismiss-escape, dismiss-outside (20 cell(s))
+  patterns-mantine-savesearchbutton--default | patterns-mantine-savesearchbutton--default~save-search | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-savesearchbutton--open-modal | patterns-mantine-savesearchbutton--open-modal | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | portal:0 :: text-clamp, target-small, focus-open, focus-trap (20 cell(s))
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | portal:0 :: text-clamp, component-overflow (20 cell(s))
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | portal:0 :: text-clamp, text-hidden, component-overflow (20 cell(s))
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | portal:0 :: text-clamp, component-overflow (20 cell(s))
+  patterns-mantine-userpickerfieldview--no-results | patterns-mantine-userpickerfieldview--no-results~requester | app :: open-failed (4 cell(s))
+  patterns-mantine-userpickerfieldview--results | patterns-mantine-userpickerfieldview--results | portal:0 :: word-split, viewport-overflow, component-overflow (8 cell(s))
+  patterns-mantine-userpickerfieldview--results | patterns-mantine-userpickerfieldview--results~requester | app :: open-failed (4 cell(s))
+  patterns-mantine-userpickerfieldview--searching | patterns-mantine-userpickerfieldview--searching~requester | app :: open-failed (4 cell(s))
+  patterns-mantine-userpickerfieldview--selected-blocked | patterns-mantine-userpickerfieldview--selected-blocked~requester | portal:0 :: word-split, viewport-overflow, component-overflow (8 cell(s))
+  patterns-mantine-userpickerfieldview--selected | patterns-mantine-userpickerfieldview--selected~requester | portal:0 :: word-split (4 cell(s))
+
+rows 22738 = 12820 app-root rows + 9918 portal-root rows; 9924 state jobs + 2440 out-of-range widths jobs + 456 closed jobs; runtime 4767s
+EXIT_CODE=1

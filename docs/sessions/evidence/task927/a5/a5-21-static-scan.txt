@@ -1,0 +1,8 @@
+﻿# a5-21: static scan after npm run build
+platform: win32; node v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T09:51:18.9508608Z
+files in .next/static containing GOCSPX-: 0
+files in .next/static containing GOOGLE_CLIENT_SECRET: 0
+files in .next/static containing SUPABASE_AUTH_EXTERNAL_GOOGLE: 0
+Google variables read in src/: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
+--- exit code: 0 ---

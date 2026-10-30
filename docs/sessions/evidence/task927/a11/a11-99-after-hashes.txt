@@ -1,0 +1,27 @@
+# a11-99: sha256 after the last edit (Amendment 11, R53-R58)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a11/a11-00-hashes.mjs docs/sessions/evidence/task927/a11/a11-99-after-hashes.txt "a11-99: sha256 after the last edit (Amendment 11, R53-R58)"
+date: 2026-10-28T17:39:22.343Z
+paths: 17
+
+8925f3225aea9ccde1751fb942049d70bb20982ffc45f3fdec2f3108ea13cfd0  src/lib/auth/googlePopup.ts
+ec5049a66254a675f7802988d1ae99047c8cbfd3d1a91f9b0d26c8c3fdc0c524  src/components/auth/GoogleSignInButton.tsx
+b331a9de2202779328078f88a91af28f43248421314928b6d2cd235fb920caf2  src/__tests__/security/clientSinks.test.ts
+75ac719f84548a75a55ca427adf2972244761437cafafb8e0082c5794692b9b3  src/lib/analytics/beforeSend.ts
+ff6e0ae014219098d8f6c3dcfbba58a76661dad635a39efa4613c2a0bc9d95cb  src/lib/analytics/__tests__/beforeSend.security.test.ts
+770515f50ded1624f8467f1e2e0cff7c852e3e62ae2b46faa2155a4bfca0806a  src/app/layout.tsx
+0c7e17a42a955e6013486b8156fb6d1f3edf08461edf2355f0eb36c7aeb3b27b  src/modules/auth/components/AuthSheet.banned.security.test.tsx
+bfda6b9151c32d30d39bc3795b68569d97eccac68681935c21849aedcc92cd5d  src/lib/auth/__tests__/googlePopup.test.ts
+5f62bb8272406349a7fd7981669b37dc659ee4c8a83900de7b12903e47c0fd7f  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+1ae205505b67003a2111f97c8ebb0b227cb07524f6f0a86d509069533b2c1b6d  src/modules/auth/components/__tests__/AuthSheet.test.tsx
+1eb311b2332ba18104264c3a63d30c47b8825368e871059dafbbbef1d3061e31  src/components/layout/__tests__/Header.google.security.test.tsx
+f39cdbb913b2ca2d644db3832aa2ff08ba3a5d97295dd2e8586061109de0e7a0  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+3494dc35b21609a4f561f51f4ef79512bf30757f09c128d6fbd54a1a95f5371f  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+c513756deafded8ba3f4632fc33b62c0a46264f89405a2e0dcc83fd095719f0f  src/lib/auth/googleIdentity.ts
+5749254c0e9bd8ff21b6e7448ba816126c82954d63a051b52e280a5f5bc44b4c  src/components/auth/GoogleSignInSlot.tsx
+f2ef4474ce406da82ca2a1187bb3f39cb9a8ceb2bbf9d5ccf5b72a9be03bfabf  src/app/auth/google/callback/GoogleCallbackRelay.tsx
+b4bb6f089898e0ca980ef0ce2dccbfa0fe8de76e7329964c4da13f7fdf0b73cf  src/app/auth/google/callback/page.tsx
+
+exit code: 0

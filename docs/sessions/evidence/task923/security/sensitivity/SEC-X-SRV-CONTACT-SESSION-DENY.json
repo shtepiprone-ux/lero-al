@@ -1,0 +1,457 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:37:13.853Z",
+ "case": "SEC-X-SRV-CONTACT-SESSION-DENY",
+ "results": [
+  {
+   "id": "SEC-X-SRV-CONTACT-SESSION-DENY",
+   "testFile": "src/modules/listings/actions/__tests__/contactGateway.security.test.ts",
+   "testName": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/contactGateway.ts",
+     "description": "revealListingContact no longer refuses a caller that requireViewer refused",
+     "from": "  if (!viewer.ok) return { ok: false, reason: viewer.reason === 'lookup_failed' ? 'load_failed' : 'unauthenticated' }\n",
+     "to": ""
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/listings/actions/contactGateway.ts",
+     "originalSha256": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16",
+     "restoredSha256": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16"
+    }
+   ],
+   "failureMessage": "AssertionError: a guest: expected { Object (ok, number) } to deeply equal { Object (ok, reason) }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactGateway.security.test.ts:327:90\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259429983,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "status": "passed",
+         "title": "[SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "duration": 16.829699999999946,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259430496,
+       "endTime": 1793259430512.8296,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactGateway.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259431620,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "status": "failed",
+         "title": "[SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "duration": 21.433400000000006,
+         "failureMessages": [
+          "AssertionError: a guest: expected { Object (ok, number) } to deeply equal { Object (ok, reason) }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactGateway.security.test.ts:327:90\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259432145,
+       "endTime": 1793259432166.4333,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactGateway.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259433237,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "status": "passed",
+         "title": "[SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+         "duration": 19.739800000000002,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-REPEAT] a repeat reveal of a listing is free",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259433774,
+       "endTime": 1793259433793.7397,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactGateway.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

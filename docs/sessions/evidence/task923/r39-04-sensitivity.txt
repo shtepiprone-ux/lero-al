@@ -1,0 +1,14 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T16:13:51.516Z
+command: node docs/sessions/evidence/task923/r39-04-sensitivity.cjs
+---- output ----
+proved     B1-planted-setting-with-no-reader (every setting key has a reader)
+           -> every setting key has a reader: AssertionError: setting 'planted_setting': no reader outside the admin code (a getSetting('planted_setting' call, key=eq.planted_setting, or a helper of src/modules/admin/lib/settings.ts that reads it): expected [ Array(1) ] to deeply equal []
+proved     B2-record-table-removed-from-the-list (every table that only the admin code writes)
+           -> every table that only the admin code writes: AssertionError: table 'role_permission_events': written only by the admin code and read by nothing outside it (add a reader, or list it in ADMIN_RECORD_TABLES with its reason): expected [ Array(1) ] to deeply equal []
+2 of 2 proved.
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,15 @@
+# rv50-07: the R145 write set against the D8_D9 scope and isPolicyPath
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-50/rv50-07-write-set.mjs docs/sessions/evidence/task923/review-50/rv50-07-write-set-before.txt
+started: 2026-10-24T12:28:20.533Z
+--- output ---
+D8_D9 executionStatus ready; stage planned; scope 337; cases 229
+src/lib/cloudinaryDelete.ts: scope yes; policy no; exists yes
+src/lib/cloudinaryDelete.security.test.ts: scope yes; policy no; exists yes
+src/lib/__tests__/cloudinary.security.test.ts: scope NO; policy no; exists yes
+src/lib/__tests__/cloudinaryDelete.test.ts: scope NO; policy no; exists yes
+src/lib/account/deleteAccount.integration.test.ts: scope yes; policy no; exists yes
+src/modules/admin/actions/index.ts: scope yes; policy no; exists yes
+docs/sessions/2026-10-10-task923-rendered-state-census.md: scope NO; policy no; exists yes
+docs/sessions/evidence/task923/r45-00-before-hashes.txt: scope NO; policy no; exists no
+--- exit code: 0 ---

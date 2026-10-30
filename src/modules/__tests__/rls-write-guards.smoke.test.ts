@@ -48,6 +48,9 @@ vi.mock('@/lib/auth/permissions', () => ({
   roleHasPermission: vi.fn().mockReturnValue(false),
 }))
 
+// The single exchange-rate source (Task 923 R79 (a)): `createCurrency` asks it whether the code is published, over the network. This suite is about the write guards, so the source answers yes.
+vi.mock('@/lib/getExchangeRateServer', () => ({ isRatePublished: async () => true }))
+
 // next/headers — used by submitContactInquiry for IP
 const mockHeadersGet = vi.fn()
 vi.mock('next/headers', () => ({
@@ -61,7 +64,7 @@ vi.mock('@/modules/notifications/lib/emails/contactInquiry', () => ({
   sendContactInquiryNotification: (...args: unknown[]) => mockSendContactNotification(...args),
   sendContactInquiryReply: vi.fn().mockResolvedValue({ ok: true }),
 }))
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: vi.fn().mockResolvedValue({}),
 }))
 vi.mock('@/modules/notifications/lib/emails/emailChange', () => ({
@@ -301,7 +304,7 @@ describe('Archetype C — createCurrency (admin/moderator write, admin client)',
     name_it: 'Dollaro USA',
   }
 
-  // User-scoped role-check chain
+  // The caller's own `users` row, read with the service role by the real `requireViewer()` (Task 923 R44) — the role check
   const mockRoleSingle = vi.fn()
 
   beforeEach(() => {
@@ -309,18 +312,15 @@ describe('Archetype C — createCurrency (admin/moderator write, admin client)',
 
     mockGetUser.mockResolvedValue(ADMIN_USER)
 
-    // User-scoped client: role check
-    mockRoleSingle.mockResolvedValue({ data: { role: 'admin' } })
-    mockCreateClient.mockResolvedValue({
-      from: () => ({
-        select: () => ({ eq: () => ({ single: mockRoleSingle }) }),
-      }),
-    })
+    mockRoleSingle.mockResolvedValue({ data: { role: 'admin', status: 'active', suspended_until: null, deleted_at: null }, error: null })
 
-    // Admin client: currency write
+    // Admin client: role check + currency write
     mockCurrencyInsert.mockResolvedValue({ data: { id: 1 }, error: null })
     mockCreateAdminClient.mockReturnValue({
       from: (table: string) => {
+        if (table === 'users') {
+          return { select: () => ({ eq: () => ({ maybeSingle: mockRoleSingle }) }) }
+        }
         if (table === 'currencies') {
           return {
             insert: () => ({ select: () => ({ single: mockCurrencyInsert }) }),
@@ -351,7 +351,7 @@ describe('Archetype C — createCurrency (admin/moderator write, admin client)',
   })
 
   it('negative — regular user → { error: "forbidden" }, no insert', async () => {
-    mockRoleSingle.mockResolvedValue({ data: { role: 'user' } })
+    mockRoleSingle.mockResolvedValue({ data: { role: 'user', status: 'active', suspended_until: null, deleted_at: null }, error: null })
 
     const { createCurrency } = await import('@/modules/admin/actions/currencies')
     const result = await createCurrency(VALID_CURRENCY)
@@ -368,7 +368,9 @@ describe('Archetype C — createCurrency (admin/moderator write, admin client)',
     const { createCurrency } = await import('@/modules/admin/actions/currencies')
     const result = await createCurrency(VALID_CURRENCY)
 
-    expect(result).toEqual({ error: insertError.message })
+    // Task 923 R71 (f), X14: this asserted the leak (the database's own message was returned) and is now its regression: a stable code, never the database text
+    expect(result).toEqual({ error: 'create_failed' })
+    expect(JSON.stringify(result)).not.toContain(insertError.message)
     expect(consoleSpy).toHaveBeenCalledWith(
       'createCurrency failed',
       expect.objectContaining({ error: insertError }),
@@ -386,7 +388,7 @@ describe('Archetype D — setModeratorPermission (admin-only, moderator rejected
   const mockEventInsert = vi.fn()
   const mockCurrentSelect = vi.fn()
 
-  // User-scoped role-check chain
+  // The caller's own `users` row, read with the service role by the real `requireViewer()` (Task 923 R44) — the role check
   const mockRoleSingle = vi.fn()
 
   beforeEach(() => {
@@ -394,13 +396,8 @@ describe('Archetype D — setModeratorPermission (admin-only, moderator rejected
 
     mockGetUser.mockResolvedValue(ADMIN_USER)
 
-    // User-scoped client: role check → admin
-    mockRoleSingle.mockResolvedValue({ data: { role: 'admin' } })
-    mockCreateClient.mockResolvedValue({
-      from: () => ({
-        select: () => ({ eq: () => ({ single: mockRoleSingle }) }),
-      }),
-    })
+    // role check → admin
+    mockRoleSingle.mockResolvedValue({ data: { role: 'admin', status: 'active', suspended_until: null, deleted_at: null }, error: null })
 
     // Admin client: permission upsert + event insert + current value read
     mockCurrentSelect.mockResolvedValue({ data: null })
@@ -418,7 +415,7 @@ describe('Archetype D — setModeratorPermission (admin-only, moderator rejected
           return { insert: mockEventInsert }
         }
         if (table === 'users') {
-          return { select: () => ({ eq: () => ({ single: vi.fn().mockResolvedValue({ data: { name: 'Admin' } }) }) }) }
+          return { select: () => ({ eq: () => ({ maybeSingle: mockRoleSingle }) }) }
         }
         return { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(), single: vi.fn().mockResolvedValue({ data: null }) }
       },
@@ -449,7 +446,7 @@ describe('Archetype D — setModeratorPermission (admin-only, moderator rejected
 
   it('negative — moderator actor → { error: "forbidden" }, no write', async () => {
     // Moderator can read permissions but CANNOT change them
-    mockRoleSingle.mockResolvedValue({ data: { role: 'moderator' } })
+    mockRoleSingle.mockResolvedValue({ data: { role: 'moderator', status: 'active', suspended_until: null, deleted_at: null }, error: null })
 
     const { setModeratorPermission } = await import('@/modules/admin/actions/permissions')
     const result = await setModeratorPermission('listings.delete', true)

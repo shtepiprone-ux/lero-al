@@ -10,7 +10,7 @@ import { withAdminShell } from '@/stories/_StoryAdminShell'
 // `AdminInquiriesManager`). GR-3a: CREATE — no canonical Story imported this surface (the manager is a container
 // with live data). Status and mailbox filters on Mantine `SegmentedControl`s in a horizontal `ScrollArea`, rows
 // on `Paper` + `UnstyledButton`. The detail dialog is the separate `InquiryDetailDialogView`. GR-3b: every export
-// renders inside the real `AdminShell` and the route's `AdminPageFrame` (`width="page"`); GR-3d: the frame is the
+// renders inside the real `AdminShell` and the route's `AdminPageFrame` (`width="shell"`); GR-3d: the frame is the
 // page gutter. `FIXTURE_INQUIRIES` is labelled fixture data; the filters are local state. Viewport and
 // locale come from the Storybook toolbar.
 const meta: Meta<typeof AdminInquiriesView> = {
@@ -44,7 +44,7 @@ function ViewDemo({
   const [mailboxFilter, setMailboxFilter] = useState<InquiryMailboxFilter>('all')
   const shown = inquiries.filter(i => statusFilter === 'all' || i.status === statusFilter)
   return (
-    <AdminPageFrame width="page">
+    <AdminPageFrame width="shell">
       <AdminInquiriesView
         inquiries={shown}
         statusFilter={statusFilter}

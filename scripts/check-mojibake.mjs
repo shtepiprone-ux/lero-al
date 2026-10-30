@@ -136,9 +136,9 @@ function gitTrackedFiles() {
   // Include tracked + staged + untracked-but-not-ignored files, so files added
   // in the same change as this gate (or not yet committed) are also scanned.
   const r = spawnSync('git', ['ls-files', '--cached', '--others', '--exclude-standard'], {
-    cwd: ROOT, encoding: 'utf8',
+    cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
   });
-  if (r.status !== 0) throw new Error(`git ls-files failed: ${r.stderr}`);
+  if (r.status !== 0) throw new Error(`git ls-files failed (${r.error?.code ?? `exit ${r.status}`}): ${r.stderr}`);
   return [...new Set(r.stdout.split('\n').map((l) => l.trim()).filter(Boolean))];
 }
 

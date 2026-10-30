@@ -1,9 +1,9 @@
 ## GR-3f — A circle renders as a circle
 
-**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words, verbatim: *"я неодноразово повторював
-щодо іконок. Коло має бути колом … Наразі візуально я бачу багатокутник, а не коло. І можеш мені не брехати, я своїм
-очам більше вірю."* Then: *"radio buttons мають мати коло у компоненті, ніякого хардкоду лише в одному попапі, це має
-бути глобально пофікшено"*.
+**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words: *"I have repeated many times about the icons. A circle must be a
+circle … Right now I visually see a polygon, not a circle. And
+do not lie to me, I trust my own eyes more."* Then: *"radio buttons must have a circle in the component, no
+hardcode in just one popup, it must be fixed globally"*.
 
 The trigger: the `PremiumDialogView` radios. Their CSS was a circle (`border-radius` equal to the 16px box). Opus's
 pixel crop at device scale 1 (`docs/sessions/evidence/task857/101-radio-variants.png`) showed what the owner saw:

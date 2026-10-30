@@ -1,0 +1,4 @@
+# fr-37 (Opus) 2026-10-28T22:33:07.823Z win32 node v22.22.3
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.md: sha256 1281f559102766d61932260be09922b406b6d44c0c00475af6c25a0602c8d71f; in HEAD true; in origin/main false; added in 800b8e349
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: sha256 d2c6909b4e2413dfd4ee0d65d8c9cf933755bd245c6ed30bddf5de21853352a2; in HEAD true; in origin/main false; added in 800b8e349
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.md line 52: | C18 | FACT | Company names are unique ignoring case and outer spaces. | source: `docs/sessions/evidence/task926/design/company-facts.txt:8-8`; observed: `(lower(btrim(name)))` |

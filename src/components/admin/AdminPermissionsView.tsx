@@ -2,11 +2,12 @@
 
 import { Fragment } from 'react'
 import { useTranslations, useFormatter } from 'next-intl'
-import { Alert, Badge, Box, Divider, Group, Stack, Switch, Text, useMantineTheme } from '@mantine/core'
+import { Alert, Box, Divider, Group, Stack, Switch, Text, useMantineTheme } from '@mantine/core'
 import { ShieldCheck, ShieldX, AlertTriangle } from 'lucide-react'
 import { MantineFormSection } from '@/design-system/mantine/patterns'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
 import type { PermissionData, PermissionEvent } from '@/modules/admin/actions/permissions'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AdminPermissionsViewProps {
   permissions: Record<PermissionKey, PermissionData>
@@ -37,17 +38,9 @@ export function AdminPermissionsView({
   return (
     <Stack gap="xl" data-testid="admin-permissions-manager">
       <Group>
-        <Badge
-          variant="outline"
-          color="gray"
-          leftSection={
-            <Box c="green" display="flex">
-              <ShieldCheck size={iconSize.badge} />
-            </Box>
-          }
-        >
+        <MantineBadge variant="tone" tone="neutral" outline>
           {t('allowed_count', { count: allowedCount, total: PERMISSION_KEYS.length })}
-        </Badge>
+        </MantineBadge>
       </Group>
 
       <MantineFormSection title={t('admin_section_title')}>

@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 import { Drawer, Box, Text, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { belowMobileGateQuery } from '../belowMobileGate'
 
 // ── Shared bottom-sheet Drawer styles ────────────────────────────────────────
 // Canonical P0 bottom-sheet treatment (single source of truth for Batch C overlays).
@@ -10,7 +11,7 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 // are P0 bottom-sheet exemptions mirroring MantineDialogDrawerPattern (Task 482).
 export const bottomSheetDrawerStyles = {
   content: {
-    borderRadius: 'var(--mantine-radius-lg) var(--mantine-radius-lg) 0 0',
+    borderRadius: 'var(--mantine-radius-3xl) var(--mantine-radius-3xl) 0 0',
     // Drawer size="auto" leaves Mantine's --drawer-height/--drawer-size vars
     // unresolved, so the class-level height falls back to 100% (Task 522
     // diagnosis) and only maxHeight clamped it back down to 90dvh — meaning
@@ -22,7 +23,9 @@ export const bottomSheetDrawerStyles = {
     display: 'flex',
     flexDirection: 'column' as const,
   },
-  header: { paddingBottom: 0 },
+  // `flexShrink: 0`: the header is pinned above the scrolled body; as a flex item it would shrink below its own title when the content is tall
+  // (Task 923 R33, Story 253)
+  header: { paddingBottom: 0, flexShrink: 0 },
   // Stretch the title slot to the full header width so the centered DragHandle
   // centers across the whole sheet (Mantine's .mantine-Drawer-title is otherwise
   // content-width under the header's justify-content:space-between → handle drifts left).
@@ -49,7 +52,7 @@ export const bottomSheetDrawerStyles = {
  */
 export function useResponsiveDropdown() {
   const theme = useMantineTheme()
-  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
+  const isMobile = useMediaQuery(belowMobileGateQuery(theme))
   const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false)
   return {
     isMobile: isMobile ?? false,
@@ -112,6 +115,8 @@ export interface ResponsiveBottomSheetProps {
    * original single-scroll-region `body` untouched.
    */
   footer?: ReactNode
+  /** Another dialog is open above this sheet (Task 859 Revision 3): hidden from assistive technology and inert. */
+  covered?: boolean
 }
 
 /**
@@ -119,7 +124,7 @@ export interface ResponsiveBottomSheetProps {
  *
  * Wraps Mantine Drawer with the fixed P0 chrome:
  *   - bottom-anchored, edge-to-edge (inner padding 0)
- *   - top-only radius (radius-lg on top, 0 on bottom)
+ *   - top-only radius (radius-3xl, 24px, on top, 0 on bottom — D78-22)
  *   - centered DragHandle at top of header
  *   - optional title text (fw=600, sm, gray.8) below the handle
  *   - ≤90dvh max-height, internal body scroll (flex column)
@@ -137,12 +142,14 @@ export function ResponsiveBottomSheet({
   header,
   children,
   footer,
+  covered,
 }: ResponsiveBottomSheetProps) {
   const hasHeading = Boolean(title) || Boolean(header)
   return (
     <Drawer
       opened={opened}
       onClose={onClose}
+      {...(covered && { 'aria-hidden': true, inert: true })}
       position="bottom"
       withCloseButton={false}
       size="auto"
@@ -193,13 +200,24 @@ export function ResponsiveBottomSheet({
           ...(footer
             ? { ...bottomSheetDrawerStyles.body, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }
             : bottomSheetDrawerStyles.body),
-          ...(hasHeading ? { paddingTop: header ? 0 : 'var(--mantine-spacing-md)' } : {}),
+          // Task 859 Revision 8 (R60, AC49): with a pinned footer the title->content gap lives INSIDE the scroll region
+          // (below), not as body padding above it, so the scroll region starts at the header divider and scrolled content
+          // is clipped there, never in an empty band under the header.
+          ...(hasHeading ? { paddingTop: header || footer ? 0 : 'var(--mantine-spacing-md)' } : {}),
         },
       }}
     >
       {footer ? (
         <>
-          <Box data-testid="mantine-drawer-scroll-content" style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+          <Box
+            data-testid="mantine-drawer-scroll-content"
+            style={{
+              flex: 1,
+              minHeight: 0,
+              overflowY: 'auto',
+              ...(hasHeading && !header ? { paddingTop: 'var(--mantine-spacing-md)' } : {}),
+            }}
+          >
             {children}
           </Box>
           <Box

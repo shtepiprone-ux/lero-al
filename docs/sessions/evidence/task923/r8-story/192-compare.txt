@@ -1,0 +1,9 @@
+platform win32 node v22.22.3
+runs docs/sessions/evidence/task923/r8-story/192-a ; docs/sessions/evidence/task923/r8-story/192-b; rows 209 / 209
+DIFF patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | app | sq | 00639 :: green || component-overflow :: allowed by class 2 Leaflet popup race (C172-C176, C182)
+
+rows 209; rows with a difference 1
+  allowed, class 2 Leaflet popup race (C172-C176, C182): 1
+differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 0
+
+EXIT_CODE=0

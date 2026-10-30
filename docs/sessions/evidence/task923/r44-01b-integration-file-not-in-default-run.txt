@@ -1,0 +1,21 @@
+# R141-R144 AC141 r44-01b: the third new file (deleteAccount.integration.test.ts) is not collected by the default run: vitest.config.ts excludes **/*.integration.test.ts, so it runs in r44-02 only
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/lib/account/deleteAccount.integration.test.ts
+NODE_PATH: (unset)
+started: 2026-10-24T11:57:53.872Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+--- stderr ---
+No test files found, exiting with code 1
+
+filter: src/lib/account/deleteAccount.integration.test.ts
+include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+exclude:  **/node_modules/**, **/.git/**, docs/**, **/*.integration.test.ts
+
+
+--- exit code: 1 ---

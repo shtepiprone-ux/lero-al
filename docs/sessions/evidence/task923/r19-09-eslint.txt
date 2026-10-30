@@ -1,0 +1,3 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:33:33.769Z
+cmd npx eslint . --quiet   (eslint over the whole repository, errors only, on the final tree)
+EXIT_CODE=0

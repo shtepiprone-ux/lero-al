@@ -7,7 +7,8 @@ export type PageLocale = 'sq' | 'en' | 'uk' | 'it'
 export const PAGE_LOCALES: PageLocale[] = ['sq', 'en', 'uk', 'it']
 
 export function toSlug(str: string) {
-  return str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/^-|-$/g, '')
+  // one hyphen between words and none at the ends (Task 923 Revision 7): "Terms & Conditions" used to give "terms--conditions", "--a--" gave "-a-"
+  return str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-+|-+$/g, '')
 }
 
 export function isLegacyContent(content: unknown): boolean {

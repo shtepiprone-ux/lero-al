@@ -42,7 +42,7 @@ function baseProps(layout?: 'grid' | 'list') {
     image: <img src="https://example.com/photo.jpg" alt="Modern Apartment" />,
     favorite: <button aria-pressed="false" aria-label="Add to favorites">heart</button>,
     typeLabel: 'For sale · Apartment',
-    badges: [{ label: 'New', color: 'green' }],
+    badges: [{ label: 'New', meaning: { variant: 'tone' as const, tone: 'success' as const } }],
     overlay: undefined as MantineListingCardOverlay | undefined,
     photoCount: 5,
     features: [{ icon: <span data-testid="feature-icon" />, value: '3 rooms' }],
@@ -151,7 +151,7 @@ describe('MantineListingCardPattern — one source per part in grid and list (Ta
     },
     {
       name: 'a sold listing',
-      props: { overlay: { label: 'SOLD', tone: 'sold' as const }, badges: [{ label: 'Sold', color: 'blueLight' }] },
+      props: { overlay: { label: 'SOLD', tone: 'sold' as const }, badges: [{ label: 'Sold', meaning: { variant: 'status', entity: 'listing', value: 'sold' } }] },
       parts: ['badges', 'overlay', 'photo-count', 'head', 'chips', 'footer'],
     },
     {

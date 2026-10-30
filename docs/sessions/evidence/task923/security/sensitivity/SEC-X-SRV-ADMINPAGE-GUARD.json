@@ -1,0 +1,226 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:36:35.452Z",
+ "case": "SEC-X-SRV-ADMINPAGE-GUARD",
+ "results": [
+  {
+   "id": "SEC-X-SRV-ADMINPAGE-GUARD",
+   "testFile": "src/lib/auth/__tests__/staffPage.security.test.ts",
+   "testName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/auth/staff.ts",
+     "description": "requireStaffPage accepts any role",
+     "from": "  if (viewer.role !== 'admin' && viewer.role !== 'moderator') notFound()\n",
+     "to": ""
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/lib/auth/staff.ts",
+     "originalSha256": "e88d41a160539c387dbe896db129c664480c0e818150d212d9a199ec2b93abec",
+     "restoredSha256": "e88d41a160539c387dbe896db129c664480c0e818150d212d9a199ec2b93abec"
+    }
+   ],
+   "failureMessage": "AssertionError: src/app/admin/companies/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/companies/page.tsx page for a plain user: read admin.from(companies), admin.companies.select, admin.companies.order, admin.users.select(company_id), admin.users.not, admin.users.in\nsrc/app/admin/companies/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/companies/page.tsx page for an agent: read admin.from(companies), admin.companies.select, admin.companies.order, admin.users.select(company_id), admin.users.not, admin.users.in\nsrc/app/admin/currency/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/currency/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for a plain user: read admin.from(email_templates), admin.email_templates.select, admin.email_templates.order, admin.email_templates.order\nsrc/app/admin/email-templates/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for an agent: read admin.from(email_templates), admin.email_templates.select, admin.email_templates.order, admin.email_templates.order\nsrc/app/admin/footer/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/footer/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/inquiries/page.tsx page for a plain user: redirect, expected n",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259344926,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "status": "passed",
+         "title": "[SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "duration": 22371.4076,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "status": "skipped",
+         "title": "an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259345357,
+       "endTime": 1793259367728.4077,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/staffPage.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259368848,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "status": "failed",
+         "title": "[SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "duration": 12323.5699,
+         "failureMessages": [
+          "AssertionError: src/app/admin/companies/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/companies/page.tsx page for a plain user: read admin.from(companies), admin.companies.select, admin.companies.order, admin.users.select(company_id), admin.users.not, admin.users.in\nsrc/app/admin/companies/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/companies/page.tsx page for an agent: read admin.from(companies), admin.companies.select, admin.companies.order, admin.users.select(company_id), admin.users.not, admin.users.in\nsrc/app/admin/currency/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/currency/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for a plain user: read admin.from(email_templates), admin.email_templates.select, admin.email_templates.order, admin.email_templates.order\nsrc/app/admin/email-templates/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/email-templates/page.tsx page for an agent: read admin.from(email_templates), admin.email_templates.select, admin.email_templates.order, admin.email_templates.order\nsrc/app/admin/footer/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/footer/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/inquiries/page.tsx page for a plain user: redirect, expected notFound\nsrc/app/admin/inquiries/page.tsx page for an agent: redirect, expected notFound\nsrc/app/admin/inquiries/sales/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/inquiries/sales/page.tsx page for a plain user: read admin.from(contact_inquiries), admin.contact_inquiries.select, admin.contact_inquiries.ilike, admin.contact_inquiries.order, admin.contact_inquiries.limit\nsrc/app/admin/inquiries/sales/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/inquiries/sales/page.tsx page for an agent: read admin.from(contact_inquiries), admin.contact_inquiries.select, admin.contact_inquiries.ilike, admin.contact_inquiries.order, admin.contact_inquiries.limit\nsrc/app/admin/inquiries/support/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/inquiries/support/page.tsx page for a plain user: read admin.from(contact_inquiries), admin.contact_inquiries.select, admin.contact_inquiries.not, admin.contact_inquiries.order, admin.contact_inquiries.limit\nsrc/app/admin/inquiries/support/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/inquiries/support/page.tsx page for an agent: read admin.from(contact_inquiries), admin.contact_inquiries.select, admin.contact_inquiries.not, admin.contact_inquiries.order, admin.contact_inquiries.limit\nsrc/app/admin/legal/page.tsx page for a plain user: redirect, expected notFound\nsrc/app/admin/legal/page.tsx page for an agent: redirect, expected notFound\nsrc/app/admin/listings/[id]/preview/page.tsx page for a plain user: redirect, expected notFound\nsrc/app/admin/listings/[id]/preview/page.tsx page for an agent: redirect, expected notFound\nsrc/app/admin/listings/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/listings/page.tsx page for a plain user: read admin.from(listings), admin.listings.select, admin.listings.order, admin.listings.range, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.or, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.lt, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.is\nsrc/app/admin/listings/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/listings/page.tsx page for an agent: read admin.from(listings), admin.listings.select, admin.listings.order, admin.listings.range, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.or, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.lt, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.is\nsrc/app/admin/locations/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/locations/page.tsx page for a plain user: read admin.from(locations), admin.locations.select, admin.locations.order, admin.locations.order, admin.locations.limit, admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order\nsrc/app/admin/locations/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/locations/page.tsx page for an agent: read admin.from(locations), admin.locations.select, admin.locations.order, admin.locations.order, admin.locations.limit, admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order\nsrc/app/admin/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/page.tsx page for a plain user: read admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.order, admin.listings.order, admin.listings.limit, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.listing_reports.order, admin.listing_reports.order, admin.listing_reports.limit, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.in, admin.support_tickets.is, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.eq, admin.support_tickets.is, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.in, admin.support_tickets.is, admin.support_tickets.order, admin.support_tickets.order, admin.support_tickets.limit, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.gte, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.or, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.lt, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.is, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.order, admin.listings.order, admin.listings.limit, admin.users.select(id, name, last_name, location_request), admin.users.not, admin.users.is, admin.users.limit, admin.rpc, admin.from(listing_activity_refresh), admin.listing_activity_refresh.select, admin.listing_activity_refresh.eq, admin.listing_activity_refresh.order, admin.listing_activity_refresh.limit, admin.from(listings), admin.listings.select, admin.listings.gte, admin.listings.lt, admin.listings.order, admin.listings.range, admin.users.select(created_at), admin.users.gte, admin.users.lt, admin.users.order, admin.users.range, admin.from(listings), admin.listings.select, admin.listings.gte, admin.listings.lt, admin.listings.order, admin.listings.range, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.gte, admin.listing_reports.lt, admin.listing_reports.order, admin.listing_reports.range, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.gte, admin.support_tickets.lt, admin.support_tickets.order, admin.support_tickets.range, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.gte, admin.listings.order, admin.listings.range, admin.from(locations), admin.locations.select, admin.locations.order, admin.locations.range\nsrc/app/admin/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/page.tsx page for an agent: read admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.order, admin.listings.order, admin.listings.limit, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.eq, admin.listing_reports.order, admin.listing_reports.order, admin.listing_reports.limit, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.in, admin.support_tickets.is, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.eq, admin.support_tickets.is, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.in, admin.support_tickets.is, admin.support_tickets.order, admin.support_tickets.order, admin.support_tickets.limit, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.gte, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.or, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.lt, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.is, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.eq, admin.from(listings), admin.listings.select, admin.listings.order, admin.listings.order, admin.listings.limit, admin.users.select(id, name, last_name, location_request), admin.users.not, admin.users.is, admin.users.limit, admin.rpc, admin.from(listing_activity_refresh), admin.listing_activity_refresh.select, admin.listing_activity_refresh.eq, admin.listing_activity_refresh.order, admin.listing_activity_refresh.limit, admin.from(listings), admin.listings.select, admin.listings.gte, admin.listings.lt, admin.listings.order, admin.listings.range, admin.users.select(created_at), admin.users.gte, admin.users.lt, admin.users.order, admin.users.range, admin.from(listings), admin.listings.select, admin.listings.gte, admin.listings.lt, admin.listings.order, admin.listings.range, admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.gte, admin.listing_reports.lt, admin.listing_reports.order, admin.listing_reports.range, admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.gte, admin.support_tickets.lt, admin.support_tickets.order, admin.support_tickets.range, admin.from(listings), admin.listings.select, admin.listings.eq, admin.listings.gte, admin.listings.order, admin.listings.range, admin.from(locations), admin.locations.select, admin.locations.order, admin.locations.range\nsrc/app/admin/pages/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/pages/page.tsx page for a plain user: read admin.from(pages), admin.pages.select, admin.pages.order\nsrc/app/admin/pages/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/pages/page.tsx page for an agent: read admin.from(pages), admin.pages.select, admin.pages.order\nsrc/app/admin/popular-locations/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/popular-locations/page.tsx page for a plain user: read admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/popular-locations/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/popular-locations/page.tsx page for an agent: read admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/property-types/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/property-types/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/reports/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/reports/page.tsx page for a plain user: read admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.order, admin.listing_reports.limit\nsrc/app/admin/reports/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/reports/page.tsx page for an agent: read admin.from(listing_reports), admin.listing_reports.select, admin.listing_reports.order, admin.listing_reports.limit\nsrc/app/admin/settings/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/settings/page.tsx page for a plain user: read admin.from(site_settings), admin.site_settings.select\nsrc/app/admin/settings/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/settings/page.tsx page for an agent: read admin.from(site_settings), admin.site_settings.select\nsrc/app/admin/support/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/support/page.tsx page for a plain user: read admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.order, admin.support_tickets.limit\nsrc/app/admin/support/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/support/page.tsx page for an agent: read admin.from(support_tickets), admin.support_tickets.select, admin.support_tickets.order, admin.support_tickets.limit\nsrc/app/admin/users/[id]/page.tsx page for a plain user: redirect, expected notFound\nsrc/app/admin/users/[id]/page.tsx page for a plain user: read admin.users.select(*), admin.users.eq, admin.users.maybeSingle, admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/users/[id]/page.tsx generateMetadata for a plain user: returned, expected notFound\nsrc/app/admin/users/[id]/page.tsx generateMetadata for a plain user: read admin.users.select(name, last_name), admin.users.eq, admin.users.single\nsrc/app/admin/users/[id]/page.tsx page for an agent: redirect, expected notFound\nsrc/app/admin/users/[id]/page.tsx page for an agent: read admin.users.select(*), admin.users.eq, admin.users.maybeSingle, admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/users/[id]/page.tsx generateMetadata for an agent: returned, expected notFound\nsrc/app/admin/users/[id]/page.tsx generateMetadata for an agent: read admin.users.select(name, last_name), admin.users.eq, admin.users.single\nsrc/app/admin/users/new/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/users/new/page.tsx page for a plain user: read admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/users/new/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/users/new/page.tsx page for an agent: read admin.from(locations), admin.locations.select, admin.locations.in, admin.locations.order, admin.from(locations), admin.locations.select, admin.locations.eq, admin.locations.order\nsrc/app/admin/users/page.tsx page for a plain user: returned, expected notFound\nsrc/app/admin/users/page.tsx page for a plain user: read admin.users.select(id, public_id, name, last_name, phone, user_type, role, is_verified, company_name, status, location_request, created_at, last_seen_at), admin.users.is, admin.users.order, admin.users.range\nsrc/app/admin/users/page.tsx page for an agent: returned, expected notFound\nsrc/app/admin/users/page.tsx page for an agent: read admin.users.select(id, public_id, name, last_name, phone, user_type, role, is_verified, company_name, status, location_request, created_at, last_seen_at), admin.users.is, admin.users.order, admin.users.range: expected [ …(76) ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/staffPage.security.test.ts:160:43\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "status": "skipped",
+         "title": "an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259369290,
+       "endTime": 1793259381613.5698,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/staffPage.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259382807,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "status": "passed",
+         "title": "[SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+         "duration": 12113.9468,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "staffPage"
+         ],
+         "fullName": "staffPage an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "status": "skipped",
+         "title": "an active administrator and an active moderator pass the guard, and it returns who they are (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259383251,
+       "endTime": 1793259395364.9468,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/staffPage.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

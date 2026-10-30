@@ -1,0 +1,15 @@
+# HEAD 64b809bfb lines cited by Task 923 claim rows whose working-tree source changed (Revision 43, rev43-11-refresh-locators.mjs)
+== src/app/admin/users/[id]/page.tsx at HEAD 64b809bfb, lines 69-69
+    const { data: authUser } = await db.auth.admin.getUserById(id)
+== src/app/admin/users/[id]/page.tsx in the working tree (uncommitted Task 923 code), lines 81-81
+  const viewer = await requireViewer()
+== src/app/admin/users/[id]/page.tsx at HEAD 64b809bfb, lines 47-55
+      .eq('user_id', id)
+      .order('changed_at', { ascending: false })
+      .limit(20)
+    changeLog = log ?? []
+  } catch {}
+
+  // Status history — new table; degrade gracefully if migration not yet applied
+  let statusHistory: UserStatusHistory[] = []
+  try {

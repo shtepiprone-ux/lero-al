@@ -1,0 +1,21 @@
+=== r1 end 2026-10-10T08:36:47Z
+HEAD b1810170c4f823841990afb800348f3d32450438
+a52bc687e5106f68c260e2c5b15809b0f057fbee  scripts/check-rendered-state-census.mjs
+6cd4c19428e15b8ca8ed2e4a677aa63a9449c8f0  scripts/rendered-state-census/registry.mjs
+8d26397adc4fca7614c49d6cda665fe635483be6  scripts/rendered-state-census/in-page.mjs
+2a9ece27253661453a233a97c48aaf889569fbf5  scripts/rendered-state-census/runner.mjs
+9c95a06ee6507fa8ae3bc7b74c06301ece2b3d16  scripts/rendered-state-census/discover.mjs
+67d8f345f8b296eade3c80771df1e97962b46d92  scripts/rendered-state-census/verify.mjs
+76c529eb35a0f8c3630755a7f38b9f4132065ad6  scripts/rendered-interaction-states.json
+6417b02ae619267d884e2845df7d2b8201ff177d  scripts/__tests__/rendered-state-census.test.ts
+3309022556a38a0de7a76d3def232c5c8186d284  package.json
+8a6b44875ec377fd1bd9474007117ddc0318c49f  scripts/__fixtures__/rendered-state-census/app-root-only.html
+97fbc1a27184c8e96ea7b18500d708553db0219d  scripts/__fixtures__/rendered-state-census/clean.html
+71ae80f6c79a94c327a48ce3875a55fab9391e4c  scripts/__fixtures__/rendered-state-census/escape-does-not-close.html
+14ee44b58cf2eaed22cb8cf3fa9108d3bb272f6e  scripts/__fixtures__/rendered-state-census/focus-escapes-trap.html
+93aa12e89cc6bf329460805ee98e818cd90431ac  scripts/__fixtures__/rendered-state-census/portal-clamp-only.html
+22082803f24381d750d424d9fcd881d30f38c9f7  scripts/__fixtures__/rendered-state-census/portal-overflow-only.html
+9435bd11610d11a8c86af0079feffa95c058426e  scripts/__fixtures__/rendered-state-census/portal-word-split-only.html
+f2da65f34ae8c12ef14573f4c886cd07200b1bdc  scripts/__fixtures__/rendered-state-census/registered-opens-nothing.html
+2d10d2113c2d93e7ddbd6dcef75d5dac6bf3fff8  scripts/__fixtures__/rendered-state-census/unregistered-portal.html
+package.json at i0: package.json eea5638cf7ca0ad75f5881fdd8cb2945f7edcee9

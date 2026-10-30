@@ -1,0 +1,12 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:20:05.795Z
+command: node docs/sessions/evidence/task927/review-8/rv8-08-login-growth.mjs 390 en
+--- output ---
+# rv8-08 AuthSheet Login 390 en mobile; platform win32; node v22.22.3
+t=381 input:email=73 | input:password=94 | =0 | Login=44 | or=20 | =40 | Don't have an acco=44
+t=571 input:email=73 | input:password=94 | input:hidden=0 | Login=44 | or=20 | =40 | Don't have an acco=44
+t=723 input:email=73 | input:password=94 | input:hidden=0 | Login=44 | or=20 | iframe(accounts.google.com)=40 | Don't have an acco=44
+t=889 Security verificat=54 | input:email=73 | input:password=94 | input:hidden=0 | Login=44 | or=20 | iframe(accounts.google.com)=40 | Don't have an acco=44
+--- exit code: 0 ---

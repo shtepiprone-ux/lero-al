@@ -21,6 +21,7 @@
 
 import { createAdminClient } from '@/lib/supabase/admin'
 import { BRAND_PRIMARY } from '@/design-system/brand'
+import { escapeHtml } from '@/lib/security/escapeHtml'
 import { sendEmail } from './emails/send'
 import type { EmailTemplate } from '@/types/database'
 
@@ -109,8 +110,12 @@ export async function sendTemplatedEmail({
     return { error: 'template_not_found' }
   }
 
+  // Task 923 Revision 7, finding S33: the variables carry text a STRANGER wrote (the title of a listing someone favourited). The template is trusted HTML written by
+  // an administrator, the variables are not, so they are escaped before they are put into it. The subject is plain text, not HTML, so it takes the raw value
+  // (sendEmail makes it one line).
+  const htmlVariables = Object.fromEntries(Object.entries(variables).map(([name, value]) => [name, escapeHtml(value)]))
   const subject = interpolate(template.subject, variables)
-  const innerHtml = interpolate(template.html_body, variables)
+  const innerHtml = interpolate(template.html_body, htmlVariables)
   const html = brandEmailLayout(innerHtml, template.locale)
 
   return sendEmail({ to, subject, html })

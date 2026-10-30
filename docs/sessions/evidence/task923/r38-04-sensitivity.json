@@ -1,0 +1,58 @@
+{
+  "takenAt": "2026-10-23T15:54:02.551Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 1,
+  "total": 1,
+  "records": [
+    {
+      "id": "S1-contact-card-key-removed",
+      "kind": "mutation",
+      "file": "src/modules/listings/components/ListingDetailView.tsx",
+      "cases": [
+        "SEC-X-FE-CONTACT-SESSION-RESET"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-FE-CONTACT-SESSION-RESET",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/components/ListingDetailView.tsx\n+++ src/modules/listings/components/ListingDetailView.tsx (mutated)\n@@ line 353 @@\n-      key={viewerId ?? 'guest'}",
+      "shaBefore": "c7006cf2d75fe809dac9c0106a4e2f0eb497bf3afe199043f1887e0c9994e50e",
+      "mutant": [
+        {
+          "caseId": "SEC-X-FE-CONTACT-SESSION-RESET",
+          "exit": 1,
+          "detected": true,
+          "fragment": "the new session shows no number link",
+          "caseFailure": [
+            "AssertionError: the new session shows no number link: expected <a …(6)><span …(2)>…(2)</span></a> to be null"
+          ],
+          "failed": [
+            {
+              "name": "ListingDetailView [SEC-X-FE-CONTACT-SESSION-RESET] a new session starts the contact card empty",
+              "kind": "assertion",
+              "message": "AssertionError: the new session shows no number link: expected <a …(6)><span …(2)>…(2)</span></a> to be null"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "c7006cf2d75fe809dac9c0106a4e2f0eb497bf3afe199043f1887e0c9994e50e",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-FE-CONTACT-SESSION-RESET",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

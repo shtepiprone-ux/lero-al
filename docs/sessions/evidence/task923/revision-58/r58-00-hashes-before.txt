@@ -1,0 +1,23 @@
+Task 923 Revision 58 (R175-R176), kickoff section 85, AC158
+File: r58-00 - sha256 of every path the revision writes, taken before its first edit. Written first.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: e84ad9616
+Command: sha256sum <path> (Git Bash), one call over the existing paths; new paths are listed as "new"
+Exit code: 0
+
+ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71  src/app/admin/users/[id]/page.tsx
+0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5  src/app/admin/users/__tests__/adminUserGone.security.test.ts
+581f32c83e72adc10bbf6a6b010225ad2694cd7053efac1ac395691fe9fdb3a9  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+5e38efec68f207f36dbe473295519f78303c36c49d88299759d43df8a43ab924  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+2780ca0072ef4115788b75710277f03466330264fa48d714258e41b33950ada8  docs/sessions/evidence/task923/security/d8-d9-report.json
+1b6165337a846d35dd249f02dca6865520cdb0243877d1143fccdc9be3b0c840  docs/sessions/2026-10-10-task923-rendered-state-census.md
+new  src/modules/admin/lib/userLocation.ts
+new  src/modules/admin/lib/__tests__/userLocation.test.ts
+new  docs/sessions/evidence/task923/revision-58/r58-00-hashes-before.txt
+new  docs/sessions/evidence/task923/revision-58/r58-01-userlocation-tests.txt
+new  docs/sessions/evidence/task923/revision-58/r58-02-report-and-verify.txt
+new  docs/sessions/evidence/task923/revision-58/r58-03-final-candidate.txt
+new  docs/sessions/evidence/task923/revision-58/r58-00b-hashes-after.txt
+
+Not written by this revision (contract of R176 (b)): the owner-fixes and Task 927 contracts and reports are rerun by verify only.

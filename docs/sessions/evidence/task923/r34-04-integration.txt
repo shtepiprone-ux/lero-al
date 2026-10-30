@@ -1,0 +1,19 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T07:28:17.625Z
+environment: SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF derived from the host of NEXT_PUBLIC_SUPABASE_URL in .env.local (ref length 20, value not printed)
+command: npx vitest run --config vitest.integration.config.ts src/tests/integration/contactGateway.integration.test.ts src/modules/listings/actions/contactSession.integration.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  09:28:19
+   Duration  18.41s (transform 211ms, setup 70ms, import 346ms, tests 17.49s, environment 0ms)
+
+
+---- end ----
+EXIT_CODE=0

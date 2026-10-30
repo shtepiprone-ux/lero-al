@@ -1,0 +1,1397 @@
+{
+ "takenAt": "2026-10-20T07:28:31.600Z",
+ "tables": [
+  {
+   "tbl": "pages",
+   "relkind": "r",
+   "acl": "{postgres=arwdDxtm/postgres,anon=rm/postgres,authenticated=rm/postgres,service_role=arwdDxtm/postgres}",
+   "owner": "postgres",
+   "rls": true,
+   "force_rls": false
+  },
+  {
+   "tbl": "site_footer",
+   "relkind": "r",
+   "acl": "{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}",
+   "owner": "postgres",
+   "rls": true,
+   "force_rls": false
+  }
+ ],
+ "columns": [
+  {
+   "tbl": "pages",
+   "num": 1,
+   "col": "id",
+   "type": "integer",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 2,
+   "col": "title",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 3,
+   "col": "slug",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 4,
+   "col": "content",
+   "type": "jsonb",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 5,
+   "col": "is_published",
+   "type": "boolean",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 6,
+   "col": "updated_by",
+   "type": "uuid",
+   "col_acl": null
+  },
+  {
+   "tbl": "pages",
+   "num": 7,
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 1,
+   "col": "locale",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 2,
+   "col": "brand_title",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 3,
+   "col": "tagline",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 4,
+   "col": "nav_section_title",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 5,
+   "col": "nav_links",
+   "type": "jsonb",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 6,
+   "col": "info_section_title",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 7,
+   "col": "info_links",
+   "type": "jsonb",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 8,
+   "col": "social_section_title",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 9,
+   "col": "social_links",
+   "type": "jsonb",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 10,
+   "col": "copyright_template",
+   "type": "text",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 11,
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "col_acl": null
+  },
+  {
+   "tbl": "site_footer",
+   "num": 12,
+   "col": "updated_by",
+   "type": "uuid",
+   "col_acl": null
+  }
+ ],
+ "policies": [
+  {
+   "tbl": "pages",
+   "name": "Admins can manage pages",
+   "cmd": "ALL",
+   "roles": "{public}",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "tbl": "pages",
+   "name": "pages_select_public",
+   "cmd": "SELECT",
+   "roles": "{anon,authenticated}",
+   "qual": "(is_published = true)",
+   "with_check": null
+  },
+  {
+   "tbl": "site_footer",
+   "name": "site_footer_admin_write",
+   "cmd": "ALL",
+   "roles": "{authenticated}",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "tbl": "site_footer",
+   "name": "site_footer_select_all",
+   "cmd": "SELECT",
+   "roles": "{public}",
+   "qual": "true",
+   "with_check": null
+  }
+ ],
+ "grantsInformationSchema": [
+  {
+   "tbl": "pages",
+   "grantee": "anon",
+   "privilege": "SELECT"
+  },
+  {
+   "tbl": "pages",
+   "grantee": "authenticated",
+   "privilege": "SELECT"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "DELETE"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "INSERT"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "REFERENCES"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "SELECT"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "TRIGGER"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "TRUNCATE"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "anon",
+   "privilege": "UPDATE"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "DELETE"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "INSERT"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "REFERENCES"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "SELECT"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "TRIGGER"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "TRUNCATE"
+  },
+  {
+   "tbl": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "UPDATE"
+  }
+ ],
+ "ri": [
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_16692",
+   "enabled": "O",
+   "constraint": "identities_user_id_fkey",
+   "child": "auth.identities",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 1
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_16720",
+   "enabled": "O",
+   "constraint": "sessions_user_id_fkey",
+   "child": "auth.sessions",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 2
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_16757",
+   "enabled": "O",
+   "constraint": "mfa_factors_user_id_fkey",
+   "child": "auth.mfa_factors",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 3
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_16948",
+   "enabled": "O",
+   "constraint": "one_time_tokens_user_id_fkey",
+   "child": "auth.one_time_tokens",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 4
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_17027",
+   "enabled": "O",
+   "constraint": "oauth_authorizations_user_id_fkey",
+   "child": "auth.oauth_authorizations",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 5
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_17046",
+   "enabled": "O",
+   "constraint": "oauth_consents_user_id_fkey",
+   "child": "auth.oauth_consents",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 6
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_17141",
+   "enabled": "O",
+   "constraint": "webauthn_credentials_user_id_fkey",
+   "child": "auth.webauthn_credentials",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 7
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_17158",
+   "enabled": "O",
+   "constraint": "webauthn_challenges_user_id_fkey",
+   "child": "auth.webauthn_challenges",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 8
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_17575",
+   "enabled": "O",
+   "constraint": "users_id_fkey",
+   "child": "public.users",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 9
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19271",
+   "enabled": "O",
+   "constraint": "email_templates_updated_by_fkey",
+   "child": "public.email_templates",
+   "delete_rule": "a",
+   "fn": "RI_FKey_noaction_del",
+   "position": 10
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19322",
+   "enabled": "O",
+   "constraint": "collections_user_id_fkey",
+   "child": "public.collections",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 11
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19354",
+   "enabled": "O",
+   "constraint": "favorite_price_alerts_user_id_fkey",
+   "child": "public.favorite_price_alerts",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 12
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19376",
+   "enabled": "O",
+   "constraint": "recently_viewed_user_id_fkey",
+   "child": "public.recently_viewed",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 13
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19605",
+   "enabled": "O",
+   "constraint": "contact_inquiries_handled_by_fkey",
+   "child": "public.contact_inquiries",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 14
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_19630",
+   "enabled": "O",
+   "constraint": "contact_inquiry_replies_replied_by_fkey",
+   "child": "public.contact_inquiry_replies",
+   "delete_rule": "a",
+   "fn": "RI_FKey_noaction_del",
+   "position": 15
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_22028",
+   "enabled": "O",
+   "constraint": "scim_users_user_id_fkey",
+   "child": "auth.scim_users",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 16
+  },
+  {
+   "parent": "auth.users",
+   "trigger": "RI_ConstraintTrigger_a_22077",
+   "enabled": "O",
+   "constraint": "mfa_recovery_code_sets_user_id_fkey",
+   "child": "auth.mfa_recovery_code_sets",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 17
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17715",
+   "enabled": "O",
+   "constraint": "listings_user_id_fkey",
+   "child": "public.listings",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 1
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17800",
+   "enabled": "O",
+   "constraint": "listing_views_user_id_fkey",
+   "child": "public.listing_views",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 2
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17816",
+   "enabled": "O",
+   "constraint": "favorites_user_id_fkey",
+   "child": "public.favorites",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 3
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17871",
+   "enabled": "O",
+   "constraint": "listing_reports_user_id_fkey",
+   "child": "public.listing_reports",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 4
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17889",
+   "enabled": "O",
+   "constraint": "saved_searches_user_id_fkey",
+   "child": "public.saved_searches",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 5
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17907",
+   "enabled": "O",
+   "constraint": "conversations_buyer_id_fkey",
+   "child": "public.conversations",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 6
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17912",
+   "enabled": "O",
+   "constraint": "conversations_seller_id_fkey",
+   "child": "public.conversations",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 7
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17933",
+   "enabled": "O",
+   "constraint": "messages_sender_id_fkey",
+   "child": "public.messages",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 8
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17960",
+   "enabled": "O",
+   "constraint": "support_tickets_user_id_fkey",
+   "child": "public.support_tickets",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 9
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17965",
+   "enabled": "O",
+   "constraint": "support_tickets_assigned_to_fkey",
+   "child": "public.support_tickets",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 10
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_17987",
+   "enabled": "O",
+   "constraint": "support_messages_sender_id_fkey",
+   "child": "public.support_messages",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 11
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18026",
+   "enabled": "O",
+   "constraint": "notifications_user_id_fkey",
+   "child": "public.notifications",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 12
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18050",
+   "enabled": "O",
+   "constraint": "notification_settings_user_id_fkey",
+   "child": "public.notification_settings",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 13
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18087",
+   "enabled": "O",
+   "constraint": "pages_updated_by_fkey",
+   "child": "public.pages",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 14
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18112",
+   "enabled": "O",
+   "constraint": "verification_requests_user_id_fkey",
+   "child": "public.verification_requests",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 15
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18117",
+   "enabled": "O",
+   "constraint": "verification_requests_reviewed_by_fkey",
+   "child": "public.verification_requests",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 16
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18137",
+   "enabled": "O",
+   "constraint": "agent_reviews_agent_id_fkey",
+   "child": "public.agent_reviews",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 17
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18142",
+   "enabled": "O",
+   "constraint": "agent_reviews_reviewer_id_fkey",
+   "child": "public.agent_reviews",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 18
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18427",
+   "enabled": "O",
+   "constraint": "user_change_log_user_id_fkey",
+   "child": "public.user_change_log",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 19
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18432",
+   "enabled": "O",
+   "constraint": "user_change_log_changed_by_fkey",
+   "child": "public.user_change_log",
+   "delete_rule": "a",
+   "fn": "RI_FKey_noaction_del",
+   "position": 20
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18727",
+   "enabled": "O",
+   "constraint": "user_status_history_user_id_fkey",
+   "child": "public.user_status_history",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 21
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18732",
+   "enabled": "O",
+   "constraint": "user_status_history_changed_by_fkey",
+   "child": "public.user_status_history",
+   "delete_rule": "a",
+   "fn": "RI_FKey_noaction_del",
+   "position": 22
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_18749",
+   "enabled": "O",
+   "constraint": "email_change_tokens_user_id_fkey",
+   "child": "public.email_change_tokens",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 23
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19170",
+   "enabled": "O",
+   "constraint": "report_actions_actor_id_fkey",
+   "child": "public.report_actions",
+   "delete_rule": "a",
+   "fn": "RI_FKey_noaction_del",
+   "position": 24
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19507",
+   "enabled": "O",
+   "constraint": "support_tickets_reported_user_id_fkey",
+   "child": "public.support_tickets",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 25
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19512",
+   "enabled": "O",
+   "constraint": "support_tickets_created_by_admin_id_fkey",
+   "child": "public.support_tickets",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 26
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19538",
+   "enabled": "O",
+   "constraint": "support_ticket_events_actor_user_id_fkey",
+   "child": "public.support_ticket_events",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 27
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19716",
+   "enabled": "O",
+   "constraint": "role_permissions_updated_by_user_id_fkey",
+   "child": "public.role_permissions",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 28
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19736",
+   "enabled": "O",
+   "constraint": "role_permission_events_actor_user_id_fkey",
+   "child": "public.role_permission_events",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 29
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19775",
+   "enabled": "O",
+   "constraint": "site_footer_updated_by_fkey",
+   "child": "public.site_footer",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 30
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19845",
+   "enabled": "O",
+   "constraint": "listing_contact_events_listing_owner_id_fkey",
+   "child": "public.listing_contact_events",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 31
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_19850",
+   "enabled": "O",
+   "constraint": "listing_contact_events_actor_user_id_fkey",
+   "child": "public.listing_contact_events",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 32
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_20230",
+   "enabled": "O",
+   "constraint": "listing_inquiries_listing_owner_id_fkey",
+   "child": "public.listing_inquiries",
+   "delete_rule": "c",
+   "fn": "RI_FKey_cascade_del",
+   "position": 33
+  },
+  {
+   "parent": "public.users",
+   "trigger": "RI_ConstraintTrigger_a_20250",
+   "enabled": "O",
+   "constraint": "history_clear_events_actor_user_id_fkey",
+   "child": "public.history_clear_events",
+   "delete_rule": "n",
+   "fn": "RI_FKey_setnull_del",
+   "position": 34
+  }
+ ],
+ "listingsColumns": [
+  {
+   "col": "id",
+   "type": "uuid",
+   "notnull": true,
+   "def": "gen_random_uuid()"
+  },
+  {
+   "col": "user_id",
+   "type": "uuid",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "location_id",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "slug",
+   "type": "text",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "title",
+   "type": "text",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "description",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "price",
+   "type": "numeric",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "price_old",
+   "type": "numeric",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "currency",
+   "type": "listing_currency",
+   "notnull": true,
+   "def": "'ALL'::listing_currency"
+  },
+  {
+   "col": "listing_type",
+   "type": "listing_type",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "property_type",
+   "type": "property_type",
+   "notnull": true,
+   "def": null
+  },
+  {
+   "col": "condition",
+   "type": "listing_condition",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "wall_type",
+   "type": "wall_type",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "heating",
+   "type": "heating_type",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "rooms",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "bedrooms",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "bathrooms",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "toilets",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "area_gross",
+   "type": "numeric",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "area_net",
+   "type": "numeric",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "floor",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "total_floors",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "year_built",
+   "type": "integer",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "address",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "lat",
+   "type": "double precision",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "lng",
+   "type": "double precision",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "views_count",
+   "type": "integer",
+   "notnull": true,
+   "def": "0"
+  },
+  {
+   "col": "is_premium",
+   "type": "boolean",
+   "notnull": true,
+   "def": "false"
+  },
+  {
+   "col": "status",
+   "type": "listing_status",
+   "notnull": true,
+   "def": "'active'::listing_status"
+  },
+  {
+   "col": "expires_at",
+   "type": "timestamp with time zone",
+   "notnull": false,
+   "def": "(now() + '60 days'::interval)"
+  },
+  {
+   "col": "search_vector",
+   "type": "tsvector",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "notnull": false,
+   "def": "now()"
+  },
+  {
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "notnull": false,
+   "def": "now()"
+  },
+  {
+   "col": "land_legal_status",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "land_zoning",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "land_development_potential",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "multi_storey_building",
+   "type": "boolean",
+   "notnull": false,
+   "def": "false"
+  },
+  {
+   "col": "offer_type",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "purchase_conditions",
+   "type": "text[]",
+   "notnull": true,
+   "def": "'{}'::text[]"
+  },
+  {
+   "col": "public_id",
+   "type": "bigint",
+   "notnull": true,
+   "def": "nextval('listings_public_id_seq'::regclass)"
+  },
+  {
+   "col": "premium_until",
+   "type": "timestamp with time zone",
+   "notnull": false,
+   "def": null
+  },
+  {
+   "col": "market_type",
+   "type": "text",
+   "notnull": false,
+   "def": null
+  }
+ ],
+ "listingsTriggers": [
+  {
+   "name": "listings_search_vector",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_search_vector BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_listing_search_vector()"
+  },
+  {
+   "name": "listings_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_updated_at()"
+  }
+ ],
+ "listingsConstraints": [
+  {
+   "name": "listings_land_development_potential_check",
+   "type": "c",
+   "def": "CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))"
+  },
+  {
+   "name": "listings_land_legal_status_check",
+   "type": "c",
+   "def": "CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))"
+  },
+  {
+   "name": "listings_land_zoning_check",
+   "type": "c",
+   "def": "CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))"
+  },
+  {
+   "name": "listings_offer_type_check",
+   "type": "c",
+   "def": "CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))"
+  },
+  {
+   "name": "listings_pkey",
+   "type": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "name": "listings_public_id_key",
+   "type": "u",
+   "def": "UNIQUE (public_id)"
+  },
+  {
+   "name": "listings_slug_key",
+   "type": "u",
+   "def": "UNIQUE (slug)"
+  }
+ ],
+ "publicIdSequence": {
+  "name": "listings_public_id_seq",
+  "owner": "postgres",
+  "type": "bigint",
+  "increment": "1",
+  "max": "9223372036854775807",
+  "cycle": false
+ },
+ "currencyColumns": [
+  {
+   "tbl": "currencies",
+   "col": "id",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "nextval('currencies_id_seq'::regclass)"
+  },
+  {
+   "tbl": "currencies",
+   "col": "code",
+   "type": "character varying",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "currencies",
+   "col": "symbol",
+   "type": "character varying",
+   "nullable": "NO",
+   "def": "''::character varying"
+  },
+  {
+   "tbl": "currencies",
+   "col": "name_sq",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text"
+  },
+  {
+   "tbl": "currencies",
+   "col": "name_en",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text"
+  },
+  {
+   "tbl": "currencies",
+   "col": "name_uk",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text"
+  },
+  {
+   "tbl": "currencies",
+   "col": "name_it",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text"
+  },
+  {
+   "tbl": "currencies",
+   "col": "is_active",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "true"
+  },
+  {
+   "tbl": "currencies",
+   "col": "is_default",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false"
+  },
+  {
+   "tbl": "currencies",
+   "col": "decimals",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "0"
+  },
+  {
+   "tbl": "currencies",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  },
+  {
+   "tbl": "currencies",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "id",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "nextval('currency_rates_id_seq'::regclass)"
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "from_currency",
+   "type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "to_currency",
+   "type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "rate",
+   "type": "numeric",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "source_url",
+   "type": "text",
+   "nullable": "YES",
+   "def": "'https://iliria98.com/'::text"
+  },
+  {
+   "tbl": "currency_rates",
+   "col": "fetched_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "id",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "nextval('exchange_providers_id_seq'::regclass)"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "name",
+   "type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "endpoint_url",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "api_key",
+   "type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "refresh_interval_min",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "60"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "priority",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "10"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "mode",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'auto'::text"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "is_enabled",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "true"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "notes",
+   "type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  },
+  {
+   "tbl": "exchange_providers",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  }
+ ],
+ "currencyConstraints": [
+  {
+   "tbl": "currencies",
+   "name": "currencies_code_key",
+   "type": "u",
+   "def": "UNIQUE (code)"
+  },
+  {
+   "tbl": "currencies",
+   "name": "currencies_pkey",
+   "type": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "currency_rates",
+   "name": "currency_rates_from_currency_to_currency_key",
+   "type": "u",
+   "def": "UNIQUE (from_currency, to_currency)"
+  },
+  {
+   "tbl": "currency_rates",
+   "name": "currency_rates_pkey",
+   "type": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "exchange_providers",
+   "name": "exchange_providers_mode_check",
+   "type": "c",
+   "def": "CHECK ((mode = ANY (ARRAY['auto'::text, 'manual'::text, 'hybrid'::text])))"
+  },
+  {
+   "tbl": "exchange_providers",
+   "name": "exchange_providers_name_key",
+   "type": "u",
+   "def": "UNIQUE (name)"
+  },
+  {
+   "tbl": "exchange_providers",
+   "name": "exchange_providers_pkey",
+   "type": "p",
+   "def": "PRIMARY KEY (id)"
+  }
+ ],
+ "currencyRatesRows": [
+  {
+   "from_currency": "EUR",
+   "to_currency": "ALL",
+   "rate": "108.50",
+   "source_url": "https://iliria98.com/",
+   "fetched_at": "2026-04-18T21:17:06.291Z"
+  }
+ ],
+ "listingCurrencyLabels": [
+  "ALL",
+  "EUR"
+ ],
+ "currenciesRows": [
+  {
+   "code": "ALL",
+   "is_active": true,
+   "is_default": true
+  },
+  {
+   "code": "EUR",
+   "is_active": true,
+   "is_default": false
+  },
+  {
+   "code": "USD",
+   "is_active": true,
+   "is_default": false
+  },
+  {
+   "code": "GBP",
+   "is_active": true,
+   "is_default": false
+  }
+ ],
+ "authSessionsReferrers": [
+  {
+   "child": "auth.mfa_amr_claims",
+   "name": "mfa_amr_claims_session_id_fkey",
+   "delete_rule": "c",
+   "def": "FOREIGN KEY (session_id) REFERENCES auth.sessions(id) ON DELETE CASCADE"
+  },
+  {
+   "child": "auth.refresh_tokens",
+   "name": "refresh_tokens_session_id_fkey",
+   "delete_rule": "c",
+   "def": "FOREIGN KEY (session_id) REFERENCES auth.sessions(id) ON DELETE CASCADE"
+  }
+ ],
+ "authSessionsPrivileges": {
+  "can_delete": true,
+  "can_select": true
+ }
+}

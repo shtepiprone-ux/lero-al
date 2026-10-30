@@ -1,0 +1,8 @@
+{
+  "error": {
+    "name": "AuthApiError",
+    "status": 400,
+    "message": "Bad ID token"
+  },
+  "session": null
+}

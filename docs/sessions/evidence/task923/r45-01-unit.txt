@@ -1,0 +1,52 @@
+# R145 AC145 r45-01: the reference check and deleteAccount unit tests pass (default run)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --reporter=verbose src/lib/cloudinaryDelete.security.test.ts src/lib/__tests__/cloudinary.security.test.ts src/lib/account/deleteAccount.security.test.ts
+NODE_PATH: (unset)
+started: 2026-10-24T13:01:43.749Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/cloudinaryDelete.security.test.ts > cloudinaryDelete > [SEC-X-SRV-CLEANUP-FAILCLOSED] a failed or matching reference read keeps the file 9ms
+ ✓ src/lib/cloudinaryDelete.security.test.ts > cloudinaryDelete > with no reference and no error the same call destroys the asset, and a page that names another file does not keep it (the controls) 14ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > signs folder and timestamp with the secret, and the secret itself is not sent 19ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > without NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME it refuses and calls nobody 2ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > without CLOUDINARY_API_KEY it refuses and calls nobody 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > without CLOUDINARY_API_SECRET it refuses and calls nobody 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > a refusal by Cloudinary is thrown with its text, and the secret is not in the message 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > uploadToCloudinary > an unreadable refusal falls back to the status code 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > asks every table that can hold an address, with the id as a literal 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by listing_images.url is never deleted, even when deletion is on 2ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by users.avatar_url is never deleted, even when deletion is on 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by users.company_logo_url is never deleted, even when deletion is on 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by companies.logo_url is never deleted, even when deletion is on 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by locations.image_url is never deleted, even when deletion is on 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an asset used by site_settings.value is never deleted, even when deletion is on 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an unused asset is only logged when deletion is not switched on 2ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > with deletion on, a signed destroy is sent and the secret is not 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > the per-call dryRun overrides the switch in both directions 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > a refusal is thrown, never reported as deleted 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an unreadable refusal is thrown, never reported as deleted 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > "not found" is thrown, never reported as deleted 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > an answer with no result is thrown, never reported as deleted 0ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > without the credentials a real delete is refused before any request 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > deleteAsset > every call is logged with its reason and outcome 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > [SEC-S48-SRV-DENY] Image clean-up deletes only assets of the project Cloudinary account 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > readImageSize > reads the size of a PNG, a JPEG and the three WebP kinds 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > readImageSize > gives null for what is not an image it reads, a truncated header and a zero size 1ms
+ ✓ src/lib/__tests__/cloudinary.security.test.ts > readImageSize > never reads past the bytes it was given 0ms
+ ✓ src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 5ms
+ ✓ src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ERR] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 5ms
+ ✓ src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-DENY] Only the person or a staff member whose rank allows it can delete an account 3ms
+
+ Test Files  3 passed (3)
+      Tests  31 passed (31)
+   Start at  15:01:43
+   Duration  619ms (transform 418ms, setup 377ms, import 519ms, tests 80ms, environment 0ms)
+
+
+--- stderr ---
+
+--- exit code: 0 ---

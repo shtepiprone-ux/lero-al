@@ -1,0 +1,36 @@
+Opus review 24, 2026-10-21, platform win32 10.0.26300.0 node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+(owner decision D66: development and production are ONE Supabase project, so the rehearsal of R87 (1) is a dry run on production itself)
+
+cmd node docs/sessions/evidence/task923/review-24/rv24-10-make-dryrun.cjs
+source  8c8bcb3d6b02b260e70a0fd8b48c56908aaf2604bc37d21a36654abd9d2651c6  proposed-hardening.sql (approved, C737)
+dry run 16f0906fbea2cde90a814ea337b024eb49d56dc7900a9a7b5d4c04ea33d66f12  proposed-hardening.dryrun.sql
+changed line: 511 of 511: "commit;" -> "rollback; ..."
+RESULT: the dry-run file is the approved file with only its final commit replaced by rollback
+EXIT_CODE=0
+
+cmd node docs/sessions/evidence/task923/review-24/rv24-11-dryrun-syntax.cjs   (NODE_PATH = scratchpad tools/node_modules, plpgsql-parser)
+proposed-hardening.sql: 60 statements, 12 plpgsql bodies parsed OK; first TransactionStmt:TRANS_STMT_BEGIN; last TransactionStmt:TRANS_STMT_COMMIT
+proposed-hardening.dryrun.sql: 60 statements, 12 plpgsql bodies parsed OK; first TransactionStmt:TRANS_STMT_BEGIN; last TransactionStmt:TRANS_STMT_ROLLBACK
+statement kinds that differ: 60: TransactionStmt:TRANS_STMT_COMMIT -> TransactionStmt:TRANS_STMT_ROLLBACK
+RESULT: the dry run parses, has the approved file's statements, opens with BEGIN and ends with ROLLBACK instead of COMMIT
+EXIT_CODE=0
+
+cmd Get-FileHash (SHA256)
+8C8BCB3D6B02B260E70A0FD8B48C56908AAF2604BC37D21A36654ABD9D2651C6  db-catalog/proposed-hardening.sql
+16F0906FBEA2CDE90A814EA337B024EB49D56DC7900A9A7B5D4C04EA33D66F12  db-catalog/proposed-hardening.dryrun.sql
+
+cmd grep -inE "concurrently|vacuum|alter system|dblink|cron\.|add value|lock table" db-catalog/proposed-hardening.dryrun.sql
+(no statement match; every statement is transactional, so ROLLBACK discards all of them)
+Notes: nextval is used only inside the guard body (line 323), which a dry run does not call, so no sequence value is spent;
+NOTIFY (line 510) is delivered only at commit, so a rolled-back run does not reload the PostgREST schema.
+
+Reading: in one Supabase project the dry run executes the preflight (the do $pre$ block, lines 107-187) and every DDL statement against the real production
+catalogue and then keeps nothing. Its locks (ALTER TABLE / CREATE POLICY / CREATE TRIGGER take ACCESS EXCLUSIVE locks on public.listings and
+public.users and the other altered tables) are held until ROLLBACK, i.e. for the run time of the file, so it is run at low traffic. Line 102 sets `set local lock_timeout = '10s';`, so a table that is busy makes
+the run stop with an error after 10 seconds instead of queueing the site's requests behind it; nothing is kept and the run is repeated later.
+If the SQL editor shows any error, the owner runs `rollback;` as a separate query so the editor's connection is not left in an aborted
+transaction (when no transaction is open it only prints a warning).
+The owner checks afterwards, read-only, that nothing stayed (the file creates both objects: caller_is_active at line 191, reauth_failures at
+line 500; the preflight refuses to run when either already exists, lines 176 and 180, so a leftover would also block the real apply):
+  select to_regclass('public.reauth_failures') as t, to_regprocedure('public.caller_is_active()') as f;   -- both NULL
+The run also exercises what no scratch copy can: the privileges of the SQL editor's role on storage.objects (lines 462-465) and the real preflight comparison with the live catalogue.

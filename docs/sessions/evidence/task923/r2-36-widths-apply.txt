@@ -1,0 +1,166 @@
+CHANGE  mantine-primitives-headerview--default~akalba-krasniqi: {"min":1440} -> {"min":768}
+OVERRIDE mantine-primitives-relativetime--default: {"min":1440} -> {"min":640} (bisect evidence)
+OVERRIDE mantine-primitives-usermenu--default~akalba-krasniqi: {"max":639} -> no widths (bisect evidence)
+CHANGE  patterns-mantine-admincurrenciesview--default~all: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admincurrenciesview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admincurrenciesview--default~eur: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrenciesview--default~eur-euroactive: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admincurrenciesview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admincurrenciesview--default~usd: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admincurrenciesview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admincurrenciesview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admincurrencytabs--default~all: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrencytabs--default~alll-albanian-lekdefaultacti: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admincurrencytabs--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admincurrencytabs--default~eur: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrencytabs--default~eur-euroactive: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admincurrencytabs--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admincurrencytabs--default~usd: {"min":1440} -> {"min":768}
+CHANGE  patterns-mantine-admincurrencytabs--default~usd-us-dollarinactive: {"max":639} -> {"max":767}
+CHANGE  patterns-mantine-admindashboardview--activity-empty-period~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--activity-empty-period~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--activity-error~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--activity-error~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--activity-stale~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--activity-stale~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--adm-02-error~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--adm-02-error~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--adm-09-zero~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--adm-09-zero~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--all-queues-zero~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--all-queues-zero~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--cities-only-other~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--cities-only-other~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--no-location-requests~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--no-location-requests~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admindashboardview--trends-error~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admindashboardview--trends-error~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminexchangeprovidersview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminexchangeprovidersview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminexchangeprovidersview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminexchangeprovidersview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminexchangeprovidersview--pending~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminexchangeprovidersview--pending~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admininquiriesview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admininquiriesview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admininquiriesview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admininquiriesview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admininquiriesview--long-subject~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admininquiriesview--long-subject~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-admininquiriesview--unscoped~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-admininquiriesview--unscoped~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--audit-zero~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--audit-zero~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--filtered-pending~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--filtered-pending~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--hidden-eligible~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--hidden-eligible~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--paginated~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--paginated~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--premium-tab~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--premium-tab~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminlistingsview--visible-filter~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminlistingsview--visible-filter~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--form~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--form~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--narrow~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--narrow~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--page~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--page~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--panel~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--panel~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--shell-fixed-gutter~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--shell-fixed-gutter~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpageframe--shell~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpageframe--shell~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpagesview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpagesview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpagesview--deleting~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpagesview--deleting~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpagesview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpagesview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpagesview--migration-pending~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpagesview--migration-pending~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpermissionsview--all-allowed~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpermissionsview--all-allowed~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpermissionsview--audit-empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpermissionsview--audit-empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpermissionsview--audit-unavailable~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpermissionsview--audit-unavailable~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpermissionsview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpermissionsview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminpermissionsview--saving~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminpermissionsview--saving~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminreportsview--all-tab~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminreportsview--all-tab~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminreportsview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminreportsview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminreportsview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminreportsview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminshell--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminshell--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminshell--drawer-open: {"max":640} -> {"max":1023}
+CHANGE  patterns-mantine-adminshell--drawer-open~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminsupportview--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminsupportview--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminsupportview--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminsupportview--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminsupportview--unassigned-landing~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminsupportview--unassigned-landing~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--create~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--create~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--edit-blocked~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--edit-blocked~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--edit-errors~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--edit-errors~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--edit~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--edit~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--saving~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--saving~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--view-agent~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--view-agent~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--view-blocked~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--view-blocked~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--view-location-request~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--view-location-request~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--view-no-history-controls~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--view-no-history-controls~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserprofileview--view~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserprofileview--view~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--default~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--default~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--empty~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--empty~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--location-filter-removed~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--location-filter-removed~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--location-filter~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--location-filter~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--paginated~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--paginated~open-menu: {"max":639} -> {"max":1023}
+CHANGE  patterns-mantine-adminuserstable--verified-tab~en-english: {"min":1440} -> {"min":1024}
+CHANGE  patterns-mantine-adminuserstable--verified-tab~open-menu: {"max":639} -> {"max":1023}
+DROP    patterns-mantine-listingdetailpattern--default~save-to-collection: opens at every probed width (was {"max":639})
+OVERRIDE patterns-mantine-listingdetailview--archived-listing~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+OVERRIDE patterns-mantine-listingdetailview--public-listing-converted~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+OVERRIDE patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+OVERRIDE patterns-mantine-listingdetailview--public-listing~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+OVERRIDE patterns-mantine-listingdetailview--staff-preview-published~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+OVERRIDE patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos: {"max":639} -> {"max":767} (bisect evidence)
+DROP    patterns-mantine-listingsshellview--closed-empty~save-search: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--closed-tab~save-search: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--default~newest-first: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--default~save-search: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--empty~save-search: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--loading-more~newest-first: opens at every probed width (was {"max":639})
+DROP    patterns-mantine-listingsshellview--loading-more~save-search: opens at every probed width (was {"max":639})
+
+widths states 189: unchanged 26, changed 155, dropped 8, problems 0
+applied to scripts/rendered-interaction-states.json

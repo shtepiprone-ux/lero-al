@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import type { ApexOptions } from 'apexcharts'
 import { Box, useMantineTheme } from '@mantine/core'
 import { resolveThemeColor } from './dashboardChartTheme'
-import { useApexTooltipMirror } from './useApexTooltipMirror'
+import { useApexFluidBox } from './useApexFluidBox'
 
 // ApexCharts reads `window` at import time — never safe to render during SSR (same pattern as
 // `MantineDashboardBarChart.tsx`/`MantineDashboardLineChart.tsx`).
@@ -45,7 +45,7 @@ export interface MantineDashboardSparklineProps {
  */
 export function MantineDashboardSparkline({ data, color, valueLabel, dateLabel, ariaLabel }: MantineDashboardSparklineProps) {
   const theme = useMantineTheme()
-  const mirrorRef = useApexTooltipMirror()
+  const { ref: chartBoxRef, chartWidth } = useApexFluidBox()
 
   if (data.length === 0) return null
 
@@ -82,14 +82,14 @@ export function MantineDashboardSparkline({ data, color, valueLabel, dateLabel, 
 
   return (
     <Box
-      ref={mirrorRef}
+      ref={chartBoxRef}
       w="100%"
       miw={theme.other.dashboardChart.sparklineMinWidth}
       h={theme.other.dashboardChart.sparklineHeight}
       role="img"
       aria-label={ariaLabel}
     >
-      <ReactApexChart options={options} series={series} type="bar" height="100%" width="100%" />
+      <ReactApexChart options={options} series={series} type="bar" height="100%" width={chartWidth} />
     </Box>
   )
 }

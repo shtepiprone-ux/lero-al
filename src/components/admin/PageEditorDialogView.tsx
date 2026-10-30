@@ -2,8 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 import { Check } from 'lucide-react'
-import { Alert, Box, Button, Flex, ScrollArea, Stack, Switch, Tabs, TextInput, useMantineTheme } from '@mantine/core'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { Alert, Box, Button, ScrollArea, Stack, Switch, Tabs, TextInput, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+
 // Not through the patterns barrel: Tiptap must reach `/admin/pages` only (Task 868 R22).
 import { MantineRichTextEditor, type RichTextEditorLabels } from '@/design-system/mantine/patterns/MantineRichTextEditor'
 import { PAGE_LOCALES, type PageLocale } from '@/components/admin/adminPagesContent'
@@ -138,30 +141,18 @@ export function PageEditorDialogView({
     <MantineModal
       opened={opened}
       onClose={onClose}
+      structured
       size="xl"
       title={isEdit ? tLegal('modal_title_edit') : tLegal('modal_title_new')}
       footer={
-        <Flex
-          direction={{ base: 'column-reverse', sm: 'row' }}
-          gap="sm"
-          justify={{ base: 'stretch', sm: 'flex-end' }}
-        >
-          <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} disabled={saving} onClick={onClose}>
-            {tc('cancel')}
-          </Button>
-          <Button
-            color="brand"
-            w={{ base: '100%', sm: 'auto' }}
-            loading={saving}
-            disabled={saveDisabled}
-            onClick={onSubmit}
-          >
-            {tc('save')}
-          </Button>
-        </Flex>
+        <MantineDialogFooter
+          secondary={<Button type="button" variant="default" disabled={saving} onClick={onClose}>{tc('cancel')}</Button>}
+          primary={<Button type="button" loading={saving} disabled={saveDisabled} onClick={onSubmit}>{tc('save')}</Button>}
+        />
       }
     >
-      <Stack gap="md">
+      <MantineDialogSections>
+        <MantineDialogSection>
         <Tabs
           value={activeTab}
           keepMounted={false}
@@ -218,7 +209,9 @@ export function PageEditorDialogView({
             )
           })}
         </Tabs>
+        </MantineDialogSection>
 
+        <MantineDialogSection>
         <TextInput
           label={t('field_slug_label')}
           value={slug}
@@ -234,7 +227,8 @@ export function PageEditorDialogView({
           checked={published}
           onChange={e => onPublishedChange(e.currentTarget.checked)}
         />
-      </Stack>
+        </MantineDialogSection>
+      </MantineDialogSections>
     </MantineModal>
   )
 }

@@ -1,0 +1,7 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-04-interaction-only-probe.mjs <root>
+{"id":"A","token":"length 21","widgetBox":[320,69],"iframeDisplay":"no iframe in light DOM","columnHeight":237,"wrapperDisplay":"block"}
+{"id":"B","token":"length 21","widgetBox":[320,0],"iframeDisplay":"no iframe in light DOM","columnHeight":168,"wrapperDisplay":"block"}
+{"id":"C","token":"length 21","widgetBox":[0,0],"iframeDisplay":"no iframe in light DOM","columnHeight":152,"wrapperDisplay":"none"}
+{"id":"D","token":"NONE","widgetBox":[320,69],"iframeDisplay":"no iframe in light DOM","columnHeight":237,"wrapperDisplay":"block"}
+D before-interactive fired: 1
+EXIT_CODE=0

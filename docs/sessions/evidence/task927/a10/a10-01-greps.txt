@@ -1,0 +1,83 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a10/a10-01-greps.mjs
+
+## google_loading in src/
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## googleButton in src/
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## GoogleSignInSlot status="loading" in src/
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## renderButton in src/
+expected: nowhere, except the local helper of FavoriteButton.test.tsx (not Google's)
+hits: 14
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:50: function renderButton(props: Partial<Parameters<typeof FavoriteButton>[0]> = {}) {
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:73: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:78: renderButton({ isFavorited: true })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:83: const { rerender } = renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:95: const { rerender } = renderButton({ isFavorited: true })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:109: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:122: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:131: renderButton({ isFavorited: false, onToggled })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:143: const { rerender } = renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:167: const { rerender } = renderButton({ isFavorited: false, onToggled })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:187: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:201: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:212: renderButton({ isFavorited: false })
+  src/modules/listings/components/__tests__/FavoriteButton.test.tsx:229: renderButton({ isFavorited: false })
+verdict: as expected
+
+## nsm7Bb in scripts/rendered-interaction-states.json
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## google_sign_in, google_popup_blocked, google_failed in messages/sq.json
+expected: three keys
+hits: 3
+  messages/sq.json:343: "google_sign_in": "Identifikohu me Google",
+  messages/sq.json:344: "google_popup_blocked": "Shfletuesi bllokoi dritaren e Google. Lejoni dritaret pop-up për këtë faqe dhe provoni përsëri.",
+  messages/sq.json:345: "google_failed": "Hyrja me Google nuk përfundoi. Provoni përsëri.",
+verdict: as expected
+
+## google_sign_in, google_popup_blocked, google_failed in messages/en.json
+expected: three keys
+hits: 3
+  messages/en.json:343: "google_sign_in": "Sign in with Google",
+  messages/en.json:344: "google_popup_blocked": "Your browser blocked Google's window. Allow pop-ups for this site and try again.",
+  messages/en.json:345: "google_failed": "Google sign-in did not finish. Try again.",
+verdict: as expected
+
+## google_sign_in, google_popup_blocked, google_failed in messages/uk.json
+expected: three keys
+hits: 3
+  messages/uk.json:343: "google_sign_in": "Вхід через Google",
+  messages/uk.json:344: "google_popup_blocked": "Браузер заблокував вікно Google. Дозвольте спливні вікна для цього сайту й спробуйте ще раз.",
+  messages/uk.json:345: "google_failed": "Вхід через Google не завершився. Спробуйте ще раз.",
+verdict: as expected
+
+## google_sign_in, google_popup_blocked, google_failed in messages/it.json
+expected: three keys
+hits: 3
+  messages/it.json:343: "google_sign_in": "Accedi con Google",
+  messages/it.json:344: "google_popup_blocked": "Il browser ha bloccato la finestra di Google. Consenti i pop-up per questo sito e riprova.",
+  messages/it.json:345: "google_failed": "L'accesso con Google non è stato completato. Riprova.",
+verdict: as expected
+
+## data-google-sign-in in src/components/auth/GoogleSignInSlot.tsx
+expected: present
+hits: 1
+  src/components/auth/GoogleSignInSlot.tsx:35: data-google-sign-in
+verdict: as expected
+
+exit code: 0

@@ -1,0 +1,16 @@
+# rv15-01 integration (Opus) 2026-10-28T19:33:06Z v22.22.3 cwd C:/Claude_Code_Projects/lero-al win32; file sha256 0c12ae6d93a01bd6fef4c6840f8fc3e7b4df31044ff60e0029395fbac2ffa028
+command: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref of .env.local> npx vitest run --config vitest.integration.config.ts --reporter=verbose src/lib/auth/googleSignIn.integration.test.ts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-ALLOW] a new Auth user with Google profile metadata gets exactly one ordinary profile row from the database trigger 1031ms
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-PRV-DENY] Supabase Auth refuses a forged Google ID token and creates neither a session nor a user 618ms
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-PASSWORD-ALLOW] public.account_has_password answers from auth.users, also after an address change 1667ms
+ ✓ src/lib/auth/googleSignIn.integration.test.ts > [SEC-927-DB-PASSWORD-DENY] neither a user session nor the anonymous client can call public.account_has_password 1018ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  20:33:08
+   Duration  6.93s (transform 56ms, setup 37ms, import 69ms, tests 6.71s, environment 0ms)
+
+exit code: 0

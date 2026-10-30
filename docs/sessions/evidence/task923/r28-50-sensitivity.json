@@ -1,0 +1,745 @@
+{
+  "takenAt": "2026-10-21T20:49:32.029Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 23,
+  "total": 23,
+  "records": [
+    {
+      "id": "M01-archived-public",
+      "caseId": "SEC-X-SRV-CLOSED-PAGE",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "test": "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 44 @@\n-const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented']\n+const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented', 'archived']",
+      "shaBefore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "shaAfterRestore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "closedListing [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived",
+            "kind": "assertion",
+            "message": "AssertionError: guest: the first read asks for active, sold and rented: expected false to be true // Object.is equality"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M02-archived-owner-limit",
+      "caseId": "SEC-X-SRV-CLOSED-PAGE",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "test": "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 171 @@\n-      if (!isStaff) archivedQuery = archivedQuery.eq('user_id', viewer.userId)\n+      ",
+      "shaBefore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "shaAfterRestore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "closedListing [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived",
+            "kind": "assertion",
+            "message": "AssertionError: stranger: archived: expected 'arch' to be 'not found' // Object.is equality"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M03-archived-viewer-check",
+      "caseId": "SEC-X-SRV-CLOSED-PAGE",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "test": "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 168 @@\n-    if (viewer.ok) {\n-      const isStaff = viewer.role === 'admin' || viewer.role === 'moderator'\n+    {\n+      const isStaff = !viewer.ok || viewer.role === 'admin' || viewer.role === 'moderator'",
+      "shaBefore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "shaAfterRestore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "closedListing [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived",
+            "kind": "assertion",
+            "message": "AssertionError: blocked: archived: expected 'arch' to be 'not found' // Object.is equality"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M04-metadata-noindex",
+      "caseId": "SEC-X-SRV-CLOSED-PAGE",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "test": "src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 84 @@\n-  if (!PUBLIC_LISTING_STATUSES.includes(data.status)) return { title: 'Lero.al', robots: { index: false, follow: true } }\n+  if (!PUBLIC_LISTING_STATUSES.includes(data.status)) return { title: 'Lero.al' }",
+      "shaBefore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "shaAfterRestore": "622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "closedListing [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived",
+            "kind": "assertion",
+            "message": "AssertionError: slug-arch: expected { title: 'Lero.al' } to deeply equal { title: 'Lero.al', robots: { …(2) } }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M05-price-ceiling-schema",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/validations/index.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/validations/index.ts\n+++ src/modules/listings/validations/index.ts (mutated)\n@@ line 15 @@\n-  price:        z.number().positive().max(MAX_LISTING_PRICE),\n+  price:        z.number().positive(),",
+      "shaBefore": "fa303e4c93a28ce0a1f1f8fda98f97ed968ccb812983a0e144e59bb8b0779d38",
+      "shaAfterRestore": "fa303e4c93a28ce0a1f1f8fda98f97ed968ccb812983a0e144e59bb8b0779d38",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: create: a price above the ceiling: expected { slug: 'a-flat-in-tirana-mvil3dhg' } to deeply equal { error: 'validation_failed' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M06-price-old-ceiling-schema",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/validations/index.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/validations/index.ts\n+++ src/modules/listings/validations/index.ts (mutated)\n@@ line 16 @@\n-  price_old:    z.number().positive().max(MAX_LISTING_PRICE).optional(),\n+  price_old:    z.number().positive().optional(),",
+      "shaBefore": "fa303e4c93a28ce0a1f1f8fda98f97ed968ccb812983a0e144e59bb8b0779d38",
+      "shaAfterRestore": "fa303e4c93a28ce0a1f1f8fda98f97ed968ccb812983a0e144e59bb8b0779d38",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: create: an old price above the ceiling: expected { slug: 'a-flat-in-tirana-mvil3fts' } to deeply equal { error: 'validation_failed' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M07-create-property-type",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/createListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/createListing.ts\n+++ src/modules/listings/actions/createListing.ts (mutated)\n@@ line 37 @@\n-  if (activeTypes.size > 0 && !activeTypes.has(propertyType)) return 'invalid_property_type'\n+  ",
+      "shaBefore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "shaAfterRestore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: create: an inactive property type: expected { slug: 'a-flat-in-tirana-mvil3i6g' } to deeply equal { error: 'invalid_property_type' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M08-create-currency",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/createListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/createListing.ts\n+++ src/modules/listings/actions/createListing.ts (mutated)\n@@ line 39 @@\n-  if (activeCurrencies.size > 0 && !activeCurrencies.has(currency)) return 'invalid_currency'\n+  ",
+      "shaBefore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "shaAfterRestore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: create: an inactive currency: expected { slug: 'a-flat-in-tirana-mvil3kj9' } to deeply equal { error: 'invalid_currency' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M09-create-read-failure",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/createListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/createListing.ts\n+++ src/modules/listings/actions/createListing.ts (mutated)\n@@ line 34 @@\n-  if (types.error) return 'invalid_property_type'\n-  if (currencies.error) return 'invalid_currency'",
+      "shaBefore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "shaAfterRestore": "07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: create: property_types unreadable: expected { slug: 'a-flat-in-tirana-mvil3mw5' } to deeply equal { error: 'invalid_property_type' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M10-update-property-type",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/updateListing.ts\n+++ src/modules/listings/actions/updateListing.ts (mutated)\n@@ line 47 @@\n-  if (activeTypes.size > 0 && !activeTypes.has(propertyType)) return 'invalid_property_type'\n+  ",
+      "shaBefore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "shaAfterRestore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: update: an inactive property type: expected { slug: 'flat', status: 'pending' } to deeply equal { error: 'invalid_property_type' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M11-update-currency",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/updateListing.ts\n+++ src/modules/listings/actions/updateListing.ts (mutated)\n@@ line 49 @@\n-  if (activeCurrencies.size > 0 && !activeCurrencies.has(currency)) return 'invalid_currency'\n+  ",
+      "shaBefore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "shaAfterRestore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: update: an inactive currency: expected { slug: 'flat', status: 'pending' } to deeply equal { error: 'invalid_currency' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M12-update-read-failure",
+      "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "test": "src/modules/listings/actions/__tests__/listingBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/actions/updateListing.ts\n+++ src/modules/listings/actions/updateListing.ts (mutated)\n@@ line 44 @@\n-  if (types.error) return 'invalid_property_type'\n-  if (currencies.error) return 'invalid_currency'",
+      "shaBefore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "shaAfterRestore": "dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: update: property_types unreadable: expected { slug: 'flat', status: 'pending' } to deeply equal { error: 'invalid_property_type' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M13-form-price-ceiling",
+      "caseId": "SEC-X-FE-LISTING-BOUNDS",
+      "file": "src/modules/listings/components/ListingFormShell.tsx",
+      "test": "src/modules/listings/components/__tests__/ListingFormShell.bounds.security.test.tsx",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/modules/listings/components/ListingFormShell.tsx\n+++ src/modules/listings/components/ListingFormShell.tsx (mutated)\n@@ line 182 @@\n-    if (!data.price || data.price <= 0 || data.price > MAX_LISTING_PRICE) {\n+    if (!data.price || data.price <= 0) {",
+      "shaBefore": "d3324b97d4ba937319d28ea2e2c662ff548f23b18e45b838af6e54253b22eb3c",
+      "shaAfterRestore": "d3324b97d4ba937319d28ea2e2c662ff548f23b18e45b838af6e54253b22eb3c",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "ListingFormShell [SEC-X-FE-LISTING-BOUNDS] a price above the ceiling is refused in the form",
+            "kind": "assertion",
+            "message": "AssertionError: price 10000000001: expected '' to be 'error_price' // Object.is equality"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M14-update-profile-name",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/admin/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 189 @@\n-    if (key === 'name' && !isProfileNameWithinBound(value)) return { error: 'name_too_long' }\n+    ",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: updateUserProfile: a 101-character name: expected {} to deeply equal { error: 'name_too_long' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M15-full-profile-name",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/admin/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 482 @@\n-  if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: updateUserProfileFull: a 101-character first name: expected {} to deeply equal { error: 'name_too_long' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M16-website-length",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/admin/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 445 @@\n-  return safe !== null && safe.length <= MAX_PROFILE_WEBSITE_LENGTH ? safe : 'invalid'\n+  return safe !== null ? safe : 'invalid'",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: updateUserProfileFull: a website of 201 characters: expected {} to deeply equal { error: 'invalid_website' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M17-company-logo",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/admin/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 506 @@\n-  if (companyLogoUrl !== null && !isTrustedImageUrl(companyLogoUrl)) return { error: 'update_failed' }\n+  ",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: updateUserProfileFull: a logo on another host: expected {} to deeply equal { error: 'update_failed' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M18-create-user-name",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/admin/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 602 @@\n-  if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: createAdminUser: a 101-character first name: expected { userId: 'new-auth-user' } to deeply equal { error: 'name_too_long' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M19-cabinet-name",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/modules/cabinet/actions/index.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/modules/cabinet/actions/index.ts\n+++ src/modules/cabinet/actions/index.ts (mutated)\n@@ line 195 @@\n-  if (!isProfileNameWithinBound(data.name)) return { error: 'name_too_long' }\n+  ",
+      "shaBefore": "b8693772041ed961b3f8d0faa97a77e98b0a4e9c2048096f8dc97a462bff6256",
+      "shaAfterRestore": "b8693772041ed961b3f8d0faa97a77e98b0a4e9c2048096f8dc97a462bff6256",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: updateCabinetProfile: a 101-character name: expected {} to deeply equal { error: 'name_too_long' }"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M20-avatar-url",
+      "caseId": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+      "file": "src/app/api/upload-avatar/route.ts",
+      "test": "src/modules/admin/actions/__tests__/profileBounds.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      },
+      "diff": "--- src/app/api/upload-avatar/route.ts\n+++ src/app/api/upload-avatar/route.ts (mutated)\n@@ line 130 @@\n-  if (!isTrustedImageUrl(cloudUrl)) {\n+  if (false) {",
+      "shaBefore": "44f1330171d7191a1e83a25dfcd06bda3f5272eb36f3667242bf5cb28c5a8826",
+      "shaAfterRestore": "44f1330171d7191a1e83a25dfcd06bda3f5272eb36f3667242bf5cb28c5a8826",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "profileBounds [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write",
+            "kind": "assertion",
+            "message": "AssertionError: the avatar route: https://evil.example/avatar.jpg: expected 200 to be 500 // Object.is equality"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 2,
+        "total": 2,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M21-admin-name-message",
+      "caseId": "SEC-X-FE-PROFILE-BOUNDS",
+      "file": "src/components/admin/AdminUserProfile.tsx",
+      "test": "src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/components/admin/AdminUserProfile.tsx\n+++ src/components/admin/AdminUserProfile.tsx (mutated)\n@@ line 200 @@\n-    return code === 'name_too_long' ? t('validation.name_too_long') : code\n+    return code",
+      "shaBefore": "d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b",
+      "shaAfterRestore": "d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "AdminUserProfile and ProfileTab [SEC-X-FE-PROFILE-BOUNDS] a refused over-long name is shown, not saved",
+            "kind": "assertion",
+            "message": "Error: Unable to find an element with the text: The first name and the last name must each be at most 100 characters.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M22-cabinet-name-message",
+      "caseId": "SEC-X-FE-PROFILE-BOUNDS",
+      "file": "src/modules/cabinet/components/ProfileTab.tsx",
+      "test": "src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/modules/cabinet/components/ProfileTab.tsx\n+++ src/modules/cabinet/components/ProfileTab.tsx (mutated)\n@@ line 195 @@\n-      setSaveErrorKey(result.error === 'name_too_long' ? 'error_name_too_long' : 'error_saving')\n+      setSaveErrorKey('error_saving')",
+      "shaBefore": "82c604f81a9965d4d60a33d633b46fa5bf20d9e6e21c3120afc6df9773c1e599",
+      "shaAfterRestore": "82c604f81a9965d4d60a33d633b46fa5bf20d9e6e21c3120afc6df9773c1e599",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "AdminUserProfile and ProfileTab [SEC-X-FE-PROFILE-BOUNDS] a refused over-long name is shown, not saved",
+            "kind": "assertion",
+            "message": "Error: Unable to find an element with the text: The name must be at most 100 characters.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible."
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    },
+    {
+      "id": "M24-provider-reader",
+      "caseId": "SEC-X-SRV-EXCHANGE-REMOVED",
+      "file": "src/app/admin/currency/page.tsx",
+      "test": "src/modules/admin/actions/__tests__/exchangeProvidersRemoved.security.test.ts",
+      "status": "proved",
+      "baseline": {
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      },
+      "diff": "--- src/app/admin/currency/page.tsx\n+++ src/app/admin/currency/page.tsx (mutated)\n@@ line 10 @@\n+const probe = () => createAdminClient().from('exchange_providers').select('api_key')",
+      "shaBefore": "3b4554b990159b2d2911c5a5b4d5ccc3dd2bb831a943a37328df946fa751ce91",
+      "shaAfterRestore": "3b4554b990159b2d2911c5a5b4d5ccc3dd2bb831a943a37328df946fa751ce91",
+      "restored": true,
+      "mutant": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "exchangeProvidersRemoved [SEC-X-SRV-EXCHANGE-REMOVED] nothing reads or writes exchange_providers",
+            "kind": "assertion",
+            "message": "AssertionError: these production lines still name the removed exchange-providers screen:"
+          }
+        ]
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 1,
+        "total": 1,
+        "failed": 0
+      }
+    }
+  ]
+}

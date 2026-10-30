@@ -119,7 +119,8 @@ export const UkrainianStressTest: Story = { ... }
 ```
 
 ### Forbidden localization patterns in stories
-- `whitespace-nowrap` without `overflow-hidden + truncate`
+- semantic/translatable `whitespace-nowrap`, truncation, ellipsis or clipping used as overflow “safety” — use
+  GR-3j reflow
 - Fixed `w-[Npx]` on label-containing elements
 - Hardcoded English-only stories for localization-sensitive components
 - Assuming English string lengths
@@ -284,7 +285,7 @@ a rendered layout change without actual visual inspection.
 ❌ Auth session checks in stories
 ❌ Random IDs or dates (use stable fixtures)
 ❌ Fixed px widths on localized text elements
-❌ whitespace-nowrap without truncation safety
+❌ semantic/translatable `whitespace-nowrap`, truncation, ellipsis or clipping used as “safety” — use GR-3j reflow
 ❌ English-only text for locale-sensitive components
 ❌ size="sm" buttons/chips as tappable mobile controls (use size="xl" = 44px)
 ❌ Claiming rendered PASS from build-storybook exit 0 alone (see §8a)
@@ -548,7 +549,7 @@ A screenshot is NOT proof of rendered Storybook content unless the gate verifies
 
 Layer 3 of the rendered-proof harness checks that every visible interactive element is geometrically intact at 320/375/390 × sq/en/uk/it. A screenshot is NOT proof unless, in addition to the five points above, every visible interactive element also passes geometry/visual-integrity:
 
-1. **`text-clipped`** — interactive element text is clipped by an `overflow:hidden`/`clip` ancestor with NO `text-overflow:ellipsis` affordance (cut mid-glyph). Inspects nearest text-bearing descendant, not root; icon-only with `aria-label` exempt. **V1-FINAL (FP-CLASS A):** the text-bearing-descendant walk skips sr-only / visually-hidden nodes (detected via `position:absolute` + `overflow:hidden` + ≤1px dimensions, or `clip:rect(0,0,0,0)` / `clip-path:inset(50%)`); a control whose only text is from sr-only descendants (e.g. `<XIcon/> + <span class="sr-only">Close</span>` with NO `aria-label`/`title` on the button) is exempt from text-clipped unconditionally — the sr-only text itself provides the accessible name (false-positive guard: `Planted/SrOnlyIconButton` must PASS). Intentional `text-overflow:ellipsis` with an intact accessible name routes to `text-clipped-ellipsis` (ambiguous third state, not hard FAIL). **V1-FINAL (FP-CLASS D):** third-party controls inside `.leaflet-container` are excluded from all geometry checks (not our layout).
+1. **`text-clipped`** — interactive element text is clipped by an `overflow:hidden`/`clip` ancestor with NO `text-overflow:ellipsis` affordance (cut mid-glyph). Inspects nearest text-bearing descendant, not root; icon-only with `aria-label` exempt. **V1-FINAL (FP-CLASS A):** the text-bearing-descendant walk skips sr-only / visually-hidden nodes (detected via `position:absolute` + `overflow:hidden` + ≤1px dimensions, or `clip:rect(0,0,0,0)` / `clip-path:inset(50%)`); a control whose only text is from sr-only descendants (e.g. `<XIcon/> + <span class="sr-only">Close</span>` with NO `aria-label`/`title` on the button) is exempt from text-clipped unconditionally — the sr-only text itself provides the accessible name (false-positive guard: `Planted/SrOnlyIconButton` must PASS). The historical `text-clipped-ellipsis` ambiguous state describes retained visual-test debt only; it never permits new or changed semantic UI to add ellipsis under GR-3j. **V1-FINAL (FP-CLASS D):** third-party controls inside `.leaflet-container` are excluded from all geometry checks (not our layout).
 2. **`offscreen-control`** — interactive element extends beyond viewport boundaries horizontally (fail-closed). Elements with an `overflow-x:auto|scroll` ancestor route to `ambiguous-offscreen` (reachable by horizontal scrolling). Vertical offscreen fails only when unreachable by normal scrolling.
 3. **`element-overlap`** — two visible interactive elements overlap by >1px after algorithmic exclusions (ancestor/descendant, label↔input, aria-hidden/inert, closed overlay layers, `pointer-events:none`). Library-internal elements (base-ui/radix/floating-ui) and `position:absolute|fixed` over a non-positioned sibling (popup-over-trigger) route to `ambiguous-overlap` (third state). **Clip-aware (Task 569, 2026-07-10):** before comparing two rects, each is intersected against every `overflow:hidden|auto|scroll` ancestor in its chain (`getVisibleClippedRect` — the SAME `isClippingAncestor` predicate `outside-container`/point 4 already uses, factored into one shared helper, not duplicated). An element fully clipped away by an ancestor at the current scroll position (its intersected rect collapses to nothing) cannot produce an overlap — its raw, unclipped `getBoundingClientRect()` may still geometrically extend into a sibling's on-screen coordinates (e.g. the last row of a `flex:1;overflow-y:auto` scroll region vs a pinned footer sibling below it — `MantineDrawer`'s Task 567 Fix 4 pattern), but nothing is actually painted there. A genuine overlap where BOTH elements are fully within their own painted (unclipped) boxes — even inside a scrollable ancestor — still hard-FAILs; the exemption never widens to "anything inside something scrollable" (see `Planted/VisualViolations/ScrollVisibleOverlap`, which must and does still FAIL).
 4. **`outside-container`** — interactive element extends beyond its nearest `overflow:hidden`/`clip` clipping ancestor.

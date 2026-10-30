@@ -1,0 +1,4105 @@
+{
+ "tables": [
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "conversations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "currency_rates",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "email_change_tokens",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "exchange_providers",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "history_clear_events",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "languages",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_activity_daily",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_activity_refresh",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_amenities",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_translations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "messages",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "public_user_profiles",
+   "relkind": "v",
+   "rls": false,
+   "force_rls": false,
+   "options": "{security_invoker=false}"
+  },
+  {
+   "schema": "public",
+   "table": "reauth_failures",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "support_messages",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "user_change_log",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "user_status_history",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "relkind": "r",
+   "rls": true,
+   "force_rls": false,
+   "options": ""
+  }
+ ],
+ "policies": [
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "policy": "Agent reviews viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "policy": "Users can create reviews",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = reviewer_id)"
+  },
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "policy": "Users can update own reviews",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = reviewer_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "policy": "Amenities viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "policy": "Only admins can manage amenities",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "policy": "Admins can manage amenity translations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "policy": "Amenity translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "policy": "collection_items_owner_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM collections c\n  WHERE ((c.id = collection_items.collection_id) AND (c.user_id = auth.uid()))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM collections c\n  WHERE ((c.id = collection_items.collection_id) AND (c.user_id = auth.uid()))))"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "policy": "collections_owner_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(user_id = auth.uid())",
+   "with_check": "(user_id = auth.uid())"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "policy": "companies_admin_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "policy": "companies_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "policy": "companies_insert_service_role",
+   "permissive": "PERMISSIVE",
+   "roles": "{service_role}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "true"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "policy": "companies_read_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "policy": "contact_inquiries_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "policy": "contact_inquiries_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "policy": "contact_inquiries_moderator_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "policy": "contact_inquiry_replies_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "policy": "contact_inquiry_replies_moderator_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "policy": "contact_inquiry_replies_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "conversations",
+   "policy": "Participants can view conversations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((auth.uid() = buyer_id) OR (auth.uid() = seller_id))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "conversations",
+   "policy": "Users can create conversations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = buyer_id)"
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "policy": "currencies_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currency_rates",
+   "policy": "Currency rates viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currency_rates",
+   "policy": "Only admins can manage currency rates",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "policy": "email_templates_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "policy": "email_templates_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))"
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "policy": "email_templates_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "policy": "email_templates_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "exchange_providers",
+   "policy": "exchange_providers_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "policy": "price_alerts_owner_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "Users can manage own favorites",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "favorites_delete_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "favorites_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "policy": "favorites_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "history_clear_events",
+   "policy": "history_clear_events_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "history_clear_events",
+   "policy": "history_clear_events_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "languages",
+   "policy": "Languages viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "languages",
+   "policy": "Only admins can manage languages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_amenities",
+   "policy": "Listing amenities viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_amenities",
+   "policy": "Users can manage own listing amenities",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_amenities.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "policy": "events_select_owner",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings l\n  WHERE ((l.id = listing_contact_events.listing_id) AND (l.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "Listing images viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "Users can manage own listing images",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_images.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "listing_inquiries_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "policy": "listing_inquiries_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "Admins can manage reports",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "listing_reports_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "listing_reports_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "listing_reports_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "policy": "listing_reports_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_translations",
+   "policy": "Listing translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_translations",
+   "policy": "Users can manage own listing translations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_translations.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "policy": "Listing views viewable by listing owner",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_views.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "Admins can manage all listings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "Listings viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((status = 'active'::listing_status) OR (auth.uid() = user_id))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "Users can create listings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "Users can update own listings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "policy": "Admins can manage location translations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "policy": "Location translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "policy": "Locations are viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "policy": "Only admins can modify locations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "messages",
+   "policy": "Participants can send messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "((auth.uid() = sender_id) AND (EXISTS ( SELECT 1\n   FROM conversations\n  WHERE ((conversations.id = messages.conversation_id) AND ((conversations.buyer_id = auth.uid()) OR (conversations.seller_id = auth.uid()))))))"
+  },
+  {
+   "schema": "public",
+   "table": "messages",
+   "policy": "Participants can view messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM conversations\n  WHERE ((conversations.id = messages.conversation_id) AND ((conversations.buyer_id = auth.uid()) OR (conversations.seller_id = auth.uid())))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "policy": "Users can manage own notification settings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "policy": "notification_settings_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "policy": "notification_settings_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "Users can update own notifications",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "Users can view own notifications",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "notifications_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "notifications_insert_service_role",
+   "permissive": "PERMISSIVE",
+   "roles": "{service_role}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "true"
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "notifications_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "policy": "notifications_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "policy": "Admins can manage page translations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "policy": "Published page translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "policy": "Admins can manage pages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "policy": "pages_select_public",
+   "permissive": "PERMISSIVE",
+   "roles": "{anon,authenticated}",
+   "cmd": "SELECT",
+   "qual": "(is_published = true)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "policy": "property_types_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "policy": "recently_viewed_owner_only",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "policy": "report_actions_admin",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "policy": "role_permission_events_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "policy": "role_permission_events_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "policy": "role_permission_events_moderator_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((role = 'moderator'::text) AND (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'moderator'::user_role)))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "policy": "role_permissions_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "policy": "role_permissions_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "policy": "role_permissions_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "policy": "role_permissions_moderator_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'moderator'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "Users can manage own saved searches",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "saved_searches_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "saved_searches_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(user_id = auth.uid())"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "saved_searches_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "policy": "saved_searches_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "site_footer_admin_write",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "policy": "site_footer_select_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "policy": "site_settings_admin_write",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "policy": "site_settings_public_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "policy": "site_settings_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_messages",
+   "policy": "Participants can send support messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = sender_id)"
+  },
+  {
+   "schema": "public",
+   "table": "support_messages",
+   "policy": "Ticket participants can view support messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((EXISTS ( SELECT 1\n   FROM support_tickets\n  WHERE ((support_tickets.id = support_messages.ticket_id) AND ((support_tickets.user_id = auth.uid()) OR (support_tickets.assigned_to = auth.uid()))))) OR (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "policy": "ste_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))"
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "policy": "ste_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "Admins can manage all tickets",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "Users can create tickets",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "Users can view own tickets",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "support_tickets_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "support_tickets_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "support_tickets_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "support_tickets_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "((user_id = auth.uid()) AND (ticket_type = 'support'::text) AND (reported_user_id IS NULL) AND (created_by_admin_id IS NULL) AND (assigned_to IS NULL) AND (status = 'open'::ticket_status))"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "policy": "support_tickets_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "user_change_log",
+   "policy": "Admin/moderator read change log",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "user_status_history",
+   "policy": "Admin/moderator read status history",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "Users can update own profile",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "Users can view own profile",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "policy": "users_self_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "policy": "Admins can manage verification requests",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "policy": "Users can create verification requests",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "policy": "Users can view own verification requests",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "Admin/moderator delete avatars",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "((bucket_id = 'avatars'::text) AND (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))))",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "Admin/moderator update avatars",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "((bucket_id = 'avatars'::text) AND (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))))",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "Admin/moderator upload avatars",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "((bucket_id = 'avatars'::text) AND (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))))"
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "policy": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  }
+ ],
+ "grants": [
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "exchange_providers",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "exchange_providers",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "grantee": "authenticated",
+   "privileges": "DELETE,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "grantee": "authenticated",
+   "privileges": "INSERT,REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "grantee": "anon",
+   "privileges": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "grantee": "authenticated",
+   "privileges": "SELECT"
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "grantee": "anon",
+   "privileges": "SELECT"
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "grantee": "authenticated",
+   "privileges": "SELECT"
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "public_user_profiles",
+   "grantee": "authenticated",
+   "privileges": "SELECT"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "role_permissions",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "grantee": "anon",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "grantee": "authenticated",
+   "privileges": "REFERENCES,TRIGGER"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "grantee": "anon",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "grantee": "authenticated",
+   "privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  }
+ ],
+ "colGrants": [
+  {
+   "table": "collection_items",
+   "grantee": "anon",
+   "cols": "collection_id:INSERT,collection_id:UPDATE,created_at:INSERT,created_at:UPDATE,listing_id:INSERT,listing_id:UPDATE"
+  },
+  {
+   "table": "collection_items",
+   "grantee": "authenticated",
+   "cols": "collection_id:INSERT,collection_id:UPDATE,created_at:INSERT,created_at:UPDATE,listing_id:INSERT,listing_id:UPDATE"
+  },
+  {
+   "table": "collections",
+   "grantee": "anon",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,name:INSERT,name:UPDATE,updated_at:INSERT,updated_at:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "collections",
+   "grantee": "authenticated",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,name:INSERT,name:UPDATE,updated_at:INSERT,updated_at:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "companies",
+   "grantee": "anon",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,logo_url:INSERT,logo_url:UPDATE,name:INSERT,name:UPDATE"
+  },
+  {
+   "table": "currencies",
+   "grantee": "anon",
+   "cols": "code:INSERT,code:UPDATE,created_at:INSERT,created_at:UPDATE,decimals:INSERT,decimals:UPDATE,id:INSERT,id:UPDATE,is_active:INSERT,is_active:UPDATE,is_default:INSERT,is_default:UPDATE,name_en:INSERT,name_en:UPDATE,name_it:INSERT,name_it:UPDATE,name_sq:INSERT,name_sq:UPDATE,name_uk:INSERT,name_uk:UPDATE,symbol:INSERT,symbol:UPDATE,updated_at:INSERT,updated_at:UPDATE"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "anon",
+   "cols": "last_notified_at:INSERT,last_notified_at:UPDATE,last_notified_price:INSERT,last_notified_price:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "authenticated",
+   "cols": "last_notified_at:INSERT,last_notified_at:UPDATE,last_notified_price:INSERT,last_notified_price:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "favorites",
+   "grantee": "anon",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "favorites",
+   "grantee": "authenticated",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "listing_contact_events",
+   "grantee": "anon",
+   "cols": "actor_ip_hash:INSERT,actor_ip_hash:UPDATE,actor_user_id:INSERT,actor_user_id:UPDATE,channel:INSERT,channel:UPDATE,created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,is_owner_click:INSERT,is_owner_click:UPDATE,listing_id:INSERT,listing_id:UPDATE,listing_owner_id:INSERT,listing_owner_id:UPDATE,locale:INSERT,locale:UPDATE,source:INSERT,source:UPDATE"
+  },
+  {
+   "table": "listing_contact_events",
+   "grantee": "authenticated",
+   "cols": "actor_ip_hash:UPDATE,actor_user_id:UPDATE,channel:UPDATE,created_at:UPDATE,id:UPDATE,is_owner_click:UPDATE,listing_id:UPDATE,listing_owner_id:UPDATE,locale:UPDATE,source:UPDATE"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "anon",
+   "cols": "id:INSERT,id:UPDATE,is_cover:INSERT,is_cover:UPDATE,listing_id:INSERT,listing_id:UPDATE,order:INSERT,order:UPDATE,url:INSERT,url:UPDATE"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "authenticated",
+   "cols": "id:INSERT,id:UPDATE,is_cover:INSERT,is_cover:UPDATE,listing_id:INSERT,listing_id:UPDATE,order:INSERT,order:UPDATE,url:INSERT,url:UPDATE"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "anon",
+   "cols": "created_at:INSERT,created_at:UPDATE,email:INSERT,email:UPDATE,id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,listing_owner_id:INSERT,listing_owner_id:UPDATE,message:INSERT,message:UPDATE,name:INSERT,name:UPDATE,requester_ip:INSERT,requester_ip:UPDATE,status:INSERT,status:UPDATE"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "authenticated",
+   "cols": "created_at:INSERT,created_at:UPDATE,email:INSERT,email:UPDATE,id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,listing_owner_id:INSERT,listing_owner_id:UPDATE,message:INSERT,message:UPDATE,name:INSERT,name:UPDATE,requester_ip:INSERT,requester_ip:UPDATE,status:INSERT,status:UPDATE"
+  },
+  {
+   "table": "listing_reports",
+   "grantee": "authenticated",
+   "cols": "comment:INSERT,created_at:INSERT,id:INSERT,listing_id:INSERT,reason:INSERT,status:INSERT,user_id:INSERT"
+  },
+  {
+   "table": "listing_views",
+   "grantee": "authenticated",
+   "cols": "id:INSERT,id:UPDATE,ip_hash:INSERT,ip_hash:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE,viewed_at:INSERT,viewed_at:UPDATE"
+  },
+  {
+   "table": "listings",
+   "grantee": "anon",
+   "cols": "address:INSERT,address:UPDATE,area_gross:INSERT,area_gross:UPDATE,area_net:INSERT,area_net:UPDATE,bathrooms:INSERT,bathrooms:UPDATE,bedrooms:INSERT,bedrooms:UPDATE,condition:INSERT,condition:UPDATE,created_at:INSERT,created_at:UPDATE,currency:INSERT,currency:UPDATE,description:INSERT,description:UPDATE,expires_at:INSERT,expires_at:UPDATE,floor:INSERT,floor:UPDATE,heating:INSERT,heating:UPDATE,id:INSERT,id:UPDATE,is_premium:INSERT,is_premium:UPDATE,land_development_potential:INSERT,land_development_potential:UPDATE,land_legal_status:INSERT,land_legal_status:UPDATE,land_zoning:INSERT,land_zoning:UPDATE,lat:INSERT,lat:UPDATE,listing_type:INSERT,listing_type:UPDATE,lng:INSERT,lng:UPDATE,location_id:INSERT,location_id:UPDATE,market_type:INSERT,market_type:UPDATE,multi_storey_building:INSERT,multi_storey_building:UPDATE,offer_type:INSERT,offer_type:UPDATE,premium_until:INSERT,premium_until:UPDATE,price:INSERT,price:UPDATE,price_initial:INSERT,price_initial:UPDATE,price_old:INSERT,price_old:UPDATE,property_type:INSERT,property_type:UPDATE,public_id:INSERT,public_id:UPDATE,purchase_conditions:INSERT,purchase_conditions:UPDATE,rooms:INSERT,rooms:UPDATE,search_vector:INSERT,search_vector:UPDATE,slug:INSERT,slug:UPDATE,status:INSERT,status:UPDATE,title:INSERT,title:UPDATE,toilets:INSERT,toilets:UPDATE,total_floors:INSERT,total_floors:UPDATE,updated_at:INSERT,updated_at:UPDATE,user_id:INSERT,user_id:UPDATE,views_count:INSERT,views_count:UPDATE,wall_type:INSERT,wall_type:UPDATE,year_built:INSERT,year_built:UPDATE"
+  },
+  {
+   "table": "listings",
+   "grantee": "authenticated",
+   "cols": "address:INSERT,address:UPDATE,area_gross:INSERT,area_gross:UPDATE,area_net:INSERT,area_net:UPDATE,bathrooms:INSERT,bathrooms:UPDATE,bedrooms:INSERT,bedrooms:UPDATE,condition:INSERT,condition:UPDATE,created_at:INSERT,created_at:UPDATE,currency:INSERT,currency:UPDATE,description:INSERT,description:UPDATE,expires_at:INSERT,expires_at:UPDATE,floor:INSERT,floor:UPDATE,heating:INSERT,heating:UPDATE,id:INSERT,id:UPDATE,is_premium:INSERT,is_premium:UPDATE,land_development_potential:INSERT,land_development_potential:UPDATE,land_legal_status:INSERT,land_legal_status:UPDATE,land_zoning:INSERT,land_zoning:UPDATE,lat:INSERT,lat:UPDATE,listing_type:INSERT,listing_type:UPDATE,lng:INSERT,lng:UPDATE,location_id:INSERT,location_id:UPDATE,market_type:INSERT,market_type:UPDATE,multi_storey_building:INSERT,multi_storey_building:UPDATE,offer_type:INSERT,offer_type:UPDATE,premium_until:INSERT,premium_until:UPDATE,price:INSERT,price:UPDATE,price_initial:INSERT,price_initial:UPDATE,price_old:INSERT,price_old:UPDATE,property_type:INSERT,property_type:UPDATE,public_id:INSERT,public_id:UPDATE,purchase_conditions:INSERT,purchase_conditions:UPDATE,rooms:INSERT,rooms:UPDATE,search_vector:INSERT,search_vector:UPDATE,slug:INSERT,slug:UPDATE,status:INSERT,status:UPDATE,title:INSERT,title:UPDATE,toilets:INSERT,toilets:UPDATE,total_floors:INSERT,total_floors:UPDATE,updated_at:INSERT,updated_at:UPDATE,user_id:INSERT,user_id:UPDATE,views_count:INSERT,views_count:UPDATE,wall_type:INSERT,wall_type:UPDATE,year_built:INSERT,year_built:UPDATE"
+  },
+  {
+   "table": "locations",
+   "grantee": "anon",
+   "cols": "display_order:INSERT,display_order:UPDATE,id:INSERT,id:UPDATE,image_url:INSERT,image_url:UPDATE,is_featured:INSERT,is_featured:UPDATE,lat:INSERT,lat:UPDATE,lng:INSERT,lng:UPDATE,name_al:INSERT,name_al:UPDATE,name_en:INSERT,name_en:UPDATE,parent_id:INSERT,parent_id:UPDATE,region_id:INSERT,region_id:UPDATE,slug:INSERT,slug:UPDATE,type:INSERT,type:UPDATE"
+  },
+  {
+   "table": "notifications",
+   "grantee": "authenticated",
+   "cols": "is_read:UPDATE"
+  },
+  {
+   "table": "property_types",
+   "grantee": "anon",
+   "cols": "created_at:INSERT,created_at:UPDATE,id:INSERT,id:UPDATE,is_active:INSERT,is_active:UPDATE,name_en:INSERT,name_en:UPDATE,name_it:INSERT,name_it:UPDATE,name_sq:INSERT,name_sq:UPDATE,name_uk:INSERT,name_uk:UPDATE,slug:INSERT,slug:UPDATE,sort_order:INSERT,sort_order:UPDATE,updated_at:INSERT,updated_at:UPDATE"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "anon",
+   "cols": "id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE,viewed_at:INSERT,viewed_at:UPDATE"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "authenticated",
+   "cols": "id:INSERT,id:UPDATE,listing_id:INSERT,listing_id:UPDATE,user_id:INSERT,user_id:UPDATE,viewed_at:INSERT,viewed_at:UPDATE"
+  },
+  {
+   "table": "saved_searches",
+   "grantee": "authenticated",
+   "cols": "created_at:INSERT,created_at:UPDATE,filters:INSERT,filters:UPDATE,filters_hash:INSERT,filters_hash:UPDATE,id:INSERT,id:UPDATE,last_checked_at:INSERT,last_checked_at:UPDATE,last_viewed_at:INSERT,last_viewed_at:UPDATE,name:INSERT,name:UPDATE,new_count:INSERT,new_count:UPDATE,notify_email:INSERT,notify_email:UPDATE,notify_frequency:INSERT,notify_frequency:UPDATE,updated_at:INSERT,updated_at:UPDATE,user_id:INSERT,user_id:UPDATE"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "anon",
+   "cols": "brand_title:INSERT,brand_title:UPDATE,copyright_template:INSERT,copyright_template:UPDATE,info_links:INSERT,info_links:UPDATE,info_section_title:INSERT,info_section_title:UPDATE,locale:INSERT,locale:UPDATE,nav_links:INSERT,nav_links:UPDATE,nav_section_title:INSERT,nav_section_title:UPDATE,social_links:INSERT,social_links:UPDATE,social_section_title:INSERT,social_section_title:UPDATE,tagline:INSERT,tagline:UPDATE,updated_at:INSERT,updated_at:UPDATE,updated_by:INSERT,updated_by:UPDATE"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "authenticated",
+   "cols": "brand_title:INSERT,brand_title:UPDATE,copyright_template:INSERT,copyright_template:UPDATE,info_links:INSERT,info_links:UPDATE,info_section_title:INSERT,info_section_title:UPDATE,locale:INSERT,locale:UPDATE,nav_links:INSERT,nav_links:UPDATE,nav_section_title:INSERT,nav_section_title:UPDATE,social_links:INSERT,social_links:UPDATE,social_section_title:INSERT,social_section_title:UPDATE,tagline:INSERT,tagline:UPDATE,updated_at:INSERT,updated_at:UPDATE,updated_by:INSERT,updated_by:UPDATE"
+  },
+  {
+   "table": "users",
+   "grantee": "anon",
+   "cols": "avatar_url:INSERT,avatar_url:UPDATE,block_reason:INSERT,block_reason:UPDATE,company_id:INSERT,company_id:UPDATE,company_logo_url:INSERT,company_logo_url:UPDATE,company_name:INSERT,company_name:UPDATE,created_at:INSERT,created_at:UPDATE,deleted_at:INSERT,deleted_at:UPDATE,id:INSERT,id:UPDATE,inactivity_warning_sent_at:INSERT,inactivity_warning_sent_at:UPDATE,is_verified:INSERT,is_verified:UPDATE,last_name:INSERT,last_name:UPDATE,last_seen_at:INSERT,last_seen_at:UPDATE,location_id:INSERT,location_id:UPDATE,location_request:INSERT,location_request:UPDATE,name:INSERT,name:UPDATE,pending_email:INSERT,pending_email:UPDATE,phone:INSERT,phone:UPDATE,position:INSERT,position:UPDATE,preferred_currency:INSERT,preferred_currency:UPDATE,preferred_locale:INSERT,preferred_locale:UPDATE,public_id:INSERT,public_id:UPDATE,role:INSERT,role:UPDATE,social_provider:INSERT,social_provider:UPDATE,status:INSERT,status:UPDATE,suspended_until:INSERT,suspended_until:UPDATE,user_type:INSERT,user_type:UPDATE,website:INSERT,website:UPDATE,whatsapp:INSERT,whatsapp:UPDATE,year_started:INSERT,year_started:UPDATE"
+  },
+  {
+   "table": "users",
+   "grantee": "authenticated",
+   "cols": "avatar_url:INSERT,avatar_url:UPDATE,block_reason:INSERT,block_reason:UPDATE,company_id:INSERT,company_id:UPDATE,company_logo_url:INSERT,company_logo_url:UPDATE,company_name:INSERT,company_name:UPDATE,created_at:INSERT,created_at:UPDATE,deleted_at:INSERT,deleted_at:UPDATE,id:INSERT,id:UPDATE,inactivity_warning_sent_at:INSERT,inactivity_warning_sent_at:UPDATE,is_verified:INSERT,is_verified:UPDATE,last_name:INSERT,last_name:UPDATE,last_seen_at:INSERT,last_seen_at:UPDATE,location_id:INSERT,location_id:UPDATE,location_request:INSERT,location_request:UPDATE,name:INSERT,name:UPDATE,pending_email:INSERT,pending_email:UPDATE,phone:INSERT,phone:UPDATE,position:INSERT,position:UPDATE,preferred_currency:INSERT,preferred_currency:UPDATE,preferred_locale:INSERT,preferred_locale:UPDATE,public_id:INSERT,public_id:UPDATE,role:INSERT,role:UPDATE,social_provider:INSERT,social_provider:UPDATE,status:INSERT,status:UPDATE,suspended_until:INSERT,suspended_until:UPDATE,user_type:INSERT,user_type:UPDATE,website:INSERT,website:UPDATE,whatsapp:INSERT,whatsapp:UPDATE,year_started:INSERT,year_started:UPDATE"
+  }
+ ],
+ "functions": [
+  {
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "security_definer": true,
+   "config": "{\"search_path=auth, public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.admin_search_users_by_email(q text)\n RETURNS TABLE(id uuid)\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'auth', 'public', 'pg_temp'\nAS $function$\r\n  SELECT au.id\r\n  FROM auth.users au\r\n  WHERE au.email ILIKE '%' || q || '%'\r\n    AND au.deleted_at IS NULL\r\n  LIMIT 100;\r\n$function$\n"
+  },
+  {
+   "name": "caller_is_active",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.caller_is_active()\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\n  select coalesce(\r\n    (select u.deleted_at is null\r\n        and (u.status = 'active' or (u.status = 'blocked' and u.suspended_until is not null and u.suspended_until <= now()))\r\n     from public.users u where u.id = auth.uid())\r\n    and exists (select 1 from auth.sessions s where s.id = nullif(auth.jwt() ->> 'session_id', '')::uuid and s.user_id = auth.uid()),\r\n    false)\r\n$function$\n"
+  },
+  {
+   "name": "caller_is_admin",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.caller_is_admin()\n RETURNS boolean\n LANGUAGE sql\n STABLE SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\n  select public.caller_is_active()\r\n     and exists (select 1 from public.users u where u.id = auth.uid() and u.role = 'admin'::user_role)\r\n$function$\n"
+  },
+  {
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.clear_user_history(p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid)\n RETURNS jsonb\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nDECLARE\r\n  v_row_ids     uuid[];\r\n  v_count       integer;\r\n  v_clear_scope text;\r\nBEGIN\r\n  IF p_history_source NOT IN ('user_change_log', 'user_status_history') THEN\r\n    RAISE EXCEPTION 'clear_user_history: invalid history_source %', p_history_source;\r\n  END IF;\r\n\r\n  v_clear_scope := CASE WHEN p_row_id IS NULL THEN 'entity' ELSE 'row' END;\r\n\r\n  IF p_history_source = 'user_change_log' THEN\r\n    IF p_row_id IS NOT NULL THEN\r\n      SELECT array_agg(id) INTO v_row_ids FROM user_change_log WHERE user_id = p_entity_id AND id = p_row_id;\r\n    ELSE\r\n      SELECT array_agg(id) INTO v_row_ids FROM user_change_log WHERE user_id = p_entity_id;\r\n    END IF;\r\n  ELSE\r\n    IF p_row_id IS NOT NULL THEN\r\n      SELECT array_agg(id) INTO v_row_ids FROM user_status_history WHERE user_id = p_entity_id AND id = p_row_id;\r\n    ELSE\r\n      SELECT array_agg(id) INTO v_row_ids FROM user_status_history WHERE user_id = p_entity_id;\r\n    END IF;\r\n  END IF;\r\n\r\n  v_count := COALESCE(array_length(v_row_ids, 1), 0);\r\n\r\n  -- No-op: nothing to clear — no audit row, no delete.\r\n  IF v_count = 0 THEN\r\n    RETURN jsonb_build_object('cleared_row_count', 0, 'cleared_row_ids', '[]'::jsonb);\r\n  END IF;\r\n\r\n  -- Audit row FIRST. If the DELETE below raises, this INSERT is rolled back\r\n  -- too (same function call = same unit of the calling transaction).\r\n  INSERT INTO history_clear_events (\r\n    actor_user_id, entity_type, entity_id, history_source, clear_scope, cleared_row_ids, cleared_row_count\r\n  ) VALUES (\r\n    p_actor_user_id, 'user', p_entity_id, p_history_source, v_clear_scope, v_row_ids, v_count\r\n  );\r\n\r\n  IF p_history_source = 'user_change_log' THEN\r\n    DELETE FROM user_change_log WHERE id = ANY(v_row_ids);\r\n  ELSE\r\n    DELETE FROM user_status_history WHERE id = ANY(v_row_ids);\r\n  END IF;\r\n\r\n  RETURN jsonb_build_object('cleared_row_count', v_count, 'cleared_row_ids', to_jsonb(v_row_ids));\r\nEND;\r\n$function$\n"
+  },
+  {
+   "name": "end_user_sessions",
+   "args": "p_user uuid",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.end_user_sessions(p_user uuid)\n RETURNS integer\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_n integer;\r\nbegin\r\n  delete from auth.sessions where user_id = p_user;\r\n  get diagnostics v_n = row_count;\r\n  return v_n;\r\nend $function$\n"
+  },
+  {
+   "name": "get_listing_owner_contact",
+   "args": "listing_id_param uuid",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.get_listing_owner_contact(listing_id_param uuid)\n RETURNS TABLE(phone text, whatsapp text)\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_uid uuid := auth.uid();\r\nbegin\r\n  if v_uid is null then raise exception 'unauthenticated' using errcode = '42501'; end if;\r\n  if not public.caller_is_active() then raise exception 'account_blocked' using errcode = '42501'; end if;\r\n  if not exists (select 1 from public.listings l join public.users u on u.id = l.user_id\r\n                 where l.id = listing_id_param and l.status = 'active' and u.deleted_at is null) then\r\n    return;\r\n  end if;\r\n  return query\r\n    select u.phone, u.whatsapp from public.listings l join public.users u on u.id = l.user_id\r\n    where l.id = listing_id_param and l.status = 'active' and u.deleted_at is null;\r\nend $function$\n"
+  },
+  {
+   "name": "guard_listings_protected_columns",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": null,
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.guard_listings_protected_columns()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  if current_user not in ('authenticated', 'anon') or public.caller_is_admin() then return new; end if;\r\n  if tg_op = 'INSERT' then\r\n    if new.status is distinct from 'pending'::listing_status\r\n    or coalesce(new.is_premium, false)\r\n    or new.premium_until is not null\r\n    or coalesce(new.views_count, 0) <> 0\r\n    or (new.expires_at is not null and new.expires_at > now() + interval '61 days')\r\n    or new.created_at is distinct from now()\r\n    or new.slug is null or new.slug !~ '^[a-z0-9]+(-[a-z0-9]+)*$' or length(new.slug) > 120 then\r\n      raise exception 'protected column' using errcode = '42501';\r\n    end if;\r\n    new.public_id := nextval('public.listings_public_id_seq'::regclass);   -- whatever the client sent: the next value of the sequence\r\n    return new;\r\n  end if;\r\n  if new.is_premium is distinct from old.is_premium\r\n  or new.premium_until is distinct from old.premium_until\r\n  or new.views_count is distinct from old.views_count\r\n  or new.expires_at is distinct from old.expires_at\r\n  or new.public_id is distinct from old.public_id\r\n  or new.user_id is distinct from old.user_id\r\n  or new.status is distinct from old.status\r\n  or new.created_at is distinct from old.created_at\r\n  or new.slug is distinct from old.slug then\r\n    raise exception 'protected column' using errcode = '42501';\r\n  end if;\r\n  return new;\r\nend $function$\n"
+  },
+  {
+   "name": "guard_users_protected_columns",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": null,
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.guard_users_protected_columns()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  -- service_role, the table owner and SECURITY DEFINER functions are trusted; an active administrator acting through a session is too\r\n  if current_user not in ('authenticated', 'anon') or public.caller_is_admin() then return new; end if;\r\n  if tg_op = 'INSERT' then\r\n    -- a session may only ever insert a plain, active, unverified, never-sanctioned user (no policy allows an insert today; this does not depend on that)\r\n    if new.role::text <> 'user'\r\n    or coalesce(new.is_verified, false)\r\n    or coalesce(new.status::text, 'active') <> 'active'\r\n    or new.block_reason is not null\r\n    or new.suspended_until is not null\r\n    or new.deleted_at is not null then\r\n      raise exception 'protected column' using errcode = '42501';\r\n    end if;\r\n    return new;\r\n  end if;\r\n  if new.id is distinct from old.id\r\n  or new.role is distinct from old.role\r\n  or new.is_verified is distinct from old.is_verified\r\n  or new.status is distinct from old.status\r\n  or new.block_reason is distinct from old.block_reason\r\n  or new.suspended_until is distinct from old.suspended_until\r\n  or new.deleted_at is distinct from old.deleted_at\r\n  or new.public_id is distinct from old.public_id then\r\n    raise exception 'protected column' using errcode = '42501';\r\n  end if;\r\n  return new;\r\nend $function$\n"
+  },
+  {
+   "name": "handle_new_user",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_type user_type := 'private';\r\n  v_avatar text := new.raw_user_meta_data->>'avatar_url';\r\nbegin\r\n  if new.raw_user_meta_data->>'user_type' = 'agent' then v_type := 'agent'; end if;   -- the only choice a sign-up form offers\r\n  if v_avatar is not null and v_avatar !~ '^https://' then v_avatar := null; end if;   -- the value is rendered in <img src>\r\n  insert into public.users (id, name, phone, avatar_url, role, user_type, is_verified, created_at)\r\n  values (\r\n    new.id,\r\n    left(coalesce(new.raw_user_meta_data->>'name', new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)), 200),\r\n    left(new.raw_user_meta_data->>'phone', 32),\r\n    left(v_avatar, 2000),\r\n    'user'::user_role,                       -- never from metadata: administrators are made by an administrator with service_role\r\n    v_type,\r\n    false,\r\n    now()\r\n  )\r\n  on conflict (id) do nothing;\r\n  return new;\r\nend $function$\n"
+  },
+  {
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.handle_new_user_notifications()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nBEGIN\r\n  INSERT INTO public.notification_settings (user_id)\r\n  VALUES (NEW.id)\r\n  ON CONFLICT (user_id) DO NOTHING;\r\n  RETURN NEW;\r\nEND;\r\n$function$\n"
+  },
+  {
+   "name": "listing_activity_owner_by_listing",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.listing_activity_owner_by_listing(p_owner uuid, p_from date, p_to date)\n RETURNS TABLE(listing_id uuid, recorded_views integer, whatsapp_clicks integer, listing_inquiry_submissions integer, last_activity_date date)\n LANGUAGE sql\n STABLE\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\n  select ad.listing_id,\r\n         sum(ad.recorded_views)::integer              as recorded_views,\r\n         sum(ad.whatsapp_clicks)::integer             as whatsapp_clicks,\r\n         sum(ad.listing_inquiry_submissions)::integer as listing_inquiry_submissions,\r\n         max(ad.metric_date)                          as last_activity_date\r\n  from public.listing_activity_daily ad\r\n  join public.listings l on l.id = ad.listing_id\r\n  where l.user_id = p_owner\r\n    and ad.metric_date between p_from and p_to\r\n  group by ad.listing_id\r\n  having sum(ad.recorded_views) + sum(ad.whatsapp_clicks) + sum(ad.listing_inquiry_submissions) > 0;\r\n$function$\n"
+  },
+  {
+   "name": "listing_activity_owner_series",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.listing_activity_owner_series(p_owner uuid, p_from date, p_to date)\n RETURNS TABLE(metric_date date, recorded_views integer, whatsapp_clicks integer, listing_inquiry_submissions integer)\n LANGUAGE sql\n STABLE\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\n  select d::date                                          as metric_date,\r\n         coalesce(sum(a.recorded_views), 0)::integer              as recorded_views,\r\n         coalesce(sum(a.whatsapp_clicks), 0)::integer             as whatsapp_clicks,\r\n         coalesce(sum(a.listing_inquiry_submissions), 0)::integer as listing_inquiry_submissions\r\n  from generate_series(p_from::timestamp, p_to::timestamp, interval '1 day') as d\r\n  left join (\r\n    select ad.metric_date, ad.recorded_views, ad.whatsapp_clicks, ad.listing_inquiry_submissions\r\n    from public.listing_activity_daily ad\r\n    join public.listings l on l.id = ad.listing_id\r\n    where l.user_id = p_owner\r\n  ) a on a.metric_date = d::date\r\n  group by d\r\n  order by d;\r\n$function$\n"
+  },
+  {
+   "name": "listing_activity_platform_series",
+   "args": "p_from date, p_to date",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "sql",
+   "volatility": "s",
+   "def": "CREATE OR REPLACE FUNCTION public.listing_activity_platform_series(p_from date, p_to date)\n RETURNS TABLE(metric_date date, recorded_views integer, whatsapp_clicks integer, listing_inquiry_submissions integer)\n LANGUAGE sql\n STABLE\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\n  select d::date                                          as metric_date,\r\n         coalesce(sum(a.recorded_views), 0)::integer              as recorded_views,\r\n         coalesce(sum(a.whatsapp_clicks), 0)::integer             as whatsapp_clicks,\r\n         coalesce(sum(a.listing_inquiry_submissions), 0)::integer as listing_inquiry_submissions\r\n  from generate_series(p_from::timestamp, p_to::timestamp, interval '1 day') as d\r\n  left join public.listing_activity_daily a on a.metric_date = d::date\r\n  group by d\r\n  order by d;\r\n$function$\n"
+  },
+  {
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.listing_contact_events_set_owner()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_owner uuid;\r\nbegin\r\n  select l.user_id\r\n    into v_owner\r\n  from public.listings l\r\n  where l.id = new.listing_id;\r\n\r\n  if v_owner is null then\r\n    raise exception 'listing_contact_events: listing % does not exist', new.listing_id\r\n      using errcode = 'foreign_key_violation';\r\n  end if;\r\n\r\n  new.listing_owner_id := v_owner;\r\n  new.is_owner_click   := (new.actor_user_id is not null and new.actor_user_id = v_owner);\r\n  return new;\r\nend;\r\n$function$\n"
+  },
+  {
+   "name": "listings_price_rule",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": null,
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.listings_price_rule()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  if tg_op = 'INSERT' then\r\n    new.price_initial := new.price;\r\n    new.price_old := null;\r\n    return new;\r\n  end if;\r\n  if new.currency is distinct from old.currency then\r\n    -- R64 (a): BLOCKED (the database holds no live rate to convert at, see the file's change 12). FAIL-SAFE, not in the kickoff: the new price starts a new starting price and no old price is\r\n    -- shown, so a price in one currency is never compared with a starting price in another.\r\n    new.price_initial := new.price;\r\n    new.price_old := null;\r\n    return new;\r\n  end if;\r\n  new.price_initial := old.price_initial;\r\n  new.price_old := case when old.price_initial is not null and new.price < old.price_initial then old.price_initial else null end;\r\n  return new;\r\nend $function$\n"
+  },
+  {
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.process_saved_search_notify(p_now timestamp with time zone)\n RETURNS TABLE(search_id uuid, user_id uuid, search_name text, new_count integer)\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nDECLARE\r\n  v_search    RECORD;\r\n  v_count     int;\r\n  v_old_since timestamptz;\r\n  v_updated   int;\r\nBEGIN\r\n  -- Advisory lock: prevent concurrent pg_cron invocations from processing the\r\n  -- same batch simultaneously.  If the lock is held, return empty result.\r\n  IF NOT pg_try_advisory_xact_lock(987654321) THEN\r\n    RAISE NOTICE 'process_saved_search_notify: another run is active, skipping';\r\n    RETURN;\r\n  END IF;\r\n\r\n  FOR v_search IN\r\n    SELECT\r\n      id,\r\n      user_id,\r\n      name,\r\n      filters,\r\n      COALESCE(last_checked_at, '1970-01-01 00:00:00+00'::timestamptz) AS since,\r\n      new_count AS cur_count\r\n    FROM saved_searches\r\n    ORDER BY last_checked_at ASC NULLS FIRST\r\n  LOOP\r\n    v_old_since := v_search.since;\r\n\r\n    -- Count new active listings matching this search's canonical filters.\r\n    -- LIMIT 50 prevents full-scan on broad searches (consistent with MAX_NEW_COUNT).\r\n    SELECT COUNT(*) INTO v_count\r\n    FROM (\r\n      SELECT l.id\r\n      FROM listings l\r\n      WHERE l.status       = 'active'\r\n        AND l.expires_at  >= p_now\r\n        AND l.created_at   > v_old_since\r\n        AND (\r\n          (v_search.filters->>'listingType')  IS NULL\r\n          OR l.listing_type = v_search.filters->>'listingType'\r\n        )\r\n        AND (\r\n          (v_search.filters->>'propertyType') IS NULL\r\n          OR l.property_type = v_search.filters->>'propertyType'\r\n        )\r\n        AND (\r\n          (v_search.filters->'locationId') IS NULL\r\n          OR l.location_id = (v_search.filters->>'locationId')::int\r\n        )\r\n        AND (\r\n          (v_search.filters->'priceMin') IS NULL\r\n          OR l.price >= (v_search.filters->>'priceMin')::numeric\r\n        )\r\n        AND (\r\n          (v_search.filters->'priceMax') IS NULL\r\n          OR l.price <= (v_search.filters->>'priceMax')::numeric\r\n        )\r\n        AND (\r\n          (v_search.filters->'areaMin') IS NULL\r\n          OR l.area_gross >= (v_search.filters->>'areaMin')::numeric\r\n        )\r\n        AND (\r\n          (v_search.filters->'areaMax') IS NULL\r\n          OR l.area_gross <= (v_search.filters->>'areaMax')::numeric\r\n        )\r\n        AND (\r\n          (v_search.filters->>'condition') IS NULL\r\n          OR l.condition = v_search.filters->>'condition'\r\n        )\r\n        AND (\r\n          (v_search.filters->>'heating') IS NULL\r\n          OR l.heating = v_search.filters->>'heating'\r\n        )\r\n      LIMIT 50\r\n    ) sub;\r\n\r\n    -- Atomic update: increment new_count server-side + stamp last_checked_at.\r\n    -- WHERE clause is the optimistic lock: if another concurrent run already\r\n    -- updated last_checked_at, this UPDATE returns 0 rows → we skip safely.\r\n    UPDATE saved_searches\r\n    SET\r\n      last_checked_at = p_now,\r\n      new_count = CASE\r\n        WHEN v_count > 0 THEN new_count + v_count\r\n        ELSE new_count\r\n      END\r\n    WHERE id = v_search.id\r\n      AND COALESCE(last_checked_at, '1970-01-01 00:00:00+00'::timestamptz) = v_old_since;\r\n\r\n    GET DIAGNOSTICS v_updated = ROW_COUNT;\r\n\r\n    -- Only emit a result row if we won the lock AND there are new matches.\r\n    IF v_updated > 0 AND v_count > 0 THEN\r\n      RETURN QUERY SELECT v_search.id, v_search.user_id, v_search.name, v_count;\r\n    END IF;\r\n  END LOOP;\r\nEND;\r\n$function$\n"
+  },
+  {
+   "name": "recompute_listing_activity",
+   "args": "p_from date, p_to date, p_job_version text",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.recompute_listing_activity(p_from date, p_to date, p_job_version text)\n RETURNS integer\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_start timestamptz;\r\n  v_end   timestamptz;\r\n  v_rows  integer;\r\nbegin\r\n  if p_from is null or p_to is null or p_job_version is null then\r\n    raise exception 'recompute_listing_activity: p_from, p_to and p_job_version are required';\r\n  end if;\r\n  if p_to < p_from then\r\n    raise exception 'recompute_listing_activity: p_to (%) is before p_from (%)', p_to, p_from;\r\n  end if;\r\n  if (p_to - p_from) + 1 > 400 then\r\n    raise exception 'recompute_listing_activity: span of % days exceeds the 400-day maximum',\r\n      (p_to - p_from) + 1;\r\n  end if;\r\n\r\n  perform pg_advisory_xact_lock(849000001);\r\n\r\n  -- Half-open UTC bounds of the Tirane days [p_from, p_to]: local midnight → instant.\r\n  v_start := p_from::timestamp at time zone 'Europe/Tirane';\r\n  v_end   := (p_to + 1)::timestamp at time zone 'Europe/Tirane';\r\n\r\n  delete from public.listing_activity_daily\r\n  where metric_date between p_from and p_to;\r\n\r\n  with views as (\r\n    select lv.listing_id,\r\n           (lv.viewed_at at time zone 'Europe/Tirane')::date as metric_date,\r\n           count(*)::integer as n\r\n    from public.listing_views lv\r\n    where lv.viewed_at >= v_start and lv.viewed_at < v_end\r\n    group by 1, 2\r\n  ),\r\n  clicks as (\r\n    select ce.listing_id,\r\n           (ce.created_at at time zone 'Europe/Tirane')::date as metric_date,\r\n           count(*)::integer as n\r\n    from public.listing_contact_events ce\r\n    where ce.channel = 'whatsapp'\r\n      and ce.is_owner_click = false\r\n      and ce.created_at >= v_start and ce.created_at < v_end\r\n    group by 1, 2\r\n  ),\r\n  inquiries as (\r\n    select li.listing_id,\r\n           (li.created_at at time zone 'Europe/Tirane')::date as metric_date,\r\n           count(*)::integer as n\r\n    from public.listing_inquiries li\r\n    where li.created_at >= v_start and li.created_at < v_end\r\n    group by 1, 2\r\n  ),\r\n  keys as (\r\n    select listing_id, metric_date from views\r\n    union\r\n    select listing_id, metric_date from clicks\r\n    union\r\n    select listing_id, metric_date from inquiries\r\n  )\r\n  insert into public.listing_activity_daily (\r\n    listing_id, metric_date, recorded_views, whatsapp_clicks, listing_inquiry_submissions,\r\n    updated_at, job_version\r\n  )\r\n  select k.listing_id,\r\n         k.metric_date,\r\n         coalesce(v.n, 0),\r\n         coalesce(c.n, 0),\r\n         coalesce(i.n, 0),\r\n         now(),\r\n         p_job_version\r\n  from keys k\r\n  join public.listings l on l.id = k.listing_id\r\n  left join views     v on v.listing_id = k.listing_id and v.metric_date = k.metric_date\r\n  left join clicks    c on c.listing_id = k.listing_id and c.metric_date = k.metric_date\r\n  left join inquiries i on i.listing_id = k.listing_id and i.metric_date = k.metric_date;\r\n\r\n  get diagnostics v_rows = row_count;\r\n  return v_rows;\r\nend;\r\n$function$\n"
+  },
+  {
+   "name": "record_listing_view",
+   "args": "p_listing_id uuid, p_user_id uuid, p_ip_hash text",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.record_listing_view(p_listing_id uuid, p_user_id uuid DEFAULT NULL::uuid, p_ip_hash text DEFAULT ''::text)\n RETURNS boolean\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_hash text := left(coalesce(p_ip_hash, ''), 64);\r\nbegin\r\n  -- same statuses as the view route (src/app/api/listings/[slug]/view/route.ts)\r\n  if not exists (select 1 from listings where id = p_listing_id and status in ('active', 'sold', 'rented', 'archived')) then return false; end if;\r\n  if p_user_id is null and v_hash = '' then return false; end if;   -- nothing to de-duplicate by: not counted\r\n  perform pg_advisory_xact_lock(hashtextextended(p_listing_id::text || '|' || coalesce(p_user_id::text, 'ip:' || v_hash), 0));\r\n  if exists (\r\n    select 1 from listing_views\r\n    where listing_id = p_listing_id and viewed_at >= now() - interval '24 hours'\r\n      and ((p_user_id is not null and user_id = p_user_id) or (p_user_id is null and ip_hash = v_hash))\r\n  ) then return false; end if;\r\n  insert into listing_views (listing_id, user_id, ip_hash, viewed_at) values (p_listing_id, p_user_id, v_hash, now());\r\n  update listings set views_count = views_count + 1 where id = p_listing_id;\r\n  return true;\r\nend $function$\n"
+  },
+  {
+   "name": "record_recently_viewed",
+   "args": "p_listing_id uuid, p_cap integer",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.record_recently_viewed(p_listing_id uuid, p_cap integer DEFAULT 25)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_user_id uuid := auth.uid();\r\n  v_cap integer := least(greatest(coalesce(p_cap, 25), 1), 100);\r\nbegin\r\n  if v_user_id is null then raise exception 'unauthenticated'; end if;\r\n  if not public.caller_is_active() then raise exception 'account_blocked' using errcode = '42501'; end if;\r\n  insert into recently_viewed (user_id, listing_id, viewed_at) values (v_user_id, p_listing_id, now())\r\n  on conflict (user_id, listing_id) do update set viewed_at = now();\r\n  delete from recently_viewed\r\n  where user_id = v_user_id\r\n    and id not in (select id from recently_viewed where user_id = v_user_id order by viewed_at desc limit v_cap);\r\nend $function$\n"
+  },
+  {
+   "name": "rls_auto_enable",
+   "args": "",
+   "security_definer": true,
+   "config": "{\"search_path=pg_catalog, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.rls_auto_enable()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog', 'pg_temp'\nAS $function$\nDECLARE\n  cmd record;\nBEGIN\n  FOR cmd IN\n    SELECT *\n    FROM pg_event_trigger_ddl_commands()\n    WHERE command_tag IN ('CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO')\n      AND object_type IN ('table','partitioned table')\n  LOOP\n     IF cmd.schema_name IS NOT NULL AND cmd.schema_name IN ('public') AND cmd.schema_name NOT IN ('pg_catalog','information_schema') AND cmd.schema_name NOT LIKE 'pg_toast%' AND cmd.schema_name NOT LIKE 'pg_temp%' THEN\n      BEGIN\n        EXECUTE format('alter table if exists %s enable row level security', cmd.object_identity);\n        RAISE LOG 'rls_auto_enable: enabled RLS on %', cmd.object_identity;\n      EXCEPTION\n        WHEN OTHERS THEN\n          RAISE LOG 'rls_auto_enable: failed to enable RLS on %', cmd.object_identity;\n      END;\n     ELSE\n        RAISE LOG 'rls_auto_enable: skip % (either system schema or not in enforced list: %.)', cmd.object_identity, cmd.schema_name;\n     END IF;\n  END LOOP;\nEND;\n$function$\n"
+  },
+  {
+   "name": "set_default_currency",
+   "args": "p_id integer",
+   "security_definer": true,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.set_default_currency(p_id integer)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  perform pg_advisory_xact_lock(hashtextextended('set_default_currency', 0));   -- two callers at once are serialised: the second one's checks see the first one's result\r\n  if not exists (select 1 from public.currencies c where c.id = p_id and c.is_active) then\r\n    raise exception 'currency_not_available' using errcode = '22023';\r\n  end if;\r\n  update public.currencies set is_default = (id = p_id) where is_default is distinct from (id = p_id);   -- one statement: never no default, never two\r\nend $function$\n"
+  },
+  {
+   "name": "update_listing_search_vector",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.update_listing_search_vector()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  new.search_vector = to_tsvector('simple', \r\n    coalesce(new.title, '') || ' ' || \r\n    coalesce(new.description, '') || ' ' ||\r\n    coalesce(new.address, '')\r\n  );\r\n  return new;\r\nend;\r\n$function$\n"
+  },
+  {
+   "name": "update_updated_at",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.update_updated_at()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  new.updated_at = now();\r\n  return new;\r\nend;\r\n$function$\n"
+  },
+  {
+   "name": "update_updated_at_column",
+   "args": "",
+   "security_definer": false,
+   "config": "{\"search_path=public, pg_temp\"}",
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "lang": "plpgsql",
+   "volatility": "v",
+   "def": "CREATE OR REPLACE FUNCTION public.update_updated_at_column()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nBEGIN\r\n  NEW.updated_at = now();\r\n  RETURN NEW;\r\nEND;\r\n$function$\n"
+  }
+ ],
+ "views": [
+  {
+   "view": "public_user_profiles",
+   "options": "{security_invoker=false}"
+  }
+ ],
+ "buckets": [
+  {
+   "id": "avatars",
+   "public": true
+  }
+ ],
+ "triggers": [
+  {
+   "schema": "auth",
+   "tbl": "users",
+   "name": "on_auth_user_created",
+   "enabled": "O",
+   "def": "CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_new_user()"
+  },
+  {
+   "schema": "public",
+   "tbl": "email_templates",
+   "name": "trg_email_templates_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_email_templates_updated_at BEFORE UPDATE ON public.email_templates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listing_contact_events",
+   "name": "listing_contact_events_set_owner",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listing_contact_events_set_owner BEFORE INSERT ON public.listing_contact_events FOR EACH ROW EXECUTE FUNCTION listing_contact_events_set_owner()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_guard_protected",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_guard_protected BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION guard_listings_protected_columns()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_price_rule",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_price_rule BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION listings_price_rule()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_search_vector",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_search_vector BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_listing_search_vector()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_updated_at()"
+  },
+  {
+   "schema": "public",
+   "tbl": "support_tickets",
+   "name": "trg_support_tickets_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_support_tickets_updated_at BEFORE UPDATE ON public.support_tickets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "schema": "public",
+   "tbl": "users",
+   "name": "on_user_created_notifications",
+   "enabled": "O",
+   "def": "CREATE TRIGGER on_user_created_notifications AFTER INSERT ON public.users FOR EACH ROW EXECUTE FUNCTION handle_new_user_notifications()"
+  },
+  {
+   "schema": "public",
+   "tbl": "users",
+   "name": "users_guard_protected",
+   "enabled": "O",
+   "def": "CREATE TRIGGER users_guard_protected BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION guard_users_protected_columns()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "enforce_bucket_name_length_trigger",
+   "enabled": "O",
+   "def": "CREATE TRIGGER enforce_bucket_name_length_trigger BEFORE INSERT OR UPDATE OF name ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.enforce_bucket_name_length()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_insert",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_insert BEFORE INSERT ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.protect_bucket_control_columns('service_role')"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_update",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_update BEFORE UPDATE OF lifecycle_configuration, lifecycle_configuration_generation ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.protect_bucket_control_columns()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_update_role",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_update_role AFTER UPDATE OF lifecycle_configuration, lifecycle_configuration_generation ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.enforce_bucket_lifecycle_service_role('service_role')"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_buckets_delete",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_buckets_delete BEFORE DELETE ON storage.buckets FOR EACH STATEMENT EXECUTE FUNCTION storage.protect_delete()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "objects",
+   "name": "protect_objects_delete",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_objects_delete BEFORE DELETE ON storage.objects FOR EACH STATEMENT EXECUTE FUNCTION storage.protect_delete()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "objects",
+   "name": "update_objects_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER update_objects_updated_at BEFORE UPDATE ON storage.objects FOR EACH ROW EXECUTE FUNCTION storage.update_updated_at_column()"
+  }
+ ],
+ "defaults": [
+  {
+   "tbl": "listing_views",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "listing_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "ip_hash",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "viewed_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "listings",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "location_id",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "slug",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "title",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "description",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "price",
+   "data_type": "numeric",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "price_old",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "currency",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'ALL'::listing_currency"
+  },
+  {
+   "tbl": "listings",
+   "col": "listing_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "property_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "condition",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "wall_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "heating",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "rooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "bedrooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "bathrooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "toilets",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "area_gross",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "area_net",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "floor",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "total_floors",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "year_built",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "address",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "lat",
+   "data_type": "double precision",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "lng",
+   "data_type": "double precision",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "views_count",
+   "data_type": "integer",
+   "nullable": "NO",
+   "def": "0"
+  },
+  {
+   "tbl": "listings",
+   "col": "is_premium",
+   "data_type": "boolean",
+   "nullable": "NO",
+   "def": "false"
+  },
+  {
+   "tbl": "listings",
+   "col": "status",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'active'::listing_status"
+  },
+  {
+   "tbl": "listings",
+   "col": "expires_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "(now() + '60 days'::interval)"
+  },
+  {
+   "tbl": "listings",
+   "col": "search_vector",
+   "data_type": "tsvector",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "created_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "updated_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "land_legal_status",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "land_zoning",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "land_development_potential",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "multi_storey_building",
+   "data_type": "boolean",
+   "nullable": "YES",
+   "def": "false"
+  },
+  {
+   "tbl": "listings",
+   "col": "offer_type",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "purchase_conditions",
+   "data_type": "ARRAY",
+   "nullable": "NO",
+   "def": "'{}'::text[]"
+  },
+  {
+   "tbl": "listings",
+   "col": "public_id",
+   "data_type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('listings_public_id_seq'::regclass)"
+  },
+  {
+   "tbl": "listings",
+   "col": "premium_until",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "market_type",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "price_initial",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "listing_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "viewed_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  },
+  {
+   "tbl": "users",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "phone",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "whatsapp",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "avatar_url",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "role",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'user'::user_role"
+  },
+  {
+   "tbl": "users",
+   "col": "user_type",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'private'::user_type"
+  },
+  {
+   "tbl": "users",
+   "col": "company_name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "is_verified",
+   "data_type": "boolean",
+   "nullable": "NO",
+   "def": "false"
+  },
+  {
+   "tbl": "users",
+   "col": "social_provider",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "created_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "users",
+   "col": "last_name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "status",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'active'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "block_reason",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "location_id",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "position",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "year_started",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "website",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "company_logo_url",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "deleted_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "location_request",
+   "data_type": "jsonb",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_currency",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'ALL'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "pending_email",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "last_seen_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "company_id",
+   "data_type": "uuid",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_locale",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'sq'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "inactivity_warning_sent_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "suspended_until",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "public_id",
+   "data_type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('users_public_id_seq'::regclass)"
+  }
+ ],
+ "constraints": [
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_listing_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_development_potential_check",
+   "contype": "c",
+   "def": "CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_legal_status_check",
+   "contype": "c",
+   "def": "CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_zoning_check",
+   "contype": "c",
+   "def": "CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_location_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_offer_type_check",
+   "contype": "c",
+   "def": "CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_public_id_key",
+   "contype": "u",
+   "def": "UNIQUE (public_id)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_slug_key",
+   "contype": "u",
+   "def": "UNIQUE (slug)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_listing_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_user_id_listing_id_key",
+   "contype": "u",
+   "def": "UNIQUE (user_id, listing_id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_company_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_location_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (location_id) REFERENCES locations(id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_preferred_currency_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (preferred_currency) REFERENCES currencies(code) ON UPDATE CASCADE"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_preferred_locale_check",
+   "contype": "c",
+   "def": "CHECK ((preferred_locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_public_id_key",
+   "contype": "u",
+   "def": "UNIQUE (public_id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_status_check",
+   "contype": "c",
+   "def": "CHECK ((status = ANY (ARRAY['active'::text, 'blocked'::text, 'inactive'::text])))"
+  }
+ ],
+ "enums": [
+  {
+   "typname": "complaint_type_t",
+   "labels": "fraud_or_scam,fake_listing_or_profile,harassment_or_abuse,inappropriate_content,spam,payment_or_deposit_issue,duplicate_or_impersonation,other"
+  },
+  {
+   "typname": "heating_type",
+   "labels": "electric,wood,central,gas,none"
+  },
+  {
+   "typname": "listing_condition",
+   "labels": "new_build,good,needs_repair,needs_renovation,under_construction"
+  },
+  {
+   "typname": "listing_currency",
+   "labels": "ALL,EUR"
+  },
+  {
+   "typname": "listing_status",
+   "labels": "active,inactive,sold,rented,archived,pending,expired"
+  },
+  {
+   "typname": "listing_type",
+   "labels": "sale,rent"
+  },
+  {
+   "typname": "location_type",
+   "labels": "region,city,village,district"
+  },
+  {
+   "typname": "notification_type",
+   "labels": "new_message,saved_search_match,listing_status_change,support_reply,listing_expires_soon,agent_verified,marketing,report_outcome,price_change"
+  },
+  {
+   "typname": "property_type",
+   "labels": "apartment,house,land,commercial,office,garage,warehouse,other,room"
+  },
+  {
+   "typname": "report_reason",
+   "labels": "spam,fraud,duplicate,wrong_category,offensive,other"
+  },
+  {
+   "typname": "report_status",
+   "labels": "pending,reviewed,resolved,dismissed"
+  },
+  {
+   "typname": "ticket_status",
+   "labels": "open,in_progress,resolved,closed"
+  },
+  {
+   "typname": "user_role",
+   "labels": "admin,moderator,agent,user"
+  },
+  {
+   "typname": "user_type",
+   "labels": "private,agent"
+  },
+  {
+   "typname": "verification_status",
+   "labels": "pending,approved,rejected"
+  },
+  {
+   "typname": "wall_type",
+   "labels": "brick,concrete,panel,wood,other"
+  }
+ ],
+ "functionGrants": [
+  {
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "b8faa55fb211b083d0552f184508016d"
+  },
+  {
+   "name": "caller_is_active",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "c382792ae25a00510b34177264d419ab"
+  },
+  {
+   "name": "caller_is_admin",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "49df7b936e8deaf941ee7329ce6eb755"
+  },
+  {
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "a494c14d2e85632bdb7593624665f343"
+  },
+  {
+   "name": "end_user_sessions",
+   "args": "p_user uuid",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "e8f5af80a741d34d149349ef63baa36a"
+  },
+  {
+   "name": "get_listing_owner_contact",
+   "args": "listing_id_param uuid",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "848eed2288d877f4703c8d13e605327d"
+  },
+  {
+   "name": "guard_listings_protected_columns",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "",
+   "md5": "e7372387302f32571d9a9f44f04d78cb"
+  },
+  {
+   "name": "guard_users_protected_columns",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "",
+   "md5": "ba284278dbb4cadfb5df3492dfd8875c"
+  },
+  {
+   "name": "handle_new_user",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "8292b95bebe2fca97d697ac92d56cde6"
+  },
+  {
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "297e3ea7103333d930bbce96aa87c033"
+  },
+  {
+   "name": "listing_activity_owner_by_listing",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "e45c7bc7bb05020680c41c64181b0e06"
+  },
+  {
+   "name": "listing_activity_owner_series",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "51e9a07e1c78937b4fd06721a6eacb98"
+  },
+  {
+   "name": "listing_activity_platform_series",
+   "args": "p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "0943fa451da9152916cbe865b09ddd9b"
+  },
+  {
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "9b79639a7d68e85a94747222fb0b0417"
+  },
+  {
+   "name": "listings_price_rule",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "",
+   "md5": "43c2215c6479744beb0857c65ff46bf8"
+  },
+  {
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "7dc2ac0a319233bab6da3c9cd87ed021"
+  },
+  {
+   "name": "recompute_listing_activity",
+   "args": "p_from date, p_to date, p_job_version text",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "8a6609de54d4166a2d4b9b047bd73d7d"
+  },
+  {
+   "name": "record_listing_view",
+   "args": "p_listing_id uuid, p_user_id uuid, p_ip_hash text",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "1ac89f139d24fe7e7e57731f6478be81"
+  },
+  {
+   "name": "record_recently_viewed",
+   "args": "p_listing_id uuid, p_cap integer",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "16f3108e8925f0bb560fb7e67015b9ef"
+  },
+  {
+   "name": "rls_auto_enable",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "d1643296b6756e1d72db676ffcdcbf37"
+  },
+  {
+   "name": "set_default_currency",
+   "args": "p_id integer",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "a41c09ac3954a999ac347bd8b427f30d"
+  },
+  {
+   "name": "update_listing_search_vector",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "51f8e92d29ddd0fd0c7c7d33b50f03e7"
+  },
+  {
+   "name": "update_updated_at",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "554a800ab248e3476ca97bc6336249f2"
+  },
+  {
+   "name": "update_updated_at_column",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "b6d8cb8b6eb78d49af22581e4e458ce3"
+  }
+ ],
+ "policiesMd5": "e36be99c2e55b86244610bdefcc45d58",
+ "policyCount": 183,
+ "serverVersion": "17.6",
+ "extensions": [
+  "pg_cron",
+  "pg_net",
+  "pg_stat_statements",
+  "pgcrypto",
+  "plpgsql",
+  "supabase_vault",
+  "uuid-ossp"
+ ],
+ "takenAt": "2026-10-21T18:08:31.398Z"
+}

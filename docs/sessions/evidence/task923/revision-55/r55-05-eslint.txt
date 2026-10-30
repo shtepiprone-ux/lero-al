@@ -1,0 +1,22 @@
+# r55-05 part 4 (R169 (d)): eslint
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx eslint . --quiet  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>)
+started: 2026-10-29T12:10:16.3169920Z
+finished: 2026-10-29T12:10:36.4876330Z
+--- output (last 25 lines) ---
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\revision-55\r55-03-table.cjs
+  1:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 1 problem (1 error, 0 warnings)
+
+
+--- exit code: 1 ---
+
+## rerun after the one fix: the eslint-disable line added to my own evidence helper r55-03-table.cjs (no product file involved)
+command: npx eslint . --quiet
+started: 2026-10-29T12:11:02.8882016Z
+finished: 2026-10-29T12:11:23.2516072Z
+--- output ---
+
+--- exit code: 0 ---

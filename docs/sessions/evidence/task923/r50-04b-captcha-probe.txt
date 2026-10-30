@@ -1,0 +1,30 @@
+# R150-R155 AC150 r50-04b-captcha-probe: whether Supabase's CAPTCHA protection was on after the integration run (D88: the owner turned it off, so off is expected)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-4/rv4-01-captcha-probe.mjs
+NODE_PATH: (unset)
+started: 2026-10-25T12:01:54.255Z
+--- stdout ---
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-4/rv4-01-captcha-probe.mjs
+date: 2026-10-25T12:01:54.348Z
+anon password grant, admin account, no captcha token: 200 session ok
+anon password grant, agent1 account, no captcha token: 200 session ok
+anon password grant, a bogus captcha token: 400 invalid_credentials Invalid login credentials
+anon id_token grant, no captcha token: 400 Bad ID token
+anon refresh_token grant, no captcha token: 400 validation_failed Refresh token is not valid
+service-role password grant, unknown account: 400 invalid_credentials Invalid login credentials
+ssr verify client, anon key, unknown account: invalid_credentials Invalid login credentials
+ssr verify client, anon key, admin account with its password: session ok
+ssr verify client, anon key, signOut local of the verify session: session ok
+ssr verify client, service-role key, unknown account: invalid_credentials Invalid login credentials
+ssr verify client, service-role key, admin account with its password: session ok
+ssr verify client, service-role key, signOut local of the verify session: session ok
+exit code: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

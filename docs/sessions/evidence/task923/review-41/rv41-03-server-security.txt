@@ -1,0 +1,136 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T15:40:58.718Z
+command: npx vitest run --reporter=verbose src/lib/captcha/__tests__/verifyTurnstile.test.ts src/modules/auth/actions/__tests__/captcha.security.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > asks Cloudflare once, with POST, the secret and the token, and never caches 2ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > sends no remote address when there is none 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > a token is sent as a form value, so a hostile token cannot add parameters 1ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > reports success only when Cloudflare says so 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > reports Cloudflare's refusal with its error codes 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":"true"} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":1} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":null} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer null is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer [] is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > a network error or an unreadable answer is "internal-error", never success 1ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > the development shortcut token does NOT work when a secret is configured 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > production refuses everyone, including the development token, and asks nobody 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > development accepts only the exact development token 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > an empty secret counts as missing 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > the development token still works with an expected action: there is no answer to compare 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > undefined is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > null is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > 5 is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > true is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > {} is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > ["tok"] is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > "" is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > a token of exactly 2048 characters is sent; one more is not 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > an invalid token is refused before the secret is even read: no secret needed, no development shortcut 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without an expected action the result is exactly today's (sign-up and password reset) > does not compare action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts an answer for that action and this site 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts this site's hostname in production 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses another action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses no action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses an empty action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses another site with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses a subdomain of this site with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses this site as a prefix with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses no hostname with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts localhost outside production only 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts 127.0.0.1 outside production only 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > compares the action before the hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > keeps Cloudflare's refusal and its codes, with nothing compared (a replayed token) 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > a success that is not the literal true is still refused 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > a network error is internal-error, never success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is accepted when NODE_ENV is test, without comparing action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is accepted when NODE_ENV is development, without comparing action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is refused in production with testing-key-in-production 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > only the literal true is the marker: the string "true" falls back to the comparison 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > a failing testing answer stays failed 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > signs up with the token and the clean metadata, and never verifies the token itself 2ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token "" never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token undefined never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token null never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token 5 never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token {"a":1} never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha token ["t"] never reaches Supabase 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a captcha that Supabase refuses is reported as captcha_failed, so the form can ask for a new token 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > Supabase's refusal is returned with its message 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to another site is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to a look-alike host is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to a user-info trick is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to a protocol-relative address is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to a javascript address is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to a data address is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > a redirect to nothing usable is moved to our own origin 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > signUpWithCaptcha > metadata the browser adds is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > keeps exactly the six fields 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > undefined gives undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > null gives undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > "text" gives undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > 5 gives undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > true gives undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops an object value 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops an array value 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops a boolean 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops null 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops undefined 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops a 201-character string 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops NaN 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > drops Infinity 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "067 123 4567" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "355691234567" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "+0691234567" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "+3556912" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "+3556912345678901" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "+355 69 123 4567" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "javascript:alert(1)" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "+355691234567; DROP" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone "" that is not E.164 is dropped 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > a phone in E.164 is kept 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > keeps a 200-character string 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an account type "admin" is dropped, only private / agent stay 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an account type "moderator" is dropped, only private / agent stay 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an account type "" is dropped, only private / agent stay 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an account type "Agent" is dropped, only private / agent stay 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an account type 1 is dropped, only private / agent stay 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > cleanSignupMetadata > an inherited or special key is not read 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > asks Supabase for the reset with the token and never verifies the token itself 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > the reset link cannot point to another site 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > a captcha token "" sends nothing 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > a captcha token undefined sends nothing 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > a captcha token 7 sends nothing 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > a captcha that Supabase refuses is reported as captcha_failed, an ordinary failure as reset_failed 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > requestPasswordResetWithCaptcha > Supabase's refusal is returned 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > keeps an address on the configured origin as it is 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > keeps the production domains 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > drops the fragment 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > moves a foreign origin to the configured one and keeps the path 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > null becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > undefined becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > "" becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > "not a url" becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > "javascript:alert(1)" becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > "ftp://lero.al/x" becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > "mailto:a@b.cc" becomes the site root 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > localhost is accepted outside production only 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > trustedRedirectUrl > without a configured site it falls back to the production domain 0ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > [SEC-S36-SRV-DENY] A Turnstile answer passes only when success is the literal true 4ms
+ ✓ src/modules/auth/actions/__tests__/captcha.security.test.ts > [SEC-S41-SRV-DENY] Sign-up and reset links point only to this site and pass only six plain metadata keys 0ms
+
+ Test Files  2 passed (2)
+      Tests  118 passed (118)
+   Start at  17:40:59
+   Duration  415ms (transform 147ms, setup 197ms, import 130ms, tests 28ms, environment 0ms)
+
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,19 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-42-readiness.mjs
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json: taskSha256 519187d37bd1475ee3cf3ff1894f8bafe315f35fd58e0f35142581412d10fe0c -> 0ddf22fdfa6f59cce08bff6ddfaad36cf0b31bc8cfd8d52168acd063ed77bb5d
+command: node scripts/check-kickoff-evidence.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+command: npm run check:kickoff-evidence
+> lero-al@0.1.0 check:kickoff-evidence
+> node scripts/check-kickoff-evidence.mjs
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+command: node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+exit 0
+command: node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+exit 0
+command: node scripts/workflow-gates/cli.mjs diff --phase plan --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree
+Security scope: 10383 changed files, 9 task contract(s).
+exit 0
+D8_D9: reviewed ready 231 cases 67 critical 598 paths; review present
+exit 0

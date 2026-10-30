@@ -1,0 +1,276 @@
+/**
+ * Task 927 (Amendment 2): the cabinet's Google re-confirmation. A Google-only account that asks for an e-mail change or for its deletion is answered `reauth_required`; the tab then
+ * shows Google's own button (no redirect), and after a confirmation with the SAME account the action the person already asked for is repeated exactly once.
+ * The REAL `ProfileTab`, `MantineDeleteConfirmModal`, `GoogleSignInButton`, `GoogleSignInSlot` and `googleIdentity` render; the doubles are the cabinet server actions, the identity
+ * context, the router, the toast, the browser auth wrapper and a GIS stand-in installed on `window.google` when the test fires the script's `load` (jsdom neither loads the script
+ * nor draws Google's button). The server's own recent-sign-in rule is covered by reauthIdToken.security.test.ts.
+ */
+import { createHash } from 'node:crypto'
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { MantineProvider } from '@mantine/core'
+import { NextIntlClientProvider } from 'next-intl'
+import { afterEach, beforeEach, expect, it, vi } from 'vitest'
+import { theme } from '@/design-system/mantine/theme'
+import messages from '../../../../../messages/en.json'
+import type { GoogleIdInitializeConfig } from '@/lib/auth/googleIdentity'
+
+const mocks = vi.hoisted(() => ({
+  deleteOwnAccount: vi.fn(),
+  getReauthMethod: vi.fn(),
+  initiateEmailChange: vi.fn(),
+  signOut: vi.fn(),
+  signInWithGoogleIdToken: vi.fn(),
+  toastSuccess: vi.fn(),
+  push: vi.fn(),
+}))
+
+vi.mock('@/modules/cabinet/actions', () => ({
+  updateCabinetProfile: vi.fn(),
+  deleteOwnAccount: mocks.deleteOwnAccount,
+  getReauthMethod: mocks.getReauthMethod,
+  initiateEmailChange: mocks.initiateEmailChange,
+  resendEmailVerification: vi.fn(),
+}))
+vi.mock('@/modules/auth/context/AuthContext', () => ({ useAuth: () => ({ signOut: mocks.signOut, refreshUser: vi.fn() }) }))
+vi.mock('next/navigation', () => ({ useRouter: () => ({ push: mocks.push, refresh: vi.fn() }) }))
+vi.mock('@/lib/toast', () => ({ toast: { success: mocks.toastSuccess, error: vi.fn() } }))
+vi.mock('@/lib/auth/browser', () => ({ signInWithGoogleIdToken: mocks.signInWithGoogleIdToken }))
+vi.mock('@/hooks/useUnsavedChangesGuard', () => ({ useUnsavedChangesGuard: () => ({ confirmLeave: vi.fn() }) }))
+vi.mock('@/modules/currency/hooks/useCurrencies', () => ({ useCurrencies: () => ({ currencies: [] }) }))
+vi.mock('@/components/shared/PhoneField', () => ({ PhoneField: () => null }))
+vi.mock('@/components/shared/LocationCombobox', () => ({ LocationCombobox: () => null }))
+vi.mock('@/components/shared/Combobox', () => ({ Combobox: () => null }))
+vi.mock('@/components/admin/AdminUserAvatar', () => ({ AdminUserAvatar: () => null }))
+vi.mock('@/modules/cabinet/components/CabinetPasswordSection', () => ({ CabinetPasswordSection: () => null }))
+
+import { ProfileTab } from '../ProfileTab'
+
+const t = messages.cabinet
+const a = messages.auth
+const CLIENT_ID = 'zz-synthetic-client.apps.googleusercontent.com'
+const PROFILE = { id: 'user-1', name: 'Alba', phone: '', whatsapp: '', company_name: null, user_type: 'private', location_id: null, preferred_currency: 'ALL', avatar_url: null, pending_email: null }
+const NEW_ADDRESS = 'new@example.com'
+
+interface GisDouble { initialize: ReturnType<typeof vi.fn>; renderButton: ReturnType<typeof vi.fn>; cancel: ReturnType<typeof vi.fn>; prompt: ReturnType<typeof vi.fn> }
+
+const base64url = (value: string) => Buffer.from(value, 'utf8').toString('base64url')
+/** a credential shaped like a Google ID token: three base64url parts, the middle one a JSON payload (the signature is Supabase Auth's to check, not the tab's) */
+const credentialFor = (email: string | undefined) => `${base64url('{"alg":"RS256"}')}.${base64url(JSON.stringify(email === undefined ? { sub: 'zz' } : { sub: 'zz', email }))}.${base64url('zz-signature')}`
+const sha256Hex = (value: string) => createHash('sha256').update(value, 'utf8').digest('hex')
+
+const gisScript = () => document.head.querySelector<HTMLScriptElement>('#google-identity-services')
+function resetGis() {
+  gisScript()?.dispatchEvent(new Event('error'))
+  document.head.querySelectorAll('#google-identity-services').forEach(element => element.remove())
+  delete window.google
+}
+const configOf = (api: GisDouble, call = -1) => api.initialize.mock.calls.at(call)![0] as GoogleIdInitializeConfig
+async function loadGis(): Promise<GisDouble> {
+  const script = await waitFor(() => { const found = gisScript(); expect(found).not.toBeNull(); return found as HTMLScriptElement })
+  const api: GisDouble = { initialize: vi.fn(), renderButton: vi.fn(), cancel: vi.fn(), prompt: vi.fn() }
+  window.google = { accounts: { id: api as never } }
+  script.dispatchEvent(new Event('load'))
+  await waitFor(() => expect(api.initialize).toHaveBeenCalledTimes(1))
+  return api
+}
+async function pickAccount(api: GisDouble, credential: string) {
+  await act(async () => { configOf(api).callback({ credential }) })
+}
+
+function renderTab() {
+  return render(
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme}>
+        <ProfileTab profile={PROFILE as never} locale="en" cities={[]} regions={[]} email="person@example.com" />
+      </MantineProvider>
+    </NextIntlClientProvider>,
+  )
+}
+
+/** the e-mail section: type the new address, press Save, the server asks for Google; Google's button (the GIS double) appears under the error line */
+async function askEmailChange(): Promise<GisDouble> {
+  renderTab()
+  await waitFor(() => expect(mocks.getReauthMethod).toHaveBeenCalled())
+  await waitFor(() => expect(screen.queryByLabelText(t.password_current_label)).toBeNull())
+  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
+  mocks.initiateEmailChange.mockResolvedValueOnce({ error: 'Sign in with Google again to change your email.', reason: 'reauth_required' })
+  fireEvent.click(screen.getByRole('button', { name: messages.common.save }))
+  expect(await screen.findByText('Sign in with Google again to change your email.')).toBeTruthy()
+  return loadGis()
+}
+
+/** the deletion dialog: press the trigger and the red primary, the server asks for Google; Google's button appears in the dialog's Google section */
+async function askDeletion(): Promise<GisDouble> {
+  renderTab()
+  await waitFor(() => expect(mocks.getReauthMethod).toHaveBeenCalled())
+  fireEvent.click(screen.getByRole('button', { name: t.delete_account }))
+  const dialog = await screen.findByRole('dialog')
+  mocks.deleteOwnAccount.mockResolvedValueOnce({ error: 'reauth_required' })
+  fireEvent.click(within(dialog).getByRole('button', { name: t.delete_account_confirm }))
+  expect(await within(dialog).findByText(t.delete_account_google_required)).toBeTruthy()
+  return loadGis()
+}
+const inDialog = () => within(screen.getByRole('dialog'))
+
+beforeEach(() => {
+  vi.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} })   // jsdom has none; the Google slot measures its width with Mantine's useElementSize
+  vi.stubGlobal('matchMedia', vi.fn().mockImplementation((query: string) => ({
+    matches: false, media: query, onchange: null, addListener: vi.fn(), removeListener: vi.fn(),
+    addEventListener: vi.fn(), removeEventListener: vi.fn(), dispatchEvent: vi.fn(),
+  })))
+  vi.stubEnv('NEXT_PUBLIC_GOOGLE_CLIENT_ID', CLIENT_ID)
+  for (const mock of Object.values(mocks)) mock.mockReset()
+  mocks.getReauthMethod.mockResolvedValue('google')
+  mocks.signOut.mockImplementation((then?: () => void) => then?.())
+  mocks.signInWithGoogleIdToken.mockResolvedValue({ data: { user: { id: 'user-1' } }, error: null })
+})
+afterEach(() => {
+  cleanup()
+  resetGis()
+  vi.unstubAllEnvs()
+  vi.unstubAllGlobals()
+})
+
+it('[SEC-927-FE-REAUTH-ALLOW] a Google-only person who confirms with the Google account of the profile gets the e-mail change and the deletion they asked for, each once', async () => {
+  // the e-mail change
+  const mailApi = await askEmailChange()
+  const mailConfig = configOf(mailApi)
+  expect(mailConfig.login_hint, 'Google preselects the profile\'s own account').toBe('person@example.com')
+  expect(mailConfig).toMatchObject({ client_id: CLIENT_ID, auto_select: false })
+  mocks.initiateEmailChange.mockResolvedValueOnce({ pendingEmail: NEW_ADDRESS })
+  await pickAccount(mailApi, credentialFor('Person@Example.com'))   // the same account, in another case
+
+  await waitFor(() => expect(mocks.initiateEmailChange).toHaveBeenCalledTimes(2))
+  expect(mocks.signInWithGoogleIdToken).toHaveBeenCalledTimes(1)
+  const [credential, nonce] = mocks.signInWithGoogleIdToken.mock.calls[0] as [string, string]
+  expect(credential).toBe(credentialFor('Person@Example.com'))
+  expect(mailConfig.nonce, 'Google got the SHA-256 hex of the raw nonce Supabase got').toBe(sha256Hex(nonce))
+  expect(mocks.initiateEmailChange).toHaveBeenNthCalledWith(1, { newEmail: NEW_ADDRESS, locale: 'en' })
+  expect(mocks.initiateEmailChange, 'the same new address, repeated once').toHaveBeenNthCalledWith(2, { newEmail: NEW_ADDRESS, locale: 'en' })
+  expect(await screen.findByText(t.email_change_resend), 'the change is pending now').toBeTruthy()
+  expect(mocks.initiateEmailChange).toHaveBeenCalledTimes(2)
+
+  // the deletion
+  cleanup(); resetGis()
+  mocks.signInWithGoogleIdToken.mockClear()
+  const deleteApi = await askDeletion()
+  expect(configOf(deleteApi).login_hint).toBe('person@example.com')
+  expect(mocks.deleteOwnAccount).toHaveBeenCalledTimes(1)
+  expect(mocks.deleteOwnAccount).toHaveBeenLastCalledWith({})
+  mocks.deleteOwnAccount.mockResolvedValueOnce({})
+  await pickAccount(deleteApi, credentialFor('person@example.com'))
+
+  await waitFor(() => expect(mocks.deleteOwnAccount).toHaveBeenCalledTimes(2))
+  expect(mocks.deleteOwnAccount).toHaveBeenLastCalledWith({})
+  expect(mocks.signInWithGoogleIdToken).toHaveBeenCalledTimes(1)
+  await waitFor(() => expect(mocks.signOut).toHaveBeenCalledTimes(1))
+  expect(mocks.push, 'the person leaves only after the deletion succeeded').toHaveBeenCalledWith('/en')
+  expect(mocks.toastSuccess).toHaveBeenCalledWith(t.delete_account_success)
+  expect(mocks.deleteOwnAccount, 'the deletion ran exactly twice: the refused attempt and the repeat').toHaveBeenCalledTimes(2)
+})
+
+it('[SEC-927-FE-REAUTH-DENY-ACCOUNT] a Google confirmation with another account or an unreadable credential is refused before Supabase and repeats nothing', async () => {
+  const wrongAccount = t.reauth_google_wrong_account.replace('{email}', 'person@example.com')
+
+  const mailApi = await askEmailChange()
+  await pickAccount(mailApi, credentialFor('other@example.com'))
+  expect(await screen.findByText(wrongAccount)).toBeTruthy()
+  await waitFor(() => expect(mailApi.initialize).toHaveBeenCalledTimes(2))   // the next attempt is armed
+  await pickAccount(mailApi, 'this-is-not-a-jwt')
+  await pickAccount(mailApi, credentialFor(undefined))
+  expect(screen.getByText(wrongAccount)).toBeTruthy()
+  expect(mocks.signInWithGoogleIdToken, 'no Supabase sign-in with another account').not.toHaveBeenCalled()
+  expect(mocks.initiateEmailChange, 'only the first, refused attempt').toHaveBeenCalledTimes(1)
+
+  cleanup(); resetGis()
+  const deleteApi = await askDeletion()
+  await pickAccount(deleteApi, credentialFor('other@example.com'))
+  expect(await inDialog().findByText(wrongAccount)).toBeTruthy()
+  await waitFor(() => expect(deleteApi.initialize).toHaveBeenCalledTimes(2))
+  await pickAccount(deleteApi, 'a.b')
+  expect(mocks.signInWithGoogleIdToken).not.toHaveBeenCalled()
+  expect(mocks.deleteOwnAccount, 'only the first, refused attempt').toHaveBeenCalledTimes(1)
+  expect(mocks.signOut).not.toHaveBeenCalled()
+})
+
+it('[SEC-927-FE-REAUTH-DENY-SWITCH] when the confirmation returns another account\'s session the person is signed out and nothing is repeated', async () => {
+  mocks.signInWithGoogleIdToken.mockResolvedValue({ data: { user: { id: 'user-2' } }, error: null })
+
+  const mailApi = await askEmailChange()
+  await pickAccount(mailApi, credentialFor('person@example.com'))
+  await waitFor(() => expect(mocks.signOut).toHaveBeenCalledTimes(1))
+  expect(mocks.push).toHaveBeenCalledWith('/en')
+  expect(mocks.initiateEmailChange, 'the e-mail change was not run for user-2').toHaveBeenCalledTimes(1)
+
+  cleanup(); resetGis()
+  mocks.signOut.mockClear(); mocks.push.mockClear()
+  const deleteApi = await askDeletion()
+  await pickAccount(deleteApi, credentialFor('person@example.com'))
+  await waitFor(() => expect(mocks.signOut).toHaveBeenCalledTimes(1))
+  expect(mocks.push).toHaveBeenCalledWith('/en')
+  expect(mocks.deleteOwnAccount, 'the deletion was not run for user-2').toHaveBeenCalledTimes(1)
+  expect(mocks.toastSuccess).not.toHaveBeenCalled()
+})
+
+it('[SEC-927-FE-REAUTH-ERR] a failed Google confirmation or an unavailable Google script shows an error and repeats nothing', async () => {
+  const mailApi = await askEmailChange()
+  mocks.signInWithGoogleIdToken.mockResolvedValueOnce({ data: { user: null }, error: { message: 'Bad ID token' } })
+  await pickAccount(mailApi, credentialFor('person@example.com'))
+  expect(await screen.findByText(t.reauth_google_failed)).toBeTruthy()
+  await waitFor(() => expect(mailApi.initialize).toHaveBeenCalledTimes(2))
+  mocks.signInWithGoogleIdToken.mockRejectedValueOnce(new Error('network'))
+  await pickAccount(mailApi, credentialFor('person@example.com'))
+  await waitFor(() => expect(mocks.signInWithGoogleIdToken).toHaveBeenCalledTimes(2))
+  expect(screen.getByText(t.reauth_google_failed)).toBeTruthy()
+  expect(mocks.initiateEmailChange, 'nothing was repeated').toHaveBeenCalledTimes(1)
+
+  // the Google script cannot be loaded: the slot's own alert, without advice to use a password, and no loader left
+  cleanup(); resetGis()
+  mocks.initiateEmailChange.mockClear()
+  renderTab()
+  await waitFor(() => expect(mocks.getReauthMethod).toHaveBeenCalled())
+  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
+  mocks.initiateEmailChange.mockResolvedValueOnce({ error: 'Sign in with Google again to change your email.', reason: 'reauth_required' })
+  fireEvent.click(screen.getByRole('button', { name: messages.common.save }))
+  await screen.findByText('Sign in with Google again to change your email.')
+  const script = await waitFor(() => { const found = gisScript(); expect(found).not.toBeNull(); return found as HTMLScriptElement })
+  expect(screen.getByRole('status', { name: a.google_loading })).toBeTruthy()
+  await act(async () => { script.dispatchEvent(new Event('error')) })
+  const alert = await screen.findByText(a.google_reauth_unavailable)
+  expect(alert.textContent).not.toMatch(/password/i)
+  expect(screen.queryByText(a.google_unavailable), 'not the sign-in sheet\'s text').toBeNull()
+  expect(screen.queryByRole('status')).toBeNull()
+  expect(mocks.signInWithGoogleIdToken).toHaveBeenCalledTimes(2)   // only the two earlier attempts
+  expect(mocks.initiateEmailChange).toHaveBeenCalledTimes(1)
+})
+
+it('[SEC-927-FE-REAUTH-ONE-CONFIG] after the deletion dialog with its own Google button closes, a confirmation in the e-mail section still repeats the e-mail change once', async () => {
+  // GIS keeps only the last `initialize` of the page, so the tab may mount only one Google button at a time: `initialize` calls minus `cancel` calls (one per unmount) = buttons alive
+  const api = await askEmailChange()
+  const alive = () => api.initialize.mock.calls.length - api.cancel.mock.calls.length
+  expect(api.initialize).toHaveBeenCalledTimes(1)
+  expect(alive(), 'the e-mail section\'s button').toBe(1)
+
+  // the deletion dialog opens and its deletion needs Google too: the e-mail section's button is gone, the dialog's button is the one alive
+  fireEvent.click(screen.getByRole('button', { name: t.delete_account }))
+  const dialog = await screen.findByRole('dialog')
+  mocks.deleteOwnAccount.mockResolvedValueOnce({ error: 'reauth_required' })
+  fireEvent.click(within(dialog).getByRole('button', { name: t.delete_account_confirm }))
+  expect(await within(dialog).findByText(t.delete_account_google_required)).toBeTruthy()
+  await waitFor(() => expect(api.initialize).toHaveBeenCalledTimes(2))
+  expect(api.cancel, 'the e-mail section\'s button was unmounted when the dialog opened').toHaveBeenCalledTimes(1)
+  expect(alive(), 'two Google buttons are never mounted at once').toBe(1)
+
+  // the dialog closes: the e-mail section's button is mounted again and initializes last, so the callback Google holds is the e-mail section's
+  fireEvent.click(within(dialog).getByRole('button', { name: messages.common.cancel }))
+  await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+  await waitFor(() => expect(api.initialize).toHaveBeenCalledTimes(3))
+  expect(alive(), 'the dialog\'s button is gone, the e-mail section\'s is alive').toBe(1)
+  mocks.initiateEmailChange.mockResolvedValueOnce({ pendingEmail: NEW_ADDRESS })
+  await pickAccount(api, credentialFor('person@example.com'))
+
+  await waitFor(() => expect(mocks.initiateEmailChange).toHaveBeenCalledTimes(2))
+  expect(mocks.signInWithGoogleIdToken).toHaveBeenCalledTimes(1)
+  expect(mocks.initiateEmailChange, 'the same new address, repeated once').toHaveBeenNthCalledWith(2, { newEmail: NEW_ADDRESS, locale: 'en' })
+  expect(mocks.deleteOwnAccount, 'the deletion was not repeated').toHaveBeenCalledTimes(1)
+})

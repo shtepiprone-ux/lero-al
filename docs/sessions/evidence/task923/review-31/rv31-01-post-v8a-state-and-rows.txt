@@ -1,0 +1,17 @@
+Opus, Review 31 (Task 923), 2026-10-21: two independent checks of the v8a apply and of R98.
+1. The live database after the owner's v8a apply, read-only (one connection: begin read only, SELECTs of pg_policies, pg_constraint, role_permissions and pg_proc, rollback; platform win32, node v22.22.3, pg 8.21.0 from a session scratchpad, db-catalog/lib.cjs; no value printed):
+transaction_read_only = on
+listings read policy names sold and rented: [{"ok":true}]
+photo read policy names listings: [{"ok":true}]
+avatars staff policies left: [{"n":0}]
+role_permissions policies left: [{"n":0}]
+new constraints validated: [{"n":7}]
+seeded moderator rows allowed: [{"n":8}]
+new function ACL: [{"acl":"{postgres=X/postgres,service_role=X/postgres}","prosecdef":true}]
+old function md5 unchanged: [{"ok":true}]
+rollback; connection closed
+2. The harness rows that are ok in r25-04 and in r26-01 (grep -oE '^ ok  [A-Z0-9a-z]+', sorted, comm):
+ok rows in r25-04-rls-harness-v8a-not-applied.txt: 215
+ok rows in r26-01-rls-harness-post-v8a.txt: 243
+ok in r25-04 and not ok in r26-01: 0 (none lost)
+ok in r26-01 and not in r25-04: V801 V802 V803 V804 V805 V806 V807 V808 V809 V810 V811 V812 V814 V815 V816 V817 V818 V821 V822 V823 V824 V825 V826 V827 V828 V829 V830 V831 

@@ -1,0 +1,8 @@
+rv48-25-dry-deletion.sql sha256 81455eb14623f04bd76f02aef2d2aaa5f0c535b3e0af1295ace2a33a841efc4e; rv48-25-dry-deletion-rollback.sql sha256 3efa35b54c0995bf348beddbca3a1d049eae5c2863136876c4873f753bfe78ac
+apply preflight: 6727 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ok (read_only=on)
+apply preflight with CRLF: ok (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 0

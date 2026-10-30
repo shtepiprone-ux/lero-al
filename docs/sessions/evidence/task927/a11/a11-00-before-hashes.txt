@@ -1,0 +1,27 @@
+# a11-00: sha256 before the first edit (Amendment 11, R53-R58)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a11/a11-00-hashes.mjs docs/sessions/evidence/task927/a11/a11-00-before-hashes.txt "a11-00: sha256 before the first edit (Amendment 11, R53-R58)"
+date: 2026-10-28T17:28:18.335Z
+paths: 17
+
+f3bc133f0cec56dd327bed55d3a48c2393e8d3ede562f95c9a56ec2cd55883f1  src/lib/auth/googlePopup.ts
+a79c5e9f405ddbdd59114817794882d1f11339ea8da1b8b0130dbf2e024723ac  src/components/auth/GoogleSignInButton.tsx
+3cefff16a23d0bdb486f1ec65311cbdb882892640dcef6405a79b5b899e5db7f  src/__tests__/security/clientSinks.test.ts
+ABSENT  src/lib/analytics/beforeSend.ts
+ABSENT  src/lib/analytics/__tests__/beforeSend.security.test.ts
+6634bdded2ce484c4dd7adbbab1cb7c439ccfb489d4c70dd090a0fc6557db183  src/app/layout.tsx
+e8b3d019e933c963db475370185b8725c2bac556e30e8cc07181853d1fbcb6c3  src/modules/auth/components/AuthSheet.banned.security.test.tsx
+3c48d27b1fc7dbd4e13c4b8c68dcf0bb39fdcc7c98394776ac80486c82340a97  src/lib/auth/__tests__/googlePopup.test.ts
+dfe590765765dff6c65c635f0949e0ae3fecc243ea3feffab35df6d43e829a1f  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+039dd127d680d3d7471044714954e7c5c10db9933473a679fa3c20b1df4b885a  src/modules/auth/components/__tests__/AuthSheet.test.tsx
+ee9c8676a7838d546702d5b0a3ed28fe29d9b2b4276828684136cf0840b789e8  src/components/layout/__tests__/Header.google.security.test.tsx
+5a019e1c97f77c6e30447ffc407e7db13843b6cbc0575f016d47ae16cf607d40  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+3494dc35b21609a4f561f51f4ef79512bf30757f09c128d6fbd54a1a95f5371f  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+c513756deafded8ba3f4632fc33b62c0a46264f89405a2e0dcc83fd095719f0f  src/lib/auth/googleIdentity.ts
+5749254c0e9bd8ff21b6e7448ba816126c82954d63a051b52e280a5f5bc44b4c  src/components/auth/GoogleSignInSlot.tsx
+f2ef4474ce406da82ca2a1187bb3f39cb9a8ceb2bbf9d5ccf5b72a9be03bfabf  src/app/auth/google/callback/GoogleCallbackRelay.tsx
+b4bb6f089898e0ca980ef0ce2dccbfa0fe8de76e7329964c4da13f7fdf0b73cf  src/app/auth/google/callback/page.tsx
+
+exit code: 0

@@ -1,0 +1,521 @@
+# fr-24 (Opus) 2026-10-28T22:06:10.044Z win32 node v22.22.3
+requirement items 583; flagged for manual reading 519
+R2 (a) (row K:1714) latest=none hits=0
+R2 (b) (row K:1714) latest=none hits=0
+R3 (row K:1715) latest=not-done hits=26 at S:5313: - **Google sign-in (Task 927).** On lero.al the sheet shows Google's personalized button, "Continue as Andrii". The owner wants Google's account-chooser popup i
+R4 (row K:1716) latest=not-done hits=28 at S:4348: | R4 | `rv48-01-targeted.txt`; `r42-02b`–`g` | 9 of 9 pass. Break 1 fails on `the list, not the 404 page`, and break 2 on `an unknown notice is not shown`. Each
+R5 (row K:1717) latest=not-done hits=20 at S:4354: | R5 | 16d and overlays | `AdminPageHeader` renders `MantineDashboardHeader` (direct Story), Mantine `Alert` (`Mantine/Primitives/Alert`) and a `lucide-react` i
+R8 (row K:1720) latest=none hits=2
+R9 (row K:1721) latest=not-done hits=14 at S:1273: 1. **Status rule of AC36.** No row is outcome (iii): the 64 NOT ALLOWED rows have a cause, a real overlap in the product that is stable across runs, which is ne
+R10 (row K:1798) latest=not-done hits=11 at S:2219: 4. **Process notes.** The first mobile-adaptation receipt was rejected by the helper (a semicolon in `surfaces` and `mobile range` written without the leading `
+R11 (row K:1799) latest=not-done hits=10 at K:2046: | R25 [C105; C106; C107; C108; D1] | **An in-flow slide of a transformed track is judged against the frame.** In the in-flow path, an element whose parent has a
+R12 (row K:1800) latest=not-done hits=8 at S:1256: | `admincurrencytabs--default` (60) | `widths-mismatch` at 320 / 390 / 639, `open-failed` + `portal-count` at 640 | its six registry rows still carried `{min:64
+R13 (row K:1801) latest=not-done hits=5 at S:1773: **R83 (g): `BLOCKED — TASK 927 ORDER`.** FACT (`r19-20-r83-order-check.txt`, EXIT_CODE=1): `ProfileTab.tsx:499` is still `{emailNeedsGoogle && (`; the Amendment
+R14 (c) (row K:1802) latest=none hits=0
+R14 (b) (row K:1802) latest=none hits=0
+R15 (row K:1862) latest=not-done hits=19 at S:383: | R19 | `in-page.mjs`, the positioned / transformed branch of `component-overflow`: after the R15 bound is found and the box is past it, the detail is skipped o
+R16 (row K:1863) latest=not-done hits=20 at S:4130: **Verdict.** R16, R17 and AC17–AC19 of Task 927 Amendment 4 are accepted. Task 927 is not approved. It waits for:
+R17 (row K:1864) latest=not-done hits=13 at S:4130: **Verdict.** R16, R17 and AC17–AC19 of Task 927 Amendment 4 are accepted. Task 927 is not approved. It waits for:
+R19 (b) (row K:1923) latest=not-done hits=1 at S:478: | R22 | `in-page.mjs`, the positioned / transformed branch of `component-overflow`: `exemptSlide` now judges only the element and the descendants whose box is n
+R20 (i) (row K:1924) latest=none hits=0
+R21 (row K:1925) latest=not-done hits=17 at S:5567: 3. **`googleIdentity.test.ts` is not byte-unchanged.** AC21 says it passes unchanged. `prompt` is a required member of `GoogleAccountsId` (R21 (a)), so its GIS 
+R22 (a) (row K:1978) latest=none hits=0
+R22 (b) (row K:1978) latest=not-done hits=1 at S:5572: 8. **Design choices to confirm.** (a) `useGoogleOneTap` marks a path as handled when it prompts (or when the sheet is open), not when the effect starts, so Reac
+R23 (row K:1979) latest=not-done hits=14 at S:524: | **new - Opus to file: `listingdetailpattern` + `listinggallerypattern`, class the visible slide measured against its displaced track box by the in-flow path**
+R24 (i) (row K:2045) latest=none hits=0
+R25 (row K:2046) latest=not-done hits=12 at S:625: 1. **D33 - mutation "R25 wholly inside the clipper dropped" is proved by a detail, not by a green portal.** On `track-flex-slide-straddles` the transformed trac
+R26 (a) (row K:2047) latest=not-done hits=6 at S:628: 4. **D36 - the 94 listed row changes against `r5-full`** (`r6-85-row-diff.txt`; the script attributes by detail only): (i) 36 `listingdetailpattern` gallery row
+R26 (b) (row K:2047) latest=not-done hits=4 at S:590: - Row diff against `r5-full` (`r6-85-row-diff.txt`): 312 rows / 341 rule changes; **attributed by detail: R25 204, R24 24, R26 (b) 19; 94 listed** and explained
+R26 (c) (row K:2047) latest=none hits=1
+R27 (row K:2048) latest=not-done hits=18 at S:5566: 2. **`uk` Story fixtures.** R27 gives `Arta Krasniqi`, the long name and `ar•••••@example.com` in all four locales. `check:stories` (rule `uk-latin-only`, run f
+R30 (row K:2142) latest=not-done hits=16 at S:6474: **Verdict.** `PARTIALLY VERIFIED`. R30–R32 are accepted. F5 and F6 are open. Amendment 8 (the button's theme and height, the slot's reserved height from a `them
+R31 (a) (row K:2143) latest=none hits=1
+R31 (b) (row K:2143) latest=none hits=1
+R31 (c) (row K:2143) latest=not-done hits=4 at K:2261: | R32 [C162; C163; C164; C165; C166; C167; C168; C169; C170; C171; D2] | **A failed same-origin document, script or stylesheet is a load failure, never a page t
+R31 (d) (row K:2143) latest=none hits=0
+R32 (a) (row K:2261) latest=none hits=2
+R32 (c) (row K:2261) latest=not-done hits=6 at S:1261: Gate proof after the fixes: self-test `r10-104-census-verify-fixes.txt` **88 cases (47 PASS, 41 FAIL as stated), exit 0**, the five new cases as stated; mutatio
+R32 (b) (row K:2261) latest=none hits=1
+R32 (d) (row K:2261) latest=none hits=1
+R32 (e) (row K:2261) latest=not-done hits=3 at S:788: | AC34 | self-test exit 0 with 61 cases (the 58 of Revision 6 plus the three of R32 (e)); mutation proof 29 of 29; the new unit test of R32 (c) passes | at R32:
+R32 (f) (row K:2261) latest=none hits=2
+R33 (i) (row K:2262) latest=none hits=2
+R34 (row K:2473) latest=not-done hits=21 at S:6556: 3. **A comment left in place, for Opus.** The component comment above `GoogleSignInButton` in `GoogleSignInButton.tsx` (line 22) still says the button is Google
+R35 (a) (row K:2474) latest=none hits=2
+R40 (row K:2475) latest=not-done hits=11 at K:2452: **GR-7 (design, Opus).** `GR-7 REFERENCE RESEARCH — moment: task design; role: Opus; task: 923 Revision 8 (R35, R40–R42); subject: a short message dialog, a sta
+R36 (row K:2478) latest=not-done hits=27 at S:1482: - **R60** with R43 (c); **R38 (1)** still blocks the product steps of §17.5 item 2; **R36** waits for the owner's SQL approval (R56). Nothing of those was start
+R37 (a) (row K:2479) latest=not-done hits=6 at S:1352: - **R38 (1) still blocks**: Opus has not classified the 191 paths of C380 (§18.4, review 12 note 6). Nothing after R38 in the order of §17.5 item 2 (R39, R44, R
+R37 (b) (row K:2479) latest=not-done hits=6 at S:1222: 7. **R38 (1) stop still holds** (Opus classifies the 191 paths of C380). R34 was done in this round (the `Revision 7 report (R34)` above; AC38 is met, while the
+R37 (c) (row K:2479) latest=none hits=0
+R37 (d) (row K:2479) latest=not-done hits=6 at S:4539: - **O1 (open obligation, not new).** R37 (d) copies the applied hardening to `supabase/migrations/20261018000000_task923_access_hardening.sql`, and R43 copies d
+R37 (e) (row K:2479) latest=not-done hits=4 at S:1391: - **R36** (R56): after R37 (e), R43 (e), R45 (c), R46 (d), which wait for the owner's SQL approval (`BLOCKED - OWNER SQL APPROVAL`, unchanged). Not run in this 
+R43 (a) (row K:2481) latest=not-done hits=5 at S:1352: - **R38 (1) still blocks**: Opus has not classified the 191 paths of C380 (§18.4, review 12 note 6). Nothing after R38 in the order of §17.5 item 2 (R39, R44, R
+R43 (b) (row K:2481) latest=not-done hits=14 at S:1481: - **Opus's re-review of hardening v6** (AC61); after it the owner is asked to approve its SHA-256. The owner may approve deletion v2's hashes now (finding 1 of 
+R43 (c) (row K:2481) latest=not-done hits=13 at S:1542: - **Not started in this part** (they are product code and follow in later parts): R64 (b)–(c) (blocked, item 7), R66, R67, R68, R70–R72, R74–R80, R62 (d) / R60 
+R43 (e) (row K:2481) latest=not-done hits=12 at S:1391: - **R36** (R56): after R37 (e), R43 (e), R45 (c), R46 (d), which wait for the owner's SQL approval (`BLOCKED - OWNER SQL APPROVAL`, unchanged). Not run in this 
+R43 (g) (row K:2481) latest=none hits=10
+R46 (b) (row K:2482) latest=none hits=0
+R46 (d) (row K:2482) latest=not-done hits=5 at S:1391: - **R36** (R56): after R37 (e), R43 (e), R45 (c), R46 (d), which wait for the owner's SQL approval (`BLOCKED - OWNER SQL APPROVAL`, unchanged). Not run in this 
+R46 (e) (row K:2482) latest=none hits=2
+R44 (a) (row K:2483) latest=not-done hits=3 at S:6949: **F14 (P2, task design: R44 (a)).** `requestGoogleCredential` awaits the nonce hash before `window.open` (`googlePopup.ts:41-44`). A browser that keeps a click'
+R44 (b) (row K:2483) latest=not-done hits=7 at K:2484: | R45 [C285; C294; C295; C296; C297; C298; C299; C300; C301; C302; C303; C320; C321; C325; D26; D28; D29] | **The server ends a refused session and restores an 
+R44 (c) (row K:2483) latest=none hits=0
+R44 (d) (row K:2483) latest=not-done hits=3 at K:2479: | R37 [C197; C198; C266; C267; C268; C271; C279; C281; C282; C283; C284; C286; C287; C288; C289; C294; C295; D7; D8; D23; D25; D26; D27; D28] | **The database l
+R44 (e) (row K:2483) latest=none hits=0
+R45 (a) (row K:2484) latest=not-done hits=7 at S:1352: - **R38 (1) still blocks**: Opus has not classified the 191 paths of C380 (§18.4, review 12 note 6). Nothing after R38 in the order of §17.5 item 2 (R39, R44, R
+R45 (b) (row K:2484) latest=not-done hits=7 at S:1278: 6. **R36 is `BLOCKED — OWNER SQL APPROVAL` (§17.5 item 2: the steps that wait for the owner's approval of the SQL).** Of the 80 cases of `Sprint_78_Task_923_sec
+R45 (c) (row K:2484) latest=not-done hits=8 at S:1391: - **R36** (R56): after R37 (e), R43 (e), R45 (c), R46 (d), which wait for the owner's SQL approval (`BLOCKED - OWNER SQL APPROVAL`, unchanged). Not run in this 
+R45 (d) (row K:2484) latest=none hits=0
+R45 (e) (row K:2484) latest=none hits=1
+R39 (h) (row K:2485) latest=none hits=2
+R39 (j) (row K:2485) latest=none hits=0
+R39 (i) (row K:2485) latest=none hits=0
+R39 (k) (row K:2485) latest=not-done hits=2 at K:2691: | R47 [C363; C364; C365; C366; C367; C368; C369; C370; C371; C372; C373; C374; C375; C376; C377; C378; C379; C383; C384; D36] | **Every table shows its record c
+R39 (a) (row K:2485) latest=none hits=2
+R39 (b) (row K:2485) latest=none hits=0
+R39 (c) (row K:2485) latest=not-done hits=4 at K:2691: | R47 [C363; C364; C365; C366; C367; C368; C369; C370; C371; C372; C373; C374; C375; C376; C377; C378; C379; C383; C384; D36] | **Every table shows its record c
+R39 (d) (row K:2485) latest=not-done hits=2 at S:1127: | (f) | R39 (d) pagination and (e) visibility filter were in place; R39 (f) `ListingsFilters`: **not done, see section 4.1**; R39 (g) `belowMobileGate.test.ts` 
+R39 (e) (row K:2485) latest=none hits=1
+R39 (f) (row K:2485) latest=not-done hits=7 at S:1152: 1. **R39 (f) `ListingsFilters` conflicts with the R33 fix.** With `hiddenFrom="sm"` on the close control and the Apply button, the census fails `listingsfilters
+R39 (g) (row K:2485) latest=not-done hits=1 at S:1127: | (f) | R39 (d) pagination and (e) visibility filter were in place; R39 (f) `ListingsFilters`: **not done, see section 4.1**; R39 (g) `belowMobileGate.test.ts` 
+R47 (b) (row K:2691) latest=none hits=0
+R47 (c) (row K:2691) latest=not-done hits=1 at S:1153: 2. **AC51: `Mantine/Primitives/Table` Default in uk at 768 scrolls** (`r9-128-table-primitive-uk-768.txt`): the Story shell is 670px, the scroll viewport 668px,
+R47 (d) (row K:2691) latest=none hits=1
+R47 (e) (row K:2691) latest=none hits=1
+R47 (f) (row K:2691) latest=not-done hits=5 at S:1152: 1. **R39 (f) `ListingsFilters` conflicts with the R33 fix.** With `hiddenFrom="sm"` on the close control and the Apply button, the census fails `listingsfilters
+R47 (g) (row K:2691) latest=none hits=1
+R48 (f) (row K:2746) latest=none hits=0
+R48 (a) (row K:2746) latest=not-done hits=6 at S:1237: Review 11 amended R48 (a) (no barrel export; R48 is met as delivered), added R51 (the 16 red test files join R44's contract; it waits for R38 (1) and R44) and R
+R48 (c) (row K:2746) latest=not-done hits=1 at S:1185: | R48 (c) | new `MantineDrawer.presentation.test.tsx` (4 tests: gate matching → `sheet`, not matching → `side`, outside a drawer → `null`, the footer reads the 
+R48 (e) (row K:2746) latest=none hits=1
+R49 (row K:2747) latest=not-done hits=15 at S:1220: 5. **GR-12 parity census not rerun**: R48 changes no markup and R49 only fixture data; UNVERIFIED as a measurement.
+R50 (row K:2748) latest=not-done hits=24 at S:3596: requirements (D14, D15, D24, R38–R50) were implemented in earlier revisions, so the value is accurate. It is not an executable route.
+R51 (b) (row K:2806) latest=none hits=0
+R54 (a) (row K:2864) latest=not-done hits=1 at S:1313: | 1 | First self-test (`r12-03-census-verify.txt`): 92 of 93 cases as stated, exit 1; `html-text-under-control` was green on `app` (its below-the-fold twin red)
+R54 (b) (row K:2864) latest=not-done hits=1 at S:7044: 6. **Observation: no attempt, no response.** R54 (b) says a click with no prepared attempt does nothing. If the preparation fails (for example `crypto.subtle` i
+R55 (row K:2865) latest=not-done hits=13 at S:1329: - **Comparison with `r10-108-full-merged`** (`r12-61-full-vs-r10-108.txt`): rows in both 34 417; none only in one run; **100 rows differ, all 100 are listed as 
+R56 (c) (row K:2866) latest=none hits=0
+R58 (a) (row K:2977) latest=not-done hits=4 at S:1407: | R58 (a) the view | `db-catalog/r14-capture.cjs` (one `BEGIN READ ONLY` ... `ROLLBACK`, `search_path = public, pg_temp`) records `pg_get_viewdef('public.public
+R58 (b) (row K:2977) latest=none hits=3
+R58 (c) (row K:2977) latest=none hits=1
+R59 (a) (row K:2978) latest=none hits=3
+R59 (b) (row K:2978) latest=none hits=2
+R59 (c) (row K:2978) latest=none hits=2
+R59 (d) (row K:2978) latest=none hits=1
+R60 (c) (row K:2979) latest=none hits=0
+R61 (row K:3013) latest=not-done hits=15 at S:1477: 4. R61 touches only the hardening files; `gen-sql-deletion.cjs` was not run in this round and the two deletion files are byte-identical to the ones Opus approve
+R62 (b) (row K:3052) latest=not-done hits=2 at S:1533: 6. FACT: the `pages` column `updated_by` (a staff user id) stays readable by `anon` under R62 (b) as it is today (the captured column list includes it); the kic
+R62 (c) (row K:3052) latest=none hits=2
+R62 (d) (row K:3052) latest=not-done hits=5 at S:1542: - **Not started in this part** (they are product code and follow in later parts): R64 (b)–(c) (blocked, item 7), R66, R67, R68, R70–R72, R74–R80, R62 (d) / R60 
+R62 (e) (row K:3052) latest=none hits=1
+R63 (a) (row K:3089) latest=none hits=1
+R63 (b) (row K:3089) latest=none hits=0
+R63 (c) (row K:3089) latest=none hits=0
+R64 (a) (row K:3123) latest=not-done hits=4 at S:1528: 1. **R64 (a) currency conversion — BLOCKED.** The kickoff converts the starting price "at the rate the site uses at that moment" and says to report `BLOCKED` if
+R64 (c) (row K:3123) latest=none hits=0
+R65 (b) (row K:3178) latest=not-done hits=3 at S:1565: Evidence: `r16-10-vitest-part2.txt` (10 files, 117 tests, exit 0, written by `r16-run.cjs`); `npx tsc --noEmit` exit 0 after the changes. The critical cases (`S
+R65 (c) (row K:3178) latest=not-done hits=4 at K:3393: - **While deactivated.** Sessions are ended at once (R65 (c)), and the person has no access. The profile page is not found,
+R65 (d) (row K:3178) latest=not-done hits=3 at S:1596: | R67 (f) | `setDefaultCurrency` calls `rpc('set_default_currency')` (R65 (d)); the refusal `22023` keeps its old text, any other error returns `Could not set t
+R66 (a) (row K:3179) latest=none hits=5
+R66 (b) (row K:3179) latest=none hits=1
+R66 (c) (row K:3179) latest=none hits=2
+R66 (e) (row K:3179) latest=not-done hits=8 at S:4631: - Since R66 (e) an error keeps the file (C1348). Before Task 923 the read's error was not looked at (C1349).
+R66 (f) (row K:3179) latest=not-done hits=1 at S:1635: | R66 (f) | `submitListingInquiry` and `trackListingContactEvent` serve only an ACTIVE listing of a LIVE owner (`isLiveAccount` in `accountAccess.ts`: profile r
+R66 (g) (row K:3179) latest=none hits=1
+R66 (h) (row K:3179) latest=not-done hits=2 at S:1587: | R66 (h) | `sendEmail` returns `{ error: 'send_failed' }` when `RESEND_API_KEY` is missing outside development; the Auth e-mail hook answers 500 `delivery_fail
+R66 (i) (row K:3179) latest=not-done hits=2 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R66 (j) (row K:3179) latest=not-done hits=1 at S:1615: 1. **Pinned tests made red by a required behaviour change and OUTSIDE both contracts (the executor cannot edit them).** `src/__tests__/instrumentation.test.ts` 
+R66 (k) (row K:3179) latest=none hits=0
+R66 (l) (row K:3179) latest=none hits=1
+R66 (o) (row K:3179) latest=not-done hits=1 at S:1589: | R66 (o) | `POST /api/upload-avatar`: for another account's id the route applies `checkActorRank` (403 refused or unreadable, 404 not a UUID or no account) BEF
+R67 (a) (row K:3180) latest=none hits=2
+R67 (b) (row K:3180) latest=none hits=1
+R67 (c) (row K:3180) latest=not-done hits=16 at S:5601: Task 923 R67 (c) moved sign-up and reset to Supabase's CAPTCHA protection, so these three fixes belong to Task 923, before its push. Google sign-in, One Tap and
+R67 (d) (row K:3180) latest=not-done hits=2 at S:1594: | R67 (d) | saved-searches and price-alerts crons: paged by `id` until done or a 25 s budget (EXECUTOR CHOICE of the number: `vercel.json` sets no `maxDuration`
+R67 (e) (row K:3180) latest=not-done hits=5 at S:1699: 16. **Stories that did not render (found by the owner, confirmed by the executor):** `ReferenceError: __dirname is not defined`, thrown from the bundled `next/s
+R67 (f) (row K:3180) latest=not-done hits=3 at S:1596: | R67 (f) | `setDefaultCurrency` calls `rpc('set_default_currency')` (R65 (d)); the refusal `22023` keeps its old text, any other error returns `Could not set t
+R67 (g) (row K:3180) latest=none hits=1
+R67 (h) (row K:3180) latest=not-done hits=2 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R67 (i) (row K:3180) latest=not-done hits=2 at S:1615: 1. **Pinned tests made red by a required behaviour change and OUTSIDE both contracts (the executor cannot edit them).** `src/__tests__/instrumentation.test.ts` 
+R68 (a) (row K:3261) latest=not-done hits=5 at S:1619: 5. **R68 (a) reproduction not done.** It needs `next build` + `next start` on the approved development project with a synthetic signed-in user. The fix does not
+R68 (b) (row K:3261) latest=not-done hits=2 at K:3215: | X37 | P2 — no session refresh on `/admin` and `/api`: a token refreshed there is not stored, and R45 (a)'s sign-out of a banned account never runs there | C63
+R68 (c) (row K:3261) latest=not-done hits=2 at S:1615: 1. **Pinned tests made red by a required behaviour change and OUTSIDE both contracts (the executor cannot edit them).** `src/__tests__/instrumentation.test.ts` 
+R68 (e) (row K:3261) latest=none hits=0
+R69 (a) (row K:3262) latest=not-done hits=8 at K:4118: | R96 [C810–C819; D67; D68] | **The v8 evidence, read-only.** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R93 (a).
+R69 (b) (row K:3262) latest=not-done hits=10 at K:4163: | R97 [C820–C836; D67; D68] | **Draft hardening v8a (not applied).** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R
+R69 (c) (row K:3262) latest=not-done hits=6 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R69 (d) (row K:3262) latest=not-done hits=11 at K:4377: | R100 [C576; C661; C662; C879–C895; D46; D51; D52; D67; D68] | **The code of R73 (b), R78 (a), R69 (d) and R72 (d).** Sonnet, in `C:\Claude_Code_Projects\lero-
+R69 (e) (row K:3262) latest=not-done hits=6 at K:4239: | R98 [C837–C851; D67; D68; D69] | **The harness after the v8a apply.** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as i
+R70 (b) (row K:3263) latest=not-done hits=5 at K:6371: | R157 [C1497; C1505; C1506; C1507; C1508; C1509; C1510; C1511; C1512; C1513; C1514] | **The missing double, and texts that say what the code does (F23, F24).**
+R70 (c) (row K:3263) latest=not-done hits=8 at S:2646: | F18 | P2 | task design (Revision 33) | SEC-CS-INT-ALLOW (`contactSession.integration.test.ts:89`) still expects the typed `sender@example.com` as the reply ad
+R70 (d) (row K:3263) latest=not-done hits=3 at S:1699: 16. **Stories that did not render (found by the owner, confirmed by the executor):** `ReferenceError: __dirname is not defined`, thrown from the bundled `next/s
+R70 (e) (row K:3263) latest=not-done hits=9 at S:1740: | R81 (g) | not in this task: R70 (e) is task 4 of §31.3 | — | no change |
+R70 (f) (row K:3263) latest=not-done hits=5 at S:1691: 9. **R70 (g)** depends on the R69 (c) SQL prefix: not started. **R70 (f)** inventory: FACT — the third-party script source of the dynamic routes is Cloudflare T
+R70 (g) (row K:3263) latest=not-done hits=5 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R70 (h) (row K:3263) latest=none hits=4
+R71 (b) (row K:3264) latest=not-done hits=4 at K:3291: **Executable now:** R68, R70 (b)–(h), R71 (b)–(l) except the R69-dependent part of (l), R72 (c)–(j) except the parts after a question. R69 waits for the owner's
+R71 (c) (row K:3264) latest=none hits=3
+R71 (d) (row K:3264) latest=not-done hits=4 at S:1699: 16. **Stories that did not render (found by the owner, confirmed by the executor):** `ReferenceError: __dirname is not defined`, thrown from the bundled `next/s
+R71 (e) (row K:3264) latest=not-done hits=3 at K:3262: | R69 [C563–C573; C606; C641–C643] | **Hardening v7, five more changes** (same SQL file as R65; written and run only after the owner approves its SHA). (a) `lis
+R71 (g) (row K:3264) latest=none hits=2
+R71 (h) (row K:3264) latest=not-done hits=5 at K:5931: | R145 [C1345; C1346; C1347; C1348; C1349; C1350; C1351; C1352; C1353; C1354; C1355; C1356; C1357; C1358; C1359; C1360; C1361; C1364; C1365; C1366; C1367; C1368
+R71 (i) (row K:3264) latest=none hits=2
+R71 (k) (row K:3264) latest=none hits=3
+R71 (l) (row K:3264) latest=none hits=2
+R72 (c) (row K:3265) latest=not-done hits=2 at K:3291: **Executable now:** R68, R70 (b)–(h), R71 (b)–(l) except the R69-dependent part of (l), R72 (c)–(j) except the parts after a question. R69 waits for the owner's
+R72 (d) (row K:3265) latest=not-done hits=12 at K:4377: | R100 [C576; C661; C662; C879–C895; D46; D51; D52; D67; D68] | **The code of R73 (b), R78 (a), R69 (d) and R72 (d).** Sonnet, in `C:\Claude_Code_Projects\lero-
+R72 (e) (row K:3265) latest=not-done hits=3 at K:3261: | R68 [C613–C620; C638–C640] | **The admin read boundary and session refresh.** (a) First the executor reproduces the bypass on a production build (`next build`
+R72 (f) (row K:3265) latest=none hits=1
+R72 (g) (row K:3265) latest=none hits=3
+R72 (h) (row K:3265) latest=not-done hits=4 at K:3255: confirm button). Both use canonical Mantine components and the existing tokens. New error and not-found pages are a later visual task (R72 (h)).
+R72 (i) (row K:3265) latest=none hits=2
+R73 (a) (row K:3354) latest=not-done hits=13 at S:1542: - **Not started in this part** (they are product code and follow in later parts): R64 (b)–(c) (blocked, item 7), R66, R67, R68, R70–R72, R74–R80, R62 (d) / R60 
+R73 (b) (row K:3354) latest=not-done hits=12 at S:1912: - **The restricted page:** for **every non-public status** (everything except active, sold and rented), a visitor who is neither the owner nor staff, signed in 
+R73 (c) (row K:3354) latest=none hits=1
+R74 (a) (row K:3355) latest=not-done hits=1 at K:3807: | R84 [C744–C747; D53] | **Moderation cannot be bypassed through the Data API (X43, hardening v8).** (a) `guard_listings_protected_columns`: a session UPDATE (`
+R74 (b) (row K:3355) latest=none hits=0
+R74 (c) (row K:3355) latest=none hits=0
+R74 (d) (row K:3355) latest=none hits=0
+R74 (e) (row K:3355) latest=not-done hits=1 at S:1652: 3. **R74.** The kickoff names the action-based gateway (`applyListingTransition`, `SEND_TO_REVIEW`), which is staff-only (`canAdminEditListing`), so an owner wo
+R75 (a) (row K:3356) latest=not-done hits=3 at K:4118: | R96 [C810–C819; D67; D68] | **The v8 evidence, read-only.** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R93 (a).
+R75 (b) (row K:3356) latest=none hits=0
+R75 (c) (row K:3356) latest=not-done hits=13 at S:1646: Read-only database capture for R75 (c) (`r17-00-rolepermissions-capture.txt`, `db-catalog/r16-rolepermissions-capture.cjs`, one `BEGIN READ ONLY`, rolled back):
+R75 (d) (row K:3356) latest=none hits=0
+R75 (e) (row K:3356) latest=none hits=0
+R75 (f) (row K:3356) latest=not-done hits=2 at K:4163: | R97 [C820–C836; D67; D68] | **Draft hardening v8a (not applied).** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R
+R75 (g) (row K:3356) latest=none hits=0
+R76 (h) (row K:3357) latest=none hits=0
+R77 (a) (row K:3358) latest=none hits=3
+R77 (b) (row K:3358) latest=none hits=0
+R77 (c) (row K:3358) latest=none hits=3
+R77 (d) (row K:3358) latest=not-done hits=6 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R77 (e) (row K:3358) latest=not-done hits=9 at S:1655: 6. **R77 (e)** SQL (`restore_inactive_account` and the `restorable` branch of `caller_access_state` leave hardening v7) is not done: the kickoff puts it with th
+R78 (a) (row K:3359) latest=not-done hits=22 at S:1698: 15. **Not done in this part, with the reason:** R70 (e) (item 8), R70 (g) (R69 (c) SQL), R66 (i) and R67 (h) (out-of-scope pinned test / R77 (d) conflict, Part 
+R78 (b) (row K:3359) latest=none hits=1
+R79 (a) (row K:3360) latest=not-done hits=3 at S:1668: | R79 (a) (b) (c) | `src/lib/getExchangeRateServer.ts`: one source (iliria98.com; the `open.er-api.com` fallback is gone); `isRatePublished(code)`; a failed piv
+R79 (b) (row K:3360) latest=not-done hits=10 at S:1542: - **Not started in this part** (they are product code and follow in later parts): R64 (b)–(c) (blocked, item 7), R66, R67, R68, R70–R72, R74–R80, R62 (d) / R60 
+R79 (c) (row K:3360) latest=none hits=0
+R80 (a) (row K:3361) latest=none hits=0
+R81 (a) (row K:3534) latest=not-done hits=7 at K:6371: | R157 [C1497; C1505; C1506; C1507; C1508; C1509; C1510; C1511; C1512; C1513; C1514] | **The missing double, and texts that say what the code does (F23, F24).**
+R81 (b) (row K:3534) latest=not-done hits=14 at S:1762: 4. **Interpretations of R81 (b), not facts:** (a) INFERENCE — "5 or more" is `count >= 5` over the last 15 minutes, and a successful check does not clear the ro
+R81 (c) (row K:3534) latest=not-done hits=4 at S:1736: | R81 (c) | `getExchangeRateServer.ts`: `SOURCE_BACKOFF_MS` = 5 minutes; after a failed read the instance does not call the source and serves the stored set unt
+R81 (e) (row K:3534) latest=none hits=4
+R81 (f) (row K:3534) latest=none hits=2
+R81 (g) (row K:3534) latest=not-done hits=3 at S:1740: | R81 (g) | not in this task: R70 (e) is task 4 of §31.3 | — | no change |
+R81 (h) (row K:3534) latest=not-done hits=6 at S:1741: | R81 (h) | waits for the owner's answer to Q10; `ProfileTab.tsx` was not touched in this part | — | WAITING |
+R81 (i) (row K:3534) latest=none hits=4
+R82 (a) (row K:3648) latest=not-done hits=3 at S:1781: | R82 (a) | `gen-sql.cjs`: section 8 deleted, so neither `caller_access_state()` nor `restore_inactive_account()` is created or granted; the preflight block is 
+R82 (b) (row K:3648) latest=none hits=2
+R82 (c) (row K:3648) latest=not-done hits=3 at S:1814: 2. **Header statements removed with the objects they described (INFERENCE).** R82 (c) says "No other statement of v7 changes", and Opus's list (rv23-02, item 2)
+R82 (d) (row K:3648) latest=none hits=7
+R82 (e) (row K:3648) latest=not-done hits=4 at S:1786: | R82 (e) | `r16-v7-logic.cjs` (O2-O8 and D1-D4 above; R3 / R4 relabelled: they prove the grants this file writes on a TEMPORARY table, not the real table's gra
+R82 (f) (row K:3648) latest=not-done hits=2 at S:1787: | R82 (f) | the two files are not applied | `r19-05-sha256.txt`: apply `8c8bcb3d6b02b260e70a0fd8b48c56908aaf2604bc37d21a36654abd9d2651c6`, rollback `fd1f13fca69
+R83 (a) (row K:3706) latest=not-done hits=2 at S:3825: 3. **A refused resend.** R83 (a) puts the error alert inside the form only, so a refused resend (the limit of three an hour) would show nothing. Today's block s
+R83 (b) (row K:3706) latest=none hits=1
+R83 (c) (row K:3706) latest=none hits=0
+R83 (d) (row K:3706) latest=none hits=0
+R83 (e) (row K:3706) latest=none hits=0
+R83 (f) (row K:3706) latest=none hits=0
+R83 (g) (row K:3706) latest=not-done hits=5 at S:1773: **R83 (g): `BLOCKED — TASK 927 ORDER`.** FACT (`r19-20-r83-order-check.txt`, EXIT_CODE=1): `ProfileTab.tsx:499` is still `{emailNeedsGoogle && (`; the Amendment
+R84 (a) (row K:3807) latest=none hits=0
+R84 (b) (row K:3807) latest=none hits=0
+R84 (c) (row K:3807) latest=not-done hits=3 at K:4118: | R96 [C810–C819; D67; D68] | **The v8 evidence, read-only.** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R93 (a).
+R84 (d) (row K:3807) latest=none hits=0
+R86 (a) (row K:3854) latest=none hits=2
+R86 (b) (row K:3854) latest=none hits=0
+R86 (c) (row K:3854) latest=not-done hits=12 at K:4163: | R97 [C820–C836; D67; D68] | **Draft hardening v8a (not applied).** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as in R
+R86 (d) (row K:3854) latest=none hits=0
+R86 (e) (row K:3854) latest=none hits=1
+R86 (f) (row K:3854) latest=not-done hits=2 at K:4768: | R110 [C982; C985; C986; C987; C1019–C1023; C1033–C1035; D64] | **The server human check.** (a) `src/lib/captcha/verifyTurnstile.ts` becomes `verifyTurnstile(t
+R87 (row K:3855) latest=not-done hits=12 at K:3989: | R93 [C769–C781; D67; D68; D69] | **The post-apply checks (they replace R87 (4) for this run).** (a) **Sonnet**, in `C:\Claude_Code_Projects\lero-al`: installs
+R88 (a) (row K:3897) latest=none hits=0
+R88 (b) (row K:3897) latest=none hits=0
+R88 (c) (row K:3897) latest=none hits=0
+R88 (d) (row K:3897) latest=none hits=0
+R88 (e) (row K:3897) latest=none hits=0
+R90 (row K:3943) latest=none hits=8
+R92 (a) (row K:3963) latest=none hits=0
+R92 (b) (row K:3963) latest=none hits=0
+R92 (c) (row K:3963) latest=none hits=0
+R92 (d) (row K:3963) latest=none hits=0
+R93 (a) (row K:3989) latest=not-done hits=6 at K:4283: | R99 [C852–C860; D67; D68; D69] | **v8a checks that survive a paste.** Sonnet, in `C:\Claude_Code_Projects\lero-al`, with `pg` from its session scratchpad as i
+R93 (b) (row K:3989) latest=none hits=0
+R93 (c) (row K:3989) latest=none hits=0
+R93 (d) (row K:3989) latest=none hits=0
+R93 (f) (row K:3989) latest=none hits=0
+R94 (a) (row K:4026) latest=not-done hits=1 at K:4018: | H1 | P1 | The BL cases insert a slug that holds the case id in capitals (C784, C785). The v7.1 guard refuses that slug with 42501 (C786, C787). So BL04b and B
+R94 (b) (row K:4026) latest=none hits=1
+R94 (c) (row K:4026) latest=none hits=0
+R94 (d) (row K:4026) latest=none hits=0
+R94 (e) (row K:4026) latest=none hits=0
+R94 (f) (row K:4026) latest=none hits=0
+R95 (a) (row K:4059) latest=none hits=2
+R95 (b) (row K:4059) latest=none hits=0
+R95 (c) (row K:4059) latest=none hits=0
+R95 (d) (row K:4059) latest=none hits=0
+R95 (e) (row K:4059) latest=none hits=0
+R95 (f) (row K:4059) latest=none hits=0
+R96 (a) (row K:4118) latest=none hits=0
+R96 (b) (row K:4118) latest=none hits=0
+R96 (c) (row K:4118) latest=none hits=0
+R96 (d) (row K:4118) latest=none hits=0
+R97 (a) (row K:4163) latest=none hits=0
+R97 (b) (row K:4163) latest=none hits=0
+R97 (c) (row K:4163) latest=none hits=0
+R97 (d) (row K:4163) latest=none hits=0
+R97 (e) (row K:4163) latest=none hits=0
+R97 (f) (row K:4163) latest=none hits=0
+R98 (a) (row K:4239) latest=none hits=1
+R98 (e) (row K:4239) latest=none hits=0
+R98 (b) (row K:4239) latest=none hits=1
+R98 (c) (row K:4239) latest=none hits=0
+R98 (d) (row K:4239) latest=none hits=0
+R99 (a) (row K:4283) latest=none hits=0
+R99 (b) (row K:4283) latest=none hits=0
+R99 (c) (row K:4283) latest=none hits=0
+R99 (d) (row K:4283) latest=none hits=0
+R99 (e) (row K:4283) latest=none hits=0
+R100 (a) (row K:4377) latest=none hits=0
+R100 (b) (row K:4377) latest=none hits=1
+R100 (c) (row K:4377) latest=not-done hits=1 at S:1875: | F6 | P3 → v8b | task design | R100 (c) says "every writer of `users.name`", but three profile-creating upserts store the metadata name with no bound: `src/lib
+R100 (e) (row K:4377) latest=none hits=1
+R100 (f) (row K:4377) latest=not-done hits=1 at S:1873: | F4 | P2 | implementation + task design | Writes outside D8_D9's scope (R100 (f)), necessary for (d) but neither listed by the kickoff nor reported: `src/compo
+R101 (b) (row K:4473) latest=none hits=0
+R101 (c) (row K:4473) latest=none hits=1
+R101 (d) (row K:4473) latest=not-done hits=1 at S:1993: | R101 (d) | `listingBounds.security.test.ts`, `ListingFormShell.bounds.security.test.tsx` follow §54.4 (EUR 10 000 000 001 and ALL 1 000 000 000 001 refused, a
+R101 (e) (row K:4473) latest=none hits=0
+R102 (b) (row K:4474) latest=none hits=0
+R102 (c) (row K:4474) latest=none hits=0
+R103 (b) (row K:4475) latest=not-done hits=2 at S:1996: | R103 (b)(c) | `listings/[slug]/page.tsx`: the non-public read asks `['inactive','archived','pending','expired']` (owner filter unless staff); when no read ret
+R103 (c) (row K:4475) latest=none hits=0
+R103 (d) (row K:4475) latest=not-done hits=2 at S:2106: | F15 | P3 | task design | AC103 "the restricted page carries `noindex`" holds on the listing page only. The edit link's restricted page has no `robots` meta (`
+R103 (e) (row K:4475) latest=none hits=2
+R103 (f) (row K:4475) latest=none hits=2
+R103 (g) (row K:4475) latest=none hits=1
+R103 (h) (row K:4475) latest=none hits=2
+R103 (i) (row K:4475) latest=not-done hits=2 at S:2001: | R103 (i) | `closedListing.security.test.ts`: "not found" for a guest, a stranger and a blocked viewer on archived and pending is now the restricted view; it m
+R104 (a) (row K:4476) latest=not-done hits=8 at S:2026: 1. **Two `updateListing.smoke` expectations disagree with today's code; I did NOT change them (R104 (a): "reported to Opus, not changed").** (i) "happy path" ex
+R104 (c) (row K:4476) latest=not-done hits=3 at S:2004: | R104 (c) | `accessHardening.integration.test.ts`: `SEC_NEGATIVE_CONTROL=closed-read` sends each deny request of `SEC-DB-X-CLOSED-READ-DENY` with the owner's s
+R104 (d) (row K:4476) latest=not-done hits=22 at S:2573: 4. **`r33-07`: three of its six commands do not exit 0 for reasons outside this revision.** (a) `check:design-tokens` fails with the same three findings as the 
+R104 (e) (row K:4476) latest=not-done hits=2 at S:2231: After the first version of this report the Stop hook (`security-hook.mjs`) answered `Product verification requires an implemented or reviewed contract` and list
+R104 (f) (row K:4476) latest=none hits=0
+R104 (g) (row K:4476) latest=none hits=0
+R105 (a) (row K:4597) latest=not-done hits=4 at S:2217: 2. **Additions beyond the letter of §55.1, none of them a change of an expectation:** (i) a one-line bullet in the header comment of `editAccessRestricted.secur
+R105 (b) (row K:4597) latest=none hits=1
+R105 (c) (row K:4597) latest=none hits=2
+R106 (a) (row K:4598) latest=none hits=1
+R106 (b) (row K:4598) latest=none hits=1
+R106 (c) (row K:4598) latest=not-done hits=1 at S:2194: | R106 (c) | `src/app/robots.ts` not touched (sha256 `c098dbd9…ed86`, as before) | file hash | pass |
+R107 (row K:4599) latest=not-done hits=11 at S:2237: ## Review 34 — Opus review of R105–R107 (Revision 31), 2026-10-22: R101–R107 accepted; the stage waits only for the owner's local-site check (PARTIALLY VERIFIED
+R108 (a) (row K:4651) latest=not-done hits=2 at S:2362: | R108 (a) | `listingSemanticHelpers.ts`: `getPostSaveRedirect` returns `` `/${locale}/cabinet?tab=listings` `` for every status that is not visible; the visibl
+R108 (b) (row K:4651) latest=none hits=2
+R108 (c) (row K:4651) latest=none hits=1
+R108 (d) (row K:4651) latest=not-done hits=3 at S:2365: | R108 (d) | `ListingFormShell.moderation.security.test.tsx`: SEC-X-FE-EDIT-MODERATION (same test name) expects `push` called with `'/sq/cabinet?tab=listings'`,
+R108 (e) (row K:4651) latest=none hits=2
+R109 (row K:4652) latest=not-done hits=14 at S:2570: 1. **Changed product paths and final sha256 (first 12).** Created: `contactActions.ts` `9be7be89a93e`, `contactHumanCheck.ts` `10edf4b0cd83`, `contactGateway.ts
+R110 (a) (row K:4768) latest=not-done hits=4 at S:2523: | R110 (a) | `verifyTurnstile(token: unknown, remoteIp?, expected?)`. A token that is not a non-empty string of at most 2048 characters is `invalid-input` befor
+R110 (b) (row K:4768) latest=none hits=1
+R110 (c) (row K:4768) latest=none hits=2
+R111 (a) (row K:4769) latest=none hits=2
+R111 (b) (row K:4769) latest=none hits=2
+R111 (c) (row K:4769) latest=none hits=1
+R111 (d) (row K:4769) latest=none hits=1
+R111 (e) (row K:4769) latest=none hits=1
+R112 (a) (row K:4770) latest=none hits=2
+R112 (b) (row K:4770) latest=not-done hits=4 at S:2646: | F18 | P2 | task design (Revision 33) | SEC-CS-INT-ALLOW (`contactSession.integration.test.ts:89`) still expects the typed `sender@example.com` as the reply ad
+R113 (a) (row K:4771) latest=none hits=2
+R113 (b) (row K:4771) latest=none hits=2
+R113 (c) (row K:4771) latest=none hits=1
+R113 (d) (row K:4771) latest=none hits=2
+R113 (e) (row K:4771) latest=not-done hits=6 at S:2647: | F19 | P3 | task design (Revision 33), resolved | R113 (e) put `getToken()` inside the async transition. The candidate requests the token in the send handler a
+R113 (f) (row K:4771) latest=none hits=1
+R113 (g) (row K:4771) latest=not-done hits=1 at S:2540: | R113 (g) | `CaptchaWidget.humanCheck.test.tsx` (14 tests, a `@marsidev/react-turnstile` double that records props and exposes `execute`, `getResponsePromise`,
+R114 (a) (row K:4772) latest=none hits=1
+R114 (b) (row K:4772) latest=none hits=0
+R114 (c) (row K:4772) latest=none hits=0
+R114 (d) (row K:4772) latest=none hits=1
+R114 (e) (row K:4772) latest=none hits=0
+R114 (f) (row K:4772) latest=none hits=0
+R114 (g) (row K:4772) latest=none hits=0
+R114 (h) (row K:4772) latest=none hits=0
+R114 (i) (row K:4772) latest=none hits=0
+R114 (j) (row K:4772) latest=none hits=0
+R114 (k) (row K:4772) latest=none hits=0
+R114 (l) (row K:4772) latest=none hits=0
+R115 (a) (row K:4918) latest=none hits=0
+R115 (b) (row K:4918) latest=none hits=0
+R115 (c) (row K:4918) latest=none hits=0
+R116 (a) (row K:4919) latest=none hits=2
+R116 (b) (row K:4919) latest=none hits=2
+R116 (c) (row K:4919) latest=none hits=1
+R116 (d) (row K:4919) latest=none hits=3
+R116 (e) (row K:4919) latest=none hits=0
+R117 (a) (row K:5014) latest=none hits=0
+R117 (b) (row K:5014) latest=none hits=1
+R117 (c) (row K:5014) latest=none hits=0
+R117 (d) (row K:5014) latest=none hits=0
+R117 (e) (row K:5014) latest=none hits=0
+R117 (f) (row K:5014) latest=none hits=4
+R118 (a) (row K:5015) latest=none hits=1
+R118 (b) (row K:5015) latest=none hits=1
+R118 (c) (row K:5015) latest=not-done hits=3 at S:2992: 2. **`scripts/rendered-interaction-states.json`.** The row's click selector is positional. R118 (c) inserts two sections before the "production wiring" section,
+R118 (d) (row K:5015) latest=none hits=3
+R119 (a) (row K:5016) latest=none hits=0
+R119 (b) (row K:5016) latest=none hits=0
+R119 (c) (row K:5016) latest=none hits=0
+R119 (d) (row K:5016) latest=none hits=0
+R119 (f) (row K:5016) latest=none hits=3
+R120 (a) (row K:5017) latest=none hits=0
+R120 (b) (row K:5017) latest=none hits=0
+R120 (c) (row K:5017) latest=none hits=0
+R120 (d) (row K:5017) latest=none hits=0
+R120 (e) (row K:5017) latest=none hits=0
+R120 (f) (row K:5017) latest=none hits=0
+R120 (g) (row K:5017) latest=none hits=0
+R120 (h) (row K:5017) latest=none hits=0
+R120 (i) (row K:5017) latest=none hits=0
+R120 (j) (row K:5017) latest=none hits=0
+R122 (row K:5100) latest=none hits=7
+R123 (a) (row K:5101) latest=none hits=1
+R123 (b) (row K:5101) latest=none hits=1
+R123 (c) (row K:5101) latest=none hits=3
+R124 (a) (row K:5102) latest=none hits=0
+R124 (b) (row K:5102) latest=none hits=0
+R124 (c) (row K:5102) latest=none hits=1
+R124 (d) (row K:5102) latest=not-done hits=4 at S:3112: 2. **`r36-04` exits 1.** `signUpWithCaptcha.smoke.test.ts` (`happy path…` and `captcha fail…`) fails in the command R124 (d) names. Both IDs are in the pinned b
+R124 (e) (row K:5102) latest=none hits=0
+R124 (f) (row K:5102) latest=none hits=1
+R124 (g) (row K:5102) latest=none hits=0
+R124 (h) (row K:5102) latest=none hits=0
+R124 (i) (row K:5102) latest=none hits=0
+R124 (j) (row K:5102) latest=none hits=0
+R126 (a) (row K:5189) latest=not-done hits=2 at S:3294: - An automated security review flagged the address source (medium): the first entry of `x-forwarded-for` is client-controlled wherever the platform appends to t
+R126 (b) (row K:5189) latest=not-done hits=3 at S:3225: - **Owner confirmation on repeat reveals.** The owner wrote (faithful translation): `And if a user presses "Show number" again, will that count as +1, or will t
+R126 (c) (row K:5189) latest=none hits=0
+R126 (d) (row K:5189) latest=none hits=0
+R126 (e) (row K:5189) latest=none hits=0
+R126 (f) (row K:5189) latest=none hits=0
+R126 (g) (row K:5189) latest=none hits=0
+R128 (a) (row K:5191) latest=none hits=1
+R128 (b) (row K:5191) latest=none hits=1
+R128 (c) (row K:5191) latest=none hits=2
+R129 (c) (row K:5192) latest=none hits=0
+R129 (b) (row K:5192) latest=none hits=0
+R130 (a) (row K:5193) latest=none hits=0
+R130 (b) (row K:5193) latest=none hits=0
+R130 (c) (row K:5193) latest=none hits=3
+R130 (d) (row K:5193) latest=none hits=0
+R130 (e) (row K:5193) latest=none hits=0
+R130 (f) (row K:5193) latest=none hits=0
+R130 (g) (row K:5193) latest=none hits=1
+R130 (h) (row K:5193) latest=none hits=0
+R130 (i) (row K:5193) latest=none hits=0
+R130 (j) (row K:5193) latest=none hits=0
+R131 (a) (row K:5262) latest=not-done hits=2 at K:5263: | R132 [C1158–C1161] | **Tests.** A new file, `src/modules/listings/components/__tests__/ListingDetailView.contactSession.security.test.tsx`, built like `Listin
+R131 (b) (row K:5262) latest=none hits=2
+R131 (c) (row K:5262) latest=none hits=1
+R131 (d) (row K:5262) latest=none hits=1
+R132 (row K:5263) latest=not-done hits=9 at S:3425: 2. **The new file doubles the gateway, the human check, the toast sink and the message dialog, and mocks the heavy children, as `ListingDetailView.favorite.test
+R133 (a) (row K:5264) latest=none hits=0
+R133 (b) (row K:5264) latest=none hits=0
+R133 (c) (row K:5264) latest=none hits=2
+R133 (d) (row K:5264) latest=none hits=0
+R133 (e) (row K:5264) latest=none hits=0
+R133 (f) (row K:5264) latest=none hits=0
+R133 (g) (row K:5264) latest=none hits=0
+R133 (h) (row K:5264) latest=none hits=0
+R134 (c) (row K:5338) latest=not-done hits=1 at S:3530: - **Tables (c).** A table is admin-written-only when every `.from('<table>')` followed by `.insert(`, `.update(`, `.upsert(` or `.delete(` is in the admin code 
+R134 (d) (row K:5338) latest=not-done hits=1 at S:3558: 1. **The findings are the assertion message.** My first version asserted `expect(findings).toEqual([])`. Both breaks failed it on that assertion, but vitest's J
+R134 (f) (row K:5338) latest=none hits=5
+R135 (a) (row K:5339) latest=none hits=0
+R135 (b) (row K:5339) latest=none hits=0
+R135 (c) (row K:5339) latest=none hits=0
+R135 (d) (row K:5339) latest=none hits=0
+R135 (e) (row K:5339) latest=none hits=0
+R135 (f) (row K:5339) latest=none hits=0
+R135 (g) (row K:5339) latest=none hits=1
+R136 (b) (row K:5423) latest=not-done hits=1 at S:3749: - **R136 (b)** `in-page.mjs`: `measure` takes `exemptText`; a `text-ellipsis` finding whose element is inside `e.closest(exemptText)` is counted in `exemptedTex
+R136 (c) (row K:5423) latest=none hits=1
+R136 (d) (row K:5423) latest=none hits=1
+R136 (e) (row K:5423) latest=none hits=1
+R137 (b) (row K:5424) latest=not-done hits=3 at S:3698: - **R83 and AC83:** not started. §65.3 puts R83 after R136 and R137 (b)–(e) in this session. Reordering the route is Opus's decision, so I did not choose it.
+R137 (d) (row K:5424) latest=none hits=3
+R137 (e) (row K:5424) latest=none hits=2
+R137 (f) (row K:5424) latest=none hits=0
+R137 (g) (row K:5424) latest=not-done hits=2 at S:3699: - **R137 (g):** not run (no code changed). No build was run, so `npm run dev` needs no stop.
+R138 (a) (row K:5540) latest=none hits=1
+R138 (b) (row K:5540) latest=none hits=2
+R138 (c) (row K:5540) latest=not-done hits=2 at K:6478: | Cases | Two contracts. `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`: 80 cases, 35 real-boundary and 33 critical (the D6–D9 package a
+R138 (d) (row K:5540) latest=none hits=2
+R139 (a) (row K:5611) latest=none hits=1
+R139 (b) (row K:5611) latest=none hits=1
+R139 (d) (row K:5611) latest=none hits=2
+R139 (e) (row K:5611) latest=none hits=1
+R139 (f) (row K:5611) latest=not-done hits=1 at S:4283: - **R139 (f).** The two new test files. Names: `AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-GONE|-DELETED|-QUERY-ERROR|-PRESENT] …` and `AdminUsersPage [SEC-X-FE
+R139 (g) (row K:5611) latest=none hits=1
+R140 (a) (row K:5717) latest=none hits=0
+R140 (c) (row K:5717) latest=not-done hits=2 at S:4491: 5. **Other `r9-` / `r14-` / `r16-` names left alone.** R140 (c) lists three file names. The comment mentions of `r9-60-account-references.cjs`, `r14-capture.cjs
+R140 (d) (row K:5717) latest=none hits=2
+R140 (e) (row K:5717) latest=none hits=0
+R140 (f) (row K:5717) latest=none hits=0
+R141 (a) (row K:5814) latest=none hits=0
+R141 (b) (row K:5814) latest=none hits=2
+R141 (c) (row K:5814) latest=none hits=0
+R141 (d) (row K:5814) latest=none hits=0
+R141 (e) (row K:5814) latest=none hits=0
+R141 (f) (row K:5814) latest=none hits=0
+R142 (a) (row K:5815) latest=none hits=0
+R142 (b) (row K:5815) latest=none hits=0
+R142 (c) (row K:5815) latest=none hits=0
+R142 (d) (row K:5815) latest=none hits=1
+R143 (e) (row K:5816) latest=none hits=0
+R144 (row K:5817) latest=not-done hits=33 at S:5024: - So both results are those of the code before Task 923. They are not defects of R141–R146, whose deletion asks for DELETE (R144) and releases every file (C1408
+R145 (a) (row K:5931) latest=none hits=0
+R145 (b) (row K:5931) latest=none hits=1
+R145 (c) (row K:5931) latest=none hits=0
+R145 (d) (row K:5931) latest=none hits=0
+R145 (e) (row K:5931) latest=not-done hits=2 at K:6478: | Cases | Two contracts. `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`: 80 cases, 35 real-boundary and 33 critical (the D6–D9 package a
+R145 (f) (row K:5931) latest=none hits=2
+R146 (b) (row K:5992) latest=none hits=1
+R146 (c) (row K:5992) latest=none hits=1
+R146 (d) (row K:5992) latest=none hits=1
+R147 (a) (row K:6044) latest=not-done hits=4 at S:5086: - Task design: R147 (a) took the bridge's comment as its premise ("only rendered when SSR confirmed the user is NOT authenticated"). The sign-up page breaks it.
+R147 (b) (row K:6044) latest=none hits=0
+R147 (c) (row K:6044) latest=none hits=0
+R147 (d) (row K:6044) latest=none hits=1
+R148 (a) (row K:6116) latest=none hits=1
+R148 (b) (row K:6116) latest=none hits=2
+R148 (c) (row K:6116) latest=not-done hits=2 at S:5162: - **R148 (c), the test.** A `browserFetch` double replaces the fetch double: an aborted request rejects with an error named `AbortError`, and a request resolves
+R148 (i) (row K:6116) latest=none hits=0
+R148 (d) (row K:6116) latest=none hits=1
+R149 (a) (row K:6174) latest=none hits=2
+R149 (b) (row K:6174) latest=not-done hits=5 at S:5385: - **R149 (b), the cases.** SEC-X-SRV-ADMIN-USER-GONE also asserts `expect(console.error, 'an absent account is not a failed query').not.toHaveBeenCalled()`. SEC
+R149 (c) (row K:6174) latest=none hits=1
+R151 (a) (row K:6240) latest=none hits=0
+R151 (b) (row K:6240) latest=none hits=0
+R151 (c) (row K:6240) latest=none hits=0
+R151 (d) (row K:6240) latest=none hits=0
+R151 (e) (row K:6240) latest=none hits=0
+R152 (row K:6241) latest=none hits=2
+R153 (row K:6242) latest=not-done hits=4 at K:6297: - **F22 (P2; implementation of S55, Revision 7, unchanged by R153).** After the cabinet password change, the browser's global sign-out got no answer (C1487). Th
+R155 (a) (row K:6244) latest=none hits=0
+R155 (b) (row K:6244) latest=none hits=0
+R155 (c) (row K:6244) latest=none hits=0
+R155 (d) (row K:6244) latest=none hits=0
+R155 (e) (row K:6244) latest=none hits=0
+R155 (f) (row K:6244) latest=none hits=0
+R156 (b) (row K:6308) latest=none hits=1
+R156 (c) (row K:6308) latest=not-done hits=4 at K:6364: - **F23 (P2; task design of R156).** One test fails after R156 (C1508). The reauth-limit file's session-client double has no `signOut` (C1509), and R156 (c) did
+R156 (d) (row K:6308) latest=none hits=0
+R157 (a) (row K:6371) latest=none hits=1
+R157 (b) (row K:6371) latest=none hits=0
+R157 (c) (row K:6371) latest=none hits=0
+R157 (d) (row K:6371) latest=none hits=0
+R157 (e) (row K:6371) latest=none hits=0
+R157 (f) (row K:6371) latest=none hits=0
+R158 (a) (row K:6423) latest=none hits=1
+R158 (b) (row K:6423) latest=none hits=0
+R158 (c) (row K:6423) latest=none hits=0
+R158 (i) (row K:6423) latest=none hits=0
+R158 (d) (row K:6423) latest=none hits=0
+R158 (e) (row K:6423) latest=none hits=0

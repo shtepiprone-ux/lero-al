@@ -1,0 +1,26 @@
+R15 sample run (en, 390 and 1440, whole registry, old Storybook build of 2026-10-10): component-overflow details from a positioned / transformed element
+rows 2043; rows with such a detail 53 (of which component-overflow is ONLY such details: 20); details 114; distinct 23
+
+16  patterns-mantine-listingdetailview :: img#leaflet-tile "" (transformed) x # past div#listing-map #
+13  patterns-mantine-listingcardtrack :: img#_imageLayer_k#tmc_# "" (absolute+transformed) x # past div#_frame_k#tmc_# #
+12  patterns-mantine-listingdetailpattern :: div "" (transformed) x # past div#h-full #
+12  patterns-mantine-listingdetailview :: div "" (transformed) x # past div#_fill_#cv#p_# #
+11  patterns-mantine-listingdetailpattern :: div "# / #" (absolute) y # past div#relative #
+8  patterns-mantine-listingdetailview :: img#leaflet-tile "" (transformed) y # past div#listing-map #
+4  mantine-primitives-listingcard :: img#_imageLayer_k#tmc_# "" (absolute+transformed) x # past div#_frame_k#tmc_# #
+4  patterns-mantine-homepagelistinggrids :: img#_imageLayer_k#tmc_# "" (absolute+transformed) x # past div#_frame_k#tmc_# #
+4  patterns-mantine-listingcardpattern :: img#_imageLayer_k#tmc_# "" (absolute+transformed) x # past div#_frame_k#tmc_# #
+4  patterns-mantine-listingdetailview :: div#leaflet-pane "Shitet apartament #+# në Tir" (transformed) y # past div#listing-map #
+4  patterns-mantine-listingdetailview :: div#leaflet-tile-container "" (transformed) y # past div#listing-map #
+4  patterns-mantine-listingdetailview :: img#leaflet-marker-shadow "" (transformed) y # past div#listing-map #
+4  patterns-mantine-listingdetailview :: img#leaflet-marker-icon "" (transformed) y # past div#listing-map #
+3  mantine-primitives-lightboxview :: div "" (transformed) x # past div#_fill_#cv#p_# #
+2  mantine-primitives-favoritesshell :: img#_imageLayer_k#tmc_# "" (absolute+transformed) x # past div#_frame_k#tmc_# #
+2  patterns-mantine-listingdetailview :: div#leaflet-popup "Shitet apartament #+# në Tir" (transformed) x # past div#listing-map #
+1  patterns-mantine-dashboardsemidonut :: svg "#apexcharts-flip-y { transfo" (transformed) y # past div#m_e#b#f #
+1  patterns-mantine-listingdetailpattern :: div "# / #" (absolute) y ## past div#relative ##
+1  patterns-mantine-listingdetailview :: div#leaflet-popup "Shitet apartament #+# në Tir" (absolute+transformed) x # past div#listing-map #
+1  patterns-mantine-listingdetailview :: a#leaflet-popup-close-button "×" (absolute) x # past div#listing-map #
+1  patterns-mantine-listinggallerypattern :: div "" (transformed) x ## past div#h-full #
+1  patterns-mantine-listinggallerypattern :: div "# / #" (absolute) y # past div#relative #
+1  patterns-mantine-listinggallerypattern :: div "" (transformed) x # past div#_fill_#cv#p_# #

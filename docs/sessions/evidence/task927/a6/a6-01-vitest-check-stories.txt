@@ -1,0 +1,138 @@
+# a6-01: check-stories gate test (Task 927 R29)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T13:54:01.255Z
+
+command: npx vitest run --reporter=verbose scripts/__tests__/check-stories.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ scripts/__tests__/check-stories.test.ts > Check 1: layout:centered / layout:padded > BAD — layout:'centered' triggers layout:centered rule 18ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 1: layout:centered / layout:padded > BAD — layout:'padded' triggers layout:padded rule 15ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 1: layout:centered / layout:padded > GOOD — layout:'fullscreen' passes with 0 layout violations 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 2: raw HTML controls > BAD — <button> in story triggers raw-html-button 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 2: raw HTML controls > BAD — <input> in story triggers raw-html-input 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 2: raw HTML controls > GOOD — no raw HTML controls passes 19ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 3: Locale-NAME export families > BAD — export const MyUkrainianStory triggers locale-name-export 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 3: Locale-NAME export families > GOOD — export const LocaleStress passes 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 3: Locale-NAME export families > BAD (p) — UkDialogOpen/SqProof/EnDesktop/AlbanianFull FAIL 14ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 3: Locale-NAME export families > GOOD (q) — Items/Enabled/Square/Editable PASS (no It/En/Sq false-positive) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 3: Locale-NAME export families > BAD — .stories.ts file is scanned 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — globals:{locale:'uk'} triggers locale-pin 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD — no locale pin passes 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD (f) — multiline globals with locale:'uk' FAIL 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD (g) — key-order globals:{ locale:'sq', viewport:… } FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD (h) — each of uk/sq/en/it FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — args:{ locale:'en' } FAIL (not just non-en) 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — JSX locale="en" FAIL 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD — function parameter default locale = 'en' PASS (not a pin) 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — multiline JSX locale="en" FAIL (prop on separate line from tag) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — multiline JSX prop + closing slash on same line: locale="en" /> 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — multiline expression prop + closing slash on same line: locale={'uk'} /> 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — JSX locale={'uk'} expression prop FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — multiline JSX locale={'it'} expression prop FAIL 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD — arrow fn parameter default locale = 'en' PASS 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD — destructured obj parameter default locale = 'en' on continuation line PASS 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD (i) — args:{ locale:'uk' } FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD (i) — JSX locale="uk" FAIL 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD (j) — toolbar-reactive locale={ctx.globals.locale} PASS 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD (j) — viewport-only pin PASS 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > GOOD (o) — a single pin yields exactly ONE violation (no double-count) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 4: Hardcoded locale pins (globals + args + props) > BAD — .stories.ts file is scanned 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 5: hardcoded title literals in fixtures > BAD — title:'Modern Apartment in Tirana...' triggers hardcoded-title-literal 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 5: hardcoded title literals in fixtures > GOOD — fixture with no forbidden title passes 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 6: storybook.* key parity across sq/en/uk/it > BAD — key in en missing from sq triggers storybook-parity 7ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 6: storybook.* key parity across sq/en/uk/it > GOOD — all 4 locales have matching keys passes 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 7: inline locale maps (uk:/sq: in stories) > BAD — uk: 'value' object literal triggers inline-locale-map 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 7: inline locale maps (uk:/sq: in stories) > GOOD — storyT call on the same line is skipped 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 8: uk.json Latin-only storybook values > BAD — Latin-only uk storybook value triggers uk-latin-only 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 8: uk.json Latin-only storybook values > GOOD — Cyrillic uk storybook value passes 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 8: uk.json Latin-only storybook values > GOOD — a masked e-mail address in uk passes (Task 927 R29) 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 8: uk.json Latin-only storybook values > BAD — a masked value that is not an address still triggers uk-latin-only (Task 927 R29) 15ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 9: runtime component hardcoded literals > BAD — >Previous< in runtime component triggers runtime-hardcode 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 9: runtime component hardcoded literals > GOOD — t() call on the same line is skipped 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 9 exclusion boundary (Task 612 test-file exclusion) > GOOD — src/components/**/*.test.tsx is excluded (no runtime-hardcode) 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 9 exclusion boundary (Task 612 test-file exclusion) > GOOD — src/modules/**/__tests__/*.tsx is excluded (no runtime-hardcode) 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 9 exclusion boundary (Task 612 test-file exclusion) > BAD (blind-spot guard) — real non-test src/modules/**/*.tsx with the SAME literal is still caught 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns true for plain English "Submit" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns true for "Browse available properties" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns true for "Listings" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for Albanian with diacritic "Kërko" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for Cyrillic "Апартамент" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for lowercase "next" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for number "25" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for 2-char value "OK" (< 3 alpha) 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for Italian with diacritics "Città" 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > isEnglishish > returns false for empty string 0ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (a) double-quote — title="Submit" triggers jsx-prop-literal 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (b) single-quote — title='Submit' triggers jsx-prop-literal 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (c) expression double-quote — title={"Submit"} triggers jsx-prop-literal 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (d) expression single-quote — title={'Submit'} triggers jsx-prop-literal 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (e) template literal — title={`Submit`} triggers jsx-prop-literal 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (f) JSX text child — <Button>Submit</Button> triggers jsx-text-literal 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — storyT() on same line skips the entire line 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — allowlisted city name "Tirana" in double-quote prop passes 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — Albanian diacritic placeholder="Kërko prona" passes (not Englishish) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — Cyrillic placeholder passes 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — template literal WITH ${} interpolation is not caught 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD — JSX text child wrapped in {" ... "} expression is not caught (no space → not form-i) 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (g) object-property placeholder:'Enter password' triggers jsx-prop-literal 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD (g) object-property placeholder with non-English value passes 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (h) standalone text line "Section body content" triggers jsx-text-literal 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD (h) standalone text line with JSX expression wrapper is not caught 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > BAD (i) expression child {'Content bounded within this container'} triggers jsx-text-literal 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 10: English JSX string-prop literal — all variants > GOOD (i) expression child with Albanian diacritics passes (not Englishish) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 11: sm:flex-row + sm:flex-wrap (toolbar overflow at 640px) > BAD — sm:flex-row sm:flex-wrap on same line triggers toolbar-sm-flex-wrap 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 11: sm:flex-row + sm:flex-wrap (toolbar overflow at 640px) > GOOD — md:flex-row md:flex-wrap passes (correct 768px breakpoint) 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 11: sm:flex-row + sm:flex-wrap (toolbar overflow at 640px) > GOOD — sm:flex-row without sm:flex-wrap passes (single-control row) 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (a) — export const FooMobile320 FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (b) — bare Tablet/Desktop/HugeDesktop FAIL 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (c) — prefix/infix TabletStack/MobileStack FAIL 12ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > GOOD (d) — allowlisted real modes PASS 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (e) — non-allowlisted SheetOpenMobile FAIL 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > GOOD (l) — WorldwideResults PASS (no Wide false-positive) 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > GOOD (m) — file-scoped: MobileScroll in allowlisted file PASS, same name in different file FAIL 16ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (n) — stale allowlist entry for non-existent file FAIL 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 12: Viewport/width-named exports (identifier-token) > BAD (k) — .stories.ts file is scanned 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical) > BAD (r) — ProofRow/DemoState/Canonical320/FilteredDraft FAIL 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical) > GOOD (s) — allowlisted FilteredPending PASS 13ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical) > BAD (t) — same Filtered* name in a different file FAIL 16ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical) > BAD — .stories.ts file is scanned 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form A (literal prop) > BAD — color="cyan" (stock, unregistered) FAILS 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form A (literal prop) > GOOD — color="brand" (registered) PASSES 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form A (literal prop) > GOOD — c="gray.5" (registered, shaded) PASSES 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form B (var(--mantine-color-*)) > BAD — var(--mantine-color-teal-6) (stock, unregistered) FAILS 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form B (var(--mantine-color-*)) > GOOD — var(--mantine-color-brand-7) (registered) PASSES 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form B (var(--mantine-color-*)) > GOOD — var(--mantine-color-white) (no digit shade) PASSES 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form C (*COLOR* map) > BAD — const DEMO_COLOR = { x: "grape" } (stock, unregistered) FAILS 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form C (*COLOR* map) > GOOD — const STATUS_COLOR = { active: "green" } (registered) PASSES 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: Unregistered Mantine colour prop — Form C (*COLOR* map) > GOOD — a map not named *COLOR* is not scanned even with a stock unregistered value 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords) > GOOD — transparent PASSES 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords) > GOOD — currentColor PASSES 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords) > GOOD — oklch() PASSES 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords) > GOOD — linear-gradient() PASSES 21ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords) > GOOD — dimmed PASSES 8ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 15: underivable registered-colour set fails loudly > BAD — missing theme.ts reports colour-registered-set-underivable, not a silent empty-set scan 7ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > BAD — Date.now() used as a fixture value FAILS 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > BAD — bare new Date() used as a fixture value FAILS 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > GOOD — a frozen constant derived by arithmetic from a documented anchor PASSES 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > GOOD — a frozen new Date(<iso literal>) PASSES 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > GOOD — a comment mentioning new Date()/Date.now() PASSES 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > GOOD — a trailing line comment mentioning new Date() PASSES (Task 698) 9ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > GOOD — a string literal containing the text "new Date()" PASSES (Task 698) 11ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > BAD — a new / Date() pair split across a line break FAILS (Task 698) 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > BAD — an apostrophe in JSX text does not hide a real new Date() below it (Task 698 review F1) 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > Check 16: Wall-clock fixture values > BAD — an apostrophe inside a regex literal does not hide a real Date.now() below it (Task 698 review F1) 10ms
+ ✓ scripts/__tests__/check-stories.test.ts > gate completeness > checksRan === 16 on a clean root (all 16 checks executed) 7ms
+ ✓ scripts/__tests__/check-stories.test.ts > gate completeness > returns 0 violations on a clean root with valid messages 8ms
+
+ Test Files  1 passed (1)
+      Tests  118 passed (118)
+   Start at  14:54:02
+   Duration  1.49s (transform 82ms, setup 97ms, import 75ms, tests 1.19s, environment 0ms)
+--- exit code: 0 ---
+
+finished: 2026-10-25T13:54:03.968Z
+exit code: 0

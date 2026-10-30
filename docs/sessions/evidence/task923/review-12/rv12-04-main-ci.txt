@@ -1,0 +1,5 @@
+command: gh run list --branch main --limit 3 (2026-10-19)
+completed	failure	docs: add frontend and server security testing rules	Governance Validation (PR)	main	push	39036771876	45m19s	2026-10-17T13:29:31Z
+completed	success	Scheduled Governance Scan	Scheduled Governance Scan	main	schedule	38290177433	1m3s	2026-10-12T18:19:54Z
+completed	failure	fix(ci): review-ledger push mode validates only ledgers changed in th…	Governance Validation (PR)	main	push	37668475795	45m25s	2026-10-07T18:39:16Z
+EXIT_CODE=0

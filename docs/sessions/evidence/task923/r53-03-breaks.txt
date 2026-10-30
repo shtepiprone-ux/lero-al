@@ -1,0 +1,36 @@
+# r53-03: Task 923 Revision 53, R158, break B18
+platform: win32 10.0.26300 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r53-03-breaks.mjs
+started: 2026-10-25T13:35:01.489Z
+
+=== B18: the bridge no longer replaces the page by the language home after it opens the sheet: a person without a session is left on the sign-in page
+file: src/modules/auth/components/AuthRedirect.tsx
+test: npx vitest run src/modules/auth/components/__tests__/staleSession.security.test.tsx -t SEC-D29-FE-STALE-DENY
+after-edit sha256 (before the break): 19c09035b8b33dfb1d5e94d57a4f244d8e5bcf2081f1e0e8a52d585ec480ccec
+baseline run: exit 0
+broken sha256: a5a9fa33d172ab1f0b6b43eda6257e13d408612ba7c5e12bf1776a8ccd9bab70
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/staleSession.security.test.tsx > [SEC-D29-FE-STALE-DENY] An open tab whose account the server refused becomes a guest and is never sent back from the sign-in page
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/modules/auth/components/__tests__/staleSession.security.test.tsx:128:30
+    126|     await waitFor(() => expect(opened).toHaveBeenCalledTimes(1))
+    127|     expect(meCalls()).toBe(1)
+    128|     expect(boundary.replace).toHaveBeenCalledTimes(1)                 …
+       |                              ^
+    129|     expect(boundary.replace).toHaveBeenCalledWith('/en')
+    130|     expect(boundary.replace).not.toHaveBeenCalledWith('/en/cabinet')  …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+restored sha256: 19c09035b8b33dfb1d5e94d57a4f244d8e5bcf2081f1e0e8a52d585ec480ccec
+restored run: exit 0
+OK   B18: baseline passes
+OK   B18: the break fails on the intended assertion
+OK   B18: restored sha256 equals the after-edit hash
+OK   B18: restored run passes
+
+THE BREAK BEHAVED AS REQUIRED
+exit code: 0

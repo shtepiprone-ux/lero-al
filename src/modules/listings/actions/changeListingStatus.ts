@@ -10,8 +10,9 @@
 
 'use server'
 
-import { getUser } from '@/lib/auth/server'
-import { createClient } from '@/lib/supabase/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
+import { roleHasPermission } from '@/lib/auth/permissions'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { applyListingTransitionByStatus, type TransitionApplicationResult } from './applyListingTransition'
 import type { ListingStatus } from '@/types/database'
 
@@ -19,19 +20,22 @@ export async function changeListingStatusAction(
   listingId: string,
   toStatus: ListingStatus,
 ): Promise<TransitionApplicationResult> {
-  const user = await getUser()
-  if (!user) return { ok: false, reason: 'forbidden' }
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role, or a failed lookup, is forbidden
+  // before the gateway is reached.
+  const viewer = await requireViewer()
+  if (!viewer.ok) return { ok: false, reason: 'forbidden' }
 
-  const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
+  // Task 923 R75: a moderator changing the status of ANOTHER person's listing needs the `listings.moderate` key (the owner changes their own listing without it, and an
+  // administrator holds every key). The listing's owner is read here because the gateway decides ownership itself, after this check.
+  if (viewer.role === 'moderator' && !(await roleHasPermission('moderator', 'listings.moderate'))) {
+    const { data: listing, error } = await createAdminClient().from('listings').select('user_id').eq('id', listingId).maybeSingle()
+    if (error) return { ok: false, reason: 'db_error' }
+    if (listing && listing.user_id !== viewer.userId) return { ok: false, reason: 'forbidden' }
+  }
 
   return applyListingTransitionByStatus(listingId, toStatus, {
-    userId: user.id,
-    role: profile?.role ?? null,
+    userId: viewer.userId,
+    role: viewer.role,
     source: 'cabinet',
   })
 }

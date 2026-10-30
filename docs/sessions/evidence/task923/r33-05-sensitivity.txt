@@ -1,0 +1,15 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T19:11:23.117Z
+command: node docs/sessions/evidence/task923/r33-50-sensitivity.cjs
+---- output ----
+proved     M10-action-comparison-removed (SEC-X-SRV-CONTACT-BOT-DENY, refuses another action with action-mismatch)
+           -> SEC-X-SRV-CONTACT-BOT-DENY: AssertionError: a token solved for the message path: expected { Object (ok, number) } to deeply equal { ok: false, …(1) }
+           -> refuses another action with action-mismatch: AssertionError: expected { Object (success, errorCodes) } to deeply equal { success: false, …(1) }
+proved     M11-require-viewer-replaced-by-fixed-viewer (SEC-X-SRV-CONTACT-SESSION-DENY)
+           -> SEC-X-SRV-CONTACT-SESSION-DENY: AssertionError: a guest: expected { Object (ok, number) } to deeply equal { Object (ok, reason) }
+2 of 2 proved.
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,19 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r34-03c-compare.mjs test-results/a5-final-suite.json docs/sessions/evidence/task927/a5/a5-20-failing-ids.txt
+started: 2026-10-25T09:48:43.962Z
+--- stdout ---
+control: derivation on r33-full-suite.json gives 241 IDs; recorded r33-03d has 241; identical: true
+report test-results/a5-final-suite.json: total 5878, passed 5639, failed 239, failed suites 72
+failing IDs now: 237; baseline r32-03d: 241
+only in this run (not in the baseline): 0
+only in the baseline (not failing now): 4
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+
+--- stderr ---
+
+exit code: 0

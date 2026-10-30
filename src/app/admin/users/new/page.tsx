@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
-import { createClient } from '@/lib/supabase/server'
-import { getUser } from '@/lib/auth/server'
+import { requireStaffPage } from '@/lib/auth/staff'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
@@ -8,10 +8,9 @@ import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 export const metadata = { title: 'Новий користувач — Admin' }
 
 export default async function AdminUserNewPage() {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const db = createAdminClient()
-  const supabase = await createClient()
-
-  const me = await getUser()
   const [
     { data: cities },
     { data: regions },
@@ -20,11 +19,9 @@ export default async function AdminUserNewPage() {
     db.from('locations').select('id, name_al').eq('type', 'region').order('name_al'),
   ])
 
-  let isAdmin = false
-  if (me) {
-    const { data: profile } = await supabase.from('users').select('role').eq('id', me.id).single()
-    isAdmin = profile?.role === 'admin'
-  }
+  // The role comes from requireViewer() (Task 923 R44).
+  const viewer = await requireViewer()
+  const isAdmin = viewer.ok && viewer.role === 'admin'
   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
 
   return (

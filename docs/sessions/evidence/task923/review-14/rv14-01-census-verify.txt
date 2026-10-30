@@ -1,0 +1,6 @@
+platform MINGW64_NT-10.0-26300 node v22.22.3 HEAD 9a5d252e5
+cmd npm run check:rendered-state-census:verify
+EXIT_CODE=0
+94
+FAIL html-text-overlap-in-inert-dialog-pinned-below as stated: portal:0: text-overlap   [observed: app green | portal:0 text-overlap]
+verify-gate: every case behaves as stated.

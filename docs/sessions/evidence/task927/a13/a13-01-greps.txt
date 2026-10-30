@@ -1,0 +1,17 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a13/a13-01-greps.mjs
+
+## generateLink({ type: 'invite' in src/lib/auth/googleSignIn.integration.test.ts
+expected: exactly once
+hits: 1
+  src/lib/auth/googleSignIn.integration.test.ts:115: const created = await run.admin.auth.admin.generateLink({ type: 'invite', email: `${run.RUN}_nopw@example.com` })
+verdict: as expected
+
+## createUser({ email: noPasswordEmail in src/lib/auth/googleSignIn.integration.test.ts
+expected: nowhere
+hits: 0
+verdict: as expected
+
+exit code: 0

@@ -1,0 +1,8 @@
+# rv14-02 greps (Opus), 2026-10-28T19:16:01Z
+providers.includes('email') in index.ts: 0
+rpc('account_has_password', { p_user: userId }) in index.ts: 1
+getUserById in index.ts:
+445:      const { data: found, error: lookupError } = await db.auth.admin.getUserById(id)
+488:  const { data: authUser } = await db.auth.admin.getUserById(userId)
+614:  const { data: authUser } = await db.auth.admin.getUserById(userId)
+app_metadata reads in src (non-test):

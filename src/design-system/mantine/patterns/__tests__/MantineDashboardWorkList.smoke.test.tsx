@@ -114,3 +114,25 @@ describe('MantineDashboardWorkList — maxRows never silently truncates past the
     expect(screen.getAllByRole('link')).toHaveLength(5)
   })
 })
+
+describe('MantineDashboardWorkList — a status badge takes its registered meaning (Task 859 R57(a))', () => {
+  it('a ticket meaning renders the registry colour, a bare tone its tone, and neither renders an icon (D78-29)', () => {
+    const rows: DashboardWorkListRow[] = [
+      {
+        id: '1',
+        href: '/admin/support',
+        primary: 'Ticket',
+        status: { label: 'Open', meaning: { variant: 'status', entity: 'ticket', value: 'open' } },
+        ctaLabel: 'Review',
+      },
+      { id: '2', href: '/admin/support', primary: 'Report', status: { label: 'Pending', tone: 'warning' }, ctaLabel: 'Review' },
+    ]
+    const { container } = render(withProvider(<MantineDashboardWorkList rows={rows} state="ready" />))
+    const badgeOf = (label: string) =>
+      screen.getAllByText(label).map(el => el.closest('.mantine-Badge-root')).find((el): el is Element => el !== null)
+    expect(badgeOf('Open')?.querySelector('svg')).toBeNull()
+    expect(badgeOf('Pending')?.querySelector('svg')).toBeNull()
+    expect(badgeOf('Open')?.getAttribute('style') ?? '').toContain('--badge-bg')
+    expect(container.querySelectorAll('.mantine-Badge-root').length).toBeGreaterThanOrEqual(2)
+  })
+})

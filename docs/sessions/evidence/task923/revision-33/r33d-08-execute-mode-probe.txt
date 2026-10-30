@@ -1,0 +1,5 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-08-execute-mode-probe.mjs <root>
+before execute: {"P":[],"I":[],"beforeP":0,"beforeI":0}
+after execute: {"P":[21],"I":[],"beforeP":0,"beforeI":1,"wrapP":"none","wrapI":"block"}
+after reset and second execute of P: {"P":[21,21],"I":[],"beforeP":0,"beforeI":1}
+EXIT_CODE=0

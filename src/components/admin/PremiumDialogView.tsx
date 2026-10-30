@@ -2,11 +2,13 @@
 
 import { useTranslations, useLocale } from 'next-intl'
 import { Star, Trash2 } from 'lucide-react'
-import { Button, Group, Radio, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Button, useMantineTheme } from '@mantine/core'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
+import { MantineNavRowList } from '@/design-system/mantine/patterns/MantineNavRowList'
 import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+import { MantineRadioCardGroup, MantineRadioCardOption } from '@/design-system/mantine/patterns/MantineRadioCardOption'
 import { RangeDatePicker, type DateRange } from '@/design-system/mantine/patterns/RangeDatePicker'
 import { formatListingDate } from '@/lib/formatters'
 
@@ -75,12 +77,7 @@ export function PremiumDialogView({
     : t('premium_inactive')
 
   const choiceCard = (value: string, label: string) => (
-    <Radio.Card key={value} value={value} disabled={saving}>
-      <Group wrap="nowrap" gap="sm">
-        <Radio.Indicator disabled={saving} />
-        <Text component="span" fz="sm" fw={500}>{label}</Text>
-      </Group>
-    </Radio.Card>
+    <MantineRadioCardOption key={value} value={value} label={label} disabled={saving} />
   )
 
   const footer = (
@@ -116,12 +113,10 @@ export function PremiumDialogView({
           </MantineDialogSection>
         )}
         <MantineDialogSection title={t('premium_quick_label')}>
-          <Radio.Group value={choice} onChange={onChoiceChange}>
-            <Stack gap="xs">
-              {presets.map(p => choiceCard(String(p.days), p.label))}
-              {choiceCard(PREMIUM_CUSTOM_CHOICE, t('premium_custom_date'))}
-            </Stack>
-          </Radio.Group>
+          <MantineRadioCardGroup value={choice} onChange={onChoiceChange}>
+            {presets.map(p => choiceCard(String(p.days), p.label))}
+            {choiceCard(PREMIUM_CUSTOM_CHOICE, t('premium_custom_date'))}
+          </MantineRadioCardGroup>
           {isCustom && (
             <RangeDatePicker
               selectionMode="single"
@@ -133,18 +128,14 @@ export function PremiumDialogView({
         </MantineDialogSection>
         {isPremium && (
           <MantineDialogSection>
-            <Group>
-              <Button
-                type="button"
-                variant="subtle"
-                color="red"
-                leftSection={<Trash2 size={iconSize} />}
-                disabled={saving}
-                onClick={onRemove}
-              >
-                {t('premium_remove')}
-              </Button>
-            </Group>
+            <MantineNavRowList
+              items={[{
+                key: 'remove',
+                icon: <Trash2 size={iconSize} />,
+                label: t('premium_remove'),
+                onClick: () => { if (!saving) onRemove() },
+              }]}
+            />
           </MantineDialogSection>
         )}
       </MantineDialogSections>

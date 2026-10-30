@@ -42,6 +42,12 @@
     production component or an equivalent canonical composition; otherwise update the Story or create that
     composition Story. Stop for an owner decision if the required Story boundary is genuinely ambiguous.
 
+    **Opus owner decision, 2026-10-20:** inspect ready components and their Stories before external research at task
+    creation/revision and review. Reuse a suitable owner and inherit its adapted design; extend a missing capability;
+    create a component plus direct Story only when none fits. Apply
+    [canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md) for the binding
+    research/measurement scope. A preserved ready Story needs no edit merely to demonstrate compliance.
+
     **Story-creation preflight is mandatory.** Before creating a `*.stories.*` file, a Storybook title, or a Story
     export for visible UI — and before retaining a legacy Story alongside a Mantine migration — the orchestrator and
     executor must search canonical Stories for a direct import of the production component or an equivalent canonical

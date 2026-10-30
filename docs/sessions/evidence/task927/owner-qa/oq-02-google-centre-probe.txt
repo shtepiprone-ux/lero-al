@@ -1,0 +1,29 @@
+en 320: Google 288px, gap left 0px, gap right 0px, centred; submit 288px from x=16, host from x=16
+en 390: Google 358px, gap left 0px, gap right 0px, centred; submit 358px from x=16, host from x=16
+en 480: Google 400px, gap left 0px, gap right 48px, NOT centred; submit 448px from x=16, host from x=16
+en 560: Google 400px, gap left 0px, gap right 128px, NOT centred; submit 528px from x=16, host from x=16
+en 639: Google 400px, gap left 0px, gap right 207px, NOT centred; submit 607px from x=16, host from x=16
+en 640: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=276, host from x=276
+en 1440: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=1076, host from x=1076
+sq 320: Google 288px, gap left 0px, gap right 0px, centred; submit 288px from x=16, host from x=16
+sq 390: Google 358px, gap left 0px, gap right 0px, centred; submit 358px from x=16, host from x=16
+sq 480: Google 400px, gap left 0px, gap right 48px, NOT centred; submit 448px from x=16, host from x=16
+sq 560: Google 400px, gap left 0px, gap right 128px, NOT centred; submit 528px from x=16, host from x=16
+sq 639: Google 400px, gap left 0px, gap right 207px, NOT centred; submit 607px from x=16, host from x=16
+sq 640: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=276, host from x=276
+sq 1440: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=1076, host from x=1076
+uk 320: Google 288px, gap left 0px, gap right 0px, centred; submit 288px from x=16, host from x=16
+uk 390: Google 358px, gap left 0px, gap right 0px, centred; submit 358px from x=16, host from x=16
+uk 480: Google 400px, gap left 0px, gap right 48px, NOT centred; submit 448px from x=16, host from x=16
+uk 560: Google 400px, gap left 0px, gap right 128px, NOT centred; submit 528px from x=16, host from x=16
+uk 639: Google 400px, gap left 0px, gap right 207px, NOT centred; submit 607px from x=16, host from x=16
+uk 640: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=276, host from x=276
+uk 1440: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=1076, host from x=1076
+it 320: Google 288px, gap left 0px, gap right 0px, centred; submit 288px from x=16, host from x=16
+it 390: Google 358px, gap left 0px, gap right 0px, centred; submit 358px from x=16, host from x=16
+it 480: Google 400px, gap left 0px, gap right 48px, NOT centred; submit 448px from x=16, host from x=16
+it 560: Google 400px, gap left 0px, gap right 128px, NOT centred; submit 528px from x=16, host from x=16
+it 639: Google 400px, gap left 0px, gap right 207px, NOT centred; submit 607px from x=16, host from x=16
+it 640: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=276, host from x=276
+it 1440: Google 348px, gap left 0px, gap right 0px, centred; submit 348px from x=1076, host from x=1076
+cells 28; Google button not centred in the form: 12

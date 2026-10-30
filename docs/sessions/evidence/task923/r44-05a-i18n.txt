@@ -1,0 +1,25 @@
+# R141-R144 AC141 r44-05 (i18n): npm run check:i18n
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npm run check:i18n
+NODE_PATH: (unset)
+started: 2026-10-24T12:05:25.815Z
+--- stdout ---
+
+> lero-al@0.1.0 check:i18n
+> node scripts/check-i18n-parity.mjs
+
+── Part 1: Locale key-set parity ──────────────────────────────
+  ✅ en  — 2642 keys (matches sq)
+  ✅ uk  — 2642 keys (matches sq)
+  ✅ it  — 2642 keys (matches sq)
+
+── Part 2: Raw-enum leak scan ──────────────────────────────────
+  ✅ No suspicious raw-enum patterns detected in .tsx files.
+
+✅ Parity PASSED — all 4 locale files have identical key sets (2642 keys).
+
+--- stderr ---
+
+--- exit code: 0 ---

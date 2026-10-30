@@ -5,8 +5,8 @@ import { Inbox } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineDashboardWorkList, type DashboardWorkListRow } from '@/design-system/mantine/patterns/MantineDashboardWorkList';
 import { RelativeTime } from '@/components/shared/RelativeTime';
-import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone';
 import { theme } from '@/design-system/mantine/theme';
+import { adminDashboardAllOk } from '@/stories/fixtures/adminDashboard.fixtures';
 
 const meta: Meta<typeof MantineDashboardWorkList> = {
   title: 'Patterns/Mantine/DashboardWorkList',
@@ -40,7 +40,27 @@ function fiveRows(l: string): DashboardWorkListRow[] {
     // own <a>. Without focusable={false} the row would get a second tab stop, which is exactly
     // the defect G2 found and the WorkList smoke test's planted arm proves.
     meta: [author, <RelativeTime key="t" date={ago} absoluteLabel="29.07.2026 22:00" focusable={false} />],
-    status: { label: storyT(l, 'storybook.mantine.admin_status_pending'), color: LISTING_STATUS_COLOR.pending },
+    // Rows 1 and 2 carry a registered meaning (R57(a), Task 859): the ticket status renders with the colour it
+    // has on /admin/support. The other rows pass a bare semantic tone, as before.
+    status: n === 1
+      ? { label: storyT(l, 'admin.support.support_status_open'), meaning: { variant: 'status', entity: 'ticket', value: 'open' } }
+      : n === 2
+        ? { label: storyT(l, 'admin.support.support_status_in_progress'), meaning: { variant: 'status', entity: 'ticket', value: 'in_progress' } }
+        : { label: storyT(l, 'storybook.mantine.admin_status_pending'), tone: 'warning' },
+    ctaLabel: storyT(l, 'storybook.mantine.dashboard_worklist_cta'),
+  }));
+}
+
+// The location-request row exactly as `AdminDashboardView` maps it (R76(c)): the primary line is a person's name; the
+// owner wraps every primary line in full (GR-3i, D6). Data and public props only.
+function locationRequestRows(l: string): DashboardWorkListRow[] {
+  const lr = adminDashboardAllOk(l).locationRequests;
+  if (!lr.ok) return [];
+  return lr.data.rows.slice(0, 1).map((row) => ({
+    id: row.id,
+    href: `/admin/users/${row.id}`,
+    primary: row.displayName,
+    meta: [[row.city, row.region].filter(Boolean).join(', ')],
     ctaLabel: storyT(l, 'storybook.mantine.dashboard_worklist_cta'),
   }));
 }
@@ -60,7 +80,7 @@ export const Default: Story = {
         </Box>
 
         <Box maw={theme.other!.boxSize!.content}>
-          <MantineDashboardWorkList rows={fiveRows(l).slice(0, 2)} maxRows={5} state="ready" />
+          <MantineDashboardWorkList rows={[...fiveRows(l).slice(0, 1), ...locationRequestRows(l)]} maxRows={5} state="ready" />
         </Box>
 
         <Box maw={theme.other!.boxSize!.content}>

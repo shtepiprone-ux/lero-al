@@ -10,7 +10,8 @@ export const loginSchema = z.object({
 // Albania-only regex /^(\+355|0)[0-9]{8,9}$/ is removed — it conflicted with
 // the canonical multi-country validator and was imported nowhere.
 export const registerSchema = z.object({
-  name: z.string().min(2).max(100).transform(v => v.trim()),
+  // trim BEFORE the length rule (Task 923 Revision 7): two spaces used to pass `min(2)`
+  name: z.string().trim().min(2).max(100),
   email: z.string().email(),
   password: z.string().min(6),
   phone: z.string().optional(),

@@ -1,0 +1,12 @@
+# r54-03 commands (R162)
+platform win32 x64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+
+1. unit: npx vitest run --reporter=json --outputFile=docs/sessions/evidence/task923/revision-54/r54-03-unit.json <4 files: createAdminUser.security, sanitizeCmsHtml.security, permissions.security, middleware.security>
+   exit 0; counts:
+   total 53 passed 53 failed 0 pending 0
+
+2. integration: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref of the approved project> npx vitest run --config vitest.integration.config.ts --reporter=json --outputFile=docs/sessions/evidence/task923/revision-54/r54-03-integration.json <9 files: accessHardening, adminPermissions, contactLifecycle, listingSlugGuard, uploadAvatar, adminPage, deleteListing, updateListing, moderatorKeys>
+   exit 0; counts:
+   total 43 passed 43 failed 0 pending 0
+
+3. node docs/sessions/evidence/task923/revision-54/r54-03-cases.mjs: exit 0 (r54-03-cases.txt)

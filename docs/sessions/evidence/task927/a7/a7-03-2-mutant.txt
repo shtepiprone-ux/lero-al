@@ -1,0 +1,72 @@
+# a7-03 step 2: typedConfirm removed from ProfileTab.tsx; SEC-927-FE-DELETE-TYPED must fail
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T18:07:41.474Z
+
+command: fc "C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\0c6904c5-c687-42f2-add9-6d081ec8470b\scratchpad\ProfileTab.after-edit.tsx" src\modules\cabinet\components\ProfileTab.tsx
+--- output ---
+Comparing files C:\USERS\NOX\APPDATA\LOCAL\TEMP\CLAUDE\C--CLAUDE-CODE-PROJECTS-LERO-AL\0C6904C5-C687-42F2-ADD9-6D081EC8470B\SCRATCHPAD\ProfileTab.after-edit.tsx and SRC\MODULES\CABINET\COMPONENTS\PROFILETAB.TSX
+***** C:\USERS\NOX\APPDATA\LOCAL\TEMP\CLAUDE\C--CLAUDE-CODE-PROJECTS-LERO-AL\0C6904C5-C687-42F2-ADD9-6D081EC8470B\SCRATCHPAD\ProfileTab.after-edit.tsx
+        }}
+        typedConfirm={reauthMethod === 'google' ? { word: DELETE_CONFIRM_WORD, label: t('delete_account_type_confirm') } : unde
+fined}
+        googleConfirm={deleteNeedsGoogle ? {
+***** SRC\MODULES\CABINET\COMPONENTS\PROFILETAB.TSX
+        }}
+        googleConfirm={deleteNeedsGoogle ? {
+*****
+--- exit code: 1 ---
+
+command: node docs/sessions/evidence/task927/a7/a7-03-sha.mjs src/modules/cabinet/components/ProfileTab.tsx
+--- output ---
+d441c65694290f90ad6b8d6f3c9e076bce87c5bd9a5bd6e593a543947e52a1cc  src/modules/cabinet/components/ProfileTab.tsx
+--- exit code: 0 ---
+
+command: npx vitest run --reporter=verbose -t SEC-927-FE-DELETE-TYPED src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-X-FE-DELETE-PASSWORD] the cabinet deletion asks for the password
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > Auth's sign-in limit is shown under the field, and a failed deletion shows the error in the dialog without a sign-out
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > the password is empty again each time the dialog opens
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > an account with no password sends none, and when the server asks for a new Google sign-in it is offered the Google confirmation button
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > the e-mail form asks for the current password and sends it; a wrong one is shown and nothing is pending
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > an account with no password has no password field in the e-mail form; reauth_required offers the Google sign-in
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-DENY] no deletion without the password
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-ALLOW] the password deletes the account and a failure is shown
+ ↓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > [SEC-927-FE-REMEMBER-DELETE] a deleted account is forgotten on this device, and a refused deletion keeps it
+ × src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > [SEC-927-FE-DELETE-TYPED] an account with no password deletes only after typing DELETE; an account with a password has no typed field 278ms
+   → nothing typed yet: the primary waits for the word: expected false to be true // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  19:07:42
+   Duration  2.26s (transform 234ms, setup 86ms, import 1.04s, tests 280ms, environment 722ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > [SEC-927-FE-DELETE-TYPED] an account with no password deletes only after typing DELETE; an account with a password has no typed field
+AssertionError: nothing typed yet: the primary waits for the word: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx:276:89
+    274|   await openDialog()
+    275|   await waitFor(() => expect(dialog().queryByLabelText(t.delete_accoun…
+    276|   expect(confirmButton().disabled, 'nothing typed yet: the primary wai…
+       |                                                                                         ^
+    277|   const typedField = dialog().getByLabelText(t.delete_account_type_con…
+    278|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+--- exit code: 1 ---
+
+finished: 2026-10-25T18:07:45.044Z
+exit code: 1

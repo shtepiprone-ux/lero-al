@@ -1,0 +1,18 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T15:31:46.495Z
+command: npx vitest run src/lib/captcha/__tests__/verifyTurnstile.test.ts src/modules/auth/actions/__tests__/captcha.security.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  118 passed (118)
+   Start at  17:31:47
+   Duration  317ms (transform 150ms, setup 195ms, import 135ms, tests 29ms, environment 0ms)
+
+
+---- end ----
+EXIT_CODE=0

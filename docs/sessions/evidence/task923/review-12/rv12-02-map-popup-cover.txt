@@ -1,0 +1,6 @@
+platform: win32 10.0.26300 node v22.22.3; cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/review-12/rv12-02-map-popup-cover.mjs
+320 | {"map":[37,294,283,550],"popupContent":[78,321,237,355],"zoomOut":[93,306,137,350],"close":[218,307,262,351]}
+390 | {"map":[37,294,353,550],"popupContent":[78,321,307,355],"zoomOut":[93,306,137,350],"close":[288,307,332,351]}
+639 | {"map":[37,294,602,550],"popupContent":[193,338,441,355],"zoomOut":[93,306,137,350],"close":[422,324,466,368]}
+EXIT_CODE=0

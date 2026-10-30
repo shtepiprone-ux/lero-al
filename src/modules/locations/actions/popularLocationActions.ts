@@ -2,17 +2,16 @@
 
 import { revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { checkStaff } from '@/lib/auth/staff'
 import { routing } from '@/i18n/routing'
 
-async function requireAdminOrModerator() {
-  const user = await getUser()
-  if (!user) return { error: 'unauthenticated' as const }
-
-  const db = createAdminClient()
-  const { data } = await db.from('users').select('role').eq('id', user.id).single()
-  if (data?.role !== 'admin' && data?.role !== 'moderator') return { error: 'forbidden' as const }
-  return { db, error: null }
+async function requireLocationsManager() {
+  // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account of any role is refused here too
+  const viewer = await checkStaff({ permission: 'locations.manage' })
+  if (!viewer.ok) return { error: viewer.reason }
+  // Task 923 R66 (c): a write to `locations` needs `locations.manage` on every path (the same table createLocation / updateLocation protect with the key): the key is part of
+  // the one staff guard above (Task 923 R75), so a moderator without it cannot feature or unfeature a location.
+  return { db: createAdminClient(), error: null }
 }
 
 function revalidatePopularLocations() {
@@ -30,8 +29,11 @@ export async function setLocationFeatured(
   locationId: number,
   displayOrder: number,
 ): Promise<{ error?: string }> {
-  const auth = await requireAdminOrModerator()
+  const auth = await requireLocationsManager()
   if (auth.error) return { error: auth.error }
+
+  // numbers only (Task 923 Revision 7): the types are erased at runtime
+  if (!Number.isInteger(locationId) || !Number.isInteger(displayOrder) || displayOrder < 0 || displayOrder > 10_000) return { error: 'validation' }
 
   const { error } = await auth.db
     .from('locations')
@@ -54,8 +56,10 @@ export async function setLocationFeatured(
 export async function setLocationUnfeatured(
   locationId: number,
 ): Promise<{ error?: string }> {
-  const auth = await requireAdminOrModerator()
+  const auth = await requireLocationsManager()
   if (auth.error) return { error: auth.error }
+
+  if (!Number.isInteger(locationId)) return { error: 'validation' }
 
   const { error } = await auth.db
     .from('locations')

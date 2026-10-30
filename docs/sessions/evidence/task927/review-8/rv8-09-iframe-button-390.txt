@@ -1,0 +1,29 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:25:15.554Z
+command: node docs/sessions/evidence/task927/review-8/rv8-09-iframe-button.mjs 390 en
+--- output ---
+# rv8-09: http://localhost:6006 390 en; platform win32; node v22.22.3; 2026-10-25T19:25:25.217Z
+{
+ "dialog": {
+  "h": 475,
+  "w": 390
+ },
+ "host": {
+  "h": 40,
+  "w": 358
+ },
+ "wrap": {
+  "h": 44,
+  "w": 358
+ },
+ "iframe": {
+  "h": 44,
+  "w": 378
+ },
+ "iframeMargin": "-2px -10px -2px -10px",
+ "iframeSrcHost": "accounts.google.com/gsi/button",
+ "inPageButton": 0
+}
+--- exit code: 0 ---

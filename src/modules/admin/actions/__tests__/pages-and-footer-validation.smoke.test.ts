@@ -25,7 +25,8 @@ vi.mock('@/lib/auth/server', () => ({
   getUser: (...args: unknown[]) => mockGetUser(...args),
 }))
 
-// User-scoped client — used only by footer's assertAdminUser role check.
+// User-scoped client — no action under test uses it any more: since Task 923 R44 / R71 (k) the footer's role check (`checkStaff` → `requireViewer`) reads the caller's own
+// row with the service-role client (`mockRoleSingle` below, behind `makeAdminFrom('users')`).
 const mockRoleSingle = vi.fn()
 const mockCreateClient = vi.fn()
 vi.mock('@/lib/supabase/server', () => ({
@@ -39,7 +40,7 @@ vi.mock('@/lib/auth/permissions', () => ({
 }))
 
 // Side-effect prevention — imported by index.ts but not under test here.
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: vi.fn().mockResolvedValue({}),
 }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
@@ -101,6 +102,7 @@ function makePagesBuilder() {
 function makeAdminFrom(table: string) {
   if (table === 'pages') return makePagesBuilder()
   if (table === 'site_footer') return { upsert: (payload: unknown, opts: unknown) => mockFooterUpsert(payload, opts) }
+  if (table === 'users') return { select: () => ({ eq: () => ({ maybeSingle: mockRoleSingle }) }) }
   return {
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
@@ -133,10 +135,8 @@ beforeEach(() => {
   vi.clearAllMocks()
 
   mockGetUser.mockResolvedValue({ id: ADMIN_ID })
-  mockRoleSingle.mockResolvedValue({ data: { role: 'admin' } })
-  mockCreateClient.mockResolvedValue({
-    from: () => ({ select: () => ({ eq: () => ({ single: mockRoleSingle }) }) }),
-  })
+  mockRoleSingle.mockResolvedValue({ data: { role: 'admin', status: 'active', suspended_until: null, deleted_at: null }, error: null })
+  mockCreateClient.mockResolvedValue({})
 
   mockCreateAdminClient.mockImplementation(() => ({
     from: (table: string) => makeAdminFrom(table),
@@ -240,8 +240,8 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
     })
 
     expect(mockFooterUpsert).toHaveBeenCalled()
-    // The user-scoped client (createClient) is used only for the role check, never for the write.
-    expect(mockCreateClient).toHaveBeenCalledTimes(1)
+    // The user-scoped client (createClient) is used for nothing: the role check is a service-role read of the caller's own row (Task 923 R44), and so is the write.
+    expect(mockCreateClient).not.toHaveBeenCalled()
   })
 
   it('review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path', async () => {
@@ -284,7 +284,7 @@ describe('upsertFooterContent — CMS slug existence (R4)', () => {
   })
 
   it('review-1 F1 — a non-admin caller gets forbidden before any pages lookup or upsert', async () => {
-    mockRoleSingle.mockResolvedValue({ data: { role: 'user' } })
+    mockRoleSingle.mockResolvedValue({ data: { role: 'user', status: 'active', suspended_until: null, deleted_at: null }, error: null })
     const { upsertFooterContent } = await import('../footer')
 
     const result = await upsertFooterContent('en', {
@@ -457,5 +457,37 @@ describe('deletePage — R7 write-path actor assertion', () => {
     expect(mockCreateAdminClient).toHaveBeenCalled()
     expect(mockPageDeleteEq).toHaveBeenCalled()
     expect(mockCreateClient).not.toHaveBeenCalled()
+  })
+})
+
+// ═══════════════════════════════════════════════════════
+// Task 923 Revision 7, finding S9 — a footer link is an allow-list, not a deny-list
+// ═══════════════════════════════════════════════════════
+
+describe('upsertFooterContent — link schemes (S9)', () => {
+  const SCRIPT_URLS = ['javascript:alert(1)', 'JaVaScRiPt:alert(1)', 'java\tscript:alert(1)', 'java\nscript:alert(1)', ' javascript:alert(1)', 'data:text/html,<script>alert(1)</script>', 'vbscript:msgbox(1)', 'file:///etc/passwd']
+
+  it.each(SCRIPT_URLS)('rejects %j in a social link and writes nothing', async (url) => {
+    const { upsertFooterContent } = await import('../footer')
+    const result = await upsertFooterContent('en', { ...EMPTY_FOOTER_PAYLOAD, social_links: [link({ id: 's1', url })] })
+    expect(result).toEqual({ error: 'invalid_url' })
+    expect(mockFooterUpsert).not.toHaveBeenCalled()
+  })
+
+  it.each(SCRIPT_URLS)('rejects %j in a navigation link and writes nothing', async (url) => {
+    const { upsertFooterContent } = await import('../footer')
+    const result = await upsertFooterContent('en', { ...EMPTY_FOOTER_PAYLOAD, nav_links: [link({ id: 'n1', url })] })
+    expect(result).toEqual({ error: 'invalid_url' })
+    expect(mockFooterUpsert).not.toHaveBeenCalled()
+  })
+
+  it('accepts https, http, mailto and tel links', async () => {
+    const { upsertFooterContent } = await import('../footer')
+    const result = await upsertFooterContent('en', {
+      ...EMPTY_FOOTER_PAYLOAD,
+      social_links: [link({ id: 's1', url: 'https://instagram.com/lero' }), link({ id: 's2', url: 'mailto:info@lero.al' }), link({ id: 's3', url: 'tel:+355691234567' })],
+    })
+    expect(result).toEqual({})
+    expect(mockFooterUpsert).toHaveBeenCalled()
   })
 })

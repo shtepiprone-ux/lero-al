@@ -1,0 +1,7 @@
+platform win32 10.0.26300 node v22.22.3 (sha256sum from the Bash tool)
+cmd sha256sum (the four files after Revision 15; the two deletion files must equal review-16's C469: c5e61f0a…64bd8 and 4b01bb9d…7c8a)
+217bd678092faaf33e5c084dacb8de787e669080853d2d69614d8579697b8726  ./docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql
+2f09fca869f24e501518a580fc1c051b6065df671ce22badebc04b676399456a  ./docs/sessions/evidence/task923/db-catalog/proposed-hardening-rollback.sql
+c5e61f0a006b61bfe60a0571cd6f033b66886a6a4f89a5b53c8a33be15a64bd8  ./docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql
+4b01bb9dce4ed484460439e45c949efb25d5225f30fb65b12498ab58cf0b7c8a  ./docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+EXIT_CODE=0

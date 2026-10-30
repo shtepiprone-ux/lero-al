@@ -1,8 +1,8 @@
 ## GR-3i — A person's name wraps onto the next line; it is never cut
 
-**Owner rule, 2026-10-09 (Task 859, review 13).** The owner's words, verbatim: *"також імена користувачів на мобільних
-екранах у таблиці треба переносити на новий рядок, а не обрізати їх. Це також обов'язково необхідно внести у
-правила!"*
+**Owner rule, 2026-10-09 (Task 859, review 13).** The owner's words: *"also the user names in the table on mobile
+screens must wrap onto a new line, not be
+clipped. This must also be put into the rules!"*
 
 **The trigger.** `AdminSupportView` renders the reporter and the reported user as links with `lineClamp={1}`
 (`AdminSupportView.tsx:97-111`). At 320 (uk) "Arben Krasniqi" showed as "Arben…". In the table form (768 and up) the

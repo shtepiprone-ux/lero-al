@@ -1,0 +1,10 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T17:43:36.261Z
+command: node scripts/check-mobile-adaptation-contract.mjs --files src/modules/listings/components/ListingFormShell.tsx
+---- output ----
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+
+---- end ----
+EXIT_CODE=0

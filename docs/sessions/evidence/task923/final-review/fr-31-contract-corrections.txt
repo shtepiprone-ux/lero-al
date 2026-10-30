@@ -1,0 +1,7 @@
+# fr-31 (Opus) 2026-10-28T22:19:41.609Z win32 node v22.22.3
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: cases 235 -> 228
+docs/sessions/evidence/task923/final-review/fr-31-moved-cases.json: 5 moved case definitions kept
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: cases 64 -> 60
+in-memory ready candidate tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: valid
+in-memory ready candidate tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: valid
+in-memory ready candidate tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: valid

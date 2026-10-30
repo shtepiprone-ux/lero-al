@@ -1,0 +1,25 @@
+PROVED     SEC-DEL-INT-ALLOW [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+NOT PROVED SEC-DEL-INT-DENY [integration] baseline=passed mutant=not failed (passed) kind=none restored=passed
+
+0 of 1 sensitivity runs proved.
+PROVED     SEC-DEL-INT-SELF [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-D27-INT-VIEWER-DENY [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-D27-INT-STAFF-DENY [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-D27-INT-STAFF-ALLOW [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-X-INT-REVEAL-LIMIT [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+PROVED     SEC-DB-X-AVATARS-STORAGE-ALLOW [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+exit 0

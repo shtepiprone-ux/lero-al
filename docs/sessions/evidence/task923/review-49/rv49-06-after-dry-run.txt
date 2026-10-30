@@ -1,0 +1,23 @@
+# Task 923 Review 49 (Opus): read-only state after the owner's dry run (reported 2026-10-24: Success. No rows returned; check f1/f2/f3 null, cols 0), 2026-10-24T10:37:22Z, HEAD 36c030802, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-04-absent-check.cjs
+query: select to_regprocedure('public.account_display_name(uuid)') as f1, to_regprocedure('public.set_actor_name()') as f2, to_regprocedure('public.lower_views_count_on_view_delete()') as f3, (select count(*) from information_schema.columns where table_schema = 'public' and ((table_name = 'site_footer' and column_name = 'updated_by_name') or (table_name = 'companies' and column_name = 'created_by'))) as cols;
+read_only=on; f1 null; f2 null; f3 null; cols 0
+all absent: the apply has not run
+exit 0
+$ node docs/sessions/evidence/task923/revision-43/rev43-04-blocks.cjs <v4 apply> <v4 rollback>
+proposed-account-deletion.sql sha256 cdc690e47ced1e2c346f5ed1c2bdb1e0ac51b6c7aa3526b404b483d1cd4a6f23; proposed-account-deletion-rollback.sql sha256 9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1
+apply preflight: 6727 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ok (read_only=on)
+apply preflight with CRLF: ok (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 0
+exit 0
+
+## The owner's report (2026-10-24, translated from Ukrainian)
+- The three SHA256 values (dry run A4499D82…2C453C41, apply CDC690E4…D4A6F23, rollback 9D5110FF…22309E2BF1): "I confirm." This is the written approval of R43 (b).
+- Backup or PITR: "backups exist only on a paid account; this is not the first time I have told you!" The project is on the free plan, so there is no backup. The apply deletes and overwrites no existing data: its UPDATEs write only the new *_name columns, and its ALTERs change key rules and NOT NULL, which the rollback file restores.
+- Dry run of proposed-account-deletion.dryrun.sql in the Supabase SQL editor: "Success. No rows returned."
+- The one-line check: [{"f1": null, "f2": null, "f3": null, "cols": 0}].
+- Opus's read-only check above agrees: nothing of the apply exists, and the v4 preflight still passes.

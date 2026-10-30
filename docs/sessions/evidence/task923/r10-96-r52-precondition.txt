@@ -1,0 +1,10 @@
+Task 923 R52 (kickoff section 20, Revision 11): precondition of AC36's final full census run, checked 2026-10-19 before the run started.
+platform: win32 10.0.26300.0 node v22.22.3; HEAD baec0898b (review 11 commit); kickoff sha256 ca1c40b97df52ef6214da7903edcdc1dd1e256b39e6bf92297d98a089c85b6e3 (cli.mjs hash --task); cli.mjs plan on the kickoff sidecar exit 0.
+
+storybook-static/index.json built: 2026-10-19T09:54:25 (r10-50-build-storybook.txt: exit 0, after the last product edit of Revision 10).
+files under src/, messages/, .storybook/ and public/ with a write time after that build: 0
+package.json 2026-10-17T19:26:37, package-lock.json 2026-10-07T20:39:08, next.config.ts 2026-10-17T18:31:57, tsconfig.json 2026-05-27T22:58:05, vitest.config.ts 2026-10-17T19:26:29: all older than the build.
+git status --porcelain lines: 2661 now, 2661 in r10-95-status-after.txt (captured after the last Revision 10 edit): no tracked or untracked path appeared or disappeared since.
+Result: no product or Story file changed after storybook-static was built; the run uses that build and Storybook is not rebuilt while it runs.
+
+Before the run: r8-full/ holds 0 entries (review 11: rv11-07-r8-full-state.txt); r8-82-full-run.txt holds only the start line of the attempt of 2026-10-16 (no end line, no exit code). The new attempt is appended to that file as a second block, so the earlier line stays as the record of the first attempt.

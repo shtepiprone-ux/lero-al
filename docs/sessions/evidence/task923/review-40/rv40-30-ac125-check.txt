@@ -1,0 +1,22 @@
+# Task 923 AC125 read-only check (Opus), 2026-10-23T15:15:43.326Z, node v22.22.3, win32, cwd C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-40
+== 1 the table exists: PASS
+[{"ok":true}]
+== 2 row level security is on: PASS
+[{"ok":true}]
+== 3 no policy exists: PASS
+[{"policies":0}]
+== 4 anon and authenticated hold no privilege: PASS
+[{"rolname":"anon","any_privilege":false},{"rolname":"authenticated","any_privilege":false}]
+== 5 service_role holds select, insert and delete: PASS
+[{"s":true,"i":true,"d":true}]
+== 6 the three indexes exist: PASS
+[{"indexname":"listing_contact_reveals_created_idx","indexdef":"CREATE INDEX listing_contact_reveals_created_idx ON public.listing_contact_reveals USING btree (created_at)"},{"indexname":"listing_contact_reveals_ip_created_idx","indexdef":"CREATE INDEX listing_contact_reveals_ip_created_idx ON public.listing_contact_reveals USING btree (requester_ip, created_at)"},{"indexname":"listing_contact_reveals_pkey","indexdef":"CREATE UNIQUE INDEX listing_contact_reveals_pkey ON public.listing_contact_reveals USING btree (id)"},{"indexname":"listing_contact_reveals_viewer_created_idx","indexdef":"CREATE INDEX listing_contact_reveals_viewer_created_idx ON public.listing_contact_reveals USING btree (viewer_id, created_at)"}]
+== 7 columns: PASS
+[{"column_name":"id","data_type":"bigint","is_nullable":"NO","column_default":null,"is_identity":"YES"},{"column_name":"viewer_id","data_type":"uuid","is_nullable":"NO","column_default":null,"is_identity":"NO"},{"column_name":"listing_id","data_type":"uuid","is_nullable":"NO","column_default":null,"is_identity":"NO"},{"column_name":"channel","data_type":"text","is_nullable":"NO","column_default":null,"is_identity":"NO"},{"column_name":"requester_ip","data_type":"text","is_nullable":"YES","column_default":null,"is_identity":"NO"},{"column_name":"created_at","data_type":"timestamp with time zone","is_nullable":"NO","column_default":"now()","is_identity":"NO"}]
+== 8 constraints: PASS
+[{"conname":"listing_contact_reveals_channel_check","def":"CHECK ((channel = ANY (ARRAY['call'::text, 'whatsapp'::text])))"},{"conname":"listing_contact_reveals_listing_id_fkey","def":"FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"},{"conname":"listing_contact_reveals_pkey","def":"PRIMARY KEY (id)"},{"conname":"listing_contact_reveals_viewer_id_fkey","def":"FOREIGN KEY (viewer_id) REFERENCES auth.users(id) ON DELETE CASCADE"}]
+== 9 table grantees: PASS
+[{"grantee":"postgres","privileges":"DELETE,INSERT,REFERENCES,SELECT,TRIGGER,TRUNCATE,UPDATE"},{"grantee":"service_role","privileges":"DELETE,INSERT,REFERENCES,SELECT,TRIGGER,TRUNCATE"}]
+== 10 row count: PASS
+[{"rows":0}]
+result PASS

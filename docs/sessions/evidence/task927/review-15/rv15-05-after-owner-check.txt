@@ -1,0 +1,4 @@
+# rv15-05 (Opus) 2026-10-28T19:55:38.248Z read-only: Google accounts after the owner check
+- p***2@gmail.com 2026-10-25T16:51:42 ["google"] password_null true
+- a***7@gmail.com 2026-06-18T14:25:35 ["email","google"] password_null false
+all auth users 8

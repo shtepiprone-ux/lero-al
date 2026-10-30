@@ -2,7 +2,8 @@
 
 import { headers } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { checkStaff } from '@/lib/auth/staff'
+import { isPlainEmail } from '@/lib/security/inputs'
 import {
   sendContactInquiryNotification,
   sendContactInquiryReply,
@@ -39,16 +40,22 @@ function resolveMailbox(mailboxKey: MailboxKey): string | null {
 const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000
 
+// Task 923 R67 (b): the limit never fails open. A request with no address at all used to skip the check ("never limited") and a failed count read as zero, so an
+// attacker who hid the address, or a database hiccup, removed the limit. Requests without an address now share ONE bucket (the rows stored with no address) with the
+// same limit, and a count that cannot be read refuses the request.
 async function isRateLimited(ip: string): Promise<boolean> {
-  if (ip === 'unknown') return false
   const db = createAdminClient()
   const since = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString()
-  const { count } = await db
+  const base = db
     .from('contact_inquiries')
     .select('id', { count: 'exact', head: true })
-    .eq('requester_ip', ip)
-    .gte('created_at', since)
-  return (count ?? 0) >= RATE_LIMIT_MAX
+  const scoped = ip === 'unknown' ? base.is('requester_ip', null) : base.eq('requester_ip', ip)
+  const { count, error } = await scoped.gte('created_at', since)
+  if (error || count === null || count === undefined) {
+    console.error('[contact-inquiry] rate limit count failed: refusing', { code: error?.code })
+    return true
+  }
+  return count >= RATE_LIMIT_MAX
 }
 
 // ── Action ────────────────────────────────────────────────────────────────────
@@ -64,17 +71,22 @@ export interface SubmitContactInquiryInput {
 export async function submitContactInquiry(
   input: SubmitContactInquiryInput,
 ): Promise<{ error?: 'rate_limited' | 'validation' | 'save_failed' | 'no_mailbox' | 'mailbox_unverified' | 'email_transient' }> {
-  // Validate
+  // Validate. The types are erased at runtime: a caller can send a number, an object or nothing (Task 923 Revision 7), and that must be "validation", not a crash.
+  if (!input || [input.topic, input.name, input.email, input.message].some((v) => typeof v !== 'string')) return { error: 'validation' }
+  if (input.customSubject !== undefined && input.customSubject !== null && typeof input.customSubject !== 'string') return { error: 'validation' }
+
   const topic = input.topic.trim()
   if (!VALID_TOPICS.has(topic)) return { error: 'validation' }
 
   const name    = input.name.trim().slice(0, 200)
-  const email   = input.email.trim().toLowerCase().slice(0, 200)
+  const email   = input.email.trim().toLowerCase()
   const message = input.message.trim().slice(0, 5000)
   const customSubject = input.customSubject?.trim().slice(0, 200) ?? null
 
   if (!name || !email || !message || message.length < 20) return { error: 'validation' }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: 'validation' }
+  // One plain address: it becomes the Reply-To of a message to our staff, and must not carry a second recipient or a header (it used to be cut at 200
+  // characters, which could turn a long address into a different, valid one; now a too-long address is refused).
+  if (!isPlainEmail(email)) return { error: 'validation' }
   if (topic === 'other' && !customSubject) return { error: 'validation' }
 
   // Rate limit by IP
@@ -141,12 +153,10 @@ export async function submitContactInquiry(
 const VALID_STATUSES: ContactStatus[] = ['new', 'in_progress', 'closed']
 
 async function assertAdminOrModerator(): Promise<string | null> {
-  const user = await getUser()
-  if (!user) return null
-  const db = createAdminClient()
-  const { data } = await db.from('users').select('role').eq('id', user.id).single()
-  if (!data || !['admin', 'moderator'].includes(data.role)) return null
-  return user.id
+  // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account, or a failed lookup, is not staff
+  // Task 923 R75: a moderator needs the `inquiries.manage` key; an administrator holds every key
+  const staff = await checkStaff({ permission: 'inquiries.manage' })
+  return staff.ok ? staff.userId : null
 }
 
 export async function updateInquiryStatus(

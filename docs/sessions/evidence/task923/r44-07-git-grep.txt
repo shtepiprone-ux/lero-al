@@ -1,0 +1,12 @@
+# R141-R144 AC141 r44-07: git grep of the removed names in src and messages prints nothing (git grep answers exit code 1 when nothing matches)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: git grep -n -E softDeleteUser|profile_deleted_auth_failed|delete_account_auth_failed|delete_shared_point2 -- src messages
+NODE_PATH: (unset)
+started: 2026-10-24T12:06:32.330Z
+--- stdout ---
+
+--- stderr ---
+
+--- exit code: 1 ---

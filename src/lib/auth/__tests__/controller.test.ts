@@ -746,14 +746,15 @@ describe('Scenario 8 — UI state stability', () => {
     }
   })
 
-  it('valid state invariant — no unauthenticated state with a user', () => {
+  it('valid state invariant — no unauthenticated state with a user', async () => {
+    // The sign-out event asks the server who is signed in (`/api/auth/me`, which unit tests must answer since Task 923 R67 (i)); the answer is "nobody".
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     ctrl = mountAuthenticated()
     authCallbackRef.current?.('SIGNED_OUT', null)
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
 
     // Invariant: unauthenticated ⟹ user === null.
-    if (ctrl.getState().status === 'unauthenticated') {
-      expect(ctrl.getState().user).toBeNull()
-    }
+    expect(ctrl.getState().user).toBeNull()
   })
 })
 
@@ -848,5 +849,37 @@ describe('Scenario 9 — Self-retriggered SIGNED_OUT loop (Task 449)', () => {
     expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
     expect(mockCoreSignOut).toHaveBeenCalledWith('local')
     expect(ctrl.getState().status).toBe('unauthenticated')
+  })
+})
+
+// ─────────────────────────────────────────────────
+// Task 923 Revision 7 — the manual refresh and the server's verdict
+// ─────────────────────────────────────────────────
+
+describe('manual refresh', () => {
+  it('asks the server once and shows the new profile', async () => {
+    const renamed = { ...MOCK_USER, name: 'Renamed' }
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(renamed))
+    ctrl = mountAuthenticated()
+    ctrl.refresh()
+    await vi.waitFor(() => expect(ctrl.getState().user?.name).toBe('Renamed'))
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+    expect(ctrl.getState().status).toBe('authenticated')
+  })
+
+  it('when the server says nobody is signed in, the person is signed out here too and the local session is cleared', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
+    ctrl = mountAuthenticated()
+    ctrl.refresh()
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual({ status: 'unauthenticated', user: null }))
+    expect(mockCoreSignOut).toHaveBeenCalledWith('local')
+  })
+
+  it('a failed clean-up of the local session does not break the state', async () => {
+    mockCoreSignOut.mockRejectedValueOnce(new Error('offline'))
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
+    ctrl = mountAuthenticated()
+    ctrl.refresh()
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
   })
 })

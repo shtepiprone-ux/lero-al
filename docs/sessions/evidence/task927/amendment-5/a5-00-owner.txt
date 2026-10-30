@@ -1,0 +1,22 @@
+# Task 927 Amendment 5: the owner's messages and answers of 2026-10-25, translated faithfully into English (shared/project-language.md)
+# The owner's screenshots are not copied into this public repository: they show personal e-mail addresses. Each is described instead.
+
+== Message 1 (2026-10-25)
+"Also, I see that on lero.al, while the sign-in drawer is open, I see the button "Continue as Andrii". Nobody uses that kind of sign-in. Instead, an adaptive popup with a choice of Google accounts must appear. See the screenshots Screenshot_16.png and Screenshot_15.png."
+Screenshot_16 (described): the sign-in drawer, login view: e-mail, password, Sign in, the OR divider, then Google's personalized button "Продовжити як Andrii" with the account's avatar letter, its e-mail and a chevron, then the register line.
+Screenshot_15 (described): medium.com with Google's account chooser at the top right, titled "Sign in to medium.com with google.com", listing three Google accounts, each with avatar letter, name and e-mail, and a close button.
+
+== Message 2 (2026-10-25)
+"In Google sign-in, this is in general what the sign-in must be like when the user has already signed in through Google once. [Image #17]. If the user has already signed in through Google, the system must show information like Welcome Back, as on the screenshot, and a button to choose another sign-in method, which takes the user to the start screen of sign-in, where one can enter login and password, and also sign in through the Google button, which must be standard, with the text Sign in with Google"
+Image #18 (described): medium.com's modal "Welcome back." with a large round avatar, the name, the masked e-mail (two letters, dots, @gmail.com), Google's "Sign in with Google" button, the link "Forget this account", the line "Not your account? More sign in options", and a terms line.
+
+== Opus's questions (2026-10-25) and the owner's answers
+Q1 "Google does not let us turn off "Continue as Andrii" in the large button. Only a button of size medium/small (height ~32 px instead of 40 px) or narrower than 200 px has no personalization. Which "Sign in with Google" button do we use?"
+  options: "Medium, without the name (Recommended)" - "Google's official medium-size button with the text "Sign in with Google". Always standard, but lower than our fields (32 px)." | "Large, as now" - "Height as the fields, but Google itself will show "Continue as ..." when the browser is signed in to Google."
+  ANSWER Q1: Medium, without the name (Recommended)
+Q2 "How do we remember the account for the "Welcome back" screen?"
+  options: "This device (Recommended)" - "After a Google sign-in on this device, the name, the avatar, the masked e-mail and the Google id are stored. After sign-out the record remains (as on Medium). "Forget this account" and the account's deletion erase it." | "Erase on sign-out" - "The same, but after "Sign out" the Welcome back screen is no longer shown."
+  ANSWER Q2: This device (Recommended)
+Q3 "Do we also show Google's popup window for choosing accounts (top right on desktop, at the bottom on mobile, as on Medium)?"
+  options: "Only together with the drawer (Recommended)" - "The window appears when a guest opens sign-in or registration. It does not pop up over pages." | "On every page for a guest" - "As on Medium: it appears right when the site opens. Google hides it for 2 hours and longer if it is closed." | "No, only Welcome back" - "Without Google's popup window. The return happens only through the Welcome back screen."
+  ANSWER Q3: On every page for a guest

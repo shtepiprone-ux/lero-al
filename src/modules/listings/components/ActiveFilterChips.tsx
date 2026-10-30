@@ -2,8 +2,8 @@
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { X } from 'lucide-react'
-import { Button, Group, useMantineTheme } from '@mantine/core'
+import { Box } from '@mantine/core'
+import { MantineFilterChips } from '@/design-system/mantine/patterns/MantineFilterChips'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -27,7 +27,6 @@ function fmt(n: number) {
 export function ActiveFilterChips({ locations }: Props) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
-  const theme = useMantineTheme()
   const { propertyTypes } = usePropertyTypes()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -182,22 +181,14 @@ export function ActiveFilterChips({ locations }: Props) {
   if (chips.length === 0) return null
 
   return (
-    <Group className="active-filter-chips" gap="xs" wrap="wrap" pt="sm" pb="xs">
-      {chips.map(chip => (
-        <Button
-          key={chip.key}
-          type="button"
-          variant="light"
-          color="brand"
-          radius="pill"
-          size="xs"
-          onClick={() => removeChip(chip)}
-          rightSection={<X size={theme.other.iconSize.badge} aria-hidden="true" />}
-          aria-label={`${chip.label} — ${t('aria_remove_filter')}`}
-        >
-          {chip.label}
-        </Button>
-      ))}
-    </Group>
+    <Box className="active-filter-chips" pt="sm" pb="xs">
+      <MantineFilterChips
+        chips={chips.map(chip => ({ key: chip.key, label: chip.label, ariaLabel: `${chip.label} — ${t('aria_remove_filter')}` }))}
+        onRemove={key => {
+          const chip = chips.find(c => c.key === key)
+          if (chip) removeChip(chip)
+        }}
+      />
+    </Box>
   )
 }

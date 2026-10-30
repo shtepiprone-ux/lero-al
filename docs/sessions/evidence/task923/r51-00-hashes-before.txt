@@ -1,0 +1,16 @@
+# r51-00: sha256 of the 8 paths of C1504, before the first edit (Task 923 Revision 51, R156)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r51-00-hashes.mjs before
+date: 2026-10-25T12:43:18.561Z
+--- output ---
+0b9c4a205eef7df33df0284fece474c37448a7909d1c77216426daeebdbfab1f  src/modules/cabinet/actions/index.ts
+c111df8c09eea0e34fd0d8e0a5f47505ef87f789d727d9597052d359546ca73e  src/modules/cabinet/components/CabinetPasswordSection.tsx
+d3a4ffffe442665317c16544af7a50d5b009e39fbef42521e5744492a6e3a20d  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+7fabd9dd42fe7728aad232bf9cf10386e23331964a0b40afd5d3de28da643479  src/modules/cabinet/actions/__tests__/changePassword.security.test.ts
+182c5a0b2dfd9f2f759df0ca92f19b581f8a5c6350629490a25327442b1ee74e  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+2a6910d5f3f7dac1bbfb5116af3d77684b6e3d8dbff90bc4baab3e3b8263bba6  src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+f0e02f7cb135a7272c01fc5d7950e465b06e3333519795ff8c713c7933bdeb53  src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx
+8aee46d453d5a82152d4878817cceb115538b9e898071e7bcb241359e579bd4a  src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx
+exit code: 0

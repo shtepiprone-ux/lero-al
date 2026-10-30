@@ -1,0 +1,77 @@
+R95 (d): sensitivity of the critical SEC-DB-X-NO-SELF-RESTORE (src/tests/integration/accessHardening.integration.test.ts)
+platform win32 10.0.26300 node v22.22.3 vitest vitest/4.1.6 win32-x64 node-v22.22.3; start 2026-10-21T17:41:12.000Z
+env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<derived, value not printed>; no function is created and no grant changes on the database: the mutation is an edit of the test file only
+sha256 of the test file before the mutation: 007271fda7319b12b4deaf3b951be5da0405742ff945140282e9b3428aee8d86
+
+=== 1. BASELINE: the unmodified test ===
+cmd npx vitest run --config vitest.integration.config.ts src/tests/integration/accessHardening.integration.test.ts -t SEC-DB-X-NO-SELF-RESTORE --reporter=verbose
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 2051ms
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 2 skipped (3)
+   Start at  19:41:13
+   Duration  5.54s (transform 58ms, setup 39ms, import 71ms, tests 5.22s, environment 0ms)
+
+EXIT_CODE=0
+
+=== 2. MUTANT: the function list of the assertion is ['restore_inactive_account', 'caller_is_active'] (caller_is_active exists and a session may call it); nothing else changed ===
+mutation: in the test, 'caller_access_state' -> 'caller_is_active' (one occurrence); sha256 of the mutated file: 275cd784aceb7f3a383fdb977f6de214ad5e0a726d2440c842ad947701cf6527
+76:      for (const name of ['restore_inactive_account', 'caller_is_active']) await expectNoFunction(who, client, name)
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows
+ × src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 1364ms
+   → the marked account: caller_is_active is not found in the Data API: expected undefined to be 'PGRST202' // Object.is equality
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session
+AssertionError: the marked account: caller_is_active is not found in the Data API: expected undefined to be 'PGRST202' // Object.is equality
+
+- Expected:
+"PGRST202"
+
++ Received:
+undefined
+
+ ❯ expectNoFunction src/tests/integration/accessHardening.integration.test.ts:50:80
+     48|   async function expectNoFunction(who: string, client: SupabaseClient,…
+     49|     const answer = await client.rpc(name)
+     50|     expect(answer.error?.code, `${who}: ${name} is not found in the Da…
+       |                                                                                ^
+     51|     expect(answer.data, `${who}: ${name} returns nothing`).toBeNull()
+     52|   }
+ ❯ src/tests/integration/accessHardening.integration.test.ts:76:76
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  19:41:28
+   Duration  4.48s (transform 53ms, setup 36ms, import 66ms, tests 4.26s, environment 0ms)
+
+EXIT_CODE=1
+
+=== 3. RESTORED: the mutation is reverted ===
+sha256 of the restored file: 007271fda7319b12b4deaf3b951be5da0405742ff945140282e9b3428aee8d86 (grep caller_is_active: 0 occurrences)
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 2023ms
+ ↓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 2 skipped (3)
+   Start at  19:41:41
+   Duration  6.14s (transform 55ms, setup 38ms, import 67ms, tests 5.83s, environment 0ms)
+
+EXIT_CODE=0

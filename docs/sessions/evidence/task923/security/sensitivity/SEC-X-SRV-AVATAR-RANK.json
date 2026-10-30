@@ -1,0 +1,325 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:35:43.925Z",
+ "case": "SEC-X-SRV-AVATAR-RANK",
+ "results": [
+  {
+   "id": "SEC-X-SRV-AVATAR-RANK",
+   "testFile": "src/app/api/upload-avatar/uploadAvatar.security.test.ts",
+   "testName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/app/api/upload-avatar/route.ts",
+     "description": "the avatar route no longer applies the rank rule to the target account",
+     "from": "    if (!rank.allowed) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })\n",
+     "to": ""
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/app/api/upload-avatar/route.ts",
+     "originalSha256": "44f1330171d7191a1e83a25dfcd06bda3f5272eb36f3667242bf5cb28c5a8826",
+     "restoredSha256": "44f1330171d7191a1e83a25dfcd06bda3f5272eb36f3667242bf5cb28c5a8826"
+    }
+   ],
+   "failureMessage": "AssertionError: expected 200 to be 403 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/api/upload-avatar/uploadAvatar.security.test.ts:127:28\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259339917,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "status": "passed",
+         "title": "[SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "duration": 15.603300000000047,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "status": "skipped",
+         "title": "an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a file whose first bytes are not the type it declares is refused before any upload",
+         "status": "skipped",
+         "title": "a file whose first bytes are not the type it declares is refused before any upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259340487,
+       "endTime": 1793259340502.6033,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/upload-avatar/uploadAvatar.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259341612,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "status": "failed",
+         "title": "[SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "duration": 13.474699999999984,
+         "failureMessages": [
+          "AssertionError: expected 200 to be 403 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/api/upload-avatar/uploadAvatar.security.test.ts:127:28\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "status": "skipped",
+         "title": "an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a file whose first bytes are not the type it declares is refused before any upload",
+         "status": "skipped",
+         "title": "a file whose first bytes are not the type it declares is refused before any upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259342153,
+       "endTime": 1793259342166.4746,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/upload-avatar/uploadAvatar.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259343277,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "status": "passed",
+         "title": "[SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+         "duration": 16.188099999999963,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "status": "skipped",
+         "title": "a moderator without the users.edit key cannot replace the avatar of another account, and an administrator needs no key (Task 923 R75)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "status": "skipped",
+         "title": "an avatar UPDATE that changes no account releases the uploaded file and answers 404",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar [SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-UPLOAD-SIZE-FIRST] the size is checked before the upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "uploadAvatar"
+         ],
+         "fullName": "uploadAvatar a file whose first bytes are not the type it declares is refused before any upload",
+         "status": "skipped",
+         "title": "a file whose first bytes are not the type it declares is refused before any upload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259343840,
+       "endTime": 1793259343856.188,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/upload-avatar/uploadAvatar.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

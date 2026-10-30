@@ -44,6 +44,259 @@
           ]
         }
       ]
+    },
+    {
+      "id": "mantine-delete-confirm-modal",
+      "component": "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/Modal.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/MantineModal.tsx"
+      ],
+      "parity": [
+        {
+          "element": "destructive confirmation (message section, red primary and Cancel pair)",
+          "storyExports": [
+            "DeleteConfirm",
+            "DeleteConfirmTyped",
+            "DeleteConfirmPassword"
+          ]
+        },
+        {
+          "element": "confirmation field of the dialog (typed word, masked password) and the Google confirmation section",
+          "storyExports": [
+            "DeleteConfirmTyped",
+            "DeleteConfirmPassword"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mantine-filter-chips",
+      "component": "src/design-system/mantine/patterns/MantineFilterChips.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/MantineFilterChips.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "removable filter chip",
+          "storyExports": [
+            "One",
+            "Several",
+            "LongLabel",
+            "Wrapping"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "admin-users-table-view",
+      "component": "src/components/admin/AdminUsersTableView.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/AdminUsersTable.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/badgeTones.ts"
+      ],
+      "parity": [
+        {
+          "element": "admin users table",
+          "storyExports": [
+            "Default",
+            "VerifiedTab",
+            "Empty",
+            "LocationFilter"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mantine-radio-card-option",
+      "component": "src/design-system/mantine/patterns/MantineRadioCardOption.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/RadioCardOption.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/app/globals.css"
+      ],
+      "parity": [
+        {
+          "element": "radio card option (a choice in a detail dialog)",
+          "storyExports": [
+            "Default"
+          ]
+        },
+        {
+          "element": "radio card group (a set of choices)",
+          "storyExports": [
+            "Default"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-inquiry-dialog-view",
+      "component": "src/modules/listings/components/ListingInquiryDialogView.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingInquiryDialogView.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/MantineModal.tsx"
+      ],
+      "parity": [
+        {
+          "element": "structured form dialog (width, radius, close control, field label, footer pair)",
+          "storyExports": [
+            "Empty",
+            "Filled",
+            "Pending"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "google-sign-in-slot",
+      "component": "src/components/auth/GoogleSignInSlot.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "the Google sign-in button, its notices and the unavailable alert",
+          "storyExports": [
+            "Ready",
+            "Pending",
+            "PopupBlocked",
+            "Failed",
+            "Unavailable",
+            "UnavailableReauth"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "google-sign-in-button",
+      "component": "src/components/auth/GoogleSignInButton.tsx",
+      "stories": [
+        "src/stories/mantine/primitives/Modal.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "the Google re-confirmation control of the deletion dialog",
+          "storyExports": [
+            "DeleteConfirmPassword"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "google-welcome-back",
+      "component": "src/components/auth/GoogleWelcomeBack.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/GoogleWelcomeBack.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "the returning person's identity block of the sign-in sheet",
+          "storyExports": [
+            "Initials",
+            "Picture",
+            "LongName",
+            "WithAlerts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "listing-access-restricted-view",
+      "component": "src/modules/listings/components/ListingAccessRestrictedView.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ListingAccessRestrictedView.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts",
+        "src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx",
+        "src/modules/listings/components/ListingsPageFrame.tsx"
+      ],
+      "parity": [
+        {
+          "element": "restricted-page empty state (icon, title, text, action) in the listings page frame",
+          "storyExports": [
+            "Guest",
+            "SignedIn"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cabinet-email-change-section-view",
+      "component": "src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "section title, as the sibling CabinetPasswordSectionView title",
+          "storyExports": [
+            "WithPassword",
+            "WaitingForConfirmation"
+          ]
+        },
+        {
+          "element": "new e-mail TextInput with its label and hint, and the current-password PasswordInput, as the sibling password fields",
+          "storyExports": [
+            "WithPassword",
+            "ReadyToSubmit",
+            "GoogleOnly",
+            "LongAddress"
+          ]
+        },
+        {
+          "element": "full-width submit Button, as the sibling submit Button",
+          "storyExports": [
+            "WithPassword",
+            "ReadyToSubmit",
+            "Sending"
+          ]
+        },
+        {
+          "element": "refusal Alert (red, role alert), as the sibling error Alert",
+          "storyExports": [
+            "WrongPassword",
+            "GoogleRequired",
+            "InvalidAddress",
+            "LimitReached"
+          ]
+        },
+        {
+          "element": "waiting notice Alert (info) and the resend Anchor button",
+          "storyExports": [
+            "WaitingForConfirmation",
+            "Resending",
+            "LongAddress"
+          ]
+        }
+      ]
     }
   ]
 }

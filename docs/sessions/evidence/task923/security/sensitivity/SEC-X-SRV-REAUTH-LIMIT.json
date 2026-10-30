@@ -1,0 +1,318 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-20T20:04:32.903Z",
+ "case": "SEC-X-SRV-REAUTH-LIMIT",
+ "results": [
+  {
+   "id": "SEC-X-SRV-REAUTH-LIMIT",
+   "testFile": "src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts",
+   "testName": "reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "the count of failed re-authentications is never compared with the limit",
+     "from": "    return count >= REAUTH_FAILURE_LIMIT ? 'blocked' : 'open'",
+     "to": "    return 'open'"
+    }
+   ],
+   "failureMessage": "AssertionError: expected {} to deeply equal { error: 'rate_limited' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:95:66\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792526669315,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "status": "passed",
+         "title": "[SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "duration": 6.432999999999993,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "status": "skipped",
+         "title": "the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "status": "skipped",
+         "title": "a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "status": "skipped",
+         "title": "a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "status": "skipped",
+         "title": "a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792526669777,
+       "endTime": 1792526669783.433,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792526670832,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "status": "failed",
+         "title": "[SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "duration": 9.469699999999989,
+         "failureMessages": [
+          "AssertionError: expected {} to deeply equal { error: 'rate_limited' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:95:66\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "status": "skipped",
+         "title": "the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "status": "skipped",
+         "title": "a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "status": "skipped",
+         "title": "a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "status": "skipped",
+         "title": "a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792526671291,
+       "endTime": 1792526671300.4697,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 4,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792526672369,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "status": "passed",
+         "title": "[SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+         "duration": 5.605000000000018,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "status": "skipped",
+         "title": "the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "status": "skipped",
+         "title": "a count that cannot be read refuses, for each of the three actions, and Auth is not called",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "status": "skipped",
+         "title": "a row that cannot be stored is logged, and the answer stays \"wrong password\"; Auth's own limit stores nothing; the right password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauthLimit"
+         ],
+         "fullName": "reauthLimit a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "status": "skipped",
+         "title": "a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792526672821,
+       "endTime": 1792526672826.605,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

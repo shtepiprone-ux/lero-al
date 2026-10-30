@@ -1,0 +1,26 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-05-gr3j-probe.mjs docs/sessions/evidence/task923/r41-05a-gr3j-cells.jsonl
+date: 2026-10-23T19:01:42.887Z
+--- output ---
+Stories 11; widths 320,390,639,640,768,1024,1440; locales sq,en,uk,it; cells 308; failing cells 1
+cells failing per rule: {"runError":1}
+cells with a latent ellipsis style that clips nothing (Mantine Alert / label owners; informational): 195
+vertical order per export (identical in every width and locale when its count is 28):
+  28 x google-only :: title > current-email(label,value) > form(new-email,submit)
+  28 x google-required :: title > current-email(label,value) > form(error,new-email,submit) > other
+  28 x invalid-address :: title > current-email(label,value) > form(error,new-email,password,submit)
+  1 x limit-reached :: 
+  27 x limit-reached :: title > current-email(label,value) > form(error,new-email,password,submit)
+  28 x long-address :: title > current-email(label,value) > waiting-notice > other
+  28 x ready-to-submit :: title > current-email(label,value) > form(new-email,password,submit)
+  28 x resending :: title > current-email(label,value) > waiting-notice > other
+  28 x sending :: title > current-email(label,value) > form(new-email,password,submit)
+  28 x waiting-for-confirmation :: title > current-email(label,value) > waiting-notice > other
+  28 x with-password :: title > current-email(label,value) > form(new-email,password,submit)
+  28 x wrong-password :: title > current-email(label,value) > form(error,new-email,password,submit)
+distinct findings:
+
+
+EXIT_CODE=1

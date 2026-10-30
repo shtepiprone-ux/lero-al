@@ -1,0 +1,56 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-listingdetailpattern--default,patterns-mantine-listinggallerypattern--default --out docs/sessions/evidence/task923/r6-gallery
+start 2026-10-15T11:52:40.486Z
+rendered state census: 5 registered state(s), 88 state job(s) + 12 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 2 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r6-gallery
+  100/102 jobs, 186 rows, 96 failing
+
+rendered state census — rows 190 (failing 96); {"statesRun":5,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,1440],"boundCells":0,"stateJobs":88,"rangeJobs":12,"closedJobs":2,"appRows":102,"portalRows":88,"runtimeSeconds":73,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             20
+  text-ellipsis          0
+  text-hidden            48
+  word-split             0
+  viewport-overflow      0
+  component-overflow     48
+  action-hidden          0
+  action-covered         0
+  target-small           48
+  focus-open             0
+  focus-trigger          20
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         72
+  action-hidden          72
+  dismiss-outside        28
+  target-small           72
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 7
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1440
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 640
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 1440
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 320
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 390
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 639
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 640
+widths states: 1; each measured at its in-range bound and at the first width outside it (rows per locale): 1 complete, 0 with a missing cell
+  patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana {"min":640}: in-range 640px x4; first outside 639px x4
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+Story x state x root with a violation: 6
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | app :: text-hidden, component-overflow, target-small (16 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | portal:0 :: target-small, focus-trigger (20 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | app :: text-hidden, component-overflow (12 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | portal:0 :: text-clamp (20 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~share-listing | app :: text-hidden, component-overflow, target-small (16 cell(s))
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | app :: text-hidden, component-overflow (12 cell(s))
+
+rows 190 = 102 app-root rows + 88 portal-root rows; 88 state jobs + 12 out-of-range widths jobs + 2 closed jobs; 0 retried job(s); runtime 73s
+end 2026-10-15T11:53:53.756Z
+EXIT_CODE=1

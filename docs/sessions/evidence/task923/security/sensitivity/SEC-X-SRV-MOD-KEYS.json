@@ -1,0 +1,226 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:38:13.734Z",
+ "case": "SEC-X-SRV-MOD-KEYS",
+ "results": [
+  {
+   "id": "SEC-X-SRV-MOD-KEYS",
+   "testFile": "src/lib/auth/__tests__/moderatorKeys.security.test.ts",
+   "testName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "updateUserProfile, the first action of the key matrix, names no permission key",
+     "from": "  const actor = await resolveAdminActor('users.edit')\n  // Task 923 Revision 7, finding S44: `data` used to be written as it came.",
+     "to": "  const actor = await resolveAdminActor()\n  // Task 923 Revision 7, finding S44: `data` used to be written as it came."
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "originalSha256": "d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256",
+     "restoredSha256": "d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256"
+    }
+   ],
+   "failureMessage": "AssertionError: these actions admit a moderator and check no key:\nsrc/modules/admin/actions/index.ts#updateUserProfile: expected [ Array(1) ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/moderatorKeys.security.test.ts:118:101\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259490122,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "status": "passed",
+         "title": "[SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "duration": 18.407099999999957,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "status": "skipped",
+         "title": "a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259490566,
+       "endTime": 1793259490584.407,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/moderatorKeys.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259491675,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "status": "failed",
+         "title": "[SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "duration": 9.623400000000004,
+         "failureMessages": [
+          "AssertionError: these actions admit a moderator and check no key:\nsrc/modules/admin/actions/index.ts#updateUserProfile: expected [ Array(1) ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/moderatorKeys.security.test.ts:118:101\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "status": "skipped",
+         "title": "a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259492108,
+       "endTime": 1793259492117.6233,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/moderatorKeys.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259493196,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "status": "passed",
+         "title": "[SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+         "duration": 18.718999999999994,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "moderatorKeys"
+         ],
+         "fullName": "moderatorKeys a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "status": "skipped",
+         "title": "a moderator is refused without the key and passes the guard with it; an administrator needs none; a switch applies to the very next call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259493639,
+       "endTime": 1793259493657.719,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/moderatorKeys.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -2,7 +2,8 @@
 
 This contract is mandatory for every new or changed visible artifact, its canonical component, and every Story that
 renders it. It operationalizes GR-0, GR-3a, GR-9, and GR-12 in a form that every role must apply. Read
-`shared/mobile-adaptation-contract.md` first: it determines the semantic compact presentation; this file determines
+`shared/mobile-adaptation-contract.md` first; Opus first applies `shared/canonical-component-reuse.md` to inherit
+ready design and scope research/proof. The mobile contract determines the semantic compact presentation; this file determines
 the canonical owner and token path that implement it.
 
 Read `shared/enforcement-model.md` immediately after this file. It gives the required receipts and explains the
@@ -43,6 +44,10 @@ needs a different appearance must be an explicit typed state/variant/size owned 
 Visible Story text is locale-backed. Fixture data is labelled and never becomes production behavior.
 
 ## One meaning, one look
+
+For Opus design/review, apply `canonical-component-reuse.md`: verify the changed integration, and run the affected
+census for a changed shared visual contract or reproduced parity defect. Reusing an unchanged canonical element
+does not require a fresh whole-library census or remeasurement of its settled chrome. Scope receipts accordingly.
 
 At task design, before Sonnet's first visual write, and before Opus's verdict, run a built-Storybook census for every
 changed element type and semantic meaning. Find **all** Stories rendering it and measure at the same locale/width:

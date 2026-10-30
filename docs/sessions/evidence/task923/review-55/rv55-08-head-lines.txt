@@ -1,0 +1,3 @@
+# HEAD 28c400fcf line cited by Task 923 claim rows C1388 and C1414, before R148 (b) rewrote the bridge's header comment (Review 55, rv55-09-fix-rows.mjs)
+== src/modules/auth/components/AuthRedirect.tsx at HEAD 28c400fcf, lines 6-6
+ * This component is only rendered when SSR confirmed the user is NOT authenticated

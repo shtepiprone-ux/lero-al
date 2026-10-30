@@ -206,7 +206,8 @@ const CONTRACT_CONSUMERS: Array<{ contract: string; file: string; mustContain: s
   {
     contract: 'theme.spacing.micro/tight/compact',
     file: 'src/design-system/mantine/patterns/MantineListingCardPattern.tsx',
-    mustContain: ['"tight"', '"compact"', 'var(--mantine-spacing-micro)'],
+    // Task 741 Revision 3 (7b4b81f8c) removed the `micro` gap from this file; only the two keys it still consumes are required.
+    mustContain: ['"tight"', '"compact"'],
   },
   {
     contract: 'theme.spacing.micro/tight/compact',

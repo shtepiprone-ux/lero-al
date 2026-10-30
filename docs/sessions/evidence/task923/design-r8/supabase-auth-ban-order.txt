@@ -1,0 +1,15 @@
+Supabase Auth password grant: the ban check runs before the password is verified (Task 923 Revision 8 design, Opus, 2026-10-17)
+source: https://github.com/supabase/auth/blob/master/internal/api/token.go (master ce9a8eee0cc042be8c7a42981a7ddae631e41d91); same line numbers at release tag v2.197.0 (2026-09-09)
+fetched with: gh api repos/supabase/auth/contents/internal/api/token.go
+lines 116-124 of token.go:
+	if !user.HasPassword() {
+		return apierrors.NewBadRequestError(apierrors.ErrorCodeInvalidCredentials, InvalidLoginMessage)
+	}
+
+	if user.IsBanned() {
+		return apierrors.NewBadRequestError(apierrors.ErrorCodeUserBanned, "User is banned")
+	}
+
+	isValidPassword, shouldReEncrypt, err := user.Authenticate(ctx, db, params.Password, ...)
+consequence: any password for a banned account's e-mail answers user_banned "User is banned", while an unknown e-mail answers invalid_credentials "Invalid login credentials"
+the banned answer also returns before the password hash is computed, so it can differ in response time; the application cannot remove that difference

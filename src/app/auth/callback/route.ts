@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { exchangeCodeForSession, ensureUserProfile } from '@/lib/auth/server'
+import { safeNextPath } from '@/lib/auth/safeRedirect'
 
 // Handles the PKCE code exchange for OAuth (Google) flows.
 // After OAuth, Supabase redirects here with ?code=... and optionally ?next=...
@@ -9,7 +10,8 @@ const LOCALE_RE = /^\/(sq|en|uk|it)\//
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  const next = searchParams.get('next') ?? '/'
+  // only a path of THIS site may come out of `next` (open redirect, Task 923 Revision 7, S5)
+  const next = safeNextPath(searchParams.get('next'), origin, '/')
 
   if (code) {
     const { error } = await exchangeCodeForSession(code)

@@ -50,3 +50,18 @@ export const WithAction: Story = {
     )
   },
 }
+
+// Task 923 R139: the page-level info notice (the theme's info `Alert`) under the header, with the real
+// `admin.pages` texts of the Users list.
+export const WithNotice: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminPageHeader
+        title={storyT(l, 'admin.pages.users_title')}
+        action={<Button>{storyT(l, 'admin.pages.users_new_btn')}</Button>}
+        notice={storyT(l, 'admin.pages.users_gone_notice')}
+      />
+    )
+  },
+}

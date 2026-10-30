@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useRef, useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderOpen, Folder } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import { Button as MantineButton, Checkbox, Divider, Loader, Stack, Text, TextInput, Flex, useMantineTheme } from '@mantine/core'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { Button as MantineButton, Checkbox, Loader, Stack, Text, TextInput, Flex, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import {
   getCollectionsWithMembership,
   createCollection,
@@ -21,6 +23,7 @@ interface Props {
 
 export function SaveToCollectionButton({ listingId }: Props) {
   const t = useTranslations('collections')
+  const tc = useTranslations('common')
   const theme = useMantineTheme()
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
@@ -30,6 +33,9 @@ export function SaveToCollectionButton({ listingId }: Props) {
   const [isPending, startTransition] = useTransition()
   const [newName, setNewName] = useState('')
   const [isCreating, setIsCreating] = useState(false)
+  // Focus stays in the dialog while a request is in flight (WCAG 2.4.3): the Create button turns `disabled` when it starts, and a disabled
+  // focused control drops the focus to `body`, so focus moves to Close, which stays enabled (Task 923, R33, owner D6).
+  const closeRef = useRef<HTMLButtonElement>(null)
 
   if (!user) return null
 
@@ -49,6 +55,7 @@ export function SaveToCollectionButton({ listingId }: Props) {
   }
 
   function toggleCollection(col: CollectionWithCount) {
+    if (isPending) return // a request in flight ignores a second toggle; the checkbox stays focusable (no native `disabled`)
     const isMember = memberIds.has(col.id)
     startTransition(async () => {
       const result = isMember
@@ -74,6 +81,7 @@ export function SaveToCollectionButton({ listingId }: Props) {
     const trimmed = newName.trim()
     if (!trimmed || isCreating) return
     setIsCreating(true)
+    closeRef.current?.focus()
     const result = await createCollection(trimmed)
     if ('error' in result) {
       toast.error(t('error_generic'))
@@ -114,18 +122,34 @@ export function SaveToCollectionButton({ listingId }: Props) {
       </MantineButton>
 
       <MantineModal
+        structured
         opened={open}
         onClose={() => setOpen(false)}
         title={t('save_to')}
+        footer={
+          <MantineDialogFooter
+            secondary={<MantineButton ref={closeRef} type="button" variant="default" onClick={() => setOpen(false)}>{tc('close')}</MantineButton>}
+            primary={
+              <MantineButton
+                type="button"
+                onClick={handleCreate}
+                disabled={!newName.trim() || isCreating}
+                loading={isCreating}
+              >
+                {t('create')}
+              </MantineButton>
+            }
+          />
+        }
       >
-        <Stack gap="sm" onClick={e => e.stopPropagation()}>
-          {loading ? (
-            <Flex justify="center" align="center" py="xl">
-              <Loader color="gray" size="sm" />
-            </Flex>
-          ) : (
-            <>
-              {collections.length === 0 ? (
+        <div onClick={e => e.stopPropagation()}>
+          <MantineDialogSections>
+            <MantineDialogSection>
+              {loading ? (
+                <Flex justify="center" align="center" py="xl">
+                  <Loader color="gray" size="sm" />
+                </Flex>
+              ) : collections.length === 0 ? (
                 <Stack align="center" gap="xs" pt="sm" pb="xs">
                   <Folder size={theme.other.iconSize.feature} color="var(--mantine-color-gray-6)" />
                   <Text size="sm" c="dimmed">{t('no_collections')}</Text>
@@ -139,7 +163,7 @@ export function SaveToCollectionButton({ listingId }: Props) {
                         key={col.id}
                         checked={isMember}
                         onChange={() => toggleCollection(col)}
-                        disabled={isPending}
+                        aria-busy={isPending || undefined}
                         label={
                           <Stack gap={0}>
                             <Text size="sm" fw={500} truncate>{col.name}</Text>
@@ -151,10 +175,10 @@ export function SaveToCollectionButton({ listingId }: Props) {
                   })}
                 </Stack>
               )}
-
-              {/* Inline create-and-add — always visible, no extra dialog */}
-              <Divider />
-              <Flex gap="xs">
+            </MantineDialogSection>
+            {/* Inline create-and-add: the name field here, the Create action in the footer */}
+            {!loading && (
+              <MantineDialogSection>
                 <TextInput
                   value={newName}
                   onChange={e => setNewName(e.target.value)}
@@ -162,25 +186,11 @@ export function SaveToCollectionButton({ listingId }: Props) {
                   maxLength={100}
                   onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
                   disabled={isCreating}
-                  size="xs"
-                  flex={1}
                 />
-                <MantineButton
-                  type="button"
-                  size="xs"
-                  onClick={handleCreate}
-                  disabled={!newName.trim() || isCreating}
-                  w={{ base: 'auto' }}
-                >
-                  {isCreating
-                    ? <Loader size={theme.other.iconSize.compact} color="white" />
-                    : t('create')
-                  }
-                </MantineButton>
-              </Flex>
-            </>
-          )}
-        </Stack>
+              </MantineDialogSection>
+            )}
+          </MantineDialogSections>
+        </div>
       </MantineModal>
     </>
   )

@@ -1,0 +1,9 @@
+platform win32 node v22.22.3
+cwd C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r5-95-probe-enobuf.mjs
+start 2026-10-15T09:15:28.683Z
+
+{"status":null,"error":"ENOBUFS","stderrLen":0,"stdoutLen":1050626}
+
+end 2026-10-15T09:15:28.826Z
+EXIT_CODE=0

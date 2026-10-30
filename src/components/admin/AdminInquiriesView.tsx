@@ -2,36 +2,18 @@
 
 import { Fragment } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { AlertCircle, CheckCircle2, ChevronRight, Circle, Mail } from 'lucide-react'
-import {
-  Badge, Box, Divider, Flex, Group, Paper, ScrollArea, SegmentedControl, Stack, Text, UnstyledButton,
-  useMantineTheme,
-} from '@mantine/core'
+import { ChevronRight, Mail } from 'lucide-react'
+import { Box, Divider, Flex, Group, Paper, ScrollArea, SegmentedControl, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { formatDate } from '@/lib/formatters'
 import type { InquiryRow } from '@/components/admin/AdminInquiriesManager'
 import type { ContactStatus } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export type InquiryStatusFilter = ContactStatus | 'all'
 export type InquiryMailboxFilter = 'all' | 'support' | 'sales'
 
 const STATUS_FILTERS = ['all', 'new', 'in_progress', 'closed'] as const
 const MAILBOX_FILTERS = ['all', 'support', 'sales'] as const
-
-/**
- * Badge colour per contact status (kickoff 894 R2): new yellow, in progress blue, closed gray. `blue` is not a
- * registered theme colour (`check:stories` check 15), so the registered `blueLight` carries "in progress".
- */
-const STATUS_COLOR: Record<ContactStatus, string> = {
-  new: 'yellow',
-  in_progress: 'blueLight',
-  closed: 'gray',
-}
-
-const STATUS_ICON: Record<ContactStatus, typeof Circle> = {
-  new: Circle,
-  in_progress: AlertCircle,
-  closed: CheckCircle2,
-}
 
 export interface AdminInquiriesViewProps {
   /** Rows to list (already filtered by the container). */
@@ -106,7 +88,6 @@ export function AdminInquiriesView({
       ) : (
         <Paper withBorder radius="lg">
           {inquiries.map((inq, index) => {
-            const StatusIcon = STATUS_ICON[inq.status]
             return (
               <Fragment key={inq.id}>
                 {index > 0 && <Divider />}
@@ -119,23 +100,25 @@ export function AdminInquiriesView({
                   data-testid="inquiry-row"
                 >
                   <Group wrap="nowrap" align="flex-start" gap="md">
-                    <Flex direction={{ base: 'column', sm: 'row' }} justify="space-between" gap="xs" flex={1} miw={0}>
-                      <Stack gap="tight" flex={1} miw={0}>
+                    {/* GR-3h (R74): below 640 the text block and the date row are two blocks of the records rhythm (sm);
+                        from 640 they are two columns, whose horizontal gap stays xs. */}
+                    <Flex direction={{ base: 'column', sm: 'row' }} justify="space-between" gap={{ base: 'sm', sm: 'xs' }} flex={1} miw={0}>
+                      <Stack gap="sm" flex={1} miw={0}>
                         <Group gap="xs" wrap="wrap">
-                          <Badge
-                            variant="light"
-                            size="sm"
-                            color={STATUS_COLOR[inq.status]}
-                            leftSection={<StatusIcon size={theme.other.iconSize.badge} />}
-                          >
+                          <MantineBadge variant="status" entity="inquiry" value={inq.status}>
                             {t(`status_${inq.status}` as 'status_new' | 'status_in_progress' | 'status_closed')}
-                          </Badge>
+                          </MantineBadge>
                           <Text size="xs" c="dimmed" ff="monospace">{inq.target_mailbox}</Text>
                         </Group>
-                        <Text size="sm" fw={500}>{displaySubject(inq)}</Text>
-                        <Text size="xs" c="dimmed" lineClamp={1}>{inq.name} · {inq.email}</Text>
+                        {/* the badge row and this text block are two blocks one rhythm step (sm) apart; the lines inside the
+                            text block follow each other. GR-3i, D6: the sender's name and the e-mail wrap; nothing is cut. */}
+                        <Stack gap="tight">
+                          <Text size="sm" fw={500}>{displaySubject(inq)}</Text>
+                          <Text size="xs" c="dimmed">{inq.name}</Text>
+                          <Text size="xs" c="dimmed">{inq.email}</Text>
+                        </Stack>
                       </Stack>
-                      <Flex direction={{ base: 'row', sm: 'column' }} align={{ base: 'center', sm: 'flex-end' }} gap={{ base: 'md', sm: 'tight' }} flex="none">
+                      <Flex direction={{ base: 'row', sm: 'column' }} align={{ base: 'center', sm: 'flex-end' }} gap={{ base: 'md', sm: 'sm' }} flex="none">
                         <Text size="xs" c="dimmed">{formatDate(inq.created_at, locale)}</Text>
                         {inq.reply_count > 0 && (
                           <Group gap="tight" wrap="nowrap" c="dimmed">

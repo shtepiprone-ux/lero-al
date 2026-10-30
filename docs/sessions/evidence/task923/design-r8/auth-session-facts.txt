@@ -1,0 +1,13 @@
+Task 923 Revision 8 self-audit (Opus, 2026-10-18): how a refused session behaves in this project's code and SDK (read in this session)
+supabase auth v2.197.0 internal/api/apierrors/errorcode.go (gh api repos/supabase/auth/contents/...?ref=v2.197.0):
+	ErrorCodeUserNotFound                      ErrorCode = "user_not_found"
+	ErrorCodeSessionNotFound                   ErrorCode = "session_not_found"
+	ErrorCodeUserBanned                        ErrorCode = "user_banned"
+supabase auth v2.197.0 internal/api/auth.go maybeLoadUserOrSession: a deleted Auth user answers
+	apierrors.NewForbiddenError(apierrors.ErrorCodeUserNotFound, "User from sub claim in JWT does not exist")
+installed SDK: @supabase/auth-js 2.105.4, @supabase/ssr 0.10.3 (node_modules/*/package.json)
+node_modules/@supabase/auth-js/dist/main/lib/fetch.js:76-80: errorCode === 'session_not_found' throws AuthSessionMissingError
+node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:2508-2511 (_getUser): only AuthSessionMissingError calls this._removeSession(); user_banned and user_not_found return the error and keep the session
+node_modules/@supabase/auth-js/dist/main/GoTrueClient.js:3195-3204 (_signOut): an AuthApiError with status 404, 401 or 403 is ignored and this._removeSession() runs (scope other than 'others')
+project middleware: src/middleware.ts:27 matcher excludes api, auth and admin paths; src/lib/auth/middleware.ts:50 calls supabase.auth.getUser() on every matched request
+live result on the development project: docs/sessions/evidence/task923/design-r8/ban-experiment-output.txt (getUser of a banned token: 403 user_banned; REST read and write with it: ALLOWED)

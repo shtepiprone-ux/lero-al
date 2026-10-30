@@ -1,0 +1,23 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+started: 2026-10-23T11:26:35Z
+command: npm run lint
+---- output ----
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\components\__tests__\ListingGallery.portal.smoke.test.tsx
+  216:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\lib\__tests__\visibility.test.ts
+    3:32  warning  'vi' is defined but never used                 @typescript-eslint/no-unused-vars
+    4:13  warning  'visibilityModule' is defined but never used   @typescript-eslint/no-unused-vars
+  184:11  warning  'original' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\tests\integration\accessHardening.integration.test.ts
+  59:5  warning  Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax')
+
+✖ 261 problems (0 errors, 261 warnings)
+  0 errors and 45 warnings potentially fixable with the `--fix` option.
+
+---- end ----
+EXIT_CODE=0

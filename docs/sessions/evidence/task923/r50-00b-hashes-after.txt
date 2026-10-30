@@ -1,0 +1,24 @@
+# R150-R155 AC150 r50-00b-hashes-after: sha256 of the 12 paths of C1486 after the last edit
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: sha256sum <the 12 paths of C1486>
+NODE_PATH: (unset)
+started: 2026-10-25T12:11:59.063Z
+--- stdout ---
+aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f *src/modules/auth/components/AuthSheet.tsx
+433056985c3f71159bb111c9379d8bf9c066808a47bd8361089805bf039fa560 *src/lib/auth/browser.ts
+46dd4c89d24b382dcb560b9a01e32e5e93805cc063c61ee8f6b5d692fa4f43af *src/modules/auth/lib/mapAuthError.ts
+0b9c4a205eef7df33df0284fece474c37448a7909d1c77216426daeebdbfab1f *src/modules/cabinet/actions/index.ts
+b089ec612829e3b8f312d009334668fd02abfd085845afa17a7fd214c02c8993 *src/tests/integration/fixtures.ts
+94039ec638a53d21aab5b7e1022b6cf4b9bc5119f6ebc220481092df34a108cc *src/modules/auth/components/__tests__/AuthSheet.test.tsx
+e8b3d019e933c963db475370185b8725c2bac556e30e8cc07181853d1fbcb6c3 *src/modules/auth/components/AuthSheet.banned.security.test.tsx
+04ef853f75fd6999176a87e243caa5e230b34e42bca351b15ecd19f211481957 *src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+c05f17059e45bc58ff7eea0fc3e37c59bdd49ceb10ee261a4a8da11361b01be9 *src/lib/auth/__tests__/browserAuth.security.test.ts
+044dc143db488c1513aba61a04957975d6c724a2cdcb41b64306beec610343d8 *src/lib/auth/__tests__/browser.smoke.test.ts
+3fda96ca7ac9f43b40c6ad2d4100e87a69af4b148222625213392cf83867d0c5 *src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+7e0b838b563e7eaadf9272128c6f95ceca40e97219941f64df68761fc0ec756e *src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx
+
+--- stderr ---
+
+--- exit code: 0 ---

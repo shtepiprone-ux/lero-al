@@ -1,0 +1,8 @@
+GR-12 census, "the confirmation step of a destructive action" (Task 923 R46 design, Opus, 2026-10-18)
+script: docs/sessions/evidence/task923/design-r8/gr12-delete-confirm-census.mjs; raw: gr12-delete-confirm-census.json; built Storybook 2026-10-17 05:08; locale en
+Stories compared 5: mantine-primitives-modal--delete-confirm, patterns-mantine-adminuserprofiledialogsview--delete, --deactivate, --unsaved, --clear-row
+1440, every Story: modal width 440, radius 24px, close 44x44, title 16/400, footer pair 198x44 side by side, red primary rgb(180, 35, 24)
+390, every Story: bottom sheet (drawer) radius 24px 24px 0px 0px, footer pair 173x44 side by side
+a field inside the destructive modal (deactivate): label 14/600 rgb(52, 64, 84), textarea radius 8px, primary disabled rgb(228, 231, 236) until the field is filled
+reference field look in a dialog (mantine-primitives-modal--form): label 14/600 rgb(52, 64, 84), input height 44, radius 8px, 14px text
+verdict: one meaning, one look; a typed field added through the owner takes the canonical TextInput look above; no difference to resolve

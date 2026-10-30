@@ -1,0 +1,28 @@
+fatal: path 'src/modules/listings/actions/contactGateway.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/modules/listings/actions/contactGateway.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/modules/listings/actions/contactGateway.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/modules/listings/actions/contactGateway.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/tests/integration/fixtures.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/tests/integration/contactGateway.integration.test.ts' exists on disk, but not in 'HEAD'
+fatal: path 'src/modules/listings/actions/__tests__/contactGateway.security.test.ts' exists on disk, but not in 'HEAD'
+C185 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1871-1871 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1888-1888
+C436 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2212-2212 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2229-2229
+C437 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1879-1879 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1896-1896
+C446 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2480-2480 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2497-2497
+C709 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2975-2975 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2992-2992
+C810 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3244-3244 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3261-3261
+C811 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2879-2879 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2896-2896
+C812 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3424-3424 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3441-3441
+C813 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2879-2879 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2896-2896
+C814 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3471-3471 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3488-3488
+C895 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3773-3773 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3790-3790
+C1128 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2974-2974 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2991-2991
+C1129 src/modules/listings/actions/contactGateway.ts:23-23 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:3-3
+C1130 src/modules/listings/actions/contactGateway.ts:58-58 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:5-5
+C1131 src/modules/listings/actions/contactGateway.ts:60-60 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:7-7
+C1132 src/modules/listings/actions/contactGateway.ts:19-19 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:9-9
+UNRESOLVED C1133 src/modules/listings/components/ListingContact.tsx:143-143
+C1149 src/tests/integration/fixtures.ts:141-141 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:11-11
+C1150 src/tests/integration/contactGateway.integration.test.ts:16-16 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:13-13
+C1151 src/modules/listings/actions/__tests__/contactGateway.security.test.ts:61-61 -> docs/sessions/evidence/task923/review-41/rv41-15-head-lines.txt:15-15
+changed 19, unresolved 1

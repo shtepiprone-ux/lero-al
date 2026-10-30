@@ -1,0 +1,10 @@
+﻿# a6-98: sha256 of the session record after the Task 927 Amendment 6 executor report
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: Get-FileHash docs/sessions/2026-10-10-task923-rendered-state-census.md -Algorithm SHA256
+date: 2026-10-25T16:12:26.0986956Z
+
+71f6c48c0aef640325ad147a258e0075e8a2604185e729a503fe204d4c755f0f  docs/sessions/2026-10-10-task923-rendered-state-census.md
+
+exit code: 0

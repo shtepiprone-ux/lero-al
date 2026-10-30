@@ -1,0 +1,6 @@
+Next.js Server Action manifest (Task 923 Revision 8 design, Opus, 2026-10-18); next 15.5.18 (node_modules/next/package.json)
+file: .next/server/server-reference-manifest.json of the local build written 2026-10-16 01:03 (before the S28 fix of 2026-10-17)
+top-level keys: node, edge, encryptionKey (the key's value is deliberately not copied here)
+each node entry is keyed by an action id and holds workers, layer, filename and exportedName
+observed entry: filename ...src\modules\listings\actions\applyListingTransition.ts, exportedName applyListingTransitionByStatus
+consequence: a build made before the fix exposed applyListingTransitionByStatus as a public Server Action; a manifest check sees it

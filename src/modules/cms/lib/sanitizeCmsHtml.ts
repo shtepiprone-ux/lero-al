@@ -1,4 +1,5 @@
 import sanitizeHtmlLib, { type IOptions } from 'sanitize-html'
+import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
 
 /**
  * Task 884 (R2) — the CMS body's stored-XSS defence. `CmsPageView.tsx` is the one place a
@@ -29,19 +30,6 @@ const CONTENT_DISCARD_TAGS = new Set([
   'math',
   'form',
 ])
-
-const CLOUDINARY_HOST = 'res.cloudinary.com'
-
-/** `true` only for an `https://res.cloudinary.com/…` URL (the host the upload route writes to). */
-function isCloudinaryImageSrc(src: string | undefined): boolean {
-  if (!src) return false
-  try {
-    const url = new URL(src)
-    return url.protocol === 'https:' && url.hostname === CLOUDINARY_HOST && !url.username && !url.password
-  } catch {
-    return false
-  }
-}
 
 const cmsHtmlAllowlist: IOptions = {
   allowedTags: [
@@ -98,8 +86,9 @@ const cmsHtmlAllowlist: IOptions = {
   allowedSchemesAppliedToAttributes: ['href'],
   allowProtocolRelative: false,
   disallowedTagsMode: 'discard',
+  // Task 923 R160 (R70 (g), owner D93): only an image of the project's own Cloudinary account is kept, the same check as listing images and the database prefix.
   exclusiveFilter: (frame) =>
-    CONTENT_DISCARD_TAGS.has(frame.tag) || (frame.tag === 'img' && !isCloudinaryImageSrc(frame.attribs.src)),
+    CONTENT_DISCARD_TAGS.has(frame.tag) || (frame.tag === 'img' && !isTrustedImageUrl(frame.attribs.src)),
   transformTags: {
     // Drop an out-of-set value together with its attribute (the `values` lists below stay as a second wall).
     div: (tagName, attribs) => {

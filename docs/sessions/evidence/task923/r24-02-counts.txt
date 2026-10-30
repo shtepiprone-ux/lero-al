@@ -1,0 +1,299 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 (NODE_PATH, not installed in the repository); start 2026-10-21T18:08:29.849Z
+cmd node docs/sessions/evidence/task923/db-catalog/r24-capture.cjs --i-confirm-dev-database   (R96 (a) and (b): read-only)
+connection 1: opened
+connection 1: BEGIN READ ONLY; show transaction_read_only = on
+R96 (b): counts. Every entry has its exact SQL and its result. Only counts, ids, URL prefixes (scheme + host, plus the cloud name for res.cloudinary.com) and configuration keys are printed; no URL path, key or personal value.
+
+## B1  R69 (b) listings.title: null, shorter than 5 after trim, or longer than 150
+bound / source: src/modules/listings/validations/index.ts:7 title: z.string().trim().min(5).max(150)
+SQL:
+  select count(*) as breaking from public.listings where title is null or char_length(btrim(title)) < 5 or char_length(title) > 150
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B1a  R69 (b) listings.title: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.listings where title is null or char_length(btrim(title)) < 5 or char_length(title) > 150 order by id limit 20
+RESULT (0 rows):
+
+## B2  R69 (b) listings.description: longer than 5000
+bound / source: src/modules/listings/validations/index.ts:8 description: z.string().max(5000)
+SQL:
+  select count(*) as breaking from public.listings where char_length(description) > 5000
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B3  R69 (b) listings.price: null or not above 0
+bound / source: src/modules/listings/validations/index.ts:9 price: z.number().positive()
+SQL:
+  select count(*) as breaking from public.listings where price is null or price <= 0
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B3a  R69 (b) listings.price: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.listings where price is null or price <= 0 order by id limit 20
+RESULT (0 rows):
+
+## B4  R69 (b) listings.price_old: not null and not above 0
+bound / source: src/modules/listings/validations/index.ts:10 price_old: z.number().positive().optional()
+SQL:
+  select count(*) as breaking from public.listings where price_old is not null and price_old <= 0
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B4a  R69 (b) listings.price_old: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.listings where price_old is not null and price_old <= 0 order by id limit 20
+RESULT (0 rows):
+
+## B5  R69 (b) price and price_old CEILING (R72 (d)): the largest stored values and the rows above round values. The Zod schema has NO ceiling today (price is only .positive(), line 9), so no bound can be cited and the number is for Opus to choose
+bound / source: src/modules/listings/validations/index.ts:9-10 (no ceiling in the working tree)
+SQL:
+  select max(price) as max_price, max(price_old) as max_price_old,
+           count(*) filter (where price > 1e6 or price_old > 1e6) as above_1e6, count(*) filter (where price > 1e7 or price_old > 1e7) as above_1e7,
+           count(*) filter (where price > 1e8 or price_old > 1e8) as above_1e8, count(*) filter (where price > 1e9 or price_old > 1e9) as above_1e9,
+           count(*) filter (where price > 1e10 or price_old > 1e10) as above_1e10, count(*) as listings_total from public.listings
+RESULT (1 row):
+  {"max_price":"80000000","max_price_old":null,"above_1e6":"4","above_1e7":"3","above_1e8":"0","above_1e9":"0","above_1e10":"0","listings_total":"19"}
+
+## B6  R69 (b) listings.lat: outside -90..90
+bound / source: src/modules/listings/validations/index.ts:30 lat: z.number().min(-90).max(90).optional()
+SQL:
+  select count(*) as breaking from public.listings where lat is not null and (lat < -90 or lat > 90 or lat = 'NaN'::float8)
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B7  R69 (b) listings.lng: outside -180..180
+bound / source: src/modules/listings/validations/index.ts:31 lng: z.number().min(-180).max(180).optional()
+SQL:
+  select count(*) as breaking from public.listings where lng is not null and (lng < -180 or lng > 180 or lng = 'NaN'::float8)
+RESULT (1 row):
+  {"breaking":"0"}
+
+## P1  URL prefixes of listing_images.url (R69 (c))
+SQL:
+  select case
+          when url is null then '<null>'
+          when url ~ '^https://res\.cloudinary\.com/[^/]+/' then substring(url from '^(https://res\.cloudinary\.com/[^/]+)/')
+          when url ~ '^https?://[^/]+' then substring(url from '^(https?://[^/]+)') || ' (other host: path not shown)'
+          else '<not an http(s) URL>' end as prefix, count(*) as rows
+        from public.listing_images  group by 1 order by 2 desc, 1
+RESULT (1 row):
+  {"prefix":"https://res.cloudinary.com/die7okukn","rows":"83"}
+
+## P2  URL prefixes of users.avatar_url (R69 (d))
+SQL:
+  select case
+          when avatar_url is null then '<null>'
+          when avatar_url ~ '^https://res\.cloudinary\.com/[^/]+/' then substring(avatar_url from '^(https://res\.cloudinary\.com/[^/]+)/')
+          when avatar_url ~ '^https?://[^/]+' then substring(avatar_url from '^(https?://[^/]+)') || ' (other host: path not shown)'
+          else '<not an http(s) URL>' end as prefix, count(*) as rows
+        from public.users  group by 1 order by 2 desc, 1
+RESULT (2 rows):
+  {"prefix":"<null>","rows":"4"}
+  {"prefix":"https://res.cloudinary.com/die7okukn","rows":"2"}
+
+## P3  URL prefixes of users.company_logo_url (R69 (d))
+SQL:
+  select case
+          when company_logo_url is null then '<null>'
+          when company_logo_url ~ '^https://res\.cloudinary\.com/[^/]+/' then substring(company_logo_url from '^(https://res\.cloudinary\.com/[^/]+)/')
+          when company_logo_url ~ '^https?://[^/]+' then substring(company_logo_url from '^(https?://[^/]+)') || ' (other host: path not shown)'
+          else '<not an http(s) URL>' end as prefix, count(*) as rows
+        from public.users  group by 1 order by 2 desc, 1
+RESULT (2 rows):
+  {"prefix":"<null>","rows":"4"}
+  {"prefix":"<not an http(s) URL>","rows":"2"}
+
+## P0  The project cloud prefix used by the checks below (R69 (c), (d))
+SQL:
+  (derived in the script from the result of P1: the most frequent https://res.cloudinary.com/<cloud> prefix)
+RESULT (1 row):
+  {"note":"project prefix taken from listing_images: https://res.cloudinary.com/die7okukn/ (1 cloud name(s) found: die7okukn)"}
+
+## B8  R69 (c) listing_images.url: not starting with the project prefix (null counts as breaking)
+bound / source: src/lib/uploads/imageUrl.ts:13-24 isTrustedImageUrl: https, host res.cloudinary.com, path starts /<cloud>/
+SQL:
+  select count(*) as breaking from public.listing_images where url is null or left(url, 37) <> 'https://res.cloudinary.com/die7okukn/'
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B8a  R69 (c) listing_images.url: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.listing_images where url is null or left(url, 37) <> 'https://res.cloudinary.com/die7okukn/' order by id limit 20
+RESULT (0 rows):
+
+## B9  R69 (d) users.avatar_url: not null and not starting with the project prefix
+bound / source: no Zod bound; the column is written by the avatar upload route and by sign-in providers (see r24-03 section 1)
+SQL:
+  select count(*) as breaking from public.users where avatar_url is not null and left(avatar_url, 37) <> 'https://res.cloudinary.com/die7okukn/'
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B9a  R69 (d) users.avatar_url: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.users where avatar_url is not null and left(avatar_url, 37) <> 'https://res.cloudinary.com/die7okukn/' order by id limit 20
+RESULT (0 rows):
+
+## B10  R69 (d) users.company_logo_url: not null and not starting with the project prefix
+bound / source: src/components/admin/AdminUserProfile.tsx:73 companyLogoUrl: z.string().optional() (no bound)
+SQL:
+  select count(*) as breaking from public.users where company_logo_url is not null and left(company_logo_url, 37) <> 'https://res.cloudinary.com/die7okukn/'
+RESULT (1 row):
+  {"breaking":"2"}
+
+## B10a  R69 (d) users.company_logo_url: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.users where company_logo_url is not null and left(company_logo_url, 37) <> 'https://res.cloudinary.com/die7okukn/' order by id limit 20
+RESULT (2 rows):
+  {"id":"5b6caf0d-1d74-44fb-a3c1-e6c638f06aae"}
+  {"id":"6e791daf-258a-47cf-a952-3466d32d5879"}
+
+## B11  R69 (d) users.website: not null and not starting with http:// or https://
+bound / source: src/modules/admin/actions/index.ts:438-441 normalizeWebsite -> src/lib/security/safeUrl.ts:19 safeExternalUrl (stores href; scheme http(s)); AdminUserProfile.tsx:74 website: z.string().optional() (no bound)
+SQL:
+  select count(*) as breaking from public.users where website is not null and website !~* '^https?://'
+RESULT (1 row):
+  {"breaking":"2"}
+
+## B11a  R69 (d) users.website: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.users where website is not null and website !~* '^https?://' order by id limit 20
+RESULT (2 rows):
+  {"id":"5b6caf0d-1d74-44fb-a3c1-e6c638f06aae"}
+  {"id":"6e791daf-258a-47cf-a952-3466d32d5879"}
+
+## B12  R69 (d) users.website: longer than 200 characters
+bound / source: no Zod bound; safeUrl.ts:22 allows up to 2048
+SQL:
+  select count(*) as breaking from public.users where char_length(website) > 200
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B13  R69 (d) users.phone: not null and not E.164 (^\+[1-9][0-9]{7,14}$)
+bound / source: src/lib/phone/index.ts:255 E164_GUARD = /^\+[1-9]\d{7,14}$/ (applied at :319 by validateNationalPhone); AdminUserProfile.tsx:68 phone: z.string() (no bound)
+SQL:
+  select count(*) as breaking from public.users where phone is not null and phone !~ '^\+[1-9][0-9]{7,14}$'
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B13a  R69 (d) users.phone: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.users where phone is not null and phone !~ '^\+[1-9][0-9]{7,14}$' order by id limit 20
+RESULT (0 rows):
+
+## B14  R69 (d) users.whatsapp: not null and not E.164
+bound / source: src/lib/phone/index.ts:255 E164_GUARD; AdminUserProfile.tsx:70 whatsapp: z.string().optional() (no bound)
+SQL:
+  select count(*) as breaking from public.users where whatsapp is not null and whatsapp !~ '^\+[1-9][0-9]{7,14}$'
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B14a  R69 (d) users.whatsapp: ids of the breaking rows (at most 20)
+SQL:
+  select id::text as id from public.users where whatsapp is not null and whatsapp !~ '^\+[1-9][0-9]{7,14}$' order by id limit 20
+RESULT (0 rows):
+
+## B15  R69 (d) users.name: longer than 100
+bound / source: src/modules/auth/validations/index.ts:14 name: z.string().trim().min(2).max(100)
+SQL:
+  select count(*) as breaking from public.users where char_length(name) > 100
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B16  R69 (d) users.last_name: longer than 100
+bound / source: no Zod bound on last_name (AdminUserProfile.tsx:66 lastName: z.string().min(1); AdminUserCreate.tsx:45 lastName: z.string().optional()); 100 is the bound R69 (d) names
+SQL:
+  select count(*) as breaking from public.users where char_length(last_name) > 100
+RESULT (1 row):
+  {"breaking":"0"}
+
+## B17  R69 (e) storage.objects in the avatars bucket
+SQL:
+  select count(*) as objects from storage.objects where bucket_id = 'avatars'
+RESULT (1 row):
+  {"objects":"1"}
+
+## B18  R78 (a) rows of public.exchange_providers
+SQL:
+  select count(*) as rows from public.exchange_providers
+RESULT (1 row):
+  {"rows":"2"}
+
+## B18a  R78 (a) ids of public.exchange_providers (no other column is read)
+SQL:
+  select id::text as id from public.exchange_providers order by id
+RESULT (2 rows):
+  {"id":"1"}
+  {"id":"2"}
+
+## B19  R75 (c) constraints of public.role_permissions (does the table restrict the text of permission_key?)
+SQL:
+  select c.conname as name, c.contype as type, pg_get_constraintdef(c.oid) as def from pg_constraint c where c.conrelid = 'public.role_permissions'::regclass order by 1
+RESULT (3 rows):
+  {"name":"role_permissions_pkey","type":"p","def":"PRIMARY KEY (role, permission_key)"}
+  {"name":"role_permissions_role_check","type":"c","def":"CHECK ((role = 'moderator'::text))"}
+  {"name":"role_permissions_updated_by_user_id_fkey","type":"f","def":"FOREIGN KEY (updated_by_user_id) REFERENCES users(id) ON DELETE SET NULL"}
+
+## B19a  R75 (c) column types of public.role_permissions
+SQL:
+  select column_name, data_type, is_nullable, column_default from information_schema.columns where table_schema = 'public' and table_name = 'role_permissions' order by ordinal_position
+RESULT (5 rows):
+  {"column_name":"role","data_type":"text","is_nullable":"NO","column_default":null}
+  {"column_name":"permission_key","data_type":"text","is_nullable":"NO","column_default":null}
+  {"column_name":"allowed","data_type":"boolean","is_nullable":"NO","column_default":"false"}
+  {"column_name":"updated_at","data_type":"timestamp with time zone","is_nullable":"NO","column_default":"now()"}
+  {"column_name":"updated_by_user_id","data_type":"uuid","is_nullable":"YES","column_default":null}
+
+## B19b  R75 (c) triggers on public.role_permissions
+SQL:
+  select t.tgname as name, pg_get_triggerdef(t.oid) as def from pg_trigger t where t.tgrelid = 'public.role_permissions'::regclass and not t.tgisinternal order by 1
+RESULT (0 rows):
+
+## B19c  R75 (c) the permission keys stored today (configuration keys, no personal data): role, key, allowed
+bound / source: src/lib/auth/permissionKeys.ts (PERMISSION_KEYS)
+SQL:
+  select role, permission_key, allowed from public.role_permissions order by role, permission_key
+RESULT (12 rows):
+  {"role":"moderator","permission_key":"audit.clear_history","allowed":false}
+  {"role":"moderator","permission_key":"legal.manage","allowed":false}
+  {"role":"moderator","permission_key":"listings.delete","allowed":true}
+  {"role":"moderator","permission_key":"listings.set_premium","allowed":true}
+  {"role":"moderator","permission_key":"locations.manage","allowed":true}
+  {"role":"moderator","permission_key":"reports.delete","allowed":true}
+  {"role":"moderator","permission_key":"reports.manage","allowed":true}
+  {"role":"moderator","permission_key":"settings.manage","allowed":false}
+  {"role":"moderator","permission_key":"users.change_role","allowed":false}
+  {"role":"moderator","permission_key":"users.create","allowed":true}
+  {"role":"moderator","permission_key":"users.hard_delete","allowed":false}
+  {"role":"moderator","permission_key":"users.soft_delete","allowed":true}
+
+## B20  R79 (b) tables of public with a column that could store a rate set: a column named like rate/currenc/exchange, or of type json/jsonb (table and columns only)
+SQL:
+  select table_name as "table", string_agg(column_name || ' ' || data_type, ', ' order by ordinal_position) as columns from information_schema.columns
+         where table_schema = 'public' and table_name in (select table_name from information_schema.tables where table_schema = 'public' and table_type = 'BASE TABLE')
+           and (column_name ilike '%rate%' or column_name ilike '%currenc%' or column_name ilike '%exchange%' or data_type in ('json', 'jsonb')) group by 1 order by 1
+RESULT (10 rows):
+  {"table":"currency_rates","columns":"from_currency text, to_currency text, rate numeric"}
+  {"table":"email_templates","columns":"variables jsonb"}
+  {"table":"history_clear_events","columns":"metadata jsonb"}
+  {"table":"listings","columns":"currency USER-DEFINED"}
+  {"table":"notifications","columns":"template_params jsonb"}
+  {"table":"page_translations","columns":"content jsonb"}
+  {"table":"pages","columns":"content jsonb"}
+  {"table":"saved_searches","columns":"filters jsonb"}
+  {"table":"site_footer","columns":"nav_links jsonb, info_links jsonb, social_links jsonb"}
+  {"table":"users","columns":"location_request jsonb, preferred_currency text"}
+
+## B20a  R79 (b) public.currency_rates: columns and row count
+SQL:
+  select (select count(*) from public.currency_rates) as rows, (select string_agg(column_name || ' ' || data_type, ', ' order by ordinal_position) from information_schema.columns where table_schema = 'public' and table_name = 'currency_rates') as columns
+RESULT (1 row):
+  {"rows":"1","columns":"id integer, from_currency text, to_currency text, rate numeric, source_url text, fetched_at timestamp with time zone"}
+
+read-only evidence of the run:
+connection 1: opened
+connection 1: BEGIN READ ONLY; show transaction_read_only = on
+connection 1: ROLLBACK done (the transaction was read only; nothing was written)
+connection 1: closed

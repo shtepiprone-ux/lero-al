@@ -1,7 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { getListingOwnerContact } from '@/modules/listings/actions/getListingOwnerContact'
+import { useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { revealListingContact } from '@/modules/listings/actions/contactGateway'
+import { CONTACT_ACTIONS } from '@/modules/listings/lib/contactActions'
+import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
 import { MessageCircle } from 'lucide-react'
@@ -11,7 +14,6 @@ import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
 import { ListingInquiryDialog } from '@/modules/listings/components/ListingInquiryDialog'
-import { trackListingContactEvent } from '@/modules/listings/actions/contactEvents'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 import {
   MantineListingContactPattern,
@@ -75,11 +77,19 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
   const t = useTranslations('listing')
   const locale = useLocale()
   const theme = useMantineTheme()
-  const [contactLoading, setContactLoading] = useState(false)
+  // The channel whose gateway request is running (Task 923 R116, owner D74): only the pressed button shows the pending state.
+  const [contactLoading, setContactLoading] = useState<'call' | 'whatsapp' | null>(null)
+  // The human check of Call and WhatsApp (Task 923 R113, R86): invisible until Cloudflare asks for interaction; every press gets one fresh token.
+  const humanCheckRef = useRef<CaptchaWidgetHandle>(null)
+  // What the gateway answered (Task 923 R119, owner D75, D78). Both stay while the same viewer is signed in: a later press of the link needs no new request. The page keys this card by the viewer (R131), so a sign-out or another account starts it empty.
+  // The number shown on the first button, and the WhatsApp link with its note when the click's activation had expired before the number arrived.
+  const [revealedPhone, setRevealedPhone] = useState<{ label: string; href: string } | null>(null)
+  const [whatsappFallback, setWhatsappFallback] = useState<{ href: string; label: string; note: string } | null>(null)
 
   const ownerDeleted = !!(owner.deleted_at)
   // owner.id is empty string in the fallback object — means no owner data was returned from DB.
-  // For guests this is due to RLS, not because the owner deleted their account.
+  // For guests this is due to RLS, not because the owner deleted their account. A guest is not served the contact card (Call, WhatsApp,
+  // Send message): only the sign-in call to action (owner decision D9, Task 923).
   const showGuestCTA = isGuest && !owner.id && !ownerDeleted
   // Authenticated viewer but owner row was genuinely null (e.g. orphaned listing).
   const ownerDataUnavailable = !isGuest && !owner.id && !ownerDeleted
@@ -112,29 +122,75 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
   // `contactLifecycleDisabled` since F2), and self-inquiry.
   const showInquiryTrigger = !ownerDeleted && !ownerDataUnavailable && !contactLifecycleDisabled && canSendInquiry
 
+  /**
+   * The human check, then the contact gateway (Task 923 R113 (d)): one fresh token per press, and the widget is reset after every answer because a Turnstile token is
+   * single-use. Returns the number of the pressed channel, or null after the refusal toast: the check's own text when the gateway or the widget says the check failed,
+   * the reveal-limit text when the gateway says `rate_limited` (Task 923 R127), the usual "could not load" text for every other refusal.
+   */
+  async function requestNumber(channel: 'whatsapp' | 'call'): Promise<string | null> {
+    const check = humanCheckRef.current
+    let captchaToken: string
+    try {
+      captchaToken = (await check?.getToken()) ?? ''
+    } catch {
+      toast.error(t('contact_bot_check_failed'))
+      check?.reset()
+      return null
+    }
+    try {
+      const result = await revealListingContact({ listingId: contactListingId, channel, captchaToken, locale })
+      if (result.ok) return result.number
+      toast.error(t(result.reason === 'bot_check_failed' ? 'contact_bot_check_failed' : result.reason === 'rate_limited' ? 'contact_rate_limited' : 'contact_load_failed'))
+      return null
+    } catch {
+      toast.error(t('contact_load_failed'))
+      return null
+    } finally {
+      check?.reset()
+    }
+  }
+
   async function handleContactClick(type: 'whatsapp' | 'call') {
     if (!contactListingId || contactLoading) return
-    setContactLoading(true)
+    // The pressed action shows Mantine's `loading`, which disables it and drops the focus to `body`: the focus goes back to it when the
+    // request is over and it is enabled again (WCAG 2.4.3; Task 923 R33, owner D6), unless the person has moved it elsewhere meanwhile.
+    const pressed = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    // After a reveal the pressed button is replaced by a link at the same place in its parent (Task 923 R121, F25): the focus follows it, so a keyboard or screen-reader user keeps their place.
+    const slot = pressed?.parentElement ?? null
+    const slotIndex = slot && pressed ? Array.prototype.indexOf.call(slot.children, pressed) : -1
+    setContactLoading(type)
     try {
-      const result = await getListingOwnerContact(contactListingId)
-      if (result.error || (!result.phone && !result.whatsapp)) {
-        toast.error(t('contact_load_failed'))
-        return
-      }
-      const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
+      const number = await requestNumber(type)
+      if (number === null) return
+      const digits = number.replace(/\D/g, '')
       if (!digits) { toast.error(t('contact_load_failed')); return }
       if (type === 'whatsapp') {
-        void trackListingContactEvent({ listingId: contactListingId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+        // the contact event is recorded by the gateway on the server: no client call writes it
         const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
-        window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
+        const href = `https://wa.me/${digits}?text=${waText}`
+        // A browser lets a script open a window only while the click's activation lasts (5.5 s in Chromium), and the check and the gateway can take longer: then the card
+        // shows a link and says why, instead of a window that is silently blocked.
+        const activation = typeof navigator === 'undefined' ? undefined : navigator.userActivation
+        if (activation && !activation.isActive) {
+          // committed at once (R121): the focus return below runs in the next frame and must find the pressed button already replaced
+          flushSync(() => setWhatsappFallback({ href, label: t('open_whatsapp'), note: t('whatsapp_retry_hint') }))
+        } else {
+          window.open(href, '_blank', 'noopener,noreferrer')
+        }
       } else {
-        const a = document.createElement('a')
-        a.href = `tel:${digits}`
-        a.rel = 'noopener noreferrer'
-        a.click()
+        // the number is shown on its button, as a link that dials; the visitor decides to call (no window, no activation needed)
+        flushSync(() => setRevealedPhone({ label: number.trim(), href: `tel:${digits}` }))
       }
     } finally {
-      setContactLoading(false)
+      setContactLoading(null)
+      requestAnimationFrame(() => {
+        const active = document.activeElement
+        if (pressed && pressed.isConnected && (!active || active === document.body)) pressed.focus()
+        else if (pressed && !pressed.isConnected && (!active || active === document.body) && slot?.isConnected) {
+          const replacement = slot.children[slotIndex]
+          if (replacement instanceof HTMLElement && replacement.isConnected) replacement.focus()
+        }
+      })
     }
   }
 
@@ -168,7 +224,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
 
   const labels: MantineListingContactLabels = {
     verified: t('verified_agent'),
-    call: t('call'),
+    call: t('show_number'),
     whatsapp: t('whatsapp_button_label'),
     inquiry: t('send_message'),
     report: t('report_listing'),
@@ -224,7 +280,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, price, cu
       onCall={() => handleContactClick('call')}
       onWhatsApp={() => handleContactClick('whatsapp')}
       onLogin={() => openAuthSheet('login')}
-      loading={contactLoading}
+      loading={contactLoading ?? undefined}
+      revealedPhone={revealedPhone ?? undefined}
+      whatsappFallback={whatsappFallback ?? undefined}
+      humanCheck={<CaptchaWidget ref={humanCheckRef} appearance="interaction-only" action={CONTACT_ACTIONS.reveal} prefetch />}
       contactDisabled={contactLifecycleDisabled}
       contactDisabledLabel={contactDisabledLabel}
       inquiryTrigger={inquiryNode}

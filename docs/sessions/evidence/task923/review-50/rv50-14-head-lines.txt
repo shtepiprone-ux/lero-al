@@ -1,0 +1,103 @@
+# HEAD 2f899a76d lines cited by Task 923 claim rows whose working-tree source changed (Revision 45, rv50-14-refresh-locators.mjs)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 506-506
+  const { error } = await db.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', userId)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 612-612
+  const { error: authError } = await db.auth.admin.deleteUser(userId)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 601-601
+    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 547-547
+      changed_by: me.id,
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 489-489
+  if (data.status !== 'active' && data.status !== 'blocked' && data.status !== 'inactive') return { error: 'invalid_status' }
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 557-557
+  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 490-490
+    await db.auth.admin.generateLink({ type: 'recovery', email: data.email })
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 325-325
+    upper[Math.floor(Math.random() * upper.length)],
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 756-756
+  if (!(await actorMayActOn(actor.userId, userId))) return { error: 'forbidden' }
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 119-119
+  await assertPermission('listings.delete')
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 446-446
+  await assertPermission('users.create')
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 605-605
+  if (data.profileType === 'admin') {
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 387-387
+  const canChangeRole = await roleHasPermission(myProfile.role as string, 'users.change_role')
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 397-405
+          await db.from('user_change_log').insert({
+            user_id: userId,
+            changed_by: me.id,
+            field_name: 'profile_type',
+            old_value: oldType,
+            new_value: data.profileType,
+          })
+        } catch {}
+      }
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 562-570
+
+  const db = createAdminClient()
+  const { data: current } = await db.from('users').select('status').eq('id', userId).single()
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+  const { error } = await db.from('users').update({ status: 'active' }).eq('id', userId)
+  if (error) { console.error('reactivateUser failed', { error, userId }); return { error: 'update_failed' } }
+
+  try {
+    await db.from('user_status_history').insert({
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 703-708
+  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+  if (!allowed) return { error: 'forbidden' }
+  if (!reason.trim()) return { error: 'reason_required' }
+  const me = await getUser()
+  if (!me) return { error: 'Unauthorized' }
+  if (!(await actorMayActOn(me.id, userId))) return { error: 'forbidden' }
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 379-379
+    suspended_until: data.status === 'blocked' ? (data.suspendedUntil ?? null) : null,
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 277-280
+// ── Site settings ────────────────────────────────────────────────────────────
+
+/** The settings the admin form offers (Task 923 Revision 7, finding S44): a setting outside this list is refused instead of being added to the table. */
+const SETTING_KEYS = [
+== src/modules/admin/actions/index.ts in the working tree (uncommitted Task 923 code), lines 280-280
+const SETTING_KEYS = [
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 749-749
+export async function createSupportTicket({
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 585-585
+  const allowed = await hasPermission('users.hard_delete').catch(() => false)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 592-592
+  // 1. Archive all non-terminal listings through the mutation gateway before removing the user
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 605-605
+  const { error: profileError } = await db.from('users').delete().eq('id', userId)
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 615-615
+    return { error: 'profile_deleted_auth_failed' }
+== src/modules/cabinet/actions/index.ts at HEAD 2f899a76d, lines 241-241
+  // 1. Archive non-terminal listings through the mutation gateway (mirrors hardDeleteUser).
+== src/modules/cabinet/actions/index.ts at HEAD 2f899a76d, lines 255-255
+  const { error: profileError } = await db.from('users').delete().eq('id', userId)
+== src/modules/cabinet/actions/index.ts at HEAD 2f899a76d, lines 266-266
+    return { error: 'profile_deleted_auth_failed' }
+== src/modules/cabinet/components/ProfileTab.tsx in the working tree (uncommitted Task 923 code), lines 447-447
+          label: t('delete_account_password_confirm'),
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 2f899a76d, lines 217-217
+      const key = result.error === 'profile_deleted_auth_failed'
+== src/components/admin/AdminUserProfileDialogsView.tsx at HEAD 2f899a76d, lines 252-252
+              <Text size="xs">{t('dialogs.delete_shared_point2')}</Text>
+== messages/en.json at HEAD 2f899a76d, lines 1517-1517
+        "delete_shared_point2": "• All listings will receive 'Archive' status",
+== messages/en.json at HEAD 2f899a76d, lines 1516-1516
+        "delete_hard_point1": "• Account and profile data will be completely deleted",
+== messages/en.json at HEAD 2f899a76d, lines 547-547
+    "delete_account_body": "This action is irreversible. All your listings will be archived and you will be logged out.",
+== messages/en.json at HEAD 2f899a76d, lines 551-551
+    "delete_account_auth_failed": "Your account was deleted, but the email address could not be freed. Please contact support.",
+== src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts at HEAD 2f899a76d, lines 256-256
+    expect(result).toEqual({ error: 'profile_deleted_auth_failed' })
+== src/modules/cabinet/actions/index.ts at HEAD 2f899a76d, lines 250-250
+    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
+== src/modules/admin/actions/index.ts at HEAD 2f899a76d, lines 45-45
+  const result = await applyListingTransitionByStatus(listingId, toStatus, actor)
+== src/modules/cabinet/components/ProfileTab.tsx at HEAD 2f899a76d, lines 219-219
+        : 'error_deleting'
+== messages/en.json at HEAD 2f899a76d, lines 1518-1518
+        "delete_hard_point3": "• Recovery is not possible",

@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-11-verdict-flips.mjs docs/sessions/evidence/task923/r7-full-a/rows.jsonl docs/sessions/evidence/task923/r7-full-b/rows.jsonl
+row pass flips docs/sessions/evidence/task923/r7-full-a/rows.jsonl -> docs/sessions/evidence/task923/r7-full-b/rows.jsonl by rule change:
+   1 +text-hidden,+component-overflow
+   1 -dismiss-escape
+cell (story x state x locale x width) verdict flips: 1
+   patterns-mantine-listingdetailview--archived-listing|patterns-mantine-listingdetailview--archived-listing~all-photos|sq|390 true->false
+EXIT_CODE=0

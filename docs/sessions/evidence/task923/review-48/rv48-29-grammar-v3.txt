@@ -1,0 +1,7 @@
+platform: win32 (Git Bash); node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; started: 2026-10-24T09:26:02Z
+modules from a session scratchpad via NODE_PATH: pg 8.21.0, plpgsql-parser 18.5.10
+command: NODE_PATH=<scratchpad>/node_modules node docs/sessions/evidence/task923/db-catalog/r9-62-syntax-deletion.cjs
+---- output ----
+proposed-account-deletion.sql: 83 statements, 3 plpgsql bodies parsed OK
+proposed-account-deletion-rollback.sql: 59 statements, 2 plpgsql bodies parsed OK
+EXIT_CODE=0

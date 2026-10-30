@@ -1,0 +1,14 @@
+# Task 923 review 10 - base-state lines copied from HEAD 35ab22cebc3e2c7845cd19c97820c3399ad8bedf for kickoff claims whose literal the session's changes removed
+
+## C238 - scripts/story-realmode-allowlist.json:7-7 at HEAD
+  { "file": "src/components/admin/StatusChangeControl.stories.tsx", "export": "SelectMobileBottomSheet", "check": 12, "reason": "Real overlay mode: status-change select bottom-sheet open state." },
+
+## C365 - src/design-system/mantine/patterns/MantineDataTableToCards.tsx:299-299 at HEAD
+  cardsBelow = 'sm',
+
+## C376 - src/stories/mantine/primitives/Table.stories.tsx:165-165 at HEAD
+// 768px, instead of the default `useMediaQuery` 640px path above. Both trees render; only one is
+
+## C383 - src/components/admin/__tests__/AdminTable.adapter.test.tsx:86-86 at HEAD
+// Task 857 R20: `AdminTable` passes `cardsBelow="md"`, so BOTH trees are in the DOM (Mantine's `hiddenFrom` /
+

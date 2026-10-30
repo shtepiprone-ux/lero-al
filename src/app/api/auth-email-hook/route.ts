@@ -37,7 +37,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import * as React from 'react'
 
 import { BRAND_PRIMARY } from '@/design-system/brand'
-import { sendEmail } from '@/modules/notifications/lib/emails/send'
+import { trustedAppOrigin } from '@/lib/auth/trustedOrigin'
+import { sendEmail, type SendEmailResult } from '@/modules/notifications/lib/emails/send'
 import { VerifyEmail, getVerifyEmailStrings } from '@/modules/notifications/lib/emails/VerifyEmail'
 import { RecoveryEmail, getRecoveryEmailStrings } from '@/modules/notifications/lib/emails/RecoveryEmail'
 import { MagicLinkEmail, getMagicLinkEmailStrings } from '@/modules/notifications/lib/emails/MagicLinkEmail'
@@ -195,10 +196,8 @@ function verifyHookSignature(
 const LOCALE_SEGMENT_RE = /^\/(sq|en|uk|it)\//
 
 function buildConfirmUrl(tokenHash: string, type: string, redirectTo: string): string {
-  let appOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
-  try {
-    appOrigin = new URL(redirectTo).origin
-  } catch {}
+  // the link points at OUR origin whatever `redirect_to` says: an origin taken from it could be another site, which would receive the one-time token (Task 923 Revision 7, S17)
+  const appOrigin = trustedAppOrigin(redirectTo)
 
   if (type === 'recovery') {
     // Derive locale from redirect_to's ?next param; fall back to 'sq' (B-fix: dashboard sends no ?next).
@@ -234,6 +233,11 @@ export async function POST(request: NextRequest) {
     // standardwebhooks indexes a plain object by lowercase header name and reads
     // webhook-id / webhook-timestamp / webhook-signature (svix-* are aliased).
     const secret = process.env.SUPABASE_EMAIL_HOOK_SECRET
+    // Fail closed (Task 923 Revision 7, S17): with no secret in production every request used to be accepted, a free e-mail relay with an attacker-chosen recipient and link.
+    if (!secret && process.env.NODE_ENV === 'production') {
+      console.error('[auth-email-hook] SUPABASE_EMAIL_HOOK_SECRET is not set: refusing every request')
+      return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+    }
     if (secret) {
       const headerObj: Record<string, string> = {}
       request.headers.forEach((value, key) => { headerObj[key.toLowerCase()] = value })
@@ -266,11 +270,14 @@ export async function POST(request: NextRequest) {
     // The email_change case below is a safety net using the Supabase verify endpoint.
     const actionUrl = buildConfirmUrl(token_hash, email_action_type, redirect_to)
 
+    // What the mail adapter answered for this request. It reports a failed or impossible delivery through `error`; it does not throw.
+    let delivery: SendEmailResult = {}
+
     switch (email_action_type) {
       case 'signup':
       case 'invite': {
         const s = getVerifyEmailStrings(locale)
-        await sendEmail({
+        delivery = await sendEmail({
           to: user.email,
           subject: s.subject,
           react: React.createElement(VerifyEmail, { confirmUrl: actionUrl, locale }),
@@ -280,7 +287,7 @@ export async function POST(request: NextRequest) {
 
       case 'recovery': {
         const s = getRecoveryEmailStrings(locale)
-        await sendEmail({
+        delivery = await sendEmail({
           to: user.email,
           subject: s.subject,
           react: React.createElement(RecoveryEmail, { resetUrl: actionUrl, locale }),
@@ -290,7 +297,7 @@ export async function POST(request: NextRequest) {
 
       case 'magiclink': {
         const s = getMagicLinkEmailStrings(locale)
-        await sendEmail({
+        delivery = await sendEmail({
           to: user.email,
           subject: s.subject,
           react: React.createElement(MagicLinkEmail, { signInUrl: actionUrl, locale }),
@@ -305,7 +312,7 @@ export async function POST(request: NextRequest) {
         const emailChangeUrl = `${supabaseUrl}/auth/v1/verify?${emailChangeParams.toString()}`
         const recipientEmail = user.new_email ?? user.email
         const s = getEmailChangeStrings(locale)
-        await sendEmail({
+        delivery = await sendEmail({
           to: recipientEmail,
           subject: s.subject,
           html: emailChangeHtml(s, emailChangeUrl),
@@ -316,7 +323,7 @@ export async function POST(request: NextRequest) {
       case 'reauthentication': {
         // OTP code — user enters it in the app; email_data.token is the code.
         const s = getReauthEmailStrings(locale)
-        await sendEmail({
+        delivery = await sendEmail({
           to: user.email,
           subject: s.subject,
           react: React.createElement(ReauthEmail, { otp: token, locale }),
@@ -329,6 +336,13 @@ export async function POST(request: NextRequest) {
         // Return success so Supabase does not retry indefinitely for unknown types.
         break
       }
+    }
+
+    // Task 923 R66 (h): a delivery that failed, or could not be attempted (no `RESEND_API_KEY` outside development), is not acknowledged. The hook used to answer 200 for
+    // every e-mail, so Auth believed a recovery or confirmation mail had been sent that never was. A non-2xx answer makes Auth report the failure to the person.
+    if (delivery.error) {
+      console.error('[auth-email-hook] delivery failed', { type: email_action_type, error: delivery.error })
+      return NextResponse.json({ error: 'delivery_failed' }, { status: 500 })
     }
 
     // Supabase expects an empty JSON object on success.

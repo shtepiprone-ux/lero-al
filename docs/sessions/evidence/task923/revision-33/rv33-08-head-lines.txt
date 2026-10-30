@@ -1,0 +1,19 @@
+# HEAD a95d3fe4a lines cited by Task 923 claim rows whose working-tree source changed or was removed (Revision 30 locator refresh)
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD a95d3fe4a, lines 153-153
+      .in('status', ['active', 'sold', 'rented', 'archived'])
+== src/modules/listings/validations/index.ts at HEAD a95d3fe4a, lines 8-8
+  price:        z.number().positive(),
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD a95d3fe4a, lines 78-78
+  const publicStatuses = ['active', 'sold', 'rented', 'archived']
+== src/app/[locale]/listings/[slug]/page.tsx at HEAD a95d3fe4a, lines 83-83
+  if (isListingArchived(data.status as ListingStatus)) {
+== src/modules/admin/actions/exchangeProviders.ts at HEAD a95d3fe4a, lines 9-9
+const EXCHANGE_PROVIDERS_CACHE_TAG = 'exchange_providers'
+== src/modules/listings/validations/index.ts at HEAD a95d3fe4a, lines 8-8
+  price:        z.number().positive(),
+== src/modules/admin/actions/index.ts at HEAD a95d3fe4a, lines 381-381
+    company_logo_url: isBusiness ? (data.companyLogoUrl ?? null) : null,
+== src/app/admin/currency/page.tsx at HEAD a95d3fe4a, lines 29-29
+        providers={<AdminExchangeProvidersManager initialProviders={providers} />}
+== src/components/admin/AdminCurrencyTabs.tsx at HEAD a95d3fe4a, lines 25-25
+        <Tabs.Tab value="providers">{t('tab_providers')}</Tabs.Tab>

@@ -1,0 +1,9 @@
+# r55-05 part 4 (R169 (d)): integration
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --config vitest.integration.config.ts --reporter=json --outputFile=docs/sessions/evidence/task923/revision-55/r55-05-integration-full.json  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>)
+started: 2026-10-29T12:05:28.0378414Z
+finished: 2026-10-29T12:10:07.9090844Z
+--- output (last 25 lines) ---
+JSON report written to C:/Claude_Code_Projects/lero-al/docs/sessions/evidence/task923/revision-55/r55-05-integration-full.json
+
+--- exit code: 0 ---

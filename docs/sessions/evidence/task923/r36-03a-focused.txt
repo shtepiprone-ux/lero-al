@@ -1,0 +1,17 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx src/components/auth/__tests__/CaptchaWidget.language.test.tsx src/modules/auth/components/__tests__/authClientParts.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx
+started: 2026-10-23T13:24:38.366Z
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  8 passed (8)
+      Tests  194 passed (194)
+   Start at  15:24:39
+   Duration  9.85s (transform 3.24s, setup 819ms, import 19.52s, tests 9.59s, environment 7.66s)
+
+
+
+exit code: 0

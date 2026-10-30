@@ -1,0 +1,338 @@
+# fr-05 (Opus) 2026-10-28T20:06:26.469Z win32 node v22.22.3
+other/manifest: 67
+other/mentioned: 1
+other/never-named: 48
+policy/manifest: 5
+policy/mentioned: 3
+policy/never-named: 6
+product/manifest: 199
+
+other/manifest	+0 -1	scripts/story-realmode-allowlist.json
+other/manifest	+0 -1	scripts/type-responsive-baseline.json
+other/manifest	+0 -10	scripts/governance/tailwind-entropy.allowlist.json
+other/manifest	+1 -0	scripts/css-var-ownership-snapshot.json
+other/manifest	+1 -36	scripts/enrolled-tailwind-baseline.json
+other/manifest	+11 -0	.storybook/stubs/crypto.ts
+other/manifest	+2 -0	.storybook/main.ts
+other/manifest	+4 -1	.gitignore
+other/manifest	untracked	debug.log
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/abs-badge-inside.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/abs-inside-clipper.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/abs-past-clipper.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/abs-past-panel.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/app-root-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/clean.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/covered-action.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/escape-does-not-close.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/focus-escapes-trap.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/hidden-away-clipped.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/hidden-away-wide-clipper.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/infinite-spinner-toast.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/inflow-past-untransformed-parent.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/late-fetch-inside.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/late-fetch-overflow.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/media-cover-zoom.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/media-shifted-past-frame.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/neg-margin-fullbleed.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/neg-margin-overflow.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/offcanvas-closed-panel.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/offcanvas-open-overflow.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/open-flaky-once-closed-violation.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/open-flaky-once.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/open-never.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/page-scroll-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/portal-clamp-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/portal-overflow-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/portal-word-split-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/positioned-slide-away-control.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/positioned-slide-away.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/raf-grow-inside.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/raf-grow-overflow.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/registered-opens-nothing.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/root-box-past-viewport.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/sheet-no-pointer-dismissal.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/slide-carousel.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/slide-hidden-content.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/slow-close.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/stacked-dialogs.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/table-cell-overflow.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/table-rowspan.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/text-cut.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/text-inner-box.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/text-scaled-past-frame.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/track-active-slide-inside.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/track-flex-slide-straddles.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/track-flex-synced.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/track-offscreen-slide-aria-only.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/track-offscreen-slide-tabbable.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/transform-inside.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/transform-past-panel.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/trap-transient-body-focus.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/unregistered-portal.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/visible-hidden-control-covered.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/widths-contradicted.html
+other/manifest	untracked	scripts/__fixtures__/rendered-state-census/widths-honoured.html
+other/mentioned	untracked	scripts/__fixtures__/rendered-state-census/day-cells-exempt.html
+other/never-named	untracked	.playwright-mcp/console-2026-10-20T13-25-14-756Z.log
+other/never-named	untracked	.playwright-mcp/console-2026-10-20T13-25-24-085Z.log
+other/never-named	untracked	.playwright-mcp/console-2026-10-20T13-25-30-957Z.log
+other/never-named	untracked	.playwright-mcp/console-2026-10-20T13-25-36-330Z.log
+other/never-named	untracked	.playwright-mcp/console-2026-10-22T11-05-18-074Z.log
+other/never-named	untracked	.playwright-mcp/page-2026-10-20T13-25-15-560Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-20T13-25-24-645Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-20T13-25-30-860Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-20T13-25-32-154Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-20T13-25-36-674Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-22T11-05-19-389Z.yml
+other/never-named	untracked	.playwright-mcp/page-2026-10-22T11-05-29-770Z.yml
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/bordered-input-wrapper.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/canvas-taller-than-box-exempt.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/canvas-taller-than-box-unexempt.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/census-target.css
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/day-cells-unexempt.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/email-longer-than-box.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/fetch-404-benign.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/hidden-drawer-popover.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-lines-tight.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-clipped-away.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-over-inert-dialog-opaque-below.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-over-inert-dialog.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-overlap-below-fold.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-overlap-in-inert-dialog-pinned-below.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-overlap-in-inert-dialog.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-overlap.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-control-below-fold.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-control.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-floating-menu.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-inert-dialog.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-opaque-below-fold.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/html-text-under-opaque.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/inert-dialog-covered.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/loading-label-invisible.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/scroll-rail-past-viewport.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/scroll-row-in-dialog.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/scroll-viewport-wrapper.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/stale-script-pending.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/sticky-header-covers-link.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/stylesheet-fails-on-reopen.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/stylesheet-fails-once.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/stylesheet-missing.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/svg-label-clipped.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/svg-labels-clear.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/svg-labels-overlap.html
+other/never-named	untracked	scripts/__fixtures__/rendered-state-census/svg-labels-unpainted.html
+policy/manifest	+1 -1	scripts/check-stories-rendered.mjs
+policy/manifest	+14 -1	scripts/workflow-gates/cli.mjs
+policy/manifest	+2 -2	scripts/check-mojibake.mjs
+policy/manifest	+70 -29	scripts/check-kickoff-evidence.mjs
+policy/manifest	untracked	scripts/check-rendered-state-census.mjs
+policy/mentioned	+260 -3	scripts/workflow-gates/diff-hook.selftest.mjs
+policy/mentioned	+40 -3	scripts/workflow-gates/hooks.selftest.mjs
+policy/mentioned	+8 -2	scripts/workflow-gates/contract.mjs
+policy/never-named	+20 -0	scripts/workflow-gates/publication.json
+policy/never-named	+40 -0	scripts/workflow-gates/session-role.selftest.mjs
+policy/never-named	+57 -0	scripts/workflow-gates/security-contract.selftest.mjs
+policy/never-named	+95 -34	scripts/workflow-gates/security-hook.mjs
+policy/never-named	untracked	scripts/workflow-gates/response-state.mjs
+policy/never-named	untracked	scripts/workflow-gates/response-state.selftest.mjs
+product/manifest	+0 -1	src/modules/notifications/components/NotificationItem.tsx
+product/manifest	+1 -1	src/app/api/cron/inactivity/__tests__/route.auth.test.ts
+product/manifest	+1 -1	src/app/api/cron/price-alerts/__tests__/route.auth.test.ts
+product/manifest	+1 -1	src/app/api/cron/saved-searches/__tests__/route.auth.test.ts
+product/manifest	+1 -1	src/components/layout/UserMenu.tsx
+product/manifest	+1 -1	src/modules/cabinet/actions/__tests__/saveSavedSearch.dedup.test.ts
+product/manifest	+1 -1	src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+product/manifest	+1 -1	src/stories/patterns/mantine/AdminPagesView.stories.tsx
+product/manifest	+1 -1	src/stories/patterns/mantine/AdminReportsView.stories.tsx
+product/manifest	+10 -11	src/components/admin/AdminPropertyTypesManager.tsx
+product/manifest	+103 -56	src/design-system/mantine/patterns/MantineModal.tsx
+product/manifest	+11 -0	src/design-system/mantine/notification-chrome.css
+product/manifest	+11 -20	src/modules/listings/components/ActiveFilterChips.tsx
+product/manifest	+12 -12	src/modules/listings/components/ListingCard.tsx
+product/manifest	+12 -12	src/modules/listings/lib/savedSearchCanonicalize.test.ts
+product/manifest	+12 -5	src/design-system/mantine/patterns/MantineCombobox.tsx
+product/manifest	+13 -0	src/design-system/mantine/patterns/MantineCopyIdButton.module.css
+product/manifest	+13 -1	src/design-system/mantine/patterns/MantineAppShellFoundation.tsx
+product/manifest	+13 -6	src/modules/admin/dashboard/components/AdminDashboardView.tsx
+product/manifest	+15 -11	src/modules/cabinet/statistics/components/AgentStatisticsView.tsx
+product/manifest	+15 -3	src/modules/listings/components/FavoriteButton.tsx
+product/manifest	+15 -4	src/components/admin/AdminSidebar.tsx
+product/manifest	+15 -7	src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+product/manifest	+159 -234	src/components/admin/ReportDetailDialogView.tsx
+product/manifest	+16 -0	src/modules/listings/components/ListingsPageFrame.module.css
+product/manifest	+16 -22	src/components/admin/PageEditorDialogView.tsx
+product/manifest	+16 -25	src/components/admin/PremiumDialogView.tsx
+product/manifest	+16 -3	src/design-system/mantine/patterns/MantineDropdownMenu.tsx
+product/manifest	+17 -34	src/components/admin/AdminInquiriesView.tsx
+product/manifest	+18 -26	src/components/shared/AvatarCropModal.tsx
+product/manifest	+18 -33	src/design-system/mantine/patterns/MantineListingCardPattern.tsx
+product/manifest	+19 -0	package-lock.json
+product/manifest	+19 -8	src/design-system/mantine/patterns/MantineDashboardLineChart.tsx
+product/manifest	+197 -28	src/stories/patterns/mantine/AdminUsersTable.stories.tsx
+product/manifest	+2 -0	src/modules/listings/components/ListingShareButton.tsx
+product/manifest	+2 -1	src/design-system/mantine/__tests__/theme.d69-18.test.tsx
+product/manifest	+2 -2	src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx
+product/manifest	+2 -2	src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx
+product/manifest	+2 -2	src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+product/manifest	+21 -20	src/stories/patterns/mantine/AdminTable.stories.tsx
+product/manifest	+21 -23	src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx
+product/manifest	+22 -0	src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx
+product/manifest	+23 -0	src/lib/toast.ts
+product/manifest	+23 -3	src/stories/patterns/mantine/DashboardWorkList.stories.tsx
+product/manifest	+25 -0	src/lib/formatters.ts
+product/manifest	+26 -1	src/stories/mantine/_MantineStoryShell.tsx
+product/manifest	+28 -15	src/design-system/mantine/patterns/MantineDetailList.tsx
+product/manifest	+28 -26	src/design-system/mantine/patterns/MantineListingDetailPattern.tsx
+product/manifest	+29 -19	src/design-system/mantine/patterns/MantineDashboardWorkList.tsx
+product/manifest	+29 -458	src/components/admin/AdminUsersTable.tsx
+product/manifest	+3 -0	src/components/ui/pagination.tsx
+product/manifest	+3 -1	src/components/shared/FilterRoomsRow.tsx
+product/manifest	+3 -1	src/design-system/mantine/patterns/MantinePopover.tsx
+product/manifest	+3 -2	src/components/admin/AdminLocationsManager.tsx
+product/manifest	+3 -2	src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+product/manifest	+3 -3	src/components/admin/AdminLegalManager.tsx
+product/manifest	+3 -3	src/design-system/mantine/patterns/MantineDashboardStatCard.tsx
+product/manifest	+3 -3	src/stories/patterns/mantine/DashboardHeader.stories.tsx
+product/manifest	+31 -26	src/modules/listings/components/SaveSearchButton.tsx
+product/manifest	+31 -37	src/components/admin/ListingPreviewDialogView.tsx
+product/manifest	+32 -0	src/lib/auth/__tests__/controller.test.ts
+product/manifest	+33 -2	src/components/shared/Map.tsx
+product/manifest	+34 -75	src/stories/mantine/primitives/Combobox.stories.tsx
+product/manifest	+37 -100	src/stories/mantine/primitives/Radio.stories.tsx
+product/manifest	+38 -16	src/stories/patterns/mantine/AvatarCropModal.stories.tsx
+product/manifest	+38 -800	src/components/admin/AdminSupportManager.tsx
+product/manifest	+4 -10	src/design-system/mantine/patterns/MantineCountButton.tsx
+product/manifest	+4 -11	src/modules/listings/components/ImageUpload.module.css
+product/manifest	+4 -2	src/design-system/mantine/patterns/MantineNotificationPattern.tsx
+product/manifest	+4 -3	src/components/admin/AdminHeader.tsx
+product/manifest	+4 -3	src/components/shared/FiltersPanel.tsx
+product/manifest	+4 -4	src/design-system/mantine/patterns/MantineDashboardSparkline.tsx
+product/manifest	+4 -5	src/modules/listings/components/ListingsSortBar.tsx
+product/manifest	+4 -7	src/design-system/mantine/patterns/MantineDashboardCard.tsx
+product/manifest	+44 -34	src/modules/listings/components/SaveToCollectionButton.tsx
+product/manifest	+46 -42	src/components/admin/CurrencyFormDialogView.tsx
+product/manifest	+49 -53	src/modules/listings/components/CollectionsSection.tsx
+product/manifest	+5 -10	src/modules/cabinet/components/CabinetShell.tsx
+product/manifest	+5 -12	src/design-system/mantine/patterns/MantineDashboardHeader.tsx
+product/manifest	+5 -3	src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx
+product/manifest	+5 -3	src/stories/patterns/mantine/DashboardBarChart.stories.tsx
+product/manifest	+5 -3	src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
+product/manifest	+5 -40	src/modules/listings/lib/listingStatusTone.ts
+product/manifest	+5 -5	src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+product/manifest	+54 -12	src/design-system/mantine/patterns/MantineDashboardBarChart.tsx
+product/manifest	+57 -23	src/design-system/mantine/patterns/MantineDashboardRadar.tsx
+product/manifest	+58 -0	src/modules/admin/dashboard/__tests__/queries.test.ts
+product/manifest	+59 -3	src/stories/mantine/primitives/CollectionsSection.stories.tsx
+product/manifest	+6 -0	src/design-system/mantine/input-chrome.css
+product/manifest	+6 -1	src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx
+product/manifest	+6 -1	src/stories/patterns/mantine/AdminDashboardRecentListings.stories.tsx
+product/manifest	+6 -11	src/design-system/mantine/patterns/MantineDashboardStatRows.tsx
+product/manifest	+6 -3	src/modules/cabinet/components/SavedSearchesTab.tsx
+product/manifest	+60 -38	src/design-system/mantine/patterns/MantineRichTextEditor.tsx
+product/manifest	+66 -64	src/components/admin/AdminDashboardRecentListings.tsx
+product/manifest	+67 -65	src/components/admin/InquiryDetailDialogView.tsx
+product/manifest	+7 -0	src/stories/mantine/primitives/UserMenu.stories.tsx
+product/manifest	+7 -13	src/modules/cabinet/components/ListingsTab.stories.tsx
+product/manifest	+7 -22	src/modules/cabinet/components/ListingsTab.tsx
+product/manifest	+7 -7	src/modules/listings/components/steps/StepPreview.tsx
+product/manifest	+77 -66	src/stories/mantine/primitives/Badge.stories.tsx
+product/manifest	+79 -76	src/components/admin/CurrencyDetailDialogView.tsx
+product/manifest	+8 -1	src/modules/listings/components/ListingStatusBanner.tsx
+product/manifest	+8 -3	src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx
+product/manifest	+8 -5	src/design-system/mantine/patterns/MantineDashboardDonut.tsx
+product/manifest	+8 -5	src/stories/patterns/mantine/DetailList.stories.tsx
+product/manifest	+9 -0	src/design-system/mantine/patterns/index.ts
+product/manifest	+9 -10	src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+product/manifest	+9 -8	src/modules/listings/components/ImageUpload.tsx
+product/manifest	+90 -296	src/lib/phone/__tests__/phone.test.ts
+product/manifest	deleted	src/components/admin/AdminSupportManager.stories.tsx
+product/manifest	deleted	src/components/ui/badge.stories.tsx
+product/manifest	deleted	src/components/ui/badge.tsx
+product/manifest	deleted	src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+product/manifest	untracked	src/__tests__/instrumentation.test.ts
+product/manifest	untracked	src/__tests__/security/filterStrings.test.ts
+product/manifest	untracked	src/app/auth/callback/__tests__/route.security.test.ts
+product/manifest	untracked	src/app/auth/confirm/__tests__/route.security.test.ts
+product/manifest	untracked	src/components/admin/AdminSupportView.tsx
+product/manifest	untracked	src/components/admin/AdminUsersTableView.tsx
+product/manifest	untracked	src/components/admin/CreateTicketDialog.tsx
+product/manifest	untracked	src/components/admin/CreateTicketDialogView.tsx
+product/manifest	untracked	src/components/admin/TicketDetailDialog.tsx
+product/manifest	untracked	src/components/admin/TicketDetailDialogView.tsx
+product/manifest	untracked	src/components/admin/UserPickerField.tsx
+product/manifest	untracked	src/components/admin/UserPickerFieldView.tsx
+product/manifest	untracked	src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx
+product/manifest	untracked	src/components/admin/__tests__/StackedConfirmDialogs.test.tsx
+product/manifest	untracked	src/components/admin/__tests__/adminPagesContent.test.ts
+product/manifest	untracked	src/components/admin/__tests__/supportFilters.test.ts
+product/manifest	untracked	src/components/admin/supportFilters.ts
+product/manifest	untracked	src/components/layout/__tests__/layoutParts.test.tsx
+product/manifest	untracked	src/components/shared/Map.module.css
+product/manifest	untracked	src/components/ui/__tests__/overlays.test.tsx
+product/manifest	untracked	src/components/ui/__tests__/primitives.test.tsx
+product/manifest	untracked	src/components/ui/__tests__/uiPrimitivesExtra.test.tsx
+product/manifest	untracked	src/design-system/mantine/__tests__/badgeTones.test.ts
+product/manifest	untracked	src/design-system/mantine/__tests__/theme.components.test.ts
+product/manifest	untracked	src/design-system/mantine/badgeTones.ts
+product/manifest	untracked	src/design-system/mantine/patterns/MantineBadge.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/MantineFilterChips.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/MantineRadioCardOption.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineAppShellFoundation.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineBadge.smoke.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardBarChart.axis.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardChartFamily.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardDonut.size.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardLayout.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardLineChart.axis.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardRadar.labels.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDashboardRings.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineDropdownMenu.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineFilterChips.smoke.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/MantineModal.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/chartTestKit.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/dashboardChartLabels.canvas.test.ts
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/dashboardChartLabels.test.ts
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/dashboardChartTheme.test.ts
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/useApexFluidBox.test.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/__tests__/viewportKit.tsx
+product/manifest	untracked	src/design-system/mantine/patterns/dashboardChartLabels.ts
+product/manifest	untracked	src/design-system/mantine/patterns/useApexFluidBox.ts
+product/manifest	untracked	src/design-system/media/__tests__/appImageConfig.test.ts
+product/manifest	untracked	src/hooks/__tests__/simpleHooks.test.ts
+product/manifest	untracked	src/hooks/__tests__/useUnsavedChangesGuard.test.ts
+product/manifest	untracked	src/lib/__tests__/formatters.axis.test.ts
+product/manifest	untracked	src/lib/__tests__/pureLibs.test.ts
+product/manifest	untracked	src/lib/__tests__/siteUrl.test.ts
+product/manifest	untracked	src/lib/__tests__/toast.focus.test.ts
+product/manifest	untracked	src/lib/auth/__tests__/sessionMiddleware.test.ts
+product/manifest	untracked	src/lib/auth/__tests__/trustedOrigin.security.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/imageGuard.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/predictive.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/reporter.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/store.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/storeServer.test.ts
+product/manifest	untracked	src/lib/performance/__tests__/vitals.test.ts
+product/manifest	untracked	src/lib/security/__tests__/safeUrl.security.test.ts
+product/manifest	untracked	src/lib/uploads/__tests__/imagePayload.test.ts
+product/manifest	untracked	src/lib/uploads/imageSniff.ts
+product/manifest	untracked	src/lib/uploads/uploadGrant.ts
+product/manifest	untracked	src/modules/admin/dashboard/components/__tests__/AdminDashboardView.axis.test.tsx
+product/manifest	untracked	src/modules/admin/lib/__tests__/adminLib.test.ts
+product/manifest	untracked	src/modules/analytics/activity/__tests__/readEdges.test.ts
+product/manifest	untracked	src/modules/cabinet/statistics/__tests__/tableAndRanking.test.ts
+product/manifest	untracked	src/modules/cabinet/statistics/components/__tests__/AgentStatisticsView.axis.test.tsx
+product/manifest	untracked	src/modules/listings/domain/__tests__/presentationEngine.test.ts
+product/manifest	untracked	src/modules/listings/lib/__tests__/queries.security.test.ts
+product/manifest	untracked	src/modules/listings/lib/__tests__/queriesEdges.test.ts
+product/manifest	untracked	src/modules/notifications/lib/createNotification.ts
+product/manifest	untracked	src/modules/notifications/lib/emails/__tests__/messageBuilders.security.test.ts
+product/manifest	untracked	src/modules/notifications/lib/emails/__tests__/resolveUserLocale.test.ts
+product/manifest	untracked	src/stories/mantine/primitives/RadioCardOption.stories.tsx
+product/manifest	untracked	src/stories/patterns/mantine/AdminSupportView.stories.tsx
+product/manifest	untracked	src/stories/patterns/mantine/CreateTicketDialogView.stories.tsx
+product/manifest	untracked	src/stories/patterns/mantine/MantineFilterChips.stories.tsx
+product/manifest	untracked	src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx
+product/manifest	untracked	src/stories/patterns/mantine/UserPickerFieldView.stories.tsx
+product/manifest	untracked	src/tests/fakeSupabase.ts

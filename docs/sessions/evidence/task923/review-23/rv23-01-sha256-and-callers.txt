@@ -1,0 +1,4 @@
+Opus review 23, 2026-10-20, node v22.22.3
+a8b0ae690d0786747b34e4c582612a1d7b4dc5eb095ae4066a3dc0230455e438  proposed-hardening.sql  lines 556
+52bd460f8c8cbe688f6bc24dae726728725e3c2414be827a27097c0327813db5  proposed-hardening-rollback.sql  lines 188
+src files calling restore_inactive_account or caller_access_state: 0

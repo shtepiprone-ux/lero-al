@@ -1,0 +1,668 @@
+{
+  "groups": 46,
+  "proposed": [
+    {
+      "id": "mantine-primitives-filtercontrols--default~property-type",
+      "story": "mantine-primitives-filtercontrols--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(7) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > input:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(7) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > input:nth-child(2)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--activity-empty-period",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-empty-period~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-empty-period",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-empty-period~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-empty-period",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--activity-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-error~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-error~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-stale~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--activity-stale",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-stale~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-stale",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--activity-stale~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--activity-stale",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-02-error~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--adm-02-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-02-error~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--adm-02-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-02-error~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--adm-02-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-09-zero~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--adm-09-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-09-zero~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--adm-09-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--adm-09-zero~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--adm-09-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--all-queues-zero~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--all-queues-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--all-queues-zero~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--all-queues-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--all-queues-zero~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--all-queues-zero",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--cities-only-other~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--cities-only-other",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--cities-only-other~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--cities-only-other",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--cities-only-other~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--cities-only-other",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--default~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--default~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--default~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--default",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--no-location-requests~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--no-location-requests",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--no-location-requests~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--no-location-requests",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--no-location-requests~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--no-location-requests",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--trends-error~akcozy-studio-in-sauk-district",
+      "story": "patterns-mantine-admindashboardview--trends-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--trends-error~akmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--trends-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-admindashboardview--trends-error~bhmodern-apartment-in-tirana-c",
+      "story": "patterns-mantine-admindashboardview--trends-error",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trap",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(2) > div:nth-child(11) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > button:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--create~private-person",
+      "story": "patterns-mantine-adminuserprofileview--create",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit-blocked~31-12-2026",
+      "story": "patterns-mantine-adminuserprofileview--edit-blocked",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(8) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)"
+      },
+      "portals": 1,
+      "focus": "inside",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(8) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > button:nth-child(2)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit-blocked~blocked",
+      "story": "patterns-mantine-adminuserprofileview--edit-blocked",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit-blocked~private-person",
+      "story": "patterns-mantine-adminuserprofileview--edit-blocked",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit-errors~active",
+      "story": "patterns-mantine-adminuserprofileview--edit-errors",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit-errors~agent",
+      "story": "patterns-mantine-adminuserprofileview--edit-errors",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit~active",
+      "story": "patterns-mantine-adminuserprofileview--edit",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--edit~private-person",
+      "story": "patterns-mantine-adminuserprofileview--edit",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--saving~active",
+      "story": "patterns-mantine-adminuserprofileview--saving",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    },
+    {
+      "id": "patterns-mantine-adminuserprofileview--saving~agent",
+      "story": "patterns-mantine-adminuserprofileview--saving",
+      "open": {
+        "kind": "click",
+        "selector": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)"
+      },
+      "portals": 1,
+      "focus": "trigger",
+      "dismiss": [
+        "escape",
+        "outside"
+      ],
+      "trigger": ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > input:nth-child(1)",
+      "_notes": "close-control: does not close"
+    }
+  ],
+  "problems": [
+    "mantine-primitives-rangedatepicker--default button \"Select dates\": lowest opening width 767 is not a theme breakpoint",
+    "mantine-primitives-rangedatepicker--single-date-selected button \"05.02.2026\": lowest opening width 767 is not a theme breakpoint",
+    "patterns-mantine-userpickerfieldview--searching input \"Requester\": lowest opening width 767 is not a theme breakpoint",
+    "patterns-mantine-userpickerfieldview--results input \"Requester\": lowest opening width 767 is not a theme breakpoint",
+    "patterns-mantine-userpickerfieldview--no-results input \"Requester\": lowest opening width 767 is not a theme breakpoint"
+  ]
+}

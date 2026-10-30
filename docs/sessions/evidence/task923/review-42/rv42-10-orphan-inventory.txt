@@ -1,0 +1,31 @@
+platform: MINGW64_NT-10.0-26300; node: v22.22.3; cwd: /c/Claude_Code_Projects/lero-al; HEAD 7ce2cdbfa working tree; command: node docs/sessions/evidence/task923/review-42/rv42-10-orphan-inventory.cjs .
+SETTING_KEYS parsed: 17
+key site_name | readers outside admin: src/components/layout/Footer.tsx
+key tagline | readers outside admin: NONE
+key contact_email | readers outside admin: NONE
+key contact_phone | readers outside admin: NONE
+key logo_url | readers outside admin: NONE
+key logo_dark_url | readers outside admin: NONE
+key favicon_url | readers outside admin: NONE
+key social_facebook | readers outside admin: NONE
+key social_instagram | readers outside admin: NONE
+key social_linkedin | readers outside admin: NONE
+key about_al | readers outside admin: NONE
+key about_uk | readers outside admin: NONE
+key meta_title | readers outside admin: NONE
+key meta_desc | readers outside admin: NONE
+key og_image | readers outside admin: src/app/[locale]/listings/[slug]/page.tsx
+key archived_noindex_days | readers outside admin: src/app/[locale]/listings/[slug]/page.tsx (via getArchivedNoindexDays)
+key default_locale | readers outside admin: src/middleware.ts, src/proxy.ts, src/app/page.tsx (via getDefaultSiteLocale)
+tables written only from the admin directories: 10
+table currencies | readers outside admin: src/lib/getExchangeRateServer.ts, src/modules/cabinet/actions/index.ts, src/modules/currency/lib/queries.ts, src/modules/listings/actions/createListing.ts, src/modules/listings/actions/updateListing.ts | admin readers: src/modules/admin/actions/currencies.ts
+table pages | readers outside admin: src/app/[locale]/[slug]/page.tsx, src/lib/cloudinaryDelete.ts | admin readers: src/app/admin/pages/page.tsx, src/modules/admin/actions/footer.ts, src/modules/admin/actions/index.ts
+table property_types | readers outside admin: src/modules/listings/actions/createListing.ts, src/modules/listings/actions/updateListing.ts | admin readers: src/modules/admin/actions/propertyTypes.ts, src/modules/admin/lib/propertyTypes.ts
+table role_permission_events | readers outside admin: NONE | admin readers: src/modules/admin/actions/permissions.ts
+table role_permissions | readers outside admin: src/lib/auth/permissions.ts | admin readers: src/modules/admin/actions/permissions.ts
+table site_footer | readers outside admin: src/components/layout/Footer.tsx (via getFooterContent) | admin readers: src/modules/admin/actions/footer.ts, src/modules/admin/lib/settings.ts
+table site_settings | readers outside admin: src/lib/cloudinaryDelete.ts, src/app/[locale]/listings/[slug]/page.tsx (via getSetting), src/components/layout/Footer.tsx (via getSetting) | admin readers: src/modules/admin/lib/settings.ts
+table support_ticket_events | readers outside admin: NONE | admin readers: src/app/admin/support/page.tsx
+table support_tickets | readers outside admin: NONE | admin readers: src/app/admin/support/page.tsx, src/modules/admin/actions/index.ts, src/modules/admin/dashboard/queries.ts, src/modules/admin/dashboard/trends.ts
+table user_change_log | readers outside admin: NONE | admin readers: src/app/admin/users/[id]/page.tsx
+EXIT_CODE=0

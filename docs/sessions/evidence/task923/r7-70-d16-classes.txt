@@ -1,0 +1,9 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-70-d16-classes.mjs docs/sessions/evidence/task923/r7-full-a/rows.jsonl
+40 chart partial div -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: div.m_6d731127 "1,102" (absolute) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+48 chart partial svg -- e.g. patterns-mantine-admindashboardview--activity-empty-period app 1024 :: svg ".apexcharts-flip-y { transfo" (transformed) x 791.7..1011.7 past div.m_e615b15f 771.7..998.7
+276 gallery-track wholly-out div -- e.g. patterns-mantine-listingdetailpattern--default app 320 :: div "1 / 5" (absolute) y 444..470 past div.relative 104..444
+112 leaflet covers div -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 14..308 past div.listing-map 37..283
+1 leaflet partial div -- e.g. patterns-mantine-listingdetailview--archived-listing app 390 :: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 38..385 past div.listing-map 37..353
+113 leaflet wholly-out a -- e.g. patterns-mantine-listingdetailview--archived-listing app 320 :: a.leaflet-popup-close-button "×" (absolute) x 284..308 past div.listing-map 37..283 holds a.leaflet-popup-close-button "Close popup"
+EXIT_CODE=0

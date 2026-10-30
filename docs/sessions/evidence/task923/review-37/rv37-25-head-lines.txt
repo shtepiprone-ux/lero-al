@@ -1,0 +1,36 @@
+# HEAD d905812de lines cited by Task 923 claim rows whose working-tree source changed (Review 37, rv37-25-refresh-locators.mjs)
+== src/modules/listings/actions/submitListingInquiry.ts in the working tree (uncommitted Task 923 code), lines 83-83
+  const viewer = await requireViewer()
+== src/modules/listings/actions/submitListingInquiry.ts in the working tree (uncommitted Task 923 code), lines 84-84
+  if (!viewer.ok) return { error: viewer.reason === 'unauthenticated' ? 'unauthenticated' : 'save_failed' }
+== src/modules/listings/components/ListingInquiryDialog.tsx at HEAD d905812de, lines 86-86
+      toast.success(t('inquiry_success'))
+== src/modules/listings/components/ListingInquiryDialog.tsx at HEAD d905812de, lines 48-48
+      setMessage('')
+== src/modules/listings/components/ListingContact.tsx at HEAD d905812de, lines 198-198
+    <ListingInquiryDialog
+== scripts/surface-census-baseline.json at HEAD d905812de, lines 787-787
+    "src/modules/listings/components/ListingFormShell.tsx :: src/components/admin/StatusChangeControl.tsx :: tier1-unenrolled-or-unstoried": {
+== src/modules/listings/actions/submitListingInquiry.ts at HEAD d905812de, lines 118-119
+      email,
+      message,
+== src/modules/listings/components/ListingInquiryDialog.tsx at HEAD d905812de, lines 59-59
+        toast.error(t('inquiry_error_rate_limited'))
+== src/modules/listings/components/ListingContact.tsx at HEAD d905812de, lines 99-99
+  const contactLifecycleDisabled = listingArchived || listingExpired || listingClosed
+== src/modules/listings/components/ListingContact.tsx at HEAD d905812de, lines 160-161
+        ? { name: '', isVerified: false }
+        : {
+== src/modules/listings/actions/getListingOwnerContact.ts at HEAD d905812de, lines 12-13
+    const { data, error } = await supabase.rpc('get_listing_owner_contact', {
+      listing_id_param: listingId,
+== src/lib/captcha/verifyTurnstile.ts at HEAD d905812de, lines 25-25
+      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+== src/components/auth/CaptchaWidget.tsx at HEAD d905812de, lines 53-53
+export const CaptchaWidget = forwardRef<CaptchaWidgetHandle, CaptchaWidgetProps>(
+== src/modules/listings/actions/submitListingInquiry.ts at HEAD d905812de, lines 34-34
+  const db = createAdminClient()
+== src/components/listing/WhatsAppContactButton.tsx at HEAD d905812de, lines 51-51
+    void trackListingContactEvent({
+== src/lib/captcha/verifyTurnstile.ts at HEAD d905812de, lines 6-6
+export async function verifyTurnstile(

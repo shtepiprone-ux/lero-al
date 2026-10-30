@@ -54,6 +54,9 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (submitting) return  // N5: double-submit guard
+    // The button is disabled until the rules are met, but a form can still be submitted by other means; the one-time
+    // token must not be spent on a password that breaks the rules (Task 923 Revision 7).
+    if (!allMet) return
     setErrorKey(null)
     setSubmitting(true)
 
@@ -69,6 +72,12 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
         return
       }
 
+      // The one-time token is SPENT now and the recovery session is live. From here on this container works in the session mode (Task 923 R66 (m)): a retry after a
+      // failed update calls only `updatePassword` with that session. Before, the second press verified the same token again, which Auth refuses, and the person was
+      // sent to the "expired" page although the session was alive.
+      setVerifyMode('session')
+      setUserId(verifyData.user?.id ?? null)
+
       // Step 2: update password (recovery session now active from verifyOtp)
       const { error: updateError } = await updatePassword(password)
       setSubmitting(false)
@@ -77,11 +86,8 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
         return
       }
 
-      const verifiedUserId = verifyData.user?.id ?? null
-      const verifiedUserEmail = verifyData.user?.email ?? null
-      if (verifiedUserId) {
-        await logPasswordRecoveryCompletion(verifiedUserId, verifiedUserEmail ?? '')
-      }
+      // the server reads who this is from the session; nothing the browser sends is trusted (Task 923 Revision 7, S2)
+      if (verifyData.user?.id) await logPasswordRecoveryCompletion()
       setPageState('success')
       await signOut()
       return
@@ -94,9 +100,7 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
       setErrorKey('reset_password_error_generic')
       return
     }
-    if (userId) {
-      await logPasswordRecoveryCompletion(userId, userEmail ?? '')
-    }
+    if (userId) await logPasswordRecoveryCompletion()
     setPageState('success')
     await signOut()
   }

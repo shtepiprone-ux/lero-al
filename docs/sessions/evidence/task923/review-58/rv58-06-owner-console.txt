@@ -1,0 +1,7 @@
+# rv58-06: the owner's Firefox console on http://localhost:3000 during the cabinet password change (2026-10-25), the lines around the error, copied verbatim from the owner's message
+[Vercel Web Analytics] [view] http://localhost:3000/uk/cabinet
+Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://<project host>.supabase.co/auth/v1/logout?scope=global. (Reason: CORS request did not succeed). Status code: (null).
+TypeError: NetworkError when attempting to fetch resource. (<project host>.supabase.co) node_modules_@sentry_core_build_esm_1b67485d._.js:11243:67
+[GSI_LOGGER]: google.accounts.id.initialize() is called multiple times. This could cause unexpected behavior and only the last initialized instance will be used. node_modules_@sentry_core_build_esm_1b67485d._.js:11243:67
+[Vercel Web Analytics] [view] http://localhost:3000/uk
+# The owner's report of the result (translated): the password changed; the error appeared. The project host is written as <project host> here.

@@ -629,7 +629,8 @@ When writing stories:
 - DO NOT duplicate existing utility chains — check `docs/tailwind-canonical-fragments.md` first.
 - DO NOT create local primitive styling clones (button-like, input-like, dialog-like patterns outside canonical components).
 - DO NOT create ad-hoc responsive wrappers when a canonical responsive pattern already exists.
-- DO NOT use `truncate` or `whitespace-nowrap` on translated UI without a responsive overflow fallback.
+- DO NOT use `truncate`, `lineClamp`, ellipsis or `whitespace-nowrap` to solve translated UI overflow. Reflow/stack
+  the semantic content under GR-3j; a tooltip or hidden full value is not a mobile fallback.
 - DO NOT add fixed `w-[Npx]` or `min-w-[Npx]` to elements containing localized labels or action text.
 - DO NOT introduce random `2xl:` behavior — only use: `2xl:grid-cols-4`, `2xl:py-20`, `2xl:text-3xl`.
 - DO NOT bypass canonical fragments when one exists in `docs/tailwind-canonical-fragments.md`.
@@ -679,7 +680,8 @@ After completing ANY UI task, Claude Code MUST:
 - NEVER hardcode widths for elements containing translatable text.
 - ALWAYS test with Ukrainian (uk) — longest strings.
 - ALWAYS use `flex-wrap` on toolbars where locale text may differ in length.
-- NEVER use `whitespace-nowrap` without `overflow-hidden` + `truncate`.
+- NEVER use `whitespace-nowrap` + `overflow-hidden`/`truncate` for semantic or translated UI. Use the source-backed
+  mobile adaptation pattern and let content wrap; compact-control exceptions require the owner decision GR-3j names.
 - ALL four locale files (sq, en, uk, it) must be updated simultaneously.
 
 #### Huge Desktop Governance Enforcement

@@ -1,0 +1,18 @@
+# a8-06 step 1: GoogleSignInSlot.tsx after the edit, before the mutation
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:04:01.865Z
+
+command: node docs/sessions/evidence/task927/a8/a8-sha.mjs src/components/auth/GoogleSignInSlot.tsx
+--- output ---
+b2581f66103826d2ffcba229570da1c78cac5a20682dd2522a115fcea384072a  src/components/auth/GoogleSignInSlot.tsx
+--- exit code: 0 ---
+
+command: findstr /n /c:"mih=" src\components\auth\GoogleSignInSlot.tsx
+--- output ---
+39:        <Box ref={hostRef} w="100%" maw={GOOGLE_BUTTON_MAX_WIDTH} mih={theme.other.boxSize.googleButton} hidden={status !== 'ready'} />
+--- exit code: 0 ---
+
+finished: 2026-10-25T19:04:01.948Z
+exit code: 0

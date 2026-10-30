@@ -1,6 +1,5 @@
-import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import type { PermissionKey } from '@/lib/auth/permissionKeys'
 
 // Admin always has full access. Non-moderator non-admin roles are denied.
@@ -32,18 +31,11 @@ export async function roleHasPermission(role: string, key: PermissionKey): Promi
 }
 
 export async function hasPermission(key: PermissionKey): Promise<boolean> {
-  const user = await getUser()
-  if (!user) return false
-
-  const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (!profile) return false
-  return roleHasPermission(profile.role as string, key)
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role has no permission,
+  // and a failed lookup is no permission either.
+  const viewer = await requireViewer()
+  if (!viewer.ok || !viewer.role) return false
+  return roleHasPermission(viewer.role, key)
 }
 
 export async function assertPermission(key: PermissionKey): Promise<void> {

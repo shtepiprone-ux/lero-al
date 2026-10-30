@@ -1,0 +1,160 @@
+R93 (b): every id of r19-06 "Not passing" (141 ids): its status in r19-06 and now (r21-01).
+sources: docs/sessions/evidence/task923/r19-06-rls-harness.txt, docs/sessions/evidence/task923/r21-01-rls-harness-post-apply.txt
+
+V01     before=VULN  now=ok   
+V02     before=VULN  now=ok   
+V03     before=VULN  now=ok   
+V04     before=VULN  now=ok   
+V07     before=VULN  now=ok   
+V08a    before=VULN  now=ok   
+V08b    before=VULN  now=ok   
+S01     before=VULN  now=ok   
+U01     before=VULN  now=ok   
+U02     before=VULN  now=ok   
+U03     before=VULN  now=ok   
+U04     before=VULN  now=ok   
+U05     before=VULN  now=ok   
+U06     before=VULN  now=VULN  | rows=0; suspended_until: "2099-01-01T00:00:00Z" -> "2099-01-01T00:00:00+00:00"
+U07     before=VULN  now=ok   
+U08     before=VULN  now=ok   
+L01     before=VULN  now=ok   
+L02     before=VULN  now=ok   
+L03     before=VULN  now=ok   
+L04     before=VULN  now=ok   
+L05     before=VULN  now=VULN  | error 42501 protected column; expires_at: "2026-11-20T17:16:28.546Z" -> "2026-11-20T17:16:28.546+00:00"
+L06     before=VULN  now=ok   
+I01     before=VULN  now=ok   
+I02     before=VULN  now=ok   
+I03     before=VULN  now=ok   
+I04     before=VULN  now=ok   
+I05     before=VULN  now=ok   
+I06     before=VULN  now=ok   
+BL01a   before=VULN  now=ok   
+BL01b   before=VULN  now=ok   
+BL01c   before=VULN  now=ok   
+BL01d   before=VULN  now=ok   
+BL01e   before=VULN  now=ok   
+BL01f   before=VULN  now=ok   
+BL01g   before=VULN  now=ok   
+BL02a   before=VULN  now=ok   
+BL02b   before=VULN  now=ok   
+BL02c   before=VULN  now=ok   
+BL02d   before=VULN  now=ok   
+BL02e   before=VULN  now=ok   
+BL02f   before=VULN  now=ok   
+BL02g   before=VULN  now=ok   
+BL03a   before=VULN  now=ok   
+BL03b   before=VULN  now=ok   
+BL03c   before=VULN  now=ok   
+BL03d   before=VULN  now=ok   
+BL03e   before=VULN  now=ok   
+BL03f   before=VULN  now=ok   
+BL03g   before=VULN  now=ok   
+BL06    before=VULN  now=ok   
+N01ua   before=VULN  now=ok   
+N01ub   before=VULN  now=ok   
+N01uc   before=VULN  now=ok   
+N01ud   before=VULN  now=ok   
+N01uf   before=VULN  now=ok   
+N01ug   before=VULN  now=ok   
+N01ga   before=VULN  now=ok   
+N01gb   before=VULN  now=ok   
+N01gc   before=VULN  now=ok   
+N01gd   before=VULN  now=ok   
+N01gf   before=VULN  now=ok   
+N01gg   before=VULN  now=ok   
+N01ma   before=VULN  now=ok   
+N01mb   before=VULN  now=ok   
+N01mc   before=VULN  now=ok   
+N01md   before=VULN  now=ok   
+N01mf   before=VULN  now=ok   
+N01mg   before=VULN  now=ok   
+N01aa   before=VULN  now=ok   
+N01ab   before=VULN  now=ok   
+N01ac   before=VULN  now=ok   
+N01ad   before=VULN  now=ok   
+N01af   before=VULN  now=ok   
+N01ag   before=VULN  now=ok   
+N02d    before=VULN  now=ok   
+N02f    before=VULN  now=ok   
+N03a    before=VULN  now=ok   
+N03b    before=VULN  now=ok   
+N03c    before=VULN  now=ok   
+N03d    before=VULN  now=ok   
+N03f    before=VULN  now=ok   
+N03g    before=VULN  now=ok   
+N04a    before=VULN  now=ok   
+N04b    before=VULN  now=ok   
+N05b    before=VULN  now=ok   
+N05d    before=VULN  now=ok   
+N06b    before=VULN  now=ok   
+V701    before=VULN  now=ok   
+V702    before=VULN  now=ok   
+V703    before=VULN  now=ok   
+V705    before=VULN  now=ok   
+V706    before=VULN  now=ok   
+V710    before=VULN  now=ok   
+V711    before=VULN  now=ok   
+V712    before=VULN  now=ok   
+V713    before=VULN  now=ok   
+V714    before=VULN  now=ok   
+V715    before=VULN  now=ok   
+V716    before=VULN  now=ok   
+V717    before=VULN  now=ok   
+V718    before=VULN  now=ok   
+V721    before=VULN  now=ok   
+V722    before=VULN  now=ok   
+V723    before=VULN  now=ok   
+V730    before=VULN  now=ok   
+V731    before=VULN  now=ok   
+V732    before=BRKN  now=ok   
+V740    before=VULN  now=ok   
+V741    before=VULN  now=ok   
+V742    before=BRKN  now=ok   
+V743    before=BRKN  now=ok   
+V744    before=BRKN  now=ok   
+V750    before=VULN  now=ok   
+V751    before=VULN  now=ok   
+V752    before=BRKN  now=ok   
+V753    before=VULN  now=ok   
+H01b    before=VULN  now=ok   
+H01c    before=VULN  now=ok   
+H01d    before=VULN  now=ok   
+H02     before=VULN  now=ok   
+DX01    before=VULN  now=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so the backfill has not run
+DX02a   before=VULN  now=VULN  | error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+DX02b   before=VULN  now=VULN  | error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+DX02c   before=VULN  now=VULN  | no row: the INSERT of DX02a failed
+DX02d   before=VULN  now=VULN  | no row: the INSERT of DX02a failed
+DX02e   before=VULN  now=VULN  | no row: the INSERT of DX02a failed
+DX03a   before=VULN  now=VULN  | blocked: Database error deleting user
+DX03b   before=VULN  now=VULN  | the row was not created
+DX03c   before=VULN  now=VULN  | error 42703 column user_status_history.changed_by_name does not exist
+DX03d1  before=VULN  now=VULN  | blocked: Database error deleting user
+DX03d2  before=VULN  now=VULN  | error 42703 column email_templates.updated_by_name does not exist
+DX04a   before=VULN  now=VULN  | views_count 2 -> 2
+DX04b   before=VULN  now=VULN  | 2 row(s), one with a null user id
+DX04c   before=VULN  now=VULN  | rows 1, views_count 0
+DX05a   before=VULN  now=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX05b   before=VULN  now=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX05c   before=VULN  now=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX06a   before=VULN  now=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06b   before=VULN  now=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06c   before=VULN  now=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06d   before=VULN  now=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+
+counts over all 141 ids: now ok=118, VULN=23, BRKN=0, info=0, missing=0
+non-DX ids (120): ok=118, not ok=2 (U06 L05)
+DX ids (21): VULN=21, BRKN=0, ok=0, missing=0
+V753 now: ok
+
+ids that passed (ok) in r19-06 and are not ok now: 2
+  BL04b: before=ok now=BRKN | error 42501 protected column
+  BL05b: before=ok now=BRKN | error 42501 protected column
+
+ids present only in r21-01: 0
+ids present only in r19-06: 0
+info V06: before=null | now=true
+info N05c: before=no control exists: an ACTIVE moderator's update and delete already do nothing (no SELECT p | now=no control exists: an ACTIVE moderator's update and delete already do nothing (no SELECT p
+info V707: before=rows=1 | now=error 42501 protected column
+info DX00: before=no (error 42703 column pages.updated_by_name does not exist) | now=no (error 42703 column pages.updated_by_name does not exist)

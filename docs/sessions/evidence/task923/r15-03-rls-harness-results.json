@@ -1,0 +1,1597 @@
+{
+ "run": "zz_synth_mvfqukxh",
+ "mode": "strict",
+ "summary": {
+  "pass": 79,
+  "vuln": 106,
+  "broken": 7,
+  "inconclusive": 0,
+  "info": 4,
+  "cleanupOk": true,
+  "harnessError": null
+ },
+ "cleanup": {
+  "errors": [],
+  "left": {
+   "users": 0,
+   "listings": 0,
+   "listing_views": 0,
+   "recently_viewed": 0,
+   "pages": 0,
+   "companies": 0,
+   "status_history_by_actor": 0,
+   "auth_users": 0
+  },
+  "ok": true
+ },
+ "results": [
+  {
+   "id": "R01",
+   "status": "PASS",
+   "what": "A reads B's users row (phone/whatsapp/role)",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "R02",
+   "status": "PASS",
+   "what": "A lists users",
+   "expected": "only A's own row",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "R03",
+   "status": "PASS",
+   "what": "anonymous lists users",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "R04",
+   "status": "PASS",
+   "what": "A reads B's PENDING listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "R05",
+   "status": "PASS",
+   "what": "anonymous reads B's PENDING listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "R06",
+   "status": "PASS",
+   "what": "A reads the view ledger of B's listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "R07",
+   "status": "PASS",
+   "what": "public listing row carries no contact columns with data",
+   "expected": "no phone/whatsapp/email data",
+   "observed": "none",
+   "note": ""
+  },
+  {
+   "id": "R09a",
+   "status": "PASS",
+   "what": "A reads contact_inquiries (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table contact_inquiries",
+   "note": ""
+  },
+  {
+   "id": "R09b",
+   "status": "PASS",
+   "what": "A reads support_tickets (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table support_tickets",
+   "note": ""
+  },
+  {
+   "id": "R09c",
+   "status": "PASS",
+   "what": "A reads support_messages (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table support_messages",
+   "note": ""
+  },
+  {
+   "id": "R09d",
+   "status": "PASS",
+   "what": "A reads role_permissions (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table role_permissions",
+   "note": ""
+  },
+  {
+   "id": "R09e",
+   "status": "PASS",
+   "what": "A reads user_change_log (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table user_change_log",
+   "note": ""
+  },
+  {
+   "id": "R09f",
+   "status": "PASS",
+   "what": "A reads user_status_history (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table user_status_history",
+   "note": ""
+  },
+  {
+   "id": "R09g",
+   "status": "PASS",
+   "what": "A reads verification_requests (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table verification_requests",
+   "note": ""
+  },
+  {
+   "id": "R09h",
+   "status": "PASS",
+   "what": "A reads history_clear_events (no grant exists)",
+   "expected": "error 42501",
+   "observed": "error 42501 permission denied for table history_clear_events",
+   "note": ""
+  },
+  {
+   "id": "W01",
+   "status": "PASS",
+   "what": "A updates B's users row",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "W02",
+   "status": "PASS",
+   "what": "A updates B's listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "W03",
+   "status": "PASS",
+   "what": "A deletes B's listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "W04",
+   "status": "PASS",
+   "what": "A inserts a listing owned by B",
+   "expected": "refused (error or 0 rows)",
+   "observed": "error 42501 new row violates row-level security policy for table \"listings\"",
+   "note": ""
+  },
+  {
+   "id": "W05",
+   "status": "PASS",
+   "what": "A adds an image to B's listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "error 42501 new row violates row-level security policy for table \"listing_images\"",
+   "note": ""
+  },
+  {
+   "id": "W06",
+   "status": "PASS",
+   "what": "A adds a favourite for B",
+   "expected": "refused (error or 0 rows)",
+   "observed": "error 42501 new row violates row-level security policy for table \"favorites\"",
+   "note": ""
+  },
+  {
+   "id": "W07",
+   "status": "PASS",
+   "what": "A writes the view ledger directly",
+   "expected": "refused (error or 0 rows)",
+   "observed": "error 42501 new row violates row-level security policy for table \"listing_views\"",
+   "note": ""
+  },
+  {
+   "id": "W08",
+   "status": "PASS",
+   "what": "A uploads to the avatars bucket (staff only)",
+   "expected": "refused",
+   "observed": "error new row violates row-level security policy",
+   "note": ""
+  },
+  {
+   "id": "F01",
+   "status": "PASS",
+   "what": "A calls admin_search_users_by_email",
+   "expected": "permission denied",
+   "observed": "error 42501 permission denied for function admin_search_users_by_email",
+   "note": ""
+  },
+  {
+   "id": "F02",
+   "status": "PASS",
+   "what": "A calls clear_user_history",
+   "expected": "permission denied",
+   "observed": "error 42501 permission denied for function clear_user_history",
+   "note": ""
+  },
+  {
+   "id": "F03",
+   "status": "PASS",
+   "what": "anonymous calls get_listing_owner_contact",
+   "expected": "denied",
+   "observed": "error 42501 permission denied for function get_listing_owner_contact",
+   "note": ""
+  },
+  {
+   "id": "F04",
+   "status": "PASS",
+   "what": "signed-in A gets the owner contact of an ACTIVE listing (the legitimate path)",
+   "expected": "one row with B's phone",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "F05",
+   "status": "PASS",
+   "what": "A asks the owner contact of a PENDING listing",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "F06",
+   "status": "INFO",
+   "what": "owner-contact quota",
+   "expected": "asserted only when OWNER_CONTACT_LIMIT is set",
+   "observed": "not configured (owner decision D-quota)",
+   "note": ""
+  },
+  {
+   "id": "V01",
+   "status": "VULN",
+   "what": "anonymous calls record_listing_view directly",
+   "expected": "permission denied",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "V02",
+   "status": "VULN",
+   "what": "signed-in A calls record_listing_view directly (spoofing B)",
+   "expected": "permission denied",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "V03",
+   "status": "VULN",
+   "what": "a pending listing's views_count after the direct calls above",
+   "expected": "unchanged",
+   "observed": "0 -> 1",
+   "note": ""
+  },
+  {
+   "id": "V04",
+   "status": "VULN",
+   "what": "no ledger row exists \"as B\" created by a non-server caller",
+   "expected": "0 rows",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "V05",
+   "status": "PASS",
+   "what": "server (service_role) records a view for the server-set user id exactly once",
+   "expected": "one ledger row, views_count 1",
+   "observed": "rows=0 rows=0 ledger=1 views_count=1",
+   "note": ""
+  },
+  {
+   "id": "V06",
+   "status": "INFO",
+   "what": "return value of record_listing_view for the first server call",
+   "expected": "true after hardening (the route reads recorded === true); null before",
+   "observed": "null",
+   "note": ""
+  },
+  {
+   "id": "V07",
+   "status": "VULN",
+   "what": "even the server does not count a view of a PENDING listing",
+   "expected": "unchanged",
+   "observed": "0 -> 2 (rows=0)",
+   "note": ""
+  },
+  {
+   "id": "V08a",
+   "status": "VULN",
+   "what": "record_recently_viewed with cap 0",
+   "expected": "no error, the just-viewed item is kept",
+   "observed": "rows=0; kept=0",
+   "note": ""
+  },
+  {
+   "id": "V08b",
+   "status": "VULN",
+   "what": "record_recently_viewed with cap -5",
+   "expected": "no error, the just-viewed item is kept",
+   "observed": "error 2201W LIMIT must not be negative; kept=0",
+   "note": ""
+  },
+  {
+   "id": "V08c",
+   "status": "PASS",
+   "what": "record_recently_viewed with cap null",
+   "expected": "no error, the just-viewed item is kept",
+   "observed": "rows=0; kept=1",
+   "note": ""
+  },
+  {
+   "id": "V08d",
+   "status": "PASS",
+   "what": "record_recently_viewed with cap 1000000",
+   "expected": "no error, the just-viewed item is kept",
+   "observed": "rows=0; kept=1",
+   "note": ""
+  },
+  {
+   "id": "V09",
+   "status": "PASS",
+   "what": "record_recently_viewed with the default cap",
+   "expected": "works",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "V10",
+   "status": "PASS",
+   "what": "anonymous calls record_recently_viewed",
+   "expected": "refused",
+   "observed": "see result",
+   "note": ""
+  },
+  {
+   "id": "P01",
+   "status": "PASS",
+   "what": "A edits own name and phone",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P02",
+   "status": "PASS",
+   "what": "A creates a listing exactly as createListing does (pending, 30-day expiry, 0 views)",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P03",
+   "status": "PASS",
+   "what": "A edits title and price of own listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P04",
+   "status": "PASS",
+   "what": "signed-in A reads B's ACTIVE (public) listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P05",
+   "status": "PASS",
+   "what": "anonymous reads an ACTIVE (public) listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P06",
+   "status": "PASS",
+   "what": "server (service_role) blocks and un-blocks a user (the auto-lift in blockCheck.ts)",
+   "expected": "works",
+   "observed": "rows=1 / rows=1",
+   "note": ""
+  },
+  {
+   "id": "P07",
+   "status": "PASS",
+   "what": "server (service_role) publishes, premium-marks and re-stamps a listing (the gateway path)",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "P08",
+   "status": "PASS",
+   "what": "a real administrator session may set premium on a listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "S01",
+   "status": "VULN",
+   "what": "sign-up metadata asks for role=admin",
+   "expected": "role = user",
+   "observed": "role=admin",
+   "note": ""
+  },
+  {
+   "id": "S02",
+   "status": "PASS",
+   "what": "sign-up metadata asks for is_verified=true",
+   "expected": "false",
+   "observed": "is_verified=false",
+   "note": ""
+  },
+  {
+   "id": "S03",
+   "status": "PASS",
+   "what": "sign-up metadata user_type=agent (the one choice the form offers) is kept",
+   "expected": "agent",
+   "observed": "user_type=agent",
+   "note": ""
+  },
+  {
+   "id": "S04",
+   "status": "PASS",
+   "what": "sign-up metadata with an invalid user_type is refused or neutralised",
+   "expected": "no privileged row",
+   "observed": "creation refused: createUser failed: Database error creating new user",
+   "note": ""
+  },
+  {
+   "id": "U01",
+   "status": "VULN",
+   "what": "users.role written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; role: \"user\" -> \"admin\"",
+   "note": ""
+  },
+  {
+   "id": "U02",
+   "status": "VULN",
+   "what": "users.role written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; role: \"user\" -> \"moderator\"",
+   "note": ""
+  },
+  {
+   "id": "U03",
+   "status": "VULN",
+   "what": "users.is_verified written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; is_verified: false -> true",
+   "note": ""
+  },
+  {
+   "id": "U04",
+   "status": "VULN",
+   "what": "users.status written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; status: \"blocked\" -> \"active\"",
+   "note": ""
+  },
+  {
+   "id": "U05",
+   "status": "VULN",
+   "what": "users.block_reason written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; block_reason: \"zz_synth_mvfqukxh sanction\" -> null",
+   "note": ""
+  },
+  {
+   "id": "U06",
+   "status": "VULN",
+   "what": "users.suspended_until written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; suspended_until: \"2099-01-01T00:00:00Z\" -> null",
+   "note": ""
+  },
+  {
+   "id": "U07",
+   "status": "VULN",
+   "what": "users.deleted_at written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; deleted_at: null -> \"2026-10-19T21:06:02.063+00:00\"",
+   "note": ""
+  },
+  {
+   "id": "U08",
+   "status": "VULN",
+   "what": "users.public_id written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; public_id: 482 -> 1000482",
+   "note": ""
+  },
+  {
+   "id": "L01",
+   "status": "VULN",
+   "what": "listings.status written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; status: \"pending\" -> \"active\"",
+   "note": ""
+  },
+  {
+   "id": "L02",
+   "status": "VULN",
+   "what": "listings.is_premium written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; is_premium: false -> true",
+   "note": ""
+  },
+  {
+   "id": "L03",
+   "status": "VULN",
+   "what": "listings.premium_until written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; premium_until: null -> \"2099-01-01T00:00:00+00:00\"",
+   "note": ""
+  },
+  {
+   "id": "L04",
+   "status": "VULN",
+   "what": "listings.views_count written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; views_count: 0 -> 999999",
+   "note": ""
+  },
+  {
+   "id": "L05",
+   "status": "VULN",
+   "what": "listings.expires_at written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; expires_at: \"2026-11-18T21:06:02.638Z\" -> \"2099-01-01T00:00:00+00:00\"",
+   "note": ""
+  },
+  {
+   "id": "L06",
+   "status": "VULN",
+   "what": "listings.public_id written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "rows=1; public_id: 182 -> 1000182",
+   "note": ""
+  },
+  {
+   "id": "L07",
+   "status": "PASS",
+   "what": "listings.user_id written alone by its own owner",
+   "expected": "unchanged",
+   "observed": "error 42501 new row violates row-level security policy for table \"listings\"; user_id: \"b4308937-aadb-4891-a361-cc1cc503a04e\" -> \"b4308937-aadb-4891-a361-cc1cc503a04e\"",
+   "note": ""
+  },
+  {
+   "id": "I01",
+   "status": "VULN",
+   "what": "A inserts status=active",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "I02",
+   "status": "VULN",
+   "what": "A inserts with NO status (the column default is active)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "I03",
+   "status": "VULN",
+   "what": "A inserts pending but is_premium=true",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "I04",
+   "status": "VULN",
+   "what": "A inserts pending but premium_until set",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "I05",
+   "status": "VULN",
+   "what": "A inserts pending but views_count=5",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "I06",
+   "status": "VULN",
+   "what": "A inserts pending but expires_at in 2099",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01a",
+   "status": "VULN",
+   "what": "status blocked, permanent: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01b",
+   "status": "VULN",
+   "what": "status blocked, permanent: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01c",
+   "status": "VULN",
+   "what": "status blocked, permanent: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01d",
+   "status": "VULN",
+   "what": "status blocked, permanent: edits own listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01e",
+   "status": "VULN",
+   "what": "status blocked, permanent: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL01f",
+   "status": "VULN",
+   "what": "status blocked, permanent: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "BL01g",
+   "status": "VULN",
+   "what": "status blocked, permanent: cannot READ own status row either (reads are refused, D26)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02a",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02b",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02c",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02d",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: edits own listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02e",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL02f",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "BL02g",
+   "status": "VULN",
+   "what": "status blocked until a FUTURE date: cannot READ own status row either (reads are refused, D26)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03a",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03b",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03c",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03d",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): edits own listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03e",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL03f",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "BL03g",
+   "status": "VULN",
+   "what": "status inactive (deactivated by staff): cannot READ own status row either (reads are refused, D26)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04a",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): edits own profile",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04b",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): creates a listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04c",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): adds a favourite",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04d",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): edits own listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04e",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): asks the owner contact (RPC)",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL04f",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): records a recently viewed item (RPC)",
+   "expected": "works",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "BL04g",
+   "status": "PASS",
+   "what": "status blocked but the suspension date has PASSED (the auto-lift case): can still READ own status row",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05a",
+   "status": "PASS",
+   "what": "status active again after an unblock: edits own profile",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05b",
+   "status": "PASS",
+   "what": "status active again after an unblock: creates a listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05c",
+   "status": "PASS",
+   "what": "status active again after an unblock: adds a favourite",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05d",
+   "status": "PASS",
+   "what": "status active again after an unblock: edits own listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05e",
+   "status": "PASS",
+   "what": "status active again after an unblock: asks the owner contact (RPC)",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL05f",
+   "status": "PASS",
+   "what": "status active again after an unblock: records a recently viewed item (RPC)",
+   "expected": "works",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "BL05g",
+   "status": "PASS",
+   "what": "status active again after an unblock: can still READ own status row",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL06",
+   "status": "VULN",
+   "what": "a blocked administrator edits another person's listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "BL07",
+   "status": "PASS",
+   "what": "the same administrator after the unblock",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ua",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ub",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01uc",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ud",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ue",
+   "status": "PASS",
+   "what": "a DELETED user account (deleted_at set), valid token: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N01uf",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ug",
+   "status": "VULN",
+   "what": "a DELETED user account (deleted_at set), valid token: reads own row",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ga",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01gb",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01gc",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01gd",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ge",
+   "status": "PASS",
+   "what": "a DELETED agent account (deleted_at set), valid token: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N01gf",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01gg",
+   "status": "VULN",
+   "what": "a DELETED agent account (deleted_at set), valid token: reads own row",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ma",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01mb",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01mc",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01md",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01me",
+   "status": "PASS",
+   "what": "a DELETED moderator account (deleted_at set), valid token: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N01mf",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01mg",
+   "status": "VULN",
+   "what": "a DELETED moderator account (deleted_at set), valid token: reads own row",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01aa",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ab",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ac",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ad",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ae",
+   "status": "PASS",
+   "what": "a DELETED admin account (deleted_at set), valid token: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N01af",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N01ag",
+   "status": "VULN",
+   "what": "a DELETED admin account (deleted_at set), valid token: reads own row",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N02a",
+   "status": "PASS",
+   "what": "an account with NO profile row, valid token: edits own profile",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N02b",
+   "status": "PASS",
+   "what": "an account with NO profile row, valid token: creates a listing",
+   "expected": "refused (access control or the foreign key to the missing profile)",
+   "observed": "error 23503 insert or update on table \"listings\" violates foreign key constraint \"listings_user_id_fke",
+   "note": ""
+  },
+  {
+   "id": "N02c",
+   "status": "PASS",
+   "what": "an account with NO profile row, valid token: adds a favourite",
+   "expected": "refused (access control or the foreign key to the missing profile)",
+   "observed": "error 23503 insert or update on table \"favorites\" violates foreign key constraint \"favorites_user_id_f",
+   "note": ""
+  },
+  {
+   "id": "N02d",
+   "status": "VULN",
+   "what": "an account with NO profile row, valid token: asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N02e",
+   "status": "PASS",
+   "what": "an account with NO profile row, valid token: records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N02f",
+   "status": "VULN",
+   "what": "an account with NO profile row, valid token: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N02g",
+   "status": "PASS",
+   "what": "an account with NO profile row, valid token: reads own row",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N03a",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): edits own profile",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N03b",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): creates a listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N03c",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): adds a favourite",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N03d",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): asks the owner contact (RPC)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N03e",
+   "status": "PASS",
+   "what": "an account whose SESSION was ended (token still unexpired): records a recently viewed item (RPC)",
+   "expected": "refused",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N03f",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N03g",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): reads own row",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N04a",
+   "status": "VULN",
+   "what": "a BLOCKED account: reads a public listing",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N04b",
+   "status": "VULN",
+   "what": "a BLOCKED account: reads a public lookup table (locations)",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N04c",
+   "status": "PASS",
+   "what": "the same account after the unblock reads a public listing",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N05a",
+   "status": "PASS",
+   "what": "an ACTIVE moderator uploads to the avatars bucket (staff may)",
+   "expected": "works",
+   "observed": "uploaded",
+   "note": ""
+  },
+  {
+   "id": "N05b",
+   "status": "VULN",
+   "what": "a BLOCKED moderator uploads to the avatars bucket",
+   "expected": "refused",
+   "observed": "UPLOADED",
+   "note": ""
+  },
+  {
+   "id": "N05c",
+   "status": "INFO",
+   "what": "a blocked moderator updates or deletes an avatars object",
+   "expected": "not asserted",
+   "observed": "no control exists: an ACTIVE moderator's update and delete already do nothing (no SELECT policy, r9-53-storage-probe.txt), so the change-7 write check is the INSERT of N05b / N05d",
+   "note": ""
+  },
+  {
+   "id": "N05d",
+   "status": "VULN",
+   "what": "a BLOCKED administrator uploads to the avatars bucket",
+   "expected": "refused",
+   "observed": "UPLOADED",
+   "note": ""
+  },
+  {
+   "id": "N06a",
+   "status": "PASS",
+   "what": "realtime: an ACTIVE person receives an event for an own notification (the control)",
+   "expected": "works",
+   "observed": "subscribed; event=true",
+   "note": ""
+  },
+  {
+   "id": "N06b",
+   "status": "VULN",
+   "what": "realtime: a BLOCKED person receives an event for a notification written after the block",
+   "expected": "no event",
+   "observed": "subscribed; event=true",
+   "note": ""
+  },
+  {
+   "id": "N07a",
+   "status": "BROKEN",
+   "what": "a marked account (10 days) is \"restorable\"",
+   "expected": "restorable",
+   "observed": "error PGRST202 Could not find the function public.caller_access_state without parameters in the schema ca",
+   "note": ""
+  },
+  {
+   "id": "N07b",
+   "status": "BROKEN",
+   "what": "restore_inactive_account restores the 10-day account and says so",
+   "expected": "true",
+   "observed": "error PGRST202 Could not find the function public.restore_inactive_account without parameters in the sche",
+   "note": ""
+  },
+  {
+   "id": "N07c",
+   "status": "BROKEN",
+   "what": "the restored account is active and not deleted",
+   "expected": "works",
+   "observed": "inactive 2026-10-09T21:06:34.343+00:00",
+   "note": ""
+  },
+  {
+   "id": "N07d",
+   "status": "PASS",
+   "what": "the restored account can write again",
+   "expected": "works",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "N07e",
+   "status": "BROKEN",
+   "what": "the restore wrote its status-history row",
+   "expected": "works",
+   "observed": "rows=0",
+   "note": ""
+  },
+  {
+   "id": "N08a",
+   "status": "BROKEN",
+   "what": "a marked account (100 days) is \"none\"",
+   "expected": "none",
+   "observed": "error PGRST202 Could not find the function public.caller_access_state without parameters in the schema ca",
+   "note": ""
+  },
+  {
+   "id": "N08b",
+   "status": "BROKEN",
+   "what": "restore_inactive_account refuses the 100-day account (false)",
+   "expected": "false",
+   "observed": "error PGRST202 Could not find the function public.restore_inactive_account without parameters in the sche",
+   "note": ""
+  },
+  {
+   "id": "N08c",
+   "status": "PASS",
+   "what": "the 100-day account is untouched",
+   "expected": "works",
+   "observed": "inactive deleted_at set",
+   "note": ""
+  },
+  {
+   "id": "N08d",
+   "status": "BROKEN",
+   "what": "an ordinary active account is \"active\"",
+   "expected": "active",
+   "observed": "error PGRST202 Could not find the function public.caller_access_state without parameters in the schema ca",
+   "note": ""
+  },
+  {
+   "id": "H01a",
+   "status": "PASS",
+   "what": "an ACTIVE account reads the view public_user_profiles (the control)",
+   "expected": "one row (B's public profile)",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "H01b",
+   "status": "VULN",
+   "what": "a BLOCKED account: reads the view public_user_profiles",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "H01c",
+   "status": "VULN",
+   "what": "a DELETED account (deleted_at set), valid token: reads the view public_user_profiles",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "H01d",
+   "status": "VULN",
+   "what": "an account whose SESSION was ended (token still unexpired): reads the view public_user_profiles",
+   "expected": "refused",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "H01e",
+   "status": "PASS",
+   "what": "the SERVICE ROLE (a server role, not a user) reads the view public_user_profiles",
+   "expected": "one row (B's public profile)",
+   "observed": "rows=1",
+   "note": ""
+  },
+  {
+   "id": "H02",
+   "status": "VULN",
+   "what": "every SECURITY DEFINER function of public (10) has pg_temp as the last search_path entry (privileged catalog read)",
+   "expected": "none without",
+   "observed": "9 without: admin_search_users_by_email, clear_user_history, handle_new_user_notifications, handle_new_user, listing_contact_events_set_owner, process_saved_search_notify, record_listing_view, record_recently_viewed, rls_auto_enable",
+   "note": ""
+  },
+  {
+   "id": "DX00",
+   "status": "INFO",
+   "what": "the deletion design is applied (pages.updated_by_name exists)",
+   "expected": "no before the SQL is applied, yes after",
+   "observed": "no (error 42703 column pages.updated_by_name does not exist)",
+   "note": ""
+  },
+  {
+   "id": "DX01",
+   "status": "VULN",
+   "what": "the backfill leaves updated_at of email_templates and support_tickets alone",
+   "expected": "no row changed since the snapshot taken before the apply",
+   "observed": "the deletion SQL is not applied: updated_by_name does not exist, so the backfill has not run",
+   "note": ""
+  },
+  {
+   "id": "DX02a",
+   "status": "VULN",
+   "what": "INSERT with an id and a supplied name",
+   "expected": "the trigger's name (from the id)",
+   "observed": "error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache",
+   "note": ""
+  },
+  {
+   "id": "DX02b",
+   "status": "VULN",
+   "what": "INSERT with a null id and a supplied name",
+   "expected": "null",
+   "observed": "error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache",
+   "note": ""
+  },
+  {
+   "id": "DX02c",
+   "status": "VULN",
+   "what": "UPDATE of the name alone (id unchanged)",
+   "expected": "see the expectation of DX02a-b",
+   "observed": "no row: the INSERT of DX02a failed",
+   "note": ""
+  },
+  {
+   "id": "DX02d",
+   "status": "VULN",
+   "what": "UPDATE changing the id to another person with a supplied name",
+   "expected": "see the expectation of DX02a-b",
+   "observed": "no row: the INSERT of DX02a failed",
+   "note": ""
+  },
+  {
+   "id": "DX02e",
+   "status": "VULN",
+   "what": "UPDATE making the id null (the SET NULL of a deletion)",
+   "expected": "see the expectation of DX02a-b",
+   "observed": "no row: the INSERT of DX02a failed",
+   "note": ""
+  },
+  {
+   "id": "DX03a",
+   "status": "VULN",
+   "what": "a staff account that has acted (a status-history row names it) is deleted",
+   "expected": "the deletion succeeds",
+   "observed": "blocked: Database error deleting user",
+   "note": ""
+  },
+  {
+   "id": "DX03b",
+   "status": "VULN",
+   "what": "pages row of the deleted staff account keeps the name with a null id",
+   "expected": "updated_by null, updated_by_name = the person's name",
+   "observed": "the row was not created",
+   "note": ""
+  },
+  {
+   "id": "DX03c",
+   "status": "VULN",
+   "what": "user_status_history row (NO ACTION today) of the deleted staff account keeps the name with a null id",
+   "expected": "changed_by null, changed_by_name = the person's name",
+   "observed": "error 42703 column user_status_history.changed_by_name does not exist",
+   "note": ""
+  },
+  {
+   "id": "DX04a",
+   "status": "VULN",
+   "what": "the count drops by one when one of two viewers is deleted",
+   "expected": "views_count 2 -> 1",
+   "observed": "views_count 2 -> 2",
+   "note": ""
+  },
+  {
+   "id": "DX04b",
+   "status": "VULN",
+   "what": "the deleted viewer's ledger row goes, the other viewer's stays",
+   "expected": "one row, of the other viewer",
+   "observed": "2 row(s), one with a null user id",
+   "note": ""
+  },
+  {
+   "id": "DX04c",
+   "status": "VULN",
+   "what": "a viewer's row goes and views_count never drops below 0",
+   "expected": "row gone, views_count 0",
+   "observed": "rows 1, views_count 0",
+   "note": ""
+  },
+  {
+   "id": "DX05a",
+   "status": "VULN",
+   "what": "deleting a company's creator succeeds",
+   "expected": "the deletion succeeds",
+   "observed": "no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache",
+   "note": ""
+  },
+  {
+   "id": "DX05b",
+   "status": "VULN",
+   "what": "the company goes with its creator",
+   "expected": "no company row",
+   "observed": "no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache",
+   "note": ""
+  },
+  {
+   "id": "DX05c",
+   "status": "VULN",
+   "what": "the agents of the company keep company_id null",
+   "expected": "both agents with company_id null",
+   "observed": "no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache",
+   "note": ""
+  },
+  {
+   "id": "E01",
+   "status": "PASS",
+   "what": "A's role at the end of all attempts",
+   "expected": "user",
+   "observed": "role=user",
+   "note": ""
+  },
+  {
+   "id": "E02",
+   "status": "PASS",
+   "what": "A edits B's listing after all escalation attempts",
+   "expected": "refused (error or 0 rows)",
+   "observed": "rows=0",
+   "note": ""
+  }
+ ]
+}

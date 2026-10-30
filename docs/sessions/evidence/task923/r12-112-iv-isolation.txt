@@ -1,0 +1,10 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node docs/sessions/evidence/task923/r12-112-iv-isolation.mjs
+listingdetailview--public-listing: full 377 rows, 40 failing; a: 377 rows, 0 differ; b: 377 rows, 0 differ; c: 377 rows, 0 differ
+listingdetailview--public-listing-not-reduced: full 377 rows, 40 failing; a: 377 rows, 0 differ; b: 377 rows, 0 differ; c: 377 rows, 0 differ
+listingdetailview--public-listing-converted: full 377 rows, 40 failing; a: 377 rows, 0 differ; b: 377 rows, 0 differ; c: 377 rows, 0 differ
+listingdetailview--staff-preview-unpublished: full 313 rows, 22 failing; a: 313 rows, 0 differ; b: 313 rows, 0 differ; c: 313 rows, 0 differ
+listingdetailview--staff-preview-published: full 313 rows, 22 failing; a: 313 rows, 0 differ; b: 313 rows, 0 differ; c: 313 rows, 0 differ
+listingdetailview--archived-listing: full 185 rows, 12 failing; a: 185 rows, 0 differ; b: 185 rows, 0 differ; c: 185 rows, 0 differ
+rows whose verdict differs from the full run, all isolated runs: 0
+EXIT_CODE=0

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: html-text-under-control-below-fold</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); }
+  .dialog { position: fixed; left: 16px; right: 16px; top: 48px; padding: 16px; background: #fff; border-radius: 8px; }
+  .dialog h2 { margin: 0 0 8px; font-size: 18px; }
+  .dialog .footer { margin-top: 16px; display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 12 self-test fixture "html-text-under-control-below-fold". The same popup-like box 1 100px down the page (below the 844px fold): the verdict does not depend on where the box lies. text-overlap fails on the app root. -->
+<div id="storybook-root">
+  <button id="open" type="button">Open dialog</button>
+  <p>Fixture page, not a product Story.</p>
+  <div style="height:1100px"></div><div style="position:relative;height:48px;width:300px;border:1px solid #999"><span style="position:absolute;left:8px;top:12px">Popup title text</span><a href="#" role="button" style="position:absolute;left:0;top:0;width:44px;height:44px;background:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;color:#000">&minus;</a></div>
+  
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-html-text-under-control-below-fold","story":"html-text-under-control-below-fold","open":{"kind":"click","selector":"#open"},"portals":1,"focus":"trap","dismiss":["escape","close-control","outside"],"trigger":"#open","closeSelector":"[data-census-close]"}</script>
+<script>
+(function () {
+  var portal = null;
+  var opener = document.getElementById('open');
+  function close() {
+    if (!portal) return;
+    portal.remove();
+    portal = null;
+    opener.focus();
+  }
+  function open() {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="backdrop"></div>' +
+      '<div class="dialog" role="dialog" aria-modal="true">' +
+      '<button type="button" data-census-close aria-label="Close" style="float:right">&times;</button>' +
+      '<h2>Dialog title</h2><p>Short body text.</p>' +
+      '<div class="footer"><button type="button">Save</button><button type="button">Cancel</button></div></div>';
+    document.body.appendChild(portal);
+    portal.querySelector('.backdrop').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').focus();
+  }
+  opener.addEventListener('click', open);
+  
+  document.addEventListener('keydown', function (e) {
+    if (!portal) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = Array.prototype.slice.call(portal.querySelectorAll('button'));
+      var first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!portal.contains(a)) { first.focus(); e.preventDefault(); }
+      else if (e.shiftKey && a === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && a === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

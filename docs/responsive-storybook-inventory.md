@@ -27,7 +27,7 @@ are struck below.)
 #### Primitives (14 story files)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
-| `src/components/ui/badge.stories.tsx` | ✅ `primitives-badge--default` | Product-rendering story |
+| `(retired, Task 859 R54) legacy ui/badge story` | ✅ `RETIRED-859-primitives-badge--default` | Product-rendering story (successor `mantine-primitives-badge--default`) |
 | `src/components/ui/button.stories.tsx` | ✅ `primitives-button--default` | Product-rendering story |
 | `src/components/ui/checkbox.stories.tsx` | ✅ `primitives-checkbox--default` | Product-rendering story |
 | `src/components/ui/command.stories.tsx` | ✅ `primitives-command--inline` | Product-rendering story |
@@ -64,7 +64,7 @@ are struck below.)
 | `src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx` | ✅ `patterns-mantine-providerformdialogview--new` | Product-rendering story (Task 874) |
 | `src/components/admin/AdminPropertyTypesManager.stories.tsx` | ✅ `admin-adminpropertytypesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminCompaniesManager.stories.tsx` | ✅ `admin-admincompaniesmanager--default` | Product-rendering story |
-| `src/components/admin/AdminSupportManager.stories.tsx` | ✅ `admin-adminsupportmanager--default` | Product-rendering story |
+| `(retired, Task 859) legacy AdminSupportManager story` | ✅ `RETIRED-859-adminsupportmanager--default` | Product-rendering story (successor `patterns-mantine-adminsupportview--default`) |
 | `src/components/admin/AdminEmailTemplatesManager.stories.tsx` | ✅ `admin-adminemailtemplatesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminListingsTable.stories.tsx` | ✅ `admin-adminlistingstable--default` | Product-rendering story |
 | `src/components/admin/AdminUsersTable.stories.tsx` | ✅ `admin-adminuserstable--default` | Product-rendering story |
@@ -145,7 +145,7 @@ Legend for "Needs fix?":
 | `AdminCurrenciesManager.stories.tsx` | `RETIRED-877-admincurrenciesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCurrenciesManager (raw `<table>` currently; Tabs + currency rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **60 overflow FAIL cells** in Task 411 (sq/en/uk/it × 320/375/390/480/560 = raw table overflows). Migrate to `AdminTable` `tableAtLg`. Preserve: currency CODE column, rate column, active toggle, add/edit/delete actions, tabs (manual/automatic), empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminPropertyTypesManager.stories.tsx` | `admin-adminpropertytypesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminPropertyTypesManager (raw `<table>` currently; property type rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable` `tableAtLg`. Preserve: name column, icon, order, edit/delete actions, empty/loading/error states. §10 (tableAtLg), §25.1 |
 | `AdminCompaniesManager.stories.tsx` | `admin-admincompaniesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminCompaniesManager (raw `<table>` currently; company rows) | sq/en/uk/it | **CRITICAL** | **YES — Slice 1** | **Part of 60 overflow FAIL cells** in Task 411. Migrate to `AdminTable` `tableAtLg`. Preserve: name, city, type, listings count, edit/delete/view actions, search, filter, empty/loading/error states. §10 (tableAtLg), §25.1 |
-| `AdminSupportManager.stories.tsx` | `admin-adminsupportmanager--default` + multi (--empty-state, --locale-stress, --tablet) | Admin | AdminSupportManager (support ticket list/table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision needed. Likely `tableAtLg`. Verify column set + row actions at 768–1023. §10, §25.1 |
+| `(retired, Task 859) legacy AdminSupportManager story` | `RETIRED-859-adminsupportmanager--default` + multi (retired; successor `patterns-mantine-adminsupportview--default`) | Admin | AdminSupportManager (support ticket list/table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS (Task 411). tableAt decision needed. Likely `tableAtLg`. Verify column set + row actions at 768–1023. §10, §25.1 |
 | `AdminEmailTemplatesManager.stories.tsx` | `admin-adminemailtemplatesmanager--default` + multi (--locale-stress, --tablet) | Admin | AdminEmailTemplatesManager (email template list + form) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. Has both list and form surfaces. `formLayout` for form; `nonTabular`/`tableAtLg` for list. Verify form action buttons at `<640`. §10, §12, §26.1 |
 | `AdminListingsTable.stories.tsx` | `admin-adminlistingstable--default` + multi (--filtered-pending, --locale-stress, --tablet) | Admin | AdminListingsTable (reference `tableAtLg` implementation, sort, search, filter) | sq/en/uk/it | HIGH | NO | `tableAtLg` reference implementation (Task 306-Fix). Machine PASS. All columns/row-actions preserved. §10, §25.1 |
 | `AdminUsersTable.stories.tsx` | `admin-adminuserstable--default` + multi (--locale-stress, --location-requests, --tablet, --verified-tab) | Admin | AdminUsersTable (user management table) | sq/en/uk/it | HIGH | OPEN DECISION | Machine PASS. tableAt decision needed. Verify column set + row actions + pagination at 768–1023. `tableAtLg` target. §10, §25.1 |
@@ -337,7 +337,7 @@ admin-adminlistingstable--default
 RETIRED-852-locale-switcher                RETIRED-852-mobile-header
 admin-adminpageshell--default              admin-adminpropertytypesmanager--default
 admin-adminsettings--default               RETIRED-852-sidebar-desktop
-RETIRED-852-sidebar-drawer-open            admin-adminsupportmanager--default
+RETIRED-852-sidebar-drawer-open            RETIRED-859-default
 RETIRED-877-admintable--default                  admin-adminuseravatar--edit-mode
 admin-adminuseravatar--view-placeholder    RETIRED-893-default
 admin-adminuserstable--default             admin-statuschangecontrol--select
@@ -364,7 +364,7 @@ All 160 are supplementary variant exports. None introduce a new responsive surfa
 RETIRED-877-admincurrenciesmanager--tablet       admin-adminpropertytypesmanager--tablet
 admin-admincompaniesmanager--tablet
 admin-adminlistingstable--tablet           admin-adminuserstable--tablet
-admin-adminsettings--tablet                admin-adminsupportmanager--tablet
+admin-adminsettings--tablet                RETIRED-859-tablet
 admin-adminemailtemplatesmanager--tablet   RETIRED-893-tablet
 ```
 Use: open at 768/810/960px to verify `tableAtLg` breakpoint (cards `<1024`, table `≥1024`) before/after Slice 1–3.
@@ -375,7 +375,7 @@ RETIRED-877-admincurrenciesmanager--locale-stress    admin-adminpropertytypesman
 admin-admincompaniesmanager--locale-stress     admin-adminemailtemplatesmanager--locale-stress
 admin-adminlistingstable--locale-stress
 admin-adminuserstable--locale-stress           admin-adminsettings--locale-stress
-admin-adminsupportmanager--locale-stress       RETIRED-893-locale-stress
+RETIRED-859-locale-stress       RETIRED-893-locale-stress
 RETIRED-852-locale-switcher-locale-stress      RETIRED-852-mobile-header-locale-stress
 RETIRED-852-sidebar-locale-stress              admin-adminuseravatar--locale-stress
 RETIRED-877-admintable--locale-stress                RETIRED-877-admincardlist--locale-stress
@@ -390,7 +390,7 @@ RETIRED-877-admincardlist--legacy-react-node     RETIRED-877-admincardlist--load
 RETIRED-877-admincardlist--static                admin-adminpageshell--multiple-actions
 admin-adminpageshell--no-header            admin-adminpageshell--with-actions
 admin-adminpageshell--with-tabs            admin-adminpageshell--with-tabs-and-actions
-admin-adminsupportmanager--empty-state     RETIRED-877-admintable--card-mode
+RETIRED-859-empty-state     RETIRED-877-admintable--card-mode
 RETIRED-877-admintable--column-menu              RETIRED-877-admintable--empty-state
 RETIRED-877-admintable--interactive              RETIRED-877-admintable--interactive-card-mode
 RETIRED-877-admintable--loading-state            RETIRED-877-admintable--manage-columns

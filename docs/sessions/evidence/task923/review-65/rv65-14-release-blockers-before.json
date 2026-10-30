@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "findings": [
+    { "id": "S59", "severity": "critical", "status": "open", "summary": "User can grant themselves admin and edit another account's listing", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json" },
+    { "id": "S60", "severity": "high", "status": "open", "summary": "Self reactivation and self verification through profile writes", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json" },
+    { "id": "S61", "severity": "high", "status": "open", "summary": "Listing owner controls moderation, premium and counters through database writes", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json" },
+    { "id": "S62", "severity": "high", "status": "open", "summary": "Anonymous view recording accepts forged identity and pending listing views", "source": "docs/sessions/evidence/task923/db-catalog/rls-session-test.json" }
+  ]
+}

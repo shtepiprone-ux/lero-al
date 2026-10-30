@@ -1,4 +1,5 @@
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { parsePeriodParams, resolvePeriod } from '@/lib/dashboard/period'
 import { getAdminDashboardData } from '@/modules/admin/dashboard/queries'
 import { getAdminTrends, getVisibleListingsByCity } from '@/modules/admin/dashboard/trends'
@@ -17,6 +18,8 @@ interface Props {
  * this boundary; the view owns its own callbacks via `useRouter`).
  */
 export default async function AdminDashboard({ searchParams }: Props) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const sp = await searchParams
   const now = new Date()
   const periodSelection = parsePeriodParams(sp, now)

@@ -1,0 +1,17 @@
+# r57-00: sha256 of the three files before the first write (Revision 57, R174, AC157)
+platform: Windows 11 Pro 10.0.26300 (Microsoft Windows NT 10.0.26300.0), AMD64; shell: Windows PowerShell 5.1
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: d0f394c1e3016e894d708c00bec897dd3a1ceb3d
+command: Get-FileHash <path> -Algorithm SHA256 (lowercased)
+captured: 2026-10-29T16:22:59+01:00 (before any write of this revision; this file is the first write)
+--- output ---
+de913a94f374cb09c0a6feda825b511517832cb07bfa935bf28c00d564213670  docs/sessions/evidence/task923/security/owner-fixes-report.json
+04fbaa3cabbd0f860137f801bfacf440cb14f46bfb375f1b68709daa8c75bd41  docs/sessions/evidence/task927/security/report.json
+373733b72e44def30ebd6586c129f42627788194273fcda851c7aa1860a08a36  docs/sessions/2026-10-10-task923-rendered-state-census.md
+--- exit code: 0 ---
+
+Contract state read for the record (read-only, ConvertFrom-Json):
+- tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: stage implemented, executionStatus ready, scope 596, cases 231, report docs/sessions/evidence/task923/security/d8-d9-report.json
+- tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: stage implemented, executionStatus ready, scope 132, cases 60, report docs/sessions/evidence/task923/security/owner-fixes-report.json
+- tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: stage implemented, executionStatus ready, scope 64, cases 53, report docs/sessions/evidence/task927/security/report.json

@@ -1,0 +1,56 @@
+# a5-00: sha256 before the first edit of Task 927 Amendment 5
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a5/a5-00-hashes.mjs docs/sessions/evidence/task927/a5/a5-00-before-hashes.txt "<label>"
+date: 2026-10-25T09:16:07.267Z
+scope paths in the contract: 43
+
+390ca54c94caaac01a9e1b5386767b237822bb235337e1c2296acdafd6b237f6  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+f1d96dcec45d59191ff488a0d82bb037e3ffbc2aaf337832107c4c57a6765a9c  src/lib/auth/browser.ts
+4e4a7616a0efcfac09fa3ba707089b318953bfa5650ece39d612592bda2f5069  src/lib/auth/googleIdentity.ts
+9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab  src/components/auth/GoogleSignInButton.tsx
+bc4e699df8b80430430369661dd9d1ec219f38f4d226072ad5f73fff9285b004  src/components/auth/GoogleSignInSlot.tsx
+2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0  src/modules/auth/components/AuthSheet.tsx
+09552d1c41c21afb722e5ca54056b0c6f09f8a8d6f2b6f9c6d746804b4348f00  src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx
+9d83748ff66d755887939ef6a2c80aaf53b8eaff7b876ffb278938a8f5b8ebea  scripts/mantine-migration-scope.json
+7cd8be47aebe2c9c6f597800d23f7e54b4a8bbed780fda0bc9c51c2cd90e253f  scripts/ui-contract-registry.json
+859707bf29dca6a0771a900fb0d25b32b6922405fa04317823a412da92354441  scripts/rendered-interaction-states.json
+3f52c9bc07cbf3724fefdf7faf1ad2a510ec193d3560135e3c28dc40a8569d36  messages/sq.json
+c34e33c7cf58f82ef856f915483fd9a6f6cd47facb966d4e578e6f681b1366f2  messages/en.json
+8613df90a9de85738ac5750028d359cb6235c2e956271006761b15ca2b9a2145  messages/uk.json
+2a90543780688a8ac4b20f1c2542df95b6d6bd707f7581027670952911c07730  messages/it.json
+bb604a7da8ba2426b07a653c47c6975dfb8a77d2fe20b4aea528dc543ae99945  docs/env.md
+1c6d81dfd750982b55c58bc11f447ad01ad39a2c7014311644ca03499f927e57  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+1cb4668cf01c87d7acc64626e4fc03dbd4b8f7d5f75833804518f8d43b02557d  src/lib/auth/__tests__/googleIdentity.test.ts
+20abc7bb6108712bf30803f3824e0d697c5ff682112346de05abe093cc0c913f  src/lib/auth/__tests__/browserAuth.security.test.ts
+433ac40f644c7e7ae20655dc454e383e54827549ebc5ebda4da5a264cadba51e  src/app/api/auth/me/__tests__/route.security.test.ts
+53d47599a104aced71ae64fec9658fa0d094b9ae1eb7ca9f07138f38af7b17f0  src/lib/auth/googleSignIn.integration.test.ts
+09347d47193c2c2bf67d8349d488bb1db6529f0fd227c5887d9d00dac2d6a3dd  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+df22ac2b7f0a0ba002662df22213eb0100bc3552a4f76a92ab5c42545aff407d  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+3b4d4932b5efb688ee2900f203c23ea1189ef7e936e511528bc71592840025d5  src/modules/cabinet/components/ProfileTab.tsx
+f2d30ee385af1bd66d1a402baeb6c9ec8c0b733fcd69f6a937e62fdfa9d79fae  src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx
+b680968a4944bb3223fd5440e9bc559fccdbe5762ee7c6508829f401bd10ab19  src/stories/mantine/primitives/Modal.stories.tsx
+be2849cdc934e7fb828a3c26b21f390ce6de399519c48cc58cbb839039974356  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+6449d15c8c24f86a22e4d18ad4800d507fb303a7f4f9f57b15d28bac8ee9c772  src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx
+5499a19094534ce22050be74be74458d093a2a73a6210b4eccce48a74fd6807b  src/modules/auth/components/__tests__/AuthSheet.test.tsx
+4512a048041b377e7800c29e8d1aaa88d4b13a601572d0ec4507be8cfeee62ff  src/modules/auth/components/AuthSheet.banned.security.test.tsx
+421a443cdf74b9579e589d8d046db780f6e4a12a633235d93922d7cab52b3268  src/lib/auth/__tests__/browser.smoke.test.ts
+9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5  src/design-system/mantine/theme.ts
+ABSENT  src/lib/auth/rememberedGoogleAccount.ts
+ABSENT  src/lib/auth/useGoogleOneTap.ts
+ABSENT  src/modules/auth/lib/mapAuthError.ts
+ABSENT  src/modules/auth/lib/googleSignIn.ts
+ABSENT  src/components/auth/GoogleWelcomeBack.tsx
+ABSENT  src/stories/patterns/mantine/GoogleWelcomeBack.stories.tsx
+f0a0c2ba2cc5dafecff612553744d49dd98b73c7475a4db50730cb9236a98c25  src/stories/patterns/mantine/AuthSheet.stories.tsx
+d92c58ad3d67718225e9af8cd0924b78f756b97319e459071b6e27fe4feb93b8  src/components/layout/Header.tsx
+982f4adf8816ba4ee4414fac779708a19c9b7fccb3044f41e2be4e7a33448ba8  src/components/layout/__tests__/headerFooterContainers.test.tsx
+75ad37b6d74391e058fe2ce0be6ae9e08cd7b3ee35018129fbc16b1ae496e128  src/components/layout/__tests__/Header.signOut.test.tsx
+ABSENT  src/components/layout/__tests__/Header.google.security.test.tsx
+ABSENT  src/lib/auth/__tests__/rememberedGoogleAccount.test.ts
+1bec4d87be54923d052328a3e95fd394e47726fe0f9cf969ab8dc24a55b2da83  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+62f2e993e7cf438c48c0b8c677878d67777cfbe82dc62a3c0eaf315a017be10e  docs/sessions/2026-10-10-task923-rendered-state-census.md
+db47417043b079f05a85ef5aed22bfc1825c4b1dc7fbf7e07dcf940cc7f01794  docs/sessions/evidence/task927/security/report.json
+
+exit code: 0

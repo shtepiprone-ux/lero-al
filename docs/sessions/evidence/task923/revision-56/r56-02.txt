@@ -1,0 +1,46 @@
+﻿# r56-02: R171 (b) - the integration file accessHardening.integration.test.ts, verbose; SEC-DB-S62-ALLOW and SEC-DB-S62-DENY
+platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --config vitest.integration.config.ts accessHardening --reporter=verbose  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>; credentials read by name from .env.local, not printed)
+started: 2026-10-29T13:09:31.9380291Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id 2680ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id 178ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner 2015ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner 439ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S62-DENY] Only the server records a listing view 1446ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-S62-ALLOW] Only the server records a listing view 796ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request 6971ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request 666ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was 246ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block 8532ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > [SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block 2101ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows 1110ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session 2942ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access 1110ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented 2609ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo 4548ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted 572ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused 1418ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted 257ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused 341ms
+stdout | src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works
+[upload-avatar] bytes: 24 type: image/png for: b25f4727-420e-430a-b687-6c8d964fe360
+
+stdout | src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works
+[upload-avatar] Cloudinary ok: 256 x 256 public_id: zz-synth-avatar
+
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works 3707ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage 1456ms
+ ✓ src/tests/integration/accessHardening.integration.test.ts > accessHardening > [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches 2614ms
+
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  14:09:33
+   Duration  57.16s (transform 215ms, setup 44ms, import 207ms, tests 56.77s, environment 0ms)
+
+
+--- exit code: 0 ---
+finished: 2026-10-29T13:10:30.5285960Z

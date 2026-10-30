@@ -1,12 +1,14 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider, Box, useMantineTheme } from '@mantine/core'
+import { Grid, Stack, Title, Text, Group, Paper, SimpleGrid, Divider, Box, useMantineTheme } from '@mantine/core'
 import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
 import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
 import { MantineListingPrice } from './MantineListingPrice'
 import { TITLE_FZ } from '@/design-system/mantine/typography'
+import { MantineBadge } from './MantineBadge'
+import { LISTING_DETAIL_BADGE_TONES } from '../badgeTones'
 
 export interface ListingFeature {
   icon: ReactNode
@@ -24,6 +26,30 @@ export type ListingDetailBadgeTone = 'new' | 'premium' | 'reduced' | 'type'
 export interface ListingDetailBadge {
   label: string
   tone: ListingDetailBadgeTone
+}
+
+/**
+ * One badge of the detail header. "Premium" is the registered `listingFlag` (its star icon and colour), so the detail
+ * page and the cabinet render the same badge (Task 859 R57(d)); `new` / `reduced` are semantic tones; `type` is the
+ * neutral outlined type chip.
+ */
+function DetailBadge({ badge }: { badge: ListingDetailBadge }) {
+  if (badge.tone === 'premium') {
+    return (
+      <MantineBadge variant="status" entity="listingFlag" value="premium">
+        {badge.label}
+      </MantineBadge>
+    )
+  }
+  return (
+    <MantineBadge
+      variant="tone"
+      tone={badge.tone === 'type' ? 'neutral' : LISTING_DETAIL_BADGE_TONES[badge.tone]}
+      outline={badge.tone === 'type'}
+    >
+      {badge.label}
+    </MantineBadge>
+  )
 }
 
 export interface MantineListingDetailData {
@@ -95,24 +121,6 @@ export interface MantineListingDetailPatternProps {
 }
 
 /**
- * Tone -> Mantine THEME color name (owner decision, 2026-07-17: native Mantine `color` + the
- * theme's default `variant='light'` — the SAME idiom as the canonical `Mantine/Primitives/Badge`
- * story (`color="green"`/`"yellow"`/`"sale"`, soft background) — not a re-skin of the legacy
- * `--badge-new/premium/reduced` tokens (`globals.css:373-375`), which were defined for the
- * legacy `@/components/ui/badge` and would have reproduced its solid-fill look via a Mantine
- * shell. `new`=green, `premium`=yellow (closest theme color to "gold"), `reduced`=`sale` (Task
- * 619 — a dedicated owner-provided crimson `#dd0939`, distinct from both `brand` (the page's own
- * price text) and `red` (error/`Blocked`); matches the card's `price_reduced` badge so the
- * "price reduced" signal reads as the same color across the whole product) — all three from
- * `theme.ts`'s `colors.{green,yellow,sale}` tuples, matched to Badge.stories.tsx.
- */
-const BADGE_TONE_COLOR: Record<Exclude<ListingDetailBadgeTone, 'type'>, string> = {
-  new: 'green',
-  premium: 'yellow',
-  reduced: 'sale',
-}
-
-/**
  * Canonical listing-detail pattern (Task 616 D3, ALL-Mantine rebuild) — composes the D1
  * gallery pattern + a Mantine info block (badges/price/meta/key-features card/description
  * card/amenities card) + the D2 sticky contact card. Zero `@/components/ui/*` imports.
@@ -179,13 +187,7 @@ export function MantineListingDetailPattern({
               <Group justify="space-between" wrap="nowrap" align="flex-start">
                 <Group gap="xs" wrap="wrap">
                   {badges.map((b, i) => (
-                    <Badge
-                      key={i}
-                      variant={b.tone === 'type' ? 'outline' : undefined}
-                      color={b.tone === 'type' ? 'gray' : BADGE_TONE_COLOR[b.tone]}
-                    >
-                      {b.label}
-                    </Badge>
+                    <DetailBadge key={i} badge={b} />
                   ))}
                 </Group>
                 {(favorite || share) && (

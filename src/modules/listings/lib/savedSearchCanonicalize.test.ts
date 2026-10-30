@@ -72,14 +72,14 @@ describe('canonicalizeFilters — wallType (multi-select)', () => {
 
 describe('canonicalizeFilters — offerType (multi-select)', () => {
   it('parses a single value', () => {
-    expect(canonicalizeFilters(sp('offer_type=sale')).offerType).toEqual(['sale'])
+    expect(canonicalizeFilters(sp('offer_type=owner')).offerType).toEqual(['owner'])
   })
 
   it('sorts multi-values', () => {
-    const c1 = canonicalizeFilters(sp('offer_type=rent,sale'))
-    const c2 = canonicalizeFilters(sp('offer_type=sale,rent'))
+    const c1 = canonicalizeFilters(sp('offer_type=agency,owner'))
+    const c2 = canonicalizeFilters(sp('offer_type=owner,agency'))
     expect(c1.offerType).toEqual(c2.offerType)
-    expect(c1.offerType).toEqual(['rent', 'sale'])
+    expect(c1.offerType).toEqual(['agency', 'owner'])
   })
 
   it('omits when empty', () => {
@@ -89,8 +89,8 @@ describe('canonicalizeFilters — offerType (multi-select)', () => {
 
 describe('canonicalizeFilters — marketType stays scalar', () => {
   it('keeps marketType as a string, not an array', () => {
-    const c = canonicalizeFilters(sp('market_type=primary'))
-    expect(c.marketType).toBe('primary')
+    const c = canonicalizeFilters(sp('market_type=new_building'))
+    expect(c.marketType).toBe('new_building')
     expect(typeof c.marketType).toBe('string')
   })
 })
@@ -144,14 +144,14 @@ describe('computeFiltersHash — order-stable for 4 new multi-select fields', ()
   })
 
   it('offerType: same hash regardless of value order', () => {
-    const h1 = computeFiltersHash(canonicalizeFilters(sp('offer_type=rent,sale')))
-    const h2 = computeFiltersHash(canonicalizeFilters(sp('offer_type=sale,rent')))
+    const h1 = computeFiltersHash(canonicalizeFilters(sp('offer_type=agency,owner')))
+    const h2 = computeFiltersHash(canonicalizeFilters(sp('offer_type=owner,agency')))
     expect(h1).toBe(h2)
   })
 
   it('combined multi-select: same hash regardless of value orders', () => {
-    const h1 = computeFiltersHash(canonicalizeFilters(sp('condition=new_build,good&heating=electric,gas&wall_type=panel,brick&offer_type=sale,rent')))
-    const h2 = computeFiltersHash(canonicalizeFilters(sp('condition=good,new_build&heating=gas,electric&wall_type=brick,panel&offer_type=rent,sale')))
+    const h1 = computeFiltersHash(canonicalizeFilters(sp('condition=new_build,good&heating=electric,gas&wall_type=panel,brick&offer_type=owner,agency')))
+    const h2 = computeFiltersHash(canonicalizeFilters(sp('condition=good,new_build&heating=gas,electric&wall_type=brick,panel&offer_type=agency,owner')))
     expect(h1).toBe(h2)
   })
 
@@ -230,8 +230,8 @@ describe('canonicalToSearchParams — comma-joined round-trip', () => {
   })
 
   it('writes offerType as sorted comma-joined string', () => {
-    const out = canonicalToSearchParams(canonicalizeFilters(sp('offer_type=rent,sale')))
-    expect(out.get('offer_type')).toBe('rent,sale')
+    const out = canonicalToSearchParams(canonicalizeFilters(sp('offer_type=agency,owner')))
+    expect(out.get('offer_type')).toBe('agency,owner')
   })
 
   it('omits fields with no values', () => {

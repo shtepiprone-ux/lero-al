@@ -35,6 +35,14 @@ vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: () => mockCreateAdminClient(),
 }))
 
+// Task 923 R44: both mark-as-read actions first ask `requireViewer()` whether the account has access. That helper reads the caller's row with the service role, which would
+// make the "never the admin client" assertions below about the helper instead of about the write; so the helper is the double, and it answers in its exact shape.
+const mockRequireViewer = vi.fn()
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: () => mockRequireViewer(),
+}))
+const VIEWER_OK = { ok: true, userId: 'u-1', role: 'user' } as const
+
 const mockUpdate = vi.fn()
 const mockInsert = vi.fn()
 
@@ -60,6 +68,20 @@ function buildUpdateChain(result: { error: unknown }) {
 describe('mutations.ts — user-scoped mark-as-read (Task 881 R9)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockRequireViewer.mockResolvedValue(VIEWER_OK)
+  })
+
+  it.each([
+    ['markNotificationRead', (m: typeof import('../mutations')) => m.markNotificationRead('n-1')],
+    ['markAllNotificationsRead', (m: typeof import('../mutations')) => m.markAllNotificationsRead()],
+  ])('%s — an account without access changes nothing: no client is created and no row is written (Task 923 R44)', async (_name, call) => {
+    mockRequireViewer.mockResolvedValue({ ok: false, reason: 'unauthenticated' })
+    const mutations = await import('../mutations')
+    await expect(call(mutations)).resolves.toBeUndefined()
+    expect(mockCreateClient).not.toHaveBeenCalled()
+    expect(mockCreateAdminClient).not.toHaveBeenCalled()
+    expect(mockUserFrom).not.toHaveBeenCalled()
+    expect(mockUpdate).not.toHaveBeenCalled()
   })
 
   it('markNotificationRead — uses the user-scoped client, never the admin client', async () => {
@@ -177,16 +199,17 @@ describe('mutations.ts — user-scoped mark-as-read (Task 881 R9)', () => {
 
 // ── Tests: createNotification ────────────────────────────────────────────────
 
-describe('mutations.ts — createNotification (Task 881 R9)', () => {
+describe('createNotification.ts (Task 881 R9; moved out of the Server Action file by Task 923 Revision 7, S1)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    mockRequireViewer.mockResolvedValue(VIEWER_OK)
   })
 
   it('uses the admin client and never the user-scoped client', async () => {
     mockInsert.mockResolvedValue({ error: null })
     mockAdminFrom.mockReturnValue({ insert: mockInsert })
 
-    const { createNotification } = await import('../mutations')
+    const { createNotification } = await import('../createNotification')
     await createNotification({
       userId: 'u-1',
       type: 'marketing',

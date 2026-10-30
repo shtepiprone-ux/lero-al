@@ -1,0 +1,14 @@
+# R140 AC140 r43-07: literal scan of the v4 pair (revision-43/rev43-05-literal-scan.cjs)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-43/rev43-05-literal-scan.cjs docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+NODE_PATH: (unset)
+started: 2026-10-24T09:40:31.907Z
+--- stdout ---
+docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql: 174 literals, 0 spanning lines
+docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql: 36 literals, 0 spanning lines
+
+--- stderr ---
+
+--- exit code: 0 ---

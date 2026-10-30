@@ -75,6 +75,11 @@ export interface MantineDropdownMenuProps {
  * Desktop Menu path on SSR + initial client render; mobile path mounts after hydration.
  * No flash — same documented caveat as MantineDialogDrawerPattern and MantineSelect.
  */
+// The control that was pressed takes the focus in the capture phase, before the menu opens, so the menu returns it there on close: a control that
+// keeps an editor selection by preventing the mousedown focus (the rich text toolbar) never took it (WCAG 2.4.3; Task 923 R33, Story 243).
+const focusPressed = (event: React.MouseEvent<HTMLElement>) =>
+  (event.target as HTMLElement).closest<HTMLElement>('button, a[href], [role="button"]')?.focus({ preventScroll: true })
+
 export function MantineDropdownMenu({
   trigger,
   items,
@@ -99,14 +104,22 @@ export function MantineDropdownMenu({
             ? { display: 'inline-block' }
             : { display: 'flex', flexDirection: 'column' }
           }
-          onClick={() => { if (!disabled) openDrawer() }}
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            if (disabled) return
+            // The control that was pressed takes the focus before the sheet opens, so the sheet returns it there on close. A control that
+            // keeps an editor selection by preventing the mousedown focus (the rich text toolbar) never took it, and the sheet had only `body`
+            // to return to (WCAG 2.4.3; Task 923 R33, Story 243).
+            const pressed = (event.target as HTMLElement).closest<HTMLElement>('button, a[href], [role="button"]')
+            pressed?.focus({ preventScroll: true })
+            openDrawer()
+          }}
         >
           {trigger}
         </Box>
       ) : fullWidthTrigger ? (
         /* Desktop, Task 852 R24 — no `alignSelf: 'flex-start'`: the trigger fills its container
            (e.g. a Stack align="stretch" parent), matching the mobile path's behaviour. */
-        <Box w="100%">
+        <Box w="100%" onClickCapture={focusPressed}>
           <Menu disabled={disabled}>
             <Menu.Target>{trigger}</Menu.Target>
             <Menu.Dropdown>
@@ -131,7 +144,7 @@ export function MantineDropdownMenu({
       ) : (
         /* Desktop: alignSelf:flex-start prevents a Stack align="stretch" parent from
            over-stretching the trigger — trigger renders at natural content width. */
-        <Box style={{ alignSelf: 'flex-start' }}>
+        <Box style={{ alignSelf: 'flex-start' }} onClickCapture={focusPressed}>
           <Menu disabled={disabled}>
             <Menu.Target>{trigger}</Menu.Target>
             <Menu.Dropdown>

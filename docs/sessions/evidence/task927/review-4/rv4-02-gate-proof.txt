@@ -1,0 +1,11 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-4/rv4-02-gate-proof.mjs
+"ar•••••@example.com" uk-latin-only violations: 0
+"a•••••@example.com" uk-latin-only violations: 0
+"Arta•••••" uk-latin-only violations: 1
+"Arta Krasniqi" uk-latin-only violations: 1
+"arta•••••@" uk-latin-only violations: 1
+"Заголовок" uk-latin-only violations: 0
+exit code: 0

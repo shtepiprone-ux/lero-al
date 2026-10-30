@@ -1,0 +1,16 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-sha.mjs src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json docs/sessions/evidence/task923/r41-00-googleReauth.txt docs/sessions/evidence/task923/r41-00-deletePassword.txt
+date: 2026-10-23T18:57:23.232Z
+--- output ---
+2cfd7b863375eef0266c24910cae0d846442c60b95e620bfa7fafc0611f13f8b  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+e5c09f5c599a972392723418e0ab9916fcf591f1e55070be566a575b2b95a21a  src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx
+10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+30ac1bfcdaa68dc614187eefbbe32a0c49e86ea60cf31e58facdf27bef4311d5  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073  docs/sessions/evidence/task923/r41-00-googleReauth.txt
+fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2  docs/sessions/evidence/task923/r41-00-deletePassword.txt
+
+
+EXIT_CODE=0

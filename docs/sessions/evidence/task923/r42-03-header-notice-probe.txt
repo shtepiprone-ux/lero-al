@@ -1,0 +1,349 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-42/rev42-04-header-notice-probe.mjs default,with-action,with-notice docs/sessions/evidence/task923/revision-42/rev42-06-probe-baseline.txt
+date: 2026-10-24T08:24:11.032Z
+--- output ---
+header default sq 320: height 70.6px, margin below 24px
+header default sq 375: height 50.6px, margin below 24px
+header default sq 390: height 50.6px, margin below 24px
+header default sq 480: height 50.6px, margin below 24px
+header default sq 560: height 50.6px, margin below 24px
+header default sq 639: height 50.6px, margin below 24px
+header default sq 640: height 55.9px, margin below 24px
+header default sq 641: height 55.9px, margin below 24px
+header default sq 680: height 55.9px, margin below 24px
+header default sq 768: height 55.9px, margin below 24px
+header default sq 810: height 55.9px, margin below 24px
+header default sq 960: height 55.9px, margin below 24px
+header default sq 1024: height 55.9px, margin below 24px
+header default sq 1200: height 55.9px, margin below 24px
+header default sq 1440: height 55.9px, margin below 24px
+header default sq 1920: height 55.9px, margin below 24px
+header default sq 2560: height 55.9px, margin below 24px
+header default en 320: height 70.6px, margin below 24px
+header default en 375: height 50.6px, margin below 24px
+header default en 390: height 50.6px, margin below 24px
+header default en 480: height 50.6px, margin below 24px
+header default en 560: height 50.6px, margin below 24px
+header default en 639: height 50.6px, margin below 24px
+header default en 640: height 55.9px, margin below 24px
+header default en 641: height 55.9px, margin below 24px
+header default en 680: height 55.9px, margin below 24px
+header default en 768: height 55.9px, margin below 24px
+header default en 810: height 55.9px, margin below 24px
+header default en 960: height 55.9px, margin below 24px
+header default en 1024: height 55.9px, margin below 24px
+header default en 1200: height 55.9px, margin below 24px
+header default en 1440: height 55.9px, margin below 24px
+header default en 1920: height 55.9px, margin below 24px
+header default en 2560: height 55.9px, margin below 24px
+header default uk 320: height 70.6px, margin below 24px
+header default uk 375: height 70.6px, margin below 24px
+header default uk 390: height 70.6px, margin below 24px
+header default uk 480: height 50.6px, margin below 24px
+header default uk 560: height 50.6px, margin below 24px
+header default uk 639: height 50.6px, margin below 24px
+header default uk 640: height 55.9px, margin below 24px
+header default uk 641: height 55.9px, margin below 24px
+header default uk 680: height 55.9px, margin below 24px
+header default uk 768: height 55.9px, margin below 24px
+header default uk 810: height 55.9px, margin below 24px
+header default uk 960: height 55.9px, margin below 24px
+header default uk 1024: height 55.9px, margin below 24px
+header default uk 1200: height 55.9px, margin below 24px
+header default uk 1440: height 55.9px, margin below 24px
+header default uk 1920: height 55.9px, margin below 24px
+header default uk 2560: height 55.9px, margin below 24px
+header default it 320: height 50.6px, margin below 24px
+header default it 375: height 50.6px, margin below 24px
+header default it 390: height 50.6px, margin below 24px
+header default it 480: height 50.6px, margin below 24px
+header default it 560: height 50.6px, margin below 24px
+header default it 639: height 50.6px, margin below 24px
+header default it 640: height 55.9px, margin below 24px
+header default it 641: height 55.9px, margin below 24px
+header default it 680: height 55.9px, margin below 24px
+header default it 768: height 55.9px, margin below 24px
+header default it 810: height 55.9px, margin below 24px
+header default it 960: height 55.9px, margin below 24px
+header default it 1024: height 55.9px, margin below 24px
+header default it 1200: height 55.9px, margin below 24px
+header default it 1440: height 55.9px, margin below 24px
+header default it 1920: height 55.9px, margin below 24px
+header default it 2560: height 55.9px, margin below 24px
+header with-action sq 320: height 130.6px, margin below 24px
+header with-action sq 375: height 110.6px, margin below 24px
+header with-action sq 390: height 110.6px, margin below 24px
+header with-action sq 480: height 110.6px, margin below 24px
+header with-action sq 560: height 110.6px, margin below 24px
+header with-action sq 639: height 110.6px, margin below 24px
+header with-action sq 640: height 55.9px, margin below 24px
+header with-action sq 641: height 55.9px, margin below 24px
+header with-action sq 680: height 55.9px, margin below 24px
+header with-action sq 768: height 55.9px, margin below 24px
+header with-action sq 810: height 55.9px, margin below 24px
+header with-action sq 960: height 55.9px, margin below 24px
+header with-action sq 1024: height 55.9px, margin below 24px
+header with-action sq 1200: height 55.9px, margin below 24px
+header with-action sq 1440: height 55.9px, margin below 24px
+header with-action sq 1920: height 55.9px, margin below 24px
+header with-action sq 2560: height 55.9px, margin below 24px
+header with-action en 320: height 130.6px, margin below 24px
+header with-action en 375: height 110.6px, margin below 24px
+header with-action en 390: height 110.6px, margin below 24px
+header with-action en 480: height 110.6px, margin below 24px
+header with-action en 560: height 110.6px, margin below 24px
+header with-action en 639: height 110.6px, margin below 24px
+header with-action en 640: height 55.9px, margin below 24px
+header with-action en 641: height 55.9px, margin below 24px
+header with-action en 680: height 55.9px, margin below 24px
+header with-action en 768: height 55.9px, margin below 24px
+header with-action en 810: height 55.9px, margin below 24px
+header with-action en 960: height 55.9px, margin below 24px
+header with-action en 1024: height 55.9px, margin below 24px
+header with-action en 1200: height 55.9px, margin below 24px
+header with-action en 1440: height 55.9px, margin below 24px
+header with-action en 1920: height 55.9px, margin below 24px
+header with-action en 2560: height 55.9px, margin below 24px
+header with-action uk 320: height 130.6px, margin below 24px
+header with-action uk 375: height 130.6px, margin below 24px
+header with-action uk 390: height 130.6px, margin below 24px
+header with-action uk 480: height 110.6px, margin below 24px
+header with-action uk 560: height 110.6px, margin below 24px
+header with-action uk 639: height 110.6px, margin below 24px
+header with-action uk 640: height 55.9px, margin below 24px
+header with-action uk 641: height 55.9px, margin below 24px
+header with-action uk 680: height 55.9px, margin below 24px
+header with-action uk 768: height 55.9px, margin below 24px
+header with-action uk 810: height 55.9px, margin below 24px
+header with-action uk 960: height 55.9px, margin below 24px
+header with-action uk 1024: height 55.9px, margin below 24px
+header with-action uk 1200: height 55.9px, margin below 24px
+header with-action uk 1440: height 55.9px, margin below 24px
+header with-action uk 1920: height 55.9px, margin below 24px
+header with-action uk 2560: height 55.9px, margin below 24px
+header with-action it 320: height 110.6px, margin below 24px
+header with-action it 375: height 110.6px, margin below 24px
+header with-action it 390: height 110.6px, margin below 24px
+header with-action it 480: height 110.6px, margin below 24px
+header with-action it 560: height 110.6px, margin below 24px
+header with-action it 639: height 110.6px, margin below 24px
+header with-action it 640: height 55.9px, margin below 24px
+header with-action it 641: height 55.9px, margin below 24px
+header with-action it 680: height 55.9px, margin below 24px
+header with-action it 768: height 55.9px, margin below 24px
+header with-action it 810: height 55.9px, margin below 24px
+header with-action it 960: height 55.9px, margin below 24px
+header with-action it 1024: height 55.9px, margin below 24px
+header with-action it 1200: height 55.9px, margin below 24px
+header with-action it 1440: height 55.9px, margin below 24px
+header with-action it 1920: height 55.9px, margin below 24px
+header with-action it 2560: height 55.9px, margin below 24px
+header with-notice sq 320: height 176.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 288px of 288px
+header with-notice sq 375: height 176.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 343px of 343px
+header with-notice sq 390: height 157.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 358px of 358px
+header with-notice sq 480: height 157.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 448px of 448px
+header with-notice sq 560: height 157.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 528px of 528px
+header with-notice sq 639: height 157.6px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 607px of 607px
+header with-notice sq 640: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 592px of 592px
+header with-notice sq 641: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 593px of 593px
+header with-notice sq 680: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 632px of 632px
+header with-notice sq 768: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 720px of 720px
+header with-notice sq 810: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 762px of 762px
+header with-notice sq 960: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 912px of 912px
+header with-notice sq 1024: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 960px of 960px
+header with-notice sq 1200: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 1136px of 1136px
+header with-notice sq 1440: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 1376px of 1376px
+header with-notice sq 1920: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 1856px of 1856px
+header with-notice sq 2560: height 115px, margin below 24px
+  text cut: ["Ky përdorues është fshirë ose nuk ekzist"]
+  notice: gap 16px against the rhythm 16px; width 2496px of 2496px
+header with-notice en 320: height 176.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 288px of 288px
+header with-notice en 375: height 176.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 343px of 343px
+header with-notice en 390: height 176.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 358px of 358px
+header with-notice en 480: height 157.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 448px of 448px
+header with-notice en 560: height 157.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 528px of 528px
+header with-notice en 639: height 157.6px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 607px of 607px
+header with-notice en 640: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 592px of 592px
+header with-notice en 641: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 593px of 593px
+header with-notice en 680: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 632px of 632px
+header with-notice en 768: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 720px of 720px
+header with-notice en 810: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 762px of 762px
+header with-notice en 960: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 912px of 912px
+header with-notice en 1024: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 960px of 960px
+header with-notice en 1200: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 1136px of 1136px
+header with-notice en 1440: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 1376px of 1376px
+header with-notice en 1920: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 1856px of 1856px
+header with-notice en 2560: height 115px, margin below 24px
+  text cut: ["This user has been deleted or does not e"]
+  notice: gap 16px against the rhythm 16px; width 2496px of 2496px
+header with-notice uk 320: height 176.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 288px of 288px
+header with-notice uk 375: height 176.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 343px of 343px
+header with-notice uk 390: height 176.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 358px of 358px
+header with-notice uk 480: height 157.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 448px of 448px
+header with-notice uk 560: height 157.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 528px of 528px
+header with-notice uk 639: height 157.6px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 607px of 607px
+header with-notice uk 640: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 592px of 592px
+header with-notice uk 641: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 593px of 593px
+header with-notice uk 680: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 632px of 632px
+header with-notice uk 768: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 720px of 720px
+header with-notice uk 810: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 762px of 762px
+header with-notice uk 960: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 912px of 912px
+header with-notice uk 1024: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 960px of 960px
+header with-notice uk 1200: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 1136px of 1136px
+header with-notice uk 1440: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 1376px of 1376px
+header with-notice uk 1920: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 1856px of 1856px
+header with-notice uk 2560: height 115px, margin below 24px
+  text cut: ["Цього користувача видалено або його не і"]
+  notice: gap 16px against the rhythm 16px; width 2496px of 2496px
+header with-notice it 320: height 176.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 288px of 288px
+header with-notice it 375: height 176.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 343px of 343px
+header with-notice it 390: height 176.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 358px of 358px
+header with-notice it 480: height 157.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 448px of 448px
+header with-notice it 560: height 157.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 528px of 528px
+header with-notice it 639: height 157.6px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 607px of 607px
+header with-notice it 640: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 592px of 592px
+header with-notice it 641: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 593px of 593px
+header with-notice it 680: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 632px of 632px
+header with-notice it 768: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 720px of 720px
+header with-notice it 810: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 762px of 762px
+header with-notice it 960: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 912px of 912px
+header with-notice it 1024: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 960px of 960px
+header with-notice it 1200: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 1136px of 1136px
+header with-notice it 1440: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 1376px of 1376px
+header with-notice it 1920: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 1856px of 1856px
+header with-notice it 2560: height 115px, margin below 24px
+  text cut: ["Questo utente è stato eliminato o non es"]
+  notice: gap 16px against the rhythm 16px; width 2496px of 2496px
+cells 204; missing 0; page overflow: 0; text cut: 68; rhythm off: 0; notice narrower than the header: 0; no notice: 0; header changed: 0
+
+EXIT_CODE=1

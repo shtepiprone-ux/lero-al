@@ -1,0 +1,13 @@
+scripts/__tests__/check-ledger-claim-projection.test.ts
+src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx
+src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx
+src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx
+src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx
+src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx
+src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+src/components/shared/__tests__/heroSearch.smoke.test.tsx
+src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx
+src/lib/__tests__/date-format-ssr-parity.smoke.test.ts
+src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx

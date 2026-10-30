@@ -3,11 +3,11 @@
 This contract is the rendered half of `mobile-adaptation-contract.md` and GR-3j for every Story whose component can
 open an overlay. It is project-wide: no task may replace it with its own probe.
 
-**Owner decision, 2026-10-10 (verbatim):** *"R94 буде достатнім лише якщо він робить це загальним контрактом, а не
-латкою Task 859: реєстр interaction states, що відкривають portal/overlay; відкриття кожного стану в Storybook;
-окремий target для app root і кожного portal-root; вимірювання тексту, viewport/component overflow, дій, focus і
-dismiss; evidence Story × state × portal root × locale × viewport; planted violation: overflow або обрізання лише
-всередині portal має падати, навіть коли page root зелений."*
+**Owner decision, 2026-10-10 (translated from Ukrainian):** *"R94 is enough only if it makes this a general contract, not a Task 859 patch: a
+register of the interaction states that open a portal/overlay; each state opened in Storybook; a separate target
+for the app root and for each portal root; measurement of text, viewport/component overflow, actions, focus and
+dismiss; evidence Story × state × portal root × locale × viewport; a planted violation: an overflow
+or clipping only inside a portal must fail, even when the page root is green."*
 
 **Why.** A Mantine `Modal`, `Drawer`, bottom sheet, `Popover`, `Menu`, `Combobox` / `Select` dropdown and `Tooltip`
 render through `Portal`, a `<div data-portal="true">` under `<body>`, outside `#storybook-root`. A census of the app
@@ -56,7 +56,12 @@ a picker name one letter per line — none of them seen by two censuses that rea
 
 ## Until the gate exists
 
-Task 923 builds the registry and the gate. Until 923 is approved, a visible task whose surface opens an overlay
+Task 923 builds the registry and the gate. Its first review uses the candidate registry/gate on the final built
+Storybook, the coverage and planted controls in this contract, and its saved AC/QA requirements. Its approval is
+the outcome of that verification, never a prerequisite for running it. Overlay changes within 923 still owe their
+applicable rendered/security/owner-QA proof. This bootstrap ordering supplies no proof waiver or approval by itself.
+
+Until 923 is approved, a consuming visible task whose surface opens an overlay
 cannot be `APPROVED`: the review verdict is `BLOCKED — RENDERED STATE CENSUS (923)`. After that, such a task is
 approved only when the gate is green on the registry rows of every Story it changes or renders (`--stories`), and the
 CI step over the whole registry turns blocking the day its full run is green; every violation of the first full run

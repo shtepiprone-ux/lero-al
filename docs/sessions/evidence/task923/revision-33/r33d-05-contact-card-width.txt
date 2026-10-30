@@ -1,0 +1,13 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-05-contact-card-width.mjs <root> uk/listings/11-mr7ucly4
+viewport 320: card content box 246px; fits 300px flexible: false
+viewport 360: card content box 286px; fits 300px flexible: false
+viewport 390: card content box 316px; fits 300px flexible: true
+viewport 414: card content box 340px; fits 300px flexible: true
+viewport 639: card content box 565px; fits 300px flexible: true
+viewport 640: card content box 550px; fits 300px flexible: true
+viewport 768: card content box 678px; fits 300px flexible: true
+viewport 1023: card content box 933px; fits 300px flexible: true
+viewport 1024: card content box 358px; fits 300px flexible: true
+viewport 1280: card content box 363px; fits 300px flexible: true
+viewport 1440: card content box 395px; fits 300px flexible: true
+EXIT_CODE=0

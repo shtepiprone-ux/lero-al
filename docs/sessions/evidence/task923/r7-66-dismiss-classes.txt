@@ -1,0 +1,25 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-66-dismiss-classes.mjs docs/sessions/evidence/task923/r7-full-b/rows.jsonl docs/sessions/evidence/task923/r7-full-a/rows.jsonl docs/sessions/evidence/task923/r6-full/rows.jsonl
+== docs/sessions/evidence/task923/r7-full-b/rows.jsonl
+476 details in 7 Stories :: dismiss-outside :: dismiss-outside: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+467 details in 5 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+48 details in 2 Stories :: dismiss-close-control :: dismiss-close-control: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+1 details in 1 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on section.m_fdNabNaa)
+rows with a "still visible" detail: 0
+== docs/sessions/evidence/task923/r7-full-a/rows.jsonl
+476 details in 7 Stories :: dismiss-outside :: dismiss-outside: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+466 details in 5 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+48 details in 2 Stories :: dismiss-close-control :: dismiss-close-control: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+1 details in 1 Stories :: dismiss-escape :: dismiss-escape: the portal is still visible Nms after the dismissal
+1 details in 1 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on section.m_fdNabNaa)
+1 details in 1 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on button.mantine-focus-auto)
+rows with a "still visible" detail: 1
+== docs/sessions/evidence/task923/r6-full/rows.jsonl
+476 details in 7 Stories :: dismiss-outside :: dismiss-outside: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+466 details in 5 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+48 details in 2 Stories :: dismiss-close-control :: dismiss-close-control: focus did not return to "<sel>" (it is on body.sb-main-fullscreen)
+6 details in 6 Stories :: dismiss-outside :: dismiss-outside: the portal is still visible Nms after the dismissal
+2 details in 1 Stories :: dismiss-escape :: dismiss-escape: focus did not return to "<sel>" (it is on button.mantine-focus-auto)
+1 details in 1 Stories :: dismiss-escape :: dismiss-escape: the portal is still visible Nms after the dismissal
+rows with a "still visible" detail: 7
+EXIT_CODE=0

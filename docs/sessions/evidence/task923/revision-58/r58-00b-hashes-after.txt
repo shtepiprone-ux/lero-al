@@ -1,0 +1,23 @@
+Task 923 Revision 58 (R175-R176), kickoff section 85, AC158
+File: r58-00b - sha256 of every path written, after the last edit. Written last.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Taken: 2026-10-29T19:20:09+0100
+Command: sha256sum <path> (Git Bash), one call over the paths below
+Exit code: 0
+
+996bd08b36824d4144cfa45bd3c947f8c03cde666d20d43eb65b68b0b1919ece  src/modules/admin/lib/userLocation.ts
+b7907c0784a1246948f8b0af839b8759d4e3805d0b8fb2e70b6d61044fd8a91b  src/modules/admin/lib/__tests__/userLocation.test.ts
+68bc9fda791f64e0ce94eac958d71a4433c9a8ff03ea079d05b3333fe7055fd9  src/app/admin/users/[id]/page.tsx
+a718dd0a788a616c5f620dddf1fb630ad4c6745fd021cc20eb8b3a1dc8bdde60  src/app/admin/users/__tests__/adminUserGone.security.test.ts
+b26d77ff7b50cfb0867dab3eda5c729fa69568e3b9b28a14ec44f3eeb6761827  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+8b5f94b0338da40e0ba63d7970e1473e702176bdb3249fc9b0d9b8a1706b3799  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+f3763d24a526b75096121e3ebf38d41872cb47af5a364d50ec38d915be3299a8  docs/sessions/evidence/task923/security/d8-d9-report.json
+7ffa87a683539ce2161bcf907f842d50082ae6e8b845c4b6ad96a0935999ad5f  docs/sessions/2026-10-10-task923-rendered-state-census.md
+e9f23f333dc3c9a134dfb1047682cbb6a145982223e9f3017498133b6a25238f  docs/sessions/evidence/task923/revision-58/r58-00-hashes-before.txt
+6d178dc148da7362df38d5b816df904a168cb15ce29b05195e1a5e474cf5cb32  docs/sessions/evidence/task923/revision-58/r58-01-userlocation-tests.txt
+c0be1fcf938d1d1db57350e2e617dbf5e6f8d11c572b8d81bd6442c7059629af  docs/sessions/evidence/task923/revision-58/r58-02-report-and-verify.txt
+ff9145f4fd37bdcb1867586196f8d026060fc0c09a842f3fa1ce90b39e055396  docs/sessions/evidence/task923/revision-58/r58-03-final-candidate.txt
+06eb8c40e066d548111a954fcccaa90cd22e120e48284181e582f5cdf4517352  docs/sessions/evidence/task923/revision-58/r58-03a-unit-full.json
+12722213dc57bd604df722a5b3b53a42cc90eb22feaa9057e462cb89fdd97b0a  docs/sessions/evidence/task923/revision-58/r58-03b-unit-compare.mjs
+(r58-00b-hashes-after.txt itself: not hashed, a hash inside a file cannot name the file.)

@@ -1,0 +1,42 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-20T12:49:13.332Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-rolepermissions-capture.cjs --i-confirm-dev-database   (read-only capture of role_permissions (R75 (c)))
+## columns of public.role_permissions
+{"num":1,"col":"role","type":"text","not_null":true,"default":null}
+{"num":2,"col":"permission_key","type":"text","not_null":true,"default":null}
+{"num":3,"col":"allowed","type":"boolean","not_null":true,"default":"false"}
+{"num":4,"col":"updated_at","type":"timestamp with time zone","not_null":true,"default":"now()"}
+{"num":5,"col":"updated_by_user_id","type":"uuid","not_null":false,"default":null}
+## constraints
+{"conname":"role_permissions_pkey","contype":"p","def":"PRIMARY KEY (role, permission_key)"}
+{"conname":"role_permissions_role_check","contype":"c","def":"CHECK ((role = 'moderator'::text))"}
+{"conname":"role_permissions_updated_by_user_id_fkey","contype":"f","def":"FOREIGN KEY (updated_by_user_id) REFERENCES users(id) ON DELETE SET NULL"}
+## triggers
+(none)
+## rows today (role, key, allowed)
+{"role":"moderator","permission_key":"audit.clear_history","allowed":false}
+{"role":"moderator","permission_key":"legal.manage","allowed":false}
+{"role":"moderator","permission_key":"listings.delete","allowed":true}
+{"role":"moderator","permission_key":"listings.set_premium","allowed":true}
+{"role":"moderator","permission_key":"locations.manage","allowed":true}
+{"role":"moderator","permission_key":"reports.delete","allowed":true}
+{"role":"moderator","permission_key":"reports.manage","allowed":true}
+{"role":"moderator","permission_key":"settings.manage","allowed":false}
+{"role":"moderator","permission_key":"users.change_role","allowed":false}
+{"role":"moderator","permission_key":"users.create","allowed":true}
+{"role":"moderator","permission_key":"users.hard_delete","allowed":false}
+{"role":"moderator","permission_key":"users.soft_delete","allowed":true}
+## policies
+{"name":"role_permissions_admin_insert","cmd":"INSERT","roles":"{public}","qual":null,"with_check":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"}
+{"name":"role_permissions_admin_select","cmd":"SELECT","roles":"{public}","qual":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))","with_check":null}
+{"name":"role_permissions_admin_update","cmd":"UPDATE","roles":"{public}","qual":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))","with_check":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"}
+{"name":"role_permissions_moderator_read","cmd":"SELECT","roles":"{public}","qual":"(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'moderator'::user_role))))","with_check":null}
+## role_permission_events columns
+{"col":"id","type":"uuid"}
+{"col":"role","type":"text"}
+{"col":"permission_key","type":"text"}
+{"col":"old_allowed","type":"boolean"}
+{"col":"new_allowed","type":"boolean"}
+{"col":"actor_user_id","type":"uuid"}
+{"col":"created_at","type":"timestamp with time zone"}
+{"col":"note","type":"text"}
+EXIT_CODE=0

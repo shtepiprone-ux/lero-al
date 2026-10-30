@@ -1,0 +1,17 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/modules/listings/actions/__tests__/contactGateway.security.test.ts src/lib/captcha/__tests__/verifyTurnstile.test.ts src/modules/auth/actions/__tests__/captcha.security.test.ts
+started: 2026-10-23T13:27:56.753Z
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  3 passed (3)
+      Tests  123 passed (123)
+   Start at  15:27:58
+   Duration  444ms (transform 339ms, setup 348ms, import 332ms, tests 59ms, environment 0ms)
+
+
+
+exit code: 0

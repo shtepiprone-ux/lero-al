@@ -1,0 +1,7 @@
+Opus review 24, 2026-10-21, platform win32 10.0.26300.0 node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+cmd node docs/sessions/evidence/task923/db-catalog/r16-syntax.cjs   (plpgsql-parser 18.5.10 and pg 8.21.0 installed by Opus in its own session scratchpad, reached through NODE_PATH; nothing installed in the repository)
+proposed-hardening.sql: 60 statements, 12 plpgsql bodies parsed OK
+proposed-hardening-rollback.sql: 38 statements, 7 plpgsql bodies parsed OK
+proposed-account-deletion.sql: 83 statements, 3 plpgsql bodies parsed OK
+proposed-account-deletion-rollback.sql: 59 statements, 2 plpgsql bodies parsed OK
+EXIT_CODE=0

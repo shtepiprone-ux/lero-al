@@ -7,6 +7,7 @@
  * Locale strings are inline (sq/en/uk/it) — same pattern as emailChange.ts.
  */
 import { BRAND_PRIMARY } from '@/design-system/brand'
+import { escapeHtml, escapeHtmlWithBreaks } from '@/lib/security/escapeHtml'
 import { sendEmail } from './send'
 
 const STRINGS: Record<string, {
@@ -75,11 +76,7 @@ function buildHtml(opts: {
 }): string {
   const s = getStrings(opts.locale)
   const year = new Date().getFullYear()
-  const safeMessage = opts.message
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br />')
+  const safeMessage = escapeHtmlWithBreaks(opts.message)
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -99,15 +96,15 @@ function buildHtml(opts: {
           <table style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
             <tr>
               <td style="font-size:12px;color:#71717a;padding:4px 0;width:30%;">${s.nameLabel}:</td>
-              <td style="font-size:14px;color:#18181b;font-weight:500;">${opts.name}</td>
+              <td style="font-size:14px;color:#18181b;font-weight:500;">${escapeHtml(opts.name)}</td>
             </tr>
             <tr>
               <td style="font-size:12px;color:#71717a;padding:4px 0;">${s.emailLabel}:</td>
-              <td style="font-size:14px;color:#18181b;font-weight:500;">${opts.email}</td>
+              <td style="font-size:14px;color:#18181b;font-weight:500;">${escapeHtml(opts.email)}</td>
             </tr>
             <tr>
               <td style="font-size:12px;color:#71717a;padding:4px 0;">${s.topicLabel}:</td>
-              <td style="font-size:14px;color:#18181b;">${opts.displaySubject}</td>
+              <td style="font-size:14px;color:#18181b;">${escapeHtml(opts.displaySubject)}</td>
             </tr>
           </table>
           <div style="margin-bottom:16px;">
@@ -213,11 +210,7 @@ function buildReplyHtml(opts: {
 }): string {
   const s = getReplyStrings(opts.locale)
   const year = new Date().getFullYear()
-  const safeBody = opts.replyBody
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br />')
+  const safeBody = escapeHtmlWithBreaks(opts.replyBody)
 
   return `<!DOCTYPE html>
 <html lang="en">

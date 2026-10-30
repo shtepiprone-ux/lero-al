@@ -1,0 +1,10 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx eslint . --quiet
+started: 2026-10-25T09:50:50.607Z
+--- stdout ---
+
+--- stderr ---
+
+exit code: 0

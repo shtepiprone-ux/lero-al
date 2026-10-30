@@ -75,6 +75,13 @@ export const Default: Story = {
       </MantineStoryShell>
     )
   },
+}
+
+// Task 923 (R33, owner D6): the admin menu open on mount is its own state. `Default` keeps all three fixtures closed, so each
+// trigger's click state is measured on its own by the rendered state census (an open menu left by `play` closed on the next
+// click and returned the focus to its own trigger, away from the one just clicked).
+export const AdminMenuOpen: Story = {
+  render: Default.render,
   play: async ({ canvasElement }) => {
     if (window.innerWidth < 640) return
     const canvas = within(canvasElement)

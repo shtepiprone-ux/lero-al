@@ -27,6 +27,19 @@
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; /* --tw-gradient-from/via/to removed (Task 762 Revision 1, R5/E-1): never declared anywhere in this repo (grep-confirmed), so they never actually watch a real transition */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* literal — reproduces Tailwind's compiled transition-timing-function theme default (tailwindcss@4.3.0); --ease-standard is declared inside @theme inline (globals.css:35); an @theme inline name is emitted only inside Tailwind's own compiler-generated theme layer, and only when the compiled output actually references it — nothing does for --ease-standard (verified: no match in .next/static/css/*.css), so it cannot be referenced here (Task 762; causal claim corrected, Task 762 Revision 1 R7) */
   transition-duration: 150ms; /* design-tokens-allow: transition-duration: 150ms — reproduces Tailwind's compiled transition-duration theme default (tailwindcss@4.3.0, .15s); no --duration-* token equals 150ms (fast=100ms, base=200ms, slow=300ms; globals.css:267-269) */
+  /* Task 923 (R33, owner D6): below the mobile gate (640px, `theme.other.mobileGate`) the control reaches the 44px
+     touch-target floor (WCAG 2.5.8; the census `target-small` rule); from 640px up it keeps its text size. */
+  min-width: var(--homepage-runtime-space-11);
+  min-height: var(--homepage-runtime-space-11);
+  justify-content: center;
+}
+
+@media (min-width: 40em) {
+  .copyId[data-copy-id] {
+    min-width: 0;
+    min-height: 0;
+    justify-content: flex-start;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

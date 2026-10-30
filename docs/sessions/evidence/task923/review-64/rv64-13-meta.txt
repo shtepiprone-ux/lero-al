@@ -1,0 +1,6 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al; env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> NEXT_PUBLIC_SUPABASE_URL=<not printed>
+command: npx vitest run --config vitest.integration.config.ts --reporter=json --outputFile=docs/sessions/evidence/task923/review-64/rv64-13-integration.json
+exit 0
+total 96 passed 96 failed 0
+passed [SEC-DB-S62-DENY] Only the server records a listing view
+passed [SEC-DB-S62-ALLOW] Only the server records a listing view

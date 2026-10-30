@@ -1,0 +1,20 @@
+# a4-00: sha256 before the first edit of Task 927 Amendment 4 (kickoff task hash 8b31fb5da7defe9eb4403bd4106d83de7e0bbb5fc73720df4c64072a1c881dc0, not edited)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a4/a4-00-hashes.mjs docs/sessions/evidence/task927/a4/a4-00-before-hashes.txt "<label>"
+date: 2026-10-23T20:02:10.920Z
+
+6e83fb616a3ec51d703d74931dc63e73e45bf33b4a065301469c8f39f2928097  src/components/auth/GoogleSignInSlot.tsx
+3477931c8d221a6561880b62f121fffabe656e005018241bf2c7474978e5525a  src/components/auth/GoogleSignInButton.tsx
+9133795e191aa4c7efe3556c30029de511facc01feba080d475823703af2e956  src/stories/mantine/primitives/Modal.stories.tsx
+e6704201985cef3732ab03ed308d8ea9f55deedd879aebf61c12275b268468a5  scripts/rendered-interaction-states.json
+fefd66862ec5866a31dc2ff18a6c1984590fe91691fad40c3e1716beb83ab66a  messages/sq.json
+e96fe5accd444a1a26f38d4f94a9efb9e5912e635d7d2a2276b9bf7097907e30  messages/en.json
+c6728e1787f35f95d84e3d6c9072f7fb7083f59d742b24512fbc5f7289204d5a  messages/uk.json
+1e3ec049e6e1b27825efc419b5fe601a99cc57c37a36d27e7af4b9011633a422  messages/it.json
+f392ef2d3fd29cde607866335eb79286c3b119801d185e190c355575b818d1ff  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+a17a86706a69cb75dea6c901942f035df2c177963371a8206fe7d446ae8b4967  docs/sessions/2026-10-10-task923-rendered-state-census.md
+12f30d276563be8e39ba835bcc82b5a652bf716c69a06638f3870627c0c3acf4  docs/sessions/evidence/task927/security/report.json
+
+exit code: 0

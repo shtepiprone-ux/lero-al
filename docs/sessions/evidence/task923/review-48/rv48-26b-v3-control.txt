@@ -1,0 +1,8 @@
+proposed-account-deletion.sql sha256 de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a; proposed-account-deletion-rollback.sql sha256 13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982
+apply preflight: 6729 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ERROR preflight failed: the table-level ACL of public.site_footer is not the audited one (read_only=on)
+apply preflight with CRLF: ERROR preflight failed: the table-level ACL of public.site_footer is not the audited one (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 2

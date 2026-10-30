@@ -1,0 +1,21 @@
+command: node docs/sessions/evidence/task923/r7-61-narrowed-compare.mjs docs/sessions/evidence/task923/r7-62-iso1-1 docs/sessions/evidence/task923/r7-62-iso1-2 docs/sessions/evidence/task923/r7-62-iso1-3
+platform win32 node v22.22.3
+runs docs/sessions/evidence/task923/r7-62-iso1-1 ; docs/sessions/evidence/task923/r7-62-iso1-2 ; docs/sessions/evidence/task923/r7-62-iso1-3; rows 13 / 13 / 13
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-the-activity-series | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-the-activity-series | portal:0 | uk | 00320 :: green || green || green
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | portal:0 | uk | 00320 :: green || green || green
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | portal:0 | uk | 00320 :: text-clamp || text-clamp || text-clamp
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akmodern-apartment-in-tirana-c | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akmodern-apartment-in-tirana-c | portal:0 | uk | 00320 :: text-clamp || text-clamp || text-clamp
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~bhmodern-apartment-in-tirana-c | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~bhmodern-apartment-in-tirana-c | portal:0 | uk | 00320 :: text-clamp+text-hidden || text-clamp+text-hidden || text-clamp+text-hidden
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~en-english | app | uk | 00320 :: green || green || green
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~open-menu | app | uk | 00320 :: text-clamp+text-ellipsis || text-clamp+text-ellipsis || text-clamp+text-ellipsis
+same patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~open-menu | portal:0 | uk | 00320 :: target-small+text-ellipsis || target-small+text-ellipsis || target-small+text-ellipsis
+
+rows 13; rows with a difference 0
+differences allowed by AC32 (focus-open on adminshell--drawer-open): 0
+differences NOT allowed (AC32: isolate three times, sample, record, report PARTIALLY IMPLEMENTED): 0
+EXIT_CODE=0

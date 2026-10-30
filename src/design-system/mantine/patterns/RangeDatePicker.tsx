@@ -20,6 +20,7 @@ import {
   useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { belowMobileGateQuery } from '../belowMobileGate'
 import {
   addMonths,
   eachDayOfInterval,
@@ -408,6 +409,10 @@ function DesktopBody({
   const rdp = theme.other.rangeDatePicker
   const rightMonth = addMonths(anchorMonth, 1)
   const columnWidth = rdp.dayCell * 7
+  // Two months side by side only where the viewport holds them (`grid-media-reflow`: reduce the tracks); otherwise one month
+  // with both arrows (Task 923 R33). The initial value is read at once, the dropdown opens on the client.
+  const tooNarrowForTwoMonths = useMediaQuery(`(max-width: ${rdp.twoMonthsMinWidth - 0.1}px)`, false, { getInitialValueInEffect: false }) ?? false
+  const twoMonths = !tooNarrowForTwoMonths
 
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
 
@@ -424,7 +429,8 @@ function DesktopBody({
   // Prev/Next disable when shifting the pair would push it entirely out of bounds (no
   // wrap-around, no empty month) — Negative flow.
   const canPrev = !minDate || !(isSameMonth(anchorMonth, minDate) || isBefore(anchorMonth, minDate))
-  const canNext = !maxDate || !(isSameMonth(rightMonth, maxDate) || isAfter(rightMonth, maxDate))
+  const lastShownMonth = twoMonths ? rightMonth : anchorMonth
+  const canNext = !maxDate || !(isSameMonth(lastShownMonth, maxDate) || isAfter(lastShownMonth, maxDate))
 
   // Task 561 D1: single-day summary collapses to one date instead of "X — X".
   const rangeSummary = staged.from
@@ -432,6 +438,17 @@ function DesktopBody({
       ? `${format(staged.from, 'dd.MM.yyyy')} — ${format(staged.to, 'dd.MM.yyyy')}`
       : format(staged.from, 'dd.MM.yyyy')
     : ''
+
+  const nextArrow = (
+    <ActionIcon
+      variant="default"
+      aria-label={t('aria_next')}
+      disabled={!canNext}
+      onClick={() => setLeftMonth(addMonths(anchorMonth, 1))}
+    >
+      <ChevronRight size={theme.other.iconSize.standard} />
+    </ActionIcon>
+  )
 
   return (
     <Stack gap="md">
@@ -479,7 +496,11 @@ function DesktopBody({
           offset from a matching invisible spacer — so the CONTENT columns (selectors/label above,
           day grids below) still align exactly, and the visible arrows sit at the true outer edges
           of the whole two-month panel. */}
-      <Group align="center" gap="xl" wrap="nowrap">
+      {/* Task 923 (R33, owner D6): each month is one block - its header over its grid - and the blocks wrap, so where the
+          viewport cannot hold two months side by side (a 640px viewport needs ~690px) the second month stacks below the first
+          (`grid-media-reflow`: reduce the tracks, never push the Next arrow out of the window). Side by side the look is unchanged. */}
+      <Group align="flex-start" gap="xl" wrap="wrap">
+        <Stack gap="md">
         <Group gap="xs" align="center" wrap="nowrap">
           <ActionIcon
             variant="default"
@@ -539,26 +560,8 @@ function DesktopBody({
               />
             </Group>
           </Center>
+          {!twoMonths && nextArrow}
         </Group>
-
-        <Group gap="xs" align="center" wrap="nowrap">
-          <Center w={columnWidth}>
-            <Text c="gray.5" fw={600} size="sm" truncate="end">
-              {formatMonthYearLabel(rightMonth, cal)}
-            </Text>
-          </Center>
-          <ActionIcon
-            variant="default"
-            aria-label={t('aria_next')}
-            disabled={!canNext}
-            onClick={() => setLeftMonth(addMonths(anchorMonth, 1))}
-          >
-            <ChevronRight size={theme.other.iconSize.standard} />
-          </ActionIcon>
-        </Group>
-      </Group>
-
-      <Group align="flex-start" gap="xl" wrap="wrap">
         <Group gap="xs" wrap="nowrap">
           {/* Invisible spacer — same control/size as the real Prev arrow above, so this grid's
               own leading offset matches the header's, keeping the two rows aligned. */}
@@ -573,6 +576,23 @@ function DesktopBody({
             cal={cal}
             onSelect={(d) => setStaged(pickStaged(selectionMode, staged, d))}
           />
+          {!twoMonths && (
+            <ActionIcon variant="default" disabled aria-hidden="true" tabIndex={-1} opacity={0}>
+              <ChevronRight size={theme.other.iconSize.standard} />
+            </ActionIcon>
+          )}
+        </Group>
+        </Stack>
+
+        {twoMonths && (
+        <Stack gap="md">
+        <Group gap="xs" align="center" wrap="nowrap">
+          <Center w={columnWidth}>
+            <Text c="gray.5" fw={600} size="sm">
+              {formatMonthYearLabel(rightMonth, cal)}
+            </Text>
+          </Center>
+          {nextArrow}
         </Group>
         <Group gap="xs" wrap="nowrap">
           <MonthGrid
@@ -588,6 +608,8 @@ function DesktopBody({
             <ChevronRight size={theme.other.iconSize.standard} />
           </ActionIcon>
         </Group>
+        </Stack>
+        )}
       </Group>
     </Stack>
   )
@@ -919,7 +941,8 @@ export function RangeDatePicker({
 }: RangeDatePickerProps) {
   const t = useTranslations('common')
   const theme = useMantineTheme()
-  const isMobile = useMediaQuery('(max-width: 40em)') ?? false
+  // Compact only BELOW the 640px gate (mobile-adaptation-contract), never the inclusive `max-width: 40em` that still matches at 640px
+  const isMobile = useMediaQuery(belowMobileGateQuery(theme)) ?? false
 
   const effectiveMinDate = useMemo(
     () => computeEffectiveMinDate(minDate, disablePastDates),
@@ -956,12 +979,16 @@ export function RangeDatePicker({
       w="100%"
       radius="lg"
       leftSection={<CalendarDays size={theme.other.iconSize.standard} color="var(--mantine-color-gray-5)" />}
+      rightSectionWidth={theme.other.touchTarget}
+      styles={{ section: { insetBlock: `calc(-1 * ${theme.other.borderWidth.hairline})` } }}
       rightSection={
         hasValue ? (
           <ActionIcon
             variant="subtle"
             color="gray"
             size="sm"
+            miw={theme.other.touchTarget}
+            mih={theme.other.touchTarget}
             aria-label={t('aria_clear')}
             tabIndex={-1}
             onClick={clearValue}

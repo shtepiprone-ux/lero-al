@@ -51,7 +51,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 |---|---|---|
 | **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | `KICKOFF FILED` 2026-09-30 → [`…Task_905…`](Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) |
 | **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | reserved (`docs/backlog-reserved.md`) |
-| **907** | `ListingFormShellView`, `ListingFormShell`, `AdminEditLayout`, `StatusChangeControl` and `StatusChangeHistory` on canonical Mantine; legacy site L7 removed; the composition Story replaces the legacy `Listings/ListingFormShellView`. | reserved (`docs/backlog-reserved.md`) |
+| **907** | `ListingFormShellView`, `ListingFormShell`, `AdminEditLayout` and `StatusChangeHistory` on canonical Mantine; legacy site L7 removed; the composition Story replaces the legacy `Listings/ListingFormShellView`. The `StatusChangeControl` → `StatusChangeSelect` switch moved to Task 923 §17 R35 (owner D20, 2026-10-17). | reserved (`docs/backlog-reserved.md`) |
 
 ## Execution order and gating
 
@@ -72,3 +72,9 @@ The Tasks table is the **single state source**. The execution-order note below i
    render is enrolled in `scripts/mantine-migration-scope.json` with its own canonical Story.
 2. `scripts/type-responsive-baseline.json` holds no listing-form row, and `steps/` no longer exists.
 3. The create and edit critical flows keep their automated regression evidence green.
+
+## Security test contract
+
+This sprint plan is a state and ordering record; it authorizes no product change. Each task's own kickoff and its adjacent
+`*.security.json` carry the frontend, server and real-boundary security cases of that task (`.claude/rules/shared/security-testing.md`).
+The plan's own contract (`Sprint_86_Listing_Form_On_Canonical_Mantine.security.json`) is Q0: runtime rows not applicable.

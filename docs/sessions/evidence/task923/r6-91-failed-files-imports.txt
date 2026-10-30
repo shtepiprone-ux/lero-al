@@ -1,0 +1,19 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: grep -rlE 'rendered-state-census|check-mojibake' <the failing test files and their imports (one level)>
+scripts/__tests__/check-ledger-claim-projection.test.ts imports=3 direct-hits=0
+src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx imports=11 direct-hits=0
+src/components/admin/__tests__/AdminExchangeProvidersManager.smoke.test.tsx imports=11 direct-hits=0
+src/components/admin/__tests__/AdminPagesManager.smoke.test.tsx imports=13 direct-hits=0
+src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx imports=13 direct-hits=0
+src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx imports=15 direct-hits=0
+src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx imports=16 direct-hits=0
+src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx imports=17 direct-hits=0
+src/components/shared/__tests__/heroSearch.smoke.test.tsx imports=17 direct-hits=0
+src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx imports=10 direct-hits=0
+src/lib/__tests__/date-format-ssr-parity.smoke.test.ts imports=4 direct-hits=0
+src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts imports=10 direct-hits=0
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx imports=10 direct-hits=0
+repo-wide src/ importers of the census/mojibake scripts:
+scripts/__tests__/rendered-state-census.test.ts
+EXIT_CODE=0

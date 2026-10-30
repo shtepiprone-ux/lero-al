@@ -1,0 +1,49 @@
+Task 923 Revision 59, R177 (e), kickoff section 86, AC159
+File: r59-02 - the planted break P7: the broken line, the failing run, the restored line, the equal sha256, the passing run.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3 | vitest v4.1.6
+cwd: C:\Claude_Code_Projects\lero-al
+Command (each run): npx vitest run src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx --reporter=verbose
+
+== 1. Container after R177 (a) (from r59-01) ==
+sha256: d144bcbcb8bbeb53c8b4ccb9fb3c7ed22c5ee73b82aa22dc9f583ea628a446a3  src/components/admin/AdminUserProfile.tsx
+
+== 2. The break: one Edit, line 98 set back to `  locationId: { shouldValidate: true },` ==
+98:   locationId: { shouldValidate: true },
+broken sha256: c7a0f85d7bc128311e1266ef6bf7dd5a457b741dbd71ceb0a8e62a0aa1a9f212
+
+== 3. Run with the break (exit code 1; copied with the editor; the act(...) warnings of stderr are omitted) ==
+ Test Files  1 failed (1)
+      Tests  2 failed | 13 passed (15)
+ × ... > T12 — a city-only change enables Save and sends the new city (Task 923 R177) 603ms
+   → expect(element).not.toBeDisabled()
+ × ... > T12b — choosing the stored city again makes the form clean, so Save is disabled 642ms
+   → expect(element).not.toBeDisabled()
+
+ FAIL  ... > T12 — a city-only change enables Save and sends the new city (Task 923 R177)
+ Error: expect(element).not.toBeDisabled()
+ Received element is disabled:  <button class="mantine-focus-auto m_77c9d27d mantine-Button-root ..." data-disabled="true" disabled="" justify="flex-start" type="button" />
+ ❯ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:403:24
+    401|     fireEvent.click(await screen.findByRole('option', { name: /Vlorë/ …
+    403|     expect(save()).not.toBeDisabled()
+
+ FAIL  ... > T12b — choosing the stored city again makes the form clean, so Save is disabled
+ Error: expect(element).not.toBeDisabled()
+ Received element is disabled:  <button class="mantine-focus-auto m_77c9d27d mantine-Button-root ..." data-disabled="true" disabled="" justify="flex-start" type="button" />
+ ❯ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx:421:24
+    419|     fireEvent.click(within(cityGroup).getByRole('textbox'))
+    421|     expect(save()).not.toBeDisabled()
+
+The other 13 tests (T1, T1 server error, T2, T10, T10b, T3, T4, T5, T6, T7, T8, T9, T11) passed.
+
+== 4. Restore: line 98 set back to R177 (a)'s line with one Edit ==
+98:   locationId: { shouldDirty: true, shouldValidate: true },
+restored sha256: d144bcbcb8bbeb53c8b4ccb9fb3c7ed22c5ee73b82aa22dc9f583ea628a446a3
+equal to the sha256 after (a): True
+
+== 5. Run after the restore (exit code 0; the run's output was filtered through Select-String for the result lines; the full verbose output of the same state is r59-01) ==
+ ✓ ... T1, T1 (server error), T2, T10, T10b, T3, T4, T5, T6, T7, T8, T9, T11
+ ✓ ... T12 — a city-only change enables Save and sends the new city (Task 923 R177) 649ms
+ ✓ ... T12b — choosing the stored city again makes the form clean, so Save is disabled 1047ms
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+exit code: 0

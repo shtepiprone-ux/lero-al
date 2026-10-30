@@ -2,6 +2,7 @@
 
 import { Modal, Drawer, Button, Text, Stack, Group, Box, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { belowMobileGateQuery } from '../belowMobileGate'
 
 export interface MantineDialogDrawerPatternProps {
   triggerLabel: string
@@ -49,7 +50,7 @@ export function MantineDialogDrawerPattern({
   const theme = useMantineTheme()
   const [opened, { open, close }] = useDisclosure(false)
   // SSR caveat: false until hydrated (see component comment above)
-  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
+  const isMobile = useMediaQuery(belowMobileGateQuery(theme))
 
   const handleConfirm = () => {
     onConfirm?.()

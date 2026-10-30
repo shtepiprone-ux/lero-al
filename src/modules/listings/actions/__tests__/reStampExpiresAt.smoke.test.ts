@@ -35,10 +35,11 @@ function makeCapturingDb(
   const eqSelectFn = () => ({ single: singleFn })
   const selectFn = () => ({ eq: eqSelectFn })
 
-  const eqUpdateFn = () => Promise.resolve({ error: null })
+  // the write is a compare-and-set (Task 923 R67 (e)): `.eq('id')`, `.eq('status')`, then `.select('id')` for the rows it changed
   const updateFn = (payload: Record<string, unknown>) => {
     capturedPayloads.push(payload)
-    return { eq: eqUpdateFn }
+    const chain = { eq: () => chain, select: () => Promise.resolve({ data: [{ id: currentListing?.id }], error: null }) }
+    return chain
   }
   const fromFn = () => ({ select: selectFn, update: updateFn })
 
@@ -101,10 +102,17 @@ describe('re-stamp expires_at on transition to publicEligible status (action-bas
 })
 
 describe('re-stamp expires_at on privileged status-based transition', () => {
-  it('owner: expired → active (privileged): INCLUDES fresh expires_at', async () => {
-    const before = Date.now()
+  it('owner: expired → active is refused (owner decision D8, 2026-10-17: only staff publish) and nothing is written', async () => {
     const { db, capturedPayloads } = makeCapturingDb({ id: 'l7', status: 'expired', user_id: 'owner-1' })
     const result = await applyListingTransitionByStatus('l7', 'active', ownerActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+    expect(capturedPayloads).toEqual([])
+  })
+
+  it('admin: expired → active (privileged): INCLUDES fresh expires_at', async () => {
+    const before = Date.now()
+    const { db, capturedPayloads } = makeCapturingDb({ id: 'l7', status: 'expired', user_id: 'owner-1' })
+    const result = await applyListingTransitionByStatus('l7', 'active', adminActor, db)
     const after = Date.now()
     expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l7' })
     expect(capturedPayloads[0]).toHaveProperty('expires_at')

@@ -1,0 +1,10 @@
+# r54-06 manifest rerun after the build
+platform win32; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: npx vitest run --config vitest.integration.config.ts src/__tests__/security/serverActionManifest.integration.test.ts (the first full run read a manifest older than the sources; the build ran after it)
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  08:56:58
+   Duration  295ms (transform 39ms, setup 41ms, import 15ms, tests 8ms, environment 0ms)
+
+exit 0

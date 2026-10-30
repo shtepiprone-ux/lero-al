@@ -14,33 +14,15 @@ import { ImageUpload } from '@/modules/listings/components/ImageUpload'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import { AdminEditLayout } from '@/components/admin/AdminEditLayout'
-import { StatusChangeControl, type StatusOption } from '@/components/admin/StatusChangeControl'
+import { StatusChangeSelect } from '@/components/admin/StatusChangeSelect'
 import { DynamicFieldSection } from './form/DynamicFieldSection'
+import { buildListingStatusOptions } from './listingStatusOptions'
 import { isEditMode } from '@/modules/listings/domain/listingFormMode'
-import {
-  ALLOWED_LISTING_TRANSITIONS,
-  getAllowedTargetStatuses,
-} from '@/modules/listings/domain/listingTransitionEngine'
+import { parsePriceDigits } from '@/modules/listings/domain/priceDigits'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { FormValues } from '@/modules/listings/types/form'
 import type { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 import type { ListingType, PropertyType, ListingStatus } from '@/types/database'
-
-// Badge variants for the listing-status Combobox options. Restricted to the
-// subset StatusOption['badgeVariant'] accepts ('rented' has no own badge
-// variant in StatusOption — mapped to 'info', matching its 'closed market'
-// meaning alongside 'sold').
-const STATUS_BADGE_VARIANT: Record<ListingStatus, StatusOption<ListingStatus>['badgeVariant']> = {
-  pending:  'warning',
-  active:   'success',
-  inactive: 'neutral',
-  sold:     'info',
-  rented:   'info',
-  archived: 'neutral',
-  expired:  'warning',
-}
-
-const ALL_LISTING_STATUSES = Object.keys(ALLOWED_LISTING_TRANSITIONS) as ListingStatus[]
 
 function SectionCard({ children, className, id }: { children: React.ReactNode; className?: string; id?: string }) {
   return (
@@ -61,6 +43,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 export interface ListingFormStatusControlProps {
   currentStatus: ListingStatus
   listingId: string
+  /** Server-computed (`canAdminEditListing`): true only for staff. An owner is never offered `active` (D6, D22). */
+  canPublish: boolean
   onStatusChange: (next: { toStatus: ListingStatus; note: string | null }) => Promise<void>
 }
 
@@ -110,21 +94,14 @@ export function ListingFormShellView({
   const tc = useTranslations('common')
   const tStatus = useTranslations('admin.common.status_control')
 
-  // Owner-or-staff (the only viewers for whom `statusControl` is set, per
-  // edit/page.tsx) gets the full privileged any-status set (Task 427).
-  const allowedTargetStatuses = statusControl
-    ? getAllowedTargetStatuses(statusControl.currentStatus, { privileged: true })
-    : []
-
-  const statusOptions: StatusOption<ListingStatus>[] = statusControl
-    ? ALL_LISTING_STATUSES
-        .filter(s => s === statusControl.currentStatus || allowedTargetStatuses.includes(s))
-        .map(s => ({
-          code: s,
-          label: t(`status_${s}` as 'status_active'),
-          labelKey: 'status_change_label',
-          badgeVariant: STATUS_BADGE_VARIANT[s],
-        }))
+  // Owner-or-staff (the only viewers for whom `statusControl` is set, per edit/page.tsx) get the any-status set
+  // (Task 427); `active` is staff-only (Task 923 R35, D6): `canPublish` decides.
+  const statusOptions = statusControl
+    ? buildListingStatusOptions(
+        statusControl.currentStatus,
+        { canPublish: statusControl.canPublish },
+        s => t(`status_${s}` as 'status_active'),
+      )
     : []
 
   return (
@@ -242,11 +219,12 @@ export function ListingFormShellView({
                       ))}
                     </div>
                     <Input
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
+                      autoComplete="off"
                       value={data.price ?? ''}
-                      onChange={e => patch({ price: e.target.value ? Number(e.target.value) : undefined })}
+                      onChange={e => patch({ price: parsePriceDigits(e.target.value) })}
                       placeholder="0"
-                      min={0}
                       className={cn('h-11 rounded-xl flex-1', errors.price && 'border-destructive')}
                     />
                   </div>
@@ -314,8 +292,7 @@ export function ListingFormShellView({
             {statusControl && (
               <div className="flex flex-col gap-2 pt-3 border-t">
                 <Label className="text-sm font-medium">{tStatus('status_change_label')}</Label>
-                <StatusChangeControl
-                  variant="select"
+                <StatusChangeSelect
                   currentStatus={statusControl.currentStatus}
                   statuses={statusOptions}
                   onSubmit={statusControl.onStatusChange}

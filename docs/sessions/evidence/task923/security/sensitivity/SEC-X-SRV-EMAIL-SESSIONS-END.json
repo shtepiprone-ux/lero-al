@@ -1,0 +1,777 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-20T17:24:41.992Z",
+ "case": "SEC-X-SRV-EMAIL-SESSIONS-END",
+ "results": [
+  {
+   "id": "SEC-X-SRV-EMAIL-SESSIONS-END",
+   "testFile": "src/modules/cabinet/actions/__tests__/emailChange.security.test.ts",
+   "testName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "a completed e-mail change no longer ends the sessions of the account",
+     "from": "await db.rpc('end_user_sessions', { p_user: token.user_id })",
+     "to": "{ error: null }"
+    },
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "a failed Auth update no longer releases the claim, so the link is burned",
+     "from": "const { error: releaseErr } = await db.from('email_change_tokens').update({ consumed_at: null }).eq('id', token.id)",
+     "to": "const releaseErr = null"
+    }
+   ],
+   "failureMessage": "AssertionError: the claim is released: expected '2026-10-20T17:24:25.624Z' to be null\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/emailChange.security.test.ts:145:83\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517063168,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "status": "passed",
+         "title": "[SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "duration": 6.515100000000018,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "status": "skipped",
+         "title": "a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "status": "skipped",
+         "title": "a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "status": "skipped",
+         "title": "an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "status": "skipped",
+         "title": "a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517063764,
+       "endTime": 1792517063770.5151,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/emailChange.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517065035,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "status": "failed",
+         "title": "[SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "duration": 10.134800000000041,
+         "failureMessages": [
+          "AssertionError: the claim is released: expected '2026-10-20T17:24:25.624Z' to be null\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/emailChange.security.test.ts:145:83\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "status": "skipped",
+         "title": "a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "status": "skipped",
+         "title": "a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "status": "skipped",
+         "title": "an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "status": "skipped",
+         "title": "a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517065619,
+       "endTime": 1792517065629.1348,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/emailChange.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517066946,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "status": "passed",
+         "title": "[SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+         "duration": 5.541499999999985,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "status": "skipped",
+         "title": "a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "status": "skipped",
+         "title": "a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "status": "skipped",
+         "title": "an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "status": "skipped",
+         "title": "a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517067537,
+       "endTime": 1792517067542.5415,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/emailChange.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-SESSIONS-END-DENY",
+   "testFile": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+   "testName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+   "boundary": "integration",
+   "baseline": "not passed (failed)",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "not passed (failed)",
+   "mutation": [
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "a completed e-mail change no longer ends the sessions of the account",
+     "from": "await db.rpc('end_user_sessions', { p_user: token.user_id })",
+     "to": "{ error: null }"
+    },
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "a failed Auth update no longer releases the claim, so the link is burned",
+     "from": "const { error: releaseErr } = await db.from('email_change_tokens').update({ consumed_at: null }).eq('id', token.id)",
+     "to": "const releaseErr = null"
+    }
+   ],
+   "failureMessage": "AssertionError: the old session is no longer valid: expected null not to be null\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts:105:98\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517068853,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "status": "failed",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "duration": 1936.4182999999998,
+         "failureMessages": [
+          "AssertionError: the change completed and every session of the account was ended (needs hardening v7: end_user_sessions): expected { success: true, sessionsEnded: false } to deeply equal { success: true }\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts:104:127\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517069427,
+       "endTime": 1792517071363.4182,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517073485,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "status": "failed",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "duration": 1933.7871999999998,
+         "failureMessages": [
+          "AssertionError: the old session is no longer valid: expected null not to be null\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts:105:98\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517073945,
+       "endTime": 1792517075878.787,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517078053,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW] email-token-once allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-ONCE-DENY] email-token-once refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW] email-token-latest allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-TOKEN-LATEST-DENY] email-token-latest refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-ALLOW] email-sessions-end allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "emailChange"
+         ],
+         "fullName": "emailChange [SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "status": "failed",
+         "title": "[SEC-X-INT-EMAIL-SESSIONS-END-DENY] email-sessions-end refused on the real project",
+         "duration": 2431.3064,
+         "failureMessages": [
+          "AssertionError: the change completed and every session of the account was ended (needs hardening v7: end_user_sessions): expected { success: true, sessionsEnded: false } to deeply equal { success: true }\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts:104:127\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517078628,
+       "endTime": 1792517081059.3064,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/emailChange.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

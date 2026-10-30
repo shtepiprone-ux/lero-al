@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+> node scripts/check-rendered-state-census.mjs --verify-gate
+check-rendered-state-census.mjs --verify-gate (fixtures served locally, no Storybook build)
+FAIL track-active-slide-inside    NOT as stated: root portal:0 should be green but fails: component-overflow, action-covered   [observed: app green | portal:0 component-overflow+action-covered]
+FAIL track-offscreen-slide-tabbable NOT as stated: root portal:0 "component-overflow" detail does not name the cause (/^div "" \(transformed\) x [\d.]+\.\.[\d.]+ past div [\d.]+\.\.[\d.]+ holds button "Slide one"$/): div "" (transformed) x 92..212 past div 212..332 | button "" (absolute) x 92..212 past div 212..332   [observed: app green | portal:0 component-overflow+action-covered]
+FAIL track-offscreen-slide-aria-only NOT as stated: root portal:0 "component-overflow" detail does not name the cause (/^div "" \(transformed\) x [\d.]+\.\.[\d.]+ past div [\d.]+\.\.[\d.]+ holds button ""$/): div "" (transformed) x 92..212 past div 212..332 | button "" (absolute) x 92..212 past div 212..332   [observed: app green | portal:0 component-overflow+action-covered]
+verify-gate: AT LEAST ONE CASE DOES NOT BEHAVE AS STATED.
+EXIT_CODE=1

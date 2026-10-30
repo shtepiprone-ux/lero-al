@@ -1,0 +1,10 @@
+# 2026-10-23T07:38:58.798Z win32 node v22.22.3 storybook-static index.html mtime 2026-10-23T07:30:26.548Z
+sq 320px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+sq 1440px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+en 320px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+en 1440px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+uk 320px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+uk 1440px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+it 320px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+it 1440px PASS {"call":{"disabled":true,"spinner":true},"whatsapp":{"disabled":false,"spinner":false},"overflow":false,"cardOverflow":false}
+failures 0

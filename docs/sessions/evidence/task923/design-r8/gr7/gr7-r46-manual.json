@@ -1,0 +1,28 @@
+{
+  "takenAt": "2026-10-18",
+  "by": "Opus, Playwright MCP, Task 923 R46 and Task 926 design",
+  "observations": [
+    {
+      "ref": "tailadmin",
+      "url": "https://demo.tailadmin.com/profile",
+      "operated": "clicked the button 'Delete account' in the section 'Danger Zone'",
+      "section": "Danger Zone Logout all devices Sign out from every active session. Change Password Delete account Sign out from every active session. Delete account",
+      "result": "no dialog opened and the URL did not change: the demo does not wire this action"
+    },
+    {
+      "ref": "omah",
+      "url": "https://omah.dexignzone.com/xhtml/account/settings.html",
+      "operated": "read the section 'Deactivate Account' and its controls without submitting",
+      "section": "Deactivate Account You are about to deactivate your account. To enhance security, please confirm your email or phone number when resetting your password. Find Out More. Confirm Account Deactivation Deactivate Account",
+      "checkbox": { "label": "Confirm Account Deactivation", "checked": false },
+      "button": { "text": "Deactivate Account", "disabledWhileUnchecked": false },
+      "alsoOnThisPage": "the profile form holds 'Company' and 'Company Site' text fields (gr7-r46-926.json, omah account-settings keyed)"
+    },
+    {
+      "ref": "kamr",
+      "url": "https://kamr-vite.vercel.app/uc-sweetalert",
+      "operated": "signed in with the demo account, opened 'Sweet Confirm' (gr7-r46-926.json)",
+      "result": "title 'Are you sure?', text 'Once deleted, you will not be able to recover this imaginary file!', buttons Cancel then OK, no field"
+    }
+  ]
+}

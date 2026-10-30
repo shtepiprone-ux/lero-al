@@ -1,0 +1,25 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:19:56.336Z
+command: node docs/sessions/evidence/task927/review-8/rv8-07-mobile-jump.mjs mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en
+--- output ---
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en mobile: 420 frames
+t=1851 top=800 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1884 top=776 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1899 top=727.6 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1916 top=659.6 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1933 top=588.9 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1950 top=526.5 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1967 top=475.7 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=1983 top=435.7 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2000 top=404.1 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2016 top=379.6 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2033 top=360.7 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2049 top=346.6 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2066 top=336.6 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2083 top=329.9 h=475 loader=true btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2100 top=326.2 h=475 loader=false btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2116 top=325 h=475 loader=false btn=- iframes=0 vv=800 sy=0 focus=INPUT
+t=2136 top=325 h=475 loader=false btn=208+40x358 iframes=1 vv=800 sy=0 focus=INPUT
+--- exit code: 0 ---

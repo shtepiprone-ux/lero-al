@@ -1,0 +1,82 @@
+﻿PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
+COMMAND=node docs/sessions/evidence/task923/r8-50-bound-mutations.mjs
+PROVED     negative margin exempts only its own size: with it removed, the benign fixture neg-margin-fullbleed fails component-overflow on portal:0: p "Full-bleed band" x 16..374 past div.stack 32..358
+PROVED     table box parent (the table algorithm places its own rows): with it removed, the benign fixture table-rowspan fails component-overflow on portal:0: td "Spans two rows" y 143.6..204.4 past tr 143.6..173.6
+PROVED     slide clipped away by design: with it removed, the benign fixture slide-carousel fails component-overflow on portal:0: div "" x 358..684 past div 32..358
+PROVED     text-hidden: text really outside the padding box: with it removed, the benign fixture text-inner-box fails text-hidden on portal:0: div "short text" scroll 326x100 > client 326x40
+PROVED     viewport: hidden away by an ancestor inside the viewport: with it removed, the benign fixture hidden-away-clipped fails viewport-overflow on portal:0: div "" x 32..632 outside 0..390
+PROVED     viewport: closed off-canvas fixed panel: with it removed, the benign fixture offcanvas-closed-panel fails viewport-overflow on app: aside "Closed navigation panel" x -200..0 outside 0..390
+PROVED     action covered by a dialog in another portal root: with it removed, the benign fixture stacked-dialogs fails action-covered on portal:0: button "Delete" centre 63.1,190 is covered by button
+PROVED     R15 bound 1: the overlay panel: with it removed, the planted fixture abs-past-panel goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R15 bound 2: the clipping ancestor: with it removed, the planted fixture abs-past-clipper goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: text-hidden [div "cut by the card" scroll 180x60 > client 150x60]
+PROVED     R19 (a) removed: the clipped-away media-only slide: with it removed, the benign fixture positioned-slide-away fails component-overflow on portal:0: div "" (transformed) x 32..92 past div 92..292
+PROVED     R19 (a) without its no-text / no-control condition: with it removed, the planted fixture positioned-slide-away-control goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: action-covered [button "Go" centre 54,165.6 is covered by div.dialog]
+PROVED     R19 (b) removed: the media crop that covers its frame: with it removed, the benign fixture media-cover-zoom fails component-overflow on portal:0: img "" (absolute+transformed) x 22..242 past div 32..232
+PROVED     R19 (b) without its cover condition: with it removed, the planted fixture media-shifted-past-frame goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R22 judges only the outside: the whole element again (the R19 text): with it removed, the benign fixture track-active-slide-inside fails component-overflow on portal:0: div "" (transformed) x 92..212 past div 212..332
+PROVED     R22 control clause: any off-screen control accepted: with it removed, the planted fixture track-offscreen-slide-tabbable goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: action-covered [button "Slide one" centre 152,183.6 is covered by div.dialog]
+PROVED     R24 (ii) dropped: a hidden, untabbable control INSIDE its frame is skipped too: with it removed, the planted fixture visible-hidden-control-covered goes green on portal:0 (action-covered empty)
+           observed on portal:0 with the mutation: green
+PROVED     R24 (i) dropped: a clipped-away control that is only aria-hidden (still tabbable) is skipped too: with it removed, the planted fixture track-offscreen-slide-aria-only goes green on portal:0 (action-covered empty)
+           observed on portal:0 with the mutation: component-overflow [div "" (transformed) x 92..212 past div 212..332 holds button ""]
+PROVED     R25 "wholly inside the clipper" dropped: any child of a transformed parent is skipped: with it removed, the planted fixture track-flex-slide-straddles no longer reports the detail [detail /^button "" x [\d.]+\.\.[\d.]+ past div [\d.]+\.\.[\d.]+$/: as delivered 1 (button "" x 272..392 past div 152..272), with the clause dropped 0]; the root itself stays red for the other detail(s)
+           observed on portal:0 with the mutation: component-overflow [div "" (transformed) x 152..272 past div 212..332] ; action-covered [button "Slide two" centre 332,183.6 is covered by div]
+PROVED     R25 "parent transformed" dropped: any child wholly inside its clipper is skipped: with it removed, the planted fixture inflow-past-untransformed-parent goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R26 (a) undone: infinite animations are counted again: with it removed, the benign fixture infinite-spinner-toast fails portal-count on app: declared 1 portal root(s), found 0
+PROVED     R26 (b) undone: the focus is read at once (need = 1 poll): with it removed, the benign fixture trap-transient-body-focus fails focus-trap on portal:0: Tab press 1 of 4 moved the focus out to body
+PROVED     R28 undone: the dismissal bound is back at 1 000ms: with it removed, the benign fixture slow-close fails dismiss-escape on portal:0: dismiss-escape: the portal is still visible 1000ms after the dismissal
+PROVED     R29 undone: the first attempt is merged back into the retried rows: with it removed, the benign fixture open-flaky-once-closed-violation fails target-small on app: button "Tiny" 20x20 < 44px
+PROVED     R31 (c) dropped: a request in flight no longer holds the page back: with it removed, the planted fixture late-fetch-overflow goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R31 (d) dropped: the layout signature is constant: with it removed, the planted fixture raf-grow-overflow goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R31 (d) infinite-animation exclusion dropped: a loader holds the layout signature: with it removed, the benign fixture infinite-spinner-toast fails portal-count on app: declared 1 portal root(s), found 0
+PROVED     R32 (b) dropped: a failed stylesheet is measured as a page (resourceFailure never reports): with it removed, the benign fixture stylesheet-fails-once fails target-small on portal:0: button "Close" 23.8x21 < 44px
+PROVED     R32 (c) dropped: a failed resource is not retried: with it removed, the benign fixture stylesheet-fails-once fails error-screen on app: resource failed: stylesheet /census-target.css?__census_status=503 (status 503, CENSUS_STATUS)
+PROVED     R32 (a) widened: a fetch that answers 404 is recorded as a failed resource: with it removed, the benign fixture fetch-404-benign fails error-screen on app: resource failed: fetch /census-missing-api.json (status 404)
+PROVED     R33 (i) Story 059 undone: an abort of the previous page request is blamed on the new page: with it removed, the benign fixture clean fails error-screen on app: resource failed: script /census-pending.js?__census_delay=10000 (net::ERR_ABORTED)
+PROVED     R33 (i) Story 018 undone: unpainted text counts as text past its clipping box: with it removed, the benign fixture loading-label-invisible fails text-hidden on portal:0: button "Alba Krasniqi account" scroll 156x59 > client 156x40
+PROVED     R33 (i) Story 021 undone: a row past the right edge of a horizontally scrolling parent is overflow: with it removed, the benign fixture scroll-row-in-dialog fails component-overflow on portal:0: div "first thumbnailsecond thumbn" x 32..332 past div 32..182
+PROVED     R33 (i) Story 059 undone: a hidden Drawer makes the popover a modal (measured as trap): with it removed, the benign fixture hidden-drawer-popover fails focus-open on portal:0: on open the focus is on button, outside every portal root
+PROVED     R33 (i) Story 059 undone: a link under a fixed page header counts as covered: with it removed, the benign fixture sticky-header-covers-link fails action-covered on app: a "A link under the header" centre 98.3,7 is covered by header
+PROVED     R33 (i) Story 073 undone: only the direct parent decides whether a wide row scrolls: with it removed, the benign fixture scroll-viewport-wrapper fails component-overflow on portal:0: div "first thumbnailsecond thumbn" x 32..332 past div 32..182
+PROVED     R33 (i) Story 073 undone: text past the box counts on an axis the element does not clip: with it removed, the benign fixture scroll-viewport-wrapper fails text-hidden on portal:0: div "first thumbnailsecond thumbnail" scroll 300x22 > client 150x22
+PROVED     R33 (i) Story 075 undone: an e-mail wider than its box is a word split: with it removed, the benign fixture email-longer-than-box fails word-split on portal:0: p "arben.gjergj.krasniqi.ma" needs 287.5px, box 120px
+PROVED     R33 (i) Story 149 undone: the inner input of a bordered wrapper is measured on its own: with it removed, the benign fixture bordered-input-wrapper fails target-small on portal:0: input "Password" 324x42 < 44px
+PROVED     R33 (i) Story 176 undone: only an ancestor that hides its overflow holds items past the viewport edge: with it removed, the benign fixture scroll-rail-past-viewport fails viewport-overflow on portal:0: span "last card" x 543.3..603.8 outside 0..390
+PROVED     R33 (i) Story 199 undone: a control in an inert dialog is measured by the action rules: with it removed, the benign fixture inert-dialog-covered fails target-small on portal:0: button "x" 32x32 < 44px
+PROVED     D9 undone: exemptTargets is ignored, the exempted day cells fail target-small: with it removed, the benign fixture day-cells-exempt fails target-small on portal:0: button.day "1" 39x39 < 44px
+PROVED     D10 undone: exemptOverflow is ignored, the exempted chart canvas fails component-overflow: with it removed, the benign fixture canvas-taller-than-box-exempt fails component-overflow on portal:0: div.canvas "Chart" y 143.6..383.6 past div 143.6..263.6
+PROVED     text-overlap undone for svg: the overlapping turned labels go green: with it removed, the planted fixture svg-labels-overlap goes green on portal:0 (text-overlap empty)
+           observed on portal:0 with the mutation: green
+PROVED     svg overlap judged by axis-aligned boxes: the clear turned labels fail: with it removed, the benign fixture svg-labels-clear fails text-overlap on portal:0: svg text "Sep 17" overlaps "Sep 18" by 5px
+PROVED     svg text that is not painted is measured: the unpainted overlapping labels fail: with it removed, the benign fixture svg-labels-unpainted fails text-overlap on portal:0: svg text "Sep 17" overlaps "Sep 18" by 7px
+PROVED     text-overlap undone for page text: the lines printed on one another go green: with it removed, the planted fixture html-text-overlap goes green on portal:0 (text-overlap empty)
+           observed on portal:0 with the mutation: green
+PROVED     page text overlap without its height bound: the tight stacked lines fail: with it removed, the benign fixture html-lines-tight fails text-overlap on portal:0: div "First line of text" overlaps div "Second line of text" by 108.5x3.4px
+PROVED     page text under an opaque box is measured: the covered text fails: with it removed, the benign fixture html-text-under-opaque fails text-overlap on portal:0: span "Pinned header text" overlaps span "Content scrolled under t" by 134.3x17px
+PROVED     page text is not cut by its clipping ancestors: the clipped-away row fails: with it removed, the benign fixture html-text-clipped-away fails text-overlap on portal:0: div "Row two" overlaps div "Pinned footer" by 61.4x17px
+PROVED     svg-text-clipped undone: the label past its svg goes green: with it removed, the planted fixture svg-label-clipped goes green on portal:0 (svg-text-clipped empty)
+           observed on portal:0 with the mutation: green
+PROVED     R33 (i) R52 undone: a point below the fold is never covered (the page is not scrolled to it): with it removed, the benign fixture html-text-under-opaque-below-fold fails text-overlap on app: span "Pinned header text" overlaps span "Content scrolled under t" by 134.3x17px
+PROVED     R33 (i) R52 undone: the text of an inert layer is never covered by the opaque panel above it: with it removed, the benign fixture html-text-under-inert-dialog fails text-overlap on portal:0: h2 "Underlying dialog title" overlaps h2 "Dialog title" by 92x20px
+PROVED     R33 (i) R52 undone: a transient failure of the reopen of a dismissal check is not retried: with it removed, the benign fixture stylesheet-fails-on-reopen fails dismiss-close-control on portal:0: dismiss-close-control: could not reopen the state (resource failed: stylesheet /census-target.css?__census_sta
+PROVED     R53 undone: the whole stack counts as lying above the text and any opaque box covers it (an opaque card below an inert dialog hides the overlap): with it removed, the planted fixture html-text-over-inert-dialog-opaque-below goes green on portal:0 (text-overlap empty)
+           observed on portal:0 with the mutation: green
+PROVED     R53 undone: the whole stack counts as lying above the text and any opaque box covers it (an opaque card below an inert dialog hides the overlap): with it removed, the planted fixture html-text-overlap-in-inert-dialog goes green on portal:0 (text-overlap empty)
+           observed on portal:0 with the mutation: green
+PROVED     R54 (m1) undone: any opaque box counts as a cover (a map control over a popup title hides it): with it removed, the planted fixture html-text-under-control goes green on app (text-overlap empty)
+           observed on app with the mutation: green
+PROVED     R54 (m1) undone: any opaque box counts as a cover (a map control over a popup title hides it): with it removed, the planted fixture html-text-under-control-below-fold goes green on app (text-overlap empty)
+           observed on app with the mutation: green
+PROVED     R54 (m2) undone: a fixed or sticky box is no cover (the header pinned over scrolled text fails): with it removed, the benign fixture html-text-under-opaque fails text-overlap on portal:0: span "Pinned header text" overlaps span "Content scrolled under t" by 134.3x17px
+PROVED     R54 (m3) undone: an overlay (menu, dialog, listbox, tooltip, portal) is no cover (the menu over page text fails): with it removed, the benign fixture html-text-under-floating-menu fails text-overlap on app: span "Page text under the menu" overlaps span "Menu item" by 74.7x17px
+
+57 of 57 proved.
+EXIT_CODE=0

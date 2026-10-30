@@ -16,7 +16,7 @@ const createAdminClient = vi.fn(() => {
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => createAdminClient() }))
 vi.mock('@/modules/notifications/lib/emails/send', () => ({ sendEmail: vi.fn() }))
 vi.mock('@/modules/notifications/lib/sendTemplatedEmail', () => ({ sendTemplatedEmail: vi.fn() }))
-vi.mock('@/modules/notifications/lib/mutations', () => ({ createNotification: vi.fn() }))
+vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: vi.fn() }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
   applyListingTransitionByStatus: vi.fn(),
 }))

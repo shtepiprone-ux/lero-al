@@ -155,7 +155,7 @@ const ASSERT_STORIES = [
   { id: 'admin-adminsettings--default',            label: 'AdminSettings/Default',            anchors: [{ type: 'testid', value: 'admin-settings', label: 'settings' }] },
   { id: 'admin-adminpropertytypesmanager--default', label: 'AdminPropertyTypesManager/Default', anchors: [{ type: 'testid', value: 'admin-property-types-manager', label: 'prop-types' }] },
   { id: 'admin-admincompaniesmanager--default',    label: 'AdminCompaniesManager/Default',    anchors: [{ type: 'testid', value: 'admin-companies-manager', label: 'companies' }] },
-  { id: 'admin-adminsupportmanager--default',      label: 'AdminSupportManager/Default',      anchors: [{ type: 'testid', value: 'admin-support-manager', label: 'support' }] },
+  { id: 'patterns-mantine-adminsupportview--default', label: 'AdminSupportView/Default',        anchors: [{ type: 'testid', value: 'admin-support-manager', label: 'support' }] },
   { id: 'admin-adminemailtemplatesmanager--default', label: 'AdminEmailTemplatesManager/Default', anchors: [{ type: 'testid', value: 'admin-email-templates-manager', label: 'email-tpl' }] },
   { id: 'patterns-mantine-adminlistingsview--default', label: 'AdminListingsView/Default',        anchors: [{ type: 'testid', value: 'admin-listings-table', label: 'listings-tbl' }] },
   { id: 'patterns-mantine-adminuserstable--default', label: 'AdminUsersTable/Default',          anchors: [{ type: 'testid', value: 'admin-users-table', label: 'users-tbl' }] },

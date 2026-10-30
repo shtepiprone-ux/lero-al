@@ -1,0 +1,18 @@
+# a5-12: rhythm, wrap, overflow and one-look probe of the Welcome back view
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a5/a5-12-rhythm.mjs
+started: 2026-10-25T09:44:36.438Z
+widths: 480; locales: sq; views: Initials, Picture, LongName, WithAlerts, AuthSheet WelcomeBack
+
+sq 480 Initials: ok | gaps root:16/16 root:16/16 root:16/16 identity:8/8 identity:8/8 | name {"sw":113,"cw":113,"ellipsis":false,"clamp":false,"lines":1} email {"sw":140,"cw":140,"ellipsis":false,"clamp":false,"lines":1} | overflow {"page":0,"view":0,"dialog":0} | google 32px
+sq 480 Picture: ok | gaps root:16/16 root:16/16 root:16/16 identity:8/8 identity:8/8 | name {"sw":113,"cw":113,"ellipsis":false,"clamp":false,"lines":1} email {"sw":140,"cw":140,"ellipsis":false,"clamp":false,"lines":1} | overflow {"page":0,"view":0,"dialog":0} | google 32px
+sq 480 LongName: ok | gaps root:16/16 root:16/16 root:16/16 identity:8/8 identity:8/8 | name {"sw":416,"cw":416,"ellipsis":false,"clamp":false,"lines":2} email {"sw":140,"cw":140,"ellipsis":false,"clamp":false,"lines":1} | overflow {"page":0,"view":0,"dialog":0} | google 32px
+sq 480 WithAlerts: ok | gaps root:16/16 root:16/16 root:16/16 root:16/16 root:16/16 identity:8/8 identity:8/8 | name {"sw":113,"cw":113,"ellipsis":false,"clamp":false,"lines":1} email {"sw":140,"cw":140,"ellipsis":false,"clamp":false,"lines":1} | overflow {"page":0,"view":0,"dialog":0} | google 32px
+sq 480 AuthSheet WelcomeBack: ok | gaps root:16/16 root:16/16 root:16/16 identity:8/8 identity:8/8 | name {"sw":113,"cw":113,"ellipsis":false,"clamp":false,"lines":1} email {"sw":140,"cw":140,"ellipsis":false,"clamp":false,"lines":1} | overflow {"page":0,"view":0,"dialog":0} | google 32px
+sq 480 google heights: ok
+
+distinct triples of Google button heights (welcome, login, modal): {"welcome":32,"login":32,"modal":32}
+cells 6; cells with a problem: 0
+exit code: 0

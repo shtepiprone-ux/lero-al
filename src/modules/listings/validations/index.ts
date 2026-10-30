@@ -2,11 +2,25 @@ import { z } from 'zod'
 import { MIN_PROPERTY_YEAR } from '@/modules/listings/constants'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 
+/**
+ * The largest price a listing may carry, per currency (Task 923 R101, owner decision D71). The largest stored prices are 80 000 000 lek and 456 000 euro, and none has a fraction.
+ * This map is the one source for the schema, the form and the server. Hardening v8b's per-currency CHECK on `listings.price` / `price_old` takes the same two numbers, so the
+ * code refuses a value before the database would.
+ */
+export const MAX_LISTING_PRICE_BY_CURRENCY = { EUR: 10_000_000_000, ALL: 1_000_000_000_000 } as const
+
+/** True for a price in `0 < price <= ceiling` of its currency. */
+export function isListingPriceWithinCeiling(price: number, currency: keyof typeof MAX_LISTING_PRICE_BY_CURRENCY): boolean {
+  return price > 0 && price <= MAX_LISTING_PRICE_BY_CURRENCY[currency]
+}
+
 const listingBaseSchema = z.object({
-  title:        z.string().min(5).max(150).transform(v => v.trim()),
+  // trim BEFORE the length rule (Task 923 Revision 7): five spaces used to pass `min(5)` and be stored as an empty title
+  title:        z.string().trim().min(5).max(150),
   description:  z.string().max(5000).optional().transform(v => v?.trim() || undefined),
-  price:        z.number().positive(),
-  price_old:    z.number().positive().optional(),
+  // the base bound is the largest ceiling; the ceiling of the listing's own currency is checked in `listingSchema`'s superRefine below
+  price:        z.number().positive().max(MAX_LISTING_PRICE_BY_CURRENCY.ALL),
+  price_old:    z.number().positive().max(MAX_LISTING_PRICE_BY_CURRENCY.ALL).optional(),
   currency:     z.enum(['ALL', 'EUR']),
   listing_type: z.enum(['sale', 'rent']),
   property_type: z.enum(['apartment', 'house', 'room', 'land', 'commercial', 'office', 'garage', 'parking', 'warehouse', 'other']),
@@ -38,6 +52,14 @@ const listingBaseSchema = z.object({
 
 export const listingSchema = listingBaseSchema.superRefine((data, ctx) => {
   const schema = getSchema(data.property_type)
+
+  // Rule 0: a price is bounded by the ceiling of its own currency (Task 923 R101, D71); `price_old` is set by the server, and the schema bounds it the same way.
+  if (!isListingPriceWithinCeiling(data.price, data.currency)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['price'], message: 'error_price' })
+  }
+  if (data.price_old !== undefined && !isListingPriceWithinCeiling(data.price_old, data.currency)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['price_old'], message: 'error_price' })
+  }
 
   // Rule 1: negative floors only when the type permits it AND checkbox is on.
   if (data.floor !== undefined && data.floor < 0) {

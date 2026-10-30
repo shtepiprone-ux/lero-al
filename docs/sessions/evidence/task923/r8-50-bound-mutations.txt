@@ -1,0 +1,48 @@
+platform win32 node v22.22.3
+cmd node docs/sessions/evidence/task923/r8-50-bound-mutations.mjs
+start 2026-10-16T09:33:57Z
+PROVED     negative margin exempts only its own size: with it removed, the benign fixture neg-margin-fullbleed fails component-overflow on portal:0: p "Full-bleed band" x 16..374 past div.stack 32..358
+PROVED     table box parent (the table algorithm places its own rows): with it removed, the benign fixture table-rowspan fails component-overflow on portal:0: td "Spans two rows" y 143.6..204.4 past tr 143.6..173.6
+PROVED     slide clipped away by design: with it removed, the benign fixture slide-carousel fails component-overflow on portal:0: div "" x 358..684 past div 32..358
+PROVED     text-hidden: text really outside the padding box: with it removed, the benign fixture text-inner-box fails text-hidden on portal:0: div "short text" scroll 326x100 > client 326x40
+PROVED     viewport: hidden away by an ancestor inside the viewport: with it removed, the benign fixture hidden-away-clipped fails viewport-overflow on portal:0: div "" x 32..632 outside 0..390
+PROVED     viewport: closed off-canvas fixed panel: with it removed, the benign fixture offcanvas-closed-panel fails viewport-overflow on app: aside "Closed navigation panel" x -200..0 outside 0..390
+PROVED     action covered by a dialog in another portal root: with it removed, the benign fixture stacked-dialogs fails action-covered on portal:0: button "Delete" centre 63.1,190 is covered by button
+PROVED     R15 bound 1: the overlay panel: with it removed, the planted fixture abs-past-panel goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R15 bound 2: the clipping ancestor: with it removed, the planted fixture abs-past-clipper goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: text-hidden [div "cut by the card" scroll 180x60 > client 150x60]
+PROVED     R19 (a) removed: the clipped-away media-only slide: with it removed, the benign fixture positioned-slide-away fails component-overflow on portal:0: div "" (transformed) x 32..92 past div 92..292
+PROVED     R19 (a) without its no-text / no-control condition: with it removed, the planted fixture positioned-slide-away-control goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: action-covered [button "Go" centre 54,165.6 is covered by div.dialog]
+PROVED     R19 (b) removed: the media crop that covers its frame: with it removed, the benign fixture media-cover-zoom fails component-overflow on portal:0: img "" (absolute+transformed) x 22..242 past div 32..232
+PROVED     R19 (b) without its cover condition: with it removed, the planted fixture media-shifted-past-frame goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R22 judges only the outside: the whole element again (the R19 text): with it removed, the benign fixture track-active-slide-inside fails component-overflow on portal:0: div "" (transformed) x 92..212 past div 212..332
+PROVED     R22 control clause: any off-screen control accepted: with it removed, the planted fixture track-offscreen-slide-tabbable goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: action-covered [button "Slide one" centre 152,183.6 is covered by div.dialog]
+PROVED     R24 (ii) dropped: a hidden, untabbable control INSIDE its frame is skipped too: with it removed, the planted fixture visible-hidden-control-covered goes green on portal:0 (action-covered empty)
+           observed on portal:0 with the mutation: green
+PROVED     R24 (i) dropped: a clipped-away control that is only aria-hidden (still tabbable) is skipped too: with it removed, the planted fixture track-offscreen-slide-aria-only goes green on portal:0 (action-covered empty)
+           observed on portal:0 with the mutation: component-overflow [div "" (transformed) x 92..212 past div 212..332 holds button ""]
+PROVED     R25 "wholly inside the clipper" dropped: any child of a transformed parent is skipped: with it removed, the planted fixture track-flex-slide-straddles no longer reports the detail [detail /^button "" x [\d.]+\.\.[\d.]+ past div [\d.]+\.\.[\d.]+$/: as delivered 1 (button "" x 272..392 past div 152..272), with the clause dropped 0]; the root itself stays red for the other detail(s)
+           observed on portal:0 with the mutation: component-overflow [div "" (transformed) x 152..272 past div 212..332] ; action-covered [button "Slide two" centre 332,183.6 is covered by div]
+PROVED     R25 "parent transformed" dropped: any child wholly inside its clipper is skipped: with it removed, the planted fixture inflow-past-untransformed-parent goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R26 (a) undone: infinite animations are counted again: with it removed, the benign fixture infinite-spinner-toast fails portal-count on app: declared 1 portal root(s), found 0
+PROVED     R26 (b) undone: the focus is read at once (need = 1 poll): with it removed, the benign fixture trap-transient-body-focus fails focus-trap on portal:0: Tab press 1 of 4 moved the focus out to body
+PROVED     R28 undone: the dismissal bound is back at 1 000ms: with it removed, the benign fixture slow-close fails dismiss-escape on portal:0: dismiss-escape: the portal is still visible 1000ms after the dismissal
+PROVED     R29 undone: the first attempt is merged back into the retried rows: with it removed, the benign fixture open-flaky-once-closed-violation fails target-small on app: button "Tiny" 20x20 < 44px
+PROVED     R31 (c) dropped: a request in flight no longer holds the page back: with it removed, the planted fixture late-fetch-overflow goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R31 (d) dropped: the layout signature is constant: with it removed, the planted fixture raf-grow-overflow goes green on portal:0 (component-overflow empty)
+           observed on portal:0 with the mutation: green
+PROVED     R31 (d) infinite-animation exclusion dropped: a loader holds the layout signature: with it removed, the benign fixture infinite-spinner-toast fails portal-count on app: declared 1 portal root(s), found 0
+PROVED     R32 (b) dropped: a failed stylesheet is measured as a page (resourceFailure never reports): with it removed, the benign fixture stylesheet-fails-once fails target-small on portal:0: button "Close" 23.8x21 < 44px
+PROVED     R32 (c) dropped: a failed resource is not retried: with it removed, the benign fixture stylesheet-fails-once fails error-screen on app: resource failed: stylesheet /census-target.css?__census_status=503 (status 503, CENSUS_STATUS)
+PROVED     R32 (a) widened: a fetch that answers 404 is recorded as a failed resource: with it removed, the benign fixture fetch-404-benign fails error-screen on app: resource failed: fetch /census-missing-api.json (status 404)
+PROVED     R33 (i) Story 059 undone: an abort of the previous page request is blamed on the new page: with it removed, the benign fixture clean fails error-screen on app: resource failed: script /census-pending.js?__census_delay=10000 (net::ERR_ABORTED)
+
+30 of 30 proved.
+end 2026-10-16T09:36:05Z
+EXIT_CODE=0

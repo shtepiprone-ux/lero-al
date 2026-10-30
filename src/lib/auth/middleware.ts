@@ -47,7 +47,16 @@ export async function refreshSession(request: NextRequest): Promise<NextResponse
   // IMPORTANT: do not add any logic between createServerClient and getUser().
   // getUser() is what triggers the token refresh when the access token is
   // expired; the refreshed tokens are captured via setAll() above.
-  await supabase.auth.getUser()
+  const { error } = await supabase.auth.getUser()
+
+  // Task 923 R45 (a) (owner decisions D26, D29): the server ends a refused session. Supabase Auth answers `user_banned` for a banned account and
+  // `user_not_found` for a deleted one, and the SDK KEEPS the session on both, so the browser would stay "signed in" with a token that no longer works.
+  // `signOut({ scope: 'local' })` removes it even on that 403 answer (the SDK ignores a 401 / 403 / 404 and removes the local session), and the
+  // cleared auth cookies reach the response through `setAll` above, so the page renders for a guest. Any other error (a network failure, an expired
+  // refresh token Auth already handles) changes nothing.
+  if (error && (error.code === 'user_banned' || error.code === 'user_not_found')) {
+    await supabase.auth.signOut({ scope: 'local' })
+  }
 
   return supabaseResponse
 }

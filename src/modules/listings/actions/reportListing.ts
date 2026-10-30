@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { getBlockedError } from '@/lib/auth/blockCheck'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { hasPermission } from '@/lib/auth/permissions'
 import type { ReportReason, ReportStatus } from '@/types/database'
 import * as React from 'react'
@@ -12,7 +13,7 @@ import {
   ReporterNotificationEmail,
   getReporterNotificationEmailStrings,
 } from '@/modules/notifications/lib/emails/ReporterNotificationEmail'
-import { createNotification } from '@/modules/notifications/lib/mutations'
+import { createNotification } from '@/modules/notifications/lib/createNotification'
 
 // sq-fallback strings for the `title`/`body` columns (Owner decision 2, Task 319, same
 // SUPPORT_NOTIFY_SQ pattern as src/modules/admin/actions/index.ts). The viewer-locale
@@ -32,6 +33,11 @@ const VALID_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dism
 const VALID_REASONS: ReportReason[] = [
   'spam', 'fraud', 'duplicate', 'wrong_category', 'offensive', 'other',
 ]
+
+// Task 923 R70 (h): a person files at most 10 reports an hour, counted on the existing count-per-window pattern. The limit never fails open: a count that cannot be
+// read refuses the report. (No upload limit, no cap per person elsewhere: R76.)
+const REPORT_LIMIT_MAX = 10
+const REPORT_LIMIT_WINDOW_MS = 60 * 60 * 1000
 
 export async function reportListingAction(
   listingId: string,
@@ -58,6 +64,17 @@ export async function reportListingAction(
     .maybeSingle()
 
   if (existing) return { error: 'already_reported' }
+
+  const { count: reportsInWindow, error: countError } = await supabase
+    .from('listing_reports')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+    .gte('created_at', new Date(Date.now() - REPORT_LIMIT_WINDOW_MS).toISOString())
+  if (countError || reportsInWindow === null || reportsInWindow === undefined) {
+    console.error('[reportListing] rate limit count failed: refusing', { code: countError?.code })
+    return { error: 'rate_limited' }
+  }
+  if (reportsInWindow >= REPORT_LIMIT_MAX) return { error: 'rate_limited' }
 
   const { error } = await supabase
     .from('listing_reports')
@@ -129,8 +146,10 @@ export async function updateReportStatusAction(
 
   const db = createAdminClient()
 
-  const { data: profile } = await db.from('users').select('role').eq('id', user.id).single()
-  if (!profile) return { error: 'forbidden' }
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account, or a failed lookup, is forbidden.
+  const viewer = await requireViewer()
+  if (!viewer.ok) return { error: 'forbidden' }
+  const profile = { role: viewer.role }
 
   const { data: report } = await db
     .from('listing_reports')

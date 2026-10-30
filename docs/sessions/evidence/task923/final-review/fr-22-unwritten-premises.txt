@@ -1,0 +1,305 @@
+# fr-22 (Opus) 2026-10-28T20:53:36.964Z win32 node v22.22.3
+
+## D8_D9: 46 unwritten
+- SEC-DB-S59-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id
+  actor: a synthetic signed-in user with role user
+  input: PATCH role admin, status active, is_verified true, suspended_until null through the REST API with the user token
+  response: error 42501; both rows unchanged
+  siblings: SEC-DB-S59-ALLOW-
+- SEC-DB-S59-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id
+  actor: a synthetic signed-in user with role user
+  input: PATCH a new name through the REST API with the user token
+  response: the name is stored
+  siblings: SEC-DB-S59-DENY-
+- SEC-DB-S61-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A session cannot write a listing status, premium, counters, expiry, public id or owner
+  actor: the synthetic owner of a synthetic listing
+  input: PATCH status active, is_premium true, views_count 9999, expires_at in a year and user_id of another user; INSERT with status active
+  response: error 42501 for each; nothing changed or inserted
+  siblings: SEC-DB-S61-ALLOW-
+- SEC-DB-S61-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A session cannot write a listing status, premium, counters, expiry, public id or owner
+  actor: the synthetic owner of a synthetic listing
+  input: PATCH a new title; INSERT a pending listing with a 30-day expiry
+  response: both succeed
+  siblings: SEC-DB-S61-DENY-
+- SEC-DB-S62-DENY [database/deny/integration] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Only the server records a listing view
+  actor: an anonymous client and a synthetic signed-in user
+  input: an RPC call with a forged user id
+  response: permission denied; views_count unchanged
+  siblings: none
+- SEC-DB-ACCESS-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked, deleted or signed-out account reads and writes nothing on its next database request
+  actor: a synthetic account blocked, then one soft-deleted, then one whose session was signed out, each with a still-valid access token
+  input: SELECT and UPDATE through the REST API right after the staff action or the sign-out
+  response: no row returned and error 42501 on write, on the first request
+  siblings: SEC-DB-ACCESS-ALLOW-
+- SEC-DB-ACCESS-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked, deleted or signed-out account reads and writes nothing on its next database request
+  actor: a synthetic active account with a live session
+  input: SELECT and an allowed UPDATE through the REST API
+  response: the rows are returned and the allowed update is stored
+  siblings: SEC-DB-ACCESS-DENY-
+- SEC-DB-ERR [database/error/integration] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A refused write answers 42501 and leaves the row as it was
+  actor: a synthetic signed-in user
+  input: PATCH role admin
+  response: error code 42501; the row is byte-for-byte unchanged when re-read through the service role
+  siblings: none
+- SEC-DB-STORAGE-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked or deleted account writes no file through the Storage API on its next request
+  actor: a synthetic moderator blocked by staff, then a synthetic administrator deleted through the real hardDeleteUser, each with the still-valid access token
+  input: an upload, a replace and a delete in the avatars bucket through the Storage API right after the staff action
+  response: refused; storage.objects unchanged
+  siblings: SEC-DB-STORAGE-ALLOW-
+- SEC-DB-STORAGE-ALLOW [database/allow/integration] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked or deleted account writes no file through the Storage API on its next request
+  actor: a synthetic active moderator
+  input: an upload to the avatars bucket, which the existing moderator policy allows
+  response: it succeeds and the synthetic object is removed in clean-up
+  siblings: SEC-DB-STORAGE-DENY-
+- SEC-DB-REALTIME-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked account receives no further realtime change after the block
+  actor: a synthetic account subscribed to postgres_changes on its own notifications
+  input: the service role inserts a notification for the account before and after a staff block
+  response: the event before the block arrives; none after it
+  siblings: SEC-DB-REALTIME-ALLOW-
+- SEC-DB-REALTIME-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A blocked account receives no further realtime change after the block
+  actor: a synthetic active account subscribed to postgres_changes on its own notifications
+  input: the service role inserts a notification for the account
+  response: the event arrives
+  siblings: SEC-DB-REALTIME-DENY-
+- SEC-D29-SRV-DENY [server/deny/unit/critical] src/lib/auth/middleware.security.test.ts
+  invariant: A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest
+  actor: a request with auth cookies
+  input: getUser answers an AuthApiError with code user_banned, then user_not_found; then getUser returns a user and the rpc caller_access_state answers none
+  response: supabase.auth.signOut({ scope: 'local' }) is called once and the response carries the cleared auth cookies
+  siblings: SEC-D29-SRV-ALLOW- SEC-D29-INT-DENY+ SEC-D29-INT-ALLOW+
+- SEC-D29-SRV-ALLOW [server/allow/unit/critical] src/lib/auth/middleware.security.test.ts
+  invariant: A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest
+  actor: a request with auth cookies
+  input: getUser returns a user and caller_access_state answers active; then getUser fails with a network error; then caller_access_state errors
+  response: no signOut; the session and its cookies stay as they are
+  siblings: SEC-D29-SRV-DENY- SEC-D29-INT-DENY+ SEC-D29-INT-ALLOW+
+- SEC-X-SRV-ADMIN-INVITE [server/allow/unit] src/modules/admin/actions/__tests__/createAdminUser.security.test.ts (FILE ABSENT)
+  invariant: A staff-created account receives a way to set its password, and no guessable password exists
+  actor: administrator with users.create
+  input: createAdminUser with a valid profile; then with the invitation failing
+  response: one invitation e-mail through the project mailer; an error returned when it fails
+  siblings: none
+- SEC-X-INT-STATUS-PERM-ALLOW [server/allow/integration] src/modules/admin/actions/adminPermissions.integration.test.ts (FILE ABSENT)
+  invariant: Deactivating or reactivating an account needs users.soft_delete on every path
+  actor: moderator granted users.soft_delete
+  input: updateUserProfileFull sets an active test account inactive
+  response: saved; Auth ban set
+  siblings: SEC-X-SRV-STATUS-PERM+ SEC-X-INT-STATUS-PERM-DENY-
+- SEC-X-INT-STATUS-PERM-DENY [server/deny/integration] src/modules/admin/actions/adminPermissions.integration.test.ts (FILE ABSENT)
+  invariant: Deactivating or reactivating an account needs users.soft_delete on every path
+  actor: moderator without users.soft_delete
+  input: updateUserProfileFull sets an active test account inactive
+  response: forbidden; row and Auth unchanged
+  siblings: SEC-X-SRV-STATUS-PERM+ SEC-X-INT-STATUS-PERM-ALLOW-
+- SEC-X-INT-LOCATIONS-PERM-ALLOW [server/allow/integration] src/modules/admin/actions/adminPermissions.integration.test.ts (FILE ABSENT)
+  invariant: Every write to locations needs locations.manage
+  actor: moderator granted locations.manage
+  input: addLocation with a test name
+  response: one locations row, removed by the test
+  siblings: SEC-X-SRV-LOCATIONS-PERM+ SEC-X-INT-LOCATIONS-PERM-DENY-
+- SEC-X-INT-LOCATIONS-PERM-DENY [server/deny/integration] src/modules/admin/actions/adminPermissions.integration.test.ts (FILE ABSENT)
+  invariant: Every write to locations needs locations.manage
+  actor: moderator without locations.manage
+  input: addLocation and setLocationFeatured
+  response: forbidden; no row written
+  siblings: SEC-X-SRV-LOCATIONS-PERM+ SEC-X-INT-LOCATIONS-PERM-ALLOW-
+- SEC-X-INT-CONTACT-LIFECYCLE-ALLOW [server/allow/integration] src/modules/listings/actions/contactLifecycle.integration.test.ts (FILE ABSENT)
+  invariant: Contact paths serve only an active listing of a live owner (owner F2)
+  actor: signed-in test visitor
+  input: inquiry, contact event and owner-contact RPC on an active test listing
+  response: accepted; numbers returned
+  siblings: SEC-X-SRV-CONTACT-LIFECYCLE+ SEC-X-INT-CONTACT-LIFECYCLE-DENY-
+- SEC-X-INT-CONTACT-LIFECYCLE-DENY [server/deny/integration] src/modules/listings/actions/contactLifecycle.integration.test.ts (FILE ABSENT)
+  invariant: Contact paths serve only an active listing of a live owner (owner F2)
+  actor: signed-in test visitor
+  input: the same three on archived, expired, sold, rented and pending test listings
+  response: refused; no row, no number
+  siblings: SEC-X-SRV-CONTACT-LIFECYCLE+ SEC-X-INT-CONTACT-LIFECYCLE-ALLOW-
+- SEC-X-INT-SLUG-SCRIPT-ALLOW [server/allow/integration] src/modules/listings/actions/listingSlugGuard.integration.test.ts
+  invariant: A stored slug cannot close or add a script in the speculation rules
+  actor: listing owner session
+  input: createListing with a normal title
+  response: the generated slug is stored
+  siblings: SEC-X-SRV-SLUG-SCRIPT+ SEC-X-INT-SLUG-SCRIPT-DENY-
+- SEC-X-INT-SLUG-SCRIPT-DENY [server/deny/integration] src/modules/listings/actions/listingSlugGuard.integration.test.ts
+  invariant: A stored slug cannot close or add a script in the speculation rules
+  actor: listing owner session
+  input: PATCH of the own listing's slug through the Data API to a value holding </script>, and an insert with such a slug
+  response: refused 42501; slug unchanged
+  siblings: SEC-X-SRV-SLUG-SCRIPT+ SEC-X-INT-SLUG-SCRIPT-ALLOW-
+- SEC-X-INT-AVATAR-RANK-ALLOW [server/allow/integration] src/app/api/upload-avatar/uploadAvatar.integration.test.ts (FILE ABSENT)
+  invariant: A staff upload of another account's avatar obeys the same rank rule as removing it
+  actor: moderator
+  input: POST /api/upload-avatar for a test user account
+  response: 200; the user avatar_url set, restored by the test
+  siblings: SEC-X-SRV-AVATAR-RANK+ SEC-X-INT-AVATAR-RANK-DENY-
+- SEC-X-INT-AVATAR-RANK-DENY [server/deny/integration] src/app/api/upload-avatar/uploadAvatar.integration.test.ts (FILE ABSENT)
+  invariant: A staff upload of another account's avatar obeys the same rank rule as removing it
+  actor: moderator
+  input: POST /api/upload-avatar for a test administrator account
+  response: 403; avatar_url unchanged
+  siblings: SEC-X-SRV-AVATAR-RANK+ SEC-X-INT-AVATAR-RANK-ALLOW-
+- SEC-X-SRV-CONFIRM-GET-INERT [server/deny/unit] src/app/auth/confirm/__tests__/confirm.security.test.ts (FILE ABSENT)
+  invariant: Opening a confirmation link consumes no token
+  actor: a mail scanner
+  input: GET with a valid token_hash for each type
+  response: a page with a confirm button; verifyOtp not called
+  siblings: none
+- SEC-X-SRV-CMS-OWN-CLOUD [server/deny/unit] src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts (FILE ABSENT)
+  invariant: CMS images come only from the project Cloudinary account
+  actor: staff member editing a page
+  input: an img from res.cloudinary.com/other-cloud and one from the project cloud
+  response: the first removed, the second kept
+  siblings: none
+- SEC-DB-X-STAFF-LISTING-WRITE-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Staff change other people's listings only through the Server Actions
+  actor: moderator holding listings.delete
+  input: the staff deleteListing Server Action
+  response: the listing deleted
+  siblings: SEC-DB-X-STAFF-LISTING-WRITE-DENY-
+- SEC-DB-X-STAFF-LISTING-WRITE-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Staff change other people's listings only through the Server Actions
+  actor: moderator session token
+  input: REST DELETE, then PATCH of the title
+  response: zero rows or 42501; the row unchanged
+  siblings: SEC-DB-X-STAFF-LISTING-WRITE-ALLOW-
+- SEC-DB-X-IMAGE-URL-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A listing image URL is always the project Cloudinary account
+  actor: listing owner session token
+  input: REST insert with a project Cloudinary URL
+  response: the row inserted
+  siblings: SEC-DB-X-IMAGE-URL-DENY-
+- SEC-DB-X-IMAGE-URL-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: A listing image URL is always the project Cloudinary account
+  actor: listing owner session token
+  input: REST insert with https://example.com/x.jpg and another Cloudinary account
+  response: 23514; no row
+  siblings: SEC-DB-X-IMAGE-URL-ALLOW-
+- SEC-DB-X-PROFILE-FIELDS-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Profile URLs, phones and names always meet the profile rules
+  actor: synthetic user session token
+  input: REST PATCH with a project avatar URL, an E.164 phone and an https website
+  response: the row updated
+  siblings: SEC-DB-X-PROFILE-FIELDS-DENY-
+- SEC-DB-X-PROFILE-FIELDS-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Profile URLs, phones and names always meet the profile rules
+  actor: synthetic user session token
+  input: REST PATCH with a foreign avatar URL, phone 12345, website javascript:x, a 300-character name
+  response: 23514 for each; the row unchanged
+  siblings: SEC-DB-X-PROFILE-FIELDS-ALLOW-
+- SEC-DB-X-AVATARS-STORAGE-ALLOW [database/allow/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Staff avatars go only through the upload route, not through Storage
+  actor: moderator
+  input: POST /api/upload-avatar
+  response: 200; avatar_url set, restored by the test
+  siblings: SEC-DB-X-AVATARS-STORAGE-DENY-
+- SEC-DB-X-AVATARS-STORAGE-DENY [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Staff avatars go only through the upload route, not through Storage
+  actor: moderator session token
+  input: a Storage upload of a small PNG
+  response: refused; no object
+  siblings: SEC-DB-X-AVATARS-STORAGE-ALLOW-
+- SEC-X-INT-ADMINPAGE-GUARD-ALLOW [server/allow/integration] src/tests/integration/adminPage.integration.test.ts (FILE ABSENT)
+  invariant: An admin page or its metadata reads nothing for a viewer who is not an active administrator or moderator
+  actor: moderator
+  input: an RSC request for /admin/users/<synthetic id> on a production build
+  response: the page with the synthetic row
+  siblings: SEC-X-SRV-ADMINPAGE-GUARD+ SEC-X-INT-ADMINPAGE-GUARD-DENY-
+- SEC-X-INT-ADMINPAGE-GUARD-DENY [server/deny/integration] src/tests/integration/adminPage.integration.test.ts (FILE ABSENT)
+  invariant: An admin page or its metadata reads nothing for a viewer who is not an active administrator or moderator
+  actor: signed-in test user without a staff role
+  input: the same request with a router-state header naming the admin layout
+  response: not found; no field of the synthetic row in the body
+  siblings: SEC-X-SRV-ADMINPAGE-GUARD+ SEC-X-INT-ADMINPAGE-GUARD-ALLOW-
+- SEC-X-INT-OWNER-DELETE-ALLOW [server/allow/integration] src/modules/listings/actions/deleteListing.integration.test.ts (FILE ABSENT)
+  invariant: A listing delete reports success only when exactly that listing was deleted
+  actor: listing owner
+  input: deleteListingAction for their synthetic listing
+  response: the row gone; success
+  siblings: SEC-X-SRV-OWNER-DELETE+ SEC-X-INT-OWNER-DELETE-DENY-
+- SEC-X-INT-OWNER-DELETE-DENY [server/deny/integration] src/modules/listings/actions/deleteListing.integration.test.ts (FILE ABSENT)
+  invariant: A listing delete reports success only when exactly that listing was deleted
+  actor: another signed-in test user
+  input: deleteListingAction for that listing
+  response: forbidden; the row remains
+  siblings: SEC-X-SRV-OWNER-DELETE+ SEC-X-INT-OWNER-DELETE-ALLOW-
+- SEC-X-INT-EDIT-MODERATION-ALLOW [server/allow/integration] src/modules/listings/actions/updateListing.integration.test.ts (FILE ABSENT)
+  invariant: An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)
+  actor: moderator
+  input: updateListing on a synthetic active listing, then a guest read
+  response: the listing stays active; the guest reads the new content
+  siblings: SEC-X-SRV-EDIT-MODERATION+ SEC-X-INT-EDIT-MODERATION-DENY- SEC-X-FE-EDIT-MODERATION+
+- SEC-X-INT-EDIT-MODERATION-DENY [server/deny/integration] src/modules/listings/actions/updateListing.integration.test.ts (FILE ABSENT)
+  invariant: An owner's edit of an active listing reaches a visitor only after staff approve it; other statuses are not moderated (D53)
+  actor: listing owner
+  input: updateListing on their synthetic active listing, then a guest read, then a staff approval
+  response: pending; the guest reads no row until the approval, then the new content
+  siblings: SEC-X-SRV-EDIT-MODERATION+ SEC-X-INT-EDIT-MODERATION-ALLOW- SEC-X-FE-EDIT-MODERATION+
+- SEC-X-INT-MOD-KEYS-ALLOW [server/allow/integration] src/tests/integration/moderatorKeys.integration.test.ts (FILE ABSENT)
+  invariant: A moderator does only what the administrator allowed through a key
+  actor: synthetic moderator, users.edit allowed
+  input: updateUserProfile on a synthetic user
+  response: the profile changed (restored by the test)
+  siblings: SEC-X-SRV-MOD-KEYS+ SEC-X-INT-MOD-KEYS-DENY-
+- SEC-X-INT-MOD-KEYS-DENY [server/deny/integration] src/tests/integration/moderatorKeys.integration.test.ts (FILE ABSENT)
+  invariant: A moderator does only what the administrator allowed through a key
+  actor: synthetic moderator, users.edit refused
+  input: updateUserProfile on a synthetic user
+  response: forbidden; the row unchanged
+  siblings: SEC-X-SRV-MOD-KEYS+ SEC-X-INT-MOD-KEYS-ALLOW-
+- SEC-X-SRV-PERMS-ADMIN-ONLY [server/deny/unit] src/modules/admin/actions/__tests__/permissions.security.test.ts
+  invariant: Only an administrator reads or changes the moderator switches (D55)
+  actor: moderator, signed-in user, guest; administrator
+  input: each called by each viewer with a database double
+  response: forbidden / not found for all but the administrator; the administrator reads and sets
+  siblings: SEC-DB-X-PERMS-NO-SESSION- SEC-X-INT-PERMS-ADMIN-ALLOW-
+- SEC-DB-X-PERMS-NO-SESSION [database/deny/integration/critical] src/tests/integration/accessHardening.integration.test.ts
+  invariant: Only an administrator reads or changes the moderator switches (D55)
+  actor: anon key with no session; moderator session token
+  input: REST select, insert and update
+  response: 42501 for each; no row changed
+  siblings: SEC-X-SRV-PERMS-ADMIN-ONLY- SEC-X-INT-PERMS-ADMIN-ALLOW-
+- SEC-X-INT-PERMS-ADMIN-ALLOW [server/allow/integration] src/tests/integration/moderatorKeys.integration.test.ts (FILE ABSENT)
+  invariant: Only an administrator reads or changes the moderator switches (D55)
+  actor: synthetic administrator
+  input: setModeratorPermission(users.edit, false), then true
+  response: both values stored, two event rows; the value restored by the test
+  siblings: SEC-X-SRV-PERMS-ADMIN-ONLY- SEC-DB-X-PERMS-NO-SESSION-
+
+## owner_fixes: 4 unwritten
+- SEC-S16-SRV-DENY [server/deny/unit/critical] src/modules/admin/actions/__tests__/adminGetters.security.test.ts
+  invariant: Only staff with the provider permission read exchange providers, and the api_key never leaves the server for anyone else
+  actor: an anonymous caller and a signed-in user without the permission
+  input: getAllExchangeProvidersAdmin()
+  response: forbidden; no provider row returned
+  siblings: SEC-S16-SRV-ALLOW- SEC-S16-INT-DENY- SEC-S16-INT-ALLOW-
+- SEC-S16-SRV-ALLOW [server/allow/unit/critical] src/modules/admin/actions/__tests__/adminGetters.security.test.ts
+  invariant: Only staff with the provider permission read exchange providers, and the api_key never leaves the server for anyone else
+  actor: an administrator with the permission
+  input: getAllExchangeProvidersAdmin()
+  response: the provider rows
+  siblings: SEC-S16-SRV-DENY- SEC-S16-INT-DENY- SEC-S16-INT-ALLOW-
+- SEC-S16-INT-DENY [server/deny/integration/critical] src/modules/admin/actions/adminGetters.integration.test.ts (FILE ABSENT)
+  invariant: Only staff with the provider permission read exchange providers, and the api_key never leaves the server for anyone else
+  actor: a synthetic user with role user and a live session
+  input: getAllExchangeProvidersAdmin() through the cookie-bound client of that session
+  response: forbidden; no row and no api_key
+  siblings: SEC-S16-SRV-DENY- SEC-S16-SRV-ALLOW- SEC-S16-INT-ALLOW-
+- SEC-S16-INT-ALLOW [server/allow/integration/critical] src/modules/admin/actions/adminGetters.integration.test.ts (FILE ABSENT)
+  invariant: Only staff with the provider permission read exchange providers, and the api_key never leaves the server for anyone else
+  actor: a synthetic administrator with a live session
+  input: getAllExchangeProvidersAdmin() through the cookie-bound client of that session
+  response: the provider rows
+  siblings: SEC-S16-SRV-DENY- SEC-S16-SRV-ALLOW- SEC-S16-INT-DENY-

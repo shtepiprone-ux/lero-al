@@ -1,0 +1,59 @@
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts (8 tests | 2 failed) 115ms
+     × happy path: owner edit → { slug, status } returned, update called once 106ms
+     × update DB error → { error: message } + console.error logged (Guard 4) 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > happy path: owner edit → { slug, status } returned, update called once
+AssertionError: expected { slug: 'my-apartment-abc123', …(1) } to deeply equal { slug: 'my-apartment-abc123', …(1) }
+
+- Expected
++ Received
+
+  {
+    "slug": "my-apartment-abc123",
+-   "status": "active",
++   "status": "pending",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:164:20
+    162|     const result = await updateListing(LISTING_ID, { ...PARSED_DATA, i…
+    163|
+    164|     expect(result).toEqual({ slug: LISTING_SLUG, status: 'active' })
+       |                    ^
+    165|     expect(mockListingsUpdateEq).toHaveBeenCalledTimes(1)
+    166|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > update DB error → { error: message } + console.error logged (Guard 4)
+AssertionError: expected { error: 'update_failed' } to deeply equal { Object (error) }
+
+- Expected
++ Received
+
+  {
+-   "error": "update constraint violation",
++   "error": "update_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:205:20
+    203|     const result = await updateListing(LISTING_ID, { ...PARSED_DATA, i…
+    204|
+    205|     expect(result).toEqual({ error: 'update constraint violation' })
+       |                    ^
+    206|     expect(consoleSpy).toHaveBeenCalledWith(
+    207|       'Failed to update listing',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 11 passed (12)
+      Tests  2 failed | 34 passed (36)
+   Start at  16:39:08
+   Duration  3.61s (transform 1.52s, setup 1.59s, import 9.21s, tests 1.06s, environment 9.90s)
+
+EXIT=1

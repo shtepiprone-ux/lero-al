@@ -175,7 +175,7 @@ export function MantineDashboardStatCard({
 
   const textStack = (
     <Stack gap={theme.spacing.xs}>
-      <Text size="sm" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+      <Text size="sm" c={isAccent ? 'white' : 'gray.5'}>
         {label}
       </Text>
       {/* GR-3c (Task 853 review 1, R12): static h3 (30px) at every width had no responsive step
@@ -191,13 +191,13 @@ export function MantineDashboardStatCard({
           <ThemeIcon size="sm" color={VARIANT_COLORS.success} variant="light" radius="xl">
             <Check size={theme.other.iconSize.compact} aria-hidden="true" />
           </ThemeIcon>
-          <Text size="xs" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+          <Text size="xs" c={isAccent ? 'white' : 'gray.5'}>
             {zeroText}
           </Text>
         </Group>
       ) : (
         caption && (
-          <Text size="xs" c={isAccent ? 'white' : 'gray.5'} lineClamp={2}>
+          <Text size="xs" c={isAccent ? 'white' : 'gray.5'}>
             {caption}
           </Text>
         )

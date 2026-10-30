@@ -1,0 +1,6 @@
+Task 923 Revision 8 self-audit: catalog premises (Opus, 2026-10-18), read-only transaction on the approved development database
+supabase_realtime tables: public.favorites, public.listings, public.notifications
+owner of the existing SECURITY DEFINER function public.get_listing_owner_contact: postgres
+postgres may SELECT auth.sessions: true; public.users: true
+postgres storage schema USAGE: true; storage.objects SELECT: true
+storage.objects policies now: Admin/moderator delete avatars (DELETE, PERMISSIVE); Admin/moderator update avatars (UPDATE, PERMISSIVE); Admin/moderator upload avatars (INSERT, PERMISSIVE)

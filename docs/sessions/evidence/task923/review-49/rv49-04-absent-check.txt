@@ -1,0 +1,6 @@
+# Task 923 Review 49 (Opus): the owner's after-dry-run check, run read-only before any dry run, 2026-10-24T09:49:17Z, HEAD e68ecbfb1, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-04-absent-check.cjs
+query: select to_regprocedure('public.account_display_name(uuid)') as f1, to_regprocedure('public.set_actor_name()') as f2, to_regprocedure('public.lower_views_count_on_view_delete()') as f3, (select count(*) from information_schema.columns where table_schema = 'public' and ((table_name = 'site_footer' and column_name = 'updated_by_name') or (table_name = 'companies' and column_name = 'created_by'))) as cols;
+read_only=on; f1 null; f2 null; f3 null; cols 0
+all absent: the apply has not run
+exit 0

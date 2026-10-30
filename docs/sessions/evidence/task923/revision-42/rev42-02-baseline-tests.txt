@@ -1,0 +1,150 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-24T07:58:02.888Z
+command: npx vitest run --reporter=verbose src/lib/auth/__tests__/staffPage.security.test.ts src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — page.tsx visibility filter (T1) > 'visible' applies the canonical public-visibility chain (status active + unexpired) 2ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — page.tsx visibility filter (T1) > 'hidden_eligible' applies the audit predicate, narrowed by reason 1ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — page.tsx visibility filter (T1) > an unknown visibility value is ignored (no query call) 1ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — routes through the canonical helpers (T1b) > 'visible' calls applyPublicVisibility once with the builder, not applyPublicEligibleButHidden 1ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — routes through the canonical helpers (T1b) > 'hidden_eligible' + 'expired' calls applyPublicEligibleButHidden(builder, { reason: 'expired' }) once 0ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > applyAdminListingsVisibility — routes through the canonical helpers (T1b) > 'bogus' calls neither helper 0ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q 322ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — search (T3) > typing pushes q after the 300 ms debounce and drops page 148ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge 402ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > a failed update toasts status_change_error and leaves the row unchanged 249ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — delete (T5) > confirm calls deleteListing(id) and removes the row 428ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — delete (T5) > cancel makes no call 265ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > PremiumDialog — presets (T6) > choosing 1 month and clicking Save calls setListingPremium(id, true, ISO ≈ now+30d) and toasts; the preset alone calls nothing 260ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > PremiumDialog — presets (T6) > db_missing_column maps to the premium_error_db_schema toast 354ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — Open public (T7) > is absent for a hidden (pending) listing 174ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — Open public (T7) > is present for a publicly visible listing 135ms
+ ✓ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — action hierarchy (T8) > the resting footer has exactly one filled button, and it is Edit 137ms
+ × src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsPage — listing summary columns (T9) > selects premium_until for the dialogs and does not select listing_images 4ms
+   → `cookies` was called outside a request scope. Read more: https://nextjs.org/docs/messages/next-dynamic-api-wrong-context
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer 7254ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > an active administrator and an active moderator pass the guard, and it returns who they are (the control) 1ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 19 passed (20)
+   Start at  09:58:04
+   Duration  7.52s (transform 2.25s, setup 173ms, import 3.41s, tests 10.15s, environment 732ms)
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — visibility filter (T2) > choosing Visible pushes visibility=visible&page=1 and keeps q
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsTable — search (T3) > typing pushes q after the 300 ms debounce and drops page
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsView inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+An update to AdminListingsTable inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > choosing Sold in the StatusChangeSelect calls updateListingStatus(id, sold), toasts and patches the row badge
+The current testing environment is not configured to support act(...)
+
+stderr | src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > ListingPreviewDialog — status select (T4) > a failed update toasts status_change_error and leaves the row unchanged
+The current testing environment is not configured to support act(...)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsPage — listing summary columns (T9) > selects premium_until for the dialogs and does not select listing_images
+Error: `cookies` was called outside a request scope. Read more: https://nextjs.org/docs/messages/next-dynamic-api-wrong-context
+ ❯ throwForMissingRequestStore node_modules/next/src/server/app-render/work-unit-async-storage.external.ts:335:8
+ ❯ callingExpression node_modules/next/src/server/request/cookies.ts:177:30
+ ❯ requireStaffPage src/lib/auth/staff.ts:88:26
+     86|   if (!viewer.ok) {
+     87|     if (viewer.reason === 'unauthenticated') {
+     88|       const raw = (await cookies()).get(ADMIN_LOCALE_COOKIE)?.value
+       |                          ^
+     89|       const locale = (ADMIN_LOCALES as readonly string[]).includes(raw…
+     90|       redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admi…
+ ❯ Module.AdminListingsPage src/app/admin/listings/page.tsx:20:3
+ ❯ src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:461:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { __NEXT_ERROR_CODE: 'E251' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+---- end ----
+EXIT_CODE=1

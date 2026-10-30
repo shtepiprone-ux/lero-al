@@ -10,9 +10,9 @@ active owner action or numbered task; it never keeps an approved task active. Th
 
 **The whole backlog, on every Opus response — not only the lines this response changed (owner rule, 2026-09-27).**
 The owner found closed Sprints 68 (2026-09-18) and 80–82 (2026-09-25) still listed in `docs/backlog.md`, with
-approvals from earlier sessions piled into "Last Session". His words: *"якщо ці спринти 80,81 і 82 закриті, чому
-backlog.md не актуалізований? Мені тобі кожного разу нагадувати, що ти слідкуєш за беклогом? Чому ти ігноруєш свої
-правила? Виправ правила, щоб більше не ігнорував!"*. The old check read only the lines a response *added*, so stale
+approvals from earlier sessions piled into "Last Session". Their words: *"if these sprints 80, 81 and 82 are closed, why is backlog.md not up to date? Do
+I have to remind you every time that you keep track of the backlog? Why do you
+ignore your own rules? Fix the rules so that you do not ignore them any more!"*. The old check read only the lines a response *added*, so stale
 state that was already in the file, or any response that wrote no file, passed unseen. Now
 `npm run check:backlog-active` (`scripts/check-backlog-active.mjs`) checks the whole file. It fails on:
 - any closed-state marker outside "Last Session" (`✅`, `CLOSED`, `APPROVED`, `ARCHIVED`, `FOLDED`, "archived

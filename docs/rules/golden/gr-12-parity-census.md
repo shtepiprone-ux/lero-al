@@ -1,3 +1,9 @@
+**Opus scope, owner decision 2026-10-20:**
+[canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md) exempts unchanged ready
+canonical chrome from fresh whole-library measurement at design/review. Verify integration; run the affected census
+for a changed shared visual contract or reproduced parity defect. The census/receipt requirements below follow that
+scope, and an inherited-design record must not claim a new measurement.
+
 **2. Cross-Story parity census, at three moments.** Before task design (Opus), before the first write (Sonnet) and
 before any verdict (Opus), for every visible element type the task creates, changes or puts in the owner matrix
 (badge, button, input, modal, table row, chip, alert, menu, …):

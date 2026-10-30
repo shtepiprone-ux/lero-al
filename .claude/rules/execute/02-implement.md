@@ -2,8 +2,8 @@
 
 ## Before each visible UI change
 
-1. Read `shared/enforcement-model.md` and emit its UI-contract receipt, then register its exact mobile-adaptation
-   receipt through the required **PowerShell tool call** before the first in-scope UI write. Before a canonical Story
+1. Read `shared/enforcement-model.md` and register its GR-0, UI-contract and mobile-adaptation receipts through the
+   required **PowerShell tool call** before the first in-scope UI write. Before a canonical Story
    write, register its exact Storybook-proof receipt through that same required tool. Prose beside a tool call is not
    durable evidence and is not a substitute; the PreToolUse hook blocks the write otherwise.
 2. Build a visual source trace for the changed artifact and named preserved siblings: source/markup, selector,

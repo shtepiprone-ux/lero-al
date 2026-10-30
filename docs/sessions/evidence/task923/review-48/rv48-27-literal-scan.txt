@@ -1,0 +1,2 @@
+docs/sessions/evidence/task923/review-48/rv48-25-dry-deletion.sql: 174 literals, 0 spanning lines
+docs/sessions/evidence/task923/review-48/rv48-25-dry-deletion-rollback.sql: 36 literals, 0 spanning lines

@@ -1,5 +1,10 @@
 ## GR-0 — Search canonical sources first; reuse or extend them; never hardcode a parallel UI
 
+**Opus ordering, owner decision 2026-10-20:** apply
+[canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md) before external research
+at task creation/revision and review. Ready Mantine components/Stories are the reuse baseline; research only named
+gaps or reproduced defects. Create a canonical component plus direct Story only when no suitable owner exists.
+
 Binds: `agent-contract` **16b–16c**. Applies to every new visible production component, named visible component
 added to an existing file, Storybook page/title/export, wrapper, or visual style — and to every Mantine migration.
 This is the **first rule every executor must read** before opening a task, source file, diff, or Storybook file.
@@ -32,6 +37,10 @@ canonical token or pattern is `STOP`, not permission to invent one.
 **Receipt — task design, execution and review alike:**
 
 `GR-0 CANONICAL REUSE PREFLIGHT — request: <component/Story/style>; semantic queries: <queries>; inspected candidates: <paths + Story IDs | NONE>; decision: <REUSE | EXTEND | COMPOSE | CREATE | STOP>; selected canonical owner: <path | NONE>; Mantine/TailAdmin token path: <path | NONE>; new hardcoded visual values: NONE; rationale: <why>.`
+
+Before a guarded UI write the receipt is registered through `emit-phase-receipt.ps1 -Kind CanonicalReuse`
+(`.claude/rules/shared/enforcement-model.md`); prose beside a tool call is not retained as transcript text. A `STOP`
+decision is a stop and never authorizes the write.
 
 No receipt, an uninspected plausible candidate, a `CREATE` decision without the search evidence, or any new
 hardcoded visual value makes the task invalid. The executor must emit `BLOCKED — GR-0 CANONICAL REUSE PREFLIGHT

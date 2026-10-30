@@ -16,6 +16,7 @@
 
 import { createHash } from 'crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { escapeLike } from '@/lib/postgrest/escape'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -47,8 +48,9 @@ interface DeleteLog {
   publicId: string
   reason: string
   dryRun: boolean
-  outcome: 'SKIP_REFERENCED' | 'DRY_RUN' | 'DELETED' | 'ERROR'
+  outcome: 'SKIP_REFERENCED' | 'SKIP_LOOKUP_FAILED' | 'DRY_RUN' | 'DELETED' | 'ERROR'
   referencedIn?: string[]
+  lookup?: string
   error?: string
 }
 
@@ -58,53 +60,48 @@ function logEntry(entry: DeleteLog) {
 
 // ── Reference check ───────────────────────────────────────────────────────────
 
-async function checkIsReferenced(publicId: string): Promise<{ referenced: boolean; tables: string[] }> {
+/**
+ * Where the id of an asset can still be in use. Task 923 R66 (e): the check used to look at five places and to IGNORE the error of every read, so a failed read counted
+ * as "not referenced" and the file was destroyed; it did not look at `pages.content` (CMS images), `users.company_logo_url` or the image values of `site_settings`.
+ * Now every read is checked: ANY error (or a read that throws) keeps the file (`SKIP_LOOKUP_FAILED`, logged), never deletes it.
+ * Task 923 R145: seven reads. `listing_images` has no id column (its columns are id, listing_id, url, order, is_cover), so a read filtered on one always answered an error and every file was kept.
+ */
+async function checkIsReferenced(publicId: string): Promise<{ referenced: boolean; tables: string[]; lookupFailed: string | null }> {
   const db = createAdminClient()
   const tables: string[] = []
+  let lookupFailed: string | null = null
   // URL pattern: publicId appears anywhere after /upload/ in the stored URL.
-  const urlPattern = `%${publicId}%`
+  // `%` and `_` are literal characters of the id, not wildcards (Task 923 Revision 7): "listings/ab_cd" must not also match "listings/abXcd"
+  const urlPattern = `%${escapeLike(publicId)}%`
 
-  // listing_images.public_id — direct match (most precise check)
-  const { data: byPublicId } = await db
-    .from('listing_images')
-    .select('id')
-    .eq('public_id', publicId)
-    .limit(1)
-  if (byPublicId?.length) tables.push('listing_images.public_id')
+  type Read = PromiseLike<{ data: unknown; error: { code?: string } | null }>
+  const check = async (label: string, read: () => Read, found: (data: unknown) => boolean) => {
+    try {
+      const { data, error } = await read()
+      if (error) { lookupFailed ??= `${label}: ${error.code ?? 'error'}`; return }
+      if (found(data)) tables.push(label)
+    } catch (err) {
+      lookupFailed ??= `${label}: ${err instanceof Error ? err.message : 'threw'}`
+    }
+  }
+  const any = (data: unknown) => Array.isArray(data) && data.length > 0
 
-  // listing_images.url — URL reference
-  const { data: byImgUrl } = await db
-    .from('listing_images')
-    .select('id')
-    .ilike('url', urlPattern)
-    .limit(1)
-  if (byImgUrl?.length) tables.push('listing_images.url')
-
+  // listing_images.url — URL reference (the table has no id column: its columns are id, listing_id, url, order and is_cover, so the URL read covers an image)
+  await check('listing_images.url', () => db.from('listing_images').select('id').ilike('url', urlPattern).limit(1), any)
   // users.avatar_url
-  const { data: byAvatarUrl } = await db
-    .from('users')
-    .select('id')
-    .ilike('avatar_url', urlPattern)
-    .limit(1)
-  if (byAvatarUrl?.length) tables.push('users.avatar_url')
-
+  await check('users.avatar_url', () => db.from('users').select('id').ilike('avatar_url', urlPattern).limit(1), any)
+  // users.company_logo_url (an agent's own agency logo)
+  await check('users.company_logo_url', () => db.from('users').select('id').ilike('company_logo_url', urlPattern).limit(1), any)
   // companies.logo_url
-  const { data: byLogoUrl } = await db
-    .from('companies')
-    .select('id')
-    .ilike('logo_url', urlPattern)
-    .limit(1)
-  if (byLogoUrl?.length) tables.push('companies.logo_url')
-
+  await check('companies.logo_url', () => db.from('companies').select('id').ilike('logo_url', urlPattern).limit(1), any)
   // popular location photos are stored in locations.image_url (J.1 uses existing locations table)
-  const { data: byLocationImg } = await db
-    .from('locations')
-    .select('id')
-    .ilike('image_url', urlPattern)
-    .limit(1)
-  if (byLocationImg?.length) tables.push('locations.image_url')
+  await check('locations.image_url', () => db.from('locations').select('id').ilike('image_url', urlPattern).limit(1), any)
+  // the image values of the site settings (logo, favicon, social image …): any setting whose value carries the id
+  await check('site_settings.value', () => db.from('site_settings').select('key').ilike('value', urlPattern).limit(1), any)
+  // CMS pages: the content is a JSON document with image nodes; the table is small, so the document is searched here rather than through a JSON path
+  await check('pages.content', () => db.from('pages').select('id, content').limit(500), (data) => Array.isArray(data) && data.some((row) => JSON.stringify((row as { content?: unknown }).content ?? null).includes(publicId)))
 
-  return { referenced: tables.length > 0, tables }
+  return { referenced: tables.length > 0, tables, lookupFailed }
 }
 
 // ── Cloudinary destroy ────────────────────────────────────────────────────────
@@ -162,7 +159,13 @@ export async function deleteAsset(
 ): Promise<DeleteAssetResult> {
   const dryRun = options.dryRun ?? (process.env.CLOUDINARY_DELETE_MODE !== 'enabled')
 
-  const { referenced, tables } = await checkIsReferenced(publicId)
+  const { referenced, tables, lookupFailed } = await checkIsReferenced(publicId)
+
+  // Task 923 R66 (e): fail closed. A reference read that failed means the file may still be in use: it is kept, logged, and nothing is destroyed.
+  if (lookupFailed) {
+    logEntry({ publicId, reason: options.reason, dryRun, outcome: 'SKIP_LOOKUP_FAILED', lookup: lookupFailed })
+    return { skipped: true, skipReason: 'reference lookup failed', dryRun, deleted: false }
+  }
 
   if (referenced) {
     logEntry({ publicId, reason: options.reason, dryRun, outcome: 'SKIP_REFERENCED', referencedIn: tables })

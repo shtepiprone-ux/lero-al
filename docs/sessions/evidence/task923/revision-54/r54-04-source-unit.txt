@@ -1,0 +1,31 @@
+PROVED     SEC-D29-SRV-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-D29-SRV-ALLOW [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-DEL-SRV-ALLOW [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-DEL-SRV-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+SKIPPED    SEC-DEL-INT-ALLOW: an integration case (add --integration)
+SKIPPED    SEC-DEL-INT-DENY: an integration case (add --integration)
+SKIPPED    SEC-DEL-INT-SELF: an integration case (add --integration)
+SKIPPED    SEC-D27-INT-VIEWER-DENY: an integration case (add --integration)
+SKIPPED    SEC-D27-INT-STAFF-DENY: an integration case (add --integration)
+SKIPPED    SEC-D27-INT-STAFF-ALLOW: an integration case (add --integration)
+PROVED     SEC-X-SRV-STATUS-PERM [unit] baseline=passed mutant=failed kind=assertion restored=passed
+NOT PROVED SEC-X-SRV-LOCATIONS-PERM [unit] baseline=passed mutant=failed kind=other restored=passed
+PROVED     SEC-X-SRV-CONTACT-LIFECYCLE [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-SLUG-SCRIPT [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-AVATAR-RANK [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-ADMINPAGE-GUARD [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-OWNER-DELETE [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-EDIT-MODERATION [unit] baseline=passed mutant=failed kind=assertion restored=passed
+NOT PROVED SEC-X-SRV-MOD-KEYS [unit] baseline=not passed (absent) mutant=not failed (absent) kind=none restored=not passed (absent)
+PROVED     SEC-X-SRV-SLUG-PLAIN [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-CONTACT-BOT-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+NOT PROVED SEC-X-SRV-RESTRICTED-PAGE-DENY [unit] baseline=passed mutant=not failed (passed) kind=none restored=passed
+PROVED     SEC-X-SRV-CONTACT-SESSION-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-REVEAL-LIMIT [unit] baseline=passed mutant=failed kind=assertion restored=passed
+SKIPPED    SEC-X-INT-REVEAL-LIMIT: an integration case (add --integration)
+PROVED     SEC-X-SRV-REVEAL-IP [unit] baseline=passed mutant=failed kind=assertion restored=passed
+PROVED     SEC-X-SRV-REVEAL-FAILCLOSED [unit] baseline=passed mutant=failed kind=assertion restored=passed
+SKIPPED    SEC-DB-X-AVATARS-STORAGE-ALLOW: an integration case (add --integration)
+
+17 of 20 sensitivity runs proved.
+exit 1

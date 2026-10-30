@@ -1,0 +1,14 @@
+# R146 AC146 r46-00: sha256 of both R146 paths before the edit, written before the first R146 write
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: for p in src/lib/account/deleteAccount.ts src/lib/account/deleteAccount.security.test.ts; do if [ -e "$p" ]; then sha256sum "$p"; else echo "ABSENT  $p"; fi; done
+NODE_PATH: (unset)
+started: 2026-10-24T13:35:35.631Z
+--- stdout ---
+f22474817a6f92660f40cf2ba550c14670bbfb6e18239cce8f1af33531b820b1 *src/lib/account/deleteAccount.ts
+316264af2cc07ab4533bed2067c27a948ed1d08d39e94f424a541c8bc60bc117 *src/lib/account/deleteAccount.security.test.ts
+
+--- stderr ---
+
+--- exit code: 0 ---

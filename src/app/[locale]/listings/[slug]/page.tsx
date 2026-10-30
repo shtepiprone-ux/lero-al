@@ -1,13 +1,15 @@
 import { notFound } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
 import { formatPrice, formatCount } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
-import { isListingArchived } from '@/modules/listings/domain'
+import { isListingClosed } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates } from '@/lib/getExchangeRateServer'
@@ -16,6 +18,8 @@ import type { PreferredCurrency } from '@/types/database'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import type { PublicUserProfile } from '@/types/database'
 import { ListingDetailView } from '@/modules/listings/components/ListingDetailView'
+import { ListingAccessRestrictedView } from '@/modules/listings/components/ListingAccessRestrictedView'
+import { getListingAccessState } from '@/modules/listings/lib/listingAccessState'
 
 // ── Date-fns locale map (mirrors RelativeTime.tsx — server-side only) ─────────
 const DATE_LOCALE_MAP: Record<string, Locale> = { sq, en: enUS, uk, it }
@@ -37,6 +41,12 @@ interface Props {
 //   - ListingPage      → full SELECT (*, 3 JOINs) in parallel with getUser()
 //
 // This keeps metadata fast and avoids any cross-phase coupling.
+
+// What any visitor may open (Task 923 R100, R73 (b)): active, sold and rented listings. A listing in any other status is opened only by its owner and by staff, and the page asks
+// for those statuses separately, after that decision (see ListingPage); the database's read policy (hardening v8a) says the same. Anyone else gets the restricted page (R103).
+const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented']
+const NON_PUBLIC_LISTING_STATUSES = ['inactive', 'archived', 'pending', 'expired']
+const LISTING_PAGE_SELECT = `*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order")`
 
 // OG locale map: next-intl locale → Facebook/OG locale code
 const OG_LOCALE: Record<string, string> = {
@@ -72,15 +82,17 @@ export async function generateMetadata({ params }: Props) {
     getSetting('og_image', `${siteUrl}/og-default.png`),
   ])
 
-  if (!data) return {}
+  // The session reads no row: a visitor on the address of a hidden listing gets the restricted page (R103), which carries the bare title and noindex like every non-public status
+  if (!data) {
+    return (await getListingAccessState(slug)) === 'hidden' ? { title: 'Lero.al', robots: { index: false, follow: true } } : {}
+  }
 
-  // Only publicly visible statuses get full OG metadata
-  const publicStatuses = ['active', 'sold', 'rented', 'archived']
-  if (!publicStatuses.includes(data.status)) return { title: 'Lero.al' }
+  // Only the public statuses (active, sold, rented) get full OG metadata; every other status gets the bare title and is kept out of the index
+  if (!PUBLIC_LISTING_STATUSES.includes(data.status)) return { title: 'Lero.al', robots: { index: false, follow: true } }
 
-  // robots noindex for old archived listings
+  // robots noindex for sold and rented listings once `archived_noindex_days` have passed since their last update, and for those only (an active listing stays indexed)
   let robots: { index: boolean; follow: boolean } | undefined
-  if (isListingArchived(data.status as ListingStatus)) {
+  if (isListingClosed(data.status as ListingStatus)) {
     const noindexDays = await getArchivedNoindexDays()
     const daysSince = Math.floor((Date.now() - new Date(data.updated_at).getTime()) / 86400000)
     if (daysSince >= noindexDays) robots = { index: false, follow: true }
@@ -144,18 +156,56 @@ export default async function ListingPage({ params }: Props) {
   // getUser() creates its own client internally (separate auth API call).
   // Running both in parallel saves the sequential auth-then-query waterfall.
   const supabase = await createClient()
-  const [authUser, { data: listing }, exchangeRates] = await Promise.all([
+  const [authUser, { data: publicListing }, exchangeRates] = await Promise.all([
     getUser(),
     supabase
       .from('listings')
-      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order")`)
+      .select(LISTING_PAGE_SELECT)
       .eq('slug', slug)
-      .in('status', ['active', 'sold', 'rented', 'archived'])
+      .in('status', PUBLIC_LISTING_STATUSES)
       .single(),
     getExchangeRates(),
   ])
 
-  if (!listing) notFound()
+  let listing = publicListing
+  // A listing in a non-public status (Task 923 R100, R73 (b); R103): only a signed-in viewer whose own profile is in good standing is looked at, and the non-public statuses are
+  // asked for only then: staff see any such listing, everyone else only their own.
+  let viewerInGoodStanding = false
+  if (!listing && authUser) {
+    const viewer = await requireViewer()
+    viewerInGoodStanding = viewer.ok
+    if (viewer.ok) {
+      const isStaff = viewer.role === 'admin' || viewer.role === 'moderator'
+      let hiddenQuery = supabase.from('listings').select(LISTING_PAGE_SELECT).eq('slug', slug).in('status', NON_PUBLIC_LISTING_STATUSES)
+      if (!isStaff) hiddenQuery = hiddenQuery.eq('user_id', viewer.userId)
+      listing = (await hiddenQuery.single()).data
+    }
+  }
+
+  if (!listing) {
+    // No read returned the row. A listing that exists but is hidden from this visitor gets the restricted page, which holds strings and links only (R103, D72); the helper answers one
+    // word and no listing field. A guest or a viewer who is not in good standing is offered to sign in, a viewer in good standing to browse the listings. Any other answer is not found.
+    if ((await getListingAccessState(slug)) !== 'hidden') notFound()
+    const [t, tNav, tc] = await Promise.all([
+      getTranslations({ locale, namespace: 'listing' }),
+      getTranslations({ locale, namespace: 'nav' }),
+      getTranslations({ locale, namespace: 'common' }),
+    ])
+    return (
+      <ListingAccessRestrictedView
+        homeHref={`/${locale}`}
+        homeLabel={tNav('home')}
+        listingsHref={`/${locale}/listings`}
+        listingsLabel={t('all_listings')}
+        currentLabel={t('access_restricted_crumb')}
+        breadcrumbAriaLabel={tc('aria_breadcrumb')}
+        title={t('access_restricted_title')}
+        description={t('access_restricted_text')}
+        actionHref={viewerInGoodStanding ? `/${locale}/listings` : `/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/listings/${slug}`)}`}
+        actionLabel={viewerInGoodStanding ? t('access_restricted_browse') : t('access_restricted_sign_in')}
+      />
+    )
+  }
 
   // Parallel: owner profile (via view) + favorites + preferred currency — all need authUser.
   // Guests get ownerRaw = null → showGuestCTA branch fires in ListingContact (unchanged).
@@ -185,7 +235,9 @@ export default async function ListingPage({ params }: Props) {
   // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
   const isGuest = !authUser || !hasValidProfile
   const canReport = !isGuest && !!authUser && authUser.id !== listing.user_id
-  // Inquiry trigger hidden only for the listing's own (authenticated, non-zombie) owner.
+  // A guest (signed out, or a zombie session) is not served the owner's contact card at all (owner decision D9, Task 923): the card shows
+  // only the sign-in call to action, and `submitListingInquiry` refuses a request without a session. Of the signed-in viewers the
+  // inquiry trigger is hidden only for the listing's own owner.
   const canSendInquiry = !authUser || isGuest || authUser.id !== listing.user_id
   const inquirerEmail = !isGuest ? (authUser?.email ?? undefined) : undefined
 
@@ -264,6 +316,7 @@ export default async function ListingPage({ params }: Props) {
       listingUrl={listingUrl}
       locale={locale}
       isGuest={isGuest}
+      viewerId={isGuest ? null : (authUser?.id ?? null)}
       canReport={canReport}
       isInitiallyFavorited={isInitiallyFavorited}
       listingId={authUser ? listing.id : undefined}

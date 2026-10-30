@@ -1,0 +1,24 @@
+C185 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1800-1800 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1839-1839
+C436 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2141-2141 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2180-2180
+C437 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1808-1808 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1847-1847
+C446 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2409-2409 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2448-2448
+C709 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2904-2904 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2943-2943
+C810 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3173-3173 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3212-3212
+C811 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2808-2808 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2847-2847
+C812 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3353-3353 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3392-3392
+C813 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2808-2808 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2847-2847
+C814 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3400-3400 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3439-3439
+C895 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3702-3702 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3741-3741
+C1059 src/design-system/mantine/patterns/MantineListingContactPattern.tsx:209-212 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:3-6
+C1063 src/stories/patterns/mantine/ListingContactPattern.stories.tsx:157-157 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:8-8
+C1065 src/design-system/mantine/patterns/MantineListingContactPattern.tsx:215-215 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:10-10
+C1066 src/modules/listings/components/ListingContact.tsx:208-208 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:12-12
+C1067 src/stories/patterns/mantine/ListingContactPattern.stories.tsx:28-28 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:14-14
+C1068 src/stories/patterns/mantine/ListingDetailPattern.stories.tsx:181-181 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:16-16
+C1069 src/modules/listings/components/ListingContact.tsx:162-162 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:18-18
+C1070 src/modules/listings/components/ListingContact.tsx:165-165 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:20-20
+UNRESOLVED C1072 src/components/auth/CaptchaWidget.tsx:86-86
+UNRESOLVED C1073 src/components/auth/CaptchaWidget.tsx:108-108
+C1079 src/design-system/mantine/patterns/MantineListingContactPattern.tsx:281-281 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:22-22
+C1082 src/modules/listings/components/ListingContact.tsx:149-149 -> docs/sessions/evidence/task923/review-39/rv39-27-head-lines.txt:24-24
+changed 21, unresolved 2

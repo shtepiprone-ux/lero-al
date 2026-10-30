@@ -1,0 +1,10 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/check-mobile-adaptation-contract.mjs --files src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx src/modules/cabinet/components/CabinetEmailChangeSection.tsx src/modules/cabinet/components/ProfileTab.tsx src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+date: 2026-10-23T17:57:27.306Z
+--- output ---
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+
+
+EXIT_CODE=0

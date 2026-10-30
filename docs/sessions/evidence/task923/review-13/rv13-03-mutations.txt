@@ -1,0 +1,6 @@
+cmd node docs/sessions/evidence/task923/r8-50-bound-mutations.mjs
+EXIT_CODE=0
+PROVED     R54 (m3) undone: an overlay (menu, dialog, listbox, tooltip, portal) is no cover (the menu over page text fails): with it removed, the benign fixture html-text-under-floating-menu fails text-overlap on app: span "Page text under the menu" overlaps span "Menu item" by 74.7x17px
+
+57 of 57 proved.
+59

@@ -1,0 +1,18 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-05-gr3j-probe.mjs docs/sessions/evidence/task923/r40-05b-gr3j-control-cells.jsonl
+date: 2026-10-23T18:03:29.223Z
+--- output ---
+Stories 2; widths 120; locales en; cells 2; failing cells 1
+cells failing per rule: {"pastViewport":1}
+cells with a latent ellipsis style that clips nothing (Mantine Alert / label owners; informational): 1
+vertical order per export (identical in every width and locale when its count is 28):
+  1 x long-address :: title > current-email(label,value) > waiting-notice > resend
+  1 x with-password :: title > current-email(label,value) > form(new-email,password,submit)
+distinct findings:
+  1 x pastViewport :: long-address :: div "Verification pending — check a" 69..124 of 120
+  1 x pastViewport :: long-address :: span "Confirm your new email" 69..124 of 120
+
+
+EXIT_CODE=1

@@ -1,0 +1,268 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:41:06.991Z",
+ "case": "SEC-D27-INT-STAFF-ALLOW",
+ "results": [
+  {
+   "id": "SEC-D27-INT-STAFF-ALLOW",
+   "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+   "testName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/auth/staff.ts",
+     "description": "the staff guard drops the moderator role (getStaffRole and every checkStaff answer null for a moderator)",
+     "from": "  const allowed = options.adminOnly ? viewer.role === 'admin' : viewer.role === 'admin' || viewer.role === 'moderator'\n",
+     "to": "  const allowed = viewer.role === 'admin'\n"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/lib/auth/staff.ts",
+     "originalSha256": "e88d41a160539c387dbe896db129c664480c0e818150d212d9a199ec2b93abec",
+     "restoredSha256": "e88d41a160539c387dbe896db129c664480c0e818150d212d9a199ec2b93abec"
+    }
+   ],
+   "failureMessage": "AssertionError: expected null to be 'moderator' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts:80:32\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259640922,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 6280.4365,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259642571,
+       "endTime": 1793259648851.4365,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259651486,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "failed",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 933.6679999999999,
+         "failureMessages": [
+          "AssertionError: expected null to be 'moderator' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts:80:32\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259653057,
+       "endTime": 1793259653990.668,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259656693,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 6885.636200000001,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259658264,
+       "endTime": 1793259665149.6362,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+# r54-06 full unit run: failing IDs against the five unchanged files of fr-29
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+total 5913; passed 5896; failed 17; pending 0; todo 0
+fr-29 files parsed: src/app/api/cron/listings-expiry/__tests__/route.test.ts, src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx, src/lib/auth/__tests__/permissions.test.ts, src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts, src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts, src/modules/cabinet/statistics/__tests__/access.test.ts, src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts
+failing files: src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx (1); src/lib/auth/__tests__/permissions.test.ts (1); src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts (3); src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts (2); src/modules/cabinet/statistics/__tests__/access.test.ts (3); src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts (2); src/app/api/cron/listings-expiry/__tests__/route.test.ts (5)
+failing IDs outside the fr-29 files: 0

@@ -1,0 +1,4 @@
+﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH
+cmd node docs/sessions/evidence/task923/db-catalog/rls-harness.cjs --i-confirm-dev-database --snapshot-updated-at
+snapshot written (digests only): {"email_templates":8,"support_tickets":0}
+EXIT_CODE=0

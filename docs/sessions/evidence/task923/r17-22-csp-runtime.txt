@@ -1,0 +1,24 @@
+command: next start -p 3077 after npm run build (production build of Revision 16), curl of four paths; nonces shortened
+== GET /sq/auth/login
+HTTP/1.1 200 OK
+Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+content-security-policy-report-only: script-src 'self' 'nonce-<n>' 'strict-dynamic' https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'
+script elements with a nonce attribute: 71 of 72
+== GET /admin
+HTTP/1.1 307 Temporary Redirect
+Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+content-security-policy-report-only: script-src 'self' 'nonce-<n>' 'strict-dynamic' https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'
+location: /en/auth/login?next=%2Fadmin&session=lost
+script elements with a nonce attribute: 20 of 20
+== GET /sq/cabinet
+HTTP/1.1 307 Temporary Redirect
+Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+content-security-policy-report-only: script-src 'self' 'nonce-<n>' 'strict-dynamic' https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'
+location: /sq/auth/login?next=%2Fsq%2Fcabinet&session=lost
+script elements with a nonce attribute: 36 of 36
+== GET /sq
+HTTP/1.1 200 OK
+Content-Security-Policy: frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+script elements with a nonce attribute: 0 of 79
+script element without a nonce on /sq/auth/login:
+<script data-mantine-script="true">

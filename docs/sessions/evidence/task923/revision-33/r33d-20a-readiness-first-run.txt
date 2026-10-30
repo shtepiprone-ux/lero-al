@@ -1,0 +1,14 @@
+# Task 923 Revision 33 readiness run (Opus), 2026-10-22T18:43:50.389Z, HEAD 118b00e8c, working tree, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+docs contract taskSha256 eb43a7bad00ef8e497851ee643fe2f5afc430df267090a16e0ace590363848a1 -> 86fbb8d96cace503f8b049fcb8b804397be27dbedc13537b45bdd8a5f3b39fdd
+== npm run -s check:kickoff-evidence
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+BLOCKED: Critical invariant requires real-boundary allow control: The contact gateway reveals a number only to a caller the server verified with Supabase Auth, and takes the caller id only from that check (Review 28, deviation 4)
+BLOCKED: Critical invariant requires real-boundary deny control: The contact gateway reveals a number only to a caller the server verified with Supabase Auth, and takes the caller id only from that check (Review 28, deviation 4)
+exit 1
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+
+exit 0
+D8_D9 executionStatus draft (a check failed); stage planned; scope 315; cases 212; critical 64
+kickoff sha256 (LF) 6ff7188f23f40652120e27b9039c3c19203029e58e2b10f713638b3de922dbd1

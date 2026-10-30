@@ -1,0 +1,10 @@
+GR-12 design-time census: "a structured dialog holding a short form" (Task 923 Revision 8, Opus, 2026-10-17)
+built Storybook: storybook-static/ (built 2026-10-17 05:08), locale en, widths 1440 and 390, portal root; raw rows: gr12-form-dialog-census.json
+Stories compared: 6 (mantine-primitives-modal--form, patterns-mantine-createticketdialogview--support, patterns-mantine-createticketdialogview--empty, patterns-mantine-savesearchbutton--open-modal, mantine-primitives-collectionssection--create-dialog-open, mantine-primitives-savetocollectionbutton--dialog-open)
+same in all 6 at 1440: modal width 440, radius 24px, close 44x44, label 14px weight 600 rgb(52, 64, 84), input height 44 radius 8px, footer pair side by side at height 44
+same in all 6 at 390: bottom drawer, radius 24px 24px 0px 0px, footer pair side by side 173 + 173 at height 44
+one look differs: the gap between two fields of one section is 12 in mantine-primitives-modal--form and 16 in patterns-mantine-createticketdialogview--support
+cause: MantineDialogSection stacks its children with gap sm (MantineDialogSections.tsx:29); CreateTicketDialogView wraps them in its own Stack gap md
+owner of the difference: CreateTicketDialogView.tsx is an untracked file of Task 859 (git status ??); it is reported to 859, not changed by Task 923
+target for the migrated inquiry dialog: fields as direct children of MantineDialogSection (rhythm token sm), no consumer Stack
+GR-12 ELEMENT PARITY - structured form dialog: Stories compared 6 (census docs/sessions/evidence/task923/design-r8/gr12/gr12-form-dialog-census.json); meanings 1; meanings with more than one look: field gap 12 vs 16 (CreateTicketDialogView, Task 859, reported; the new inquiry dialog follows the canonical sm) (owner decisions: none); hardcode in changed files and their Stories (style/styles/className/colour literal/raw string): NONE (no file changed at design time).

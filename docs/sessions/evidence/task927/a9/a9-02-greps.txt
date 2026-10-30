@@ -1,0 +1,32 @@
+# a9-02 greps (findstr exit 1 = no match; expected for filled_black in src and for Task 927 D20 in the registry)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:46:59.504Z
+
+command: findstr /s /n /c:"filled_black" src\*.ts src\*.tsx
+--- output ---
+
+--- exit code: 1 ---
+
+command: findstr /n /c:"theme: 'outline'" src\lib\auth\googleIdentity.ts src\components\auth\GoogleSignInButton.tsx
+--- output ---
+src\lib\auth\googleIdentity.ts:34:  theme: 'outline'
+src\components\auth\GoogleSignInButton.tsx:53:      theme: 'outline',
+--- exit code: 0 ---
+
+command: findstr /n /c:"Task 927 D20" scripts\rendered-interaction-states.json
+--- output ---
+
+--- exit code: 1 ---
+
+command: findstr /n /c:"in its Light theme (Task 927 D19, D24" scripts\rendered-interaction-states.json
+--- output ---
+809:      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's large size, 40 px as Google's branding guidelines give, in its Light theme (Task 927 D19, D24, 2026-10-25), and Google may personalize it for a returning person (D22), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+6116:      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's large size, 40 px as Google's branding guidelines give, in its Light theme (Task 927 D19, D24, 2026-10-25), and Google may personalize it for a returning person (D22), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+6130:      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's large size, 40 px as Google's branding guidelines give, in its Light theme (Task 927 D19, D24, 2026-10-25), and Google may personalize it for a returning person (D22), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+6188:      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's large size, 40 px as Google's branding guidelines give, in its Light theme (Task 927 D19, D24, 2026-10-25), and Google may personalize it for a returning person (D22), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+--- exit code: 0 ---
+
+finished: 2026-10-25T19:46:59.680Z
+exit code: 1

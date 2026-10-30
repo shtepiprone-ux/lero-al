@@ -1,0 +1,245 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH (not installed in the repository); start 2026-10-21T17:26:22.000Z
+cmd node docs/sessions/evidence/task923/db-catalog/rls-harness.cjs --i-confirm-dev-database   (rls-harness on the development database after v7.1, with the R94 (a) and (b) fixes)
+run zz_synth_mvidw0hk: users A, B, C(admin) and 3 synthetic listings prepared (ids not printed)
+ ok  R01 A reads B's users row (phone/whatsapp/role) | expected: refused (error or 0 rows) | observed: rows=0
+ ok  R02 A lists users | expected: only A's own row | observed: rows=1
+ ok  R03 anonymous lists users | expected: refused (error or 0 rows) | observed: rows=0
+ ok  R04 A reads B's PENDING listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  R05 anonymous reads B's PENDING listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  R06 A reads the view ledger of B's listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  R07 public listing row carries no contact columns with data | expected: no phone/whatsapp/email data | observed: none
+ ok  R09a A reads contact_inquiries (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table contact_inquiries
+ ok  R09b A reads support_tickets (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table support_tickets
+ ok  R09c A reads support_messages (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table support_messages
+ ok  R09d A reads role_permissions (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table role_permissions
+ ok  R09e A reads user_change_log (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table user_change_log
+ ok  R09f A reads user_status_history (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table user_status_history
+ ok  R09g A reads verification_requests (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table verification_requests
+ ok  R09h A reads history_clear_events (no grant exists) | expected: error 42501 | observed: error 42501 permission denied for table history_clear_events
+ ok  W01 A updates B's users row | expected: refused (error or 0 rows) | observed: rows=0
+ ok  W02 A updates B's listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  W03 A deletes B's listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  W04 A inserts a listing owned by B | expected: refused (error or 0 rows) | observed: error 42501 protected column
+ ok  W05 A adds an image to B's listing | expected: refused (error or 0 rows) | observed: error 42501 new row violates row-level security policy for table "listing_images"
+ ok  W06 A adds a favourite for B | expected: refused (error or 0 rows) | observed: error 42501 new row violates row-level security policy for table "favorites"
+ ok  W07 A writes the view ledger directly | expected: refused (error or 0 rows) | observed: error 42501 new row violates row-level security policy for table "listing_views"
+ ok  W08 A uploads to the avatars bucket (staff only) | expected: refused | observed: error new row violates row-level security policy
+ ok  F01 A calls admin_search_users_by_email | expected: permission denied | observed: error 42501 permission denied for function admin_search_users_by_email
+ ok  F02 A calls clear_user_history | expected: permission denied | observed: error 42501 permission denied for function clear_user_history
+ ok  F03 anonymous calls get_listing_owner_contact | expected: denied | observed: error 42501 permission denied for function get_listing_owner_contact
+ ok  F04 signed-in A gets the owner contact of an ACTIVE listing (the legitimate path) | expected: one row with B's phone | observed: rows=1
+ ok  F05 A asks the owner contact of a PENDING listing | expected: refused (error or 0 rows) | observed: rows=0
+ ok  F06 no cap on contact reveals (owner decision D49): one caller opens six different active listings in a row on the direct RPC | expected: all six answer | observed: answered 6 of 6
+ ok  V01 anonymous calls record_listing_view directly | expected: permission denied | observed: error 42501 permission denied for function record_listing_view
+ ok  V02 signed-in A calls record_listing_view directly (spoofing B) | expected: permission denied | observed: error 42501 permission denied for function record_listing_view
+ ok  V03 a pending listing's views_count after the direct calls above | expected: unchanged | observed: 0 -> 0
+ ok  V04 no ledger row exists "as B" created by a non-server caller | expected: 0 rows | observed: rows=0
+ ok  V05 server (service_role) records a view for the server-set user id exactly once | expected: one ledger row, views_count 1 | observed: rows=1 rows=1 ledger=1 views_count=1
+info V06 return value of record_listing_view for the first server call | expected: true after hardening (the route reads recorded === true); null before | observed: true
+ ok  V07 even the server does not count a view of a PENDING listing | expected: unchanged | observed: 0 -> 0 (rows=1)
+ ok  V08a record_recently_viewed with cap 0 | expected: no error, the just-viewed item is kept | observed: rows=0; kept=1
+ ok  V08b record_recently_viewed with cap -5 | expected: no error, the just-viewed item is kept | observed: rows=0; kept=1
+ ok  V08c record_recently_viewed with cap null | expected: no error, the just-viewed item is kept | observed: rows=0; kept=1
+ ok  V08d record_recently_viewed with cap 1000000 | expected: no error, the just-viewed item is kept | observed: rows=0; kept=1
+ ok  V09 record_recently_viewed with the default cap | expected: works | observed: rows=0
+ ok  V10 anonymous calls record_recently_viewed | expected: refused | observed: see result
+ ok  P01 A edits own name and phone | expected: works | observed: rows=1
+ ok  P02 A creates a listing exactly as createListing does (pending, 30-day expiry, 0 views) | expected: works | observed: rows=1
+ ok  P03 A edits title and price of own listing | expected: works | observed: rows=1
+ ok  P04 signed-in A reads B's ACTIVE (public) listing | expected: works | observed: rows=1
+ ok  P05 anonymous reads an ACTIVE (public) listing | expected: works | observed: rows=1
+ ok  P06 server (service_role) blocks and un-blocks a user (the auto-lift in blockCheck.ts) | expected: works | observed: rows=1 / rows=1
+ ok  P07 server (service_role) publishes, premium-marks and re-stamps a listing (the gateway path) | expected: works | observed: rows=1
+ ok  P08 a real administrator session may set premium on a listing | expected: works | observed: rows=1
+ ok  S01 sign-up metadata asks for role=admin | expected: role = user | observed: role=user
+ ok  S02 sign-up metadata asks for is_verified=true | expected: false | observed: is_verified=false
+ ok  S03 sign-up metadata user_type=agent (the one choice the form offers) is kept | expected: agent | observed: user_type=agent
+ ok  S04 invalid user_type / non-https avatar in metadata | expected: private, no javascript: address | observed: user_type=private avatar=
+ ok  U01 users.role written alone by its own owner | expected: unchanged | observed: error 42501 protected column; role: "user" -> "user"
+ ok  U02 users.role written alone by its own owner | expected: unchanged | observed: error 42501 protected column; role: "user" -> "user"
+ ok  U03 users.is_verified written alone by its own owner | expected: unchanged | observed: error 42501 protected column; is_verified: false -> false
+ ok  U04 users.status written alone by its own owner | expected: unchanged | observed: rows=0; status: "blocked" -> "blocked"
+ ok  U05 users.block_reason written alone by its own owner | expected: unchanged | observed: rows=0; block_reason: "zz_synth_mvidw0hk sanction" -> "zz_synth_mvidw0hk sanction"
+ ok  U06 users.suspended_until written alone by its own owner | expected: unchanged | observed: rows=0; suspended_until: "2099-01-01T00:00:00Z" -> "2099-01-01T00:00:00+00:00"
+ ok  U07 users.deleted_at written alone by its own owner | expected: unchanged | observed: error 42501 protected column; deleted_at: null -> null
+ ok  U08 users.public_id written alone by its own owner | expected: unchanged | observed: error 42501 protected column; public_id: 669 -> 669
+ ok  L01 listings.status written alone by its own owner | expected: unchanged | observed: error 42501 protected column; status: "pending" -> "pending"
+ ok  L02 listings.is_premium written alone by its own owner | expected: unchanged | observed: error 42501 protected column; is_premium: false -> false
+ ok  L03 listings.premium_until written alone by its own owner | expected: unchanged | observed: error 42501 protected column; premium_until: null -> null
+ ok  L04 listings.views_count written alone by its own owner | expected: unchanged | observed: error 42501 protected column; views_count: 0 -> 0
+ ok  L05 listings.expires_at written alone by its own owner | expected: unchanged | observed: error 42501 protected column; expires_at: "2026-11-20T17:26:40.954Z" -> "2026-11-20T17:26:40.954+00:00"
+ ok  L06 listings.public_id written alone by its own owner | expected: unchanged | observed: error 42501 protected column; public_id: 360 -> 360
+ ok  L07 listings.user_id written alone by its own owner | expected: unchanged | observed: error 42501 protected column; user_id: "c115ebbe-3486-4236-979a-808a52cca27e" -> "c115ebbe-3486-4236-979a-808a52cca27e"
+ ok  I01 A inserts status=active | expected: refused | observed: error 42501 protected column
+ ok  I02 A inserts with NO status (the column default is active) | expected: refused | observed: error 42501 protected column
+ ok  I03 A inserts pending but is_premium=true | expected: refused | observed: error 42501 protected column
+ ok  I04 A inserts pending but premium_until set | expected: refused | observed: error 42501 protected column
+ ok  I05 A inserts pending but views_count=5 | expected: refused | observed: error 42501 protected column
+ ok  I06 A inserts pending but expires_at in 2099 | expected: refused | observed: error 42501 protected column
+ ok  BL01a status blocked, permanent: edits own profile | expected: refused | observed: rows=0
+ ok  BL01b status blocked, permanent: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  BL01c status blocked, permanent: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  BL01d status blocked, permanent: edits own listing | expected: refused | observed: rows=0
+ ok  BL01e status blocked, permanent: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL01f status blocked, permanent: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL01g status blocked, permanent: cannot READ own status row either (reads are refused, D26) | expected: refused | observed: rows=0
+ ok  BL02a status blocked until a FUTURE date: edits own profile | expected: refused | observed: rows=0
+ ok  BL02b status blocked until a FUTURE date: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  BL02c status blocked until a FUTURE date: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  BL02d status blocked until a FUTURE date: edits own listing | expected: refused | observed: rows=0
+ ok  BL02e status blocked until a FUTURE date: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL02f status blocked until a FUTURE date: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL02g status blocked until a FUTURE date: cannot READ own status row either (reads are refused, D26) | expected: refused | observed: rows=0
+ ok  BL03a status inactive (deactivated by staff): edits own profile | expected: refused | observed: rows=0
+ ok  BL03b status inactive (deactivated by staff): creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  BL03c status inactive (deactivated by staff): adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  BL03d status inactive (deactivated by staff): edits own listing | expected: refused | observed: rows=0
+ ok  BL03e status inactive (deactivated by staff): asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL03f status inactive (deactivated by staff): records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  BL03g status inactive (deactivated by staff): cannot READ own status row either (reads are refused, D26) | expected: refused | observed: rows=0
+ ok  BL04a status blocked but the suspension date has PASSED (the auto-lift case): edits own profile | expected: works | observed: rows=1
+ ok  BL04b status blocked but the suspension date has PASSED (the auto-lift case): creates a listing | expected: works | observed: rows=1
+ ok  BL04c status blocked but the suspension date has PASSED (the auto-lift case): adds a favourite | expected: works | observed: rows=1
+ ok  BL04d status blocked but the suspension date has PASSED (the auto-lift case): edits own listing | expected: works | observed: rows=1
+ ok  BL04e status blocked but the suspension date has PASSED (the auto-lift case): asks the owner contact (RPC) | expected: works | observed: rows=1
+ ok  BL04f status blocked but the suspension date has PASSED (the auto-lift case): records a recently viewed item (RPC) | expected: works | observed: rows=0
+ ok  BL04g status blocked but the suspension date has PASSED (the auto-lift case): can still READ own status row | expected: works | observed: rows=1
+ ok  BL05a status active again after an unblock: edits own profile | expected: works | observed: rows=1
+ ok  BL05b status active again after an unblock: creates a listing | expected: works | observed: rows=1
+ ok  BL05c status active again after an unblock: adds a favourite | expected: works | observed: rows=1
+ ok  BL05d status active again after an unblock: edits own listing | expected: works | observed: rows=1
+ ok  BL05e status active again after an unblock: asks the owner contact (RPC) | expected: works | observed: rows=1
+ ok  BL05f status active again after an unblock: records a recently viewed item (RPC) | expected: works | observed: rows=0
+ ok  BL05g status active again after an unblock: can still READ own status row | expected: works | observed: rows=1
+ ok  BL06 a blocked administrator edits another person's listing | expected: refused | observed: rows=0
+ ok  BL07 the same administrator after the unblock | expected: works | observed: rows=1
+ ok  N01ua a DELETED user account (deleted_at set), valid token: edits own profile | expected: refused | observed: rows=0
+ ok  N01ub a DELETED user account (deleted_at set), valid token: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N01uc a DELETED user account (deleted_at set), valid token: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N01ud a DELETED user account (deleted_at set), valid token: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01ue a DELETED user account (deleted_at set), valid token: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01uf a DELETED user account (deleted_at set), valid token: reads a public listing | expected: refused | observed: rows=0
+ ok  N01ug a DELETED user account (deleted_at set), valid token: reads own row | expected: refused | observed: rows=0
+ ok  N01ga a DELETED agent account (deleted_at set), valid token: edits own profile | expected: refused | observed: rows=0
+ ok  N01gb a DELETED agent account (deleted_at set), valid token: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N01gc a DELETED agent account (deleted_at set), valid token: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N01gd a DELETED agent account (deleted_at set), valid token: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01ge a DELETED agent account (deleted_at set), valid token: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01gf a DELETED agent account (deleted_at set), valid token: reads a public listing | expected: refused | observed: rows=0
+ ok  N01gg a DELETED agent account (deleted_at set), valid token: reads own row | expected: refused | observed: rows=0
+ ok  N01ma a DELETED moderator account (deleted_at set), valid token: edits own profile | expected: refused | observed: rows=0
+ ok  N01mb a DELETED moderator account (deleted_at set), valid token: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N01mc a DELETED moderator account (deleted_at set), valid token: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N01md a DELETED moderator account (deleted_at set), valid token: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01me a DELETED moderator account (deleted_at set), valid token: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01mf a DELETED moderator account (deleted_at set), valid token: reads a public listing | expected: refused | observed: rows=0
+ ok  N01mg a DELETED moderator account (deleted_at set), valid token: reads own row | expected: refused | observed: rows=0
+ ok  N01aa a DELETED admin account (deleted_at set), valid token: edits own profile | expected: refused | observed: rows=0
+ ok  N01ab a DELETED admin account (deleted_at set), valid token: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N01ac a DELETED admin account (deleted_at set), valid token: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N01ad a DELETED admin account (deleted_at set), valid token: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01ae a DELETED admin account (deleted_at set), valid token: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N01af a DELETED admin account (deleted_at set), valid token: reads a public listing | expected: refused | observed: rows=0
+ ok  N01ag a DELETED admin account (deleted_at set), valid token: reads own row | expected: refused | observed: rows=0
+ ok  N02a an account with NO profile row, valid token: edits own profile | expected: refused | observed: rows=0
+ ok  N02b an account with NO profile row, valid token: creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N02c an account with NO profile row, valid token: adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N02d an account with NO profile row, valid token: asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N02e an account with NO profile row, valid token: records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N02f an account with NO profile row, valid token: reads a public listing | expected: refused | observed: rows=0
+ ok  N02g an account with NO profile row, valid token: reads own row | expected: refused | observed: rows=0
+ ok  N03a an account whose SESSION was ended (token still unexpired): edits own profile | expected: refused | observed: rows=0
+ ok  N03b an account whose SESSION was ended (token still unexpired): creates a listing | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "listings
+ ok  N03c an account whose SESSION was ended (token still unexpired): adds a favourite | expected: refused | observed: error 42501 new row violates row-level security policy "blocked_account_no_insert" for table "favorite
+ ok  N03d an account whose SESSION was ended (token still unexpired): asks the owner contact (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N03e an account whose SESSION was ended (token still unexpired): records a recently viewed item (RPC) | expected: refused | observed: error 42501 account_blocked
+ ok  N03f an account whose SESSION was ended (token still unexpired): reads a public listing | expected: refused | observed: rows=0
+ ok  N03g an account whose SESSION was ended (token still unexpired): reads own row | expected: refused | observed: rows=0
+ ok  N04a a BLOCKED account: reads a public listing | expected: refused | observed: rows=0
+ ok  N04b a BLOCKED account: reads a public lookup table (locations) | expected: refused | observed: rows=0
+ ok  N04c the same account after the unblock reads a public listing | expected: works | observed: rows=1
+ ok  N05a an ACTIVE moderator uploads to the avatars bucket (staff may) | expected: works | observed: uploaded
+ ok  N05b a BLOCKED moderator uploads to the avatars bucket | expected: refused | observed: error new row violates row-level security policy
+info N05c a blocked moderator updates or deletes an avatars object | expected: not asserted | observed: no control exists: an ACTIVE moderator's update and delete already do nothing (no SELECT policy, r9-53-storage-probe.txt), so the change-7 write check is the INSERT of N05b / N05d
+ ok  N05d a BLOCKED administrator uploads to the avatars bucket | expected: refused | observed: error new row violates row-level security policy
+ ok  N06a realtime: an ACTIVE person receives an event for an own notification (the control) | expected: works | observed: subscribed; event=true
+ ok  N06b realtime: a BLOCKED person receives an event for a notification written after the block | expected: no event | observed: subscribed; event=false
+ ok  N07a a marked account (10 days) calls caller_access_state through the Data API | expected: function not found (PGRST202 / 42883) | observed: error PGRST202 Could not find the function public.caller_access_state without parameters in the schema ca
+ ok  N07b a marked account (10 days) calls restore_inactive_account through the Data API | expected: function not found (PGRST202 / 42883) | observed: error PGRST202 Could not find the function public.restore_inactive_account without parameters in the sche
+ ok  N07c the 10-day account is still marked after both calls (untouched) | expected: status inactive, deleted_at set | observed: inactive deleted_at set
+ ok  N08a a marked account (100 days) calls caller_access_state through the Data API | expected: function not found (PGRST202 / 42883) | observed: error PGRST202 Could not find the function public.caller_access_state without parameters in the schema ca
+ ok  N08b a marked account (100 days) calls restore_inactive_account through the Data API | expected: function not found (PGRST202 / 42883) | observed: error PGRST202 Could not find the function public.restore_inactive_account without parameters in the sche
+ ok  N08c the 100-day account is still marked after both calls (untouched) | expected: status inactive, deleted_at set | observed: inactive deleted_at set
+ ok  N08d the catalog holds neither caller_access_state() nor restore_inactive_account() | expected: neither function exists | observed: caller_access_state absent; restore_inactive_account absent
+ ok  V701 listings.created_at written alone by its own owner | expected: unchanged | observed: error 42501 protected column; created_at: "2026-10-21T17:26:26.569568+00:00" -> "2026-10-21T17:26:26.569568+00:00"
+ ok  V702 A inserts a listing whose created_at lies ten years in the future (to sit at the top of the catalogue) | expected: refused | observed: error 42501 protected column
+ ok  V703 A inserts a listing that supplies its own public_id (a number far ahead of the sequence) | expected: stored with a different public_id | observed: public_id stored differs from the supplied one
+ ok  V704 A inserts a listing exactly as createListing sends it (no created_at, no public_id) with a plain slug | expected: works | observed: rows=1
+ ok  V705 A inserts a listing whose slug has a capital letter, a space and a punctuation mark | expected: refused | observed: error 42501 protected column
+ ok  V706 listings.slug written alone by its own owner | expected: unchanged | observed: error 42501 protected column; slug: "zz_synth_mvidw0hk-a_pending" -> "zz_synth_mvidw0hk-a_pending"
+info V707 A inserts a listing with the slug generateSlug makes for "Shitet apartament - 2+1" (two hyphens in a row) | expected: not asserted: the kickoff rule refuses it, createListing makes it (Opus decides) | observed: error 42501 protected column
+ ok  V710 a new listing at 100: price_initial 100, no old price | expected: price_initial 100, price_old null | observed: price 100, price_initial 100, price_old null
+ ok  V711 100 -> 80: price_old is the starting price, 100 | expected: price_initial 100, price_old 100 | observed: price 80, price_initial 100, price_old 100
+ ok  V712 80 -> 120: no old price | expected: price_initial 100, price_old null | observed: price 120, price_initial 100, price_old null
+ ok  V713 120 -> 110: no old price (110 is above the start) | expected: price_initial 100, price_old null | observed: price 110, price_initial 100, price_old null
+ ok  V714 110 -> 90: price_old 100 again | expected: price_initial 100, price_old 100 | observed: price 90, price_initial 100, price_old 100
+ ok  V715 the owner's example 100 -> 120 -> 99: price_old 100 (today's rule would store 120) | expected: price_initial 100, price_old 100 | observed: price 99, price_initial 100, price_old 100
+ ok  V716 a session owner patches price_old and price_initial directly: the trigger's values stay | expected: price_initial 100, price_old null | observed: price 100, price_initial 100, price_old null
+ ok  V717 a session owner (not service_role) lowers the price 100 -> 70: price_old 100 | expected: price_initial 100, price_old 100 | observed: price 70, price_initial 100, price_old 100
+ ok  V718 a currency change ALL -> EUR at a new price 50 (BLOCKED, the database cannot convert; the draft's fail-safe): the new price is the new start, no old price | expected: currency EUR, price_initial 50, price_old null | observed: currency EUR, price_initial 50, price_old null
+ ok  V720 A (active) asks the owner contact of an ACTIVE listing | expected: one row | observed: rows=1
+ ok  V721 A (active) asks the owner contact of a SOLD listing (owner decision F2: contact is locked) | expected: no row | observed: rows=0
+ ok  V722 A (active) asks the owner contact of a RENTED listing (owner decision F2: contact is locked) | expected: no row | observed: rows=0
+ ok  V723 A (active) asks the owner contact of a ARCHIVED listing (owner decision F2: contact is locked) | expected: no row | observed: rows=0
+ ok  V724 to_regclass('public.owner_contact_access') is null: the quota table does not exist | expected: null | observed: null
+ ok  V725 the quota function public.owner_contact_daily_limit() does not exist | expected: absent | observed: absent
+ ok  V730 anon calls public.end_user_sessions | expected: permission denied (42501) | observed: error 42501 permission denied for function end_user_sessions
+ ok  V731 a signed-in session calls public.end_user_sessions | expected: permission denied (42501) | observed: error 42501 permission denied for function end_user_sessions
+ ok  V732 service_role ends every session of a synthetic user | expected: the rows go and the count is returned | observed: sessions 1 -> 0; returned 1
+ ok  V740 anon calls public.set_default_currency | expected: permission denied (42501) | observed: error 42501 permission denied for function set_default_currency
+ ok  V741 authenticated calls public.set_default_currency | expected: permission denied (42501) | observed: error 42501 permission denied for function set_default_currency
+ ok  V742 service_role: a missing currency is refused (22023) | expected: error 22023 | observed: error 22023
+ ok  V743 service_role: an inactive currency (a row made inside the rolled-back transaction) is refused (22023) | expected: error 22023 | observed: error 22023
+ ok  V744 service_role: an active currency (EUR) becomes the one default | expected: exactly one default, EUR | observed: defaults after the call: EUR
+ ok  V750 anon selects, inserts and deletes public.reauth_failures | expected: permission denied (42501) for each | observed: error 42501 permission denied for table reauth_failures | error 42501 permission denied for table reauth_failures | error 42501 permission denied for table reauth_failures
+ ok  V751 a signed-in session selects, inserts and deletes public.reauth_failures | expected: permission denied (42501) for each | observed: error 42501 permission denied for table reauth_failures | error 42501 permission denied for table reauth_failures | error 42501 permission denied for table reauth_failures
+ ok  V752 service_role inserts the failure rows of a synthetic person and counts them | expected: two rows are written and counted | observed: insert ok; count 2; clean-up ok
+ ok  V753 the grantees of the REAL public.reauth_failures are the table owner and service_role only (no PUBLIC, anon or authenticated; no column grant) | expected: owner + service_role | observed: grantees postgres,service_role; service_role privileges DELETE,INSERT,MAINTAIN,REFERENCES,SELECT,TRIGGER,TRUNCATE; column grants 0
+ ok  H01a an ACTIVE account reads the view public_user_profiles (the control) | expected: one row (B's public profile) | observed: rows=1
+ ok  H01b a BLOCKED account: reads the view public_user_profiles | expected: refused | observed: rows=0
+ ok  H01c a DELETED account (deleted_at set), valid token: reads the view public_user_profiles | expected: refused | observed: rows=0
+ ok  H01d an account whose SESSION was ended (token still unexpired): reads the view public_user_profiles | expected: refused | observed: rows=0
+ ok  H01e the SERVICE ROLE (a server role, not a user) reads the view public_user_profiles | expected: one row (B's public profile) | observed: rows=1
+ ok  H02 every SECURITY DEFINER function of public (14) has pg_temp as the last search_path entry (privileged catalog read) | expected: none without | observed: none without
+info DX00 the deletion design is applied (pages.updated_by_name exists) | expected: no before the SQL is applied, yes after | observed: no (error 42703 column pages.updated_by_name does not exist)
+VULN DX01 the backfill leaves updated_at of email_templates and support_tickets alone | expected: no row changed since the snapshot taken before the apply | observed: the deletion SQL is not applied: updated_by_name does not exist, so the backfill has not run
+VULN DX02a INSERT with an id and a supplied name | expected: the trigger's name (from the id) | observed: error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+VULN DX02b INSERT with a null id and a supplied name | expected: null | observed: error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+VULN DX02c UPDATE of the name alone (id unchanged) | expected: see the expectation of DX02a-b | observed: no row: the INSERT of DX02a failed
+VULN DX02d UPDATE changing the id to another person with a supplied name | expected: see the expectation of DX02a-b | observed: no row: the INSERT of DX02a failed
+VULN DX02e UPDATE making the id null (the SET NULL of a deletion) | expected: see the expectation of DX02a-b | observed: no row: the INSERT of DX02a failed
+VULN DX03a a staff account that has acted (a status-history row names it) is deleted | expected: the deletion succeeds | observed: blocked: Database error deleting user
+VULN DX03b pages row of the deleted staff account keeps the name with a null id | expected: updated_by null, updated_by_name = the person's name | observed: the row was not created
+VULN DX03c user_status_history row (NO ACTION today) of the deleted staff account keeps the name with a null id | expected: changed_by null, changed_by_name = the person's name | observed: error 42703 column user_status_history.changed_by_name does not exist
+VULN DX03d1 a staff account named by a key to auth.users (email_templates.updated_by, NO ACTION today) is deleted | expected: the deletion succeeds | observed: blocked: Database error deleting user
+VULN DX03d2 email_templates row (key to auth.users) of the deleted staff account keeps the name with a null id | expected: updated_by null, updated_by_name = the person's name | observed: error 42703 column email_templates.updated_by_name does not exist
+VULN DX04a the count drops by one when one of two viewers is deleted | expected: views_count 2 -> 1 | observed: views_count 2 -> 2
+VULN DX04b the deleted viewer's ledger row goes, the other viewer's stays | expected: one row, of the other viewer | observed: 2 row(s), one with a null user id
+VULN DX04c a viewer's row goes and views_count never drops below 0 | expected: row gone, views_count 0 | observed: rows 1, views_count 0
+VULN DX05a deleting a company's creator succeeds | expected: the deletion succeeds | observed: no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+VULN DX05b the company goes with its creator | expected: no company row | observed: no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+VULN DX05c the agents of the company keep company_id null | expected: both agents with company_id null | observed: no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+VULN DX06a anon reads updated_by_name of pages | expected: refused by a privilege (error 42501), no value returned | observed: the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+VULN DX06b a signed-in session reads updated_by_name of pages | expected: refused by a privilege (error 42501), no value returned | observed: the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+VULN DX06c anon reads updated_by_name of site_footer | expected: refused by a privilege (error 42501), no value returned | observed: the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+VULN DX06d a signed-in session reads updated_by_name of site_footer | expected: refused by a privilege (error 42501), no value returned | observed: the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+ ok  DX06e anon reads id, title, slug, content and is_published of a published page | expected: works | observed: rows=1
+ ok  DX06f a signed-in session reads id, title, slug, content and is_published of a published page | expected: works | observed: rows=1
+ ok  DX06g anon reads the public footer columns (locale, brand_title) | expected: works | observed: rows=1
+ ok  E01 A's role at the end of all attempts | expected: user | observed: role=user
+ ok  E02 A edits B's listing after all escalation attempts | expected: refused (error or 0 rows) | observed: rows=0
+cleanup: VERIFIED COMPLETE left={"users":0,"listings":0,"listings_plain_slug":0,"listing_views":0,"recently_viewed":0,"pages":0,"companies":0,"email_templates":0,"status_history_by_actor":0,"auth_users":0} errors=0
+
+237 checks: 212 pass, 21 VULN, 0 BROKEN, 0 INCONCLUSIVE, 4 info. Not passing: DX01 DX02a DX02b DX02c DX02d DX02e DX03a DX03b DX03c DX03d1 DX03d2 DX04a DX04b DX04c DX05a DX05b DX05c DX06a DX06b DX06c DX06d
+RESULT: FAIL (exit 1)
+EXIT_CODE=1

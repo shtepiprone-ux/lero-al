@@ -1,0 +1,55 @@
+# r55-01 (R166): verbose integration run of src/lib/account/deleteAccount.integration.test.ts
+platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --config vitest.integration.config.ts src/lib/account/deleteAccount.integration.test.ts --reporter=verbose --retry=0  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref of NEXT_PUBLIC_SUPABASE_URL, 20 chars>)
+started: 2026-10-29T11:18:12.1791051Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvtg9ee7f410/company-logo',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvtg9ee7f410/listing-two',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvtg9ee7f410/listing-one',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+stdout | src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+[deleteAsset] {
+  publicId: 'zz_synth_mvtg9ee7f410/verification',
+  reason: 'account_deleted',
+  dryRun: true,
+  outcome: 'DRY_RUN'
+}
+
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 10656ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 1051ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id 3456ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id 435ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account 2395ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account 3326ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  12:18:13
+   Duration  26.18s (transform 230ms, setup 39ms, import 423ms, tests 25.58s, environment 0ms)
+
+
+--- exit code: 0 ---
+

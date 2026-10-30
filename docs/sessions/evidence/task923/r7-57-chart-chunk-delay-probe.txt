@@ -1,0 +1,18 @@
+platform win32 node v22.22.3
+start 2026-10-15T17:54:15Z
+command: node docs/sessions/evidence/task923/r7-57-chart-chunk-delay-probe.mjs patterns-mantine-admindashboardview--default~en-english uk 1024 0
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+apexcharts chunk delay 0ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1108ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1103ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1127ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 0ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 1219ms; chart details at return 3, 3s later 3; layout unchanged
+exit=0
+command: node docs/sessions/evidence/task923/r7-57-chart-chunk-delay-probe.mjs patterns-mantine-admindashboardview--default~en-english uk 1024 2000
+platform win32 node v22.22.3; state patterns-mantine-admindashboardview--default~en-english @ uk 1024
+apexcharts chunk delay 2000ms trial 1: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 3271ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 2000ms trial 2: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 3251ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 2000ms trial 3: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 3253ms; chart details at return 3, 3s later 3; layout unchanged
+apexcharts chunk delay 2000ms trial 4: page scrolls true / true, images still loading 0 / 0; open ok; waitStable 3266ms; chart details at return 3, 3s later 3; layout unchanged
+exit=0
+end 2026-10-15T17:55:05Z
+EXIT_CODE=0

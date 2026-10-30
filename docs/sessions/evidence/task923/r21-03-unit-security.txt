@@ -1,0 +1,12 @@
+platform win32 10.0.26300 node v22.22.3; start 2026-10-21T17:19:30.000Z
+cmd npx vitest run src/modules/listings/lib/__tests__/generateSlug.security.test.ts src/lib/auth/blockCheck.security.test.ts   (R93 (c))
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  19:19:32
+   Duration  986ms (transform 80ms, setup 167ms, import 68ms, tests 281ms, environment 737ms)
+
+EXIT_CODE=0

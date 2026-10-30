@@ -1,0 +1,12 @@
+# Task 923 Revision 42 write authority (Opus), 2026-10-24T08:02:22.750Z, win32, node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+src/app/admin/users/[id]/page.tsx: isPolicyPath false; in D8_D9 scope true
+src/app/admin/users/page.tsx: isPolicyPath false; in D8_D9 scope true
+src/components/admin/AdminPageHeader.tsx: isPolicyPath false; in D8_D9 scope true
+src/stories/patterns/mantine/AdminPageHeader.stories.tsx: isPolicyPath false; in D8_D9 scope true
+src/app/admin/users/__tests__/adminUserGone.security.test.ts: isPolicyPath false; in D8_D9 scope true
+src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx: isPolicyPath false; in D8_D9 scope true
+messages/sq.json: isPolicyPath false; in D8_D9 scope true
+messages/en.json: isPolicyPath false; in D8_D9 scope true
+messages/uk.json: isPolicyPath false; in D8_D9 scope true
+messages/it.json: isPolicyPath false; in D8_D9 scope true
+D8_D9 executionStatus ready; scope 333

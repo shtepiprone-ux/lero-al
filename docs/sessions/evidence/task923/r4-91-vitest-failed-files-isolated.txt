@@ -1,0 +1,12 @@
+platform win32 node v22.22.3
+command: npx vitest run <the two files that failed in r4-91-vitest-all-1>
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  10 passed (10)
+   Start at  23:27:17
+   Duration  3.49s (transform 1.12s, setup 163ms, import 1.73s, tests 3.21s, environment 1.40s)
+
+EXIT_CODE=0

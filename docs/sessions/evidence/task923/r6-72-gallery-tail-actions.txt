@@ -1,0 +1,25 @@
+platform win32 node v22.22.3
+input docs/sessions/evidence/task923/r6-gallery/rows.jsonl (190 rows); baseline docs/sessions/evidence/task923/r5-full/rows.jsonl (190 rows of the same two Stories)
+rows whose component-overflow list has a tail (AC24: must be 0): 0
+component-overflow details by kind: {"counter":264,"desync":12,"in-flow slide":0,"other":0} (AC24: in-flow slide 0, other 0)
+
+per width, rows with the rule / printed details (this run | baseline r5-full):
+  action-hidden
+      320px  0 rows / 0 details       | 8 rows / 96 details
+      390px  0 rows / 0 details       | 8 rows / 96 details
+      639px  0 rows / 0 details       | 8 rows / 96 details
+      640px  0 rows / 0 details       | 0 rows / 0 details
+     1440px  0 rows / 0 details       | 0 rows / 0 details
+  action-covered
+      320px  0 rows / 0 details       | 0 rows / 0 details
+      390px  0 rows / 0 details       | 0 rows / 0 details
+      639px  0 rows / 0 details       | 0 rows / 0 details
+      640px  0 rows / 0 details       | 0 rows / 0 details
+     1440px  0 rows / 0 details       | 0 rows / 0 details
+  target-small
+      320px  12 rows / 100 details    | 12 rows / 100 details
+      390px  12 rows / 100 details    | 12 rows / 100 details
+      639px  12 rows / 100 details    | 12 rows / 100 details
+      640px  12 rows / 100 details    | 12 rows / 100 details
+     1440px  0 rows / 0 details       | 0 rows / 0 details
+EXIT_CODE=0

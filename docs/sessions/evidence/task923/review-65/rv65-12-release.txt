@@ -1,0 +1,20 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al
+command: node scripts/workflow-gates/cli.mjs release
+exit 0
+command: node scripts/workflow-gates/cli.mjs diff --phase release --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree
+Security scope: 10273 changed files, 9 task contract(s).
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Product verification requires an implemented or reviewed contract
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Merge/release requires independently reviewed stage
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Independent Opus review decision missing
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Invalid or sensitive repository path
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/cabinet/actions/companyLink.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/lib/deleteCompany.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/companyCreate.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/companyCreate.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/auth/components/__tests__/authSheetCompany.security.test.tsx
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/components/__tests__/CreateCompanyDialog.security.test.tsx
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/components/__tests__/CreateCompanyDialog.security.test.tsx
+exit 1

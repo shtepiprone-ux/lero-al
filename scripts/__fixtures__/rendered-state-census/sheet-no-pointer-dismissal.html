@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: sheet-no-pointer-dismissal</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); }
+  .dialog { position: fixed; left: 16px; right: 16px; padding: 16px; background: #fff; border-radius: 8px; }
+  .mantine-Drawer-content { position: fixed; inset: 0; background: #fff; padding: 16px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 1 self-test fixture "sheet-no-pointer-dismissal". A full-bleed bottom sheet with no close control: close-control and outside do not apply and are recorded as not applicable. -->
+<div id="storybook-root">
+  <button id="open" type="button">Open</button>
+  <p>Fixture page, not a product Story.</p>
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-sheet-no-pointer-dismissal","story":"sheet-no-pointer-dismissal","open":{"kind":"click","selector":"#open"},"trigger":"#open","portals":1,"focus":"trap","dismiss":["escape","close-control","outside"]}</script>
+<script>
+(function () {
+  var portals = [];
+  var opener = document.getElementById('open');
+  function close() {
+    portals.forEach(function (p) { p.remove(); });
+    portals = [];
+    opener.focus();
+  }
+  function add(html) {
+    var p = document.createElement('div');
+    p.setAttribute('data-portal', 'true');
+    p.innerHTML = html;
+    document.body.appendChild(p);
+    portals.push(p);
+    return p;
+  }
+  function open() {
+    if (portals.length) return;
+    var p = add('<div class="mantine-Drawer-content" role="dialog" aria-modal="true"><h2>Sheet title</h2><p>Sheet body.</p><button type="button">Apply</button><button type="button">Reset</button></div>');
+    p.querySelector('button').focus();
+  }
+  opener.addEventListener('click', open);
+  document.addEventListener('keydown', function (e) {
+    if (!portals.length) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var top = portals[portals.length - 1];
+      var f = Array.prototype.slice.call(top.querySelectorAll('button'));
+      var first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!top.contains(a)) { first.focus(); e.preventDefault(); }
+      else if (e.shiftKey && a === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && a === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

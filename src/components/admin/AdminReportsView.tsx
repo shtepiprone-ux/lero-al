@@ -1,12 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Badge, Group, ScrollArea, Stack, Tabs, Text, useMantineTheme } from '@mantine/core'
+import { Group, ScrollArea, Stack, Tabs, Text, useMantineTheme } from '@mantine/core'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
-import { REPORT_STATUS_COLOR } from '@/components/admin/ReportDetailDialogView'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { REPORT_FILTERS, type ReportStatusFilter } from '@/components/admin/reportStatusFilter'
 import type { ReportRow } from '@/components/admin/AdminReportsManager'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AdminReportsViewProps {
   /** Rows of the active tab (already filtered by the container). */
@@ -22,7 +22,7 @@ export interface AdminReportsViewProps {
  * Presentational View of the `/admin/reports` list (Task 858, Container/Presentational split of
  * `AdminReportsManager`). `useTranslations` only: no state, no navigation, no server action. Status tabs
  * are Mantine `Tabs` with a count `Badge`; the list is the shared `AdminTable` adapter (table from 768px,
- * cards below). The detail dialog is the separate `ReportDetailDialogView`.
+ * record cards below, D36). The detail dialog is the separate `ReportDetailDialogView`.
  */
 export function AdminReportsView({ reports, filter, counts, onFilterChange, onSelect }: AdminReportsViewProps) {
   const t = useTranslations('admin.reports')
@@ -31,9 +31,9 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
 
   function statusBadge(r: ReportRow) {
     return (
-      <Badge variant="light" size="sm" color={REPORT_STATUS_COLOR[r.status]}>
+      <MantineBadge variant="status" entity="report" value={r.status}>
         {t(`status_${r.status}` as Parameters<typeof t>[0])}
-      </Badge>
+      </MantineBadge>
     )
   }
 
@@ -44,32 +44,32 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
     {
       key: 'reason',
       header: t('col_reason'),
-      cell: r => <Text size="sm" fw={500} c="gray.7">{reasonLabel(r)}</Text>,
+      // §7.3 (b): the status badge sits under the reason, one rhythm step (sm) apart (Task 923 R39 (c): it left its own column).
+      cell: r => (
+        <Stack gap="sm" align="flex-start">
+          <Text size="sm" fw={500} c="gray.7">{reasonLabel(r)}</Text>
+          {statusBadge(r)}
+        </Stack>
+      ),
     },
     {
       key: 'listing',
       header: t('col_listing'),
-      // §7.3 (a)/(b): the listing title wraps at the table-title token width, clamped to two lines;
+      // §7.3 (a)/(b): the listing title wraps in full at the table-title token width (D6);
       // the reporter is its dimmed meta line.
       width: theme.other.layout.tableTitleColumnWidth,
       wrap: true,
       cell: r => (
         <Stack gap="micro">
-          <Text size="sm" c="dimmed" lineClamp={2}>{r.listing?.title ?? '—'}</Text>
-          <Text size="xs" c="dimmed" lineClamp={1}>{reporterLabel(r)}</Text>
+          <Text size="sm" c="dimmed">{r.listing?.title ?? '—'}</Text>
+          <Text size="xs" c="dimmed">{reporterLabel(r)}</Text>
         </Stack>
       ),
     },
     {
-      key: 'status',
-      header: t('col_status'),
-      // §7.3 (b): status and date stacked in one cell.
-      cell: r => (
-        <Stack gap="tight" align="flex-start">
-          {statusBadge(r)}
-          <Text size="xs" c="dimmed" component="div"><RelativeTime date={r.created_at} /></Text>
-        </Stack>
-      ),
+      key: 'date',
+      header: t('col_date'),
+      cell: r => <Text size="xs" c="dimmed" component="div"><RelativeTime date={r.created_at} /></Text>,
     },
   ]
 
@@ -86,9 +86,9 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
                   value={f}
                   rightSection={
                     counts[f] > 0 ? (
-                      <Badge size="sm" variant={active ? 'filled' : 'light'} color={active ? 'brand' : 'gray'}>
+                      <MantineBadge variant="count" emphasis={active ? 'brand' : 'neutral'}>
                         {counts[f]}
-                      </Badge>
+                      </MantineBadge>
                     ) : null
                   }
                 >
@@ -106,11 +106,14 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
         rowKey={r => r.id}
         onRowClick={onSelect}
         cardRow={r => ({
-          title: <Text size="sm" fw={500} c="gray.7" component="span">{reasonLabel(r)}</Text>,
-          subtitle: (
-            <Group component="span" gap="xs" wrap="wrap">
+          // a block, like every other card title: an inline `span` made the badge row start 1px lower than the block gap.
+          title: <Text size="sm" fw={500} c="gray.7" component="div">{reasonLabel(r)}</Text>,
+          // R69(e), GR-3h: status and time are the card's badges row, not its subtitle.
+          badges: (
+            <Group gap="xs" wrap="wrap">
               {statusBadge(r)}
-              <RelativeTime date={r.created_at} />
+              {/* the same dimmed xs time the table cell shows; outside the subtitle it no longer inherits that size */}
+              <Text size="xs" c="dimmed" component="span"><RelativeTime date={r.created_at} /></Text>
             </Group>
           ),
           meta: (

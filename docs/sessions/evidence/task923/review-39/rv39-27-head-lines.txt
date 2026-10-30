@@ -1,0 +1,27 @@
+# HEAD 28535934f lines cited by Task 923 claim rows whose working-tree source changed (Review 39, rv39-27-refresh-locators.mjs)
+== src/design-system/mantine/patterns/MantineListingContactPattern.tsx at HEAD 28535934f, lines 204-207
+                disabled={loading || contactDisabled}
+                title={contactDisabled ? contactDisabledLabel : undefined}
+                aria-disabled={contactDisabled || undefined}
+                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <Phone size={theme.other.iconSize.comfortable} />}
+== src/stories/patterns/mantine/ListingContactPattern.stories.tsx at HEAD 28535934f, lines 157-157
+            loading
+== src/design-system/mantine/patterns/MantineListingContactPattern.tsx at HEAD 28535934f, lines 209-209
+                {labels.call}
+== src/modules/listings/components/ListingContact.tsx at HEAD 28535934f, lines 171-171
+    call: t('call'),
+== src/stories/patterns/mantine/ListingContactPattern.stories.tsx at HEAD 28535934f, lines 28-28
+    call: storyT(l, 'storybook.mantine.listing_contact_call'),
+== src/stories/patterns/mantine/ListingDetailPattern.stories.tsx at HEAD 28535934f, lines 181-181
+      call: storyT(l, 'storybook.mantine.listing_contact_call'),
+== src/modules/listings/components/ListingContact.tsx at HEAD 28535934f, lines 129-129
+        window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
+== src/modules/listings/components/ListingContact.tsx at HEAD 28535934f, lines 132-132
+        a.href = `tel:${digits}`
+== src/design-system/mantine/patterns/MantineListingContactPattern.tsx at HEAD 28535934f, lines 272-272
+        <Text size="xs" c="dimmed">
+== src/modules/listings/components/ListingContact.tsx at HEAD 28535934f, lines 116-116
+    if (!contactListingId || contactLoading) return
+== src/components/auth/CaptchaWidget.tsx before R117 (working tree, read by Opus in Review 38: transcript 2fa8cad4-d4b2-4f4e-aec4-747582a94e28.jsonl entry 1589, 2026-10-23T06:51:38.172Z), lines 86 and 108
+        if (onDemand) widget.execute()
+            onError={() => { setChallengeShown(false); onError?.() }}

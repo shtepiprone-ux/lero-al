@@ -2,6 +2,10 @@
 
 Read this for visible UI after `ui-token-contract.md` and before adding, changing, or accepting a Story.
 
+For Opus design/review, first apply `canonical-component-reuse.md`: inspect and reuse the ready component and
+Story, extend only missing states, or create both when no suitable owner exists. Its inherited-design and
+unchanged-chrome exception scopes the measurements below; verify changed integration and relevant regressions.
+
 ## Hierarchy
 
 1. A direct canonical Story proves the real production component and all changed states.

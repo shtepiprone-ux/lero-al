@@ -1,0 +1,4 @@
+# rv65-13: the contracts named by BLOCKED lines of the release-phase diff, counted
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al; command: node scripts/workflow-gates/cli.mjs diff --phase release --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree, BLOCKED lines grouped by contract
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: 14 BLOCKED lines
+contracts with BLOCKED lines: 1

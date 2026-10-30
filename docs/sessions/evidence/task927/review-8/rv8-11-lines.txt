@@ -1,0 +1,16 @@
+﻿# rv8-11: source lines for Task 927 Amendment 9
+platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T19:40:06.665Z
+src/lib/auth/googleIdentity.ts:29: * Google's large size is the 40 px height of Google's branding guidelines (Task 927 D19); `filled_black` is Google's Dark theme (D20).
+src/lib/auth/googleIdentity.ts:34: theme: 'filled_black'
+src/lib/auth/googleIdentity.ts:38: logo_alignment: 'center'
+src/components/auth/GoogleSignInButton.tsx:22: * `prompt()` is never called here: no One Tap and no automatic sign-in (One Tap is the header's `useGoogleOneTap`). The button is Google's medium "Sign in with Google" (D14), which Google never personalizes.
+src/components/auth/GoogleSignInButton.tsx:53: theme: 'filled_black',
+src/components/auth/GoogleSignInButton.tsx:57: logo_alignment: 'center',
+src/components/auth/GoogleSignInSlot.tsx:39: <Box ref={hostRef} w="100%" maw={GOOGLE_BUTTON_MAX_WIDTH} mih={theme.other.boxSize.googleButton} hidden={status !== 'ready'} />
+src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx:261: type: 'standard', theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'rectangular', logo_alignment: 'center', width: drawn, locale: 'it',
+scripts/rendered-interaction-states.json:809: "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's large size, 40 px as Google's branding guidelines give, in its Dark theme (Task 927 D19, D20, 2026-10-25), and Google may personalize it for a returning person (D22), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+write set: src/lib/auth/googleIdentity.ts: scope YES; policy no
+write set: src/components/auth/GoogleSignInButton.tsx: scope YES; policy no
+write set: src/components/auth/GoogleSignInSlot.tsx: scope YES; policy no
+write set: src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx: scope YES; policy no
+write set: scripts/rendered-interaction-states.json: scope YES; policy no

@@ -1,0 +1,11 @@
+platform: win32 (Git Bash); node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; started: 2026-10-24T09:20:05Z
+command: node docs/sessions/evidence/task923/review-48/rv48-18-acl-drift.cjs
+---- output ----
+capture keys: takenAt, tables, columns, policies, grantsInformationSchema, ri, listingsColumns, listingsTriggers, listingsConstraints, publicIdSequence, currencyColumns, currencyConstraints, currencyRatesRows, listingCurrencyLabels, currenciesRows, authSessionsReferrers, authSessionsPrivileges
+live pages relacl: {postgres=arwdDxtm/postgres,anon=rm/postgres,authenticated=rm/postgres,service_role=arwdDxtm/postgres}
+live pages columns: id, title, slug, content, is_published, updated_by, updated_at
+capture pages: null
+live site_footer relacl: {postgres=arwdDxtm/postgres,anon=arwdxtm/postgres,authenticated=arwdxtm/postgres,service_role=arwdDxtm/postgres}
+live site_footer columns: locale, brand_title, tagline, nav_section_title, nav_links, info_section_title, info_links, social_section_title, social_links, copyright_template, updated_at, updated_by
+capture site_footer: null
+EXIT_CODE=0

@@ -8,6 +8,7 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8
 [Console]::OutputEncoding = $utf8
 $contextChunkSize = 7000
+. (Join-Path $PSScriptRoot 'session-role.ps1')
 
 function Test-AnyPattern {
   param(
@@ -27,16 +28,15 @@ function Test-AnyPattern {
 try {
   $event = [Console]::In.ReadToEnd() | ConvertFrom-Json -ErrorAction Stop
   $prompt = [string]$event.prompt
-  $model = if ($event.PSObject.Properties.Name -contains 'model') { [string]$event.model } else { '' }
-  $agentType = if ($event.PSObject.Properties.Name -contains 'agent_type') { [string]$event.agent_type } else { '' }
+  $role = Get-LeroSessionRole $event
 } catch {
   exit 0
 }
 
 # This router is exclusively for Opus orchestration. Sonnet receives execute-task
 # from sonnet-executor-bootstrap.ps1 and must never receive task-design/review context.
-# Fail closed when model metadata is missing so a non-Opus session cannot be misrouted.
-if ($agentType -eq 'executor' -or $model -notmatch '(?i)opus' -or [string]::IsNullOrWhiteSpace($prompt)) {
+# UserPromptSubmit does not carry model. Use the named agent or SessionStart/PostModelSwitch state.
+if ($role -ne 'orchestrator' -or [string]::IsNullOrWhiteSpace($prompt)) {
   exit 0
 }
 
@@ -54,8 +54,23 @@ $taskPatterns = @(
   '(?i)(\u0441\u0442\u0432\u043e\u0440[\u0438\u0456]|\u0441\u0444\u043e\u0440\u043c\u0443\u0439|\u043d\u0430\u043f\u0438\u0448\u0438|\u043f\u0456\u0434\u0433\u043e\u0442\u0443\u0439|\u0434\u0435\u043a\u043e\u043c\u043f\u043e\u0437|\u0441\u043f\u0435\u0446\u0438\u0444\u0456\u043a\u0430\u0446|\u043f\u043b\u0430\u043d\s+\u0440\u0435\u0430\u043b\u0456\u0437\u0430\u0446|\u0437\u0430\u0434\u0430\u0447[\u0430\u0443\u0438\u0456])'
 )
 
-# Review wins when a prompt discusses both a task and completed implementation.
-if (Test-AnyPattern -Value $prompt -Patterns $reviewPatterns) {
+# A forwarded implementation report starts review without a separate imperative.
+# Header matching preserves explicit summary/task-design requests that merely mention a report.
+$reportPatterns = @(
+  '(?i)\A\s*(?:[#>*-]+\s*)?(?:Sonnet(?:''s)?\s+(?:(?:implementation|completion|handoff)\s+)?report|(?:implementation|completion|handoff)\s+report\s+(?:from|by)\s+Sonnet|EXECUTOR\s+HANDOFF|IMPLEMENTATION\s+COMPLETE|PARTIALLY\s+IMPLEMENTED)\b',
+  '(?i)\A\s*(?:[#>*-]+\s*)?(?:\u041e\u0441\u044c\s+)?\u0437\u0432\u0456\u0442(?:\s+\u0432\u0456\u0434)?\s+Sonnet\b',
+  '(?im)^\s*(?:status:\s*)?(?:PARTIALLY IMPLEMENTED|IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW)\s*$'
+)
+
+# An explicit owner request precedes status/header text quoted as report data.
+if ($prompt -match '(?i)\A\s*(?:please\s+)?(?:summarize|translate|\u043f\u0456\u0434\u0441\u0443\u043c\u0443\u0439|\u043f\u0435\u0440\u0435\u043a\u043b\u0430\u0434\u0438)\b') { exit 0 }
+$explicitTask = $prompt -match '(?i)\A\s*(?:please\s+)?(?:(?:create|write|design)\s+(?:an?\s+)?task|(?:\u0441\u0442\u0432\u043e\u0440\u0438|\u043f\u0456\u0434\u0433\u043e\u0442\u0443\u0439|\u043d\u0430\u043f\u0438\u0448\u0438)\s+\u0437\u0430\u0434\u0430\u0447\u0443)\b'
+
+# Otherwise prefer review when a prompt discusses both a task and completed implementation.
+if ($explicitTask) {
+  $mode = 'TASK DESIGN'
+  $skillName = 'create-task'
+} elseif ((Test-AnyPattern -Value $prompt -Patterns $reviewPatterns) -or (Test-AnyPattern -Value $prompt -Patterns $reportPatterns)) {
   $mode = 'IMPLEMENTATION REVIEW'
   $skillName = 'review-task'
 } elseif (Test-AnyPattern -Value $prompt -Patterns $taskPatterns) {
@@ -120,6 +135,7 @@ discard all preliminary task-design conclusions and restart this gate before wri
 $context = @"
 $startupGate
 Lero.al automatic orchestration router selected [$mode] from the submitted prompt. The canonical workflow below is injected for this turn. Follow it before giving a substantive result. The user does not need to repeat the workflow name.
+For an existing cycle, resume its checkpoint under shared/orchestration-state.md. Valid unchanged current-session reads/receipts remain valid; injection does not restart completed review or request another go-ahead.
 
 $body
 "@

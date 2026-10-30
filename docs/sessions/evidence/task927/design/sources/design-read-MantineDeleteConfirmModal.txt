@@ -1,0 +1,253 @@
+=== Read C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantineDeleteConfirmModal.tsx offset=1 limit=125 at 2026-10-20T14:23:16.011Z
+1	'use client'
+2	
+3	import { useEffect, useState, type ReactNode } from 'react'
+4	import { Box, Button, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+5	import { MantineModal } from './MantineModal'
+6	import { MantineDialogSection, MantineDialogSections } from './MantineDialogSections'
+7	import { MantineDialogFooter } from './MantineDialogFooter'
+8	
+9	/** The word a person types to confirm an account deletion: every locale already asks for it (Task 923 R46, owner decision D34). */
+10	export const DELETE_CONFIRM_WORD = 'DELETE'
+11	
+12	export interface MantineDeleteConfirmModalProps {
+13	  opened: boolean
+14	  /** Fired by the close button, Esc, the backdrop and Cancel. */
+15	  onClose: () => void
+16	  /** States the object being deleted ("Delete currency EUR?"). */
+17	  title: ReactNode
+18	  /** States the consequence ("The currency is removed from every price"). A string is set as 14px text. */
+19	  message: ReactNode
+20	  confirmLabel: string
+21	  cancelLabel: string
+22	  onConfirm: () => void
+23	  /** The confirm action is running: the primary shows its loader and both buttons are disabled. */
+24	  loading?: boolean
+25	  /** The confirm action is unavailable until the dialog's own fields are valid (a required reason). */
+26	  confirmDisabled?: boolean
+27	  /** `data-testid` of the red primary and of the message section, for the consumers whose tests address them. */
+28	  confirmTestId?: string
+29	  bodyTestId?: string
+30	  /**
+31	   * A typed confirmation (Task 923 R46): one more dialog section, after every other section, holds a labelled field. The red primary stays disabled
+32	   * until the typed text, trimmed and in upper case, equals `word`. The field is empty each time the dialog opens and takes the focus.
+33	   */
+34	  typedConfirm?: { word: string; label: string }
+35	  /**
+36	   * Re-authentication instead of a typed word (Task 923 R80, owner decision D54): one more dialog section, after every other section, holds a masked password field.
+37	   * The red primary stays disabled while it is empty. The value belongs to the consumer (its action needs it, and it empties the value each time the dialog opens);
+38	   * `error` is the field's own message (a wrong password). The field takes the focus when the dialog opens.
+39	   */
+40	  passwordConfirm?: { label: string; value: string; onChange: (value: string) => void; error?: ReactNode; showLabel: string; hideLabel: string }
+41	  /**
+42	   * An account with no password proves who the person is with a new Google sign-in (Task 923 R80): one more dialog section, before the password or typed field, says why
+43	   * and holds one button that starts that sign-in. The red primary is not affected: the consumer shows this section when the server asks for the sign-in.
+44	   */
+45	  googleConfirm?: { message: ReactNode; label: string; onConfirm: () => void }
+46	  /** Further `MantineDialogSection`s after the message (a reason field, a list of consequences). */
+47	  children?: ReactNode
+48	}
+49	
+50	/**
+51	 * The one confirmation step of a destructive action (Task 859 Revision 2, R28, owner decision D78-18). It is a
+52	 * structured `MantineModal` (bottom sheet below 640) with a section that states the consequence, and a
+53	 * `MantineDialogFooter` pair: Cancel on the left (secondary) and the red destructive primary on the right, which
+54	 * shows `loading` while the action runs. A dialog's resting destructive action is subtle red; pressing it opens this
+55	 * modal, and only the primary here runs the action. With `typedConfirm` the primary also waits for the typed word; with `passwordConfirm` (Task 923 R80) it waits for
+56	 * the password instead, and `googleConfirm` adds the way for an account with no password.
+57	 */
+58	export function MantineDeleteConfirmModal({
+59	  opened,
+60	  onClose,
+61	  title,
+62	  message,
+63	  confirmLabel,
+64	  cancelLabel,
+65	  onConfirm,
+66	  loading = false,
+67	  confirmDisabled = false,
+68	  confirmTestId,
+69	  bodyTestId,
+70	  typedConfirm,
+71	  passwordConfirm,
+72	  googleConfirm,
+73	  children,
+74	}: MantineDeleteConfirmModalProps) {
+75	  const [typed, setTyped] = useState('')
+76	  const [passwordVisible, setPasswordVisible] = useState(false)
+77	  // The field starts empty every time the dialog opens: a word typed before a cancel never carries over (Task 923 R46); a password is never left visible either.
+78	  useEffect(() => {
+79	    if (opened) {
+80	      setTyped('')
+81	      setPasswordVisible(false)
+82	    }
+83	  }, [opened])
+84	  const typedOk = !typedConfirm || typed.trim().toUpperCase() === typedConfirm.word.toUpperCase()
+85	  const passwordOk = !passwordConfirm || passwordConfirm.value !== ''
+86	
+87	  return (
+88	    <MantineModal
+89	      structured
+90	      opened={opened}
+91	      onClose={onClose}
+92	      title={title}
+93	      footer={
+94	        <MantineDialogFooter
+95	          secondary={<Button type="button" variant="default" disabled={loading} onClick={onClose}>{cancelLabel}</Button>}
+96	          primary={
+97	            <Button type="button" color="red" loading={loading} disabled={confirmDisabled || !typedOk || !passwordOk} onClick={onConfirm} data-testid={confirmTestId}>
+98	              {confirmLabel}
+99	            </Button>
+100	          }
+101	        />
+102	      }
+103	    >
+104	      <MantineDialogSections>
+105	        <MantineDialogSection>
+106	          <Box data-testid={bodyTestId}>{typeof message === 'string' ? <Text fz="sm">{message}</Text> : message}</Box>
+107	        </MantineDialogSection>
+108	        {children}
+109	        {googleConfirm && (
+110	          <MantineDialogSection>
+111	            <Stack gap="sm">
+112	              <Text fz="sm">{googleConfirm.message}</Text>
+113	              <Button type="button" variant="default" fullWidth disabled={loading} onClick={googleConfirm.onConfirm}>{googleConfirm.label}</Button>
+114	            </Stack>
+115	          </MantineDialogSection>
+116	        )}
+117	        {typedConfirm && (
+118	          <MantineDialogSection>
+119	            <TextInput
+120	              label={typedConfirm.label}
+121	              placeholder={typedConfirm.word}
+122	              autoComplete="off"
+123	              data-autofocus
+124	              value={typed}
+125	              disabled={loading}
+
+=== Read C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantineDeleteConfirmModal.tsx offset=1 limit=125 at undefined
+1	'use client'
+2	
+3	import { useEffect, useState, type ReactNode } from 'react'
+4	import { Box, Button, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+5	import { MantineModal } from './MantineModal'
+6	import { MantineDialogSection, MantineDialogSections } from './MantineDialogSections'
+7	import { MantineDialogFooter } from './MantineDialogFooter'
+8	
+9	/** The word a person types to confirm an account deletion: every locale already asks for it (Task 923 R46, owner decision D34). */
+10	export const DELETE_CONFIRM_WORD = 'DELETE'
+11	
+12	export interface MantineDeleteConfirmModalProps {
+13	  opened: boolean
+14	  /** Fired by the close button, Esc, the backdrop and Cancel. */
+15	  onClose: () => void
+16	  /** States the object being deleted ("Delete currency EUR?"). */
+17	  title: ReactNode
+18	  /** States the consequence ("The currency is removed from every price"). A string is set as 14px text. */
+19	  message: ReactNode
+20	  confirmLabel: string
+21	  cancelLabel: string
+22	  onConfirm: () => void
+23	  /** The confirm action is running: the primary shows its loader and both buttons are disabled. */
+24	  loading?: boolean
+25	  /** The confirm action is unavailable until the dialog's own fields are valid (a required reason). */
+26	  confirmDisabled?: boolean
+27	  /** `data-testid` of the red primary and of the message section, for the consumers whose tests address them. */
+28	  confirmTestId?: string
+29	  bodyTestId?: string
+30	  /**
+31	   * A typed confirmation (Task 923 R46): one more dialog section, after every other section, holds a labelled field. The red primary stays disabled
+32	   * until the typed text, trimmed and in upper case, equals `word`. The field is empty each time the dialog opens and takes the focus.
+33	   */
+34	  typedConfirm?: { word: string; label: string }
+35	  /**
+36	   * Re-authentication instead of a typed word (Task 923 R80, owner decision D54): one more dialog section, after every other section, holds a masked password field.
+37	   * The red primary stays disabled while it is empty. The value belongs to the consumer (its action needs it, and it empties the value each time the dialog opens);
+38	   * `error` is the field's own message (a wrong password). The field takes the focus when the dialog opens.
+39	   */
+40	  passwordConfirm?: { label: string; value: string; onChange: (value: string) => void; error?: ReactNode; showLabel: string; hideLabel: string }
+41	  /**
+42	   * An account with no password proves who the person is with a new Google sign-in (Task 923 R80): one more dialog section, before the password or typed field, says why
+43	   * and holds one button that starts that sign-in. The red primary is not affected: the consumer shows this section when the server asks for the sign-in.
+44	   */
+45	  googleConfirm?: { message: ReactNode; label: string; onConfirm: () => void }
+46	  /** Further `MantineDialogSection`s after the message (a reason field, a list of consequences). */
+47	  children?: ReactNode
+48	}
+49	
+50	/**
+51	 * The one confirmation step of a destructive action (Task 859 Revision 2, R28, owner decision D78-18). It is a
+52	 * structured `MantineModal` (bottom sheet below 640) with a section that states the consequence, and a
+53	 * `MantineDialogFooter` pair: Cancel on the left (secondary) and the red destructive primary on the right, which
+54	 * shows `loading` while the action runs. A dialog's resting destructive action is subtle red; pressing it opens this
+55	 * modal, and only the primary here runs the action. With `typedConfirm` the primary also waits for the typed word; with `passwordConfirm` (Task 923 R80) it waits for
+56	 * the password instead, and `googleConfirm` adds the way for an account with no password.
+57	 */
+58	export function MantineDeleteConfirmModal({
+59	  opened,
+60	  onClose,
+61	  title,
+62	  message,
+63	  confirmLabel,
+64	  cancelLabel,
+65	  onConfirm,
+66	  loading = false,
+67	  confirmDisabled = false,
+68	  confirmTestId,
+69	  bodyTestId,
+70	  typedConfirm,
+71	  passwordConfirm,
+72	  googleConfirm,
+73	  children,
+74	}: MantineDeleteConfirmModalProps) {
+75	  const [typed, setTyped] = useState('')
+76	  const [passwordVisible, setPasswordVisible] = useState(false)
+77	  // The field starts empty every time the dialog opens: a word typed before a cancel never carries over (Task 923 R46); a password is never left visible either.
+78	  useEffect(() => {
+79	    if (opened) {
+80	      setTyped('')
+81	      setPasswordVisible(false)
+82	    }
+83	  }, [opened])
+84	  const typedOk = !typedConfirm || typed.trim().toUpperCase() === typedConfirm.word.toUpperCase()
+85	  const passwordOk = !passwordConfirm || passwordConfirm.value !== ''
+86	
+87	  return (
+88	    <MantineModal
+89	      structured
+90	      opened={opened}
+91	      onClose={onClose}
+92	      title={title}
+93	      footer={
+94	        <MantineDialogFooter
+95	          secondary={<Button type="button" variant="default" disabled={loading} onClick={onClose}>{cancelLabel}</Button>}
+96	          primary={
+97	            <Button type="button" color="red" loading={loading} disabled={confirmDisabled || !typedOk || !passwordOk} onClick={onConfirm} data-testid={confirmTestId}>
+98	              {confirmLabel}
+99	            </Button>
+100	          }
+101	        />
+102	      }
+103	    >
+104	      <MantineDialogSections>
+105	        <MantineDialogSection>
+106	          <Box data-testid={bodyTestId}>{typeof message === 'string' ? <Text fz="sm">{message}</Text> : message}</Box>
+107	        </MantineDialogSection>
+108	        {children}
+109	        {googleConfirm && (
+110	          <MantineDialogSection>
+111	            <Stack gap="sm">
+112	              <Text fz="sm">{googleConfirm.message}</Text>
+113	              <Button type="button" variant="default" fullWidth disabled={loading} onClick={googleConfirm.onConfirm}>{googleConfirm.label}</Button>
+114	            </Stack>
+115	          </MantineDialogSection>
+116	        )}
+117	        {typedConfirm && (
+118	          <MantineDialogSection>
+119	            <TextInput
+120	              label={typedConfirm.label}
+121	              placeholder={typedConfirm.word}
+122	              autoComplete="off"
+123	              data-autofocus
+124	              value={typed}
+125	              disabled={loading}

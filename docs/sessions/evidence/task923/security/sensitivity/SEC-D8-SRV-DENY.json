@@ -1,0 +1,533 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-17T17:32:36.338Z",
+ "case": "SEC-D8-SRV-DENY",
+ "results": [
+  {
+   "id": "SEC-D8-SRV-DENY",
+   "testFile": "src/modules/listings/actions/ownerPublish.security.test.ts",
+   "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/applyListingTransition.ts",
+     "description": "the guard that refuses `active` to a non-staff actor is removed",
+     "from": "  if (!canAdminEditListing(actor.role) && !canOwnerSetStatus(currentStatus, toStatus)) {\n    return { ok: false, reason: 'forbidden' }\n  }\n",
+     "to": ""
+    }
+   ],
+   "failureMessage": "AssertionError: user owner, inactive -> active: expected { Object (ok, nextStatus, ...) } to deeply equal { ok: false, reason: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.security.test.ts:83:74\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 2,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258333268,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "status": "passed",
+         "title": "[SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "duration": 3.833499999999958,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "status": "passed",
+         "title": "[SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "duration": 0.5004999999998745,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258334616,
+       "endTime": 1792258334620.5005,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 1,
+     "numFailedTests": 1,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258335930,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "status": "failed",
+         "title": "[SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "duration": 8.677500000000009,
+         "failureMessages": [
+          "AssertionError: user owner, inactive -> active: expected { Object (ok, nextStatus, ...) } to deeply equal { ok: false, reason: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.security.test.ts:83:74\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "status": "passed",
+         "title": "[SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "duration": 1.0387000000000626,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258337311,
+       "endTime": 1792258337321.0388,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 5,
+     "numPassedTests": 2,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258338589,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "status": "passed",
+         "title": "[SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+         "duration": 4.570899999999938,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "status": "passed",
+         "title": "[SEC-D8-SRV-DENY-OTHER] a signed-in user who is not the owner and not staff cannot change the status at all",
+         "duration": 0.5078000000000884,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway: publishing is staff-only"
+         ],
+         "fullName": "status gateway: publishing is staff-only [SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "status": "skipped",
+         "title": "[SEC-D8-SRV-ERR] a missing listing, an unchanged status and a failed write return their exact reasons without side effects",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258339934,
+       "endTime": 1792258339938.5708,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-D8-INT-DENY",
+   "testFile": "src/modules/listings/actions/ownerPublish.integration.test.ts",
+   "testName": "status gateway against the real database [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/applyListingTransition.ts",
+     "description": "the guard that refuses `active` to a non-staff actor is removed",
+     "from": "  if (!canAdminEditListing(actor.role) && !canOwnerSetStatus(currentStatus, toStatus)) {\n    return { ok: false, reason: 'forbidden' }\n  }\n",
+     "to": ""
+    }
+   ],
+   "failureMessage": "AssertionError: expected { Object (ok, nextStatus, ...) } to deeply equal { ok: false, reason: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.integration.test.ts:39:20\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258341183,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "status": "passed",
+         "title": "[SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "duration": 2158.9162,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "status": "skipped",
+         "title": "[SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258343216,
+       "endTime": 1792258345374.9163,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258347911,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "status": "failed",
+         "title": "[SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "duration": 284.0246000000002,
+         "failureMessages": [
+          "AssertionError: expected { Object (ok, nextStatus, ...) } to deeply equal { ok: false, reason: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.integration.test.ts:39:20\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "status": "skipped",
+         "title": "[SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258349234,
+       "endTime": 1792258349518.0247,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792258351833,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "status": "passed",
+         "title": "[SEC-D8-INT-DENY] the owner cannot publish on the real database: status, expiry and notifications stay unchanged",
+         "duration": 2028.7659999999998,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "status gateway against the real database"
+         ],
+         "fullName": "status gateway against the real database [SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "status": "skipped",
+         "title": "[SEC-D8-INT-ALLOW] a real administrator publishes the same listing on the real database",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792258353175,
+       "endTime": 1792258355203.766,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/ownerPublish.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

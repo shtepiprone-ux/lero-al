@@ -1,0 +1,5 @@
+columns: [{"column_name":"currency","data_type":"USER-DEFINED","udt_name":"listing_currency","numeric_precision":null,"numeric_scale":null},{"column_name":"price","data_type":"numeric","udt_name":"numeric","numeric_precision":null,"numeric_scale":null},{"column_name":"price_old","data_type":"numeric","udt_name":"numeric","numeric_precision":null,"numeric_scale":null}]
+price checks: [{"conname":"listings_price_old_positive_check","def":"CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))"},{"conname":"listings_price_positive_check","def":"CHECK ((price > (0)::numeric))"}]
+max by currency: [{"currency":"ALL","max_price":"80000000","max_price_old":null,"rows":7},{"currency":"EUR","max_price":"456000","max_price_old":null,"rows":14}]
+fractional prices: [{"n":0}]
+statuses: [{"status":"active","n":12},{"status":"sold","n":1},{"status":"rented","n":1},{"status":"archived","n":1},{"status":"expired","n":6}]

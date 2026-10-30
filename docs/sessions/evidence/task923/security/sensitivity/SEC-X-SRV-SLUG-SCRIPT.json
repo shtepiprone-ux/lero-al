@@ -1,0 +1,259 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:35:38.811Z",
+ "case": "SEC-X-SRV-SLUG-SCRIPT",
+ "results": [
+  {
+   "id": "SEC-X-SRV-SLUG-SCRIPT",
+   "testFile": "src/modules/listings/components/SimilarListings.security.test.tsx",
+   "testName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/security/inputs.ts",
+     "description": "jsonForScript no longer escapes `<`",
+     "from": "`[<>&${String.fromCharCode(0x2028)}${String.fromCharCode(0x2029)}]`",
+     "to": "`[>&${String.fromCharCode(0x2028)}${String.fromCharCode(0x2029)}]`"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/lib/security/inputs.ts",
+     "originalSha256": "9fcf627c3331c9ecb863a162d1fe8fdb7fa1f61edd10ba60b1433eac5f27306d",
+     "restoredSha256": "9fcf627c3331c9ecb863a162d1fe8fdb7fa1f61edd10ba60b1433eac5f27306d"
+    }
+   ],
+   "failureMessage": "AssertionError: expected 2 to be 1 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/components/SimilarListings.security.test.tsx:44:46\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259332535,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "status": "passed",
+         "title": "[SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "duration": 7.925000000000182,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "status": "skipped",
+         "title": "the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "status": "skipped",
+         "title": "[SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259333861,
+       "endTime": 1793259333868.925,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/components/SimilarListings.security.test.tsx"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259334960,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "status": "failed",
+         "title": "[SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "duration": 10.669900000000098,
+         "failureMessages": [
+          "AssertionError: expected 2 to be 1 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/components/SimilarListings.security.test.tsx:44:46\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "status": "skipped",
+         "title": "the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "status": "skipped",
+         "title": "[SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259336308,
+       "endTime": 1793259336318.67,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/components/SimilarListings.security.test.tsx"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259337397,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "status": "passed",
+         "title": "[SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+         "duration": 8.673399999999901,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "status": "skipped",
+         "title": "the same block with ordinary slugs keeps its two URLs and its settings (the control)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "SimilarListings"
+         ],
+         "fullName": "SimilarListings [SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "status": "skipped",
+         "title": "[SEC-X-FE-SPECULATION-ESCAPE] the parsed page has one speculation script",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259338732,
+       "endTime": 1793259338740.6733,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/components/SimilarListings.security.test.tsx"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

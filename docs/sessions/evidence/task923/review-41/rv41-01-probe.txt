@@ -1,0 +1,12 @@
+﻿platform: win32; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; started: 2026-10-23T15:42:34Z; command: npx vitest run --config docs/sessions/evidence/task923/review-41/rv41-01-vitest.config.mts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:42:35
+   Duration  5.21s (transform 1.06s, setup 87ms, import 3.82s, tests 447ms, environment 717ms)
+
+
+exit 0

@@ -1,0 +1,316 @@
+{
+  "takenAt": "2026-10-18T11:32:30.205Z",
+  "entries": 45,
+  "withCheck": 31,
+  "withReason": 14,
+  "unclassified": 0,
+  "rows": [
+    {
+      "file": "src/app/api/auth-email-hook/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "the Supabase Auth e-mail hook: signed by Auth, acts for no person"
+    },
+    {
+      "file": "src/app/api/auth/me/route.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/app/api/cron/inactivity/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "cron job, authenticated by the cron secret, acts for no person; it calls deleteAccount for marks older than 90 days (R43 (d))"
+    },
+    {
+      "file": "src/app/api/cron/listing-activity/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "cron job, authenticated by the cron secret, acts for no person"
+    },
+    {
+      "file": "src/app/api/cron/listings-expiry/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "cron job, authenticated by the cron secret, acts for no person"
+    },
+    {
+      "file": "src/app/api/cron/price-alerts/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "cron job, authenticated by the cron secret, acts for no person"
+    },
+    {
+      "file": "src/app/api/cron/saved-searches/route.ts",
+      "check": [],
+      "reasonKind": "cron-or-hook",
+      "reason": "cron job, authenticated by the cron secret, acts for no person"
+    },
+    {
+      "file": "src/app/api/exchange-rate/route.ts",
+      "check": [],
+      "reasonKind": "guest-equal",
+      "reason": "public exchange rates: the same answer for a guest"
+    },
+    {
+      "file": "src/app/api/listings/[slug]/view/route.ts",
+      "check": [],
+      "reasonKind": "guest-equal",
+      "reason": "counts a listing view: open to guests (a fingerprint) and to a validated token; no private read"
+    },
+    {
+      "file": "src/app/api/listings/route.ts",
+      "check": [],
+      "reasonKind": "guest-equal",
+      "reason": "public listing search: the same answer for a guest"
+    },
+    {
+      "file": "src/app/api/presence/route.ts",
+      "check": [],
+      "reasonKind": "R45 (c)",
+      "reason": "handled by R45 (c): restores through the RPC restore_inactive_account after the approved SQL (R37 (d)); not started here"
+    },
+    {
+      "file": "src/app/api/property-types/route.ts",
+      "check": [],
+      "reasonKind": "guest-equal",
+      "reason": "public property types: the same answer for a guest"
+    },
+    {
+      "file": "src/app/api/upload-avatar/route.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/app/api/upload-cms-image/route.ts",
+      "check": [
+        "assertPermission"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/app/api/upload-company-logo/route.ts",
+      "check": [
+        "getStaffRole"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/app/api/upload-popular-location-photo/route.ts",
+      "check": [
+        "getStaffRole"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/app/auth/callback/route.ts",
+      "check": [],
+      "reasonKind": "auth-flow",
+      "reason": "OAuth code exchange: Supabase Auth decides (a banned account is refused there); it creates the profile row, reads nothing private"
+    },
+    {
+      "file": "src/app/auth/confirm/route.ts",
+      "check": [],
+      "reasonKind": "auth-flow",
+      "reason": "token-hash verification: Supabase Auth decides; reads nothing private"
+    },
+    {
+      "file": "src/modules/admin/actions/clearHistory.ts",
+      "check": [
+        "hasPermission"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/admin/actions/currencies.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/exchangeProviders.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/footer.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/index.ts",
+      "check": [
+        "requireViewer",
+        "hasPermission",
+        "assertPermission"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/locale.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/permissions.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/admin/actions/propertyTypes.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/auth/actions/captcha.ts",
+      "check": [],
+      "reasonKind": "guest-equal",
+      "reason": "sign-up and password-reset requests for a person who has no session yet"
+    },
+    {
+      "file": "src/modules/auth/actions/recovery.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/cabinet/actions/index.ts",
+      "check": [
+        "getBlockedError"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/companies/actions.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/contacts/actions/index.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/changeListingStatus.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/collectionActions.ts",
+      "check": [
+        "getBlockedError"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/listings/actions/contactEvents.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/createListing.ts",
+      "check": [
+        "getBlockedError"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/listings/actions/deleteListing.ts",
+      "check": [
+        "getBlockedError",
+        "hasPermission"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/listings/actions/favoriteActions.ts",
+      "check": [
+        "getBlockedError"
+      ],
+      "via": "a guard that takes its role from requireViewer (hasPermission / assertPermission / getStaffRole)"
+    },
+    {
+      "file": "src/modules/listings/actions/getListingOwnerContact.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/recentlyViewedActions.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/reportListing.ts",
+      "check": [
+        "requireViewer",
+        "getBlockedError",
+        "hasPermission"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/submitListingInquiry.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "check": [
+        "requireViewer",
+        "getBlockedError"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/locations/actions/popularLocationActions.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/notifications/actions/emailTemplates.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    },
+    {
+      "file": "src/modules/notifications/lib/mutations.ts",
+      "check": [
+        "requireViewer"
+      ],
+      "via": "requireViewer"
+    }
+  ]
+}

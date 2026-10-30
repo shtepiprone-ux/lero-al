@@ -1,0 +1,7 @@
+﻿platform: win32 x64
+recorded: 2026-10-23T15:48:38.1741751Z
+purpose: sha256 of each R131-R133 path BEFORE the first edit (kickoff 62.3)
+2b3d010aef3c7d18befc803b6832c22f10276bf299bd482e6650e14e0a8b3df1  src/modules/listings/components/ListingDetailView.tsx
+6f5764da6b746653862f2c14bc53a3e0b3a209632ad7b6fbe448a316fa349a7c  src/app/[locale]/listings/[slug]/page.tsx
+e0278a604bbcbf5edcb1051807db9c5970c4025dfe106672616d1071fe7da6c4  src/modules/listings/components/ListingContact.tsx
+ABSENT (new file)  src/modules/listings/components/__tests__/ListingDetailView.contactSession.security.test.tsx

@@ -1,0 +1,2666 @@
+{
+  "takenAt": "2026-10-18T18:37:05.863Z",
+  "summary": {
+    "changedProductPaths": 442,
+    "d89": 108,
+    "ownerFixes": 93,
+    "t859": 49,
+    "t790": 1,
+    "r7UncontractedNamedByEvidence": 143,
+    "other": 48
+  },
+  "rows": [
+    {
+      "path": "messages/en.json",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "messages/it.json",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "messages/sq.json",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "messages/uk.json",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "next.config.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "package-lock.json",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "package.json",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "sentry.edge.config.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "sentry.server.config.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/[locale]/listings/[slug]/edit/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/[locale]/listings/[slug]/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/currency/page.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/admin/email-templates/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/inquiries/sales/page.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/admin/inquiries/support/page.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/admin/layout.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/listings/[id]/preview/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/listings/page.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/admin/pages/page.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/admin/reports/page.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/admin/support/page.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/app/admin/users/[id]/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/users/new/page.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/admin/users/page.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/api/auth-email-hook/route.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/api/auth/me/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/api/cron/inactivity/__tests__/route.auth.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/api/cron/price-alerts/__tests__/route.auth.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/api/cron/price-alerts/route.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-151-security-surface.json"
+    },
+    {
+      "path": "src/app/api/cron/saved-searches/__tests__/route.auth.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/app/api/cron/saved-searches/route.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-151-security-surface.json"
+    },
+    {
+      "path": "src/app/api/property-types/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/api/upload-avatar/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/api/upload-company-logo/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/api/upload-popular-location-photo/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/auth/callback/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/auth/confirm/route.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminCurrenciesView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminDashboardRecentListings.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminExchangeProvidersView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminHeader.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminInquiriesView.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminLegalManager.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/AdminListingsView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminLocationsManager.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/AdminPagesView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminPermissionsView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/AdminPropertyTypesManager.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/AdminReportsView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminSidebar.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/admin/AdminSupportManager.stories.tsx",
+      "git": " D",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminSupportManager.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminTable.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminUserProfileDialogsView.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminUserProfileView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/admin/AdminUsersTable.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/CurrencyDetailDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/CurrencyFormDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/InquiryDetailDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/ListingPreviewDialogView.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/PageEditorDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/PremiumDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/ProviderFormDialogView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/ReportDetailDialogView.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/StatusChangeControl.stories.tsx",
+      "git": " D",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/components/admin/StatusChangeControl.tsx",
+      "git": " D",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/components/admin/__tests__/AdminCurrenciesManager.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/adminPagesContent.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/auth/CaptchaWidget.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/layout/Footer.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/layout/FooterView.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/layout/Header.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/layout/UserMenu.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/shared/AvatarCropModal.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/shared/FilterRoomsRow.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/shared/FiltersPanel.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/shared/Map.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/ui/badge.stories.tsx",
+      "git": " D",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  D"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "git": " D",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/__tests__/theme.d69-18.test.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/input-chrome.css",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/design-system/mantine/notification-chrome.css",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineAppShellFoundation.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineCombobox.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineCopyIdButton.module.css",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineCountButton.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardBarChart.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardCard.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardDonut.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardHeader.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardLineChart.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardRadar.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardSparkline.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardStatCard.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardStatRows.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDashboardWorkList.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDataTableToCards.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDetailList.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDropdownMenu.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineListingDetailPattern.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css",
+      "git": " D",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  D"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineModal.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineNotificationPattern.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantinePopover.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineRichTextEditor.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/RangeDatePicker.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardWorkList.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx",
+      "git": " M",
+      "task": "790",
+      "evidence": "Sprint_77_kickoff_prompt_Task_790_Rest_Main_CI_Green.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/index.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-146-test-matrix.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/responsiveBottomSheet.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/theme.ts",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/instrumentation-client.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/__tests__/controller.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/lib/auth/blockCheck.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/browser.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/middleware.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/permissions.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/captcha/verifyTurnstile.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/cloudinaryDelete.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/cloudinaryUpload.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/cron/verifyCronRequest.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/formatters.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/getExchangeRateServer.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/phone/__tests__/phone.test.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/reserved-slugs.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/toast.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/__tests__/rls-write-guards.smoke.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/clearHistory.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/currencies.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/exchangeProviders.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/footer.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/index.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/locale.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/permissions.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/propertyTypes.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/dashboard/__tests__/queries.test.ts",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/dashboard/components/AdminDashboardView.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/modules/auth/actions/captcha.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/actions/recovery.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/components/AuthSheet.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/components/ResetPasswordClient.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/validations/index.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/saveSavedSearch.dedup.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/cabinet/actions/index.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/components/CabinetShell.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/cabinet/components/ListingsTab.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/cabinet/components/ListingsTab.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/cabinet/components/SavedSearchesTab.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/cabinet/statistics/access.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/statistics/components/AgentStatisticsView.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/modules/companies/actions.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/contacts/actions/index.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/contactEvents.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/reStampExpiresAt.smoke.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/reportListing.smoke.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/applyListingTransition.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/applyListingTransition.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/changeListingStatus.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/collectionActions.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/contactEvents.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/createListing.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/deleteListing.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/getListingOwnerContact.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/recentlyViewedActions.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/reportListing.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/submitListingInquiry.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/submitListingInquiry.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/updateListing.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ActiveFilterChips.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/CollectionsSection.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/FavoriteButton.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/ImageUpload.module.css",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/listings/components/ImageUpload.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/ListingCard.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/modules/listings/components/ListingContact.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingDetailView.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/ListingFormLoader.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingFormShell.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingFormShellView.stories.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingFormShellView.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingInquiryDialog.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingShareButton.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/ListingStatusBanner.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/modules/listings/components/ListingsFilters.tsx",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingsPageFrame.module.css",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/listings/components/ListingsSortBar.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/SaveSearchButton.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/SaveToCollectionButton.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/__tests__/listingsMigratedControls.smoke.test.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/components/steps/StepPreview.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/listings/domain/filterEngine.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/domain/index.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/domain/listingTransitionEngine.test.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/domain/listingTransitionEngine.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/lib/listingStatusTone.ts",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/modules/listings/lib/recentlyViewedQueries.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/lib/savedSearchCanonicalize.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/listings/lib/savedSearchCanonicalize.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/validations/index.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/locations/actions/popularLocationActions.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/actions/emailTemplates.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/components/NotificationItem.tsx",
+      "git": " M",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/notifications/lib/__tests__/mutations.smoke.test.ts",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/contactInquiry.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/emailChange.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/listingInquiry.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/send.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/mutations.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/sendTemplatedEmail.ts",
+      "git": " M",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/stories/fixtures/admin.fixtures.ts",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/_MantineStoryShell.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/primitives/Badge.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/primitives/CollectionsSection.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/primitives/Combobox.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/primitives/Modal.stories.tsx",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/stories/mantine/primitives/Radio.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/mantine/primitives/Table.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/mantine/primitives/UserMenu.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminCurrencyTabs.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminDashboardRecentListings.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminInquiriesView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminPagesView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminReportsView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminTable.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminUsersTable.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AvatarCropModal.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/DashboardBarChart.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/DashboardHeader.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/DashboardWorkList.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/DetailList.stories.tsx",
+      "git": " M",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/ListingCardPattern.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx",
+      "git": " M",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status  M"
+    },
+    {
+      "path": "vitest.config.ts",
+      "git": " M",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/__tests__/instrumentation.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/__tests__/security/clientSinks.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/__tests__/security/directives.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/__tests__/security/directives.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/__tests__/security/filterStrings.test.ts",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/__tests__/security/serverActionManifest.integration.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/__tests__/security/serverEntryGuards.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/__tests__/security/staffActions.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/app/api/auth-email-hook/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/api/property-types/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/api/upload-company-logo/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/api/upload-popular-location-photo/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/app/auth/callback/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/app/auth/confirm/__tests__/route.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/admin/AdminSupportView.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/AdminUsersTableView.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/CreateTicketDialog.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/CreateTicketDialogView.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/TicketDetailDialog.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/TicketDetailDialogView.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/UserPickerField.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/UserPickerFieldView.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/__tests__/AdminSupportManager.smoke.test.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/__tests__/StackedConfirmDialogs.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/admin/__tests__/adminPagesContent.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/admin/__tests__/supportFilters.test.ts",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/admin/supportFilters.ts",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/components/layout/__tests__/FooterView.security.test.tsx",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/components/layout/__tests__/headerFooterContainers.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/layout/__tests__/layoutParts.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/components/layout/__tests__/sessionEnded.security.test.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/components/shared/Map.module.css",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/components/ui/__tests__/overlays.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/ui/__tests__/primitives.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/components/ui/__tests__/uiPrimitivesExtra.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/__tests__/badgeTones.test.ts",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/design-system/mantine/__tests__/belowMobileGate.test.ts",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/design-system/mantine/__tests__/theme.components.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/badgeTones.ts",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/belowMobileGate.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineBadge.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineFilterChips.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineRadioCardOption.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineAppShellFoundation.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineBadge.smoke.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardBarChart.axis.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardChartFamily.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardDonut.size.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardLayout.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardLineChart.axis.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardRadar.labels.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDashboardRings.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDataTableToCards.switch.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineDropdownMenu.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineFilterChips.smoke.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/MantineModal.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/chartTestKit.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/dashboardChartLabels.canvas.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/dashboardChartLabels.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-82-vitest-chart-labels-1.txt"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/dashboardChartTheme.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/useApexFluidBox.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/__tests__/viewportKit.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/dashboardChartLabels.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/mantine/patterns/useApexFluidBox.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/design-system/media/__tests__/appImageConfig.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/hooks/__tests__/simpleHooks.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/hooks/__tests__/useUnsavedChangesGuard.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/__tests__/cloudinary.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/__tests__/exchangeRateServer.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/__tests__/formatters.axis.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/__tests__/pureLibs.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/__tests__/siteUrl.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/__tests__/toast.focus.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/auth/__tests__/authCore.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/auth/__tests__/browserAuth.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/__tests__/safeRedirect.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/__tests__/sessionMiddleware.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/auth/__tests__/trustedOrigin.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/auth/accountAccess.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/accountAccess.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/accountAccess.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/blockCheck.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/middleware.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/requireViewer.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/requireViewer.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/roleReads.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/safeRedirect.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/sessionEnd.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/staff.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/staffAccess.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/staffAccess.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/auth/trustedOrigin.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/captcha/__tests__/verifyTurnstile.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/cron/__tests__/verifyCronRequest.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/performance/__tests__/imageGuard.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/performance/__tests__/predictive.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/performance/__tests__/reporter.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/performance/__tests__/store.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/performance/__tests__/storeServer.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/performance/__tests__/vitals.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/postgrest/__tests__/escape.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/postgrest/escape.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/security/__tests__/headers.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/security/__tests__/inputs.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/security/__tests__/safeUrl.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/security/__tests__/sentryScrub.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/security/escapeHtml.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/security/headers.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/security/inputs.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/security/safeUrl.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/lib/security/sentryScrub.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/supabase/__tests__/clients.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/uploads/__tests__/imagePayload.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/uploads/__tests__/imageUrl.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/uploads/__tests__/uploads.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/uploads/imageSniff.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/lib/uploads/imageUrl.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/lib/uploads/uploadGrant.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminCatalog.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminGetters.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminLocale.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminOperations.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/permissions.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/userAdministration.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/userWebsite.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/accountBan.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/accountBan.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/adminGetters.integration.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/actions/userProfileFields.integration.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/admin/dashboard/components/__tests__/AdminDashboardView.axis.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/admin/lib/__tests__/adminLib.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/analytics/activity/__tests__/readEdges.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/auth/actions/__tests__/captcha.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/actions/__tests__/recovery.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/components/AuthSheet.banned.security.test.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/components/__tests__/AuthSheet.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-144-inventory.json"
+    },
+    {
+      "path": "src/modules/auth/components/__tests__/authClientParts.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/auth/components/__tests__/resetPassword.test.tsx",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/auth/lib/signupMetadata.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/cabinet/statistics/__tests__/tableAndRanking.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/cabinet/statistics/components/__tests__/AgentStatisticsView.axis.test.tsx",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/companies/__tests__/companies.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/companies/__tests__/companyActions.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/contacts/actions/__tests__/contacts.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/collectionActions.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/deleteListing.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/listingImages.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/visitorActions.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/contactSession.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/contactSession.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/ownerPublish.integration.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/actions/ownerPublish.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/ListingInquiryDialogView.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/listingStatusOptions.security.test.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/components/listingStatusOptions.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/domain/__tests__/filterEngine.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/domain/__tests__/listingDomain.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/listings/domain/__tests__/presentationEngine.test.ts",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/modules/listings/domain/ownerStatusRules.security.test.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/modules/listings/lib/__tests__/queries.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/listings/lib/__tests__/queriesEdges.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/listings/lib/savedSearchCanonicalize.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/notifications/lib/__tests__/notifications.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/__tests__/sendTemplatedEmail.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/createNotification.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/emailInjection.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/messageBuilders.security.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/resolveUserLocale.test.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-142-unit-mutations.mjs"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/send.security.test.ts",
+      "git": "??",
+      "task": "923 D14/D15 (record owner_fixes)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json scope"
+    },
+    {
+      "path": "src/stories/mantine/primitives/RadioCardOption.stories.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/AdminSupportView.stories.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/stories/patterns/mantine/CreateTicketDialogView.stories.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/stories/patterns/mantine/ListingInquiryDialogView.stories.tsx",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/stories/patterns/mantine/MantineFilterChips.stories.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/stories/patterns/mantine/TicketDetailDialogView.stories.tsx",
+      "git": "??",
+      "task": "859",
+      "evidence": "Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md"
+    },
+    {
+      "path": "src/stories/patterns/mantine/UserPickerFieldView.stories.tsx",
+      "git": "??",
+      "task": "other (no task evidence names it)",
+      "evidence": "git status ??"
+    },
+    {
+      "path": "src/tests/fakeSupabase.ts",
+      "git": "??",
+      "task": "923 Revision 7 session work named by its evidence, in neither contract (Opus decides)",
+      "evidence": "docs/sessions/evidence/task923/r8-146-test-matrix.json"
+    },
+    {
+      "path": "src/tests/integration/environment.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/tests/integration/fixtures.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "src/tests/integration/setup.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    },
+    {
+      "path": "vitest.integration.config.ts",
+      "git": "??",
+      "task": "923 D6-D9 (record D8_D9)",
+      "evidence": "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scope"
+    }
+  ]
+}

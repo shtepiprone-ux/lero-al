@@ -1,0 +1,15 @@
+# a9-00 sha256 before the first edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a9/a9-00-hashes.mjs docs/sessions/evidence/task927/a9/a9-00-before-hashes.txt "a9-00 sha256 before the first edit"
+date: 2026-10-25T19:46:02.466Z
+paths: 5
+
+a6edbdf17283173bc4f8fae9d5c420ea5186138128dc9bc6c0fa2ba256e47cbf  src/lib/auth/googleIdentity.ts
+319d9ae2673e09e20c04c8116d61068dd9643f7cadc9a8fca6e90677c27539ad  src/components/auth/GoogleSignInButton.tsx
+b2581f66103826d2ffcba229570da1c78cac5a20682dd2522a115fcea384072a  src/components/auth/GoogleSignInSlot.tsx
+a102ed5a096faf465251cd19a4d6278b0862cca3a19cb4b48a3ecb33c1038eb2  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+24244f4dd44cfaa3dd86c7d9d30d7264c40306e2ef14cb783f09684d2e2d99bd  scripts/rendered-interaction-states.json
+
+exit code: 0

@@ -1,14 +1,22 @@
-import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
-import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminSupportManager, type SupportTicketRow, type SupportTicketEventRow } from '@/components/admin/AdminSupportManager'
+import { parseSupportFilters } from '@/components/admin/supportFilters'
 
 export const metadata = { title: 'Support — Admin' }
 
-export default async function AdminSupportPage() {
+export default async function AdminSupportPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
+  const sp = await searchParams
+  const initialFilters = parseSupportFilters(sp)
   await getAdminLocale()
-  const t = await getTranslations('admin.pages')
   const db = createAdminClient()
 
   // Fetch tickets with three user joins (reporter, reported, created_by_admin)
@@ -38,12 +46,8 @@ export default async function AdminSupportPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-6xl mx-auto">
-      <AdminPageHeader
-        title={t('support_title')}
-        subtitle={t('support_subtitle')}
-      />
-      <AdminSupportManager tickets={tickets} events={events} />
-    </div>
+    <AdminPageFrame width="shell">
+      <AdminSupportManager tickets={tickets} events={events} initialFilters={initialFilters} />
+    </AdminPageFrame>
   )
 }

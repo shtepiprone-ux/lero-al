@@ -1,0 +1,6 @@
+# Review 11: the opener policy of Google's sign-in pages (no cookies, redirects not followed)
+date: 2026-10-26T06:44:32Z
+command: curl -s -o /dev/null -D - https://accounts.google.com/v3/signin/accountchooser
+HTTP/1.1 400 Bad Request
+Cross-Origin-Opener-Policy-Report-Only: same-origin; report-to="AccountsSignInUi"
+exit code: 0

@@ -1,0 +1,18 @@
+# HEAD 36c030802 lines cited by Task 923 claim rows whose working-tree source changed (Revision 44, rev44-08-refresh-locators.mjs)
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 217-217
+update public.email_templates set "updated_by_name" = public.account_display_name("updated_by") where "updated_by" is not null;
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 88-88
+    select c.confdeltype into have from pg_constraint c where c.conrelid = ('public.' || want[i][1])::regclass and c.conname = want[i][2];
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 41-41
+-- verification_requests.document_url and the person's objects of the avatars bucket under <user id>/ go with the account too; deleteAccount (R43 (c)) removes those files. This file does not touch
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 185-185
+alter table public.pages add column "updated_by_name" text;
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 189-189
+alter table public.site_footer add column "updated_by_name" text;
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 263-263
+alter table public.listing_views drop constraint "listing_views_user_id_fkey", add constraint "listing_views_user_id_fkey" foreign key ("user_id") references public.users(id) on delete cascade;
+== docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql at HEAD 36c030802, lines 266-267
+create function public.lower_views_count_on_view_delete() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+== docs/sessions/evidence/task923/db-catalog/gen-sql-deletion.cjs at HEAD 36c030802, lines 308-308
+fs.writeFileSync(D + 'db-catalog/proposed-account-deletion.sql', apply)

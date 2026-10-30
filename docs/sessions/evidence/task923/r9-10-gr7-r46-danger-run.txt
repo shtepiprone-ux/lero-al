@@ -1,0 +1,33 @@
+[
+ {
+  "ref": "tailadmin",
+  "page": "profile danger zone",
+  "width": 1440,
+  "zoneText": "My Profile Musharof Chowdhury Team Manager Arizona, United States. First Name Chowdury Last Name Musharof Email address randomuser@pimjo.com Phone +09 363 398 46 Bio Team Manager Social Links Edit Address Country United States City/State Arizona, United States. Postal Code ERT 2489 TAX ID AS4568384 Edit Security Change Password Receive real-time notifications and team alerts. Change Password Two-f",
+  "opened": null,
+  "confirmDisabledBeforeTyping": null
+ },
+ {
+  "ref": "omah",
+  "page": "account/settings deactivate",
+  "width": 1440,
+  "cardText": "Deactivate Account",
+  "error": "locator.textContent: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Deactivate Account').first().locator('xpath=ancestor::div[contains(@class,\"card\")][1]').locator('button, a.btn').last()\u001b[22m\n"
+ },
+ {
+  "ref": "tailadmin",
+  "page": "profile danger zone",
+  "width": 390,
+  "zoneText": "My Profile Musharof Chowdhury Team Manager Arizona, United States. First Name Chowdury Last Name Musharof Email address randomuser@pimjo.com Phone +09 363 398 46 Bio Team Manager Social Links Edit Address Country United States City/State Arizona, United States. Postal Code ERT 2489 TAX ID AS4568384 Edit Security Change Password Receive real-time notifications and team alerts. Change Password Two-f",
+  "opened": null,
+  "confirmDisabledBeforeTyping": null
+ },
+ {
+  "ref": "omah",
+  "page": "account/settings deactivate",
+  "width": 390,
+  "cardText": "Deactivate Account",
+  "error": "locator.textContent: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Deactivate Account').first().locator('xpath=ancestor::div[contains(@class,\"card\")][1]').locator('button, a.btn').last()\u001b[22m\n"
+ }
+]
+EXIT_CODE=0

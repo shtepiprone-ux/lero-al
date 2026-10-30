@@ -1,0 +1,19 @@
+# rv67-46: the one squashed commit on origin/main, closing evidence only, no media
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-46-squash-manifest.mjs
+HEAD 29acfb269e814ea37a94567f6cb1f9e97a40be41; origin/main 7dd707aa154801ff2e44402e3976841cb377dddb
+changed against origin/main: 10396; closing documents read: 1346; contracts 8; files named by reports 76
+new evidence (non-media): 6427 (444.9 MB); cited, kept: 1916 (115.1 MB)
+left out, stay on disk: other tasks' evidence 2008; Task 926 2; .playwright-mcp/debug.log 13; media 1027 (83.4 MB); uncited evidence 4511 (329.8 MB)
+included: 2835 paths (19 deletions); 128.7 MB
+untrack (git rm --cached, stay on disk): none
+committed locally, left out of the squashed commit (stay on disk, untracked): 1246 (40.5 MB) {"uncited evidence":1067,"media":177,"Task 926":2}
+kickoff sources checked: 2077, of them 18 under node_modules/ (installed by npm ci)
+  largest kept: 22.6 MB docs/sessions/evidence/task923/r7-full-a/rows.jsonl (cited by tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md)
+  largest kept: 22.6 MB docs/sessions/evidence/task923/r7-full-b/rows.jsonl (cited by tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md)
+  largest kept: 5.2 MB docs/sessions/evidence/task923/r8-85-row-diff.txt (cited by docs/sessions/2026-10-10-task923-rendered-state-census.md)
+  largest kept: 3.7 MB docs/sessions/evidence/task923/r7-84-determinism-a-b.txt (cited by tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md)
+  largest kept: 3.4 MB docs/sessions/evidence/task923/r8-61-full-vs-r7-full-b.txt (cited by docs/sessions/2026-10-10-task923-rendered-state-census.md)
+notes (unchanged kickoffs, not checked by CI): 1
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md cites src/components/admin/AdminExchangeProvidersView.tsx, which is not tracked after the commit
+problems: 0
+exit 0

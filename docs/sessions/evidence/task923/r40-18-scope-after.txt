@@ -1,0 +1,33 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-scope-after.mjs
+date: 2026-10-23T18:27:03.179Z
+--- output ---
+contract: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md stage=planned executionStatus=ready scope=328 paths
+scripts/rendered-state-census/registry.mjs                                             isProductPath=true isPolicyPath=false inScope=true
+scripts/rendered-state-census/in-page.mjs                                              isProductPath=true isPolicyPath=false inScope=true
+scripts/rendered-state-census/runner.mjs                                               isProductPath=true isPolicyPath=false inScope=true
+scripts/rendered-state-census/verify.mjs                                               isProductPath=true isPolicyPath=false inScope=true
+scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html                    isProductPath=false isPolicyPath=false inScope=false
+scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html                  isProductPath=false isPolicyPath=false inScope=false
+scripts/rendered-interaction-states.json                                               isProductPath=false isPolicyPath=false inScope=true
+scripts/__tests__/rendered-state-census.test.ts                                        isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/ProfileTab.tsx                                          isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/CabinetEmailChangeSection.tsx                           isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx                       isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/lib/emailChangeErrors.ts                                           isProductPath=true isPolicyPath=false inScope=true
+src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx                 isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx   isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts                   isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/actions/index.ts                                                   isProductPath=true isPolicyPath=false inScope=true
+messages/sq.json                                                                       isProductPath=true isPolicyPath=false inScope=true
+messages/en.json                                                                       isProductPath=true isPolicyPath=false inScope=true
+messages/uk.json                                                                       isProductPath=true isPolicyPath=false inScope=true
+messages/it.json                                                                       isProductPath=true isPolicyPath=false inScope=true
+scripts/mantine-migration-scope.json                                                   isProductPath=false isPolicyPath=false inScope=true
+scripts/ui-contract-registry.json                                                      isProductPath=false isPolicyPath=false inScope=true
+every changed product path is in the scope
+
+
+EXIT_CODE=0

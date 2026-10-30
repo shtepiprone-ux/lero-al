@@ -1,0 +1,17 @@
+# Task 923 Revision 37 readiness run (Opus), 2026-10-23T14:50:49.388Z, HEAD 6363a1836, working tree, win32, node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+docs contract taskSha256 17a2bc27df9e81ea270d9788ba6b5693f729476959a9833aa193dba7cac7feeb -> 17a2bc27df9e81ea270d9788ba6b5693f729476959a9833aa193dba7cac7feeb
+in-memory validateContract(ready, plan): {"ok":true,"errors":[]}
+== npm run -s check:kickoff-evidence
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+BLOCKED: Execution status must be ready; draft or blocked contracts cannot authorize execution or publication
+exit 1
+D8_D9 plan while blocked: refused as expected
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+
+exit 0
+D8_D9 executionStatus blocked; stage planned; scope 317; cases 222; critical 70
+kickoff sha256 (LF) 5cf3b390da3b593f7c9b67688f32600d1b0536766c0f8cdbd90e1cca0ae2036a
+D8_D9 sidecar sha256 7eee7fbf3f3cb7533ae12bc02d0fdbd7c36a34f69051587ec4023cad798beefa
+result PASS

@@ -1,0 +1,26 @@
+# Task 923 Review 49 (Opus): the dry-run file of deletion v4, 2026-10-24T09:46:12Z, HEAD e68ecbfb1, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-02-make-dryrun.cjs
+lines 288 and 288; changed line numbers: 287 ("commit;" -> "rollback;")
+proposed-account-deletion.dryrun.sql: sha256 A4499D828705494C16D3CD3D8C41D74C25A83F58A2EB809562A4890F2C453C41; md5 9b7c0edb75e2def67a54bf2b53e65dca; bytes 29319
+proposed-account-deletion.sql: sha256 CDC690E47CED1E2C346F5ED1C2BDB1E0AC51B6C7AA3526B404B483D1CD4A6F23; md5 cc4952336f423252693510e7bd8ca769; bytes 29317
+proposed-account-deletion-rollback.sql: sha256 9D5110FF1AE9477AF1230A5206B1A1D988B8F47DADF043A400D65122309E2BF1; md5 cb226b5bf67d3b7a4796baa621bb2ad2; bytes 9593
+exit 0
+$ diff <apply> <dryrun>
+287c287
+< commit;
+---
+> rollback;
+exit 1 (1 = differs)
+$ node docs/sessions/evidence/task923/revision-43/rev43-04-blocks.cjs <dryrun> <rollback>
+proposed-account-deletion.dryrun.sql sha256 a4499d828705494c16d3cd3d8c41d74c25a83f58a2eb809562a4890f2c453c41; proposed-account-deletion-rollback.sql sha256 9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1
+apply preflight: 6727 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ok (read_only=on)
+apply preflight with CRLF: ok (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 0
+exit 0
+$ node docs/sessions/evidence/task923/revision-43/rev43-05-literal-scan.cjs <dryrun>
+docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.dryrun.sql: 174 literals, 0 spanning lines
+exit 0

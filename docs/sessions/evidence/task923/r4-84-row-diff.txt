@@ -1,0 +1,3 @@
+rows r3 22739 r4 22740 only in r4 1 only in r3 0
++ mantine-primitives-headerview--signing-out|mantine-primitives-headerview--signing-out~notifications|portal:0|it|390
+{"rules":{"text-clamp":["p.mantine-focus-auto \"3 nuovi annunci corrispondono alla tua ricerca s\" clamp 2","p.mantine-focus-auto \"180.000 EUR → 165.000 EUR\" clamp 2","p.mantine-focus-auto \"Un amministratore ha aperto un reclamo riguardan\" clamp 2","p.mantine-focus-auto \"Il reclamo riguardante 

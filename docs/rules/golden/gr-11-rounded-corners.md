@@ -1,9 +1,9 @@
 ## GR-11 — Every rounded corner renders as a smooth curve, like the reference
 
-**Owner rule, 2026-10-04 (Task 741, O46-3 rows 3–4).** Verbatim: *"Запиши правило обов'язкове - якщо у об'єкта кути не
-скруглені - задача не приймається. Вони не скруглені, вони наче обрізані невірно!"* and *"проблема зі скругленням кутів
-глобальна! … Необхідно написати один раз обов'язкове правило щодо скруглення кутів у об'єктів (кнопки, таблиці, елементи
-і так далі)."* Also: *"у TailWind і у всіх інших реіференсів кути супер чудово скруглені. Проблема лише в моєму проекті."*
+**Owner rule, 2026-10-04 (Task 741, O46-3 rows 3–4).** Their words: *"Write a mandatory rule - if the corners of an object are not rounded, the task
+is not accepted. They are not rounded, they look as if they were cut wrongly!"* and *"the problem with rounded corners is global! … A
+mandatory rule on rounding the corners of objects (buttons,
+tables, elements and so on) must be written once."* Also: *"in TailWind and in all the other references the corners are rounded superbly. The problem is only in my project."*
 
 **What was measured** (`docs/sessions/evidence/task741r3/rev3g/owner-return/`, Chromium, DPR 1, 8px radius). The
 coverage of the corner's diagonal pixels, where an ideal 8px arc gives 60/75/60:

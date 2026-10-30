@@ -1,0 +1,39 @@
+# a10-99b sha256 after the sensitivity proofs (must equal a10-99)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a10/a10-00-hashes.mjs docs/sessions/evidence/task927/a10/a10-99b-after-sensitivity-hashes.txt "a10-99b sha256 after the sensitivity proofs (must equal a10-99)"
+date: 2026-10-26T07:46:57.003Z
+paths: 29
+
+bccb52db248f2f13a70fd897c07cd16780686f71901847fea99c5218dccffe65  public/brand/google-g.svg
+c513756deafded8ba3f4632fc33b62c0a46264f89405a2e0dcc83fd095719f0f  src/lib/auth/googleIdentity.ts
+f3bc133f0cec56dd327bed55d3a48c2393e8d3ede562f95c9a56ec2cd55883f1  src/lib/auth/googlePopup.ts
+b4bb6f089898e0ca980ef0ce2dccbfa0fe8de76e7329964c4da13f7fdf0b73cf  src/app/auth/google/callback/page.tsx
+f2ef4474ce406da82ca2a1187bb3f39cb9a8ceb2bbf9d5ccf5b72a9be03bfabf  src/app/auth/google/callback/GoogleCallbackRelay.tsx
+5749254c0e9bd8ff21b6e7448ba816126c82954d63a051b52e280a5f5bc44b4c  src/components/auth/GoogleSignInSlot.tsx
+a79c5e9f405ddbdd59114817794882d1f11339ea8da1b8b0130dbf2e024723ac  src/components/auth/GoogleSignInButton.tsx
+cb65bd133740a0342aa12612a722ef03826269d6f8afec6e65bae358438c89cd  src/components/auth/GoogleWelcomeBack.tsx
+4cfdbd5f8646cf646b11dab65ca26bdbd37ba266cd2530e30193aee365f7b835  src/modules/auth/components/AuthSheet.tsx
+20246800ee426bfc1db576fa5c401add7cc8d39046fe5ce4b40a0e7abb445218  src/modules/cabinet/components/ProfileTab.tsx
+9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5  src/design-system/mantine/theme.ts
+572c3ac7625a0ff70695d06fec62cc8f41492fb11e7812c53a06be371cbe8b86  src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx
+35438a44d1e65263756977b7415e8c6cbcb968b3cc84a604c4095d7caa709f87  scripts/ui-contract-registry.json
+e504948fea65fce10a58c9d881ab1ca486e5baea9c4a8d54dfeb058f70ec4e12  scripts/rendered-interaction-states.json
+baf89e233a3fa14bd7199ff11705fd91afb59a278cc8d9c1258b18f357adee0a  messages/sq.json
+90321e25ced998c5e7aa03e650af038e2f83fa7e989c7ab32e1018b4a451ac81  messages/en.json
+3e4b353ffb4a4d14acb7509787e97660dd0548397fef334c45cac6c7909e262a  messages/uk.json
+5cbe44183239573a31c95a1c7251b7f49a86ea4960f06871a15418d56a47dfc3  messages/it.json
+4e5d1ac98dde25144ffad874e3902cb796426f2e4412a104ac8de3bca19180b3  docs/env.md
+dfadf0ede2471c345afd0af6aa8ba0cb83199c9b44b6c35a0ad087a9d33fbd47  src/lib/auth/__tests__/googleIdentity.test.ts
+3c48d27b1fc7dbd4e13c4b8c68dcf0bb39fdcc7c98394776ac80486c82340a97  src/lib/auth/__tests__/googlePopup.test.ts
+8c5120707bac962a887aa25314506e1db88afc73de2483945bae93a02bfa726e  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+dfe590765765dff6c65c635f0949e0ae3fecc243ea3feffab35df6d43e829a1f  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+039dd127d680d3d7471044714954e7c5c10db9933473a679fa3c20b1df4b885a  src/modules/auth/components/__tests__/AuthSheet.test.tsx
+e8b3d019e933c963db475370185b8725c2bac556e30e8cc07181853d1fbcb6c3  src/modules/auth/components/AuthSheet.banned.security.test.tsx
+7e0b838b563e7eaadf9272128c6f95ceca40e97219941f64df68761fc0ec756e  src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx
+ee9c8676a7838d546702d5b0a3ed28fe29d9b2b4276828684136cf0840b789e8  src/components/layout/__tests__/Header.google.security.test.tsx
+5a019e1c97f77c6e30447ffc407e7db13843b6cbc0575f016d47ae16cf607d40  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+3494dc35b21609a4f561f51f4ef79512bf30757f09c128d6fbd54a1a95f5371f  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+
+exit code: 0

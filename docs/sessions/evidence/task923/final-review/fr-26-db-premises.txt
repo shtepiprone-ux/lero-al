@@ -1,0 +1,83 @@
+# fr-26 (Opus) 2026-10-28T22:09:30.950Z win32 node v22.22.3
+## tables present / RLS enabled / forced
+  exchange_providers rls=true force=false
+  listing_images rls=true force=false
+  listing_views rls=true force=false
+  listings rls=true force=false
+  notifications rls=true force=false
+  role_permissions rls=true force=false
+  users rls=true force=false
+## table privileges of anon / authenticated (SELECT INSERT UPDATE DELETE)
+  exchange_providers anon ---- authenticated ----
+  listing_images anon SIUD authenticated SIUD
+  listing_views anon S--- authenticated SIUD
+  listings anon SIUD authenticated SIUD
+  notifications anon ---- authenticated S---
+  role_permissions anon ---- authenticated ----
+  users anon SIUD authenticated SIUD
+## policies (table name command roles | using | check)
+  exchange_providers "exchange_providers_read" SELECT {public} | true | 
+  listing_images "Listing images viewable by everyone" SELECT {public} | (EXISTS ( SELECT 1 FROM listings l WHERE (l.id = listing_images.listing_id))) | 
+  listing_images "Users can manage own listing images" ALL {public} | (EXISTS ( SELECT 1 FROM listings WHERE ((listings.id = listing_images.listing_id) AND (listings.user_id = auth.uid())))) | 
+  listing_images "blocked_account_no_delete" DELETE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listing_images "blocked_account_no_insert" INSERT {authenticated} |  | ( SELECT caller_is_active() AS caller_is_active)
+  listing_images "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listing_images "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+  listing_views "Listing views viewable by listing owner" SELECT {public} | (EXISTS ( SELECT 1 FROM listings WHERE ((listings.id = listing_views.listing_id) AND (listings.user_id = auth.uid())))) | 
+  listing_views "blocked_account_no_delete" DELETE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listing_views "blocked_account_no_insert" INSERT {authenticated} |  | ( SELECT caller_is_active() AS caller_is_active)
+  listing_views "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listing_views "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+  listings "Admins can manage all listings" ALL {public} | (EXISTS ( SELECT 1 FROM users WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))) | 
+  listings "Listings viewable by everyone" SELECT {public} | ((status = ANY (ARRAY['active'::listing_status, 'sold'::listing_status, 'rented'::listing_status])) OR (auth.uid() = user_id)) | 
+  listings "Users can create listings" INSERT {public} |  | (auth.uid() = user_id)
+  listings "Users can update own listings" UPDATE {public} | (auth.uid() = user_id) | 
+  listings "blocked_account_no_delete" DELETE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listings "blocked_account_no_insert" INSERT {authenticated} |  | ( SELECT caller_is_active() AS caller_is_active)
+  listings "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  listings "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+  notifications "Users can update own notifications" UPDATE {public} | (auth.uid() = user_id) | 
+  notifications "Users can view own notifications" SELECT {public} | (auth.uid() = user_id) | 
+  notifications "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  notifications "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+  notifications "notifications_delete" DELETE {public} | (user_id = auth.uid()) | 
+  notifications "notifications_insert_service_role" INSERT {service_role} |  | true
+  notifications "notifications_select" SELECT {public} | (user_id = auth.uid()) | 
+  notifications "notifications_update" UPDATE {public} | (user_id = auth.uid()) | 
+  users "Users can update own profile" UPDATE {public} | (auth.uid() = id) | 
+  users "Users can view own profile" SELECT {public} | (auth.uid() = id) | 
+  users "blocked_account_no_delete" DELETE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  users "blocked_account_no_insert" INSERT {authenticated} |  | ( SELECT caller_is_active() AS caller_is_active)
+  users "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  users "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+  users "users_self_read" SELECT {authenticated} | (auth.uid() = id) | 
+  objects "blocked_account_no_delete" DELETE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  objects "blocked_account_no_insert" INSERT {authenticated} |  | ( SELECT caller_is_active() AS caller_is_active)
+  objects "blocked_account_no_select" SELECT {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | 
+  objects "blocked_account_no_update" UPDATE {authenticated} | ( SELECT caller_is_active() AS caller_is_active) | ( SELECT caller_is_active() AS caller_is_active)
+## CHECK constraints (table name convalidated | definition)
+  listing_images listing_images_url_prefix_check true | CHECK (starts_with(url, 'https://res.cloudinary.com/die7okukn/'::text))
+  listings listings_description_length_check true | CHECK (((description IS NULL) OR (char_length(description) <= 5000)))
+  listings listings_land_development_potential_check true | CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))
+  listings listings_land_legal_status_check true | CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))
+  listings listings_land_zoning_check true | CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))
+  listings listings_lat_range_check true | CHECK (((lat IS NULL) OR ((lat >= ('-90'::integer)::double precision) AND (lat <= (90)::double precision))))
+  listings listings_lng_range_check true | CHECK (((lng IS NULL) OR ((lng >= ('-180'::integer)::double precision) AND (lng <= (180)::double precision))))
+  listings listings_offer_type_check true | CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))
+  listings listings_price_old_positive_check true | CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))
+  listings listings_price_positive_check true | CHECK ((price > (0)::numeric))
+  listings listings_title_length_check true | CHECK (((char_length(btrim(title)) >= 5) AND (char_length(btrim(title)) <= 150)))
+  users users_preferred_locale_check true | CHECK ((preferred_locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))
+  users users_status_check true | CHECK ((status = ANY (ARRAY['active'::text, 'blocked'::text, 'inactive'::text])))
+## access functions (name(args) secdef anon auth service_role)
+  caller_is_active() true false true true
+  caller_is_admin() true false true true
+  get_listing_owner_contact(listing_id_param uuid) true false true true
+  get_listing_owner_contact_as(p_caller uuid, listing_id_param uuid) true false false true
+  record_listing_view(p_listing_id uuid, p_user_id uuid, p_ip_hash text) true false false true
+## realtime publication tables
+  public.favorites
+  public.listings
+  public.notifications
+## storage buckets (id public)
+  avatars true

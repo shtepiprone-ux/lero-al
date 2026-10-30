@@ -1,0 +1,5 @@
+OWASP ASVS 5.0, V6 Authentication (Task 923 Revision 8 design, Opus, 2026-10-17)
+source: https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md (last commit 67100a95f382d7bae8058c6f63fe07680b21e34f, 2025-05-28)
+line 67:
+| **6.3.8** | Verify that valid users cannot be deduced from failed authentication challenges, such as by basing on error messages, HTTP response codes, or different response times. Registration and forgot password functionality must also have this protection. | 3 |
+level: 3 (the project target is Level 2 with risk-based higher rigor, .claude/rules/shared/security-testing.md)

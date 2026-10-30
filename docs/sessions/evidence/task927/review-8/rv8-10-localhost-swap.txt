@@ -1,0 +1,39 @@
+# rv8-10: storybook-static served on http://localhost:6016 (an origin where Google swaps in its iframe button); mobile 390 en; v22.22.3; 2026-10-25T19:30:57Z
+== as built
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en mobile: 420 frames
+t=2083 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2119 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2517 top=285 h=515 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2550 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+== FIX_HOST=1 (host height fixed at 2.5rem in the page only)
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en mobile: 420 frames
+t=2225 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2259 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2607 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2640 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+== as built
+@patterns-mantine-authsheet--welcome-back 390 en mobile: 412 frames
+t=603 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=638 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=903 top=326.8 h=473.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=936 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+== FIX_HOST=1 (host height fixed at 2.5rem in the page only)
+@patterns-mantine-authsheet--welcome-back 390 en mobile: 413 frames
+t=625 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=660 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=891 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=924 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+== as built
+@patterns-mantine-authsheet--login 390 en mobile: 413 frames
+t=599 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=635 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=849 top=235.9 h=564.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=882 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=1966 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+== FIX_HOST=1 (host height fixed at 2.5rem in the page only)
+@patterns-mantine-authsheet--login 390 en mobile: 413 frames
+t=617 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=653 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=883 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=916 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=2034 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email

@@ -29,6 +29,9 @@
  *   → Authorized when the actor is the listing owner OR admin/moderator (Task 427); the
  *     listing may then move directly to ANY other status (canSetStatusPrivileged) — not
  *     limited to ALLOWED_LISTING_TRANSITIONS.
+ *   → EXCEPT publishing (owner decision D8, 2026-10-17): only an administrator / moderator may
+ *     set `active`; the owner may set every other status (canOwnerSetStatus), so a listing the
+ *     owner wants back goes to `pending` and waits for a check.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * PURITY CONTRACT
@@ -38,7 +41,11 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-'use server'
+// Security (Task 923 Revision 7, finding S28): this is NOT a Server Action file. Both functions take the `actor` (user id and ROLE) as an argument and write with the
+// service-role client; as `'use server'` exports they were public endpoints, so anyone could call them with `{ role: 'admin' }` and change the status of any listing.
+// Only server code that has already established who is calling may import it (the cron job, the admin / cabinet actions and `changeListingStatus.ts`, which reads
+// the role from the session); `server-only` makes importing it from a client bundle a build error.
+import 'server-only'
 
 import { revalidateTag, revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -46,9 +53,10 @@ import { routing } from '@/i18n/routing'
 import {
   resolveTransition,
   canSetStatusPrivileged,
+  canOwnerSetStatus,
 } from '@/modules/listings/domain/listingTransitionEngine'
 import { canAdminEditListing } from '@/modules/listings/domain/listingPermissions'
-import { createNotification } from '@/modules/notifications/lib/mutations'
+import { createNotification } from '@/modules/notifications/lib/createNotification'
 import type { ListingTransitionAction } from '@/modules/listings/domain/listingTransitionEngine'
 import type { ListingStatus } from '@/types/database'
 import { shouldReStampExpiresAt, computeExpiresAt } from '@/modules/listings/domain/listingConstants'
@@ -66,7 +74,7 @@ export interface TransitionActorContext {
 
 export type TransitionApplicationResult =
   | { ok: true;  nextStatus: ListingStatus; listingId: string }
-  | { ok: false; reason: 'not_found' | 'invalid_transition' | 'forbidden' | 'db_error' }
+  | { ok: false; reason: 'not_found' | 'invalid_transition' | 'forbidden' | 'db_error' | 'conflict' }
 
 // ── Internal Supabase client type ─────────────────────────────────────────────
 
@@ -95,10 +103,15 @@ async function writeListingStatus(
     updatePayload.expires_at = computeExpiresAt()
   }
 
-  const { error } = await db
+  // Task 923 R67 (e): the write is a compare-and-set. It matches the listing only while its status is still the one the transition was decided on, and it must
+  // change exactly one row. Without the status filter a concurrent change (a moderator's decision, an owner's edit) was overwritten by a transition that had been
+  // validated against a status that no longer held; a write that changed nothing answered success. Now no change is `conflict`, and nothing is notified or refreshed.
+  const { data: written, error } = await db
     .from('listings')
     .update(updatePayload)
     .eq('id', listingId)
+    .eq('status', currentStatus)
+    .select('id')
 
   if (error) {
     console.error('applyListingTransition: DB write failed', {
@@ -110,10 +123,22 @@ async function writeListingStatus(
     })
     return { ok: false, reason: 'db_error' }
   }
+  if (written?.length !== 1) {
+    console.warn('applyListingTransition: the listing changed since it was read, nothing written', {
+      listingId,
+      from: currentStatus,
+      to: nextStatus,
+      actor: actor.source ?? actor.userId,
+      rows: written?.length ?? 0,
+    })
+    return { ok: false, reason: 'conflict' }
+  }
 
-  // Notify the listing owner about the status change (non-blocking fire-and-forget).
+  // Notify the listing owner about the status change AFTER the response (Task 923 R71 (d)). A promise nobody awaits can be dropped in serverless code when the
+  // response ends; `after()` keeps the function alive until the work is done. Outside a request (a script, a unit test) there is no response to wait for and
+  // `after()` throws: the work then starts at once.
   if (ownerId && ownerId !== actor.userId) {
-    createNotification({
+    const notifyOwner = () => createNotification({
       userId: ownerId,
       type: 'listing_status_change',
       title: listingTitle ?? listingId,
@@ -122,6 +147,8 @@ async function writeListingStatus(
       body: JSON.stringify({ from: currentStatus, to: nextStatus }),
       link: slug ? `/listings/${slug}` : undefined,
     }).catch(e => console.error('[notifications] listing_status_change notify failed', e))
+    // `next/server` is loaded when the work is scheduled, not when this module is: Storybook bundles this module with every component that imports it and cannot run `next/server` in the browser (its import failed the AuthSheet, SaveSearchButton and listing Stories with `__dirname is not defined`).
+    try { (await import('next/server')).after(notifyOwner) } catch { void notifyOwner() }
   }
 
   // Invalidate the homepage stats counter — any status transition may affect the
@@ -238,6 +265,13 @@ export async function applyListingTransitionByStatus(
   // false, so this falls through to invalid_transition below.
   if (!canSetStatusPrivileged(currentStatus, toStatus)) {
     return { ok: false, reason: 'invalid_transition' }
+  }
+
+  // Owner decision D8 (2026-10-17): publishing for general view is reserved to an administrator / moderator. The owner keeps every other status. `active`
+  // is refused from EVERY status (not only from `pending`), otherwise `pending -> inactive -> active` would bypass the check. Nothing is written, re-stamped
+  // or notified when this refuses.
+  if (!canAdminEditListing(actor.role) && !canOwnerSetStatus(currentStatus, toStatus)) {
+    return { ok: false, reason: 'forbidden' }
   }
 
   return writeListingStatus(listingId, currentStatus, toStatus, actor, db, current.slug ?? null, current.title ?? null, current.user_id ?? null)

@@ -1,0 +1,56 @@
+[
+  {
+    "ref": "tailadmin",
+    "url": "https://demo.tailadmin.com/modals",
+    "afterOpen": {
+      "active": "BUTTON.bg-brand-500",
+      "insideDialog": false,
+      "dialogFound": true,
+      "dialogParentIsBody": true
+    },
+    "tab12InsideDialog": 3,
+    "afterEscape": {
+      "active": "A",
+      "insideDialog": false,
+      "dialogFound": true,
+      "dialogParentIsBody": true
+    },
+    "closedByEscape": false
+  },
+  {
+    "ref": "lahomes",
+    "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+    "afterOpen": {
+      "active": "DIV.modal",
+      "insideDialog": true,
+      "dialogFound": true,
+      "dialogParentIsBody": false
+    },
+    "tab12InsideDialog": 12,
+    "afterEscape": {
+      "active": "BUTTON.btn",
+      "insideDialog": false,
+      "dialogFound": false,
+      "dialogParentIsBody": false
+    },
+    "closedByEscape": true
+  },
+  {
+    "ref": "kamr",
+    "url": "https://kamr-vite.vercel.app/ui-modal",
+    "afterOpen": {
+      "active": "DIV.fade",
+      "insideDialog": true,
+      "dialogFound": true,
+      "dialogParentIsBody": true
+    },
+    "tab12InsideDialog": 7,
+    "afterEscape": {
+      "active": "BUTTON.mb-2",
+      "insideDialog": false,
+      "dialogFound": false,
+      "dialogParentIsBody": false
+    },
+    "closedByEscape": true
+  }
+]

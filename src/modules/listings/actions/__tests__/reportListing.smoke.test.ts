@@ -28,9 +28,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 // .select().eq().eq().maybeSingle() + .insert()
 const mockMaybeSingle = vi.fn()
 const mockInsert = vi.fn()
+// the per-person report limit (Task 923 R70 (h)): .select(..., { head }).eq('user_id').gte('created_at') answers a count
+const mockWindowCount = vi.fn()
 const reportChain = {
   select: vi.fn().mockReturnThis(),
   eq: vi.fn().mockReturnThis(),
+  gte: mockWindowCount,
   maybeSingle: mockMaybeSingle,
   insert: mockInsert,
 }
@@ -71,7 +74,8 @@ vi.mock('@/lib/supabase/admin', () => ({
         }
       }
       if (table === 'users') {
-        return { select: () => ({ eq: () => ({ single: mockUsersSingle }) }) }
+        // the caller's own row, read by the real `requireViewer()` (Task 923 R44) with the service role
+        return { select: () => ({ eq: () => ({ maybeSingle: mockUsersSingle }) }) }
       }
       if (table === 'report_actions') {
         return { insert: mockReportActionsInsert }
@@ -109,7 +113,7 @@ vi.mock('@/modules/notifications/lib/emails/ReporterNotificationEmail', () => ({
 }))
 
 const mockCreateNotification = vi.fn()
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: (...args: unknown[]) => mockCreateNotification(...args),
 }))
 
@@ -143,6 +147,7 @@ describe('reportListingAction — smoke tests (Guard 1)', () => {
     mockGetUser.mockResolvedValue(AUTH_USER)
     mockGetBlockedError.mockResolvedValue(null)       // not blocked
     mockMaybeSingle.mockResolvedValue({ data: null }) // no existing report
+    mockWindowCount.mockResolvedValue({ count: 0, error: null }) // no report filed in the last hour
     mockInsert.mockResolvedValue({ error: null })     // insert succeeds
     mockCreateClient.mockResolvedValue({ from: mockFrom })
     mockListingsSingle.mockResolvedValue({ data: VALID_LISTING_ROW, error: null })
@@ -265,7 +270,7 @@ describe('updateReportStatusAction — outcome notifications (Task 880 R5/R6)', 
     vi.clearAllMocks()
     mockGetUser.mockResolvedValue({ id: 'moderator-1' })
     setupPermission({ 'reports.manage': true })
-    mockUsersSingle.mockResolvedValue({ data: { role: 'moderator' } })
+    mockUsersSingle.mockResolvedValue({ data: { role: 'moderator', status: 'active', suspended_until: null, deleted_at: null }, error: null })
     // Default old status 'reviewed' — reviewed→{resolved,dismissed} is manager-allowlisted;
     // the SAME row also carries the R5 combined reporter+owner fields (the mock returns one
     // object regardless of the requested column list, matching every listing_reports select).

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react'
-import { Button, TextInput, ActionIcon, Badge, Box, Divider, Group, SimpleGrid, Text, useMantineTheme } from '@mantine/core'
+import { Button, TextInput, ActionIcon, Box, Divider, Group, SimpleGrid, Text, useMantineTheme } from '@mantine/core'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -14,6 +14,8 @@ import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { useMantineDrawerPresentation } from '@/design-system/mantine/patterns/MantineDrawer'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; onClose?: () => void }
@@ -94,6 +96,10 @@ export function ListingsFilters({ locations, onClose }: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
   const theme = useMantineTheme()
+  // The close icon and the Apply button exist only in the bottom sheet (below the 640px gate), which has no close button of its own. `MantineDrawer` owns
+  // that presentation, so they are mounted from it and never hidden with CSS: Mantine's focus trap reads an inline `display` only, so a control that a
+  // class hides stays tabbable and Tab leaves the dialog (Task 923 R48, replacing R33).
+  const inBottomSheet = useMantineDrawerPresentation() === 'sheet'
 
   const {
     get, updateParams, toggleMulti,
@@ -139,18 +145,17 @@ export function ListingsFilters({ locations, onClose }: Props) {
         <SlidersHorizontal size={theme.other.iconSize.standard} color="var(--mantine-color-brand-7)" />
         <Text fw={600} size="sm">{t('filters_title')}</Text>
         {activeCount > 0 && (
-          <Badge color="brand" variant="filled" radius="pill">
+          <MantineBadge variant="count">
             {activeCount}
-          </Badge>
+          </MantineBadge>
         )}
-        {onClose && (
+        {onClose && inBottomSheet && (
           <ActionIcon
             variant="subtle"
             mih={theme.other.touchTarget}
             miw={theme.other.touchTarget}
             onClick={onClose}
             aria-label={tc('close')}
-            hiddenFrom="sm"
             style={{ marginLeft: 'auto' }}
           >
             <X size={theme.other.iconSize.roomy} />
@@ -417,8 +422,8 @@ export function ListingsFilters({ locations, onClose }: Props) {
       </Box>
 
       {/* Mobile apply button */}
-      {onClose && (
-        <Button fullWidth mt="md" hiddenFrom="sm" onClick={onClose}>
+      {onClose && inBottomSheet && (
+        <Button fullWidth mt="md" onClick={onClose}>
           {tc('apply_filters')}
           {activeCount > 0 && ` (${activeCount})`}
         </Button>

@@ -539,9 +539,9 @@ describe('canSetStatusPrivileged', () => {
 // ── getAllowedTargetStatuses (Task 427) ───────────────────────────────────────
 
 describe('getAllowedTargetStatuses', () => {
-  it('privileged: true returns the full any-status set (excluding current)', () => {
+  it('privileged: true with canPublish returns the full any-status set (excluding current)', () => {
     for (const s of ALL_STATUSES) {
-      expect(getAllowedTargetStatuses(s, { privileged: true }).sort())
+      expect(getAllowedTargetStatuses(s, { privileged: true, canPublish: true }).sort())
         .toEqual(getPrivilegedTargetStatuses(s).sort())
     }
   })

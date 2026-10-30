@@ -1,0 +1,9 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-10-na-vs-violation.mjs docs/sessions/evidence/task923/r7-full-a/rows.jsonl docs/sessions/evidence/task923/r7-full-b/rows.jsonl
+== docs/sessions/evidence/task923/r7-full-a/rows.jsonl
+rows 22739 retried rows 50 rows with a rule both notApplicable and violated 0
+{}
+== docs/sessions/evidence/task923/r7-full-b/rows.jsonl
+rows 22740 retried rows 48 rows with a rule both notApplicable and violated 0
+{}
+EXIT_CODE=0

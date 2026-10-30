@@ -1,0 +1,432 @@
+# r54-01 R159 + R160: vitest verbose of the 14 files of fr-38-baseline.txt plus createAdminUser.security.test.ts and sanitizeCmsHtml.security.test.ts
+platform MINGW64_NT-10.0-26300 win32; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: npx vitest run --reporter=verbose <16 files>
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/__tests__/security/clientSinks.test.ts > new-tab links > every target="_blank" has rel with noopener, on the same element 13ms
+ ✓ src/__tests__/security/clientSinks.test.ts > new-tab links > every window.open passes noopener 2ms
+ ✓ src/__tests__/security/clientSinks.test.ts > new-tab links > the checker sees an unsafe link (planted) 0ms
+ ✓ src/__tests__/security/clientSinks.test.ts > raw HTML and code evaluation > dangerouslySetInnerHTML appears only in the allowlisted files 1ms
+ ✓ src/__tests__/security/clientSinks.test.ts > raw HTML and code evaluation > the CMS body is sanitised in the same expression it is output 0ms
+ ✓ src/__tests__/security/clientSinks.test.ts > raw HTML and code evaluation > no eval, new Function, innerHTML assignment, document.write or string timers 10ms
+ ✓ src/__tests__/security/clientSinks.test.ts > secrets in the browser bundle > no NEXT_PUBLIC variable is named like a secret 1ms
+ ✓ src/__tests__/security/clientSinks.test.ts > secrets in the browser bundle > the service-role key and the Cloudinary secret are read only in server-only code 2ms
+ ✓ src/__tests__/security/clientSinks.test.ts > [SEC-S11-SRV-DENY] No component opens a new tab without rel noopener 11ms
+ ✓ src/__tests__/security/clientSinks.test.ts > [SEC-927-FE-SINKS-EXCEPTION] the noopener rule excuses only Google's sign-in window in googlePopup.ts 3ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > updateUserProfile writes only name, phone and company_name > drops every other column a caller sends 4ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > updateUserProfile writes only name, phone and company_name > a moderator cannot make themselves an administrator through it 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > updateUserProfile writes only name, phone and company_name > takes text only 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > updateUserProfile writes only name, phone and company_name > a moderator cannot edit an administrator; an administrator can 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > updateUserProfile writes only name, phone and company_name > a plain user cannot use it at all 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > toggleUserVerified is refused and changes nothing 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > removeUserAvatar is refused and changes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > deactivateUser is refused and changes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > reactivateUser is refused and changes nothing 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > hardDeleteUser is refused and changes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > updateUserProfileFull is refused and changes nothing 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > toggleUserVerified works when an administrator does it 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > removeUserAvatar works when an administrator does it 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > hardDeleteUser works when an administrator does it 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > deactivateUser works when an administrator does it 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > updateUserProfileFull works when an administrator does it 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > a moderator still works on an ordinary account 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > rank: an administrator account is out of reach for a moderator with every permission > a moderator can still edit themselves and another moderator 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > a moderator with the role permission cannot set the account type "admin" on anyone, themselves included 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > the same moderator can set the other account types 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > an administrator can promote 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > a moderator without the role permission changes nobody's type, and the other fields still save 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > creating an administrator account needs an administrator; other types do not 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > only an administrator makes an administrator > without the permission no account is created at all 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > toggleUserVerified > refuses "true" as the value 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > toggleUserVerified > refuses 1 as the value 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > toggleUserVerified > refuses null as the value 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > toggleUserVerified > refuses undefined as the value 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > createLocation drops unknown columns 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > updateLocation cannot move the row or change its id 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > updatePage drops unknown columns 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > a page cannot publish with an empty Albanian body 2ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > a slug that another page uses is refused 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > locations and pages write only their own columns > without the permission nothing is written 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > stores the settings the form offers 1ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses an unknown key and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a key that tries to be clever and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a language that does not exist and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses zero days and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses days that are not a number and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a javascript logo and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a script social link and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a data image and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a value over 5000 characters and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a value that is not text and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses a value that is an object and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > one bad entry stops the whole save 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses null as the whole payload 2ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses undefined as the whole payload 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses "site_name=x" as the whole payload 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > refuses 5 as the whole payload 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > needs the settings permission 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > saveSettings > accepts exactly 5000 characters 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfile refuses the phone "067 123 4567" 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfile refuses the phone "355691234567" 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfile refuses the phone "javascript:alert(1)" 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfile refuses the phone "+355691234567?x=1" 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfile accepts a valid number and lets staff clear it 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull refuses the phone "067 123 4567" and whatsapp undefined 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull refuses the phone "355691234567" and whatsapp undefined 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull refuses the phone "javascript:alert(1)" and whatsapp undefined 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull refuses the phone "+355691234567?x=1" and whatsapp undefined 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull refuses the phone "" and whatsapp undefined 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > updateUserProfileFull saves valid numbers 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > createAdminUser refuses the phone "067 123 4567": no account is made 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > createAdminUser refuses the phone "355691234567": no account is made 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > createAdminUser refuses the phone "javascript:alert(1)": no account is made 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > createAdminUser refuses the phone "+355691234567?x=1": no account is made 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > phone numbers written by staff are in the stored form (finding S54) > createAdminUser refuses the phone "": no account is made 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > [SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification 0ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts > [SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account 1ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts > adminPermissions > [SEC-X-SRV-STATUS-PERM] the full profile form cannot deactivate or reactivate without users.soft_delete 5ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts > adminPermissions > the same moderator still blocks and unblocks without users.soft_delete (blocking keeps its rule), and an administrator needs no key 1ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts > adminPermissions > [SEC-X-SRV-LOCATIONS-PERM] every locations write path requires locations.manage 17ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts > adminPermissions > [SEC-X-SRV-CREATE-STAFF-ROLE] users.create alone cannot make a staff account 1ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts > adminPermissions > [SEC-X-SRV-SUSPEND-FUTURE] a past or invalid suspension end is refused 1ms
+ ✓ src/__tests__/security/staffActions.test.ts > the table covers the staff actions > lists every exported action of the staff action files, none forgotten 3ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updateListingStatus does nothing for them 1ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.setListingPremium does nothing for them 1ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.toggleListingPremium does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.deleteListing does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updateUserProfile does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.toggleUserVerified does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.createLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updateLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.toggleLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.deleteLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.saveSettings does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.createPage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updatePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.deletePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updateUserProfileFull does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.createAdminUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.deactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.reactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.hardDeleteUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.removeUserAvatar does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.addLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.approveLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.rejectLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.searchUsersForPicker does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > admin.updateTicketStatus does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > permissions.getModeratorPermissions does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > permissions.getPermissionEvents does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > permissions.setModeratorPermission does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > footer.getAllFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > footer.upsertFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.getAllCurrenciesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.createCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.updateCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.toggleCurrencyActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.setDefaultCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > currencies.deleteCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > propertyTypes.createPropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > propertyTypes.updatePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > propertyTypes.togglePropertyTypeActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > propertyTypes.deletePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > propertyTypes.getAllPropertyTypesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > clearHistory.clearHistoryRow does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > clearHistory.clearHistoryForEntity does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > emailTemplates.upsertEmailTemplateAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > emailTemplates.deleteEmailTemplateGroupAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > emailTemplates.deleteEmailTemplateLocaleAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > popular.setLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > an anonymous visitor > popular.setLocationUnfeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updateListingStatus does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.setListingPremium does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.toggleListingPremium does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.deleteListing does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updateUserProfile does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.toggleUserVerified does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.createLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updateLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.toggleLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.deleteLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.saveSettings does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.createPage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updatePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.deletePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updateUserProfileFull does nothing for them 2ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.createAdminUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.deactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.reactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.hardDeleteUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.removeUserAvatar does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.addLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.approveLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.rejectLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.searchUsersForPicker does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > admin.updateTicketStatus does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > permissions.getModeratorPermissions does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > permissions.getPermissionEvents does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > permissions.setModeratorPermission does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > footer.getAllFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > footer.upsertFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.getAllCurrenciesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.createCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.updateCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.toggleCurrencyActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.setDefaultCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > currencies.deleteCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > propertyTypes.createPropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > propertyTypes.updatePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > propertyTypes.togglePropertyTypeActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > propertyTypes.deletePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > propertyTypes.getAllPropertyTypesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > clearHistory.clearHistoryRow does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > clearHistory.clearHistoryForEntity does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > emailTemplates.upsertEmailTemplateAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > emailTemplates.deleteEmailTemplateGroupAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > emailTemplates.deleteEmailTemplateLocaleAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > popular.setLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in plain user > popular.setLocationUnfeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updateListingStatus does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.setListingPremium does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.toggleListingPremium does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.deleteListing does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updateUserProfile does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.toggleUserVerified does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.createLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updateLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.toggleLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.deleteLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.saveSettings does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.createPage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updatePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.deletePage does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updateUserProfileFull does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.createAdminUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.deactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.reactivateUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.hardDeleteUser does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.removeUserAvatar does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.addLocation does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.approveLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.rejectLocationRequest does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.searchUsersForPicker does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > admin.updateTicketStatus does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > permissions.getModeratorPermissions does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > permissions.getPermissionEvents does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > permissions.setModeratorPermission does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > footer.getAllFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > footer.upsertFooterContent does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.getAllCurrenciesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.createCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.updateCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.toggleCurrencyActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.setDefaultCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > currencies.deleteCurrency does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > propertyTypes.createPropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > propertyTypes.updatePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > propertyTypes.togglePropertyTypeActive does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > propertyTypes.deletePropertyType does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > propertyTypes.getAllPropertyTypesAdmin does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > clearHistory.clearHistoryRow does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > clearHistory.clearHistoryForEntity does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > emailTemplates.upsertEmailTemplateAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > emailTemplates.deleteEmailTemplateGroupAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > emailTemplates.deleteEmailTemplateLocaleAction does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > popular.setLocationFeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > a signed-in agent > popular.setLocationUnfeatured does nothing for them 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updateListingStatus 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.setListingPremium 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.toggleListingPremium 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.deleteListing 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updateUserProfile 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.toggleUserVerified 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.createLocation 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updateLocation 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.toggleLocationFeatured 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.deleteLocation 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.saveSettings 1ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.createPage 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updatePage 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.deletePage 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updateUserProfileFull 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.createAdminUser 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.deactivateUser 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.reactivateUser 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.hardDeleteUser 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.removeUserAvatar 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.addLocation 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.approveLocationRequest 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.rejectLocationRequest 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.searchUsersForPicker 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > admin.updateTicketStatus 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > permissions.getModeratorPermissions 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > permissions.getPermissionEvents 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > permissions.setModeratorPermission 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > footer.getAllFooterContent 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > footer.upsertFooterContent 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.getAllCurrenciesAdmin 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.createCurrency 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.updateCurrency 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.toggleCurrencyActive 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.setDefaultCurrency 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > currencies.deleteCurrency 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > propertyTypes.createPropertyType 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > propertyTypes.updatePropertyType 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > propertyTypes.togglePropertyTypeActive 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > propertyTypes.deletePropertyType 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > propertyTypes.getAllPropertyTypesAdmin 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > clearHistory.clearHistoryRow 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > clearHistory.clearHistoryForEntity 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > emailTemplates.upsertEmailTemplateAction 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > emailTemplates.deleteEmailTemplateGroupAction 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > emailTemplates.deleteEmailTemplateLocaleAction 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > popular.setLocationFeatured 0ms
+ ✓ src/__tests__/security/staffActions.test.ts > control: an administrator DOES reach the database (so the table above is not passing for another reason) > popular.setLocationUnfeatured 0ms
+ ✓ src/modules/admin/actions/__tests__/profileBounds.security.test.ts > profileBounds > [SEC-X-SRV-PROFILE-BOUNDS-DENY] an out-of-range profile value is refused before any write 18ms
+ ✓ src/modules/admin/actions/__tests__/profileBounds.security.test.ts > profileBounds > [SEC-X-SRV-PROFILE-BOUNDS-ALLOW] values at the bounds are written 4ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "javascript:alert(document.cookie)" and writes nothing 4ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "JaVaScRiPt:alert(1)" and writes nothing 1ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "java\tscript:alert(1)" and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "data:text/html,<script>alert(1)</script>" and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "vbscript:x" and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "//evil.example" and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > refuses the website "https://user:pw@evil.example/" and writes nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > stores a valid address in its normalised form 1ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > stores a bare host as https 1ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > an empty website is stored as nothing 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > a private profile stores no website at all, whatever was sent 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > updateUserProfileFull > a private profile is not refused for a script value it will not store 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "javascript:alert(document.cookie)" before creating the account 1ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "JaVaScRiPt:alert(1)" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "java\tscript:alert(1)" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "data:text/html,<script>alert(1)</script>" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "vbscript:x" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "//evil.example" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > refuses the website "https://user:pw@evil.example/" before creating the account 0ms
+ ✓ src/modules/admin/actions/__tests__/userWebsite.security.test.ts > createAdminUser > stores a valid address 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips a <script> tag and its text content 3ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips an onerror handler on an <img> 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips an onload handler on an <svg>, and the svg itself 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips an <iframe> entirely 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes a javascript: href 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes a JaVaScRiPt: href (case-insensitive scheme) 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes an entity-encoded javascript: href 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes a data: href 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > removes a protocol-relative href 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips onclick and style attributes from a <p>, keeping its text 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips a <form> and its <input> 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — removed payloads (R4/T1) > strips a <style> tag and its content 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps ordinary rich text 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps an https href unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps a relative href unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps a bare fragment href unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps a fragment href with a target unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps a mailto href unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > keeps a table with colspan unchanged 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — kept content (R4/T1) > adds rel="noopener noreferrer" to a target="_blank" link 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — null/undefined/empty and idempotency (R2) > returns "" for null, undefined and empty string 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — null/undefined/empty and idempotency (R2) > is idempotent over the removed/kept payload table 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 0 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 1 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 2 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 3 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 4 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 5 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 6 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > fixture 7 round-trips byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Story fixture round-trip (T1b, §3.4a) > is idempotent over every Story fixture body 3ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps a 2-column block byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps a 3-column block byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps a Cloudinary image with alt byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps a Cloudinary image with width and height byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps centred text byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps justified H2 text byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > keeps right-aligned list item byte-identical 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions kept (T7) > is idempotent over the kept rows 1ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img from another host 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img whose host only starts with the Cloudinary host 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with a data: URI 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with a relative path 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with a protocol-relative URL 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with an http (not https) Cloudinary URL 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with a javascript: URI 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops an img with an img with no src 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > strips onerror and other attributes from a kept Cloudinary img 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > drops any other data-* value or attribute on a div 0ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts > sanitizeCmsHtml — Task 868 additions dropped (T7) > still removes style="color:red" (884 contract) and any style other than text-align 1ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts > updateUserProfileFull — smoke tests (Guard 1, Task 448) > happy path — status change writes a user_status_history row 316ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts > updateUserProfileFull — smoke tests (Guard 1, Task 448) > happy path — account-type (profileType) change writes a user_change_log row 1ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts > updateUserProfileFull — smoke tests (Guard 1, Task 448) > no history row when status is unchanged 1ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts > updateUserProfileFull — smoke tests (Guard 1, Task 448) > forbidden — non-admin/moderator caller returns { error: "Forbidden" } 0ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts > updateUserProfileFull — smoke tests (Guard 1, Task 448) > unauthorized — no session returns { error: "Unauthorized" } 0ms
+ ✓ src/modules/admin/actions/__tests__/createAdminUser.security.test.ts > createAdminUser > [SEC-X-SRV-ADMIN-INVITE] the new account is invited and a failed invitation is reported 6ms
+ ✓ src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts > sanitizeCmsHtml > [SEC-X-SRV-CMS-OWN-CLOUD] another Cloudinary account is refused 5ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > an empty string → empty 1ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > null → empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > undefined → empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > an empty paragraph → empty 1ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a whitespace paragraph and a break → empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a non-breaking-space paragraph → empty 1ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a numeric-entity nbsp → empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > empty nested columns → empty 1ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a lone script → empty 1ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > an image from another host only → empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a paragraph with text → not empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > plain text → not empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a Cloudinary image alone → not empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > text inside columns → not empty 0ms
+ ✓ src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts > isCmsBodyEmpty (T8) > a table cell with text → not empty 0ms
+ ✓ src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx > CmsPageView — render-path sanitisation (R3/T2) > strips a <script> payload from the rendered markup, keeping its surrounding text 14ms
+ ✓ src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx > CmsPageView — render-path sanitisation (R3/T2) > strips an onerror image payload from the rendered markup, keeping its surrounding text 4ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > the en layout fixture keeps its text and every tag 44ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > the sq layout fixture keeps its text and every tag 18ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > the uk layout fixture keeps its text and every tag 22ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > the it layout fixture keeps its text and every tag 20ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > CMS fixture 0 keeps its text and every tag 9ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > CMS fixture 1 keeps its text and every tag 5ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > CMS fixture 2 keeps its text and every tag 7ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > CMS fixture 3 keeps its text and every tag 9ms
+ ✓ src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts > editor round trip (T10) > a legacy body keeps its text; the tags the editor renames or drops are exactly the listed ones 13ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > names the editable area by its label and holds five toolbar controls 251ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > the menuFormat menu lists every D868-3 function by its localized name 165ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > the menuParagraph menu lists every D868-3 function by its localized name 141ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > the menuInsert menu lists every D868-3 function by its localized name 135ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > the menuHistory menu lists every D868-3 function by its localized name 85ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > T11 — an empty editor emits "" and never <p></p> 105ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > T7 — the 2-column control inserts the block the sanitizer keeps byte-identical 127ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > T7 — the 3-column control inserts 3 columns, and remove deletes the block 226ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > inserts a 3×3 table with a header row, and the sanitizer keeps it 132ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > image dialog: a valid file and alt text upload, then insert <img src alt> 235ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > image dialog: a non-image file shows the type error and cannot be uploaded 197ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > image dialog: a failed upload keeps the dialog open and the document untouched 148ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > bold through the Format menu wraps the selected text in <strong>, and the selection survives the menu 113ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > H2 through the Paragraph menu turns the block into an <h2> 140ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > align centre through the Paragraph menu sets text-align: center 148ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields 924ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > remove link is disabled while the selection has no link, and enabled inside one 184ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > undo through the History menu reverts the last change 120ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx > MantineRichTextEditor > AC30 — with the cursor in bold text the Format trigger is active and the Bold item shows a check 112ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx > AdminUserProfile and ProfileTab > [SEC-X-FE-PROFILE-BOUNDS] a refused over-long name is shown, not saved 1563ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 (server error) — the banner shows the server error and the save_error toast fires 684ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both 1070ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10 — a status-only change enables Save and sends the new status (O84-8) 659ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10b — choosing the stored status again makes the form clean, so Save is disabled 776ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T3 — deactivate: confirm is disabled for a blank reason; with a reason it calls deactivateUser(id, reason) 325ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T4 — delete: the dialog opens first; confirm deletes and redirects; cancel deletes nothing 263ms
+stdout | src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere
+[UnsavedChanges] route_change_attempt { source: 'toolbar_button', href: '/admin/users' }
+[UnsavedChanges] navigation_blocked { type: 'toolbar_button', href: '/admin/users' }
+
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T5 — clear a history row calls clearHistoryRow; a { cleared: 0 } result shows the no-op info toast 146ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere 583ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T7 — create with an invalid email shows the inline email error and never calls createAdminUser 600ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T8 — a non-admin sees no deactivate/delete actions, and the account-type select is disabled 272ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T9 — every edit control is reachable by its label 408ms
+
+ Test Files  16 passed (16)
+      Tests  415 passed (415)
+   Start at  07:57:43
+   Duration  11.98s (transform 2.02s, setup 3.02s, import 14.00s, tests 11.76s, environment 16.52s)
+
+exit 0

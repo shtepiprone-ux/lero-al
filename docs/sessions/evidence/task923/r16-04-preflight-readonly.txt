@@ -1,0 +1,24 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-20T07:41:43.046Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-preflight-readonly.cjs --i-confirm-dev-database   (R62-R65: the preflight of hardening v7 and deletion v3 on the live schema, read only, and each broken comparison refused)
+ ok  proposed-hardening.sql: preflight against the live schema: passes
+ ok  proposed-account-deletion.sql: preflight against the live schema: passes
+ ok  sensitivity hardening: view md5: refuses: preflight failed: public.public_user_profiles changed since the capture (definition md5)
+ ok  sensitivity hardening: view ACL: refuses: preflight failed: the grants or the options of public.public_user_profiles changed since the capture
+ ok  sensitivity hardening: view options: refuses: preflight failed: the grants or the options of public.public_user_profiles changed since the capture
+ ok  sensitivity hardening: clear_user_history settings: refuses: preflight failed: the settings of public.clear_user_history(text, uuid, uuid, uuid) changed since the capture
+ ok  sensitivity hardening: admin_search_users_by_email settings: refuses: preflight failed: the settings of public.admin_search_users_by_email(text) changed since the capture
+ ok  sensitivity hardening: rls_auto_enable settings: refuses: preflight failed: the settings of public.rls_auto_enable() changed since the capture
+ ok  sensitivity hardening v7: the default of listings.created_at: refuses: preflight failed: the default of public.listings.created_at is not the audited one
+ ok  sensitivity hardening v7: the default of listings.public_id: refuses: preflight failed: public.listings.public_id or its sequence is not the audited one
+ ok  sensitivity hardening v7: price_initial already exists: refuses: preflight failed: public.listings.price / price_old are not numeric, or price_initial already exists
+ ok  sensitivity hardening v7: the triggers of listings: refuses: preflight failed: the triggers of public.listings are not the two enabled ones that were audited (listings_search_vector, listings_updated_at)
+ ok  sensitivity hardening v7: the type of currencies.id: refuses: preflight failed: public.currencies.id is not integer
+ ok  sensitivity hardening v7: end_user_sessions already exists: refuses: preflight failed: v7 objects already exist
+ ok  sensitivity deletion: a constraint definition (ON DELETE clause added): refuses: preflight failed: report_actions.report_actions_actor_id_fkey is defined as FOREIGN KEY (actor_id) REFERENCES users(id) (captured FOREIGN KEY (actor_id) REFEREN
+ ok  sensitivity deletion: an updated_at trigger name: refuses: preflight failed: trigger trg_email_templates_updated_at on public.email_templates is not the enabled trigger that was audited
+ ok  sensitivity deletion v3: a changed column list of pages: refuses: preflight failed: the columns of public.pages are not the audited ones
+ ok  sensitivity deletion v3: a changed column list of site_footer: refuses: preflight failed: the columns of public.site_footer are not the audited ones
+ ok  sensitivity deletion v3: a changed table-level ACL of pages: refuses: preflight failed: the table-level ACL of public.pages is not the audited one
+ ok  sensitivity deletion v3: a changed table-level ACL of site_footer: refuses: preflight failed: the table-level ACL of public.site_footer is not the audited one
+RESULT: both preflights pass on the live schema and each broken comparison is refused
+EXIT_CODE=0

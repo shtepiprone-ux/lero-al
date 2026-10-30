@@ -1,0 +1,53 @@
+platform win32 node v22.22.3
+command: node docs/sessions/evidence/task923/r7-85-row-diff.mjs docs/sessions/evidence/task923/r7-full-a/rows.jsonl docs/sessions/evidence/task923/r6-full/rows.jsonl docs/sessions/evidence/task923/r4-full/rows.jsonl
+platform win32 node v22.22.3
+new docs/sessions/evidence/task923/r7-full-a/rows.jsonl: 22739 rows; base docs/sessions/evidence/task923/r6-full/rows.jsonl: 22740 rows; older docs/sessions/evidence/task923/r4-full/rows.jsonl: 22740 rows
+rows only in the base 1; only in the new run 0
+  only base: patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | portal:0 | uk | 320
+
+rows in both runs with at least one change: 35; changes (row x rule): 42
+attributed by detail: {"R31":16,"R28":7}; listed (no requirement explains them by detail): 19
+
+changes per rule, direction and component (row counts):
+  1 x action-hidden: green -> failing :: admindashboardview
+  1 x component-overflow: details changed :: authsheet
+  1 x component-overflow: failing -> green :: listingdetailview
+  13 x component-overflow: green -> failing :: admindashboardview
+  4 x dismiss-escape: details changed :: richtexteditor
+  1 x dismiss-escape: failing -> green :: adminexchangeprovidersview
+  1 x dismiss-escape: green -> failing :: listingdetailview
+  1 x dismiss-outside: failing -> green :: admindashboardview
+  1 x dismiss-outside: failing -> green :: adminexchangeprovidersview
+  1 x dismiss-outside: failing -> green :: adminpagesview
+  2 x dismiss-outside: failing -> green :: adminuserprofileview
+  1 x dismiss-outside: failing -> green :: adminuserstable
+  2 x focus-open: failing -> green :: adminshell
+  6 x focus-open: green -> failing :: adminshell
+  1 x portal-count: green -> failing :: admindashboardview
+  1 x target-small: green -> failing :: admindashboardview
+  1 x text-clamp: failing -> green :: admindashboardview
+  1 x text-ellipsis: failing -> green :: admindashboardview
+  1 x text-hidden: failing -> green :: listingdetailview
+  1 x viewport-overflow: green -> failing :: admindashboardview
+
+listed changes (row | rule | direction | details in the base | details in the new run):
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | text-clamp | failing -> green | base: p.mantine-focus-auto "Видимі зараз" clamp 2 ;; p.mantine-focus-auto "На модерації" clamp 2 | new: -
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | text-ellipsis | failing -> green | base: label.m_1738fcb2 "7 днів" ellipsis 87>87 ;; label.m_1738fcb2 "30 днів" ellipsis 87>87 | new: -
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | viewport-overflow | green -> failing | base: - | new: h1.m_8a5d1357 "Dashboard" x 16..336 outside 0..320 ;; p.mantine-focus-auto "Операційний стан платформи" x 16..336 outside 0..320
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | component-overflow | green -> failing | base: - | new: div.m_cf365364 "7 днів30 днівСвій період" x 16..338 past div.m_b1336c6 16..336
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | action-hidden | green -> failing | base: - | new: a.m_e615b15f ".__m__-_r_67_{align-item" centre 176,930.5 outside the 320x844 viewport and no scroll region holds it ;; a.m_e615b15f ".__m__-_r_6j_{align-item" centre 176,1285.9 outside the 320x844 viewport and no scroll region holds it
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | target-small | green -> failing | base: - | new: button.mantine-focus-auto "Відкрити меню" 16x6 < 44px ;; input.m_1714d588 "7d" 13x13 < 44px
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~about-visible-listings | app | uk | 320 | portal-count | green -> failing | base: - | new: declared 1 portal root(s), found 0
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | en | 390 | focus-open | green -> failing | base: - | new: on open the focus is on button.mantine-focus-auto[Open menu], outside every portal root
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | it | 390 | focus-open | failing -> green | base: on open the focus is on button.mantine-focus-auto[Apri menu], outside every portal root | new: -
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | sq | 320 | focus-open | green -> failing | base: - | new: on open the focus is on button.mantine-focus-auto[Hap menunë], outside every portal root
+  patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | uk | 640 | focus-open | failing -> green | base: on open the focus is on button.mantine-focus-auto[Відкрити меню], outside every portal root | new: -
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | sq | 320 | component-overflow | details changed | base: div "" x 16..316 past div 16..304 | new: div "" x 16..316 past div 16..304 ;; div "" y 631..702 past div 631..696
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | app | sq | 390 | text-hidden | failing -> green | base: div.listing-map "Shitet apartament 2+1 në Tiranë, zonë e re×+− Le" scroll 429x389 > client 316x256 | new: -
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | app | sq | 390 | component-overflow | failing -> green | base: div.leaflet-popup "Shitet apartament 2+1 në Tir" (absolute+transformed) x 38..385 past div.listing-map 37..353 ;; a.leaflet-popup-close-button "×" (absolute) x 361..385 past div.listing-map 37..353 holds a.leaflet-popup-close-button "Close popup" | new: -
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | portal:0 | en | 320 | dismiss-escape | green -> failing | base: - | new: dismiss-escape: the portal is still visible 5000ms after the dismissal
+  patterns-mantine-richtexteditor--default | patterns-mantine-richtexteditor--default~history | portal:0 | sq | 640 | dismiss-escape | details changed | base: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on body.sb-main-fullscreen) | new: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on section.m_fd1ab0aa)
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~history | portal:0 | it | 320 | dismiss-escape | details changed | base: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on button.mantine-focus-auto) | new: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on body.sb-main-fullscreen)
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~history | portal:0 | uk | 390 | dismiss-escape | details changed | base: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on button.mantine-focus-auto) | new: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on body.sb-main-fullscreen)
+  patterns-mantine-richtexteditor--with-content | patterns-mantine-richtexteditor--with-content~history | portal:0 | uk | 640 | dismiss-escape | details changed | base: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on body.sb-main-fullscreen) | new: dismiss-escape: focus did not return to ":scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span:nth-child(6) > button:nth-child(2), :scope > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) > button:nth-child(2)" (it is on button.mantine-focus-auto)
+EXIT_CODE=0

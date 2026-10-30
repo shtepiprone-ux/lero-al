@@ -1,0 +1,11 @@
+columnsWithoutKey only today: {"tbl":"listing_contact_reveals","col":"requester_ip","typ":"text"}
+userKeys only today: {"tbl":"listing_contact_reveals","col":"viewer_id","conname":"listing_contact_reveals_viewer_id_fkey","confdeltype":"c","attnotnull":true,"references_table":"auth.users"}
+userKeys only today: {"tbl":"reauth_failures","col":"user_id","conname":"reauth_failures_user_id_fkey","confdeltype":"c","attnotnull":true,"references_table":"auth.users"}
+triggersOnDeleted only today: {"tbl":"listings","trigger_name":"listings_guard_protected","event_manipulation":"UPDATE","action_timing":"BEFORE"}
+triggersOnDeleted only today: {"tbl":"listings","trigger_name":"listings_guard_protected","event_manipulation":"INSERT","action_timing":"BEFORE"}
+triggersOnDeleted only today: {"tbl":"listings","trigger_name":"listings_price_rule","event_manipulation":"INSERT","action_timing":"BEFORE"}
+triggersOnDeleted only today: {"tbl":"listings","trigger_name":"listings_price_rule","event_manipulation":"UPDATE","action_timing":"BEFORE"}
+triggersOnDeleted only today: {"tbl":"users","trigger_name":"users_guard_protected","event_manipulation":"INSERT","action_timing":"BEFORE"}
+triggersOnDeleted only today: {"tbl":"users","trigger_name":"users_guard_protected","event_manipulation":"UPDATE","action_timing":"BEFORE"}
+schema findings compared: 6; rows that differ: 9
+storage objects then: [{"bucket_id":"avatars","objects":1,"in_a_uuid_folder":1}]; today: [{"bucket_id":"avatars","objects":1,"in_a_uuid_folder":1}]

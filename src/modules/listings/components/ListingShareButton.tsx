@@ -40,6 +40,8 @@ export function ListingShareButton({ listingTitle, listingUrl }: ListingShareBut
         onClick={handleShare}
         variant="subtle"
         size={theme.other.iconSize.prominent}
+        miw={{ base: theme.other.touchTarget, sm: 0 }}
+        mih={{ base: theme.other.touchTarget, sm: 0 }}
         radius="pill"
         aria-label={t('share_listing')}
       >

@@ -1,0 +1,15 @@
+# r56-00: sha256 of every path written by Revision 56 (R171, R172, R173) before its first edit
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-56/r56-hash.mjs docs/sessions/evidence/task923/revision-56/r56-00.txt "r56-00: sha256 of every path written by Revision 56 (R171, R172, R173) before its first edit"
+started: 2026-10-29T13:06:52.779Z
+--- output ---
+ABSENT  src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts
+df1b6d46ff26a003d9a914d396890b22f7e2f9ab6693fa87691f581c68aef3a6  src/tests/integration/accessHardening.integration.test.ts
+921083a93ea6b927641d568baad33a80d92acf5ecf55c92cd1890bb97a655c35  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+48a18ca2ae700e2f7e9e9609666fdbbc2460fd446b17ffd762a8765347314f57  docs/sessions/evidence/task923/security/sensitivity.mjs
+ABSENT  docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-VIEW-DENY.json
+ABSENT  docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-PROFILE-PROTECTED-DENY.json
+d3b196c4e448c9c2eda6c061530f1449d79bd8ae2e40feae7990f873e882784a  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+2337ee9e28951b6c77c8e9c9df60b87d872d9e71aaec6691de573a0c932960cc  docs/sessions/evidence/task923/security/d8-d9-report.json
+8a3d994ec2838b4660e84b16c70c3852edc5afcb703012e34178dbb304667d9a  docs/sessions/2026-10-10-task923-rendered-state-census.md
+--- exit code: 0 ---

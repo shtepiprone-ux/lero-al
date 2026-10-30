@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { isUuid } from '@/lib/security/inputs'
 import { LISTING_SELECT } from './listingSelect'
 import type { CardListingData } from '../components/ListingCard'
 
@@ -14,9 +15,15 @@ export async function getRecentlyViewedForUser(
 ): Promise<CardListingData[]> {
   const supabase = await createClient()
 
+  // Task 923 Revision 7: ask for the signed-in person's own rows explicitly instead of relying only on row-level security (a missing or wrong policy would
+  // otherwise return everybody's history).
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return []
+
   const { data: rows } = await supabase
     .from('recently_viewed')
     .select('listing_id')
+    .eq('user_id', user.id)
     .order('viewed_at', { ascending: false })
     .limit(limit + (excludeId ? 1 : 0))
 
@@ -49,7 +56,8 @@ export async function getRecentlyViewedForGuest(
   ids: string[],
   { excludeId, limit = 25 }: { excludeId?: string; limit?: number } = {},
 ): Promise<CardListingData[]> {
-  const filteredIds = ids.filter(id => id !== excludeId).slice(0, limit)
+  // The ids come from a cookie the visitor can edit: only real listing ids are queried.
+  const filteredIds = ids.filter(id => isUuid(id) && id !== excludeId).slice(0, limit)
   if (!filteredIds.length) return []
 
   const supabase = await createClient()

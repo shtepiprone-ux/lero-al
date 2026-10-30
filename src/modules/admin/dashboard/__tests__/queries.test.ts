@@ -425,3 +425,61 @@ describe('getAdminDashboardData', () => {
     expect(order).toHaveLength(state.calls.length)
   })
 })
+
+describe('getAdminDashboardData: odd answers from the database', () => {
+  it('an error with no code still fails its block and is logged with an empty code', async () => {
+    state.respond = (c) => (c.table === 'listing_reports' && isCount(c) && has(c, 'eq', 'status', 'pending') ? ({ error: {} } as never) : defaultRespond(c))
+    const d = await getAdminDashboardData()
+    expect(d.adm02).toEqual({ ok: false, error: 'query_failed' })
+    expect(errorSpy).toHaveBeenCalledWith('[AdminDashboard] adm02 failed', { code: null, cause: undefined })
+  })
+
+  it('a count that is undefined (not only null) is a failure, never 0', async () => {
+    state.respond = (c) => (c.table === 'listing_reports' && isCount(c) && has(c, 'eq', 'status', 'pending') ? { count: undefined } : defaultRespond(c))
+    expect((await getAdminDashboardData()).adm02).toEqual({ ok: false, error: 'query_failed' })
+    expect(errorSpy).toHaveBeenCalledWith('[AdminDashboard] adm02 failed', { code: 'count_missing', cause: undefined })
+  })
+
+  it('a list that comes back null without an error is a failure, never an empty queue', async () => {
+    state.respond = (c) => (c.table === 'support_tickets' && !isCount(c) ? { data: null } : defaultRespond(c))
+    const d = await getAdminDashboardData()
+    expect(d.adm06).toEqual({ ok: false, error: 'query_failed' })
+    expect(errorSpy).toHaveBeenCalledWith('[AdminDashboard] adm06 failed', { code: 'data_missing', cause: undefined })
+    expect(d.adm01.ok).toBe(true)
+  })
+
+  it('a thrown error keeps its cause in the log', async () => {
+    const boom = new Error('network down')
+    state.respond = (c) => { if (c.table === 'support_tickets' && !isCount(c)) throw boom; return defaultRespond(c) }
+    await getAdminDashboardData()
+    expect(errorSpy).toHaveBeenCalledWith('[AdminDashboard] adm06 failed', { code: null, cause: boom })
+  })
+
+  it('location requests without a total are a failure, not "0 requests"', async () => {
+    state.respond = (c) => (c.table === 'users' ? { count: null, data: [{ id: 'u1', name: 'A', last_name: 'B', location_request: { city: 'X' } }] } : defaultRespond(c))
+    const d = await getAdminDashboardData()
+    expect(d.locationRequests).toEqual({ ok: false, error: 'query_failed' })
+    expect(errorSpy).toHaveBeenCalledWith('[AdminDashboard] locationRequests failed', { code: 'count_missing' })
+  })
+
+  it('missing relations and names show a dash or nothing, never "undefined" or a crash', async () => {
+    state.respond = (c) => {
+      if (c.table === 'listing_reports' && !isCount(c)) return { data: [{ id: 'rep-1', created_at: '2026-09-01T10:00:00Z', reason: 'spam', status: 'pending', listing: null }] }
+      if (c.table === 'users') return { count: 1, data: [{ id: 'u1', name: '  ', last_name: undefined, location_request: null }] }
+      if (c.table === 'listings' && !isCount(c) && !has(c, 'eq', 'status', 'pending')) return { data: [{ id: 'r-1', slug: 's', title: 'T', status: 'active', is_premium: false, price: 1, currency: 'EUR', created_at: '2026-09-01T10:00:00Z', owner: [] }] }
+      return defaultRespond(c)
+    }
+    const d = await getAdminDashboardData()
+    expect(d.adm02.ok && d.adm02.data.rows[0].listingTitle).toBeNull()
+    expect(d.locationRequests.ok && d.locationRequests.data.rows[0]).toMatchObject({ displayName: '—', city: '', region: null })
+    expect(d.recentListings.ok && JSON.stringify(d.recentListings.data)).toContain('—')
+  })
+
+  it('the refresh time is the time of the call', async () => {
+    const before = Date.now()
+    const d = await getAdminDashboardData()
+    const t = Date.parse(d.refreshedAt)
+    expect(t).toBeGreaterThanOrEqual(before - 1)
+    expect(t).toBeLessThanOrEqual(Date.now() + 1)
+  })
+})

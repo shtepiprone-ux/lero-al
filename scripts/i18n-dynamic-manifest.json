@@ -32,13 +32,6 @@
       "note": "PropertyType (10) — audit §2 sites #2, 46, 48, 50."
     },
     {
-      "id": "admin-currency-providers-mode",
-      "site": "src/components/admin/ProviderFormDialogView.tsx:131",
-      "namespace": "admin.currency.providers",
-      "keys": ["mode_auto", "mode_manual", "mode_hybrid"],
-      "note": "audit §2 sites #3-5 — ('auto'|'manual'|'hybrid')."
-    },
-    {
       "id": "admin-inquiries-filter",
       "site": "src/components/admin/AdminInquiriesView.tsx:85",
       "namespace": "admin.inquiries",
@@ -96,28 +89,28 @@
     },
     {
       "id": "admin-support-role",
-      "site": "src/components/admin/AdminSupportManager.tsx:121",
+      "site": "src/components/admin/UserPickerFieldView.tsx:85",
       "namespace": "admin.support",
       "keys": ["role_admin", "role_moderator", "role_agent", "role_user"],
       "note": "UserRole (4) — audit §2 sites #16, 18."
     },
     {
       "id": "admin-support-user-status",
-      "site": "src/components/admin/AdminSupportManager.tsx:123",
+      "site": "src/components/admin/UserPickerFieldView.tsx:88",
       "namespace": "admin.users",
       "keys": ["user_status_active", "user_status_blocked", "user_status_inactive"],
-      "note": "UserStatus (3) — audit §2 site #17. Task 320 namespace fix (Strategy A): UserCard now resolves these via a second useTranslations('admin.users') scope (tu), matching admin-users-user-status (#38/#41). No admin.support.user_status_* keys exist or are added."
+      "note": "UserStatus (3) — audit §2 site #17. Task 320 namespace fix (Strategy A): the picker View resolves these via a second useTranslations('admin.users') scope (tu), matching admin-users-user-status (#38/#41). No admin.support.user_status_* keys exist or are added."
     },
     {
       "id": "admin-support-complaint-type",
-      "site": "src/components/admin/AdminSupportManager.tsx:325",
+      "site": "src/components/admin/CreateTicketDialogView.tsx:71",
       "namespace": "admin.support",
       "keys": ["complaint_type_fraud_or_scam", "complaint_type_fake_listing_or_profile", "complaint_type_harassment_or_abuse", "complaint_type_inappropriate_content", "complaint_type_spam", "complaint_type_payment_or_deposit_issue", "complaint_type_duplicate_or_impersonation", "complaint_type_other"],
       "note": "ComplaintType (8) — audit §2 sites #19, 22, 23, 26."
     },
     {
       "id": "admin-support-support-status",
-      "site": "src/components/admin/AdminSupportManager.tsx:333",
+      "site": "src/components/admin/TicketDetailDialogView.tsx:75",
       "namespace": "admin.support",
       "keys": ["support_status_open", "support_status_in_progress", "support_status_resolved", "support_status_closed"],
       "note": "TicketStatus (4) — audit §2 sites #20, 21, 24, 25, 27; #25's falsy branch uses static filter_all_status (deliberately excluded)."

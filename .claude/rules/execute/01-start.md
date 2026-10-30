@@ -17,6 +17,8 @@ Open this phase file before the saved task; do not open source, diff, or Storybo
    For a confirmed non-visible task, record why it is not applicable.
 4. Read the affected source, callers, tests, Stories, and current diff. Reproduce the stated current behavior or
    retain direct evidence before changing it.
+   Validate the adjacent JSON plan and emit the exact security-task receipt from `shared/workflow-gates.md` before
+   any product write. A missing/stale contract is a hard stop, including for an older saved task.
 5. Record in session evidence: requirement/AC ledger, preserved and required behavior, QA profile, relevant negative
    flows, and the exact task-owned write scope.
 6. For a visible surface, read `docs/rules/agent-contract/p0-16d-surface-census.md` and run its rendered-component
@@ -28,5 +30,6 @@ Required first substantive receipt:
 
 `EXECUTION PREFLIGHT COMPLETE - loaded: execute-task; shared/role-boundaries; shared/ui-token-contract; saved task and selected rule bundle.`
 
-Then issue the relevant GR-0 canonical-reuse receipt before any visual/component/Story write. The exact detailed
-receipts and historic definitions remain in `docs/golden-rules.md`.
+Then register the relevant GR-0 canonical-reuse receipt (`-Kind CanonicalReuse`, `shared/enforcement-model.md`)
+before any visual/component/Story write. The exact detailed receipts and historic definitions remain in
+`docs/golden-rules.md`.

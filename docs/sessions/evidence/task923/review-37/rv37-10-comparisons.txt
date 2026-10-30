@@ -1,0 +1,16 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+started: 2026-10-23T06:25:41Z
+== 1. failing IDs: comm of r32-03d-failing-ids.txt and review-37/rv37-02d-failing-ids.txt
+only in rv37: 0
+only in r32-03d: 0
+== 2. check:design-tokens findings block: r33-07e-design-tokens.txt lines 16-23 against revision-34/rv34-02-design-tokens-baseline.txt lines 11-18
+design-tokens findings: IDENTICAL to the baseline
+== 3. check:locale-leak report .screenshots/locale-leak/2026-10-22T20-02-00-738Z-shard-1-1/report.json
+leaks 779 render errors 7 complete false
+leaks in this revision's Stories (authsheet, listingcontact, listinginquiry, captcha): 0
+render errors in this revision's Stories: 0
+EXIT_CODE=0
+scanned ids matching: 12 patterns-mantine-authsheet--captcha patterns-mantine-authsheet--forgot-password patterns-mantine-authsheet--login patterns-mantine-authsheet--login-validation-error patterns-mantine-authsheet--register patterns-mantine-authsheet--register-agent patterns-mantine-authsheet--register-agent-add-company patterns-mantine-authsheet--register-agent-add-company-logo patterns-mantine-listingcontactpattern--default patterns-mantine-listinginquirydialogview--empty patterns-mantine-listinginquirydialogview--filled patterns-mantine-listinginquirydialogview--pending
+excluded matching: none

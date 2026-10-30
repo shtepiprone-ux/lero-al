@@ -1,0 +1,21 @@
+# Task 923 Revision 42 readiness run (Opus), 2026-10-24T08:01:37.105Z, HEAD 06b3960e0, working tree, win32, node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+docs contract taskSha256 435e287c680388ba2da6ec02092a519d1d6a3d08af23d8a06de194df3528d035 -> 933191bfb8e599fd2c46c1e649bca2b6b432269c5ae02bd420ff288708849f99
+in-memory validateContract(ready, plan): []
+== npm run -s check:kickoff-evidence
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+
+exit 0
+== node scripts/check-mobile-adaptation-contract.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+
+exit 0
+D8_D9 executionStatus ready; stage planned; scope 333; cases 230; critical 70
+kickoff sha256 (LF) 9e71a2b007d9e676b02c97708f82fed41ba919962eb8015a2e1ebc2bffe0c2bc
+D8_D9 sidecar sha256 3f1b2e51b58b4464498e37b0ef1738b774d630219c7123c66ffc548e85e03dc4

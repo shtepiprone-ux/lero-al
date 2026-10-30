@@ -1,0 +1,2 @@
+cmd: rg -l 'rate_limit_events|rate_limits|auth_attempts|failed_attempts' src  (Opus, 2026-10-20)
+result: no file (0 matches)

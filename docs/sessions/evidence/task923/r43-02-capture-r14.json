@@ -1,0 +1,2607 @@
+{
+ "takenAt": "2026-10-24T09:39:20.248Z",
+ "view": {
+  "name": "public.public_user_profiles",
+  "relkind": "v",
+  "owner": "postgres",
+  "options": [
+   "security_invoker=false"
+  ],
+  "acl": "{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres}",
+  "md5": "67e32527c05ca1f97f3e19594297dd47",
+  "def": " SELECT id,\n    name,\n    avatar_url,\n    user_type,\n    is_verified,\n    company_name,\n    deleted_at,\n    phone IS NOT NULL AND length(phone) > 0 AS has_phone,\n    whatsapp IS NOT NULL AND length(whatsapp) > 0 AS has_whatsapp\n   FROM users\n  WHERE (CURRENT_USER <> ALL (ARRAY['authenticated'::name, 'anon'::name])) OR ( SELECT caller_is_active() AS caller_is_active);",
+  "columns": [
+   {
+    "name": "id",
+    "type": "uuid"
+   },
+   {
+    "name": "name",
+    "type": "text"
+   },
+   {
+    "name": "avatar_url",
+    "type": "text"
+   },
+   {
+    "name": "user_type",
+    "type": "text"
+   },
+   {
+    "name": "is_verified",
+    "type": "boolean"
+   },
+   {
+    "name": "company_name",
+    "type": "text"
+   },
+   {
+    "name": "deleted_at",
+    "type": "timestamp with time zone"
+   },
+   {
+    "name": "has_phone",
+    "type": "boolean"
+   },
+   {
+    "name": "has_whatsapp",
+    "type": "boolean"
+   }
+  ]
+ },
+ "functionsNamed": [
+  {
+   "schema": "public",
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "argtypes": "text",
+   "secdef": true,
+   "config": [
+    "search_path=auth, public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "argtypes": "text, uuid, uuid, uuid",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "argtypes": "timestamp with time zone",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "rls_auto_enable",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=pg_catalog, pg_temp"
+   ],
+   "kind": "f"
+  }
+ ],
+ "functionsSecdefPublic": [
+  {
+   "schema": "public",
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "argtypes": "text",
+   "secdef": true,
+   "config": [
+    "search_path=auth, public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "caller_is_active",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "caller_is_admin",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "argtypes": "text, uuid, uuid, uuid",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "end_user_sessions",
+   "args": "p_user uuid",
+   "argtypes": "uuid",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "get_listing_owner_contact",
+   "args": "listing_id_param uuid",
+   "argtypes": "uuid",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "get_listing_owner_contact_as",
+   "args": "p_caller uuid, listing_id_param uuid",
+   "argtypes": "uuid, uuid",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "handle_new_user",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "argtypes": "timestamp with time zone",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "record_listing_view",
+   "args": "p_listing_id uuid, p_user_id uuid, p_ip_hash text",
+   "argtypes": "uuid, uuid, text",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "record_recently_viewed",
+   "args": "p_listing_id uuid, p_cap integer",
+   "argtypes": "uuid, integer",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "rls_auto_enable",
+   "args": "",
+   "argtypes": "",
+   "secdef": true,
+   "config": [
+    "search_path=pg_catalog, pg_temp"
+   ],
+   "kind": "f"
+  },
+  {
+   "schema": "public",
+   "name": "set_default_currency",
+   "args": "p_id integer",
+   "argtypes": "integer",
+   "secdef": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "kind": "f"
+  }
+ ],
+ "constraints": [
+  {
+   "tbl": "agent_reviews",
+   "col": "agent_id",
+   "con": "agent_reviews_agent_id_fkey",
+   "def": "FOREIGN KEY (agent_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "agent_reviews",
+   "col": "reviewer_id",
+   "con": "agent_reviews_reviewer_id_fkey",
+   "def": "FOREIGN KEY (reviewer_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "collections",
+   "col": "user_id",
+   "con": "collections_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "handled_by",
+   "con": "contact_inquiries_handled_by_fkey",
+   "def": "FOREIGN KEY (handled_by) REFERENCES auth.users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "replied_by",
+   "con": "contact_inquiry_replies_replied_by_fkey",
+   "def": "FOREIGN KEY (replied_by) REFERENCES auth.users(id)",
+   "delete_rule": "a",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "conversations",
+   "col": "buyer_id",
+   "con": "conversations_buyer_id_fkey",
+   "def": "FOREIGN KEY (buyer_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "conversations",
+   "col": "seller_id",
+   "con": "conversations_seller_id_fkey",
+   "def": "FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "email_change_tokens",
+   "col": "user_id",
+   "con": "email_change_tokens_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "email_templates",
+   "col": "updated_by",
+   "con": "email_templates_updated_by_fkey",
+   "def": "FOREIGN KEY (updated_by) REFERENCES auth.users(id)",
+   "delete_rule": "a",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "favorite_price_alerts",
+   "col": "user_id",
+   "con": "favorite_price_alerts_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "favorites",
+   "col": "user_id",
+   "con": "favorites_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "actor_user_id",
+   "con": "history_clear_events_actor_user_id_fkey",
+   "def": "FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "actor_user_id",
+   "con": "listing_contact_events_actor_user_id_fkey",
+   "def": "FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "listing_owner_id",
+   "con": "listing_contact_events_listing_owner_id_fkey",
+   "def": "FOREIGN KEY (listing_owner_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_contact_reveals",
+   "col": "viewer_id",
+   "con": "listing_contact_reveals_viewer_id_fkey",
+   "def": "FOREIGN KEY (viewer_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_inquiries",
+   "col": "listing_owner_id",
+   "con": "listing_inquiries_listing_owner_id_fkey",
+   "def": "FOREIGN KEY (listing_owner_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "user_id",
+   "con": "listing_reports_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listing_views",
+   "col": "user_id",
+   "con": "listing_views_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "listings",
+   "col": "user_id",
+   "con": "listings_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "messages",
+   "col": "sender_id",
+   "con": "messages_sender_id_fkey",
+   "def": "FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "notification_settings",
+   "col": "user_id",
+   "con": "notification_settings_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "notifications",
+   "col": "user_id",
+   "con": "notifications_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "pages",
+   "col": "updated_by",
+   "con": "pages_updated_by_fkey",
+   "def": "FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "reauth_failures",
+   "col": "user_id",
+   "con": "reauth_failures_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "user_id",
+   "con": "recently_viewed_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "report_actions",
+   "col": "actor_id",
+   "con": "report_actions_actor_id_fkey",
+   "def": "FOREIGN KEY (actor_id) REFERENCES users(id)",
+   "delete_rule": "a",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "actor_user_id",
+   "con": "role_permission_events_actor_user_id_fkey",
+   "def": "FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "updated_by_user_id",
+   "con": "role_permissions_updated_by_user_id_fkey",
+   "def": "FOREIGN KEY (updated_by_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "saved_searches",
+   "col": "user_id",
+   "con": "saved_searches_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "site_footer",
+   "col": "updated_by",
+   "con": "site_footer_updated_by_fkey",
+   "def": "FOREIGN KEY (updated_by) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_messages",
+   "col": "sender_id",
+   "con": "support_messages_sender_id_fkey",
+   "def": "FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "actor_user_id",
+   "con": "support_ticket_events_actor_user_id_fkey",
+   "def": "FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "assigned_to",
+   "con": "support_tickets_assigned_to_fkey",
+   "def": "FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "created_by_admin_id",
+   "con": "support_tickets_created_by_admin_id_fkey",
+   "def": "FOREIGN KEY (created_by_admin_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "reported_user_id",
+   "con": "support_tickets_reported_user_id_fkey",
+   "def": "FOREIGN KEY (reported_user_id) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "user_id",
+   "con": "support_tickets_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "changed_by",
+   "con": "user_change_log_changed_by_fkey",
+   "def": "FOREIGN KEY (changed_by) REFERENCES users(id)",
+   "delete_rule": "a",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "user_id",
+   "con": "user_change_log_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "changed_by",
+   "con": "user_status_history_changed_by_fkey",
+   "def": "FOREIGN KEY (changed_by) REFERENCES users(id)",
+   "delete_rule": "a",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "user_id",
+   "con": "user_status_history_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "users",
+   "col": "id",
+   "con": "users_id_fkey",
+   "def": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "reviewed_by",
+   "con": "verification_requests_reviewed_by_fkey",
+   "def": "FOREIGN KEY (reviewed_by) REFERENCES users(id) ON DELETE SET NULL",
+   "delete_rule": "n",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "user_id",
+   "con": "verification_requests_user_id_fkey",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE",
+   "delete_rule": "c",
+   "update_rule": "a",
+   "match_type": "s",
+   "deferrable": false,
+   "deferred": false,
+   "validated": true
+  }
+ ],
+ "triggers": [
+  {
+   "tbl": "email_templates",
+   "name": "trg_email_templates_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_email_templates_updated_at BEFORE UPDATE ON public.email_templates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "name": "listing_contact_events_set_owner",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listing_contact_events_set_owner BEFORE INSERT ON public.listing_contact_events FOR EACH ROW EXECUTE FUNCTION listing_contact_events_set_owner()"
+  },
+  {
+   "tbl": "listings",
+   "name": "listings_guard_protected",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_guard_protected BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION guard_listings_protected_columns()"
+  },
+  {
+   "tbl": "listings",
+   "name": "listings_price_rule",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_price_rule BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION listings_price_rule()"
+  },
+  {
+   "tbl": "listings",
+   "name": "listings_search_vector",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_search_vector BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_listing_search_vector()"
+  },
+  {
+   "tbl": "listings",
+   "name": "listings_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_updated_at()"
+  },
+  {
+   "tbl": "support_tickets",
+   "name": "trg_support_tickets_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_support_tickets_updated_at BEFORE UPDATE ON public.support_tickets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "tbl": "users",
+   "name": "on_user_created_notifications",
+   "enabled": "O",
+   "def": "CREATE TRIGGER on_user_created_notifications AFTER INSERT ON public.users FOR EACH ROW EXECUTE FUNCTION handle_new_user_notifications()"
+  },
+  {
+   "tbl": "users",
+   "name": "users_guard_protected",
+   "enabled": "O",
+   "def": "CREATE TRIGGER users_guard_protected BEFORE INSERT OR UPDATE ON public.users FOR EACH ROW EXECUTE FUNCTION guard_users_protected_columns()"
+  }
+ ],
+ "columns": [
+  {
+   "tbl": "companies",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "companies",
+   "col": "name",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "companies",
+   "col": "logo_url",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "companies",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "topic",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "custom_subject",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "name",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "email",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "message",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "target_mailbox",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "requester_ip",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "status",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'new'::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "handled_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "handled_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiries",
+   "col": "reply_count",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "0",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "inquiry_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "replied_by",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "body",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "contact_inquiry_replies",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "key",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "locale",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "subject",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "html_body",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "variables",
+   "type": "jsonb",
+   "nullable": "NO",
+   "def": "'[]'::jsonb",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "is_active",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "true",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "email_templates",
+   "col": "updated_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "actor_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "entity_type",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "entity_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "history_source",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "clear_scope",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "cleared_row_ids",
+   "type": "ARRAY",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "cleared_row_count",
+   "type": "integer",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "metadata",
+   "type": "jsonb",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "history_clear_events",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "listing_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "listing_owner_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "actor_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "channel",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "source",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "locale",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "is_owner_click",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_contact_events",
+   "col": "actor_ip_hash",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "listing_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "reason",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "comment",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "status",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'pending'::report_status",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_reports",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "listing_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "ip_hash",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "viewed_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "location_id",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "slug",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "title",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "description",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "price",
+   "type": "numeric",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "price_old",
+   "type": "numeric",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "currency",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'ALL'::listing_currency",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "listing_type",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "property_type",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "condition",
+   "type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "wall_type",
+   "type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "heating",
+   "type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "rooms",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "bedrooms",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "bathrooms",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "toilets",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "area_gross",
+   "type": "numeric",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "area_net",
+   "type": "numeric",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "floor",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "total_floors",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "year_built",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "address",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "lat",
+   "type": "double precision",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "lng",
+   "type": "double precision",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "views_count",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "0",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "is_premium",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "status",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'active'::listing_status",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "expires_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "(now() + '60 days'::interval)",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "search_vector",
+   "type": "tsvector",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "land_legal_status",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "land_zoning",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "land_development_potential",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "multi_storey_building",
+   "type": "boolean",
+   "nullable": "YES",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "offer_type",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "purchase_conditions",
+   "type": "ARRAY",
+   "nullable": "NO",
+   "def": "'{}'::text[]",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "public_id",
+   "type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('listings_public_id_seq'::regclass)",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "premium_until",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "market_type",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "listings",
+   "col": "price_initial",
+   "type": "numeric",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "id",
+   "type": "integer",
+   "nullable": "NO",
+   "def": "nextval('pages_id_seq'::regclass)",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "title",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "slug",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "content",
+   "type": "jsonb",
+   "nullable": "NO",
+   "def": "'{}'::jsonb",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "is_published",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "updated_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "pages",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "report_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "actor_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "actor_role",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "old_status",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "new_status",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "notes",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "report_actions",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "role",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "permission_key",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "old_allowed",
+   "type": "boolean",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "new_allowed",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "actor_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permission_events",
+   "col": "note",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "role",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "permission_key",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "allowed",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "role_permissions",
+   "col": "updated_by_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "locale",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "brand_title",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "tagline",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "nav_section_title",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "nav_links",
+   "type": "jsonb",
+   "nullable": "NO",
+   "def": "'[]'::jsonb",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "info_section_title",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "info_links",
+   "type": "jsonb",
+   "nullable": "NO",
+   "def": "'[]'::jsonb",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "social_section_title",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "social_links",
+   "type": "jsonb",
+   "nullable": "NO",
+   "def": "'[]'::jsonb",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "copyright_template",
+   "type": "text",
+   "nullable": "NO",
+   "def": "''::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "site_footer",
+   "col": "updated_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "ticket_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "actor_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "actor_role",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "event_type",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "old_status",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "new_status",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "note",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_ticket_events",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "subject",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "status",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'open'::ticket_status",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "assigned_to",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "reported_user_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "reason",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "created_by_admin_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "ticket_type",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'support'::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "updated_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "support_tickets",
+   "col": "complaint_type",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'other'::complaint_type_t",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "changed_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "field_name",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "old_value",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "new_value",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_change_log",
+   "col": "changed_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "old_status",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "new_status",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "reason",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "changed_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "user_status_history",
+   "col": "changed_at",
+   "type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "name",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "phone",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "whatsapp",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "avatar_url",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "role",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'user'::user_role",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "user_type",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'private'::user_type",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "company_name",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "is_verified",
+   "type": "boolean",
+   "nullable": "NO",
+   "def": "false",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "social_provider",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "last_name",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "status",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'active'::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "block_reason",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "location_id",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "position",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "year_started",
+   "type": "integer",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "website",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "company_logo_url",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "deleted_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "location_request",
+   "type": "jsonb",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_currency",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'ALL'::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "pending_email",
+   "type": "text",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "last_seen_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "company_id",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_locale",
+   "type": "text",
+   "nullable": "NO",
+   "def": "'sq'::text",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "inactivity_warning_sent_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "suspended_until",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "users",
+   "col": "public_id",
+   "type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('users_public_id_seq'::regclass)",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "user_id",
+   "type": "uuid",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "document_url",
+   "type": "text",
+   "nullable": "NO",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "status",
+   "type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'pending'::verification_status",
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "reviewed_by",
+   "type": "uuid",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "reviewed_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null,
+   "generated": "NEVER"
+  },
+  {
+   "tbl": "verification_requests",
+   "col": "created_at",
+   "type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()",
+   "generated": "NEVER"
+  }
+ ]
+}

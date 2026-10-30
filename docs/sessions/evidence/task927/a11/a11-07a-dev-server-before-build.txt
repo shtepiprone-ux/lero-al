@@ -1,0 +1,7 @@
+﻿platform: win32; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: .\docs\sessions\evidence\task927\a11\a11-04a-dev-server.ps1 (before npm run build)
+started: 2026-10-28T17:39:24.1224727Z
+--- output ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+--- exit code: 0 ---

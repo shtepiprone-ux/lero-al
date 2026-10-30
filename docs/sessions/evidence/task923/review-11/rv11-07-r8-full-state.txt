@@ -1,0 +1,5 @@
+platform: win32 10.0.26300 node v22.22.3 (Opus review 11, 2026-10-19)
+command: ls -A docs/sessions/evidence/task923/r8-full | wc -l; wc -l docs/sessions/evidence/task923/r8-82-full-run.txt
+r8-full entries: 0
+r8-82-full-run.txt lines: 3 (platform, cmd, start 2026-10-16T09:53:52Z); no summary, no EXIT_CODE
+result: AC36's final full run has no evidence; it was started on 2026-10-16 and never completed

@@ -1,0 +1,30 @@
+# R149 AC149 r49-01-default-run: the three test files of R149, verbose
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --reporter=verbose src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx src/lib/auth/__tests__/staffPage.security.test.ts
+NODE_PATH: (unset)
+started: 2026-10-25T08:45:05.591Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN] the redirect notice is shown 162ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED] an unknown notice is not shown 81ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT] no notice without the parameter 22ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 2769ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 2ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 1ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer 6848ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > an active administrator and an active moderator pass the guard, and it returns who they are (the control) 2ms
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  09:45:06
+   Duration  7.14s (transform 1.82s, setup 289ms, import 1.15s, tests 9.89s, environment 807ms)
+
+
+--- stderr ---
+
+--- exit code: 0 ---

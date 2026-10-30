@@ -5,12 +5,17 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { CheckCircle2, ImagePlus } from 'lucide-react'
-import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+import { signIn } from '@/lib/auth/browser'
 import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
+import { mapAuthError } from '@/modules/auth/lib/mapAuthError'
+import { completeGoogleSignIn, openStoredDestination } from '@/modules/auth/lib/googleSignIn'
+import type { RememberedGoogleAccount } from '@/lib/auth/rememberedGoogleAccount'
 import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
+import { GoogleWelcomeBack } from '@/components/auth/GoogleWelcomeBack'
 import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
@@ -23,23 +28,16 @@ import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone } from '@/lib/phone'
 import { SITE_URL } from '@/lib/siteUrl'
 
-export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
+export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password' | 'welcome-back'
 
 interface AuthSheetProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   initialView?: AuthView
-}
-
-// Map Supabase error messages → stable i18n keys (Epic A error-code contract)
-function mapAuthError(message: string): string {
-  const m = message.toLowerCase()
-  if (m.includes('invalid login credentials') || m.includes('invalid credentials')) return 'error_invalid_credentials'
-  if (m.includes('user already registered') || m.includes('already registered') || m.includes('already exists')) return 'error_email_exists'
-  if (m.includes('password should be at least') || m.includes('weak password')) return 'error_weak_password'
-  if (m.includes('email not confirmed') || m.includes('not confirmed')) return 'error_email_not_confirmed'
-  if (m.includes('rate limit') || m.includes('too many')) return 'error_rate_limit'
-  return 'error_generic'
+  /** The Google account this device remembers: a sheet opened on `login` then opens on Welcome back (Task 927 Amendment 5). */
+  googleAccount?: RememberedGoogleAccount | null
+  /** "Forget this account": the owner of the record erases it. */
+  onForgetGoogleAccount?: () => void
 }
 
 // ── Login view ────────────────────────────────────────────────────────────────
@@ -55,7 +53,6 @@ function LoginView({
 }) {
   const t = useTranslations('auth')
   const tc = useTranslations('common')
-  const theme = useMantineTheme()
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -63,6 +60,8 @@ function LoginView({
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [sessionLost, setSessionLost] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
@@ -76,10 +75,17 @@ function LoginView({
     setErrorKey(null)
     if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
     if (!password) { setErrorKey('error_weak_password'); return }
+    if (!captchaToken) return
     setLoading(true)
-    const { error } = await signIn(email, password)
+    const { error } = await signIn(email, password, captchaToken)
     setLoading(false)
-    if (error) { setErrorKey(mapAuthError(error.message)); return }
+    if (error) {
+      // a token is valid once (Task 923 R151): the next attempt needs a new check
+      widgetRef.current?.reset()
+      setCaptchaToken(null)
+      setErrorKey(mapAuthError(error.message))
+      return
+    }
     onClose()
     // Redirect to the originally-requested route (set by AuthRedirect when gated routes redirect here).
     // sanitizeReturnTo ensures the path is a safe same-origin relative path.
@@ -92,8 +98,13 @@ function LoginView({
     }
   }
 
-  async function handleGoogle() {
-    await signInWithOAuth('google', `${SITE_URL}/auth/callback`)
+  // Task 927: Google's window returns the ID token through `/auth/google/callback` to this page (Task 927 D25); it goes to Supabase with this attempt's raw nonce.
+  async function handleGoogle(result: { credential: string; nonce: string }) {
+    setErrorKey(null)
+    const key = await completeGoogleSignIn(result)
+    if (key) { setErrorKey(key); return }
+    onClose()
+    openStoredDestination(router)
   }
 
   return (
@@ -134,28 +145,20 @@ function LoginView({
         />
       </Stack>
 
-      <Button type="submit" fullWidth loading={loading} disabled={loading}>
+      <CaptchaWidget
+        ref={widgetRef}
+        onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
+        onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
+        onExpire={() => setCaptchaToken(null)}
+      />
+
+      <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
         {t('login')}
       </Button>
 
       <Divider label={<Text span size="sm" c="gray.4" tt="uppercase">{t('or')}</Text>} labelPosition="center" />
 
-      <Button
-        type="button"
-        variant="default"
-        fullWidth
-        onClick={handleGoogle}
-        leftSection={
-          <svg width={theme.other.iconSize.standard} height={theme.other.iconSize.standard} style={{ flexShrink: 0 }} viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-        }
-      >
-        Google
-      </Button>
+      <GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} onCredential={handleGoogle} />
 
       <Text ta="center" size="sm" c="dimmed">
         {t('no_account')}{' '}
@@ -164,6 +167,57 @@ function LoginView({
         </Anchor>
       </Text>
     </Stack>
+  )
+}
+
+// ── Welcome back view (Task 927 Amendment 5) ──────────────────────────────────
+
+function WelcomeBackView({
+  account,
+  onForget,
+  onMoreOptions,
+  onClose,
+}: {
+  account: RememberedGoogleAccount
+  onForget: () => void
+  onMoreOptions: () => void
+  onClose: () => void
+}) {
+  const t = useTranslations('auth')
+  const router = useRouter()
+  const [errorKey, setErrorKey] = useState<string | null>(null)
+  const [sessionLost, setSessionLost] = useState(false)
+
+  useEffect(() => {
+    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
+      setSessionLost(true)
+      sessionStorage.removeItem(AUTH_SESSION_LOST_KEY)
+    }
+  }, [])
+
+  async function handleGoogle(result: { credential: string; nonce: string }) {
+    setErrorKey(null)
+    const key = await completeGoogleSignIn(result)
+    if (key) { setErrorKey(key); return }
+    onClose()
+    openStoredDestination(router)
+  }
+
+  return (
+    <GoogleWelcomeBack
+      name={account.name}
+      maskedEmail={account.maskedEmail}
+      picture={account.picture}
+      alerts={
+        <>
+          {sessionLost && <Alert color="blueLight">{t('session_recovery_message')}</Alert>}
+          {errorKey && <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>}
+        </>
+      }
+      googleControl={<GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} loginHint={account.sub} onCredential={handleGoogle} />}
+      onForget={onForget}
+      onMoreOptions={onMoreOptions}
+    />
   )
 }
 
@@ -236,14 +290,12 @@ function ForgotPasswordView({
         <Alert color="red">{t('captcha_error_failed')}</Alert>
       )}
 
-      <Box my="sm">
-        <CaptchaWidget
-          ref={widgetRef}
-          onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
-          onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
-          onExpire={() => setCaptchaToken(null)}
-        />
-      </Box>
+      <CaptchaWidget
+        ref={widgetRef}
+        onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
+        onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
+        onExpire={() => setCaptchaToken(null)}
+      />
 
       <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
         {t('forgot_password_submit')}
@@ -378,6 +430,8 @@ function CompanyField({
         const fd = new FormData()
         fd.append('logo', logoFile)
         fd.append('companyId', result.id)
+        // the upload route accepts this one-record grant instead of a session (the person has none yet); Task 923 Revision 7, S3
+        if (result.logoGrant) fd.append('grant', result.logoGrant)
         await fetch('/api/upload-company-logo', { method: 'POST', body: fd })
       } catch {
         // Logo upload failure is non-fatal — company is created successfully
@@ -461,6 +515,8 @@ function CompanyField({
                   type="button"
                   variant="subtle"
                   size="xs"
+                  miw={theme.other.touchTarget}
+                  aria-label={tc('aria_clear')}
                   onClick={() => {
                     setLogoFile(null)
                     if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
@@ -709,14 +765,12 @@ function RegisterView({
         <PasswordRequirementsHint value={password} />
       </Stack>
 
-      <Box my="sm">
-        <CaptchaWidget
-          ref={widgetRef}
-          onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
-          onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
-          onExpire={() => setCaptchaToken(null)}
-        />
-      </Box>
+      <CaptchaWidget
+        ref={widgetRef}
+        onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
+        onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
+        onExpire={() => setCaptchaToken(null)}
+      />
 
       <Button type="submit" fullWidth loading={loading} disabled={loading || !allPasswordMet || !captchaToken}>
         {t('register')}
@@ -745,19 +799,22 @@ function RegisterView({
 
 // ── AuthSheet ─────────────────────────────────────────────────────────────────
 
-export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthSheetProps) {
+export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAccount = null, onForgetGoogleAccount }: AuthSheetProps) {
   const t = useTranslations('auth')
-  const [view, setView] = useState<AuthView>(initialView)
+  // A sheet opened on `login` for a person this device remembers opens on Welcome back; every other opening keeps the view it was asked for.
+  const openingView: AuthView = initialView === 'login' && googleAccount ? 'welcome-back' : initialView
+  const [view, setView] = useState<AuthView>(openingView)
   const [regShared, setRegShared] = useState<SharedRegFields>({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
 
   useEffect(() => {
     if (open) {
-      setView(initialView)
+      setView(openingView)
       setRegShared({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
     }
-  }, [open, initialView])
+  }, [open, openingView, googleAccount])
 
   const titles: Record<AuthView, string> = {
+    'welcome-back': t('welcome_back_title'),
     login: t('login'),
     register: t('register'),
     'register-agent': t('register_agent'),
@@ -781,6 +838,17 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
 
   return (
     <MantineDrawer opened={open} onClose={() => onOpenChange(false)} title={drawerTitle} side="right" size="sm">
+      {view === 'welcome-back' && googleAccount && (
+        <WelcomeBackView
+          account={googleAccount}
+          onMoreOptions={() => setView('login')}
+          onForget={() => {
+            onForgetGoogleAccount?.()
+            setView('login')
+          }}
+          onClose={() => onOpenChange(false)}
+        />
+      )}
       {view === 'login' && (
         <LoginView
           onRegister={() => setView('register')}

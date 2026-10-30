@@ -1,0 +1,31 @@
+Snapshot of node_modules/@mantine/hooks/esm/use-focus-trap/tabbable.mjs (@mantine/hooks 8.3.18), copied 2026-10-19 by Opus review 10, unchanged lines 1-30:
+'use client';
+const TABBABLE_NODES = /input|select|textarea|button|object/;
+const FOCUS_SELECTOR = "a, input, select, textarea, button, object, [tabindex]";
+function hidden(element) {
+  if (process.env.NODE_ENV === "test") {
+    return false;
+  }
+  return element.style.display === "none";
+}
+function visible(element) {
+  const isHidden = element.getAttribute("aria-hidden") || element.getAttribute("hidden") || element.getAttribute("type") === "hidden";
+  if (isHidden) {
+    return false;
+  }
+  let parentElement = element;
+  while (parentElement) {
+    if (parentElement === document.body || parentElement.nodeType === 11) {
+      break;
+    }
+    if (hidden(parentElement)) {
+      return false;
+    }
+    parentElement = parentElement.parentNode;
+  }
+  return true;
+}
+function getElementTabIndex(element) {
+  let tabIndex = element.getAttribute("tabindex");
+  if (tabIndex === null) {
+    tabIndex = void 0;

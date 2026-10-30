@@ -1,0 +1,11 @@
+=== r1 i0 2026-10-10T06:19:17Z
+platform win32 v22.22.3 C:/Claude_Code_Projects/lero-al
+HEAD b1810170c4f823841990afb800348f3d32450438
+porcelain lines 1588
+package.json eea5638cf7ca0ad75f5881fdd8cb2945f7edcee9
+storybook-static/index.json 2026-10-09 22:06:36.008987900 +0200
+scripts/check-card-track-monotonicity.mjs
+
+scripts/__tests__:
+brand-single-source.test.ts
+check-design-tokens.test.ts

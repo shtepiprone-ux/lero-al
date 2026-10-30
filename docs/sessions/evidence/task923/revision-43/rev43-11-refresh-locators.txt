@@ -1,0 +1,19 @@
+# Task 923 Revision 43 locator refresh (Opus), 2026-10-24T09:30:13Z, HEAD 64b809bfb, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/revision-43/rev43-11-refresh-locators.mjs . tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md 24 --write
+C185 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1980-1980 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2004-2004
+C436 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2321-2321 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2345-2345
+C437 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1988-1988 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2012-2012
+C446 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2589-2589 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2613-2613
+C614 src/app/admin/users/[id]/page.tsx:73 -> docs/sessions/evidence/task923/revision-43/rev43-11-head-lines.txt:3-3
+C615 src/app/admin/users/[id]/page.tsx:80 -> docs/sessions/evidence/task923/revision-43/rev43-11-head-lines.txt:5-5
+C646 src/app/admin/users/[id]/page.tsx:47-55 -> docs/sessions/evidence/task923/revision-43/rev43-11-head-lines.txt:7-15
+C709 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3084-3084 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3108-3108
+C810 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3353-3353 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3377-3377
+C811 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2988-2988 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3012-3012
+C812 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3533-3533 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3557-3557
+C813 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2988-2988 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3012-3012
+C814 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3580-3580 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3604-3604
+C895 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3882-3882 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3906-3906
+C1128 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3083-3083 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3107-3107
+changed 15, unresolved 0
+exit 0

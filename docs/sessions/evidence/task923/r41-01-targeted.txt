@@ -1,0 +1,126 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --reporter=verbose scripts/__tests__/rendered-state-census.test.ts src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/actions/__tests__/emailChange.security.test.ts src/modules/cabinet/actions/__tests__/reauth.security.test.ts src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx src/lib/auth/__tests__/googleIdentity.test.ts src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx
+date: 2026-10-23T18:58:00.818Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication 5ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once 4ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with an oauth entry stamped in the future is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with an oauth entry with no timestamp is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with no authentication methods at all is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the refusal texts exist in all four languages and differ 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > no session is "Unauthorized", before any check 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the right password deletes the account; a fresh Google sign-in deletes a Google-only account 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > Auth's sign-in limit and an unreadable account both refuse the deletion without writing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing 8ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists 2ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable 1ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > a failure of the session end is reported, not hidden, and does not undo the change; a failed clear of the pending address is logged 2ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > a link with a wrong, empty or non-text token, an unknown one, and an expired one change nothing 1ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > [SEC-X-SRV-EMAIL-RESEND-LIMIT] resend is limited and a failed count refuses 3ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > an address already used by another account is refused; the exact address is compared, not a substring; an RPC that fails refuses 1ms
+ ✓ src/modules/cabinet/actions/__tests__/emailChange.security.test.ts > emailChange > a failed retire of the earlier links or a failed store of the pending address refuses and sends nothing 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts a valid registry (click and mount states) against the build index 3ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts a keys-open state and an empty dismiss with a reason 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts exemptTargets with its dated owner decision and rejects it without one (Task 923 R33, owner D9) 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts exemptOverflow with its dated owner decision and rejects it without one (Task 923 R33, owner D10) 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts exemptText with its dated owner decision and rejects it without one (Task 923 R136, owner D84) 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a duplicate id 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects an unknown key 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects an out-of-scope title 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a Story id absent from the build index 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects an empty dismiss without a reason 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects portals: 0 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a click state without a selector or a trigger, and a mount state with a trigger 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects an unknown focus mode, an unknown dismiss mechanism and a wrong version 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > accepts a widths range made of theme breakpoints and applies it per viewport width 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a widths bound that is not a theme breakpoint (min) or a breakpoint minus 1 (max) 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > does not accept a widths range without the theme breakpoint list 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a malformed widths range 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > validateRegistry > rejects a registry that is not an object with a states array 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > rangeEdges > names the in-range bound and the first width outside the range 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > theme breakpoints > parses the breakpoints block of the theme text 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > theme breakpoints > reads the real theme: sm is the 640px mobile gate and xxl is 1440px 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > theme breakpoints > rejects a theme text without a breakpoints block 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > discovery click widths > always clicks at 390 and 1440, and at every widths bound of the Story rows 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > names a navigation error and an open timeout, and no other open or measured failure 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > runs a job once and leaves no retry key when nothing was transient 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > retries once on a fresh page and records the first failure on every row 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > a second failure is the violation, still with the retry recorded 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > a retry replaces the first attempt: nothing it measured on a page that never opened is carried over (R29) 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > names a render timeout as transient, and never an errored render or the error display 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > (i) a render timeout then a green second attempt ends green, with the retry recorded 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > (ii) a render that ends errored (the error display) is run once and has no retry key 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > (iii) a render timeout on both attempts still fails error-screen, with the retry recorded 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > names a failed same-origin resource as transient, and still no errored render 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > names a transient reopen failure of a dismissal check as transient, with the inner reason 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > does not name a reopen that failed for a reason that is not a load failure, nor a dismissal that did not close 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > transient failures (R16) > lists each retried cell in the summary with its outcome 15ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > the measured matrix (Task 923 Revision 7) > has the contract widths and both sides of every theme layout switch between 640 and 1440 1ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > the measured matrix (Task 923 Revision 7) > measures all four locales 0ms
+ ✓ scripts/__tests__/rendered-state-census.test.ts > the measured matrix (Task 923 Revision 7) > every rule the measuring code reports is a rule of the evidence row (text inside an svg and overlapping text included) 1ms
+ ✓ src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts > emailChangeErrors > [SEC-X-SRV-EMAIL-ERRORS-SAME] the refusal texts are unchanged 6ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-ALLOW] the server lets a Google-only account change its e-mail and delete itself right after an id_token sign-in 7ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-DENY] the server refuses a Google-only account whose last Google sign-in is older than 10 minutes or absent 2ms
+ ✓ src/lib/auth/__tests__/googleIdentity.test.ts > [SEC-927-FE-UNIT-NONCE] a nonce pair is 32 random bytes in base64 with its lowercase hex SHA-256, and two pairs differ 26ms
+ ✓ src/lib/auth/__tests__/googleIdentity.test.ts > [SEC-927-FE-UNIT-LOADER] concurrent loads share one script element, an error or a timeout rejects, and a later call retries with a new element 28ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > MantineDeleteConfirmModal > states the object and the consequence 213ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > MantineDeleteConfirmModal > the primary runs the action, Cancel closes 94ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > MantineDeleteConfirmModal > the close button and Esc close it 59ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > MantineDeleteConfirmModal > while loading the primary has data-loading and Cancel is disabled 61ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx > CabinetEmailChangeSection > [SEC-X-FE-EMAIL-SECTION-DENY] no e-mail change without the proof 519ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > MantineDeleteConfirmModal > confirmDisabled disables the primary 51ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx > CabinetEmailChangeSection > [SEC-X-FE-EMAIL-SECTION-ALLOW] the proven change waits for confirmation 124ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx > CabinetEmailChangeSection > an address that does not look like one is refused by the section itself, and a refused resend is shown 78ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > [SEC-DEL-FE-OWNER-DENY] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted 167ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > [SEC-DEL-FE-OWNER-ALLOW] The person is warned that every listing and photo is deleted and must type DELETE before the account is deleted 193ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > the typed word is empty again each time the dialog opens, and the field takes the focus 88ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ALLOW] a Google-only person who confirms with the Google account of the profile gets the e-mail change and the deletion they asked for, each once 642ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-X-FE-DELETE-PASSWORD] the cabinet deletion asks for the password 594ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > passwordConfirm and googleConfirm > the primary waits for a password; the field is masked, empty, and can be shown and hidden 113ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > passwordConfirm and googleConfirm > the field's own error is shown, and no field exists without passwordConfirm 66ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > Auth's sign-in limit is shown under the field, and a failed deletion shows the error in the dialog without a sign-out 256ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > passwordConfirm and googleConfirm > the Google section shows its text and renders the control of the consumer under it; the primary is unaffected by it 87ms
+ ✓ src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx > passwordConfirm and googleConfirm > the password is cleared by the consumer on every open, and the toggle is hidden again on reopen 83ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-DENY-ACCOUNT] a Google confirmation with another account or an unreadable credential is refused before Supabase and repeats nothing 349ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-DENY-SWITCH] when the confirmation returns another account's session the person is signed out and nothing is repeated 266ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > the password is empty again each time the dialog opens 491ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ERR] a failed Google confirmation or an unavailable Google script shows an error and repeats nothing 252ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > an account with no password sends none, and when the server asks for a new Google sign-in it is offered the Google confirmation button 152ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > [SEC-X-FE-SIGNOUT-OTHERS] a changed password with sessions left still signs out everywhere 1967ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > the controls: a plain success signs out everywhere with its own text; any other refusal signs nobody out and shows its own error 112ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > the warning has its text in all four languages, says the password changed, and the four texts differ 0ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > the e-mail form asks for the current password and sends it; a wrong one is shown and nothing is pending 152ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ALLOW] a visitor who picks a Google account is signed in with that credential and the raw nonce whose SHA-256 Google got, the sheet closes and the stored same-site destination opens 219ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > an account with no password has no password field in the e-mail form; reauth_required offers the Google sign-in 98ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx > [SEC-927-FE-REAUTH-ONE-CONFIG] after the deletion dialog with its own Google button closes, a confirmation in the e-mail section still repeats the e-mail change once 461ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-DENY] no deletion without the password 141ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-ALLOW] the password deletes the account and a failure is shown 171ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-REDIRECT] after a Google sign-in a stored destination that is not a path of this site is not opened and the page refreshes instead 262ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-BANNED] a banned Google account gets the wrong-credentials text in every locale, stays signed out and the sheet stays open 342ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-REPLAY] a second credential during a pending sign-in is ignored and the next attempt uses a new nonce 65ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-DENY-NOAUTO] nothing signs a visitor in automatically: auto select is off, One Tap is never prompted and nothing is sent before an account is picked 43ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-SCRIPT] when the Google script fails to load the slot shows the unavailable alert, no loader remains and the e-mail sign-in still works 83ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-TIMEOUT] when the Google script never answers within 10 seconds the slot shows the unavailable alert 45ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-NOCLIENT] without a client ID no Google script is requested and the slot shows the unavailable alert 42ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > [SEC-927-FE-ERR-NOLEAK] a failed Google sign-in writes neither the credential nor the raw nonce to the console, storage or the address 64ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > the Google button is drawn with Google's own options and a width of at most 400 pixels 153ms
+ ✓ src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx > a rejected sign-in call shows the generic error and keeps the sheet open 46ms
+
+ Test Files  12 passed (12)
+      Tests  108 passed (108)
+   Start at  20:57:55
+   Duration  5.74s (transform 2.19s, setup 1.32s, import 10.05s, tests 9.63s, environment 7.84s)
+
+
+
+EXIT_CODE=0

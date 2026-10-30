@@ -1,0 +1,35 @@
+# rv59-02: literal lines for Task 923 Revision 52
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv59-02-lines.mjs
+date: 2026-10-25T13:01:21.138Z
+--- lines ---
+docs/sessions/evidence/task923/r51-04-probe.txt:35: PROBE| control 2, after the admin password update alone: browser ended; second ended; third (stands for the check's own) ended
+docs/sessions/evidence/task923/r51-04-probe.txt:21: PROBE| /auth/v1/logout requests: POST /auth/v1/logout?scope=global -> 403 session_not_found
+docs/sessions/evidence/task923/r51-04-probe.txt:20: PROBE| cookie writes: sb-<ref>-auth-token value empty maxAge 0; auth cookies left 0
+docs/sessions/evidence/task923/review-58/rv59-01-targeted.txt:7: AssertionError: expected { ok: false, …(1) } to deeply equal { ok: true }
+src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:47: vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({ auth: { getClaims: async () => ({ data: { claims: { amr: [] } }, error: null }) } }) }))
+src/modules/cabinet/actions/index.ts:681: // Every session of this account ends now, the password check's own included (Task 923 R156, finding S55): a changed password locks out whoever got hold of the old one, and the person signs in again with the new one.
+src/modules/cabinet/actions/index.ts:682: // The verify client's session is the check's own, so the request's session client ends them all and empties this browser's auth cookie.
+src/modules/cabinet/actions/index.ts:683: // answers with `{ error }` instead of throwing, so both are read, and the person is told (`sessions_not_ended`, Task 923 R70 (b)).
+src/modules/cabinet/components/CabinetPasswordSection.tsx:45: // The server has ended every session and emptied this browser's cookie (Task 923 R156): the local sign-out sends no request and only tells the page.
+src/modules/cabinet/components/CabinetPasswordSection.tsx:50: // The password HAS changed, but the other devices could not be signed out (Task 923 R81 (a)): the form is emptied, the person is told, and every session is ended
+src/modules/cabinet/components/CabinetPasswordSection.tsx:51: // from here exactly as after `ok` — the form must not claim that nothing changed and leave the old sessions alive.
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:5: *  - changing the password ends every other session (the current one stays), and a failure of that step does not undo the change;
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:90: it('after a successful change the other sessions are signed out, once, and the current one stays', async () => {
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:89: describe('changing the password ends every other session', () => {
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts:3: * Security (Task 923 R70 (b)): the password change reads the answer of "sign out the other devices".
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts:5: *    HAS changed, the e-mail notice still goes out, the other devices are still signed in) and is never presented as a full success.
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx:63: // every session ends from here, once, exactly as after a plain success
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx:71: it('the controls: a plain success signs out everywhere with its own text; any other refusal signs nobody out and shows its own error', async () => {
+SEC-X-FE-SIGNOUT-OTHERS: input "changeCabinetPassword answering { ok: false, reason: sessions_not_ended }"; response "both fields emptied; the password_changed_sessions_not_ended warning shown; signOut(global) called once"; forbiddenEffects ["the password_error_server text","no signOut(global)","the fields kept"]
+SEC-X-SRV-SIGNOUT-OTHERS: input "changeCabinetPassword where signOut others returns an error"; response "sessions_not_ended"; forbiddenEffects ["a plain success answer"]
+--- write set ---
+src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/actions/index.ts: scope yes; policy no; exists yes
+src/modules/cabinet/components/CabinetPasswordSection.tsx: scope yes; policy no; exists yes
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx: scope yes; policy no; exists yes
+exit code: 0

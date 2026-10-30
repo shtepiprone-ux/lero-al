@@ -1,0 +1,3 @@
+# a5-98: sha256 of the session record after the Task 927 Amendment 5 executor report was appended
+before: 62f2e993e7cf438c48c0b8c677878d67777cfbe82dc62a3c0eaf315a017be10e
+after:  5fd5d7eb5c71ce04c864d4c82281581b82a6a9dd93b0ba38e35ede1044eaa196

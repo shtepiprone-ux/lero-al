@@ -77,6 +77,11 @@ Every acceptance criterion and every confirmed review finding should map back to
 
 ## Evidence-first preflight (mandatory before task publication or review decision)
 
+The ordered operational workflow is C1-C7 in `.claude/skills/create-task/SKILL.md` or R1-R7 in
+`.claude/skills/review-task/SKILL.md`. Follow its phase files and evidence/exit conditions. Both use
+`.claude/rules/shared/task-readiness.md` before publishing a new or revised executor route. These detailed sections
+support the selected phase; they do not replace it or require loading the other workflow parent.
+
 Before publishing an implementation kickoff, declaring a task executable, or returning an approval/revision
 decision, complete the applicable sections of
 [`docs/orchestrator-evidence-preflight-template.md`](orchestrator-evidence-preflight-template.md). This is a
@@ -84,7 +89,8 @@ decision, complete the applicable sections of
 
 For task design and every kickoff revision, also apply the compact claim-to-evidence contract and its mechanical gate:
 `npm run check:kickoff-evidence`. A `C# FACT` needs its current evidence path/range and a literal observed there;
-`D# OWNER DECISION` needs a dated verbatim owner choice; every `R#`/`AC#` cites those entries. An inference or
+`D# OWNER DECISION` needs a dated owner choice in faithful English translation; each R cites those entries and each
+AC inherits them through its declared R (direct C/D for additional premises). An inference or
 unresolved row is an investigation result, not executable task input. Return `BLOCKED — KICKOFF EVIDENCE GAP` rather
 than delegating a premise to Sonnet.
 
@@ -203,7 +209,9 @@ Ask the user only when all are true:
 2. The answer cannot be derived from repository context or accepted decisions.
 3. A reversible documented assumption would be unsafe.
 
-Otherwise choose the safest reversible assumption, label it, and keep the task easy to change.
+Otherwise derive the routine choice from inspected evidence and existing owner decisions. Investigative hypotheses
+may guide a probe but cannot become executable task premises. Resolve a missing material fact or mark the dependent
+route blocked; do not replace evidence with a reversible assumption.
 
 ## Task design protocol
 
@@ -383,9 +391,9 @@ authorized retry, or replace an `UNATTRIBUTED` result with a causal story that w
 
 The final review must state the lowest-evidence row, not only the strongest result. If an artifact is stale,
 missing, narrower than required, or contradictory, downgrade the decision before writing required-next-actions.
-Owner commit/push commands may be emitted only after this locked decision. `NEEDS REVISION` has one narrow exception:
-after Opus amends the kickoff, it emits a commit handoff for that orchestration artifact only; it never emits a push
-or stages rejected implementation paths.
+Owner commit/push commands may be emitted only after this locked decision. An open-task review has a narrow design
+exception: after Opus verifies a saved correction (`NEEDS REVISION`) or next assigned route (`PARTIALLY VERIFIED`),
+it emits a commit handoff for those orchestration artifacts only; it never emits a push or stages implementation paths.
 
 Allowed decisions:
 
@@ -405,6 +413,9 @@ Decision criteria:
 - `NEEDS REVISION`: a requirement is incomplete/incorrect, required evidence is missing, or a blocking finding
   remains.
 - `PARTIALLY VERIFIED`: actual implementation was inspected, but only part of the required evidence is available.
+  This includes an accepted intermediate stage while assigned implementation/evidence remains outstanding. Complete
+  the next available Opus action and verified route before the design-only handoff; genuine external blockers use
+  plain `BLOCKED` without Git under the automatic-cycle rule.
 - `BLOCKED`: required access, context, owner decision, environment, or dependency prevents meaningful review.
 
 These decision rules are fail-closed: an unmet, changed, or unverified P0/P1/P2 acceptance criterion is never
@@ -452,8 +463,8 @@ non-approved verdict. Never overwrite an existing archive file: stop and resolve
 update the `docs/backlog-archive.md` kickoff link to the new `tasks/Archive/` path, then verify that the destination
 exists and the source path no longer does before composing the owner handoff.
 
-**Physical sprint-plan archive — mandatory (owner rule, 2026-09-25, verbatim: *"запиши у правило, що і план спринтів
-також переміщується, якщо спринт закритий!"*).** When a sprint is closed, move its plan file
+**Physical sprint-plan archive — mandatory (owner rule, 2026-09-25: *"write it into the rule that the sprint
+plan is moved too, if the sprint is closed!"*).** When a sprint is closed, move its plan file
 (`tasks/Sprints/Sprint_NN_<Slug>.md`) to `tasks/Archive/<same filename>` in the same change that sets the plan's status
 to `✅ CLOSED` and adds the sprint's `docs/backlog-archive.md` row. The move itself follows the kickoff rule above:
 
@@ -471,18 +482,33 @@ Re-read `docs/backlog.md` and `docs/backlog-archive.md`, verify that the active 
 than 80 physical lines, then inspect the diff. The approval handoff must stage both changed backlog files with the
 task's other reconciled artifacts. Do not repeat closure evidence in chat: one required receipt is enough.
 
-### Needs-revision closure - amend the kickoff before responding
+### Open-task review closure - verify the correction or next assigned stage
 
-`NEEDS REVISION` is a task-revision workflow. Before final output, Opus must update the current kickoff so a fresh
-Sonnet session can execute the correction without chat context. Map each confirmed blocking finding to the changed
+An owner-forwarded Sonnet report authorizes the full review and its necessary verified revisions as one cycle
+(`.claude/rules/shared/role-boundaries.md`). Do not pause for permission to start or revise. Keep a checkpoint and
+reuse valid evidence under `shared/orchestration-state.md` when the owner continues the same work.
+
+A passed intermediate stage also continues this cycle. After the owner supplies a pending validation result,
+resume from current proof and perform the next available Opus action. Design and verify the next assigned route
+before finalizing, or retain it if already ready. A state-only commit with "next revision later" is incomplete.
+Name the actual ready sidecar with `NEXT EXECUTOR CONTRACT: tasks/<actual-path>.security.json`. A concrete external
+dependency permits plain `BLOCKED` without Git; a draft route or unfinished available design does not justify stopping.
+
+`NEEDS REVISION` starts with a completed, consolidated audit under review R6. Investigate the correction and pass
+`.claude/rules/shared/task-readiness.md` before publishing it as executable. Map each confirmed blocking finding to the changed
 scope, requirement, acceptance criterion, verification, re-entry, or completion-report clause; remove contradictory
 text; and update all active task-state artifacts required by GR-5. A missing owner decision is written into the
 kickoff as `STOP - OWNER DECISION REQUIRED` with bounded options and their verification impact.
 
+If feasibility remains unverified, obtain the available evidence and continue independent investigation before
+finalizing. Only a concrete remaining dependency justifies stopping; routine permission is already given. Retain
+the confirmed finding and exact gap, and do not invent an executable replacement merely to amend it. A review
+finding and a ready remediation route are separate outcomes. No Sonnet handoff is allowed for a failed readiness check.
+
 Apply the revision-persistence gate before calling the kickoff updated: reopen the saved file, compare its actual
 headings and amended requirement/AC identifiers with the response's amendment inventory, and resolve every internal
 section reference introduced by the revision. If the check fails, keep the verdict `NEEDS REVISION`, correct the
-kickoff, and do not hand Sonnet a chat-only substitute. A claimed owner decision must be a dated, verbatim decision in
+kickoff, and do not hand Sonnet a chat-only substitute. A claimed owner decision must be a dated decision, faithfully translated into English, in
 the saved kickoff or sprint artifact; a review/backlog summary cannot authorize the missing branch.
 
 After that reread and the corresponding diff inspection, emit an explicit-path `git add` + `git commit` handoff for
@@ -499,19 +525,25 @@ decision.
 
 ### Final review response — concise operational handoff
 
-For `NEEDS REVISION`, the final chat response contains only these four headings, in order:
+For `NEEDS REVISION`, or `PARTIALLY VERIFIED` with an accepted stage and its next route ready, the final chat response
+contains only these four headings, in order:
 
-1. `Problems and verdict` — concise confirmed blocking defects and the correction now written into the kickoff.
-2. `Kickoff updated` — the exact task path and sections amended. Do not restate Sonnet instructions.
+1. `Problems and verdict` — confirmed defects and the correction, or the accepted stage and verified next assigned
+   route while the task remains open. A genuine blocked result names its exact dependency.
+2. `Kickoff updated` — the exact task path and sections amended, or `Not ready` with the unresolved evidence gap.
+   Do not restate Sonnet instructions or claim an unverified correction was saved.
 3. `Next actions — owner` — only unresolved owner decisions or owner-native validation; otherwise `None.`
-4. `Git handoff` — explicit-path `git add` + `git commit` for the amended kickoff and Opus-authored state artifacts;
-   `No push - NEEDS REVISION is not an approved implementation review.`
+4. `Git handoff` — explicit-path `git add` + `git commit` only for the verified amended kickoff and Opus-authored state artifacts;
+   if no ready amendment was produced, `None - correction route not ready.`
+   Include the plain `NEXT EXECUTOR CONTRACT` reference outside the command fence for the ready route.
+   No implementation commit or push: neither decision is whole-task approval.
 
 For every other decision, the final chat response contains only these four headings, in order:
 
 1. `Problems and verdict` — state the verdict and list only confirmed quality defects, contradictions, missing
    required evidence, or material scope/status mismatches. Each problem includes severity, location, concise
-   evidence, impact, correction, and verification. If no problem exists, write `APPROVED - No problems found.`
+   evidence, impact, correction, and verification. Write `APPROVED - No problems found.` only when every whole-task
+   approval condition holds, never merely because the latest stage has no defect.
    For `APPROVED` or `APPROVED WITH NOTES`, append only `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog:
    <n> lines.`
 2. `Next actions — Sonnet` — only concrete executor remediation or outstanding evidence, with verification; otherwise
@@ -649,7 +681,9 @@ If any answer exposes a gap, revise before returning.
 ## Recurring orchestrator failure modes
 
 > Moved verbatim out of `docs/backlog.md` on **2026-08-27** by the row-by-row audit. This is durable procedure,
-> not active state. **Read it before writing any kickoff.**
+> not active state. Consult the relevant incident when its failure class applies; current phase files and
+> `shared/task-readiness.md` own the ordered workflow and proof applicability. Historical "every kickoff" language
+> below is not an additional blanket test/research requirement.
 
 **Recurring orchestrator failure mode — read before writing any kickoff (M1 · M2 · M4 · M5).** Four blocked/revised tasks failed identically: the *fix* was right, the *control* could not detect its own effect. **Every kickoff needs a two-armed plant that can demonstrably fail, plus a pre-plant census proving no further lifeline.** Reconcile git state from `git log`/`git status`, never a session log's self-description. **Corollary (709):** a kickoff's own "measured" facts are not exempt. **Corollary (710–714, 2026-08-06):** four consecutive kickoffs shipped a factual defect the executor had to correct — a stale line reference, a `grep` that counted `.split(` as a test, a crude literal census, and a requirement that was *unsatisfiable* because the detector could not see the target syntax. **Measure with the real tool, not an ad-hoc grep**; see `orchestrator-procedures.md` → "Detector-aware requirements and migrations" (`6c3a2054e`). **Corollary (724, 2026-08-07) — two defects, one kickoff.** ① *Never fence an artifact off as zero-diff and simultaneously require the aggregate gate that measures it to go green.* State the scoped condition — "no failure outside X" — and assign the exit code to the task that owns X. ② *A gate's own exclusion selector is an attack surface.* When a kickoff re-expresses an exclusion as a DOM property (711's `[role="group"]`), the next task can satisfy the gate by **producing** that property. Say so in the kickoff, and require every exemption to be a condition the gate evaluates — never one an author applies. **Corollary (726, 2026-08-08) — story markup that exists only to exercise a selector, gate or measurement is a probe, not a permanent artifact.** A missing API-specific story is not authorization to add one; a permanent addition needs a named in-scope production consumer or quoted owner authorization. Blocking in both `create-task/SKILL.md` and `execute-task/SKILL.md`: it stopped 726 draft 2, and 726 then proved the probe/revert path end-to-end. **Corollary (661, recorded 2026-08-08) — a verdict that is not written down did not happen.** 661 was `APPROVED WITH NOTES` and committed on 2026-07-23; the same session then pivoted straight into writing 662's kickoff, 662's outcome got recorded and 661's did not, and the backlog still read `AWAITING ORCHESTRATOR REVIEW` sixteen days later — long enough that the orchestrator proposed re-reviewing already-approved, already-committed work. This is the **second** occurrence of the identical failure (703/704/705, 2026-08-01). **Write the verdict, the archive row and every spawned follow-up before starting the next artifact, not after.** Follow-ups a review names but does not file are lost the same way: 661's ΔE sync-check went unfiled for sixteen days. **Corollary (721, 2026-08-08) — the kickoff's own measured facts are still not exempt, now a fifth time.** 721's kickoff stated band-700's applicable set as "4 locales × 1 viewport = 4 cells"; `MANTINE_STORY_EXTRA_VIEWPORTS` keys by **component**, and `HeroSearch` has two stories, so it is 8. The executor measured it correctly and the orchestrator did not. When a kickoff derives a count from a config, **read what the config keys on**, not what it appears to key on. **Corollary (717 · 721 · 722) — three consecutive executors misreported `docs/backlog.md`'s line count** by measuring it after their own edit and calling the result pre-existing. Take the baseline from `git show HEAD:docs/backlog.md | wc -l` before writing. **Corollary (694, 2026-08-10) — the kickoff-fact defect is now a sixth occurrence, and this one was the orchestrator's own, written the same day it was executed.** §13.2's plant matrix listed P1's failing set as "B, C, E"; assertion C compares `--accent` to `brand[0]` and P1 edits `brand[7]`, so C structurally cannot fire. The executor measured B+E, said so, and did **not** widen C to react to an unrelated token — the correct disposition, and the reason a plant matrix must state *which assertion consumes which input*, not merely which assertions exist. **Freshness is not accuracy: a fact measured an hour ago is exempt from nothing.** The same task read its backlog baseline from `HEAD` correctly — a third consecutive clean read after 717/721/722. **Corollary (702, 2026-08-10) — seventh occurrence, and the tell is now specific enough to act on: all three of 702's defects were *derived* claims, not measurements.** §3's numbers survived re-derivation; what failed was the reasoning laid over them — "688 already reproduces this composition" (it flattens instead), "no markers needed" (true of the `.tsx`, false of the module it creates), and a command list whose flag silently skips the phase its own AC depends on. **Inspecting a value is not inspecting the claim built on it: open the cited file and the cited flag's code path, not just the number.** §15's quality-gate row asserting nothing went uninspected was itself the defect. **Corollary (702, same day) — the unwritten-verdict failure is now a THIRD occurrence** after 661 and 703/704/705, and this time the gap was hours, not weeks: 702 was approved and committed while `docs/backlog.md` still read `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, so the next session handed it to an executor as live work. It was refused on artifact evidence, which is the only reason this cost a round trip instead of a duplicate implementation. **Sixteen days and four hours produce the same defect — approve, archive and update the backlog as one indivisible step.** **Corollary (2026-08-10, same day, FOURTH occurrence) — "the backlog" is not one file, and updating it is not one edit.** 702's verdict was recorded in `docs/backlog.md` and its sprint plan's **Tasks table was left at `KICKOFF FILED`**, so an executor was again offered approved-and-committed work — this time it surfaced the row as a menu option instead of acting on it, which is the only reason it cost nothing. **Root cause: `Sprint_NN_*.md` carried task state in two tables and only one was maintained.** Fixed structurally rather than by another reminder — the Tasks table is now the single state source, the execution-order table is order-and-gating only, and both say so in-file. **When closing a task, enumerate every artifact that names its state — backlog registry, backlog Last Session, sprint Tasks table, sprint order table, archive — and change them in the same edit.** **Corollary (700, 2026-08-10) — a gate's scoping rule is also its blind spot, and the kickoff must say which half it does not cover.** 700's R3 scopes the gate by ownership computed live from `globals.css`, which is what makes it precise (the unscoped form reports 112 Mantine false positives) and simultaneously what makes it blind: deleting a token there un-owns it **together with its orphaned consumers**, so the gate goes silent on `0 violations, exit 0` — filed as **743**. **When a requirement narrows a detector to make it usable, state the class the narrowing excludes, in the kickoff, before the executor builds it.** Also 700: the same rule silently made two of the kickoff's own plants self-immunizing, and the executor caught it — **write plants against the observable defect, not against the mechanism you assume produces it.** And its re-scope is the counterexample worth keeping: the reserved premise was measured false *before* the kickoff was written, which is the only reason a gate that could never fail did not ship.
 

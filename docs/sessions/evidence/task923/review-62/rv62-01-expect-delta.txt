@@ -1,0 +1,324 @@
+
+### src\modules\admin\actions\__tests__\profileBounds.security.test.ts
+- expect(state.authAdminCalls.filter((c) => c.name === 'createUser'), 'createAdminUser: no Auth account was created').toEqual([])
++ expect(state.authAdminCalls.filter((c) => c.name === 'inviteUserByEmail' || c.name === 'createUser'), 'createAdminUser: no Auth account was created').toEqual([])
+
+### src\modules\admin\actions\__tests__\profileBounds.security.test.ts
+- expect(state.authAdminCalls.filter((c) => c.name === 'createUser')).toHaveLength(1)
++ expect(state.authAdminCalls.filter((c) => c.name === 'inviteUserByEmail')).toHaveLength(1)
++ expect(state.authAdminCalls.filter((c) => c.name === 'createUser'), 'Task 923 R159: the account is invited, never created with a password').toEqual([])
+
+### src\modules\admin\actions\__tests__\userWebsite.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\userAdministration.security.test.ts: no assertion/title line changed
+
+### WRITE src\modules\admin\actions\__tests__\createAdminUser.security.test.ts (93 lines, 18 assertion/title lines)
+
+### WRITE src\modules\cms\lib\__tests__\sanitizeCmsHtml.security.test.ts (38 lines, 10 assertion/title lines)
+
+### src\__tests__\instrumentation.test.ts
+- it('CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent', async () => {
+- expect(inits[0].sendDefaultPii).toBe(true)
++ it('does not send personal data such as the IP address by default (S57, R66 (j))', async () => {
++ expect(inits[0].sendDefaultPii).toBe(false)
+
+### src\lib\auth\__tests__\authCore.security.test.ts: no assertion/title line changed
+
+### src\lib\auth\__tests__\authCore.security.test.ts: no assertion/title line changed
+
+### src\lib\auth\__tests__\authCore.security.test.ts
+- it('a person with no profile row is not blocked', async () => {
+- expect(await getBlockedError('nobody')).toBeNull()
+- it('CHARACTERISATION (owner decision S32): a database error while reading the status is treated as "allowed"', async () => {
+- expect(await getBlockedError('perm')).toBeNull()
++ it('a person with no profile row has no access', async () => {
++ expect(await getBlockedError('nobody')).toBe('account_blocked')
++ expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
++ it('a database error while reading the status is no access (fails closed)', async () => {
++ expect(await getBlockedError('active')).toBe('account_blocked')
++ expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
+
+### src\lib\auth\__tests__\sessionMiddleware.test.ts
+- it.each(['/api/auth/me', '/auth/callback', '/admin/users', '/_next/static/chunk.js', '/_next/image', '/favicon.ico', '/logo.svg', '/photo.PNG'.toLowerCase()])('%s is left alone', async (p) => { expect(await matches(p)).toBe(false) })
++ it.each(['/api/auth/me', '/admin/users'])('%s gets the session refresh (R68 (b))', async (p) => { expect(await matches(p)).toBe(true) })
++ it.each(['/auth/callback', '/_next/static/chunk.js', '/_next/image', '/favicon.ico', '/logo.svg', '/photo.PNG'.toLowerCase()])('%s is left alone', async (p) => { expect(await matches(p)).toBe(false) })
+
+### src\lib\auth\__tests__\controller.test.ts
+- it('valid state invariant — no unauthenticated state with a user', () => {
++ it('valid state invariant — no unauthenticated state with a user', async () => {
++ await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
+
+### src\components\layout\__tests__\headerFooterContainers.test.tsx: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminLocale.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminLocale.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts
+- it('a database failure returns its message and refreshes nothing', async () => {
+- expect(await call()).toEqual({ error: `fail ${op}` })
++ it('a database failure returns a stable error code, never the database message, and refreshes nothing', async () => {
++ expect(result).toEqual({ error: code })
++ expect(JSON.stringify(result), 'the database message is not returned').not.toContain(`fail ${op}`)
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts
+- expect(db.log).toHaveLength(db.log.filter((l) => l.table === 'users').length)
++ expect(db.log.filter((l) => l.table !== 'users' && l.table !== 'role_permissions')).toEqual([])
++ expect(db.log.filter((l) => l.table === 'users').every((l) => l.filters.length === 1 && l.filters[0][0] === 'id' && l.filters[0][1] === 'eq' && l.filters[0][2] === 'mod')).toBe(true)
+
+### src\modules\admin\actions\__tests__\adminOperations.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\permissions.security.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\permissions.security.test.ts
+- it('a moderator may read, a plain user and an anonymous caller may not', async () => {
++ it('only an administrator reads; a moderator, a plain user and an anonymous caller may not', async () => {
+
+### src\modules\admin\actions\__tests__\permissions.security.test.ts
+- it('a moderator may read', async () => {
++ it('a moderator gets nothing; the administrator reads the events', async () => {
++ expect(await getPermissionEvents()).toBeNull()
+
+### src\modules\admin\actions\__tests__\permissions.security.test.ts: no assertion/title line changed
+
+### src\modules\notifications\actions\__tests__\emailTemplates.security.test.ts: no assertion/title line changed
+
+### src\modules\notifications\actions\__tests__\emailTemplates.security.test.ts: no assertion/title line changed
+
+### src\modules\locations\actions\__tests__\popularLocationActions.security.test.ts: no assertion/title line changed
+
+### src\modules\locations\actions\__tests__\popularLocationActions.security.test.ts: no assertion/title line changed
+
+### src\modules\companies\__tests__\companyActions.security.test.ts: no assertion/title line changed
+
+### src\modules\companies\__tests__\companyActions.security.test.ts
+- expect(await call()).toEqual({ error: 'forbidden' })
++ expect(await call()).toEqual({ error })
+
+### src\modules\listings\actions\__tests__\changeListingStatus.security.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\__tests__\changeListingStatus.security.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\__tests__\changeListingStatus.security.test.ts
++ it('a session with no profile row is refused without touching the gateway', async () => {
++ expect(await changeListingStatusAction('l1', 'archived')).toEqual({ ok: false, reason: 'forbidden' })
++ expect(gatewayCalls).toEqual([])
+
+### src\modules\listings\actions\__tests__\deleteReport.smoke.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\__tests__\deleteReport.smoke.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\__tests__\deleteReport.smoke.test.ts
+- expect(profileChain.single).not.toHaveBeenCalled()
++ expect(profileChain.maybeSingle).not.toHaveBeenCalled()
+
+### src\modules\listings\actions\__tests__\reportListing.smoke.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\__tests__\reportListing.smoke.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\pages-and-footer-validation.smoke.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\pages-and-footer-validation.smoke.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\pages-and-footer-validation.smoke.test.ts: no assertion/title line changed
+
+### src\modules\admin\actions\__tests__\pages-and-footer-validation.smoke.test.ts
+- expect(mockCreateClient).toHaveBeenCalledTimes(1)
++ expect(mockCreateClient).not.toHaveBeenCalled()
+
+### src\modules\admin\actions\__tests__\pages-and-footer-validation.smoke.test.ts: no assertion/title line changed
+
+### src\modules\__tests__\rls-write-guards.smoke.test.ts: no assertion/title line changed
+
+### src\modules\__tests__\rls-write-guards.smoke.test.ts
+- expect(result).toEqual({ error: insertError.message })
++ expect(result).toEqual({ error: 'create_failed' })
++ expect(JSON.stringify(result)).not.toContain(insertError.message)
+
+### src\modules\notifications\lib\__tests__\mutations.smoke.test.ts: no assertion/title line changed
+
+### src\modules\notifications\lib\__tests__\mutations.smoke.test.ts
++ await expect(call(mutations)).resolves.toBeUndefined()
++ expect(mockCreateClient).not.toHaveBeenCalled()
++ expect(mockCreateAdminClient).not.toHaveBeenCalled()
++ expect(mockUserFrom).not.toHaveBeenCalled()
++ expect(mockUpdate).not.toHaveBeenCalled()
+
+### src\modules\notifications\lib\__tests__\mutations.smoke.test.ts: no assertion/title line changed
+
+### src\tests\integration\accessHardening.integration.test.ts
+- import { afterAll, beforeAll, describe, expect, it } from 'vitest'
++ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
++ expect(leftListings.error).toBeNull()
++ expect(leftListings.data, 'no listing inserted by a session is left').toEqual([])
++ expect(leftObjects.error).toBeNull()
++ expect(leftObjects.data, 'no Storage object of this run is left').toEqual([])
++ it('[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id', async () => {
++ expect(before.own?.role, 'precondition: the actor is an ordinary user').toBe('user')
++ expect(own.error?.code, `${label}: refused with 42501 by the guard`).toBe('42501')
++ expect(own.data, `${label}: nothing returned`).toBeNull()
++ expect(other.data ?? [], `${label}: another user's row is not reachable`).toEqual([])
++ expect(await storedUser(person.id), 'the actor row is unchanged').toEqual(before.own)
++ expect(await storedUser(victim.id), 'the other user row is unchanged').toEqual(before.other)
++ it('[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id', async () => {
++ expect(update.error, 'the permitted change is not refused').toBeNull()
++ expect(update.data).toEqual([{ id: person.id, name: renamed }])
++ expect((await storedUser(person.id))?.name, 'the name is stored').toBe(renamed)
++ it('[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner', async () => {
++ expect(refused.error?.code, `${label}: refused with 42501 by the guard`).toBe('42501')
++ expect(refused.data, `${label}: nothing returned`).toBeNull()
++ expect(refused.error?.code, `an insert with ${label}: refused with 42501`).toBe('42501')
++ expect(refused.data, `an insert with ${label}: nothing returned`).toBeNull()
++ expect(stored.data, `an insert with ${label}: no row was stored`).toEqual([])
++ expect(await storedListing(listing.id), 'the listing is unchanged').toEqual(before)
++ it('[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner', async () => {
++ expect(edit.error, 'an ordinary edit is not refused').toBeNull()
++ expect(edit.data).toEqual([{ id: listing.id, title: retitled }])
++ expect((await storedListing(listing.id))?.title, 'the new title is stored').toBe(retitled)
++ expect(inserted.error, 'a pending insert with a 30-day expiry is not refused').toBeNull()
++ expect(inserted.data).toHaveLength(1)
++ expect(inserted.data?.[0]).toMatchObject({ status: 'pending', user_id: person.id })
++ it('[SEC-DB-S62-DENY] Only the server records a listing view', async () => {
++ expect(answer.error?.code, `${who}: permission denied`).toBe('42501')
++ expect(answer.data, `${who}: nothing returned`).toBeNull()
++ expect((await storedListing(listing.id))?.views_count, 'views_count is unchanged').toBe(before.views)
++ expect(await countViews(), 'no view row was written').toBe(before.rows)
++ expect(server.error, 'the service role records a view').toBeNull()
+
+### src\tests\integration\accessHardening.integration.test.ts
++ it('[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request', async () => {
++ expect(written.error, 'the staff block was written').toBeNull()
++ expect(written.error, 'the deletion mark was written').toBeNull()
++ expect(ended.error, 'the sessions were ended by the server role').toBeNull()
++ expect(ended.data as number, 'at least the session of this account was removed').toBeGreaterThanOrEqual(1)
++ expect(favorite.error, `${label}: the favourite was prepared`).toBeNull()
++ expect(before.user.data, `${label}: before the action it reads its own row`).toHaveLength(1)
++ expect(before.listing.data, `${label}: before the action it reads its own listing`).toHaveLength(1)
++ expect(before.favorite.data, `${label}: before the action it reads its favourite`).toHaveLength(1)
++ expect(answer.error, `${label}: ${what}: the refused read is not an error`).toBeNull()
++ expect(answer.data, `${label}: ${what} is not returned`).toEqual([])
++ expect(rename.data ?? [], `${label}: the profile update reached no row`).toEqual([])
++ expect(retitle.data ?? [], `${label}: the listing update reached no row`).toEqual([])
++ expect(insertListing.error?.code, `${label}: a listing insert is refused with 42501`).toBe('42501')
++ expect(insertListing.data, `${label}: no listing came back`).toBeNull()
++ expect(insertFavorite.error?.code, `${label}: a favourite insert is refused with 42501`).toBe('42501')
++ expect(removeFavorite.data ?? [], `${label}: the favourite delete removed no row`).toEqual([])
++ expect((await storedUser(account.id))?.name, `${label}: the profile name is unchanged`).toBe(name)
++ expect((await storedListing(listing.id))?.title, `${label}: the listing title is unchanged`).toBe(`${run.RUN} acc-deny-${n}`)
++ expect((await run.admin.from('favorites').select('id').eq('user_id', account.id)).data, `${label}: its one favourite remains`).toHaveLength(1)
++ expect((await run.admin.from('listings').select('id').eq('slug', plainSlug(`acc-deny-insert-${n}`))).data, `${label}: the refused listing was not stored`).toEqual([])
++ it('[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request', async () => {
++ expect(reads.user.error, 'the active account reads its own row').toBeNull()
++ expect(reads.user.data).toEqual([{ id: person.id }])
++ expect(reads.listing.data, 'it reads its own listing').toEqual([{ id: listing.id }])
++ expect(reads.favorite.error).toBeNull()
++ expect(rename.error, 'the allowed profile update is not refused').toBeNull()
++ expect(rename.data).toEqual([{ id: person.id, name: renamed }])
++ expect(retitle.error, 'the allowed listing update is not refused').toBeNull()
++ expect(retitle.data).toEqual([{ id: listing.id, title: retitled }])
++ expect((await storedUser(person.id))?.name, 'the profile update is stored').toBe(renamed)
++ expect((await storedListing(listing.id))?.title, 'the listing update is stored').toBe(retitled)
++ it('[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was', async () => {
++ expect(refused.error?.code, 'the refusal is 42501').toBe('42501')
++ expect(refused.data, 'no success answer: nothing came back').toBeNull()
++ expect(await wholeRow(), 'the row is byte for byte what it was').toBe(before)
++ /** the account listens to the INSERTs of its own notifications; resolves when Realtime has confirmed the subscription */
++ it('[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block', async () => {
++ expect((await notifyAccount(blocked.id, first)).error).toBeNull()
++ expect(await waitUntil(() => listening.titles.includes(first)), 'the event before the block arrives').toBe(true)
++ expect((await run.admin.from('users').update({ status: 'blocked', block_reason: `${run.RUN} blocked` }).eq('id', blocked.id)).error).toBeNull()
++ expect((await notifyAccount(blocked.id, second)).error).toBeNull()
++ expect((await notifyAccount(control.id, marker)).error).toBeNull()
++ expect(await waitUntil(() => controlListening.titles.includes(marker)), 'the active control account receives its event').toBe(true)
++ expect(listening.titles, 'the blocked account received nothing after the block').toEqual([first])
++ it('[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block', async () => {
++ expect((await notifyAccount(active.id, title)).error).toBeNull()
++ expect(await waitUntil(() => listening.titles.includes(title)), 'the event arrives').toBe(true)
++ expect(listening.titles).toEqual([title])
+
+### src\tests\integration\accessHardening.integration.test.ts: no assertion/title line changed
+
+### src\tests\integration\accessHardening.integration.test.ts
+- expect(await waitUntil(() => listening.titles.includes(first)), 'the event before the block arrives').toBe(true)
++ expect(await waitUntil(() => listening.received().includes(first)), 'the event before the block arrives').toBe(true)
+
+### src\tests\integration\accessHardening.integration.test.ts
+- expect(await waitUntil(() => controlListening.titles.includes(marker)), 'the active control account receives its event').toBe(true)
+- expect(listening.titles, 'the blocked account received nothing after the block').toEqual([first])
++ expect(await waitUntil(() => controlListening.received().includes(marker)), 'the active control account receives its event').toBe(true)
++ expect(listening.received(), 'the blocked account received nothing after the block').toEqual([first])
+
+### src\tests\integration\accessHardening.integration.test.ts
+- expect(await waitUntil(() => listening.titles.includes(title)), 'the event arrives').toBe(true)
+- expect(listening.titles).toEqual([title])
++ expect(await waitUntil(() => listening.received().includes(title)), 'the event arrives').toBe(true)
++ expect(listening.received()).toEqual([title])
+
+### src\tests\integration\accessHardening.integration.test.ts: no assertion/title line changed
+
+### src\tests\integration\accessHardening.integration.test.ts
++ expect(listening.ready, 'the change feed of the account delivers events before the block').toBe(true)
++ expect(controlListening.ready, 'the change feed of the active control account delivers events').toBe(true)
+
+### src\tests\integration\accessHardening.integration.test.ts
++ expect(listening.ready, 'the change feed of the active account delivers events').toBe(true)
+
+### src\tests\integration\accessHardening.integration.test.ts
++ it('[SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted', async () => {
++ expect(added.error, 'the owner session adds a photo inside the project cloud').toBeNull()
++ expect(added.data).toEqual([{ listing_id: listing.id, url: PHOTO_URL }])
++ expect(stored.data, 'the photo is stored').toEqual([{ url: PHOTO_URL }])
++ it('[SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused', async () => {
++ expect(refused.error?.code, `${url}: refused with a check violation`).toBe('23514')
++ expect(refused.error?.message, `${url}: by the URL prefix constraint`).toContain('listing_images_url_prefix_check')
++ expect(refused.data, `${url}: nothing returned`).toBeNull()
++ expect(stored.data, 'no foreign image address was stored').toEqual([])
++ expect(prior.error, 'the stored switch is readable').toBeNull()
++ expect(set.error, 'the key is switched on for this case').toBeNull()
++ expect(restored.error, 'the stored switch is restored').toBeNull()
++ it('[SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works', async () => {
++ expect(response.status, 'the route answers 200 for a moderator with the key').toBe(200)
++ expect(await response.json()).toEqual({ url: 'https://res.cloudinary.com/die7okukn/image/upload/v1/zz-synth-avatar.png' })
++ expect(acting.uploaded, 'one upload, into the target account\'s folder').toEqual([`${target.id}/avatars`])
++ expect(stored.data?.avatar_url, 'the avatar address is stored on the target account').toBe('https://res.cloudinary.com/die7okukn/image/upload/v1/zz-synth-avatar.png')
++ it('[SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage', async () => {
++ expect(upload.error, 'the Storage upload of a staff session is refused').not.toBeNull()
++ expect(upload.error?.message, 'by row-level security').toMatch(/row-level security/i)
++ expect(upload.data, 'no object path came back').toBeNull()
++ expect(listed.error).toBeNull()
++ expect(listed.data?.map((object) => object.name), 'no object was stored in the avatars bucket').toEqual([])
++ it('[SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches', async () => {
++ expect(select.error?.code, `${who}: select on ${table}`).toBe('42501')
++ expect(select.data, `${who}: no row of ${table} came back`).toBeNull()
++ expect(insert.error?.code, `${who}: insert into ${table}`).toBe('42501')
++ expect(update.error?.code, `${who}: update of ${table}`).toBe('42501')
++ expect(await countRows('role_permissions'), 'no switch row was added').toBe(before.role_permissions)
++ expect(await countRows('role_permission_events'), 'no event row was added').toBe(before.role_permission_events)
+
+### WRITE src\modules\admin\actions\adminPermissions.integration.test.ts (133 lines, 25 assertion/title lines)
+
+### WRITE src\tests\integration\moderatorKeys.integration.test.ts (93 lines, 21 assertion/title lines)
+
+### WRITE src\app\api\upload-avatar\uploadAvatar.integration.test.ts (94 lines, 18 assertion/title lines)
+
+### WRITE src\modules\listings\actions\deleteListing.integration.test.ts (62 lines, 12 assertion/title lines)
+
+### WRITE src\modules\listings\actions\updateListing.integration.test.ts (82 lines, 18 assertion/title lines)
+
+### WRITE src\modules\listings\actions\contactLifecycle.integration.test.ts (88 lines, 18 assertion/title lines)
+
+### WRITE src\tests\integration\adminPage.integration.test.ts (130 lines, 19 assertion/title lines)
+
+### src\lib\auth\__tests__\moderatorKeys.security.test.ts
+- it('[SEC-X-SRV-MOD-KEYS] every action that admits a moderator checks a key, and the key is the administrator\'s switch', async () => {
++ it('[SEC-X-SRV-MOD-KEYS] every moderator action checks its key', async () => {
+
+### src\modules\listings\actions\updateListing.integration.test.ts: no assertion/title line changed
+
+### src\modules\listings\actions\updateListing.integration.test.ts: no assertion/title line changed

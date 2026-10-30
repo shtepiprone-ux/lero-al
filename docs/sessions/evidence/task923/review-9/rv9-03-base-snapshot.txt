@@ -1,0 +1,50 @@
+# Task 923 review 9 - base-state lines copied from HEAD 800b8e349e14fbfa6fa3434cb0e55d9652c11a3c for kickoff claims whose literal the session's changes removed
+
+## C207 - src/design-system/mantine/patterns/MantineDataTableToCards.tsx:283-283 at HEAD
+ * Responsive API: `cardsBelow="sm"` (default) uses `useMediaQuery('(max-width: 40em)')` — SSR
+
+## C209 - src/modules/listings/components/ListingInquiryDialog.tsx:18-18 at HEAD
+} from '@/components/ui/dialog'
+
+## C214 - src/components/admin/StatusChangeControl.tsx:7-7 at HEAD
+import { Button } from '@/components/ui/button'
+
+## C216 - src/modules/listings/components/ListingFormShellView.tsx:317-317 at HEAD
+                <StatusChangeControl
+
+## C255 - src/design-system/mantine/patterns/MantineDataTableToCards.tsx:580-580 at HEAD
+        <Box hiddenFrom="md">{cardsMarkup}</Box>
+
+## C256 - src/design-system/mantine/patterns/MantineDataTableToCards.tsx:596-596 at HEAD
+  return isMobile ? cardsMarkup : tableMarkup
+
+## C258 - src/components/admin/AdminTable.tsx:139-139 at HEAD
+        cardsBelow="md"
+
+## C260 - src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx:120-120 at HEAD
+        <Group justify={isMobile ? 'center' : 'flex-end'}>
+
+## C261 - src/components/admin/AdminListingsView.tsx:222-222 at HEAD
+        {isMobile ? (
+
+## C263 - src/components/admin/AdminListingsView.tsx:58-58 at HEAD
+ * `AdminTable` adapter (cards below 768px). The preview and premium dialogs are separate Views.
+
+## C271 - src/lib/auth/blockCheck.ts:23-23 at HEAD
+  const supabase = await createClient()
+
+## C274 - src/lib/auth/permissions.ts:41-41 at HEAD
+    .select('role')
+
+## C275 - src/app/admin/layout.tsx:49-49 at HEAD
+  const isAuthorized = profile?.role === 'admin' || profile?.role === 'moderator'
+
+## C313 - src/modules/listings/components/ListingInquiryDialog.tsx:26-26 at HEAD
+  trigger: React.ReactElement
+
+## C314 - src/modules/listings/components/ListingInquiryDialog.tsx:78-78 at HEAD
+      if (result.error === 'email_transient') {
+
+## C318 - src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx:126-126 at HEAD
+            size={isMobile ? 'sm' : 'md'}
+

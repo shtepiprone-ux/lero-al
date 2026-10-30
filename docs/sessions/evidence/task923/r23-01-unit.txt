@@ -1,0 +1,20 @@
+platform win32 10.0.26300 node v22.22.3 vitest vitest/4.1.6 win32-x64 node-v22.22.3; start 2026-10-21T17:40:22.000Z
+cmd npx vitest run src/lib/auth/__tests__/blockCheck.security.test.ts src/modules/listings/components/__tests__/ListingFormShell.create.security.test.tsx src/modules/listings/lib/__tests__/generateSlug.security.test.ts --reporter=verbose   (R95 (b))
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/auth/__tests__/blockCheck.security.test.ts > blockCheck > [SEC-X-SRV-BLOCKCHECK-NO-ROW] a missing or deleted row is no access 3ms
+ ✓ src/lib/auth/__tests__/blockCheck.security.test.ts > blockCheck > [SEC-X-SRV-BLOCKCHECK-ACTIVE] an active account keeps its access 2ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > [SEC-X-SRV-SLUG-PLAIN] every title gives a plain slug 276ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > an ordinary title keeps its words, hyphens collapse, and the slug ends with the creation time in base 36 (the control) 1ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > a title with no Latin letter or digit gets the base listing 0ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > the base is cut at 80 characters and the hyphens the cut leaves are trimmed 0ms
+ ✓ src/modules/listings/lib/__tests__/generateSlug.security.test.ts > generateSlug > is a plain module, not a Server Action, and createListing uses it instead of a local copy 1ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.create.security.test.tsx > ListingFormShell > [SEC-X-FE-SLUG-CREATE] a hyphen or Cyrillic title is sent as typed and a refusal is shown 47ms
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  19:40:24
+   Duration  1.14s (transform 166ms, setup 262ms, import 268ms, tests 334ms, environment 712ms)
+
+EXIT_CODE=0

@@ -1,0 +1,13 @@
+# Task 923 Review 49 (Opus): read-only facts of the deletion path after the apply, 2026-10-24T10:50:48Z, HEAD 36c030802, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-09-delete-path.cjs
+read_only=on
+foreign keys to a user: 44; by delete rule {"c":27,"n":17} (a = no action, r = restrict, c = cascade, n = set null, d = set default)
+trigger public.listing_views listing_views_lower_count: after delete row, enabled O, lower_views_count_on_view_delete, security definer true
+trigger public.listings listings_guard_protected: before insert/update row, enabled O, guard_listings_protected_columns, security definer false
+trigger public.listings listings_price_rule: before insert/update row, enabled O, listings_price_rule, security definer false
+trigger public.listings listings_search_vector: before insert/update row, enabled O, update_listing_search_vector, security definer false
+trigger public.listings listings_updated_at: before update row, enabled O, update_updated_at, security definer false
+listing_images keys: FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE
+storage buckets: [{"id":"avatars","public":true}]
+storage objects per bucket: [{"bucket_id":"avatars","n":1}]
+exit 0

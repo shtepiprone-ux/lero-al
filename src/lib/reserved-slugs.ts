@@ -6,6 +6,7 @@ export type LocaleCode = (typeof LOCALE_CODES)[number]
 export const RESERVED_SLUGS: readonly string[] = [
   'auth',
   'cabinet',
+  'ci', // CI fixtures (/ci/click-shield-modal): a page with this slug would never be reachable (Task 923 Revision 7)
   'contact',
   'favorites',
   'listings',

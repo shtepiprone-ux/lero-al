@@ -1,0 +1,12 @@
+Task 923 Revision 8 self-audit (Opus, 2026-10-18): output of docs/sessions/evidence/task923/db-catalog/ban-experiment.cjs on the approved development project (one synthetic user, deleted at the end)
+before ban: sign-in                                        ok
+ban applied (876000h)                                      ok; banned_until=2126-09-24
+password sign-in while banned                              refused: 400 user_banned User is banned
+refresh token while banned                                 refused: 400 user_banned Invalid Refresh Token: User Banned
+auth.getUser(old access token) while banned                refused: 403 user_banned User is banned
+REST read with the old access token while banned           ALLOWED rows=1
+REST write with the old access token while banned          ALLOWED rows=1
+unban (ban_duration none)                                  ok; banned_until=undefined
+password sign-in after unban                               ok
+access-token lifetime (seconds)                            3600
+cleanup                                                    deleted; profile rows left=0

@@ -1,0 +1,14 @@
+# R149 AC149 r49-04e-dev-server-before-build: server check right before the build, read-only, counts printed
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: powershell -NoProfile -ExecutionPolicy Bypass -File C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/45d40018-4190-48bd-84cd-3b650e5bb542/scratchpad/dev.ps1
+NODE_PATH: (unset)
+started: 2026-10-25T08:54:51.059Z
+--- stdout ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

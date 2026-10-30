@@ -1,0 +1,4 @@
+starts <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g><pa
+has class false
+bytes 786
+sha256 bccb52db248f2f13a70fd897c07cd16780686f71901847fea99c5218dccffe65

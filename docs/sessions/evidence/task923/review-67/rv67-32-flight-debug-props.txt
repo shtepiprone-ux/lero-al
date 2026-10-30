@@ -1,0 +1,9 @@
+# rv67-32: React Flight emits server-component props in development only
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-32-flight-debug-props.mjs
+next 15.5.18
+node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.development.js: "function outlineComponentInfo" 1; "componentDebugInfo.props = componentInfo.props" 1; 'case "_debugInfo":' 3
+node_modules/next/dist/compiled/react-server-dom-turbopack/cjs/react-server-dom-turbopack-server.node.production.js: "function outlineComponentInfo" 0; "componentDebugInfo.props = componentInfo.props" 0; 'case "_debugInfo":' 3
+node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.development.js: "function outlineComponentInfo" 1; "componentDebugInfo.props = componentInfo.props" 1; 'case "_debugInfo":' 3
+node_modules/next/dist/compiled/react-server-dom-webpack/cjs/react-server-dom-webpack-server.node.production.js: "function outlineComponentInfo" 0; "componentDebugInfo.props = componentInfo.props" 0; 'case "_debugInfo":' 3
+development: outlineComponentInfo writes each server component's props into the payload; production: neither the function nor the props assignment exists. The "_debugInfo" case counts are equal and not the difference.
+exit 0

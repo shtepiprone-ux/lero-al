@@ -1,0 +1,55 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a10/a10-02-case-map.mjs docs/sessions/evidence/task927/a10/a10-02-case-map.txt docs/sessions/evidence/task927/a10/a10-02-vitest.json docs/sessions/evidence/task927/a10/a10-02-vitest-extra.json
+vitest: 25 suites, 165 tests, 165 passed, 0 failed, 0 pending
+
+SEC-927-FE-ALLOW                         passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-WRAP                          passed  src/lib/auth/__tests__/browserAuth.security.test.ts
+SEC-927-FE-UNIT-NONCE                    passed  src/lib/auth/__tests__/googleIdentity.test.ts
+SEC-927-FE-DENY-REDIRECT                 passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-BANNED                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-REPLAY                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-NOAUTO                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-NOCLIENT                  passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-NOLEAK                    passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-UNIT-LOADER                   passed  src/lib/auth/__tests__/googleIdentity.test.ts
+SEC-927-SRV-ALLOW                        passed  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-SRV-DENY                         passed  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-SRV-ERR                          passed  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-DB-ALLOW                         integration (not collected by vitest.config.ts)
+SEC-927-PRV-DENY                         integration (not collected by vitest.config.ts)
+SEC-927-FE-REAUTH-ALLOW                  passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-DENY-ACCOUNT           passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-DENY-SWITCH            passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-ERR                    passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-SRV-REAUTH-ALLOW                 passed  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+SEC-927-SRV-REAUTH-DENY                  passed  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+SEC-927-FE-REAUTH-ONE-CONFIG             passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-ONETAP-ALLOW                  passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-NOTGUEST          passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-SHEET             passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-REDIRECT          passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-ERR                    passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-ALLOW                passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-DENY-HOSTILE         passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-FORGET               passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-WELCOME-DENY-BANNED           passed  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-KEEP                 passed  src/components/layout/__tests__/Header.signOut.test.tsx
+SEC-927-FE-REMEMBER-DELETE               passed  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+SEC-927-FE-DELETE-TYPED                  passed  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+SEC-927-FE-UNIT-REMEMBER                 passed  src/lib/auth/__tests__/rememberedGoogleAccount.test.ts
+SEC-927-FE-ERR-POPUP                     passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-POPUP-TIMEOUT             passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-POPUP-DENY-ORIGIN             passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-DENY-STATE              passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-CHANNEL                 passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-CANCEL                  passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-ONCE                    passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-CALLBACK-RELAY                passed  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-DENY-NOSTATE         passed  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-ERR                  passed  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-NOLEAK               passed  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+
+unit cases of the contract: 44; passed and mapped: 44; missing or not passed: 0
+exit code: 0

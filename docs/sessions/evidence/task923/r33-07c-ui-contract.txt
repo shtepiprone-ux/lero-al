@@ -1,0 +1,14 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T19:23:35.117Z
+command: npm run check:ui-contract
+---- output ----
+
+> lero-al@0.1.0 check:ui-contract
+> node scripts/check-ui-contract.mjs
+
+FAIL  check:ui-contract — fail closed: BASE is required (pass --base or set the CI environment variable).
+
+---- end ----
+EXIT_CODE=1

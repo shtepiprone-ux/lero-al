@@ -1,0 +1,5 @@
+# HEAD 7ce2cdbfa lines cited by Task 923 claim rows whose working-tree source changed (Review 42, rv42-15-refresh-locators.mjs)
+== src/modules/listings/components/ListingDetailView.tsx at HEAD 7ce2cdbfa, lines 349-349
+    <LazyListingContact
+== src/modules/listings/components/ListingContact.tsx before R131 (working tree; Opus Read output, transcript c1f16c21-dbad-4f8c-94df-690a447a1510.jsonl entry 3359, 2026-10-23T15:38:47.856Z), line 84
+  // What the gateway answered (Task 923 R119, owner D75, D78). Both stay for the life of the page: a later press of the link needs no new request.

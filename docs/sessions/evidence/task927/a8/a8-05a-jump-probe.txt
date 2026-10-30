@@ -1,0 +1,65 @@
+# a8-05 part 1: jump-probe2.mjs on the fresh build, 320/390/639 x en,uk x delay 0,1500. The middle number of sections= is the Google section.
+platform: win32 10.0.26300; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task927/jump/jump-probe2.mjs <width> <locale> <delay>
+== 320 en 0
+@320 en delay 0ms mobile false: frames with dialog 359
+t=35 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=252 top=316.1 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=287 top=305.2 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 320 en 1500
+@320 en delay 1500ms mobile false: frames with dialog 360
+t=33 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=1797 top=304 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=1834 top=304 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 320 uk 0
+@320 uk delay 0ms mobile false: frames with dialog 360
+t=33 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=280 top=305.2 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=316 top=304 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 320 uk 1500
+@320 uk delay 1500ms mobile false: frames with dialog 360
+t=23 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=1787 top=304 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=1822 top=304 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 390 en 0
+@390 en delay 0ms mobile false: frames with dialog 360
+t=21 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=269 top=326.2 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=305 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+== 390 en 1500
+@390 en delay 1500ms mobile false: frames with dialog 360
+t=29 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=1794 top=325 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=1829 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+== 390 uk 0
+@390 uk delay 0ms mobile false: frames with dialog 360
+t=34 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=281 top=305.2 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=317 top=304 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 390 uk 1500
+@390 uk delay 1500ms mobile false: frames with dialog 360
+t=39 top=800 h=496 sections=61/155/113 google=loader iframeH=null focus=input
+t=1833 top=304 h=496 sections=61/155/113 google=empty iframeH=null focus=input
+t=1869 top=304 h=496 sections=61/155/113 google=button iframeH=0 focus=input
+== 639 en 0
+@639 en delay 0ms mobile false: frames with dialog 360
+t=22 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=256 top=329.9 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=292 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+== 639 en 1500
+@639 en delay 1500ms mobile false: frames with dialog 360
+t=22 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=1805 top=325 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=1840 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+== 639 uk 0
+@639 uk delay 0ms mobile false: frames with dialog 360
+t=28 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=275 top=326.2 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=312 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+== 639 uk 1500
+@639 uk delay 1500ms mobile false: frames with dialog 360
+t=25 top=800 h=475 sections=61/134/113 google=loader iframeH=null focus=input
+t=1839 top=325 h=475 sections=61/134/113 google=empty iframeH=null focus=input
+t=1876 top=325 h=475 sections=61/134/113 google=button iframeH=0 focus=input
+runs 12 ; runs with more than one Google section height: 0
+exit code: 0

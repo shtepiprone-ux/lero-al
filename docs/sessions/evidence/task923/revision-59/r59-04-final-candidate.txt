@@ -1,0 +1,39 @@
+Task 923 Revision 59, R178 (d) - the final candidate, kickoff section 86, AC159
+Platform: Windows 11 Pro 10.0.26300.0 | Windows PowerShell 5.1.26100.9711 | Node v22.22.3 | vitest v4.1.6
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: 29acfb269
+Output copied here with the editor from the PowerShell results. The build (r59-03 section 2) is the candidate's build: no source file changed after it.
+The environment of the integration run was set inside the PowerShell process (NEXT_PUBLIC_SUPABASE_URL read from .env.local by name, SECURITY_TEST_PROJECT_REF from its host, SECURITY_TEST_TARGET=development); no value was printed.
+
+== 1. Full unit run ==
+Command: npx vitest run --reporter=json --outputFile=docs/sessions/evidence/task923/revision-59/r59-04a-unit-full.json   (stdout/stderr piped to Select-Object -Last 8 for display only; the JSON file is the record)
+Started 2026-10-29T21:23:16+01:00   Ended 2026-10-29T21:25:03+01:00   Exit code: 1 (failing tests; compared below)
+Last lines shown: jsdom "Not implemented" notices (navigation, alert(), HTMLCanvasElement getContext) and
+JSON report written to C:/Claude_Code_Projects/lero-al/docs/sessions/evidence/task923/revision-59/r59-04a-unit-full.json
+
+== 2. Comparison with the 17 failing IDs of review-62/rv62-11-unit-compare.txt, by file and full name ==
+Command: node docs/sessions/evidence/task923/revision-59/r59-04b-unit-compare.mjs   (reads the JSON above; prints only)
+Exit code: 0
+Output (the 17 FAILED lines are the baseline's, by file and full name):
+run: total 5922 passed 5905 failed 17 pending 0 suites 1347 failedSuites 15
+baseline failing IDs (rv62-11): 17
+failing now but not in the baseline: 0
+in the baseline but not failing now: 0
+same failing IDs as the baseline: true
+R177 tests in this run: 2; not passed: 0
+  passed src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx :: AdminUserProfile (T1–T9) T12 — a city-only change enables Save and sends the new city (Task 923 R177)
+  passed src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx :: AdminUserProfile (T1–T9) T12b — choosing the stored city again makes the form clean, so Save is disabled
+FAILED (17): listings-expiry route.test.ts x5; AdminListingsTable.smoke.test.tsx x1 (T9); permissions.test.ts x1; getModeratorPermissions.smoke.test.ts x3;
+  signUpWithCaptcha.smoke.test.ts x2; cabinet/statistics access.test.ts x3; listingStatusChange.smoke.test.ts x2
+Total 5922 against 5920 in r58-03: the 2 are T12 and T12b.
+
+== 3. Integration run ==
+Command: npx vitest run --config vitest.integration.config.ts
+Started 2026-10-29T21:25:13+01:00   Ended 2026-10-29T21:30:00+01:00   Exit code: 0
+ Test Files  24 passed (24)
+      Tests  96 passed (96)
+   Duration  285.54s
+
+== 4. Typecheck and eslint ==
+Command: npm run typecheck   (tsc --noEmit)   Started 2026-10-29T21:30:04+01:00   Exit code: 0   (no error line)
+Command: npx eslint . --quiet   Started 2026-10-29T21:30:12+01:00   Ended 21:30:31+01:00   Exit code: 0   (no output)

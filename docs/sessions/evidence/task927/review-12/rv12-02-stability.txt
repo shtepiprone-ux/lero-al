@@ -1,0 +1,48 @@
+# Review 12: Opus's run of rv11-10 on the executor's build
+platform: MINGW64_NT-10.0-26300 / node v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task927/review-11/rv11-10-google-button-stability.mjs
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 en: ok
+t=1863 h=500 controls=1 kinds=ours box=288x44@227 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 uk: ok
+t=1840 h=500 controls=1 kinds=ours box=288x44@227 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en: ok
+t=1849 h=479 controls=1 kinds=ours box=358x44@227 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 uk: ok
+t=1869 h=500 controls=1 kinds=ours box=358x44@227 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 en: ok
+t=1828 h=479 controls=1 kinds=ours box=607x44@227 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 uk: ok
+t=1842 h=479 controls=1 kinds=ours box=607x44@227 alerts=0
+## patterns-mantine-authsheet--welcome-back 320 en: ok
+t=380 h=437 controls=1 kinds=ours box=288x44@160 alerts=0
+## patterns-mantine-authsheet--welcome-back 320 uk: ok
+t=370 h=457 controls=1 kinds=ours box=288x44@180 alerts=0
+## patterns-mantine-authsheet--welcome-back 390 en: ok
+t=365 h=437 controls=1 kinds=ours box=358x44@160 alerts=0
+## patterns-mantine-authsheet--welcome-back 390 uk: ok
+t=367 h=437 controls=1 kinds=ours box=358x44@160 alerts=0
+## patterns-mantine-authsheet--welcome-back 639 en: ok
+t=374 h=437 controls=1 kinds=ours box=607x44@160 alerts=0
+## patterns-mantine-authsheet--welcome-back 639 uk: ok
+t=365 h=437 controls=1 kinds=ours box=607x44@160 alerts=0
+## patterns-mantine-authsheet--login 320 en: ok
+t=374 h=528 controls=1 kinds=ours box=288x44@100 alerts=0
+t=1905 h=618 controls=1 kinds=ours box=288x44@100 alerts=1
+## patterns-mantine-authsheet--login 320 uk: ok
+t=365 h=528 controls=1 kinds=ours box=288x44@100 alerts=0
+t=1949 h=638 controls=1 kinds=ours box=288x44@100 alerts=1
+## patterns-mantine-authsheet--login 390 en: ok
+t=364 h=528 controls=1 kinds=ours box=358x44@100 alerts=0
+t=2179 h=598 controls=1 kinds=ours box=358x44@100 alerts=1
+## patterns-mantine-authsheet--login 390 uk: ok
+t=365 h=528 controls=1 kinds=ours box=358x44@100 alerts=0
+t=1944 h=618 controls=1 kinds=ours box=358x44@100 alerts=1
+## patterns-mantine-authsheet--login 639 en: ok
+t=365 h=528 controls=1 kinds=ours box=607x44@100 alerts=0
+t=1906 h=598 controls=1 kinds=ours box=607x44@100 alerts=1
+## patterns-mantine-authsheet--login 639 uk: ok
+t=372 h=528 controls=1 kinds=ours box=607x44@100 alerts=0
+t=1925 h=598 controls=1 kinds=ours box=607x44@100 alerts=1
+runs 18; failing 0
+exit code: 0

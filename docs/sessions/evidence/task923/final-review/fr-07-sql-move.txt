@@ -1,0 +1,2 @@
+# fr-07 (Opus) 2026-10-28T20:07:46.596Z win32 node v22.22.3
+moved files matching the note: 39; mismatching: 0; old paths still present: 0

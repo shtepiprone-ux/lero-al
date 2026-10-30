@@ -1,0 +1,17 @@
+platform win32 node v22.22.3
+cwd C:\Claude_Code_Projects\lero-al
+command: node --import ./docs/sessions/evidence/task923/r5-95-spawn-maxbuffer-preload.mjs scripts/check-mojibake.mjs
+start 2026-10-15T09:17:50.405Z
+
+check:mojibake — scanning 11949 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+
+check:mojibake — skipping 4 tracked-but-deleted path(s) (staged deletion pending, nothing to scan):
+  src/components/admin/AdminSupportManager.stories.tsx
+  src/components/ui/badge.stories.tsx
+  src/components/ui/badge.tsx
+  src/design-system/mantine/patterns/MantineListingGalleryPattern.module.css
+
+check:mojibake: 0 artifacts in 11949 files
+
+end 2026-10-15T09:18:15.928Z
+EXIT_CODE=0

@@ -1,0 +1,47 @@
+# R149 AC149 r49-05-mockclear: is the mockClear line of the beforeEach needed (shuffled order, with and without)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r49-05-mockclear.mjs
+NODE_PATH: (unset)
+started: 2026-10-25T08:57:07.939Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+test file sha256 before: 0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5
+sha256 without the line: 6f302f3181f6da1d669a242cf91b0c27fd2f1938459e9d9cd6fad6925ec4eaa4
+
+--- with the mockClear line
+seed 1: exit 0
+seed 2: exit 0
+seed 3: exit 0
+seed 4: exit 0
+seed 5: exit 0
+seed 6: exit 0
+seed 7: exit 0
+seed 8: exit 0
+seed 9: exit 0
+seed 10: exit 0
+seed 11: exit 0
+seed 12: exit 0
+runs failed: 0 of 12
+
+--- without the mockClear line
+seed 1: exit 0
+seed 2: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 3: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 4: exit 0
+seed 5: exit 0
+seed 6: exit 0
+seed 7: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 8: exit 0
+seed 9: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 10: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 11: exit 1; failed: × [SEC-X-SRV-ADMIN-USER-GONE | FAIL src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE
+seed 12: exit 0
+runs failed: 6 of 12
+
+test file sha256 after restore: 0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5; equals before: true
+
+--- stderr ---
+
+--- exit code: 0 ---

@@ -1,0 +1,30 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:31:31.382Z
+cmd node docs/sessions/evidence/task923/r19-03-diff-classify.cjs   (the diff of v7 -> v7.1 touches only change 7, change 8 and the header (apply and rollback))
+ ok  reviewed v7 copy proposed-hardening.v7.sql.bak sha256 a8b0ae690d0786747b34e4c582612a1d7b4dc5eb095ae4066a3dc0230455e438 (the reviewed hash)
+ ok  reviewed v7 copy proposed-hardening-rollback.v7.sql.bak sha256 52bd460f8c8cbe688f6bc24dae726728725e3c2414be827a27097c0327813db5 (the reviewed hash)
+
+apply: 15 hunks (old proposed-hardening.v7.sql.bak -> new proposed-hardening.sql); old header ends at line 93, change 7/8 = old lines 398-471; new header ends at 100, change 7/8 = new lines 405-426
+   ok  @@ -1,1 +1,1 @@  header
+   ok  @@ -8,1 +8,10 @@  header
+   ok  @@ -18,1 +26,0 @@  header
+   ok  @@ -30,2 +38,1 @@  header
+   ok  @@ -46,1 +53,1 @@  header
+   ok  @@ -50,1 +57,2 @@  header
+   ok  @@ -58,1 +66,2 @@  header
+   ok  @@ -61,4 +70,1 @@  header
+   ok  @@ -79,1 +85,2 @@  header
+   ok  @@ -82,5 +89,5 @@  header
+   ok  @@ -88,1 +95,1 @@  header
+   ok  @@ -398,14 +405,1 @@  change 7/8
+   ok  @@ -416,3 +409,0 @@  change 7/8
+   ok  @@ -426,9 +416,0 @@  change 7/8
+   ok  @@ -440,31 +422,4 @@  change 7/8
+  tally: {"header":11,"change 7/8":4}
+
+rollback: 3 hunks (old proposed-hardening-rollback.v7.sql.bak -> new proposed-hardening-rollback.sql); old header ends at line 5, change 7/8 = old lines 57-106; new header ends at 7, change 7/8 = new lines 59-108
+   ok  @@ -1,1 +1,1 @@  header
+   ok  @@ -3,0 +4,2 @@  header
+   ok  @@ -85,1 +87,1 @@  change 7/8
+  tally: {"header":2,"change 7/8":1}
+RESULT: every hunk of both files is in the header or in change 7 / change 8; both reviewed v7 copies have the reviewed hashes
+EXIT_CODE=0

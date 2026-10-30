@@ -1,0 +1,13 @@
+# a12-07: cli.mjs verify (no SECURITY_TEST_* variables set; the integration file is not run)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:11:28.793Z
+
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+--- output ---
+BLOCKED: Product verification requires an implemented or reviewed contract
+--- exit code: 1 ---
+
+finished: 2026-10-28T19:11:28.875Z
+exit code: 1

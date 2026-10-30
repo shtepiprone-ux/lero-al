@@ -1,0 +1,226 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T11:20:05.427Z",
+ "case": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+ "results": [
+  {
+   "id": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+   "testFile": "src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts",
+   "testName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/app/[locale]/listings/[slug]/page.tsx",
+     "description": "the listing page treats a pending listing as public",
+     "from": "const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented']",
+     "to": "const PUBLIC_LISTING_STATUSES = ['active', 'sold', 'rented', 'pending']"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/app/[locale]/listings/[slug]/page.tsx",
+     "originalSha256": "f5048f96891e4fae80524c2ad0a696f3291955b503054b53341fe900ee839663",
+     "restoredSha256": "f5048f96891e4fae80524c2ad0a696f3291955b503054b53341fe900ee839663"
+    }
+   ],
+   "failureMessage": "AssertionError: guest on pending: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts:116:79\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272796852,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "status": "passed",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "duration": 9.685000000000173,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272798947,
+       "endTime": 1793272798956.685,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272800112,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "status": "failed",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "duration": 11.058199999999943,
+         "failureMessages": [
+          "AssertionError: guest on pending: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts:116:79\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272802141,
+       "endTime": 1793272802152.058,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272803426,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "status": "passed",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+         "duration": 9.783100000000104,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "listingAccessRestricted"
+         ],
+         "fullName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272805342,
+       "endTime": 1793272805351.7832,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,674 @@
+[
+  {
+    "id": "mantine-primitives-modal--form",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "Confirm action",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "textarea",
+        "h": 85,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [
+      12,
+      77
+    ],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 516,
+        "y": 680,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Confirm",
+        "x": 726,
+        "y": 680,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "mantine-primitives-modal--form",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "Confirm action",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "textarea",
+        "h": 85,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [
+      12,
+      77
+    ],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Confirm",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-createticketdialogview--support",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "New ticket",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "textarea",
+        "h": 85,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [
+      69,
+      16,
+      16
+    ],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 516,
+        "y": 690,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Create ticket",
+        "x": 726,
+        "y": 690,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-createticketdialogview--support",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "New ticket",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      },
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      },
+      {
+        "tag": "textarea",
+        "h": 85,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [
+      69,
+      16,
+      16
+    ],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Create ticket",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-createticketdialogview--empty",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "New ticket",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 516,
+        "y": 533,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Create ticket",
+        "x": 726,
+        "y": 533,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-createticketdialogview--empty",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "New ticket",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Create ticket",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-savesearchbutton--open-modal",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "Save search",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 516,
+        "y": 524,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Save",
+        "x": 726,
+        "y": 524,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "patterns-mantine-savesearchbutton--open-modal",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "Save search",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [
+      {
+        "fontSize": 14,
+        "fontWeight": "600",
+        "color": "rgb(52, 64, 84)"
+      }
+    ],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Save",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "mantine-primitives-collectionssection--create-dialog-open",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "New collection",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 516,
+        "y": 509,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Create",
+        "x": 726,
+        "y": 509,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "mantine-primitives-collectionssection--create-dialog-open",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "New collection",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Cancel",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Create",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "mantine-primitives-savetocollectionbutton--dialog-open",
+    "width": 440,
+    "found": true,
+    "kind": "modal",
+    "radius": "24px",
+    "viewport": 1440,
+    "title": {
+      "text": "Save to collection",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": {
+      "w": 44,
+      "h": 44
+    },
+    "labels": [],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Close",
+        "x": 516,
+        "y": 568,
+        "w": 198,
+        "h": 44
+      },
+      {
+        "text": "Create",
+        "x": 726,
+        "y": 568,
+        "w": 198,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  },
+  {
+    "id": "mantine-primitives-savetocollectionbutton--dialog-open",
+    "width": 390,
+    "found": true,
+    "kind": "drawer",
+    "radius": "24px 24px 0px 0px",
+    "viewport": 390,
+    "title": {
+      "text": "Save to collection",
+      "fontSize": 16,
+      "fontWeight": "400"
+    },
+    "close": null,
+    "labels": [],
+    "inputs": [
+      {
+        "tag": "input",
+        "h": 44,
+        "radius": "8px",
+        "fontSize": 14
+      }
+    ],
+    "fieldGaps": [],
+    "footer": [
+      {
+        "text": "Close",
+        "x": 16,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      },
+      {
+        "text": "Create",
+        "x": 201,
+        "y": 840,
+        "w": 173,
+        "h": 44
+      }
+    ],
+    "footerStacked": false
+  }
+]

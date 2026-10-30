@@ -1,0 +1,27 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-01-turnstile-localhost-probe.mjs <root>
+page: /uk/auth/register
+widget iframes: 1
+token after 30 s: NONE
+dev fallback note shown: 0
+cloudflare responses: 11 (302 /turnstile/v0/api.js; 200 /turnstile/v0/b/d2d3316b729e/api.js; 200 /cdn-cgi/challenge-platform/h/b/turnstile/f/av0/rch/32s30/0x; 200 /cdn-cgi/challenge-platform/h/b/fo/2500143105:1792688732:c8o; 200 https://challenges.cloudflare.com/d4094d69-bed3-4129-9c23-f6; 401 /cdn-cgi/challenge-platform/h/b/pat/a4ea81c2af784c6f/1792693)
+console lines about turnstile: none
+screenshot failed locator.screenshot: Timeout 29974.75ms exceeded.
+Call log:
+[2m  - taking element screenshot[22m
+[2m  - waiting for fonts to load...[22m
+[2m  - fonts loaded[22m
+[2m  - attempting scroll into view action[22m
+[2m    2 × waiting for element to be stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying scroll into view action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying scroll into view action[22m
+[2m      - waiting 100ms[22m
+[2m    55 × waiting for element to be stable[22m
+[2m       - element is not visible[22m
+[2m     - retrying scroll into view action[22m
+[2m       - waiting 500ms[22m
+
+EXIT_CODE=0

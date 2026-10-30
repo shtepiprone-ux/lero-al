@@ -1,0 +1,41 @@
+# Review 10: the AuthSheet Login Story in the owner's real Chrome (Claude in Chrome), storybook-static served on http://localhost:6026 by rv10-04-serve.mjs
+date: 2026-10-26
+platform: win32 10.0.26300 (owner's Chrome "Browser 1", deviceId acbeac50-..., isLocal true)
+
+## Before the owner reconnected the extension
+tool: mcp__claude-in-chrome__list_connected_browsers -> []
+tool: mcp__claude-in-chrome__tabs_context_mcp -> "Browser extension is not connected. Please ensure the Claude browser extension is installed and running (https://claude.ai/chrome), and that you are logged into claude.ai with the same account as Claude Code. ..."
+Cause of the disconnect: not established (UNVERIFIED; the "same account" text is the tool's generic hint).
+
+## After the owner ran /chrome ("Now using browser "Browser 1" for Chrome actions.")
+tool: mcp__claude-in-chrome__list_connected_browsers -> [{"deviceId":"acbeac50-d2a3-47c2-8970-e0e827816f1d","name":"Browser 1","osPlatform":"Windows","isLocal":true,"inUse":true}]
+tool: mcp__claude-in-chrome__tabs_context_mcp -> tab 1084167627 "New Tab" (chrome://newtab/)
+
+## Login Story, 10 s (en) and 8 s (uk) after navigation, page script
+en: {"alerts":[],"dialogH":1031,"dialogTop":0,"googleIframes":0,"innerWidth":1920,"turnstileInputs":["token len 730"]}
+uk: {"alerts":[],"dialogH":1031,"dialogTop":0,"iframes":["https://accounts.google.com/gsi/button 368x44"],"innerWidth":1920,"turnstile":["token len 730"]}
+Screenshots: Google's button is light and outlined, logo centred ("Sign in with Google" / "Вхід через Google").
+
+## Reading
+- In a real Chrome, Turnstile on localhost issues a token, and the sheet shows no "Security verification failed" alert.
+- The automated Chromium of rv10-03 gets Turnstile 600010 on localhost (and 110200 on 127.0.0.1), so the alert of Review 9 F9 is an artefact of automation.
+- resize_window did not change the page width (innerWidth stayed 1920; the window is likely maximized), so no mobile frame record was taken in the owner's Chrome; the mobile frames are rv10-02 (Playwright, localhost).
+
+## Correction (same day, after the owner's objection): mobile widths through Storybook's own viewport toolbar
+The "Reading" above said no mobile frame record was possible in the owner's Chrome. That was wrong: only resize_window failed.
+Storybook's viewport toolbar (21 presets in .storybook/preview.tsx, mobile275 ... ultrawide; none at 639) sizes the preview iframe.
+Method: the full Storybook manager http://localhost:6026/index.html?path=/story/<story>&globals=viewport:<preset>;locale:<locale>;
+a requestAnimationFrame sampler in the manager page reads #storybook-preview-iframe's dialog every frame, then either reloads the
+preview iframe (AuthSheet Login, WelcomeBack: the sheet opens on load) or clicks the state's selector from
+scripts/rendered-interaction-states.json (the deletion dialog's Google ready section). Each line: ms, dialog height, Google loader,
+Google's iframe button, Google's in-page button (div[role=button]), alerts. The visible text confirms the locale (html lang stays en).
+
+login 390 en (mobile390, w 390):   522 h=524.1 loader=1 | 608 h=524.1 loader=0 | 768 h=524.1 gsiIframe=1 inPageBtn=1 | 1182 h=524.1 gsiIframe=1 inPageBtn=0 | alerts 0 throughout (10 s)
+login 320 uk (mobile320, w 320):   314 h=524.1 loader=1 | 334 h=524.1 | 373 h=524.1 gsiIframe=1 inPageBtn=1 | 623 h=524.1 gsiIframe=1 inPageBtn=0 | alerts 0 (8 s); text "Увійти ... Немає акаунту? Зареєструватись"
+welcome-back 390 en (mobile390):   323 h=433.2 loader=1 | 328 h=433.2 | 377 h=433.2 gsiIframe=1 inPageBtn=1 | 643 h=433.2 gsiIframe=1 inPageBtn=0 | alerts 0 (8 s)
+delete-google-ready 390 en:        15 h=475 loader=1 | 25 h=475 | 58 h=475 gsiIframe=1 inPageBtn=1 | 358 h=475 gsiIframe=1 inPageBtn=0 | alerts 0 (7 s); button "Delete"
+delete-google-ready 320 uk:        15 h=496 loader=1 | 31 h=496 | 64 h=496 gsiIframe=1 inPageBtn=1 | 347 h=496 gsiIframe=1 inPageBtn=0 | alerts 0 (7 s); button "Видалити"
+
+Reading: in the owner's Chrome, on localhost, Google's swap (in-page button and iframe together, then the iframe alone) leaves the
+sheet's and the dialog's height unchanged at mobile widths, and no captcha alert appears. Google's button is light and outlined (screenshot of
+the deletion dialog at 390 en). A 15-action batch for further cells timed out in the extension and returned nothing; it is not counted.

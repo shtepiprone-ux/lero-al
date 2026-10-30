@@ -1,0 +1,11 @@
+platform win32 10.0.26300 node v22.22.3; start 2026-10-21T17:42:16.000Z   (second run: the first run found TS2345 in listingSlugGuard.integration.test.ts, the payload lacked the keys description and address; fixed in the test, rerun below)
+=== 1. npm run typecheck ===
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+EXIT_CODE_TYPECHECK=0
+
+=== 2. npx eslint --quiet on the four changed test files ===
+cmd npx eslint --quiet src/lib/auth/__tests__/blockCheck.security.test.ts src/modules/listings/components/__tests__/ListingFormShell.create.security.test.tsx src/modules/listings/actions/listingSlugGuard.integration.test.ts src/tests/integration/accessHardening.integration.test.ts
+EXIT_CODE_ESLINT=0

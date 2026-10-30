@@ -1,0 +1,24 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node docs/sessions/evidence/task923/r12-113-r54-rows.mjs
+dashboardperiodcontrol--custom-range-too-long @390: failing rows 1; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailpattern--default @768: failing rows 4; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--archived-listing @320: failing rows 4; differ from r10-108-full-merged 4; whole change is a new text-overlap finding 4
+listingdetailview--archived-listing @390: failing rows 4; differ from r10-108-full-merged 4; whole change is a new text-overlap finding 4
+listingdetailview--archived-listing @639: failing rows 4; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--public-listing @320: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing @390: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing @639: failing rows 16; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--public-listing-converted @320: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing-converted @390: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing-converted @639: failing rows 16; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--public-listing-not-reduced @320: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing-not-reduced @390: failing rows 12; differ from r10-108-full-merged 12; whole change is a new text-overlap finding 12
+listingdetailview--public-listing-not-reduced @639: failing rows 16; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--staff-preview-published @320: failing rows 6; differ from r10-108-full-merged 6; whole change is a new text-overlap finding 6
+listingdetailview--staff-preview-published @390: failing rows 4; differ from r10-108-full-merged 4; whole change is a new text-overlap finding 4
+listingdetailview--staff-preview-published @639: failing rows 12; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+listingdetailview--staff-preview-unpublished @320: failing rows 6; differ from r10-108-full-merged 6; whole change is a new text-overlap finding 6
+listingdetailview--staff-preview-unpublished @390: failing rows 4; differ from r10-108-full-merged 4; whole change is a new text-overlap finding 4
+listingdetailview--staff-preview-unpublished @639: failing rows 12; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
+rows differing from r10-108-full-merged: 100; whole change a new text-overlap finding: 100; any other change: 0
+EXIT_CODE=0

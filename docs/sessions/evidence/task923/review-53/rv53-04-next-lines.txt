@@ -1,0 +1,7 @@
+# node_modules/next/dist/client/components/navigation.js of next 15.5.18, lines 115-120
+function usePathname() {
+    useDynamicRouteParams == null ? void 0 : useDynamicRouteParams('usePathname()');
+    // In the case where this is `null`, the compat types added in `next-env.d.ts`
+    // will add a new overload that changes the return type to include `null`.
+    return (0, _react.useContext)(_hooksclientcontextsharedruntime.PathnameContext);
+}

@@ -1,0 +1,12 @@
+# a6-00b: sha256 after the last edit of Task 927 Amendment 6
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a6/a6-00-hashes.mjs docs/sessions/evidence/task927/a6/a6-00b-after-hashes.txt "a6-00b: sha256 after the last edit of Task 927 Amendment 6"
+date: 2026-10-25T16:11:22.151Z
+paths: 2
+
+c72029e7c7c59bcb922c01c5985f845af517285f10022c0db2d28880747e50cc  messages/uk.json
+4c576cc66fa4477357afec3a1fdf448618e338a9d7f6a602c4faba5d9779f73b  scripts/__tests__/check-stories.test.ts
+
+exit code: 0

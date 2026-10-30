@@ -1,0 +1,16 @@
+platform win32 10.0.26300 node v22.22.3; no extra module; no database connection; start 2026-10-21T18:29:35.241Z
+cmd node - (an inline script: a line-by-line comparison of proposed-hardening-v8a.sql and proposed-hardening-v8a.dryrun.sql, then GNU diff)
+apply: 265 lines (last line 265: "commit;"); dry run: 265 lines (last line 265: "rollback;")
+lines that differ: 1 -> line 265: apply "commit;" / dry run "rollback;"
+only the last line differs, from "commit;" to "rollback;": YES
+--- GNU diff (apply -> dry run) ---
+--- proposed-hardening-v8a.sql
++++ proposed-hardening-v8a.dryrun.sql
+@@ -262,4 +262,4 @@
+ end $post$;
+ 
+ notify pgrst, 'reload schema';
+-commit;
++rollback;
+diff exit status 1 (1 = the files differ)
+EXIT_CODE=0

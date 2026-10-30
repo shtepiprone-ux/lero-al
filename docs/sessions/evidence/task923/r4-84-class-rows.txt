@@ -1,0 +1,1 @@
+{ leaflet: 114, chart: 60, gallery: 60 } { leaflet: 28, chart: 11, gallery: 5 }

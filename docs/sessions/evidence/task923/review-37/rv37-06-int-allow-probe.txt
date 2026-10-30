@@ -1,0 +1,30 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+started: 2026-10-23T06:21:18Z
+environment: SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF derived from NEXT_PUBLIC_SUPABASE_URL in .env.local (value not printed)
+purpose: feasibility probe of the correction of SEC-CS-INT-ALLOW (Opus, read-only to product files). A scratch copy of src/modules/listings/actions/contactSession.integration.test.ts outside the repository with three textual changes, shown by diff below; the two location-only changes are needed because the copy lives outside the project:
+14c14
+< vi.mock('next/headers', () => ({ headers: async () => new Headers({ 'x-forwarded-for': TEST_IP }) }))
+---
+> vi.mock('C:/Claude_Code_Projects/lero-al/node_modules/next/headers.js', () => ({ headers: async () => new Headers({ 'x-forwarded-for': TEST_IP }) }))
+17c17
+< import { submitListingInquiry } from './submitListingInquiry'
+---
+> import { submitListingInquiry } from '@/modules/listings/actions/submitListingInquiry'
+89c89
+<     expect(acting.emails[0]).toMatchObject({ replyTo: 'sender@example.com' })
+---
+>     expect(acting.emails[0]).toMatchObject({ replyTo: viewer.email.toLowerCase() })
+command: npx vitest run --config vitest.integration.config.ts --dir <scratchpad>/probe
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  08:21:19
+   Duration  9.34s (transform 111ms, setup 41ms, import 136ms, tests 9.04s, environment 0ms)
+
+EXIT_CODE=0

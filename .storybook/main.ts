@@ -39,6 +39,8 @@ const config: StorybookConfig = {
       // affected beyond these two literal import specifiers.
       'next/headers': path.resolve(__dirname, './stubs/next-headers.ts'),
       'crypto': path.resolve(__dirname, './stubs/crypto.ts'),
+      // Task 923 R38 — `src/lib/uploads/uploadGrant.ts` imports the `node:` spelling; it is the same module and the same never-invoked rationale.
+      'node:crypto': path.resolve(__dirname, './stubs/crypto.ts'),
     };
     return config;
   },

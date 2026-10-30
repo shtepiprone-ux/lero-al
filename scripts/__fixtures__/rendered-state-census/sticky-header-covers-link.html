@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: sticky-header-covers-link</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  header { position: fixed; top: 0; left: 0; right: 0; height: 72px; background: #eee; z-index: 5; }
+  body { min-height: 3000px; }
+  .popover { position: fixed; left: 16px; right: 16px; top: 80px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 8px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 7 self-test fixture "sticky-header-covers-link" (Story 059). The page is scrolled so that a link lies under a fixed page header; the person reaches it by scrolling, so action-covered stays green. The twin (not-scrollable) is the case covered-action. -->
+<header>Page header</header>
+<div id="storybook-root" style="padding-top:405px">
+  <p style="margin:0"><a href="#target" style="display:inline-block;min-width:44px;min-height:44px">A link under the header</a></p>
+  <button id="open" type="button" style="margin-top:120px">Open info</button>
+  <p>Fixture page, not a product Story.</p>
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-sticky-header-covers-link","story":"sticky-header-covers-link","open":{"kind":"click","selector":"#open"},"portals":1,"focus":"trigger","dismiss":["escape","outside"],"trigger":"#open"}</script>
+<script>
+(function () {
+  var portal = null;
+  var opener = document.getElementById('open');
+  function close() { if (!portal) return; portal.remove(); portal = null; }
+  function open() {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="mantine-Drawer-content" style="display:none"><p>navigation</p></div>' +
+      '<div class="popover" role="note"><p>About this series: a short explanation.</p></div>';
+    document.body.appendChild(portal);
+  }
+  window.scrollTo(0, 420);
+  opener.addEventListener('click', open);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('mousedown', function (e) { if (portal && !portal.contains(e.target) && e.target !== opener) close(); });
+})();
+</script>
+</body>
+</html>

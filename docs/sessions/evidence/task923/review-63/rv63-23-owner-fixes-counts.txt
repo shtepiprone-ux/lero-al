@@ -1,0 +1,5 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al
+command: for each of commit d44732cf3^ (before Revision 54) and the working tree, count the cases and the critical cases of tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+before Revision 54 (d44732cf3^): cases 64, critical 13
+working tree: cases 60, critical 9
+exit 0

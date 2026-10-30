@@ -1,9 +1,16 @@
 'use client'
 
-import { useState, useMemo, useTransition, useCallback, type ReactNode } from 'react'
+import { useState, useMemo, useTransition, useCallback, useEffect, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from '@/lib/toast'
-import { CheckCircle2, AlertCircle, Loader2, Trash2, AlertTriangle } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Trash2, AlertTriangle } from 'lucide-react'
+import { Alert } from '@mantine/core'
+import { MantineDeleteConfirmModal, DELETE_CONFIRM_WORD } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
+import { MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { signInWithGoogleIdToken } from '@/lib/auth/browser'
+import { emailFromCredential } from '@/lib/auth/googleIdentity'
+import { forgetRememberedGoogleAccount } from '@/lib/auth/rememberedGoogleAccount'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -18,8 +25,7 @@ import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateCabinetProfile,
   deleteOwnAccount,
-  initiateEmailChange,
-  resendEmailVerification,
+  getReauthMethod,
 } from '@/modules/cabinet/actions'
 import type { User } from '@/types/database'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -27,6 +33,7 @@ import { Combobox } from '@/components/shared/Combobox'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { CabinetPasswordSection } from '@/modules/cabinet/components/CabinetPasswordSection'
+import { CabinetEmailChangeSection } from '@/modules/cabinet/components/CabinetEmailChangeSection'
 
 interface CityOption { id: number; name_al: string; region_id: number | null }
 interface RegionOption { id: number; name_al: string }
@@ -69,8 +76,6 @@ function CurrencySelector({ value, onChange, labels, fieldLabel }: {
   )
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function ProfileTab({ profile, locale, cities, regions, email, onAvatarChange, recentlyViewed }: Props) {
@@ -98,18 +103,25 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
   const [currency, setCurrency] = useState<string>(profile?.preferred_currency ?? 'ALL')
   const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url ?? null)
 
-  // Email change state
-  const [newEmail, setNewEmail] = useState('')
-  const [pendingEmail, setPendingEmail] = useState<string | null>(profile?.pending_email ?? null)
-  const [emailChangeStatus, setEmailChangeStatus] = useState<'idle' | 'pending' | 'sending' | 'error'>('idle')
-  const [emailError, setEmailError] = useState<string | null>(null)
+  // How the person proves who they are before the e-mail change and the deletion (Task 923 R80, D54): the current password, or a new Google sign-in for an account with
+  // none. Unknown until the server answers (or when it cannot say): the password field shows, and the server refuses anyone it cannot verify.
+  const [reauthMethod, setReauthMethod] = useState<'password' | 'google' | null>(null)
+  useEffect(() => {
+    let alive = true
+    getReauthMethod().then(method => { if (alive) setReauthMethod(method) }).catch(() => undefined)
+    return () => { alive = false }
+  }, [])
 
   // Save status
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  // which message the save-error slot shows (Task 923 R100: an over-long name has its own text)
+  const [saveErrorKey, setSaveErrorKey] = useState<'error_saving' | 'error_name_too_long'>('error_saving')
 
   // Delete account dialog
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [deleteConfirm, setDeleteConfirm] = useState('')
+  const [deletePassword, setDeletePassword] = useState('')
+  const [deleteFieldError, setDeleteFieldError] = useState<string | null>(null)
+  const [deleteNeedsGoogle, setDeleteNeedsGoogle] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
@@ -169,6 +181,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       preferredCurrency: currency,
     })
     if (result.error) {
+      setSaveErrorKey(result.error === 'name_too_long' ? 'error_name_too_long' : 'error_saving')
       setSaveStatus('error')
     } else {
       setSaveStatus('saved')
@@ -180,55 +193,71 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     }
   }
 
-  async function handleEmailChange() {
-    if (!newEmail.trim()) return
-    if (!EMAIL_RE.test(newEmail.trim())) { setEmailError(t('error_email_invalid')); return }
-    setEmailChangeStatus('sending')
-    setEmailError(null)
-    const result = await initiateEmailChange({ newEmail: newEmail.trim(), locale })
-    if (result.error) {
-      setEmailChangeStatus('error')
-      setEmailError(result.error)
-    } else {
-      setPendingEmail(result.pendingEmail ?? newEmail.trim())
-      setEmailChangeStatus('pending')
-      setNewEmail('')
+  /**
+   * The Google confirmation (Task 923 R80, Task 927): our Google button opens Google's window, no redirect of this page. The credential is accepted only for this profile's own e-mail (a guard
+   * against confirming with another account; the server acts only on the session's own account), the new session must belong to this profile, and then the action the person
+   * already asked for is repeated once: the server now lets it through, because the session lists `oauth` within the last 10 minutes.
+   */
+  async function handleGoogleCredential(
+    { credential, nonce }: { credential: string; nonce: string },
+    repeat: () => Promise<void>,
+    showError: (text: string) => void,
+  ) {
+    if (deleting) return
+    const claimed = emailFromCredential(credential)
+    if (!claimed || claimed !== (email ?? '').trim().toLowerCase()) { showError(t('reauth_google_wrong_account', { email: email ?? '' })); return }
+    let result: Awaited<ReturnType<typeof signInWithGoogleIdToken>>
+    try {
+      result = await signInWithGoogleIdToken(credential, nonce)
+    } catch {
+      showError(t('reauth_google_failed'))
+      return
     }
+    const signedInId = result.data?.user?.id
+    if (result.error || !signedInId) { showError(t('reauth_google_failed')); return }
+    // the browser now holds another account's session: nothing is repeated for it
+    if (signedInId !== profile?.id) { signOut(() => router.push(`/${locale}`)); return }
+    await repeat()
   }
 
-  async function handleResendVerification() {
-    setEmailChangeStatus('sending')
-    const result = await resendEmailVerification({ locale })
-    if (result.error) {
-      setEmailChangeStatus('error')
-      setEmailError(result.error)
-    } else {
-      setEmailChangeStatus('pending')
-    }
+  async function repeatDeleteAfterGoogle() {
+    setDeleteNeedsGoogle(false)
+    await handleDeleteAccount()
+  }
+
+  function openDeleteDialog() {
+    setDeletePassword('')
+    setDeleteFieldError(null)
+    setDeleteError(null)
+    setDeleteNeedsGoogle(false)
+    setShowDeleteDialog(true)
   }
 
   async function handleDeleteAccount() {
     setDeleting(true)
     setDeleteError(null)
-    const result = await deleteOwnAccount()
+    setDeleteFieldError(null)
+    // Task 923 R80, D54 and Task 927 D17: an account with a password is deleted after its current password; an account with none types DELETE in the dialog and, when the server asks, confirms with a recent Google sign-in
+    const result = await deleteOwnAccount(reauthMethod === 'google' ? {} : { password: deletePassword })
     setDeleting(false)
     if (result.error) {
-      // N10: profile_deleted_auth_failed means profile is gone but email not freed — never show success.
-      const key = result.error === 'profile_deleted_auth_failed'
-        ? 'delete_account_auth_failed'
-        : 'error_deleting'
-      setDeleteError(t(key as Parameters<typeof t>[0]))
+      // the proof was refused: the field says so (a wrong password, Auth's own limit) or the Google confirmation appears; nothing was deleted
+      if (result.error === 'invalid_password') { setDeleteFieldError(t('password_error_invalid_current')); return }
+      if (result.error === 'rate_limited') { setDeleteFieldError(t('password_error_rate_limited')); return }
+      if (result.error === 'reauth_required') { setDeleteNeedsGoogle(true); return }
+      // any other answer is a failed deletion (Task 923 R142 (d)): the server deletes the account in one transaction, so nothing is half-deleted
+      setDeleteError(t('error_deleting'))
       return
     }
     setShowDeleteDialog(false)
+    // the deleted account is no longer remembered on this device (Task 927 D15)
+    forgetRememberedGoogleAccount()
     toast.success(t('delete_account_success'))
     // Clear the client auth state before navigating so the header shows the
     // signed-out state immediately on redirect (server-side signOut alone does
     // not trigger a SIGNED_OUT event in the Supabase SDK synchronously).
     signOut(() => router.push(`/${locale}`))
   }
-
-  const deleteConfirmOk = deleteConfirm.trim().toUpperCase() === 'DELETE'
 
   return (
     <div className="flex flex-col gap-6">
@@ -345,54 +374,15 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       </div>
 
       {/* ── Email change ───────────────────────────────────────────────────── */}
-      <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col gap-3">
-        <Label className="text-sm font-semibold">{t('email_label')}</Label>
-        {email && (
-          <p className="text-sm text-muted-foreground">
-            {t('email_current_label')}: <span className="font-medium text-foreground">{email}</span>
-          </p>
-        )}
-        {pendingEmail ? (
-          <div className="flex flex-col gap-2">
-            <p className="text-sm text-muted-foreground">
-              {t('email_change_pending').replace('{email}', pendingEmail)}
-            </p>
-            <button
-              type="button"
-              onClick={handleResendVerification}
-              disabled={emailChangeStatus === 'sending'}
-              className="text-sm text-primary hover:underline disabled:opacity-50 w-fit"
-            >
-              {emailChangeStatus === 'sending' ? tc('loading') : t('email_change_resend')}
-            </button>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <Input
-              type="email"
-              value={newEmail}
-              onChange={e => { setNewEmail(e.target.value); setEmailError(null) }}
-              placeholder={t('email_change_hint')}
-              className="h-11 rounded-xl flex-1"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              size="xl"
-              className="rounded-xl shrink-0 max-sm:w-auto"
-              onClick={handleEmailChange}
-              disabled={!newEmail.trim() || emailChangeStatus === 'sending'}
-            >
-              {emailChangeStatus === 'sending' ? <Loader2 className="h-4 w-4 animate-spin" /> : tc('save')}
-            </Button>
-          </div>
-        )}
-        {emailError && (
-          <p className="text-xs text-destructive flex items-center gap-1">
-            <AlertCircle className="h-3 w-3 shrink-0" />{emailError}
-          </p>
-        )}
-      </div>
+      {/* GIS keeps only the last `initialize` of the page: while the deletion dialog shows its own Google button, the section's is not mounted (`googleAllowed`), and it initializes again when the dialog closes. */}
+      <CabinetEmailChangeSection
+        email={email ?? null}
+        initialPendingEmail={profile?.pending_email ?? null}
+        locale={locale}
+        reauthMethod={reauthMethod}
+        googleAllowed={!showDeleteDialog}
+        onGoogleCredential={handleGoogleCredential}
+      />
 
       {/* ── Save button ────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between pt-1">
@@ -405,7 +395,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
         {saveStatus === 'error' && (
           <span className="flex items-center gap-1.5 text-sm text-destructive">
             <AlertCircle className="h-4 w-4" />
-            {t('error_saving')}
+            {t(saveErrorKey)}
           </span>
         )}
         <div className="ml-auto">
@@ -438,7 +428,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           variant="destructive"
           size="sm"
           className="w-fit rounded-xl gap-1.5"
-          onClick={() => setShowDeleteDialog(true)}
+          onClick={openDeleteDialog}
         >
           <Trash2 className="h-4 w-4" />
           {t('delete_account')}
@@ -446,48 +436,43 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       </div>
 
       {/* ── Delete confirm dialog ───────────────────────────────────────────── */}
-      {showDeleteDialog && (
-        <Dialog open onOpenChange={open => { if (!open) setShowDeleteDialog(false) }}>
-          <DialogContent showCloseButton={false} className="max-w-sm">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-destructive">
-                <Trash2 className="h-5 w-5" /> {t('delete_account_title')}
-              </DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-col gap-3">
-              <p className="text-sm text-muted-foreground">{t('delete_account_body')}</p>
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('delete_account_type_confirm')}</Label>
-                <Input
-                  value={deleteConfirm}
-                  onChange={e => setDeleteConfirm(e.target.value)}
-                  placeholder="DELETE"
-                  className="h-10 rounded-xl font-mono"
-                  autoComplete="off"
-                />
-              </div>
-              {deleteError && (
-                <p className="text-xs text-destructive flex items-center gap-1">
-                  <AlertCircle className="h-3 w-3 shrink-0" />{deleteError}
-                </p>
-              )}
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setShowDeleteDialog(false)} disabled={deleting}>
-                {tc('cancel')}
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={handleDeleteAccount}
-                disabled={!deleteConfirmOk || deleting}
-              >
-                {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                {t('delete_account_confirm')}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+      {/* The canonical destructive confirmation: an account with a password gives its password (Task 923 R80, owner decision D54); an account with no password types DELETE (Task 927 D17) and confirms with Google when the server asks. */}
+      <MantineDeleteConfirmModal
+        opened={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        title={t('delete_account_title')}
+        message={t('delete_account_body')}
+        confirmLabel={t('delete_account_confirm')}
+        cancelLabel={tc('cancel')}
+        onConfirm={handleDeleteAccount}
+        loading={deleting}
+        passwordConfirm={reauthMethod === 'google' ? undefined : {
+          label: t('delete_account_password_confirm'),
+          value: deletePassword,
+          onChange: value => { setDeletePassword(value); setDeleteFieldError(null) },
+          error: deleteFieldError ?? undefined,
+          showLabel: tc('show_password'),
+          hideLabel: tc('hide_password'),
+        }}
+        typedConfirm={reauthMethod === 'google' ? { word: DELETE_CONFIRM_WORD, label: t('delete_account_type_confirm') } : undefined}
+        googleConfirm={deleteNeedsGoogle ? {
+          message: t('delete_account_google_required'),
+          control: (
+            <GoogleSignInButton
+              clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+              purpose="reauth"
+              loginHint={email ?? undefined}
+              onCredential={result => handleGoogleCredential(result, repeatDeleteAfterGoogle, setDeleteError)}
+            />
+          ),
+        } : undefined}
+      >
+        {deleteError && (
+          <MantineDialogSection>
+            <Alert color="red" role="alert">{deleteError}</Alert>
+          </MantineDialogSection>
+        )}
+      </MantineDeleteConfirmModal>
 
       {/* ── Unsaved-changes confirmation dialog ────────────────────────────── */}
       {showGuardDialog && (

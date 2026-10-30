@@ -1,0 +1,8 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx eslint --quiet src/components/admin/AdminPageHeader.tsx src/app/admin/users/[id]/page.tsx src/app/admin/users/page.tsx src/stories/patterns/mantine/AdminPageHeader.stories.tsx src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx
+date: 2026-10-24T08:25:40.250Z
+--- output ---
+
+EXIT_CODE=0

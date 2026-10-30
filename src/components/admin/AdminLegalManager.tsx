@@ -9,7 +9,7 @@ import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { createPage, updatePage, deletePage } from '@/modules/admin/actions'
@@ -177,9 +177,9 @@ export function AdminLegalManager({ pages: init }: Props) {
                     <td className="px-5 py-4 font-medium">{p.title}</td>
                     <td className="px-5 py-4 hidden md:table-cell font-mono text-xs text-muted-foreground">{p.slug}</td>
                     <td className="px-5 py-4">
-                      <Badge variant={p.is_published ? 'success' : 'neutral'} className="text-xs">
+                      <MantineBadge variant="status" entity="page" value={p.is_published ? 'published' : 'draft'}>
                         {p.is_published ? t('status_published') : t('status_draft')}
-                      </Badge>
+                      </MantineBadge>
                     </td>
                     <td className="px-5 py-4 hidden lg:table-cell text-xs text-muted-foreground">
                       <RelativeTime date={p.updated_at} />

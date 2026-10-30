@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/supabase
+/supabase/*
 /node_modules
 /.pnp
 .pnp.*
@@ -70,6 +70,23 @@ playwright/.auth/
 .claude/*
 !.claude/rules/
 !.claude/rules/**
+# Shared enforcement is versioned; local credentials, state, worktrees and settings.local.json stay ignored.
+!.claude/settings.json
+!.claude/hooks/
+.claude/hooks/*
+!.claude/hooks/*.ps1
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/create-task/
+!.claude/skills/create-task/SKILL.md
+!.claude/skills/execute-task/
+!.claude/skills/execute-task/SKILL.md
+!.claude/skills/review-task/
+!.claude/skills/review-task/SKILL.md
+!.claude/agents/
+.claude/agents/*
+!.claude/agents/executor.md
+!.claude/agents/orchestrator.md
 .codex/
 docs/chat-gpt-reports/
 
@@ -89,3 +106,11 @@ tech-materials/
 # GR-7 shared reference library: JSON, summaries and scripts are committed; full-page screenshots stay local
 # (owner decision 2026-10-04, "Git: JSON only"). A screenshot a kickoff or review cites is copied into its task evidence.
 docs/research/references/*/shots-*/
+
+
+# Supabase Database SSL Sertificate
+prod-ca-2021.crt
+
+# Supabase migrations
+supabase/*
+!supabase/sql_migrations/

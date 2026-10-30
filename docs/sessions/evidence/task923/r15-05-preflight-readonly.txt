@@ -1,0 +1,14 @@
+﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; every execution is BEGIN READ ONLY ... ROLLBACK
+cmd node docs/sessions/evidence/task923/db-catalog/r14-preflight-readonly.cjs --i-confirm-dev-database   (reads the regenerated v6 file)
+ ok  proposed-hardening.sql: preflight against the live schema: passes
+ ok  proposed-account-deletion.sql: preflight against the live schema: passes
+ ok  sensitivity hardening: view md5: refuses: preflight failed: public.public_user_profiles changed since the capture (definition md5)
+ ok  sensitivity hardening: view ACL: refuses: preflight failed: the grants or the options of public.public_user_profiles changed since the capture
+ ok  sensitivity hardening: view options: refuses: preflight failed: the grants or the options of public.public_user_profiles changed since the capture
+ ok  sensitivity hardening: clear_user_history settings: refuses: preflight failed: the settings of public.clear_user_history(text, uuid, uuid, uuid) changed since the capture
+ ok  sensitivity hardening: admin_search_users_by_email settings: refuses: preflight failed: the settings of public.admin_search_users_by_email(text) changed since the capture
+ ok  sensitivity hardening: rls_auto_enable settings: refuses: preflight failed: the settings of public.rls_auto_enable() changed since the capture
+ ok  sensitivity deletion: a constraint definition (ON DELETE clause added): refuses: preflight failed: report_actions.report_actions_actor_id_fkey is defined as FOREIGN KEY (actor_id) REFERENCES users(id) (captured FOREIGN KEY (actor_id) REFEREN
+ ok  sensitivity deletion: an updated_at trigger name: refuses: preflight failed: trigger trg_email_templates_updated_at on public.email_templates is not the enabled trigger that was audited
+RESULT: both preflights pass on the live schema and each broken comparison is refused
+EXIT_CODE=0

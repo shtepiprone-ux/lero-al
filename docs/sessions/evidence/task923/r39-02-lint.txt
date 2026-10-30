@@ -1,0 +1,587 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T16:14:19.550Z
+command: npm run lint
+---- output ----
+
+> lero-al@0.1.0 lint
+> eslint
+
+
+C:\Claude_Code_Projects\lero-al\.artifacts\_to_delete\homepage-detailwind-census.mjs
+  105:3  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\.artifacts\measure-text.mjs
+  27:7  warning  'result' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\probe886r6.mjs
+   41:10  warning  'alphaOf' is defined but never used          @typescript-eslint/no-unused-vars
+  164:15  warning  'frames' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\rail4.mjs
+  16:11  warning  'rail' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\sortbar-audit.mjs
+  48:13  warning  'countText' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  57:15  warning  'cs' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.artifacts\worstcase-audit.mjs
+  31:13  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\leak877-scoped-r4.mjs
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  483:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\leak877-scoped.mjs
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  483:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task673-delta\capture-computed-styles.mjs
+   66:7   warning  'SITES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  157:22  warning  'sel' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\capture-computed-styles.mjs
+   23:37  warning  'readFileSync' is defined but never used                                     @typescript-eslint/no-unused-vars
+   99:10  warning  'readProps' is defined but never used                                        @typescript-eslint/no-unused-vars
+  100:3   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  131:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  149:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  163:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:31  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  176:66  warning  Expected an assignment or function call and instead saw an expression        @typescript-eslint/no-unused-expressions
+  181:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  189:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  200:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  226:5   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  249:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  269:7   warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task688-delta\compare-manifests.mjs
+  96:9  warning  'md5DeltaByStory' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task690-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\extract-candidate-rules.mjs
+  2:25  warning  'resolve' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task693-delta\capture-computed-styles.mjs
+   95:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  120:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  136:7  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+  147:5  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\.screenshots\task748-overlay\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\research\references\2026-10-04\gr7-deep.mjs
+  207:107  warning  'e' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task695\real-before-after-comparator.mjs
+  58:31  warning  'readdir' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-rework\real-before-after-comparator.mjs
+  154:16  warning  'resolvePartAElementBefore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748-round2\g1-gate-blindness-probe.mjs
+   92:9   warning  'overlayLostAfter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  100:11  warning  'baseId' is assigned a value but never used            @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task748\executor-comparator\capture-and-compare.mjs
+  137:21  warning  'trigger' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\probe-gr3.mjs
+  19:11  warning  'rr' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3e\design\variant-diff.mjs
+  22:25  warning  'idx' is defined but never used         @typescript-eslint/no-unused-vars
+  40:37  warning  'e' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3f\review-3f\research-review\gr7-review-3f.mjs
+  74:9   warning  'kamrIn' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  84:44  warning  'p' is assigned a value but never used       @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3g\exec\probe-ac52.mjs
+  42:67  warning  'actN' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  43:13  warning  'nums' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3g\review\research-review\gr7-review-3g.mjs
+  74:9   warning  'kamrIn' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  84:44  warning  'p' is assigned a value but never used       @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3h\exec\corner-check.mjs
+  42:11  warning  'rect' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  86:45  warning  'dpr' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3h\exec\probe-ac52.mjs
+  42:67  warning  'actN' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  43:13  warning  'nums' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3i\exec\corner-check-r71.mjs
+  86:7  warning  'GRID' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3i\exec\probe-ac52.mjs
+  42:67  warning  'actN' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  43:13  warning  'nums' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3i\review\review-probe.mjs
+  91:28  warning  'corner' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3j\exec\corner-twin-probe.mjs
+   77:81  warning  'hoverNote' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  130:9   warning  'grid' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  131:9   warning  'isGrid' is assigned a value but never used     @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task741r3\rev3j\review\diag-check.mjs
+  16:24  warning  'sub' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task763\capture-appimage-styles.mjs
+   63:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  106:9  warning  'root' is assigned a value but never used         @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task764\compare-phase-c.mjs
+  110:9  warning  'postT0' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task765\capture-appimage-styles.mjs
+  65:7  warning  'HOVER_PROPS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task794\research\gr7-operate.mjs
+   15:16  warning  'mainImgSrc' is defined but never used       @typescript-eslint/no-unused-vars
+  100:9   warning  'hero' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  171:9   warning  'thumbs' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task794\research\gr7-operate2.mjs
+  27:169  warning  'outer' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task815\62_probe-render-phase.mjs
+  87:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task822\17_explore-dom.mjs
+  54:7  warning  'stackCandidate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task822\19_r5_probe.mjs
+  120:13  warning  'indicator' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task827\_probe-ac3-ancestor-chain.mjs
+  106:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task828\execution\i0-probe.mjs
+  56:1  warning  Unused eslint-disable directive (no problems were reported from 'no-undef')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task828\review1\probe-rail-extra-grid.mjs
+  48:5  warning  Unused eslint-disable directive (no problems were reported from 'no-new-func')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task832\40_r1_build_redarms_probe.mjs
+  8:10  warning  'createServer' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac31-before-dropdownmenu.mjs
+  9:39  warning  'reject' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac31-before-usermenu.mjs
+  9:39  warning  'reject' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\ac43-before-probe.mjs
+  6:25  warning  'resolve' is defined but never used             @typescript-eslint/no-unused-vars
+  9:7   warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\probe-drawer.mjs
+  146:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task852\probe-shell.mjs
+  172:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  219:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\ac9-measure.mjs
+  17:11  warning  'rows' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\gr3b-gr3c-measure.mjs
+  25:11  warning  'fixedWidthNodes' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task853\live-proof-links.mjs
+  39:7  warning  'targets' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\114-measure-r7.mjs
+  76:62  warning  'dr' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\133-gr3g-probe-r10.mjs
+  158:11  warning  'first' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\138-gr3g-probe-r11.mjs
+  158:11  warning  'first' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\145-opus-thead-bg.mjs
+  17:9  warning  'resp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\147-thead-bg-r12.mjs
+  17:9  warning  'resp' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\152-opus-table-border.mjs
+  26:49  warning  'pc' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\59b-measure2-r2.mjs
+  101:9  warning  'ths' is assigned a value but never used       @typescript-eslint/no-unused-vars
+  103:9  warning  'nonTitle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  104:9  warning  'title' is assigned a value but never used     @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task857\88-measure-r3.mjs
+  142:13  warning  'id' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\30-measure.mjs
+   46:11  warning  'tableWrap' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  121:11  warning  'body' is assigned a value but never used       @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r1-30-measure.mjs
+  165:157  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r10x-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r10x-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r11x-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r11x-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r12x-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r12x-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r13x-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r13x-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-ac73.mjs
+  8:7  warning  'LAB' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-badges.mjs
+  47:15  warning  'minH' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-classify.mjs
+  34:14  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  35:14  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  36:14  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  37:14  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  38:14  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-mobile-diff.mjs
+  16:17  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-mobile-summary.mjs
+  22:15  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r14x-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\r5-gr3.mjs
+  88:9   warning  'a' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  88:24  warning  'b' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\research-exec\r4-gr10-explore.mjs
+  3:10  warning  'join' is defined but never used          @typescript-eslint/no-unused-vars
+  5:7   warning  'DIR' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-10\r10-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-11\r11-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-11\r11-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-12\r12-play-check.mjs
+  38:11  warning  'err' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-12\r12-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-15\r15-mobile-summary.mjs
+  22:15  warning  't' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-9\r9-ui-contract-lib.mjs
+   27:10  warning  'dirname' is defined but never used        @typescript-eslint/no-unused-vars
+   27:35  warning  'resolve' is defined but never used        @typescript-eslint/no-unused-vars
+   28:10  warning  'fileURLToPath' is defined but never used  @typescript-eslint/no-unused-vars
+   60:10  warning  'relativePath' is defined but never used   @typescript-eslint/no-unused-vars
+   74:10  warning  'argValue' is defined but never used       @typescript-eslint/no-unused-vars
+  296:10  warning  'runGate' is defined but never used        @typescript-eslint/no-unused-vars
+  314:10  warning  'printResult' is defined but never used    @typescript-eslint/no-unused-vars
+  332:10  warning  'verifyGate' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task859\review-9\r9-users-pointer.mjs
+  38:9  warning  'label' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task868\probe868-r1.mjs
+  41:7  warning  'r1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task868\probe868-r4.mjs
+  41:7  warning  'r1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task878\capture-badge-crop.mjs
+   6:25  warning  'resolve' is defined but never used             @typescript-eslint/no-unused-vars
+  10:7   warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac4-r3-contrast-probe.mjs
+  132:7  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  141:5  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-raw-repro-rev3.mjs
+  53:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  55:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  57:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  59:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+  61:9  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-arm2.mjs
+   13:10  warning  'rectArea' is defined but never used                                                 @typescript-eslint/no-unused-vars
+  145:5   warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-rev3.mjs
+   59:107  warning  'pageErrors' is defined but never used                                               @typescript-eslint/no-unused-vars
+  151:5    warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe-rev4.mjs
+  152:5  warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\ac9-tooltip-probe.mjs
+   13:10  warning  'rectArea' is defined but never used                                                 @typescript-eslint/no-unused-vars
+  145:5   warning  Unused eslint-disable directive (no problems were reported from 'no-await-in-loop')
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task889\verify-ac.mjs
+  50:11  warning  'valueEl' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\probe890.mjs
+  55:11  warning  'h1' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev1\live-probe.mjs
+  39:11  warning  'areaPts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\capture-agent1-session.mjs
+  31:7  warning  '__dirname' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\live-gap-cabinet.mjs
+  16:11  warning  'grid' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\rev3\live-gap.mjs
+  16:11  warning  'grid' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task890\review6\locale-leak-scoped.mjs
+   38:25  warning  'resolve' is defined but never used               @typescript-eslint/no-unused-vars
+   42:7   warning  '__dirname' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   57:7   warning  'ALL_LOCALES' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  487:11  warning  'scanned' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task891\rev1\measure.mjs
+  15:7  warning  'GR3B_WIDTHS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  16:7  warning  'GR3C_WIDTHS' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task891\rev3\diag2.mjs
+  26:9  warning  'donutBox' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\lib.cjs
+  4:7  warning  'path' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\r24-capture.cjs
+  75:46  warning  'opts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\r9-62-syntax-deletion.cjs
+  31:15  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\syntax2.cjs
+  31:15  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\design-r8\s-findings-inventory.mjs
+  19:36  warning  'problem' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r17-14-parity-probe.mjs
+  25:9  warning  'inputBox' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r19-04-slug-probe.cjs
+  9:7  warning  'path' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r2-31-widths-probe.mjs
+  15:21  warning  'newMeasuringPage' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r2-34-propose-rows.mjs
+   23:52  warning  'newMeasuringPage' is defined but never used  @typescript-eslint/no-unused-vars
+  137:13  warning  '_notes' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r2-60-owner-table.mjs
+  52:13  warning  'key' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r7-57-chart-chunk-delay-probe.mjs
+  35:12  warning  'rate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r8-137-footer-probe.mjs
+  16:213  warning  'c' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r8-144-unit-test-inventory.mjs
+  17:73  warning  'existsSync' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r8-151-security-surface.mjs
+  22:7  warning  'testText' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  47:7  warning  'RISK' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r8-79-radar-geometry-probe.mjs
+  16:9  warning  'polys' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r9-31-case-coverage.mjs
+  6:7  warning  'tail' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-2\rv2-exemption-probe.mjs
+  14:9   warning  'geo' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  20:17  warning  '_' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-39\rv39-12-vitest.config.mts
+  6:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-39\rv39-15-privacy-read.cjs
+  7:7  warning  'dump' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-39\rv39-19-authsheet-captcha-probe.mjs
+  18:11  warning  'holder' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-3\rv3-r17-probe.mjs
+  13:7  warning  'probe' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-4\rv4-rows-check.mjs
+  13:175  warning  'st' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  13:179  warning  'l' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-6\rv6-56-chart-image-delay-probe.mjs
+  35:12  warning  'rate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\review-6\rv6-57-chart-chunk-delay-probe.mjs
+  35:12  warning  'rate' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\revision-33\r33d-19-sidecar-revision.mjs
+  43:7  warning  'INV' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\revision-33\rv33-07-head-tree-check.cjs
+  16:137  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task927\validation\gr3-probe.mjs
+  41:21  warning  'boxes' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\AdminUsersTableView.tsx
+  139:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  287:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\admin\__tests__\AdminUsersTable.smoke.test.tsx
+   93:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   94:38  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   95:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   98:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  102:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:69  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  114:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  118:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:49  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  133:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  139:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  142:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  153:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  161:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  165:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  169:48  warning  '_component' is defined but never used    @typescript-eslint/no-unused-vars
+  169:71  warning  '_underline' is defined but never used    @typescript-eslint/no-unused-vars
+  169:86  warning  '_c' is defined but never used            @typescript-eslint/no-unused-vars
+  169:98  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  197:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  198:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  200:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  201:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  207:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\components\auth\__tests__\CaptchaWidget.language.test.tsx
+  36:75  warning  '_ref' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\components\layout\__tests__\headerFooterContainers.test.tsx
+  180:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  193:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  194:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  195:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  221:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  223:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\MantinePagination.tsx
+  285:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+C:\Claude_Code_Projects\lero-al\src\design-system\mantine\patterns\__tests__\MantineDashboardDonut.size.test.tsx
+  7:10  warning  'theme' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\lib\auth\safeRedirect.ts
+  12:3  warning  Unused eslint-disable directive (no problems were reported from 'no-control-regex')
+
+C:\Claude_Code_Projects\lero-al\src\lib\auth\staffAccess.integration.test.ts
+  47:3  warning  Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax')
+
+C:\Claude_Code_Projects\lero-al\src\lib\security\safeUrl.ts
+  9:1  warning  Unused eslint-disable directive (no problems were reported from 'no-control-regex')
+
+C:\Claude_Code_Projects\lero-al\src\modules\admin\actions\index.ts
+  494:3  warning  Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax')
+
+C:\Claude_Code_Projects\lero-al\src\modules\auth\actions\recovery.ts
+  45:3  warning  Unused eslint-disable directive (no problems were reported from 'no-control-regex')
+
+C:\Claude_Code_Projects\lero-al\src\modules\auth\components\ResetPasswordClient.tsx
+  24:10  warning  'userEmail' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\auth\components\__tests__\authClientParts.test.tsx
+   7:24  warning  'fireEvent' is defined but never used     @typescript-eslint/no-unused-vars
+  16:76  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:80  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Claude_Code_Projects\lero-al\src\modules\cabinet\statistics\components\AgentStatisticsView.tsx
+  32:10  warning  'LISTING_STATUS_COLOR' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\listingImages.security.test.ts
+  34:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\updateListing.security.test.ts
+  32:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\actions\__tests__\updateListingGallery.security.test.ts
+  24:130  warning  '_images' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  54:105  warning  '_c' is defined but never used                @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\components\__tests__\ListingGallery.portal.smoke.test.tsx
+  216:5  warning  Unused eslint-disable directive (no problems were reported from 'no-bitwise')
+
+C:\Claude_Code_Projects\lero-al\src\modules\listings\lib\__tests__\visibility.test.ts
+    3:32  warning  'vi' is defined but never used                 @typescript-eslint/no-unused-vars
+    4:13  warning  'visibilityModule' is defined but never used   @typescript-eslint/no-unused-vars
+  184:11  warning  'original' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\src\tests\integration\accessHardening.integration.test.ts
+  59:5  warning  Unused eslint-disable directive (no problems were reported from 'no-restricted-syntax')
+
+✖ 264 problems (0 errors, 264 warnings)
+  0 errors and 45 warnings potentially fixable with the `--fix` option.
+
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,93 @@
+# R148 AC148 r48-02: three breaks B10, B11, B12, one at a time, each restored
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r48-02-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-25T06:26:03.578Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B10: the bridge acts on the status at mount again: the re-check is never pending
+file: src/modules/auth/components/AuthRedirect.tsx
+test: npx vitest run src/modules/auth/components/__tests__/staleSession.security.test.tsx -t SEC-D29-FE-STALE-DENY
+after-edit sha256 (before the break): 8e2594c27e68435c19d02e6f3f8b8571ebddf0bed1bcfd1d807f7e416ad3b721
+baseline run: exit 0
+broken sha256: fd7c5b9230298777dc68e01a8ef265bb2c95607712c848fbd7db54d101d0f503
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/staleSession.security.test.tsx > [SEC-D29-FE-STALE-DENY] An open tab whose account the server refused becomes a guest and is never sent back from the sign-in page
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      "/en/cabinet",
+    ]
+
+
+restored sha256: 8e2594c27e68435c19d02e6f3f8b8571ebddf0bed1bcfd1d807f7e416ad3b721
+restored run: exit 0
+OK   B10: baseline passes
+OK   B10: the break fails on the intended assertion
+OK   B10: restored sha256 equals the after-edit hash
+OK   B10: restored run passes
+
+=== B11: handleNavigation() does nothing
+file: src/lib/auth/controller.ts
+test: npx vitest run src/modules/auth/components/__tests__/staleSession.security.test.tsx -t SEC-D29-FE-STALE-DENY
+after-edit sha256 (before the break): cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
+baseline run: exit 0
+broken sha256: a2b17c2d0087215bc00d7e4441be8e8d094d1c6d525542760da8d00da6993ff6
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/staleSession.security.test.tsx > [SEC-D29-FE-STALE-DENY] An open tab whose account the server refused becomes a guest and is never sent back from the sign-in page
+AssertionError: expected <button …(10)>…(1)</button> to be null
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"site-header"[39m
+restored sha256: cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
+restored run: exit 0
+OK   B11: baseline passes
+OK   B11: the break fails on the intended assertion
+OK   B11: restored sha256 equals the after-edit hash
+OK   B11: restored run passes
+
+=== B12: the restart in mount() is removed: a re-check that an unmount cut off is never started again
+file: src/lib/auth/controller.ts
+test: npx vitest run src/modules/auth/components/__tests__/staleSession.security.test.tsx -t SEC-D29-FE-STALE-ALLOW
+after-edit sha256 (before the break): cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
+baseline run: exit 0
+broken sha256: d15d2f367eb58e46bfb14136398b71fb3919a8c7cd2ed04335bc40c79bf0132e
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/staleSession.security.test.tsx > [SEC-D29-FE-STALE-ALLOW] An open tab whose account the server refused becomes a guest and is never sent back from the sign-in page
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+
+Ignored nodes: comments, script, style
+[36m<html[39m
+  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+[36m>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<output[39m
+        [33mdata-testid[39m=[32m"status"[39m
+restored sha256: cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
+restored run: exit 0
+OK   B12: baseline passes
+OK   B12: the break fails on the intended assertion
+OK   B12: restored sha256 equals the after-edit hash
+OK   B12: restored run passes
+
+ALL THREE BREAKS BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

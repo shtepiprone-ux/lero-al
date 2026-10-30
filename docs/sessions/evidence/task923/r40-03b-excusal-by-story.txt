@@ -1,0 +1,14 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-excusal.mjs docs/sessions/evidence/task923/r40-03-census-rows.jsonl/rows.jsonl
+date: 2026-10-23T17:43:49.011Z
+--- output ---
+patterns-mantine-authsheet--login-validation-error root=portal rows 32 text 32 controls 12 widths 320,390,639,640,768,1023,1024,1440
+patterns-mantine-authsheet--login root=portal rows 32 text 32 controls 12 widths 320,390,639,640,768,1023,1024,1440
+rows 326 failing 0 rows with excused text 64 rows with excused controls 24
+excused rows in a Story that is not an authsheet Login Story: 0
+widths with an excused control: 320,390,639
+
+
+EXIT_CODE=0

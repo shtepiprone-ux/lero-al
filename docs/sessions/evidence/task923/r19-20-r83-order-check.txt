@@ -1,0 +1,15 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:35:12.605Z
+cmd node docs/sessions/evidence/task923/r19-20-r83-order-check.cjs   (R83 (g): exit 1 = the Task 927 Amendment 3 change is absent, so R83 is BLOCKED - TASK 927 ORDER)
+src/modules/cabinet/components/ProfileTab.tsx: 626 lines; every line that names emailNeedsGoogle or showDeleteDialog:
+  src/modules/cabinet/components/ProfileTab.tsx:115: const [emailNeedsGoogle, setEmailNeedsGoogle] = useState(false)
+  src/modules/cabinet/components/ProfileTab.tsx:130: const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  src/modules/cabinet/components/ProfileTab.tsx:499: {emailNeedsGoogle && (
+  src/modules/cabinet/components/ProfileTab.tsx:563: opened={showDeleteDialog}
+Task 927 Amendment 3 condition (emailNeedsGoogle && !showDeleteDialog): ABSENT
+the R83 files (§35.1) and whether they exist now:
+  absent  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  absent  src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  absent  src/modules/cabinet/lib/emailChangeErrors.ts
+  absent  src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+RESULT: BLOCKED - TASK 927 ORDER (R83 (g)): the e-mail Google button of ProfileTab.tsx still renders on its own condition
+EXIT_CODE=1

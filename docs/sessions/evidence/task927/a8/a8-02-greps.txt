@@ -1,0 +1,25 @@
+# a8-02 greps of src/ (findstr exit 1 = no match; for the first two that is the expected result)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T18:54:57.697Z
+
+command: findstr /s /n /c:"size: 'medium'" src\*.ts src\*.tsx
+--- output ---
+
+--- exit code: 1 ---
+
+command: findstr /s /n /c:"theme: 'outline'" src\*.ts src\*.tsx
+--- output ---
+
+--- exit code: 1 ---
+
+command: findstr /n /c:"filled_black" src\lib\auth\googleIdentity.ts src\components\auth\GoogleSignInButton.tsx
+--- output ---
+src\lib\auth\googleIdentity.ts:29: * Google's large size is the 40 px height of Google's branding guidelines (Task 927 D19); `filled_black` is Google's Dark theme (D20).
+src\lib\auth\googleIdentity.ts:34:  theme: 'filled_black'
+src\components\auth\GoogleSignInButton.tsx:53:      theme: 'filled_black',
+--- exit code: 0 ---
+
+finished: 2026-10-25T18:54:57.941Z
+exit code: 1

@@ -1,0 +1,17 @@
+# a5-03: AC20/AC22 greps
+platform: MINGW64_NT-10.0-26300 cwd: /c/Claude_Code_Projects/lero-al
+--- grep continue_with in src/
+exit: 1
+--- grep size: 'large' in the two Google files
+exit: 1
+--- grep '40px high' in rendered-interaction-states.json
+0
+--- 'Task 927 D14' count in rendered-interaction-states.json
+4
+--- function mapAuthError in src/
+src/modules/auth/lib/mapAuthError.ts:2:export function mapAuthError(message: string): string {
+--- signInWithOAuth in src/ and .storybook/
+src/lib/auth/__tests__/browserAuth.security.test.ts:15:for (const m of ['signInWithPassword', 'signInWithOAuth', 'signInWithIdToken', 'signUp', 'resetPasswordForEmail', 'updateUser', 'verifyOtp', 'signOut', 'getSession', 'refreshSession', 'onAuthStateChange']) auth[m] = vi.fn(async () => ({ data: {}, error: null }))
+src/lib/auth/__tests__/browserAuth.security.test.ts:116:  auth.signInWithIdToken.mockClear(); auth.signInWithOAuth.mockClear()
+src/lib/auth/__tests__/browserAuth.security.test.ts:122:  expect(auth.signInWithOAuth, 'the redirect flow is gone').not.toHaveBeenCalled()
+src/lib/auth/__tests__/browserAuth.security.test.ts:123:  expect('signInWithOAuth' in browser, 'the OAuth wrapper no longer exists').toBe(false)

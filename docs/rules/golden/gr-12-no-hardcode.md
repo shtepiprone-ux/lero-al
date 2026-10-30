@@ -1,8 +1,8 @@
 ## GR-12 — One element, one look: no hardcode, and every existing Story is compared before writing, executing or approving
 
-**Owner rule, 2026-10-08 (Task 859, O78-13 return), verbatim:** *"Необхідно жорстко задати правило і для Sonnet і для
-тебе, щоб не було ніякого хардкоду, щоб обов'язкова була перевірка на існуючі патерни елементів компонентів у вже
-існуючих сторісах (у нас є таке правило, але ви обидва їх ігноруєте)."*
+**Owner rule, 2026-10-08 (Task 859, O78-13 return):** *"A strict rule must be set both for Sonnet and for you, so that there is
+no hardcode at all, so that a check for the existing element patterns of components in
+the already existing Stories is mandatory (we have such a rule, but you both ignore it)."*
 
 **What reached the owner after seven reviews** (`Mantine/Primitives/Badge`, Task 859):
 - section captions written as raw strings in the Story ("soft · leftSection", "long label / no clip");

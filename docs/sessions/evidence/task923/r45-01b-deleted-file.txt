@@ -1,0 +1,13 @@
+# R145 AC145 r45-01b: src/lib/__tests__/cloudinaryDelete.test.ts does not exist (test ! -e)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "test ! -e src/lib/__tests__/cloudinaryDelete.test.ts && echo \"absent: yes\""
+NODE_PATH: (unset)
+started: 2026-10-24T13:01:43.839Z
+--- stdout ---
+absent: yes
+
+--- stderr ---
+
+--- exit code: 0 ---

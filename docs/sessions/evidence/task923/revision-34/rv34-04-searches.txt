@@ -1,0 +1,6 @@
+# searches, 2026-10-22T15:07:13.504Z
+Task 923 security contracts naming src/components/shared/Map.module.css: count 0 (of 3 contracts)
+Task 923 security contracts naming src/design-system/mantine/input-chrome.css: count 0 (of 3 contracts)
+.screenshots/locale-leak/2026-10-22T13-28-28-904Z-shard-1-1/report.json: leakCount 780, render errors 3
+restricted-view Story ids scanned: patterns-mantine-listingaccessrestrictedview--guest, patterns-mantine-listingaccessrestrictedview--signed-in
+restricted-view leaks: 0; restricted-view render errors: 0

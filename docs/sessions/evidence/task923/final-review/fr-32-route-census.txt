@@ -1,0 +1,102 @@
+# fr-32 (Opus) 2026-10-28T22:22:06.084Z win32 node v22.22.3
+
+## 927 tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: cases 53, critical 0, stage planned, executionStatus draft, report docs/sessions/evidence/task927/security/report.json
+### unwritten 0
+### critical without a sensitivity artifact 0
+
+## D8_D9 tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: cases 228, critical 65, stage planned, executionStatus draft, report docs/sessions/evidence/task923/security/d8-d9-report.json
+### unwritten 39
+  SEC-DB-S59-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S59-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S61-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S61-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S62-DENY	database	integration	critical=false	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-ACCESS-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-ACCESS-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-ERR	database	integration	critical=false	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-REALTIME-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-REALTIME-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-D29-SRV-DENY	server	unit	critical=true	src/lib/auth/middleware.security.test.ts
+  SEC-D29-SRV-ALLOW	server	unit	critical=true	src/lib/auth/middleware.security.test.ts
+  SEC-X-SRV-ADMIN-INVITE	server	unit	critical=false	src/modules/admin/actions/__tests__/createAdminUser.security.test.ts (file missing)
+  SEC-X-INT-STATUS-PERM-ALLOW	server	integration	critical=false	src/modules/admin/actions/adminPermissions.integration.test.ts (file missing)
+  SEC-X-INT-STATUS-PERM-DENY	server	integration	critical=false	src/modules/admin/actions/adminPermissions.integration.test.ts (file missing)
+  SEC-X-INT-LOCATIONS-PERM-ALLOW	server	integration	critical=false	src/modules/admin/actions/adminPermissions.integration.test.ts (file missing)
+  SEC-X-INT-LOCATIONS-PERM-DENY	server	integration	critical=false	src/modules/admin/actions/adminPermissions.integration.test.ts (file missing)
+  SEC-X-INT-CONTACT-LIFECYCLE-ALLOW	server	integration	critical=false	src/modules/listings/actions/contactLifecycle.integration.test.ts (file missing)
+  SEC-X-INT-CONTACT-LIFECYCLE-DENY	server	integration	critical=false	src/modules/listings/actions/contactLifecycle.integration.test.ts (file missing)
+  SEC-X-INT-SLUG-SCRIPT-ALLOW	server	integration	critical=false	src/modules/listings/actions/listingSlugGuard.integration.test.ts
+  SEC-X-INT-SLUG-SCRIPT-DENY	server	integration	critical=false	src/modules/listings/actions/listingSlugGuard.integration.test.ts
+  SEC-X-INT-AVATAR-RANK-ALLOW	server	integration	critical=false	src/app/api/upload-avatar/uploadAvatar.integration.test.ts (file missing)
+  SEC-X-INT-AVATAR-RANK-DENY	server	integration	critical=false	src/app/api/upload-avatar/uploadAvatar.integration.test.ts (file missing)
+  SEC-X-SRV-CMS-OWN-CLOUD	server	unit	critical=false	src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts (file missing)
+  SEC-DB-X-IMAGE-URL-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-IMAGE-URL-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-AVATARS-STORAGE-ALLOW	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-AVATARS-STORAGE-DENY	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-INT-ADMINPAGE-GUARD-ALLOW	server	integration	critical=false	src/tests/integration/adminPage.integration.test.ts (file missing)
+  SEC-X-INT-ADMINPAGE-GUARD-DENY	server	integration	critical=false	src/tests/integration/adminPage.integration.test.ts (file missing)
+  SEC-X-INT-OWNER-DELETE-ALLOW	server	integration	critical=false	src/modules/listings/actions/deleteListing.integration.test.ts (file missing)
+  SEC-X-INT-OWNER-DELETE-DENY	server	integration	critical=false	src/modules/listings/actions/deleteListing.integration.test.ts (file missing)
+  SEC-X-INT-EDIT-MODERATION-ALLOW	server	integration	critical=false	src/modules/listings/actions/updateListing.integration.test.ts (file missing)
+  SEC-X-INT-EDIT-MODERATION-DENY	server	integration	critical=false	src/modules/listings/actions/updateListing.integration.test.ts (file missing)
+  SEC-X-INT-MOD-KEYS-ALLOW	server	integration	critical=false	src/tests/integration/moderatorKeys.integration.test.ts (file missing)
+  SEC-X-INT-MOD-KEYS-DENY	server	integration	critical=false	src/tests/integration/moderatorKeys.integration.test.ts (file missing)
+  SEC-X-SRV-PERMS-ADMIN-ONLY	server	unit	critical=false	src/modules/admin/actions/__tests__/permissions.security.test.ts
+  SEC-DB-X-PERMS-NO-SESSION	database	integration	critical=true	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-INT-PERMS-ADMIN-ALLOW	server	integration	critical=false	src/tests/integration/moderatorKeys.integration.test.ts (file missing)
+### critical without a sensitivity artifact 49
+  SEC-DB-S59-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S59-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S61-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-S61-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-ACCESS-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-ACCESS-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-D27-INT-STAFF-DENY	server	integration	src/lib/auth/staffAccess.integration.test.ts
+  SEC-D27-INT-STAFF-ALLOW	server	integration	src/lib/auth/staffAccess.integration.test.ts
+  SEC-DB-REALTIME-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-D27-INT-VIEWER-DENY	server	integration	src/lib/auth/staffAccess.integration.test.ts
+  SEC-DB-REALTIME-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-D29-SRV-DENY	server	unit	src/lib/auth/middleware.security.test.ts
+  SEC-D29-SRV-ALLOW	server	unit	src/lib/auth/middleware.security.test.ts
+  SEC-DEL-SRV-ALLOW	server	unit	src/lib/account/deleteAccount.security.test.ts
+  SEC-DEL-SRV-DENY	server	unit	src/lib/account/deleteAccount.security.test.ts
+  SEC-DEL-INT-ALLOW	database	integration	src/lib/account/deleteAccount.integration.test.ts
+  SEC-DEL-INT-STAFF	database	integration	src/lib/account/deleteAccount.integration.test.ts
+  SEC-DEL-INT-DENY	database	integration	src/lib/account/deleteAccount.integration.test.ts
+  SEC-DEL-INT-SELF	database	integration	src/lib/account/deleteAccount.integration.test.ts
+  SEC-X-SRV-STATUS-PERM	server	unit	src/modules/admin/actions/__tests__/adminPermissions.security.test.ts
+  SEC-X-SRV-LOCATIONS-PERM	server	unit	src/modules/admin/actions/__tests__/adminPermissions.security.test.ts
+  SEC-X-SRV-CONTACT-LIFECYCLE	server	unit	src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts
+  SEC-X-SRV-SLUG-SCRIPT	server	unit	src/modules/listings/components/SimilarListings.security.test.tsx
+  SEC-X-SRV-AVATAR-RANK	server	unit	src/app/api/upload-avatar/uploadAvatar.security.test.ts
+  SEC-X-SRV-ADMINPAGE-GUARD	server	unit	src/lib/auth/__tests__/staffPage.security.test.ts
+  SEC-X-SRV-OWNER-DELETE	server	unit	src/modules/listings/actions/__tests__/deleteListing.security.test.ts
+  SEC-DB-X-LISTING-CHECKS-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-LISTING-CHECKS-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-IMAGE-URL-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-IMAGE-URL-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-AVATARS-STORAGE-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-AVATARS-STORAGE-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-SRV-EDIT-MODERATION	server	unit	src/modules/listings/actions/__tests__/updateListing.security.test.ts
+  SEC-DB-X-CLOSED-READ-ALLOW	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-CLOSED-READ-DENY	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-SRV-MOD-KEYS	server	unit	src/lib/auth/__tests__/moderatorKeys.security.test.ts
+  SEC-DB-X-PERMS-NO-SESSION	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-DB-X-REAUTH-FAILURES-NO-SESSION	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-SRV-SLUG-PLAIN	server	unit	src/modules/listings/lib/__tests__/generateSlug.security.test.ts
+  SEC-DB-X-NO-SELF-RESTORE	database	integration	src/tests/integration/accessHardening.integration.test.ts
+  SEC-X-SRV-CONTACT-BOT-DENY	server	unit	src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+  SEC-X-SRV-RESTRICTED-PAGE-DENY	server	unit	src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts
+  SEC-X-SRV-CONTACT-SESSION-DENY	server	unit	src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+  SEC-X-SRV-REVEAL-LIMIT	server	unit	src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+  SEC-X-SRV-REVEAL-IP	server	unit	src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+  SEC-X-SRV-REVEAL-FAILCLOSED	server	unit	src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+  SEC-X-INT-REVEAL-TABLE-DENY	database	integration	src/tests/integration/contactGateway.integration.test.ts
+  SEC-X-INT-REVEAL-TABLE-SERVER	database	integration	src/tests/integration/contactGateway.integration.test.ts
+  SEC-X-INT-REVEAL-LIMIT	server	integration	src/tests/integration/contactGateway.integration.test.ts
+
+## owner_fixes tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: cases 60, critical 9, stage implemented, executionStatus draft, report docs/sessions/evidence/task923/security/owner-fixes-report.json
+### unwritten 0
+### critical without a sensitivity artifact 1
+  SEC-S44-INT-DENY	server	integration	src/modules/admin/actions/userProfileFields.integration.test.ts

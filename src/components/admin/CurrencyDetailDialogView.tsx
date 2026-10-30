@@ -1,10 +1,15 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Pencil, Star, ToggleLeft, ToggleRight, Trash2 } from 'lucide-react'
-import { Badge, Box, Button, Flex, Group, SimpleGrid, Stack, Text, useMantineTheme } from '@mantine/core'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { PauseCircleIcon, PenIcon, PlayCircleIcon, StarIcon, TrashBinTrashIcon } from '@solar-icons/react/broken'
+import { Button, Group, useMantineTheme } from '@mantine/core'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
+import { MantineNavRowList, type MantineNavRow } from '@/design-system/mantine/patterns/MantineNavRowList'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import type { DBCurrency } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface CurrencyDetailDialogViewProps {
   currency: DBCurrency
@@ -15,20 +20,13 @@ export interface CurrencyDetailDialogViewProps {
   onDelete: () => void
 }
 
-function Field({ label, value }: { label: string; value: string | number }) {
-  return (
-    <Box>
-      <Text size="xs" c="dimmed">{label}</Text>
-      <Text size="sm" c="gray.7">{value}</Text>
-    </Box>
-  )
-}
-
 /**
  * Presentational View for the currency detail dialog (Task 877, Container/Presentational split of
- * `AdminCurrenciesManager`; was the internal `CurrencyDetailDialog`). No server action, no `toast`: every
- * transition is a callback the container owns. Renders in the canonical `MantineModal`; the badges follow
- * TailAdmin §6 (`light`, `sm`): default = brand, active/inactive = green/gray.
+ * `AdminCurrenciesManager`; Task 859 Revision 2, R29: the canonical dialog anatomy, §23.7). A structured
+ * `MantineModal` (bottom sheet below 640px): the facts as `MantineDetailList`, the state actions (set default,
+ * activate / deactivate) as `MantineNavRowList` rows, and a `MantineDialogFooter` pair: Delete (the resting
+ * destructive action, secondary, only for a non-default currency) and Edit (the one primary). No server action, no
+ * `toast`: every transition is a callback the container owns.
  */
 export function CurrencyDetailDialogView({
   currency,
@@ -40,75 +38,80 @@ export function CurrencyDetailDialogView({
 }: CurrencyDetailDialogViewProps) {
   const t = useTranslations('admin.currency.currencies')
   const theme = useMantineTheme()
-  const iconSize = theme.other.iconSize.compact
+  const iconSize = theme.other.iconSize.standard
+
+  const navRows: MantineNavRow[] = [
+    ...(!currency.is_default && currency.is_active
+      ? [{ key: 'default', icon: <StarIcon size={iconSize} aria-hidden="true" />, label: t('set_default'), onClick: onSetDefault }]
+      : []),
+    {
+      key: 'toggle',
+      icon: currency.is_active
+        ? <PauseCircleIcon size={iconSize} aria-hidden="true" />
+        : <PlayCircleIcon size={iconSize} aria-hidden="true" />,
+      label: currency.is_active ? t('deactivate') : t('activate'),
+      onClick: onToggleActive,
+    },
+  ]
 
   return (
     <MantineModal
       opened
       onClose={onClose}
-      title={<Text component="span" ff="monospace" fw={600} inherit>{currency.code}</Text>}
+      structured
+      title={currency.code}
+      description={currency.name_en || currency.name_sq}
       footer={
-        // Revision 5 (O78-6b return): the footer keeps ONLY "Edit". The dialog still closes with the header ✕,
-        // Escape and an overlay tap (a bottom sheet's own dismissal below 640px); "Close" is gone.
-        <Flex justify={{ base: 'stretch', sm: 'flex-end' }}>
-          <Button w={{ base: '100%', sm: 'auto' }} leftSection={<Pencil size={iconSize} />} onClick={onEdit}>
-            {t('edit')}
-          </Button>
-        </Flex>
+        <MantineDialogFooter
+          secondary={
+            currency.is_default ? undefined : (
+              <Button
+                type="button"
+                variant="default"
+                c="red.7"
+                leftSection={<TrashBinTrashIcon size={iconSize} aria-hidden="true" />}
+                onClick={onDelete}
+              >
+                {t('delete')}
+              </Button>
+            )
+          }
+          primary={
+            <Button type="button" leftSection={<PenIcon size={iconSize} aria-hidden="true" />} onClick={onEdit}>
+              {t('edit')}
+            </Button>
+          }
+        />
       }
     >
-      <Stack gap="md">
-        <Text size="sm" c="dimmed">{currency.name_en || currency.name_sq}</Text>
-        {/* Revision 3 (O78-6 return): all six fields in ONE two-column grid, so both columns are filled. */}
-        <SimpleGrid cols={2} spacing="md">
-          <Field label={t('symbol')} value={currency.symbol} />
-          <Field label={t('decimals')} value={currency.decimals} />
-          <Field label={t('name_sq')} value={currency.name_sq} />
-          <Field label={t('name_en')} value={currency.name_en} />
-          <Field label={t('name_uk')} value={currency.name_uk} />
-          <Field label={t('name_it')} value={currency.name_it} />
-        </SimpleGrid>
-        <Group gap="xs">
-          {currency.is_default && <Badge size="sm" variant="light" color="brand">{t('default_badge')}</Badge>}
-          <Badge size="sm" variant="light" color={currency.is_active ? 'green' : 'gray'}>
-            {currency.is_active ? t('is_active') : t('deactivate')}
-          </Badge>
-        </Group>
-        {/* Revisions 5–6: the three state actions are transparent text buttons with an icon (TailAdmin §6a-link) in a
-            vertical list directly below the badges, ONE BUTTON PER LINE, left-aligned, each as wide as its own
-            label. The toggle always renders, so the list always does. */}
-        <Stack gap={0} align="flex-start">
-          {!currency.is_default && currency.is_active && (
-            <Button
-              variant="transparent"
-              mih={theme.other.touchTarget}
-              leftSection={<Star size={iconSize} />}
-              onClick={onSetDefault}
-            >
-              {t('set_default')}
-            </Button>
-          )}
-          <Button
-            variant="transparent"
-            mih={theme.other.touchTarget}
-            leftSection={currency.is_active ? <ToggleLeft size={iconSize} /> : <ToggleRight size={iconSize} />}
-            onClick={onToggleActive}
-          >
-            {currency.is_active ? t('deactivate') : t('activate')}
-          </Button>
-          {!currency.is_default && (
-            <Button
-              variant="transparent"
-              color="red"
-              mih={theme.other.touchTarget}
-              leftSection={<Trash2 size={iconSize} />}
-              onClick={onDelete}
-            >
-              {t('delete')}
-            </Button>
-          )}
-        </Stack>
-      </Stack>
+      <MantineDialogSections>
+        <MantineDialogSection>
+          <MantineDetailList
+            items={[
+              { label: t('symbol'), value: currency.symbol },
+              { label: t('decimals'), value: currency.decimals },
+              { label: t('name_sq'), value: currency.name_sq },
+              { label: t('name_en'), value: currency.name_en },
+              { label: t('name_uk'), value: currency.name_uk },
+              { label: t('name_it'), value: currency.name_it },
+              {
+                label: t('is_active'),
+                value: (
+                  <Group gap="xs" justify="flex-end">
+                    {currency.is_default && <MantineBadge variant="tone" tone="brand">{t('default_badge')}</MantineBadge>}
+                    <MantineBadge variant="status" entity="currency" value={currency.is_active ? 'active' : 'inactive'}>
+                      {currency.is_active ? t('is_active') : t('status_inactive')}
+                    </MantineBadge>
+                  </Group>
+                ),
+              },
+            ]}
+          />
+        </MantineDialogSection>
+        <MantineDialogSection>
+          <MantineNavRowList items={navRows} />
+        </MantineDialogSection>
+      </MantineDialogSections>
     </MantineModal>
   )
 }

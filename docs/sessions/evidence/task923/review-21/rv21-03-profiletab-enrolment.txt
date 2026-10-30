@@ -1,0 +1,4 @@
+cmd: grep ProfileTab in scripts/mantine-migration-scope.json, scripts/ui-contract-registry.json and every *.stories.tsx under src (Opus, 2026-10-20)
+manifest hits: 0
+registry hits: 0
+Story files importing ProfileTab: 0

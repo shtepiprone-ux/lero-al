@@ -1,0 +1,281 @@
+{
+ "version": 1,
+ "status": "passed",
+ "generatedAt": "2026-10-29T15:24:18.258Z",
+ "contractSha256": "c678616248b34112eb175bbf8aaa751cbf09880c74d769128783ea3ada05edf9",
+ "scopeSha256": "3c78d47c2a2253e11a01da311285b4acdf8266ea45f3827ad2a120ae834cd7c6",
+ "errors": [],
+ "vulnerabilities": [],
+ "cleanup": {
+  "verified": true,
+  "remaining": 0,
+  "errors": []
+ },
+ "cases": [
+  {
+   "id": "SEC-927-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 15
+  },
+  {
+   "id": "SEC-927-FE-WRAP",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-UNIT-NONCE",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-927-FE-DENY-REDIRECT",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-927-FE-DENY-BANNED",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-DENY-REPLAY",
+   "status": "passed",
+   "assertionCount": 12
+  },
+  {
+   "id": "SEC-927-FE-DENY-NOAUTO",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-927-FE-ERR-NOCLIENT",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-927-FE-ERR-NOLEAK",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-927-FE-UNIT-LOADER",
+   "status": "passed",
+   "assertionCount": 32
+  },
+  {
+   "id": "SEC-927-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-927-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-927-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-927-DB-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-PRV-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-927-FE-REAUTH-ALLOW",
+   "status": "passed",
+   "assertionCount": 20
+  },
+  {
+   "id": "SEC-927-FE-REAUTH-DENY-ACCOUNT",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-FE-REAUTH-DENY-SWITCH",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-927-FE-REAUTH-ERR",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-927-SRV-REAUTH-ALLOW",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-SRV-REAUTH-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-REAUTH-ONE-CONFIG",
+   "status": "passed",
+   "assertionCount": 13
+  },
+  {
+   "id": "SEC-927-FE-ONETAP-ALLOW",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-927-FE-ONETAP-DENY-NOTGUEST",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-927-FE-ONETAP-DENY-SHEET",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-927-FE-ONETAP-DENY-REDIRECT",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-927-FE-ONETAP-ERR",
+   "status": "passed",
+   "assertionCount": 12
+  },
+  {
+   "id": "SEC-927-FE-REMEMBER-ALLOW",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-927-FE-REMEMBER-DENY-HOSTILE",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-927-FE-REMEMBER-FORGET",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-927-FE-WELCOME-DENY-BANNED",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-FE-REMEMBER-KEEP",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-927-FE-REMEMBER-DELETE",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-927-FE-DELETE-TYPED",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-927-FE-UNIT-REMEMBER",
+   "status": "passed",
+   "assertionCount": 28
+  },
+  {
+   "id": "SEC-927-FE-ERR-POPUP",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-ERR-POPUP-TIMEOUT",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-FE-POPUP-DENY-ORIGIN",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-927-FE-POPUP-DENY-STATE",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-927-FE-POPUP-CHANNEL",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-FE-POPUP-CANCEL",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-POPUP-ONCE",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-927-FE-CALLBACK-RELAY",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-927-FE-CALLBACK-DENY-NOSTATE",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-CALLBACK-ERR",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-CALLBACK-NOLEAK",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-927-FE-POPUP-FOCUS",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-927-FE-POPUP-SYNC-OPEN",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-927-FE-SINKS-EXCEPTION",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-927-FE-ANALYTICS-DROP",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-927-SRV-REAUTH-NOPASSWORD",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-927-DB-PASSWORD-ALLOW",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-927-DB-PASSWORD-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  }
+ ]
+}

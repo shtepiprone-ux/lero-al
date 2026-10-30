@@ -1,0 +1,13 @@
+# R141-R144 AC141 r44-05 (mobile adaptation contract): check-mobile-adaptation-contract.mjs --files with this kickoff and the changed tsx files
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/check-mobile-adaptation-contract.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md src/components/admin/AdminUserProfileDialogsView.tsx src/modules/cabinet/components/ProfileTab.tsx src/components/admin/__tests__/adminDeleteDialog.security.test.tsx src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+NODE_PATH: (unset)
+started: 2026-10-24T12:05:13.846Z
+--- stdout ---
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+
+--- stderr ---
+
+--- exit code: 0 ---

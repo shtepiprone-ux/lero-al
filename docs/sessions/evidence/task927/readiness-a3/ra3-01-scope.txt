@@ -1,0 +1,31 @@
+﻿stage planned; executionStatus (absent); report docs/sessions/evidence/task927/security/report.json; scope 30; cases 24
+product | exists | [  ] | - | tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+product | exists | [ M] | - | src/lib/auth/browser.ts
+product | exists | [??] | - | src/lib/auth/googleIdentity.ts
+product | exists | [??] | - | src/components/auth/GoogleSignInButton.tsx
+product | exists | [??] | - | src/components/auth/GoogleSignInSlot.tsx
+product | exists | [ M] | also-923 | src/modules/auth/components/AuthSheet.tsx
+product | exists | [??] | - | src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx
+product | exists | [ M] | also-923 | scripts/mantine-migration-scope.json
+product | exists | [ M] | also-923 | scripts/ui-contract-registry.json
+product | exists | [ M] | also-923 | messages/sq.json
+product | exists | [ M] | also-923 | messages/en.json
+product | exists | [ M] | also-923 | messages/uk.json
+product | exists | [ M] | also-923 | messages/it.json
+product | exists | [ M] | - | docs/env.md
+product | exists | [??] | - | src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+product | exists | [??] | - | src/lib/auth/__tests__/googleIdentity.test.ts
+product | exists | [??] | - | src/lib/auth/__tests__/browserAuth.security.test.ts
+product | exists | [??] | - | src/app/api/auth/me/__tests__/route.security.test.ts
+product | exists | [??] | - | src/lib/auth/googleSignIn.integration.test.ts
+product | exists | [??] | - | src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+product | exists | [??] | - | src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+product | exists | [ M] | also-923 | src/modules/cabinet/components/ProfileTab.tsx
+product | exists | [??] | also-923 | src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx
+product | exists | [ M] | also-923 | src/stories/mantine/primitives/Modal.stories.tsx
+product | exists | [??] | also-923 | src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+product | exists | [??] | also-923 | src/design-system/mantine/patterns/__tests__/MantineDeleteConfirmModal.smoke.test.tsx
+product | exists | [??] | also-923 | src/modules/auth/components/__tests__/AuthSheet.test.tsx
+product | exists | [??] | also-923 | src/modules/auth/components/AuthSheet.banned.security.test.tsx
+product | exists | [ M] | - | src/lib/auth/__tests__/browser.smoke.test.ts
+product | exists | [ M] | - | src/design-system/mantine/theme.ts

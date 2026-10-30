@@ -1,0 +1,27 @@
+# fr-18 (Opus) 2026-10-28T20:26:34.930Z win32 node v22.22.3
+triggers (table trigger function enabled):
+  listings listings_guard_protected guard_listings_protected_columns O
+  listings listings_price_rule listings_price_rule O
+  listings listings_search_vector update_listing_search_vector O
+  listings listings_updated_at update_updated_at O
+  users on_user_created_notifications handle_new_user_notifications O
+  users users_guard_protected guard_users_protected_columns O
+column UPDATE privilege (table.column authenticated anon):
+  users.role true true
+  users.status true true
+  users.is_verified true true
+  users.suspended_until true true
+  users.block_reason true true
+  users.deleted_at true true
+  users.public_id true true
+  listings.status true true
+  listings.is_premium true true
+  listings.views_count true true
+  listings.user_id true true
+  listings.moderated_by (no such column)
+functions matching view|guard|protect (name(args) secdef anon auth):
+  guard_listings_protected_columns() false true true
+  guard_users_protected_columns() false true true
+  lower_views_count_on_view_delete() true false false
+  record_listing_view(p_listing_id uuid, p_user_id uuid, p_ip_hash text) true false false
+  record_recently_viewed(p_listing_id uuid, p_cap integer) true false true

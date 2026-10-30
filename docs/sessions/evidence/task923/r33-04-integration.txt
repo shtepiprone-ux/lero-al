@@ -1,0 +1,49 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T19:08:28.128Z
+environment: SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF derived from the host of NEXT_PUBLIC_SUPABASE_URL in .env.local (ref length 20, value not printed)
+command: npx vitest run --config vitest.integration.config.ts src/tests/integration/contactGateway.integration.test.ts src/modules/listings/actions/contactSession.integration.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/actions/contactSession.integration.test.ts (2 tests | 1 failed) 8433ms
+     × [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry 1761ms
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 5 passed (6)
+   Start at  21:08:29
+   Duration  18.32s (transform 127ms, setup 45ms, import 208ms, tests 17.74s, environment 0ms)
+
+stderr | src/modules/listings/actions/contactSession.integration.test.ts > contact actions against real Auth and database > [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry
+[captcha] TURNSTILE_SECRET_KEY not set — captcha verification skipped (dev only).
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/actions/contactSession.integration.test.ts > contact actions against real Auth and database > [SEC-CS-INT-ALLOW] on the real database a signed-in active person creates exactly one inquiry
+AssertionError: expected { …(7) } to match object { replyTo: 'sender@example.com' }
+(6 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "replyTo": "sender@example.com",
++   "replyTo": "zz_synth_mvjwze9a1ad8_active-viewer@example.com",
+  }
+
+ ❯ src/modules/listings/actions/contactSession.integration.test.ts:89:30
+     87|     expect(rows.data).toHaveLength(1)
+     88|     expect(acting.emails).toHaveLength(1)
+     89|     expect(acting.emails[0]).toMatchObject({ replyTo: 'sender@example.…
+       |                              ^
+     90|     const bell = await eventually(ownerBell, r => (r.data ?? []).lengt…
+     91|     expect(bell.error).toBeNull()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+---- end ----
+EXIT_CODE=1

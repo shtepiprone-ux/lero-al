@@ -1,0 +1,40 @@
+# fr-27 (Opus) 2026-10-28T22:09:54.036Z
+  public.exchange_providers "exchange_providers_read" PERMISSIVE SELECT
+  public.listing_images "Listing images viewable by everyone" PERMISSIVE SELECT
+  public.listing_images "Users can manage own listing images" PERMISSIVE ALL
+  public.listing_images "blocked_account_no_delete" RESTRICTIVE DELETE
+  public.listing_images "blocked_account_no_insert" RESTRICTIVE INSERT
+  public.listing_images "blocked_account_no_select" RESTRICTIVE SELECT
+  public.listing_images "blocked_account_no_update" RESTRICTIVE UPDATE
+  public.listing_views "Listing views viewable by listing owner" PERMISSIVE SELECT
+  public.listing_views "blocked_account_no_delete" RESTRICTIVE DELETE
+  public.listing_views "blocked_account_no_insert" RESTRICTIVE INSERT
+  public.listing_views "blocked_account_no_select" RESTRICTIVE SELECT
+  public.listing_views "blocked_account_no_update" RESTRICTIVE UPDATE
+  public.listings "Admins can manage all listings" PERMISSIVE ALL
+  public.listings "Listings viewable by everyone" PERMISSIVE SELECT
+  public.listings "Users can create listings" PERMISSIVE INSERT
+  public.listings "Users can update own listings" PERMISSIVE UPDATE
+  public.listings "blocked_account_no_delete" RESTRICTIVE DELETE
+  public.listings "blocked_account_no_insert" RESTRICTIVE INSERT
+  public.listings "blocked_account_no_select" RESTRICTIVE SELECT
+  public.listings "blocked_account_no_update" RESTRICTIVE UPDATE
+  public.notifications "Users can update own notifications" PERMISSIVE UPDATE
+  public.notifications "Users can view own notifications" PERMISSIVE SELECT
+  public.notifications "blocked_account_no_select" RESTRICTIVE SELECT
+  public.notifications "blocked_account_no_update" RESTRICTIVE UPDATE
+  public.notifications "notifications_delete" PERMISSIVE DELETE
+  public.notifications "notifications_insert_service_role" PERMISSIVE INSERT
+  public.notifications "notifications_select" PERMISSIVE SELECT
+  public.notifications "notifications_update" PERMISSIVE UPDATE
+  public.users "Users can update own profile" PERMISSIVE UPDATE
+  public.users "Users can view own profile" PERMISSIVE SELECT
+  public.users "blocked_account_no_delete" RESTRICTIVE DELETE
+  public.users "blocked_account_no_insert" RESTRICTIVE INSERT
+  public.users "blocked_account_no_select" RESTRICTIVE SELECT
+  public.users "blocked_account_no_update" RESTRICTIVE UPDATE
+  public.users "users_self_read" PERMISSIVE SELECT
+  storage.objects "blocked_account_no_delete" RESTRICTIVE DELETE
+  storage.objects "blocked_account_no_insert" RESTRICTIVE INSERT
+  storage.objects "blocked_account_no_select" RESTRICTIVE SELECT
+  storage.objects "blocked_account_no_update" RESTRICTIVE UPDATE

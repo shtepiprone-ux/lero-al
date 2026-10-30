@@ -1,0 +1,13 @@
+platform win32 10.0.26300 node v22.22.3
+command: npm run check:locale-leak (on the Storybook rebuilt after the lazy next/server import; machine otherwise idle)
+LEAK_EXIT=1
+
+
+[exited with code 1]
+report: complete false | expected 5067 | scanned 5055 | render errors 4 | leakCount 840 | leaksBlocking true | stories scanned 563 | excluded 13
+render error: patterns-mantine-admininquiriesview--empty desktop-1280 en - page.waitForFunction: Timeout 15000ms exceeded.
+render error: patterns-mantine-cmspageview--long-title-wrap mobile-375 en - page.waitForFunction: Timeout 15000ms exceeded.
+render error: patterns-mantine-dashboardperiodcontrol--custom-range-too-long mobile-320 en - Story render/play failed
+render error: patterns-mantine-dashboardperiodcontrol--custom-range-too-long mobile-375 en - Story render/play failed
+leaks per Story family (top 8): [["patterns-mantine-listingdetailview",126],["planted-visualviolations",75],["patterns-mantine-inquirydetaildialogview",72],["patterns-mantine-adminuserstable",60],["mantine-primitives-collectionssection",45],["patterns-mantine-admininquiriesview",45],["patterns-mantine-reportdetaildialogview",45],["patterns-mantine-adminexchangeprovidersview",38]]
+first leak: {"storyId":"admin-admincompaniesmanager--default","storyLabel":"Admin/AdminCompaniesManager/Default","locale":"sq","viewport":"mobile-320","token":"Tirana Real Estate Group"}

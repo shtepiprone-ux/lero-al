@@ -1,0 +1,13 @@
+# Task 923 Review 51 rv51-05: order columns, Storage writers, read-order assertion; 2026-10-24T13:27:02.002Z
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-51/rv51-05-facts.mjs
+--- stdout ---
+users has an id column: true
+listing_images has an id column: true
+companies has an id column: true
+verification_requests has an id column: true
+-- application code that calls storage.from( (git grep exit 0) --
+src/lib/account/deleteAccount.ts:111:    const bucket = db.storage.from(AVATAR_BUCKET)
+-- the security test's read-order assertion (git grep exit 0) --
+src/lib/account/deleteAccount.security.test.ts:177:      `eq:users:id=${TARGET}`, `eq:listings:user_id=${TARGET}`, 'in:listing_images:listing_id=l1,l2', `eq:companies:created_by=${TARGET}`, `eq:verification_requests:user_id=${TARGET}`,
+--- exit code: 0 ---

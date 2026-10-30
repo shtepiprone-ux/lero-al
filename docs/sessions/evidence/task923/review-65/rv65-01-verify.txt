@@ -1,0 +1,7 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al; env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> NEXT_PUBLIC_SUPABASE_URL=<not printed>
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+exit 0
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+exit 0
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+exit 0

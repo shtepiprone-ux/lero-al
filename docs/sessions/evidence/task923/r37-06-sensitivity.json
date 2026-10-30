@@ -1,0 +1,107 @@
+{
+  "takenAt": "2026-10-23T15:31:58.020Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 2,
+  "total": 2,
+  "records": [
+    {
+      "id": "S1-hour-comparison-removed",
+      "kind": "mutation",
+      "file": "src/modules/listings/actions/contactGateway.ts",
+      "cases": [
+        "SEC-X-SRV-REVEAL-LIMIT"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-LIMIT",
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/actions/contactGateway.ts\n+++ src/modules/listings/actions/contactGateway.ts (mutated)\n@@ line 62 @@\n-    if (inLastHour >= limit.perHour || mine.data.length >= limit.perDay) return 'rate_limited'\n+    if (mine.data.length >= limit.perDay) return 'rate_limited'",
+      "shaBefore": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-LIMIT",
+          "exit": 1,
+          "detected": true,
+          "fragment": "with 20 rows in the last hour",
+          "caseFailure": [
+            "AssertionError: a standard viewer with 20 rows in the last hour, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'rate_limited' }"
+          ],
+          "failed": [
+            {
+              "name": "contactGateway [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+              "kind": "assertion",
+              "message": "AssertionError: a standard viewer with 20 rows in the last hour, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'rate_limited' }"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-LIMIT",
+          "exit": 0,
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "S2-failed-read-treated-as-no-rows",
+      "kind": "mutation",
+      "file": "src/modules/listings/actions/contactGateway.ts",
+      "cases": [
+        "SEC-X-SRV-REVEAL-FAILCLOSED"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-FAILCLOSED",
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/actions/contactGateway.ts\n+++ src/modules/listings/actions/contactGateway.ts (mutated)\n@@ line 48 @@\n-    const mine = await db.from('listing_contact_reveals').select('listing_id, created_at').eq('viewer_id', viewerId).gte('created_at', dayAgo)\n+    const mineRead = await db.from('listing_contact_reveals').select('listing_id, created_at').eq('viewer_id', viewerId).gte('created_at', dayAgo)\n+    const mine = { data: mineRead.data ?? [], error: null }",
+      "shaBefore": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-FAILCLOSED",
+          "exit": 1,
+          "detected": true,
+          "fragment": "the read of the viewer's rows",
+          "caseFailure": [
+            "AssertionError: the read of the viewer's rows answers an error, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'load_failed' }"
+          ],
+          "failed": [
+            {
+              "name": "contactGateway [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+              "kind": "assertion",
+              "message": "AssertionError: the read of the viewer's rows answers an error, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'load_failed' }"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "7f7254e49961c21e5770bb4600c22067382c04c97b562486170ce495ce6c5c16",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-REVEAL-FAILCLOSED",
+          "exit": 0,
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

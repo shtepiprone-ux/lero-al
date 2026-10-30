@@ -1,0 +1,2 @@
+{"id":"patterns-mantine-authsheet--login","portalForm":{"form":true,"portalText":"Login\nEmail\nPassword\nForgot password?\nLogin\nOR\nVazhdo me Google\n\nDon't have an a","errShown":false},"pageErrors":[]}
+{"id":"patterns-mantine-authsheet--captcha","portalForm":{"form":false,"portalText":"","errShown":false},"pageErrors":[]}

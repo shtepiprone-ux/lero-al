@@ -1,0 +1,18 @@
+# Review 56 rv56-04-write-set.txt: the R149 write set against the D8_D9 scope and the canonical isPolicyPath (read-only)
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-56/rv56-00-run.mjs write-set
+--- output ---
+src/app/admin/users/[id]/page.tsx: scope yes; policy no; exists yes
+src/app/admin/users/__tests__/adminUserGone.security.test.ts: scope yes; policy no; exists yes
+docs/sessions/evidence/task923/r49-02-breaks.mjs: policy no
+docs/sessions/evidence/task923/r49-00-hashes-before.txt: policy no
+docs/sessions/2026-10-10-task923-rendered-state-census.md: policy no
+docs/sessions/evidence/task923/r48-02-breaks.mjs: exists yes
+docs/sessions/evidence/task923/r34-03c-compare.mjs: exists yes
+docs/sessions/evidence/task923/r32-03d-failing-ids.txt: exists yes
+docs/sessions/evidence/task923/review-50/rv50-06-dev-server.txt: exists yes
+npm scripts: typecheck yes; build yes
+D8_D9 executionStatus ready; stage planned; scope 342; cases 231
+--- exit code: 0 ---

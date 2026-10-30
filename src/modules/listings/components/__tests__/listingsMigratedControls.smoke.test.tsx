@@ -244,7 +244,7 @@ describe('SaveSearchButton — C10: server-action branches', () => {
 
     await waitFor(() => expect(toastInfo).toHaveBeenCalledTimes(1))
     expect(toastError).not.toHaveBeenCalled()
-    await waitFor(() => expect(screen.queryByText('Save search', { selector: '.mantine-Modal-title' })).toBeNull())
+    await waitFor(() => expect(screen.queryByText('Save search', { selector: '.mantine-Modal-title *' })).toBeNull())
   })
 
   it('result.error: toast.error, modal STAYS open', async () => {
@@ -255,7 +255,7 @@ describe('SaveSearchButton — C10: server-action branches', () => {
     fireEvent.click(screen.getAllByText('Save').at(-1)!)
 
     await waitFor(() => expect(toastError).toHaveBeenCalledWith('save_failed'))
-    expect(screen.queryByText('Save search', { selector: '.mantine-Modal-title' })).not.toBeNull()
+    expect(screen.queryByText('Save search', { selector: '.mantine-Modal-title *' })).not.toBeNull()
   })
 
   it('success: toast.success, modal closes, name cleared', async () => {

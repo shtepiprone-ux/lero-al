@@ -354,15 +354,16 @@ grep -rn "<Dialog\|<Sheet" src/ --include="*.tsx"
 - NO locale-specific width hacks (`min-w-[200px]` for Ukrainian labels forbidden)
 - NO locale-specific breakpoint overrides
 - NO hardcoded widths for navigation, buttons, or modals
-- Text that must not wrap: use `truncate` — do not use `whitespace-nowrap` without `overflow-hidden`
+- Semantic/localized text must reflow in full. Do not use `truncate`, line clamps, ellipsis or `whitespace-nowrap`
+  as a fitting strategy; use the selected GR-3j presentation.
 - Toolbars with many items: use `flex-wrap` so items wrap gracefully instead of overflowing
 - Test Albanian (sq) and Ukrainian (uk) — they have the longest strings in this project
 
-### Truncation Governance
+### Full-content and reflow governance
 | Context | Rule |
 |---|---|
-| Navigation labels | Truncate with `truncate max-w-*` |
-| Card titles | Truncate after 2 lines: `line-clamp-2` |
+| Navigation labels | Use canonical compact navigation; every destination label remains reachable and named |
+| Card titles | Wrap and grow the card; reflow the card/record presentation rather than clamp |
 | Filter labels | Allow wrapping — never truncate filter labels |
 | Button labels | Allow text to wrap inside button, or shorten translation |
 | Modal titles | Allow wrapping — never truncate |
@@ -511,7 +512,7 @@ npm run governance:update-baseline
 
 | Workflow | Trigger | Scope | Blocking |
 |---|---|---|---|
-| `.github/workflows/governance-pr.yml` | PR to main **and every push to main** (same path filter; owner decision 2026-10-07) | All governance scans + self-tests + ESLint + TypeScript + build + regression suites | ✅ |
+| `.github/workflows/governance-pr.yml` | Direct owner push to main; optional PR/merge queue and manual dispatch; no path filter | Registered static gates, full tests, task security contracts, Windows hooks and rendered checks; `Governance Required` plus separate `Release Security Required` | Failed checks fail the run; production promotion requires configured Vercel Deployment Checks |
 | `.github/workflows/governance-scheduled.yml` | Weekly Monday 09:00 UTC, manual dispatch | Self-test + full scan; report as run summary and artifact (read-only, never committed) | ✅ on violations |
 
 On a push, the review-ledger step validates the ledgers changed in the pushed range and requires none
@@ -521,12 +522,21 @@ paths later work moved or deleted), and the diff-mapped surface census uses the 
 the tip of `main` is what must be green. Reading that result is an orchestrator duty, not an optional check
 (`docs/orchestrator-procedures.md` → "Main-branch CI receipt").
 
+The canonical task/write/verification/release procedure is `.claude/rules/shared/workflow-gates.md`. Its machine
+contract is cumulative with review-ledger and UI requirements. Do not infer branch protection or Vercel promotion
+gating from a workflow file: on 2026-10-17 the remote main branch was unprotected and its ruleset list was empty.
+The optional ruleset payload protects deletion/force pushes; it requires neither PRs nor pre-existing checks on
+a new main commit. Owner direct push remains the delivery route. CI cannot retroactively reject an accepted push;
+production protection requires Vercel Deployment Checks on that same commit. The approved development environment
+still needs owner configuration. Locale leaks retain the dated migration reporting exception; incomplete rendering
+and security test failures remain blocking.
+
 | Drift Type | Detection Method | Severity | Escalation Path | Recommended Action |
 |---|---|---|---|---|
 | Primitive duplication | grep weekly scan | MEDIUM–HIGH | Document in weekly report | Schedule dedicated migration task |
 | Responsive fragmentation | monthly breakpoint audit | MEDIUM | Document in monthly report | Add canonical responsive classes |
 | Accessibility regression | monthly a11y audit | HIGH | Immediate fix task | Restore aria-labels/roles |
-| Localization overflow | quarterly locale audit | MEDIUM | Document in quarterly report | Add truncate/flex-wrap/shorter key |
+| Localization overflow | quarterly locale audit | MEDIUM | Document in quarterly report | Reflow/stack, revise semantic presentation, or improve a translation; never clip content |
 | Hydration-risk patterns | weekly grep scan | CRITICAL | Block task, fix immediately | Remove viewport JS, use CSS only |
 | Arbitrary Tailwind growth | monthly entropy audit | LOW–MEDIUM | Document count in monthly report | Refactor to canonical token |
 | Huge-desktop regression | quarterly huge-desktop audit | MEDIUM | Document in quarterly report | Add 2xl: step / container-wide |
@@ -547,7 +557,7 @@ the tip of `main` is what must be green. Reading that result is an orchestrator 
 | ARBITRARY_VALUE | w-[]/h-[]/text-[] outside canonical allowlist | tailwind-entropy.mjs | HIGH+ |
 | RESPONSIVE_DRIFT | Missing 2xl: steps, inconsistent chains | scan-tailwind.mjs | MEDIUM+ |
 | FRAGMENT_CLONE | Button/input/dialog styled outside canonical primitives | tailwind-entropy.mjs | CRITICAL/HIGH |
-| OVERFLOW_RISK | whitespace-nowrap without truncate, fixed-width + overflow-hidden | tailwind-entropy.mjs | HIGH+ |
+| OVERFLOW_RISK | semantic `whitespace-nowrap`, truncation/ellipsis, or fixed-width + overflow-hidden | tailwind-entropy.mjs plus GR-3j mobile diff gate | HIGH+ |
 | HUGE_DESKTOP_RISK | Unbounded sections at 2xl, missing grid steps | tailwind-entropy.mjs | MEDIUM+ |
 | ICON_DENSITY_RISK | Non-canonical icon sizes | tailwind-entropy.mjs | LOW |
 
@@ -611,7 +621,8 @@ convention as `scripts/enrolled-tailwind-baseline.json`).
 2. **HIGH DUPLICATE_CHAIN** → Extract to CSS utility in globals.css or shadcn component
 3. **HIGH ARBITRARY_VALUE** → Replace with canonical token or add to allowlist with reason
 4. **MEDIUM RESPONSIVE_DRIFT** → Add missing 2xl: step or use container-wide
-5. **MEDIUM OVERFLOW_RISK** → Add truncate + overflow-hidden or remove whitespace-nowrap
+5. **MEDIUM OVERFLOW_RISK** → Reflow/wrap/stack the semantic content under GR-3j; do not add truncation or use
+   `overflow-hidden` to mask it
 
 
 ---

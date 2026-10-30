@@ -1,0 +1,12 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+started: 2026-10-25T09:50:12.580Z
+--- stdout ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+
+--- stderr ---
+
+exit code: 0

@@ -479,6 +479,8 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     // URL paths, slugs, email addresses, email domains (i18n-rules.md §5a: email placeholders never translated)
     /https?:\/\//, /^[a-z0-9-]+\.[a-z]{2,}/, /^@/, /^[A-Z]+$/,
     /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
+    // A masked e-mail address as the app shows it (Task 927 R19 maskEmail: visible start, U+2022 bullets, @domain); like any address it is never translated
+    /^[a-zA-Z0-9._%+\-]{1,2}•+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
     // City names (Albania) and brand names that appear in all locales
     /^(Tirana|Durrës|Vlorë|Shkodër|Berat|Kombinat|Sauk|Blloku|Elbasan)$/i,
     // WhatsApp, Email, brand identifiers

@@ -1,0 +1,14 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T07:29:10.221Z
+command: node docs/sessions/evidence/task923/r34-03c-compare.mjs test-results/r34-full-suite.json docs/sessions/evidence/task923/r34-03d-failing-ids.txt
+---- output ----
+control: derivation on r33-full-suite.json gives 241 IDs; recorded r33-03d has 241; identical: true
+report test-results/r34-full-suite.json: total 5813, passed 5570, failed 243, failed suites 76
+failing IDs now: 241; baseline r32-03d: 241
+only in this run (not in the baseline): 0
+only in the baseline (not failing now): 0
+
+---- end ----
+EXIT_CODE=0

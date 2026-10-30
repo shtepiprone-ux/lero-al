@@ -1,0 +1,261 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T15:51:17.678Z",
+ "case": "SEC-S01-INT-DENY",
+ "results": [
+  {
+   "id": "SEC-S01-INT-DENY",
+   "testFile": "src/__tests__/security/serverActionManifest.integration.test.ts",
+   "testName": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": ".next/server/server-reference-manifest.json",
+     "description": "the manifest gets an entry for createNotification, as if the writer were a public Server Action of the build",
+     "from": "{\"node\":{",
+     "to": "{\"node\":{\"zz-sensitivity-createNotification\":{\"workers\":{},\"layer\":{},\"filename\":\"../x/src/modules/notifications/lib/createNotification.ts\",\"exportedName\":\"createNotification\"},"
+    }
+   ],
+   "failureMessage": "AssertionError: no entry of the manifest maps to createNotification: expected [ { …(2) } ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/__tests__/security/serverActionManifest.integration.test.ts:32:76\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338675084,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "status": "passed",
+         "title": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 2.5327000000000055,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "status": "skipped",
+         "title": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338675251,
+       "endTime": 1792338675253.5327,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/serverActionManifest.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338676222,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "status": "failed",
+         "title": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 7.427700000000016,
+         "failureMessages": [
+          "AssertionError: no entry of the manifest maps to createNotification: expected [ { …(2) } ] to deeply equal []\n    at C:/Claude_Code_Projects/lero-al/src/__tests__/security/serverActionManifest.integration.test.ts:32:76\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "status": "skipped",
+         "title": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338676401,
+       "endTime": 1792338676408.4277,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/serverActionManifest.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338677363,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "status": "passed",
+         "title": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 2.7349000000000103,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "status": "skipped",
+         "title": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "skipped",
+         "title": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338677614,
+       "endTime": 1792338677616.7349,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/serverActionManifest.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

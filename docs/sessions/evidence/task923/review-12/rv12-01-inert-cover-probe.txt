@@ -1,0 +1,13 @@
+platform: win32 10.0.26300 node v22.22.3; cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/review-12/rv12-01-inert-cover-probe.mjs
+html-text-under-inert-dialog root=app pass=true text-overlap=[]
+html-text-under-inert-dialog root=portal:0 pass=true text-overlap=[]
+html-text-over-inert-dialog root=app pass=true text-overlap=[]
+html-text-over-inert-dialog root=portal:0 pass=false text-overlap=["h2 \"Underlying dialog title\" overlaps h2 \"Dialog title\" by 92x20px"]
+planted-opaque-below root=app pass=true text-overlap=[]
+planted-opaque-below root=portal:0 pass=true text-overlap=[]
+planted-inert-self-overlap root=app pass=true text-overlap=[]
+planted-inert-self-overlap root=portal:0 pass=true text-overlap=[]
+planted-inert-self-overlap-nocard root=app pass=true text-overlap=[]
+planted-inert-self-overlap-nocard root=portal:0 pass=false text-overlap=["h2 \"Underlying dialog title\" overlaps h2 \"Second overlapping line\" by 189x16.8px"]
+EXIT_CODE=0

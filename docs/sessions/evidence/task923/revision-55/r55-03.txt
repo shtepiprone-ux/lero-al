@@ -1,0 +1,45 @@
+# r55-03 (R168 (c)-(d)): the 21 database-break artifacts, the catalog fingerprint, the state file
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+
+## 1. the 21 artifacts (docs/sessions/evidence/task923/security/sensitivity/<case>.json)
+command: node docs/sessions/evidence/task923/revision-55/r55-03-table.cjs (reads each artifact: baseline, mutant, failureKind, restored, databaseBreak.equal, fingerprintBefore vs fingerprintAfter)
+--- output ---
+| case | baseline | mutant | failureKind | restored | databaseBreak.equal | fingerprintBefore vs After | generatedAt | check |
+|---|---|---|---|---|---|---|---|---|
+| SEC-DEL-INT-STAFF | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:35:49.696Z | OK |
+| SEC-DB-S59-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:36:10.297Z | OK |
+| SEC-DB-S59-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:36:25.360Z | OK |
+| SEC-DB-S61-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:36:45.121Z | OK |
+| SEC-DB-S61-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:37:00.806Z | OK |
+| SEC-DB-ACCESS-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:37:32.029Z | OK |
+| SEC-DB-ACCESS-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:37:48.210Z | OK |
+| SEC-DB-REALTIME-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:38:17.826Z | OK |
+| SEC-DB-REALTIME-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:39:11.169Z | OK |
+| SEC-DB-X-LISTING-CHECKS-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:39:30.476Z | OK |
+| SEC-DB-X-LISTING-CHECKS-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:39:45.737Z | OK |
+| SEC-DB-X-IMAGE-URL-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:40:01.035Z | OK |
+| SEC-DB-X-IMAGE-URL-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:40:16.623Z | OK |
+| SEC-DB-X-AVATARS-STORAGE-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:40:35.867Z | OK |
+| SEC-DB-X-CLOSED-READ-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:41:01.352Z | OK |
+| SEC-DB-X-CLOSED-READ-ALLOW | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:41:22.616Z | OK |
+| SEC-DB-X-PERMS-NO-SESSION | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:41:44.547Z | OK |
+| SEC-DB-X-REAUTH-FAILURES-NO-SESSION | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:42:01.281Z | OK |
+| SEC-DB-X-NO-SELF-RESTORE | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:42:21.795Z | OK |
+| SEC-X-INT-REVEAL-TABLE-DENY | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:42:42.365Z | OK |
+| SEC-X-INT-REVEAL-TABLE-SERVER | passed | failed | assertion | passed | true | equal dae776ab95bf | 2026-10-29T11:43:02.908Z | OK |
+cases: 21; failing the five-value check: 0
+
+## 2. the fingerprint, run once
+command: node docs/sessions/evidence/task923/security/db-break.cjs fingerprint  (env: NODE_PATH=<pg 8.21.0 dir of C1598>, SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>)
+started: 2026-10-29T11:46:27.5554229Z
+--- output ---
+{"fingerprint":"dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346","parts":{"triggers":"37b79f350f8d31e6c2236bdabc00aebab1bb17087cc26b92e1add6e16d1aaa46","guardFunctions":"02c7998ab154b165901beae01d4c6c104f7c6e5fcca7d42af79d8fef213e9680","policies":"af7a138055d167cdf3ebc77d1693efa947d51c3509e11b69d6695dd7c82afe5a","checks":"4267c7eee554618d68a61b0d7084be72c5c2b37d209e95b31f4bf783b9e1acc6","privileges":"5363bcbc0dc837ccc0792c0f9566d68aa4efc6570ee55b98b9318065e33b8998","realtime":"c3868b2f69be5d1143df0ca160f225d654abb145031fbc01bfceda6f220818d0","restoreFunctions":"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"}}
+--- exit code: 0 ---
+fingerprint: dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346
+expected (C1597): dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346
+equal: True
+
+## 3. the state file
+command: Test-Path (Join-Path $env:TEMP 'lero-task923-db-break-state.json')
+--- output ---
+exists: False

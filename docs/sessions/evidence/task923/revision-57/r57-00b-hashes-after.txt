@@ -1,0 +1,30 @@
+# r57-00b: sha256 after the last write (Revision 57, R174, AC157). Written last, after the "Revision 57 executor report" section was added to the session record.
+platform: Windows 11 Pro 10.0.26300, Windows PowerShell 5.1.26100.9711; node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: d0f394c1e3016e894d708c00bec897dd3a1ceb3d (unchanged)
+command: Get-FileHash <path> -Algorithm SHA256 (lowercased)
+captured: 2026-10-29T16:31:51.0554039+01:00
+--- output ---
+## The three files of r57-00 (before -> after)
+owner-fixes-report.json   de913a94f374cb09c0a6feda825b511517832cb07bfa935bf28c00d564213670 -> 87470e6b408f482bdcd2c8c5e78842f373d3e9e749c40af18f33fd13f72209d7  (changed: rewritten by owner-fixes-report.mjs)
+task927 report.json       04fbaa3cabbd0f860137f801bfacf440cb14f46bfb375f1b68709daa8c75bd41 -> 5c7546832668b71a8767c0474f1f75585d4cdd463da63f7261b693eed5036fdc  (changed: rewritten by make-report.mjs)
+session record            373733b72e44def30ebd6586c129f42627788194273fcda851c7aa1860a08a36 -> 9d64ea8591377f1103237c524c929e5a02a7b94fa82a01f4ffdb83f7b4ac0728  (changed: "Revision 57 executor report" appended)
+
+## Full list
+87470e6b408f482bdcd2c8c5e78842f373d3e9e749c40af18f33fd13f72209d7  docs/sessions/evidence/task923/security/owner-fixes-report.json
+5c7546832668b71a8767c0474f1f75585d4cdd463da63f7261b693eed5036fdc  docs/sessions/evidence/task927/security/report.json
+9d64ea8591377f1103237c524c929e5a02a7b94fa82a01f4ffdb83f7b4ac0728  docs/sessions/2026-10-10-task923-rendered-state-census.md
+534b8d2d12d832404af26ce37305fd082d3e0285c12fa3e0023ea4df4c66e169  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+d6ae1d9574ed03f5cb3099d899c28b5488cbd9f51052ac9a98d3cace5835b44b  tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+aad20e06633251cc694f08274076734200860834cb5d257574f0011920f8e4ce  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+2780ca0072ef4115788b75710277f03466330264fa48d714258e41b33950ada8  docs/sessions/evidence/task923/security/d8-d9-report.json
+b5bdf1ef7316aaf70ede3571dbbb475785b0b2a00c7682fa93c5a1f6ae0cebea  docs/sessions/evidence/task927/security/prv-deny-literal-error.json
+6c6491e6aeb10ba6f5d732290f89a8a2487d9191c710360164852021cfd9fb51  docs/sessions/evidence/task927/security/sec-927-db-password-deny.txt
+78b734c3392782d17ff1f8efb657de55dcf1363f40336625240ff850c6d4f13d  docs/sessions/evidence/task923/revision-57/r57-00-hashes-before.txt
+5e0c2615734dd229d30dc05615d86a0ba4748c2929b8b193d489dd4ab4778fc1  docs/sessions/evidence/task923/revision-57/r57-01-dev-server.txt
+c9311a1a0b8356cafd69152d19bc23357946e70656ab167ffe9570794bd3a834  docs/sessions/evidence/task923/revision-57/r57-02-report-runs.txt
+548a99b5a5994a001e88f2807960cfc8a3ed30ba91d03867b2471b90f17dbce1  docs/sessions/evidence/task923/revision-57/r57-03-verify-runs.txt
+--- exit code: 0 ---
+
+Unchanged by this revision: the three contracts (mtimes 2026-10-29 14:16, 2026-10-28 23:36 and 2026-10-29 12:57, all before the first write; the D8_D9 contract is `implemented`, `ready`, 596 paths, 231 cases) and d8-d9-report.json (mtime 14:16).
+The two `googleSignIn.integration.test.ts` evidence files (rows 8 and 9) were rewritten by the Task 927 `verify` run with content equal to `HEAD` (`git status` clean for both); see deviation 3 of the report.

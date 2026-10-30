@@ -1,0 +1,38 @@
+﻿# rv8-02: source lines for Task 927 Amendment 8
+platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T18:42:31.497Z
+src/components/auth/GoogleSignInButton.tsx:53: theme: 'outline',
+src/components/auth/GoogleSignInButton.tsx:54: size: 'medium',
+src/components/auth/GoogleSignInButton.tsx:55: text: 'signin_with',
+src/components/auth/GoogleSignInButton.tsx:56: shape: 'rectangular',
+src/components/auth/GoogleSignInButton.tsx:57: logo_alignment: 'center',
+src/components/auth/GoogleSignInButton.tsx:110: setStatus('ready')
+src/components/auth/GoogleSignInButton.tsx:126: if (status === 'ready') drawButton()
+src/lib/auth/googleIdentity.ts:28: /** Google's medium size is never personalized (no "Continue as <name>"), and `signin_with` reads "Sign in with Google" (Task 927 D14). */
+src/lib/auth/googleIdentity.ts:31: theme: 'outline'
+src/lib/auth/googleIdentity.ts:32: size: 'medium'
+src/components/auth/GoogleSignInSlot.tsx:24: * The root adds no spacing of its own: in every state exactly one child has height (the loader, the alert, or the host), so the slot's box equals that child's box.
+src/components/auth/GoogleSignInSlot.tsx:32: <Loader size="sm" />
+src/components/auth/GoogleSignInSlot.tsx:37: <Box ref={hostRef} w="100%" maw={GOOGLE_BUTTON_MAX_WIDTH} hidden={status !== 'ready'} />
+src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx:261: type: 'standard', theme: 'outline', size: 'medium', text: 'signin_with', shape: 'rectangular', logo_alignment: 'center', width: drawn, locale: 'it',
+src/components/layout/__tests__/Header.google.security.test.tsx:271: it('[SEC-927-FE-REMEMBER-ALLOW] after a Google sign-in this device remembers only the account id, name, masked e-mail and Google picture, and the sheet opens on Welcome back with that account as the hint', async () => {
+src/components/layout/__tests__/Header.google.security.test.tsx:301: expect(api.renderButton.mock.calls.at(-1)![1]).toMatchObject({ size: 'medium', text: 'signin_with' })
+scripts/rendered-interaction-states.json:809: "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is drawn at Google's medium size (Task 927 D14, 2026-10-25: \"Medium, without the name\", lower than the fields), and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+src/design-system/mantine/theme.ts:82: boxSize: Record<
+src/design-system/mantine/theme.ts:790: galleryThumb: '2.75rem',   //  44px — Task 813 R17 Revision 4, owner decision 2026-09-11:
+src/modules/cabinet/components/ProfileTab.tsx:240: // Task 923 R80, D54: the account is deleted after the current password (or, for an account with none, a recent Google sign-in) — not after a typed word
+src/modules/cabinet/components/ProfileTab.tsx:464: loginHint={email ?? undefined}
+src/modules/auth/components/AuthSheet.tsx:217: googleControl={<GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} loginHint={account.sub} onCredential={handleGoogle} />}
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:246: | D12 | OWNER DECISION | Google's personalized button is not used; Google's account chooser appears instead. | owner: 2026-10-25; decision: `Nobody uses that kind of sign-in. Instead, an adaptive popup with a choice of Google accounts must appear.` |
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:248: | D14 | OWNER DECISION | Google's medium button with the text Sign in with Google, never personalized, accepted although it is lower than the fields. | owner: 2026-10-25; decision: `Medium, without the name (Recommended)` |
+census row citing D14: mantine-primitives-modal--delete-confirm-password~delete-google-ready
+census row citing D14: patterns-mantine-authsheet--login
+census row citing D14: patterns-mantine-authsheet--login-validation-error
+census row citing D14: patterns-mantine-authsheet--welcome-back
+write set: src/lib/auth/googleIdentity.ts: scope YES; policy no
+write set: src/components/auth/GoogleSignInButton.tsx: scope YES; policy no
+write set: src/components/auth/GoogleSignInSlot.tsx: scope YES; policy no
+write set: src/design-system/mantine/theme.ts: scope YES; policy no
+write set: scripts/rendered-interaction-states.json: scope YES; policy no
+write set: src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx: scope YES; policy no
+write set: src/components/layout/__tests__/Header.google.security.test.tsx: scope YES; policy no
+write set: src/modules/cabinet/components/ProfileTab.tsx: scope YES; policy no

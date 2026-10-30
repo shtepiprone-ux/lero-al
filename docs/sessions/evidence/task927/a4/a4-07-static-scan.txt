@@ -1,0 +1,5 @@
+# a4-07 .next/static secret scan (AC11), 2026-10-23T20:25:43Z, cwd /c/Claude_Code_Projects/lero-al, node v22.22.3
+pattern GOCSPX-: 0 file(s)
+pattern GOOGLE_CLIENT_SECRET: 0 file(s)
+pattern SUPABASE_AUTH_EXTERNAL_GOOGLE: 0 file(s)
+exit code: 0

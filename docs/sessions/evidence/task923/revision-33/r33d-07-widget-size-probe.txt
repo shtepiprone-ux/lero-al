@@ -1,0 +1,4 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-07-widget-size-probe.mjs <root>
+size flexible: {"widget":[246,69],"columnClient":246,"overflows":true}
+size compact: {"widget":[246,144],"columnClient":246,"overflows":false}
+EXIT_CODE=0

@@ -1,0 +1,9 @@
+﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; one transaction on the development database, ROLLBACK, scratch schema only
+cmd node docs/sessions/evidence/task923/db-catalog/r15-view-probe.cjs --i-confirm-dev-database
+connected as current_user=postgres session_user=postgres (the owner of the scratch objects below)
+the view is owned by postgres, options ["security_invoker=false"]
+read under set local role authenticated: the definer view answered "authenticated"
+read under set local role service_role: the definer view answered "service_role"
+transaction rolled back, scratch schema gone: true
+RESULT: a definer view answers each role's own name (current_user is the caller); the rollback is verified
+EXIT_CODE=0

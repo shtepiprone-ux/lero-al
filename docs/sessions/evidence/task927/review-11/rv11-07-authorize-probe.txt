@@ -1,0 +1,14 @@
+# Review 11: does Google accept our client for an id_token response with each callback address? (no cookies, redirect not followed; client id not printed)
+date: 2026-10-26T06:40:52Z
+
+## redirect_uri=http://localhost:3000/auth/google/callback
+HTTP/1.1 302 Moved Temporarily
+Location: https://accounts.google.com/v3/signin/identifier?opparams=%253F&dsh=S305679932%3A1792996852126342&client_id=<client-id>&nonce=n-probe&o2v=2&prompt=select_account&redirect_uri=http%3A%2F%2Flo
+
+## redirect_uri=https://lero.al/auth/google/callback
+HTTP/1.1 302 Moved Temporarily
+Location: https://accounts.google.com/v3/signin/identifier?opparams=%253F&dsh=S1879802674%3A1792996852454590&client_id=<client-id>&nonce=n-probe&o2v=2&prompt=select_account&redirect_uri=https%3A%2F%2F
+
+## redirect_uri=http://localhost:3000/auth/google/not-registered
+HTTP/1.1 302 Moved Temporarily
+Location: https://accounts.google.com/signin/oauth/error?authError=ChVyZWRpcmVjdF91cmlfbWlzbWF0Y2gSsAEKWW91IGNhbid0IHNpZ24gaW4gdG8gdGhpcyBhcHAgYmVjYXVzZSBpdCBkb2Vzbid0IGNvbXBseSB3aXRoIEdvb2dsZSdzIE9Bd

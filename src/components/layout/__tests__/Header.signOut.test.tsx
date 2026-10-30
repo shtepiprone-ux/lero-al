@@ -178,3 +178,25 @@ describe('Header sign-out pending state (Task 876)', () => {
     expect(screen.queryByRole('button', { name: 'Open menu' })).not.toHaveAttribute('data-loading')
   })
 })
+
+// Task 927 Amendment 5 (owner decision D15): the Google account this device remembers survives a sign-out, so the next opening of the sheet can greet the person.
+it('[SEC-927-FE-REMEMBER-KEEP] a sign-out keeps the remembered Google account on this device', async () => {
+  const record = JSON.stringify({ sub: '000000000000000000001', name: 'Arta Krasniqi', maskedEmail: 'ar•••••@example.com', picture: null })
+  localStorage.setItem('lero:google-account', record)
+  mockCoreSignOut.mockResolvedValue({ error: null })
+
+  renderHeader()
+  await act(async () => {
+    fireEvent.click(screen.getByRole('button', { name: /Dritan Gjoka/ }))
+  })
+  const logoutItem = await screen.findByText('Logout')
+  await act(async () => {
+    fireEvent.click(logoutItem)
+    await new Promise(r => setTimeout(r, 0))
+  })
+
+  await waitFor(() => expect(mockCoreSignOut).toHaveBeenCalledTimes(1))
+  await waitFor(() => expect(refreshMock).toHaveBeenCalledTimes(1))
+  expect(localStorage.getItem('lero:google-account')).toBe(record)
+  localStorage.clear()
+})

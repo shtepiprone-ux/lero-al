@@ -1,0 +1,54 @@
+Task 923: how a user is deleted today (Opus, 2026-10-18), read-only transaction on the approved development database
+foreign keys from public tables to a user: 41
+fk: public.agent_reviews.agent_id -> public.users ON DELETE CASCADE
+fk: public.agent_reviews.reviewer_id -> public.users ON DELETE CASCADE
+fk: public.collections.user_id -> auth.users ON DELETE CASCADE
+fk: public.contact_inquiries.handled_by -> auth.users ON DELETE SET NULL
+fk: public.contact_inquiry_replies.replied_by -> auth.users ON DELETE NO ACTION
+fk: public.conversations.buyer_id -> public.users ON DELETE CASCADE
+fk: public.conversations.seller_id -> public.users ON DELETE CASCADE
+fk: public.email_change_tokens.user_id -> public.users ON DELETE CASCADE
+fk: public.email_templates.updated_by -> auth.users ON DELETE NO ACTION
+fk: public.favorite_price_alerts.user_id -> auth.users ON DELETE CASCADE
+fk: public.favorites.user_id -> public.users ON DELETE CASCADE
+fk: public.history_clear_events.actor_user_id -> public.users ON DELETE SET NULL
+fk: public.listing_contact_events.actor_user_id -> public.users ON DELETE SET NULL
+fk: public.listing_contact_events.listing_owner_id -> public.users ON DELETE CASCADE
+fk: public.listing_inquiries.listing_owner_id -> public.users ON DELETE CASCADE
+fk: public.listing_reports.user_id -> public.users ON DELETE SET NULL
+fk: public.listing_views.user_id -> public.users ON DELETE SET NULL
+fk: public.listings.user_id -> public.users ON DELETE CASCADE
+fk: public.messages.sender_id -> public.users ON DELETE CASCADE
+fk: public.notification_settings.user_id -> public.users ON DELETE CASCADE
+fk: public.notifications.user_id -> public.users ON DELETE CASCADE
+fk: public.pages.updated_by -> public.users ON DELETE SET NULL
+fk: public.recently_viewed.user_id -> auth.users ON DELETE CASCADE
+fk: public.report_actions.actor_id -> public.users ON DELETE NO ACTION
+fk: public.role_permission_events.actor_user_id -> public.users ON DELETE SET NULL
+fk: public.role_permissions.updated_by_user_id -> public.users ON DELETE SET NULL
+fk: public.saved_searches.user_id -> public.users ON DELETE CASCADE
+fk: public.site_footer.updated_by -> public.users ON DELETE SET NULL
+fk: public.support_messages.sender_id -> public.users ON DELETE CASCADE
+fk: public.support_ticket_events.actor_user_id -> public.users ON DELETE SET NULL
+fk: public.support_tickets.assigned_to -> public.users ON DELETE SET NULL
+fk: public.support_tickets.created_by_admin_id -> public.users ON DELETE SET NULL
+fk: public.support_tickets.reported_user_id -> public.users ON DELETE SET NULL
+fk: public.support_tickets.user_id -> public.users ON DELETE CASCADE
+fk: public.user_change_log.changed_by -> public.users ON DELETE NO ACTION
+fk: public.user_change_log.user_id -> public.users ON DELETE CASCADE
+fk: public.user_status_history.changed_by -> public.users ON DELETE NO ACTION
+fk: public.user_status_history.user_id -> public.users ON DELETE CASCADE
+fk: public.users.id -> auth.users ON DELETE CASCADE
+fk: public.verification_requests.reviewed_by -> public.users ON DELETE SET NULL
+fk: public.verification_requests.user_id -> public.users ON DELETE CASCADE
+summary NO ACTION (blocks deleting the user): contact_inquiry_replies.replied_by, email_templates.updated_by, report_actions.actor_id, user_change_log.changed_by, user_status_history.changed_by
+summary SET NULL (row kept without the user): contact_inquiries.handled_by, history_clear_events.actor_user_id, listing_contact_events.actor_user_id, listing_reports.user_id, listing_views.user_id, pages.updated_by, role_permission_events.actor_user_id, role_permissions.updated_by_user_id, site_footer.updated_by, support_ticket_events.actor_user_id, support_tickets.assigned_to, support_tickets.created_by_admin_id, support_tickets.reported_user_id, verification_requests.reviewed_by
+summary CASCADE (row deleted with the user): 22 keys
+users rows: status active, deleted_at null: 6
+auth users without a profile row: 0
+profiles with deleted_at older than 90 days: 0
+foreign keys to public.companies: 1
+fk: public.users.company_id -> public.companies ON DELETE SET NULL
+companies columns: id, name, logo_url, created_at
+companies: 2; without any linked user: 2
+listing_images columns: id, listing_id, url, order, is_cover

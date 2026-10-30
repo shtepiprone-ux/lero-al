@@ -67,6 +67,13 @@ export interface MantineAppShellFoundationProps {
  *
  * Touch targets: NavLink min-h defaults to `theme.other.touchTarget`.
  */
+const NAV_DRAWER_ID = 'app-shell-nav-drawer'
+
+function focusNavDrawer() {
+  const dialog = document.getElementById(`${NAV_DRAWER_ID}-body`)?.closest('[role="dialog"]')
+  dialog?.querySelector<HTMLElement>('.mantine-Drawer-close')?.focus()
+}
+
 export function MantineAppShellFoundation({
   siteName,
   navItems = [],
@@ -185,7 +192,12 @@ export function MantineAppShellFoundation({
           padding="sm"
           size={drawerSize}
           withCloseButton
-          closeButtonProps={{ 'aria-label': drawerCloseLabel }}
+          closeButtonProps={{ 'aria-label': drawerCloseLabel, miw: theme.other.touchTarget, mih: theme.other.touchTarget }}
+          id={NAV_DRAWER_ID}
+          // Mantine's focus trap moves the focus into a `keepMounted` drawer from a `setTimeout` that can run before the drawer is shown, and
+          // then the focus stays on the burger behind it (6 of 15 loads on the built Storybook, `r8-123`); once the slide-in has finished the
+          // focus is put on the drawer's close control (Task 923 R33, the AdminShell drawer finding)
+          transitionProps={{ onEntered: focusNavDrawer }}
           // Task 852 R32/G1 — bound the body (shared with `MantineDrawer`'s Task 567 Fix 4 rule) so
           // `navContent`'s `h="100%"` resolves against a real height instead of growing to its full
           // content: `AdminSidebar`'s own `ScrollArea` scrolls the nav, and its footer stays pinned

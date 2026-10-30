@@ -1,0 +1,1 @@
+registry 511 -> 557 rows (+46); valid against the build index and the theme breakpoints

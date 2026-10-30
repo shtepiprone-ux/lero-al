@@ -1,0 +1,112 @@
+{
+  "takenAt": "2026-10-23T16:14:04.993Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 2,
+  "total": 2,
+  "records": [
+    {
+      "id": "B1-planted-setting-with-no-reader",
+      "kind": "mutation",
+      "file": "src/modules/admin/actions/index.ts",
+      "cases": [
+        "every setting key has a reader"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "every setting key has a reader",
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/admin/actions/index.ts\n+++ src/modules/admin/actions/index.ts (mutated)\n@@ line 281 @@\n-  'about_al', 'about_uk', 'meta_title', 'meta_desc', 'og_image', 'archived_noindex_days', 'default_locale',\n+  'about_al', 'about_uk', 'meta_title', 'meta_desc', 'og_image', 'archived_noindex_days', 'default_locale', 'planted_setting',",
+      "shaBefore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "mutant": [
+        {
+          "caseId": "every setting key has a reader",
+          "exit": 1,
+          "detected": true,
+          "fragment": "setting 'planted_setting': no reader outside the admin code",
+          "caseFailure": [
+            "AssertionError: setting 'planted_setting': no reader outside the admin code (a getSetting('planted_setting' call, key=eq.planted_setting, or a helper of src/modules/admin/lib/settings.ts that reads it): expected [ Array(1) ] to deeply equal []"
+          ],
+          "failed": [
+            {
+              "name": "adminOrphans — the real src tree parses seventeen unique setting keys from the source of the Server Action module",
+              "kind": "assertion",
+              "message": "AssertionError: expected [ 'site_name', 'tagline', …(16) ] to have a length of 17 but got 18"
+            },
+            {
+              "name": "adminOrphans — the real src tree every setting key has a reader outside the admin code, except the thirteen keys of Task 930, which have none yet",
+              "kind": "assertion",
+              "message": "AssertionError: setting 'planted_setting': no reader outside the admin code (a getSetting('planted_setting' call, key=eq.planted_setting, or a helper of src/modules/admin/lib/settings.ts that reads it): expected [ Array(1) ] to deeply equal []"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "every setting key has a reader",
+          "exit": 0,
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "B2-record-table-removed-from-the-list",
+      "kind": "mutation",
+      "file": "src/modules/admin/__tests__/adminOrphans.test.ts",
+      "cases": [
+        "every table that only the admin code writes"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "every table that only the admin code writes",
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/admin/__tests__/adminOrphans.test.ts\n+++ src/modules/admin/__tests__/adminOrphans.test.ts (mutated)\n@@ line 26 @@\n-  role_permission_events: 'the permission change history, read by the admin permissions screen',",
+      "shaBefore": "68ed009393c240d9e52e13206c1729815cd748efee772bed6e85cff15aedba7b",
+      "mutant": [
+        {
+          "caseId": "every table that only the admin code writes",
+          "exit": 1,
+          "detected": true,
+          "fragment": "table 'role_permission_events': written only by the admin code and read by nothing outside it",
+          "caseFailure": [
+            "AssertionError: table 'role_permission_events': written only by the admin code and read by nothing outside it (add a reader, or list it in ADMIN_RECORD_TABLES with its reason): expected [ Array(1) ] to deeply equal []"
+          ],
+          "failed": [
+            {
+              "name": "adminOrphans — the real src tree every table that only the admin code writes has a reader outside it, or is an admin record table that an admin screen reads",
+              "kind": "assertion",
+              "message": "AssertionError: table 'role_permission_events': written only by the admin code and read by nothing outside it (add a reader, or list it in ADMIN_RECORD_TABLES with its reason): expected [ Array(1) ] to deeply equal []"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "68ed009393c240d9e52e13206c1729815cd748efee772bed6e85cff15aedba7b",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "every table that only the admin code writes",
+          "exit": 0,
+          "passed": 9,
+          "total": 9,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+platform: win32 node v22.22.3; Opus review 18, owner answers 2026-10-19
+command: node (read catalog.json tables; list every public table whose name contains price or history)
+tables: 51
+price or history tables: favorite_price_alerts, history_clear_events, user_status_history
+command: grep listings price columns in fingerprint.json defaults
+listings price columns: price, price_old
+conclusion: no table records a listing's first price. favorite_price_alerts keeps last_notified_price, the last price notified to one person per favourite (src/app/api/cron/price-alerts/route.ts:80); history_clear_events and user_status_history hold no price.
+EXIT_CODE=0

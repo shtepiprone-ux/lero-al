@@ -53,10 +53,23 @@ export interface MantineListingContactPatternProps {
   onCall?: () => void
   onWhatsApp?: () => void
   onLogin?: () => void
-  /** Task 793 E-B — disables Call/WhatsApp and swaps their icon for a spinner while the
-   * click-time contact RPC (`getListingOwnerContact`, Task 266) resolves. Transient, independent
-   * of listing lifecycle — see `contactDisabled` for the permanent archived/expired case. */
-  loading?: boolean
+  /** Task 793 E-B, Task 923 R116 (owner decision D74) — the channel whose click-time contact gateway request
+   * (`revealListingContact`, Task 923 R111) is running. Only that button is disabled and swaps its icon for a
+   * spinner; the other one keeps its icon and stays enabled. Transient, independent of listing lifecycle — see
+   * `contactDisabled` for the permanent archived/expired case. */
+  loading?: 'call' | 'whatsapp'
+  /** Task 923 R118 (owner decision D75) — the phone number the contact gateway returned. When set (and `contactDisabled` is false) the first button becomes a
+   * link: it shows `label` (the number, already formatted) instead of `labels.call`, with the same colour, size and icon, and dials `href` (`tel:` + digits). It
+   * has no click handler and is not disabled. */
+  revealedPhone?: { label: string; href: string }
+  /** Task 923 R118 (owner decision D78) — set when WhatsApp could not be opened at once (the browser's click activation had expired before the number arrived).
+   * When set (and `contactDisabled` is false) the WhatsApp button becomes a link that opens `href` in a new tab and shows `label`, and `note` — the reason, asking
+   * the visitor to press again — is shown under the buttons as dimmed extra-small text announced as a status. */
+  whatsappFallback?: { href: string; label: string; note: string }
+  /** Task 923 R113 — the human check (app: the interaction-only `CaptchaWidget`), a positioned node rendered right after the Call/WhatsApp
+   * grid as a child of the card's Stack (so it keeps the card's `md` rhythm). Only in the `normal` state and only where the grid renders. The
+   * slot owns its own visibility: the app's widget takes no space until Cloudflare asks for interaction. */
+  humanCheck?: ReactNode
   /** Task 793 R11 + F2 (owner instructions, 2026-09-06) — disables Call/WhatsApp/Send-message
    * permanently for archived, expired **and** closed (sold/rented) listings (no spinner, unlike
    * `loading`). Orthogonal to `state`: for `closedListing` this composes with the headline block
@@ -104,9 +117,12 @@ export function MantineListingContactPattern({
   onCall,
   onWhatsApp,
   onLogin,
-  loading = false,
+  loading,
+  revealedPhone,
+  whatsappFallback,
   contactDisabled = false,
   contactDisabledLabel,
+  humanCheck,
   inquiryTrigger,
   saveTrigger,
   reportTrigger,
@@ -195,35 +211,67 @@ export function MantineListingContactPattern({
             layout inside a ~280px card in the Docs preview and the sidebar. Task 793 F2: also renders
             for `closedListing`, with Call/WhatsApp disabled via `contactDisabled`. */}
         {(state === 'normal' || state === 'closedListing') && (hasPhone || hasWhatsapp) && (
-          <SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="sm">
-            {hasPhone && (
+          <SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="md">
+            {hasPhone && (revealedPhone && !contactDisabled ? (
+              <Button
+                component="a"
+                href={revealedPhone.href}
+                color="brand"
+                fullWidth
+                leftSection={<Phone size={theme.other.iconSize.comfortable} />}
+              >
+                {revealedPhone.label}
+              </Button>
+            ) : (
               <Button
                 color="brand"
                 fullWidth
                 onClick={onCall}
-                disabled={loading || contactDisabled}
+                disabled={loading === 'call' || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
-                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <Phone size={theme.other.iconSize.comfortable} />}
+                leftSection={loading === 'call' ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <Phone size={theme.other.iconSize.comfortable} />}
               >
                 {labels.call}
               </Button>
-            )}
-            {hasWhatsapp && (
+            ))}
+            {hasWhatsapp && (whatsappFallback && !contactDisabled ? (
+              <Button
+                component="a"
+                href={whatsappFallback.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="green"
+                fullWidth
+                leftSection={<MessageCircle size={theme.other.iconSize.comfortable} />}
+              >
+                {whatsappFallback.label}
+              </Button>
+            ) : (
               <Button
                 color="green"
                 fullWidth
                 onClick={onWhatsApp}
-                disabled={loading || contactDisabled}
+                disabled={loading === 'whatsapp' || contactDisabled}
                 title={contactDisabled ? contactDisabledLabel : undefined}
                 aria-disabled={contactDisabled || undefined}
-                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
+                leftSection={loading === 'whatsapp' ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
               >
                 {labels.whatsapp}
               </Button>
-            )}
+            ))}
           </SimpleGrid>
         )}
+
+        {/* Task 923 R118 — why WhatsApp did not open at once, right under the buttons it concerns: the same dimmed extra-small text as the card's other notes. */}
+        {(state === 'normal' || state === 'closedListing') && hasWhatsapp && !contactDisabled && whatsappFallback && (
+          <Text size="xs" c="dimmed" role="status">
+            {whatsappFallback.note}
+          </Text>
+        )}
+
+        {/* Task 923 R113 — the human check, right after the grid it belongs to: the card's `md` rhythm is the gap around it. */}
+        {state === 'normal' && (hasPhone || hasWhatsapp) && humanCheck}
 
         {/* Send-message trigger — `inquiryTrigger` is an opaque consumer-supplied node that sets its
             own `fullWidth` internally (hook-free split, Task 605), so it fills the card directly.

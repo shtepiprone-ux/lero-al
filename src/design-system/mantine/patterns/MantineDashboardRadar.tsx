@@ -3,12 +3,12 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import type { ApexOptions } from 'apexcharts'
-import { Box, Stack, Group, Text, px, useMantineTheme } from '@mantine/core'
-import { useElementSize, useMergedRef } from '@mantine/hooks'
+import { Box, Stack, Group, List, Text, px, useMantineTheme } from '@mantine/core'
 import { MantineDashboardChartStateFrame, type DashboardChartState } from './MantineDashboardChartStateFrame'
 import { MantineDashboardChartLegend } from './MantineDashboardChartLegend'
 import { resolveThemeColor } from './dashboardChartTheme'
-import { useApexTooltipMirror } from './useApexTooltipMirror'
+import { useApexFluidBox } from './useApexFluidBox'
+import { chartLabelSize, radarRadius, useChartLabelFont, wrapLabel } from './dashboardChartLabels'
 
 // ApexCharts reads `window` at import time — never safe to render during SSR (same pattern as
 // `MantineDashboardLineChart.tsx`/`MapWrapper.tsx`).
@@ -79,20 +79,30 @@ export function MantineDashboardRadar({
   ariaLabel,
 }: MantineDashboardRadarProps) {
   const theme = useMantineTheme()
-  const { radarSize, radarLabelReserve, radarStrokeWidth, radarFillOpacity, animationSpeed } =
+  const { radarSize, radarLabelOffset, radarStrokeWidth, radarFillOpacity, animationSpeed } =
     theme.other.dashboardChart
   const [hiddenKeys, setHiddenKeys] = useState<Set<string>>(new Set())
-  // The chart box is responsive (full width below `sm`, capped above it), so the polygon's radius
-  // follows the box's real width: whatever is left after reserving room on both sides for the
-  // category labels, never more than `radarSize`. `boxWidth` is 0 until first measured.
-  const { ref: sizeRef, width: boxWidth } = useElementSize()
-  const mirrorRef = useApexTooltipMirror()
-  const chartBoxRef = useMergedRef(sizeRef, mirrorRef)
-  const plotRadius = boxWidth > 0 ? Math.min(radarSize, (boxWidth - 2 * radarLabelReserve) / 2) : radarSize
+  // The chart box is responsive (full width below `sm`, capped above it). `boxWidth` is 0 until first measured.
+  const { ref: chartBoxRef, boxWidth, chartWidth } = useApexFluidBox()
   // The box is as tall as it is wide, up to `dashboardChartMinHeight` — a round plot in a taller box
   // is mostly blank space on a narrow screen.
   const maxBoxHeight = Number(px(theme.other.boxSize.dashboardChartMinHeight))
   const boxHeight = boxWidth > 0 ? Math.min(maxBoxHeight, boxWidth) : maxBoxHeight
+  // Task 923 Revision 7 (owner, 2026-10-16: wrap the labels): a multi-word category label wraps on its spaces
+  // (Material: labels stay horizontal; WCAG Reflow: required text wraps), and the polygon takes the room the
+  // real, wrapped labels leave (Apple HIG: the chart is large enough to show its details) - never the old fixed
+  // 90px reserve on each side, which left a 33px radius at 320px. `radarSize` is still the largest radius.
+  const categoryNames = data.map((d) => categoryLabel(d.category))
+  const labelFont = useChartLabelFont(theme, categoryNames)
+  const labelSize = chartLabelSize(theme)
+  // Material, Data visualization: "charts that are dense ... can display labels in a legend". Where the box is narrower than the
+  // full-width plot (every phone width, and a narrow card), the category names do not fit around the polygon: the plot shows a number
+  // on each vertex and the names go in a numbered key below it (wrapping freely, never cut). At the full width the names stay on the plot.
+  const numbered = boxWidth > 0 && boxWidth < maxBoxHeight
+  const labelLines = categoryNames.map((name, i) => (numbered ? [String(i + 1)] : wrapLabel(name, 0, labelFont)))
+  const plotRadius = boxWidth > 0
+    ? Math.min(radarSize, radarRadius(labelLines, labelFont, labelSize * Number(theme.lineHeights.xs), radarLabelOffset, boxWidth, boxHeight, radarSize))
+    : radarSize
 
   const visibleSeries = series.filter((s) => !hiddenKeys.has(s.key))
 
@@ -140,8 +150,11 @@ export function MantineDashboardRadar({
     xaxis: {
       categories: data.map((d) => d.category),
       labels: {
-        formatter: (v: string) => categoryLabel(v),
-        style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+        formatter: (v: string) => {
+          const i = data.findIndex((d) => d.category === v)
+          return numbered ? String(i + 1) : wrapLabel(categoryLabel(v), 0, labelFont)
+        },
+        style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${labelSize}px` },
       },
     },
     yaxis: { show: false, labels: { show: false } },
@@ -175,17 +188,38 @@ export function MantineDashboardRadar({
           combined with the legend's now-shared `dashboardPeriodColumn` width, it starts at the same X
           as the card header's own period combobox. */}
       <Group gap="xl" wrap="wrap" align="center" justify="space-between">
-        <Box ref={chartBoxRef} h={boxHeight} w={{ base: '100%', sm: theme.other.boxSize.dashboardChartMinHeight }}>
-          {visibleSeries.length === 0 ? (
-            <Stack align="center" justify="center" h="100%" gap="xs">
-              <Text size="sm" c="dimmed">
-                {allHiddenHint}
-              </Text>
-            </Stack>
-          ) : (
-            <ReactApexChart options={options} series={apexSeries} type="radar" height="100%" width="100%" aria-label={ariaLabel} />
+        <Stack gap="md" w={{ base: '100%', sm: theme.other.boxSize.dashboardChartMinHeight }}>
+          <Box ref={chartBoxRef} h={boxHeight} w="100%">
+            {visibleSeries.length === 0 ? (
+              <Stack align="center" justify="center" h="100%" gap="xs">
+                <Text size="sm" c="dimmed">
+                  {allHiddenHint}
+                </Text>
+              </Stack>
+            ) : (
+              <ReactApexChart options={options} series={apexSeries} type="radar" height="100%" width={chartWidth} aria-label={ariaLabel} />
+            )}
+          </Box>
+
+          {/* The numbered key of the vertices (a real ordered list: a screen reader reads "1 of 6 ..."), shown exactly when the
+              plot shows numbers instead of names. */}
+          {numbered && (
+            <List size="sm" spacing="xs" aria-label={ariaLabel}>
+              {categoryNames.map((name, i) => (
+                <List.Item
+                  key={data[i].category}
+                  icon={
+                    <Text span size="sm" c="dimmed" fw={600}>
+                      {i + 1}
+                    </Text>
+                  }
+                >
+                  {name}
+                </List.Item>
+              ))}
+            </List>
           )}
-        </Box>
+        </Stack>
 
         {/* Owner revision 2026-09-19: a vertical legend column to the plot's right, not a row below it.
             Task 845 Pass 15: `sm` width matches `dashboardPeriodColumn` — see the outer `Group`'s own

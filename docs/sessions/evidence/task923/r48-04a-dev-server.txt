@@ -1,0 +1,14 @@
+# R148 AC148 r48-04a: server check, read-only, the two commands of rv50-06 with counts printed
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: & 'C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/8a6a4f5d-0bc5-4ad2-a044-2b932c412fc4/scratchpad/dev.ps1'
+NODE_PATH: (unset)
+started: 2026-10-25T06:28:47.837Z
+--- stdout ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

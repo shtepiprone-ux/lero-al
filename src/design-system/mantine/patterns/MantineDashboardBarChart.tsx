@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import type { ApexOptions } from 'apexcharts'
-import { Box, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Box, Stack, Text, px, useMantineTheme } from '@mantine/core'
 import { MantineDashboardChartStateFrame, type DashboardChartState } from './MantineDashboardChartStateFrame'
 import { MantineDashboardChartLegend } from './MantineDashboardChartLegend'
 import { resolveThemeColor } from './dashboardChartTheme'
-import { useApexTooltipMirror } from './useApexTooltipMirror'
+import { useApexFluidBox } from './useApexFluidBox'
+import { chartLabelSize, fitLabelCount, labelStride, plotWidthOf, textWidth, useChartLabelFont, widestLine, wrapLabel } from './dashboardChartLabels'
 
 // ApexCharts reads `window` at import time — never safe to render during SSR (same pattern as
 // `MantineDashboardLineChart.tsx`/`MapWrapper.tsx`).
@@ -101,10 +102,41 @@ export function MantineDashboardBarChart({
   horizontal = false,
 }: MantineDashboardBarChartProps) {
   const theme = useMantineTheme()
-  const mirrorRef = useApexTooltipMirror()
+  const { ref: chartBoxRef, boxWidth, chartWidth } = useApexFluidBox()
   const [hiddenKeys, setHiddenKeys] = useState<Set<string>>(new Set())
 
   const visibleSeries = series.filter((s) => !hiddenKeys.has(s.key))
+
+  // Task 923 Revision 7. Material: labels stay horizontal and "should not inhibit reading the chart"; WCAG Reflow + the mobile contract:
+  // required text wraps, it is never cut. Vertical bars: the category labels are thinned to the ones that fit with a gap between them.
+  // Horizontal bars: a category name wraps on its spaces inside a column of at most `barCategoryMaxShare` of the box, so the bars keep the
+  // rest; ApexCharts is told not to cut a line (no "...").
+  const categoryNames = data.map((d) => categoryLabel(d.category))
+  const labelFont = useChartLabelFont(theme, categoryNames)
+  const labelGap = Number(px(theme.spacing.xs))
+  const categoryLines = categoryNames.map((name) => (horizontal && boxWidth > 0 ? wrapLabel(name, boxWidth * theme.other.dashboardChart.barCategoryMaxShare, labelFont) : [name]))
+  // The column ApexCharts reserves for the names is its own estimate (about 160px), narrower than a long name: the name then runs past the
+  // canvas edge (measured 37px at 1440, r8-83). `minWidth` reserves the real width of the widest wrapped line.
+  const categoryColumn = Math.ceil(widestLine(categoryLines, labelFont))
+  // A wrapped name is as tall as its lines: the chart box grows so every row of bars is at least as tall as the tallest name plus a gap, instead of
+  // two names overlapping (measured: a 6-line uk name is 96px in a 69px row, r8-83). Never below the token minimum height.
+  const lineHeightPx = chartLabelSize(theme) * Number(theme.lineHeights.xs)
+  const minBoxHeight = Number(px(theme.other.boxSize.dashboardChartMinHeight))
+  const rowHeight = Math.max(0, ...categoryLines.map((lines) => lines.length)) * lineHeightPx + labelGap
+  const boxHeight = horizontal ? Math.max(minBoxHeight, Math.ceil(data.length * rowHeight + lineHeightPx + 4 * labelGap)) : minBoxHeight
+  const yTop = Math.max(0, ...series.flatMap((s) => data.map((d) => Number(d[s.key] ?? 0))))
+  const { barColumnWidth, barColumnWidthDense, barDenseSlotWidth } = theme.other.dashboardChart
+  // Apple HIG: a chart too packed with data is hard to use. When one category slot is narrower than `barDenseSlotWidth` (30 days in a
+  // 200px plot), the bars fill more of their slot instead of shrinking to hairlines.
+  const dense = !horizontal && boxWidth > 0 && plotWidthOf(boxWidth, textWidth(valueLabel(yTop), labelFont), labelGap) / Math.max(1, data.length) < barDenseSlotWidth
+  // The value axis of a horizontal chart runs along the width: its labels ("0 20 40 60") are thinned to the ones that fit the plot with a gap
+  // between them (an axis of n labels has n - 1 intervals; ApexCharts rounds them to nice values).
+  const valueAxisIntervals = horizontal && boxWidth > 0
+    ? Math.max(1, fitLabelCount(Math.max(0, boxWidth - categoryColumn - 2 * labelGap), textWidth(valueLabel(yTop), labelFont), labelGap, 11) - 1)
+    : undefined
+  const stride = !horizontal && boxWidth > 0
+    ? labelStride(plotWidthOf(boxWidth, textWidth(valueLabel(yTop), labelFont), labelGap), widestLine([categoryNames], labelFont), labelGap, data.length)
+    : 1
 
   const toggleSeries = (key: string) => {
     setHiddenKeys((prev) => {
@@ -136,7 +168,7 @@ export function MantineDashboardBarChart({
     colors: series.map((s) => resolveThemeColor(theme, s.color)),
     plotOptions: {
       bar: {
-        columnWidth: theme.other.dashboardChart.barColumnWidth,
+        columnWidth: dense ? barColumnWidthDense : barColumnWidth,
         ...(horizontal
           ? { horizontal: true, barHeight: theme.other.dashboardChart.barColumnWidth }
           : {}),
@@ -154,14 +186,17 @@ export function MantineDashboardBarChart({
     },
     xaxis: {
       categories: data.map((d) => d.category),
+      ...(valueAxisIntervals ? { tickAmount: valueAxisIntervals } : {}),
       labels: horizontal
         ? {
             formatter: (v: string) => valueLabel(Number(v)),
-            style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+            style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${chartLabelSize(theme)}px` },
           }
         : {
-            formatter: (v: string) => categoryLabel(v),
-            style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+            formatter: (v: string) => (data.findIndex((d) => d.category === v) % stride === 0 ? categoryLabel(v) : ''),
+            style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${chartLabelSize(theme)}px` },
+            rotate: 0,
+            hideOverlappingLabels: false,
           },
       axisBorder: { show: false },
       axisTicks: { show: false },
@@ -169,12 +204,19 @@ export function MantineDashboardBarChart({
     yaxis: {
       labels: horizontal
         ? {
-            formatter: (v: number) => categoryLabel(String(v)),
-            style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+            // a multi-line label is an array of lines; the column is as wide as the widest whole line, so ApexCharts has no reason to cut one
+            formatter: (v: number | string) => {
+              const i = data.findIndex((d) => d.category === String(v))
+              return i >= 0 ? categoryLines[i] : categoryLabel(String(v))
+            },
+            // never let ApexCharts cut a line itself: the lines are already wrapped to fit `barCategoryMaxShare` of the box above
+            maxWidth: boxWidth > 0 ? boxWidth : 160,
+            minWidth: categoryColumn,
+            style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${chartLabelSize(theme)}px` },
           }
         : {
             formatter: (v: number) => valueLabel(v),
-            style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+            style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${chartLabelSize(theme)}px` },
           },
     },
     // Native ApexCharts tooltip (Task 845 Revision 2, owner decision 2026-09-19): the library's own
@@ -205,7 +247,7 @@ export function MantineDashboardBarChart({
       loadingAriaLabel={loadingAriaLabel}
     >
       <Stack gap="md">
-        <Box ref={mirrorRef} h={theme.other.boxSize.dashboardChartMinHeight}>
+        <Box ref={chartBoxRef} h={boxHeight}>
           {visibleSeries.length === 0 ? (
             <Stack align="center" justify="center" h="100%" gap="xs">
               <Text size="sm" c="dimmed">
@@ -213,7 +255,7 @@ export function MantineDashboardBarChart({
               </Text>
             </Stack>
           ) : (
-            <ReactApexChart options={options} series={apexSeries} type="bar" height="100%" width="100%" aria-label={ariaLabel} />
+            <ReactApexChart options={options} series={apexSeries} type="bar" height="100%" width={chartWidth} aria-label={ariaLabel} />
           )}
         </Box>
 

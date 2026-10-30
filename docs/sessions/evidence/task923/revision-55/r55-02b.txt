@@ -1,0 +1,55 @@
+# r55-02b (R170): the break of SEC-DB-S61-ALLOW meets the asserted edit
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-29T11:20:29.3944096Z
+Only one entry of db-break.cjs changed (line 92). The file is untracked in Git (new in Revision 54), so there is no git diff; the removed line is the one read in this session before the edit (hash of the whole file before: see r55-00), the added line is read back from the file now.
+
+--- removed line ---
+  'SEC-DB-S61-ALLOW': { describe: 'a BEFORE INSERT OR UPDATE trigger refuses (42501) every write of a listing with a synthetic title', ...refuseTrigger('listings', 'insert or update', SYNTH_TITLE) },
+--- added line (line 92) ---
+  'SEC-DB-S61-ALLOW': { describe: 'a BEFORE UPDATE trigger refuses (42501) every change of the title of a listing to a synthetic title', ...refuseTrigger('listings', 'update', `old.title is distinct from new.title and ${SYNTH_TITLE}`) },
+--- unchanged helper the new line uses (SYNTH_TITLE) ---
+const SYNTH_TITLE = "new.title like 'zz\\_synth\\_%' escape '\\'"
+--- the test it must meet: src/tests/integration/accessHardening.integration.test.ts:135-138 ---
+  const listing = await run.makeListing(person.id, 'pending', 's61-allow')      // INSERT through service_role: the BEFORE UPDATE trigger is not fired
+  const retitled = ${'$'}{run.RUN} s61 retitled
+  const edit = await person.client.from('listings').update({ title: retitled }).eq('id', listing.id).select('id, title')   // UPDATE of title to a synthetic title: refused (42501) under the break
+  expect(edit.error, 'an ordinary edit is not refused').toBeNull()
+
+--- command 1: node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --check-anchors ---
+ok        SEC-D29-SRV-DENY src/lib/auth/middleware.ts (1)
+ok        SEC-D29-SRV-ALLOW src/lib/auth/middleware.ts (1)
+ok        SEC-DEL-SRV-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-SRV-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-INT-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-SELF src/modules/cabinet/actions/index.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-ALLOW src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-STATUS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-LOCATIONS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-CONTACT-LIFECYCLE src/modules/listings/actions/submitListingInquiry.ts (1)
+ok        SEC-X-SRV-SLUG-SCRIPT src/lib/security/inputs.ts (1)
+ok        SEC-X-SRV-AVATAR-RANK src/app/api/upload-avatar/route.ts (1)
+ok        SEC-X-SRV-ADMINPAGE-GUARD src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-OWNER-DELETE src/modules/listings/actions/deleteListing.ts (1)
+ok        SEC-X-SRV-EDIT-MODERATION src/modules/listings/actions/updateListing.ts (1)
+ok        SEC-X-SRV-MOD-KEYS src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-SLUG-PLAIN src/modules/listings/lib/generateSlug.ts (1)
+ok        SEC-X-SRV-CONTACT-BOT-DENY src/lib/captcha/verifyTurnstile.ts (1)
+ok        SEC-X-SRV-RESTRICTED-PAGE-DENY src/app/[locale]/listings/[slug]/page.tsx (1)
+ok        SEC-X-SRV-CONTACT-SESSION-DENY src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-INT-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-IP src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-FAILCLOSED src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-DB-X-AVATARS-STORAGE-ALLOW src/app/api/upload-avatar/route.ts (1)
+database breaks (db-break.cjs): 21
+
+exit code: 0
+
+--- command 2: node --check docs/sessions/evidence/task923/security/db-break.cjs ---
+
+exit code: 0

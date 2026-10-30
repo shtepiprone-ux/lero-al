@@ -1,0 +1,63 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a12/a12-02-case-map.mjs docs/sessions/evidence/task927/a12/a12-02-case-map.txt docs/sessions/evidence/task927/a12/a12-02-vitest.json
+vitest: 35 suites, 182 tests, 182 passed, 0 failed, 0 pending
+files run: 13
+
+SEC-927-FE-ALLOW                         passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-WRAP                          file not part of this run  src/lib/auth/__tests__/browserAuth.security.test.ts
+SEC-927-FE-UNIT-NONCE                    file not part of this run  src/lib/auth/__tests__/googleIdentity.test.ts
+SEC-927-FE-DENY-REDIRECT                 passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-BANNED                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-REPLAY                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-DENY-NOAUTO                   passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-NOCLIENT                  passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-NOLEAK                    passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-UNIT-LOADER                   file not part of this run  src/lib/auth/__tests__/googleIdentity.test.ts
+SEC-927-SRV-ALLOW                        file not part of this run  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-SRV-DENY                         file not part of this run  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-SRV-ERR                          file not part of this run  src/app/api/auth/me/__tests__/route.security.test.ts
+SEC-927-DB-ALLOW                         integration (not collected by vitest.config.ts)
+SEC-927-PRV-DENY                         integration (not collected by vitest.config.ts)
+SEC-927-FE-REAUTH-ALLOW                  passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-DENY-ACCOUNT           passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-DENY-SWITCH            passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-REAUTH-ERR                    passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-SRV-REAUTH-ALLOW                 passed  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+SEC-927-SRV-REAUTH-DENY                  passed  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+SEC-927-FE-REAUTH-ONE-CONFIG             passed  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+SEC-927-FE-ONETAP-ALLOW                  file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-NOTGUEST          file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-SHEET             file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-DENY-REDIRECT          file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-ONETAP-ERR                    file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-ALLOW                file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-DENY-HOSTILE         file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-FORGET               file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-WELCOME-DENY-BANNED           file not part of this run  src/components/layout/__tests__/Header.google.security.test.tsx
+SEC-927-FE-REMEMBER-KEEP                 file not part of this run  src/components/layout/__tests__/Header.signOut.test.tsx
+SEC-927-FE-REMEMBER-DELETE               passed  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+SEC-927-FE-DELETE-TYPED                  passed  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+SEC-927-FE-UNIT-REMEMBER                 file not part of this run  src/lib/auth/__tests__/rememberedGoogleAccount.test.ts
+SEC-927-FE-ERR-POPUP                     passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-ERR-POPUP-TIMEOUT             passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-POPUP-DENY-ORIGIN             passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-DENY-STATE              passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-CHANNEL                 passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-CANCEL                  passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-ONCE                    passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-CALLBACK-RELAY                file not part of this run  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-DENY-NOSTATE         file not part of this run  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-ERR                  file not part of this run  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-CALLBACK-NOLEAK               file not part of this run  src/app/auth/google/callback/__tests__/GoogleCallbackRelay.security.test.tsx
+SEC-927-FE-POPUP-FOCUS                   passed  src/lib/auth/__tests__/googlePopup.test.ts
+SEC-927-FE-POPUP-SYNC-OPEN               passed  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+SEC-927-FE-SINKS-EXCEPTION               file not part of this run  src/__tests__/security/clientSinks.test.ts
+SEC-927-FE-ANALYTICS-DROP                file not part of this run  src/lib/analytics/__tests__/beforeSend.security.test.ts
+SEC-927-SRV-REAUTH-NOPASSWORD            passed  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+SEC-927-DB-PASSWORD-ALLOW                integration (not collected by vitest.config.ts)
+SEC-927-DB-PASSWORD-DENY                 integration (not collected by vitest.config.ts)
+
+unit cases whose file was run: 26; passed and mapped: 26; missing or not passed: 0
+exit code: 0

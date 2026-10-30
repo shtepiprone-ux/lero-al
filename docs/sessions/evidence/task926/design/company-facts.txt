@@ -1,0 +1,8 @@
+Task 926: company facts (Opus, 2026-10-18), read-only transaction on the approved development database
+public_user_profiles definition: SELECT id, name, avatar_url, user_type, is_verified, company_name, deleted_at, phone IS NOT NULL AND length(phone) > 0 AS has_phone, whatsapp IS NOT NULL AND length(whatsapp) > 0 AS has_whatsapp FROM users;
+views that depend on users.company_name: public_user_profiles
+public functions that mention company_name: (none)
+users: company_name set 2; company_id set 0; both 0; agents 3
+users company columns: company_id uuid null, company_logo_url text null, company_name text null
+companies policies: companies_admin_delete DELETE {authenticated} ; companies_insert_service_role INSERT {service_role} ; companies_read_all SELECT {public} ; companies_admin_update UPDATE {authenticated}
+companies indexes: CREATE UNIQUE INDEX companies_name_norm_uniq ON public.companies USING btree (lower(btrim(name))) ; CREATE UNIQUE INDEX companies_pkey ON public.companies USING btree (id)

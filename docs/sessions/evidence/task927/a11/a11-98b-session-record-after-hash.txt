@@ -1,0 +1,4 @@
+﻿platform: win32; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: Get-FileHash -Algorithm SHA256 docs/sessions/2026-10-10-task923-rendered-state-census.md (after the Amendment 11 report)
+188d2977f849acae5e3a37f1b1a848b0b96f5e8ccb784f86c222556ae2355bcf  docs/sessions/2026-10-10-task923-rendered-state-census.md
+exit code: 0

@@ -1,0 +1,36 @@
+cwd /c/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/r6-72-chart-row-diff.mjs
+platform win32 node v22.22.3
+chart rows: union 60; r4 60; r5 51; r6 48
+presence of the chart detail in r4 / r5 / r6, row counts:
+  3 x chart / no-chart / no-chart
+  42 x chart / chart / chart
+  9 x chart / chart / no-chart
+  6 x chart / no-chart / chart
+
+rows where r6 has no chart detail but r4 had (r6 failing rules | r6 row exists):
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | en | 1024 :: r6 text-clamp+text-ellipsis | r5 chart false
+  patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | it | 1024 :: r6 text-clamp+text-ellipsis | r5 chart false
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~en-english | app | en | 1024 :: r6 text-clamp+text-ellipsis | r5 chart true
+  patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~en-english | app | uk | 1024 :: r6 text-clamp+text-ellipsis+text-hidden | r5 chart true
+  patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~en-english | app | it | 1024 :: r6 text-clamp+text-ellipsis | r5 chart true
+  patterns-mantine-admindashboardview--cities-only-other | patterns-mantine-admindashboardview--cities-only-other~en-english | app | uk | 1024 :: r6 text-clamp+text-ellipsis+text-hidden | r5 chart true
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | it | 1024 :: r6 text-clamp+text-ellipsis | r5 chart true
+  patterns-mantine-admindashboardview--default | patterns-mantine-admindashboardview--default~en-english | app | uk | 1024 :: r6 text-clamp+text-ellipsis+text-hidden | r5 chart true
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | en | 1024 :: r6 text-clamp+text-ellipsis | r5 chart true
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | it | 1024 :: r6 text-clamp+text-ellipsis | r5 chart true
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | sq | 1024 :: r6 text-clamp+text-ellipsis+text-hidden | r5 chart false
+  patterns-mantine-admindashboardview--no-location-requests | patterns-mantine-admindashboardview--no-location-requests~en-english | app | uk | 1024 :: r6 text-clamp+text-ellipsis+text-hidden | r5 chart true
+  (12 rows)
+
+rows where r6 has the chart detail and r4 had not:
+  (0 rows)
+
+states of the rows that changed (count by state):
+  2 x patterns-mantine-admindashboardview--activity-empty-period~en-english
+  2 x patterns-mantine-admindashboardview--activity-error~en-english
+  1 x patterns-mantine-admindashboardview--adm-09-zero~en-english
+  1 x patterns-mantine-admindashboardview--cities-only-other~en-english
+  2 x patterns-mantine-admindashboardview--default~en-english
+  4 x patterns-mantine-admindashboardview--no-location-requests~en-english
+EXIT_CODE=0

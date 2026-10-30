@@ -1,0 +1,13 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/security/make-report.mjs
+started: 2026-10-23T20:26:03.265Z
+--- stdout ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+report written: docs/sessions/evidence/task927/security/report.json (24 cases)
+
+--- stderr ---
+
+exit code: 0

@@ -1,0 +1,17 @@
+# rv50-03: the 13 test files of r44-01 and the three reference-check test files, default config
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/lib/account/deleteAccount.security.test.ts src/components/admin/__tests__/adminDeleteDialog.security.test.tsx src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts src/modules/cabinet/actions/__tests__/reauth.security.test.ts src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts src/modules/admin/actions/__tests__/adminActorRank.security.test.ts src/modules/admin/actions/__tests__/userAdministration.security.test.ts src/__tests__/security/staffActions.test.ts src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx src/lib/cloudinaryDelete.security.test.ts src/lib/__tests__/cloudinary.security.test.ts src/lib/__tests__/cloudinaryDelete.test.ts
+started: 2026-10-24T12:26:36.410Z
+--- output ---
+     × skips when public_id is directly referenced in listing_images 7ms
+     × returns dryRun=true and does not call Cloudinary when unreferenced 2ms
+     × logs a structured DRY_RUN entry 1ms
+     × calls Cloudinary destroy when mode=enabled and asset is unreferenced 2ms
+ Test Files  1 failed | 15 passed (16)
+      Tests  4 failed | 435 passed (439)
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+ FAIL  src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+--- exit code: 1 ---

@@ -1,0 +1,28 @@
+# rv67-40: the final commit's path manifest
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-40-final-commit-manifest.mjs
+HEAD 29acfb269e814ea37a94567f6cb1f9e97a40be41; origin/main 7dd707aa154801ff2e44402e3976841cb377dddb
+changed active kickoffs checked: 2; cited sources checked: 1991, of them 18 under node_modules/ (installed by npm ci)
+tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.security.json: stage planned; 3 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.security.json: stage planned; 3 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json: stage planned; 3 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: stage reviewed; 576 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: stage reviewed; 132 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_86_Listing_Form_On_Canonical_Mantine.security.json: stage planned; 3 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_91_Google_Sign_In_Shows_Lero_Al.security.json: stage planned; 3 paths checked; not tracked after the commit 0
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: stage reviewed; 68 paths checked; not tracked after the commit 0
+included: 5776 paths (5381 untracked, 355 modified, 40 deleted); 255.8 MB; largest docs/sessions/evidence/task923/r7-full-a/rows.jsonl 22.6 MB
+excluded: 2018 paths (raw 10, other tasks 2008)
+  raw 20.8 MB  docs/sessions/evidence/task923/full/rows.jsonl
+  raw 28.5 MB  docs/sessions/evidence/task923/r10-108-full-merged/rows.jsonl
+  raw 28.5 MB  docs/sessions/evidence/task923/r12-full/rows.jsonl
+  raw 19.9 MB  docs/sessions/evidence/task923/r2-82a-full-suspended/rows.jsonl
+  raw 20.9 MB  docs/sessions/evidence/task923/r3-full/rows.jsonl
+  raw 20.9 MB  docs/sessions/evidence/task923/r4-full/rows.jsonl
+  raw 20.9 MB  docs/sessions/evidence/task923/r5-full/rows.jsonl
+  raw 20.9 MB  docs/sessions/evidence/task923/r6-full/rows.jsonl
+  raw 5.2 MB  docs/sessions/evidence/task923/r8-85-row-diff.txt
+  raw 28.6 MB  docs/sessions/evidence/task923/r8-full/rows.jsonl
+  other tasks: 2008 paths under docs/sessions/evidence/task859/, docs/sessions/evidence/task790/
+Task 926 leaves the index (git rm --cached): tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.md, tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json
+problems: 0
+exit 0

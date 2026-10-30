@@ -1,0 +1,10 @@
+# R141-R145 AC141 r44-04 (precondition, §71.3): is a Next.js dev server or Storybook running right before npm run build-storybook? (Sonnet, read-only; the two commands of review-50/rv50-06-dev-server.txt)
+platform: Windows PowerShell 5.1.26100.9711; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command 1: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where-Object { $_.CommandLine -match 'next|storybook' }
+command 2: Get-NetTCPConnection -State Listen | Where-Object { $_.LocalPort -in 3000,3001,3002,3003,6006 }
+started: 2026-10-24T15:05:23+02:00
+--- output ---
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+Both counts are 0: the build runs without asking again (§71.3). The owner also answered in this session that npm run dev was not running.
+--- exit code: 0 ---

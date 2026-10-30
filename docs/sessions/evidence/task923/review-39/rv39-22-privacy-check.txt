@@ -1,0 +1,5 @@
+# Task 923 Review 39 (Opus), 2026-10-23T12:29:26.294Z: read-only check of pages.slug = privacy-policy after the owner edited it in the admin (2026-10-23).
+sq addendum link: https://www.cloudflare.com/turnstile-privacy-policy/ text Turnstile Privacy Addendum
+en addendum link: https://www.cloudflare.com/turnstile-privacy-policy/ text Turnstile Privacy Addendum
+uk addendum link: https://www.cloudflare.com/turnstile-privacy-policy/ text Turnstile Privacy Addendum
+it addendum link: https://www.cloudflare.com/turnstile-privacy-policy/ text Turnstile Privacy Addendum

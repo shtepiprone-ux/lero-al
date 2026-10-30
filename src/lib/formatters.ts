@@ -290,6 +290,31 @@ export function formatShortDate(dateStr: string | null | undefined, locale: stri
 }
 
 /**
+ * The bare day of the month ("19") of a `YYYY-MM-DD` date, for a chart axis tick (Task 923 Revision 7). A time-axis tick never repeats the
+ * month: the month is stated once above the chart (`formatDateRange` in the card's `scopeLabel`), the tick only varies by day
+ * (owner correction 2026-09-19, `DashboardLineChart.stories.tsx`; Datawrapper puts the larger unit "in separate rows" instead of in every tick;
+ * Highcharts draws the larger unit only on the boundary). Digits are identical in sq / en / uk / it, so it needs no locale data. UTC getter, as
+ * `formatShortDate`. Returns '—' on null, undefined, or invalid input.
+ */
+export function formatDayNumber(dateStr: string | null | undefined): string {
+  if (!dateStr) return '—'
+  const d = new Date(dateStr)
+  return Number.isNaN(d.getTime()) ? '—' : String(d.getUTCDate())
+}
+
+/**
+ * The period a chart shows, stated once above it: "Aug 19 – Sep 16" (`formatShortDate` of the first and the last date). One date when the
+ * range is a single day. Returns '' when either end is missing, so a card with no data shows no caption.
+ */
+export function formatDateRange(first: string | null | undefined, last: string | null | undefined, locale: string): string {
+  if (!first || !last) return ''
+  const a = formatShortDate(first, locale)
+  const b = formatShortDate(last, locale)
+  if (a === '—' || b === '—') return ''
+  return a === b ? a : `${a} – ${b}`
+}
+
+/**
  * The bare localized short month name — e.g. en:"Jun" · uk:"черв." · it:"giu" · sq:"qer". Same
  * safe, static `calendar_months_short` data as `formatListingDate`/`formatShortDate` (never a live
  * `Intl.DateTimeFormat` call). For a chart whose header already states the active month/year via

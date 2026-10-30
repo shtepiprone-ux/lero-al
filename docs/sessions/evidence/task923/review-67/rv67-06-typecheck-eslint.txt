@@ -1,0 +1,8 @@
+platform: MINGW64_NT-10.0-26300 3.6.5-22c95533.x86_64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: npm run typecheck
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+
+exit code: 0
+command: npx eslint . --quiet
+exit code: 0

@@ -1,0 +1,322 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T11:19:23.731Z",
+ "case": "SEC-DEL-INT-DENY",
+ "results": [
+  {
+   "id": "SEC-DEL-INT-DENY",
+   "testFile": "src/lib/account/deleteAccount.integration.test.ts",
+   "testName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "hardDeleteUser no longer applies the rank rule",
+     "from": "  if (!rank.allowed || !rank.actorRole) return { error: 'forbidden' }\n",
+     "to": ""
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "originalSha256": "d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256",
+     "restoredSha256": "d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256"
+    }
+   ],
+   "failureMessage": "AssertionError: a moderator deleting an administrator: expected {} to deeply equal { error: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/lib/account/deleteAccount.integration.test.ts:317:93\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272744511,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "passed",
+         "title": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "duration": 2694.6361,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272745186,
+       "endTime": 1793272747880.636,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/account/deleteAccount.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272750951,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "failed",
+         "title": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "duration": 3468.1116,
+         "failureMessages": [
+          "AssertionError: a moderator deleting an administrator: expected {} to deeply equal { error: 'forbidden' }\n    at C:/Claude_Code_Projects/lero-al/src/lib/account/deleteAccount.integration.test.ts:317:93\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272751623,
+       "endTime": 1793272755091.1116,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/account/deleteAccount.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 6,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 5,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793272758333,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "passed",
+         "title": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+         "duration": 2730.4344,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "status": "skipped",
+         "title": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793272759009,
+       "endTime": 1793272761739.4343,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/account/deleteAccount.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

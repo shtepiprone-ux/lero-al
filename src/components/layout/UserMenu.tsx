@@ -51,7 +51,7 @@ export function UserMenu({ user, locale, onNavigate, onOpenAdmin, onLogout, isSi
           rightSection={<ChevronDown size={theme.other.iconSize.badge} />}
           loading={isSigningOut}
         >
-          <Text component="span" truncate inherit maw={theme.other.boxSize.truncateLabel}>{user.name}</Text>
+          <Text component="span" inherit>{user.name}</Text>
         </Button>
       }
       items={items}

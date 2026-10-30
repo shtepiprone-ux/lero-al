@@ -20,6 +20,12 @@ async function clearHistory(
   const allowed = await hasPermission('audit.clear_history').catch(() => false)
   if (!allowed) return { error: 'forbidden' }
 
+  // Task 923 Revision 7: the history source names the table the database function clears. The type is erased at runtime, so only the two real sources and plain
+  // ids go to it.
+  if ((source !== 'user_change_log' && source !== 'user_status_history') || typeof entityId !== 'string' || !entityId || (rowId !== null && (typeof rowId !== 'string' || !rowId))) {
+    return { error: 'validation' }
+  }
+
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
 

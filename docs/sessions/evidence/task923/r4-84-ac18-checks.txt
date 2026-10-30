@@ -1,0 +1,10 @@
+rows 22740; app 12820; portal 9920
+rows missing a rule key (of 20) 0; rows without notApplicable 0; unique 22740
+rows with a retry key 48 (cells 24); retry value not a string 0
+gate-level cells (open-failed, portal-count, widths-mismatch, error-screen) by width and owner: {"open-failed @640 -> 924":24,"portal-count @640 -> 924":4,"widths-mismatch @640 -> 924":44,"error-screen @390 -> 925":1}
+gate-level cells owned by neither 924 nor 925 (AC18: must be 0), of which at 639: 0 (0)
+unregistered-portal rows 0
+AC4 patterns-mantine-ticketdetaildialogview--support @320: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support @390: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results @320: portal rows 4, failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active @320: portal rows 4, failing 4 [text-clamp, text-hidden]; app rows failing 0 of 4

@@ -362,17 +362,18 @@ function detectOverflowRisks(allFileData) {
     lines.forEach((line, i) => {
       const lineNum = i + 1;
 
-      // whitespace-nowrap without overflow-hidden + truncate
+      // whitespace-nowrap without a compact-control decision is a mobile reflow risk. This legacy heuristic flags
+      // the risky form; GR-3j's diff gate separately forbids adding nowrap/truncation to changed semantic UI.
       if (/whitespace-nowrap/.test(line) && !/overflow-hidden|truncate/.test(line)) {
         findings.push({
           category: 'OVERFLOW_RISK',
           subcategory: 'nowrap-unsafe',
           file: relFile,
           line: lineNum,
-          pattern: 'whitespace-nowrap without truncate',
+          pattern: 'whitespace-nowrap mobile reflow risk',
           affectedLocales: ['sq', 'en', 'uk', 'it'],
           severity: 'MEDIUM',
-          recommendedAction: 'Add overflow-hidden and truncate, or allow wrapping',
+          recommendedAction: 'Allow wrapping/reflow, stack the semantic content, or obtain the GR-3j compact-control decision; do not add truncation',
         });
       }
 

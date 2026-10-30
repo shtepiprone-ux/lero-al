@@ -1,0 +1,10 @@
+platform: MINGW64_NT-10.0-26300 3.6.5-22c95533.x86_64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; start 2026-10-29T20:39:18+01:00; env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref, 20 characters> NEXT_PUBLIC_SUPABASE_URL=<not printed>
+(a first run at 20:38:52 without these variables was refused by the suite's guard: 'Refusing to run: set SECURITY_TEST_TARGET=development'; no test ran)
+command: npx vitest run --config vitest.integration.config.ts
+
+ Test Files  24 passed (24)
+      Tests  96 passed (96)
+   Start at  20:39:19
+   Duration  293.05s (transform 612ms, setup 186ms, import 3.02s, tests 286.88s, environment 2ms)
+
+exit code: 0 end 2026-10-29T20:44:12+01:00

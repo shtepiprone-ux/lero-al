@@ -1,0 +1,7 @@
+# chromium 148.0.7778.96, node v22.22.3, win32, 2026-10-23T06:53:11.917Z
+await 0 ms after the click: userActivation.isActive=true; window.open returned a window=true
+await 1000 ms after the click: userActivation.isActive=true; window.open returned a window=true
+await 3000 ms after the click: userActivation.isActive=true; window.open returned a window=true
+await 4500 ms after the click: userActivation.isActive=true; window.open returned a window=true
+await 5500 ms after the click: userActivation.isActive=false; window.open returned a window=true
+await 8000 ms after the click: userActivation.isActive=false; window.open returned a window=true

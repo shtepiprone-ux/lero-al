@@ -1,0 +1,24 @@
+# Review 11: how medium.com draws and runs "Sign in with Google" (owner's Chrome, Claude in Chrome, 2026-10-26)
+tool: mcp__claude-in-chrome__navigate https://medium.com/m/signin, then a page script
+
+## The sign-in modal ("Welcome back.", 1512x812 window)
+googleButtons: [{"tag":"A","text":"Sign in with Google","href":"//medium.com/m/connect/google?state=google-%7Chttps%3A%2F%2Fmedium.com%2F%3Fsource%3Dlogin","w":300,"h":42}]
+gsiScript (script src matching accounts.google.com/gsi): []
+iframes whose src mentions google: ["https://www.google.com/recaptcha/enterprise/anchor"]  (reCAPTCHA only; no gsi/button iframe)
+Screenshot: six pill buttons of one style (Google, LinkedIn, Facebook, Apple, X, email), each Medium's own markup with the provider's logo at the left.
+Reading: Medium's Google button is Medium's own link, server-rendered with the page. Google draws nothing in the page, so nothing swaps or resizes.
+
+## Where the link leads (navigate to the href, read location only; no account chosen, nothing submitted)
+host accounts.google.com, path /v3/signin/accountchooser ("Choose an account to continue to Medium")
+params: response_type=id_token token; scope=email openid profile; redirect_uri=https://medium.com/m/callback/google;
+        access_type=online; flowName=GeneralOAuthFlow; a nonce parameter is present (value redacted by the tool); client_id 216296035834… (truncated)
+Reading: a full-page redirect to Google's OpenID Connect authorization endpoint with response_type id_token (implicit flow with a nonce),
+returning to Medium's own callback on its own domain. No client secret is needed for an id_token response.
+curl of the same link without a browser: HTTP 403 (rv11-01).
+
+## Computed style of Medium's Google link (second visit, same day; page script)
+{"box":{"w":270,"h":37.8},"border":"1px solid rgb(210, 210, 210)","radius":"1584px","bg":"rgb(23, 23, 23)","padding":"8px",
+ "text":{"font":"sohne, \"Helvetica Neue\", Helvetica, Arial, sans-serif","size":"16px","weight":"400","color":"rgb(229, 229, 229)","lineHeight":"24px"},
+ "icon":{"w":21.6,"h":21.6,"viewBox":"0 0 24 24","fills":["#4285F4","#34A853","#FBBC05","#EA4335"],"hasGradient":false}}
+Reading: Medium sets the button in its own font (sohne), not Google Sans, and draws the four-colour "G" as an inline 24-unit SVG.
+(The page followed a dark colour scheme on this visit: background rgb(23,23,23); the first visit's screenshot was light.)

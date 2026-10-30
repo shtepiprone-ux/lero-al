@@ -1,0 +1,12 @@
+# r55-01 (R166 part b): sensitivity run of SEC-DEL-INT-DENY, break DEL_NO_RANK, --integration
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --source --integration SEC-DEL-INT-DENY  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>)
+started: 2026-10-29T11:19:03.3624233Z
+sha256 of src/modules/admin/actions/index.ts before: d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256
+sha256 of src/modules/admin/actions/index.ts after:  d578aa384ef6ccfccee859965444c7750d8d690f228ee25023df441d9710d256
+--- output ---
+PROVED     SEC-DEL-INT-DENY [integration] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+
+--- exit code: 0 ---

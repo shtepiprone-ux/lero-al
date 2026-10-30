@@ -1,0 +1,15 @@
+# working-tree snapshot, 2026-10-22T15:07:03.507Z
+== src/modules/listings/actions/updateListing.ts sha256 dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d
+src/modules/listings/actions/updateListing.ts:108: const moved = await applyListingTransitionByStatus(listingId, 'pending', { userId: user.id, role: null, source: 'cabinet' })
+src/modules/listings/actions/updateListing.ts:130: return { error: 'update_failed' }
+== src/modules/listings/actions/__tests__/updateListing.smoke.test.ts sha256 4f2c4faef26ee08b119fb03d4aa49259e25706bbfa6a15be4312e1d14eeb29a7
+src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:154: mockApplyTransition.mockResolvedValue({ ok: true, nextStatus: 'pending', listingId: LISTING_ID })
+src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:164: expect(result).toEqual({ slug: LISTING_SLUG, status: 'active' })
+src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:205: expect(result).toEqual({ error: 'update constraint violation' })
+== src/app/[locale]/listings/[slug]/edit/page.tsx sha256 d485b854876294f0224b6b776d6956bb684db9ee8672ed75e70d59e0f6c950b7
+src/app/[locale]/listings/[slug]/edit/page.tsx:18: export async function generateMetadata({ params }: Props) {
+src/app/[locale]/listings/[slug]/edit/page.tsx:21: return { title: `${t('edit_listing')} | Lero.al` }
+== src/app/robots.ts sha256 c098dbd9a016cc2639ffe633b2bf1311ed19b2c2bcc3cd7cbd74ec863486ed86
+src/app/robots.ts:13: disallow: ['/admin', '/api', '/cabinet', '/auth', '/*/cabinet', '/*/auth'],
+== src/app/[locale]/listings/[slug]/edit/__tests__/editAccessRestricted.security.test.ts sha256 4abffdf18011c24774492473a3898363889685c240f92b01980e343c5a3e0744
+src/app/[locale]/listings/[slug]/edit/__tests__/editAccessRestricted.security.test.ts:35: import EditListingPage from '../page'

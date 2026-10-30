@@ -1,4 +1,4 @@
-import { createTheme, darken, lighten, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
+import { createTheme, darken, lighten, parseThemeColor, type MantineColorsTuple, type MantineTheme, type MantineGradient, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
 import { brand } from '@/design-system/brand'
 
 // Task 775 (D775-C = C1) — native Mantine typing for the two additive spacing keys below.
@@ -118,6 +118,7 @@ declare module '@mantine/core' {
                                // own demo backdrop height. Storybook fixture chrome, not a shipped
                                // production dimension, but AC17 scopes "no raw literal" to story
                                // fixtures too.
+      | 'searchFieldMin'  // 200px — Task 923 R33: the least width of a list's search field in a filter row; below it the row wraps instead of squeezing the field
       | 'compactTrigger'  // 280px — RangeDatePicker compact trigger width
       | 'avatarCropArea'  // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72)
       | 'emptyState'      // 360px — MantineEmptyLoadingErrorState stack max-width
@@ -327,8 +328,11 @@ declare module '@mantine/core' {
       semiDonutSize: number // 220px — MantineDashboardSemiDonut ring diameter
       radialSize: number // 180px — MantineDashboardRadialProgress ring diameter
       radarSize: number // 100px — MantineDashboardRadar's `plotOptions.radar.size` (the largest radius, used when the chart box is wide enough)
-      radarLabelReserve: number // 90px — horizontal room the radar keeps free on each side for its category labels: the widest label measured live across en/uk/sq/it is 77px (uk `Повідомлення`) plus the label's gap to the polygon (Task 845 Revision 2)
       barRadius: number // 4px — MantineDashboardBarChart stacked-bar top corner radius
+      barColumnWidthDense: string // '80%' — Task 923 Revision 7: `plotOptions.bar.columnWidth` once a category slot is narrower than `barDenseSlotWidth` (30 days in a phone-width plot), so the bars do not shrink to hairlines
+      barDenseSlotWidth: number // 12px — Task 923 Revision 7: the category slot width below which a vertical bar chart uses `barColumnWidthDense`
+      barCategoryMaxShare: number // 0.5 — Task 923 Revision 7: the most of a horizontal bar chart's width its wrapped category names may take; the bars keep the rest
+      radarLabelOffset: number // 10px — gap ApexCharts leaves between a radar vertex and its category label (measured on the built Storybook, Task 923 r8-79: x for a side label, y for a top / bottom one). Task 923 Revision 7: replaces `radarLabelReserve` (a fixed 90px each side, the widest locale label plus this gap, which left a 33px radius at 320px); the radius now follows the real, wrapped label widths (`dashboardChartLabels.ts` `radarRadius`)      barRadius: number // 4px — MantineDashboardBarChart stacked-bar top corner radius
       donutBorderRadius: number // 8px — donut/semi-donut segment corner radius
       donutSpacing: number // 3px — gap between adjacent donut segments
       expandOffset: number // 10px — ApexCharts' own default pie `expandOffset`; extra canvas room
@@ -368,6 +372,7 @@ declare module '@mantine/core' {
       monthDropdownMinWidth: number // 190px — Task 774's measured month-label dropdown floor
       yearDropdownMinWidth: number  // 140px — Task 774's measured year-label dropdown floor
       mobileListHeight: string      // '45dvh' — Task 561 D4: the mobile scrolling month-list's fixed height
+      twoMonthsMinWidth: number     // 700px — Task 923 R33: the viewport that holds the two-month dropdown (668px measured at 1440) plus a 16px gutter each side
     }
   }
 }
@@ -392,7 +397,7 @@ const gray: MantineColorsTuple = [
 // CSS variables project-wide. See the `sale` tuple comment below for the full traced mechanism
 // (Task 620 correction of the prior index-6 claim on this header and the three tuples below).
 const green: MantineColorsTuple = [
-  '#ecfdf3', // 0 — success-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
+  '#ecfdf3', // 0 — success-50 (lightest stop; no longer a Badge fill: D78-26 made every badge solid at index 7)
   '#d1fadf', // 1 — success-100
   '#a9f3c3', // 2
   '#6ce9a6', // 3 — success-300
@@ -405,7 +410,7 @@ const green: MantineColorsTuple = [
 ]
 
 const yellow: MantineColorsTuple = [
-  '#fffaeb', // 0 — warning-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
+  '#fffaeb', // 0 — warning-50 (lightest stop; no longer a Badge fill: D78-26 made every badge solid at index 7)
   '#fef3d0', // 1
   '#fee3a2', // 2
   '#fdc848', // 3
@@ -418,7 +423,7 @@ const yellow: MantineColorsTuple = [
 ]
 
 const red: MantineColorsTuple = [
-  '#fef3f2', // 0 — error-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
+  '#fef3f2', // 0 — error-50 (lightest stop; no longer a Badge fill: D78-26 made every badge solid at index 7)
   '#fee4e2', // 1 — error-100
   '#fecdca', // 2
   '#fda29b', // 3 — error-300
@@ -442,13 +447,14 @@ const blueLight: MantineColorsTuple = [
   '#36bffa', // 4 — blue-light-400 (§4 AUTHORITATIVE)
   '#0ba5ec', // 5 — blue-light-500 (§4 AUTHORITATIVE — Alert info border/icon)
   '#0086c9', // 6 — blue-light-600 (§4 AUTHORITATIVE)
-  '#0086c9', // 7 — UNUSED by Alert (placeholder = nearest §4 stop); Badge light/filled/outline DOES read this index (primaryShade:7, Task 620) — identical value to index 6 here, so no rendered discrepancy
+  '#026aa2', // 7 — blue-light-700 (Untitled UI, the palette TailAdmin derives from; owner D78-23, Task 859 Revision 4): TailAdmin defines no stop darker than -600, whose 3.75:1 on index 0 fails WCAG AA at 12px; this one is 5.49:1. Badge light text / filled / outline read this index (primaryShade:7, Task 620)
   '#0086c9', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
   '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
 
 // TailAdmin orange (Task 686 §4 line 46 — role `moderator` Badge + `location_request` signal in
-// AdminUsersTable.tsx). The zip ships only 3 stops (--color-orange-50/400/500). Same sparse-ramp
+// AdminUsersTable.tsx). The zip ships only 3 stops (--color-orange-50/400/500); TailAdmin's live stylesheet
+// (`style.css`, read 2026-10-07, Task 859 Revision 4) also defines orange-600 `#ec4a0a` and orange-700 `#c4320a`. Same sparse-ramp
 // convention as `blueLight` above: unused slots are placeholder-filled with the nearest §4 stop
 // (NOT interpolated, NOT presented as authoritative). Index 2 sits equidistant between index 0
 // and index 4 — resolved DOWNWARD per convention (index 0's value), since no rendered consumer
@@ -460,8 +466,8 @@ const orange: MantineColorsTuple = [
   '#fd853a', // 3 — UNUSED (nearest §4 stop is orange-400, not consumed)
   '#fd853a', // 4 — orange-400 (§4 AUTHORITATIVE)
   '#fb6514', // 5 — orange-500 (§4 AUTHORITATIVE)
-  '#fb6514', // 6 — UNUSED by TailAdmin (no orange-600 stop; placeholder = nearest §4 stop, orange-500) — consumed by `c="orange.6"` / `var(--mantine-color-orange-6)` (AdminUsersTable.tsx location-request icon/label)
-  '#fb6514', // 7 — UNUSED by TailAdmin; Badge/Button variant="light" DOES read this index (primaryShade:7, Task 620) — identical value to index 6 here, so no rendered discrepancy — consumed by ROLE_COLOR.moderator Badge + the location-request filter Button
+  '#fb6514', // 6 — kept as orange-500 (TailAdmin's live orange-600 is `#ec4a0a`; index 6 is unchanged so `c="orange.6"` / `var(--mantine-color-orange-6)` in AdminUsersTable.tsx location-request icon/label render as before)
+  '#c4320a', // 7 — orange-700 (TailAdmin live `style.css`, 2026-10-07; Task 859 Revision 4, R41): 5.16:1 on index 0, where the former orange-500 copy gave 2.82:1 and failed WCAG AA. Badge/Button variant="light" read this index (primaryShade:7, Task 620) — consumed by ROLE_COLOR.moderator Badge + the location-request filter Button
   '#fb6514', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
   '#fb6514', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
@@ -476,7 +482,7 @@ const orange: MantineColorsTuple = [
 // Added for the `status_rented` card badge (Task 617) — no existing theme color matched
 // `globals.css --status-rented: oklch(0.577 0.174 295)` (purple).
 const purple: MantineColorsTuple = [
-  '#f4f2fe', // 0 — approximation (Badge light bg)
+  '#f4f2fe', // 0 — approximation (lightest stop; no longer a Badge fill: D78-26)
   '#e9e5fd', // 1 — approximation
   '#d3cbfb', // 2 — approximation
   '#bdb1f9', // 3 — approximation
@@ -685,6 +691,7 @@ export const theme = createTheme({
     lg:   '0.5rem',   //  8px — Button / Input / Select / SegmentedControl
     xl:   '0.75rem',  // 12px
     '2xl': '1rem',    // 16px — Card / Paper (TailAdmin rounded-2xl)
+    '3xl': '1.5rem',  // 24px — dialog content (TailAdmin /modals, D78-22, Task 859 Revision 3)
     pill:  '9999px',  // Badge pill (TailAdmin rounded-full)
   },
   defaultRadius: 'lg', // 8px default for all controls
@@ -794,6 +801,7 @@ export const theme = createTheme({
       dashboardPeriodColumn: '13.25rem', // 212px — Task 845 Pass 15, see the `MantineThemeOther` augmentation above for the full measurement
       dropdownPanel: '13.75rem', // 220px
       galleryNavDemoHeight: '16.875rem', // 270px — Task 824 R17 revision, D824-4/AC17 audit
+      searchFieldMin: '12.5rem', // 200px — Task 923 R33 (Story 077): the AdminListingsView search field was squeezed to 12px by two long-label selects
       compactTrigger: '17.5rem', // 280px
       avatarCropArea: '18rem', // 288px — Task 842: AvatarCropModal crop-area height (was Tailwind h-72, AvatarCropModal.tsx:104)
       emptyState: '22.5rem',     // 360px
@@ -905,7 +913,10 @@ export const theme = createTheme({
       semiDonutSize: 220,
       radialSize: 180,
       radarSize: 100,
-      radarLabelReserve: 90,
+      barColumnWidthDense: '80%',
+      barDenseSlotWidth: 12,
+      barCategoryMaxShare: 0.5,
+      radarLabelOffset: 10,
       barRadius: 4,
       donutBorderRadius: 8,
       donutSpacing: 3,
@@ -943,6 +954,7 @@ export const theme = createTheme({
       monthDropdownMinWidth: 190,
       yearDropdownMinWidth: 140,
       mobileListHeight: '45dvh',
+      twoMonthsMinWidth: 700,
     },
   },
 
@@ -1052,7 +1064,9 @@ export const theme = createTheme({
         // "Вторин|на"). 'normal' + overflowWrap:'break-word' wraps at spaces first; a single
         // token is only broken as the LAST resort when it alone can't fit its line (320px h-scroll
         // guard), never as the default behavior for a multi-word label in a tight row.
-        label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'normal', overflowWrap: 'break-word' },
+        // Task 923 (R33, owner D6): Mantine's compact buttons set `line-height: 1`, so a label that wraps stacked its lines on a
+        // 14px pitch with their text boxes overlapping; the theme `sm` line height keeps a wrapped label readable.
+        label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'normal', overflowWrap: 'break-word', lineHeight: 'var(--mantine-line-height-sm)' },
       }),
     },
     TextInput: {
@@ -1081,18 +1095,29 @@ export const theme = createTheme({
     },
     PasswordInput: {
       // inputWrapperOrder: description below input (Task 503 owner UX decision, matches TextInput/Textarea)
-      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
-      styles: {
+      // Task 923 (R33, owner D6): the show-password toggle is a 44px target (Mantine's own is 26px) and its right section is as wide as it.
+      // The size is the Styles API `visibilityToggle` slot, not `visibilityToggleButtonProps`: a consumer passes that prop for its aria-label and
+      // it would replace a default.
+      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'], rightSectionWidth: '2.75rem' },
+      styles: (theme: MantineTheme) => ({
         // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
         input: {
           minHeight: '2.75rem',                 // ≥44px outer div / TailAdmin h-11 (rem — exemption)
           color: 'var(--mantine-color-gray-8)', // §6 text — gray-800
         },
-      },
+        // the section spans the field's border box (it is positioned in the padding box, inside the border), so the 44px toggle lies
+        // inside it instead of 1px past it on both sides
+        section: { insetBlock: `calc(-1 * ${theme.other.borderWidth.hairline})` },
+        visibilityToggle: { minWidth: '2.75rem', minHeight: '2.75rem' },
+      }),
     },
     Select: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
       styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
+    },
+    // FileInput (Task 923 R33, Story 244): the same ≥44px field height as Select / TextInput (Mantine's own is 36px)
+    FileInput: {
+      styles: { input: { minHeight: '2.75rem' } },
     },
     Checkbox: {
       // size='xs' → 16px box (sm ≈ 20px, too large per §6f); body min-height 44px touch target;
@@ -1191,6 +1216,10 @@ export const theme = createTheme({
           justifyContent: 'center',
           borderRadius: 'var(--mantine-radius-md)', // §6c item radius — 6px (rounded-md)
           paddingInline: '0.75rem', // §6c item padding — px-3 = 12px
+          // Task 923 (R33, owner D6): Mantine's stock `overflow: hidden; text-overflow: ellipsis` is lifted; a label never ends in an
+          // ellipsis (the row swipe-scrolls instead, see `FavoritesTypeFilter` / `MantineDashboardPeriodControl`).
+          overflow: 'visible',
+          textOverflow: 'clip',
           '--sc-label-color': 'var(--mantine-color-gray-9)', // §6c active text = gray-900
         },
       },
@@ -1240,14 +1269,44 @@ export const theme = createTheme({
     // 18px, not 14px. The 14px variant remains reachable via `size='md'` for a consumer that needs
     // it (untouched — no current consumer relies on 'md'/'lg'/'xl' via the 'sm' default).
     Badge: {
-      defaultProps: { radius: 'pill', variant: 'light', size: 'sm' },
+      // Task 859 Revision 7 (owner decision D78-26, 2026-10-08): the canonical badge look is the one the `ListingCard`
+      // Story shows: Mantine's `filled` variant, which draws the colour's index-7 stop (primaryShade:7) with white text.
+      // It is the same on white, gray-50 and photo surfaces, so there is no second (light/tint) look and no per-surface
+      // variant: D78-21's light tint is withdrawn. `MantineBadge` is the only caller and passes a meaning, never a look.
+      defaultProps: { radius: 'pill', variant: 'filled', size: 'sm' },
+      // The one other look a badge has, owned here and not in a caller: the `light` variant is the neutral count chip
+      // (inside a light host button or beside a tab label, `MantineBadge` `count` `neutral`): the colour's index-2 tint
+      // with its index-7 text (gray-2 / gray-7, owner correction 2026-07-09). Every other badge is `filled`.
+      vars: (theme: MantineTheme, props: BadgeProps) => {
+        if (props.variant !== 'light') return { root: {} }
+        const parsed = parseThemeColor({ color: props.color ?? theme.primaryColor, theme })
+        if (!parsed.isThemeColor) return { root: {} }
+        return {
+          root: {
+            '--badge-bg': `var(--mantine-color-${parsed.color}-2)`,
+            '--badge-color': `var(--mantine-color-${parsed.color}-7)`,
+          },
+        }
+      },
       styles: (_theme: MantineTheme, props: BadgeProps) => {
         const size = props.size ?? 'sm'
         return {
+          // Task 859 R84 (D6, GR-3j): a badge never cuts its label. The pill grows with a label that does not fit one
+          // line (`height: auto`, never below Mantine's own badge height) and the label wraps instead of ellipsising.
+          // A label that fits keeps its single-line pill. `circle` keeps width == height (see below).
+          label: {
+            whiteSpace: 'normal',
+            overflow: 'visible',
+            textOverflow: 'clip',
+          },
           root: {
             fontWeight: 500,
+            // Mantine's stock Badge root also ends in `text-overflow: ellipsis` (hidden overflow): lifted with the label's, Task 923 R33
+            overflow: 'visible',
+            textOverflow: 'clip',
             textTransform: 'none',
             letterSpacing: 'normal',
+            ...(!props.circle && { height: 'auto', minHeight: 'var(--badge-height)' }),
             // Task 781R — `circle` (Mantine's own native round-counter mod, e.g. a filter-count
             // badge inside a button) must NOT inherit the §6b oval-pill height/padding override
             // below: Mantine's own `[data-circle]` CSS class sets `width: var(--badge-height)` +
@@ -1269,6 +1328,27 @@ export const theme = createTheme({
           },
         }
       },
+    },
+    // Text and Anchor (Task 859 R85, D6, GR-3i/GR-3j): a word or e-mail longer than its box breaks inside the word
+    // instead of running past it; text that fits renders unchanged.
+    Text: {
+      styles: { root: { overflowWrap: 'break-word' } },
+    },
+    // An Anchor rendered as a `button` is a standalone text action ("← Back to login"), not a link inside a sentence: it reaches the
+    // 44px touch token (Task 923 R33, the AuthSheet finding), as every other mobile-reachable control.
+    Anchor: {
+      styles: (theme: MantineTheme, props: { component?: unknown }) => ({
+        root: {
+          overflowWrap: 'break-word',
+          ...(props.component === 'button' && {
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: theme.other.touchTarget,
+            minWidth: theme.other.touchTarget,
+          }),
+        },
+      }),
     },
     // Card: flat-border, 2xl radius (16px), lg padding (20px). No shadow (shadow only on popovers).
     // Border color: gray-2 (#e4e7ec) via scoped CSS variable override (Task 527 fix #7, §6l Cards —
@@ -1292,11 +1372,32 @@ export const theme = createTheme({
     // header styles: title→body gap 8px (Task 527 fix #12, §6l composition rhythm) — Mantine's
     // ModalBase header padding defaults to spacing-md (16px) on every side; body's own top padding
     // resets to 0 when a header is present, so header's bottom padding IS the title→body gap.
+    // Task 859 Revision 3 (D78-22): the dialog content takes the 24px `3xl` corner of TailAdmin /modals. The content is
+    // a Mantine `Paper`, and the Paper entry below sets `--paper-radius` to 16px inline, which is what painted; the
+    // content therefore sets its own `--paper-radius` here, for both `Modal` and `Modal.Root` (same styles name).
+    // Task 859 Revision 7 (R51, owner O78-13 return): a dialog scrolls only its content. The content is a flex column
+    // that clips (`overflow: hidden`, so the 24px corners are never crossed by a scrollbar); the header and the footer
+    // are non-scrolling flex children, and only the body is the scroll region (`flex: 1; min-height: 0`). It is the same
+    // split `ResponsiveBottomSheet` uses below 640 (`bottomSheetDrawerStyles.body`), and Lahomes' scrollable modal.
+    // Task 859 Revision 8 (R55, owner O78-13 return): the header keeps its natural height in every state. In a flex column
+    // a flex item shrinks by default (`flex-shrink: 1`), so a body that overflowed squeezed the header below its content
+    // (77px measured as 60-69.5px) and left a band of scrolled body content between the header box and its divider.
+    // The footer is already `flex="none"`; only the body is allowed to shrink (`flex: 1; min-height: 0`).
     Modal: {
-      defaultProps: { radius: 'lg', centered: true },
+      defaultProps: { radius: '3xl', centered: true },
       styles: {
-        header: { paddingBottom: '0.5rem' }, // §6l 8px
+        header: { paddingBottom: '0.5rem', flexShrink: 0 }, // §6l 8px; never squeezed by an overflowing body (R55)
+        content: {
+          '--paper-radius': 'var(--mantine-radius-3xl)',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        },
+        body: { flex: 1, minHeight: 0, overflowY: 'auto' },
       },
+    },
+    ModalRoot: {
+      defaultProps: { radius: '3xl' },
     },
     // Drawer shares Modal's ModalBase header/body composition — same title→body 8px rhythm (Task 527 fix #12).
     Drawer: {
@@ -1673,6 +1774,7 @@ export const theme = createTheme({
             fontSize: 'var(--mantine-font-size-sm)', // §6l 14px
             color: 'var(--mantine-color-gray-5)',     // §6l gray-500
             lineHeight: '1.25rem',                    // §6l 20px
+            overflowWrap: 'anywhere',                 // a long unbreakable token (an e-mail) wraps inside the alert instead of running past it (Task 927 R15)
           },
           icon: {
             color: `var(--mantine-color-${color}-5)`, // §6l semantic-500

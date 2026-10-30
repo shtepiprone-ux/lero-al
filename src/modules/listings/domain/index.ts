@@ -73,5 +73,8 @@ export {
   isModeratableStatus,
   getPrivilegedTargetStatuses,
   canSetStatusPrivileged,
+  STAFF_ONLY_TARGET_STATUSES,
+  canOwnerSetStatus,
+  getOwnerTargetStatuses,
   getAllowedTargetStatuses,
 } from './listingTransitionEngine'

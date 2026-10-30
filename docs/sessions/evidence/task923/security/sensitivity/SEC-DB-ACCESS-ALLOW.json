@@ -1,0 +1,824 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T11:37:48.210Z",
+ "case": "SEC-DB-ACCESS-ALLOW",
+ "results": [
+  {
+   "id": "SEC-DB-ACCESS-ALLOW",
+   "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+   "testName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "database": true,
+     "description": "caller_is_active() returns false for every caller",
+     "key": "SEC-DB-ACCESS-ALLOW"
+    }
+   ],
+   "databaseBreak": {
+    "key": "SEC-DB-ACCESS-ALLOW",
+    "fingerprintBefore": "dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346",
+    "fingerprintAfter": "dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346",
+    "equal": true
+   },
+   "failureMessage": "AssertionError: expected [] to deeply equal [ Array(1) ]\n    at C:/Claude_Code_Projects/lero-al/src/tests/integration/accessHardening.integration.test.ts:246:27\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 22,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 21,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793273853150,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "status": "skipped",
+         "title": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "skipped",
+         "title": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "passed",
+         "title": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "duration": 937.7582,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "status": "skipped",
+         "title": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "status": "skipped",
+         "title": "[SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "status": "skipped",
+         "title": "[SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "status": "skipped",
+         "title": "[SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "status": "skipped",
+         "title": "[SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793273854447,
+       "endTime": 1793273855384.7583,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/accessHardening.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 22,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 21,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793273859063,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "status": "skipped",
+         "title": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "skipped",
+         "title": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "failed",
+         "title": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "duration": 431.9126000000001,
+         "failureMessages": [
+          "AssertionError: expected [] to deeply equal [ Array(1) ]\n    at C:/Claude_Code_Projects/lero-al/src/tests/integration/accessHardening.integration.test.ts:246:27\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "status": "skipped",
+         "title": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "status": "skipped",
+         "title": "[SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "status": "skipped",
+         "title": "[SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "status": "skipped",
+         "title": "[SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "status": "skipped",
+         "title": "[SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793273860382,
+       "endTime": 1793273860813.9126,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/accessHardening.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 22,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 21,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793273864553,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "status": "skipped",
+         "title": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "status": "skipped",
+         "title": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "status": "skipped",
+         "title": "[SEC-DB-S62-DENY] Only the server records a listing view",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "skipped",
+         "title": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "status": "passed",
+         "title": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+         "duration": 715.4828,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "status": "skipped",
+         "title": "[SEC-DB-ERR] A refused write answers 42501 and leaves the row as it was",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "status": "skipped",
+         "title": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "status": "skipped",
+         "title": "[SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "status": "skipped",
+         "title": "[SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "status": "skipped",
+         "title": "[SEC-DB-X-RESTORE-ALLOW] an active account keeps its own access",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "status": "skipped",
+         "title": "[SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "status": "skipped",
+         "title": "[SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "status": "skipped",
+         "title": "[SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "accessHardening"
+         ],
+         "fullName": "accessHardening [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "status": "skipped",
+         "title": "[SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793273865838,
+       "endTime": 1793273866553.483,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/accessHardening.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

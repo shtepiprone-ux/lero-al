@@ -1,0 +1,16 @@
+# R140 AC140 r43-05: grammar check of the v4 pair (db-catalog/r9-62-syntax-deletion.cjs, pg 8.21.0 + plpgsql-parser 18.5.10 from the session scratchpad)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "node -e \"console.log(\\\"pg \\\"+require(\\\"pg/package.json\\\").version+\\\", plpgsql-parser \\\"+require(\\\"plpgsql-parser/package.json\\\").version)\"; node docs/sessions/evidence/task923/db-catalog/r9-62-syntax-deletion.cjs; rc=$?; echo \"grammar check exit: $rc\"; exit $rc"
+NODE_PATH: C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/node_modules
+started: 2026-10-24T09:40:16.566Z
+--- stdout ---
+pg 8.21.0, plpgsql-parser 18.5.10
+proposed-account-deletion.sql: 83 statements, 3 plpgsql bodies parsed OK
+proposed-account-deletion-rollback.sql: 59 statements, 2 plpgsql bodies parsed OK
+grammar check exit: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

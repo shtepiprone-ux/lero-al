@@ -27,7 +27,7 @@ const meta: Meta<typeof ListingPreviewDialogView> = {
     docs: {
       description: {
         component:
-          'Listing preview on the canonical dialog anatomy (docs §23.7): a structured `MantineModal` whose sections are the status as `StatusChangeSelect`, the facts as `MantineDetailList` and the navigation as `MantineNavRowList` (hidden listings have no public-page row); the footer is an equal-width Delete (secondary) and Edit (the one primary) pair; the delete confirmation shows one section and a Cancel / filled red Delete pair.',
+          'Listing preview on the canonical dialog anatomy (docs §23.7): a structured `MantineModal` whose sections are the status as `StatusChangeSelect`, the facts as `MantineDetailList` and the navigation as `MantineNavRowList` (hidden listings have no public-page row); the footer is an equal-width Delete (secondary) and Edit (the one primary) pair; Delete opens the canonical `MantineDeleteConfirmModal` (Cancel / filled red Delete) as a second dialog over the preview.',
       },
     },
   },
@@ -54,6 +54,8 @@ function DialogDemo({
   const tc = useTranslations('cabinet')
   const tl = useTranslations('listing')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(initialConfirm)
+  // Fixture only: the production container sets `deleting` while `deleteListing` runs and closes the confirm when it resolves.
+  const [deleting, setDeleting] = useState(false)
   const statusLabels = Object.fromEntries(
     LISTING_STATUS_CODES.map(s => [s, getListingStatusLabel(s, k => tc(k as Parameters<typeof tc>[0]))]),
   ) as Record<ListingStatus, string>
@@ -66,9 +68,9 @@ function DialogDemo({
       statusOptions={statusOptions}
       onStatusChange={({ toStatus }) => setListing(prev => ({ ...prev, status: toStatus }))}
       showDeleteConfirm={showDeleteConfirm}
-      deleting={false}
+      deleting={deleting}
       onShowDeleteConfirm={setShowDeleteConfirm}
-      onDelete={() => {}}
+      onDelete={() => { setDeleting(true); setTimeout(() => { setDeleting(false); setShowDeleteConfirm(false) }, 1500) }}
       onPremium={() => {}}
       onClose={() => {}}
     />

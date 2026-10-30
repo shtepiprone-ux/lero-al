@@ -1,0 +1,310 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS evidence script (Task 923), not product code */
+// Generates proposed-account-deletion.sql (v4) and its rollback (Task 923 R43 (b), owner decisions D25, D30-D35; v2 = R59 of kickoff section 24, Opus's review of 2026-10-19,
+// review-15/rv15-02-sql-review.md; v3 = R62 of kickoff section 26, Opus's review 17 of 2026-10-19, review-17/rv17-02-sql-review.md). Nothing is executed here.
+// The constraint names, the referenced table, the delete rule and the NOT NULL state of every key come from r43-01-deletion-schema-facts.txt (read-only query on the approved
+// development database, r9-60-account-references.cjs); the exact definition of every key (pg_get_constraintdef) comes from r43-02-capture-r14.json (r14-capture.cjs, read-only);
+// the columns and the table-level ACL of `pages` and `site_footer` (R62 (b)) come from r43-03-capture-r16.json (r16-capture.cjs, read-only).
+// The file is NOT applied: Opus re-reviews it, the owner approves its SHA-256, and only then is it applied.
+const fs = require('fs')
+const D = 'C:/Claude_Code_Projects/lero-al/docs/sessions/evidence/task923/'
+const cap = require(D + 'r43-02-capture-r14.json')
+const cap16 = require(D + 'r43-03-capture-r16.json')
+const facts = fs.readFileSync(D + 'r43-01-deletion-schema-facts.txt', 'utf8').split(/\r?\n/).slice(1).filter(Boolean).map((l) => {
+  const m = /^(\w+)\.(\w+) -> (auth\.users|users) (\w) notnull=(true|false) \((\w+)\)$/.exec(l)
+  if (!m) throw new Error('unparsed fact line: ' + l)
+  return { tbl: m[1], col: m[2], ref: m[3] === 'users' ? 'public.users' : 'auth.users', rule: m[4], notnull: m[5] === 'true', con: m[6] }
+})
+const find = (tbl, col) => { const f = facts.find((x) => x.tbl === tbl && x.col === col); if (!f) throw new Error(`no key ${tbl}.${col}`); return f }
+
+// (1) the 15 staff traces whose key becomes ON DELETE SET NULL; (3) the 2 report / complaint keys that already are SET NULL and only gain the name
+const STAFF = [
+  ['contact_inquiries', 'handled_by'], ['contact_inquiry_replies', 'replied_by'], ['email_templates', 'updated_by'], ['history_clear_events', 'actor_user_id'],
+  ['pages', 'updated_by'], ['report_actions', 'actor_id'], ['role_permission_events', 'actor_user_id'], ['role_permissions', 'updated_by_user_id'],
+  ['site_footer', 'updated_by'], ['support_ticket_events', 'actor_user_id'], ['support_tickets', 'assigned_to'], ['support_tickets', 'created_by_admin_id'],
+  ['user_change_log', 'changed_by'], ['user_status_history', 'changed_by'], ['verification_requests', 'reviewed_by'],
+].map(([tbl, col]) => ({ ...find(tbl, col), name: col + '_name' }))
+const KEPT = [['listing_reports', 'user_id'], ['support_tickets', 'reported_user_id']].map(([tbl, col]) => ({ ...find(tbl, col), name: col + '_name' }))
+const ALL = [...STAFF, ...KEPT]
+if (STAFF.length !== 15 || ALL.length !== 17) throw new Error('expected 15 + 2 name columns')
+// (2) the person's own statistics go with the account
+const STATS = [find('listing_views', 'user_id'), find('listing_contact_events', 'actor_user_id')]
+
+// R59 (c): the keys this file re-creates (the five NO ACTION staff keys and the two statistics keys): their captured definitions are checked by the preflight and restored by the rollback
+const RECREATED = [...STAFF.filter((f) => f.rule !== 'n'), ...STATS]
+if (RECREATED.length !== 7) throw new Error('expected seven re-created keys, have ' + RECREATED.length)
+const defOf = (f) => {
+  const c = cap.constraints.find((x) => x.tbl === f.tbl && x.col === f.col && x.con === f.con)
+  if (!c) throw new Error(`no captured definition for ${f.tbl}.${f.con}`)
+  if (!c.validated) throw new Error(`${f.tbl}.${f.con} is NOT VALID in the capture; its definition text would have to say so`)
+  return c.def
+}
+// R59 (a): the two updated_at triggers that a backfill must not fire (their tables, names and enabled state are checked by the preflight)
+const UPDATED_AT = [['email_templates', 'trg_email_templates_updated_at'], ['support_tickets', 'trg_support_tickets_updated_at']]
+for (const [tbl, name] of UPDATED_AT) {
+  const t = cap.triggers.find((x) => x.tbl === tbl && x.name === name)
+  if (!t || t.enabled !== 'O') throw new Error(`the capture has no enabled trigger ${tbl}.${name}`)
+}
+const ofUpdatedAt = (f) => UPDATED_AT.some(([tbl]) => tbl === f.tbl)
+
+// R62 (b): `pages` and `site_footer` are readable by anon and authenticated at table level (every column, so every column added later). The new staff-name column on both must not be public:
+// the table-level SELECT of both roles is replaced by a SELECT on each CURRENT column except updated_by_name. The capture (r43-03-capture-r16.json) is the source of the column lists, the
+// table-level ACL the preflight compares and the rollback restores, and the proof that no column-level ACL exists today (so revoking the column grants restores the state exactly).
+const PUBLIC_TABLES = ['pages', 'site_footer'].map((tbl) => {
+  const t = cap16.tables.find((x) => x.tbl === tbl)
+  const cols = cap16.columns.filter((x) => x.tbl === tbl)
+  if (!t || !cols.length) throw new Error(`the capture r43-03-capture-r16.json has no table ${tbl}`)
+  if (!t.rls) throw new Error(`${tbl} has row-level security off in the capture`)
+  if (cols.some((x) => x.col_acl !== null)) throw new Error(`${tbl} already has a column-level ACL in the capture: the rollback could not restore the state exactly`)
+  if (cols.some((x) => x.col === 'updated_by_name')) throw new Error(`${tbl} already has updated_by_name in the capture`)
+  for (const role of ['anon', 'authenticated']) {
+    if (!new RegExp(`(?:^|[{,])${role}=[a-zA-Z*]*r[a-zA-Z*]*/`).test(t.acl)) throw new Error(`${tbl}: ${role} holds no table-level SELECT in the capture (${t.acl}): the revoke would change nothing`)
+  }
+  return { tbl, acl: t.acl, cols: cols.map((x) => x.col) }
+})
+const GRANT_ROLES = 'anon, authenticated'
+
+const q = (s) => `"${s}"`
+const lit = (s) => "'" + String(s).replace(/'/g, "''") + "'"
+const fkAdd = (f, rule) => `alter table public.${f.tbl} drop constraint ${q(f.con)}, add constraint ${q(f.con)} foreign key (${q(f.col)}) references ${f.ref}(id) on delete ${rule};`
+const fkRestore = (f) => `alter table public.${f.tbl} drop constraint ${q(f.con)}, add constraint ${q(f.con)} ${defOf(f)};`
+const backfill = (f) => `update public.${f.tbl} set ${q(f.name)} = public.account_display_name(${q(f.col)}) where ${q(f.col)} is not null;`
+const nameTrigger = (f) => `create trigger ${f.tbl}_${f.col}_name before insert or update on public.${f.tbl} for each row execute function public.set_actor_name('${f.col}', '${f.name}');`
+
+const apply = `-- PROPOSED (v4) — NOT APPLIED. Task 923 R43 (b): ONE complete deletion of an account for every role and every path (owner decisions D25, D27, D30-D35).
+-- v2 = v1 + the three changes of Opus's review of 2026-10-19 (review-15/rv15-02-sql-review.md, kickoff section 24, R59): (a) the backfill leaves updated_at alone, (b) the name is the trigger's alone,
+-- (c) the preflight compares the whole definition of the seven re-created keys.
+-- v3 = v2 + the changes of Opus's review 17 (review-17/rv17-02-sql-review.md, kickoff section 26, R62): (a) the kept name is the person's name and last name, never an e-mail address;
+-- (b) pages and site_footer stop being readable by anon / authenticated in every column: the new updated_by_name is not public; (c) a writer who clears the id of a LIVE account stores a null
+-- name, the old name stays only for an account that no longer exists; (d) deleteAccount removes the company logo too (code, R43 (c), outside this file).
+-- v4 = v3 regenerated against the catalog of 2026-10-24, after hardening v7.1 and v8a (kickoff section 69, R140): only the audited table-level ACL of site_footer changes; anon and authenticated no longer hold TRUNCATE on it.
+-- Generated by gen-sql-deletion.cjs from r43-01-deletion-schema-facts.txt, r43-02-capture-r14.json and r43-03-capture-r16.json.
+-- The database was NOT changed by the executor.
+-- Opus re-reviews this file, the owner approves its SHA-256 in writing, only then is it applied (and copied byte for byte to supabase/migrations/20261018010000_task923_account_deletion.sql).
+--
+-- WHAT IT DOES
+--   1. Staff traces keep a NAME (D32): the 15 columns that name the staff member who acted (handled_by, replied_by, updated_by, actor_*, assigned_to, created_by_admin_id,
+--      changed_by, reviewed_by) each get a sibling <column>_name, filled by one shared BEFORE INSERT OR UPDATE trigger and backfilled; their keys become ON DELETE SET NULL, so the record stays
+--      with the name when the id goes. Five of them were NO ACTION and BLOCKED the deletion of any staff member who had ever acted; two (replied_by, actor_id) were NOT NULL and lose that.
+--      The name is the TRIGGER's alone (R59 (b)): on INSERT it is set from the id (null when the id is null); on UPDATE it is recomputed when the id changes to another person, kept when the id
+--      is unchanged, and, when the id becomes null, kept only if the old account no longer exists (the SET NULL of a deletion, R62 (c)): a writer who clears the id of a LIVE account (a row of
+--      public.users or of auth.users still exists) stores a null name. A name supplied by a writer is never stored. The name is the person's name and last name (R62 (a)): it is never read
+--      from auth.users, so an e-mail address is never kept; both empty stores null. Each backfill runs BEFORE its trigger is created, so the trigger does not see it.
+--   2. The person's own statistics go with the account (D33): listing_views.user_id and listing_contact_events.actor_user_id become ON DELETE CASCADE, and an AFTER DELETE
+--      trigger on listing_views lowers listings.views_count by one for each deleted row whose listing still exists (one row is one increment), never below 0.
+--   3. Reports and complaints stay, with the name (D33, D35): listing_reports.user_id and support_tickets.reported_user_id keep SET NULL and gain the same name column,
+--      trigger and backfill. listing_inquiries holds the sender's typed name and e-mail already and is not touched. 17 columns in all keep a name.
+--   4. Companies (D31): companies.created_by -> public.users ON DELETE CASCADE. Deleting the creator deletes the company ROW; its other agents keep company_id null through
+--      the existing SET NULL. The company's LOGO FILE is not removed by this SQL: deleteAccount (R43 (c), R62 (d)) collects companies.logo_url of every company whose created_by is the person
+--      BEFORE the Auth deletion and removes the file after it. Existing companies get created_by = null (no creator is recorded); Task 926 fills it for new companies (and must not record a
+--      staff member as the creator of a company made for an agent: deleting that staff account would delete the agents' company).
+--   5. Everything else already goes with the Auth user through the CASCADE keys (users.id -> auth.users CASCADE and the 24 CASCADE keys).
+--   6. (v2, R59 (a)) email_templates and support_tickets carry BEFORE UPDATE triggers that set updated_at (trg_email_templates_updated_at, trg_support_tickets_updated_at). The two are
+--      disabled around the backfills of those two tables, in this transaction, and enabled again: no template and no ticket gets a new "last updated" time at migration.
+--   7. (v2, R59 (c)) The seven keys this file re-creates are re-created with the clauses of today's definition (no ON UPDATE, MATCH or DEFERRABLE clause today); the preflight compares each
+--      captured definition (pg_get_constraintdef) and the rollback restores exactly that definition.
+--   8. (v3, R62 (b)) NO NAME IN PUBLIC. anon and authenticated hold a table-level SELECT on pages and site_footer today, which covers every column added later, and both tables have a policy that
+--      returns their rows to visitors. The new updated_by_name column would be readable with the public API key alone. In this transaction the table-level SELECT of both roles on both tables is
+--      REVOKED and replaced by a SELECT on each CURRENT column except updated_by_name (the column lists come from r43-03-capture-r16.json; the preflight refuses on any difference in the columns, in
+--      the table-level ACL, or if a column-level ACL already exists). Nothing else changes: the other privileges, the policies and the service role are untouched. A column added to either table
+--      LATER is not readable by anon / authenticated until a migration grants it. Staff screens read the two name columns only through the service-role client, after the staff check.
+--      The rollback revokes the column grants and grants the table-level SELECT back (the captured relacl is checked at its end).
+--
+-- OUTSIDE THIS SQL (kickoff sections 24 and 26, R60, R62 (d), owner decision D30): users.company_logo_url, companies.logo_url of every company created by the person,
+-- verification_requests.document_url and the person's objects of the avatars bucket under <user id>/ go with the account too; deleteAccount (R43 (c)) removes those files. This file does not touch
+-- them.
+
+begin;
+set local lock_timeout = '10s';
+-- v2: the text of a constraint definition depends on the search_path that renders it; the capture and this preflight both render under this one
+set local search_path = public, pg_temp;
+
+-- ── 0. preflight: the keys must be exactly what was read ───────────────────────────────────────────────────────────────────────────────────
+do $pre$
+declare
+  r record;
+  want text[][] := array[
+${[...ALL, ...STATS].map((f) => `    ['${f.tbl}', '${f.con}', '${f.rule}']`).join(',\n')}
+  ];
+  want_def text[][] := array[
+${RECREATED.map((f) => `    [${lit(f.tbl)}, ${lit(f.con)}, ${lit(defOf(f))}]`).join(',\n')}
+  ];
+  i int;
+  have char;
+  have_def text;
+begin
+  for i in 1 .. array_length(want, 1) loop
+    select c.confdeltype into have from pg_constraint c where c.conrelid = ('public.' || want[i][1])::regclass and c.conname = want[i][2];
+    if have is null or have::text <> want[i][3] then
+      raise exception 'preflight failed: %.% has delete rule % (audited %)', want[i][1], want[i][2], coalesce(have::text, 'missing'), want[i][3];
+    end if;
+  end loop;
+  -- v2 (R59 (c)): the whole definition of each re-created key, not only its delete rule
+  for i in 1 .. array_length(want_def, 1) loop
+    select pg_get_constraintdef(c.oid) into have_def from pg_constraint c where c.conrelid = ('public.' || want_def[i][1])::regclass and c.conname = want_def[i][2];
+    if have_def is distinct from want_def[i][3] then
+      raise exception 'preflight failed: %.% is defined as % (captured %)', want_def[i][1], want_def[i][2], coalesce(have_def, 'missing'), want_def[i][3];
+    end if;
+  end loop;
+  -- v2 (R59 (a)): the two updated_at triggers exist, are not internal and are enabled (so that enabling them again restores today's state)
+${UPDATED_AT.map(([tbl, name]) => `  if (select count(*) from pg_trigger t where t.tgrelid = 'public.${tbl}'::regclass and t.tgname = '${name}' and not t.tgisinternal and t.tgenabled = 'O') <> 1 then
+    raise exception 'preflight failed: trigger ${name} on public.${tbl} is not the enabled trigger that was audited';
+  end if;`).join('\n')}
+  -- v3 (R62 (b)): pages and site_footer have exactly the columns and the table-level ACL that were captured, and no column-level ACL (the column lists below are the captured ones)
+${PUBLIC_TABLES.map((t) => `  if (select array_agg(a.attname::text order by a.attnum) from pg_attribute a where a.attrelid = 'public.${t.tbl}'::regclass and a.attnum > 0 and not a.attisdropped)
+     is distinct from array[${t.cols.map(lit).join(', ')}]::text[] then
+    raise exception 'preflight failed: the columns of public.${t.tbl} are not the audited ones';
+  end if;
+  if (select c.relacl::text from pg_class c where c.oid = 'public.${t.tbl}'::regclass) is distinct from ${lit(t.acl)} then
+    raise exception 'preflight failed: the table-level ACL of public.${t.tbl} is not the audited one';
+  end if;
+  if exists (select 1 from pg_attribute a where a.attrelid = 'public.${t.tbl}'::regclass and a.attnum > 0 and not a.attisdropped and a.attacl is not null) then
+    raise exception 'preflight failed: public.${t.tbl} already has a column-level ACL';
+  end if;`).join('\n')}
+  if to_regprocedure('public.account_display_name(uuid)') is not null or to_regprocedure('public.set_actor_name()') is not null
+     or exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'companies' and column_name = 'created_by') then
+    raise exception 'preflight failed: deletion objects already exist';
+  end if;
+end $pre$;
+
+-- ── 1/3. the name that stays when the account goes ─────────────────────────────────────────────────────────────────────────────────────────
+-- v3 (R62 (a)): the person's name and last name, each trimmed, joined by one space, or null when both are empty. It never reads auth.users: an e-mail address is not a name and D30 keeps
+-- nothing else of a deleted person.
+create function public.account_display_name(p_user uuid) returns text
+language sql stable security definer set search_path = public, pg_temp as $$
+  select nullif(concat_ws(' ', nullif(trim(u.name), ''), nullif(trim(u.last_name), '')), '') from public.users u where u.id = p_user
+$$;
+revoke all on function public.account_display_name(uuid) from public, anon, authenticated;
+grant execute on function public.account_display_name(uuid) to service_role;
+
+-- one shared trigger function (R59 (b), R62 (c)): the name column is the trigger's alone. INSERT: from the id, null when the id is null. UPDATE: recomputed when the id changes to another
+-- person; kept when the id is unchanged; and when the id becomes null (R62 (c)): kept only if the old account no longer exists (no row of that id in public.users and none in auth.users:
+-- the SET NULL of a deletion), stored as null if it still exists (a writer clearing the id of a live account). An UPDATE of a row whose id is already null keeps the old name.
+-- Whatever name a writer supplies is replaced. The function is security definer so that it can look the old account up whatever the writer's own rights.
+create function public.set_actor_name() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_id_col text := tg_argv[0];
+  v_name_col text := tg_argv[1];
+  v_new jsonb := to_jsonb(new);
+  v_id uuid := nullif(v_new ->> v_id_col, '')::uuid;
+  v_old jsonb;
+  v_old_id uuid;
+  v_name text;
+begin
+  if tg_op = 'INSERT' then
+    v_name := case when v_id is null then null else public.account_display_name(v_id) end;
+  else
+    v_old := to_jsonb(old);
+    v_old_id := nullif(v_old ->> v_id_col, '')::uuid;
+    if v_id is null then
+      if v_old_id is not null and (exists (select 1 from public.users u where u.id = v_old_id) or exists (select 1 from auth.users a where a.id = v_old_id)) then
+        v_name := null;                                        -- the id of a LIVE account was cleared: no name is kept
+      else
+        v_name := v_old ->> v_name_col;                        -- the old account is gone (or the id was already null): the old name stays
+      end if;
+    elsif (v_old ->> v_id_col) is not distinct from (v_new ->> v_id_col) then
+      v_name := v_old ->> v_name_col;                          -- the id is unchanged: the old name stays
+    else
+      v_name := public.account_display_name(v_id);             -- the id changed to another person
+    end if;
+  end if;
+  return jsonb_populate_record(new, jsonb_build_object(v_name_col, v_name));
+end $$;
+revoke all on function public.set_actor_name() from public, anon, authenticated;
+
+-- the 17 name columns
+${ALL.map((f) => `alter table public.${f.tbl} add column ${q(f.name)} text;`).join('\n')}
+
+-- the backfills run BEFORE the triggers exist (R59 (b)); the tables without an updated_at trigger first
+${ALL.filter((f) => !ofUpdatedAt(f)).map(backfill).join('\n')}
+
+-- R59 (a): email_templates and support_tickets keep their updated_at through the backfill (the two triggers are disabled, then enabled again, in this transaction)
+${UPDATED_AT.map(([tbl, name]) => `alter table public.${tbl} disable trigger ${name};`).join('\n')}
+${ALL.filter(ofUpdatedAt).map(backfill).join('\n')}
+${UPDATED_AT.map(([tbl, name]) => `alter table public.${tbl} enable trigger ${name};`).join('\n')}
+
+-- the 17 name triggers
+${ALL.map(nameTrigger).join('\n')}
+
+-- the 15 staff keys become SET NULL (five were NO ACTION; two columns were NOT NULL)
+${STAFF.map((f) => (f.notnull ? `alter table public.${f.tbl} alter column ${q(f.col)} drop not null;\n` : '') + (f.rule === 'n' ? `-- ${f.tbl}.${f.col} is SET NULL already` : fkAdd(f, 'set null'))).join('\n')}
+
+-- ── 2. the person's own statistics ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+${STATS.map((f) => fkAdd(f, 'cascade')).join('\n')}
+
+create function public.lower_views_count_on_view_delete() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  update public.listings set views_count = greatest(views_count - 1, 0) where id = old.listing_id;
+  return old;
+end $$;
+revoke all on function public.lower_views_count_on_view_delete() from public, anon, authenticated;
+create trigger listing_views_lower_count after delete on public.listing_views for each row execute function public.lower_views_count_on_view_delete();
+
+-- ── 4. companies ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+alter table public.companies add column created_by uuid null references public.users(id) on delete cascade;
+create index companies_created_by on public.companies (created_by);
+
+-- ── 5. (v3, R62 (b)) no name in public ───────────────────────────────────────────────────────────────────────────────────────────────────────
+-- Revoking a table-level privilege also removes the column-level ones, so the revoke comes first. updated_by_name is the one column of both tables that is NOT granted again; the
+-- column lists are the captured ones (the preflight refused if they differ). The policies, the other privileges and the service role are not touched.
+revoke select on public.pages, public.site_footer from ${GRANT_ROLES};
+${PUBLIC_TABLES.map((t) => `grant select (${t.cols.map(q).join(', ')}) on public.${t.tbl} to ${GRANT_ROLES};`).join('\n')}
+
+notify pgrst, 'reload schema';
+commit;
+`
+
+const rollback = `-- ROLLBACK for proposed-account-deletion.sql (v4) — NOT APPLIED. Restores the audited delete rules (the seven re-created keys exactly as captured in r43-02-capture-r14.json) and drops every object
+-- the deletion design created. The two updated_at triggers are not touched by the rollback (the apply enabled them again).
+-- The two columns that were NOT NULL (contact_inquiry_replies.replied_by, report_actions.actor_id) get NOT NULL back only if no row has become null since: delete or fill
+-- those rows first, otherwise the statement fails and the transaction rolls back (nothing is half-restored).
+-- WARNING (R62 (e)): a rollback after ANY staff account has been deleted drops the <column>_name columns, which hold the ONLY name those records still carry. The kept names are lost for good;
+-- take a copy of the 17 name columns first if that matters.
+begin;
+set local lock_timeout = '10s';
+set local search_path = public, pg_temp;
+-- v3 (R62 (b)): the column grants go and the table-level SELECT of anon / authenticated comes back (the captured relacl is checked below)
+${PUBLIC_TABLES.map((t) => `revoke select (${t.cols.map(q).join(', ')}) on public.${t.tbl} from ${GRANT_ROLES};`).join('\n')}
+grant select on public.pages, public.site_footer to ${GRANT_ROLES};
+drop index if exists public.companies_created_by;
+alter table public.companies drop column if exists created_by;
+drop trigger if exists listing_views_lower_count on public.listing_views;
+drop function if exists public.lower_views_count_on_view_delete();
+${STATS.map(fkRestore).join('\n')}
+${STAFF.map((f) => (f.rule === 'n' ? `-- ${f.tbl}.${f.col} was SET NULL already` : fkRestore(f)) + (f.notnull ? `\nalter table public.${f.tbl} alter column ${q(f.col)} set not null;` : '')).join('\n')}
+${ALL.map((f) => `drop trigger if exists ${f.tbl}_${f.col}_name on public.${f.tbl};\nalter table public.${f.tbl} drop column if exists ${q(f.name)};`).join('\n')}
+drop function if exists public.set_actor_name();
+drop function if exists public.account_display_name(uuid);
+-- the restored keys are the captured ones
+do $chk$
+declare
+  want_def text[][] := array[
+${RECREATED.map((f) => `    [${lit(f.tbl)}, ${lit(f.con)}, ${lit(defOf(f))}]`).join(',\n')}
+  ];
+  i int;
+  have_def text;
+begin
+  for i in 1 .. array_length(want_def, 1) loop
+    select pg_get_constraintdef(c.oid) into have_def from pg_constraint c where c.conrelid = ('public.' || want_def[i][1])::regclass and c.conname = want_def[i][2];
+    if have_def is distinct from want_def[i][3] then
+      raise exception 'rollback check failed: %.% is defined as % (captured %)', want_def[i][1], want_def[i][2], coalesce(have_def, 'missing'), want_def[i][3];
+    end if;
+  end loop;
+end $chk$;
+-- v3 (R62 (b)): the table-level ACL of both tables is the captured one again and no column-level ACL is left
+do $chk2$
+begin
+${PUBLIC_TABLES.map((t) => `  if (select c.relacl::text from pg_class c where c.oid = 'public.${t.tbl}'::regclass) is distinct from ${lit(t.acl)} then
+    raise exception 'rollback check failed: the table-level ACL of public.${t.tbl} is not the captured one';
+  end if;
+  if exists (select 1 from pg_attribute a where a.attrelid = 'public.${t.tbl}'::regclass and a.attnum > 0 and not a.attisdropped and a.attacl is not null) then
+    raise exception 'rollback check failed: public.${t.tbl} still has a column-level ACL';
+  end if;`).join('\n')}
+end $chk2$;
+notify pgrst, 'reload schema';
+commit;
+`
+fs.writeFileSync(D + 'db-catalog/proposed-account-deletion.sql', apply)
+fs.writeFileSync(D + 'db-catalog/proposed-account-deletion-rollback.sql', rollback)
+console.log('written', apply.length, rollback.length, 'name columns', ALL.length, 'staff keys', STAFF.length, 'stats keys', STATS.length, 're-created keys', RECREATED.length, 'updated_at triggers', UPDATED_AT.length)

@@ -1,0 +1,20 @@
+# a13-02: typecheck and eslint --quiet on the integration file
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:31:12.266Z
+
+command: npm run typecheck
+--- output ---
+
+> lero-al@0.1.0 typecheck
+> tsc --noEmit
+--- exit code: 0 ---
+
+command: npx eslint --quiet src/lib/auth/googleSignIn.integration.test.ts
+--- output ---
+
+--- exit code: 0 ---
+
+finished: 2026-10-28T19:31:22.107Z
+exit code: 0

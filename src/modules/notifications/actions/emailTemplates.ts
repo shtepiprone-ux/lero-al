@@ -1,45 +1,24 @@
 'use server'
 
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
-import { createClient } from '@/lib/supabase/server'
+import { checkStaff } from '@/lib/auth/staff'
 import type { EmailTemplate } from '@/types/database'
 
 type SupportedLocale = 'sq' | 'en' | 'uk' | 'it'
 
 async function assertAdminOrModerator() {
-  const user = await getUser()
-  if (!user) return { error: 'unauthorized' as const }
-
-  const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (profile?.role !== 'admin' && profile?.role !== 'moderator') {
-    return { error: 'forbidden' as const }
-  }
-  return { user, role: profile.role as 'admin' | 'moderator' }
+  // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account of any role is refused here too
+  // Task 923 R75: a moderator needs the `email_templates.manage` key (deleting stays administrator-only, below); an administrator holds every key
+  const staff = await checkStaff({ permission: 'email_templates.manage' })
+  if (!staff.ok) return { error: staff.reason === 'unauthenticated' ? ('unauthorized' as const) : ('forbidden' as const) }
+  return { user: { id: staff.userId }, role: staff.role }
 }
 
 /** DELETE is admin-only per the email_templates policy (Task 123 / Task 161). */
 async function assertAdmin() {
-  const user = await getUser()
-  if (!user) return { error: 'unauthorized' as const }
-
-  const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  if (profile?.role !== 'admin') {
-    return { error: 'forbidden' as const }
-  }
-  return { user }
+  const staff = await checkStaff({ adminOnly: true })
+  if (!staff.ok) return { error: staff.reason === 'unauthenticated' ? ('unauthorized' as const) : ('forbidden' as const) }
+  return { user: { id: staff.userId } }
 }
 
 // Upsert one locale variant of a template (insert or update on key+locale conflict).
@@ -54,12 +33,26 @@ export async function upsertEmailTemplateAction(data: {
   const auth = await assertAdminOrModerator()
   if ('error' in auth && !auth.user) return { error: auth.error }
 
+  // The types are erased at runtime (Task 923 Revision 7): a template is stored only with a plain key, one of the four languages, text of a sane size and a list
+  // of placeholder names.
+  const key = typeof data?.key === 'string' ? data.key.trim().toLowerCase().replace(/\s+/g, '_') : ''
+  if (
+    !/^[a-z0-9_-]{1,64}$/.test(key) ||
+    !(['sq', 'en', 'uk', 'it'] as const).includes(data.locale) ||
+    typeof data.subject !== 'string' || !data.subject.trim() || data.subject.length > 300 ||
+    typeof data.html_body !== 'string' || data.html_body.length > 200_000 ||
+    !Array.isArray(data.variables) || data.variables.length > 50 || !data.variables.every((v) => typeof v === 'string' && /^\w{1,64}$/.test(v)) ||
+    typeof data.is_active !== 'boolean'
+  ) {
+    return { error: 'validation' }
+  }
+
   const db = createAdminClient()
   const { data: row, error } = await db
     .from('email_templates')
     .upsert(
       {
-        key: data.key.trim().toLowerCase().replace(/\s+/g, '_'),
+        key,
         locale: data.locale,
         subject: data.subject.trim(),
         html_body: data.html_body,

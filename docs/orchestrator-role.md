@@ -2,6 +2,8 @@
 
 This file defines the Opus orchestration and review layer. The compact executable workflow lives in
 `.claude/skills/` and `.claude/rules/`; detailed task-specific sources are selected by `docs/rule-index.md`.
+Task design follows C1-C7 and review follows R1-R7. Each step needs its observed evidence and exit condition; loaded
+rules or a receipt cannot complete it. Both workflows share `.claude/rules/shared/task-readiness.md` at publication.
 
 ## Role
 
@@ -111,13 +113,15 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 Opus may emit explicit-path commit commands for the owner after a verified task design that changed task/docs
-artifacts, after the mandatory kickoff amendment of a `NEEDS REVISION` review, or after an `APPROVED` /
+artifacts, after the verified kickoff amendment of a `NEEDS REVISION` review, or after an `APPROVED` /
 `APPROVED WITH NOTES` review. Only after the latter approved review may Opus also emit
 `git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream read-only
 before emitting that command, and it must not run any of these commands. A task-design handoff and every non-approved
 review are never authorization to emit a push command.
 
-**ALWAYS-DO, owner rule 2026-09-10.** The commit + push handoff is part of an approved verdict, not a follow-up. It is emitted in the same response, reconciled against `git status --short`. If that command cannot be run in the current environment, state that in one line and emit the handoff anyway from the inspected paths, asking the owner to check the status himself — deferring the block to a later turn is the failure this rule exists to stop; it happened three times in one session before it was written down.
+**Approved-state closure.** The commit + push handoff is part of an approved verdict and uses fresh verified status,
+paths and remote/branch. If current status cannot be inspected, keep the handoff blocked and name the missing evidence;
+do not emit a guessed command. The current fresh-state rule and 2026-10-22 ordered workflow govern readiness.
 
 An approved handoff is incomplete until Opus has removed the closed task from active backlog state and added its concise
 ledger row to `docs/backlog-archive.md`. Stage both changed backlog files with the approved task artifacts; never leave
@@ -175,7 +179,8 @@ verdict.
 
 ## Task design
 
-Use `docs/orchestrator-procedures.md` for the full task design protocol.
+Follow `.claude/skills/create-task/SKILL.md` C1-C7; use the selected sections of `docs/orchestrator-procedures.md`
+for detailed contracts.
 
 Every kickoff must be executable by a fresh Sonnet session with no hidden chat context. It must include:
 
@@ -193,7 +198,7 @@ Every kickoff must be executable by a fresh Sonnet session with no hidden chat c
 
 Before the kickoff can be published, apply the compact
 `.claude/rules/shared/claim-evidence-contract.md` and run `npm run check:kickoff-evidence`. Each material premise has
-a `C# FACT` with a current path/range/literal or a `D# OWNER DECISION` with a dated verbatim choice. `INFERENCE`,
+a `C# FACT` with a current path/range/literal or a `D# OWNER DECISION` with a dated owner choice in faithful English translation. `INFERENCE`,
 `UNKNOWN`, `UNVERIFIED`, `CONTRADICTION`, and `ASSUMPTION` cannot support scope, requirements, ACs, exclusions, or
 expected command output; resolve them or return `BLOCKED — KICKOFF EVIDENCE GAP`.
 
@@ -220,22 +225,35 @@ task is blocked on an owner decision rather than published with a guessed value.
 
 ## Review
 
-Use `docs/orchestrator-procedures.md` for the full review protocol.
+Follow `.claude/skills/review-task/SKILL.md` R1-R7; use the selected sections of `docs/orchestrator-procedures.md`
+for detailed contracts.
 
 Review the actual diff and files, not the executor's summary.
 
 ### Final review response — owner rule
 
 The final chat response is a short operational handoff, not an evidence transcript. Follow the four-heading contract
-in `.claude/skills/review-task/SKILL.md` exactly:
+in `docs/orchestrator-procedures.md` exactly:
 
-For `NEEDS REVISION`, Opus must amend the existing kickoff before responding. The final response contains only:
+For `NEEDS REVISION`, Opus investigates and verifies the correction under `shared/task-readiness.md` before
+publishing an amended executable kickoff. A missing proof is an explicit gap, never permission to improvise a route.
+The owner's forwarded Sonnet report already authorizes this entire review/revision cycle under
+`shared/role-boundaries.md`. Complete available checks and verified task revisions before finalizing; do not ask
+for another start or offer to make the required amendment later. Resume existing proof on continuation.
+A passed intermediate stage also requires completing the next available Opus action, including verified design of
+the next assigned route. A pending owner-validation result resumes this transition. A state-only commit with the
+next route still draft is incomplete; follow the automatic-cycle rule and GR-6 completion precedence.
+For an open-task correction or accepted stage with its next route ready, the final response contains only:
 
-1. `Problems and verdict` — concise confirmed defects and the correction written into the kickoff.
-2. `Kickoff updated` — exact kickoff path and the sections amended; Sonnet's next action is that file, not chat prose.
+1. `Problems and verdict` — concise confirmed defects and the verified correction, or exact readiness gap.
+2. `Kickoff updated` — exact kickoff path and sections amended, or `Not ready` with the unresolved evidence gap;
+   Sonnet's next action must come from a verified saved task, not chat prose.
 3. `Next actions — owner` — only an unresolved owner decision or owner-native validation; otherwise `None.`
-4. `Git handoff` — explicit-path `git add` + `git commit` for the amended kickoff and state artifacts Opus changed;
-   no push.
+4. `Git handoff` — explicit-path `git add` + `git commit` for the verified amended kickoff and state artifacts Opus
+   changed; otherwise `None - correction route not ready.` No push.
+
+Include the actual plain `NEXT EXECUTOR CONTRACT: tasks/<actual-path>.security.json` reference for a ready route.
+A genuine external dependency instead ends with plain `BLOCKED` and no route/Git handoff.
 
 `Kickoff updated` is permitted only after Opus reopens the saved file and verifies that every section, requirement,
 acceptance criterion, and internal `§N` / `§N.M` reference it says was amended actually exists there. A review or

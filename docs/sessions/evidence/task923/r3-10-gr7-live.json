@@ -1,0 +1,18 @@
+[
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/ui-modal.html",
+  "viewport": "390x844",
+  "pageScrollW": [390, 390],
+  "afterOpen": { "dialog": "div.modal-content", "box": [8, 382], "positionedOrTransformed": 0, "pastBox": 0, "pageScrollW": [390, 390] },
+  "afterEsc": { "dialogsVisible": 0 }
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/modals",
+  "viewport": "390x844",
+  "pageScrollW": [390, 390],
+  "afterOpen": { "dialog": null, "note": "the dialog selector matched nothing (first pass and Revision 1 record the same: TailAdmin's modal is visual only); nothing to measure" },
+  "afterEsc": { "dialogsVisible": 0 }
+ }
+]

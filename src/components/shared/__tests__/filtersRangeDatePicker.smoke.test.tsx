@@ -36,6 +36,7 @@ import { format } from 'date-fns'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { theme } from '@/design-system/mantine/theme'
+import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { FiltersPanel } from '@/components/shared/FiltersPanel'
 import { ListingsFilters } from '@/modules/listings/components/ListingsFilters'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
@@ -82,6 +83,18 @@ function withProviders(children: React.ReactNode) {
       </MantineProvider>
     </NextIntlClientProvider>
   )
+}
+
+// Stands in a viewport: `matches` is the answer to every media query, so `true` is "below the 640px gate" for the queries `MantineDrawer` reads.
+function stubViewport(matches: boolean) {
+  vi.stubGlobal('matchMedia', vi.fn().mockImplementation((query: string) => ({
+    matches, media: query, onchange: null, addListener: vi.fn(), removeListener: vi.fn(), addEventListener: vi.fn(), removeEventListener: vi.fn(), dispatchEvent: vi.fn(),
+  })))
+}
+
+// `/listings` hosts the filter panel in `MantineDrawer` at every width (`ListingsShellView`), so the panel tests render it there.
+function inDrawer(panel: React.ReactNode) {
+  return withProviders(<MantineDrawer opened onClose={() => {}} side="left" size="xs">{panel}</MantineDrawer>)
 }
 
 beforeAll(() => {
@@ -444,13 +457,66 @@ describe('ListingsFilters — URL contract, property-type visibility, negative f
     expect(pushedUrl).toContain('area_min=0')
   })
 
+  // The close icon and the Apply button are mounted by `MantineDrawer`'s bottom-sheet presentation (`useMantineDrawerPresentation() === 'sheet'`), not hidden by CSS
+  // and not decided by a media query in `ListingsFilters` (Task 923 R48): a CSS-hidden last control counts as tabbable in Mantine's focus trap, so Tab would leave
+  // the dialog from 640px. The tests render the panel inside the real `MantineDrawer`, as `/listings` does (`ListingsShellView`), and stand in each viewport.
   it('T6 / AC6 — mobile Apply calls onClose exactly once and pushes nothing', () => {
+    stubViewport(true)
+    try {
+      mockSearchParams = new URLSearchParams()
+      const onClose = vi.fn()
+      const { baseElement } = render(inDrawer(<ListingsFilters locations={[]} onClose={onClose} />))
+      fireEvent.click(within(baseElement).getByRole('button', { name: 'Apply filters' }))
+
+      expect(onClose).toHaveBeenCalledTimes(1)
+      expect(mockRouterPush).not.toHaveBeenCalled()
+    } finally {
+      stubViewport(false)
+    }
+  })
+
+  it('T6b — from 640px there is no Apply button (filters apply as they are changed)', () => {
+    stubViewport(false)
+    mockSearchParams = new URLSearchParams()
+    const { baseElement } = render(inDrawer(<ListingsFilters locations={[]} onClose={vi.fn()} />))
+    expect(within(baseElement).queryByRole('button', { name: 'Apply filters' })).toBeNull()
+  })
+})
+
+// Task 923 R48 — security contract cases of `Sprint_78_Task_923_security_record_owner_fixes.security.json`; each is a top-level test whose full name is the case name.
+it("[SEC-R48-FE-ALLOW] In the compact bottom sheet the filter panel's Apply button only closes the panel", () => {
+  stubViewport(true)
+  try {
     mockSearchParams = new URLSearchParams()
     const onClose = vi.fn()
-    const { baseElement } = render(withProviders(<ListingsFilters locations={[]} onClose={onClose} />))
+    const { baseElement } = render(inDrawer(<ListingsFilters locations={[]} onClose={onClose} />))
     fireEvent.click(within(baseElement).getByRole('button', { name: 'Apply filters' }))
 
     expect(onClose).toHaveBeenCalledTimes(1)
     expect(mockRouterPush).not.toHaveBeenCalled()
-  })
+  } finally {
+    stubViewport(false)
+  }
+})
+
+it('[SEC-R48-FE-DENY] Outside the compact bottom sheet the filter panel mounts no close icon and no Apply button', () => {
+  const onClose = vi.fn()
+  try {
+    // A side MantineDrawer (the 640px gate does not match): neither control is in the document, hidden or not.
+    stubViewport(false)
+    mockSearchParams = new URLSearchParams()
+    const side = render(inDrawer(<ListingsFilters locations={[]} onClose={onClose} />))
+    expect(within(side.baseElement).queryByRole('button', { name: 'Close' })).toBeNull()
+    expect(within(side.baseElement).queryByRole('button', { name: 'Apply filters' })).toBeNull()
+    side.unmount()
+
+    // Outside any MantineDrawer, even in a compact viewport: the presentation decides, not the viewport.
+    stubViewport(true)
+    const bare = render(withProviders(<ListingsFilters locations={[]} onClose={onClose} />))
+    expect(within(bare.baseElement).queryByRole('button', { name: 'Close' })).toBeNull()
+    expect(within(bare.baseElement).queryByRole('button', { name: 'Apply filters' })).toBeNull()
+    expect(onClose).not.toHaveBeenCalled()
+  } finally {
+    stubViewport(false)
+  }
 })

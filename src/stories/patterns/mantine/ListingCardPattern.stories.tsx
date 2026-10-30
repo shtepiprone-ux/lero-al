@@ -12,7 +12,6 @@ import { AppImage } from '@/design-system/media/AppImage';
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
 import { AuthContext } from '@/modules/auth/context/AuthContext';
 import { StoryPageGutter } from '@/stories/_StoryPageGutter';
-import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone';
 // Production's own favourite-chrome classes, so the Story writes no value of its own (Task 741 R3).
 import styles from '@/modules/listings/components/ListingCard.module.css';
 import { TITLE_FZ } from '@/design-system/mantine/typography';
@@ -129,33 +128,33 @@ function DemoCard({ l, id, layout = 'grid', status = 'active', isNew = false, re
   // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
   // new=green, reduced=sale (Task 619 — dedicated owner-provided crimson #dd0939, replacing
   // brand; matches the detail pattern's reduced badge so the signal reads the same color across
-  // the whole product). Every non-active status reads LISTING_STATUS_COLOR, as production does.
+  // the whole product). Every non-active status reads the badge registry, as production does.
   // Pattern always renders these variant="filled" (opaque, safe over the photo) — no `variant`
   // field needed on the badge data itself.
   const badges: MantineListingCardBadge[] = [];
   if (status === 'active') {
-    if (isNew) badges.push({ label: storyT(l, 'listing.new'), color: 'green' });
-    if (reduced) badges.push({ label: storyT(l, 'listing.price_reduced'), color: 'sale' });
+    if (isNew) badges.push({ label: storyT(l, 'listing.new'), meaning: { variant: 'tone', tone: 'success' } });
+    if (reduced) badges.push({ label: storyT(l, 'listing.price_reduced'), meaning: { variant: 'tone', tone: 'sale' } });
   }
   if (sold) {
-    badges.push({ label: storyT(l, 'listing.status_sold'), color: LISTING_STATUS_COLOR.sold });
+    badges.push({ label: storyT(l, 'listing.status_sold'), meaning: { variant: 'status', entity: 'listing', value: 'sold' } });
   }
   // Task 886 R40 — rented, as production `ListingCard.tsx` maps it (`status_rented` -> `purple`).
   if (rented) {
-    badges.push({ label: storyT(l, 'listing.status_rented'), color: LISTING_STATUS_COLOR.rented });
+    badges.push({ label: storyT(l, 'listing.status_rented'), meaning: { variant: 'status', entity: 'listing', value: 'rented' } });
   }
   if (archived) {
-    badges.push({ label: storyT(l, 'listing.status_archived'), color: LISTING_STATUS_COLOR.archived });
+    badges.push({ label: storyT(l, 'listing.status_archived'), meaning: { variant: 'status', entity: 'listing', value: 'archived' } });
   }
   // Task 741 R3b (R40, owner D46-4): expired, inactive and pending are labelled from the same map.
   if (status === 'expired') {
-    badges.push({ label: storyT(l, 'listing.status_expired'), color: LISTING_STATUS_COLOR.expired });
+    badges.push({ label: storyT(l, 'listing.status_expired'), meaning: { variant: 'status', entity: 'listing', value: 'expired' } });
   }
   if (status === 'inactive') {
-    badges.push({ label: storyT(l, 'listing.status_inactive'), color: LISTING_STATUS_COLOR.inactive });
+    badges.push({ label: storyT(l, 'listing.status_inactive'), meaning: { variant: 'status', entity: 'listing', value: 'inactive' } });
   }
   if (status === 'pending') {
-    badges.push({ label: storyT(l, 'listing.status_pending'), color: LISTING_STATUS_COLOR.pending });
+    badges.push({ label: storyT(l, 'listing.status_pending'), meaning: { variant: 'status', entity: 'listing', value: 'pending' } });
   }
 
   // Task 741 — `overlay.className` is a pass-through, proven with a non-Tailwind hook class the scanner

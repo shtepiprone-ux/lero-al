@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import {
   MANTINE_STORY_TITLE_PREFIXES,
   MANTINE_STORY_ENROLLED_TITLES,
@@ -16,19 +16,36 @@ describe('mantine-story-scope — Task 678 per-story enrolment', () => {
     expect(isCanonicalMantineTitle('System/FeaturedListings')).toBe(false);
   });
 
+  // Task 790 (rest): the production enrolment map is empty since Task 896, so the exact-title
+  // mechanism is proven against a fixture entry added to the real exported map and always removed.
+  // The fixture title is not a production Story title.
+  const FIXTURE_TITLE = 'Fixture/EnrolledOnly';
+  afterEach(() => {
+    delete (MANTINE_STORY_ENROLLED_TITLES as Record<string, string>)[FIXTURE_TITLE];
+  });
+
   it('enrols an exact title without enrolling its unrelated siblings (R3 / D32 counterexample)', () => {
-    expect(isCanonicalMantineTitle('Admin/AdminUsersTable')).toBe(true);
-    // 3 arbitrary siblings under the same `Admin/` segment — none enrolled by the prefix, none
+    expect(isCanonicalMantineTitle(FIXTURE_TITLE)).toBe(false);
+    (MANTINE_STORY_ENROLLED_TITLES as Record<string, string>)[FIXTURE_TITLE] =
+      'fixture entry proving the exact-title mechanism';
+    expect(isCanonicalMantineTitle(FIXTURE_TITLE)).toBe(true);
+    // 3 arbitrary siblings under the same `Fixture/` segment — none enrolled by the prefix, none
     // enrolled by name, so none may resolve true.
-    expect(isCanonicalMantineTitle('Admin/AdminCardList')).toBe(false);
-    expect(isCanonicalMantineTitle('Admin/AdminSidebar')).toBe(false);
-    expect(isCanonicalMantineTitle('Admin/AdminSettings')).toBe(false);
+    expect(isCanonicalMantineTitle('Fixture/AdminCardList')).toBe(false);
+    expect(isCanonicalMantineTitle('Fixture/AdminSidebar')).toBe(false);
+    expect(isCanonicalMantineTitle('Fixture/AdminSettings')).toBe(false);
   });
 
   it('does not enrol by substring or partial match — only exact title equality', () => {
-    expect(isCanonicalMantineTitle('Admin/AdminUsersTableExtra')).toBe(false);
-    expect(isCanonicalMantineTitle('Admin/AdminUsersTable/Default')).toBe(false);
-    expect(isCanonicalMantineTitle('X/Admin/AdminUsersTable')).toBe(false);
+    (MANTINE_STORY_ENROLLED_TITLES as Record<string, string>)[FIXTURE_TITLE] =
+      'fixture entry proving the exact-title mechanism';
+    expect(isCanonicalMantineTitle(`${FIXTURE_TITLE}Extra`)).toBe(false);
+    expect(isCanonicalMantineTitle(`${FIXTURE_TITLE}/Default`)).toBe(false);
+    expect(isCanonicalMantineTitle(`X/${FIXTURE_TITLE}`)).toBe(false);
+  });
+
+  it('leaves no fixture entry behind in the production enrolment map', () => {
+    expect(Object.hasOwn(MANTINE_STORY_ENROLLED_TITLES, FIXTURE_TITLE)).toBe(false);
   });
 
   it('fails closed on an empty enrolment set: behavior reduces to prefix-only (D32 empty case)', () => {

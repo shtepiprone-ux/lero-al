@@ -1,0 +1,48 @@
+Security scope: 9970 changed files, 9 task contract(s).
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Product verification requires an implemented or reviewed contract
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Merge/release requires independently reviewed stage
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Independent Opus review decision missing
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Invalid or sensitive repository path
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/actions.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/cabinet/actions/companyLink.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/lib/deleteCompany.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/companyCreate.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/companyCreate.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/auth/components/__tests__/authSheetCompany.security.test.tsx
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/components/__tests__/CreateCompanyDialog.security.test.tsx
+BLOCKED: tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json: Missing file: src/modules/companies/components/__tests__/CreateCompanyDialog.security.test.tsx
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Product verification requires an implemented or reviewed contract
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Merge/release requires independently reviewed stage
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Independent Opus review decision missing
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Invalid or sensitive repository path
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/admin/actions/__tests__/createAdminUser.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/admin/actions/adminPermissions.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/admin/actions/adminPermissions.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/admin/actions/adminPermissions.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/admin/actions/adminPermissions.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/contactLifecycle.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/contactLifecycle.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/app/api/upload-avatar/uploadAvatar.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/app/api/upload-avatar/uploadAvatar.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/app/auth/confirm/__tests__/confirm.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/tests/integration/adminPage.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/tests/integration/adminPage.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/deleteListing.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/deleteListing.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/updateListing.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/modules/listings/actions/updateListing.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/tests/integration/moderatorKeys.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/tests/integration/moderatorKeys.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Missing file: src/tests/integration/moderatorKeys.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Merge/release requires independently reviewed stage
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Independent Opus review decision missing
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Invalid or sensitive repository path
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Missing file: src/modules/admin/actions/adminGetters.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Missing file: src/modules/admin/actions/adminGetters.integration.test.ts
+BLOCKED: tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Product verification requires an implemented or reviewed contract
+BLOCKED: tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Merge/release requires independently reviewed stage
+BLOCKED: tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Independent Opus review decision missing
+BLOCKED: tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Invalid or sensitive repository path

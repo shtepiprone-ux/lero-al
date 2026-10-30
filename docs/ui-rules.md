@@ -409,7 +409,8 @@ Consider adding in Phase 4:
 - ALL layout and responsive rules MUST work for all locales: sq, en, uk, it.
 - NO locale-specific width hacks.
 - NO hardcoded widths for navigation, buttons, or modals that would break with long translations.
-- Use `truncate` on text that should not wrap.
+- Semantic/localized text must reflow in full; use GR-3j's selected presentation rather than `truncate`, a line
+  clamp, ellipsis or `whitespace-nowrap` to make it fit.
 - Use `flex-wrap` on toolbar items that may wrap with long translations.
 - Test with Albanian (sq) and Ukrainian (uk) — longest locale strings.
 
@@ -430,7 +431,8 @@ Layout → Position → Sizing → Spacing → Typography → Colors → Borders
 ### Anti-Patterns (enforced from 2026-05-18)
 - DO NOT introduce arbitrary spacing without canonical reason — use canonical scale (§1)
 - DO NOT duplicate utility chains — check `docs/tailwind-canonical-fragments.md` first
-- DO NOT use `whitespace-nowrap` alone — combine with `overflow-hidden truncate`
+- DO NOT use `whitespace-nowrap`, `overflow-hidden`, `truncate` or a line clamp to conceal semantic/localized text;
+  reflow/stack it under GR-3j
 - DO NOT add fixed px widths to elements containing translated text
 - DO NOT use arbitrary `2xl:` values — use only `2xl:grid-cols-4`, `2xl:py-20`, `2xl:text-3xl`
 - DO NOT bypass canonical fragments when one exists in `docs/tailwind-canonical-fragments.md`
@@ -651,9 +653,9 @@ and configure EVERY control to it:
    → each hit must be justified against §3/§15 or removed. Record.
 3. **Z-index on the scale:** `grep -rn "z-\[" <touched>` and any `z-30/40/50` → must match §16; chrome at
    `z-30`. Record.
-4. **Overflow-risk rows:** every `flex` row with icon + translatable label must have `min-w-0` and/or
-   `flex-wrap`/`truncate`; verify the row does not clip at **320px** in **uk** (longest). Record the
-   widths checked.
+4. **Overflow-risk rows:** every `flex` row with icon + translatable label must have `min-w-0` and wrapping/reflow
+   (or the selected GR-3j semantic presentation); verify required content does not clip throughout the applicable
+   **`<640px`** range and at the **`640px`** transition in the longest affected locale. Record the widths checked.
 5. **Same-row height:** confirm every control on a shared row is one height (§15). Record.
 6. **Responsive proof per QA profile:** use `docs/qa-profiles.md`.
    Q2 checks the affected UI at 320 / 390 / 768 / 1024 / one desktop width, with `uk@320` mandatory.

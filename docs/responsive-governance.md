@@ -69,7 +69,8 @@ selected QA profile; the full matrix remains the Q3/Q4 legacy standard.
 1. Toolbars are `flex items-center gap-2` containers.
 2. On mobile (`<lg:`) toolbars that would overflow MUST stack vertically (`flex-col`) or use a compact mobile variant.
 3. Toolbars with many actions (admin) MUST show a mobile-friendly layout (fewer visible actions, overflow menu).
-4. No toolbar may clip or overflow horizontally — overflow-x-auto is acceptable for tables, NOT for toolbars.
+4. No toolbar may clip or overflow horizontally — it wraps/stacks by priority. Data tables use the canonical card
+   reflow on compact screens; horizontal table scrolling is not an adaptation pattern.
 5. Responsive breakpoint for toolbar layout change: `lg:` (sidebar appears at lg:).
 
 ---

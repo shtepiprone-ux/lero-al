@@ -1,0 +1,17 @@
+platform MINGW64_NT-10.0-26300; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-35-shift-self-cites.mjs 21
+shifted | C185 |  2405-2405 -> 2426-2426
+shifted | C436 |  2746-2746 -> 2767-2767
+shifted | C437 |  2413-2413 -> 2434-2434
+shifted | C446 |  3014-3014 -> 3035-3035
+shifted | C709 |  3509-3509 -> 3530-3530
+shifted | C810 |  3778-3778 -> 3799-3799
+shifted | C811 |  3413-3413 -> 3434-3434
+shifted | C812 |  3958-3958 -> 3979-3979
+shifted | C813 |  3413-3413 -> 3434-3434
+shifted | C814 |  4005-4005 -> 4026-4026
+shifted | C895 |  4307-4307 -> 4328-4328
+shifted | C1128 | 3508-3508 -> 3529-3529
+shifted | C1637 | 6807-6807 -> 6828-6828
+shifted | C1656 | 6703-6703 -> 6724-6724
+shifted 14, unresolved 0
+exit 0

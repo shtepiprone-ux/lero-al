@@ -1,0 +1,8 @@
+platform win32 node v22.22.3
+PROVED     R32 (c) dropped: a failed resource is not retried: with it removed, the benign fixture stylesheet-fails-once fails error-screen on app: resource failed: stylesheet /census-target.css?__census_status=503 (status 503, CENSUS_STATUS)
+PROVED     R32 (a) widened: a fetch that answers 404 is recorded as a failed resource: with it removed, the benign fixture fetch-404-benign fails error-screen on app: resource failed: fetch /census-missing-api.json (status 404)
+PROVED     R33 (i) Story 059 undone: an abort of the previous page request is blamed on the new page: with it removed, the benign fixture clean fails error-screen on app: resource failed: script /census-pending.js?__census_delay=10000 (net::ERR_ABORTED)
+PROVED     R33 (i) Story 018 undone: unpainted text counts as text past its clipping box: with it removed, the benign fixture loading-label-invisible fails text-hidden on portal:0: button "Alba Krasniqi account" scroll 156x59 > client 156x40
+
+31 of 31 proved.
+EXIT_CODE=0

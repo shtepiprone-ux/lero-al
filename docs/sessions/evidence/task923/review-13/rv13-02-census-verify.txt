@@ -1,0 +1,29 @@
+platform MINGW64_NT-10.0-26300 node v22.22.3 HEAD a711a8859
+cmd npm run check:rendered-state-census:verify
+PASS trap-transient-body-focus    as stated: every root green   [observed: app green | portal:0 green]
+PASS open-flaky-once              as stated: every root green; retry recorded (open click "#open": locator.click: Timeout 4000ms exceeded....)   [observed: app green | portal:0 green]
+FAIL open-never                   as stated: app: open-failed; retry recorded (open click "#nothing": locator.click: Timeout 4000ms exceede...)   [observed: app open-failed+portal-count]
+PASS slow-close                   as stated: every root green   [observed: app green | portal:0 green]
+PASS open-flaky-once-closed-violation as stated: every root green; retry recorded (open click "#open": locator.click: Timeout 4000ms exceeded....)   [observed: app green | portal:0 green]
+FAIL late-fetch-overflow          as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS late-fetch-inside            as stated: every root green   [observed: app green | portal:0 green]
+FAIL raf-grow-overflow            as stated: portal:0: component-overflow   [observed: app green | portal:0 component-overflow]
+PASS raf-grow-inside              as stated: every root green   [observed: app green | portal:0 green]
+PASS stylesheet-fails-once        as stated: every root green; retry recorded (resource failed: stylesheet /census-target.css?__census_stat...)   [observed: app green | portal:0 green]
+FAIL stylesheet-missing           as stated: app: error-screen; retry recorded (resource failed: stylesheet /census-missing.css (status 404)...)   [observed: app error-screen]
+PASS fetch-404-benign             as stated: every root green   [observed: app green | portal:0 green]
+PASS stale-abort-benign           as stated: every root green   [observed: app green | portal:0 green]
+PASS html-text-under-opaque-below-fold as stated: every root green   [observed: app green | portal:0 green]
+FAIL html-text-overlap-below-fold as stated: app: text-overlap   [observed: app text-overlap | portal:0 green]
+PASS html-text-under-inert-dialog as stated: every root green   [observed: app green | portal:0 green]
+FAIL html-text-over-inert-dialog  as stated: portal:0: text-overlap   [observed: app green | portal:0 text-overlap]
+PASS stylesheet-fails-on-reopen   as stated: every root green; retry recorded (resource failed: stylesheet /census-target.css?__census_stat...)   [observed: app green | portal:0 green]
+FAIL html-text-over-inert-dialog-opaque-below as stated: portal:0: text-overlap   [observed: app green | portal:0 text-overlap]
+FAIL html-text-overlap-in-inert-dialog as stated: portal:0: text-overlap   [observed: app green | portal:0 text-overlap]
+PASS html-text-under-floating-menu as stated: every root green   [observed: app green | portal:0 green]
+FAIL html-text-under-control      as stated: app: text-overlap   [observed: app text-overlap | portal:0 green]
+FAIL html-text-under-control-below-fold as stated: app: text-overlap   [observed: app text-overlap | portal:0 green]
+
+verify-gate: every case behaves as stated.
+EXIT_CODE=0
+verify.mjs CASES entries: 93

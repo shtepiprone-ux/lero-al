@@ -4,6 +4,7 @@ import { Button } from '@mantine/core'
 import { AuthSheet } from '@/modules/auth/components/AuthSheet'
 import { CaptchaWidget } from '@/components/auth/CaptchaWidget'
 import { MantineStoryShell } from '../../mantine/_MantineStoryShell'
+import { storyT } from '../../_storyI18n'
 import enMessages from '../../../../messages/en.json'
 import sqMessages from '../../../../messages/sq.json'
 import ukMessages from '../../../../messages/uk.json'
@@ -58,6 +59,31 @@ export const Login: Story = {
       <AuthSheet key="login" open onOpenChange={() => {}} initialView="login" />
     </MantineStoryShell>
   ),
+}
+
+// Task 927 Amendment 5 — the returning person's view: a sheet opened on `login` for a remembered Google account opens on Welcome back. The account is a labelled synthetic fixture.
+export const WelcomeBack: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <MantineStoryShell>
+        <Button variant="default" disabled>trigger (Story opens the drawer directly)</Button>
+        <AuthSheet
+          key={`welcome-back-${locale}`}
+          open
+          onOpenChange={() => {}}
+          initialView="login"
+          googleAccount={{
+            sub: '000000000000000000001',
+            name: storyT(locale, 'storybook.mantine.google_welcome_demo_name'),
+            maskedEmail: storyT(locale, 'storybook.mantine.google_welcome_demo_email'),
+            picture: null,
+          }}
+          onForgetGoogleAccount={() => {}}
+        />
+      </MantineStoryShell>
+    )
+  },
 }
 
 export const Register: Story = {

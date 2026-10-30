@@ -1,0 +1,81 @@
+# Working-tree lines cited by Task 927 Amendment 5 (Opus, 2026-10-25), copied by a5-03-lines.mjs
+== src/components/auth/GoogleSignInButton.tsx line(s) 54, working tree, file sha256 9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab
+      size: 'large',
+== src/components/auth/GoogleSignInButton.tsx line(s) 55, working tree, file sha256 9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab
+      text: 'continue_with',
+== src/components/auth/GoogleSignInButton.tsx line(s) 22, working tree, file sha256 9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab
+ * `prompt()` is never called: no One Tap and no automatic sign-in.
+== src/components/auth/GoogleSignInButton.tsx line(s) 118, working tree, file sha256 9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab
+      apiRef.current?.cancel()
+== src/lib/auth/googleIdentity.ts line(s) 37, working tree, file sha256 4e4a7616a0efcfac09fa3ba707089b318953bfa5650ece39d612592bda2f5069
+/** The calls of `google.accounts.id` this app uses; `prompt` is deliberately absent (no One Tap, no automatic sign-in). */
+== src/lib/auth/googleIdentity.ts line(s) 122, working tree, file sha256 4e4a7616a0efcfac09fa3ba707089b318953bfa5650ece39d612592bda2f5069
+export function emailFromCredential(credential: string): string | null {
+== src/modules/auth/components/AuthSheet.tsx line(s) 27, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
+== src/modules/auth/components/AuthSheet.tsx line(s) 36, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+function mapAuthError(message: string): string {
+== src/modules/auth/components/AuthSheet.tsx line(s) 70, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
+== src/modules/auth/components/AuthSheet.tsx line(s) 98, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+  async function handleGoogle({ credential, nonce }: { credential: string; nonce: string }) {
+== src/modules/auth/components/AuthSheet.tsx line(s) 120, 226, 649, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+== src/modules/auth/components/AuthSheet.tsx line(s) 163, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+      <GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} onCredential={handleGoogle} />
+== src/modules/auth/components/AuthSheet.tsx line(s) 766, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+    login: t('login'),
+== src/modules/auth/components/AuthSheet.tsx line(s) 760, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+      setView(initialView)
+== src/components/layout/Header.tsx line(s) 19, working tree, file sha256 d92c58ad3d67718225e9af8cd0924b78f756b97319e459071b6e27fe4feb93b8
+  const { user, signOut, isSigningOut } = useUser()
+== src/components/layout/Header.tsx line(s) 21, working tree, file sha256 d92c58ad3d67718225e9af8cd0924b78f756b97319e459071b6e27fe4feb93b8
+  const [authOpen, setAuthOpen] = useState(false)
+== src/components/layout/Header.tsx line(s) 32, working tree, file sha256 d92c58ad3d67718225e9af8cd0924b78f756b97319e459071b6e27fe4feb93b8
+  function openAuthSheet(view: AuthView) {
+== src/components/layout/Header.tsx line(s) 79, working tree, file sha256 d92c58ad3d67718225e9af8cd0924b78f756b97319e459071b6e27fe4feb93b8
+      authSheetSlot={
+== src/app/[locale]/layout.tsx line(s) 49, working tree, file sha256 2de486e2f1fa5db55ed85b1205a25e14e8859e0e78dc9758e54441bfa1ae3a63
+          <Header />
+== src/lib/auth/controller.ts line(s) 39, working tree, file sha256 cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
+  | 'unauthenticated'
+== src/modules/auth/context/AuthContext.tsx line(s) 150, working tree, file sha256 275cf837531e86a1f43afc9018ccfc60ee54393af321dac17b07171392b44242
+        status: authState.status,
+== src/modules/cabinet/components/ProfileTab.tsx line(s) 252, working tree, file sha256 3b4d4932b5efb688ee2900f203c23ea1189ef7e936e511528bc71592840025d5
+    toast.success(t('delete_account_success'))
+== src/modules/cabinet/components/CabinetEmailChangeSection.tsx line(s) 93, working tree, file sha256 b383509d0f502d646cc1499e03aa63db97ca537c45ef4d82157049faa641cbea
+        <GoogleSignInButton
+== src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx line(s) 182, working tree, file sha256 1c6d81dfd750982b55c58bc11f447ad01ad39a2c7014311644ca03499f927e57
+  expect(api.prompt).not.toHaveBeenCalled()
+== src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx line(s) 260, working tree, file sha256 1c6d81dfd750982b55c58bc11f447ad01ad39a2c7014311644ca03499f927e57
+      type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', logo_alignment: 'center', width: drawn, locale: 'it',
+== src/components/layout/__tests__/headerFooterContainers.test.tsx line(s) 23, working tree, file sha256 982f4adf8816ba4ee4414fac779708a19c9b7fccb3044f41e2be4e7a33448ba8
+vi.mock('next-intl', () => ({ useLocale: () => 'en' }))
+== src/components/layout/__tests__/headerFooterContainers.test.tsx line(s) 28, working tree, file sha256 982f4adf8816ba4ee4414fac779708a19c9b7fccb3044f41e2be4e7a33448ba8
+vi.mock('@/components/layout/HeaderView', () => ({ HeaderView: (p: ViewProps) => { view = p; return null } }))
+== src/stories/patterns/mantine/AuthSheet.stories.tsx line(s) 54, working tree, file sha256 f0a0c2ba2cc5dafecff612553744d49dd98b73c7475a4db50730cb9236a98c25
+export const Login: Story = {
+== scripts/rendered-interaction-states.json line(s) 809, 6116, 6130, working tree, file sha256 859707bf29dca6a0771a900fb0d25b32b6922405fa04317823a412da92354441
+      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is 40px high, Google's largest size, and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is 40px high, Google's largest size, and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+      "ownerDecision": "owner D84, 2026-10-23: \"Accept as is\" - Google's own sign-in button (Task 927 D2) is 40px high, Google's largest size, and its label carries Google's nowrap ellipsis CSS; the census counts both and checks everything else"
+== src/design-system/mantine/theme.ts line(s) 64, working tree, file sha256 9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5
+      | 'colossal',    // 64px
+== src/design-system/mantine/theme.ts line(s) 1335, working tree, file sha256 9b8b57e8bd066668975f3185aaca8b4609bd904a4c41e74badb7965f86b3a8c5
+      styles: { root: { overflowWrap: 'break-word' } },
+== src/components/layout/MobileNavDrawer.tsx line(s) 53, working tree, file sha256 b53dde4864636bdbe21c06de546160eddcfd17d19ff2c9d498892cc993f16f3e
+              <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={theme.other.iconSize.banner} />
+== src/lib/toast.ts line(s) 43, working tree, file sha256 d2d48d813524247655771320dd3d60313360c0ab304658de11d025aed771c7c5
+  error: (message: string) => show('error', message),
+== src/lib/security/headers.ts line(s) 13, working tree, file sha256 0faa19069e4306cb8ec4acf69c662aa21fdc09dc6a01525b428e684bead8d288
+export const CSP_BASELINE = ["frame-ancestors 'none'", "base-uri 'self'", "form-action 'self'", "object-src 'none'"].join('; ')
+== tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json line(s) 3, working tree, file sha256 62f110cde4b111808acb8a69fc4e09d3f01796fc73f16d5b622a5e8e7cd199ea
+  "stage": "implemented",
+== git show origin/main (7dd707aa1):src/modules/auth/components/AuthSheet.tsx, lines naming Google
+8: import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+95:   async function handleGoogle() {
+96:     await signInWithOAuth('google', `${SITE_URL}/auth/callback`)
+147:         onClick={handleGoogle}
+157:         Google

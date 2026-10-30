@@ -2,6 +2,9 @@
 
 Validate the implementation; do not conduct an implementation review or issue an approval verdict.
 
+Follow `shared/workflow-gates.md`: stage `implemented`, retain the current machine report and run `verify` on the
+adjacent contract. Do not change planned expectations or declare `reviewed`. A failed checker is a failed handoff.
+
 1. Map every requirement and acceptance criterion to changed code and inspected evidence.
 2. Inspect the actual diff against the task's write scope and `Files Changed` table.
 3. Run the exact task/QA commands and retain unpiped transcripts with real exit codes. For every non-Q0 task, run the

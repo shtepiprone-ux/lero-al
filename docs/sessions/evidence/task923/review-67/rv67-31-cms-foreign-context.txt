@@ -1,0 +1,16 @@
+# rv67-30: the CMS check of §80.2 on the rendered public page
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-31-cms-foreign-context.cjs
+foreign image (the owner's, another account): https://res.cloudinary.com/bpkyyzu8/image/upload/v1793307227/cld-sample.jpg
+own image: https://res.cloudinary.com/<project cloud>/image/upload/v1/zz-synth-cms-own.jpg
+inserted page id 13, slug zz-synth-cms-image-check, published, sq body with both images
+GET http://localhost:3000/sq/zz-synth-cms-image-check: status 200, 293027 characters
+img tags of the two test images in the HTML: 1
+  <img src="https://res.cloudinary.com/<project cloud>/image/upload/v1/zz-synth-cms-own.jpg" alt="own" />
+occurrence at 291061: ...laude_Code_Project \\\\lero-al\\\\.next\\\\ erver\\\\chunk \\\\ r\\\\[root-of-the- erver]__beaae40a._.j \",2215,263,2192,1,fal e]],\"prop \":{\"title\":\"zz- ynth CMS image check\",\"body\":\"\u003cp\u003ezz- ynth marker before\u003c/p\u003e\u003cp\u003e\u003cimg  rc=\\\"http ://re .cloudinary.com/bpkyyzu8/image/upload/v1793307227/cld- ample.jpg\\\" alt=\\\"foreign\\\"\u003e\u003c/p\u003e\u003cp\u003e\u003cimg  rc=\...
+PASS HTTP status 200
+PASS the page renders the body (both markers present)
+FAIL the foreign account's name appears nowhere in the HTML
+PASS no img with alt="foreign"
+PASS the own-cloud img is rendered
+cleanup: deleted page id 13; zz-synth pages left 0
+exit 1

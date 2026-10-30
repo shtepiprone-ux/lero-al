@@ -245,16 +245,6 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/components/admin/AdminSupportManager.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Admin support: role/status badges (text-[10px] h-4) and truncated user UUID mono display. Canonical badge/micro-label size.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Badge and mono ID display contexts. Not translated body text. Canonical allowed value."
-    },
-    {
-      "rule": "arbitrary-font-size",
       "file": "src/components/admin/AdminUserProfile.tsx",
       "pattern": "text-[10px]",
       "reason": "Email confirmed/not-confirmed Badge in admin user profile. Canonical badge/micro-label size.",

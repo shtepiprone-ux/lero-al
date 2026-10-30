@@ -1,0 +1,12 @@
+﻿OUTSIDE scripts/__fixtures__/rendered-state-census/census-pending.js
+OUTSIDE scripts/__tests__/mantine-story-scope.test.ts
+OUTSIDE scripts/__tests__/rendered-state-census.test.ts
+OUTSIDE scripts/governance/scan-localization.mjs
+OUTSIDE scripts/governance/tailwind-entropy.mjs
+OUTSIDE scripts/rendered-state-census/discover.mjs
+OUTSIDE scripts/rendered-state-census/in-page.mjs
+OUTSIDE scripts/rendered-state-census/registry.mjs
+OUTSIDE scripts/rendered-state-census/runner.mjs
+OUTSIDE scripts/rendered-state-census/theme-breakpoints.mjs
+OUTSIDE scripts/rendered-state-census/verify.mjs
+changed or untracked scripts product paths: 11; outside every contract scope: 11

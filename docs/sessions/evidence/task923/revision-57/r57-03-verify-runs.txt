@@ -1,0 +1,34 @@
+# r57-03: R174 (b), the three `verify` runs (Revision 57, AC157)
+platform: Windows PowerShell 5.1.26100.9711 (Windows 11 Pro 10.0.26300); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+environment (process only, from .env.local by name, values not printed): SECURITY_TEST_TARGET=development; SECURITY_TEST_PROJECT_REF (20 characters); NEXT_PUBLIC_SUPABASE_URL (set)
+Per R174 (c): each `verify` ran as a plain command that wrote no file. The literal output and the exit code below were copied into this file with the editor.
+The three `verify` runs came after the two report runs of r57-02 (the reports they check were rewritten first).
+
+## Run 1 - D8_D9 (the executor contract)
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+started: 2026-10-29T16:24:32.9764911+01:00
+--- output ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+--- exit code: 0 ---
+finished: 2026-10-29T16:29:48.5349835+01:00
+
+## Run 2 - owner-fixes
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+started: 2026-10-29T16:29:53.0926795+01:00
+--- output ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+--- exit code: 0 ---
+finished: 2026-10-29T16:30:15.3894754+01:00
+
+## Run 3 - Task 927
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+started: 2026-10-29T16:30:19.2807076+01:00
+--- output ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+--- exit code: 0 ---
+finished: 2026-10-29T16:30:36.1701063+01:00
+
+Note: `verify` prints no pass line of its own; the exit code 0 is the result. The D8_D9 run directory (8c4008c4d581fa71) is the one the gate derives from that contract's task, so it is distinct from the other two.

@@ -1,0 +1,7 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al
+command: npm run typecheck
+typecheck exit 0
+command: npx eslint . --quiet
+eslint exit 0
+command: node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --check-anchors
+check-anchors exit 0

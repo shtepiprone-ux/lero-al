@@ -1,0 +1,87 @@
+groups 670 (Story x state x root); 68 owner bucket(s); rows with a violation 10575
+
+Story x state x root groups per owner:
+  859 R58 (gallery counter placed with theme spacing): 4
+  859 §31 R88 (sheet header never shrinks): 3
+  859 §31 R89 (dialog title / description never cut): 57
+  859 §31 R90 (one combobox option anatomy): 3
+  921 (MantineDashboardStatCard / BarChart text): 148
+  922 (AdminPermissionsView switch): 5
+  922 (AdminSidebar label truncation): 277
+  922 (RangeDatePicker label truncation): 6
+  924 (compact presentation still shown at exactly 640px): 18
+  925 (DashboardPeriodControl CustomRangeTooLong error screen): 1
+  new — Opus to file (58 components): 566
+
+rows (Story x state x root x locale x width) with a violation, per owner and rule:
+  859 R58 (gallery counter placed with theme spacing): component-overflow 48
+  859 §31 R88 (sheet header never shrinks): component-overflow 40
+  859 §31 R89 (dialog title / description never cut): text-clamp 1140, text-ellipsis 80, text-hidden 223
+  859 §31 R90 (one combobox option anatomy): component-overflow 16, viewport-overflow 15, word-split 20
+  921 (MantineDashboardStatCard / BarChart text): text-clamp 2780
+  922 (AdminPermissionsView switch): target-small 80
+  922 (AdminSidebar label truncation): text-ellipsis 3676
+  922 (RangeDatePicker label truncation): text-ellipsis 24
+  924 (compact presentation still shown at exactly 640px): open-failed 24, portal-count 4, widths-mismatch 44
+  925 (DashboardPeriodControl CustomRangeTooLong error screen): error-screen 1
+  new — Opus to file: action-covered 52, component-overflow 701, dismiss-close-control 48, dismiss-escape 469, dismiss-outside 482, focus-open 78, focus-trap 60, focus-trigger 560, target-small 2536, text-clamp 1516, text-ellipsis 1840, text-hidden 1050, viewport-overflow 169, word-split 120
+
+new — Opus to file, by component (groups):
+  AdminShell drawer initial-focus race (class: the drawer opened on mount leaves the focus on the app menu button): 1
+  admincurrenciesview: 10
+  admincurrencytabs: 7
+  admindashboardrecentlistings: 4
+  admindashboardview + dashboardsemidonut (class: dashboard chart extends past its card): 10
+  admindashboardview: 91
+  adminexchangeprovidersview: 10
+  admininquiriesview: 8
+  adminlistingsview: 40
+  adminpageframe: 6
+  adminpagesview: 8
+  adminreportsview: 6
+  adminshell: 2
+  adminsupportview: 12
+  adminuserprofileview: 45
+  adminuserstable: 13
+  agentstatisticsview: 36
+  appshellfoundation: 1
+  authsheet: 7
+  avatarcropmodal: 1
+  collectionssection: 15
+  dashboardperiodcontrol: 2
+  favoritebutton: 4
+  favoritesshell: 6
+  filterspanelshell: 1
+  headeractions: 1
+  headerview: 7
+  herosearch: 6
+  homepagelistinggrids: 4
+  inquirydetaildialogview: 1
+  lightboxview: 2
+  listingcard: 4
+  listingcardpattern: 4
+  listingcardtrack: 14
+  listingcontactpattern: 1
+  listingdetailpattern: 5
+  listingdetailview (class: Leaflet popup wider than its map, close control clipped away): 28
+  listingdetailview: 38
+  listinggallerypattern (class: gallery desync - a hidden slide in the frame while the named, tabbable slide is off-screen): 1
+  listinggallerypattern: 1
+  listingpreviewdialogview: 1
+  listingsactionrow: 3
+  listingsfilters: 1
+  listingsshellview: 27
+  listingssortbar: 7
+  modal: 4
+  notificationbellview: 1
+  notificationpattern: 3
+  pageeditordialogview: 7
+  premiumdialogview: 1
+  providerformdialogview: 4
+  rangedatepicker: 8
+  relativetime: 1
+  reportdetaildialogview: 1
+  richtexteditor: 23
+  savesearchbutton: 3
+  savetocollectionbutton: 3
+  usermenu: 5

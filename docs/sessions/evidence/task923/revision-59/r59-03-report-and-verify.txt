@@ -1,0 +1,51 @@
+Task 923 Revision 59, R178 (a)-(c), kickoff section 86, AC159
+File: r59-03 - the two dev-server counts, the build, the report run and the three verify runs.
+Platform: Windows 11 Pro 10.0.26300.0 | Windows PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: 29acfb269
+Environment (report and verify): set inside each PowerShell process: NEXT_PUBLIC_SUPABASE_URL read from .env.local by name, SECURITY_TEST_PROJECT_REF taken from its host (length 20), SECURITY_TEST_TARGET=development. No value was printed or saved.
+No cli.mjs command wrote a file; each output and exit code below was copied with the editor.
+
+== 1. R178 (a): the two read-only commands of review-50/rv50-06-dev-server.txt (2026-10-29T21:09:42+01:00) ==
+Command: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where-Object CommandLine -match 'next|storybook'  (counted)
+Command: Get-NetTCPConnection -State Listen | Where-Object { $_.LocalPort -in 3000,3001,3002,3003,6006 }  (counted)
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+Both counts 0: continue.
+
+== 2. R178 (a): npm run build (started 2026-10-29T21:09:54+01:00, finished 21:11:24+01:00) ==
+Command: npm run build
+The route table ends with "ƒ Middleware 167 kB"; "First Load JS shared by all 185 kB"; the admin route lines include
+"├ ƒ /admin/users/[id]   398 B   692 kB".
+exit code: 0
+No source file was edited after this build: the edits after it are the sidecar's stage line and the report file; the container, the test and every product file are the ones of r59-00b.
+
+== 3. R178 (b): the report (started 21:11:32+01:00, finished 21:16:46+01:00) ==
+Command: node docs/sessions/evidence/task923/security/d8-d9-report.mjs
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+report written: docs/sessions/evidence/task923/security/d8-d9-report.json (231 cases, 67 with sensitivity)
+exit code: 0
+d8-d9-report.json sha256 after: 4bb339e0e761817b63b1bb834eaf92b59da68d4f96275bfd780216585fe9a393 (before: f3763d24a526b75096121e3ebf38d41872cb47af5a364d50ec38d915be3299a8)
+
+== 4. R178 (c): stage ==
+The D8_D9 sidecar, line 3: "stage": "implemented" (was "planned"); one Edit, no other line.
+sidecar sha256 after: 750d3d916e1bae221dc35901231a0fcc729f6cc7e25c52e6c212936ebbcf9153 (before: 808b5e4e1892f007aba46b9f22f80271d06cd3f876ed816de9e5210847efcd16)
+
+== 5. R178 (c): verify on the three contracts (each a plain command, same environment) ==
+5a. node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+    started 21:16:56+01:00, finished 21:21:52+01:00
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+    exit code: 0
+5b. node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+    started 21:21:58+01:00, finished 21:22:14+01:00
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+    exit code: 0
+5c. node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+    started 21:22:20+01:00, finished 21:22:36+01:00
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+    JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+    exit code: 0
+`verify` prints no pass line; the result is the exit code. The owner-fixes and Task 927 contracts and reports were not edited by this revision; the build ran first, so the owner-fixes run passed at its first attempt (Revision 58, deviation 1).

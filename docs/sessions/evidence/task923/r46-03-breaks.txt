@@ -1,0 +1,59 @@
+# R146 AC146 r46-03: two breaks (B8, B9), one at a time, each restored; after each restore the file's sha256 equals its after-edit hash
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r46-03-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T13:39:53.029Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B8: put back the `listings` read and the `in('listing_id', …)` image read of R141
+file: src/lib/account/deleteAccount.ts
+test: npx vitest run src/lib/account/deleteAccount.security.test.ts -t SEC-DEL-SRV-ALLOW
+after-edit sha256 (before the break): aacb9c6d2abd9b45e13808ceda9a41e21c2939126e5959204e9f3231bad43bd0
+baseline run: exit 0
+broken sha256: 2254628adac5b2bc1a71e22fdc8eeef09af4aff73c20507b5b52e7c62c01f113
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: staff: what each read asked for: expected [ 'eq:users:id=tgt-0001', …(4) ] to deeply equal [ 'eq:users:id=tgt-0001', …(3) ]
+
+- Expected
++ Received
+
+  [
+    "eq:users:id=tgt-0001",
+restored sha256: aacb9c6d2abd9b45e13808ceda9a41e21c2939126e5959204e9f3231bad43bd0
+restored run: exit 0
+OK   B8: baseline passes
+OK   B8: the break fails on the intended assertion
+OK   B8: restored sha256 equals the after-edit hash
+OK   B8: restored run passes
+
+=== B9: read one page only: the loop of `read` returns after the first page
+file: src/lib/account/deleteAccount.ts
+test: npx vitest run src/lib/account/deleteAccount.security.test.ts -t SEC-DEL-SRV-ALLOW
+after-edit sha256 (before the break): aacb9c6d2abd9b45e13808ceda9a41e21c2939126e5959204e9f3231bad43bd0
+baseline run: exit 0
+broken sha256: 58b63a1076b93deabb2f52d6c11e3e36d6997a4752bb659964eddca8aadeb9e4
+broken run: exit 1
+ FAIL  src/lib/account/deleteAccount.security.test.ts > [SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction
+AssertionError: 1345 of the 2 345 image ids were not released (first: listings/bulk-1000): expected 1345 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1345
+restored sha256: aacb9c6d2abd9b45e13808ceda9a41e21c2939126e5959204e9f3231bad43bd0
+restored run: exit 0
+OK   B9: baseline passes
+OK   B9: the break fails on the intended assertion
+OK   B9: restored sha256 equals the after-edit hash
+OK   B9: restored run passes
+
+BOTH BREAKS BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

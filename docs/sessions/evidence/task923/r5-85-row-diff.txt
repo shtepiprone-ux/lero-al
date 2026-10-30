@@ -1,0 +1,20 @@
+platform win32 node v22.22.3
+cwd C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/r5-85-row-diff.mjs
+
+rows r4-full 22740; r5-full 22740
+rows only in r4-full 0; only in r5-full 0
+rows in both whose failing-rule set differs: 69
+  4 x action-hidden: green -> failing   e.g. patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~open-menu | app | en | 639
+  9 x component-overflow: failing -> green   e.g. patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~en-english | app | en | 1024
+  1 x component-overflow: green -> failing   e.g. patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | sq | 390
+  3 x dismiss-close-control: failing -> green   e.g. patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | uk | 320
+  4 x dismiss-close-control: green -> failing   e.g. patterns-mantine-adminpermissionsview--all-allowed | patterns-mantine-adminpermissionsview--all-allowed~open-menu | portal:0 | it | 639
+  3 x dismiss-escape: green -> failing   e.g. patterns-mantine-admindashboardview--adm-09-zero | patterns-mantine-admindashboardview--adm-09-zero~bhmodern-apartment-in-tirana-c | portal:0 | uk | 1440
+  7 x dismiss-outside: green -> failing   e.g. patterns-mantine-admindashboardview--activity-error | patterns-mantine-admindashboardview--activity-error~akcozy-studio-in-sauk-district | portal:0 | en | 1440
+  7 x focus-open: failing -> green   e.g. patterns-mantine-adminshell--drawer-open | patterns-mantine-adminshell--drawer-open | portal:0 | en | 639
+  15 x focus-trap: failing -> green   e.g. patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 320
+  7 x focus-trap: green -> failing   e.g. patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 640
+  12 x target-small: green -> failing   e.g. patterns-mantine-admindashboardview--activity-empty-period | patterns-mantine-admindashboardview--activity-empty-period~akcozy-studio-in-sauk-district | app | uk | 320
+  1 x viewport-overflow: green -> failing   e.g. patterns-mantine-listingcontactpattern--default | patterns-mantine-listingcontactpattern--default~write-on-whatsapp | portal:0 | it | 390
+EXIT_CODE=0

@@ -1,0 +1,18 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:34:35.730Z
+cmd node docs/sessions/evidence/task923/r19-05-sha256.cjs   (SHA-256 of the two hardening v7.1 files; neither equals C716)
+hardening v7.1 (NOT APPLIED; for Opus review and the owner's approval of THESE hashes):
+  8c8bcb3d6b02b260e70a0fd8b48c56908aaf2604bc37d21a36654abd9d2651c6  proposed-hardening.sql  (511 lines)
+  fd1f13fca69f84493e391049a8261e6e6fbcb4627f8be31e9f9fa8c24abdfc88  proposed-hardening-rollback.sql  (190 lines)
+reviewed hashes of earlier versions:
+   ok  a8b0ae69...0455e438 (C716 hardening v7 apply (Opus review 23, NEEDS REVISION)) equals: neither new file
+   ok  52bd460f...27813db5 (hardening v7 rollback (Opus review 23)) equals: neither new file
+   ok  217bd678...697b8726 (hardening v6 apply (approved by review 17, withdrawn by review 18)) equals: neither new file
+   ok  2f09fca8...6399456a (hardening v6 rollback) equals: neither new file
+the retained copies of the reviewed v7 files:
+  a8b0ae690d0786747b34e4c582612a1d7b4dc5eb095ae4066a3dc0230455e438  proposed-hardening.v7.sql.bak
+  52bd460f8c8cbe688f6bc24dae726728725e3c2414be827a27097c0327813db5  proposed-hardening-rollback.v7.sql.bak
+deletion v3 (not part of this revision; must keep the hashes of r18-23-sha256.txt):
+   ok  de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a  proposed-account-deletion.sql
+   ok  13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982  proposed-account-deletion-rollback.sql
+RESULT: neither v7.1 file has a reviewed hash (C716 included); the deletion files are unchanged
+EXIT_CODE=0

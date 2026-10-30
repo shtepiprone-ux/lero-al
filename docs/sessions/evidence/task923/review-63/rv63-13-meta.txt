@@ -1,0 +1,7 @@
+platform win32 x64; node v22.22.3; cwd /c/Claude_Code_Projects/lero-al
+command: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> npx vitest run --config vitest.integration.config.ts --reporter=json --outputFile=docs/sessions/evidence/task923/review-63/rv63-13-integration.json
+exit 0
+command: npm run typecheck
+typecheck exit 0
+command: npx eslint . --quiet
+eslint exit 0

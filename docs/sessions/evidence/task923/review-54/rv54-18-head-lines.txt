@@ -1,0 +1,21 @@
+# HEAD 166aec8ec lines cited by Task 923 claim rows whose working-tree source changed (Revision 48, rv54-18-refresh-locators.mjs)
+== src/modules/auth/components/AuthRedirect.tsx at HEAD 166aec8ec, lines 81-81
+    if (status === 'authenticated') {
+== src/modules/auth/components/AuthRedirect.tsx at HEAD 166aec8ec, lines 85-85
+      router.replace(loginDestination)
+== src/modules/auth/context/AuthContext.tsx at HEAD 166aec8ec, lines 76-76
+    controllerRef.current = new AuthController({
+== src/lib/auth/controller.ts at HEAD 166aec8ec, lines 163-163
+    if (event === 'TOKEN_REFRESHED') return
+== src/lib/auth/controller.ts at HEAD 166aec8ec, lines 81-81
+  private static readonly VISIBILITY_SYNC_MIN_MS = 30_000
+== src/lib/auth/controller.ts at HEAD 166aec8ec, lines 142-142
+      if (!user) coreSignOut('local').catch(() => {})
+== src/lib/auth/controller.ts at HEAD 166aec8ec, lines 225-225
+  refresh(): void {
+== src/modules/auth/context/AuthContext.tsx at HEAD 166aec8ec, lines 128-128
+  const refreshUser = useCallback(
+== src/modules/auth/components/AuthRedirect.tsx at HEAD 166aec8ec, lines 115-115
+      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" aria-label={tc('loading')} />
+== src/modules/auth/components/__tests__/authClientParts.test.tsx before R147, line 35, copied from the source held in docs/sessions/evidence/task923/review-20/rv20-eslint.json (untracked)
+vi.mock('@/modules/auth/hooks/useUser', () => ({ useUser: () => ({ status: authStatus }) }))

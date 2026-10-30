@@ -1,0 +1,26 @@
+# jump-probe2: what resizes the ready-section dialog
+platform: win32; node: v22.22.3
+
+command: node docs/sessions/evidence/task927/jump/jump-probe2.mjs 390 en 0
+@390 en delay 0ms mobile false: frames with dialog 360
+t=24 top=800 h=457 sections=61/116/113 google=loader iframeH=null focus=input
+t=236 top=375.6 h=435 sections=61/94/113 google=empty iframeH=null focus=input
+t=273 top=334.2 h=467 sections=61/126/113 google=button iframeH=0 focus=input
+
+command: node docs/sessions/evidence/task927/jump/jump-probe2.mjs 390 en 1500
+@390 en delay 1500ms mobile false: frames with dialog 360
+t=27 top=800 h=457 sections=61/116/113 google=loader iframeH=null focus=input
+t=1808 top=365 h=435 sections=61/94/113 google=empty iframeH=null focus=input
+t=1844 top=333 h=467 sections=61/126/113 google=button iframeH=0 focus=input
+
+command: node docs/sessions/evidence/task927/jump/jump-probe2.mjs 320 en 0
+@320 en delay 0ms mobile false: frames with dialog 360
+t=21 top=800 h=478 sections=61/137/113 google=loader iframeH=null focus=input
+t=269 top=345.1 h=456 sections=61/115/113 google=empty iframeH=null focus=input
+t=306 top=312 h=488 sections=61/147/113 google=button iframeH=0 focus=input
+
+command: node docs/sessions/evidence/task927/jump/jump-probe2.mjs 639 uk 0
+@639 uk delay 0ms mobile false: frames with dialog 360
+t=33 top=800 h=457 sections=61/116/113 google=loader iframeH=null focus=input
+t=295 top=365 h=435 sections=61/94/113 google=empty iframeH=null focus=input
+t=330 top=333 h=467 sections=61/126/113 google=button iframeH=0 focus=input

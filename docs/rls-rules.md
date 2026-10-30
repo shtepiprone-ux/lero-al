@@ -2,6 +2,13 @@
 
 ## RLS-Change Test Requirement (Epic RS Slice 1, Task 436, 2026-06-16)
 
+Apply `.claude/rules/shared/security-testing.md` and `workflow-gates.md` to every task. An action test with a fake
+Supabase client proves application behavior only. Changes to RLS/grants/RPCs also require real database tests with
+separate ordinary-user sessions, allowed controls, denied access and unchanged protected state; service_role is
+fixture setup, not the actor proving RLS. Test protected fields as well as row ownership, including signup/INSERT
+and UPDATE routes. An omitted WITH CHECK alone does not establish a vulnerability; ownership RLS does not itself
+authorize changes to role, verification, moderation or paid entitlement fields. Inspect grants and effective behavior.
+
 > **Origin:** The Task 270 RLS policy change broke `reportListingAction`'s insert path with no test
 > catching it — discovered only via Task 435 days later. This rule closes that class of regression.
 > Referenced from `docs/rule-index.md` "DB / server action / RLS" and "Schema / migration" bundles,
@@ -44,13 +51,13 @@ blocking item.
 | Edit user profile (name, phone, etc.) | ✅ | ✅ |
 | Change user role | ✅ | ❌ (read-only field) |
 | Change user status | ✅ | ✅ |
-| Delete user (soft-delete) | ✅ | ❌ (button hidden + Server Action rejects) |
+| Delete user (complete hard delete, Task 923 D30) | ✅ (permission `users.hard_delete`; an administrator is deleted only by an administrator; never the actor's own account) | ❌ (button hidden + Server Action rejects) |
 | Upload/change avatar | ✅ | ✅ |
 
 ## Cabinet Self-Mutation Rules
 
 - Users can only mutate their own row (`users.id = auth.uid()`).
-- `deleteOwnAccount`: requires authenticated session; soft-deletes own row + archives own listings. Cannot delete another user's account.
+- `deleteOwnAccount`: requires an authenticated session and re-authentication (the current password, or for an account without one a Google sign-in within 10 minutes); then `deleteAccount` deletes the account completely (Task 923 D30, see `docs/domain-rules.md` "Account Deletion"). Nothing is soft-deleted or archived. Cannot delete another user's account.
 - `updateCabinetProfile`: user-scoped Supabase client enforces RLS.
 - `uploadCabinetAvatar`: same user-scoped client.
 

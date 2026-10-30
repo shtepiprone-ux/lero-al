@@ -51,9 +51,10 @@ const selectChain = {
   eq: vi.fn().mockReturnThis(),
   single: vi.fn(),
 }
+// the caller's own `users` row, read by the real `requireViewer()` (Task 923 R44) with the service role
 const profileChain = {
   eq: vi.fn().mockReturnThis(),
-  single: vi.fn(),
+  maybeSingle: vi.fn(),
 }
 
 vi.mock('@/lib/supabase/admin', () => ({
@@ -84,7 +85,7 @@ vi.mock('@/modules/notifications/lib/emails/ReporterNotificationEmail', () => ({
   ReporterNotificationEmail: vi.fn(),
   getReporterNotificationEmailStrings: vi.fn().mockReturnValue({ subject: '', heading: '', body: '' }),
 }))
-vi.mock('@/modules/notifications/lib/mutations', () => ({ createNotification: vi.fn() }))
+vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: vi.fn() }))
 
 const AUTH_USER = { id: 'admin-1' }
 
@@ -166,7 +167,7 @@ describe('updateReportStatusAction — allowlist/status_override guard (Task 463
   beforeEach(() => {
     vi.clearAllMocks()
     mockGetUser.mockResolvedValue(AUTH_USER)
-    profileChain.single.mockResolvedValue({ data: { role: 'moderator' } })
+    profileChain.maybeSingle.mockResolvedValue({ data: { role: 'moderator', status: 'active', suspended_until: null, deleted_at: null }, error: null })
     selectChain.single.mockResolvedValue({ data: { status: 'pending' } })
     updateChain.eq.mockReturnThis()
     mockUpdateSelect.mockResolvedValue({ data: [{ id: 'r-1' }], error: null })
@@ -269,7 +270,7 @@ describe('updateReportStatusAction — allowlist/status_override guard (Task 463
     expect(result).toEqual({ error: 'forbidden' })
     expect(mockUpdate).not.toHaveBeenCalled()
     expect(selectChain.single).not.toHaveBeenCalled()
-    expect(profileChain.single).not.toHaveBeenCalled()
+    expect(profileChain.maybeSingle).not.toHaveBeenCalled()
   })
 
   // CAS: concurrent transition race → conflict

@@ -1,0 +1,47 @@
+platform win32 v22.22.3
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-agentstatisticsview--default,patterns-mantine-agentstatisticsview--sorted-by-views --widths 639 --locales en --no-closed --jobs 2 --out docs/sessions/evidence/task923/r2-86-recheck
+rendered state census: 10 registered state(s), 10 state job(s) + 0 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 0 closed job(s); 2 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r2-86-recheck
+
+rendered state census — rows 20 (failing 10); {"statesRun":10,"locales":["en"],"widths":[639],"boundCells":0,"stateJobs":10,"rangeJobs":0,"closedJobs":0,"appRows":10,"portalRows":10,"runtimeSeconds":18,"ruleKeys":20}
+rows failing per rule:
+  text-clamp             10
+  text-ellipsis          10
+  text-hidden            0
+  word-split             0
+  viewport-overflow      0
+  component-overflow     0
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         10
+  action-hidden          10
+  focus-trigger          10
+  target-small           10
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 0
+widths states: 0; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 0 with a missing cell
+Story x state x root with a violation: 10
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~more-information | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~offer-type | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~sort-by | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~status | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--default | patterns-mantine-agentstatisticsview--default~visibility | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~more-information | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~offer-type | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~sort-by | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~status | app :: text-clamp, text-ellipsis (1 cell(s))
+  patterns-mantine-agentstatisticsview--sorted-by-views | patterns-mantine-agentstatisticsview--sorted-by-views~visibility | app :: text-clamp, text-ellipsis (1 cell(s))
+
+rows 20 = 10 app-root rows + 10 portal-root rows; 10 state jobs + 0 out-of-range widths jobs + 0 closed jobs; runtime 18s
+EXIT_CODE=1

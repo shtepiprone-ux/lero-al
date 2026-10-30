@@ -1,0 +1,77 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r42-03b-notice-cut-diagnosis.mjs
+date: 2026-10-24T08:25:01.272Z
+--- output ---
+sq 320: text-overflow ellipsis; white-space normal; clamp none; scroll 218x40 client 218x40; rows 2
+sq 375: text-overflow ellipsis; white-space normal; clamp none; scroll 273x40 client 273x40; rows 2
+sq 390: text-overflow ellipsis; white-space normal; clamp none; scroll 288x20 client 288x20; rows 1
+sq 480: text-overflow ellipsis; white-space normal; clamp none; scroll 378x20 client 378x20; rows 1
+sq 560: text-overflow ellipsis; white-space normal; clamp none; scroll 458x20 client 458x20; rows 1
+sq 639: text-overflow ellipsis; white-space normal; clamp none; scroll 537x20 client 537x20; rows 1
+sq 640: text-overflow ellipsis; white-space normal; clamp none; scroll 522x20 client 522x20; rows 1
+sq 641: text-overflow ellipsis; white-space normal; clamp none; scroll 523x20 client 523x20; rows 1
+sq 680: text-overflow ellipsis; white-space normal; clamp none; scroll 562x20 client 562x20; rows 1
+sq 768: text-overflow ellipsis; white-space normal; clamp none; scroll 650x20 client 650x20; rows 1
+sq 810: text-overflow ellipsis; white-space normal; clamp none; scroll 692x20 client 692x20; rows 1
+sq 960: text-overflow ellipsis; white-space normal; clamp none; scroll 842x20 client 842x20; rows 1
+sq 1024: text-overflow ellipsis; white-space normal; clamp none; scroll 890x20 client 890x20; rows 1
+sq 1200: text-overflow ellipsis; white-space normal; clamp none; scroll 1066x20 client 1066x20; rows 1
+sq 1440: text-overflow ellipsis; white-space normal; clamp none; scroll 1306x20 client 1306x20; rows 1
+sq 1920: text-overflow ellipsis; white-space normal; clamp none; scroll 1786x20 client 1786x20; rows 1
+sq 2560: text-overflow ellipsis; white-space normal; clamp none; scroll 2426x20 client 2426x20; rows 1
+en 320: text-overflow ellipsis; white-space normal; clamp none; scroll 218x40 client 218x40; rows 2
+en 375: text-overflow ellipsis; white-space normal; clamp none; scroll 273x40 client 273x40; rows 2
+en 390: text-overflow ellipsis; white-space normal; clamp none; scroll 288x40 client 288x40; rows 2
+en 480: text-overflow ellipsis; white-space normal; clamp none; scroll 378x20 client 378x20; rows 1
+en 560: text-overflow ellipsis; white-space normal; clamp none; scroll 458x20 client 458x20; rows 1
+en 639: text-overflow ellipsis; white-space normal; clamp none; scroll 537x20 client 537x20; rows 1
+en 640: text-overflow ellipsis; white-space normal; clamp none; scroll 522x20 client 522x20; rows 1
+en 641: text-overflow ellipsis; white-space normal; clamp none; scroll 523x20 client 523x20; rows 1
+en 680: text-overflow ellipsis; white-space normal; clamp none; scroll 562x20 client 562x20; rows 1
+en 768: text-overflow ellipsis; white-space normal; clamp none; scroll 650x20 client 650x20; rows 1
+en 810: text-overflow ellipsis; white-space normal; clamp none; scroll 692x20 client 692x20; rows 1
+en 960: text-overflow ellipsis; white-space normal; clamp none; scroll 842x20 client 842x20; rows 1
+en 1024: text-overflow ellipsis; white-space normal; clamp none; scroll 890x20 client 890x20; rows 1
+en 1200: text-overflow ellipsis; white-space normal; clamp none; scroll 1066x20 client 1066x20; rows 1
+en 1440: text-overflow ellipsis; white-space normal; clamp none; scroll 1306x20 client 1306x20; rows 1
+en 1920: text-overflow ellipsis; white-space normal; clamp none; scroll 1786x20 client 1786x20; rows 1
+en 2560: text-overflow ellipsis; white-space normal; clamp none; scroll 2426x20 client 2426x20; rows 1
+uk 320: text-overflow ellipsis; white-space normal; clamp none; scroll 218x40 client 218x40; rows 2
+uk 375: text-overflow ellipsis; white-space normal; clamp none; scroll 273x40 client 273x40; rows 2
+uk 390: text-overflow ellipsis; white-space normal; clamp none; scroll 288x40 client 288x40; rows 2
+uk 480: text-overflow ellipsis; white-space normal; clamp none; scroll 378x20 client 378x20; rows 1
+uk 560: text-overflow ellipsis; white-space normal; clamp none; scroll 458x20 client 458x20; rows 1
+uk 639: text-overflow ellipsis; white-space normal; clamp none; scroll 537x20 client 537x20; rows 1
+uk 640: text-overflow ellipsis; white-space normal; clamp none; scroll 522x20 client 522x20; rows 1
+uk 641: text-overflow ellipsis; white-space normal; clamp none; scroll 523x20 client 523x20; rows 1
+uk 680: text-overflow ellipsis; white-space normal; clamp none; scroll 562x20 client 562x20; rows 1
+uk 768: text-overflow ellipsis; white-space normal; clamp none; scroll 650x20 client 650x20; rows 1
+uk 810: text-overflow ellipsis; white-space normal; clamp none; scroll 692x20 client 692x20; rows 1
+uk 960: text-overflow ellipsis; white-space normal; clamp none; scroll 842x20 client 842x20; rows 1
+uk 1024: text-overflow ellipsis; white-space normal; clamp none; scroll 890x20 client 890x20; rows 1
+uk 1200: text-overflow ellipsis; white-space normal; clamp none; scroll 1066x20 client 1066x20; rows 1
+uk 1440: text-overflow ellipsis; white-space normal; clamp none; scroll 1306x20 client 1306x20; rows 1
+uk 1920: text-overflow ellipsis; white-space normal; clamp none; scroll 1786x20 client 1786x20; rows 1
+uk 2560: text-overflow ellipsis; white-space normal; clamp none; scroll 2426x20 client 2426x20; rows 1
+it 320: text-overflow ellipsis; white-space normal; clamp none; scroll 218x40 client 218x40; rows 2
+it 375: text-overflow ellipsis; white-space normal; clamp none; scroll 273x40 client 273x40; rows 2
+it 390: text-overflow ellipsis; white-space normal; clamp none; scroll 288x40 client 288x40; rows 2
+it 480: text-overflow ellipsis; white-space normal; clamp none; scroll 378x20 client 378x20; rows 1
+it 560: text-overflow ellipsis; white-space normal; clamp none; scroll 458x20 client 458x20; rows 1
+it 639: text-overflow ellipsis; white-space normal; clamp none; scroll 537x20 client 537x20; rows 1
+it 640: text-overflow ellipsis; white-space normal; clamp none; scroll 522x20 client 522x20; rows 1
+it 641: text-overflow ellipsis; white-space normal; clamp none; scroll 523x20 client 523x20; rows 1
+it 680: text-overflow ellipsis; white-space normal; clamp none; scroll 562x20 client 562x20; rows 1
+it 768: text-overflow ellipsis; white-space normal; clamp none; scroll 650x20 client 650x20; rows 1
+it 810: text-overflow ellipsis; white-space normal; clamp none; scroll 692x20 client 692x20; rows 1
+it 960: text-overflow ellipsis; white-space normal; clamp none; scroll 842x20 client 842x20; rows 1
+it 1024: text-overflow ellipsis; white-space normal; clamp none; scroll 890x20 client 890x20; rows 1
+it 1200: text-overflow ellipsis; white-space normal; clamp none; scroll 1066x20 client 1066x20; rows 1
+it 1440: text-overflow ellipsis; white-space normal; clamp none; scroll 1306x20 client 1306x20; rows 1
+it 1920: text-overflow ellipsis; white-space normal; clamp none; scroll 1786x20 client 1786x20; rows 1
+it 2560: text-overflow ellipsis; white-space normal; clamp none; scroll 2426x20 client 2426x20; rows 1
+cells 68; computed text-overflow ellipsis: 68; really clipped (scroll > client): 0; line clamp: 0; cells where the text wraps to more than one row: 11
+
+EXIT_CODE=0

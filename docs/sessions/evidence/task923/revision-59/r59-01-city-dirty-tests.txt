@@ -1,0 +1,33 @@
+Task 923 Revision 59, R177 (d), kickoff section 86, AC159
+File: r59-01 - the profile smoke test after R177 (a)-(c), verbose run; the container's sha256 after (a).
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3 | vitest v4.1.6
+cwd: C:\Claude_Code_Projects\lero-al
+Command: npx vitest run src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx --reporter=verbose
+Exit code: 0
+
+Container sha256 after R177 (a): d144bcbcb8bbeb53c8b4ccb9fb3c7ed22c5ee73b82aa22dc9f583ea628a446a3  src/components/admin/AdminUserProfile.tsx
+Line 98 after (a):                 locationId: { shouldDirty: true, shouldValidate: true },
+
+--- output (copied with the editor; the [UnsavedChanges] lines are T6's console output) ---
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields 862ms
+ ✓ ... > T1 (server error) — the banner shows the server error and the save_error toast fires 597ms
+ ✓ ... > T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both 1044ms
+ ✓ ... > T10 — a status-only change enables Save and sends the new status (O84-8) 583ms
+ ✓ ... > T10b — choosing the stored status again makes the form clean, so Save is disabled 947ms
+ ✓ ... > T3 — deactivate: confirm is disabled for a blank reason; with a reason it calls deactivateUser(id, reason) 271ms
+ ✓ ... > T4 — delete: the dialog opens first; confirm deletes and redirects; cancel deletes nothing 296ms
+ ✓ ... > T5 — clear a history row calls clearHistoryRow; a { cleared: 0 } result shows the no-op info toast 146ms
+ ✓ ... > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere 537ms
+ ✓ ... > T7 — create with an invalid email shows the inline email error and never calls createAdminUser 687ms
+ ✓ ... > T8 — a non-admin sees no deactivate/delete actions, and the account-type select is disabled 238ms
+ ✓ ... > T9 — every edit control is reachable by its label 432ms
+ ✓ ... > T11 — view mode shows the stored city and its region 98ms
+ ✓ ... > T12 — a city-only change enables Save and sends the new city (Task 923 R177) 644ms
+ ✓ ... > T12b — choosing the stored city again makes the form clean, so Save is disabled 1130ms
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Duration  12.38s
+exit code: 0

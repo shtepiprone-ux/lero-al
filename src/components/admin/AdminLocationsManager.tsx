@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
 import { AppImage } from '@/design-system/media/AppImage'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -328,9 +329,9 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                   </td>
                   <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">{l.name_en ?? '—'}</td>
                   <td className="px-5 py-3">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
+                    <MantineBadge variant="tone" tone="neutral">
                       {typeLabels[l.type] ?? l.type}
-                    </span>
+                    </MantineBadge>
                   </td>
                   <td className="px-5 py-3 hidden sm:table-cell">
                     {l.type === 'city' && (

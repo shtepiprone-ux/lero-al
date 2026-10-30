@@ -145,6 +145,8 @@ export interface ListingDetailViewProps {
   listingUrl: string
   locale: string
   isGuest: boolean
+  /** the signed-in viewer's id, null for a guest: the contact card is keyed by it, so a sign-out or another account starts it empty (Task 923 R131) */
+  viewerId?: string | null
   canReport: boolean
   isInitiallyFavorited: boolean
   /** Listing ID required to enable the favorite action; omit/undefined disables it. */
@@ -203,6 +205,7 @@ export function ListingDetailViewBody({
   listingUrl,
   locale,
   isGuest,
+  viewerId,
   canReport,
   isInitiallyFavorited,
   listingId,
@@ -347,6 +350,7 @@ export function ListingDetailViewBody({
   // `shareSlot` below), so `ListingContact` no longer needs either. ─────────────────────────────
   const contactSlot = (
     <LazyListingContact
+      key={viewerId ?? 'guest'}
       owner={owner}
       isGuest={isGuest}
       listingTitle={listing.title}
@@ -443,7 +447,15 @@ export function ListingDetailViewBody({
                   {previewBanner === 'unpublished' ? t('preview_banner_unpublished') : t('preview_banner_published')}
                 </Text>
                 {previewBanner === 'published' && (
-                  <Anchor component={Link} href={`/${locale}/listings/${listing.slug}`} target="_blank" size="sm" fw={500}>
+                  <Anchor
+                    component={Link}
+                    href={`/${locale}/listings/${listing.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    size="sm"
+                    fw={500}
+                    styles={{ root: { display: 'inline-flex', alignItems: 'center', minHeight: theme.other!.touchTarget } }}
+                  >
                     {t('preview_open_public')}
                   </Anchor>
                 )}

@@ -4,17 +4,56 @@ Read with [the testing contract](security-testing.md) and [test quality](securit
 
 ## Existing development database: owner decision 2026-10-17
 
-The owner explicitly permits tests against the EXISTING development Supabase database. A second Supabase account,
-project or local stack is not mandatory. Do not block solely because a separate database has not been created.
-Record the approved development project identity and scope every test write/cleanup to identifiable synthetic
-records for the current run. Preserve existing people, listings, phone numbers and media; their presence does not
-make them test fixtures. No full database reset, truncation, policy replacement or deliberate security mutation in
-that shared DB. Destructive schema/policy/mutation scenarios require a disposable environment instead.
+Owner clarification, 2026-10-17: the EXISTING approved development Supabase database may be used for tests and
+reviewed, owner-approved corrective migrations. A second Supabase account, project or local stack is not mandatory.
+Do not require a separate environment solely because an approved fix creates, changes or replaces schema objects,
+RLS policies, grants, triggers or functions.
 
-For shared development DB tests, inspect the actual schema/functions/RLS first and record the schema revision or
-fingerprint. Setup must respect current constraints. Baseline and final checks verify unrelated records were not
-changed, without copying their private values into artifacts. Real-data extraction is not required for this proof.
-A disposable local/hosted test DB remains an option for CI and destructive/concurrent schema experiments.
+### Corrective migrations
+
+A corrective migration repairs the intended application behavior or access controls. Before applying it, validate
+the approved development project identity, inspect and record the current schema/functions/RLS revision or
+fingerprint, and review the exact SQL, intended effects, write scope and rollback or recovery plan. Apply it under
+the task-approved migration authority, then verify the real application/database paths and unrelated-data
+preservation. This environment permission does not approve a particular SQL draft or waive task scope, review,
+credentials, migration authority or evidence requirements.
+
+### Test setup and deliberate security mutations
+
+Scope test writes and cleanup to identifiable synthetic records owned by the current run. Preserve existing
+people, listings, phone numbers and media; their presence does not make them test fixtures. Test setup must respect
+current constraints. Do not reset or truncate the shared database, damage unrelated data, or deliberately weaken,
+remove or replace its protections to plant a vulnerability for a negative or sensitivity test. Destructive
+schema/policy experiments and deliberate security-weakening mutations require an isolated disposable environment.
+This restriction applies to those experiments; it is not a blanket ban on reviewed corrective migrations.
+
+After an approved corrective migration, normal integration/API/RLS regression checks may use this same development
+database with scoped synthetic fixtures and verified cleanup. Baseline and final checks verify unrelated records
+were not changed, without copying their private values into artifacts. Real-data extraction is not required.
+If one test requires a disposable environment, identify that exact test and reason; continue independent checks
+and approved corrective work that do not require it.
+
+### One project before launch: owner decision 2026-10-21
+
+Owner decision (Task 923, D67): "The whole project is still in development, so for now we can do everything on
+production. There are no real users; every user in the database is a test user." The project has one Supabase
+project (D66), so it is both production and the approved development database above. Until launch it is the approved test target: the
+identity check (`SECURITY_TEST_TARGET=development` plus its recorded ref) accepts it, and its keys are the approved
+development credentials. All other rules here still apply. The exception ends at launch: before a real person can
+sign up, tests move to a separate project, this section is removed, and production targets are rejected again.
+
+Owner decision (Task 923, D91, 2026-10-28), extending D67: "That is not a problem: right now the site is closed to
+the world, nobody knows anything about it. So for now everything may be tested on the real database. When I release
+the project to the world, then everything will have branches and separate databases." Until launch, the sensitivity
+proof of a critical database case may break that case's protection on this project. This is an exception to
+"Test setup and deliberate security mutations" above. The break may remove, disable or replace the one trigger,
+policy, grant or function the case names. It is allowed only under all of these conditions:
+- a scripted harness applies the break through `DATABASE_URL`, one break at a time;
+- it records the catalog fingerprint of the touched objects before the break;
+- it restores them in `finally`, and an identical fingerprint after the restore is part of the case's artifact;
+- it acts only on the run's synthetic fixtures.
+A failed restore or a fingerprint mismatch stops the run and is reported at once. Nothing is broken by hand. The
+exception ends with D67's at launch.
 
 ## Which credentials are sufficient
 
@@ -48,9 +87,10 @@ request. Unexpected I/O must be retained as a failing condition. Explicit handle
 credential scope, body field allowlist and count.
 
 Before integration/browser setup, validate the approved development/test project identity, parsed target URL,
-per-run fixture scope and allowed provider account/bucket. Reject ambiguous or production targets. A hostname alone
-cannot distinguish projects/accounts. Cleanup may delete only resources the current run owns. Real email/SMS,
-payment and media effects use sandbox sinks or explicitly identified test resources. In particular,
+per-run fixture scope and allowed provider account/bucket. Reject ambiguous or production targets, except under
+"One project before launch" above. A hostname alone cannot distinguish projects/accounts. Cleanup may delete only
+resources the current run owns. Real email/SMS, payment and media effects use sandbox sinks or explicitly identified
+test resources. In particular,
 `CLOUDINARY_DELETE_MODE=enabled` does not authorize deleting unrelated assets; a logged warning provides no guard.
 
 Load required environment variables explicitly from the owner's approved source; do not auto-discover unrelated

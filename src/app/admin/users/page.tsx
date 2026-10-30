@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { Button, Group, Text } from '@mantine/core'
 import { UserPlus } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
@@ -8,6 +9,7 @@ import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
 import { theme } from '@/design-system/mantine/theme'
+import { orContains } from '@/lib/postgrest/escape'
 
 export const metadata = { title: 'Users — Admin' }
 
@@ -20,6 +22,8 @@ export default async function AdminUsersPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const sp = await searchParams
@@ -54,12 +58,8 @@ export default async function AdminUsersPage({
       const words = qTrimmed.split(/\s+/).filter(Boolean)
       // OR across all words and all text fields (no UUID ilike — causes DB type error).
       // Searching "John Doe" finds users where any field contains "John" or "Doe".
-      const conditions = words.flatMap(w => [
-        `name.ilike.%${w}%`,
-        `last_name.ilike.%${w}%`,
-        `phone.ilike.%${w}%`,
-        `company_name.ilike.%${w}%`,
-      ])
+      // search text is a VALUE: quoted and escaped, never part of the filter (Task 923 Revision 7, S8)
+      const conditions = words.map(w => orContains(['name', 'last_name', 'phone', 'company_name'], w))
       const FULL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
       if (FULL_UUID.test(qTrimmed)) conditions.push(`id.eq.${qTrimmed}`)
       query = query.or(conditions.join(','))
@@ -84,10 +84,11 @@ export default async function AdminUsersPage({
   }
 
   return (
-    <AdminPageFrame width="shell" gutter="xl">
+    <AdminPageFrame width="shell">
       <AdminPageHeader
         title={t('users_title')}
         subtitle={locationRequest ? t('users_location_filter') : undefined}
+        notice={sp.notice === 'user_gone' ? t('users_gone_notice') : undefined}
         action={
           <Group gap="sm" wrap="nowrap">
             {tab === 'all' && (

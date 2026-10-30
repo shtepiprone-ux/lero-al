@@ -9,7 +9,6 @@ Last generated: 2026-07-24 (hand-corrected 2026-09-24 for Task 873's `PasswordRe
 | `AppImage` | ❌ | — |
 | `appImageConfig.ts` | ✅ | src/components/ui/appImageConfig.ts.stories.tsx |
 | `avatar` | ❌ | — |
-| `badge` | ✅ | src/components/ui/badge.stories.tsx |
 | `button` | ✅ | src/components/ui/button.stories.tsx |
 | `card` | ❌ | — |
 | `checkbox` | ✅ | src/components/ui/checkbox.stories.tsx |

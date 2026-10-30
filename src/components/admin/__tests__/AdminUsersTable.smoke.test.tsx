@@ -164,6 +164,11 @@ vi.mock('@mantine/core', () => {
   // Divider
   const Divider = (props: any) => React.createElement('hr', { 'data-mantine': 'divider', ...props })
 
+  // Anchor (Task 859 R52: the name link moved from a raw `<Link style>` to Mantine's `Anchor component={Link}`; it
+  // still renders an `<a href>`). Mantine-only props are dropped so React does not warn about DOM attributes.
+  const Anchor = ({ children, href, component: _component, underline: _underline, c: _c, ...p }: any) =>
+    React.createElement('a', { href, ...p }, children)
+
   // useMantineTheme (Task 782) — AdminUsersTable now reads theme.other.iconSize.* for its icon
   // dimension tokens instead of a raw number. Values below are copied from
   // src/design-system/mantine/theme.ts's own `other.iconSize` — a literal, not an import, so this
@@ -180,7 +185,7 @@ vi.mock('@mantine/core', () => {
     },
   })
 
-  return { Stack, Group, Text, Badge, Avatar, Loader, Button, ActionIcon, TextInput, Tabs, SegmentedControl, ScrollArea, Box, Divider, useMantineTheme }
+  return { Stack, Group, Text, Badge, Avatar, Loader, Button, ActionIcon, TextInput, Tabs, SegmentedControl, ScrollArea, Box, Divider, Anchor, useMantineTheme }
 })
 
 // ── MantineDataTableToCards mock ──────────────────────────────────────────────

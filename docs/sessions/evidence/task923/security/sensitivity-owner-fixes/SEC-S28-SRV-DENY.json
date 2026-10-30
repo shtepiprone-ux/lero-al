@@ -1,0 +1,411 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T15:51:37.226Z",
+ "case": "SEC-S28-SRV-DENY",
+ "results": [
+  {
+   "id": "SEC-S28-SRV-DENY",
+   "testFile": "src/__tests__/security/directives.test.ts",
+   "testName": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/applyListingTransition.ts",
+     "description": "the server-only marker of the status gateway becomes a 'use server' directive, so applyListingTransitionByStatus is a public Server Action again",
+     "from": "import 'server-only'\n\nimport { revalidateTag, revalidatePath } from 'next/cache'\n",
+     "to": "'use server'\n\nimport { revalidateTag, revalidatePath } from 'next/cache'\n"
+    }
+   ],
+   "failureMessage": "AssertionError: expected true to be false // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/__tests__/security/directives.test.ts:52:47\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338694041,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds a directive on the first line",
+         "status": "skipped",
+         "title": "finds a directive on the first line",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after a very long block comment (the case that hid a critical hole)",
+         "status": "skipped",
+         "title": "finds it after a very long block comment (the case that hid a critical hole)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after line comments and blank lines",
+         "status": "skipped",
+         "title": "finds it after line comments and blank lines",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it among several directives",
+         "status": "skipped",
+         "title": "finds it among several directives",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not take one directive for the other",
+         "status": "skipped",
+         "title": "does not take one directive for the other",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find a directive that is not at the top (inside a function or after code)",
+         "status": "skipped",
+         "title": "does not find a directive that is not at the top (inside a function or after code)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find one in a module with none, or in a comment",
+         "status": "skipped",
+         "title": "does not find one in a module with none, or in a comment",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "passed",
+         "title": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "duration": 42.84819999999999,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338694393,
+       "endTime": 1792338694435.8481,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/directives.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338695401,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds a directive on the first line",
+         "status": "skipped",
+         "title": "finds a directive on the first line",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after a very long block comment (the case that hid a critical hole)",
+         "status": "skipped",
+         "title": "finds it after a very long block comment (the case that hid a critical hole)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after line comments and blank lines",
+         "status": "skipped",
+         "title": "finds it after line comments and blank lines",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it among several directives",
+         "status": "skipped",
+         "title": "finds it among several directives",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not take one directive for the other",
+         "status": "skipped",
+         "title": "does not take one directive for the other",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find a directive that is not at the top (inside a function or after code)",
+         "status": "skipped",
+         "title": "does not find a directive that is not at the top (inside a function or after code)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find one in a module with none, or in a comment",
+         "status": "skipped",
+         "title": "does not find one in a module with none, or in a comment",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "failed",
+         "title": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "duration": 5.734399999999994,
+         "failureMessages": [
+          "AssertionError: expected true to be false // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/__tests__/security/directives.test.ts:52:47\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338695760,
+       "endTime": 1792338695765.7344,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/directives.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338696788,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds a directive on the first line",
+         "status": "skipped",
+         "title": "finds a directive on the first line",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after a very long block comment (the case that hid a critical hole)",
+         "status": "skipped",
+         "title": "finds it after a very long block comment (the case that hid a critical hole)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it after line comments and blank lines",
+         "status": "skipped",
+         "title": "finds it after line comments and blank lines",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective finds it among several directives",
+         "status": "skipped",
+         "title": "finds it among several directives",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not take one directive for the other",
+         "status": "skipped",
+         "title": "does not take one directive for the other",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find a directive that is not at the top (inside a function or after code)",
+         "status": "skipped",
+         "title": "does not find a directive that is not at the top (inside a function or after code)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "hasDirective"
+         ],
+         "fullName": "hasDirective does not find one in a module with none, or in a comment",
+         "status": "skipped",
+         "title": "does not find one in a module with none, or in a comment",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "status": "passed",
+         "title": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+         "duration": 45.82670000000002,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338697149,
+       "endTime": 1792338697194.8267,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/__tests__/security/directives.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

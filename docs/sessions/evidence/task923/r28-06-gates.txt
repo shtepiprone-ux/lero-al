@@ -1,0 +1,23 @@
+# Task 923 R100 evidence
+# platform: win32 10.0.26300 (x64)
+# node: v22.22.3
+# cwd: C:\Claude_Code_Projects\lero-al
+# command: npm run check:ui-contract -- --base HEAD~1 --head HEAD && node scripts/check-mobile-adaptation-contract.mjs --base HEAD~1 --head HEAD
+# env set for the run: none
+# start: 2026-10-21T20:53:34.702Z
+
+
+> lero-al@0.1.0 check:ui-contract
+> node scripts/check-ui-contract.mjs --base HEAD~1 --head HEAD
+
+check:ui-contract — GR-12 fail-closed Story ownership and UI-contract registry gate
+    Base: HEAD~1
+    Head: HEAD
+    Changed Story files inspected: 0
+    Newly enrolled components requiring a contract: 0
+    Rule: changed canonical Stories may exercise data/public state only; local visual styling is rejected with no suppression path.
+FAIL  registry  mantine-badge-status: component must be an enrolled path in scripts/mantine-migration-scope.json
+Fix: move the visual decision into the existing/new semantic token or canonical component; then update its direct Story and parity contract. Do not add a local style or allowlist entry.
+
+# end: 2026-10-21T20:53:35.401Z
+# EXIT_CODE=1

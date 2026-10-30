@@ -1,9 +1,44 @@
 # Opus review: adversarial implementation and UI audit
 
+## R3. Trace implementation semantics and dependent behavior
+
 Rebuild the requirement/AC ledger and trace every row to shipped code and concrete evidence. Try relevant failure
 paths: absent/invalid input, stale data, repeated action, partial failure, authorization, locale expansion, small
 viewport, changed consumers, and regression. A non-applicable branch needs a concrete reason.
 
+Read complete relevant functions and their callers, not only added lines. Follow real UI/HTTP entry points through
+server guards, queries/RPCs, DB grants/RLS and external effects where applicable. Inspect response/error mappings
+and test doubles after changed reads/writes. For deletions check all imports, Stories, cases and sensitivity scripts.
+Keep requested behavior, current behavior and effective runtime enforcement distinct. A new product preference is
+an owner question, not a defect against the saved contract.
+
+If the saved route itself is confirmed unexecutable, disable its affected sidecars immediately under
+`shared/orchestration-state.md`, retain the finding, and continue the independent audit before consolidating a correction.
+
+**Exit:** each AC has inspected implementation and a relevant counter-check; any unchecked boundary is explicit.
+
+## R4. Inspect assertions and independently execute proof
+
+Inspect exact collected test names/assertions, fixtures, mocks, target config and allow/deny/error controls under
+`shared/security-testing.md`. Run the mapped/focused checks yourself on the candidate and examine their raw results;
+verify actual collection, no skipped required cases and the intended assertion failure in sensitivity evidence.
+Mocks prove only their local boundary; source scans do not prove real RLS. Verify synthetic cleanup and forbidden
+effects. Preserve byte/hash restoration proof for a deliberate break, and never mutate a live boundary without its
+task/environment authorization. A proposed break that cannot safely run is missing evidence, not a passing test.
+
+Compare required aggregate results with R2's baseline by identity/cause. Verify contract digests and rerun `verify`
+under `shared/workflow-gates.md`; report unavailable inputs separately from implementation/test defects.
+
+**Exit:** required security/regression evidence is current and inspected, or its exact failure/gap is recorded. Do
+not proceed to an approval claim with an unresolved required gap.
+
+## R5. Verify applicable canonical UI and integration evidence
+
+Run the 16d rendered-component census yourself on the final applicable build. A rendered in-scope component
+without a direct Story/manifest entry is `NEEDS REVISION`, even when an aggregate coverage count is green.
+
+First apply `shared/canonical-component-reuse.md`: inspect ready components/Stories, inherit their settled design,
+and verify integration. Research only named gaps; a ready match must not be replaced with a duplicate.
 For every changed visible artifact, read `shared/mobile-adaptation-contract.md`, `shared/ui-token-contract.md`,
 `shared/enforcement-model.md`, and `shared/storybook-proof.md`, then inspect in this order:
 
@@ -14,12 +49,14 @@ For every changed visible artifact, read `shared/mobile-adaptation-contract.md`,
 5. Story decorators/render and rendered behavior at task-required locales/viewports.
 
 For every Story × state that opens an overlay, re-run the rendered state census of `shared/rendered-state-census.md`
-on the final build (app root and every portal root separately); until its gate (task 923) is approved, such a task
-is `BLOCKED — RENDERED STATE CENSUS (923)`, and afterwards it needs the gate green on its own Stories' rows; a
-root-only census never approves it.
+on the final build (app root and every portal root separately). For the gate's first review use its candidate and
+the bootstrap order in that contract; never require its own prior approval. A consuming overlay task stays
+`BLOCKED — RENDERED STATE CENSUS (923)` until the gate is approved, then requires it green on its Stories' rows.
+A root-only census never approves it.
 
-Run the final built-Storybook parity census yourself. A local visual decision, missing semantic token process,
-Story-level styling, raw value/palette semantic literal, unlocalized visible Story text, duplicate child markup, or
+Run the affected final built-Storybook parity census yourself for a changed shared visual contract or reproduced
+parity defect; apply the reuse rule's exemption for unchanged canonical chrome. A local visual decision, missing
+semantic token process, Story-level styling, raw value/palette semantic literal, unlocalized visible Story text, duplicate child markup, or
 one meaning with two looks without a dated owner decision is `NEEDS REVISION`. Geometry checks never override this
 result. Verify all required GR-3b…GR-3j, GR-9, GR-12 receipts, the `check:ui-contract` result,
 `check-mobile-adaptation-contract` result, and every Story
@@ -34,3 +71,8 @@ mechanism conflict.
 
 If required evidence is unavailable, use `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED`; do not infer an
 approval. The detailed UI and evidence protocol is selected through `docs/rule-index.md`.
+
+Inspect the final non-Q0 app build and relevant runtime/server logs, not only exit codes or HTTP status. Where a
+required gate reads committed blobs, run it after the owner's commit with verified base/head; it cannot approve a
+dirty candidate by reading an older HEAD. UI checks may be N/A only with a scope-based reason. Record the exact
+Story/state/locale/width/root coverage; a subset never silently replaces the selected matrix.

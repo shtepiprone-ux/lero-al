@@ -1,0 +1,11 @@
+-- Task 923, R87 (2): the replacement for the backup the Free plan does not offer (owner, 2026-10-21: "Free Plan does not
+-- include project backups."). Line 303 of proposed-hardening.sql sets every listings.price_old to null, and
+-- proposed-hardening-rollback.sql does not bring those values back (its line 7). This file keeps the only such value.
+--
+-- Captured by the owner in the production SQL editor on 2026-10-21, before the apply:
+--   select count(*) as n, json_agg(json_build_object('id', id, 'price_old', price_old) order by id) as rows
+--   from public.listings where price_old is not null;
+-- Result: n = 1, rows = [{"id": "41ecb1c3-f1fa-4237-93dc-190ce96954bd", "price_old": 1000}]
+--
+-- Restore, only after proposed-hardening-rollback.sql has run (v7.1 itself keeps price_old under its own rule):
+update public.listings set price_old = 1000 where id = '41ecb1c3-f1fa-4237-93dc-190ce96954bd';

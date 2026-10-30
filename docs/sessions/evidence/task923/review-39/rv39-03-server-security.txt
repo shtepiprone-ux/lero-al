@@ -1,0 +1,71 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T11:20:36.369Z
+command: npx vitest run --reporter=verbose src/modules/listings/actions/__tests__/contactGateway.security.test.ts src/lib/captcha/__tests__/verifyTurnstile.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > asks Cloudflare once, with POST, the secret and the token, and never caches 2ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > sends no remote address when there is none 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > a token is sent as a form value, so a hostile token cannot add parameters 1ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > reports success only when Cloudflare says so 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > reports Cloudflare's refusal with its error codes 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":"true"} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":1} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer {"success":null} is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer null is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > an answer [] is NOT a success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > a network error or an unreadable answer is "internal-error", never success 1ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with a secret configured > the development shortcut token does NOT work when a secret is configured 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > production refuses everyone, including the development token, and asks nobody 1ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > development accepts only the exact development token 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > an empty secret counts as missing 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without a secret > the development token still works with an expected action: there is no answer to compare 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > undefined is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > null is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > 5 is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > true is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > {} is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > ["tok"] is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > "" is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" is invalid-input and Cloudflare is not asked 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > a token of exactly 2048 characters is sent; one more is not 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > the shape of the token (R110 (a)) > an invalid token is refused before the secret is even read: no secret needed, no development shortcut 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > without an expected action the result is exactly today's (sign-up and password reset) > does not compare action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts an answer for that action and this site 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts this site's hostname in production 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses another action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses no action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses an empty action with action-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses another site with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses a subdomain of this site with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses this site as a prefix with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > refuses no hostname with hostname-mismatch 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts localhost outside production only 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > accepts 127.0.0.1 outside production only 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > compares the action before the hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > keeps Cloudflare's refusal and its codes, with nothing compared (a replayed token) 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > a success that is not the literal true is still refused 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > with an expected action (R110 (a)) > a network error is internal-error, never success 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is accepted when NODE_ENV is test, without comparing action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is accepted when NODE_ENV is development, without comparing action or hostname 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > is refused in production with testing-key-in-production 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > only the literal true is the marker: the string "true" falls back to the comparison 0ms
+ ✓ src/lib/captcha/__tests__/verifyTurnstile.test.ts > Cloudflare's testing-key answer (R110 (a) (1)) > a failing testing answer stays failed 0ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check 19ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once 3ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-BOT-ERR] an unverifiable check fails closed 2ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check 2ms
+ ✓ src/modules/listings/actions/__tests__/contactGateway.security.test.ts > contactGateway > [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id 1ms
+
+ Test Files  2 passed (2)
+      Tests  53 passed (53)
+   Start at  13:20:37
+   Duration  415ms (transform 204ms, setup 221ms, import 199ms, tests 42ms, environment 0ms)
+
+
+---- end ----
+EXIT_CODE=0

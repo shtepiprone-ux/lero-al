@@ -1,8 +1,7 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { revalidatePath } from 'next/cache'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
 
@@ -32,22 +31,18 @@ export type SetPermissionResult =
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
 async function getAdminUserId(): Promise<string | null> {
-  const user = await getUser()
-  if (!user) return null
-  const supabase = await createClient()
-  const { data } = await supabase.from('users').select('role').eq('id', user.id).single()
-  return data?.role === 'admin' ? user.id : null
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account, or a failed lookup, is not an administrator.
+  const viewer = await requireViewer()
+  return viewer.ok && viewer.role === 'admin' ? viewer.userId : null
 }
 
 // ── Public actions ────────────────────────────────────────────────────────────
 
 export async function getModeratorPermissions(): Promise<Record<PermissionKey, PermissionData>> {
-  const user = await getUser()
-  if (!user) throw new Error('unauthenticated')
-
-  const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
-  if (profile?.role !== 'admin' && profile?.role !== 'moderator') throw new Error('forbidden')
+  const viewer = await requireViewer()
+  if (!viewer.ok) throw new Error(viewer.reason === 'lookup_failed' ? 'forbidden' : 'unauthenticated')
+  // Task 923 R75 (e): the switches are read by an ADMINISTRATOR only; a moderator is refused (their own checks go through `roleHasPermission` on the server)
+  if (viewer.role !== 'admin') throw new Error('forbidden')
 
   // Single admin client instance for both the role_permissions read and the actor-name read below.
   // `authenticated` has no SELECT grant on role_permissions (Task 275); a user-scoped read always
@@ -102,19 +97,17 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
 
 export async function getPermissionEvents(limit = 20): Promise<PermissionEvent[] | null> {
   try {
-    const user = await getUser()
-    if (!user) return null
-
-    const supabase = await createClient()
-    const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
-    if (profile?.role !== 'admin' && profile?.role !== 'moderator') return null
+    const viewer = await requireViewer()
+    if (!viewer.ok) return null
+    if (viewer.role !== 'admin') return null   // Task 923 R75 (e): administrators only
 
     const db = createAdminClient()
+    const pageSize = Number.isInteger(limit) ? Math.min(Math.max(limit, 1), 200) : 20
     const { data: events, error } = await db
       .from('role_permission_events')
       .select('id, role, permission_key, old_allowed, new_allowed, actor_user_id, created_at')
       .order('created_at', { ascending: false })
-      .limit(limit)
+      .limit(pageSize)
 
     if (error) return null
 
@@ -155,6 +148,9 @@ export async function setModeratorPermission(
   try {
     const adminUserId = await getAdminUserId()
     if (!adminUserId) return { error: 'forbidden' }
+
+    // The key and the value are types only; at runtime the caller can send any string (Task 923 Revision 7). Only a known permission, switched to a real boolean.
+    if (!PERMISSION_KEYS.includes(key) || typeof value !== 'boolean') return { error: 'validation' }
 
     const db = createAdminClient()
 

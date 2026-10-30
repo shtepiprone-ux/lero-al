@@ -1,0 +1,35 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-sha.mjs scripts/rendered-state-census/registry.mjs scripts/rendered-state-census/in-page.mjs scripts/rendered-state-census/runner.mjs scripts/rendered-state-census/verify.mjs scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html scripts/rendered-interaction-states.json scripts/__tests__/rendered-state-census.test.ts src/modules/cabinet/components/ProfileTab.tsx src/modules/cabinet/components/CabinetEmailChangeSection.tsx src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx src/modules/cabinet/lib/emailChangeErrors.ts src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts src/modules/cabinet/actions/index.ts src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/actions/__tests__/emailChange.security.test.ts messages/sq.json messages/en.json messages/uk.json messages/it.json scripts/mantine-migration-scope.json scripts/ui-contract-registry.json tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+date: 2026-10-23T17:18:00.588Z
+--- output ---
+264510b826901991464073928566762242305e383abb9d267bbbd8e89ea367bb  scripts/rendered-state-census/registry.mjs
+79c9935c750bba1e68fa55a129bd1420e8b84938fd766b519e7e392aea0e063a  scripts/rendered-state-census/in-page.mjs
+b6549b101b3ddeee11e6e9cade89271175619269d94acf4aa4e40471caac945c  scripts/rendered-state-census/runner.mjs
+854589930b7efea8732a5a41f8d083e9fa0377cb4dca56f3766d2263a60488d2  scripts/rendered-state-census/verify.mjs
+ABSENT  scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html
+ABSENT  scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html
+55c64c6bf0b8b58c4872c7e9830d21a7f8fe46b909be5f27dbdb993bca00745a  scripts/rendered-interaction-states.json
+bdce4a052ec2247540cd8a5a02b0ef9ccb0dbfe89d20a23b8e02bd2258a72602  scripts/__tests__/rendered-state-census.test.ts
+64b1a0823f7bff13043af52206f2e391756feedd302de44383b574508eba3ee7  src/modules/cabinet/components/ProfileTab.tsx
+ABSENT  src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+ABSENT  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+ABSENT  src/modules/cabinet/lib/emailChangeErrors.ts
+ABSENT  src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+ABSENT  src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx
+ABSENT  src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts
+b8693772041ed961b3f8d0faa97a77e98b0a4e9c2048096f8dc97a462bff6256  src/modules/cabinet/actions/index.ts
+fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+5a8d5a6767c9c4f85474056fe725b82519e34baba3076d8a66a1183cf0cad206  src/modules/cabinet/actions/__tests__/emailChange.security.test.ts
+23417db2c3b03e09e92c109db28af49bf592aaa999e9fa5d7ba079b5c5d811b7  messages/sq.json
+9e20b24851cf1898be4f249cd06da8e0004b5457a6bc14a572e2a67fa29da88c  messages/en.json
+34e24c206b5fb203f4a381d23545c30d45acf289acef9644d7808d996bfcb371  messages/uk.json
+58763c6fa3fd8e2b456a5a8e0db5f2141edf311ebc9c63cf6a7c2c7bbf88c308  messages/it.json
+aa8b733085a497891ddd7cf45ac5a38172b4d270967785492c6affd4afb4ab8b  scripts/mantine-migration-scope.json
+af1588fcdeaf8f66f6270514588d2ca3557a393c0f6d76751d70c5db406fa136  scripts/ui-contract-registry.json
+a78aa3f0c4946916ed273fe8002315f7a02197d64c21a30124f33df154585893  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+
+
+EXIT_CODE=0

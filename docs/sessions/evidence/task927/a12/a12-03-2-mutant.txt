@@ -1,0 +1,97 @@
+# a12-03 mutation 2: an unreadable answer is taken as no password (return data === true)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:07:25.365Z
+
+command: powershell -NoProfile -Command Get-Content
+--- output ---
+Get-Content : Cannot process command because of one or more missing mandatory parameters: Path.
+At line:1 char:1
++ Get-Content
++ ~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-Content], ParameterBindingException
+    + FullyQualifiedErrorId : MissingMandatoryParameter,Microsoft.PowerShell.Commands.GetContentCommand
+--- exit code: 1 ---
+
+command: src/modules/cabinet/actions/index.ts
+--- output ---
+'src' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: |
+--- output ---
+| was unexpected at this time.
+--- exit code: 1 ---
+
+command: Select-Object
+--- output ---
+'Select-Object' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: -Skip
+--- output ---
+'-Skip' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: 120
+--- output ---
+'120' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: -First
+--- output ---
+'-First' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: 12
+--- output ---
+'12' is not recognized as an internal or external command,
+operable program or batch file.
+--- exit code: 1 ---
+
+command: npx vitest run --reporter=verbose src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-ALLOW] the server lets a Google-only account change its e-mail and delete itself right after an id_token sign-in 4ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-DENY] the server refuses a Google-only account whose last Google sign-in is older than 10 minutes or absent 1ms
+ × src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-NOPASSWORD] an account without a password is asked for Google even when Auth lists the email provider, and an unreadable answer refuses 4ms
+   → expected 'google' to be null
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  20:07:26
+   Duration  292ms (transform 72ms, setup 91ms, import 71ms, tests 10ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-NOPASSWORD] an account without a password is asked for Google even when Auth lists the email provider, and an unreadable answer refuses
+AssertionError: expected 'google' to be null
+
+- Expected:
+null
+
++ Received:
+"google"
+
+ ❯ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:132:35
+    130|   // an answer that cannot be read refuses
+    131|   state.hasPassword = 'error'
+    132|   expect(await getReauthMethod()).toBeNull()
+       |                                   ^
+    133|   expect(await deleteOwnAccount()).toEqual({ error: 'delete_failed' })
+    134|   expect(state.authDeletes, 'nothing is deleted on an unreadable answe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+--- exit code: 1 ---
+
+finished: 2026-10-28T19:07:27.163Z
+exit code: 1

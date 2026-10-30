@@ -1,0 +1,40 @@
+# rv58-07: literal lines for Task 923 Revision 51
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv58-07-lines.mjs
+date: 2026-10-25T12:36:57.118Z
+--- lines ---
+node_modules/@supabase/auth-js/dist/module/lib/fetch.js:110:         console.error(e);
+node_modules/@supabase/auth-js/dist/module/GoTrueClient.js:3179:     async _signOut({ scope } = { scope: 'global' }) {
+node_modules/@supabase/auth-js/dist/module/GoTrueClient.js:3186:             const accessToken = (_a = data.session) === null || _a === void 0 ? void 0 : _a.access_token;
+node_modules/@supabase/auth-js/dist/module/GoTrueClient.js:3187:             if (accessToken) {
+node_modules/@supabase/auth-js/dist/module/GoTrueClient.js:3188:                 const { error } = await this.admin.signOut(accessToken, scope);
+src/modules/cabinet/actions/index.ts:681:     // Every OTHER session of this account ends now (Task 923 Revision 7, finding S55): a changed password must also lock out whoever got hold of the old one. The
+src/modules/cabinet/actions/index.ts:682:     // current session, which the verify client carries, stays. A failure here must not undo the change that was made, and it must not be hidden either: the SDK
+src/modules/cabinet/actions/index.ts:686:       const { error: signOutError } = await verifyClient.auth.signOut({ scope: 'others' })
+src/modules/cabinet/components/CabinetPasswordSection.tsx:45:       await signOut('global')
+src/modules/cabinet/components/CabinetPasswordSection.tsx:55:       await signOut('global')
+src/lib/supabase/server.ts:18:               cookieStore.set(name, value, options)
+src/modules/cabinet/actions/index.ts:6: import { createClient } from '@/lib/supabase/server'
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:86:     expect(signOuts).toEqual([{ scope: 'others' }])
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:112:     expect(signOuts).toEqual([{ scope: 'others' }])
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts:185:   expect(signOuts).toEqual([{ scope: 'others' }])                       // the other sessions end, once; scope 'global' or 'local' would end this one too
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts:66:     expect(state.signOuts).toEqual([{ scope: 'others' }])
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts:26: vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({}) }))
+src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts:31: vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({ from: (t: string) => fromWithFailure(t) }) }))
+src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts:278:     expect(await changeCabinetPassword({ currentPassword: 'OldPassw0rd!', newPassword: 'NewStr0ng!Passw0rd' })).toEqual({ ok: true })
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx:65:     expect(mocks.signOut).toHaveBeenCalledWith('global')
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx:75:     expect(mocks.signOut).toHaveBeenCalledWith('global')
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx:149:   it('a successful change calls signOut("global")', async () => {
+owner-fixes contract SEC-S55-SRV-DENY: invariant "A password change ends every other session of the account and keeps the current one"; forbiddenEffects ["another session still valid after the change"]
+--- write set ---
+src/modules/cabinet/actions/index.ts: scope yes; policy no; exists yes
+src/modules/cabinet/components/CabinetPasswordSection.tsx: scope yes; policy no; exists yes
+src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts: scope NO; policy no; exists yes
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts: scope yes; policy no; exists yes
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx: scope yes; policy no; exists yes
+src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx: scope NO; policy no; exists yes
+exit code: 0

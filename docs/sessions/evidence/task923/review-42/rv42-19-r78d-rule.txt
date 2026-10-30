@@ -1,0 +1,4 @@
+# Task 923 R78 (d) (Opus, 2026-10-23): the rule Opus added to its own task-design checklist, .claude/rules/create/01-preflight.md C2 item 2, lines 36-37 of the working tree.
+# That file also holds other uncommitted rule work that is not Opus's, so the owner commits it separately; this copy is the evidence C1187 cites.
+   A new site setting, or a table that only admin code writes, needs its reader outside the admin code in the same
+   task; an admin-only record (audit or support desk) names its admin reader (Task 923 R78 (d), owner D51).

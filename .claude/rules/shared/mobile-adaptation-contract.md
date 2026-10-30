@@ -1,8 +1,10 @@
 # Mobile adaptation contract
 
 This is the mandatory semantic-layout contract for every visible UI change. Read it **before**
-`ui-token-contract.md`. It defines how content adapts; a current component, Story, screenshot, or legacy CSS is
-never a normative mobile reference. Stories prove the result after the decision has been made.
+`ui-token-contract.md`. Opus first applies `canonical-component-reuse.md` (owner decision 2026-10-20): inherit a
+ready Mantine component's adapted design and record its existing profile/mechanism/owner before researching a new
+decision. Fresh primary-source selection and remeasurement apply only to uncovered decisions/reproduced defects.
+For a new adaptation, a current screenshot or legacy CSS cannot replace the normative basis below.
 
 ## Normative basis and precedence
 

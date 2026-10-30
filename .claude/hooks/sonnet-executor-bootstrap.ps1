@@ -8,17 +8,18 @@ $utf8 = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8
 [Console]::OutputEncoding = $utf8
 $contextChunkSize = 7000
+. (Join-Path $PSScriptRoot 'session-role.ps1')
 
 try {
   $event = [Console]::In.ReadToEnd() | ConvertFrom-Json -ErrorAction Stop
-  $model = if ($event.PSObject.Properties.Name -contains 'model') { [string]$event.model } else { '' }
+  $role = Get-LeroSessionRole $event
   $agentType = if ($event.PSObject.Properties.Name -contains 'agent_type') { [string]$event.agent_type } else { '' }
 } catch {
   exit 0
 }
 
 # The executor agent preloads this skill itself, so avoid duplicate context there.
-if ($agentType -eq 'executor' -or $model -notmatch '(?i)sonnet') {
+if ($agentType -eq 'executor' -or $role -ne 'executor') {
   exit 0
 }
 

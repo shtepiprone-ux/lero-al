@@ -1,0 +1,22 @@
+# a7-02 vitest server re-confirmation cases (unchanged)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T18:07:12.040Z
+
+command: npx vitest run --reporter=verbose src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-ALLOW] the server lets a Google-only account change its e-mail and delete itself right after an id_token sign-in 5ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts > [SEC-927-SRV-REAUTH-DENY] the server refuses a Google-only account whose last Google sign-in is older than 10 minutes or absent 1ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  19:07:13
+   Duration  296ms (transform 74ms, setup 91ms, import 75ms, tests 7ms, environment 0ms)
+--- exit code: 0 ---
+
+finished: 2026-10-25T18:07:13.533Z
+exit code: 0

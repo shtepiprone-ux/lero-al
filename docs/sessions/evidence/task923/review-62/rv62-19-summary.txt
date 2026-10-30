@@ -1,0 +1,8 @@
+# rv62-19 Review 62 summary of the independent runs (Opus)
+platform win32 x64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: node (reads rv62-10, rv62-12, rv62-13, rv62-17) and the pg package.json
+integration: total 95 passed 95 failed 0
+D8_D9 unit cases passed once: 143 of 143
+D8_D9 integration cases passed once: 85 of 85
+pg 8.21.0 at C:\Users\Nox\AppData\Local\Temp\claude\C--Claude-Code-Projects-lero-al\4c03b76f-66ec-41ef-90fe-07818c6a0b08\scratchpad\pgdir\node_modules
+exit 0

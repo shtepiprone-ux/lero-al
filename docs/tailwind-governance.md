@@ -181,16 +181,15 @@ flex items-center gap-1.5               — compact meta row
 ```
 ✅ overflow-hidden — for rounded corners on cards/images
 ✅ overflow-y-auto — for scrollable sidebars, modals
-✅ overflow-x-auto — for tables on mobile
-✅ truncate        — for single-line text that must not wrap
-✅ line-clamp-2    — for card titles (2-line truncation)
-✅ overflow-hidden + truncate — combined for locale-safe overflow
+✅ overflow-x-auto — only for a genuinely two-dimensional local object with a GR-3j owner rationale; never a mobile data table
+✅ `min-w-0 break-words` / `flex-wrap` — full semantic text reflow
+✅ canonical compact presentation — cards, toolbars, navigation and overlays adapt without loss of content
 ```
 
 **Forbidden:**
 ```
 ❌ overflow-hidden to mask layout bugs (use proper layout instead)
-❌ whitespace-nowrap alone without overflow-hidden + truncate
+❌ semantic `whitespace-nowrap`, `truncate`, line-clamp, ellipsis or clipping used to make a localized layout fit
 ❌ overflow-hidden + fixed px width on translated text
 ```
 
@@ -273,13 +272,14 @@ All layouts MUST work for sq, en, uk, it. Ukrainian has the longest strings.
 - NEVER use `whitespace-nowrap` on button labels, nav items, or action labels
 - ALWAYS use `flex-wrap` on toolbars that contain translatable content
 - ALWAYS test with Ukrainian (uk) after any layout change
-- For text that MUST be single-line: use `truncate` (implies overflow-hidden)
+- If a compact control genuinely cannot wrap, use the selected GR-3j `inline-control` pattern and an owner decision;
+  do not hide its only semantic text.
 
 **Safe patterns:**
 ```
 ✅ flex flex-wrap gap-2          — locale-safe toolbar
-✅ min-w-0 truncate              — locale-safe text truncation
-✅ max-w-[200px] overflow-hidden truncate  — fixed width with safe truncation
+✅ min-w-0 break-words           — locale-safe full-content reflow
+✅ flex flex-wrap gap-2          — locale-safe action/control grouping
 ```
 
 **Unsafe patterns:**

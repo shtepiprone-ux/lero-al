@@ -1,0 +1,41 @@
+# 2026-10-23T07:18:28.000Z win32 node v22.22.3 listing /uk/listings/11-mr7ucly4
+console info: Executing inline script violates the following Content Security Policy directive 'script-src 'self' 'nonce-pZdD4eW/kEsaTyi68MI6xA==' 'strict-dynamic' https://challenges.cloudflare.com'. Either the 'un
+signed in: /api/auth/me 200
+--- 1440px: pressed Call (Зателефонувати)
+1440px +0.6s no notification; challenge iframe null
+console error: Connecting to 'data:,' violates the following Content Security Policy directive: "connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://valid.al
+console error: Connecting to 'data:,' violates the following Content Security Policy directive: "connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://valid.al
+console warning: OTS parsing error: Size of decompressed WOFF 2.0 is less than compressed size
+console debug: Error
+console dir:  Error
+console dir:  Error
+console dirxml: %c%d font-size:0;color:transparent Error
+console dirxml: %c%d font-size:0;color:transparent Error
+console table: %c%d font-size:0;color:transparent Error
+console table: %c%d font-size:0;color:transparent Error
+1440px +5.7s no notification; challenge iframe null
+1440px +10.9s no notification; challenge iframe null
+1440px +16.0s no notification; challenge iframe null
+1440px +21.1s no notification; challenge iframe null
+1440px +26.3s no notification; challenge iframe null
+1440px +30.4s notification: {"text":"Не вдалося підтвердити, що ви не робот. Спробуйте ще раз.","rect":[984,65,340,60],"opacity":"1","transform":"matrix(1, 0, 0, 1, 0, 0)","visibility":"visible","onTop":"div.m_3d733a3a mantine-Notification-description","topIsInside":true,"container":{"pos":"top-right","rect":[984,65,440,60],"z":"400"},"viewport":[1440,900]}; challenge iframe null
+--- 390px: pressed Call (Зателефонувати)
+console debug: Error
+console dir:  Error
+console dir:  Error
+console dirxml: %c%d font-size:0;color:transparent Error
+console dirxml: %c%d font-size:0;color:transparent Error
+console table: %c%d font-size:0;color:transparent Error
+console table: %c%d font-size:0;color:transparent Error
+console error: Connecting to 'data:,' violates the following Content Security Policy directive: "connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://valid.al
+console error: Connecting to 'data:,' violates the following Content Security Policy directive: "connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://valid.al
+console error: Connecting to 'data:,' violates the following Content Security Policy directive: "connect-src 'self' https://hagen.challenges.cloudflare.com https://brunhild.challenges.cloudflare.com https://valid.al
+390px +0.6s no notification; challenge iframe null
+console warning: OTS parsing error: Size of decompressed WOFF 2.0 is less than compressed size
+390px +5.7s no notification; challenge iframe null
+390px +10.8s no notification; challenge iframe null
+390px +15.9s no notification; challenge iframe null
+390px +21.0s no notification; challenge iframe null
+390px +26.2s no notification; challenge iframe null
+console warning: Failed to execute 'postMessage' on 'DOMWindow': The target origin provided ('https://challenges.cloudflare.com') does not match the recipient window's origin ('http://localhost:3000').
+390px +30.3s notification: {"text":"Не вдалося підтвердити, що ви не робот. Спробуйте ще раз.","rect":[6,97,358,64],"opacity":"1","transform":"matrix(1, 0, 0, 1, -9.88411, 0)","visibility":"visible","onTop":"div.m_3d733a3a mantine-Notification-description","topIsInside":true,"container":{"pos":"top-right","rect":[16,97,358,64],"z":"400"},"viewport":[390,844]}; challenge iframe null

@@ -56,10 +56,24 @@ export async function getCollectionsWithMembership(listingId: string): Promise<{
 
 // ── Writes ────────────────────────────────────────────────────────────────────
 
+/**
+ * Is this collection the caller's? (Task 923 Revision 7, finding S20.) `collection_items` is written by id, and an item row carries no user id, so the only thing
+ * that kept person B from adding to or emptying person A's collection was a row-level-security policy this code cannot see (the project manifest lists the
+ * cross-user check as not yet verified on a live database). The action asks the question itself, with the caller's own id, before it touches the items.
+ */
+async function callerOwnsCollection(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  collectionId: string,
+  userId: string,
+): Promise<boolean> {
+  const { data } = await supabase.from('collections').select('id').eq('id', collectionId).eq('user_id', userId).maybeSingle()
+  return !!data
+}
+
 export async function createCollection(
   name: string,
 ): Promise<{ collection: CollectionWithCount } | { error: string }> {
-  const trimmed = name.trim()
+  const trimmed = typeof name === 'string' ? name.trim() : ''
   if (!trimmed) return { error: 'name_required' }
   if (trimmed.length > 100) return { error: 'name_too_long' }
 
@@ -77,7 +91,7 @@ export async function createCollection(
 
   if (error) {
     console.error('Failed to create collection', { error, userId: authUser.id })
-    return { error: error.code === '23505' ? 'name_duplicate' : error.message }
+    return { error: error.code === '23505' ? 'name_duplicate' : 'create_failed' }
   }
 
   revalidatePath('/[locale]/favorites', 'page')
@@ -88,7 +102,7 @@ export async function renameCollection(
   collectionId: string,
   newName: string,
 ): Promise<{ ok: true } | { error: string }> {
-  const trimmed = newName.trim()
+  const trimmed = typeof newName === 'string' ? newName.trim() : ''
   if (!trimmed) return { error: 'name_required' }
   if (trimmed.length > 100) return { error: 'name_too_long' }
 
@@ -106,7 +120,7 @@ export async function renameCollection(
 
   if (error) {
     console.error('Failed to rename collection', { error, collectionId })
-    return { error: error.message }
+    return { error: 'update_failed' }
   }
 
   return { ok: true }
@@ -129,7 +143,7 @@ export async function deleteCollection(
 
   if (error) {
     console.error('Failed to delete collection', { error, collectionId })
-    return { error: error.message }
+    return { error: 'delete_failed' }
   }
 
   return { ok: true }
@@ -145,6 +159,7 @@ export async function addToCollection(
   if (blockError) return { error: blockError }
 
   const supabase = await createClient()
+  if (!(await callerOwnsCollection(supabase, collectionId, authUser.id))) return { error: 'collection_not_found' }
   const { error } = await supabase
     .from('collection_items')
     .insert({ collection_id: collectionId, listing_id: listingId })
@@ -152,7 +167,7 @@ export async function addToCollection(
   // 23505 = unique violation (already in collection) — treat as success
   if (error && error.code !== '23505') {
     console.error('Failed to add to collection', { error, collectionId, listingId })
-    return { error: error.message }
+    return { error: 'create_failed' }
   }
 
   revalidatePath('/[locale]/favorites', 'page')
@@ -169,6 +184,7 @@ export async function removeFromCollection(
   if (blockError) return { error: blockError }
 
   const supabase = await createClient()
+  if (!(await callerOwnsCollection(supabase, collectionId, authUser.id))) return { error: 'collection_not_found' }
   const { error } = await supabase
     .from('collection_items')
     .delete()
@@ -177,7 +193,7 @@ export async function removeFromCollection(
 
   if (error) {
     console.error('Failed to remove from collection', { error, collectionId, listingId })
-    return { error: error.message }
+    return { error: 'delete_failed' }
   }
 
   return { ok: true }

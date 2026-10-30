@@ -1,0 +1,13 @@
+# a13-99: sha256 after the edit (Amendment 13, R64)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:31:23.533Z
+
+command: node docs/sessions/evidence/task927/a13/a13-hash.mjs
+--- output ---
+0c12ae6d93a01bd6fef4c6840f8fc3e7b4df31044ff60e0029395fbac2ffa028  src/lib/auth/googleSignIn.integration.test.ts
+--- exit code: 0 ---
+
+finished: 2026-10-28T19:31:23.595Z
+exit code: 0

@@ -1,0 +1,101 @@
+{
+  "takenAt": "2026-10-22T15:52:04.960Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 2,
+  "total": 2,
+  "records": [
+    {
+      "id": "M5-guest-redirect-before-state-check",
+      "kind": "mutation",
+      "file": "src/app/[locale]/listings/[slug]/edit/page.tsx",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-EDIT"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/app/[locale]/listings/[slug]/edit/page.tsx\n+++ src/app/[locale]/listings/[slug]/edit/page.tsx (mutated)\n@@ line 56 @@\n-    if ((await getListingAccessState(slug)) === 'hidden') return restrictedPage(locale, slug, 'sign-in')",
+      "shaBefore": "8c084bb289e85a612893b31aa2d6cccecc2adfb1de2fbd69d332f70dbb2b2a38",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 1,
+          "detected": true,
+          "fragment": null,
+          "failed": [
+            {
+              "name": "editAccessRestricted [SEC-X-SRV-RESTRICTED-EDIT] the edit link of a hidden listing shows the restricted page to a non-owner",
+              "kind": "assertion",
+              "message": "AssertionError: slug-archived: the page rendered an element and threw nothing: expected 'NEXT_REDIRECT /en/auth/login?next=%2F…' to be undefined"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "8c084bb289e85a612893b31aa2d6cccecc2adfb1de2fbd69d332f70dbb2b2a38",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M8-drop-robots-from-edit-metadata",
+      "kind": "mutation",
+      "file": "src/app/[locale]/listings/[slug]/edit/page.tsx",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-EDIT"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/app/[locale]/listings/[slug]/edit/page.tsx\n+++ src/app/[locale]/listings/[slug]/edit/page.tsx (mutated)\n@@ line 21 @@\n-  return { title: `${t('edit_listing')} | Lero.al`, robots: { index: false, follow: true } }\n+  return { title: `${t('edit_listing')} | Lero.al` }",
+      "shaBefore": "8c084bb289e85a612893b31aa2d6cccecc2adfb1de2fbd69d332f70dbb2b2a38",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 1,
+          "detected": true,
+          "fragment": "the edit page metadata",
+          "failed": [
+            {
+              "name": "editAccessRestricted [SEC-X-SRV-RESTRICTED-EDIT] the edit link of a hidden listing shows the restricted page to a non-owner",
+              "kind": "assertion",
+              "message": "AssertionError: guest: the edit page metadata: expected { Object (title) } to deeply equal { …(2) }"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "8c084bb289e85a612893b31aa2d6cccecc2adfb1de2fbd69d332f70dbb2b2a38",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

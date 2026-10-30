@@ -71,7 +71,9 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   function handleClick(e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
-    if (disabled) return
+    // A request in flight ignores a second activation (the control stays focusable: a native `disabled` would drop the
+    // focus of the person who just pressed it - WCAG 2.4.3; Task 923, R33, owner D6).
+    if (disabled || isPending) return
 
     // Guest guard: open AuthSheet drawer instead of redirecting.
     // Guard only against active sign-out; all other null-user states are guests
@@ -128,7 +130,8 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   const commonProps = {
     type: 'button' as const,
     onClick: handleClick,
-    disabled: disabled || isPending,
+    disabled,
+    'aria-busy': isPending || undefined,
     'aria-label': disabled ? (disabledLabel ?? tc('aria_add_favorite')) : (favorited ? tc('aria_remove_favorite') : tc('aria_add_favorite')),
     'aria-pressed': disabled ? undefined : favorited,
     'aria-disabled': disabled || undefined,
@@ -148,7 +151,16 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     // theme's own 9999px token (matches the legacy `rounded-full`); `size={32}` matches the legacy
     // `w-8 h-8` (32px) exactly. Task 837 R2 — this was the component's only live-production shape;
     // the `pill` branch (ListingContact.tsx's former action-row favorite) is deleted, no consumer.
-    <ActionIcon {...commonProps} variant="subtle" size={theme.other.iconSize.prominent} radius="pill">
+    // Task 923 (R33, owner D6): below the mobile gate (sm, 640px) the control meets the 44px touch token (`miw`/`mih` from the
+    // theme, as `HeaderActions.tsx`); from sm up it stays the 32px circle.
+    <ActionIcon
+      {...commonProps}
+      variant="subtle"
+      size={theme.other.iconSize.prominent}
+      miw={{ base: theme.other.touchTarget, sm: 0 }}
+      mih={{ base: theme.other.touchTarget, sm: 0 }}
+      radius="pill"
+    >
       {icon}
     </ActionIcon>
   )

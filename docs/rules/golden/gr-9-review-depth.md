@@ -1,9 +1,9 @@
 ## GR-9 — A review is meticulous: every element, every state, every variant, every claim
 
 **Owner rule, 2026-10-04 (Task 741, O46-2).** The owner returned all three matrix rows that Opus had handed over as
-measured, then wrote, verbatim: *"ти робиш дуже погано рев'ю! Будь ласка, роби якісно, детальніше, бо
-ти поверхнево робиш рев'ю, через що я палю дуже багато токенів! Запиши правило - рев'ю робиться дуже
-прискіпливо, якісно, детально!"*
+measured, then wrote: *"you do very poor reviews! Please review with quality and in more detail, because
+you review superficially, and because of that I burn a lot of tokens! Write
+a rule - a review is done very meticulously, with quality, in detail!"*
 
 **What the shallow review missed, one row each:**
 - **Rows 1–2:** the grid card and the list card of `ListingCard` are two hand-built markups, with two greys, a 10px
@@ -50,8 +50,8 @@ review. It applies before the first finding and before the matrix reaches the ow
    The fix is a presentational View with callbacks plus a stateful Story harness, never a disabled control or a
    removed Story. The owner found all three in `AdminUsersTable` after seven reviews had passed it.
 7. **Only then** run the GR-3b…GR-3i measurements and hand the matrix to the owner.
-8. **Width coverage (owner return 2026-10-09, Task 859 review 13: "бейджі не мають відступів починаючи з 767px, ти
-   дуже паршиво провів аудит").** Every measurement in steps 1–7 that depends on layout runs at every width of the
+8. **Width coverage (owner return 2026-10-09, Task 859 review 13: "the badges have no gaps starting from
+767px, you did a very poor audit").** Every measurement in steps 1–7 that depends on layout runs at every width of the
    canonical matrix and on both sides of every layout switch the Story has (for example 767 and 768 where a table
    becomes cards). The reviewer measured badge gaps at 320 and 390 only and reported them as the phone result; the
    whole card range up to 767px had the defect. A sampled width is not a finding of absence.

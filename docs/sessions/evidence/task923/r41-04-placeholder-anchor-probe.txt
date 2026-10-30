@@ -1,0 +1,66 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-45/rv45-15-placeholder-anchor-probe.mjs
+date: 2026-10-23T18:59:57.414Z
+--- output ---
+placeholder sq 320: text 0px, box 254px, fits; repeats the description: false
+resend sq 320: notice left 16px, action text left 16px (0px in), action box 194px of the notice's 288px
+placeholder en 320: text 0px, box 254px, fits; repeats the description: false
+resend en 320: notice left 16px, action text left 16px (0px in), action box 164px of the notice's 288px
+placeholder uk 320: text 0px, box 254px, fits; repeats the description: false
+resend uk 320: notice left 16px, action text left 16px (0px in), action box 177px of the notice's 288px
+placeholder it 320: text 0px, box 254px, fits; repeats the description: false
+resend it 320: notice left 16px, action text left 16px (0px in), action box 145px of the notice's 288px
+placeholder sq 390: text 0px, box 324px, fits; repeats the description: false
+resend sq 390: notice left 16px, action text left 16px (0px in), action box 194px of the notice's 358px
+placeholder en 390: text 0px, box 324px, fits; repeats the description: false
+resend en 390: notice left 16px, action text left 16px (0px in), action box 164px of the notice's 358px
+placeholder uk 390: text 0px, box 324px, fits; repeats the description: false
+resend uk 390: notice left 16px, action text left 16px (0px in), action box 177px of the notice's 358px
+placeholder it 390: text 0px, box 324px, fits; repeats the description: false
+resend it 390: notice left 16px, action text left 16px (0px in), action box 145px of the notice's 358px
+placeholder sq 639: text 0px, box 573px, fits; repeats the description: false
+resend sq 639: notice left 16px, action text left 16px (0px in), action box 194px of the notice's 607px
+placeholder en 639: text 0px, box 573px, fits; repeats the description: false
+resend en 639: notice left 16px, action text left 16px (0px in), action box 164px of the notice's 607px
+placeholder uk 639: text 0px, box 573px, fits; repeats the description: false
+resend uk 639: notice left 16px, action text left 16px (0px in), action box 177px of the notice's 607px
+placeholder it 639: text 0px, box 573px, fits; repeats the description: false
+resend it 639: notice left 16px, action text left 16px (0px in), action box 145px of the notice's 607px
+placeholder sq 640: text 0px, box 542px, fits; repeats the description: false
+resend sq 640: notice left 32px, action text left 32px (0px in), action box 194px of the notice's 576px
+placeholder en 640: text 0px, box 542px, fits; repeats the description: false
+resend en 640: notice left 32px, action text left 32px (0px in), action box 164px of the notice's 576px
+placeholder uk 640: text 0px, box 542px, fits; repeats the description: false
+resend uk 640: notice left 32px, action text left 32px (0px in), action box 177px of the notice's 576px
+placeholder it 640: text 0px, box 542px, fits; repeats the description: false
+resend it 640: notice left 32px, action text left 32px (0px in), action box 145px of the notice's 576px
+placeholder sq 768: text 0px, box 636px, fits; repeats the description: false
+resend sq 768: notice left 49px, action text left 49px (0px in), action box 194px of the notice's 670px
+placeholder en 768: text 0px, box 636px, fits; repeats the description: false
+resend en 768: notice left 49px, action text left 49px (0px in), action box 164px of the notice's 670px
+placeholder uk 768: text 0px, box 636px, fits; repeats the description: false
+resend uk 768: notice left 49px, action text left 49px (0px in), action box 177px of the notice's 670px
+placeholder it 768: text 0px, box 636px, fits; repeats the description: false
+resend it 768: notice left 49px, action text left 49px (0px in), action box 145px of the notice's 670px
+placeholder sq 1024: text 0px, box 892px, fits; repeats the description: false
+resend sq 1024: notice left 49px, action text left 49px (0px in), action box 194px of the notice's 926px
+placeholder en 1024: text 0px, box 892px, fits; repeats the description: false
+resend en 1024: notice left 49px, action text left 49px (0px in), action box 164px of the notice's 926px
+placeholder uk 1024: text 0px, box 892px, fits; repeats the description: false
+resend uk 1024: notice left 49px, action text left 49px (0px in), action box 177px of the notice's 926px
+placeholder it 1024: text 0px, box 892px, fits; repeats the description: false
+resend it 1024: notice left 49px, action text left 49px (0px in), action box 145px of the notice's 926px
+placeholder sq 1440: text 0px, box 1308px, fits; repeats the description: false
+resend sq 1440: notice left 49px, action text left 49px (0px in), action box 194px of the notice's 1342px
+placeholder en 1440: text 0px, box 1308px, fits; repeats the description: false
+resend en 1440: notice left 49px, action text left 49px (0px in), action box 164px of the notice's 1342px
+placeholder uk 1440: text 0px, box 1308px, fits; repeats the description: false
+resend uk 1440: notice left 49px, action text left 49px (0px in), action box 177px of the notice's 1342px
+placeholder it 1440: text 0px, box 1308px, fits; repeats the description: false
+resend it 1440: notice left 49px, action text left 49px (0px in), action box 145px of the notice's 1342px
+cells 28; placeholder cut: 0; placeholder repeats the description: 0; resend text more than 8px in from the notice's edge: 0
+
+
+EXIT_CODE=0

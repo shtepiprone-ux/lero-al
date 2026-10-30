@@ -1,0 +1,67 @@
+# r55-04 part 1 (R169 (a)): npm run build
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npm run build
+started: 2026-10-29T11:46:48.0495706Z
+finished: 2026-10-29T11:49:39.9259364Z
+--- output (last 60 lines; full output kept in r55-04-build-full.txt) ---
+├ ƒ /[locale]/listings/[slug]            3.29 kB         728 kB
+├ ƒ /[locale]/listings/[slug]/edit       6.68 kB         281 kB
+├ ƒ /[locale]/listings/create            1.47 kB         253 kB
+├ ƒ /admin                               14.5 kB         490 kB
+├ ƒ /admin/companies                       13 kB         333 kB
+├ ƒ /admin/currency                      7.28 kB         411 kB
+├ ƒ /admin/email-templates               13.2 kB         272 kB
+├ ƒ /admin/footer                        16.3 kB         254 kB
+├ ƒ /admin/inquiries                       384 B         186 kB
+├ ƒ /admin/inquiries/sales                 394 B         626 kB
+├ ƒ /admin/inquiries/support               393 B         626 kB
+├ ƒ /admin/legal                           384 B         186 kB
+├ ƒ /admin/listings                      12.2 kB         638 kB
+├ ƒ /admin/listings/[id]/preview          2.2 kB         727 kB
+├ ƒ /admin/locations                     8.76 kB         281 kB
+├ ƒ /admin/pages                          166 kB         792 kB
+├ ƒ /admin/permissions                   4.64 kB         624 kB
+├ ƒ /admin/popular-locations             12.3 kB         280 kB
+├ ƒ /admin/property-types                  13 kB         320 kB
+├ ƒ /admin/reports                       7.12 kB         411 kB
+├ ƒ /admin/settings                       6.5 kB         245 kB
+├ ƒ /admin/support                       11.1 kB         630 kB
+├ ƒ /admin/users                         6.48 kB         626 kB
+├ ƒ /admin/users/[id]                      398 B         692 kB
+├ ƒ /admin/users/new                       398 B         692 kB
+├ ƒ /api/auth-email-hook                   385 B         186 kB
+├ ƒ /api/auth/me                           384 B         186 kB
+├ ƒ /api/cron/inactivity                   385 B         186 kB
+├ ƒ /api/cron/listing-activity             384 B         186 kB
+├ ƒ /api/cron/listings-expiry              385 B         186 kB
+├ ƒ /api/cron/price-alerts                 385 B         186 kB
+├ ƒ /api/cron/saved-searches               384 B         186 kB
+├ ○ /api/exchange-rate                     384 B         186 kB          1h      1y
+├ ƒ /api/listings                          385 B         186 kB
+├ ƒ /api/listings/[slug]/view              385 B         186 kB
+├ ƒ /api/presence                          384 B         186 kB
+├ ƒ /api/property-types                    385 B         186 kB
+├ ƒ /api/upload-avatar                     385 B         186 kB
+├ ƒ /api/upload-cms-image                  385 B         186 kB
+├ ƒ /api/upload-company-logo               385 B         186 kB
+├ ƒ /api/upload-popular-location-photo     385 B         186 kB
+├ ƒ /auth/callback                         385 B         186 kB
+├ ƒ /auth/confirm                          385 B         186 kB
+├ ƒ /auth/google/callback                3.38 kB         199 kB
+├ ○ /robots.txt                            384 B         186 kB
+└ ● /sitemap/[__metadata_id__]             385 B         186 kB
+    └ /sitemap/0.xml
++ First Load JS shared by all             185 kB
+  ├ chunks/3434-bacb03bfeb1caf25.js       126 kB
+  ├ chunks/4bd1b696-bc62c0f5edf56f0e.js  54.4 kB
+  └ other shared chunks (total)          5.39 kB
+
+
+ƒ Middleware                              167 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+--- exit code: 0 ---

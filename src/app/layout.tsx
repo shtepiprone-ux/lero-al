@@ -16,6 +16,7 @@ import '@/design-system/mantine/range-date-picker-chrome.css'
 import '@/design-system/mantine/typography-chrome.css'
 import './globals.css'
 import { MantineRootProvider } from '@/design-system/mantine/MantineRootProvider'
+import { withoutAuthCallback } from '@/lib/analytics/beforeSend'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -52,8 +53,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <MantineRootProvider>
           {children}
         </MantineRootProvider>
-        <Analytics />
-        <SpeedInsights />
+        <Analytics beforeSend={withoutAuthCallback} />
+        <SpeedInsights beforeSend={withoutAuthCallback} />
       </body>
     </html>
   )

@@ -3,11 +3,12 @@
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { ExternalLink, Eye, Pencil, Star, Trash2 } from 'lucide-react'
-import { Badge, Button, Group, useMantineTheme } from '@mantine/core'
+import { Button, Group, useMantineTheme } from '@mantine/core'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 import { MantineNavRowList } from '@/design-system/mantine/patterns/MantineNavRowList'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { StatusChangeSelect, type StatusSelectOption } from '@/components/admin/StatusChangeSelect'
@@ -16,6 +17,7 @@ import { formatListingDate } from '@/lib/formatters'
 import { formatVisibility } from '@/modules/listings/lib/visibility'
 import { isListingHidden } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface ListingPreviewDialogViewProps {
   listing: AdminListing
@@ -39,7 +41,7 @@ export interface ListingPreviewDialogViewProps {
  * §23.7): a structured `MantineModal` (bottom sheet below 640px) with sections — the status as
  * `StatusChangeSelect`, the facts as `MantineDetailList` and the navigation as `MantineNavRowList`. The dialog does not
  * repeat the subject: the listing's row stays visible behind it. The footer is a `MantineDialogFooter` pair: Delete (secondary) and Edit (the one primary).
- * The delete confirmation replaces the sections with one section and the footer with Cancel and a filled red Delete.
+ * Delete opens `MantineDeleteConfirmModal` over this dialog (Task 859 Revision 3, R36 — the same stacked confirm as `ReportDetailDialogView`).
  * `useTranslations` / `useLocale` / `useMantineTheme` only: no state, no server action, no toast.
  */
 export function ListingPreviewDialogView({
@@ -73,44 +75,25 @@ export function ListingPreviewDialogView({
         </Button>
       }
       primary={
-        <Button component={Link} href={`/${locale}/listings/${listing.slug}/edit`} target="_blank" leftSection={<Pencil size={iconSize} />}>
+        <Button component={Link} href={`/${locale}/listings/${listing.slug}/edit`} target="_blank" rel="noopener noreferrer" leftSection={<Pencil size={iconSize} />}>
           {tc('edit')}
         </Button>
       }
     />
   )
 
-  // Delete-confirm footer: Delete is that step's primary (filled, destructive colour), Cancel is secondary.
-  const confirmFooter = (
-    <MantineDialogFooter
-      secondary={
-        <Button variant="default" disabled={deleting} onClick={() => onShowDeleteConfirm(false)}>
-          {tc('cancel')}
-        </Button>
-      }
-      primary={
-        <Button color="red" loading={deleting} onClick={onDelete}>
-          {tc('delete')}
-        </Button>
-      }
-    />
-  )
-
   return (
-    <MantineModal
-      opened
-      onClose={onClose}
-      structured
-      size="lg"
-      title={listing.title}
-      description={typeLabel}
-      footer={showDeleteConfirm ? confirmFooter : restingFooter}
-    >
-      {showDeleteConfirm ? (
-        <MantineDialogSections>
-          <MantineDialogSection title={t('delete_confirm')} description={t('delete_dialog_body')} />
-        </MantineDialogSections>
-      ) : (
+    <>
+      <MantineModal
+        opened
+        onClose={onClose}
+        structured
+        size="lg"
+        title={listing.title}
+        description={typeLabel}
+        footer={restingFooter}
+        covered={showDeleteConfirm}
+      >
         <MantineDialogSections>
           <MantineDialogSection title={t('col_status')}>
             <StatusChangeSelect
@@ -127,9 +110,9 @@ export function ListingPreviewDialogView({
                   label: t('visibility_label'),
                   value: (
                     <Group gap={0} justify="flex-end">
-                      <Badge variant="light" size="sm" color={vis.visible ? 'green' : 'red'}>
+                      <MantineBadge variant="status" entity="listingVisibility" value={vis.visible ? 'visible' : 'hidden'}>
                         {vis.visible ? t('visibility_visible') : t(vis.labelKey as Parameters<typeof t>[0])}
-                      </Badge>
+                      </MantineBadge>
                     </Group>
                   ),
                 },
@@ -168,7 +151,18 @@ export function ListingPreviewDialogView({
             />
           </MantineDialogSection>
         </MantineDialogSections>
-      )}
-    </MantineModal>
+      </MantineModal>
+
+      <MantineDeleteConfirmModal
+        opened={showDeleteConfirm}
+        onClose={() => onShowDeleteConfirm(false)}
+        title={t('delete_confirm')}
+        message={t('delete_dialog_body')}
+        confirmLabel={tc('delete')}
+        cancelLabel={tc('cancel')}
+        loading={deleting}
+        onConfirm={onDelete}
+      />
+    </>
   )
 }

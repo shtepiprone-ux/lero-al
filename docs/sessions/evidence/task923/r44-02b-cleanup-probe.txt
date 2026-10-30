@@ -1,0 +1,22 @@
+# R141-R144 AC141 r44-02b: after r44-02, the synthetic rows of every run of this revision are gone (read-only counts; each integration file also asserts its own verified clean-up in afterAll)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/probe-cleanup44.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T11:59:57.137Z
+--- stdout ---
+users.name zz_synth_*              0
+listings.slug zz_synth_*           0
+companies.name zz_synth_*          0
+contact_inquiries.name zz_synth_*  0
+listing_inquiries.name zz_synth_*  0
+listing_views.ip_hash zz_synth_*   0
+listing_reports.comment zz_synth_* 0
+user_status_history.reason zz_synth_* 0
+auth users zz_synth_*              0
+TOTAL left: 0; queries unknown: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

@@ -1,0 +1,13 @@
+signed in (alert ["Кабінет | Lero.al"]): page /uk/cabinet | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"] | browser -> POST /auth/v1/token; browser <- 200 /auth/v1/token
+-- fresh session
+/uk/cabinet?tab=listings -> 200: page /uk/cabinet | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/cabinet/listings -> 404: page /uk/cabinet/listings | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/cabinet?tab=listings -> 200: page /uk/cabinet | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/listings/35-mviht7po -> 200: page /uk/listings/35-mviht7po | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/listings -> 200: page /uk/listings | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+-- session made to look expired
+/uk/cabinet?tab=listings -> 200: page /uk/cabinet | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/cabinet/listings -> 404: page /uk/cabinet/listings | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/cabinet?tab=listings -> 200: page /uk/cabinet | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/listings/35-mviht7po -> 200: page /uk/listings/35-mviht7po | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]
+/uk/listings -> 200: page /uk/listings | /api/auth/me 200 user=yes | header "Увійти"=0 | cookies ["sb-*-auth-token.0","sb-*-auth-token.1"]

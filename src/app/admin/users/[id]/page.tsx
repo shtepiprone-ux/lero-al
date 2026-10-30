@@ -1,15 +1,18 @@
-import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { getLocale } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { createClient } from '@/lib/supabase/server'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
 import { formatDate, formatDateTime } from '@/lib/formatters'
 import type { UserChangeLog, UserStatusHistory } from '@/types/database'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
+import { userLocation } from '@/modules/admin/lib/userLocation'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const { id } = await params
   const db = createAdminClient()
   const { data } = await db.from('users').select('name, last_name').eq('id', id).single()
@@ -18,6 +21,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 }
 
 export default async function AdminUserProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const { id } = await params
   const db = createAdminClient()
 
@@ -27,16 +32,17 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
     { data: cities },
     { data: regions },
   ] = await Promise.all([
-    db.from('users').select('*').eq('id', id).single(),
+    db.from('users').select('*').eq('id', id).maybeSingle(),
     db.from('locations').select('id, name_al, region_id').in('type', ['city', 'village']).order('name_al'),
     db.from('locations').select('id, name_al').eq('type', 'region').order('name_al'),
   ])
 
   if (userError) console.error('AdminUserProfilePage: user query failed', { error: userError, id })
-  if (!user) notFound()
+  // Task 923 R139 (D85, D86): a missing or deleted account opens the Users list, which says why
+  if (!user) redirect('/admin/users?notice=user_gone')
 
   // Soft-delete check
-  if (user.deleted_at) notFound()
+  if (user.deleted_at) redirect('/admin/users?notice=user_gone')
 
   // Change log — table may not exist yet; degrade gracefully
   let changeLog: UserChangeLog[] = []
@@ -72,10 +78,9 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   } catch {}
 
   // Current viewer's role
-  const me = await getUser()
-  const supabase = await createClient()
-  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me!.id).single()
-  const isAdmin = myProfile?.role === 'admin'
+  // The role comes from requireViewer() (Task 923 R44).
+  const viewer = await requireViewer()
+  const isAdmin = viewer.ok && viewer.role === 'admin'
   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
 
   // Pre-format timestamps on the server so the client renders verbatim strings.
@@ -90,7 +95,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   return (
     <AdminPageFrame width="page">
       <AdminUserProfile
-        user={user}
+        user={{ ...user, location: userLocation(user.location_id, cities ?? [], regions ?? []) }}
         email={email}
         emailConfirmedAt={emailConfirmedAt}
         cities={cities ?? []}

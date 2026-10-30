@@ -1,0 +1,27 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T16:20:08.964Z
+command: npx vitest run --reporter=verbose src/modules/admin/__tests__/adminOrphans.test.ts
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the real src tree > parses seventeen unique setting keys from the source of the Server Action module 2ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the real src tree > every setting key has a reader outside the admin code, except the thirteen keys of Task 930, which have none yet 24ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the real src tree > every table that only the admin code writes has a reader outside it, or is an admin record table that an admin screen reads 9ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > a key with no reader outside the admin code is an orphan 1ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > a key read only inside the admin code is an orphan; a direct getSetting and a key=eq. reader are readers 0ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > a TASK_930_KEYS key that gains a getSetting reader outside the admin code is reported 0ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > an admin-written-only table with no reader outside the admin code is an orphan 0ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > a table read only through a helper of the settings library that a file outside the admin code imports is not an orphan 1ms
+ ✓ src/modules/admin/__tests__/adminOrphans.test.ts > adminOrphans — the rules on planted inputs > an ADMIN_RECORD_TABLES table with no admin reader is reported, and so is one that is no longer admin-written-only 0ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  18:20:10
+   Duration  1.08s (transform 40ms, setup 90ms, import 66ms, tests 39ms, environment 749ms)
+
+
+---- end ----
+EXIT_CODE=0

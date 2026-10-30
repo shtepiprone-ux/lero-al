@@ -36,33 +36,29 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
 const page = await ctx.newPage();
 page.on('dialog', d => d.dismiss().catch(() => null)); // native alert/confirm: record nothing, never block
 
-// Kamr: the owner's credentials (admin / 123456) first. The email field is type="email", so "admin" may be refused by
-// the browser's own validation; then the form's prefilled demo values are submitted unchanged. Which one worked is logged.
+// Kamr: the demo account demo@example.com / 123456 (owner, 2026-10-04). The library run of 2026-10-04 first tried
+// 'admin' (refused by the type="email" field) and then submitted the same prefilled demo values; loginNote records it.
 let loginNote = null;
-async function submitLogin() {
+async function login() {
+  if (REF !== 'kamr') return false;
+  if ((await page.locator('input[type="password"]').count()) === 0) return false;
+  await page.locator('input[type="email"], input[type="text"]').first().fill('demo@example.com').catch(() => null);
+  await page.locator('input[type="password"]').first().fill('123456').catch(() => null);
+  await page.waitForTimeout(1000); // let the SPA hydrate before submitting
   await page.locator('button[type="submit"], button:has-text("Sign")').first().click().catch(() => null);
   await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => null);
   await page.waitForTimeout(800);
-}
-async function login() {
-  if (REF !== 'kamr') return;
-  if ((await page.locator('input[type="password"]').count()) === 0) return;
-  await page.locator('input[type="email"], input[type="text"]').first().fill('admin').catch(() => null);
-  await page.locator('input[type="password"]').first().fill('123456').catch(() => null);
-  await submitLogin();
-  if ((await page.locator('input[type="password"]').count()) === 0) { loginNote ??= 'owner credentials admin/123456 accepted'; return; }
-  await page.reload({ waitUntil: 'networkidle' }).catch(() => null);
-  await submitLogin();
-  if ((await page.locator('input[type="password"]').count()) === 0) { loginNote ??= 'admin/123456 refused by the type=email field; prefilled demo@example.com/123456 accepted'; return; }
-  loginNote = 'login failed with both credential sets';
+  loginNote ??= (await page.locator('input[type="password"]').count()) === 0 ? 'demo@example.com/123456 accepted' : 'login failed';
+  return true;
 }
 
 async function load(url) {
   // Resume-friendly speed: 'load' plus a fixed settle wait (networkidle never settles on some demos and cost 30s per reload).
   const resp = await page.goto(url, { waitUntil: 'load', timeout: 25000 }).catch(() => null);
   await page.waitForTimeout(REF === 'kamr' ? 1500 : 900);
-  await login();
-  if (REF === 'kamr' && !page.url().startsWith(url.split('?')[0]) && /login|sign/i.test(page.url())) {
+  const signedIn = await login();
+  // After a sign-in Kamr lands on its dashboard, so the requested page is opened again.
+  if (REF === 'kamr' && !page.url().startsWith(url.split('?')[0]) && (signedIn || /login|sign/i.test(page.url()))) {
     await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 }).catch(() => null);
   }
   return resp ? resp.status() : null;

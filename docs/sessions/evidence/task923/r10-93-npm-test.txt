@@ -1,0 +1,248 @@
+﻿platform: win32 10.0.26300.0 node v22.22.3
+command: npm test (the whole suite, once)
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/admin/actions/__tests__/permissions.security.test.ts (41 tests | 34 failed) 40ms
+     × an administrator switches a permission on and the change is audited with the old value and the actor 11ms
+     × switching an existing one off records the previous value and keeps one row for it 1ms
+     × asking for the value it already has is a no-op: no write, no audit row, no refresh 2ms
+     × the permission "users.hard_delete_everything" is refused and nothing is written 1ms
+     × the permission "" is refused and nothing is written 1ms
+     × the permission "__proto__" is refused and nothing is written 1ms
+     × the permission "listings.delete; drop" is refused and nothing is written 1ms
+     × the permission undefined is refused and nothing is written 1ms
+     × the permission 5 is refused and nothing is written 1ms
+     × the value "true" is not a boolean: refused 1ms
+     × the value "false" is not a boolean: refused 0ms
+     × the value 1 is not a boolean: refused 1ms
+     × the value 0 is not a boolean: refused 0ms
+     × the value null is not a boolean: refused 0ms
+     × the value undefined is not a boolean: refused 0ms
+     × the value {} is not a boolean: refused 0ms
+     × every known permission can be switched 0ms
+     × a failed write is "save_failed" and leaves no audit row 1ms
+     × a failed audit row does not undo the change that was made 0ms
+     × returns every permission, off unless a row says on, with who changed it 1ms
+     × ignores a row whose key is not a known permission 1ms
+     × does not take the admin's own switches for the moderator's 0ms
+     × an unreadable table shows every switch OFF 0ms
+     × a moderator may read, a plain user and an anonymous caller may not 2ms
+     × returns events with the actor's name; an event without an actor has none 2ms
+     × a moderator may read 0ms
+     × the limit 5 is asked as 5 1ms
+     × the limit 0 is asked as 1 0ms
+     × the limit -3 is asked as 1 0ms
+     × the limit 1000 is asked as 200 0ms
+     × the limit 2.5 is asked as 20 0ms
+     × the limit null is asked as 20 0ms
+     × the limit "10" is asked as 20 0ms
+     × the limit undefined is asked as 20 0ms
+ ❯ src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts (27 tests | 26 failed) 28ms
+     × a moderator features one location and refreshes the home pages 10ms
+     × an administrator features one location and refreshes the home pages 1ms
+     × a plain user is refused 2ms
+     × someone with no profile is refused 1ms
+     × refuses location 1.5 with order 1 1ms
+     × refuses location "1" with order 1 1ms
+     × refuses location null with order 1 1ms
+     × refuses location undefined with order 1 1ms
+     × refuses location null with order 1 1ms
+     × refuses location 1 with order -1 1ms
+     × refuses location 1 with order 1.5 1ms
+     × refuses location 1 with order "2" 0ms
+     × refuses location 1 with order null 0ms
+     × refuses location 1 with order 10001 0ms
+     × refuses location 1 with order undefined 0ms
+     × refuses location {} with order 1 0ms
+     × accepts the order 0 and 10 000 1ms
+     × a database failure is "save_failed" and nothing is refreshed 0ms
+     × removes one location from the section and keeps its photo 0ms
+     × refuses the location 1.5 0ms
+     × refuses the location "1" 0ms
+     × refuses the location null 0ms
+     × refuses the location undefined 0ms
+     × refuses the location null 0ms
+     × refuses the location {} 0ms
+     × a database failure is "remove_failed" 0ms
+ ❯ src/modules/admin/actions/__tests__/adminOperations.security.test.ts (60 tests | 53 failed) 50ms
+     × hands the change to the transition gateway with the staff member as the actor and refreshes the list 9ms
+     × a refusal by the gateway is returned, logged unless it is "not_found", and nothing is refreshed 1ms
+     × a plain user is refused before the gateway 4ms
+     × someone with no profile is refused before the gateway 1ms
+     × switches the flag on with an end date and refreshes the admin lists and the public pages in every language 3ms
+     × without an end date the old one is left alone; with null it is cleared 2ms
+     × an end date in the past is refused and nothing is written 1ms
+     × a listing that does not exist is "not_found" 1ms
+     × a database failure is "transient", or "db_missing_column" when the column is not there yet 1ms
+     × a moderator without the permission is refused; toggling goes through the same rules 1ms
+     × deletes one listing and refreshes the counters and the public lists 2ms
+     × a database failure deletes nothing and refreshes nothing 1ms
+     × create, update, feature and delete each change one row and refresh the page 1ms
+     × a database failure returns its message and refreshes nothing 0ms
+     × addLocation makes a city under its region with a unique, plain slug 0ms
+     × addLocation reports a failure 2ms
+     × approving a request sets the location and clears the request; rejecting only clears it 1ms
+     × a failed request decision returns a key and refreshes nothing 0ms
+     × create stores the Albanian title of the content, and refreshes the list 1ms
+     × create falls back to the given title when the Albanian one is empty 0ms
+     × create refuses the slug "Upper" 0ms
+     × create refuses the slug "a/b" 0ms
+     × create refuses the slug "with space" 0ms
+     × create refuses the slug "" 0ms
+     × create refuses the slug "auth" 0ms
+     × create refuses the slug "sq" 0ms
+     × create refuses the slug "cabinet" 0ms
+     × create reports a database failure 0ms
+     × update writes the known fields, the Albanian title and the time, and refreshes 1ms
+     × update refuses a slug that is not valid or is used by ANOTHER page, and accepts its own 0ms
+     × publishing needs an Albanian body: the supplied one, or the stored one when none is supplied 0ms
+     × update reports a failure; delete removes one page, or reports a failure 0ms
+     × a text shorter than two characters finds nobody and does not ask 0ms
+     × a whole id finds exactly that person, and not a deleted one 0ms
+     × a text search asks for the text as a VALUE: a comma or a bracket cannot add a condition 0ms
+     × a wildcard in the text is a literal character 0ms
+     × only staff may search 1ms
+     × creates a support ticket for an existing person, records the event and refreshes the list 1ms
+     × a complaint needs the reported person and a known complaint type, and the reported person is told 0ms
+     × refuses an unknown ticket type with "{ ticketType: 'chat' }" and writes nothing 0ms
+     × refuses a blank requester with "{ requesterUserId: '  ' }" and writes nothing 0ms
+     × refuses a complaint with no reported person with "{ ticketType: 'user_complaint', complaintType: 'spam' }" and writes nothing 0ms
+     × refuses a complaint with no type with "{ ticketType: 'user_complaint', reportedUserId: 'adm' }" and writes nothing 0ms
+     × refuses a complaint with an unknown type with "{ ticketType: 'user_complaint', reportedUserId: 'adm', complaintType: 'rude' }" and writes nothing 0ms
+     × refuses a blank subject with "{ subject: ' ' }" and writes nothing 0ms
+     × refuses a blank reason with "{ reason: ' ' }" and writes nothing 0ms
+     × refuses a requester who does not exist with "{ requesterUserId: 'nobody' }" and writes nothing 0ms
+     × refuses a reported person who does not exist with "{ ticketType: 'user_complaint', reportedUserId: 'nobody', complaintType: 'spam' }" and writes nothing 0ms
+     × a database failure is "create_failed" and tells nobody 0ms
+     × moves a ticket on, records who and why, and tells the reported person only when it is resolved or closed 0ms
+     × the same status again changes nothing 0ms
+     × a ticket with no reported person tells nobody 0ms
+     × an unknown ticket is "not_found"; a database failure is "update_failed" 0ms
+ ❯ src/modules/companies/__tests__/companyActions.security.test.ts (32 tests | 16 failed) 30ms
+       × updateCompanyAction is refused and nothing changes 6ms
+       × deleteCompanyAction is refused and nothing changes 1ms
+       × updateCompanyAction is refused and nothing changes 1ms
+       × deleteCompanyAction is refused and nothing changes 1ms
+       × updateCompanyAction is refused and nothing changes 1ms
+       × deleteCompanyAction is refused and nothing changes 1ms
+       × renames, trimmed 1ms
+       × refuses the name "" 1ms
+       × refuses the name "a" 1ms
+       × refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 0ms
+       × deletes only the named company 1ms
+       × renames, trimmed 1ms
+       × refuses the name "" 0ms
+       × refuses the name "a" 0ms
+       × refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 0ms
+       × deletes only the named company 0ms
+ ❯ src/lib/auth/__tests__/authCore.security.test.ts (38 tests | 4 failed) 32ms
+     × a person with no profile row is not blocked 5ms
+     × CHARACTERISATION (owner decision S32): a database error while reading the status is treated as "allowed" 1ms
+     × adm is staff (admin) 2ms
+     × mod is staff (moderator) 1ms
+ ❯ src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts (35 tests | 32 failed) 28ms
+     × an administrator saves a template; the key is normalised and the author is the session's user 6ms
+     × a moderator saves a template; the key is normalised and the author is the session's user 1ms
+     × saving the same key and language again updates one row 2ms
+     × a plain user is refused and nothing is saved 2ms
+     × an agent is refused and nothing is saved 1ms
+     × someone with no profile is refused and nothing is saved 1ms
+     × refuses an empty key and saves nothing 1ms
+     × refuses a key with a slash and saves nothing 1ms
+     × refuses a key with markup and saves nothing 1ms
+     × refuses a key over 64 characters and saves nothing 0ms
+     × refuses no key and saves nothing 0ms
+     × refuses a language that does not exist and saves nothing 0ms
+     × refuses a language in capitals and saves nothing 0ms
+     × refuses an empty subject and saves nothing 0ms
+     × refuses a subject over 300 characters and saves nothing 0ms
+     × refuses a body that is not text and saves nothing 0ms
+     × refuses a body over 200 000 characters and saves nothing 0ms
+     × refuses variables that are not a list and saves nothing 0ms
+     × refuses a variable with a space and saves nothing 0ms
+     × refuses a variable that is not text and saves nothing 0ms
+     × refuses more than 50 variables and saves nothing 0ms
+     × refuses a state that is not true / false and saves nothing 0ms
+     × accepts a body of exactly 200 000 characters and 50 variables 0ms
+     × refuses nothing at all 0ms
+     × a database failure is "save_failed" 0ms
+       × deleteEmailTemplateGroupAction is refused 0ms
+       × deleteEmailTemplateLocaleAction is refused 0ms
+       × deleteEmailTemplateGroupAction is refused 0ms
+       × deleteEmailTemplateLocaleAction is refused 1ms
+     × an administrator deletes every language of a key, and only that key 0ms
+     × an administrator deletes one language by id, and only that one 0ms
+     × a database failure is "delete_failed" 0ms
+ ❯ src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts (6 tests | 5 failed) 17ms
+     × usr reaches the gateway with the role "user" taken from the database and the source "cabinet" 9ms
+     × adm reaches the gateway with the role "admin" taken from the database and the source "cabinet" 1ms
+     × nul reaches the gateway with the role null taken from the database and the source "cabinet" 1ms
+     × ghost reaches the gateway with the role null taken from the database and the source "cabinet" 1ms
+     × the role comes from the row of the session's user, never from another 0ms
+ ❯ src/modules/admin/actions/__tests__/adminLocale.test.ts (22 tests | 1 failed) 16ms
+     × stores a supported language in an httpOnly, lax, year-long cookie and on the signed-in person's profile only 5ms
+ ❯ src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts (4 tests | 3 failed) 54ms
+     × admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present 45ms
+     × regular user → rejects forbidden; admin client from(role_permissions) never called 3ms
+     × admin client read error → resolves to the all-false map; console.error called 2ms
+ ❯ src/lib/auth/__tests__/permissions.test.ts (10 tests | 1 failed) 83ms
+     × hasPermission → true for a moderator whose key is stored allowed:true (admin-client read) 7ms
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts (17 tests | 8 failed) 109ms
+     × resolved: reporter AND listing owner both notified with the correct template ids 8ms
+     × dismissed: reporter AND listing owner both notified with the correct template ids 2ms
+     × owner equals reporter → only the reporter notification is sent 1ms
+     × reviewed (non-terminal) transition → no notification call 1ms
+     × reopen (resolved→pending) → no notification call 1ms
+     × ordering: the action does not resolve before both the reporter and owner notification promises resolve 1ms
+     × createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch) 1ms
+     × R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {} 1ms
+ ❯ src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts (21 tests | 10 failed) 98ms
+     × allowlist transition (pending→reviewed) with reports.manage → passes 8ms
+     × allowlist transition (pending→resolved) with reports.manage → passes 2ms
+     × allowlist transition (pending→reviewed) with status_override only (no reports.manage) → passes 2ms
+     × allowlist transition (pending→resolved) with status_override only (no reports.manage) → passes 1ms
+     × out-of-allowlist with reports.status_override granted → passes 1ms
+     × same→same noop → invalid_status 1ms
+     × CAS conflict (status changed between read and write) → conflict 1ms
+     × successful status change → audit row inserted 1ms
+     × audit insert failure → status CAS-reverted + console.error + save_failed 1ms
+     × audit failure + CAS revert miss (concurrent change) → CRITICAL console.error + save_failed 1ms
+ ❯ src/modules/notifications/lib/__tests__/mutations.smoke.test.ts (9 tests | 8 failed) 162ms
+     × markNotificationRead — uses the user-scoped client, never the admin client 79ms
+     × markNotificationRead — update() payload keys are exactly [is_read]=true 1ms
+     × markNotificationRead — filters eq(id) and eq(is_read, false) 5ms
+     × markNotificationRead — { error } result logs once and resolves without throwing 2ms
+     × markAllNotificationsRead — uses the user-scoped client, never the admin client 1ms
+     × markAllNotificationsRead — update() payload keys are exactly [is_read]=true 1ms
+     × markAllNotificationsRead — filters eq(is_read, false) only 1ms
+     × markAllNotificationsRead — { error } result logs once and resolves without throwing 1ms
+ ❯ src/modules/__tests__/rls-write-guards.smoke.test.ts (15 tests | 4 failed) 264ms
+     × positive — admin → insert via admin client → { id } 30ms
+     × diagnosability — insert failure → console.error with root cause 2ms
+     × positive — admin → permission upserted + audit event inserted → {} 7ms
+     × diagnosability — upsert failure → console.error with root cause 1ms
+ ❯ src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts (40 tests | 8 failed) 336ms
+     × positive — a published CMS slug saves and its social_links reach the upsert 180ms
+     × negative — an unpublished slug rejects the whole payload, no upsert 2ms
+     × negative — a nonexistent slug rejects the whole payload, no upsert 2ms
+     × a disabled link with a bad URL does not block the save 1ms
+     × a pages lookup error returns transient, no upsert 2ms
+     × R7 — the upsert is issued through the service-role client, not the user client 2ms
+     × review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path 1ms
+     × accepts https, http, mailto and tel links 1ms
+ ❯ src/modules/cabinet/statistics/__tests__/access.test.ts (9 tests | 3 failed) 23ms
+     × role agent -> ok with the session user id 10ms
+     × reads the role of the session user only 2ms
+     × a role lookup error is denied (not_agent), never granted 2ms
+
+ Test Files  16 failed | 263 passed (279)
+      Tests  216 failed | 5370 passed (5586)
+   Start at  10:25:04
+   Duration  86.48s (transform 11.37s, setup 32.88s, import 294.65s, tests 238.23s, environment 220.78s)
+
+EXIT_CODE=1

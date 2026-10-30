@@ -1,0 +1,12 @@
+Task 923 R55 (kickoff section 21, Revision 12): precondition of the repeated full census run, checked 2026-10-19 before the run started (R52's precondition again).
+platform: win32 10.0.26300.0 node v22.22.3; HEAD a711a8859 (review 12 commit); kickoff sha256 26c6cfdadc402135638f9e4a281e7febca3b5276e7f80e094b99be52e0c9a745 (cli.mjs hash --task).
+
+storybook-static/index.json built: 2026-10-19T09:54:25 (r10-50-build-storybook.txt: exit 0). Revision 12 changed no product, Story, registry or .storybook file, so no rebuild.
+files under src/, messages/, .storybook/ and public/ with a write time after that build: 0
+package.json 2026-10-17T19:26:37, package-lock.json 2026-10-07T20:39:08, next.config.ts 2026-10-17T18:31:57, tsconfig.json 2026-05-27T22:58:05, vitest.config.ts 2026-10-17T19:26:29: all older than the build.
+git status --porcelain lines: 2701 now, 2685 in r10-112-status-after-r52.txt. Compared line by line (sorted): 0 lines only in r10-112; 16 lines only now, all of them untracked evidence paths of this round
+  (docs/sessions/evidence/task923/r12-01, r12-02, r12-03, r12-04, r12-05, r12-06, r12-10, r12-110, r12-20, r12-21, r12-60, r12-61, r12-84, r12-ac57-delete-confirm/, r12-ac57-listing/, r12-story/).
+The gate paths of Revision 12 (scripts/rendered-state-census/in-page.mjs and verify.mjs, scripts/__fixtures__/rendered-state-census/, scripts/__tests__/rendered-state-census.test.ts) were already listed in r10-112 as modified or untracked.
+Result: no product or Story file changed after storybook-static was built; the run uses that build and Storybook is not rebuilt while it runs.
+
+Before the run: docs/sessions/evidence/task923/r12-full/ and r12-82-full-run.txt do not exist.

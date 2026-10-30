@@ -1,0 +1,7 @@
+# rv62-16 paths the executor wrote in Revision 54 that r54-00 / r54-00b do not list (Opus, read-only)
+platform win32 x64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: grep -c <path> r54-00-before-hash.txt r54-00b-after-hash.txt; sha256sum <path>
+not in r54-00b: src/lib/auth/__tests__/moderatorKeys.security.test.ts (listed 0 times); current sha256 bf789d70a6f0386fa7349fbfedd6c3bd9afa1324bb5c9dab690bc3c16b815019
+not in r54-00b: docs/sessions/evidence/task923/security/owner-fixes-report.mjs (listed 0 times); current sha256 8716b7667466072ba007512367dc9405c7c65f283a5206112204b25a2c33dc97
+source of the writes: the executor transcript's Edit calls (rv62-edits.mjs); moderatorKeys: the test title only; owner-fixes-report.mjs: sensitivityOf looks at the case's own artifact first
+exit 0

@@ -1,0 +1,11 @@
+rows now 32, baseline 32; form rows identical 24; failing 0
+captcha|sq|320 note delta [x,y,w,h] [0,12,0,0]
+captcha|sq|1440 note delta [x,y,w,h] [0,12,0,0]
+captcha|en|320 note delta [x,y,w,h] [0,12,0,0]
+captcha|en|1440 note delta [x,y,w,h] [0,12,0,0]
+captcha|uk|320 note delta [x,y,w,h] [0,12,0,0]
+captcha|uk|1440 note delta [x,y,w,h] [0,12,0,0]
+captcha|it|320 note delta [x,y,w,h] [0,12,0,0]
+captcha|it|1440 note delta [x,y,w,h] [0,12,0,0]
+css now {"inFlowZeroBoxGap":32,"absoluteZeroBoxGap":16} baseline {"inFlowZeroBoxGap":32,"absoluteZeroBoxGap":16}
+EXIT_CODE=0

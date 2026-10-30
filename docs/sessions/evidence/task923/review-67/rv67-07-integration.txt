@@ -1,0 +1,9 @@
+platform: MINGW64_NT-10.0-26300 3.6.5-22c95533.x86_64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; start 2026-10-29T21:40:52+01:00; env SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref, 20 characters> NEXT_PUBLIC_SUPABASE_URL=<not printed>
+command: npx vitest run --config vitest.integration.config.ts
+
+ Test Files  24 passed (24)
+      Tests  96 passed (96)
+   Start at  21:40:54
+   Duration  296.60s (transform 668ms, setup 200ms, import 3.12s, tests 290.04s, environment 2ms)
+
+exit code: 0 end 2026-10-29T21:45:51+01:00

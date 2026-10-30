@@ -3,28 +3,21 @@ import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text } from '@mantine/core
 import { theme } from '@/design-system/mantine/theme'
 import { cn } from '@/lib/utils'
 import type { FooterLink } from '@/types/database'
+import { resolveLinkTarget } from '@/lib/security/safeUrl'
 import styles from './FooterView.module.css'
 
-// Resolve a link URL: internal paths get the locale prefix; external used as-is.
-function resolveHref(url: string, locale: string): string {
-  if (!url) return `/${locale}`
-  if (url.startsWith('http://') || url.startsWith('https://')) return url
-  return `/${locale}${url.startsWith('/') ? url : '/' + url}`
-}
-
-function isExternal(url: string): boolean {
-  return url.startsWith('http://') || url.startsWith('https://')
-}
-
+// A configured link is rendered only when it resolves to a safe target (Task 923 Revision 7, S9): internal paths get the locale prefix, http(s) / mailto / tel
+// are used as they are, and anything else (a `javascript:` or `data:` URL, also with a tab inside the scheme) is shown as plain text, never as a link.
 function FooterLink_({ link, locale }: { link: FooterLink; locale: string }) {
-  const ext = isExternal(link.url)
+  const target = resolveLinkTarget(link.url, locale)
+  if (!target) return <Text unstyled component="span" className={styles.footerLink}>{link.label}</Text>
   return (
     <Anchor
       unstyled
       component={Link}
-      href={resolveHref(link.url, locale)}
+      href={target.href}
       className={styles.footerLink}
-      {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      {...(target.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {link.label}
     </Anchor>
@@ -117,18 +110,23 @@ export function FooterView({
           <Text unstyled className={styles.copyright}>{copyright}</Text>
           <Group align="center" gap="lg">
             <Text unstyled component="span" className={styles.socialLabel} visibleFrom="sm">{socialTitle}:</Text>
-            {socialLinks.map(link => (
+            {socialLinks.map(link => {
+              const target = resolveLinkTarget(link.url, locale)
+              // a social link is always another site: an internal or unsafe value is not rendered as a link
+              if (!target?.external) return <Text unstyled component="span" key={link.id} className={styles.socialLink}>{link.label}</Text>
+              return (
               <Anchor
                 unstyled
                 key={link.id}
-                href={link.url}
+                href={target.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.socialLink}
               >
                 {link.label}
               </Anchor>
-            ))}
+              )
+            })}
           </Group>
         </Flex>
       </Box>

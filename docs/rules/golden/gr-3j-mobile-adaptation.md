@@ -1,5 +1,10 @@
 ## GR-3j — Mobile is an intentional semantic presentation, never a squeezed desktop layout
 
+**Opus reuse precedence, owner decision 2026-10-20:** first apply
+[canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md). Inherit ready Mantine
+adaptations and verify changed integration; fresh pattern research applies to named gaps/reproduced defects.
+The source-selection requirements below govern new adaptations and do not reopen settled ready-component design.
+
 **Owner rule, 2026-10-09.** A long reporter/user name and ordinary record details were visibly cut in the compact
 composition in Task 859 even though the Story had previous responsive receipts. The root defect was broader than a
 name slot: rules described widths and individual widgets, but did not force a chosen mobile presentation for a whole

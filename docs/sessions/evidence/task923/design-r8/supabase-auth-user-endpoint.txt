@@ -1,0 +1,18 @@
+Supabase Auth: what GET /user (supabase.auth.getUser()) refuses (Task 923 Revision 8 design, Opus, 2026-10-18)
+source: https://github.com/supabase/auth release tag v2.197.0 (2026-09-09)
+fetched with: gh api "repos/supabase/auth/contents/internal/api/auth.go?ref=v2.197.0" and the same for internal/api/api.go
+api.go:281: r.With(api.requireAuthentication).Route("/user", func(r *router) {
+auth.go:36-38 (inside requireAuthentication):
+	// Reject banned users who still hold an access token issued before the ban
+	if user := getUser(ctx); user != nil && user.IsBanned() {
+		return ctx, apierrors.NewForbiddenError(apierrors.ErrorCodeUserBanned, "User is banned")
+auth.go:152-155 (inside maybeLoadUserOrSession):
+		session, err = models.FindSessionByID(db, sessionId, false)
+		if err != nil {
+			if models.IsNotFoundError(err) {
+				return ctx, apierrors.NewForbiddenError(apierrors.ErrorCodeSessionNotFound, "Session from session_id claim in JWT does not exist")...
+project code: src/lib/auth/server.ts:21 getUser() calls supabase.auth.getUser(), so it reaches GET /user
+consequence: at v2.197.0 a banned account and a signed-out session fail getUser() on the next request
+limits (facts, not assumptions): the Auth version of the hosted project is not recorded in this repository; a soft deletion
+(src/modules/admin/actions/index.ts:613 writes only deleted_at) sets no ban; a role read through the service role is not limited by RLS.
+So "blocked at once" and "deleted is deleted" for every account cannot rest on the Auth ban alone: the server checks the profile itself.

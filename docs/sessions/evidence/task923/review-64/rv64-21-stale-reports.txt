@@ -1,0 +1,26 @@
+# rv64-21: the stale owner-fixes and Task 927 reports, the r56-00b recheck, the two mutants, the release mapping
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-64/rv64-21-stale-reports.mjs
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: stage implemented; report docs/sessions/evidence/task923/security/d8-d9-report.json generatedAt 2026-10-29T13:16:11.641Z
+  scope hash equal: true; validateReport issues: 0
+  Revision 56 paths in its scope: src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts, src/tests/integration/accessHardening.integration.test.ts, src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts, docs/sessions/evidence/task923/security/sensitivity.mjs
+  scope paths modified after the report: none
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: stage implemented; report docs/sessions/evidence/task923/security/owner-fixes-report.json generatedAt 2026-10-29T11:55:56.385Z
+  scope hash equal: false; validateReport issues: 1
+  Revision 56 paths in its scope: src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+  scope paths modified after the report: src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: stage implemented; report docs/sessions/evidence/task927/security/report.json generatedAt 2026-10-29T11:56:23.122Z
+  scope hash equal: false; validateReport issues: 1
+  Revision 56 paths in its scope: src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+  scope paths modified after the report: src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+r56-00b: 9 paths, equal to the current file: 9
+SEC-X-SRV-VIEW-DENY: baseline passed mutant failed kind assertion restored passed; first line: AssertionError: pending: not found: expected 200 to be 404 // Object.is equality
+  at: src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts:45:48
+  src/app/api/listings/[slug]/view/route.ts: restored equals original true; current file equals original true
+SEC-X-SRV-PROFILE-PROTECTED-DENY: baseline passed mutant failed kind assertion restored passed; first line: AssertionError: only the form columns are written: expected [ 'block_reason', 'blocked_at', …(18) ] to deeply equal [ 'company_name', 'location_id', …(5) ]
+  at: src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts:373:96
+  src/modules/cabinet/actions/index.ts: restored equals original true; current file equals original true
+current D8_D9 contract: 231 cases, 67 critical, 596 paths
+S59: rows 3, critical server deny true, real-boundary deny true -> PASS
+S60: rows 3, critical server deny true, real-boundary deny true -> PASS
+S61: rows 3, critical server deny true, real-boundary deny true -> PASS
+S62: rows 3, critical server deny true, real-boundary deny true -> PASS

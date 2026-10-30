@@ -2,26 +2,10 @@
 
 import type { ComponentProps, ReactNode } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
+import { ActionIcon, Alert, Anchor, Box, Button, Checkbox, Flex, Grid, Group, Paper, Stack, Text, TextInput, Title, useMantineTheme } from '@mantine/core'
+import { safeExternalUrl } from '@/lib/security/safeUrl'
 import {
-  ActionIcon,
-  Alert,
-  Anchor,
-  Badge,
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  Grid,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-  useMantineTheme,
-} from '@mantine/core'
-import {
-  ChevronLeft, History, MapPin, Pencil, RotateCcw, Save, ShieldCheck, Trash2, UserPlus, X,
+  ChevronLeft, History, MapPin, Pencil, RotateCcw, Save, Trash2, UserPlus, X,
 } from 'lucide-react'
 import { MantineFormSection, MantineSelect } from '@/design-system/mantine/patterns'
 import { RangeDatePicker } from '@/design-system/mantine/patterns/RangeDatePicker'
@@ -31,6 +15,8 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { formatDate, formatDateTime } from '@/lib/formatters'
 import type { ProfileType } from '@/modules/admin/actions'
 import type { User, UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 
 // ── Types and constants (shared with the container) ─────────────────────────────
 
@@ -76,8 +62,6 @@ export function profileTypeFromUser(user: Pick<User, 'role' | 'user_type'>): Pro
   if (user.user_type === 'developer') return 'developer'
   return 'private'
 }
-
-const STATUS_COLOR = { active: 'green', blocked: 'red', inactive: 'yellow' } as const
 
 export interface AdminUserProfileViewProps {
   mode: AdminUserProfileMode
@@ -370,22 +354,28 @@ export function AdminUserProfileView({
       </MantineFormSection>
       <MantineFormSection title={t('sections.account_status')}>
         <Stack gap="sm">
-          <Group justify="space-between" gap="sm">
-            <Text size="xs" c="dimmed">
-              {profileTypeLabel}
-            </Text>
-            <Badge variant="light" color="gray">
-              {PROFILE_TYPE_LABELS[storedProfileType]}
-            </Badge>
-          </Group>
-          <Group justify="space-between" gap="sm">
-            <Text size="xs" c="dimmed">
-              {t('fields.status')}
-            </Text>
-            <Badge variant="light" color={STATUS_COLOR[storedStatus]}>
-              {STATUS_LABELS[storedStatus]}
-            </Badge>
-          </Group>
+          {/* R86, GR-3j: the account type and the status are labelled fields — label above the badge. */}
+          <MantineDetailList
+            variant="plain"
+            items={[
+              {
+                label: profileTypeLabel,
+                value: (
+                  <MantineBadge variant="status" entity="profileType" value={storedProfileType}>
+                    {PROFILE_TYPE_LABELS[storedProfileType]}
+                  </MantineBadge>
+                ),
+              },
+              {
+                label: t('fields.status'),
+                value: (
+                  <MantineBadge variant="status" entity="user" value={storedStatus}>
+                    {STATUS_LABELS[storedStatus]}
+                  </MantineBadge>
+                ),
+              },
+            ]}
+          />
           {user.status === 'blocked' && user.suspended_until && (
             <Text size="xs" c="dimmed">
               {t('fields.suspended_until').toLowerCase()}{' '}
@@ -489,9 +479,9 @@ export function AdminUserProfileView({
           <Stack gap="xl">
             {/* ── Header card ─────────────────────────────────────────────────── */}
             <Paper withBorder radius="2xl" p={{ base: 'lg', sm: 'xl' }}>
-              <Group align="flex-start" wrap="nowrap" gap="lg">
+              <Flex direction={{ base: 'column', sm: 'row' }} align="flex-start" gap="lg">
                 {avatar}
-                <Stack gap="xs" miw={0} flex={1}>
+                <Stack gap="xs" miw={0} w={{ base: '100%', sm: 'auto' }} flex={{ base: 'none', sm: 1 }}>
                   {isCreate || !user ? (
                     <>
                       <Title order={1} fz="xl" fw={700}>
@@ -507,19 +497,19 @@ export function AdminUserProfileView({
                         {displayName}
                       </Title>
                       <Group gap="xs">
-                        <Badge variant="light" color="gray">
+                        <MantineBadge variant="status" entity="profileType" value={storedProfileType}>
                           {PROFILE_TYPE_LABELS[storedProfileType]}
-                        </Badge>
-                        <Badge variant="light" color={STATUS_COLOR[storedStatus]}>
+                        </MantineBadge>
+                        <MantineBadge variant="status" entity="user" value={storedStatus}>
                           {STATUS_LABELS[storedStatus]}
-                        </Badge>
+                        </MantineBadge>
                         {user.is_verified && (
-                          <Badge variant="light" color="green" leftSection={<ShieldCheck size={theme.other.iconSize.badge} />}>
+                          <MantineBadge variant="status" entity="agentVerification" value="verified">
                             {t('header.verified_badge')}
-                          </Badge>
+                          </MantineBadge>
                         )}
                       </Group>
-                      <Text size="sm" c="dimmed" truncate="end" title={email}>
+                      <Text size="sm" c="dimmed">
                         {email}
                       </Text>
                       {user.public_id != null && (
@@ -530,7 +520,7 @@ export function AdminUserProfileView({
                     </>
                   )}
                 </Stack>
-              </Group>
+              </Flex>
             </Paper>
 
             {/* ── Location request ────────────────────────────────────────────── */}
@@ -582,13 +572,13 @@ export function AdminUserProfileView({
                   <FieldRow label={t('fields.email')} editing={false}>
                     <Stack gap={0}>
                       <Group gap="xs" wrap="wrap">
-                        <Text size="sm" fw={500} truncate="end" title={email}>
+                        <Text size="sm" fw={500}>
                           {email}
                         </Text>
                         {emailConfirmedAt !== undefined && (
-                          <Badge variant="light" color={emailConfirmedAt ? 'green' : 'yellow'}>
+                          <MantineBadge variant="status" entity="emailConfirmation" value={emailConfirmedAt ? 'confirmed' : 'unconfirmed'}>
                             {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
-                          </Badge>
+                          </MantineBadge>
                         )}
                       </Group>
                       <Text size="xs" c="dimmed">
@@ -726,9 +716,14 @@ export function AdminUserProfileView({
                     ) : (
                       <ViewValue>
                         {user?.website ? (
-                          <Anchor href={user.website} target="_blank" rel="noopener noreferrer" size="sm" truncate="end">
-                            {user.website}
-                          </Anchor>
+                          // a stored website is a link only when it is an http(s) address; a script URL is shown as text (Task 923 Revision 7, S9)
+                          safeExternalUrl(user.website) ? (
+                            <Anchor href={safeExternalUrl(user.website) ?? undefined} target="_blank" rel="noopener noreferrer" size="sm">
+                              {user.website}
+                            </Anchor>
+                          ) : (
+                            <Text size="sm">{user.website}</Text>
+                          )
                         ) : undefined}
                       </ViewValue>
                     )}

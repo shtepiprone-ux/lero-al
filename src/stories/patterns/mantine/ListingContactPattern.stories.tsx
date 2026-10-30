@@ -25,7 +25,7 @@ type Story = StoryObj<typeof MantineListingContactPattern>;
 function makeLabels(l: string): MantineListingContactLabels {
   return {
     verified: storyT(l, 'storybook.mantine.listing_detail_verified_label'),
-    call: storyT(l, 'storybook.mantine.listing_contact_call'),
+    call: storyT(l, 'listing.show_number'),
     whatsapp: storyT(l, 'storybook.mantine.listing_contact_wa'),
     inquiry: storyT(l, 'storybook.mantine.listing_detail_inquiry'),
     report: storyT(l, 'storybook.mantine.listing_detail_report'),
@@ -81,6 +81,9 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     const labels = makeLabels(l);
+    // Fixture data (labelled): the phone number the gateway answers, the same in every locale; its digits make the tel: and wa.me links.
+    const revealedNumber = storyT(l, 'storybook.mantine.listing_contact_revealed_number');
+    const revealedDigits = revealedNumber.replace(/\D/g, '');
     // Fixture data (labelled): the same numbers as Patterns/Mantine/ListingDetailView — reduced, not converted,
     // used by every section except the four price-state cards below. Prices go through the production formatter.
     const price = {
@@ -154,7 +157,58 @@ export const Default: Story = {
             labels={labels}
             hasPhone
             hasWhatsapp
-            loading
+            loading="call"
+            inquiryTrigger={<DemoInquiryTrigger l={l} />}
+            saveTrigger={<DemoSaveTrigger l={l} />}
+            reportTrigger={<DemoReportTrigger l={l} />}
+          />
+        </Stack>
+
+        {/* Task 923 R118 (owner decisions D75, D78) — the two answers of the contact gateway: the number shown on its button, and the WhatsApp link with its note. */}
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {storyT(l, 'storybook.mantine.listing_detail_section_revealed')}
+          </Text>
+          <MantineListingContactPattern
+            state="normal"
+            agent={{
+              name: storyT(l, 'storybook.mantine.listing_detail_agent_name'),
+              initials: 'EH',
+              isVerified: true,
+              subtitle: storyT(l, 'storybook.mantine.listing_detail_agent_company'),
+            }}
+            price={price}
+            labels={labels}
+            hasPhone
+            hasWhatsapp
+            revealedPhone={{ label: revealedNumber, href: `tel:${revealedDigits}` }}
+            inquiryTrigger={<DemoInquiryTrigger l={l} />}
+            saveTrigger={<DemoSaveTrigger l={l} />}
+            reportTrigger={<DemoReportTrigger l={l} />}
+          />
+        </Stack>
+
+        <Stack gap="xs">
+          <Text size="xs" c="gray.5" fw={500}>
+            {storyT(l, 'storybook.mantine.listing_detail_section_whatsapp_fallback')}
+          </Text>
+          <MantineListingContactPattern
+            state="normal"
+            agent={{
+              name: storyT(l, 'storybook.mantine.listing_detail_agent_name'),
+              initials: 'EH',
+              isVerified: true,
+              subtitle: storyT(l, 'storybook.mantine.listing_detail_agent_company'),
+            }}
+            price={price}
+            labels={labels}
+            hasPhone
+            hasWhatsapp
+            whatsappFallback={{
+              href: `https://wa.me/${revealedDigits}`,
+              label: storyT(l, 'listing.open_whatsapp'),
+              note: storyT(l, 'listing.whatsapp_retry_hint'),
+            }}
             inquiryTrigger={<DemoInquiryTrigger l={l} />}
             saveTrigger={<DemoSaveTrigger l={l} />}
             reportTrigger={<DemoReportTrigger l={l} />}

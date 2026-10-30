@@ -1,0 +1,87 @@
+﻿# r56-03: R172 - the new case in cabinetActions.security.test.ts and the sensitivity proof of SEC-X-SRV-PROFILE-PROTECTED-DENY
+platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+commands: (1) npx vitest run cabinetActions.security --reporter=verbose  (2) node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --source SEC-X-SRV-PROFILE-PROTECTED-DENY
+started: 2026-10-29T13:10:45.4793443Z
+--- (1) verbose run ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > B cannot update, delete or mark viewed A's saved search 4ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > B's "delete all" removes only B's own searches 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > a saved search is stored for the caller, never for an id of the browser's choosing 20ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > the owner can change and delete their own 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > a frequency outside instant / daily / weekly is refused and nothing changes 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > an anonymous caller is refused by every saved-search action and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > writes only the whitelist of columns, for the caller's own row, ignoring extra fields 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "admin" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "developer" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "moderator" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "AGENT" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses a currency that is not an active one of the catalogue 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > a business account keeps its company name, a private one drops it 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > an anonymous caller is refused and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > deleteOwnAccount > an anonymous caller is refused and nothing is deleted 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > deleteOwnAccount > asks for the deletion of ONLY the caller's own account, as "self" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > stores a HASH of the token; the raw token is only in the link that is e-mailed to the new address 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > allows 3 requests an hour and refuses the 4th, sending nothing for it 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the current address and an address that belongs to another account 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "no-at-sign": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@b": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@b.c": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a b@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@example.com, b@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@example.com\r\nBcc: x@y.zz": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "<script>@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "Ana <ana@example.com>": no token, no e-mail 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@@example.com": no token, no e-mail 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address undefined: no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address {}: no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > an anonymous caller is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > resend makes a NEW token (the old link stops working) for the caller's own pending change only 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > a valid token changes the e-mail once and is then used up 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "not-a-token" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "0000000000000000000000000000000000000000000000000000000000000000" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > an expired token changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the HASH (what the database holds) is not a valid token: knowing the table is not enough 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > changes the password when the current one is right and the new one is strong 55ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a wrong current password changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "short" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "alllowercase1!" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "NoDigits!!!!!" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > the same password is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > an anonymous caller is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "067 123 4567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "355691234567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+355 69 123 4567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "javascript:alert(1)" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+355691234567?text=x" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+0691234567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+3556912" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "<b>x</b>" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > saves a valid number, trimmed, and an empty one as nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > a missing phone is allowed 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S29-SRV-DENY] updateCabinetProfile accepts only the account types private and agent 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S30-SRV-DENY] updateSavedSearchFrequency accepts only the known frequencies 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S35-SRV-DENY] A new e-mail address is one plain address of at most 254 characters, escaped in the confirmation e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-X-SRV-PROFILE-PROTECTED-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id 0ms
+
+ Test Files  1 passed (1)
+      Tests  64 passed (64)
+   Start at  14:10:46
+   Duration  514ms (transform 132ms, setup 139ms, import 119ms, tests 98ms, environment 0ms)
+
+
+--- (1) exit code: 0 ---
+--- (2) sensitivity proof ---
+PROVED     SEC-X-SRV-PROFILE-PROTECTED-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+
+--- (2) exit code: 0 ---
+finished: 2026-10-29T13:10:53.6253986Z

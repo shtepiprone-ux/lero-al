@@ -1,0 +1,65 @@
+login en 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal en 320: NO fourth section
+login en 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal en 390: NO fourth section
+login en 480: Google 400px in a 448px form, gap left 0px, right 48px, NOT centred
+modal en 480: NO fourth section
+login en 560: Google 400px in a 528px form, gap left 0px, right 128px, NOT centred
+modal en 560: NO fourth section
+login en 639: Google 400px in a 607px form, gap left 0px, right 207px, NOT centred
+modal en 639: NO fourth section
+login en 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 640: NO fourth section
+login en 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 1024: NO fourth section
+login en 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 1440: NO fourth section
+login sq 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal sq 320: NO fourth section
+login sq 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal sq 390: NO fourth section
+login sq 480: Google 400px in a 448px form, gap left 0px, right 48px, NOT centred
+modal sq 480: NO fourth section
+login sq 560: Google 400px in a 528px form, gap left 0px, right 128px, NOT centred
+modal sq 560: NO fourth section
+login sq 639: Google 400px in a 607px form, gap left 0px, right 207px, NOT centred
+modal sq 639: NO fourth section
+login sq 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 640: NO fourth section
+login sq 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 1024: NO fourth section
+login sq 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 1440: NO fourth section
+login uk 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal uk 320: NO fourth section
+login uk 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal uk 390: NO fourth section
+login uk 480: Google 400px in a 448px form, gap left 0px, right 48px, NOT centred
+modal uk 480: NO fourth section
+login uk 560: Google 400px in a 528px form, gap left 0px, right 128px, NOT centred
+modal uk 560: NO fourth section
+login uk 639: Google 400px in a 607px form, gap left 0px, right 207px, NOT centred
+modal uk 639: NO fourth section
+login uk 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 640: NO fourth section
+login uk 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 1024: NO fourth section
+login uk 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 1440: NO fourth section
+login it 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal it 320: NO fourth section
+login it 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal it 390: NO fourth section
+login it 480: Google 400px in a 448px form, gap left 0px, right 48px, NOT centred
+modal it 480: NO fourth section
+login it 560: Google 400px in a 528px form, gap left 0px, right 128px, NOT centred
+modal it 560: NO fourth section
+login it 639: Google 400px in a 607px form, gap left 0px, right 207px, NOT centred
+modal it 639: NO fourth section
+login it 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 640: NO fourth section
+login it 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 1024: NO fourth section
+login it 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 1440: NO fourth section
+cells 64; Google button not centred: 44

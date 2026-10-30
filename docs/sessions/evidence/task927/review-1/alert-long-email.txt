@@ -1,0 +1,17 @@
+{"width":320,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":284,"cw":284,"clipped":false}
+{"width":390,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":324,"cw":324,"clipped":false}
+{"width":640,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":374,"cw":374,"clipped":false}
+{"width":320,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false}
+{"width":390,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false}
+{"width":640,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false}
+{"width":320,"alertRight":304,"contentRight":320,"vw":320,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":464,"cw":464,"clipped":false}
+{"width":390,"alertRight":374,"contentRight":390,"vw":390,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":464,"cw":464,"clipped":false}
+{"width":640,"alertRight":524,"contentRight":540,"vw":640,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false}
+--- without fix
+{"width":320,"alertRight":304,"contentRight":320,"vw":320,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false,"msgRight":530}
+{"width":390,"alertRight":374,"contentRight":390,"vw":390,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false,"msgRight":530}
+{"width":640,"alertRight":524,"contentRight":540,"vw":640,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"normal","sw":497,"cw":497,"clipped":false,"msgRight":630}
+--- with overflow-wrap:anywhere on the message (trial in the live DOM)
+{"width":320,"alertRight":304,"contentRight":320,"vw":320,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"anywhere","sw":254,"cw":254,"clipped":false,"msgRight":287}
+{"width":390,"alertRight":374,"contentRight":390,"vw":390,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"anywhere","sw":324,"cw":324,"clipped":false,"msgRight":357}
+{"width":640,"alertRight":524,"contentRight":540,"vw":640,"docScrollX":false,"overflow":"hidden","textOverflow":"ellipsis","whiteSpace":"normal","overflowWrap":"anywhere","sw":374,"cw":374,"clipped":false,"msgRight":507}

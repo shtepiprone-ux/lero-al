@@ -1,0 +1,18 @@
+# HEAD 70004b09a lines cited by Task 923 claim rows whose working-tree source changed (Revision 46, rv51-11-refresh-locators.mjs)
+== src/lib/cloudinaryDelete.ts at HEAD 70004b09a, lines 163-163
+  const dryRun = options.dryRun ?? (process.env.CLOUDINARY_DELETE_MODE !== 'enabled')
+== src/lib/cloudinaryDelete.ts at HEAD 70004b09a, lines 168-168
+    logEntry({ publicId, reason: options.reason, dryRun, outcome: 'SKIP_REFERENCED', referencedIn: tables })
+== src/lib/cloudinaryDelete.ts at HEAD 70004b09a, lines 163-163
+  const dryRun = options.dryRun ?? (process.env.CLOUDINARY_DELETE_MODE !== 'enabled')
+== src/lib/cloudinaryDelete.ts in the working tree (uncommitted Task 923 code), lines 166-166
+    logEntry({ publicId, reason: options.reason, dryRun, outcome: 'SKIP_LOOKUP_FAILED', lookup: lookupFailed })
+== src/lib/cloudinaryDelete.ts at HEAD 70004b09a, lines 189-189
+    throw err
+== src/lib/__tests__/cloudinary.security.test.ts in the working tree (uncommitted Task 923 code), lines 118-119
+    info.mockClear()
+    expect(await deleteAsset('avatars/me', { reason: 't' })).toEqual({ skipped: false, dryRun: true, deleted: false })
+== src/lib/__tests__/cloudinary.security.test.ts in the working tree (uncommitted Task 923 code), lines 129-129
+  it('with deletion on, a signed destroy is sent and the secret is not', async () => {
+== src/lib/account/deleteAccount.integration.test.ts in the working tree (uncommitted Task 923 code), lines 223-223
+  expect(world.answer, 'the real hardDeleteUser answers').toEqual({})

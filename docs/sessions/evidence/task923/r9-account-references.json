@@ -1,0 +1,642 @@
+{
+  "takenAt": "2026-10-18T11:41:47.222Z",
+  "note": "read-only; every finding carries the SQL that produced it",
+  "findings": {
+    "columnsWithoutKey": {
+      "sql": "with fk as ( select c.conrelid, unnest(c.conkey) as attnum from pg_constraint c where c.contype = 'f' and c.connamespace = 'public'::regnamespace ) select cl.relname as tbl, a.attname as col, format_type(a.atttypid, a.atttypmod) as typ from pg_attribute a join pg_class cl on cl.oid = a.attrelid and cl.relkind = 'r' join pg_namespace n on n.oid = cl.relnamespace and n.nspname = 'public' where a.attnum > 0 and not a.attisdropped and (a.attname ~* '(^|_)(user|owner|actor|author|sender|reviewer|requester|reporter|agent|buyer|seller|handled|assigned|created_by|updated_by|reviewed_by|changed_by|replied_by)(_|$)' or a.attname ~* '(e_?mail|phone|whatsapp|(^|_)name$|first_name|last_name|full_name|company_name|ip_hash|fingerprint)') and not exists (select 1 from fk where fk.conrelid = cl.oid and fk.attnum = a.attnum) order by 1, 2",
+      "rows": [
+        {
+          "tbl": "amenity_translations",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "collections",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "companies",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "contact_inquiries",
+          "col": "email",
+          "typ": "text"
+        },
+        {
+          "tbl": "contact_inquiries",
+          "col": "handled_at",
+          "typ": "timestamp with time zone"
+        },
+        {
+          "tbl": "contact_inquiries",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "contact_inquiries",
+          "col": "requester_ip",
+          "typ": "text"
+        },
+        {
+          "tbl": "email_change_tokens",
+          "col": "new_email",
+          "typ": "text"
+        },
+        {
+          "tbl": "exchange_providers",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "listing_activity_daily",
+          "col": "whatsapp_clicks",
+          "typ": "integer"
+        },
+        {
+          "tbl": "listing_contact_events",
+          "col": "actor_ip_hash",
+          "typ": "text"
+        },
+        {
+          "tbl": "listing_contact_events",
+          "col": "is_owner_click",
+          "typ": "boolean"
+        },
+        {
+          "tbl": "listing_inquiries",
+          "col": "email",
+          "typ": "text"
+        },
+        {
+          "tbl": "listing_inquiries",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "listing_inquiries",
+          "col": "requester_ip",
+          "typ": "text"
+        },
+        {
+          "tbl": "listing_views",
+          "col": "ip_hash",
+          "typ": "text"
+        },
+        {
+          "tbl": "location_translations",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "notification_settings",
+          "col": "channel_email",
+          "typ": "boolean"
+        },
+        {
+          "tbl": "report_actions",
+          "col": "actor_role",
+          "typ": "text"
+        },
+        {
+          "tbl": "saved_searches",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "saved_searches",
+          "col": "notify_email",
+          "typ": "boolean"
+        },
+        {
+          "tbl": "support_ticket_events",
+          "col": "actor_role",
+          "typ": "text"
+        },
+        {
+          "tbl": "user_change_log",
+          "col": "field_name",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "company_name",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "last_name",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "name",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "pending_email",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "phone",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "user_type",
+          "typ": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "whatsapp",
+          "typ": "text"
+        }
+      ]
+    },
+    "userKeys": {
+      "sql": "select cl.relname as tbl, a.attname as col, c.conname, c.confdeltype, a.attnotnull, c.confrelid::regclass::text as references_table from pg_constraint c join pg_class cl on cl.oid = c.conrelid join pg_attribute a on a.attrelid = c.conrelid and a.attnum = any(c.conkey) where c.contype = 'f' and c.connamespace = 'public'::regnamespace and c.confrelid in ('public.users'::regclass, 'auth.users'::regclass) order by 1, 2",
+      "rows": [
+        {
+          "tbl": "agent_reviews",
+          "col": "agent_id",
+          "conname": "agent_reviews_agent_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "agent_reviews",
+          "col": "reviewer_id",
+          "conname": "agent_reviews_reviewer_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "collections",
+          "col": "user_id",
+          "conname": "collections_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "contact_inquiries",
+          "col": "handled_by",
+          "conname": "contact_inquiries_handled_by_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "contact_inquiry_replies",
+          "col": "replied_by",
+          "conname": "contact_inquiry_replies_replied_by_fkey",
+          "confdeltype": "a",
+          "attnotnull": true,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "conversations",
+          "col": "buyer_id",
+          "conname": "conversations_buyer_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "conversations",
+          "col": "seller_id",
+          "conname": "conversations_seller_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "email_change_tokens",
+          "col": "user_id",
+          "conname": "email_change_tokens_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "email_templates",
+          "col": "updated_by",
+          "conname": "email_templates_updated_by_fkey",
+          "confdeltype": "a",
+          "attnotnull": false,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "favorite_price_alerts",
+          "col": "user_id",
+          "conname": "favorite_price_alerts_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "favorites",
+          "col": "user_id",
+          "conname": "favorites_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "history_clear_events",
+          "col": "actor_user_id",
+          "conname": "history_clear_events_actor_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listing_contact_events",
+          "col": "actor_user_id",
+          "conname": "listing_contact_events_actor_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listing_contact_events",
+          "col": "listing_owner_id",
+          "conname": "listing_contact_events_listing_owner_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listing_inquiries",
+          "col": "listing_owner_id",
+          "conname": "listing_inquiries_listing_owner_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listing_reports",
+          "col": "user_id",
+          "conname": "listing_reports_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listing_views",
+          "col": "user_id",
+          "conname": "listing_views_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "listings",
+          "col": "user_id",
+          "conname": "listings_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "messages",
+          "col": "sender_id",
+          "conname": "messages_sender_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "notification_settings",
+          "col": "user_id",
+          "conname": "notification_settings_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "notifications",
+          "col": "user_id",
+          "conname": "notifications_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "pages",
+          "col": "updated_by",
+          "conname": "pages_updated_by_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "recently_viewed",
+          "col": "user_id",
+          "conname": "recently_viewed_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "report_actions",
+          "col": "actor_id",
+          "conname": "report_actions_actor_id_fkey",
+          "confdeltype": "a",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "role_permission_events",
+          "col": "actor_user_id",
+          "conname": "role_permission_events_actor_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "role_permissions",
+          "col": "updated_by_user_id",
+          "conname": "role_permissions_updated_by_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "saved_searches",
+          "col": "user_id",
+          "conname": "saved_searches_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "site_footer",
+          "col": "updated_by",
+          "conname": "site_footer_updated_by_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_messages",
+          "col": "sender_id",
+          "conname": "support_messages_sender_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_ticket_events",
+          "col": "actor_user_id",
+          "conname": "support_ticket_events_actor_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_tickets",
+          "col": "assigned_to",
+          "conname": "support_tickets_assigned_to_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_tickets",
+          "col": "created_by_admin_id",
+          "conname": "support_tickets_created_by_admin_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_tickets",
+          "col": "reported_user_id",
+          "conname": "support_tickets_reported_user_id_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "support_tickets",
+          "col": "user_id",
+          "conname": "support_tickets_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "user_change_log",
+          "col": "changed_by",
+          "conname": "user_change_log_changed_by_fkey",
+          "confdeltype": "a",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "user_change_log",
+          "col": "user_id",
+          "conname": "user_change_log_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "user_status_history",
+          "col": "changed_by",
+          "conname": "user_status_history_changed_by_fkey",
+          "confdeltype": "a",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "user_status_history",
+          "col": "user_id",
+          "conname": "user_status_history_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        },
+        {
+          "tbl": "users",
+          "col": "id",
+          "conname": "users_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "auth.users"
+        },
+        {
+          "tbl": "verification_requests",
+          "col": "reviewed_by",
+          "conname": "verification_requests_reviewed_by_fkey",
+          "confdeltype": "n",
+          "attnotnull": false,
+          "references_table": "users"
+        },
+        {
+          "tbl": "verification_requests",
+          "col": "user_id",
+          "conname": "verification_requests_user_id_fkey",
+          "confdeltype": "c",
+          "attnotnull": true,
+          "references_table": "users"
+        }
+      ]
+    },
+    "urlColumns": {
+      "sql": "select table_name as tbl, column_name as col, data_type from information_schema.columns where table_schema = 'public' and column_name ~* '(url|image|photo|logo|avatar|public_id|cloudinary)' order by 1, 2",
+      "rows": [
+        {
+          "tbl": "companies",
+          "col": "logo_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "currency_rates",
+          "col": "source_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "exchange_providers",
+          "col": "endpoint_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "listing_images",
+          "col": "url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "listings",
+          "col": "public_id",
+          "data_type": "bigint"
+        },
+        {
+          "tbl": "locations",
+          "col": "image_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "public_user_profiles",
+          "col": "avatar_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "avatar_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "company_logo_url",
+          "data_type": "text"
+        },
+        {
+          "tbl": "users",
+          "col": "public_id",
+          "data_type": "bigint"
+        },
+        {
+          "tbl": "verification_requests",
+          "col": "document_url",
+          "data_type": "text"
+        }
+      ]
+    },
+    "storageBuckets": {
+      "sql": "select id, public from storage.buckets order by id",
+      "rows": [
+        {
+          "id": "avatars",
+          "public": true
+        }
+      ]
+    },
+    "storageObjects": {
+      "sql": "select bucket_id, count(*)::int as objects, count(*) filter (where (storage.foldername(name))[1] ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$')::int as in_a_uuid_folder from storage.objects group by bucket_id order by 1",
+      "rows": [
+        {
+          "bucket_id": "avatars",
+          "objects": 1,
+          "in_a_uuid_folder": 1
+        }
+      ]
+    },
+    "companiesCols": {
+      "sql": "select column_name, data_type, is_nullable from information_schema.columns where table_schema='public' and table_name='companies' order by ordinal_position",
+      "rows": [
+        {
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "name",
+          "data_type": "text",
+          "is_nullable": "NO"
+        },
+        {
+          "column_name": "logo_url",
+          "data_type": "text",
+          "is_nullable": "YES"
+        },
+        {
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO"
+        }
+      ]
+    },
+    "triggersOnDeleted": {
+      "sql": "select event_object_table as tbl, trigger_name, event_manipulation, action_timing from information_schema.triggers where event_object_schema = 'public' and event_object_table in ('listing_views','listings','users','listing_contact_events','companies') order by 1, 2",
+      "rows": [
+        {
+          "tbl": "listing_contact_events",
+          "trigger_name": "listing_contact_events_set_owner",
+          "event_manipulation": "INSERT",
+          "action_timing": "BEFORE"
+        },
+        {
+          "tbl": "listings",
+          "trigger_name": "listings_search_vector",
+          "event_manipulation": "INSERT",
+          "action_timing": "BEFORE"
+        },
+        {
+          "tbl": "listings",
+          "trigger_name": "listings_search_vector",
+          "event_manipulation": "UPDATE",
+          "action_timing": "BEFORE"
+        },
+        {
+          "tbl": "listings",
+          "trigger_name": "listings_updated_at",
+          "event_manipulation": "UPDATE",
+          "action_timing": "BEFORE"
+        },
+        {
+          "tbl": "users",
+          "trigger_name": "on_user_created_notifications",
+          "event_manipulation": "INSERT",
+          "action_timing": "AFTER"
+        }
+      ]
+    },
+    "viewsCountSemantics": {
+      "sql": "select count(*)::int as listing_views_rows, count(user_id)::int as with_user from public.listing_views",
+      "rows": [
+        {
+          "listing_views_rows": 83,
+          "with_user": 45
+        }
+      ]
+    }
+  }
+}

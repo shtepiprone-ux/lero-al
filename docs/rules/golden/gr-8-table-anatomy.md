@@ -1,10 +1,10 @@
 ## GR-8 — One table anatomy: checkboxes, then content, then edit/delete
 
-**Owner rule, 2026-10-04.** The owner returned Task 859 and wrote, verbatim: *"Я бачу, що таблиці в адмінці всі різні.
-Немає одного стилю таблиць, де спершу йде стовпчик з чекбоксами, а потім йдуть стовпчики контенту таблиці, а після
-контенту йдуть стовпчики з опціями редагувати,видалити. Я буквально вчора писав про це, і сьогодні я знову бачу цю
-невідповідність!"* Then: *"я вчора сказав тобі щоб ти завів правило щодо таблиць і що треба перевірити референси, які я тобі
-вчора надавав, завжди … перевіряти їх перед написанням."*
+**Owner rule, 2026-10-04.** The owner returned Task 859 and wrote: *"I see that the tables in the admin panel are all different. There is
+no single table style where the checkbox column comes first, then the content columns
+of the table, and after the content the columns with the edit and delete
+options. I wrote about this literally yesterday, and today I see this mismatch again!"* Then: *"yesterday I told you to create a rule about tables and that you must
+check the references I gave you yesterday, always … check them before writing."*
 
 **Why this rule exists.** On 2026-10-03 the request became Task 919's kickoff and decisions D78-13…D78-16, and no
 rule. Opus then narrowed it twice:
@@ -15,7 +15,7 @@ The same day, 859's revision gave `/admin/support` a table without the anatomy. 
 templates and inquiries were bound by nothing, or by a later task.
 
 **Applies to:** every table of stored records in new or migrated UI. That means admin first, and every table in the
-project (owner, 2026-10-02: *"і це стосується всіх таблиць у проекті, а не тільки в адмінці"*). Two cases are not
+project (owner, 2026-10-02: *"and this applies to all tables in the project, not only in the admin panel"*). Two cases are not
 settled: a table whose rows are computed, not stored (statistics, dashboards), and a card-list layout of records (for
 example inquiries). Each is an **open owner decision**. Until the owner decides, a kickoff touching one stops there
 with bounded options.

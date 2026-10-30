@@ -1,0 +1,79 @@
+groups 677 (Story x state x root); 63 owner bucket(s)
+
+Story x state x root groups per owner:
+  859 §31 R88 (sheet header never shrinks): 3
+  859 §31 R89 (dialog title / description never cut): 57
+  859 §31 R90 (one combobox option anatomy): 3
+  921 (MantineDashboardStatCard / BarChart text): 148
+  922 (AdminPermissionsView switch): 5
+  922 (AdminSidebar label truncation): 277
+  922 (RangeDatePicker label truncation): 6
+  new — Opus to file (56 components): 538
+
+rows (Story x state x root x locale x width) with a violation, per owner and rule:
+  859 §31 R88 (sheet header never shrinks): component-overflow 40
+  859 §31 R89 (dialog title / description never cut): text-clamp 1140, text-ellipsis 80, text-hidden 223
+  859 §31 R90 (one combobox option anatomy): component-overflow 16, viewport-overflow 15, word-split 20
+  921 (MantineDashboardStatCard / BarChart text): text-clamp 2780
+  922 (AdminPermissionsView switch): target-small 80
+  922 (AdminSidebar label truncation): text-ellipsis 3676
+  922 (RangeDatePicker label truncation): text-ellipsis 24
+  new — Opus to file: action-covered 52, action-hidden 26, component-overflow 817, dismiss-close-control 59, dismiss-escape 468, dismiss-outside 476, error-screen 1, focus-open 85, focus-trap 65, focus-trigger 560, open-failed 26, portal-count 6, target-small 2538, text-clamp 1516, text-ellipsis 1840, text-hidden 1024, viewport-overflow 169, widths-mismatch 44, word-split 120
+
+new — Opus to file, by component (groups):
+  admincurrenciesview: 10
+  admincurrencytabs: 7
+  admindashboardrecentlistings: 4
+  admindashboardview: 90
+  adminexchangeprovidersview: 9
+  admininquiriesview: 8
+  adminlistingsview: 40
+  adminpageframe: 6
+  adminpagesview: 7
+  adminreportsview: 6
+  adminshell: 2
+  adminsupportview: 12
+  adminuserprofileview: 43
+  adminuserstable: 12
+  agentstatisticsview: 36
+  appshellfoundation: 1
+  authsheet: 7
+  avatarcropmodal: 1
+  collectionssection: 15
+  dashboardperiodcontrol: 3
+  dashboardsemidonut: 1
+  favoritebutton: 4
+  favoritesshell: 6
+  filterspanelshell: 1
+  headeractions: 1
+  headerview: 7
+  herosearch: 6
+  homepagelistinggrids: 4
+  inquirydetaildialogview: 1
+  lightboxview: 3
+  listingcard: 4
+  listingcardpattern: 4
+  listingcardtrack: 14
+  listingcontactpattern: 1
+  listingdetailpattern: 5
+  listingdetailview: 49
+  listinggallerypattern: 2
+  listingpreviewdialogview: 1
+  listingsactionrow: 3
+  listingsfilters: 1
+  listingsshellview: 27
+  listingssortbar: 7
+  modal: 4
+  notificationbellview: 1
+  notificationpattern: 3
+  pageeditordialogview: 7
+  premiumdialogview: 1
+  providerformdialogview: 4
+  rangedatepicker: 8
+  relativetime: 1
+  reportdetaildialogview: 1
+  richtexteditor: 23
+  savesearchbutton: 3
+  savetocollectionbutton: 3
+  usermenu: 5
+  userpickerfieldview: 3

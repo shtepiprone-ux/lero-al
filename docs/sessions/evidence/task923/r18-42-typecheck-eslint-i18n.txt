@@ -1,0 +1,5 @@
+command: npm run typecheck -> TYPECHECK_EXIT=0
+command: node node_modules/eslint/bin/eslint.js . --quiet --ignore-pattern "docs/sessions/evidence/task923/review-21/**" -> ESLINT_EXIT=0
+command: node node_modules/eslint/bin/eslint.js . --quiet (without the ignore) -> ESLINT_EXIT=1: the only errors are 2 x no-require-imports in docs/sessions/evidence/task923/review-21/rv21-find-literals.cjs (Opus review artifact, not edited by the executor)
+command: node scripts/check-i18n-parity.mjs -> I18N_EXIT=0 (2649 keys)
+(all run directly in PowerShell; exit codes read from $LASTEXITCODE)

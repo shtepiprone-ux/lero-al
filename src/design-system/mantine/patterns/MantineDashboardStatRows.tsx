@@ -2,9 +2,11 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { Box, Stack, Group, Text, Badge, Skeleton, Button, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { Box, Stack, Group, Text, Skeleton, Button, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { ChevronRight } from 'lucide-react'
 import { MantineEmptyLoadingErrorState } from './MantineEmptyLoadingErrorState'
+import { MantineBadge } from './MantineBadge'
+import { BADGE_BUCKET_TONES } from '../badgeTones'
 
 export type DashboardStatRowTone = 'positive' | 'warning' | 'danger' | 'neutral'
 
@@ -34,13 +36,6 @@ export interface MantineDashboardStatRowsProps {
   retryLabel?: string
   onRetry?: () => void
   loadingAriaLabel?: string
-}
-
-const TONE_COLOR: Record<DashboardStatRowTone, string> = {
-  positive: 'green',
-  warning: 'yellow',
-  danger: 'red',
-  neutral: 'gray',
 }
 
 /**
@@ -116,16 +111,16 @@ export function MantineDashboardStatRows({
       {rows.map((row) => {
         const content = (
           <Group justify="space-between" wrap="nowrap" gap="sm" mih={theme.other.touchTarget}>
-            <Text size="sm" c="gray.8" lineClamp={2}>
+            <Text size="sm" c="gray.8" miw={0}>
               {row.label}
             </Text>
             {/* `flex="0 0 auto"` (Task 890 rev 1): the count never shrinks, so a long label wraps instead of
                 clipping the badge in a narrow card. */}
             <Group gap="xs" wrap="nowrap" flex="0 0 auto">
               {row.tone && (
-                <Badge color={TONE_COLOR[row.tone]} variant="light" size="sm">
+                <MantineBadge variant="tone" tone={BADGE_BUCKET_TONES[row.tone]}>
                   {row.displayCount ?? row.count}
-                </Badge>
+                </MantineBadge>
               )}
               {!row.tone && (
                 <Text size="sm" fw={600} c="gray.8">

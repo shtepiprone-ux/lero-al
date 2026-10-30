@@ -1,0 +1,12 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-63/rv63-21-release-mapping.mjs
+in-memory contract: 231 cases, 67 critical, 596 paths
+S59: rows 3, missing 0, critical server deny true, real-boundary deny true -> PASS
+S60: rows 3, missing 0, critical server deny true, real-boundary deny true -> PASS
+S61: rows 3, missing 0, critical server deny true, real-boundary deny true -> PASS
+S62: rows 3, missing 0, critical server deny true, real-boundary deny true -> PASS
+current contract S59: critical server deny false, real-boundary deny true
+current contract S60: critical server deny false, real-boundary deny true
+current contract S61: critical server deny true, real-boundary deny true
+current contract S62: critical server deny false, real-boundary deny true
+validateContract(plan) on the in-memory contract: 0 issues
+exit 0

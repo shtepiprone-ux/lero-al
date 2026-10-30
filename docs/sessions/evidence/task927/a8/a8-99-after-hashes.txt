@@ -1,0 +1,18 @@
+# a8-99 sha256 after the last edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a8/a8-00-hashes.mjs docs/sessions/evidence/task927/a8/a8-99-after-hashes.txt "a8-99 sha256 after the last edit"
+date: 2026-10-25T19:07:27.850Z
+paths: 8
+
+a6edbdf17283173bc4f8fae9d5c420ea5186138128dc9bc6c0fa2ba256e47cbf  src/lib/auth/googleIdentity.ts
+319d9ae2673e09e20c04c8116d61068dd9643f7cadc9a8fca6e90677c27539ad  src/components/auth/GoogleSignInButton.tsx
+b2581f66103826d2ffcba229570da1c78cac5a20682dd2522a115fcea384072a  src/components/auth/GoogleSignInSlot.tsx
+f944f2d1e7a9415dc8093e36469d79dd26d8f4e6a59fc791b3db98774086d0ed  src/design-system/mantine/theme.ts
+24244f4dd44cfaa3dd86c7d9d30d7264c40306e2ef14cb783f09684d2e2d99bd  scripts/rendered-interaction-states.json
+a102ed5a096faf465251cd19a4d6278b0862cca3a19cb4b48a3ecb33c1038eb2  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+c8a379cffcb8bd07bace2246e31c70b5621344127f6620b959e4e288291878ce  src/components/layout/__tests__/Header.google.security.test.tsx
+fb8114359a3118a3d6b06e2929377dd31b5c073380b4cb3c612e4bfb3f65b3fe  src/modules/cabinet/components/ProfileTab.tsx
+
+exit code: 0

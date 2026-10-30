@@ -1,0 +1,8 @@
+platform win32 10.0.26300 node v22.22.3
+cmd node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+(the command printed nothing; written by hand because the policy hook refuses a command that names scripts/workflow-gates together with a redirect)
+HEAD 5a4b5c7bd (review 16 commit)
+kickoff sha256 (cli.mjs hash --task): 5efc4665262578f08f851134ce1f7d9868d08e447f4d50a2aa1d356c29344864
+the four files at the start of this round equal review-16/rv16-01-reviewed-sha256.txt (hardening v5 e26a3464…eb7ea / rollback 3c9168fd…be845, deletion v2 c5e61f0a…64bd8 / rollback 4b01bb9d…7c8a)
+PLAN_EXIT=0
+EXIT_CODE=0

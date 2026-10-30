@@ -178,7 +178,7 @@ function demoContact(l: string): MantineListingContactPatternProps {
     },
     labels: {
       verified: storyT(l, 'storybook.mantine.listing_detail_verified_label'),
-      call: storyT(l, 'storybook.mantine.listing_contact_call'),
+      call: storyT(l, 'listing.show_number'),
       whatsapp: storyT(l, 'storybook.mantine.listing_contact_wa'),
       inquiry: storyT(l, 'storybook.mantine.listing_detail_inquiry'),
       report: storyT(l, 'storybook.mantine.listing_detail_report'),

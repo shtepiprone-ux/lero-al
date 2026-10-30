@@ -1,0 +1,28 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T18:44:33.079Z
+command: node docs/sessions/evidence/task923/r40-05-gr12-census.mjs docs/sessions/evidence/task923/review-45/rv45-13-gr12-census.json
+---- output ----
+GR-12 ELEMENT PARITY census — meanings 8; measurements 136; locales en,sq,uk,it; widths 390,1440
+- section title (Text 600 sm): Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--with-password, patterns-mantine-cabinetpasswordsectionview--empty); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:null/16 | ref:null/16
+- TextInput with label and hint: Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--with-password, mantine-primitives-textinput--default); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:null/16 | ref:8/null
+- PasswordInput with label: Stories compared 3 (patterns-mantine-cabinetemailchangesectionview--with-password, patterns-mantine-cabinetpasswordsectionview--empty, mantine-primitives-passwordinput--default); cells compared 16; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:16/16 | ref:null/16 | ref:8/null
+- full-width submit Button: Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--ready-to-submit, patterns-mantine-cabinetpasswordsectionview--ready-to-submit); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:16/null | ref:16/null
+- refusal Alert (red, no icon, no title): Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--wrong-password, patterns-mantine-cabinetpasswordsectionview--error-invalid-current); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:null/16 | ref:null/16
+- waiting notice Alert (info, icon and title): Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--waiting-for-confirmation, mantine-primitives-alert--default); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:16/16 | ref:16/null
+- resend Anchor button: Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--waiting-for-confirmation, patterns-mantine-authsheet--login); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:16/null | ref:-29.5/null
+- labelled detail field (MantineDetailList plain): Stories compared 2 (patterns-mantine-cabinetemailchangesectionview--with-password, patterns-mantine-detaillist--plain); cells compared 8; cells with a different look 0
+    gap above/below inside its container (mine vs ref): mine:undefined/undefined | ref:undefined/undefined
+meanings with more than one look: NONE (owner decisions: none)
+hardcode in the changed files and their Stories (style/styles/className/colour literal/raw string): see the zero-hit grep file
+
+---- end ----
+EXIT_CODE=0

@@ -10,13 +10,11 @@ import { toast } from '@/lib/toast'
 import { deleteListingAction } from '@/modules/listings/actions/deleteListing'
 import { formatPrice } from '@/lib/formatters'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
 import type { ListingStatus } from '@/types/database'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
-import type { VariantProps } from 'class-variance-authority'
-import { badgeVariants } from '@/components/ui/badge'
 import {
   type ListingVisibilityGroup,
   VALID_VISIBILITY_GROUPS,
@@ -41,19 +39,6 @@ interface Props {
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-
-type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>
-
-// Badge variants for individual listing status display — reads DB status from server response.
-const STATUS_VARIANT: Record<ListingStatus, BadgeVariant> = {
-  pending:  'warning',
-  active:   'success',
-  inactive: 'neutral',
-  sold:     'info',
-  rented:   'rented',
-  archived: 'neutral',
-  expired:  'warning',
-}
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -307,24 +292,24 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
             <div className="flex-1 min-w-0 flex flex-col justify-between gap-1">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <Badge variant={STATUS_VARIANT[status]} className="text-xs px-1.5 py-0 h-5">
+                  <MantineBadge variant="status" entity="listing" value={status}>
                     {t(`status_${status}`)}
-                  </Badge>
+                  </MantineBadge>
                   {(() => {
                     const vis = formatVisibility({ status, expires_at: listing.expires_at ?? null })
                     if (!vis.visible) {
                       return (
-                        <span className="inline-flex items-center px-1.5 py-0 h-5 rounded-md border border-destructive/30 bg-destructive/10 text-destructive text-xs font-medium whitespace-normal break-words">
+                        <MantineBadge variant="status" entity="listingVisibility" value="hidden">
                           {t(vis.labelKey as Parameters<typeof t>[0])}
-                        </span>
+                        </MantineBadge>
                       )
                     }
                     return null
                   })()}
                   {listing.is_premium && (
-                    <Badge className="text-xs px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
+                    <MantineBadge variant="status" entity="listingFlag" value="premium">
                       {t('filter_PREMIUM')}
-                    </Badge>
+                    </MantineBadge>
                   )}
                   <span className="text-xs text-muted-foreground">
                     {tl(listing.listing_type)} · {tl(`property_type_${listing.property_type}`)}

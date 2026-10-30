@@ -1,0 +1,23 @@
+CREATE OR REPLACE FUNCTION public.listings_price_rule()
+ RETURNS trigger
+ LANGUAGE plpgsql
+ SET search_path TO 'public', 'pg_temp'
+AS $function$
+begin
+  if tg_op = 'INSERT' then
+    new.price_initial := new.price;
+    new.price_old := null;
+    return new;
+  end if;
+  if new.currency is distinct from old.currency then
+    -- R64 (a): BLOCKED (the database holds no live rate to convert at, see the file's change 12). FAIL-SAFE, not in the kickoff: the new price starts a new starting price and no old price is
+    -- shown, so a price in one currency is never compared with a starting price in another.
+    new.price_initial := new.price;
+    new.price_old := null;
+    return new;
+  end if;
+  new.price_initial := old.price_initial;
+  new.price_old := case when old.price_initial is not null and new.price < old.price_initial then old.price_initial else null end;
+  return new;
+end $function$
+

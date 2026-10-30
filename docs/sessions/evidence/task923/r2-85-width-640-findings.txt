@@ -1,0 +1,11 @@
+open-failed | agentstatisticsview | sort-by @639 x1
+open-failed | agentstatisticsview | visibility @639 x1
+open-failed | rangedatepicker | 05-02-2026 @640 x4
+open-failed | rangedatepicker | select-dates @640 x4
+open-failed | usermenu | akalba-krasniqi @640 x4
+open-failed | userpickerfieldview | requester @640 x12
+portal-count | agentstatisticsview | sort-by @639 x1
+portal-count | agentstatisticsview | visibility @639 x1
+portal-count | relativetime | mantine-primitives-relativetime--default @640 x4
+widths-mismatch | adminlistingsview | public-visibility @640 x32
+widths-mismatch | adminsupportview | unassigned @640 x12

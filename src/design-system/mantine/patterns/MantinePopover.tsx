@@ -201,7 +201,9 @@ export function MantinePopover({
             returnFocus
           >
             <Popover.Target>{clickableTrigger}</Popover.Target>
-            <Popover.Dropdown>{renderChildren(closeDesktop)}</Popover.Dropdown>
+            {/* Never wider than the viewport less the page gutter on both sides: the `max-content` width stops at the window edge and
+                the content wraps (Task 923 R33), instead of pushing its actions out of the window. */}
+            <Popover.Dropdown maw="calc(100vw - 2 * var(--mantine-spacing-md))">{renderChildren(closeDesktop)}</Popover.Dropdown>
           </Popover>
         </Box>
       )}

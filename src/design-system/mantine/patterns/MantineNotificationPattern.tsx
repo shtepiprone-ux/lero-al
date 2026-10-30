@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Group, Stack, Paper, Text, ThemeIcon, Badge } from '@mantine/core'
+import { Button, Group, Stack, Paper, Text, ThemeIcon } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import {
   VARIANT_COLORS,
@@ -8,6 +8,8 @@ import {
   NOTIFICATION_AUTO_CLOSE,
   type NotificationVariant,
 } from '@/design-system/mantine/notificationVariants'
+import { MantineBadge } from './MantineBadge'
+import { NOTIFICATION_VARIANT_BADGE_TONES } from '../badgeTones'
 
 export type { NotificationVariant }
 
@@ -97,7 +99,7 @@ export function MantineNotificationPattern({
                 <Stack gap="micro" style={{ flex: 1 }}>
                   <Group gap="xs">
                     <Text size="sm" fw={600}>{item.title}</Text>
-                    <Badge color={VARIANT_COLORS[item.variant]} variant="light" size="xs">{item.variant}</Badge>
+                    <MantineBadge variant="tone" tone={NOTIFICATION_VARIANT_BADGE_TONES[item.variant]} size="xs">{item.variant}</MantineBadge>
                   </Group>
                   <Text size="xs" c="dimmed">{item.message}</Text>
                 </Stack>

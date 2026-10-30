@@ -1,0 +1,15 @@
+# a9-99 sha256 after the last edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a9/a9-00-hashes.mjs docs/sessions/evidence/task927/a9/a9-99-after-hashes.txt "a9-99 sha256 after the last edit"
+date: 2026-10-25T21:21:50.446Z
+paths: 5
+
+950218698674f3ddc9bbb7dec7dcef23c0099a357771c94dd7e9ca0bc08470e7  src/lib/auth/googleIdentity.ts
+39136f51de2fc0338fb6234b6d35e2aec169f94faccfa096c7e9d209378b9116  src/components/auth/GoogleSignInButton.tsx
+cbc225624ab2de2066712f61496b1b5ddf1156b151b07e08fb98312781af5377  src/components/auth/GoogleSignInSlot.tsx
+347f7865173a4a5223848374bdbda9d5a08cd9ad358912c04a202286ecec2d6f  src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+751343331710faf9c47d036d54d3a6a55b9ffbd13d4bf296fc726f66dee64154  scripts/rendered-interaction-states.json
+
+exit code: 0

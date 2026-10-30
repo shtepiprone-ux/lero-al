@@ -1,0 +1,833 @@
+{
+  "product": [
+    {
+      "path": "next.config.ts",
+      "git": " M",
+      "why": [
+        "finding S7"
+      ]
+    },
+    {
+      "path": "sentry.edge.config.ts",
+      "git": " M",
+      "why": [
+        "finding S57"
+      ]
+    },
+    {
+      "path": "sentry.server.config.ts",
+      "git": " M",
+      "why": [
+        "finding S57"
+      ]
+    },
+    {
+      "path": "src/__tests__/security/directives.ts",
+      "git": "??",
+      "why": [
+        "mutations sec4"
+      ]
+    },
+    {
+      "path": "src/app/admin/listings/page.tsx",
+      "git": " M",
+      "why": [
+        "finding S8"
+      ]
+    },
+    {
+      "path": "src/app/admin/users/page.tsx",
+      "git": " M",
+      "why": [
+        "finding S8"
+      ]
+    },
+    {
+      "path": "src/app/api/auth-email-hook/route.ts",
+      "git": " M",
+      "why": [
+        "finding S17"
+      ]
+    },
+    {
+      "path": "src/app/api/property-types/route.ts",
+      "git": " M",
+      "why": [
+        "finding S10"
+      ]
+    },
+    {
+      "path": "src/app/api/upload-company-logo/route.ts",
+      "git": " M",
+      "why": [
+        "finding S3"
+      ]
+    },
+    {
+      "path": "src/app/api/upload-popular-location-photo/route.ts",
+      "git": " M",
+      "why": [
+        "finding S4"
+      ]
+    },
+    {
+      "path": "src/app/auth/callback/route.ts",
+      "git": " M",
+      "why": [
+        "finding S5"
+      ]
+    },
+    {
+      "path": "src/app/auth/confirm/route.ts",
+      "git": " M",
+      "why": [
+        "finding S5"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminCurrenciesView.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminExchangeProvidersView.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminListingsView.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminPagesView.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminReportsView.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminTable.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/components/admin/AdminUserProfileView.tsx",
+      "git": " M",
+      "why": [
+        "finding S9"
+      ]
+    },
+    {
+      "path": "src/components/admin/adminPagesContent.ts",
+      "git": " M",
+      "why": [
+        "mutations sec25"
+      ]
+    },
+    {
+      "path": "src/components/layout/Footer.tsx",
+      "git": " M",
+      "why": [
+        "session log :856 (coverage work)"
+      ]
+    },
+    {
+      "path": "src/components/layout/FooterView.tsx",
+      "git": " M",
+      "why": [
+        "finding S9"
+      ]
+    },
+    {
+      "path": "src/components/layout/Header.tsx",
+      "git": " M",
+      "why": [
+        "session log :856 (coverage work)"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/belowMobileGate.ts",
+      "git": "??",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineAdminSurfacePattern.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDataTableToCards.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/patterns/RangeDatePicker.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/design-system/mantine/patterns/responsiveBottomSheet.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/instrumentation-client.ts",
+      "git": " M",
+      "why": [
+        "finding S57"
+      ]
+    },
+    {
+      "path": "src/lib/auth/blockCheck.ts",
+      "git": " M",
+      "why": [
+        "mutations sec6"
+      ]
+    },
+    {
+      "path": "src/lib/auth/browser.ts",
+      "git": " M",
+      "why": [
+        "finding S58",
+        "mutations sec26"
+      ]
+    },
+    {
+      "path": "src/lib/auth/safeRedirect.ts",
+      "git": "??",
+      "why": [
+        "mutations sec13"
+      ]
+    },
+    {
+      "path": "src/lib/auth/staff.ts",
+      "git": "??",
+      "why": [
+        "mutations sec6"
+      ]
+    },
+    {
+      "path": "src/lib/auth/trustedOrigin.ts",
+      "git": "??",
+      "why": [
+        "mutations sec9"
+      ]
+    },
+    {
+      "path": "src/lib/captcha/verifyTurnstile.ts",
+      "git": " M",
+      "why": [
+        "mutations sec6"
+      ]
+    },
+    {
+      "path": "src/lib/cloudinaryDelete.ts",
+      "git": " M",
+      "why": [
+        "finding S48",
+        "mutations sec13"
+      ]
+    },
+    {
+      "path": "src/lib/cloudinaryUpload.ts",
+      "git": " M",
+      "why": [
+        "finding S48",
+        "mutations sec13"
+      ]
+    },
+    {
+      "path": "src/lib/cron/verifyCronRequest.ts",
+      "git": " M",
+      "why": [
+        "finding S18"
+      ]
+    },
+    {
+      "path": "src/lib/getExchangeRateServer.ts",
+      "git": " M",
+      "why": [
+        "finding S56",
+        "mutations sec21"
+      ]
+    },
+    {
+      "path": "src/lib/reserved-slugs.ts",
+      "git": " M",
+      "why": [
+        "mutations sec13"
+      ]
+    },
+    {
+      "path": "src/lib/security/escapeHtml.ts",
+      "git": "??",
+      "why": [
+        "mutations sec13,sec2"
+      ]
+    },
+    {
+      "path": "src/lib/security/inputs.ts",
+      "git": "??",
+      "why": [
+        "mutations sec19"
+      ]
+    },
+    {
+      "path": "src/lib/security/sentryScrub.ts",
+      "git": "??",
+      "why": [
+        "mutations sec25"
+      ]
+    },
+    {
+      "path": "src/lib/uploads/imageUrl.ts",
+      "git": "??",
+      "why": [
+        "finding S49",
+        "mutations sec14,sec2"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/clearHistory.ts",
+      "git": " M",
+      "why": [
+        "mutations sec10"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/currencies.ts",
+      "git": " M",
+      "why": [
+        "mutations sec10,sec21,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/exchangeProviders.ts",
+      "git": " M",
+      "why": [
+        "finding S16",
+        "mutations sec10,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/footer.ts",
+      "git": " M",
+      "why": [
+        "mutations sec10"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/index.ts",
+      "git": " M",
+      "why": [
+        "finding S8",
+        "mutations sec11,sec19,sec24,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/permissions.ts",
+      "git": " M",
+      "why": [
+        "mutations sec10,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/admin/actions/propertyTypes.ts",
+      "git": " M",
+      "why": [
+        "mutations sec10"
+      ]
+    },
+    {
+      "path": "src/modules/auth/actions/captcha.ts",
+      "git": " M",
+      "why": [
+        "finding S41",
+        "mutations sec9"
+      ]
+    },
+    {
+      "path": "src/modules/auth/actions/recovery.ts",
+      "git": " M",
+      "why": [
+        "finding S2"
+      ]
+    },
+    {
+      "path": "src/modules/auth/components/ResetPasswordClient.tsx",
+      "git": " M",
+      "why": [
+        "session log :856 (coverage work)"
+      ]
+    },
+    {
+      "path": "src/modules/auth/lib/signupMetadata.ts",
+      "git": "??",
+      "why": [
+        "mutations sec19,sec9"
+      ]
+    },
+    {
+      "path": "src/modules/auth/validations/index.ts",
+      "git": " M",
+      "why": [
+        "mutations sec14"
+      ]
+    },
+    {
+      "path": "src/modules/cabinet/actions/index.ts",
+      "git": " M",
+      "why": [
+        "mutations sec19,sec23,sec5,sec7"
+      ]
+    },
+    {
+      "path": "src/modules/companies/actions.ts",
+      "git": " M",
+      "why": [
+        "finding S6",
+        "mutations sec9"
+      ]
+    },
+    {
+      "path": "src/modules/contacts/actions/index.ts",
+      "git": " M",
+      "why": [
+        "mutations sec8"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/applyListingTransition.ts",
+      "git": " M",
+      "why": [
+        "finding S28",
+        "mutations sec4"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/collectionActions.ts",
+      "git": " M",
+      "why": [
+        "finding S20",
+        "mutations sec2,sec9"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/contactEvents.ts",
+      "git": " M",
+      "why": [
+        "mutations sec8"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/createListing.ts",
+      "git": " M",
+      "why": [
+        "mutations sec14,sec2"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/deleteListing.ts",
+      "git": " M",
+      "why": [
+        "finding S27",
+        "mutations sec5"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/getListingOwnerContact.ts",
+      "git": " M",
+      "why": [
+        "mutations sec8"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/recentlyViewedActions.ts",
+      "git": " M",
+      "why": [
+        "mutations sec8"
+      ]
+    },
+    {
+      "path": "src/modules/listings/actions/updateListing.ts",
+      "git": " M",
+      "why": [
+        "mutations sec14,sec2"
+      ]
+    },
+    {
+      "path": "src/modules/listings/components/ListingsFilters.tsx",
+      "git": " M",
+      "why": [
+        "R39"
+      ]
+    },
+    {
+      "path": "src/modules/listings/domain/filterEngine.ts",
+      "git": " M",
+      "why": [
+        "mutations sec15"
+      ]
+    },
+    {
+      "path": "src/modules/listings/lib/recentlyViewedQueries.ts",
+      "git": " M",
+      "why": [
+        "mutations sec22,sec8"
+      ]
+    },
+    {
+      "path": "src/modules/listings/lib/savedSearchCanonicalize.ts",
+      "git": " M",
+      "why": [
+        "mutations sec16"
+      ]
+    },
+    {
+      "path": "src/modules/listings/validations/index.ts",
+      "git": " M",
+      "why": [
+        "mutations sec14"
+      ]
+    },
+    {
+      "path": "src/modules/locations/actions/popularLocationActions.ts",
+      "git": " M",
+      "why": [
+        "mutations sec12,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/actions/emailTemplates.ts",
+      "git": " M",
+      "why": [
+        "mutations sec12,sec3"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/contactInquiry.ts",
+      "git": " M",
+      "why": [
+        "mutations sec2,sec7"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/emailChange.ts",
+      "git": " M",
+      "why": [
+        "mutations sec7"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/listingInquiry.ts",
+      "git": " M",
+      "why": [
+        "mutations sec2,sec7"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/send.ts",
+      "git": " M",
+      "why": [
+        "mutations sec7"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/mutations.ts",
+      "git": " M",
+      "why": [
+        "finding S1"
+      ]
+    },
+    {
+      "path": "src/modules/notifications/lib/sendTemplatedEmail.ts",
+      "git": " M",
+      "why": [
+        "mutations sec7"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "path": "src/__tests__/instrumentation.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/__tests__/security/directives.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/__tests__/security/serverEntryGuards.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/__tests__/security/staffActions.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/components/admin/__tests__/adminPagesContent.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/components/layout/__tests__/headerFooterContainers.test.tsx",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/__tests__/cloudinary.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/__tests__/exchangeRateServer.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/__tests__/pureLibs.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/__tests__/siteUrl.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/auth/__tests__/authCore.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/auth/__tests__/browserAuth.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/auth/__tests__/safeRedirect.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/auth/__tests__/sessionMiddleware.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/auth/__tests__/trustedOrigin.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/captcha/__tests__/verifyTurnstile.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/imageGuard.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/predictive.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/reporter.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/store.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/storeServer.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/performance/__tests__/vitals.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/phone/__tests__/phone.test.ts",
+      "git": " M"
+    },
+    {
+      "path": "src/lib/security/__tests__/inputs.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/security/__tests__/sentryScrub.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/supabase/__tests__/clients.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/uploads/__tests__/imagePayload.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/lib/uploads/__tests__/imageUrl.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminCatalog.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminGetters.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminLocale.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/adminOperations.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts",
+      "git": " M"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/permissions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/userAdministration.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/actions/__tests__/userWebsite.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/admin/lib/__tests__/adminLib.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/auth/actions/__tests__/captcha.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/auth/components/__tests__/resetPassword.test.tsx",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/cabinet/statistics/__tests__/tableAndRanking.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/companies/__tests__/companies.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/companies/__tests__/companyActions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/contacts/actions/__tests__/contacts.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/collectionActions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/deleteListing.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/listingImages.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/actions/__tests__/visitorActions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/domain/__tests__/filterEngine.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/domain/__tests__/listingDomain.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/lib/__tests__/queries.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/lib/__tests__/queriesEdges.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/listings/lib/savedSearchCanonicalize.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/lib/__tests__/sendTemplatedEmail.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/emailInjection.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/messageBuilders.security.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/resolveUserLocale.test.ts",
+      "git": "??"
+    },
+    {
+      "path": "src/modules/notifications/lib/emails/__tests__/send.security.test.ts",
+      "git": "??"
+    }
+  ]
+}

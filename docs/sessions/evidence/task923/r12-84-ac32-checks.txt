@@ -1,0 +1,23 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node docs/sessions/evidence/task923/r12-84-ac32-checks.mjs docs/sessions/evidence/task923/r12-full
+platform win32 node v22.22.3; run docs/sessions/evidence/task923/r12-full
+rows 34417; app 19225; portal 15192; unique 34417
+distinct rule keys across rows 22
+rows without exactly 20 rule keys (AC32's literal) 34417
+rows without all 22 rule keys of this run (the added check) 0
+rows without notApplicable 0
+rows without numeric skippedActions 0
+rows without dismissMs object 0
+rows without settle {ms:number, bounded:boolean} 0
+rows with a retry key 5; retry not a string 0
+gate-level cells by width and owner: {"error-screen @390 -> 925":1}
+gate-level cells owned by neither 924 nor 925 (must be 0): 0, of which at 639: 0
+rows with an image-layer detail (must be 0): 0
+AC4 patterns-mantine-ticketdetaildialogview--support @320: portal rows 4, failing 0 []; app rows failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support @390: portal rows 4, failing 0 []; app rows failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results @320: portal rows 4, failing 0 []; app rows failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active @320: portal rows 4, failing 0 []; app rows failing 0 of 4
+settle-bounded rows 0; Story x state: none
+largest settle.ms 4986; rows with settle.ms > 8000: 0
+dismissMs: 26004 numeric, max 1780; never closed (null): 0
+EXIT_CODE=0

@@ -1,0 +1,9 @@
+# Task 923 Review 53 rv53-01: Auth users against profile rows; 2026-10-24T14:47:03.086Z
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-53/rv53-01-account-state.mjs
+--- stdout ---
+Auth users 6; profile rows 6
+Auth users with no profile row: 0
+profile rows with no Auth user: 0
+profile rows with deleted_at set: 0
+--- exit code: 0 ---

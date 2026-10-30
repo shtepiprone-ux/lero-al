@@ -1,0 +1,59 @@
+# Task 923 review 9 - phase-gate root cause, fix and replay (native Windows, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 800b8e349)
+
+## 1. Executor session 3f4dd1db (2026-10-18), assistant blocks around the denied Edits (transcript lines 896-981)
+910 claude-sonnet-5-5 thinking thinkingLen=0
+911 claude-sonnet-5-5 thinking thinkingLen=239
+912 claude-sonnet-5-5 tool_use PowerShell "Set-Location C:\\Claude_Code_Projects\\lero-al\n& .\\.claude\\hooks\\emit-phase-receipt.ps1 -Kind MobileAdaptation ..."
+932 claude-sonnet-5-5 thinking thinkingLen=0
+933 claude-sonnet-5-5 tool_use Edit src\\components\\admin\\AdminReportsView.tsx
+981 claude-sonnet-5-5 tool_use PowerShell "& .\\.claude\\hooks\\emit-phase-receipt.ps1 -Kind MobileAdaptation ..."
+assistant text blocks containing GR-0 CANONICAL REUSE PREFLIGHT or UI CONTRACT PREFLIGHT COMPLETE before the final report (line 1185): 0
+The prose receipts the executor wrote beside its tool calls were stored as empty thinking; the gate reads only text blocks and
+emit-phase-receipt registrations, and the helper had no kind for GR-0 or the UI contract.
+The first registration (line 912) has a Set-Location prefix, so the gate's anchored pattern ignores it; the second (line 981) is valid.
+
+## 2. This review session ed7a0473 (Opus), assistant block types before the fix
+{ 'thinking:empty': 15, tool_use: 23, 'thinking:full': 5 }  -- no text block at all, the same storage behaviour.
+
+## 3. Fixed gate replayed on the executor transcript, Edit of src/components/admin/AdminReportsView.tsx
+permissionDecision: deny
+permissionDecisionReason: UI/Story write blocked; missing valid receipt: CanonicalReuse (GR-0), UiContract. Register each through the PowerShell tool ...
+EXIT_CODE=0
+(The mobile receipt of line 981 is valid against scripts/mobile-adaptation-patterns.json; only the two unregistrable receipts were missing.)
+
+## 4. Self-test after the fix
+$ & .\.claude\hooks\phase-write-gate.ps1 -VerifyGate
+GREEN transcript parser accepts text and registered Mobile/Storybook/Kickoff proofs
+GREEN registered GR-0/UI contract/mobile receipts alone authorize a UI write; prefixed or STOP registrations do not; an empty transcript names every command
+GREEN blocks a GR-0 STOP decision
+GREEN blocks a GR-0 receipt with a new hardcoded value
+GREEN blocks a GR-0 label without its fields
+GREEN does not gate a read-only shell command   (now includes 2>/dev/null, 2>&1 and 2>$null forms)
+GREEN detects an obvious shell-based UI write   (now includes a real redirection after 2>/dev/null and after 2>&1)
+... 38 lines GREEN in total
+phase-write-gate self-test PASSED
+EXIT=0
+
+## 5. Sensitivity: the gate with the old registration pattern (no CanonicalReuse|UiContract kinds), copy in the session scratchpad
+FAIL  registered GR-0/UI contract/mobile receipts alone authorize a UI write; prefixed or STOP registrations do not; an empty transcript names every command
+phase-write-gate self-test FAILED
+EXIT=1
+
+## 6. Hook suite
+$ node --test scripts/workflow-gates/hooks.selftest.mjs
+# tests 9  # pass 9  # fail 0   (includes the ASCII-only check of every hook .ps1)
+
+## 7. Role capture
+After /clear this session had no role file under .claude/state/session-roles/ (security-hook: ROLE UNKNOWN). /model naming the
+current model wrote none either; switching to claude-sonnet-5-5 and back to claude-opus-5-5 fired PostModelSwitch and recorded
+the orchestrator role.
+
+## 8. Executor's SECURITY TEST CONTRACT MISSING denials after the fix (session 3f4dd1db, 2026-10-18 19:52)
+Cause: review 9 changed two files the owner-fixes contract requires to be fully read (the record
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.md and .claude/rules/shared/workflow-gates.md), so the executor's
+earlier reads no longer matched their content. Transcript: Edits denied at lines 1257-1290; receipt re-run at 1273; record,
+security-testing.md and workflow-gates.md re-read at 1358-1368.
+$ node docs/sessions/evidence/task923/review-9/rv9-04-security-hook-diagnosis.mjs <3f4dd1db transcript> src/components/admin/AdminReportsView.tsx
+hook result: []   (after the re-read the write is allowed; the contract is valid, the path is in scope, 6 of 6 required reads complete)
+The deny message now names the failed condition (stale read with the file list, path outside scope, or no receipt);
+node --test scripts/workflow-gates/diff-hook.selftest.mjs: 23 pass, 0 fail (new test 4).

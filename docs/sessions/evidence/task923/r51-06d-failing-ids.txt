@@ -1,0 +1,238 @@
+src/__tests__/instrumentation.test.ts > instrumentation-client > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+src/__tests__/instrumentation.test.ts > sentry.edge.config > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+src/__tests__/instrumentation.test.ts > sentry.server.config > CHARACTERISATION (owner decision S57): personal data such as the IP address is still sent
+src/app/api/cron/listings-expiry/__tests__/route.test.ts > GET /api/cron/listings-expiry (Vercel invocation) > authorized, lapsed active listings → same result as POST
+src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > NULL-expiry active rows reported but NOT mutated
+src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > authorized, lapsed active listings → expired count matches
+src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > authorized, nothing lapsed → expired = 0, no updates
+src/app/api/cron/listings-expiry/__tests__/route.test.ts > POST /api/cron/listings-expiry > status set to engine-resolved value (expired), not raw string
+src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx > AdminListingsPage — listing summary columns (T9) > selects premium_until for the dialogs and does not select listing_images
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a database record with no lists at all still renders
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a failing footer service gives the same page as no content, not an error
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > database text wins field by field; an empty field falls back on its own
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > only enabled links are shown; a list with none enabled falls back to the built-in ones
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > splits the site name into brand and domain
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > the copyright template gets the current year in every place it is written
+src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > without database content every field comes from the translations and the built-in links
+src/lib/auth/__tests__/authCore.security.test.ts > getBlockedError > CHARACTERISATION (owner decision S32): a database error while reading the status is treated as "allowed"
+src/lib/auth/__tests__/authCore.security.test.ts > getBlockedError > a person with no profile row is not blocked
+src/lib/auth/__tests__/authCore.security.test.ts > getStaffRole > adm is staff (admin)
+src/lib/auth/__tests__/authCore.security.test.ts > getStaffRole > mod is staff (moderator)
+src/lib/auth/__tests__/controller.test.ts > Scenario 8 — UI state stability > valid state invariant — no unauthenticated state with a user
+src/lib/auth/__tests__/permissions.test.ts > hasPermission / assertPermission — moderator end-to-end > hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)
+src/lib/auth/__tests__/sessionMiddleware.test.ts > middleware.ts > matcher > /admin/users is left alone
+src/lib/auth/__tests__/sessionMiddleware.test.ts > middleware.ts > matcher > /api/auth/me is left alone
+src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype C — createCurrency (admin/moderator write, admin client) > diagnosability — insert failure → console.error with root cause
+src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype C — createCurrency (admin/moderator write, admin client) > positive — admin → insert via admin client → { id }
+src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype D — setModeratorPermission (admin-only, moderator rejected) > diagnosability — upsert failure → console.error with root cause
+src/modules/__tests__/rls-write-guards.smoke.test.ts > Archetype D — setModeratorPermission (admin-only, moderator rejected) > positive — admin → permission upserted + audit event inserted → {}
+src/modules/admin/actions/__tests__/adminLocale.test.ts > setAdminLocale > stores a supported language in an httpOnly, lax, year-long cookie and on the signed-in person's profile only
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create falls back to the given title when the Albanian one is empty
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug ""
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "Upper"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "a/b"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "auth"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "cabinet"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "sq"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create refuses the slug "with space"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create reports a database failure
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > create stores the Albanian title of the content, and refreshes the list
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > publishing needs an Albanian body: the supplied one, or the stored one when none is supplied
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update refuses a slug that is not valid or is used by ANOTHER page, and accepts its own
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update reports a failure; delete removes one page, or reports a failure
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > CMS pages > update writes the known fields, the Albanian title and the time, and refreshes
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > deleteListing > a database failure deletes nothing and refreshes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > deleteListing > deletes one listing and refreshes the counters and the public lists
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > a database failure returns its message and refreshes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > a failed request decision returns a key and refreshes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > addLocation makes a city under its region with a unique, plain slug
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > addLocation reports a failure
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > approving a request sets the location and clears the request; rejecting only clears it
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > locations > create, update, feature and delete each change one row and refresh the page
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a text search asks for the text as a VALUE: a comma or a bracket cannot add a condition
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a text shorter than two characters finds nobody and does not ask
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a whole id finds exactly that person, and not a deleted one
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > a wildcard in the text is a literal character
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > searchUsersForPicker > only staff may search
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a database failure is "transient", or "db_missing_column" when the column is not there yet
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a listing that does not exist is "not_found"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > a moderator without the permission is refused; toggling goes through the same rules
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > an end date in the past is refused and nothing is written
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > switches the flag on with an end date and refreshes the admin lists and the public pages in every language
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > setListingPremium > without an end date the old one is left alone; with null it is cleared
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a complaint needs the reported person and a known complaint type, and the reported person is told
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a database failure is "create_failed" and tells nobody
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > a ticket with no reported person tells nobody
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > an unknown ticket is "not_found"; a database failure is "update_failed"
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > creates a support ticket for an existing person, records the event and refreshes the list
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > moves a ticket on, records who and why, and tells the reported person only when it is resolved or closed
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank reason with "{ reason: ' ' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank requester with "{ requesterUserId: '  ' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a blank subject with "{ subject: ' ' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with an unknown type with "{ ticketType: 'user_complaint', reportedUserId: 'adm', complaintType: 'rude' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with no reported person with "{ ticketType: 'user_complaint', complaintType: 'spam' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a complaint with no type with "{ ticketType: 'user_complaint', reportedUserId: 'adm' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a reported person who does not exist with "{ ticketType: 'user_complaint', reportedUserId: 'nobody', complaintType: 'spam' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses a requester who does not exist with "{ requesterUserId: 'nobody' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > refuses an unknown ticket type with "{ ticketType: 'chat' }" and writes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > support tickets > the same status again changes nothing
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > a plain user is refused before the gateway
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > a refusal by the gateway is returned, logged unless it is "not_found", and nothing is refreshed
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > hands the change to the transition gateway with the staff member as the actor and refreshes the list
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts > updateListingStatus > someone with no profile is refused before the gateway
+src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin caller → result reflects the stored rows via the admin client; every other key false; 13 keys present
+src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > admin client read error → resolves to the all-false map; console.error called
+src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts > getModeratorPermissions > regular user → rejects forbidden; admin client from(role_permissions) never called
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > R7 — the upsert is issued through the service-role client, not the user client
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > a disabled link with a bad URL does not block the save
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > a pages lookup error returns transient, no upsert
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > negative — a nonexistent slug rejects the whole payload, no upsert
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > negative — an unpublished slug rejects the whole payload, no upsert
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > positive — a published CMS slug saves and its social_links reach the upsert
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — CMS slug existence (R4) > review-1 F2 — one batched lookup with the distinct candidate slug set, excluding a duplicate and a static path
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts > upsertFooterContent — link schemes (S9) > accepts https, http, mailto and tel links
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > a moderator may read, a plain user and an anonymous caller may not
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > an unreadable table shows every switch OFF
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > does not take the admin's own switches for the moderator's
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > ignores a row whose key is not a known permission
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getModeratorPermissions > returns every permission, off unless a row says on, with who changed it
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > a moderator may read
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > returns events with the actor's name; an event without an actor has none
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit "10" is asked as 20
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit -3 is asked as 1
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 0 is asked as 1
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 1000 is asked as 200
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 2.5 is asked as 20
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit 5 is asked as 5
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit null is asked as 20
+src/modules/admin/actions/__tests__/permissions.security.test.ts > getPermissionEvents > the limit undefined is asked as 20
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > a failed audit row does not undo the change that was made
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > a failed write is "save_failed" and leaves no audit row
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > an administrator switches a permission on and the change is audited with the old value and the actor
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > asking for the value it already has is a no-op: no write, no audit row, no refresh
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > every known permission can be switched
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > switching an existing one off records the previous value and keeps one row for it
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "" is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "__proto__" is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "listings.delete; drop" is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission "users.hard_delete_everything" is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission 5 is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the permission undefined is refused and nothing is written
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value "false" is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value "true" is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value 0 is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value 1 is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value null is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value undefined is not a boolean: refused
+src/modules/admin/actions/__tests__/permissions.security.test.ts > setModeratorPermission > the value {} is not a boolean: refused
+src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase
+src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > happy path: valid captcha + email/password → { ok: true }
+src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > a row that cannot be stored is logged, and the answer stays "wrong password"; Auth's own limit stores nothing; the right password stores nothing
+src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > a role lookup error is denied (not_agent), never granted
+src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > reads the role of the session user only
+src/modules/cabinet/statistics/__tests__/access.test.ts > getAgentStatisticsAccess > role agent -> ok with the session user id
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > deletes only the named company
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name ""
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name "a"
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a moderator > renames, trimmed
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a person with no profile > deleteCompanyAction is refused and nothing changes
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a person with no profile > updateCompanyAction is refused and nothing changes
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a plain user > deleteCompanyAction is refused and nothing changes
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > a plain user > updateCompanyAction is refused and nothing changes
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > deletes only the named company
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name ""
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name "a"
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > refuses the name "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an admin > renames, trimmed
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an agent > deleteCompanyAction is refused and nothing changes
+src/modules/companies/__tests__/companyActions.security.test.ts > rename and delete: staff only > an agent > updateCompanyAction is refused and nothing changes
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > adm reaches the gateway with the role "admin" taken from the database and the source "cabinet"
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > ghost reaches the gateway with the role null taken from the database and the source "cabinet"
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > nul reaches the gateway with the role null taken from the database and the source "cabinet"
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > the role comes from the row of the session's user, never from another
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts > changeListingStatusAction > usr reaches the gateway with the role "user" taken from the database and the source "cabinet"
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > CAS conflict (status changed between read and write) → conflict
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→resolved) with reports.manage → passes
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→resolved) with status_override only (no reports.manage) → passes
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→reviewed) with reports.manage → passes
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > allowlist transition (pending→reviewed) with status_override only (no reports.manage) → passes
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > audit failure + CAS revert miss (concurrent change) → CRITICAL console.error + save_failed
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > audit insert failure → status CAS-reverted + console.error + save_failed
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > out-of-allowlist with reports.status_override granted → passes
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > same→same noop → invalid_status
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts > updateReportStatusAction — allowlist/status_override guard (Task 463) > successful status change → audit row inserted
+src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > admin: pending → active (privileged) → { ok: true, nextStatus: "active" }
+src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {}
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch)
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > dismissed: reporter AND listing owner both notified with the correct template ids
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > ordering: the action does not resolve before both the reporter and owner notification promises resolve
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > owner equals reporter → only the reporter notification is sent
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reopen (resolved→pending) → no notification call
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > resolved: reporter AND listing owner both notified with the correct template ids
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reviewed (non-terminal) transition → no notification call
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a database failure is "save_failed" and nothing is refreshed
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a moderator features one location and refreshes the home pages
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > a plain user is refused
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > accepts the order 0 and 10 000
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > an administrator features one location and refreshes the home pages
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location "1" with order 1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order "2"
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order -1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order 1.5
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order 10001
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order null
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1 with order undefined
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location 1.5 with order 1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location null with order 1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location undefined with order 1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > refuses location {} with order 1
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationFeatured > someone with no profile is refused
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > a database failure is "remove_failed"
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location "1"
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location 1.5
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location null
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location undefined
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > refuses the location {}
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts > setLocationUnfeatured > removes one location from the section and keeps its photo
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a database failure is "delete_failed"
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a moderator > deleteEmailTemplateGroupAction is refused
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a moderator > deleteEmailTemplateLocaleAction is refused
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a plain user > deleteEmailTemplateGroupAction is refused
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > a plain user > deleteEmailTemplateLocaleAction is refused
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > an administrator deletes every language of a key, and only that key
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > deleting templates is for administrators only > an administrator deletes one language by id, and only that one
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a database failure is "save_failed"
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a moderator saves a template; the key is normalised and the author is the session's user
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > a plain user is refused and nothing is saved
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > accepts a body of exactly 200 000 characters and 50 variables
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > an administrator saves a template; the key is normalised and the author is the session's user
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > an agent is refused and nothing is saved
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a body over 200 000 characters and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a body that is not text and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key over 64 characters and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key with a slash and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a key with markup and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a language in capitals and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a language that does not exist and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a state that is not true / false and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a subject over 300 characters and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a variable that is not text and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses a variable with a space and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses an empty key and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses an empty subject and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses more than 50 variables and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses no key and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses nothing at all
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > refuses variables that are not a list and saves nothing
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > saving the same key and language again updates one row
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts > upsertEmailTemplateAction > someone with no profile is refused and nothing is saved
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — filters eq(is_read, false) only
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — update() payload keys are exactly [is_read]=true
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — uses the user-scoped client, never the admin client
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markAllNotificationsRead — { error } result logs once and resolves without throwing
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — filters eq(id) and eq(is_read, false)
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — update() payload keys are exactly [is_read]=true
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — uses the user-scoped client, never the admin client
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts > mutations.ts — user-scoped mark-as-read (Task 881 R9) > markNotificationRead — { error } result logs once and resolves without throwing

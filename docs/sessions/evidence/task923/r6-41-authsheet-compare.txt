@@ -1,0 +1,71 @@
+platform win32 node v22.22.3
+runs docs/sessions/evidence/task923/r6-40-authsheet-1 ; docs/sessions/evidence/task923/r6-40-authsheet-2 ; docs/sessions/evidence/task923/r6-40-authsheet-3; rows 64 / 64 / 64
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | en | 00320 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | en | 00390 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | en | 00640 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | en | 01440 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | uk | 00320 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | uk | 00390 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | uk | 00640 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | app | uk | 01440 :: green || green || green
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | en | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | uk | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | uk | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | uk | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | portal:0 | uk | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | en | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | en | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | en | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | en | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | uk | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | uk | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | uk | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | app | uk | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | en | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | en | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | en | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | en | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | uk | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | uk | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | uk | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | portal:0 | uk | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | en | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | en | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | en | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | en | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | uk | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | uk | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | uk | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | app | uk | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | en | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | portal:0 | uk | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | en | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | en | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | en | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | en | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | uk | 00320 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | uk | 00390 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | uk | 00640 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | app | uk | 01440 :: green || green || green
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | en | 01440 :: component-overflow || component-overflow || component-overflow
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 00320 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 00390 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 00640 :: component-overflow+target-small || component-overflow+target-small || component-overflow+target-small
+same patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | portal:0 | uk | 01440 :: component-overflow || component-overflow || component-overflow
+
+rows 64; rows with a difference 0
+differences allowed by AC25 (focus-open on adminshell--drawer-open): 0
+differences NOT allowed (AC25: stop as BLOCKED): 0
+EXIT_CODE=0

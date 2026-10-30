@@ -1,0 +1,54 @@
+ M src/app/auth/callback/route.ts
+ M src/app/auth/confirm/route.ts
+ M src/lib/auth/__tests__/controller.test.ts
+ M src/lib/auth/blockCheck.ts
+ M src/lib/auth/browser.ts
+ M src/lib/auth/controller.ts
+ M src/lib/auth/middleware.ts
+ M src/lib/auth/permissionKeys.ts
+ M src/lib/auth/permissions.ts
+ M src/modules/auth/actions/captcha.ts
+ M src/modules/auth/actions/recovery.ts
+ M src/modules/auth/components/AuthSheet.tsx
+ M src/modules/auth/components/ResetPasswordClient.tsx
+ M src/modules/auth/validations/index.ts
+?? scripts/rendered-interaction-states.json
+?? src/app/auth/callback/__tests__/
+?? src/app/auth/confirm/__tests__/route.security.test.ts
+?? src/lib/auth/__tests__/authCore.security.test.ts
+?? src/lib/auth/__tests__/browserAuth.security.test.ts
+?? src/lib/auth/__tests__/middlewareScope.security.test.ts
+?? src/lib/auth/__tests__/moderatorKeys.security.test.ts
+?? src/lib/auth/__tests__/noAutoRestore.security.test.ts
+?? src/lib/auth/__tests__/safeRedirect.security.test.ts
+?? src/lib/auth/__tests__/sessionMiddleware.test.ts
+?? src/lib/auth/__tests__/staffPage.security.test.ts
+?? src/lib/auth/__tests__/trustedOrigin.security.test.ts
+?? src/lib/auth/accountAccess.integration.test.ts
+?? src/lib/auth/accountAccess.security.test.ts
+?? src/lib/auth/accountAccess.ts
+?? src/lib/auth/blockCheck.security.test.ts
+?? src/lib/auth/controller.signout.security.test.ts
+?? src/lib/auth/middleware.security.test.ts
+?? src/lib/auth/requireViewer.security.test.ts
+?? src/lib/auth/requireViewer.ts
+?? src/lib/auth/roleReads.security.test.ts
+?? src/lib/auth/safeRedirect.ts
+?? src/lib/auth/sessionEnd.integration.test.ts
+?? src/lib/auth/staff.ts
+?? src/lib/auth/staffAccess.integration.test.ts
+?? src/lib/auth/staffAccess.security.test.ts
+?? src/lib/auth/trustedOrigin.ts
+?? src/modules/auth/actions/__tests__/captcha.security.test.ts
+?? src/modules/auth/actions/__tests__/recovery.security.test.ts
+?? src/modules/auth/components/AuthSheet.banned.security.test.tsx
+?? src/modules/auth/components/ResetPasswordClient.security.test.tsx
+?? src/modules/auth/components/__tests__/AuthSheet.test.tsx
+?? src/modules/auth/components/__tests__/authClientParts.test.tsx
+?? src/modules/auth/components/__tests__/resetPassword.test.tsx
+?? src/modules/auth/lib/signupMetadata.ts
+?? vitest.integration.config.ts
+87906b1b2d8f2370403e16f3352465eeab63899a
+ M src/tests/setup.ts
+?? src/tests/fakeSupabase.ts
+?? src/tests/integration/

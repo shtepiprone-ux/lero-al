@@ -1,0 +1,14 @@
+# Task 927 Amendment 13 readiness run (Opus), 2026-10-28T20:09:17.416Z, HEAD eace7ed3b, working tree, win32, node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+in-memory validateContract(ready, plan): []
+== node scripts/check-kickoff-evidence.mjs --files tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
+exit 0
+== node scripts/check-mobile-adaptation-contract.mjs --files tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+
+exit 0
+contract executionStatus ready; stage planned; scope 64; inputs 24; cases 53
+kickoff sha256 (LF) dee612b655376b821489bfc833ac7410abb314c8460f742de11b66c04124600c
+contract sha256 9d465c65cd6369823d95a51b628c5453e7ecb1f783f6b8c75edbf8a38e69fc4a

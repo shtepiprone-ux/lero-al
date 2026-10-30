@@ -1,0 +1,46 @@
+Task 923 review 8 - Opus command evidence (native Windows, Windows PowerShell 5.1)
+platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al head=1cb4ab2e5c0b36b701484a5ce15145829608bcb9 date=2026-10-17
+
+---- command: node node_modules/typescript/bin/tsc --noEmit
+src/modules/listings/components/ListingFormShellView.tsx(116,61): error TS2345: Argument of type '{ privileged: true; }' is not assignable to parameter of type '{ privileged: false; } | { privileged: true; canPublish: boolean; }'.
+  Property 'canPublish' is missing in type '{ privileged: true; }' but required in type '{ privileged: true; canPublish: boolean; }'.
+tsc result: nonzero exit (2 in the first run, 1 reported through the capture wrapper)
+
+---- command: npx vitest run src/modules/listings/domain/ownerStatusRules.security.test.ts src/modules/listings/actions/ownerPublish.security.test.ts src/lib/auth/accountAccess.security.test.ts src/lib/auth/blockCheck.security.test.ts src/modules/admin/actions/accountBan.security.test.ts src/modules/listings/actions/contactSession.security.test.ts
+ Test Files  6 passed (6)
+      Tests  26 passed (26)
+exit=0
+
+---- command: node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+exit=0
+
+---- command: npx vitest run scripts/__tests__/css-var-resolvability.test.ts scripts/__tests__/mantine-story-scope.test.ts src/design-system/mantine/__tests__/theme.d69-18.test.tsx docs/sessions/evidence/task763/appimage-config-class-assertions.test.ts
+ Test Files  3 passed (3)
+      Tests  119 passed (119)
+(the docs/ file is not collected: the working-tree vitest.config.ts excludes docs/**, Task 790 R3 / O790-1)
+
+---- static gates that failed on the committed candidate, re-run on the working tree
+[0] npm run check:i18n-hardcode
+[1] npm run check:file-integrity:all  -> 93 files, all tracked evidence of tasks 778 (32), 765 (24), 741r3 (16), 912 (11), 891 (3), 876 (3), 857, 877, 859, 767 (1 each); 0 of task923
+[0] node scripts/check-badge-canonical.mjs
+[0] node scripts/check-dialog-canonical.mjs
+[1] node scripts/check-ui-contract.mjs --base 7dd707aa154801ff2e44402e3976841cb377dddb -> FAIL registry mantine-badge-status: component must be an enrolled path in scripts/mantine-migration-scope.json
+[0] npm run check:ui-contract:verify
+[0] node scripts/check-mobile-adaptation-contract.mjs --base 7dd707aa154801ff2e44402e3976841cb377dddb
+[0] node scripts/check-mobile-adaptation-contract.mjs --verify-gate
+[0] npm run check:tailwind-runtime-tokens
+
+---- ListingInquiryDialog: no branch for result.error === 'unauthenticated'; the last statement of the result handling is
+86: toast.success(t('inquiry_success'))
+
+---- phase-write-gate transcript read (Get-AssistantTranscript), synthetic 319 MB transcript (50 copies of a real 6.4 MB session transcript)
+before (HEAD 1cb4ab2e): 27355 ms
+after (Opus fix, streamed read + literal pre-filter): 1330 ms, output identical to before (also identical on the three largest real transcripts)
+.claude/hooks/phase-write-gate.ps1 -VerifyGate: phase-write-gate self-test PASSED
+security-hook.mjs evaluateHook on the same 319 MB transcript: read 611 ms + evaluate 1928 ms; V8 MAX_STRING_LENGTH 536870888
+
+---- command: node scripts/check-mojibake.mjs (whole repository; working tree)
+check:mojibake FAILED — 2 artifact(s), 0 invalid-UTF-8 file(s):
+src/app/api/upload-company-logo/route.ts:8:79  U+FFFD replacement character
+src/app/api/upload-popular-location-photo/route.ts:8:79  U+FFFD replacement character
+git status: both " M" (working-tree edits; line 8 of the committed file is "//")

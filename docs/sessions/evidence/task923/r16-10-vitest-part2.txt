@@ -1,0 +1,22 @@
+platform win32 10.0.26300 node v22.22.3; pg n/a from a scratchpad prefix via NODE_PATH; start 2026-10-20T07:54:53.893Z
+cmd node node_modules/vitest/vitest.mjs run src/modules/admin/actions/__tests__/adminActorRank.security.test.ts src/modules/admin/actions/__tests__/adminPermissions.security.test.ts src/modules/admin/actions/__tests__/adminResults.security.test.ts src/modules/listings/components/SimilarListings.security.test.tsx src/modules/admin/actions/__tests__/userAdministration.security.test.ts src/modules/admin/actions/accountBan.security.test.ts src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts src/__tests__/security/clientSinks.test.ts --reporter=default   (R66 (a) (b) (c) (g), R71 (b) (c) (h) (j): the four new test files and the neighbouring files that stay green)
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/__tests__/security/clientSinks.test.ts (9 tests) 42ms
+ ✓ src/modules/admin/actions/__tests__/adminResults.security.test.ts (3 tests) 10ms
+ ✓ src/modules/admin/actions/accountBan.security.test.ts (3 tests) 15ms
+ ✓ src/modules/admin/actions/__tests__/adminActorRank.security.test.ts (4 tests) 14ms
+ ✓ src/modules/admin/actions/__tests__/userAdministration.security.test.ts (72 tests) 33ms
+ ✓ src/modules/admin/actions/__tests__/adminPermissions.security.test.ts (5 tests) 27ms
+ ✓ src/modules/listings/components/SimilarListings.security.test.tsx (3 tests) 24ms
+ ✓ src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts (5 tests) 158ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.visibility.test.ts (6 tests) 7ms
+ ✓ src/modules/listings/components/__tests__/SimilarListings.ladder.test.ts (7 tests) 10ms
+
+ Test Files  10 passed (10)
+      Tests  117 passed (117)
+   Start at  09:54:54
+   Duration  4.81s (transform 2.95s, setup 1.26s, import 8.88s, tests 341ms, environment 4.08s)
+
+EXIT_CODE=0

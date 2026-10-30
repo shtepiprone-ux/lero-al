@@ -16,6 +16,7 @@
 import { BRAND_PRIMARY } from '@/design-system/brand'
 import { TIRANE_TZ } from '@/lib/dashboard/period'
 import { formatDateTimeInZone } from '@/lib/formatters'
+import { escapeHtml } from '@/lib/security/escapeHtml'
 import { sendEmail } from './send'
 
 // ── Locale strings ────────────────────────────────────────────────────────────
@@ -139,12 +140,12 @@ function verificationHtml(s: ReturnType<typeof getStrings>, verificationUrl: str
     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">${s.verifyGreeting}</p>
     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">${s.verifyBody}</p>
     <div style="text-align:center;margin:32px 0;">
-      <a href="${verificationUrl}" style="display:inline-block;background:${BRAND_PRIMARY};color:#ffffff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">${s.verifyButton}</a>
+      <a href="${escapeHtml(verificationUrl)}" style="display:inline-block;background:${BRAND_PRIMARY};color:#ffffff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">${s.verifyButton}</a>
     </div>
     <p style="font-size:13px;color:#71717a;margin:0 0 8px;">${s.verifyExpiry}</p>
     <p style="font-size:13px;color:#71717a;margin:0;">${s.verifyIgnore}</p>
     <p style="font-size:12px;color:#a1a1aa;margin:16px 0 0;word-break:break-all;">
-      ${verificationUrl}
+      ${escapeHtml(verificationUrl)}
     </p>
   `)
 }
@@ -154,10 +155,10 @@ function securityHtml(s: ReturnType<typeof getStrings>, oldEmail: string, newEma
     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">${s.securityGreeting}</p>
     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">${s.securityBody}</p>
     <table style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
-      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelCurrentEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${oldEmail}</td></tr>
-      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelNewEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${newEmail}</td></tr>
+      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelCurrentEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${escapeHtml(oldEmail)}</td></tr>
+      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelNewEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${escapeHtml(newEmail)}</td></tr>
       <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelTime}</td><td style="font-size:13px;color:#18181b;">${timestamp}</td></tr>
-      ${deviceHint ? `<tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelDevice}</td><td style="font-size:13px;color:#18181b;">${deviceHint}</td></tr>` : ''}
+      ${deviceHint ? `<tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelDevice}</td><td style="font-size:13px;color:#18181b;">${escapeHtml(deviceHint)}</td></tr>` : ''}
     </table>
     <p style="font-size:14px;color:#ef4444;font-weight:500;margin:0;">${s.securityAdvice}</p>
   `)

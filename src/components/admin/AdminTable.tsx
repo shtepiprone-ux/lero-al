@@ -29,8 +29,18 @@ export type AdminTableColumn<Row> = {
 
 export type AdminTableCard = {
   title: ReactNode
+  /** Muted text line under the title. Text only: badges go in `badges` (GR-3h). */
   subtitle?: ReactNode
+  /** A row of badges (or text mixed with badges) under the title, one rhythm step of the card (Task 859 R69). */
+  badges?: ReactNode
+  /**
+   * Labelled fields (Task 859 R80, GR-3j): each is its label with its complete value below it, forwarded to
+   * `CardConfig.meta`. An empty value skips its field.
+   */
+  fields?: { label: ReactNode; value: ReactNode }[]
+  /** Free text that is not a field (no label), shown below the fields. */
   meta?: ReactNode
+  /** The card's actions: its last block. */
   trailing?: ReactNode
 }
 
@@ -58,12 +68,13 @@ function visibleFrom(visibility: AdminTableColumn<unknown>['visibility']): Manti
 
 /**
  * Shared admin data list (Task 877, D78-8): a thin adapter over the canonical `MantineDataTableToCards`
- * pattern — cards below 768px (`cardsBelow="md"`, §7.3 rule 2; Task 857 R20), the TailAdmin §6b table above. It keeps the legacy `AdminTable` props
+ * pattern — record cards below 768px (`md`, the pattern's own default: §7.3 rule 2, owner decision D36, Task 923 R47), the TailAdmin §6b
+ * table from 768px. It has no breakpoint prop of its own. It keeps the legacy `AdminTable` props
  * (minus the sorting/hiding/loading/error ones no production consumer ever passed) so the five admin
  * managers that render it change with the pattern and need no edit.
  *
  * Without `cardRow` the card is synthesized: the sticky column is the title, the first two always-visible
- * columns the subtitle, the rest the detail row. Column `className` is not forwarded; `width` and `wrap`
+ * columns the badges row (Task 859 R69), the rest labelled fields (label = the column `header`, value = the cell; R80). Column `className` is not forwarded; `width` and `wrap`
  * are (Task 857 R15), and omitted they leave today's output unchanged.
  */
 export function AdminTable<Row>({
@@ -87,16 +98,13 @@ export function AdminTable<Row>({
     const metaCols = [...otherAlways.slice(2), ...mdVisible]
     return {
       title: stickyCol ? stickyCol.cell(row) : null,
-      subtitle: subtitleCols.length > 0 ? (
-        <Group component="span" gap="xs" wrap="wrap">
+      // R69(d): the first two always-visible cells are objects (badges), so they are the card's badges row, not its subtitle.
+      badges: subtitleCols.length > 0 ? (
+        <Group gap="xs" wrap="wrap">
           {subtitleCols.map(c => <span key={c.key}>{c.cell(row)}</span>)}
         </Group>
       ) : undefined,
-      meta: metaCols.length > 0 ? (
-        <Group gap="xs" wrap="wrap">
-          {metaCols.map(c => <span key={c.key}>{c.cell(row)}</span>)}
-        </Group>
-      ) : undefined,
+      fields: metaCols.length > 0 ? metaCols.map(c => ({ label: c.header, value: c.cell(row) })) : undefined,
     }
   }
 
@@ -122,6 +130,8 @@ export function AdminTable<Row>({
   const card: CardConfig<WrappedRow<Row>> = {
     title: w => <Text size="sm" fw={500} c="gray.7" component="div">{cardOf(w).title}</Text>,
     subtitle: w => cardOf(w).subtitle,
+    badges: w => cardOf(w).badges,
+    meta: w => cardOf(w).fields ?? [],
     detail: w => cardOf(w).meta,
     actions: w => cardOf(w).trailing,
   }
@@ -136,7 +146,6 @@ export function AdminTable<Row>({
         card={card}
         onRowClick={onRowClick ? w => onRowClick(w.row) : undefined}
         stickyColumnIndex={stickyColumnIndex}
-        cardsBelow="md"
         ariaLabel={ariaLabel}
       />
     </div>

@@ -1,0 +1,11 @@
+platform MINGW64_NT-10.0-26300 node v22.22.3 date 2026-10-20T22:44:07+02:00
+ ✓ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person 8ms
+ ✓ src/lib/__tests__/exchangeRates.security.test.ts > exchangeRates > [SEC-X-SRV-RATES-BACKOFF] an outage asks the source once per 5 minutes 3ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > [SEC-X-FE-SIGNOUT-OTHERS] a changed password with sessions left still signs out everywhere 2291ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-DENY] no deletion without the password 192ms
+ ✓ src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx > ProfileTab.deletePassword > [SEC-DEL-FE-ALLOW] the password deletes the account and a failure is shown 183ms
+ Test Files  14 passed (14)
+      Tests  184 passed (184)
+EXIT_CODE=0
+cmd eslint . --quiet
+ESLINT_EXIT=0

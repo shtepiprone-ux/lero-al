@@ -1,0 +1,4 @@
+platform win32 x64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: NODE_PATH=<executor scratchpad>/pgdir/node_modules node docs/sessions/evidence/task923/security/db-break.cjs fingerprint (read-only, after the rv62-13 integration run)
+{"fingerprint":"dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346","parts":{"triggers":"37b79f350f8d31e6c2236bdabc00aebab1bb17087cc26b92e1add6e16d1aaa46","guardFunctions":"02c7998ab154b165901beae01d4c6c104f7c6e5fcca7d42af79d8fef213e9680","policies":"af7a138055d167cdf3ebc77d1693efa947d51c3509e11b69d6695dd7c82afe5a","checks":"4267c7eee554618d68a61b0d7084be72c5c2b37d209e95b31f4bf783b9e1acc6","privileges":"5363bcbc0dc837ccc0792c0f9566d68aa4efc6570ee55b98b9318065e33b8998","realtime":"c3868b2f69be5d1143df0ca160f225d654abb145031fbc01bfceda6f220818d0","restoreFunctions":"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"}}
+exit 0

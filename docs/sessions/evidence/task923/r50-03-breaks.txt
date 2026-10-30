@@ -1,0 +1,93 @@
+# R150-R155 AC150 r50-03-breaks: B14, B15, B16 (each break restored to its after-edit sha256)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r50-03-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-25T11:57:44.286Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B14: createVerifyClient is back on the anon key: the password check is refused by the CAPTCHA protection for a right password
+file: src/modules/cabinet/actions/index.ts
+test: npx vitest run src/modules/cabinet/actions/__tests__/reauth.security.test.ts -t SEC-X-SRV-REAUTH-VERIFY-KEY
+after-edit sha256 (before the break): 0b9c4a205eef7df33df0284fece474c37448a7909d1c77216426daeebdbfab1f
+baseline run: exit 0
+broken sha256: e4714acb8764cea6e2099b7dd9983a503a7e46b6583ceae7591bf64c3bcacd10
+broken run: exit 1
+ FAIL  src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-VERIFY-KEY] the password check signs in as the service role, never with the anon key
+AssertionError: the password check signs in as the service role: expected 'zz-anon-key' to be 'zz-service-key' // Object.is equality
+
+Expected: "zz-service-key"
+Received: "zz-anon-key"
+
+ ❯ src/modules/cabinet/actions/__tests__/reauth.security.test.ts:118:104
+    116|     expect(await deleteOwnAccount({ password: state.password })).toEqu…
+    117|     expect(state.verifyKeys, 'one verify client for each of the two ch…
+    118|     for (const key of state.verifyKeys) expect(key, 'the password chec…
+       |                                                                                                        ^
+    119|     expect(state.verifyKeys, 'the password check signs in as the servi…
+restored sha256: 0b9c4a205eef7df33df0284fece474c37448a7909d1c77216426daeebdbfab1f
+restored run: exit 0
+OK   B14: baseline passes
+OK   B14: the break fails on the intended assertion
+OK   B14: restored sha256 equals the after-edit hash
+OK   B14: restored run passes
+
+=== B15: the login view signs in with signIn(email, password) again: the token of the silent check is not sent
+file: src/modules/auth/components/AuthSheet.tsx
+test: npx vitest run src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx -t SEC-X-FE-LOGIN-CAPTCHA-ALLOW
+after-edit sha256 (before the break): aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f
+baseline run: exit 0
+broken sha256: 9d470c89dc7fc95196edb2d67bedfe7d25d64de4951b4a5a537e1bbb55fdc681
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx > [SEC-X-FE-LOGIN-CAPTCHA-ALLOW] a password sign-in sends the e-mail, the password and the check's token
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'alba@example.com', 'secret', …(1) ]
+
+Received:
+
+  1st vi.fn() call:
+
+  [
+    "alba@example.com",
+    "secret",
+-   "cap-token",
+  ]
+restored sha256: aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f
+restored run: exit 0
+OK   B15: baseline passes
+OK   B15: the break fails on the intended assertion
+OK   B15: restored sha256 equals the after-edit hash
+OK   B15: restored run passes
+
+=== B16: the login view does not reset the check after a refused sign-in: the used token stays and the widget is not renewed
+file: src/modules/auth/components/AuthSheet.tsx
+test: npx vitest run src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx -t SEC-X-FE-LOGIN-CAPTCHA-ERR
+after-edit sha256 (before the break): aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f
+baseline run: exit 0
+broken sha256: 52e4f673f30fc4cb843357adab36be0fe061cf2fd7e1d66e2ebd80966b369006
+broken run: exit 1
+ FAIL  src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx > [SEC-X-FE-LOGIN-CAPTCHA-ERR] a refused sign-in resets the check and needs a new token; a CAPTCHA refusal has its own text
+AssertionError: sq: captcha refusal resets the check: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx:132:73
+    130|     await waitFor(() => expect(alertText(), `${locale}: captcha refusa…
+    131|     expect(alertText(), `${locale}: not the generic text`).not.toBe(au…
+    132|     expect(widget.reset, `${locale}: captcha refusal resets the check`…
+       |                                                                         ^
+    133|     expect(loginButton(), `${locale}: captcha refusal disables the but…
+    134|     submit()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+restored sha256: aab8d8ad745458d33851f8bcd7cc036d04ccb15368c1473cd0a734b581d00c4f
+restored run: exit 0
+OK   B16: baseline passes
+OK   B16: the break fails on the intended assertion
+OK   B16: restored sha256 equals the after-edit hash
+OK   B16: restored run passes
+
+ALL THREE BREAKS BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

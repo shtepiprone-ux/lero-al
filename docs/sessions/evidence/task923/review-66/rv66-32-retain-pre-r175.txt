@@ -1,0 +1,4 @@
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-32-retain-pre-r175.mjs
+src/app/admin/users/[id]/page.tsx: rebuilt sha256 ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71; r58-00 before ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71; equal true
+src/app/admin/users/__tests__/adminUserGone.security.test.ts: rebuilt sha256 0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5; r58-00 before 0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5; equal true
+exit 0

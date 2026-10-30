@@ -1,0 +1,96 @@
+# a5-30: sensitivity proofs
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a5/a5-30-sensitivity.mjs
+started: 2026-10-25T09:28:45.101Z
+
+## M1 no guest check -> protects SEC-927-FE-ONETAP-DENY-NOTGUEST
+baseline: exit 0, passed 9, failed 0
+break: src/lib/auth/useGoogleOneTap.ts
+  - "if (!clientId || !guest) return"
+  + "if (!clientId) return"
+mutant: exit 1, passed 8, failed 1
+  failed: [SEC-927-FE-ONETAP-DENY-NOTGUEST] One Tap is never loaded or prompted unless the visitor is a guest
+    AssertionError: initializing: expected "vi.fn()" to not be called at all, but actually been called 1 times
+    
+    Received:
+    
+      1st vi.fn() call:
+    
+the named case failed on an assertion: yes
+restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
+RESULT M1 no guest check: OK
+
+## M2 no marking of a path the sheet was open on -> protects SEC-927-FE-ONETAP-DENY-SHEET
+baseline: exit 0, passed 9, failed 0
+break: src/lib/auth/useGoogleOneTap.ts
+  - "    if (sheetOpen) {\n      handled.current.add(pathname)\n      return\n    }"
+  + "    if (sheetOpen) return"
+mutant: exit 1, passed 8, failed 1
+  failed: [SEC-927-FE-ONETAP-DENY-SHEET] One Tap is cancelled when the sign-in sheet opens, ignores a late credential and is not raised again on a page where the sheet was open
+    AssertionError: no prompt on the path the sheet was open on: expected "vi.fn()" to not be called at all, but actually been called 1 times
+    
+    Received:
+    
+      1st vi.fn() call:
+    
+the named case failed on an assertion: yes
+restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
+RESULT M2 no marking of a path the sheet was open on: OK
+
+## M3 the credential stored as a fifth field -> protects SEC-927-FE-REMEMBER-ALLOW
+baseline: exit 0, passed 9, failed 0
+break: src/lib/auth/rememberedGoogleAccount.ts
+  - "JSON.stringify({ sub, name, maskedEmail, picture })"
+  + "JSON.stringify(account)"
+break: src/modules/auth/lib/googleSignIn.ts
+  - "saveRememberedGoogleAccount(account)"
+  + "saveRememberedGoogleAccount({ ...account, credential } as typeof account)"
+mutant: exit 1, passed 7, failed 2
+  failed: [SEC-927-FE-ONETAP-ALLOW] a guest is offered Google's One Tap once on a page, and picking an account signs in with that prompt's raw nonce and opens the stored same-site destination
+    AssertionError: expected { sub: '000000000000000000001', …(4) } to deeply equal { sub: '000000000000000000001', …(3) }
+        at C:/Claude_Code_Projects/lero-al/src/components/layout/__tests__/Header.google.security.test.tsx:152:57
+        at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+  failed: [SEC-927-FE-REMEMBER-ALLOW] after a Google sign-in this device remembers only the account id, name, masked e-mail and Google picture, and the sheet opens on Welcome back with that account as the hint
+    AssertionError: expected { sub: '000000000000000000001', …(4) } to deeply equal { sub: '000000000000000000001', …(3) }
+        at C:/Claude_Code_Projects/lero-al/src/components/layout/__tests__/Header.google.security.test.tsx:282:57
+        at runNextTicks (node:internal/process/task_queues:64:5)
+        at processTimers (node:internal/timers:518:9)
+        at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+the named case failed on an assertion: yes
+restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
+RESULT M3 the credential stored as a fifth field: OK
+
+## M4 no host check of the picture -> protects SEC-927-FE-REMEMBER-DENY-HOSTILE
+baseline: exit 0, passed 9, failed 0
+break: src/lib/auth/rememberedGoogleAccount.ts
+  - "return url.protocol === 'https:' && onGoogleHost ? value : null"
+  + "return url.protocol === 'https:' ? value : null"
+mutant: exit 1, passed 8, failed 1
+  failed: [SEC-927-FE-REMEMBER-DENY-HOSTILE] a hostile or malformed remembered record is never rendered as markup or a foreign image and is removed
+    AssertionError: picture on a foreign host: expected false to be true // Object.is equality
+    
+    Ignored nodes: comments, script, style
+    [36m<html[39m
+      [33mdata-mantine-color-scheme[39m=[32m"light"[39m
+    [36m>[39m
+the named case failed on an assertion: yes
+restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
+RESULT M4 no host check of the picture: OK
+
+## M5 no forget on deletion -> protects SEC-927-FE-REMEMBER-DELETE
+baseline: exit 0, passed 9, failed 0
+break: src/modules/cabinet/components/ProfileTab.tsx
+  - "    forgetRememberedGoogleAccount()\n    toast.success(t('delete_account_success'))"
+  + "    toast.success(t('delete_account_success'))"
+mutant: exit 1, passed 8, failed 1
+  failed: [SEC-927-FE-REMEMBER-DELETE] a deleted account is forgotten on this device, and a refused deletion keeps it
+    AssertionError: the deleted account is forgotten: expected '{"sub":"000000000000000000001","name"…' to be null
+        at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx:261:73
+        at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+the named case failed on an assertion: yes
+restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
+RESULT M5 no forget on deletion: OK
+
+exit code: 0

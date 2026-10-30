@@ -1,0 +1,13 @@
+Opus, Review 30 (Task 923), 2026-10-21: an independent check of R99, separate from Sonnet's r27-05.
+platform win32 (Git Bash), node v22.22.3, cwd C:\Claude_Code_Projects\lero-al; pg 8.21.0 from a session scratchpad; db-catalog/lib.cjs connects (no value printed).
+Method: each DO block is cut byte for byte from the file ("do $pre$" to "end $pre$;" of the apply file, "do $chk$" to "end $chk$;" of the rollback), and runs alone in its own connection: begin read only; show transaction_read_only; the block; rollback. Each runs with the file's LF and with every LF turned into CRLF.
+The control is the apply file of commit cd17f3d9b (the one the owner pasted).
+new apply preflight with LF: ok (read_only=on)
+new apply preflight with CRLF: ok (read_only=on)
+new rollback end checks with LF: ok (read_only=on)
+new rollback end checks with CRLF: ok (read_only=on)
+control: previous apply preflight with LF: ok (read_only=on)
+control: previous apply preflight with CRLF: ERROR preflight failed: the policy Admin/moderator delete avatars on storage.objects changed since the capture
+Get-FileHash -Algorithm SHA256 (PowerShell): AEA42E62ED8D3AA5AC91E456D5C5D1A221D0CDDCBD57BAD9ECAC40D59D15ABA3 proposed-hardening-v8a.sql; 31013A24069E6A7BF9A5958BA65F45006C30361CAC93C422233DEE9EE9FE9FC4 proposed-hardening-v8a-rollback.sql; 32F8363B47598A51C82CC88A0DCA19C733740064C47F98A1C947F328B1DE9CAB proposed-hardening-v8a.dryrun.sql (equal to r27-03)
+A scan of single-quoted string literals outside comments: proposed-hardening-v8a.sql 248 literals, none spanning lines; proposed-hardening-v8a-rollback.sql 126, none; proposed-hardening-v8a.dryrun.sql 248, none.
+git diff --numstat against HEAD: each of the three files 10 added, 25 removed; every changed line is an md5 comparison of a policy text or the one header line about it.

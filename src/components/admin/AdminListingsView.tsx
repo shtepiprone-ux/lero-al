@@ -2,12 +2,8 @@
 
 import type { ChangeEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { useMediaQuery } from '@mantine/hooks'
 import { Search, Star } from 'lucide-react'
-import {
-  Badge, Flex, Group, Paper, ScrollArea, SegmentedControl, Stack, Tabs, Text, TextInput, UnstyledButton,
-  useMantineTheme,
-} from '@mantine/core'
+import { Flex, Group, Paper, ScrollArea, SegmentedControl, Stack, Tabs, Text, TextInput, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { MantineCopyIdButton } from '@/design-system/mantine/patterns/MantineCopyIdButton'
 import { MantinePagination } from '@/design-system/mantine/patterns/MantinePagination'
 import { MantineSelect } from '@/design-system/mantine/patterns/MantineSelect'
@@ -16,10 +12,10 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import type { AdminListing } from '@/components/admin/AdminListingsTable'
 import { formatPrice } from '@/lib/formatters'
 import { LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
-import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
 import { formatVisibility } from '@/modules/listings/lib/visibility'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import type { ListingStatus } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export type AdminListingsVisibilityFilter = '' | 'visible' | 'hidden_eligible'
 
@@ -55,7 +51,7 @@ export interface AdminListingsViewProps {
  * Presentational View of the `/admin/listings` list (Task 857, Container/Presentational split of
  * `AdminListingsTable`). `useTranslations` / `useLocale` / `usePropertyTypes` (read-only) only: no state, no
  * router, no server action. Tabs and the segmented visibility filter follow `AdminUsersTable`; the list is the
- * `AdminTable` adapter (cards below 768px). The preview and premium dialogs are separate Views.
+ * `AdminTable` adapter (record cards below 768px, D36). The preview and premium dialogs are separate Views.
  */
 export function AdminListingsView({
   listings,
@@ -81,8 +77,6 @@ export function AdminListingsView({
   const locale = useLocale()
   const theme = useMantineTheme()
   const { propertyTypes } = usePropertyTypes()
-  // The pattern's own phone query: the visibility filter is a select there, a segmented control from 640px (R18).
-  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
   const visibilityOptions = [
     { value: '', label: tc('filter_ALL') },
     { value: 'visible', label: t('visibility_visible') },
@@ -100,20 +94,23 @@ export function AdminListingsView({
   const visibilityBadge = (l: AdminListing) => {
     const vis = formatVisibility({ status: l.status, expires_at: l.expires_at })
     return (
-      <Badge variant="light" size="sm" color={vis.visible ? 'green' : 'red'}>
+      <MantineBadge variant="status" entity="listingVisibility" value={vis.visible ? 'visible' : 'hidden'}>
         {vis.visible ? t('visibility_visible') : t(vis.labelKey as Parameters<typeof t>[0])}
-      </Badge>
+      </MantineBadge>
     )
   }
 
   const statusBadge = (l: AdminListing) => (
-    <Badge variant="light" size="sm" color={LISTING_STATUS_COLOR[l.status]}>
+    <MantineBadge variant="status" entity="listing" value={l.status}>
       {statusLabels[l.status]}
-    </Badge>
+    </MantineBadge>
   )
 
   // Type · property, then the agent: the dimmed meta line under the title and in the card (one helper, §7.3 (b)).
   const metaLine = (l: AdminListing) => `${typeLabel(l)}${l.owner?.name ? ` · ${l.owner.name}` : ''}`
+  // The table's meta line starts with the price: it left its own column (Task 923 R39 (c)). The card shows the
+  // price in its badges row, so its meta line stays `metaLine`.
+  const tableMetaLine = (l: AdminListing) => `${formatPrice(l.price, l.currency, locale)} · ${metaLine(l)}`
 
   const columns: AdminTableColumn<AdminListing>[] = [
     {
@@ -123,7 +120,7 @@ export function AdminListingsView({
       cell: l => (
         <MantineCopyIdButton
           id={l.id}
-          label={`#${l.public_id ?? l.id.slice(0, 8)}`}
+          label={`#${l.public_id ?? l.id}`}
           copyLabel={tl('copy_id')}
           copiedLabel={tl('id_copied')}
         />
@@ -146,24 +143,19 @@ export function AdminListingsView({
           <Group gap="xs" wrap="nowrap" align="flex-start">
             {l.is_premium && <Star size={theme.other.iconSize.compact} color="var(--badge-premium)" />}
             <Stack gap="micro">
-              <Text size="sm" fw={500} lineClamp={2}>{l.title}</Text>
-              <Text size="xs" c="dimmed" lineClamp={1}>{metaLine(l)}</Text>
+              <Text size="sm" fw={500}>{l.title}</Text>
+              <Text size="xs" c="dimmed">{tableMetaLine(l)}</Text>
             </Stack>
           </Group>
         </UnstyledButton>
       ),
     },
     {
-      key: 'price',
-      header: t('col_price'),
-      cell: l => <Text size="sm" fw={500}>{formatPrice(l.price, l.currency, locale)}</Text>,
-    },
-    {
       key: 'status',
       header: t('col_status'),
-      // §7.3 (b): status and visibility stacked in one cell.
+      // §7.3 (b): status and visibility stacked in one cell, one rhythm step (sm) apart (R70, GR-3h).
       cell: l => (
-        <Stack gap="tight" align="flex-start">
+        <Stack gap="sm" align="flex-start">
           {statusBadge(l)}
           {visibilityBadge(l)}
         </Stack>
@@ -208,7 +200,7 @@ export function AdminListingsView({
           aria-label={t('search_placeholder')}
           leftSection={<Search size={theme.other.iconSize.standard} />}
           flex={{ base: 'none', sm: 1 }}
-          miw={0}
+          miw={{ base: 0, sm: theme.other.boxSize.searchFieldMin }}
           data-testid="listings-search"
         />
         <MantineSelect
@@ -219,25 +211,25 @@ export function AdminListingsView({
           aria-label={tc('filter_ALL')}
           data-testid="listings-status-filter"
         />
-        {isMobile ? (
-          <MantineSelect
-            value={activeVisibility}
-            onChange={value => onVisibilityChange(value ?? '')}
-            data={visibilityOptions}
-            allowDeselect={false}
-            aria-label={t('visibility_label')}
-            data-testid="listings-visibility-filter"
-          />
-        ) : (
-          <SegmentedControl
-            value={activeVisibility}
-            onChange={onVisibilityChange}
-            size="xs"
-            aria-label={t('visibility_label')}
-            data-testid="listings-visibility-filter"
-            data={visibilityOptions}
-          />
-        )}
+        {/* A select below 640px, a segmented control from 640px: both render, Mantine's visibility props choose (Task 923 R39 (e)). */}
+        <MantineSelect
+          hiddenFrom="sm"
+          value={activeVisibility}
+          onChange={value => onVisibilityChange(value ?? '')}
+          data={visibilityOptions}
+          allowDeselect={false}
+          aria-label={t('visibility_label')}
+          data-testid="listings-visibility-filter-compact"
+        />
+        <SegmentedControl
+          visibleFrom="sm"
+          value={activeVisibility}
+          onChange={onVisibilityChange}
+          size="xs"
+          aria-label={t('visibility_label')}
+          data-testid="listings-visibility-filter"
+          data={visibilityOptions}
+        />
       </Flex>
 
       {auditCounts && (
@@ -284,10 +276,11 @@ export function AdminListingsView({
           title: (
             <Group gap="xs" wrap="nowrap">
               {l.is_premium && <Star size={theme.other.iconSize.compact} color="var(--badge-premium)" />}
-              <Text size="sm" fw={500} lineClamp={1}>{l.title}</Text>
+              <Text size="sm" fw={500} miw={0}>{l.title}</Text>
             </Group>
           ),
-          subtitle: (
+          // R69(e), GR-3h: price + status + visibility are the card's badges row, not its subtitle.
+          badges: (
             <Group gap="xs" wrap="wrap">
               <Text size="sm" fw={500} component="span">{formatPrice(l.price, l.currency, locale)}</Text>
               {statusBadge(l)}

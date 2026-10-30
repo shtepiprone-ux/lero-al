@@ -1,0 +1,25 @@
+# r54-02 R161: the 17 files, cause group and failed count before / after
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-54/r54-02-table.mjs (inputs r54-02-before.json, r54-02-after.json)
+
+file | group | failed before / tests before | failed after / tests after | cause
+src/__tests__/instrumentation.test.ts | (b) | 3 / 27 | 0 / 27 | sendDefaultPii is false in the three configs (R66 (j)); the S57 characterisation became its regression
+src/modules/__tests__/rls-write-guards.smoke.test.ts | (a)+(b)+(d) | 4 / 15 | 0 / 15 | role check read through the service-role double; createCurrency answers create_failed, not the database text (X14); the rate source is a double
+src/components/layout/__tests__/headerFooterContainers.test.tsx | (d) | 7 / 21 | 0 / 21 | the settings mock gains getFooterContent (the module Footer imports it from)
+src/lib/auth/__tests__/authCore.security.test.ts | (a)+(b) | 4 / 38 | 0 / 38 | staff rows are active; a missing profile row and a status-read error are no access (R37)
+src/lib/auth/__tests__/controller.test.ts | (d) | 1 / 47 | 0 / 47 | the SIGNED_OUT event fetches /api/auth/me, which the test now answers
+src/lib/auth/__tests__/sessionMiddleware.test.ts | (c) | 2 / 31 | 0 / 31 | the matcher refreshes the session on /api/auth/me and /admin/users (R68 (b))
+src/modules/companies/__tests__/companyActions.security.test.ts | (a) | 16 / 32 | 0 / 32 | active actor rows, the companies.manage key, and a profile-less session is a guest
+src/modules/admin/actions/__tests__/adminLocale.test.ts | (a) | 1 / 22 | 0 / 22 | the actor row in the service-role double
+src/modules/admin/actions/__tests__/adminOperations.security.test.ts | (a)+(b) | 53 / 60 | 0 / 60 | active actor rows, listings.moderate and support.manage keys, delete returns its rows; database text is not returned (X14); a profile-less session is a guest
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts | (a) | 8 / 40 | 0 / 40 | the role row moved to the service-role double; the user-scoped client is not used
+src/modules/admin/actions/__tests__/permissions.security.test.ts | (a)+(b) | 34 / 41 | 0 / 42 | active actor rows; a moderator no longer reads the switches (R75 (e)); SEC-X-SRV-PERMS-ADMIN-ONLY added (R162)
+src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts | (a) | 5 / 6 | 0 / 6 | the actor row in the service-role double; a profile-less session is refused before the gateway
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts | (a) | 10 / 21 | 0 / 21 | the role row read with maybeSingle and an active status
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts | (a) | 8 / 17 | 0 / 17 | the role row read with maybeSingle and an active status
+src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts | (a) | 32 / 35 | 0 / 35 | active actor rows, the email_templates.manage key, and a profile-less session is a guest
+src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts | (a) | 26 / 27 | 0 / 27 | active actor rows, the locations.manage key, and a profile-less session is a guest
+src/modules/notifications/lib/__tests__/mutations.smoke.test.ts | (a) | 8 / 9 | 0 / 11 | requireViewer is the double, in its exact shape; the refusal path is asserted
+
+total | | 222 / 489 | 0 / 492
+files with a failed, skipped, todo or missing test after: 0

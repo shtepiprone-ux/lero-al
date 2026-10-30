@@ -3,16 +3,17 @@
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { AlertTriangle, ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react'
-import { ActionIcon, Alert, Badge, Button, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Alert, Button, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import {
   MantineDataTableToCards,
-  MantineModal,
   type CardConfig,
   type TableColumn,
 } from '@/design-system/mantine/patterns'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { getDisplayTitle } from '@/components/admin/adminPagesContent'
 import type { Page } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 
 export interface AdminPagesViewProps {
   pages: Page[]
@@ -42,8 +43,8 @@ interface PageRow {
 /**
  * Presentational View of `/admin/pages` (Task 868, Container/Presentational split of
  * `AdminPagesManager`). No hooks beyond `useTranslations` / `useMantineTheme`, no server action, no
- * `toast`. The list renders through the canonical `MantineDataTableToCards` (table from `md`, cards
- * below 768px) and the delete confirmation through `MantineModal`.
+ * `toast`. The list renders through the canonical `MantineDataTableToCards` (table from `md`, record
+ * cards below 768px, D36) and the delete confirmation through `MantineDeleteConfirmModal`.
  */
 export function AdminPagesView({
   pages,
@@ -67,9 +68,9 @@ export function AdminPagesView({
 
   function statusBadge(p: Page) {
     return (
-      <Badge variant="light" color={p.is_published ? 'green' : 'gray'} size="sm">
+      <MantineBadge variant="status" entity="page" value={p.is_published ? 'published' : 'draft'}>
         {p.is_published ? t('status_published') : t('status_draft')}
-      </Badge>
+      </MantineBadge>
     )
   }
 
@@ -124,13 +125,13 @@ export function AdminPagesView({
     {
       key: 'title',
       label: t('col_title'),
-      // §7.3 (a)/(b): the title wraps at the table-title token width, clamped to two lines; the slug is its meta line.
+      // §7.3 (a)/(b): the title and the slug wrap in full at the table-title token width (D6); the slug is its meta line.
       width: theme.other.layout.tableTitleColumnWidth,
       wrap: true,
       render: r => (
         <Stack gap="micro">
-          <Text size="sm" fw={500} c="gray.7" lineClamp={2}>{getDisplayTitle(r.page)}</Text>
-          <Text size="xs" c="dimmed" ff="monospace" truncate="end">{r.page.slug}</Text>
+          <Text size="sm" fw={500} c="gray.7">{getDisplayTitle(r.page)}</Text>
+          <Text size="xs" c="dimmed" ff="monospace">{r.page.slug}</Text>
         </Stack>
       ),
     },
@@ -193,30 +194,17 @@ export function AdminPagesView({
         rows={rows}
         emptyLabel={emptyLabel}
         card={card}
-        cardsBelow="md"
       />
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={deleteTarget !== null}
         onClose={onCancelDelete}
         title={t('delete_confirm')}
-        footer={
-          <Flex
-            direction={{ base: 'column-reverse', sm: 'row' }}
-            gap="sm"
-            justify={{ base: 'stretch', sm: 'flex-end' }}
-          >
-            <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} onClick={onCancelDelete}>
-              {tc('cancel')}
-            </Button>
-            <Button color="red" w={{ base: '100%', sm: 'auto' }} onClick={onConfirmDelete}>
-              {tc('delete')}
-            </Button>
-          </Flex>
-        }
-      >
-        <Text size="sm" c="gray.7">{deleteTarget ? getDisplayTitle(deleteTarget) : null}</Text>
-      </MantineModal>
+        message={deleteTarget ? getDisplayTitle(deleteTarget) : null}
+        confirmLabel={tc('delete')}
+        cancelLabel={tc('cancel')}
+        onConfirm={onConfirmDelete}
+      />
 
       {editorSlot}
     </Stack>

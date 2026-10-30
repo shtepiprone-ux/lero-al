@@ -1,0 +1,33 @@
+﻿# r56-05 part 7 (R173 (c)): build
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npm run build
+started: 2026-10-29T13:30:14.1666300Z
+finished: 2026-10-29T13:32:27.3548482Z
+--- output (last 25 lines) ---
+├ ƒ /api/listings/[slug]/view              385 B         186 kB
+├ ƒ /api/presence                          384 B         186 kB
+├ ƒ /api/property-types                    385 B         186 kB
+├ ƒ /api/upload-avatar                     385 B         186 kB
+├ ƒ /api/upload-cms-image                  385 B         186 kB
+├ ƒ /api/upload-company-logo               385 B         186 kB
+├ ƒ /api/upload-popular-location-photo     385 B         186 kB
+├ ƒ /auth/callback                         385 B         186 kB
+├ ƒ /auth/confirm                          385 B         186 kB
+├ ƒ /auth/google/callback                3.38 kB         199 kB
+├ ○ /robots.txt                            384 B         186 kB
+└ ● /sitemap/[__metadata_id__]             385 B         186 kB
+    └ /sitemap/0.xml
++ First Load JS shared by all             185 kB
+  ├ chunks/3434-e54005cb83918adc.js       126 kB
+  ├ chunks/4bd1b696-bc62c0f5edf56f0e.js  54.4 kB
+  └ other shared chunks (total)          5.39 kB
+
+
+ƒ Middleware                              167 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+--- exit code: 0 ---

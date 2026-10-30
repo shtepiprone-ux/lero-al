@@ -1,0 +1,14 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T15:31:48.144Z
+command: node docs/sessions/evidence/task923/r37-06-sensitivity.cjs
+---- output ----
+proved     S1-hour-comparison-removed (SEC-X-SRV-REVEAL-LIMIT)
+           -> SEC-X-SRV-REVEAL-LIMIT: AssertionError: a standard viewer with 20 rows in the last hour, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'rate_limited' }
+proved     S2-failed-read-treated-as-no-rows (SEC-X-SRV-REVEAL-FAILCLOSED)
+           -> SEC-X-SRV-REVEAL-FAILCLOSED: AssertionError: the read of the viewer's rows answers an error, call: expected { Object (ok, number) } to deeply equal { ok: false, reason: 'load_failed' }
+2 of 2 proved.
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,1190 @@
+﻿platform win32 10.0.26300.0 node v22.22.3
+cmd node scripts/check-rendered-state-census.mjs --jobs 10 --out docs/sessions/evidence/task923/r12-full
+start 2026-10-19T15:39:12.3304266Z
+rendered state census: 584 registered state(s), 15192 state job(s) + 3572 out-of-range widths job(s) (no cell is skipped; 76 cell(s) are the added in-range bound / first out-of-range widths) + 461 closed job(s); 10 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r12-full
+  100/19225 jobs, 100 rows, 0 failing
+  200/19225 jobs, 200 rows, 0 failing
+  300/19225 jobs, 300 rows, 0 failing
+  400/19225 jobs, 400 rows, 1 failing
+  500/19225 jobs, 539 rows, 1 failing
+  600/19225 jobs, 739 rows, 1 failing
+  700/19225 jobs, 939 rows, 1 failing
+  800/19225 jobs, 1139 rows, 1 failing
+  900/19225 jobs, 1339 rows, 1 failing
+  1000/19225 jobs, 1539 rows, 1 failing
+  1100/19225 jobs, 1739 rows, 1 failing
+  1200/19225 jobs, 1939 rows, 1 failing
+  1300/19225 jobs, 2119 rows, 1 failing
+  1400/19225 jobs, 2319 rows, 1 failing
+  1500/19225 jobs, 2519 rows, 1 failing
+  1600/19225 jobs, 2719 rows, 1 failing
+  1700/19225 jobs, 2919 rows, 1 failing
+  1800/19225 jobs, 3119 rows, 1 failing
+  1900/19225 jobs, 3319 rows, 1 failing
+  2000/19225 jobs, 3519 rows, 1 failing
+  2100/19225 jobs, 3719 rows, 1 failing
+  2200/19225 jobs, 3919 rows, 1 failing
+  2300/19225 jobs, 4119 rows, 1 failing
+  2400/19225 jobs, 4313 rows, 1 failing
+  2500/19225 jobs, 4507 rows, 1 failing
+  2600/19225 jobs, 4683 rows, 1 failing
+  2700/19225 jobs, 4883 rows, 1 failing
+  2800/19225 jobs, 5083 rows, 1 failing
+  2900/19225 jobs, 5245 rows, 1 failing
+  3000/19225 jobs, 5400 rows, 1 failing
+  3100/19225 jobs, 5551 rows, 1 failing
+  3200/19225 jobs, 5692 rows, 1 failing
+  3300/19225 jobs, 5850 rows, 1 failing
+  3400/19225 jobs, 6031 rows, 1 failing
+  3500/19225 jobs, 6182 rows, 1 failing
+  3600/19225 jobs, 6323 rows, 1 failing
+  3700/19225 jobs, 6480 rows, 1 failing
+  3800/19225 jobs, 6663 rows, 1 failing
+  3900/19225 jobs, 6863 rows, 1 failing
+  4000/19225 jobs, 7031 rows, 1 failing
+  4100/19225 jobs, 7231 rows, 1 failing
+  4200/19225 jobs, 7405 rows, 1 failing
+  4300/19225 jobs, 7599 rows, 1 failing
+  4400/19225 jobs, 7786 rows, 1 failing
+  4500/19225 jobs, 7967 rows, 1 failing
+  4600/19225 jobs, 8167 rows, 1 failing
+  4700/19225 jobs, 8335 rows, 1 failing
+  4800/19225 jobs, 8535 rows, 1 failing
+  4900/19225 jobs, 8703 rows, 1 failing
+  5000/19225 jobs, 8903 rows, 1 failing
+  5100/19225 jobs, 9076 rows, 1 failing
+  5200/19225 jobs, 9271 rows, 1 failing
+  5300/19225 jobs, 9456 rows, 1 failing
+  5400/19225 jobs, 9639 rows, 1 failing
+  5500/19225 jobs, 9839 rows, 1 failing
+  5600/19225 jobs, 10007 rows, 1 failing
+  5700/19225 jobs, 10207 rows, 1 failing
+  5800/19225 jobs, 10375 rows, 1 failing
+  5900/19225 jobs, 10575 rows, 1 failing
+  6000/19225 jobs, 10746 rows, 1 failing
+  6100/19225 jobs, 10943 rows, 1 failing
+  6200/19225 jobs, 11113 rows, 1 failing
+  6300/19225 jobs, 11279 rows, 1 failing
+  6400/19225 jobs, 11444 rows, 1 failing
+  6500/19225 jobs, 11589 rows, 1 failing
+  6600/19225 jobs, 11744 rows, 1 failing
+  6700/19225 jobs, 11910 rows, 1 failing
+  6800/19225 jobs, 12067 rows, 1 failing
+  6900/19225 jobs, 12222 rows, 1 failing
+  7000/19225 jobs, 12385 rows, 1 failing
+  7100/19225 jobs, 12542 rows, 1 failing
+  7200/19225 jobs, 12710 rows, 1 failing
+  7300/19225 jobs, 12859 rows, 1 failing
+  7400/19225 jobs, 13022 rows, 1 failing
+  7500/19225 jobs, 13180 rows, 1 failing
+  7600/19225 jobs, 13343 rows, 1 failing
+  7700/19225 jobs, 13503 rows, 1 failing
+  7800/19225 jobs, 13652 rows, 1 failing
+  7900/19225 jobs, 13808 rows, 1 failing
+  8000/19225 jobs, 13951 rows, 1 failing
+  8100/19225 jobs, 14111 rows, 1 failing
+  8200/19225 jobs, 14279 rows, 1 failing
+  8300/19225 jobs, 14452 rows, 1 failing
+  8400/19225 jobs, 14604 rows, 1 failing
+  8500/19225 jobs, 14753 rows, 1 failing
+  8600/19225 jobs, 14901 rows, 1 failing
+  8700/19225 jobs, 15055 rows, 1 failing
+  8800/19225 jobs, 15199 rows, 1 failing
+  8900/19225 jobs, 15353 rows, 1 failing
+  9000/19225 jobs, 15501 rows, 1 failing
+  9100/19225 jobs, 15663 rows, 1 failing
+  9200/19225 jobs, 15863 rows, 1 failing
+  9300/19225 jobs, 16031 rows, 1 failing
+  9400/19225 jobs, 16180 rows, 1 failing
+  9500/19225 jobs, 16336 rows, 1 failing
+  9600/19225 jobs, 16507 rows, 1 failing
+  9700/19225 jobs, 16707 rows, 1 failing
+  9800/19225 jobs, 16907 rows, 1 failing
+  9900/19225 jobs, 17107 rows, 1 failing
+  10000/19225 jobs, 17278 rows, 1 failing
+  10100/19225 jobs, 17457 rows, 1 failing
+  10200/19225 jobs, 17643 rows, 1 failing
+  10300/19225 jobs, 17842 rows, 1 failing
+  10400/19225 jobs, 18011 rows, 1 failing
+  10500/19225 jobs, 18203 rows, 1 failing
+  10600/19225 jobs, 18379 rows, 1 failing
+  10700/19225 jobs, 18567 rows, 1 failing
+  10800/19225 jobs, 18747 rows, 1 failing
+  10900/19225 jobs, 18917 rows, 1 failing
+  11000/19225 jobs, 19061 rows, 1 failing
+  11100/19225 jobs, 19229 rows, 1 failing
+  11200/19225 jobs, 19384 rows, 1 failing
+  11300/19225 jobs, 19529 rows, 1 failing
+  11400/19225 jobs, 19682 rows, 1 failing
+  11500/19225 jobs, 19831 rows, 1 failing
+  11600/19225 jobs, 19995 rows, 1 failing
+  11700/19225 jobs, 20195 rows, 1 failing
+  11800/19225 jobs, 20395 rows, 1 failing
+  11900/19225 jobs, 20595 rows, 1 failing
+  12000/19225 jobs, 20795 rows, 1 failing
+  12100/19225 jobs, 20995 rows, 1 failing
+  12200/19225 jobs, 21195 rows, 1 failing
+  12300/19225 jobs, 21395 rows, 1 failing
+  12400/19225 jobs, 21595 rows, 1 failing
+  12500/19225 jobs, 21795 rows, 1 failing
+  12600/19225 jobs, 21995 rows, 1 failing
+  12700/19225 jobs, 22195 rows, 1 failing
+  12800/19225 jobs, 22375 rows, 1 failing
+  12900/19225 jobs, 22575 rows, 1 failing
+  13000/19225 jobs, 22775 rows, 1 failing
+  13100/19225 jobs, 22975 rows, 1 failing
+  13200/19225 jobs, 23175 rows, 1 failing
+  13300/19225 jobs, 23375 rows, 1 failing
+  13400/19225 jobs, 23575 rows, 1 failing
+  13500/19225 jobs, 23775 rows, 1 failing
+  13600/19225 jobs, 23975 rows, 1 failing
+  13700/19225 jobs, 24175 rows, 1 failing
+  13800/19225 jobs, 24375 rows, 1 failing
+  13900/19225 jobs, 24575 rows, 1 failing
+  14000/19225 jobs, 24775 rows, 1 failing
+  14100/19225 jobs, 24975 rows, 1 failing
+  14200/19225 jobs, 25175 rows, 2 failing
+  14300/19225 jobs, 25363 rows, 5 failing
+  14400/19225 jobs, 25547 rows, 17 failing
+  14500/19225 jobs, 25731 rows, 29 failing
+  14600/19225 jobs, 25931 rows, 57 failing
+  14700/19225 jobs, 26115 rows, 69 failing
+  14800/19225 jobs, 26312 rows, 97 failing
+  14900/19225 jobs, 26499 rows, 109 failing
+  15000/19225 jobs, 26695 rows, 137 failing
+  15100/19225 jobs, 26883 rows, 145 failing
+  15200/19225 jobs, 27067 rows, 159 failing
+  15300/19225 jobs, 27267 rows, 179 failing
+  15400/19225 jobs, 27467 rows, 181 failing
+  15500/19225 jobs, 27667 rows, 181 failing
+  15600/19225 jobs, 27867 rows, 181 failing
+  15700/19225 jobs, 28067 rows, 181 failing
+  15800/19225 jobs, 28267 rows, 181 failing
+  15900/19225 jobs, 28464 rows, 181 failing
+  16000/19225 jobs, 28618 rows, 181 failing
+  16100/19225 jobs, 28793 rows, 181 failing
+  16200/19225 jobs, 28955 rows, 181 failing
+  16300/19225 jobs, 29118 rows, 181 failing
+  16400/19225 jobs, 29290 rows, 181 failing
+  16500/19225 jobs, 29443 rows, 181 failing
+  16600/19225 jobs, 29619 rows, 181 failing
+  16700/19225 jobs, 29787 rows, 181 failing
+  16800/19225 jobs, 29987 rows, 181 failing
+  16900/19225 jobs, 30187 rows, 181 failing
+  17000/19225 jobs, 30387 rows, 181 failing
+  17100/19225 jobs, 30587 rows, 181 failing
+  17200/19225 jobs, 30787 rows, 181 failing
+  17300/19225 jobs, 30987 rows, 181 failing
+  17400/19225 jobs, 31187 rows, 181 failing
+  17500/19225 jobs, 31387 rows, 181 failing
+  17600/19225 jobs, 31587 rows, 181 failing
+  17700/19225 jobs, 31787 rows, 181 failing
+  17800/19225 jobs, 31958 rows, 181 failing
+  17900/19225 jobs, 32107 rows, 181 failing
+  18000/19225 jobs, 32259 rows, 181 failing
+  18100/19225 jobs, 32440 rows, 181 failing
+  18200/19225 jobs, 32593 rows, 181 failing
+  18300/19225 jobs, 32738 rows, 181 failing
+  18400/19225 jobs, 32905 rows, 181 failing
+  18500/19225 jobs, 33056 rows, 181 failing
+  18600/19225 jobs, 33206 rows, 181 failing
+  18700/19225 jobs, 33403 rows, 181 failing
+  18800/19225 jobs, 33603 rows, 181 failing
+  18900/19225 jobs, 33803 rows, 181 failing
+  19000/19225 jobs, 33992 rows, 181 failing
+  19100/19225 jobs, 34179 rows, 181 failing
+  19200/19225 jobs, 34367 rows, 181 failing
+
+rendered state census — rows 34417 (failing 181); {"statesRun":584,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,768,1023,1024,1440],"boundCells":76,"stateJobs":15192,"rangeJobs":3572,"closedJobs":461,"appRows":19225,"portalRows":15192,"runtimeSeconds":11104,"ruleKeys":22}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  text-overlap           176
+  svg-text-clipped       0
+  viewport-overflow      0
+  component-overflow     4
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           1
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         9448
+  action-hidden          9448
+  dismiss-close-control  720
+  dismiss-outside        1212
+  focus-trigger          1676
+  target-small           9448
+  widths-mismatch        640
+controls skipped by the action rules (R24 / R30: clipped away, out of the tab order, hidden from assistive technology): 1464 in 88 row(s)
+controls excused from target-small by a registry row's exemptTargets and its dated owner decision (Task 923 R33, D9): 53760 in 72 row(s)
+boxes excused from component-overflow by a registry row's exemptOverflow and its dated owner decision (Task 923 R33, D10): 52 in 32 row(s)
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 699
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1023
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1024
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1440
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 320
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 390
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 639
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 640
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 768
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 1023
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 1024
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 1440
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 320
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 390
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 639
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 640
+  mantine-primitives-lightboxview--default | mantine-primitives-lightboxview--default | 768
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 1023
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 1024
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 1440
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 320
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 390
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 639
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 640
+  mantine-primitives-lightboxview--swipe-track-mode | mantine-primitives-lightboxview--swipe-track-mode | 768
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 1023
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 1024
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 1440
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 320
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 390
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 639
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 640
+  mantine-primitives-lightboxview--swipe-track-mode-few-photos | mantine-primitives-lightboxview--swipe-track-mode-few-photos | 768
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 1023
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 1024
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 1440
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 320
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 390
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 639
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 640
+  mantine-primitives-mobilenavdrawer--agent | mantine-primitives-mobilenavdrawer--agent | 768
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 1023
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 1024
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 1440
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 320
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 390
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 639
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 640
+  mantine-primitives-mobilenavdrawer--default | mantine-primitives-mobilenavdrawer--default | 768
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 1023
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 1024
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 1440
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 320
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 390
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 639
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 640
+  mantine-primitives-savetocollectionbutton--saving | mantine-primitives-savetocollectionbutton--saving | 768
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 1023
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 1024
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 1440
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 320
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 390
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 639
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 640
+  patterns-mantine-adminuserprofiledialogsview--cancel | patterns-mantine-adminuserprofiledialogsview--cancel | 768
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 1023
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 1024
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 1440
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 320
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 390
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 639
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 640
+  patterns-mantine-adminuserprofiledialogsview--clear-entity | patterns-mantine-adminuserprofiledialogsview--clear-entity | 768
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 1023
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 1024
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 1440
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 320
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 390
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 639
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 640
+  patterns-mantine-adminuserprofiledialogsview--clear-row | patterns-mantine-adminuserprofiledialogsview--clear-row | 768
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 1023
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 1024
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 1440
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 320
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 390
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 639
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 640
+  patterns-mantine-adminuserprofiledialogsview--deactivate | patterns-mantine-adminuserprofiledialogsview--deactivate | 768
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 1023
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 1024
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 1440
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 320
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 390
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 639
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 640
+  patterns-mantine-adminuserprofiledialogsview--deactivate-loading | patterns-mantine-adminuserprofiledialogsview--deactivate-loading | 768
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 1023
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 1024
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 1440
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 320
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 390
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 639
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 640
+  patterns-mantine-adminuserprofiledialogsview--delete | patterns-mantine-adminuserprofiledialogsview--delete | 768
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 1023
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 1024
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 1440
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 320
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 390
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 639
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 640
+  patterns-mantine-adminuserprofiledialogsview--delete-loading | patterns-mantine-adminuserprofiledialogsview--delete-loading | 768
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 1023
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 1024
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 1440
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 320
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 390
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 639
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 640
+  patterns-mantine-adminuserprofiledialogsview--reactivate | patterns-mantine-adminuserprofiledialogsview--reactivate | 768
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 1023
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 1024
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 1440
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 320
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 390
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 639
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 640
+  patterns-mantine-adminuserprofiledialogsview--unsaved | patterns-mantine-adminuserprofiledialogsview--unsaved | 768
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 1023
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 1024
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 1440
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 320
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 390
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 639
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 640
+  patterns-mantine-authsheet--forgot-password | patterns-mantine-authsheet--forgot-password | 768
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1023
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1024
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1440
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 320
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 390
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 639
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 640
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 768
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1023
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1024
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1440
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 320
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 390
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 639
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 640
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 768
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 1023
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 1024
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 1440
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 320
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 390
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 639
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 640
+  patterns-mantine-authsheet--register | patterns-mantine-authsheet--register | 768
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 1023
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 1024
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 1440
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 320
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 390
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 639
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 640
+  patterns-mantine-authsheet--register-agent | patterns-mantine-authsheet--register-agent | 768
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 1023
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 1024
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 1440
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 320
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 390
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 639
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 640
+  patterns-mantine-authsheet--register-agent-add-company | patterns-mantine-authsheet--register-agent-add-company | 768
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 1023
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 1024
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 1440
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 320
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 390
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 639
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 640
+  patterns-mantine-authsheet--register-agent-add-company-logo | patterns-mantine-authsheet--register-agent-add-company-logo | 768
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 1023
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 1024
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 1440
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 320
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 390
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 639
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 640
+  patterns-mantine-avatarcropmodal--default | patterns-mantine-avatarcropmodal--default | 768
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 1023
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 1024
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 1440
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 320
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 390
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 639
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 640
+  patterns-mantine-avatarcropmodal--saving | patterns-mantine-avatarcropmodal--saving | 768
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 1023
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 1024
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 1440
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 320
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 390
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 639
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 640
+  patterns-mantine-createticketdialogview--complaint | patterns-mantine-createticketdialogview--complaint | 768
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 1023
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 1024
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 1440
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 320
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 390
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 639
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 640
+  patterns-mantine-createticketdialogview--complaint-same-user | patterns-mantine-createticketdialogview--complaint-same-user | 768
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 1023
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 1024
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 1440
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 320
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 390
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 639
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 640
+  patterns-mantine-createticketdialogview--empty | patterns-mantine-createticketdialogview--empty | 768
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 1023
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 1024
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 1440
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 320
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 390
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 639
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 640
+  patterns-mantine-createticketdialogview--errors | patterns-mantine-createticketdialogview--errors | 768
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 1023
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 1024
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 1440
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 320
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 390
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 639
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 640
+  patterns-mantine-createticketdialogview--support | patterns-mantine-createticketdialogview--support | 768
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 1023
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 1024
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 1440
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 320
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 390
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 639
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 640
+  patterns-mantine-currencydetaildialogview--default | patterns-mantine-currencydetaildialogview--default | 768
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 1023
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 1024
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 1440
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 320
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 390
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 639
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 640
+  patterns-mantine-currencydetaildialogview--default-currency | patterns-mantine-currencydetaildialogview--default-currency | 768
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 1023
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 1024
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 1440
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 320
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 390
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 639
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 640
+  patterns-mantine-currencydetaildialogview--inactive | patterns-mantine-currencydetaildialogview--inactive | 768
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 1023
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 1024
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 1440
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 320
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 390
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 639
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 640
+  patterns-mantine-currencyformdialogview--edit | patterns-mantine-currencyformdialogview--edit | 768
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 1023
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 1024
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 1440
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 320
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 390
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 639
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 640
+  patterns-mantine-currencyformdialogview--new | patterns-mantine-currencyformdialogview--new | 768
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 1023
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 1024
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 1440
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 320
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 390
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 639
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 640
+  patterns-mantine-currencyformdialogview--submitting | patterns-mantine-currencyformdialogview--submitting | 768
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 1023
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 1024
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 1440
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 320
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 390
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 639
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 640
+  patterns-mantine-inquirydetaildialogview--new | patterns-mantine-inquirydetaildialogview--new | 768
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 1023
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 1024
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 1440
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 320
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 390
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 639
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 640
+  patterns-mantine-inquirydetaildialogview--replies-load-failed | patterns-mantine-inquirydetaildialogview--replies-load-failed | 768
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 1023
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 1024
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 1440
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 320
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 390
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 639
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 640
+  patterns-mantine-inquirydetaildialogview--sending | patterns-mantine-inquirydetaildialogview--sending | 768
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 1023
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 1024
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 1440
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 320
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 390
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 639
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 640
+  patterns-mantine-inquirydetaildialogview--with-replies | patterns-mantine-inquirydetaildialogview--with-replies | 768
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1023
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1024
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 1440
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 640
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | 768
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 320
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 390
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 639
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 640
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | 767
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 320
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 390
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 639
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 640
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | 768
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~all-photos-3 | 768
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~all-photos-3 | 768
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 320
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 390
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 639
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 640
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos | 767
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 320
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 390
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 639
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 640
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos-3 | 768
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 320
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 390
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 639
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 640
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos | 767
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 320
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 390
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 639
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 640
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~all-photos-3 | 768
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 320
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 390
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 639
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 640
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos | 767
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 1023
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 1024
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 1440
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 320
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 390
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 639
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 640
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos-3 | 768
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 1023
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 1024
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 1440
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 320
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 390
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 639
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 640
+  patterns-mantine-listinggallerypattern--default | patterns-mantine-listinggallerypattern--default | 768
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 1023
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 1024
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 1440
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 320
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 390
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 639
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 640
+  patterns-mantine-listinginquirydialogview--empty | patterns-mantine-listinginquirydialogview--empty | 768
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 1023
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 1024
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 1440
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 320
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 390
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 639
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 640
+  patterns-mantine-listinginquirydialogview--filled | patterns-mantine-listinginquirydialogview--filled | 768
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 1023
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 1024
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 1440
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 320
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 390
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 639
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 640
+  patterns-mantine-listinginquirydialogview--pending | patterns-mantine-listinginquirydialogview--pending | 768
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 1023
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 1024
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 1440
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 320
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 390
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 639
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 640
+  patterns-mantine-listingpreviewdialogview--active | patterns-mantine-listingpreviewdialogview--active | 768
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 1023
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 1024
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 1440
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 320
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 390
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 639
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 640
+  patterns-mantine-listingpreviewdialogview--delete-confirm | patterns-mantine-listingpreviewdialogview--delete-confirm | 768
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 1023
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 1024
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 1440
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 320
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 390
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 639
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 640
+  patterns-mantine-listingpreviewdialogview--hidden | patterns-mantine-listingpreviewdialogview--hidden | 768
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 1023
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 1024
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 1440
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 320
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 390
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 639
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 640
+  patterns-mantine-listingpreviewdialogview--premium | patterns-mantine-listingpreviewdialogview--premium | 768
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 1023
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 1024
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 1440
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 320
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 390
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 639
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 640
+  patterns-mantine-listingpreviewdialogview--sold-status-actions | patterns-mantine-listingpreviewdialogview--sold-status-actions | 768
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1023
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1024
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1440
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 320
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 390
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 639
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 640
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 768
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 1023
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 1024
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 1440
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 320
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 390
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 639
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 640
+  patterns-mantine-pageeditordialogview--edit-published | patterns-mantine-pageeditordialogview--edit-published | 768
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 1023
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 1024
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 1440
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 320
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 390
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 639
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 640
+  patterns-mantine-pageeditordialogview--empty-locale-warning | patterns-mantine-pageeditordialogview--empty-locale-warning | 768
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 1023
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 1024
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 1440
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 320
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 390
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 639
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 640
+  patterns-mantine-pageeditordialogview--new | patterns-mantine-pageeditordialogview--new | 768
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 1023
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 1024
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 1440
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 320
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 390
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 639
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 640
+  patterns-mantine-pageeditordialogview--publish-body-required | patterns-mantine-pageeditordialogview--publish-body-required | 768
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 1023
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 1024
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 1440
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 320
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 390
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 639
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 640
+  patterns-mantine-pageeditordialogview--rich-content | patterns-mantine-pageeditordialogview--rich-content | 768
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 1023
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 1024
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 1440
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 320
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 390
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 639
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 640
+  patterns-mantine-pageeditordialogview--saving | patterns-mantine-pageeditordialogview--saving | 768
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 1023
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 1024
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 1440
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 320
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 390
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 639
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 640
+  patterns-mantine-pageeditordialogview--slug-error | patterns-mantine-pageeditordialogview--slug-error | 768
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 1023
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 1024
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 1440
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 320
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 390
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 639
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 640
+  patterns-mantine-premiumdialogview--custom-date | patterns-mantine-premiumdialogview--custom-date | 768
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 1023
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 1024
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 1440
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 320
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 390
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 639
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 640
+  patterns-mantine-premiumdialogview--not-premium | patterns-mantine-premiumdialogview--not-premium | 768
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 1023
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 1024
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 1440
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 320
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 390
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 639
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 640
+  patterns-mantine-premiumdialogview--premium | patterns-mantine-premiumdialogview--premium | 768
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 1023
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 1024
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 1440
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 320
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 390
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 639
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 640
+  patterns-mantine-premiumdialogview--premium-active | patterns-mantine-premiumdialogview--premium-active | 768
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 1023
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 1024
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 1440
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 320
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 390
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 639
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 640
+  patterns-mantine-premiumdialogview--saving | patterns-mantine-premiumdialogview--saving | 768
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 1023
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 1024
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 1440
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 320
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 390
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 639
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 640
+  patterns-mantine-providerformdialogview--api-key-revealed | patterns-mantine-providerformdialogview--api-key-revealed | 768
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 1023
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 1024
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 1440
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 320
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 390
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 639
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 640
+  patterns-mantine-providerformdialogview--edit | patterns-mantine-providerformdialogview--edit | 768
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 1023
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 1024
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 1440
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 320
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 390
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 639
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 640
+  patterns-mantine-providerformdialogview--new | patterns-mantine-providerformdialogview--new | 768
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 1023
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 1024
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 1440
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 320
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 390
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 639
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 640
+  patterns-mantine-providerformdialogview--submitting | patterns-mantine-providerformdialogview--submitting | 768
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 1023
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 1024
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 1440
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 320
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 390
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 639
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 640
+  patterns-mantine-reportdetaildialogview--delete-confirm | patterns-mantine-reportdetaildialogview--delete-confirm | 768
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 1023
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 1024
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 1440
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 320
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 390
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 639
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 640
+  patterns-mantine-reportdetaildialogview--full-management | patterns-mantine-reportdetaildialogview--full-management | 768
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 1023
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 1024
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 1440
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 320
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 390
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 639
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 640
+  patterns-mantine-reportdetaildialogview--owner-missing | patterns-mantine-reportdetaildialogview--owner-missing | 768
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 1023
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 1024
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 1440
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 320
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 390
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 639
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 640
+  patterns-mantine-reportdetaildialogview--pending | patterns-mantine-reportdetaildialogview--pending | 768
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 1023
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 1024
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 1440
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 320
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 390
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 639
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 640
+  patterns-mantine-reportdetaildialogview--saving | patterns-mantine-reportdetaildialogview--saving | 768
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 1023
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 1024
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 1440
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 320
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 390
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 639
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 640
+  patterns-mantine-reportdetaildialogview--terminal-reopen | patterns-mantine-reportdetaildialogview--terminal-reopen | 768
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 1023
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 1024
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 1440
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 320
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 390
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 639
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 640
+  patterns-mantine-savesearchbutton--pending | patterns-mantine-savesearchbutton--pending | 768
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 1023
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 1024
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 1440
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 320
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 390
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 639
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 640
+  patterns-mantine-ticketdetaildialogview--complaint | patterns-mantine-ticketdetaildialogview--complaint | 768
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 1023
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 1024
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 1440
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 320
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 390
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 639
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 640
+  patterns-mantine-ticketdetaildialogview--support | patterns-mantine-ticketdetaildialogview--support | 768
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 1023
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 1024
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 1440
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 320
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 390
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 639
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 640
+  patterns-mantine-ticketdetaildialogview--updating | patterns-mantine-ticketdetaildialogview--updating | 768
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 1023
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 1024
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 1440
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 320
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 390
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 639
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 640
+  patterns-mantine-ticketdetaildialogview--with-timeline | patterns-mantine-ticketdetaildialogview--with-timeline | 768
+widths states: 223; each measured at its in-range bound and at the first width outside it (rows per locale): 223 complete, 0 with a missing cell
+  mantine-primitives-headerview--default~akalba-krasniqi {"min":768}: in-range 768px x4; first outside 767px x4
+  mantine-primitives-rangedatepicker--default~select-dates {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-rangedatepicker--single-date-selected~05-02-2026 {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-relativetime--default {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--admin-menu-open {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--default~akalba-krasniqi {"max":639}: in-range 639px x4; first outside 640px x4
+  mantine-primitives-usermenu--default~akalba-krasniqi-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--default~bhblerim-hoxha {"max":639}: in-range 639px x4; first outside 640px x4
+  mantine-primitives-usermenu--default~bhblerim-hoxha-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  mantine-primitives-usermenu--default~dbdriton-berisha {"max":639}: in-range 639px x4; first outside 640px x4
+  mantine-primitives-usermenu--default~dbdriton-berisha-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-admincurrenciesview--default~all {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--default~eur {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~eur-euroactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrenciesview--default~usd {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrenciesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrencytabs--default~all {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~alll-albanian-lekdefaultacti {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrencytabs--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrencytabs--default~eur {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~eur-euroactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admincurrencytabs--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrencytabs--default~usd {"min":768}: in-range 768px x4; first outside 767px x4
+  patterns-mantine-admincurrencytabs--default~usd-us-dollarinactive {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-admindashboardview--activity-empty-period~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-empty-period~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--activity-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--activity-stale~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--activity-stale~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--adm-02-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--adm-02-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--adm-09-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--adm-09-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--all-queues-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--all-queues-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--cities-only-other~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--cities-only-other~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--no-location-requests~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--no-location-requests~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admindashboardview--trends-error~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admindashboardview--trends-error~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--long-subject~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--long-subject~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admininquiriesview--unscoped~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admininquiriesview--unscoped~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--audit-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--default~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--empty~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--filtered-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--filtered-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--filtered-pending~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--paginated~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--paginated~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--paginated~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--premium-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--premium-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--premium-tab~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--visible-filter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--visible-filter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--visible-filter~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminpageframe--form~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--form~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--narrow~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--narrow~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--page~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--page~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--panel~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--panel~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--shell-fixed-gutter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--shell-fixed-gutter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpageframe--shell~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpageframe--shell~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--deleting~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--deleting~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--migration-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--migration-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--all-allowed~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--all-allowed~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--audit-empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--audit-empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--audit-unavailable~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--audit-unavailable~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpermissionsview--saving~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpermissionsview--saving~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--all-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--all-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminshell--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--drawer-open {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminshell--drawer-open~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--default~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminsupportview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--empty~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminsupportview--unassigned-landing~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminsupportview--unassigned-landing~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminsupportview--unassigned-landing~unassigned {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminuserprofileview--create~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--create~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit-blocked~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit-blocked~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit-errors~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit-errors~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--edit~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--edit~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--saving~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--saving~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-agent~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-agent~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-blocked~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-blocked~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-location-request~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-location-request~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view-no-history-controls~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view-no-history-controls~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserprofileview--view~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserprofileview--view~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--location-filter-removed~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--location-filter-removed~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--location-filter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--location-filter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--paginated~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--paginated~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminuserstable--verified-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminuserstable--verified-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-appshellfoundation--default~toggle-navigation {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingdetailview--archived-listing~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing-converted~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing-not-reduced~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--public-listing~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--staff-preview-published~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingdetailview--staff-preview-unpublished~all-photos {"max":767}: in-range 767px x4; first outside 768px x4
+  patterns-mantine-listingsshellview--closed-empty~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-empty~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-empty~newest-first {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingsshellview--closed-empty~newest-first-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-tab~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-tab~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--closed-tab~newest-first {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingsshellview--closed-tab~newest-first-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--default~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--default~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--default~newest-first {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingsshellview--default~newest-first-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--empty~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--empty~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--empty~newest-first {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingsshellview--empty~newest-first-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--loading-more~all-locations {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--loading-more~all-types {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-listingsshellview--loading-more~newest-first {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-listingsshellview--loading-more~newest-first-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--default~history {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--default~history-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--default~insert {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--default~insert-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--default~paragraph {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--default~paragraph-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--default~text-format {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--default~text-format-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-content~history {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-content~history-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-content~insert {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-content~insert-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-content~paragraph {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-content~paragraph-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-content~text-format {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-content~text-format-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-error~history {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-error~history-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-error~insert {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-error~insert-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-error~paragraph {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-error~paragraph-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-richtexteditor--with-error~text-format {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-richtexteditor--with-error~text-format-wide {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--no-results~requester {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--results~requester {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-userpickerfieldview--searching~requester {"min":640}: in-range 640px x4; first outside 639px x4
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 3 (recovered 3, still failing 0)
+  patterns-mantine-admindashboardview--all-queues-zero | patterns-mantine-admindashboardview--all-queues-zero~about-the-activity-series | uk | 320 :: recovered :: first failure: render did not reach finished/errored within 20s
+  patterns-mantine-adminuserstable--location-filter | patterns-mantine-adminuserstable--location-filter~open-menu | uk | 320 :: recovered :: first failure: render did not reach finished/errored within 20s
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | en | 1023 :: recovered :: first failure: resource failed: script /assets/leaflet-src-CD2J-Hg8.js (net::ERR_ABORTED)
+jobs that hit the settle bound (R31: 8000ms; the page was measured as it was), by Story x state: 0 job(s) in 0 Story x state
+Story x state x root with a violation: 24
+  patterns-mantine-dashboardperiodcontrol--custom-range-too-long | closed | app :: error-screen (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~add-to-favorites | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~modern-apartment-in-tirana | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~save-to-collection | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailpattern--default | patterns-mantine-listingdetailpattern--default~share-listing | app :: component-overflow (1 cell(s))
+  patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~call | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~send-message | app :: text-overlap (4 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-converted | patterns-mantine-listingdetailview--public-listing-converted~write-on-whatsapp | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~call | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~send-message | app :: text-overlap (4 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing-not-reduced | patterns-mantine-listingdetailview--public-listing-not-reduced~write-on-whatsapp | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~call | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~send-message | app :: text-overlap (4 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--public-listing | patterns-mantine-listingdetailview--public-listing~write-on-whatsapp | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~call | app :: text-overlap (5 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-published | patterns-mantine-listingdetailview--staff-preview-published~write-on-whatsapp | app :: text-overlap (5 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~call | app :: text-overlap (5 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~share-listing | app :: text-overlap (12 cell(s))
+  patterns-mantine-listingdetailview--staff-preview-unpublished | patterns-mantine-listingdetailview--staff-preview-unpublished~write-on-whatsapp | app :: text-overlap (5 cell(s))
+
+rows 34417 = 19225 app-root rows + 15192 portal-root rows; 15192 state jobs + 3572 out-of-range widths jobs + 461 closed jobs; 3 retried job(s); runtime 11104s
+end 2026-10-19T18:44:17.0388527Z
+EXIT_CODE=1

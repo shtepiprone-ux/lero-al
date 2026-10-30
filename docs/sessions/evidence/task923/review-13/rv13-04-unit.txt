@@ -1,0 +1,10 @@
+cmd npx vitest run scripts/__tests__/rendered-state-census.test.ts
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  1 passed (1)
+      Tests  38 passed (38)
+   Start at  21:07:46
+   Duration  414ms (transform 107ms, setup 118ms, import 120ms, tests 24ms, environment 0ms)
+
+EXIT_CODE=0

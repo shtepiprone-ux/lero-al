@@ -1,0 +1,39 @@
+Task 923 Review 66 (Opus): R175 (f) rerun independently
+platform: MINGW64_NT-10.0-26300 3.6.5-22c95533.x86_64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+command: npx vitest run src/modules/admin/lib/__tests__/userLocation.test.ts src/app/admin/users/__tests__/adminUserGone.security.test.ts src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx --reporter=verbose
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/admin/lib/__tests__/userLocation.test.ts > userLocation > a city with a region carries the region as parent 2ms
+ ✓ src/modules/admin/lib/__tests__/userLocation.test.ts > userLocation > a city with no region has a null parent 0ms
+ ✓ src/modules/admin/lib/__tests__/userLocation.test.ts > userLocation > a city whose region is not in the list has a null parent 0ms
+ ✓ src/modules/admin/lib/__tests__/userLocation.test.ts > userLocation > no location id, or an id that is not in the list, gives null 0ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 3322ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 1ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields 835ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T1 (server error) — the banner shows the server error and the save_error toast fires 566ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both 985ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10 — a status-only change enables Save and sends the new status (O84-8) 581ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T10b — choosing the stored status again makes the form clean, so Save is disabled 924ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T3 — deactivate: confirm is disabled for a blank reason; with a reason it calls deactivateUser(id, reason) 182ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T4 — delete: the dialog opens first; confirm deletes and redirects; cancel deletes nothing 368ms
+stdout | src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere
+[UnsavedChanges] route_change_attempt { source: 'toolbar_button', href: '/admin/users' }
+[UnsavedChanges] navigation_blocked { type: 'toolbar_button', href: '/admin/users' }
+
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T5 — clear a history row calls clearHistoryRow; a { cleared: 0 } result shows the no-op info toast 153ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T6 — a dirty edit and the back button open the unsaved dialog; "stay" keeps the page and navigates nowhere 463ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T7 — create with an invalid email shows the inline email error and never calls createAdminUser 718ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T8 — a non-admin sees no deactivate/delete actions, and the account-type select is disabled 235ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T9 — every edit control is reachable by its label 283ms
+ ✓ src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx > AdminUserProfile (T1–T9) > T11 — view mode shows the stored city and its region 124ms
+
+ Test Files  3 passed (3)
+      Tests  21 passed (21)
+   Start at  20:30:01
+   Duration  10.56s (transform 1.93s, setup 305ms, import 2.96s, tests 9.75s, environment 2.03s)
+
+exit code: 0

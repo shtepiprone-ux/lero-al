@@ -1,0 +1,17 @@
+# rv14-05 (Opus) 2026-10-28T19:17:33.424Z win32 node v22.22.3 cwd C:\Claude_Code_Projects\lero-al
+session role: [{"current_user":"postgres","session_user":"postgres","read_only":"on"}]
+PREFLIGHT 01 condition (absent = true): [{"absent":true}]
+any function named account_has_password (rollback namesake): []
+roles of the grants exist: [{"rolname":"anon"},{"rolname":"authenticated"},{"rolname":"postgres"},{"rolname":"service_role"}]
+auth.users.encrypted_password: [{"data_type":"character varying"}]
+the function owner (the SQL editor role postgres) can read auth.users: [{"postgres_select":true}]
+default privileges on new functions in public (why the revoke is needed): [{"grantor":"supabase_admin","acl":"{postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}"},{"grantor":"postgres","acl":"{postgres=X/postgres}"}]
+precedent end_user_sessions: definer, search_path, grants: [{"prosecdef":true,"proconfig":["search_path=public, pg_temp"],"anon":false,"authenticated":false,"service_role":true}]
+the body over all accounts (has_password -> n): [{"has_password":false,"n":2},{"has_password":true,"n":7}]
+POSTCHECK 04 expression on the body itself (disagreements, expect 0): [{"n":0}]
+an unknown id gives no row (null): [{"answer":null}]
+transaction rolled back; nothing written
+a12-account-has-password.sql: on disk LF; LF sha256 68870d9f27346e248968f0f92a06d2a9f7d3b930a540974eb9146eedb2ce9dfe md5 9a52ded07455a882a66db421361d4a5c; CRLF sha256 815faef2096cc37320a2593008d44209f401d1f1a0f739ccc2ff2ad563105f29 md5 bac6371184137a04928715c0ddc2a0dc
+a12-account-has-password.dryrun.sql: on disk LF; LF sha256 f33b7723da5d1d4a74f32f08ca613f8959d67b1e9270afe5f7d4478a0707f569 md5 434266d498569e2800a3ae3c3d3e10ff; CRLF sha256 6f4ba7a9bf40bbe97f07d3745c205fbe953a753895f6a28f4a4860ab65f9699a md5 29091250ed87595bf595926f73d29542
+a12-account-has-password-rollback.sql: on disk LF; LF sha256 1b7882a03fd44a3929c8aa543437cd770a9ef59da6363b40e059bfb326164a8f md5 0fc9383f2d404011f94db1f4ecdc1213; CRLF sha256 bf3a99bdf3bcd4036696a420aa2fae94528604c5b1bf92edc3875ffd59a5150f md5 a2f9e39ca7fcb5805fa757a18a42e296
+exit code: 0

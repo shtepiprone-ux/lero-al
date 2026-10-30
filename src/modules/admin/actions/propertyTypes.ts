@@ -2,22 +2,18 @@
 
 import { revalidateTag } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getUser } from '@/lib/auth/server'
-import { createClient } from '@/lib/supabase/server'
+import { checkStaff } from '@/lib/auth/staff'
 import { PROPERTY_TYPES_CACHE_TAG } from '@/modules/admin/lib/propertyTypes'
 import type { DBPropertyType } from '@/types/database'
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 
 async function assertAdmin() {
-  const user = await getUser()
-  if (!user) return { error: 'unauthenticated' as const }
-  const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
-  if (profile?.role !== 'admin' && profile?.role !== 'moderator') {
-    return { error: 'forbidden' as const }
-  }
-  return { userId: user.id }
+  // one guard for every staff action (Task 923 R71 (k)): the decision lives in `@/lib/auth/staff`, this keeps only the answer shape of this file
+  // Task 923 R75: a moderator needs the `catalog.manage` key (currencies, exchange providers, property types); an administrator holds every key
+  const staff = await checkStaff({ permission: 'catalog.manage' })
+  if (!staff.ok) return { error: staff.reason }
+  return { userId: staff.userId }
 }
 
 // ── Slug normalization ────────────────────────────────────────────────────────
@@ -71,7 +67,7 @@ export async function createPropertyType(
   if (error) {
     if (error.code === '23505') return { error: 'Slug already exists', code: 'duplicate_slug' }
     console.error('createPropertyType failed', { error })
-    return { error: error.message }
+    return { error: 'create_failed' }
   }
 
   revalidateTag(PROPERTY_TYPES_CACHE_TAG)
@@ -83,7 +79,7 @@ export async function createPropertyType(
 export async function updatePropertyType(
   id: number,
   input: PropertyTypeInput,
-): Promise<{ error?: string; code?: 'duplicate_slug' }> {
+): Promise<{ error?: string; code?: 'duplicate_slug' | 'has_listings' | 'count_failed' }> {
   const auth = await assertAdmin()
   if ('error' in auth) return { error: auth.error }
 
@@ -102,6 +98,18 @@ export async function updatePropertyType(
     ? normalizeSlug(input.slug.trim())
     : (current?.slug ?? normalizeSlug(input.name_sq))
 
+  // A listing refers to its type by slug. Renaming the slug of a type that listings use would leave them pointing at nothing (Task 923 Revision 7); the code's own
+  // comment above promised this protection, the check was missing.
+  if (current?.slug && newSlug !== current.slug) {
+    const { count, error: countError } = await db.from('listings').select('*', { count: 'exact', head: true }).eq('property_type', current.slug)
+    // Task 923 R71 (i): a count that cannot be read is not "no listings": the change is refused (it used to go ahead and could orphan the listings)
+    if (countError || count === null) {
+      console.error('updatePropertyType: listing count failed', { code: countError?.code, id })
+      return { error: 'count_failed', code: 'count_failed' }
+    }
+    if ((count ?? 0) > 0) return { error: `Cannot change the slug: ${count} listing${count === 1 ? '' : 's'} use this type`, code: 'has_listings' }
+  }
+
   const { error } = await db
     .from('property_types')
     .update({
@@ -118,7 +126,7 @@ export async function updatePropertyType(
   if (error) {
     if (error.code === '23505') return { error: 'Slug already exists', code: 'duplicate_slug' }
     console.error('updatePropertyType failed', { error, id })
-    return { error: error.message }
+    return { error: 'update_failed' }
   }
 
   revalidateTag(PROPERTY_TYPES_CACHE_TAG)
@@ -137,7 +145,7 @@ export async function togglePropertyTypeActive(id: number, isActive: boolean): P
     .update({ is_active: isActive, updated_at: new Date().toISOString() })
     .eq('id', id)
 
-  if (error) return { error: error.message }
+  if (error) { console.error('togglePropertyTypeActive failed', { code: error.code }); return { error: 'update_failed' } }
   revalidateTag(PROPERTY_TYPES_CACHE_TAG)
   return {}
 }
@@ -146,7 +154,7 @@ export async function togglePropertyTypeActive(id: number, isActive: boolean): P
 
 export async function deletePropertyType(
   id: number,
-): Promise<{ error?: string; code?: 'has_listings' | 'not_found'; listingCount?: number }> {
+): Promise<{ error?: string; code?: 'has_listings' | 'not_found' | 'count_failed'; listingCount?: number }> {
   const auth = await assertAdmin()
   if ('error' in auth) return { error: auth.error }
 
@@ -162,10 +170,16 @@ export async function deletePropertyType(
   if (!pt) return { error: 'Not found', code: 'not_found' }
 
   // Dependency check: count listings using this property type
-  const { count } = await db
+  const { count, error: countError } = await db
     .from('listings')
     .select('*', { count: 'exact', head: true })
     .eq('property_type', pt.slug)
+
+  // Task 923 R71 (i): a count that cannot be read is not "no listings": the delete is refused
+  if (countError || count === null) {
+    console.error('deletePropertyType: listing count failed', { code: countError?.code, id })
+    return { error: 'count_failed', code: 'count_failed' }
+  }
 
   if ((count ?? 0) > 0) {
     return {
@@ -178,7 +192,7 @@ export async function deletePropertyType(
   const { error } = await db.from('property_types').delete().eq('id', id)
   if (error) {
     console.error('deletePropertyType failed', { error, id })
-    return { error: error.message }
+    return { error: 'delete_failed' }
   }
 
   revalidateTag(PROPERTY_TYPES_CACHE_TAG)
@@ -188,6 +202,9 @@ export async function deletePropertyType(
 // ── Fetch all (for admin table — includes inactive) ───────────────────────────
 
 export async function getAllPropertyTypesAdmin(): Promise<DBPropertyType[]> {
+  // Security (Task 923 Revision 7, S16/S17): every exported function of this file is a public endpoint, so the read is guarded like the writes.
+  // Without it the service-role query below answered ANY caller (here with the providers' api_key).
+  if ('error' in (await assertAdmin())) return []
   const db = createAdminClient()
   const { data } = await db
     .from('property_types')

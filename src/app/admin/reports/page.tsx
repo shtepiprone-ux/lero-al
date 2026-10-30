@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { hasPermission } from '@/lib/auth/permissions'
@@ -14,6 +15,8 @@ export default async function AdminReportsPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const sp = await searchParams
   const initialFilter = parseReportStatusParam(sp.status)
   const locale = await getAdminLocale()
@@ -36,7 +39,7 @@ export default async function AdminReportsPage({
     .limit(200)
 
   return (
-    <AdminPageFrame width="page">
+    <AdminPageFrame width="shell">
       <AdminPageHeader
         title={t('reports_title')}
         subtitle={t('reports_subtitle', { count: count ?? 0 })}

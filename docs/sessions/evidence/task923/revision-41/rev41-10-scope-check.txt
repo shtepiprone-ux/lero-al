@@ -1,0 +1,6 @@
+contract: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md stage=planned executionStatus=ready scope=329 paths
+src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx isProductPath=true isPolicyPath=false inScope=true
+every R138 write in scope: true

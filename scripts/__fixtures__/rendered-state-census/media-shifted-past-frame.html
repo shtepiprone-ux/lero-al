@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: media-shifted-past-frame</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); }
+  .dialog { position: fixed; left: 16px; right: 16px; top: 48px; padding: 16px; background: #fff; border-radius: 8px; }
+  .dialog h2 { margin: 0 0 8px; font-size: 18px; }
+  .dialog .footer { margin-top: 16px; display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 3 self-test fixture "media-shifted-past-frame". R19 (b), planted: an image the size of its frame translated 30px, so it no longer covers the frame: part of the frame is empty and the picture is cut. It fails component-overflow on the portal root. -->
+<div id="storybook-root">
+  <button id="open" type="button">Open dialog</button>
+  <p>Fixture page, not a product Story.</p>
+  
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-media-shifted-past-frame","story":"media-shifted-past-frame","open":{"kind":"click","selector":"#open"},"portals":1,"focus":"trap","dismiss":["escape","close-control","outside"],"trigger":"#open","closeSelector":"[data-census-close]"}</script>
+<script>
+(function () {
+  var portal = null;
+  var opener = document.getElementById('open');
+  if (!opener) return;
+  function close() {
+    if (!portal) return;
+    portal.remove();
+    portal = null;
+    opener.focus();
+  }
+  function open() {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="backdrop"></div>' +
+      '<div class="dialog" role="dialog" aria-modal="true">' +
+      '<button type="button" data-census-close aria-label="Close" style="float:right">&times;</button>' +
+      '<h2>Dialog title</h2><p>Short body text.</p>' + "<div style=\"overflow:hidden;position:relative;width:200px;height:80px;background:#eee;margin:8px 0\"><img alt=\"\" src=\"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==\" style=\"display:block;position:absolute;left:0;top:0;width:200px;height:80px;transform:translateX(30px)\"></div>" +
+      '<div class="footer"><button type="button">Save</button><button type="button">Cancel</button></div></div>';
+    document.body.appendChild(portal);
+    portal.querySelector('.backdrop').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').focus();
+  }
+  opener.addEventListener('click', open);
+  document.addEventListener('keydown', function (e) {
+    if (!portal) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = Array.prototype.slice.call(portal.querySelectorAll('button'));
+      var first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!portal.contains(a)) { first.focus(); e.preventDefault(); }
+      else if (e.shiftKey && a === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && a === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+ "cityAndVillageRows": 180,
+ "positionOf151ByName": "1",
+ "location151": [
+  {
+   "id": 151,
+   "type": "village",
+   "name_al": "Adriatik - Durrës",
+   "region_id": null,
+   "parent_id": null
+  }
+ ],
+ "policies": [
+  {
+   "policyname": "Locations are viewable by everyone",
+   "cmd": "SELECT",
+   "roles": "{public}",
+   "qual": "true"
+  },
+  {
+   "policyname": "Only admins can modify locations",
+   "cmd": "ALL",
+   "roles": "{public}",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))"
+  },
+  {
+   "policyname": "blocked_account_no_select",
+   "cmd": "SELECT",
+   "roles": "{authenticated}",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)"
+  }
+ ],
+ "columns": [
+  "id",
+  "name_al",
+  "name_en",
+  "slug",
+  "type",
+  "parent_id",
+  "region_id",
+  "lat",
+  "lng",
+  "image_url",
+  "is_featured",
+  "display_order"
+ ]
+}

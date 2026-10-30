@@ -1,0 +1,46 @@
+# r55-02 (R167): the break NO_PENDING_STATUS of SEC-X-SRV-RESTRICTED-PAGE-DENY
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+
+## (b) command: node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --check-anchors
+started: 2026-10-29T11:19:55.5830684Z
+--- output ---
+ok        SEC-D29-SRV-DENY src/lib/auth/middleware.ts (1)
+ok        SEC-D29-SRV-ALLOW src/lib/auth/middleware.ts (1)
+ok        SEC-DEL-SRV-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-SRV-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-ALLOW src/lib/account/deleteAccount.ts (1)
+ok        SEC-DEL-INT-DENY src/modules/admin/actions/index.ts (1)
+ok        SEC-DEL-INT-SELF src/modules/cabinet/actions/index.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-VIEWER-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-DENY src/lib/auth/requireViewer.ts (1)
+ok        SEC-D27-INT-STAFF-ALLOW src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-STATUS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-LOCATIONS-PERM src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-CONTACT-LIFECYCLE src/modules/listings/actions/submitListingInquiry.ts (1)
+ok        SEC-X-SRV-SLUG-SCRIPT src/lib/security/inputs.ts (1)
+ok        SEC-X-SRV-AVATAR-RANK src/app/api/upload-avatar/route.ts (1)
+ok        SEC-X-SRV-ADMINPAGE-GUARD src/lib/auth/staff.ts (1)
+ok        SEC-X-SRV-OWNER-DELETE src/modules/listings/actions/deleteListing.ts (1)
+ok        SEC-X-SRV-EDIT-MODERATION src/modules/listings/actions/updateListing.ts (1)
+ok        SEC-X-SRV-MOD-KEYS src/modules/admin/actions/index.ts (1)
+ok        SEC-X-SRV-SLUG-PLAIN src/modules/listings/lib/generateSlug.ts (1)
+ok        SEC-X-SRV-CONTACT-BOT-DENY src/lib/captcha/verifyTurnstile.ts (1)
+ok        SEC-X-SRV-RESTRICTED-PAGE-DENY src/app/[locale]/listings/[slug]/page.tsx (1)
+ok        SEC-X-SRV-CONTACT-SESSION-DENY src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-INT-REVEAL-LIMIT src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-IP src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-X-SRV-REVEAL-FAILCLOSED src/modules/listings/actions/contactGateway.ts (1)
+ok        SEC-DB-X-AVATARS-STORAGE-ALLOW src/app/api/upload-avatar/route.ts (1)
+database breaks (db-break.cjs): 21
+--- exit code: 0 ---
+
+## (c) command: node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --source SEC-X-SRV-RESTRICTED-PAGE-DENY  (unit case; no environment variables)
+started: 2026-10-29T11:19:55.6590967Z
+--- output ---
+PROVED     SEC-X-SRV-RESTRICTED-PAGE-DENY [unit] baseline=passed mutant=failed kind=assertion restored=passed
+
+1 of 1 sensitivity runs proved.
+--- exit code: 0 ---

@@ -1,0 +1,39 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-sha.mjs scripts/rendered-state-census/registry.mjs scripts/rendered-state-census/in-page.mjs scripts/rendered-state-census/runner.mjs scripts/rendered-state-census/verify.mjs scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html scripts/rendered-interaction-states.json scripts/__tests__/rendered-state-census.test.ts src/modules/cabinet/components/ProfileTab.tsx src/modules/cabinet/components/CabinetEmailChangeSection.tsx src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx src/modules/cabinet/lib/emailChangeErrors.ts src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts src/modules/cabinet/actions/index.ts src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/actions/__tests__/emailChange.security.test.ts messages/sq.json messages/en.json messages/uk.json messages/it.json scripts/mantine-migration-scope.json scripts/ui-contract-registry.json tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json scripts/rendered-state-census/verify.mjs src/modules/cabinet/components/CabinetEmailChangeSection.tsx src/modules/cabinet/lib/emailChangeErrors.ts src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+date: 2026-10-23T18:27:03.576Z
+--- output ---
+5acf3e8df6c02095962009283bce2c01528d87fe4967c79a89cf87c088f408f8  scripts/rendered-state-census/registry.mjs
+b439a14a132c579b5fa01424a413dbd29c231747c62fffbdec3288db5091eef2  scripts/rendered-state-census/in-page.mjs
+f422760851c835b95b548ca40200ea0985dae85ef2ea588dc277b4e64f7df44d  scripts/rendered-state-census/runner.mjs
+9b8aa561114a32d93de281cf3c0331d96b5cfeb353012f17755b24965e10dd1b  scripts/rendered-state-census/verify.mjs
+ccfc91fd61394e1de2224fdfd2bf1e04b0373930e676a6b8e9835fa14f7db5f9  scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html
+343e5a8c94082ff2dd2e92aeac15eb16c29e85193373f5e1008712fb280a4dd7  scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html
+e6704201985cef3732ab03ed308d8ea9f55deedd879aebf61c12275b268468a5  scripts/rendered-interaction-states.json
+600ce5606528c23a066dd8d24e18ef7fbe39480420f37108c2751e6c3c50a090  scripts/__tests__/rendered-state-census.test.ts
+40222b7b134256e865361ba68cf649a5c85b2e23c188a697e45540e4561991a1  src/modules/cabinet/components/ProfileTab.tsx
+b383509d0f502d646cc1499e03aa63db97ca537c45ef4d82157049faa641cbea  src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+2cfd7b863375eef0266c24910cae0d846442c60b95e620bfa7fafc0611f13f8b  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+13ecee908630ada38d944dabed8d6b718a3c665c9ac6eaf659bf3745c015097c  src/modules/cabinet/lib/emailChangeErrors.ts
+bd217a484e0ad951c3b2f1d984aa371a55b999003c70cd82e696d817227cb203  src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+e5c09f5c599a972392723418e0ab9916fcf591f1e55070be566a575b2b95a21a  src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx
+1c3b6cecbafd806436bc7e3d5819d75719a491e4022950e3864e23dd5c99faf5  src/modules/cabinet/lib/__tests__/emailChangeErrors.security.test.ts
+c5da90492b2e34093c2e7c5522c677577cb0830daa841ee8db6f5e6520f032e0  src/modules/cabinet/actions/index.ts
+fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+5a8d5a6767c9c4f85474056fe725b82519e34baba3076d8a66a1183cf0cad206  src/modules/cabinet/actions/__tests__/emailChange.security.test.ts
+fefd66862ec5866a31dc2ff18a6c1984590fe91691fad40c3e1716beb83ab66a  messages/sq.json
+e96fe5accd444a1a26f38d4f94a9efb9e5912e635d7d2a2276b9bf7097907e30  messages/en.json
+c6728e1787f35f95d84e3d6c9072f7fb7083f59d742b24512fbc5f7289204d5a  messages/uk.json
+1e3ec049e6e1b27825efc419b5fe601a99cc57c37a36d27e7af4b9011633a422  messages/it.json
+9d83748ff66d755887939ef6a2c80aaf53b8eaff7b876ffb278938a8f5b8ebea  scripts/mantine-migration-scope.json
+7cd8be47aebe2c9c6f597800d23f7e54b4a8bbed780fda0bc9c51c2cd90e253f  scripts/ui-contract-registry.json
+237362d96360d1cd2ecb76683a0d01450460480b684eb2768a89dd088ee44535  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+9b8aa561114a32d93de281cf3c0331d96b5cfeb353012f17755b24965e10dd1b  scripts/rendered-state-census/verify.mjs
+b383509d0f502d646cc1499e03aa63db97ca537c45ef4d82157049faa641cbea  src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+13ecee908630ada38d944dabed8d6b718a3c665c9ac6eaf659bf3745c015097c  src/modules/cabinet/lib/emailChangeErrors.ts
+2cfd7b863375eef0266c24910cae0d846442c60b95e620bfa7fafc0611f13f8b  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+
+
+EXIT_CODE=0

@@ -1,0 +1,7 @@
+# rv13-12: Opus, the lines Amendment 11 changed, as committed before it (HEAD e67bfb315 holds layout.tsx before R56's edit)
+platform: win32 10.0.26300
+cwd: C:\Claude_Code_Projects\lero-al
+command: git show HEAD:src/app/layout.tsx | sed -n '55,56p'
+        <Analytics />
+        <SpeedInsights />
+exit code: 0

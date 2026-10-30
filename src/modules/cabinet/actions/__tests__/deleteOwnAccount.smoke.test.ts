@@ -2,20 +2,19 @@
  * Guard smoke — deleteOwnAccount + consumeEmailChangeToken (Task 441 / Epic RS Slice 2).
  *
  * Covers registry P0 auth lifecycle rows:
- *   - Self-delete + email reuse: hard-delete frees the auth identity (auth.admin.deleteUser
- *     called) + no false success on partial failure.
+ *   - Self-delete + email reuse: the one complete deletion (`deleteAccount`) frees the auth identity
+ *     + no false success when it fails.
  *   - Email change: token consumed → email updated; expired/consumed/invalid token → typed error.
  *
  * Key invariants:
- *   - deleteOwnAccount: calls auth.admin.deleteUser (frees email for reuse).
- *     If auth-delete fails, returns `profile_deleted_auth_failed` NOT success.
- *     If profile-delete fails, returns `delete_failed` and DOES NOT call auth.admin.deleteUser.
+ *   - deleteOwnAccount: after the re-authentication it calls `deleteAccount(userId, { reason: 'self' })` once (Task 923 R142: the Auth user, the profile, the listings and
+ *     their files go together, which frees the email for reuse). If `deleteAccount` fails the answer is `delete_failed`, never success; before the proof nothing is called.
  *   - consumeEmailChangeToken: consumed_at check prevents double-use; expires_at check
  *     prevents stale tokens; auth.admin.updateUserById called on success.
  *
  * Planted-violation proof (deleteOwnAccount):
- *   Stub auth.admin.deleteUser to fail AND stub the action to return {} anyway →
- *   expect(result).toEqual({ error: 'profile_deleted_auth_failed' }) FAILS.
+ *   Stub `deleteAccount` to fail AND stub the action to return {} anyway →
+ *   expect(result).toEqual({ error: 'delete_failed' }) FAILS.
  *   Revert → PASS.
  *
  * Planted-violation proof (consumeEmailChangeToken):
@@ -35,10 +34,13 @@ vi.mock('next/headers', () => ({
   cookies: vi.fn().mockResolvedValue({ getAll: () => [], set: vi.fn() }),
 }))
 
-// next/server — for createServerClient (used in changeCabinetPassword only, not under test)
+// The SDK's verify client (Task 923 R70 (a), R81 (e)): the deletion and the e-mail change check the current password with it. Every former assertion of this file stays;
+// only the doubles changed: the account has a password, the check accepts it, the failed-attempt table is empty, and the token claim and the pending address are readable.
+const verifyClient = vi.hoisted(() => ({ auth: { signInWithPassword: async () => ({ error: null }), signOut: async () => ({ error: null }) } }))
 vi.mock('@supabase/ssr', () => ({
-  createServerClient: vi.fn(),
+  createServerClient: vi.fn(() => verifyClient),
 }))
+const PASSWORD = 'Right-Passw0rd!'
 
 const mockGetUser = vi.fn()
 vi.mock('@/lib/auth/server', () => ({
@@ -59,24 +61,26 @@ vi.mock('@/modules/notifications/lib/emails/emailChange', () => ({
 vi.mock('@/modules/notifications/lib/emails/passwordChanged', () => ({
   sendPasswordChangedEmail: vi.fn().mockResolvedValue({}),
 }))
-vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
-  applyListingTransitionByStatus: vi.fn().mockResolvedValue({ ok: true }),
+// The one deletion (Task 923 R141, R142): the cabinet action only calls it, after the proof
+const mockDeleteAccount = vi.fn()
+vi.mock('@/lib/account/deleteAccount', () => ({
+  deleteAccount: (...a: unknown[]) => mockDeleteAccount(...a),
 }))
 
 // Admin client: routes DB calls by table + auth.admin.*
-const mockDeleteUser    = vi.fn()   // auth.admin.deleteUser
 const mockUpdateUserById = vi.fn()  // auth.admin.updateUserById
 const mockListUsers     = vi.fn()   // auth.admin.listUsers
 const mockGetUserById   = vi.fn()   // auth.admin.getUserById
 const mockSignOutGlobal = vi.fn()   // auth.admin.signOut
 const mockAdminFrom     = vi.fn()
+const mockRpc           = vi.fn()   // end_user_sessions (R66 (d))
 
 vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: vi.fn(() => ({
     from: (table: string) => mockAdminFrom(table),
+    rpc: (...a: unknown[]) => (a[0] === 'account_has_password' ? { data: true, error: null } : mockRpc(...a)),
     auth: {
       admin: {
-        deleteUser:    (...a: unknown[]) => mockDeleteUser(...a),
         updateUserById: (...a: unknown[]) => mockUpdateUserById(...a),
         listUsers:     (...a: unknown[]) => mockListUsers(...a),
         getUserById:   (...a: unknown[]) => mockGetUserById(...a),
@@ -105,8 +109,15 @@ vi.mock('@/lib/supabase/server', () => ({
 const USER_ID = 'user-cabinet-1'
 
 // Shared admin from() router: listings + users + email_change_tokens tables
+/** `reauth_failures` (Task 923 R81 (b)): nobody has failed attempts in this file */
+const reauthFailures = () => ({
+  select: () => ({ eq: () => ({ gte: () => Promise.resolve({ count: 0, error: null }) }) }),
+  insert: () => Promise.resolve({ error: null }),
+})
+
 function makeAdminFrom() {
   mockAdminFrom.mockImplementation((table: string) => {
+    if (table === 'reauth_failures') return reauthFailures()
     if (table === 'listings') {
       return {
         select: vi.fn().mockReturnThis(),
@@ -152,65 +163,44 @@ function makeAdminFrom() {
 
 beforeEach(() => {
   vi.clearAllMocks()
-  mockGetUser.mockResolvedValue({ id: USER_ID })
+  mockGetUser.mockResolvedValue({ id: USER_ID, email: 'person@example.com' })
   makeAdminFrom()
-  mockDeleteUser.mockResolvedValue({ error: null })
+  mockDeleteAccount.mockResolvedValue({ ok: true, filesNotRemoved: 0 })
   mockUpdateUserById.mockResolvedValue({ error: null })
   mockListUsers.mockResolvedValue({ data: { users: [] } })
-  mockGetUserById.mockResolvedValue({ data: { user: { email: 'old@example.com' } } })
+  mockGetUserById.mockResolvedValue({ data: { user: { email: 'old@example.com', app_metadata: { providers: ['email'] } } } })
   mockSignOutGlobal.mockResolvedValue({})
+  mockRpc.mockResolvedValue({ data: null, error: null })
 })
 
 // ── deleteOwnAccount ──────────────────────────────────────────────────────────
 
-describe('deleteOwnAccount — smoke tests (Task 441)', () => {
-  it('happy path: deletes profile + auth identity, returns {}', async () => {
+describe('deleteOwnAccount — smoke tests (Task 441; Task 923 R142)', () => {
+  it('happy path: the proof passes, deleteAccount(own id, { reason: "self" }) runs once, returns {}', async () => {
     const { deleteOwnAccount } = await import('../index')
-    const result = await deleteOwnAccount()
+    const result = await deleteOwnAccount({ password: PASSWORD })
 
     expect(result).toEqual({})
-    // auth.admin.deleteUser MUST be called — this frees the email for future signups (Task 439)
-    expect(mockDeleteUser).toHaveBeenCalledWith(USER_ID)
+    // the Auth user and the profile go in one deletion — this frees the email for future signups (Task 439)
+    expect(mockDeleteAccount).toHaveBeenCalledTimes(1)
+    expect(mockDeleteAccount).toHaveBeenCalledWith(USER_ID, { reason: 'self' })
   })
 
-  it('auth-delete fail → { error: "profile_deleted_auth_failed" } — NOT false success', async () => {
-    mockDeleteUser.mockResolvedValue({ error: { message: 'Auth user not found', status: 404 } })
+  it('deleteAccount fails → { error: "delete_failed" } — NOT false success', async () => {
+    mockDeleteAccount.mockResolvedValue({ ok: false, error: 'delete_failed' })
 
     const { deleteOwnAccount } = await import('../index')
-    const result = await deleteOwnAccount()
+    const result = await deleteOwnAccount({ password: PASSWORD })
 
-    // Guard: partial failure MUST be surfaced — email is NOT freed, UI must NOT show success.
-    // This is the Task 439 fix invariant: no false success on auth-delete failure.
-    expect(result).toEqual({ error: 'profile_deleted_auth_failed' })
-  })
-
-  it('profile-delete fail → { error: "delete_failed" }, auth.admin.deleteUser NOT called', async () => {
-    // Simulate profile row delete failing
-    mockAdminFrom.mockImplementation((table: string) => {
-      if (table === 'listings') {
-        return {
-          select: vi.fn().mockReturnThis(),
-          eq: vi.fn().mockReturnThis(),
-          not: vi.fn().mockReturnThis(),
-          then: (res: (v: { data: null }) => unknown) => Promise.resolve({ data: null }).then(res),
-        }
-      }
-      if (table === 'users') {
-        return {
-          delete: () => ({
-            eq: () => Promise.resolve({ error: { message: 'FK violation', code: '23503' } }),
-          }),
-        }
-      }
-      return { select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis() }
-    })
-
-    const { deleteOwnAccount } = await import('../index')
-    const result = await deleteOwnAccount()
-
+    // Guard: a failed deletion MUST be surfaced, and there is no half-deleted answer any more: the UI must NOT show success.
     expect(result).toEqual({ error: 'delete_failed' })
-    // Auth identity must NOT be deleted when profile delete failed
-    expect(mockDeleteUser).not.toHaveBeenCalled()
+  })
+
+  it('a file that could not be removed does not fail the deletion', async () => {
+    mockDeleteAccount.mockResolvedValue({ ok: true, filesNotRemoved: 2 })
+
+    const { deleteOwnAccount } = await import('../index')
+    expect(await deleteOwnAccount({ password: PASSWORD })).toEqual({})
   })
 
   it('unauthorized → { error: "Unauthorized" }', async () => {
@@ -220,7 +210,13 @@ describe('deleteOwnAccount — smoke tests (Task 441)', () => {
     const result = await deleteOwnAccount()
 
     expect(result).toEqual({ error: 'Unauthorized' })
-    expect(mockDeleteUser).not.toHaveBeenCalled()
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
+  })
+
+  it('no password → { error: "invalid_password" } and deleteAccount is NOT called', async () => {
+    const { deleteOwnAccount } = await import('../index')
+    expect(await deleteOwnAccount()).toEqual({ error: 'invalid_password' })
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
   })
 })
 
@@ -254,13 +250,14 @@ describe('consumeEmailChangeToken — smoke tests (Task 441)', () => {
           }),
           update: () => ({
             eq: () => ({
-              is: () => Promise.resolve({ error: null }),
+              is: () => ({ select: () => Promise.resolve({ data: [{ id: tokenRow?.id }], error: null }) }),
             }),
           }),
         }
       }
       if (table === 'users') {
         return {
+          select: () => ({ eq: () => ({ single: vi.fn().mockResolvedValue({ data: { pending_email: tokenRow?.new_email }, error: null }) }) }),
           update: () => ({ eq: () => Promise.resolve({ error: null }) }),
         }
       }

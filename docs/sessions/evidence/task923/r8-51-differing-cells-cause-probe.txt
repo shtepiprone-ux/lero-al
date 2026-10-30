@@ -1,0 +1,23 @@
+platform win32 node v22.22.3
+cmd node docs/sessions/evidence/task923/r8-51-differing-cells-cause-probe.mjs
+start 2026-10-16T08:48:47Z
+platform win32 node v22.22.3 2026-10-16T08:48:47.268Z
+A normal: settle {"ms":709,"bounded":false} | app: text-clamp(7)+text-ellipsis(3) | portal:0: green | viewport-overflow 0 | portal-count [] | target-small[0] null | error-screen []
+A iframe-css-aborted: settle {"ms":0,"bounded":false} | app: error-screen(1) | viewport-overflow 0 | portal-count [] | target-small[0] null | error-screen ["resource failed: stylesheet /assets/iframe-9P-dourH.css (net::ERR_FAILED)"]
+A iframe-css-404: settle {"ms":0,"bounded":false} | app: error-screen(1) | viewport-overflow 0 | portal-count [] | target-small[0] null | error-screen ["resource failed: stylesheet /assets/iframe-9P-dourH.css (status 404)"]
+B escape at 530ms after the click (portals after open 1): first seen closed 127ms later, reopened true, portals at 5000ms 1
+B escape at 1511ms after the click (portals after open 1): first seen closed 133ms later, reopened true, portals at 5000ms 1
+B escape at 1905ms after the click (portals after open 1): first seen closed 130ms later, reopened true, portals at 5000ms 1
+B escape at 2009ms after the click (portals after open 1): first seen closed never later, reopened false, portals at 5000ms 1
+B escape at 2105ms after the click (portals after open 1): first seen closed 129ms later, reopened false, portals at 5000ms 0
+B escape at 2615ms after the click (portals after open 1): first seen closed 137ms later, reopened false, portals at 5000ms 0
+C normal trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C normal trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-late-3000 trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-late-3000 trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-aborted trial 1: popup 196..512 (316px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C leaflet-css-aborted trial 2: popup 196..512 (316px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C google-fonts-aborted trial 1: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+C google-fonts-aborted trial 2: popup 38..385 (347px) map 37..353 (316px) .leaflet-popup-content style.width 301px
+end 2026-10-16T08:50:25Z
+EXIT_CODE=0

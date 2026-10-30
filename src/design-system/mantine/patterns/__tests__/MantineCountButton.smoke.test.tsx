@@ -129,7 +129,9 @@ describe('MantineCountButton — variant-aware chip background (owner correction
     const button = screen.getByText('Apply filters').closest('button')!
     const badgeRoot = button.querySelector('.mantine-Badge-root') as HTMLElement
     expect(badgeRoot).toBeTruthy()
-    expect(badgeRoot.style.backgroundColor).not.toBe('var(--mantine-color-gray-2)')
+    // Task 859 R50: the neutral chip's colours come from the theme `Badge` entry (`--badge-bg` / `--badge-color`), not
+    // from an inline `styles` object in `MantineBadge`.
+    expect(badgeRoot.style.getPropertyValue('--badge-bg')).not.toBe('var(--mantine-color-gray-2)')
   })
 
   it('a default (bordered) host button renders the canonical gray chip, not white-on-white', () => {
@@ -143,8 +145,8 @@ describe('MantineCountButton — variant-aware chip background (owner correction
     const button = screen.getByText('Apply filters').closest('button')!
     const badgeRoot = button.querySelector('.mantine-Badge-root') as HTMLElement
     expect(badgeRoot).toBeTruthy()
-    expect(badgeRoot.style.backgroundColor).toBe('var(--mantine-color-gray-2)')
-    expect(badgeRoot.style.color).toBe('var(--mantine-color-gray-7)')
+    expect(badgeRoot.style.getPropertyValue('--badge-bg')).toBe('var(--mantine-color-gray-2)')
+    expect(badgeRoot.style.getPropertyValue('--badge-color')).toBe('var(--mantine-color-gray-7)')
   })
 })
 

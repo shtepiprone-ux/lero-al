@@ -1,0 +1,14 @@
+# rv54-09: read-only facts for Revision 48; platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-54/rv54-09-facts.mjs
+--- stdout ---
+installed next 15.5.18
+== node_modules/next/dist/build/define-env.js lines 126-127
+        'process.env.__NEXT_STRICT_MODE_APP': // When next.config.js does not have reactStrictMode it's enabled by default.
+        config.reactStrictMode === null ? true : config.reactStrictMode,
+== node_modules/next/dist/client/app-index.js lines 152 and 199
+const StrictModeIfEnabled = process.env.__NEXT_STRICT_MODE_APP ? _react.default.StrictMode : _react.default.Fragment;
+    const reactEl = /*#__PURE__*/ (0, _jsxruntime.jsx)(StrictModeIfEnabled, {
+next.config.ts mentions of reactStrictMode: 0
+Stories under src: 191; Stories that mount <AuthProvider>: 0
+Stories that only name AuthProvider: src/stories/mantine/primitives/FavoriteButton.stories.tsx, src/stories/mantine/primitives/ListingCard.stories.tsx, src/stories/patterns/mantine/ListingCardPattern.stories.tsx, src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+--- exit code: 0 ---

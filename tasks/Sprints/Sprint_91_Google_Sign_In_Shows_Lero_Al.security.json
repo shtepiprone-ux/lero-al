@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "kind": "docs",
+  "qaProfile": "Q0",
+  "task": "tasks/Sprints/Sprint_91_Google_Sign_In_Shows_Lero_Al.md",
+  "taskSha256": "635ea1b468a30d381278b5a2ab6bda8e7d171d3e591ecc7469b5f60d7ffef8df",
+  "scope": [
+    "tasks/Sprints/Sprint_91_Google_Sign_In_Shows_Lero_Al.md"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "cases": [],
+  "notApplicable": "The Sprint 91 plan records task state, ordering and owner decisions only; it changes no runtime behavior, dependency, executable gate or deployment configuration. Each task's product work is governed by that task's own adjacent security contract."
+}

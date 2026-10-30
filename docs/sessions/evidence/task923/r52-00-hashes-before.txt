@@ -1,0 +1,14 @@
+# r52-00: sha256 of the 6 paths of C1514, before the first edit (Task 923 Revision 52, R157)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r52-00-hashes.mjs before
+date: 2026-10-25T13:05:00.784Z
+--- output ---
+d58eabff1bee4db07a90907e467f3ec69b820fda6708f435a2182657a3346fa5  src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+00c08c2b80e171978bff9940983003c76eb24818df1aea7f463a2e6b721a7baa  src/modules/cabinet/actions/index.ts
+0d9edd423969e1698b55c766196c8649384f26566c61ad8a2df8938a6392414b  src/modules/cabinet/components/CabinetPasswordSection.tsx
+e6f794ffbc06585c71471e42081355e1671227a94c54d41679e1f891558b7d80  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+87bbf7085287d6ba4798a19fe05ba64c31025c072b5ebde1bc7a6135955ffa77  src/modules/cabinet/actions/__tests__/changePassword.security.test.ts
+06d10054cae999002284e01f5122a8e455cd34c797b772ec854d3f75d969996d  src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx
+exit code: 0

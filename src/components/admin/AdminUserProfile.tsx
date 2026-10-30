@@ -88,14 +88,14 @@ function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_pro
 }
 
 // The options each control passed to `setValue` before the View split (typed inputs: register semantics;
-// `profileType`/`phone`/`whatsapp`/`suspendedUntil`: dirty; `locationId`: validate; `useMainPhone`: none; `status`: dirty since Task 893 R17).
+// `profileType`/`phone`/`whatsapp`/`suspendedUntil`: dirty; `locationId`: validate, and dirty since Task 923 R177; `useMainPhone`: none; `status`: dirty since Task 893 R17).
 const FIELD_OPTIONS: { [K in keyof FormValues]?: Parameters<UseFormSetValue<FormValues>>[2] } = {
   profileType: { shouldDirty: true },
   status: { shouldDirty: true },
   useMainPhone: {},
   phone: { shouldDirty: true },
   whatsapp: { shouldDirty: true },
-  locationId: { shouldValidate: true },
+  locationId: { shouldDirty: true, shouldValidate: true },
   suspendedUntil: { shouldDirty: true },
 }
 
@@ -195,6 +195,11 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     if (!isBusiness) { setValue('companyName', ''); setValue('website', ''); setValue('position', ''); setValue('yearStarted', undefined) }
   }, [profileType, isBusiness, setValue])
 
+  // The error banner shows the localized text of the one refusal it knows (Task 923 R100: an over-long name); any other answer is shown as the server sent it, as before.
+  function saveErrorText(code: string): string {
+    return code === 'name_too_long' ? t('validation.name_too_long') : code
+  }
+
   // ── Email validation (create mode) ──
 
   function validateCreateEmail(): boolean {
@@ -236,7 +241,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         yearStarted: data.yearStarted ?? null,
       }),
     })
-    if (result.error) { setSaveError(result.error); setSaving(false); return }
+    if (result.error) { setSaveError(saveErrorText(result.error)); setSaving(false); return }
 
     if (pendingAvatarBlob && result.userId) {
       console.log('[AvatarFlow] upload_started', { mode: 'create', hasUserId: true })
@@ -287,7 +292,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
       suspendedUntil: data.suspendedUntil ?? null,
     })
     setSaving(false)
-    if (result.error) { setSaveError(result.error); toast.error(t('feedback.save_error')); return }
+    if (result.error) { setSaveError(saveErrorText(result.error)); toast.error(t('feedback.save_error')); return }
     toast.success(t('feedback.save_success'))
     form.reset(data)
     setEditActive(false); router.refresh()

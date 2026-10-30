@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { within, userEvent, expect, waitFor } from 'storybook/test';
 import { storyT } from '@/stories/_storyI18n';
 import { AvatarCropModal } from '@/components/shared/AvatarCropModal';
 import { MantineStoryShell } from '../../mantine/_MantineStoryShell';
@@ -29,23 +30,44 @@ const meta: Meta<typeof AvatarCropModal> = {
 export default meta;
 type Story = StoryObj<typeof AvatarCropModal>;
 
-export const Default: Story = {
-  render: (_args, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en';
+const renderModal: Story['render'] = (_args, context) => {
+  const locale = (context?.globals?.locale as string) ?? 'en';
 
-    return (
-      <MantineStoryShell>
-        <AvatarCropModal
-          imageSrc="/og-default.png"
-          title={storyT(locale, 'cabinet.avatar_crop_title')}
-          hint={storyT(locale, 'cabinet.avatar_crop_hint')}
-          zoomLabel={storyT(locale, 'cabinet.avatar_zoom_label')}
-          cancelLabel={storyT(locale, 'common.cancel')}
-          saveLabel={storyT(locale, 'common.save')}
-          onConfirm={() => new Promise<void>(() => {})}
-          onCancel={() => {}}
-        />
-      </MantineStoryShell>
-    );
+  return (
+    <MantineStoryShell>
+      <AvatarCropModal
+        imageSrc="/og-default.png"
+        title={storyT(locale, 'cabinet.avatar_crop_title')}
+        hint={storyT(locale, 'cabinet.avatar_crop_hint')}
+        zoomLabel={storyT(locale, 'cabinet.avatar_zoom_label')}
+        cancelLabel={storyT(locale, 'common.cancel')}
+        saveLabel={storyT(locale, 'common.save')}
+        onConfirm={() => new Promise<void>(() => {})}
+        onCancel={() => {}}
+      />
+    </MantineStoryShell>
+  );
+};
+
+export const Default: Story = {
+  render: renderModal,
+};
+
+/**
+ * Task 859 R46 — the real `saving` state (`loading={saving}` on Save, Cancel disabled). The `play`
+ * waits for `react-easy-crop` to report the crop area (Save is disabled until then), presses Save,
+ * and asserts the loading state; `onConfirm` never resolves, so the state stays on for review.
+ */
+export const Saving: Story = {
+  render: renderModal,
+  play: async ({ canvasElement, context }) => {
+    const locale = (context?.globals?.locale as string) ?? 'en';
+    const body = within(canvasElement.ownerDocument.body);
+    await body.findByRole('dialog');
+    const save = await body.findByRole('button', { name: storyT(locale, 'common.save') });
+    await waitFor(() => expect(save).toBeEnabled(), { timeout: 8000 });
+    await userEvent.click(save);
+    await waitFor(() => expect(save).toHaveAttribute('data-loading', 'true'));
+    await expect(body.getByRole('button', { name: storyT(locale, 'common.cancel') })).toBeDisabled();
   },
 };

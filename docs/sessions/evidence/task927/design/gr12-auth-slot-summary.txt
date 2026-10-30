@@ -1,0 +1,26 @@
+GR-12 / GR-3h census, sign-in sheet Google slot (Task 927 design, Opus, 2026-10-20); built Storybook 2026-10-19T07:54:25.122Z; locale en
+Stories compared 4: patterns-mantine-authsheet--login, patterns-mantine-authsheet--login-validation-error, patterns-mantine-authsheet--register, patterns-mantine-authsheet--captcha
+patterns-mantine-authsheet--login @1440: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,16]
+  button Login; 348x44; 14px/14px; rgb(255, 255, 255); bg rgb(236, 84, 71); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Google; 348x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+patterns-mantine-authsheet--login @390: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,16]
+  button Login; 358x44; 14px/14px; rgb(255, 255, 255); bg rgb(236, 84, 71); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Google; 358x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+patterns-mantine-authsheet--login-validation-error @1440: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,16,16]
+  button Login; 348x44; 14px/14px; rgb(255, 255, 255); bg rgb(236, 84, 71); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Google; 348x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+  alert Please enter a valid email address.; 348x54; 16px/24px; rgb(180, 35, 24); bg rgb(254, 243, 242); bd 1px rgb(240, 68, 56); r 12px; w400
+patterns-mantine-authsheet--login-validation-error @390: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,16,16]
+  button Login; 358x44; 14px/14px; rgb(255, 255, 255); bg rgb(236, 84, 71); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Google; 358x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+  alert Please enter a valid email address.; 358x54; 16px/24px; rgb(180, 35, 24); bg rgb(254, 243, 242); bd 1px rgb(240, 68, 56); r 12px; w400
+patterns-mantine-authsheet--register @1440: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,28,28,16,16]
+  button Register; 348x44; 14px/14px; rgb(102, 112, 133); bg rgb(228, 231, 236); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Register as agent; 348x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+  alert Security verification failed. Please try; 348x54; 16px/24px; rgb(180, 35, 24); bg rgb(254, 243, 242); bd 1px rgb(240, 68, 56); r 12px; w400
+patterns-mantine-authsheet--register @390: portal true; form row-gap 16px; gaps between form blocks [16,16,16,16,28,28,16,16]
+  button Register; 358x44; 14px/14px; rgb(102, 112, 133); bg rgb(228, 231, 236); bd 1px rgba(0, 0, 0, 0); r 8px; w500
+  button Register as agent; 358x44; 14px/14px; rgb(52, 64, 84); bg rgb(255, 255, 255); bd 1px rgb(228, 231, 236); r 8px; w500
+  alert Security verification failed. Please try; 358x54; 16px/24px; rgb(180, 35, 24); bg rgb(254, 243, 242); bd 1px rgb(240, 68, 56); r 12px; w400
+patterns-mantine-authsheet--captcha @1440: ERROR page.waitForSelector: Timeout 30000ms exceeded.
+patterns-mantine-authsheet--captcha @390: ERROR page.waitForSelector: Timeout 30000ms exceeded.

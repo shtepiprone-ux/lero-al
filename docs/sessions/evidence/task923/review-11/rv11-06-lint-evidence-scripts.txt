@@ -1,0 +1,12 @@
+platform: win32 node v22.22.3
+command: npx eslint <the nine evidence scripts of r10-74 after the header line>
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\lib.cjs
+  4:7  warning  'path' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\db-catalog\syntax2.cjs
+  31:15  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+
+✖ 2 problems (0 errors, 2 warnings)
+
+EXIT_CODE=0

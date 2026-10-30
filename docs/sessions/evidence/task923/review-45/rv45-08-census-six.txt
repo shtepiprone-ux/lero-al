@@ -1,0 +1,68 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T18:38:18.420Z
+command: node scripts/check-rendered-state-census.mjs --stories patterns-mantine-authsheet--login,patterns-mantine-authsheet--login-validation-error,patterns-mantine-googlesigninslot--loading,patterns-mantine-googlesigninslot--unavailable,patterns-mantine-googlesigninslot--unavailable-reauth,mantine-primitives-modal--delete-confirm-password
+---- output ----
+rendered state census: 5 registered state(s), 160 state job(s) + 0 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 6 closed job(s); 6 worker(s); out C:\Users\Nox\AppData\Local\Temp\rendered-state-census
+  100/166 jobs, 194 rows, 0 failing
+
+rendered state census — rows 326 (failing 0); {"statesRun":5,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,768,1023,1024,1440],"boundCells":0,"stateJobs":160,"rangeJobs":0,"closedJobs":6,"appRows":166,"portalRows":160,"runtimeSeconds":126,"ruleKeys":22}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  text-overlap           0
+  svg-text-clipped       0
+  viewport-overflow      0
+  component-overflow     0
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             0
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            0
+  portal-count           0
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        0
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         160
+  action-hidden          160
+  dismiss-close-control  36
+  target-small           160
+controls skipped by the action rules (R24 / R30: clipped away, out of the tab order, hidden from assistive technology): 0 in 0 row(s)
+controls excused from target-small by a registry row's exemptTargets and its dated owner decision (Task 923 R33, D9): 24 in 24 row(s)
+boxes excused from component-overflow by a registry row's exemptOverflow and its dated owner decision (Task 923 R33, D10): 0 in 0 row(s)
+text excused from text-ellipsis by a registry row's exemptText and its dated owner decision (Task 923 R136, D84): 64 in 64 row(s)
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 16
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1023
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1024
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 1440
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 320
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 390
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 639
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 640
+  patterns-mantine-authsheet--login | patterns-mantine-authsheet--login | 768
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1023
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1024
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 1440
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 320
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 390
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 639
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 640
+  patterns-mantine-authsheet--login-validation-error | patterns-mantine-authsheet--login-validation-error | 768
+widths states: 0; each measured at its in-range bound and at the first width outside it (rows per locale): 0 complete, 0 with a missing cell
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 0 (recovered 0, still failing 0)
+jobs that hit the settle bound (R31: 8000ms; the page was measured as it was), by Story x state: 0 job(s) in 0 Story x state
+Story x state x root with a violation: 0
+
+rows 326 = 166 app-root rows + 160 portal-root rows; 160 state jobs + 0 out-of-range widths jobs + 6 closed jobs; 0 retried job(s); runtime 126s
+
+---- end ----
+EXIT_CODE=0

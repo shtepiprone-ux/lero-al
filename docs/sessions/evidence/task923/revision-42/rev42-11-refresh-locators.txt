@@ -1,0 +1,18 @@
+fatal: path 'scripts/rendered-interaction-states.json' exists on disk, but not in 'HEAD'
+fatal: path 'scripts/rendered-interaction-states.json' exists on disk, but not in 'HEAD'
+C185 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1949-1949 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1980-1980
+C361 scripts/rendered-interaction-states.json:4562-4562 -> docs/sessions/evidence/task923/revision-42/rev42-11-head-lines.txt:3-3
+C436 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2290-2290 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2321-2321
+C437 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1957-1957 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:1988-1988
+C446 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2558-2558 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2589-2589
+C709 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3053-3053 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3084-3084
+C729 tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:212-212 -> docs/sessions/evidence/task923/revision-42/rev42-11-head-lines.txt:5-5
+C810 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3322-3322 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3353-3353
+C811 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2957-2957 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2988-2988
+C812 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3502-3502 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3533-3533
+C813 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2957-2957 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:2988-2988
+C814 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3549-3549 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3580-3580
+C895 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3851-3851 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3882-3882
+C1128 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3052-3052 -> tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:3083-3083
+C1207 scripts/rendered-interaction-states.json:6085-6085 -> docs/sessions/evidence/task923/revision-42/rev42-11-head-lines.txt:7-7
+changed 15, unresolved 0

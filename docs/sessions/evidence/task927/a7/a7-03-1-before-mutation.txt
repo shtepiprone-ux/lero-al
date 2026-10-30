@@ -1,0 +1,18 @@
+# a7-03 step 1: ProfileTab.tsx after the edit, before the mutation
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T18:07:33.359Z
+
+command: node docs/sessions/evidence/task927/a7/a7-03-sha.mjs src/modules/cabinet/components/ProfileTab.tsx
+--- output ---
+da8ff5575d75ca0a80514b0f22bc998a58a8d074d5305acaed9ea11efc428edf  src/modules/cabinet/components/ProfileTab.tsx
+--- exit code: 0 ---
+
+command: findstr /n typedConfirm src\modules\cabinet\components\ProfileTab.tsx
+--- output ---
+457:        typedConfirm={reauthMethod === 'google' ? { word: DELETE_CONFIRM_WORD, label: t('delete_account_type_confirm') } : undefined}
+--- exit code: 0 ---
+
+finished: 2026-10-25T18:07:33.444Z
+exit code: 0

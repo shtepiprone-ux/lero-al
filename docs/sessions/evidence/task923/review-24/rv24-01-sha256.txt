@@ -1,0 +1,8 @@
+Opus review 24, 2026-10-21, platform win32 10.0.26300.0 node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+cmd node -e <SHA-256 of the four files with node:crypto, read from docs/sessions/evidence/task923/db-catalog/>
+8c8bcb3d6b02b260e70a0fd8b48c56908aaf2604bc37d21a36654abd9d2651c6  proposed-hardening.sql  lines 512
+fd1f13fca69f84493e391049a8261e6e6fbcb4627f8be31e9f9fa8c24abdfc88  proposed-hardening-rollback.sql  lines 191
+a8b0ae690d0786747b34e4c582612a1d7b4dc5eb095ae4066a3dc0230455e438  proposed-hardening.v7.sql.bak  lines 557
+52bd460f8c8cbe688f6bc24dae726728725e3c2414be827a27097c0327813db5  proposed-hardening-rollback.v7.sql.bak  lines 189
+EXIT_CODE=0
+(the two .bak files carry the hashes Opus reviewed in review 23, C716; the diff of review 24 is between them and the v7.1 files)

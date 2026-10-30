@@ -1,0 +1,168 @@
+{
+  "takenAt": "2026-10-22T19:11:36.386Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 2,
+  "total": 2,
+  "records": [
+    {
+      "id": "M10-action-comparison-removed",
+      "kind": "mutation",
+      "file": "src/lib/captcha/verifyTurnstile.ts",
+      "cases": [
+        "SEC-X-SRV-CONTACT-BOT-DENY",
+        "refuses another action with action-mismatch"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-BOT-DENY",
+          "passed": 5,
+          "total": 5,
+          "failed": 0
+        },
+        {
+          "caseId": "refuses another action with action-mismatch",
+          "passed": 48,
+          "total": 48,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/lib/captcha/verifyTurnstile.ts\n+++ src/lib/captcha/verifyTurnstile.ts (mutated)\n@@ line 28 @@\n-  if (data.action !== expected.action) return { success: false, errorCodes: ['action-mismatch'] }",
+      "shaBefore": "3c0438b1276c6a0f4623d84ce1477f9fcaf336c49e11e401386eca8dd590a8cf",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-BOT-DENY",
+          "exit": 1,
+          "detected": true,
+          "fragment": "a token solved for the message path",
+          "caseFailure": [
+            "AssertionError: a token solved for the message path: expected { Object (ok, number) } to deeply equal { ok: false, …(1) }"
+          ],
+          "failed": [
+            {
+              "name": "contactGateway [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+              "kind": "assertion",
+              "message": "AssertionError: a token solved for the message path: expected { Object (ok, number) } to deeply equal { ok: false, …(1) }"
+            },
+            {
+              "name": "contactGateway [SEC-X-SRV-INQUIRY-BOT-DENY] no inquiry without a verified human check",
+              "kind": "assertion",
+              "message": "AssertionError: a token solved for the reveal path: expected {} to deeply equal { error: 'bot_check_failed' }"
+            }
+          ],
+          "suiteErrors": []
+        },
+        {
+          "caseId": "refuses another action with action-mismatch",
+          "exit": 1,
+          "detected": true,
+          "fragment": null,
+          "caseFailure": [
+            "AssertionError: expected { Object (success, errorCodes) } to deeply equal { success: false, …(1) }"
+          ],
+          "failed": [
+            {
+              "name": "with an expected action (R110 (a)) refuses another action with action-mismatch",
+              "kind": "assertion",
+              "message": "AssertionError: expected { Object (success, errorCodes) } to deeply equal { success: false, …(1) }"
+            },
+            {
+              "name": "with an expected action (R110 (a)) refuses no action with action-mismatch",
+              "kind": "assertion",
+              "message": "AssertionError: expected { Object (success, errorCodes) } to deeply equal { success: false, …(1) }"
+            },
+            {
+              "name": "with an expected action (R110 (a)) refuses an empty action with action-mismatch",
+              "kind": "assertion",
+              "message": "AssertionError: expected { Object (success, errorCodes) } to deeply equal { success: false, …(1) }"
+            },
+            {
+              "name": "with an expected action (R110 (a)) compares the action before the hostname",
+              "kind": "assertion",
+              "message": "AssertionError: expected [ 'hostname-mismatch' ] to deeply equal [ 'action-mismatch' ]"
+            },
+            {
+              "name": "Cloudflare's testing-key answer (R110 (a) (1)) only the literal true is the marker: the string \"true\" falls back to the comparison",
+              "kind": "assertion",
+              "message": "AssertionError: expected { success: false, …(1) } to deeply equal { success: false, …(1) }"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "3c0438b1276c6a0f4623d84ce1477f9fcaf336c49e11e401386eca8dd590a8cf",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-BOT-DENY",
+          "exit": 0,
+          "passed": 5,
+          "total": 5,
+          "failed": 0
+        },
+        {
+          "caseId": "refuses another action with action-mismatch",
+          "exit": 0,
+          "passed": 48,
+          "total": 48,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M11-require-viewer-replaced-by-fixed-viewer",
+      "kind": "mutation",
+      "file": "src/modules/listings/actions/contactGateway.ts",
+      "cases": [
+        "SEC-X-SRV-CONTACT-SESSION-DENY"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-SESSION-DENY",
+          "passed": 5,
+          "total": 5,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/actions/contactGateway.ts\n+++ src/modules/listings/actions/contactGateway.ts (mutated)\n@@ line 36 @@\n-  const viewer = await requireViewer()\n+  const viewer: Awaited<ReturnType<typeof requireViewer>> = { ok: true, userId: '11111111-2222-4333-8444-555555555555', role: null }",
+      "shaBefore": "c55f77937787cdcbfb9e7b6dd64d1e0838cdf028dd3b6688f04c99d95b1fc173",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-SESSION-DENY",
+          "exit": 1,
+          "detected": true,
+          "fragment": "a guest",
+          "caseFailure": [
+            "AssertionError: a guest: expected { Object (ok, number) } to deeply equal { Object (ok, reason) }"
+          ],
+          "failed": [
+            {
+              "name": "contactGateway [SEC-X-SRV-CONTACT-BOT-ALLOW] a verified reveal returns the number once",
+              "kind": "assertion",
+              "message": "AssertionError: expected [ { …(2) } ] to deeply equal [ { …(2) } ]"
+            },
+            {
+              "name": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+              "kind": "assertion",
+              "message": "AssertionError: a guest: expected { Object (ok, number) } to deeply equal { Object (ok, reason) }"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "c55f77937787cdcbfb9e7b6dd64d1e0838cdf028dd3b6688f04c99d95b1fc173",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-CONTACT-SESSION-DENY",
+          "exit": 0,
+          "passed": 5,
+          "total": 5,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

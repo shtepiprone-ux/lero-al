@@ -1,0 +1,105 @@
+{
+  "note": "Cases taken out of the D8_D9 contract by Task 923 final review, checkpoint 10, with their destination. Restored verbatim by the task that implements them.",
+  "cases": [
+    {
+      "destination": "Task 932 (R70 (e), moved by R81 (g))",
+      "case": {
+        "id": "SEC-X-SRV-CONFIRM-GET-INERT",
+        "layer": "server",
+        "outcome": "deny",
+        "boundary": "unit",
+        "critical": false,
+        "invariant": "Opening a confirmation link consumes no token",
+        "actor": "a mail scanner",
+        "resource": "every token type of /auth/confirm",
+        "input": "GET with a valid token_hash for each type",
+        "response": "a page with a confirm button; verifyOtp not called",
+        "forbiddenEffects": [
+          "a verifyOtp call on GET"
+        ],
+        "testFile": "src/app/auth/confirm/__tests__/confirm.security.test.ts",
+        "testName": "confirm [SEC-X-SRV-CONFIRM-GET-INERT] a GET leaves the token unused"
+      }
+    },
+    {
+      "destination": "hardening v8b (R69 (a))",
+      "case": {
+        "id": "SEC-DB-X-STAFF-LISTING-WRITE-ALLOW",
+        "layer": "database",
+        "outcome": "allow",
+        "boundary": "integration",
+        "critical": true,
+        "invariant": "Staff change other people's listings only through the Server Actions",
+        "actor": "moderator holding listings.delete",
+        "resource": "a synthetic listing of another user",
+        "input": "the staff deleteListing Server Action",
+        "response": "the listing deleted",
+        "forbiddenEffects": [
+          "a refusal"
+        ],
+        "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+        "testName": "accessHardening [SEC-DB-X-STAFF-LISTING-WRITE-ALLOW] the Server Action deletes"
+      }
+    },
+    {
+      "destination": "hardening v8b (R69 (a))",
+      "case": {
+        "id": "SEC-DB-X-STAFF-LISTING-WRITE-DENY",
+        "layer": "database",
+        "outcome": "deny",
+        "boundary": "integration",
+        "critical": true,
+        "invariant": "Staff change other people's listings only through the Server Actions",
+        "actor": "moderator session token",
+        "resource": "a synthetic listing of another user",
+        "input": "REST DELETE, then PATCH of the title",
+        "response": "zero rows or 42501; the row unchanged",
+        "forbiddenEffects": [
+          "a deleted or changed listing"
+        ],
+        "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+        "testName": "accessHardening [SEC-DB-X-STAFF-LISTING-WRITE-DENY] a staff session cannot write a listing through the Data API"
+      }
+    },
+    {
+      "destination": "hardening v8b (R69 (d))",
+      "case": {
+        "id": "SEC-DB-X-PROFILE-FIELDS-ALLOW",
+        "layer": "database",
+        "outcome": "allow",
+        "boundary": "integration",
+        "critical": true,
+        "invariant": "Profile URLs, phones and names always meet the profile rules",
+        "actor": "synthetic user session token",
+        "resource": "their own users row",
+        "input": "REST PATCH with a project avatar URL, an E.164 phone and an https website",
+        "response": "the row updated",
+        "forbiddenEffects": [
+          "a refusal"
+        ],
+        "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+        "testName": "accessHardening [SEC-DB-X-PROFILE-FIELDS-ALLOW] valid profile fields are accepted"
+      }
+    },
+    {
+      "destination": "hardening v8b (R69 (d))",
+      "case": {
+        "id": "SEC-DB-X-PROFILE-FIELDS-DENY",
+        "layer": "database",
+        "outcome": "deny",
+        "boundary": "integration",
+        "critical": true,
+        "invariant": "Profile URLs, phones and names always meet the profile rules",
+        "actor": "synthetic user session token",
+        "resource": "their own users row",
+        "input": "REST PATCH with a foreign avatar URL, phone 12345, website javascript:x, a 300-character name",
+        "response": "23514 for each; the row unchanged",
+        "forbiddenEffects": [
+          "an invalid profile value stored"
+        ],
+        "testFile": "src/tests/integration/accessHardening.integration.test.ts",
+        "testName": "accessHardening [SEC-DB-X-PROFILE-FIELDS-DENY] invalid profile fields are refused"
+      }
+    }
+  ]
+}

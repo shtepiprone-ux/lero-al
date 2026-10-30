@@ -1,0 +1,444 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T15:51:14.199Z",
+ "case": "SEC-S01-SRV-DENY",
+ "results": [
+  {
+   "id": "SEC-S01-SRV-DENY",
+   "testFile": "src/modules/notifications/lib/__tests__/notifications.security.test.ts",
+   "testName": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/notifications/lib/createNotification.ts",
+     "description": "the server-only marker of createNotification.ts becomes a 'use server' directive, so the writer is a public Server Action again",
+     "from": "import 'server-only'\n\nimport { createAdminClient } from '@/lib/supabase/admin'\n",
+     "to": "'use server'\n\nimport { createAdminClient } from '@/lib/supabase/admin'\n"
+    }
+   ],
+   "failureMessage": "AssertionError: expected '\\'use server\\'\\n\\nimport { createAdmi…' not to match /^\\s*['\"]use server['\"]/m\n    at C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/__tests__/notifications.security.test.ts:108:22\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 4,
+     "numPassedTestSuites": 4,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338670971,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action createNotification.ts has no \"use server\" directive and imports server-only",
+         "status": "skipped",
+         "title": "createNotification.ts has no \"use server\" directive and imports server-only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "status": "skipped",
+         "title": "mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification inserts one row for the given user with optional fields as null",
+         "status": "skipped",
+         "title": "inserts one row for the given user with optional fields as null",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification passes the link, template id and params through",
+         "status": "skipped",
+         "title": "passes the link, template id and params through",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "status": "skipped",
+         "title": "a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "status": "skipped",
+         "title": "a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "status": "skipped",
+         "title": "markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "status": "skipped",
+         "title": "markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "status": "passed",
+         "title": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 45.53280000000001,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338671396,
+       "endTime": 1792338671441.5327,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/__tests__/notifications.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 4,
+     "numPassedTestSuites": 3,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338672359,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action createNotification.ts has no \"use server\" directive and imports server-only",
+         "status": "skipped",
+         "title": "createNotification.ts has no \"use server\" directive and imports server-only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "status": "skipped",
+         "title": "mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification inserts one row for the given user with optional fields as null",
+         "status": "skipped",
+         "title": "inserts one row for the given user with optional fields as null",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification passes the link, template id and params through",
+         "status": "skipped",
+         "title": "passes the link, template id and params through",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "status": "skipped",
+         "title": "a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "status": "skipped",
+         "title": "a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "status": "skipped",
+         "title": "markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "status": "skipped",
+         "title": "markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "status": "failed",
+         "title": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 5.303200000000004,
+         "failureMessages": [
+          "AssertionError: expected '\\'use server\\'\\n\\nimport { createAdmi…' not to match /^\\s*['\"]use server['\"]/m\n    at C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/__tests__/notifications.security.test.ts:108:22\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338672759,
+       "endTime": 1792338672764.3032,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/__tests__/notifications.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 4,
+     "numPassedTestSuites": 4,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 9,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 8,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338673719,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action createNotification.ts has no \"use server\" directive and imports server-only",
+         "status": "skipped",
+         "title": "createNotification.ts has no \"use server\" directive and imports server-only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the writer is server-only and not a Server Action"
+         ],
+         "fullName": "the writer is server-only and not a Server Action mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "status": "skipped",
+         "title": "mutations.ts (\"use server\") exports only the two actions a person runs on their own notifications",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification inserts one row for the given user with optional fields as null",
+         "status": "skipped",
+         "title": "inserts one row for the given user with optional fields as null",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification passes the link, template id and params through",
+         "status": "skipped",
+         "title": "passes the link, template id and params through",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "createNotification"
+         ],
+         "fullName": "createNotification a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "status": "skipped",
+         "title": "a database error is logged and does not throw (the caller's own work has already succeeded)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "status": "skipped",
+         "title": "a blocked, deactivated, deleted or missing account changes nothing, whatever its role (Task 923 R44)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "status": "skipped",
+         "title": "markNotificationRead updates one row by id and only an unread one, through the caller's own client",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "the actions a person runs on their own notifications"
+         ],
+         "fullName": "the actions a person runs on their own notifications markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "status": "skipped",
+         "title": "markAllNotificationsRead touches only unread rows (row-level security limits them to the caller)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "status": "passed",
+         "title": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+         "duration": 44.13459999999998,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338674124,
+       "endTime": 1792338674168.1345,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/__tests__/notifications.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

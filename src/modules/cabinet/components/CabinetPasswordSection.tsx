@@ -42,7 +42,18 @@ export function CabinetPasswordSection() {
       toast.success(t('password_changed_success'))
       setCurrentPassword('')
       setNewPassword('')
-      await signOut('global')
+      // Supabase ended every session on the password change, and the server emptied this browser's cookie (Task 923 R156): the local sign-out sends no request and only tells the page.
+      await signOut('local')
+      return
+    }
+
+    // The password HAS changed, but the server's sign-out failed (Task 923 R81 (a), R156): the form is emptied, the person is told, and this browser's state is
+    // cleared from here exactly as after ok — the form must not claim that nothing changed.
+    if (result.reason === 'sessions_not_ended') {
+      toast.warning(t('password_changed_sessions_not_ended'))
+      setCurrentPassword('')
+      setNewPassword('')
+      await signOut('local')
       return
     }
 

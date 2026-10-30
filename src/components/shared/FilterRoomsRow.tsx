@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Group } from '@mantine/core'
+import { Button, Group, useMantineTheme } from '@mantine/core'
 import { ROOMS_OPTIONS } from '@/modules/listings/constants'
 
 interface FilterRoomsRowProps {
@@ -12,6 +12,7 @@ interface FilterRoomsRowProps {
 }
 
 export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
+  const theme = useMantineTheme()
   return (
     <Group {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} gap="xs" wrap="wrap" data-testid="filter-chip-row">
       {ROOMS_OPTIONS.map(opt => {
@@ -21,6 +22,7 @@ export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRow
             key={opt}
             type="button"
             variant={selected.includes(strVal) ? 'filled' : 'default'}
+            miw={theme.other.touchTarget}
             style={{ flexShrink: 0 }}
             onClick={() => onToggle(strVal)}
           >

@@ -1,0 +1,179 @@
+# r51-02-vitest.txt: Task 923 Revision 51, R156
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --reporter=verbose src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts src/modules/cabinet/actions/__tests__/changePassword.security.test.ts src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx src/modules/cabinet/actions/__tests__/reauth.security.test.ts src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+started: 2026-10-25T12:45:31.838Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-VERIFY-KEY] the password check signs in as the service role, never with the anon key 5ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with an oauth entry stamped in the future is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with an oauth entry with no timestamp is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > a Google-only account with no authentication methods at all is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the refusal texts exist in all four languages and differ 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > no session is "Unauthorized", before any check 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > the right password deletes the account; a fresh Google sign-in deletes a Google-only account 0ms
+ ✓ src/modules/cabinet/actions/__tests__/reauth.security.test.ts > reauth > Auth's sign-in limit and an unreadable account both refuse the deletion without writing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > updateCabinetProfile > a person who is account_blocked writes nothing 2ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > updateCabinetProfile > a person who is account_suspended writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > updateCabinetProfile > a database failure is "save_failed" 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > deleteOwnAccount > asks for the one complete deletion of the caller's own account only, as "self": nothing is archived and the action writes no row 2ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > deleteOwnAccount > when the deletion fails the answer is "delete_failed": there is no half-deleted answer any more 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > deleteOwnAccount > a file that could not be removed does not make the deletion fail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > deleteOwnAccount > an anonymous caller deletes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > deleteOwnAccount > a person with no listings is asked for the same single deletion 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > a token that cannot be stored is "failed" and nothing is mailed 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > the error for the language sq is in that language (English for an unknown one) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > the error for the language en is in that language (English for an unknown one) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > the error for the language uk is in that language (English for an unknown one) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > the error for the language it is in that language (English for an unknown one) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > the error for the language xx is in that language (English for an unknown one) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > resending with nothing pending says so in the person's language 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > e-mail change failures and languages > resending ignores a request that expired or was already used 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > consumeEmailChangeToken failures > when the token cannot be marked as used nothing is changed 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > consumeEmailChangeToken failures > when the sign-in address cannot be changed the answer says so and the pending address is kept 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > changeCabinetPassword when the session store fails > is "server_error", never a crash 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts > the password re-check client > reads the session cookies but never writes one back (a correct password must not replace the live session) 45ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person 6ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > the window is 15 minutes: older rows do not count, four recent ones leave one attempt, the fifth wrong password closes the door 1ms
+ ✓ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > a count that cannot be read refuses, for each of the three actions, and Auth is not called 1ms
+ × src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > a row that cannot be stored is logged, and the answer stays "wrong password"; Auth's own limit stores nothing; the right password stores nothing 53ms
+   → expected { ok: false, …(1) } to deeply equal { ok: true }
+ ✓ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > a Google-only person has no password to guess: the limit does not touch that path, and a missing password stores nothing 1ms
+ ✓ src/modules/cabinet/actions/__tests__/changePassword.security.test.ts > changePassword > [SEC-X-SRV-SIGNOUT-OTHERS] a failed sign-out of other devices is reported 50ms
+ ✓ src/modules/cabinet/actions/__tests__/changePassword.security.test.ts > changePassword > a refused change never reaches the sign-out, so it cannot be reported as one 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > B cannot update, delete or mark viewed A's saved search 4ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > B's "delete all" removes only B's own searches 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > a saved search is stored for the caller, never for an id of the browser's choosing 22ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > the owner can change and delete their own 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > a frequency outside instant / daily / weekly is refused and nothing changes 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > saved searches > an anonymous caller is refused by every saved-search action and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > writes only the whitelist of columns, for the caller's own row, ignoring extra fields 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "admin" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "developer" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "moderator" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses the user type "AGENT" 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > refuses a currency that is not an active one of the catalogue 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > a business account keeps its company name, a private one drops it 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > updateCabinetProfile > an anonymous caller is refused and nothing is written 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > deleteOwnAccount > an anonymous caller is refused and nothing is deleted 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > deleteOwnAccount > asks for the deletion of ONLY the caller's own account, as "self" 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > stores a HASH of the token; the raw token is only in the link that is e-mailed to the new address 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > allows 3 requests an hour and refuses the 4th, sending nothing for it 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the current address and an address that belongs to another account 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "no-at-sign": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@b": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@b.c": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a b@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@example.com, b@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@example.com\r\nBcc: x@y.zz": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "<script>@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "Ana <ana@example.com>": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "a@@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com": no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address undefined: no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > refuses the new address {}: no token, no e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > an anonymous caller is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > e-mail change > resend makes a NEW token (the old link stops working) for the caller's own pending change only 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > a valid token changes the e-mail once and is then used up 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "not-a-token" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "0000000000000000000000000000000000000000000000000000000000000000" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the token "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > an expired token changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > consumeEmailChangeToken > the HASH (what the database holds) is not a valid token: knowing the table is not enough 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > changes the password when the current one is right and the new one is strong 44ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a wrong current password changes nothing 2ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "short" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "alllowercase1!" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "NoDigits!!!!!" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > a weak new password "" is refused before the current one is even tried 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > the same password is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > changeCabinetPassword > an anonymous caller is refused 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "067 123 4567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "355691234567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+355 69 123 4567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "javascript:alert(1)" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+355691234567?text=x" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+0691234567" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "+3556912" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > refuses the phone "<b>x</b>" and writes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > saves a valid number, trimmed, and an empty one as nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > phone numbers are stored in the form the forms produce (finding S54) > a missing phone is allowed 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S29-SRV-DENY] updateCabinetProfile accepts only the account types private and agent 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S30-SRV-DENY] updateSavedSearchFrequency accepts only the known frequencies 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts > [SEC-S35-SRV-DENY] A new e-mail address is one plain address of at most 254 characters, escaped in the confirmation e-mail 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > after a successful change the other sessions are signed out, once, and the current one stays 47ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a wrong current password signs nobody out and changes nothing 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a weak new password signs nobody out and changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > the same password signs nobody out and changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > no session signs nobody out and changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a session with no e-mail address signs nobody out and changes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a failed sign-out of the others does not undo the change, and is reported (Task 923 R70 (b)) 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a failed profile read for the greeting does not undo the change either 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > "Email rate limit exceeded" is reported as rate limited 1ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > "Too many requests" is reported as rate limited 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > changing the password ends every other session > a refusal by the update itself is "server_error" and signs nobody out 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > the e-mail change does not pretend to end sessions > a good token changes the account's address, clears the pending address, is used up, and no sign-out call is made with a user id 2ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > a name is cut at 100 characters and trimmed; a blank or non-text one becomes "Search" 12ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > a duplicate race is "already saved"; another failure returns a fixed code, never the database message, and refreshes nothing (Task 923 R71 (f)) 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > updateLastViewed returns a fixed code, never the database message, when it fails and refreshes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > updateSavedSearchFrequency returns a fixed code, never the database message, when it fails and refreshes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > updateSavedSearchNotify returns a fixed code, never the database message, when it fails and refreshes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > deleteSavedSearch returns a fixed code, never the database message, when it fails and refreshes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > saved searches: names and failures > deleteAllSavedSearches returns a fixed code, never the database message, when it fails and refreshes nothing 0ms
+ ✓ src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts > [SEC-S55-SRV-DENY] A password change ends every session of the account, the check's own included 1ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — same-password guard (Task 873) > submit stays disabled when current and new password are identical 1524ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — server error mapping (Task 873) > invalid_current reason shows the localized alert 58ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > [SEC-X-FE-SIGNOUT-OTHERS] a changed password with sessions left still signs out everywhere 1478ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > the controls: a plain success signs out everywhere with its own text; any other refusal signs nobody out and shows its own error 104ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.signOut.security.test.tsx > CabinetPasswordSection.signOut > the warning has its text in all four languages, says the password changed, and the four texts differ 0ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — success path (Task 873) > a successful change calls signOut("local") 47ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — new-password hint stays linked (Task 873, §16.3, AC5′, owner D81-5) > the new-password field has a non-empty aria-describedby resolving to a div with all five rule keys 29ms
+ ✓ src/modules/cabinet/components/__tests__/CabinetPasswordSection.smoke.test.tsx > CabinetPasswordSection — reveal toggles have an accessible name (Task 873, §16.2) > both toggles are not aria-hidden and carry a localized label; clicking toggles the input type 28ms
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 132 passed (133)
+   Start at  13:45:33
+   Duration  3.67s (transform 1.87s, setup 905ms, import 2.89s, tests 3.61s, environment 1.63s)
+
+
+--- stderr ---
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts > reauthLimit > a row that cannot be stored is logged, and the answer stays "wrong password"; Auth's own limit stores nothing; the right password stores nothing
+AssertionError: expected { ok: false, …(1) } to deeply equal { ok: true }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
++   "ok": false,
++   "reason": "sessions_not_ended",
+  }
+
+ ❯ src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts:148:105
+    146|     expect(rows(), 'Auth\'s limit is not a wrong password').toEqual([])
+    147|     state.signInMessage = 'Invalid login credentials'
+    148|     expect(await changeCabinetPassword({ currentPassword: state.passwo…
+       |                                                                                                         ^
+    149|     expect(rows(), 'a right password stores no row').toEqual([])
+    150|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+--- exit code: 1 ---

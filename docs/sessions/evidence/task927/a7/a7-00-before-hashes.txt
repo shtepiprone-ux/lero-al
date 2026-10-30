@@ -1,0 +1,14 @@
+# a7-00 sha256 before the first edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a7/a7-00-hashes.mjs docs/sessions/evidence/task927/a7/a7-00-before-hashes.txt "a7-00 sha256 before the first edit"
+date: 2026-10-25T18:05:50.680Z
+paths: 4
+
+9026f5d2bf8c8d077c49c5ead84b230640359c5589ab43d64ceda8e872bffbdd  src/modules/cabinet/components/ProfileTab.tsx
+20ce54752f3b80526464fe8e26e79a54a2e9c9545365b846cfe2f2bbf2e29750  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+09347d47193c2c2bf67d8349d488bb1db6529f0fd227c5887d9d00dac2d6a3dd  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+b680968a4944bb3223fd5440e9bc559fccdbe5762ee7c6508829f401bd10ab19  src/stories/mantine/primitives/Modal.stories.tsx
+
+exit code: 0

@@ -1,0 +1,330 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:33:55.059Z
+cmd npm run test:listings   (the listing smoke suite (createListing now imports generateSlug from the new module); the failures are the ones r18-43 already recorded)
+
+> lero-al@0.1.0 test:listings
+> vitest run src/modules/listings/actions/__tests__/reportListing.smoke.test.ts src/modules/listings/actions/__tests__/createListing.smoke.test.ts src/modules/listings/actions/__tests__/updateListing.smoke.test.ts src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts (5 tests | 1 failed) 84ms
+     × insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4) 6ms
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts (17 tests | 8 failed) 87ms
+     × resolved: reporter AND listing owner both notified with the correct template ids 6ms
+     × dismissed: reporter AND listing owner both notified with the correct template ids 2ms
+     × owner equals reporter → only the reporter notification is sent 2ms
+     × reviewed (non-terminal) transition → no notification call 1ms
+     × reopen (resolved→pending) → no notification call 1ms
+     × ordering: the action does not resolve before both the reporter and owner notification promises resolve 1ms
+     × createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch) 1ms
+     × R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {} 1ms
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts (13 tests | 2 failed) 10ms
+     × owner: active → sold (privileged) → { ok: true, nextStatus: "sold" } 3ms
+     × admin: pending → active (privileged) → { ok: true, nextStatus: "active" } 1ms
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts (8 tests | 5 failed) 158ms
+     × happy path: owner edit → { slug, status } returned, update called once 151ms
+     × update DB error → { error: message } + console.error logged (Guard 4) 1ms
+     × (a) lowered price: stored 100000/null → price 90000 writes price_old 100000 1ms
+     × (b) client price_old is ignored: unchanged price + payload price_old 5 writes null 1ms
+     × (c) currency change writes price_old null 1ms
+
+ Test Files  4 failed | 2 passed (6)
+      Tests  16 failed | 49 passed (65)
+   Start at  11:33:55
+   Duration  1.50s (transform 832ms, setup 625ms, import 744ms, tests 549ms, environment 5.41s)
+
+--- stderr ---
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4)
+AssertionError: expected { error: 'insert_failed' } to deeply equal { Object (error) }
+
+- Expected
++ Received
+
+  {
+-   "error": "constraint violation on listings",
++   "error": "insert_failed",
+  }
+
+ ❯ src/modules/listings/actions/__tests__/createListing.smoke.test.ts:139:20
+    137|
+    138|     // Guard 4: DB failure must surface a typed error — never a silent…
+    139|     expect(result).toEqual({ error: 'constraint violation on listings'…
+       |                    ^
+    140|     expect(consoleSpy).toHaveBeenCalledWith(
+    141|       'Failed to create listing',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }
+TypeError: db.from(...).update(...).eq(...).eq is not a function
+ ❯ writeListingStatus src/modules/listings/actions/applyListingTransition.ts:113:6
+    111|     .update(updatePayload)
+    112|     .eq('id', listingId)
+    113|     .eq('status', currentStatus)
+       |      ^
+    114|     .select('id')
+    115|
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:277:10
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts:113:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts > gateway — applyListingTransitionByStatus (smoke) > admin: pending → active (privileged) → { ok: true, nextStatus: "active" }
+TypeError: db.from(...).update(...).eq(...).eq is not a function
+ ❯ writeListingStatus src/modules/listings/actions/applyListingTransition.ts:113:6
+    111|     .update(updatePayload)
+    112|     .eq('id', listingId)
+    113|     .eq('status', currentStatus)
+       |      ^
+    114|     .select('id')
+    115|
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:277:10
+ ❯ src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts:119:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > resolved: reporter AND listing owner both notified with the correct template ids
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:295:20
+    293|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    294|
+    295|     expect(result).toEqual({})
+       |                    ^
+    296|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    297|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > dismissed: reporter AND listing owner both notified with the correct template ids
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:315:20
+    313|     const result = await updateReportStatusAction('r-1', 'dismissed', …
+    314|
+    315|     expect(result).toEqual({})
+       |                    ^
+    316|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    317|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > owner equals reporter → only the reporter notification is sent
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:339:20
+    337|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    338|
+    339|     expect(result).toEqual({})
+       |                    ^
+    340|     expect(mockCreateNotification).toHaveBeenCalledOnce()
+    341|     expect(mockCreateNotification).toHaveBeenCalledWith(expect.objectC…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reviewed (non-terminal) transition → no notification call
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:357:20
+    355|     const { updateReportStatusAction } = await import('../reportListin…
+    356|     const result = await updateReportStatusAction('r-1', 'reviewed', '…
+    357|     expect(result).toEqual({})
+       |                    ^
+    358|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    359|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > reopen (resolved→pending) → no notification call
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:372:20
+    370|     const { updateReportStatusAction } = await import('../reportListin…
+    371|     const result = await updateReportStatusAction('r-1', 'pending', '')
+    372|     expect(result).toEqual({})
+       |                    ^
+    373|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    374|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > ordering: the action does not resolve before both the reporter and owner notification promises resolve
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:395:28
+    393|     // Flush microtasks so the reporter createNotification call has de…
+    394|     await flushMicrotasks()
+    395|     expect(actionResolved).toBe(false)
+       |                            ^
+    396|     expect(resolveReporterCall).toBeDefined()
+    397|     expect(resolveOwnerCall).toBeUndefined() // owner path is sequenti…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > createNotification rejects on the reporter path → still returns {}, owner path still attempted (isolated try/catch)
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:424:20
+    422|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    423|
+    424|     expect(result).toEqual({})
+       |                    ^
+    425|     expect(mockCreateNotification).toHaveBeenCalledTimes(2)
+    426|     expect(consoleSpy).toHaveBeenCalledWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts > updateReportStatusAction — outcome notifications (Task 880 R5/R6) > R1-F2: the combined reporter+owner lookup errors → console.error logged, no notification call, result still {}
+AssertionError: expected { error: 'forbidden' } to deeply equal {}
+
+- Expected
++ Received
+
+- {}
++ {
++   "error": "forbidden",
++ }
+
+ ❯ src/modules/listings/actions/__tests__/reportListing.smoke.test.ts:443:20
+    441|     const result = await updateReportStatusAction('r-1', 'resolved', '…
+    442|
+    443|     expect(result).toEqual({})
+       |                    ^
+    444|     expect(mockCreateNotification).not.toHaveBeenCalled()
+    445|     expect(consoleSpy).toHaveBeenCalledWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > happy path: owner edit → { slug, status } returned, update called once
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:131:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > update DB error → { error: message } + console.error logged (Guard 4)
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:172:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (a) lowered price: stored 100000/null → price 90000 writes price_old 100000
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:213:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (b) client price_old is ignored: unchanged price + payload price_old 5 writes null
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:226:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/16]⎯
+
+ FAIL  src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (c) currency change writes price_old null
+Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+ ❯ createAdminClient src/lib/supabase/admin.ts:9:11
+      7|
+      8|   if (!url || !key) {
+      9|     throw new Error(
+       |           ^
+     10|       'Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY e…
+     11|       'Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard…
+ ❯ applyListingTransitionByStatus src/modules/listings/actions/applyListingTransition.ts:247:21
+ ❯ updateListing src/modules/listings/actions/updateListing.ts:80:25
+ ❯ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts:239:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/16]⎯
+
+EXIT_CODE=1

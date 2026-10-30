@@ -4,6 +4,10 @@ Use this template before Opus publishes a non-trivial implementation task or ret
 decision. Keep the completed preflight with the task design or review evidence; do not replace it with a confidence
 statement.
 
+Follow the ordered C1-C7 design or R1-R7 review workflow. Use this existing evidence record for step observations;
+complete `.claude/rules/shared/task-readiness.md` before publishing any correction or new executor route. A filled
+table or startup receipt alone does not establish that a command ran or an instruction can be executed.
+
 ## 1. Scope and execution state
 
 | Field | Value |
@@ -87,6 +91,17 @@ At minimum test every new or changed gate against a missing/invalid input and in
 reported status. Mark the result `EXECUTED` only when a command or artifact actually exercised it; label a
 source-derived counterfactual `ANALYTICAL`, never “fired” or “cleared”.
 
+### 5a. Mobile adaptation record (visible UI only)
+
+| Surface / semantic regions | Pattern IDs | Primary standards inspected | Mobile range and actual switches | Compact reading/action order | Required-content treatment | Direct Story and range/transition evidence |
+|---|---|---|---|---|---|---|
+| | | W3C Reflow; Apple HIG Layout; Android Adapt layouts | `<640px` / actual thresholds / `640px` transition | | wrapping or canonical directly reachable disclosure; no clipping | |
+
+Repository code and current Stories may appear in the evidence column only as observed behavior/proof targets. They
+cannot supply the selected mobile pattern. Missing row, source, compact-range/transition record, required-content
+treatment, or rendered evidence is
+`BLOCKED — MOBILE ADAPTATION`.
+
 ## 6. Write-scope viability, ownership, and handoff readiness
 
 | Path the executor must change | Current classification | File-local limit / constraint | Allowed action or owner decision | Handoff / staging status |
@@ -138,6 +153,8 @@ unexpected path and a changed value; manual quotation is not a gate.
 - [ ] Every command can run at its scheduled point without overwriting irreplaceable evidence.
 - [ ] Reported enums, exit codes, matrices, and baseline counts come from the actual producing code/artifact.
 - [ ] UI claims separate source, computed, geometry, and required visual evidence.
+- [ ] Visible UI has a complete GR-3j Mobile adaptation record with primary sources, selected patterns, the `<640px`
+      range and actual switches, compact order, required-content treatment, direct Story, and transition evidence.
 - [ ] Synthetic UI probes assert and persist the effective mutation plus raw live/synthetic measurements.
 - [ ] Remediation plans name their start phase and preserved artifacts.
 - [ ] Every required write path is viable in the current worktree; no scope or reporting instruction contradicts it.

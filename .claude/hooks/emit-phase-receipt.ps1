@@ -4,7 +4,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('StorybookProof', 'KickoffEvidence', 'MobileAdaptation')]
+    [ValidateSet('StorybookProof', 'KickoffEvidence', 'MobileAdaptation', 'CanonicalReuse', 'UiContract')]
     [string]$Kind,
 
     [Parameter(Mandatory = $true)]
@@ -47,6 +47,16 @@ elseif ($Kind -eq 'MobileAdaptation') {
     $pattern = Get-MobileAdaptationReceiptPattern
     if ($Receipt -notmatch $pattern) {
         throw 'Invalid MobileAdaptation receipt. Use every named field in the mobile adaptation contract; mobile order may contain semicolons, but required content must remain `no semantic loss`.'
+    }
+}
+elseif ($Kind -eq 'CanonicalReuse') {
+    if ($Receipt -notmatch (Get-CanonicalReuseReceiptPattern)) {
+        throw 'Invalid CanonicalReuse receipt. Use the GR-0 receipt of docs/rules/golden/gr-0-canonical-reuse.md: request: ...; decision: REUSE | EXTEND | COMPOSE | CREATE; ...; new hardcoded visual values: NONE. A STOP decision never authorizes a write.'
+    }
+}
+elseif ($Kind -eq 'UiContract') {
+    if ($Receipt -notmatch (Get-UiContractReceiptPattern)) {
+        throw 'Invalid UiContract receipt. Use: UI CONTRACT PREFLIGHT COMPLETE - scope: <exact paths>; canonical owner: <path>; token owner: <registry/theme path>; direct Story: <path>.'
     }
 }
 

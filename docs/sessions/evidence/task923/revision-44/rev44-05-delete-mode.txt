@@ -1,0 +1,4 @@
+# Task 923 Revision 44 (Opus): the delete-mode line of .env.local (not a secret), 2026-10-24T11:02:07Z, HEAD 36c030802, win32, node v22.22.3, cwd /c/Claude_Code_Projects/lero-al
+$ node -e "const t=require('fs').readFileSync('.env.local','utf8'); const m=t.match(/^CLOUDINARY_DELETE_MODE=(.*)$/m); console.log('CLOUDINARY_DELETE_MODE', m ? JSON.stringify(m[1].trim()) : 'absent')"
+CLOUDINARY_DELETE_MODE "enabled"
+exit 0

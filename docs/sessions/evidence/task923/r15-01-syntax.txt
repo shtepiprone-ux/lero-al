@@ -1,0 +1,5 @@
+﻿platform win32 10.0.26300.0 node v22.22.3; plpgsql-parser 18.5.10 from a scratchpad prefix via NODE_PATH (not installed in the repository)
+cmd node docs/sessions/evidence/task923/db-catalog/r15-syntax.cjs
+proposed-hardening.sql: 54 statements, 10 plpgsql bodies parsed OK
+proposed-hardening-rollback.sql: 31 statements, 6 plpgsql bodies parsed OK
+EXIT_CODE=0

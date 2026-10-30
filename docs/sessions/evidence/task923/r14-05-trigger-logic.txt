@@ -1,0 +1,20 @@
+﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; temporary (pg_temp) objects only, one transaction, ROLLBACK
+cmd node docs/sessions/evidence/task923/db-catalog/r14-trigger-logic.cjs --i-confirm-dev-database
+ ok  B1 INSERT with an id and a supplied name: the name is the trigger's | observed: "Alice Staff"
+ ok  B2 INSERT with a null id and a supplied name: the name is null | observed: null
+ ok  B3 INSERT with a null id and no name: the name is null | observed: null
+ ok  B4 UPDATE of the name alone (id unchanged): the old name stays | observed: "Alice Staff"
+ ok  B5 UPDATE of another column: the name stays | observed: "Alice Staff"
+ ok  B6 UPDATE changing the id to another person (with a supplied name): recomputed from the new id | observed: "Bob Staff"
+ ok  B7 UPDATE making the id null (the SET NULL of a deletion): the old name stays | observed: {"actor":null,"actor_name":"Bob Staff"}
+ ok  B8 UPDATE of the name alone while the id is null: the old name stays | observed: "Bob Staff"
+ ok  B9 UPDATE keeping the id null and supplying a name: the old name stays | observed: "Bob Staff"
+ ok  B10 UPDATE from a null id to a person: recomputed | observed: "Alice Staff"
+ ok  O1 a backfill that runs BEFORE the trigger is created fills the names | observed: ["Alice Staff","Bob Staff"]
+ ok  O2 the same backfill AFTER the trigger exists is overridden by the trigger (names stay null): the order matters | observed: [null,null]
+ ok  U1 a backfill under the BEFORE UPDATE trigger rewrites updated_at (the hazard R59 (a) names) | observed: rows changed: 2
+ ok  U2 the same backfill with the trigger disabled around it leaves updated_at alone and still fills the names | observed: rows changed: 0; named: 2
+ ok  U3 the trigger is enabled again afterwards (tgenabled = O, as the preflight requires) | observed: "O"
+ ok  U4 after enabling, an ordinary UPDATE fires the trigger again | observed: rows changed: 1
+RESULT: all cases hold
+EXIT_CODE=0

@@ -1,8 +1,8 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Badge, Flex, Stack, Text, Title, useMantineTheme } from '@mantine/core'
-import { AlertTriangle } from 'lucide-react'
+import { Flex, Stack, Text, Title } from '@mantine/core'
+import { MantineBadge } from './MantineBadge'
 
 export interface MantineDashboardHeaderProps {
   title: string
@@ -31,10 +31,7 @@ export interface MantineDashboardHeaderProps {
  * Sizes come from the existing theme scale (no new font token): title `Title order={1}
  * size="h4"` (24/32 — what `AdminPageHeader` renders today), subtitle `Text size="sm"
  * c="gray.5"`, updated-at `Text size="xs" c="gray.5"`. The stale badge reuses the
- * `MantineDashboardCard` stale-badge anatomy (yellow `Badge`, `AlertTriangle` at
- * `iconSize.compact`, text always present — colour is never the only carrier).
- *
- * `'use client'`: `useMantineTheme` supplies the badge icon size (`theme.other.iconSize`).
+ * `MantineDashboardCard` stale badge (a warning-tone `MantineBadge`, text only, D78-29).
  *
  * `actions` (Task 877): the slot the shared `AdminPageHeader` adapter forwards its `action` to.
  *
@@ -48,7 +45,6 @@ export function MantineDashboardHeader({
   periodControl,
   actions,
 }: MantineDashboardHeaderProps) {
-  const theme = useMantineTheme()
   const hasStatusLine = Boolean(updatedAtLabel || stale)
 
   return (
@@ -83,12 +79,9 @@ export function MantineDashboardHeader({
                 </Text>
               )}
               {stale && (
-                <Badge
-                  color="yellow"
-                  leftSection={<AlertTriangle size={theme.other.iconSize.compact} aria-hidden="true" />}
-                >
+                <MantineBadge variant="tone" tone="warning">
                   {stale.label}
-                </Badge>
+                </MantineBadge>
               )}
             </Flex>
           )}

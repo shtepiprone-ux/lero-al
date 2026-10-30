@@ -6,7 +6,7 @@
  *   1. Same-password guard: submit is disabled when current === new, even when the new
  *      password meets every rule (`isSamePassword` in `CabinetPasswordSection.tsx`).
  *   2. `invalid_current` error mapping shows the localized alert.
- *   3. A successful change calls `signOut('global')` (session cleanup after a password change).
+ *   3. A successful change calls `signOut('local')` (the server has ended every session; the local sign-out only tells the page).
  *   4. (Review 1, §16.3, AC5′) The new-password field's Mantine `description` link: the input has
  *      a non-empty `aria-describedby` that resolves to a `<div>` containing all five
  *      `password_rule_*` keys — the accessibility link the owner (D81-5) required be preserved.
@@ -146,7 +146,7 @@ describe('CabinetPasswordSection — server error mapping (Task 873)', () => {
 })
 
 describe('CabinetPasswordSection — success path (Task 873)', () => {
-  it('a successful change calls signOut("global")', async () => {
+  it('a successful change calls signOut("local")', async () => {
     mockChangeCabinetPassword.mockResolvedValue({ ok: true })
     const { CabinetPasswordSection } = await import('../CabinetPasswordSection')
     let container: HTMLElement
@@ -171,7 +171,7 @@ describe('CabinetPasswordSection — success path (Task 873)', () => {
       newPassword: 'Sample123!',
     })
     expect(mockToastSuccess).toHaveBeenCalledWith('password_changed_success')
-    expect(mockSignOut).toHaveBeenCalledWith('global')
+    expect(mockSignOut).toHaveBeenCalledWith('local')
   })
 })
 

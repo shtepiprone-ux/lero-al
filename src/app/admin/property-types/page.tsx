@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPropertyTypesManager } from '@/components/admin/AdminPropertyTypesManager'
@@ -11,6 +12,8 @@ export default async function AdminPropertyTypesPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   await getAdminLocale()
   const t = await getTranslations('admin.property_types')
   const sp = await searchParams

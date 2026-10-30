@@ -1,10 +1,11 @@
 'use client'
 
-import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Alert, Button, Flex, Group, Stack, Text, Textarea, useMantineTheme } from '@mantine/core'
-import { AlertTriangle, RotateCcw, Trash2 } from 'lucide-react'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { Button, Stack, Text, Textarea } from '@mantine/core'
+import { DELETE_CONFIRM_WORD, MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+import { MantineDialogSection, MantineDialogSections } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 
 export type AdminUserProfileDialog =
   | 'unsaved'
@@ -30,52 +31,14 @@ export interface AdminUserProfileDialogsViewProps {
   onClose: () => void
 }
 
-interface ConfirmFooterProps {
-  cancelLabel: string
-  confirmLabel: string
-  confirmColor: 'red' | 'yellow' | 'green'
-  loading: boolean
-  confirmDisabled?: boolean
-  onCancel: () => void
-  onConfirm: () => void
-}
-
-/** The footer every dialog shares: cancel + confirm, stacked below `sm` (confirm on top), inline from `sm`. */
-function ConfirmFooter({ cancelLabel, confirmLabel, confirmColor, loading, confirmDisabled, onCancel, onConfirm }: ConfirmFooterProps) {
-  return (
-    <Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm" justify={{ base: 'stretch', sm: 'flex-end' }}>
-      <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} disabled={loading} onClick={onCancel}>
-        {cancelLabel}
-      </Button>
-      <Button
-        color={confirmColor}
-        w={{ base: '100%', sm: 'auto' }}
-        loading={loading}
-        disabled={confirmDisabled}
-        onClick={onConfirm}
-      >
-        {confirmLabel}
-      </Button>
-    </Flex>
-  )
-}
-
-function DialogTitle({ icon, color, children }: { icon: ReactNode; color: 'yellow.7' | 'red.7' | 'green.7'; children: ReactNode }) {
-  return (
-    <Group gap="xs" wrap="nowrap" c={color}>
-      {icon}
-      <Text component="span" inherit>
-        {children}
-      </Text>
-    </Group>
-  )
-}
-
 /**
  * Presentational View of the confirmation dialogs of `/admin/users/[id]` (Task 893, R6; Container/Presentational
- * split of `AdminUserProfile`). Every dialog is a controlled canonical `MantineModal` (centred from 640px, bottom
- * sheet below). No server call and no state beyond `useTranslations`: the container owns which dialog is open, the
- * reason text, the loading flag and every outcome.
+ * split of `AdminUserProfile`; Task 859 Revision 2, R29). Six dialogs are the canonical `MantineDeleteConfirmModal`
+ * (a red filled primary, Cancel on the left): leaving with unsaved changes, cancelling the creation, deactivating
+ * (with its required reason), the hard delete (with its consequences and the typed word DELETE, Task 923 R144) and the two history clears. Reactivating is the
+ * one non-destructive confirmation: a structured `MantineModal` whose primary is the theme's. No server call and no
+ * state beyond `useTranslations`: the container owns which dialog is open, the reason text, the loading flag and
+ * every outcome.
  */
 export function AdminUserProfileDialogsView({
   dialog,
@@ -88,199 +51,124 @@ export function AdminUserProfileDialogsView({
   onClose,
 }: AdminUserProfileDialogsViewProps) {
   const t = useTranslations('admin.user_profile')
-  const theme = useMantineTheme()
-  const iconSize = theme.other.iconSize.standard
+
+  const subject = (about: string) => (
+    <Stack gap="xs">
+      <Text fz="sm">{about}</Text>
+      <Text fz="sm" fw={600}>{userName}</Text>
+    </Stack>
+  )
+
+  const reasonField = (label: string, placeholder: string) => (
+    <Textarea
+      autosize
+      minRows={3}
+      label={label}
+      placeholder={placeholder}
+      value={reason}
+      onChange={e => onReasonChange(e.target.value)}
+    />
+  )
 
   return (
     <>
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={dialog === 'unsaved'}
         onClose={onClose}
-        title={
-          <DialogTitle icon={<AlertTriangle size={iconSize} />} color="yellow.7">
-            {t('dialogs.unsaved_title')}
-          </DialogTitle>
-        }
-        footer={
-          <ConfirmFooter
-            cancelLabel={t('dialogs.unsaved_stay')}
-            confirmLabel={t('dialogs.unsaved_leave')}
-            confirmColor="red"
-            loading={false}
-            onCancel={onClose}
-            onConfirm={onConfirm}
-          />
-        }
-      >
-        <Text size="sm" c="dimmed">
-          {t('dialogs.unsaved_body')}
-        </Text>
-      </MantineModal>
+        title={t('dialogs.unsaved_title')}
+        message={t('dialogs.unsaved_body')}
+        confirmLabel={t('dialogs.unsaved_leave')}
+        cancelLabel={t('dialogs.unsaved_stay')}
+        onConfirm={onConfirm}
+      />
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={dialog === 'cancel'}
         onClose={onClose}
-        title={
-          <DialogTitle icon={<AlertTriangle size={iconSize} />} color="yellow.7">
-            {t('dialogs.cancel_title')}
-          </DialogTitle>
-        }
-        footer={
-          <ConfirmFooter
-            cancelLabel={t('dialogs.cancel_return')}
-            confirmLabel={t('dialogs.cancel_confirm')}
-            confirmColor="red"
-            loading={false}
-            onCancel={onClose}
-            onConfirm={onConfirm}
-          />
-        }
-      >
-        <Text size="sm" c="dimmed">
-          {t('dialogs.cancel_body')}
-        </Text>
-      </MantineModal>
+        title={t('dialogs.cancel_title')}
+        message={t('dialogs.cancel_body')}
+        confirmLabel={t('dialogs.cancel_confirm')}
+        cancelLabel={t('dialogs.cancel_return')}
+        onConfirm={onConfirm}
+      />
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={dialog === 'deactivate'}
         onClose={onClose}
-        title={
-          <DialogTitle icon={<Trash2 size={iconSize} />} color="yellow.7">
-            {t('dialogs.deactivate_title')}
-          </DialogTitle>
-        }
-        footer={
-          <ConfirmFooter
-            cancelLabel={t('dialogs.deactivate_cancel')}
-            confirmLabel={t('dialogs.deactivate_confirm')}
-            confirmColor="yellow"
-            loading={loading}
-            confirmDisabled={!reason.trim()}
-            onCancel={onClose}
-            onConfirm={onConfirm}
-          />
-        }
+        title={t('dialogs.deactivate_title')}
+        message={subject(t('dialogs.deactivate_about'))}
+        confirmLabel={t('dialogs.deactivate_confirm')}
+        cancelLabel={t('dialogs.deactivate_cancel')}
+        loading={loading}
+        confirmDisabled={!reason.trim()}
+        onConfirm={onConfirm}
       >
-        <Stack gap="sm">
-          <Text size="sm" c="dimmed">
-            {t('dialogs.deactivate_about')}
-          </Text>
-          <Text size="sm" fw={600}>
-            {userName}
-          </Text>
-          <Textarea
-            autosize
-            minRows={3}
-            label={t('dialogs.deactivate_reason_label')}
-            placeholder={t('dialogs.deactivate_reason_placeholder')}
-            value={reason}
-            onChange={e => onReasonChange(e.target.value)}
-          />
-        </Stack>
-      </MantineModal>
+        <MantineDialogSection>
+          {reasonField(t('dialogs.deactivate_reason_label'), t('dialogs.deactivate_reason_placeholder'))}
+        </MantineDialogSection>
+      </MantineDeleteConfirmModal>
 
       <MantineModal
+        structured
         opened={dialog === 'reactivate'}
         onClose={onClose}
-        title={
-          <DialogTitle icon={<RotateCcw size={iconSize} />} color="green.7">
-            {t('dialogs.reactivate_title')}
-          </DialogTitle>
-        }
+        title={t('dialogs.reactivate_title')}
         footer={
-          <ConfirmFooter
-            cancelLabel={t('dialogs.reactivate_cancel')}
-            confirmLabel={t('dialogs.reactivate_confirm')}
-            confirmColor="green"
-            loading={loading}
-            confirmDisabled={!reason.trim()}
-            onCancel={onClose}
-            onConfirm={onConfirm}
+          <MantineDialogFooter
+            secondary={<Button type="button" variant="default" disabled={loading} onClick={onClose}>{t('dialogs.reactivate_cancel')}</Button>}
+            primary={
+              <Button type="button" loading={loading} disabled={!reason.trim()} onClick={onConfirm}>
+                {t('dialogs.reactivate_confirm')}
+              </Button>
+            }
           />
         }
       >
-        <Stack gap="sm">
-          <Text size="sm" c="dimmed">
-            {t('dialogs.reactivate_about')}
-          </Text>
-          <Text size="sm" fw={600}>
-            {userName}
-          </Text>
-          <Textarea
-            autosize
-            minRows={3}
-            label={t('dialogs.reactivate_reason_label')}
-            placeholder={t('dialogs.reactivate_reason_placeholder')}
-            value={reason}
-            onChange={e => onReasonChange(e.target.value)}
-          />
-        </Stack>
+        <MantineDialogSections>
+          <MantineDialogSection>{subject(t('dialogs.reactivate_about'))}</MantineDialogSection>
+          <MantineDialogSection>
+            {reasonField(t('dialogs.reactivate_reason_label'), t('dialogs.reactivate_reason_placeholder'))}
+          </MantineDialogSection>
+        </MantineDialogSections>
       </MantineModal>
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={dialog === 'delete'}
         onClose={onClose}
-        title={
-          <DialogTitle icon={<Trash2 size={iconSize} />} color="red.7">
-            {t('dialogs.delete_hard_title')}
-          </DialogTitle>
+        title={t('dialogs.delete_hard_title')}
+        message={
+          <Stack gap="xs">
+            <Text fz="sm">{t('dialogs.delete_hard_about')}</Text>
+            <Text fz="sm" fw={600}>{userName}</Text>
+            <Text fz="xs" c="dimmed">{email}</Text>
+          </Stack>
         }
-        footer={
-          <ConfirmFooter
-            cancelLabel={t('dialogs.delete_cancel')}
-            confirmLabel={t('dialogs.delete_hard_confirm')}
-            confirmColor="red"
-            loading={loading}
-            onCancel={onClose}
-            onConfirm={onConfirm}
-          />
-        }
+        confirmLabel={t('dialogs.delete_hard_confirm')}
+        cancelLabel={t('dialogs.delete_cancel')}
+        loading={loading}
+        onConfirm={onConfirm}
+        typedConfirm={{ word: DELETE_CONFIRM_WORD, label: t('dialogs.delete_type_confirm') }}
       >
-        <Stack gap="xs">
-          <Text size="sm" c="dimmed">
-            {t('dialogs.delete_hard_about')}
-          </Text>
-          <Text size="sm" fw={600}>
-            {userName}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {email}
-          </Text>
-          <Alert color="red" variant="light" title={t('dialogs.delete_hard_warning')}>
-            <Stack gap="xs">
-              <Text size="xs">{t('dialogs.delete_hard_point1')}</Text>
-              <Text size="xs">{t('dialogs.delete_shared_point2')}</Text>
-              <Text size="xs">{t('dialogs.delete_hard_point3')}</Text>
-            </Stack>
-          </Alert>
-        </Stack>
-      </MantineModal>
+        <MantineDialogSection title={t('dialogs.delete_hard_warning')}>
+          <Stack gap="xs">
+            <Text fz="sm">{t('dialogs.delete_hard_point1')}</Text>
+            <Text fz="sm">{t('dialogs.delete_hard_point3')}</Text>
+          </Stack>
+        </MantineDialogSection>
+      </MantineDeleteConfirmModal>
 
       {(['clear-row', 'clear-entity'] as const).map(scope => (
-        <MantineModal
+        <MantineDeleteConfirmModal
           key={scope}
           opened={dialog === scope}
           onClose={onClose}
-          title={
-            <DialogTitle icon={<Trash2 size={iconSize} />} color="red.7">
-              {scope === 'clear-entity' ? t('dialogs.clear_entity_title') : t('dialogs.clear_row_title')}
-            </DialogTitle>
-          }
-          footer={
-            <ConfirmFooter
-              cancelLabel={t('dialogs.clear_cancel')}
-              confirmLabel={t('dialogs.clear_confirm')}
-              confirmColor="red"
-              loading={loading}
-              onCancel={onClose}
-              onConfirm={onConfirm}
-            />
-          }
-        >
-          <Text size="sm" c="dimmed">
-            {scope === 'clear-entity' ? t('dialogs.clear_entity_body') : t('dialogs.clear_row_body')}
-          </Text>
-        </MantineModal>
+          title={scope === 'clear-entity' ? t('dialogs.clear_entity_title') : t('dialogs.clear_row_title')}
+          message={scope === 'clear-entity' ? t('dialogs.clear_entity_body') : t('dialogs.clear_row_body')}
+          confirmLabel={t('dialogs.clear_confirm')}
+          cancelLabel={t('dialogs.clear_cancel')}
+          loading={loading}
+          onConfirm={onConfirm}
+        />
       ))}
     </>
   )

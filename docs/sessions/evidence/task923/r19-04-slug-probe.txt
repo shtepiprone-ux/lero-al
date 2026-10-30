@@ -1,0 +1,27 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:31:00.367Z
+cmd node docs/sessions/evidence/task923/r19-04-slug-probe.cjs   (R82 (d): the 20000-title probe of r16-06 against the new generateSlug, with the old text as a control)
+module under test: src/modules/listings/lib/generateSlug.ts, sha256 5a034dd8da0548d4d816be6f93f297b617478202be931e6c27b25f21a30371a1
+
+the 15 realistic titles of r16-06 (the slug of the NEW generateSlug, its verdict under the rule):
+  ok      title "Apartament 2+1 në Tiranë" -> "apartament-21-ne-tirane-mvhwwp8d"
+  ok      title "Shitet apartament - 2+1" -> "shitet-apartament-21-mvhwwp8g"
+  ok      title "Apartment for sale — Tirana" -> "apartment-for-sale-tirana-mvhwwp8i"
+  ok      title "Villa me pamje nga deti" -> "villa-me-pamje-nga-deti-mvhwwp8l"
+  ok      title "Продається квартира в центрі" -> "listing-mvhwwp8n"
+  ok      title "Квартира 2+1" -> "21-mvhwwp8n"
+  ok      title "   " -> "listing-mvhwwp8n"
+  ok      title "---" -> "listing-mvhwwp8o"
+  ok      title "A - B" -> "a-b-mvhwwp8o"
+  ok      title "ë ç" -> "e-c-mvhwwp8o"
+  ok      title "Apartament 3+1, 120 m2, kati 5/9 (ri)" -> "apartament-31-120-m2-kati-59-ri-mvhwwp8o"
+  ok      title "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..." -> "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..."
+  ok      title "ab ab ab ab ab ab ab ab ab ab ab ab ab a..." -> "ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-..."
+  ok      title "Apartment_with_underscores" -> "apartment-with-underscores-mvhwwp8o"
+  ok      title "Zyrë me qira - qendër" -> "zyre-me-qira-qender-mvhwwp8o"
+  new: 0 of 15 refused; control (the old text): 6 of 15 refused (r16-06: 6)
+
+seeded pseudo-random sample: 20000 titles, 0 produce a slug the rule refuses (0.0%); longest slug 58 characters
+control (the old text of generateSlug) on the same sample: 11418 of 20000 refused (57.1%; r16-06: 11418)
+
+RESULT: the new generateSlug refuses 0 of the 15 realistic titles and 0 of the 20000; the control reproduces r16-06 (11418 and 6)
+EXIT_CODE=0

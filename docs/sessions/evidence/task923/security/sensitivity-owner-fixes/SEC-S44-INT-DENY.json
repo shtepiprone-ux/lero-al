@@ -1,0 +1,207 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:42:24.666Z",
+ "case": "SEC-S44-INT-DENY",
+ "results": [
+  {
+   "id": "SEC-S44-INT-DENY",
+   "testFile": "src/modules/admin/actions/userProfileFields.integration.test.ts",
+   "testName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "updateUserProfile also copies role and status from the caller, so a staff member can change them through it",
+     "from": "  for (const key of ['name', 'phone', 'company_name'] as const) {\n",
+     "to": "  for (const key of ['name', 'phone', 'company_name', 'role', 'status'] as unknown as readonly ('name' | 'phone' | 'company_name')[]) {\n"
+    }
+   ],
+   "failureMessage": "AssertionError: the role is unchanged: expected 'admin' to be 'user' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts:40:53\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259728469,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 560.3152999999998,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259730633,
+       "endTime": 1793259731193.3152,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259733849,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "failed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 619.2811999999999,
+         "failureMessages": [
+          "AssertionError: the role is unchanged: expected 'admin' to be 'user' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts:40:53\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259736974,
+       "endTime": 1793259737593.2812,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259740297,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 529.8893999999998,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259742325,
+       "endTime": 1793259742854.8894,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

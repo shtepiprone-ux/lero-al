@@ -1,0 +1,43 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T19:22:37.832Z
+command: node docs/sessions/evidence/task923/r33-60-route-proof.mjs
+---- output ----
+signed in as HYDRATION_AGENT1: /api/auth/me 200
+listing: 11-mr7ucly4
+PASS card sq 320
+PASS card sq 360
+PASS card sq 390
+PASS card sq 639
+PASS card sq 640
+PASS card sq 1024
+PASS card sq 1440
+PASS card en 320
+PASS card en 360
+PASS card en 390
+PASS card en 639
+PASS card en 640
+PASS card en 1024
+PASS card en 1440
+PASS card uk 320
+PASS card uk 360
+PASS card uk 390
+PASS card uk 639
+PASS card uk 640
+PASS card uk 1024
+PASS card uk 1440
+PASS card it 320
+PASS card it 360
+PASS card it 390
+PASS card it 639
+PASS card it 640
+PASS card it 1024
+PASS card it 1440
+PASS dialog uk 320
+PASS dialog uk 1440
+PASS toast uk 390 after 33.7 s: "Не вдалося підтвердити, що ви не робот. Спробуйте ще раз."
+ALL PASS
+
+---- end ----
+EXIT_CODE=0

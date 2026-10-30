@@ -4,13 +4,13 @@ import { useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Bookmark } from 'lucide-react'
-import { Button, Flex, TextInput, useMantineTheme } from '@mantine/core'
+import { Button, TextInput, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
-import { MantineModal } from '@/design-system/mantine/patterns'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { saveSavedSearch } from '@/modules/cabinet/actions'
 import { canonicalizeFilters } from '@/modules/listings/lib/savedSearchCanonicalize'
-
-const FULL_BELOW_SM = { base: '100%', sm: 'auto' } as const
 
 export function SaveSearchButton() {
   const t = useTranslations('saved_search')
@@ -82,34 +82,39 @@ export function SaveSearchButton() {
       </Button>
 
       <MantineModal
+        structured
         opened={open}
         onClose={() => setOpen(false)}
         title={t('save_modal_title')}
         footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} justify={{ sm: 'flex-end' }} gap="xs">
-            <Button variant="subtle" color="gray" w={FULL_BELOW_SM} onClick={() => setOpen(false)} disabled={isPending}>
-              {t('cancel')}
-            </Button>
-            <Button
-              w={FULL_BELOW_SM}
-              onClick={handleSave}
-              loading={isPending}
-              leftSection={<Bookmark size={theme.other.iconSize.compact} />}
-            >
-              {t('save')}
-            </Button>
-          </Flex>
+          <MantineDialogFooter
+            secondary={<Button type="button" variant="default" onClick={() => setOpen(false)} disabled={isPending}>{t('cancel')}</Button>}
+            primary={
+              <Button
+                type="button"
+                onClick={handleSave}
+                loading={isPending}
+                leftSection={<Bookmark size={theme.other.iconSize.compact} />}
+              >
+                {t('save')}
+              </Button>
+            }
+          />
         }
       >
-        <TextInput
-          label={t('name_placeholder')}
-          value={name}
-          onChange={e => setName(e.target.value)}
-          placeholder={buildAutoName()}
-          maxLength={80}
-          onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
-          autoFocus
-        />
+        <MantineDialogSections>
+          <MantineDialogSection>
+            <TextInput
+              label={t('name_placeholder')}
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder={buildAutoName()}
+              maxLength={80}
+              onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
+              autoFocus
+            />
+          </MantineDialogSection>
+        </MantineDialogSections>
       </MantineModal>
     </>
   )

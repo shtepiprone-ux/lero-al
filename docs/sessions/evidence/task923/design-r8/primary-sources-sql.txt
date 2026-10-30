@@ -1,0 +1,9 @@
+Primary sources for the Task 923 SQL review (Opus, 2026-10-18); literal text read in this session with WebFetch
+postgresql-18-security-definer https://www.postgresql.org/docs/18/sql-createfunction.html ("Writing SECURITY DEFINER Functions Safely")
+Particularly important in this regard is the temporary-table schema, which is searched first by default, and is normally writable by anyone. A secure arrangement can be obtained by forcing the temporary schema to be searched last. To do this, write pg_temp as the last entry in search_path.
+To avoid having a window where the new function is accessible to all, create it and set the privileges within a single transaction.
+supabase-auth-sessions https://supabase.com/docs/guides/auth/sessions
+You can check that the session_id claim in the JWT corresponds to a row in the auth.sessions table.
+Values below 5 minutes, and especially below 2 minutes, should not be used in most situations because:
+not stated on that page: what happens to a banned account's access token, or whether a signed-out session's token stays valid until expiry
+verified live later the same day (design-r8/catalog-premises.txt, line 4): the owner of the public SECURITY DEFINER functions, postgres, may SELECT auth.sessions

@@ -1,0 +1,53 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-grep.mjs
+date: 2026-10-23T18:18:12.785Z
+--- output ---
+— the new files: nothing of the old block may remain —
+  0  legacy Input               src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  className                  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  Loader2                    src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  style / styles prop        src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  sx prop                    src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  hex colour literal         src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  px / rem literal           src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  .replace( on a message     src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  0  legacy Input               src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  className                  src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  Loader2                    src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  style / styles prop        src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  sx prop                    src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  hex colour literal         src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  px / rem literal           src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  .replace( on a message     src/modules/cabinet/components/CabinetEmailChangeSection.tsx
+  0  legacy Input               src/modules/cabinet/lib/emailChangeErrors.ts
+  0  className                  src/modules/cabinet/lib/emailChangeErrors.ts
+  0  Loader2                    src/modules/cabinet/lib/emailChangeErrors.ts
+  0  style / styles prop        src/modules/cabinet/lib/emailChangeErrors.ts
+  0  sx prop                    src/modules/cabinet/lib/emailChangeErrors.ts
+  0  hex colour literal         src/modules/cabinet/lib/emailChangeErrors.ts
+  0  px / rem literal           src/modules/cabinet/lib/emailChangeErrors.ts
+  0  .replace( on a message     src/modules/cabinet/lib/emailChangeErrors.ts
+  0  legacy Input               src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  className                  src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  Loader2                    src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  style / styles prop        src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  sx prop                    src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  hex colour literal         src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  px / rem literal           src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+  0  .replace( on a message     src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx
+— ProfileTab.tsx: the names that only the moved block used —
+  0  Loader2                    src/modules/cabinet/components/ProfileTab.tsx
+  0  PasswordInput              src/modules/cabinet/components/ProfileTab.tsx
+  0  Stack                      src/modules/cabinet/components/ProfileTab.tsx
+  0  initiateEmailChange        src/modules/cabinet/components/ProfileTab.tsx
+  0  resendEmailVerification    src/modules/cabinet/components/ProfileTab.tsx
+  0  EMAIL_RE                   src/modules/cabinet/components/ProfileTab.tsx
+  0  emailChangeStatus          src/modules/cabinet/components/ProfileTab.tsx
+  0  setEmailError              src/modules/cabinet/components/ProfileTab.tsx
+  0  email_change_pending       src/modules/cabinet/components/ProfileTab.tsx
+zero hits in every pair
+
+
+EXIT_CODE=0

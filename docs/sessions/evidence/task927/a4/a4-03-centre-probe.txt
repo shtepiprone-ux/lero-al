@@ -1,0 +1,75 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a4/a4-03-centre-probe-drawer-body.mjs both
+started: 2026-10-23T20:16:52.701Z
+--- stdout ---
+login en 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal en 320: Google 288px in a 320px dialog body, gap left 16px, right 16px, centred
+login en 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal en 390: Google 358px in a 390px dialog body, gap left 16px, right 16px, centred
+login en 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+modal en 480: Google 400px in a 480px dialog body, gap left 40px, right 40px, centred
+login en 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+modal en 560: Google 400px in a 560px dialog body, gap left 80px, right 80px, centred
+login en 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+modal en 639: Google 400px in a 639px dialog body, gap left 120px, right 120px, centred
+login en 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 640: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login en 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 1024: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login en 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal en 1440: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login sq 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal sq 320: Google 288px in a 320px dialog body, gap left 16px, right 16px, centred
+login sq 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal sq 390: Google 358px in a 390px dialog body, gap left 16px, right 16px, centred
+login sq 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+modal sq 480: Google 400px in a 480px dialog body, gap left 40px, right 40px, centred
+login sq 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+modal sq 560: Google 400px in a 560px dialog body, gap left 80px, right 80px, centred
+login sq 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+modal sq 639: Google 400px in a 639px dialog body, gap left 120px, right 120px, centred
+login sq 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 640: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login sq 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 1024: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login sq 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal sq 1440: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login uk 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal uk 320: Google 288px in a 320px dialog body, gap left 16px, right 16px, centred
+login uk 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal uk 390: Google 358px in a 390px dialog body, gap left 16px, right 16px, centred
+login uk 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+modal uk 480: Google 400px in a 480px dialog body, gap left 40px, right 40px, centred
+login uk 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+modal uk 560: Google 400px in a 560px dialog body, gap left 80px, right 80px, centred
+login uk 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+modal uk 639: Google 400px in a 639px dialog body, gap left 120px, right 120px, centred
+login uk 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 640: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login uk 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 1024: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login uk 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal uk 1440: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login it 320: Google 288px in a 288px form, gap left 0px, right 0px, centred
+modal it 320: Google 288px in a 320px dialog body, gap left 16px, right 16px, centred
+login it 390: Google 358px in a 358px form, gap left 0px, right 0px, centred
+modal it 390: Google 358px in a 390px dialog body, gap left 16px, right 16px, centred
+login it 480: Google 400px in a 448px form, gap left 24px, right 24px, centred
+modal it 480: Google 400px in a 480px dialog body, gap left 40px, right 40px, centred
+login it 560: Google 400px in a 528px form, gap left 64px, right 64px, centred
+modal it 560: Google 400px in a 560px dialog body, gap left 80px, right 80px, centred
+login it 639: Google 400px in a 607px form, gap left 104px, right 104px, centred
+modal it 639: Google 400px in a 639px dialog body, gap left 120px, right 120px, centred
+login it 640: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 640: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login it 1024: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 1024: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+login it 1440: Google 348px in a 348px form, gap left 0px, right 0px, centred
+modal it 1440: Google 400px in a 408px dialog body, gap left 4px, right 4px, centred
+cells 64; Google button not centred: 0
+
+--- stderr ---
+
+exit code: 0

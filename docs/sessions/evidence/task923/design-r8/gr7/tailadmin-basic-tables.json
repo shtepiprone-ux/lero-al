@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-18",
+  "tool": "Playwright MCP, Chromium",
+  "url": "https://demo.tailadmin.com/basic-tables",
+  "w1920": [
+    { "cols": 4, "tableWidth": 1388, "wrapperClient": 1388, "wrapperScroll": 1388, "overflowX": "auto" },
+    { "cols": 5, "tableWidth": 1436, "wrapperClient": 1436, "wrapperScroll": 1436, "overflowX": "auto" },
+    { "cols": 3, "tableWidth": 1388, "wrapperClient": 1388, "wrapperScroll": 1388, "overflowX": "auto" }
+  ],
+  "w640": [
+    { "cols": 4, "tableWidth": 564, "wrapperClient": 493, "wrapperScroll": 564, "overflowX": "auto" },
+    { "cols": 5, "tableWidth": 546, "wrapperClient": 541, "wrapperScroll": 546, "overflowX": "auto" },
+    { "cols": 3, "tableWidth": 493, "wrapperClient": 493, "wrapperScroll": 493, "overflowX": "auto" }
+  ],
+  "note": "at 640 TailAdmin keeps the table and scrolls it horizontally (two of three tables overflow); this project's §7.3 forbids a horizontal scroll, so the reference is not followed here"
+}

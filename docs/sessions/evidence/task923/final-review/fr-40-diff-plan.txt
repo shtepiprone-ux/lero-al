@@ -1,0 +1,3 @@
+# fr-40 (Opus) 2026-10-28T22:37:21Z win32 node v22.22.3; node scripts/workflow-gates/cli.mjs diff --phase plan --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree (git CRLF warnings removed)
+Security scope: 10017 changed files, 9 task contract(s).
+exit 0

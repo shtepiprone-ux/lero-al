@@ -1,0 +1,59 @@
+{
+ "recentUsers": [
+  {
+   "id": "09c604fc-23a2-4662-9450-3db505c659ae",
+   "created_at": "2026-10-29T16:56:56.660Z",
+   "role": "user",
+   "user_type": "private",
+   "status": "active",
+   "location_id": 151,
+   "has_phone": true,
+   "email": "pr***@gmail.com",
+   "invited_at": "2026-10-29T16:56:56.736Z",
+   "confirmation_sent_at": null,
+   "email_confirmed_at": "2026-10-29T16:57:13.348Z",
+   "last_sign_in_at": "2026-10-29T16:57:52.733Z",
+   "auth_created_at": "2026-10-29T16:56:56.664Z"
+  }
+ ],
+ "triggers": [
+  {
+   "sch": "auth",
+   "tbl": "users",
+   "trigger_name": "on_auth_user_created",
+   "action_timing": "AFTER",
+   "events": "INSERT",
+   "action_statement": "EXECUTE FUNCTION handle_new_user()"
+  },
+  {
+   "sch": "public",
+   "tbl": "users",
+   "trigger_name": "on_user_created_notifications",
+   "action_timing": "AFTER",
+   "events": "INSERT",
+   "action_statement": "EXECUTE FUNCTION handle_new_user_notifications()"
+  },
+  {
+   "sch": "public",
+   "tbl": "users",
+   "trigger_name": "users_guard_protected",
+   "action_timing": "BEFORE",
+   "events": "INSERT,UPDATE",
+   "action_statement": "EXECUTE FUNCTION guard_users_protected_columns()"
+  }
+ ],
+ "functions": [
+  {
+   "sig": "handle_new_user_notifications()",
+   "def": "CREATE OR REPLACE FUNCTION public.handle_new_user_notifications()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nBEGIN\r\n  INSERT INTO public.notification_settings (user_id)\r\n  VALUES (NEW.id)\r\n  ON CONFLICT (user_id) DO NOTHING;\r\n  RETURN NEW;\r\nEND;\r\n$function$\n"
+  },
+  {
+   "sig": "handle_new_user()",
+   "def": "CREATE OR REPLACE FUNCTION public.handle_new_user()\n RETURNS trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\ndeclare\r\n  v_type user_type := 'private';\r\n  v_avatar text := new.raw_user_meta_data->>'avatar_url';\r\nbegin\r\n  if new.raw_user_meta_data->>'user_type' = 'agent' then v_type := 'agent'; end if;   -- the only choice a sign-up form offers\r\n  if v_avatar is not null and v_avatar !~ '^https://' then v_avatar := null; end if;   -- the value is rendered in <img src>\r\n  insert into public.users (id, name, phone, avatar_url, role, user_type, is_verified, created_at)\r\n  values (\r\n    new.id,\r\n    left(coalesce(new.raw_user_meta_data->>'name', new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)), 200),\r\n    left(new.raw_user_meta_data->>'phone', 32),\r\n    left(v_avatar, 2000),\r\n    'user'::user_role,                       -- never from metadata: administrators are made by an administrator with service_role\r\n    v_type,\r\n    false,\r\n    now()\r\n  )\r\n  on conflict (id) do nothing;\r\n  return new;\r\nend $function$\n"
+  },
+  {
+   "sig": "guard_users_protected_columns()",
+   "def": "CREATE OR REPLACE FUNCTION public.guard_users_protected_columns()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'public', 'pg_temp'\nAS $function$\r\nbegin\r\n  -- service_role, the table owner and SECURITY DEFINER functions are trusted; an active administrator acting through a session is too\r\n  if current_user not in ('authenticated', 'anon') or public.caller_is_admin() then return new; end if;\r\n  if tg_op = 'INSERT' then\r\n    -- a session may only ever insert a plain, active, unverified, never-sanctioned user (no policy allows an insert today; this does not depend on that)\r\n    if new.role::text <> 'user'\r\n    or coalesce(new.is_verified, false)\r\n    or coalesce(new.status::text, 'active') <> 'active'\r\n    or new.block_reason is not null\r\n    or new.suspended_until is not null\r\n    or new.deleted_at is not null then\r\n      raise exception 'protected column' using errcode = '42501';\r\n    end if;\r\n    return new;\r\n  end if;\r\n  if new.id is distinct from old.id\r\n  or new.role is distinct from old.role\r\n  or new.is_verified is distinct from old.is_verified\r\n  or new.status is distinct from old.status\r\n  or new.block_reason is distinct from old.block_reason\r\n  or new.suspended_until is distinct from old.suspended_until\r\n  or new.deleted_at is distinct from old.deleted_at\r\n  or new.public_id is distinct from old.public_id then\r\n    raise exception 'protected column' using errcode = '42501';\r\n  end if;\r\n  return new;\r\nend $function$\n"
+  }
+ ]
+}

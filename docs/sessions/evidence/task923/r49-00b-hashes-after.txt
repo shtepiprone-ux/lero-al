@@ -1,0 +1,14 @@
+# R149 AC149 r49-00b-hashes-after: sha256 of the two R149 paths after the edit
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: sha256sum src/app/admin/users/[id]/page.tsx src/app/admin/users/__tests__/adminUserGone.security.test.ts
+NODE_PATH: (unset)
+started: 2026-10-25T08:45:01.010Z
+--- stdout ---
+ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71 *src/app/admin/users/[id]/page.tsx
+0687c6be195dbeb2555db0edc1421f40cb813e8817e8fed961ddd3e90997c0c5 *src/app/admin/users/__tests__/adminUserGone.security.test.ts
+
+--- stderr ---
+
+--- exit code: 0 ---

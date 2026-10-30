@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { ActionIcon, Badge, Box, Button, Center, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Box, Button, Center, Flex, Group, Stack, Text, useMantineTheme } from '@mantine/core'
 import { Activity, CalendarClock, Check, Eye, Info, Mail, MessageCircle, MessageSquare } from 'lucide-react'
 import { MantineDashboardHeader } from '@/design-system/mantine/patterns/MantineDashboardHeader'
 import { MantineDashboardPeriodControl, type DashboardPeriodControlLabels } from '@/design-system/mantine/patterns/MantineDashboardPeriodControl'
@@ -30,7 +30,7 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AppImage } from '@/design-system/media/AppImage'
 import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
 import { LISTING_STATUS_COLOR, VISIBILITY_TONE_COLOR } from '@/modules/listings/lib/listingStatusTone'
-import { formatCount, formatDate, formatDateOnly, formatShortDate } from '@/lib/formatters'
+import { formatCount, formatDate, formatDateOnly, formatDateRange, formatDayNumber, formatShortDate } from '@/lib/formatters'
 import { tiraneAbsoluteLabel, compareToPrevious, serializePeriod, type PeriodSelection } from '@/lib/dashboard/period'
 import { agentCardHref } from '@/modules/cabinet/statistics/hrefs'
 import { AGT10_SORT_TOKENS, sortTokenOf, resolveSortToken, serializeAgt10Table } from '@/modules/cabinet/statistics/tableParams'
@@ -41,6 +41,7 @@ import type { PortfolioSegments } from '@/modules/cabinet/statistics/portfolio'
 import { activityStates } from '@/modules/cabinet/statistics/activityState'
 import type { BlockResult } from '@/lib/dashboard/blockResult'
 import type { ListingStatus, ListingType } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AgentStatisticsViewProps {
   data: AgentStatisticsData
@@ -272,7 +273,7 @@ export function AgentStatisticsView({
 
   function titleLink(row: Agt10Row): ReactNode {
     return (
-      <Text component={Link} href={`/${locale}/listings/${row.slug}`} size="sm" fw={500} c="gray.8" lineClamp={2}>
+      <Text component={Link} href={`/${locale}/listings/${row.slug}`} size="sm" fw={500} c="gray.8">
         {row.title}
       </Text>
     )
@@ -280,17 +281,17 @@ export function AgentStatisticsView({
 
   function statusBadge(row: Agt10Row): ReactNode {
     return (
-      <Badge color={LISTING_STATUS_COLOR[row.status]} variant="light" size="sm">
+      <MantineBadge variant="status" entity="listing" value={row.status}>
         {getListingStatusLabel(row.status, tl)}
-      </Badge>
+      </MantineBadge>
     )
   }
 
   function visibilityBadge(row: Agt10Row): ReactNode {
     return (
-      <Badge color={row.visible ? VISIBILITY_TONE_COLOR.positive : VISIBILITY_TONE_COLOR.danger} variant="light" size="sm">
+      <MantineBadge variant="status" entity="listingVisibility" value={row.visible ? 'visible' : 'hidden'}>
         {row.visible ? t('agt10_visibility_visible') : t('agt10_visibility_hidden')}
-      </Badge>
+      </MantineBadge>
     )
   }
 
@@ -348,7 +349,7 @@ export function AgentStatisticsView({
       key: 'status',
       label: t('agt10_col_status'),
       render: (row) => (
-        <Stack gap="tight" align="flex-start">
+        <Stack gap="sm" align="flex-start">
           {statusBadge(row)}
           {visibilityBadge(row)}
         </Stack>
@@ -358,7 +359,7 @@ export function AgentStatisticsView({
       key: 'dates',
       label: t('agt10_col_dates'),
       render: (row) => (
-        <Stack gap="tight" align="flex-start">
+        <Stack gap="sm" align="flex-start">
           <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_expires')}>
             <CalendarClock size={theme.other.iconSize.badge} aria-hidden="true" />
             {expiresCell(row)}
@@ -375,7 +376,7 @@ export function AgentStatisticsView({
       label: t('agt10_col_activity_counts'),
       align: 'right',
       render: (row) => (
-        <Stack gap="tight" align="flex-end">
+        <Stack gap="sm" align="flex-end">
           <Group gap="tight" wrap="nowrap" role="group" aria-label={t('agt10_col_views')}>
             <Eye size={theme.other.iconSize.badge} aria-hidden="true" />
             {viewsCell(row)}
@@ -512,6 +513,8 @@ export function AgentStatisticsView({
         main={
           <MantineDashboardCard
             title={t('activity_card_title', { period: periodLabel })}
+            // Task 923 Revision 7: the axis ticks are bare days; the period (with its month) is stated ONCE here, under the title
+            scopeLabel={formatDateRange(activityChartData[0]?.date, activityChartData[activityChartData.length - 1]?.date, locale)}
             state={cardState}
             errorMessage={t('error_generic')}
             retryLabel={tCommon('retry')}
@@ -550,7 +553,8 @@ export function AgentStatisticsView({
                 { key: 'formInquiries', label: t('activity_series_form'), color: theme.other.chartSeries.formInquiries },
               ]}
               mode="multi"
-              dateLabel={(d) => formatShortDate(d, locale)}
+              dateLabel={formatDayNumber}
+              tooltipDateLabel={(d) => formatShortDate(d, locale)}
               valueLabel={fc}
               state={chartState}
               emptyDescription={t('activity_empty')}

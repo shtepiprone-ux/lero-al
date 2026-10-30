@@ -1,0 +1,18 @@
+Opus, Task 923, the owner's answers to Q1 and Q2 (2026-10-20): read-only listings of the code, taken 2026-10-20T06:10:31Z
+[1] public route folders under src/app/[locale] (no profile, user or agent route):
+[slug]
+__ci
+auth
+cabinet
+ci
+contact
+favorites
+layout.tsx
+listings
+page.tsx
+[2] folders under src/app/[locale] and src/app/api named profile, users, agent or seller: 0
+[3] every href in src/modules/listings/components/ListingContact.tsx: 136: a.href = `tel:${digits}`
+[4] files among the listing page and ListingContact.tsx that link to a /users/, /profile/ or /agent/ path: 0
+[5] href occurrences in src/design-system/mantine/patterns/MantineListingContactPattern.tsx: 0
+[6] sendEmail or notify occurrences in src/app/api/cron/listings-expiry/route.ts: 0
+[7] files in src (tests excluded) that call restore_inactive_account or caller_access_state: 0

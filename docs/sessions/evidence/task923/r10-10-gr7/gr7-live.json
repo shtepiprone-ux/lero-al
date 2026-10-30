@@ -1,0 +1,564 @@
+{
+  "takenAt": "2026-10-19T07:41:25.053Z",
+  "primary": [
+    {
+      "source": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/",
+      "status": 200,
+      "literals": [
+        {
+          "pattern": "/Tab\\s*:?\\s*Moves focus to the next tabbable element inside the dialog/i",
+          "literal": "n element inside the dialog. See notes below regarding initial focus placement. Tab : Moves focus to the next tabbable element inside the dialog. If focus is on the last tabbable element inside the dialog, moves focus to the first tabbable element inside the dialog. Shift + Tab : Moves focus to the previous tabbable element inside the dia"
+        },
+        {
+          "pattern": "/Shift \\+ Tab/i",
+          "literal": "e non-modal dialogs, modal dialogs contain their tab sequence. That is, Tab and Shift + Tab do not move focus outside the dialog. However, unlike most non-modal dialogs, modal dialogs do not provide means for moving keyboard focus outside the dialog window without closing the dialog. The alertdialog role is a special-case dialog role desi"
+        }
+      ]
+    },
+    {
+      "source": "https://www.w3.org/WAI/WCAG21/Understanding/reflow",
+      "status": 200,
+      "literals": [
+        {
+          "pattern": "/without loss of information or functionality/i",
+          "literal": "must scroll to read long lines. Success Criterion (SC) Content can be presented without loss of information or functionality, and without requiring scrolling in two dimensions for: Vertical scrolling content at a width equivalent to 320 CSS pixels ; Horizontal scrolling content at a height equivalent to 256 CSS pixels . Except for parts o"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "ref": "lahomes",
+      "name": "ui-offcanvas",
+      "url": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "panels": [
+        {
+          "index": 0,
+          "error": "trigger not visible"
+        },
+        {
+          "index": 1,
+          "label": "Link with href",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 2,
+          "label": "Button with data-bs-target",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 3,
+          "label": "Enable Body Scrolling",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": false,
+          "tabPresses": 12
+        },
+        {
+          "index": 4,
+          "label": "Enable Backdrop (Default)",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 5,
+          "label": "Enable Both Scrolling & Backdrop",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        }
+      ]
+    },
+    {
+      "ref": "lahomes",
+      "name": "ui-offcanvas",
+      "url": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/ui-offcanvas.html",
+      "panels": [
+        {
+          "index": 0,
+          "label": "",
+          "panel": {
+            "placement": "end",
+            "box": {
+              "x": 1160,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Reset"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 1,
+          "label": "Link with href",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 2,
+          "label": "Button with data-bs-target",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 3,
+          "label": "Enable Body Scrolling",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": false,
+          "tabPresses": 12
+        },
+        {
+          "index": 4,
+          "label": "Enable Backdrop (Default)",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        },
+        {
+          "index": 5,
+          "label": "Enable Both Scrolling & Backdrop",
+          "panel": {
+            "placement": "start",
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 280,
+              "h": 900
+            },
+            "closeControls": 1,
+            "buttons": [
+              "",
+              "Dropdown button"
+            ]
+          },
+          "tabStaysInside": true,
+          "tabPresses": 12
+        }
+      ]
+    },
+    {
+      "ref": "lahomes",
+      "name": "property-grid",
+      "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "filters": {
+        "triggers": [],
+        "applies": [
+          "Apply"
+        ],
+        "offcanvasCount": 1
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "property-grid",
+      "url": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-grid.html",
+      "filters": {
+        "triggers": [],
+        "applies": [
+          "Apply"
+        ],
+        "offcanvasCount": 1
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "property-list",
+      "url": "https://techzaa.in/lahomes/admin/property-list.html",
+      "width": 768,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-list.html",
+      "tables": [
+        {
+          "columns": 9,
+          "tableLayout": "auto",
+          "tableWidth": 1038,
+          "wrapperClient": 728,
+          "wrapperScroll": 1038,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ],
+      "filters": {
+        "triggers": [],
+        "applies": [],
+        "offcanvasCount": 1
+      }
+    },
+    {
+      "ref": "lahomes",
+      "name": "property-list",
+      "url": "https://techzaa.in/lahomes/admin/property-list.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://techzaa.in/lahomes/admin/property-list.html",
+      "tables": [
+        {
+          "columns": 9,
+          "tableLayout": "auto",
+          "tableWidth": 1038,
+          "wrapperClient": 350,
+          "wrapperScroll": 1038,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ],
+      "filters": {
+        "triggers": [],
+        "applies": [],
+        "offcanvasCount": 1
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "property-list",
+      "url": "https://omah.dexignzone.com/xhtml/property-list.html",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/property-list.html",
+      "filters": {
+        "triggers": [
+          "Search"
+        ],
+        "applies": [
+          "Search"
+        ],
+        "offcanvasCount": 0
+      }
+    },
+    {
+      "ref": "omah",
+      "name": "property-list",
+      "url": "https://omah.dexignzone.com/xhtml/property-list.html",
+      "width": 1440,
+      "status": 200,
+      "finalUrl": "https://omah.dexignzone.com/xhtml/property-list.html",
+      "filters": {
+        "triggers": [
+          "Search"
+        ],
+        "applies": [
+          "Search"
+        ],
+        "offcanvasCount": 0
+      }
+    },
+    {
+      "ref": "tailadmin",
+      "name": "basic-tables",
+      "url": "https://demo.tailadmin.com/basic-tables",
+      "width": 768,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/basic-tables",
+      "tables": [
+        {
+          "columns": 4,
+          "tableLayout": "auto",
+          "tableWidth": 620,
+          "wrapperClient": 620,
+          "wrapperScroll": 620,
+          "scrolls": false,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 668,
+          "wrapperClient": 668,
+          "wrapperScroll": 668,
+          "scrolls": false,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 3,
+          "tableLayout": "auto",
+          "tableWidth": 620,
+          "wrapperClient": 620,
+          "wrapperScroll": 620,
+          "scrolls": false,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 7,
+          "tableLayout": "auto",
+          "tableWidth": 953,
+          "wrapperClient": 668,
+          "wrapperScroll": 953,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 727,
+          "wrapperClient": 668,
+          "wrapperScroll": 775,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 1102,
+          "wrapperClient": 668,
+          "wrapperScroll": 1102,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ]
+    },
+    {
+      "ref": "tailadmin",
+      "name": "basic-tables",
+      "url": "https://demo.tailadmin.com/basic-tables",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://demo.tailadmin.com/basic-tables",
+      "tables": [
+        {
+          "columns": 4,
+          "tableLayout": "auto",
+          "tableWidth": 564,
+          "wrapperClient": 282,
+          "wrapperScroll": 564,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 546,
+          "wrapperClient": 314,
+          "wrapperScroll": 546,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 3,
+          "tableLayout": "auto",
+          "tableWidth": 359,
+          "wrapperClient": 274,
+          "wrapperScroll": 359,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 7,
+          "tableLayout": "auto",
+          "tableWidth": 953,
+          "wrapperClient": 314,
+          "wrapperScroll": 953,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 683,
+          "wrapperClient": 314,
+          "wrapperScroll": 723,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        },
+        {
+          "columns": 5,
+          "tableLayout": "auto",
+          "tableWidth": 1102,
+          "wrapperClient": 314,
+          "wrapperScroll": 1102,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ]
+    },
+    {
+      "ref": "kamr",
+      "name": "table-filtering",
+      "url": "https://kamr-vite.vercel.app/table-filtering",
+      "width": 768,
+      "kamrLogin": "https://kamr-vite.vercel.app/dashboard",
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/table-filtering",
+      "tables": [
+        {
+          "columns": 7,
+          "tableLayout": "auto",
+          "tableWidth": 852,
+          "wrapperClient": 570,
+          "wrapperScroll": 852,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ],
+      "filters": {
+        "triggers": [],
+        "applies": [],
+        "offcanvasCount": 0
+      }
+    },
+    {
+      "ref": "kamr",
+      "name": "table-filtering",
+      "url": "https://kamr-vite.vercel.app/table-filtering",
+      "width": 390,
+      "status": 200,
+      "finalUrl": "https://kamr-vite.vercel.app/table-filtering",
+      "tables": [
+        {
+          "columns": 7,
+          "tableLayout": "auto",
+          "tableWidth": 852,
+          "wrapperClient": 334,
+          "wrapperScroll": 852,
+          "scrolls": true,
+          "percentageWidthColumns": 0
+        }
+      ],
+      "filters": {
+        "triggers": [],
+        "applies": [],
+        "offcanvasCount": 0
+      }
+    }
+  ]
+}

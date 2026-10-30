@@ -1,0 +1,49 @@
+# r51-04-probe.txt: Task 923 Revision 51, R156, the real changeCabinetPassword on the approved development project
+platform: win32 10.0.26300 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r51-04-probe.mjs   (runs: npx vitest run --config <generated, outside the repository> --reporter=verbose, with SECURITY_TEST_TARGET=development and SECURITY_TEST_PROJECT_REF taken from the URL in .env.local; neither is printed)
+started: 2026-10-25T12:49:15.972Z
+--- output (URL, host, project ref and JWT-shaped strings replaced by placeholders) ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > the real changeCabinetPassword ends every session of the account and empties the browser cookie
+PROBE| before: sessions issued for the account 2; browser alive; second alive; auth cookies in the jar 1
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > the real changeCabinetPassword ends every session of the account and empties the browser cookie
+PROBE| the real changeCabinetPassword answered {"ok":true}
+PROBE| sessions issued for the account after the call 3 (the password check's own is the third)
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > the real changeCabinetPassword ends every session of the account and empties the browser cookie
+PROBE| after: browser ended; second ended; the check's own ended
+PROBE| cookie writes: sb-<ref>-auth-token value empty maxAge 0; auth cookies left 0
+PROBE| /auth/v1/logout requests: POST /auth/v1/logout?scope=global -> 403 session_not_found
+PROBE| mail sink: 1 password-changed notice(s) recorded, nothing sent
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > the real changeCabinetPassword ends every session of the account and empties the browser cookie
+PROBE| control: the new password signs in yes; the old password signs in no
+
+ ✓ docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > the real changeCabinetPassword ends every session of the account and empties the browser cookie 3151ms
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > control: what the admin password update alone does to the live sessions
+PROBE| control 2, before the admin password update: browser alive; second alive; third (stands for the check's own) alive
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > control: what the admin password update alone does to the live sessions
+PROBE| control 2: admin updateUserById ok
+
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > control: what the admin password update alone does to the live sessions
+PROBE| control 2, after the admin password update alone: browser ended; second ended; third (stands for the check's own) ended
+
+ ✓ docs/sessions/evidence/task923/r51-04-probe.body.mjs > r51-04 > control: what the admin password update alone does to the live sessions 1409ms
+PROBE-LINES-JSON ["before: sessions issued for the account 2; browser alive; second alive; auth cookies in the jar 1","the real changeCabinetPassword answered {\"ok\":true}","sessions issued for the account after the call 3 (the password check's own is the third)","after: browser ended; second ended; the check's own ended","cookie writes: sb-<ref>-auth-token value empty maxAge 0; auth cookies left 0","/auth/v1/logout requests: POST /auth/v1/logout?scope=global -> 403 session_not_found","mail sink: 1 password-changed notice(s) recorded, nothing sent","control: the new password signs in yes; the old password signs in no","control 2, before the admin password update: browser alive; second alive; third (stands for the check's own) alive","control 2: admin updateUserById ok","control 2, after the admin password update alone: browser ended; second ended; third (stands for the check's own) ended","clean-up: {\"verified\":true,\"remaining\":0,\"errors\":[]}"]
+stdout | docs/sessions/evidence/task923/r51-04-probe.body.mjs
+PROBE| clean-up: {"verified":true,"remaining":0,"errors":[]}
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  13:49:17
+   Duration  6.63s (transform 139ms, setup 51ms, import 183ms, tests 6.28s, environment 0ms)
+
+
+--- exit code: 0 ---

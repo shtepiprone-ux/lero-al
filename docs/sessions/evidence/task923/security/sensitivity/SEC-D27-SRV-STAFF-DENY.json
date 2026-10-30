@@ -1,0 +1,500 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T12:08:19.664Z",
+ "case": "SEC-D27-SRV-STAFF-DENY",
+ "results": [
+  {
+   "id": "SEC-D27-SRV-STAFF-DENY",
+   "testFile": "src/lib/auth/staffAccess.security.test.ts",
+   "testName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/auth/requireViewer.ts",
+     "description": "the account-state check is removed from requireViewer",
+     "from": "    if (!accountHasAccess(data.status, data.suspended_until)) return { ok: false, reason: 'unauthenticated' }\n",
+     "to": ""
+    },
+    {
+     "file": "src/lib/auth/requireViewer.ts",
+     "description": "the deleted mark is no longer a reason to refuse in requireViewer",
+     "from": "    if (!data || data.deleted_at) return { ok: false, reason: 'unauthenticated' }\n",
+     "to": "    if (!data) return { ok: false, reason: 'unauthenticated' }\n"
+    }
+   ],
+   "failureMessage": "AssertionError: getStaffRole / admin / deleted: the existing refusal, got \"admin\": expected false to be true // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.security.test.ts:128:102\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325274922,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 16.934399999999982,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325275567,
+       "endTime": 1792325275583.9343,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325276604,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "failed",
+         "title": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 6.758800000000008,
+         "failureMessages": [
+          "AssertionError: getStaffRole / admin / deleted: the existing refusal, got \"admin\": expected false to be true // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.security.test.ts:128:102\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325277242,
+       "endTime": 1792325277248.7588,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 3,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 2,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325278240,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 16.6087,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-SRV-STAFF-ERR] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325278886,
+       "endTime": 1792325278902.6086,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-D27-INT-STAFF-DENY",
+   "testFile": "src/lib/auth/staffAccess.integration.test.ts",
+   "testName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/lib/auth/requireViewer.ts",
+     "description": "the account-state check is removed from requireViewer",
+     "from": "    if (!accountHasAccess(data.status, data.suspended_until)) return { ok: false, reason: 'unauthenticated' }\n",
+     "to": ""
+    },
+    {
+     "file": "src/lib/auth/requireViewer.ts",
+     "description": "the deleted mark is no longer a reason to refuse in requireViewer",
+     "from": "    if (!data || data.deleted_at) return { ok: false, reason: 'unauthenticated' }\n",
+     "to": "    if (!data) return { ok: false, reason: 'unauthenticated' }\n"
+    }
+   ],
+   "failureMessage": "AssertionError: 5bdfa795-eb19-4822-bc85-5f12a13652db: no staff role: expected 'admin' to be null\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts:71:65\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325279902,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 4109.9133,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325281001,
+       "endTime": 1792325285110.9133,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325287191,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "failed",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 2837.4381999999996,
+         "failureMessages": [
+          "AssertionError: 5bdfa795-eb19-4822-bc85-5f12a13652db: no staff role: expected 'admin' to be null\n    at C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts:71:65\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325288336,
+       "endTime": 1792325291173.4382,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792325293339,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "passed",
+         "title": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "duration": 4184.1271,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "status": "skipped",
+         "title": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792325294342,
+       "endTime": 1792325298526.1272,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/lib/auth/staffAccess.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

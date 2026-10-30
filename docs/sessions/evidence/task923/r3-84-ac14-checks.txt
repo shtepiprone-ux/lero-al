@@ -1,0 +1,11 @@
+rows 22739; app 12820; portal 9919
+rows missing a rule key (of 20) 0; rows without notApplicable 0; unique 22739
+rows with a retry key 48 (cells 24); retry value not a string 0
+gate-level cells (open-failed, portal-count, widths-mismatch, error-screen) by width and owner: {"error-screen @390 -> NONE":1,"open-failed @640 -> 924":24,"portal-count @640 -> 924":4,"widths-mismatch @640 -> 924":44,"error-screen @390 -> 925":1}
+gate-level cells owned by neither 924 nor 925 (AC14: must be 0), of which at 639: 1 (0)
+  STRAY error-screen | mantine-primitives-headerview--signing-out | mantine-primitives-headerview--signing-out~notifications | it | @390: render did not reach finished/errored within 20s
+unregistered-portal rows 0
+AC4 patterns-mantine-ticketdetaildialogview--support @320: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 4
+AC4 patterns-mantine-ticketdetaildialogview--support @390: portal rows 4, failing 4 [text-clamp, component-overflow]; app rows failing 0 of 5
+AC4 patterns-mantine-userpickerfieldview--results @320: portal rows 4, failing 4 [word-split, viewport-overflow, component-overflow]; app rows failing 0 of 8
+AC4 patterns-mantine-listingpreviewdialogview--active @320: portal rows 4, failing 4 [text-clamp, text-hidden]; app rows failing 0 of 4

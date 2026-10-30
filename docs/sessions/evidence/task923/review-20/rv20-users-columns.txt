@@ -1,0 +1,3 @@
+source: docs/sessions/evidence/task923/r14-03-capture.json (columns, tbl users), taken 2026-10-19T20:26:48.531Z
+users columns (29): id, name, phone, whatsapp, avatar_url, role, user_type, company_name, is_verified, social_provider, created_at, last_name, status, block_reason, location_id, position, year_started, website, company_logo_url, deleted_at, location_request, preferred_currency, pending_email, last_seen_at, company_id, preferred_locale, inactivity_warning_sent_at, suspended_until, public_id
+users has email column: false

@@ -1,0 +1,102 @@
+# Review 11: rv11-10 on the current build (storybook-static of 2026-10-25 22:19, Amendment 9) — the baseline
+platform: MINGW64_NT-10.0-26300 / node v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task927/review-11/rv11-10-google-button-stability.mjs
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 en: FAIL | 2 frame(s) without exactly one Google control, first t=2378 n=2 kinds=gis+iframe | the control's box changes: 288x40@227 -> 308x44@225
+t=1899 h=496 controls=0 kinds=- box=- alerts=0
+t=2164 h=496 controls=1 kinds=gis box=288x40@227 alerts=0
+t=2378 h=496 controls=2 kinds=gis+iframe box=288x40@227 alerts=0
+t=2411 h=496 controls=1 kinds=iframe box=308x44@225 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 uk: FAIL | 2 frame(s) without exactly one Google control, first t=2374 n=2 kinds=gis+iframe | the control's box changes: 288x40@227 -> 308x44@225
+t=1862 h=496 controls=0 kinds=- box=- alerts=0
+t=2143 h=496 controls=1 kinds=gis box=288x40@227 alerts=0
+t=2374 h=496 controls=2 kinds=gis+iframe box=288x40@227 alerts=0
+t=2406 h=496 controls=1 kinds=iframe box=308x44@225 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en: FAIL | 2 frame(s) without exactly one Google control, first t=2323 n=2 kinds=gis+iframe | the control's box changes: 358x40@227 -> 378x44@225
+t=1859 h=475 controls=0 kinds=- box=- alerts=0
+t=2126 h=475 controls=1 kinds=gis box=358x40@227 alerts=0
+t=2323 h=475 controls=2 kinds=gis+iframe box=358x40@227 alerts=0
+t=2356 h=475 controls=1 kinds=iframe box=378x44@225 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 uk: FAIL | 2 frame(s) without exactly one Google control, first t=2363 n=2 kinds=gis+iframe | the control's box changes: 358x40@227 -> 378x44@225
+t=1887 h=496 controls=0 kinds=- box=- alerts=0
+t=2165 h=496 controls=1 kinds=gis box=358x40@227 alerts=0
+t=2363 h=496 controls=2 kinds=gis+iframe box=358x40@227 alerts=0
+t=2397 h=496 controls=1 kinds=iframe box=378x44@225 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 en: FAIL | 2 frame(s) without exactly one Google control, first t=2383 n=2 kinds=gis+iframe | the control's box changes: 400x40@227 -> 420x44@225
+t=1904 h=475 controls=0 kinds=- box=- alerts=0
+t=2186 h=475 controls=1 kinds=gis box=400x40@227 alerts=0
+t=2383 h=475 controls=2 kinds=gis+iframe box=400x40@227 alerts=0
+t=2416 h=475 controls=1 kinds=iframe box=420x44@225 alerts=0
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 uk: FAIL | 2 frame(s) without exactly one Google control, first t=2383 n=2 kinds=gis+iframe | the control's box changes: 400x40@227 -> 420x44@225
+t=1874 h=475 controls=0 kinds=- box=- alerts=0
+t=2136 h=475 controls=1 kinds=gis box=400x40@227 alerts=0
+t=2383 h=475 controls=2 kinds=gis+iframe box=400x40@227 alerts=0
+t=2416 h=475 controls=1 kinds=iframe box=420x44@225 alerts=0
+## patterns-mantine-authsheet--welcome-back 320 en: FAIL | 2 frame(s) without exactly one Google control, first t=879 n=2 kinds=gis+iframe | the control's box changes: 288x40@160 -> 308x44@158
+t=401 h=433 controls=0 kinds=- box=- alerts=0
+t=682 h=433 controls=1 kinds=gis box=288x40@160 alerts=0
+t=879 h=433 controls=2 kinds=gis+iframe box=288x40@160 alerts=0
+t=913 h=433 controls=1 kinds=iframe box=308x44@158 alerts=0
+## patterns-mantine-authsheet--welcome-back 320 uk: FAIL | 2 frame(s) without exactly one Google control, first t=939 n=2 kinds=gis+iframe | the control's box changes: 288x40@180 -> 308x44@178
+t=402 h=453 controls=0 kinds=- box=- alerts=0
+t=693 h=453 controls=1 kinds=gis box=288x40@180 alerts=0
+t=939 h=453 controls=2 kinds=gis+iframe box=288x40@180 alerts=0
+t=973 h=453 controls=1 kinds=iframe box=308x44@178 alerts=0
+## patterns-mantine-authsheet--welcome-back 390 en: FAIL | 2 frame(s) without exactly one Google control, first t=875 n=2 kinds=gis+iframe | the control's box changes: 358x40@160 -> 378x44@158
+t=407 h=433 controls=0 kinds=- box=- alerts=0
+t=677 h=433 controls=1 kinds=gis box=358x40@160 alerts=0
+t=875 h=433 controls=2 kinds=gis+iframe box=358x40@160 alerts=0
+t=908 h=433 controls=1 kinds=iframe box=378x44@158 alerts=0
+## patterns-mantine-authsheet--welcome-back 390 uk: FAIL | 2 frame(s) without exactly one Google control, first t=890 n=2 kinds=gis+iframe | the control's box changes: 358x40@160 -> 378x44@158
+t=419 h=433 controls=0 kinds=- box=- alerts=0
+t=661 h=433 controls=1 kinds=gis box=358x40@160 alerts=0
+t=890 h=433 controls=2 kinds=gis+iframe box=358x40@160 alerts=0
+t=925 h=433 controls=1 kinds=iframe box=378x44@158 alerts=0
+## patterns-mantine-authsheet--welcome-back 639 en: FAIL | 2 frame(s) without exactly one Google control, first t=863 n=2 kinds=gis+iframe | the control's box changes: 400x40@160 -> 420x44@158
+t=423 h=433 controls=0 kinds=- box=- alerts=0
+t=666 h=433 controls=1 kinds=gis box=400x40@160 alerts=0
+t=863 h=433 controls=2 kinds=gis+iframe box=400x40@160 alerts=0
+t=896 h=433 controls=1 kinds=iframe box=420x44@158 alerts=0
+## patterns-mantine-authsheet--welcome-back 639 uk: FAIL | 2 frame(s) without exactly one Google control, first t=903 n=2 kinds=gis+iframe | the control's box changes: 400x40@160 -> 420x44@158
+t=402 h=433 controls=0 kinds=- box=- alerts=0
+t=657 h=433 controls=1 kinds=gis box=400x40@160 alerts=0
+t=903 h=433 controls=2 kinds=gis+iframe box=400x40@160 alerts=0
+t=937 h=433 controls=1 kinds=iframe box=420x44@158 alerts=0
+## patterns-mantine-authsheet--login 320 en: FAIL | 2 frame(s) without exactly one Google control, first t=937 n=2 kinds=gis+iframe | the control's box changes: 288x40@100 -> 308x44@98
+t=400 h=524 controls=0 kinds=- box=- alerts=0
+t=706 h=524 controls=1 kinds=gis box=288x40@100 alerts=0
+t=937 h=524 controls=2 kinds=gis+iframe box=288x40@100 alerts=0
+t=969 h=524 controls=1 kinds=iframe box=308x44@98 alerts=0
+t=2236 h=614 controls=1 kinds=iframe box=308x44@98 alerts=1
+## patterns-mantine-authsheet--login 320 uk: FAIL | 2 frame(s) without exactly one Google control, first t=962 n=2 kinds=gis+iframe | the control's box changes: 288x40@100 -> 308x44@98
+t=409 h=524 controls=0 kinds=- box=- alerts=0
+t=714 h=524 controls=1 kinds=gis box=288x40@100 alerts=0
+t=962 h=524 controls=2 kinds=gis+iframe box=288x40@100 alerts=0
+t=994 h=524 controls=1 kinds=iframe box=308x44@98 alerts=0
+t=2063 h=634 controls=1 kinds=iframe box=308x44@98 alerts=1
+## patterns-mantine-authsheet--login 390 en: FAIL | 2 frame(s) without exactly one Google control, first t=952 n=2 kinds=gis+iframe | the control's box changes: 358x40@100 -> 378x44@98
+t=438 h=524 controls=0 kinds=- box=- alerts=0
+t=721 h=524 controls=1 kinds=gis box=358x40@100 alerts=0
+t=952 h=524 controls=2 kinds=gis+iframe box=358x40@100 alerts=0
+t=984 h=524 controls=1 kinds=iframe box=378x44@98 alerts=0
+t=1971 h=594 controls=1 kinds=iframe box=378x44@98 alerts=1
+## patterns-mantine-authsheet--login 390 uk: FAIL | 2 frame(s) without exactly one Google control, first t=849 n=2 kinds=gis+iframe | the control's box changes: 358x40@100 -> 378x44@98
+t=396 h=524 controls=0 kinds=- box=- alerts=0
+t=653 h=524 controls=1 kinds=gis box=358x40@100 alerts=0
+t=849 h=524 controls=2 kinds=gis+iframe box=358x40@100 alerts=0
+t=881 h=524 controls=1 kinds=iframe box=378x44@98 alerts=0
+t=2017 h=614 controls=1 kinds=iframe box=378x44@98 alerts=1
+## patterns-mantine-authsheet--login 639 en: FAIL | 2 frame(s) without exactly one Google control, first t=882 n=2 kinds=gis+iframe | the control's box changes: 400x40@100 -> 420x44@98
+t=411 h=524 controls=0 kinds=- box=- alerts=0
+t=667 h=524 controls=1 kinds=gis box=400x40@100 alerts=0
+t=882 h=524 controls=2 kinds=gis+iframe box=400x40@100 alerts=0
+t=916 h=524 controls=1 kinds=iframe box=420x44@98 alerts=0
+t=1999 h=594 controls=1 kinds=iframe box=420x44@98 alerts=1
+## patterns-mantine-authsheet--login 639 uk: FAIL | 2 frame(s) without exactly one Google control, first t=895 n=2 kinds=gis+iframe | the control's box changes: 400x40@100 -> 420x44@98
+t=408 h=524 controls=0 kinds=- box=- alerts=0
+t=682 h=524 controls=1 kinds=gis box=400x40@100 alerts=0
+t=895 h=524 controls=2 kinds=gis+iframe box=400x40@100 alerts=0
+t=929 h=524 controls=1 kinds=iframe box=420x44@98 alerts=0
+t=2217 h=594 controls=1 kinds=iframe box=420x44@98 alerts=1
+runs 18; failing 18
+exit code: 1

@@ -1,0 +1,422 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T11:42:42.365Z",
+ "case": "SEC-X-INT-REVEAL-TABLE-DENY",
+ "results": [
+  {
+   "id": "SEC-X-INT-REVEAL-TABLE-DENY",
+   "testFile": "src/tests/integration/contactGateway.integration.test.ts",
+   "testName": "contactGateway [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "database": true,
+     "description": "SELECT on public.listing_contact_reveals is granted to anon and authenticated",
+     "key": "SEC-X-INT-REVEAL-TABLE-DENY"
+    }
+   ],
+   "databaseBreak": {
+    "key": "SEC-X-INT-REVEAL-TABLE-DENY",
+    "fingerprintBefore": "dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346",
+    "fingerprintAfter": "dae776ab95bffe3ce3114126115d7b14dceefb5d7c2a6bdc5a5108e01624b346",
+    "equal": true
+   },
+   "failureMessage": "AssertionError: a signed-in session: select is refused: expected null not to be null\n    at C:/Claude_Code_Projects/lero-al/src/tests/integration/contactGateway.integration.test.ts:149:66\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793274142900,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "status": "passed",
+         "title": "[SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "duration": 1268.9544,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793274144950,
+       "endTime": 1793274146218.9543,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/contactGateway.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793274150162,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "status": "failed",
+         "title": "[SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "duration": 928.9612999999999,
+         "failureMessages": [
+          "AssertionError: a signed-in session: select is refused: expected null not to be null\n    at C:/Claude_Code_Projects/lero-al/src/tests/integration/contactGateway.integration.test.ts:149:66\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793274152240,
+       "endTime": 1793274153168.9612,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/contactGateway.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 8,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 7,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793274157015,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-DENY] a session cannot reach the contact function",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-RPC-ALLOW] the gateway function keeps the contact rules",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-GATEWAY] the real gateway on the real database and siteverify",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "status": "skipped",
+         "title": "[SEC-X-INT-CONTACT-SESSION-DENY] no number without a session Supabase Auth verifies",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "status": "passed",
+         "title": "[SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+         "duration": 1325.8377,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-RECORD] the real gateway records a reveal once per listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactGateway"
+         ],
+         "fullName": "contactGateway [SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793274159077,
+       "endTime": 1793274160402.8376,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/tests/integration/contactGateway.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

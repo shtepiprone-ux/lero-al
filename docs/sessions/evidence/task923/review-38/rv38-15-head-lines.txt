@@ -1,0 +1,10 @@
+# HEAD 2230550c7 lines cited by Task 923 claim rows whose working-tree source changed (Review 38, rv38-15-refresh-locators.mjs)
+== src/design-system/mantine/patterns/MantineListingContactPattern.tsx at HEAD 2230550c7, lines 220-223
+                leftSection={loading ? <Loader size={theme.other.iconSize.comfortable} color="currentColor" /> : <MessageCircle size={theme.other.iconSize.comfortable} />}
+              >
+                {labels.whatsapp}
+              </Button>
+== src/modules/listings/components/ListingContact.tsx at HEAD 2230550c7, lines 78-78
+  const [contactLoading, setContactLoading] = useState(false)
+== src/modules/listings/components/ListingContact.tsx at HEAD 2230550c7, lines 227-227
+      loading={contactLoading}

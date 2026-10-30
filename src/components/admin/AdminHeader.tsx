@@ -2,7 +2,8 @@
 
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { Burger, Group, Text, Badge } from '@mantine/core'
+import { Burger, Group, Text } from '@mantine/core'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 interface Props {
   opened: boolean
@@ -50,10 +51,10 @@ export function AdminHeader({ opened, onOpen, siteName = 'Lero.al' }: Props) {
         <Group gap="tight" hiddenFrom="lg" wrap="nowrap">
           <Text fw={700} size="sm" c="brand">{brand}</Text>
           <Text fw={700} size="sm">{tld}</Text>
-          <Badge size="xs" variant="light" color="brand" radius="sm">Admin</Badge>
+          <MantineBadge variant="tone" tone="brand" size="xs">{t('admin_badge')}</MantineBadge>
         </Group>
       </Group>
-      <Text size="sm" fw={500} c="gray.5" truncate="end" title={title} ta="right">
+      <Text size="sm" fw={500} c="gray.5" ta="right" miw={0}>
         {title}
       </Text>
     </Group>

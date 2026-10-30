@@ -1,0 +1,9 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node scripts/check-mobile-adaptation-contract.mjs --files src/design-system/mantine/patterns/MantineListingContactPattern.tsx src/modules/listings/components/ListingContact.tsx src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/components/auth/CaptchaWidget.tsx src/modules/auth/components/AuthSheet.tsx src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx src/components/auth/__tests__/CaptchaWidget.language.test.tsx src/modules/auth/components/__tests__/authClientParts.test.tsx
+started: 2026-10-23T13:25:22.067Z
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+
+
+exit code: 0

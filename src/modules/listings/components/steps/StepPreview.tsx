@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { AppImage } from '@/design-system/media/AppImage'
 import { formatPrice } from '@/lib/formatters'
 import { MapPin, BedDouble, Bath, Maximize2, Building2 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import type { FormValues } from '@/modules/listings/types/form'
 
 interface Props {
@@ -33,22 +33,22 @@ export function StepPreview({ data, error }: Props) {
             </div>
           )}
           <div className="absolute top-3 left-3">
-            <Badge variant="secondary" className="text-xs">
+            <MantineBadge variant="tone" tone="neutral">
               {data.images.length} {t('photo_count')}
-            </Badge>
+            </MantineBadge>
           </div>
         </AppImage>
 
         {/* Info */}
         <div className="p-5 flex flex-col gap-3">
           <div className="flex items-center gap-2 flex-wrap">
-            <Badge variant="outline" className="text-xs">
+            <MantineBadge variant="tone" tone="neutral">
               {t(data.listing_type)}
-            </Badge>
+            </MantineBadge>
             {data.property_type && (
-              <Badge variant="outline" className="text-xs">
+              <MantineBadge variant="tone" tone="neutral">
                 {t(`property_type_${data.property_type}`)}
-              </Badge>
+              </MantineBadge>
             )}
           </div>
 

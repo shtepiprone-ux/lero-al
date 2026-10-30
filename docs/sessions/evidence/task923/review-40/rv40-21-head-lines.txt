@@ -1,0 +1,29 @@
+# HEAD 6363a1836 lines cited by Task 923 claim rows whose working-tree source changed (Review 40, rv40-21-refresh-locators.mjs)
+== src/modules/auth/components/AuthSheet.tsx at HEAD 6363a1836, lines 365-365
+    const result = await createCompanyAction(newName.trim())
+== src/modules/listings/components/ListingContact.tsx in the working tree (uncommitted Task 923 code), lines 157-157
+    const pressed = document.activeElement instanceof HTMLElement ? document.activeElement : null
+== src/modules/listings/components/ListingContact.tsx in the working tree (uncommitted Task 923 code), lines 188-188
+        if (pressed && pressed.isConnected && (!active || active === document.body)) pressed.focus()
+== src/design-system/mantine/patterns/MantineListingContactPattern.tsx at HEAD 6363a1836, lines 198-198
+          <SimpleGrid type="container" cols={{ base: 1, [theme.breakpoints.xs2]: 2 }} spacing="sm">
+== src/components/auth/CaptchaWidget.tsx at HEAD 6363a1836, lines 81-81
+        options={{ theme, size: 'flexible', language }}
+== src/modules/auth/components/AuthSheet.tsx at HEAD 6363a1836, lines 239-239
+      <Box my="sm">
+== src/modules/auth/components/AuthSheet.tsx at HEAD 6363a1836, lines 712-712
+      <Box my="sm">
+== src/modules/auth/components/AuthSheet.tsx at HEAD 6363a1836, lines 642-642
+    <Stack component="form" onSubmit={handleSubmit} gap="md" pb="xl">
+== src/components/auth/CaptchaWidget.tsx at HEAD 6363a1836, lines 47-47
+    <Text size="xs" lh={mantineTheme.other.lineHeight.authNoteParagraph} c="dimmed" ta="center" py="tight" role="note">
+== src/components/auth/__tests__/CaptchaWidget.language.test.tsx at HEAD 6363a1836, lines 101-101
+    expect(lastCall.options).toEqual({ theme: 'auto', size: 'flexible', language: expectedLanguage })
+== src/modules/auth/components/__tests__/authClientParts.test.tsx before R123 (working tree; Opus grep -n output, transcript c1f16c21-dbad-4f8c-94df-690a447a1510.jsonl entry 1426, 2026-10-23T12:32:51.143Z), line 63
+    expect(turnstile.props!.options).toEqual({ theme: 'auto', size: 'flexible', language: 'en' })
+== src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx before R123 (working tree; Opus sed -n 70,140p output, transcript c1f16c21-dbad-4f8c-94df-690a447a1510.jsonl, 2026-10-23T12:32:58.922Z), lines 81-85
+    expect(lastOptions()).toEqual({ theme: 'auto', size: 'flexible', language: 'en' })
+    expect(Object.keys(lastOptions() as object)).toEqual(['theme', 'size', 'language'])
+    expect(lastProps().style).toEqual({ width: '100%', lineHeight: 0 })
+    // no wrapper: the widget sits directly in the render root
+    expect(box()).toBe(container)

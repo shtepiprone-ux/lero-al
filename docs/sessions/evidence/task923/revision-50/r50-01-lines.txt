@@ -1,0 +1,53 @@
+# r50-01: literal lines for Task 923 Revision 50
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-50/r50-01-lines.mjs
+date: 2026-10-25T11:24:31.909Z
+origin/main: 7dd707aa1 2026-10-17 15:27:59 +0200
+--- origin/main ---
+origin/main:src/modules/auth/actions/captcha.ts:23:   const verify = await verifyTurnstile(captchaToken)
+origin/main:src/modules/auth/actions/captcha.ts:35:     options: { emailRedirectTo, data, captchaToken },
+origin/main:src/modules/auth/components/AuthSheet.tsx:80:     const { error } = await signIn(email, password)
+origin/main:src/modules/cabinet/actions/index.ts:478:       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+origin/main:src/modules/cabinet/actions/index.ts:487:     const { error: verifyError } = await verifyClient.auth.signInWithPassword({
+--- working tree ---
+src/modules/auth/components/AuthSheet.tsx:139:       <Button type="submit" fullWidth loading={loading} disabled={loading}>
+src/modules/auth/components/AuthSheet.tsx:227:     if (!captchaToken) return
+src/modules/auth/components/AuthSheet.tsx:231:     const result = await requestPasswordResetWithCaptcha({ email, captchaToken, redirectTo })
+src/modules/auth/components/AuthSheet.tsx:274:         <Alert color="red">{t('captcha_error_failed')}</Alert>
+src/modules/auth/components/AuthSheet.tsx:277:       <CaptchaWidget
+src/modules/auth/components/AuthSheet.tsx:284:       <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
+src/modules/auth/components/AuthSheet.tsx:754:         onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
+src/modules/auth/components/AuthSheet.tsx:755:         onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
+src/modules/auth/components/AuthSheet.banned.security.test.tsx:62:     expect(browser.signIn).toHaveBeenCalledWith('alba@example.com', 'secret')
+src/lib/auth/__tests__/browser.smoke.test.ts:57:     expect(mockSignInWithPassword).toHaveBeenCalledWith({ email: 'valid@example.com', password: 'correct-pass' })
+src/components/auth/CaptchaWidget.tsx:90:     const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+src/components/auth/CaptchaWidget.tsx:152:     if (!siteKey) {
+src/components/auth/CaptchaWidget.tsx:196:       <Box pos="absolute">
+src/components/auth/CaptchaWidget.tsx:198:           ref={widgetRef}
+src/lib/supabase/admin.ts:6:   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+src/tests/integration/fixtures.ts:35:   const admin = createClient(env.url, env.serviceKey, clientOptions)
+src/tests/integration/fixtures.ts:36:   const anonymousClient = () => createClient(env.url, env.anonKey, clientOptions)
+src/tests/integration/fixtures.ts:153:   return { RUN, env, admin, anonymousClient, signIn, makeUser, makeListing, anyLocationId, cleanup }
+src/modules/cabinet/actions/index.ts:164:     if (outcome === 'rate_limited') return 'rate_limited'      // Auth's own limit: not a wrong password, nothing is counted
+src/modules/cabinet/actions/index.ts:165:     await noteReauthFailure(user.id)
+src/modules/cabinet/actions/index.ts:166:     return 'invalid_password'
+src/modules/cabinet/actions/index.ts:668:       if (msg.includes('rate limit') || msg.includes('too many')) return { ok: false, reason: 'rate_limited' }
+src/modules/cabinet/actions/index.ts:669:       await noteReauthFailure(user.id)
+src/modules/cabinet/actions/index.ts:670:       return { ok: false, reason: 'invalid_current' }
+session record:966: A token is valid 300 seconds and can be validated once; a replay answers `timeout-or-duplicate`.
+--- write set ---
+src/modules/auth/components/AuthSheet.tsx: scope yes; policy no; exists yes
+src/lib/auth/browser.ts: scope NO; policy no; exists yes
+src/modules/auth/lib/mapAuthError.ts: scope NO; policy no; exists yes
+src/modules/cabinet/actions/index.ts: scope yes; policy no; exists yes
+src/tests/integration/fixtures.ts: scope yes; policy no; exists yes
+src/modules/auth/components/__tests__/AuthSheet.test.tsx: scope yes; policy no; exists yes
+src/modules/auth/components/AuthSheet.banned.security.test.tsx: scope yes; policy no; exists yes
+src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx: scope NO; policy no; exists yes
+src/lib/auth/__tests__/browserAuth.security.test.ts: scope NO; policy no; exists yes
+src/lib/auth/__tests__/browser.smoke.test.ts: scope NO; policy no; exists yes
+src/modules/cabinet/actions/__tests__/reauth.security.test.ts: scope yes; policy no; exists yes
+src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx: scope NO; policy no; exists no
+exit code: 0

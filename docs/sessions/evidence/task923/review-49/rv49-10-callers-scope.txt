@@ -1,0 +1,46 @@
+# Task 923 Review 49 (Opus): softDeleteUser mentions and the D8_D9 scope of Revision 44's paths, 2026-10-24T10:52:57Z, HEAD 36c030802, win32, node v22.22.3, cwd C:/Claude_Code_Projects/lero-al
+$ node docs/sessions/evidence/task923/review-49/rv49-10-callers-scope.mjs
+mentions of softDeleteUser in src: 11
+test     src/__tests__/security/staffActions.test.ts:95:  ['admin.softDeleteUser', admin.softDeleteUser as Fn, ['u1']],
+test     src/modules/admin/actions/__tests__/adminActorRank.security.test.ts:53:import { deactivateUser, hardDeleteUser, reactivateUser, removeUserAvatar, softDeleteUser, toggleUs
+test     src/modules/admin/actions/__tests__/adminActorRank.security.test.ts:122:    expect(await softDeleteUser('adm')).toEqual({ error: 'forbidden' })
+test     src/modules/admin/actions/__tests__/adminActorRank.security.test.ts:130:    expect(await softDeleteUser('mod')).toEqual({ error: 'forbidden' })
+test     src/modules/admin/actions/__tests__/adminActorRank.security.test.ts:137:    expect(await softDeleteUser('tgt')).toEqual({})
+test     src/modules/admin/actions/__tests__/userAdministration.security.test.ts:33:  createAdminUser, createLocation, createPage, deactivateUser, hardDeleteUser, reactivateUser, 
+test     src/modules/admin/actions/__tests__/userAdministration.security.test.ts:105:    ['softDeleteUser', () => softDeleteUser('adm2')],
+test     src/modules/admin/actions/__tests__/userAdministration.security.test.ts:124:    ['softDeleteUser', () => softDeleteUser('adm2')],
+test     src/modules/admin/actions/__tests__/userAdministration.security.test.ts:136:    expect(await softDeleteUser('tgt')).toEqual({})
+NON-TEST src/modules/admin/actions/index.ts:667:export async function softDeleteUser(userId: string): Promise<{ error?: string }> {
+NON-TEST src/modules/admin/actions/index.ts:681:    console.error('softDeleteUser failed', { error, userId })
+non-test mentions: 2 (src/modules/admin/actions/index.ts:667, src/modules/admin/actions/index.ts:681)
+in scope     new    src/lib/account/deleteAccount.ts
+in scope     new    src/lib/account/deleteAccount.security.test.ts
+in scope     new    src/lib/account/deleteAccount.integration.test.ts
+in scope     exists src/modules/admin/actions/index.ts
+in scope     exists src/modules/cabinet/actions/index.ts
+in scope     exists src/modules/cabinet/components/ProfileTab.tsx
+in scope     exists src/components/admin/AdminUserProfileDialogsView.tsx
+in scope     new    src/components/admin/__tests__/adminDeleteDialog.security.test.tsx
+in scope     exists messages/sq.json
+in scope     exists messages/en.json
+in scope     exists messages/uk.json
+in scope     exists messages/it.json
+in scope     exists src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts
+in scope     exists src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+in scope     exists src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+in scope     exists src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+in scope     exists src/modules/admin/actions/__tests__/adminActorRank.security.test.ts
+in scope     exists src/modules/admin/actions/__tests__/userAdministration.security.test.ts
+in scope     exists src/__tests__/security/staffActions.test.ts
+in scope     exists src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx
+in scope     exists src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+in scope     exists src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+in scope     exists src/modules/cabinet/actions/reauth.integration.test.ts
+in scope     exists src/modules/cabinet/actions/reauthLimit.integration.test.ts
+in scope     exists src/lib/auth/sessionEnd.integration.test.ts
+NOT IN SCOPE exists src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts
+NOT IN SCOPE exists src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+NOT IN SCOPE exists src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+NOT IN SCOPE exists src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+scope 333; not in scope: 4
+exit 0

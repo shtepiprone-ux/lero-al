@@ -200,18 +200,42 @@ export function canSetStatusPrivileged(from: ListingStatus, to: ListingStatus): 
   return from !== to && ALL_LISTING_STATUSES.includes(from) && ALL_LISTING_STATUSES.includes(to)
 }
 
+// ── Publishing is staff-only (owner decision D8, 2026-10-17, Task 923 Revision 7) ──────────────────────────
+//
+// "The owner of a listing cannot publish it for general view. A listing goes to 'pending' until an administrator / moderator checks it and
+// publishes it." The owner keeps every other status (hide, archive, mark sold / rented, send back to review); only a status that makes the
+// listing publicly visible is reserved to staff. The server gateway (applyListingTransition.ts) enforces this; the status control only offers
+// what is allowed.
+
+/** Statuses that only an administrator / moderator may set. */
+export const STAFF_ONLY_TARGET_STATUSES: readonly ListingStatus[] = ['active']
+
+/** True when the OWNER (a non-staff actor) may set the status directly from `from` to `to`. */
+export function canOwnerSetStatus(from: ListingStatus, to: ListingStatus): boolean {
+  return canSetStatusPrivileged(from, to) && !STAFF_ONLY_TARGET_STATUSES.includes(to)
+}
+
+/** The direct targets an owner may select: every other status except the staff-only ones. */
+export function getOwnerTargetStatuses(currentStatus: ListingStatus): ListingStatus[] {
+  return getPrivilegedTargetStatuses(currentStatus).filter(status => !STAFF_ONLY_TARGET_STATUSES.includes(status))
+}
+
 /**
  * Returns the set of selectable target statuses for `currentStatus`.
- * - `privileged: true`  → the full any-status set (getPrivilegedTargetStatuses).
+ * - `privileged: true, canPublish: true`  → staff: the full any-status set (getPrivilegedTargetStatuses).
+ * - `privileged: true, canPublish: false` → the owner: the any-status set without the staff-only ones (getOwnerTargetStatuses).
  * - `privileged: false` → the base-matrix-derived set (via getTransitionActionForStatus).
+ * `canPublish` has no default on purpose: forgetting it must be a compile error, not a silently wider list.
  *
  * Single entry point for UIs deciding which status options to render.
  */
 export function getAllowedTargetStatuses(
   currentStatus: ListingStatus,
-  { privileged }: { privileged: boolean },
+  options: { privileged: false } | { privileged: true; canPublish: boolean },
 ): ListingStatus[] {
-  if (privileged) return getPrivilegedTargetStatuses(currentStatus)
+  if (options.privileged) {
+    return options.canPublish ? getPrivilegedTargetStatuses(currentStatus) : getOwnerTargetStatuses(currentStatus)
+  }
   return ALL_LISTING_STATUSES.filter(status => getTransitionActionForStatus(currentStatus, status) !== null)
 }
 

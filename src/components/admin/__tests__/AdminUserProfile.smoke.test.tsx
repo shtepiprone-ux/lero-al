@@ -8,8 +8,8 @@
  *   T2  status blocked with an empty reason → validation message, no action; with a reason and a picked date →
  *       the payload carries `status: 'blocked'`, the reason and `suspendedUntil: 'YYYY-MM-DD'`.
  *   T3  deactivate: confirm is disabled for a blank reason; with a reason → `deactivateUser(id, reason)`.
- *   T4  delete: the dialog opens first; confirm → `hardDeleteUser(id)` → `router.push('/admin/users')`; cancel →
- *       no call.
+ *   T4  delete: the dialog opens first; confirm waits for the typed word DELETE (R144) → `hardDeleteUser(id)` →
+ *       `router.push('/admin/users')`; cancel → no call.
  *   T5  clear a history row → `clearHistoryRow('user_change_log', id, rowId)`; `{ cleared: 0 }` → `toast.info`.
  *   T6  edit a field, click back → the unsaved dialog; "stay" keeps the page and navigates nowhere.
  *   T7  create with an invalid email → inline email error, no `createAdminUser` call.
@@ -17,12 +17,15 @@
  *   T9  every edit control is reachable by its label.
  *   T10 (revision 1, R17 / O84-8) a status-only change enables Save and sends the new status; T10b choosing the
  *       stored status again leaves the form clean (Save disabled).
+ *   T12 (Task 923 R177) a city-only change enables Save and sends the new city; T12b choosing the stored city
+ *       again leaves the form clean (Save disabled).
  *
  * Planted-violation proofs (transcripts in docs/sessions/evidence/task893/):
  *   P1 — drop the blank-reason check on the deactivate confirm → T3 fails.
  *   P2 — call `hardDeleteUser` without opening the dialog → T4 (cancel still deletes) fails.
  *   P5 — remove the label association from the first-name input → T9 fails.
  *   P6 — restore `FIELD_OPTIONS.status` to `{}` → T10 fails.
+ *   P7 — restore `FIELD_OPTIONS.locationId` to `{ shouldValidate: true }` → T12 and T12b fail.
  */
 
 import React from 'react'
@@ -165,7 +168,7 @@ beforeEach(() => {
   mockClearEntity.mockResolvedValue({ cleared: 1 })
 })
 
-describe('AdminUserProfile (T1–T9)', { timeout: 15_000 }, () => {
+describe('AdminUserProfile (T1–T9)', () => {
   it('T1 — edit a first name and save: updateUserProfileFull gets the new name and the unchanged fields', async () => {
     renderProfile()
     enterEditMode()
@@ -301,7 +304,12 @@ describe('AdminUserProfile (T1–T9)', { timeout: 15_000 }, () => {
 
     fireEvent.click(screen.getByRole('button', { name: t.actions.delete_permanently }))
     dialog = await screen.findByRole('dialog')
-    fireEvent.click(within(dialog).getByRole('button', { name: t.dialogs.delete_hard_confirm }))
+    // Task 923 R144 (D34): the primary waits until the word DELETE is typed into the dialog's own field
+    const primary = within(dialog).getByRole('button', { name: t.dialogs.delete_hard_confirm })
+    expect(primary).toBeDisabled()
+    fireEvent.change(within(dialog).getByLabelText(t.dialogs.delete_type_confirm), { target: { value: 'DELETE' } })
+    expect(primary).not.toBeDisabled()
+    fireEvent.click(primary)
 
     await waitFor(() => expect(mockHardDelete).toHaveBeenCalledWith(USER.id))
     await waitFor(() => expect(mockPush).toHaveBeenCalledWith('/admin/users'))
@@ -371,5 +379,49 @@ describe('AdminUserProfile (T1–T9)', { timeout: 15_000 }, () => {
     for (const label of [t.fields.first_name, t.fields.last_name, t.fields.phone, t.fields.city, t.fields.company_name]) {
       expect(screen.getByLabelText(label)).toBeTruthy()
     }
+  })
+
+  it('T11 — view mode shows the stored city and its region', () => {
+    renderProfile()
+
+    const section = document.getElementById('section-location')
+    expect(section).not.toBeNull()
+    expect(section?.textContent).toContain('Tirana')
+    expect(section?.textContent).toContain('Qarku i Tiranës')
+  })
+
+  it('T12 — a city-only change enables Save and sends the new city (Task 923 R177)', async () => {
+    renderProfile()
+    enterEditMode()
+    const save = () => screen.getByRole('button', { name: t.actions.save })
+    expect(save()).toBeDisabled()
+
+    const cityGroup = screen.getByRole('group', { name: t.fields.city })
+    fireEvent.click(within(cityGroup).getByRole('textbox'))
+    fireEvent.click(await screen.findByRole('option', { name: /Vlorë/ }))
+
+    expect(save()).not.toBeDisabled()
+    fireEvent.click(save())
+
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect(mockUpdate).toHaveBeenCalledWith(
+      USER.id,
+      expect.objectContaining({ locationId: 3, firstName: USER.name, lastName: USER.last_name }),
+    )
+  })
+
+  it('T12b — choosing the stored city again makes the form clean, so Save is disabled', async () => {
+    renderProfile()
+    enterEditMode()
+    const save = () => screen.getByRole('button', { name: t.actions.save })
+
+    const cityGroup = screen.getByRole('group', { name: t.fields.city })
+    fireEvent.click(within(cityGroup).getByRole('textbox'))
+    fireEvent.click(await screen.findByRole('option', { name: /Vlorë/ }))
+    expect(save()).not.toBeDisabled()
+
+    fireEvent.click(within(cityGroup).getByRole('textbox'))
+    fireEvent.click(await screen.findByRole('option', { name: /Tirana/ }))
+    await waitFor(() => expect(save()).toBeDisabled())
   })
 })

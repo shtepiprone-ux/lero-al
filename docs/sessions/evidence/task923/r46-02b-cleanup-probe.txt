@@ -1,0 +1,22 @@
+# R146 AC146 r46-02b: after r46-02 the synthetic rows are gone (read-only counts)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/632095c8-e6a9-4ebe-8541-dc0e4164effb/scratchpad/probe-cleanup46.mjs
+NODE_PATH: (unset)
+started: 2026-10-24T13:39:15.114Z
+--- stdout ---
+users.name zz_synth_*              0
+listings.slug zz_synth_*           0
+companies.name zz_synth_*          0
+contact_inquiries.name zz_synth_*  0
+listing_inquiries.name zz_synth_*  0
+listing_views.ip_hash zz_synth_*   0
+listing_reports.comment zz_synth_* 0
+user_status_history.reason zz_synth_* 0
+auth users zz_synth_*              0
+TOTAL left: 0; queries unknown: 0
+
+--- stderr ---
+
+--- exit code: 0 ---

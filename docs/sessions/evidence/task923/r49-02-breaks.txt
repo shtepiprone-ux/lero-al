@@ -1,0 +1,41 @@
+# R149 AC149 r49-02-breaks: one deliberate break, B13, restored
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r49-02-breaks.mjs
+NODE_PATH: (unset)
+started: 2026-10-25T08:45:32.058Z
+--- stdout ---
+platform: win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al
+
+=== B13: the account lookup ends with .single() again: an absent account is answered with PostgREST's no-row error and logged as a failed query
+file: src/app/admin/users/[id]/page.tsx
+test: npx vitest run src/app/admin/users/__tests__/adminUserGone.security.test.ts -t SEC-X-SRV-ADMIN-USER-GONE
+after-edit sha256 (before the break): ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71
+baseline run: exit 0
+broken sha256: 37f6ff6e84a4c18b18e72b4a5737a7d98d810aded9714a6969f1e434266fdd0a
+broken run: exit 1
+ FAIL  src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list
+AssertionError: an absent account is not a failed query: expected "error" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st error call:
+
+    Array [
+      "AdminUserProfilePage: user query failed",
+      Object {
+        "error": Object {
+          "code": "PGRST116",
+restored sha256: ea097fd2ef984f39ad3bdeafb879571f6e1440132c417c5e29ded0186414da71
+restored run: exit 0
+OK   B13: baseline passes
+OK   B13: the break fails on the intended assertion
+OK   B13: restored sha256 equals the after-edit hash
+OK   B13: restored run passes
+
+THE BREAK BEHAVED AS REQUIRED
+
+--- stderr ---
+
+--- exit code: 0 ---

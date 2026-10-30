@@ -4,8 +4,10 @@ import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import Cropper from 'react-easy-crop'
 import type { Area } from 'react-easy-crop'
-import { Paper, Slider, Text, Stack, Flex, Button, useMantineTheme } from '@mantine/core'
+import { Paper, Slider, Text, Stack, Button, useMantineTheme } from '@mantine/core'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 
 // ── Canvas crop helper ────────────────────────────────────────────────────────
 
@@ -71,6 +73,9 @@ export function AvatarCropModal({
 
   async function handleSave() {
     if (!croppedAreaPixels || saving) return
+    // Both buttons are disabled while saving, and a disabled focused control drops the focus to `body`: it goes to the dialog, which stays
+    // focusable (WCAG 2.4.3; Task 923 R33, owner D6)
+    document.activeElement?.closest<HTMLElement>('[role="dialog"]')?.focus()
     setSaving(true)
     try {
       const blob = await cropImageToBlob(imageSrc, croppedAreaPixels)
@@ -94,36 +99,21 @@ export function AvatarCropModal({
   return (
     <MantineModal
       opened
+      structured
       onClose={() => { if (!saving) onCancel() }}
       title={title}
       footer={
-        <Flex
-          direction={{ base: 'column-reverse', sm: 'row' }}
-          gap="sm"
-          justify={{ base: 'stretch', sm: 'flex-end' }}
-        >
-          <Button
-            variant="outline"
-            color="gray"
-            w={{ base: '100%', sm: 'auto' }}
-            onClick={onCancel}
-            disabled={saving}
-          >
-            {cancelLabel}
-          </Button>
-          {/* Also disabled when crop area not yet initialized (image still loading) */}
-          <Button
-            color="brand"
-            w={{ base: '100%', sm: 'auto' }}
-            onClick={handleSave}
-            loading={saving}
-            disabled={!croppedAreaPixels}
-          >
-            {saveLabel}
-          </Button>
-        </Flex>
+        <MantineDialogFooter
+          secondary={<Button type="button" variant="default" onClick={onCancel} disabled={saving}>{cancelLabel}</Button>}
+          primary={
+            // Also disabled when crop area not yet initialized (image still loading)
+            <Button type="button" onClick={handleSave} loading={saving} disabled={!croppedAreaPixels}>{saveLabel}</Button>
+          }
+        />
       }
     >
+      <MantineDialogSections>
+        <MantineDialogSection>
       <Stack gap="md">
         {/* Crop area — react-easy-crop fills the relative container */}
         <Paper
@@ -165,6 +155,8 @@ export function AvatarCropModal({
         {/* Hint text */}
         <Text size="xs" c="dimmed" ta="center">{hint}</Text>
       </Stack>
+        </MantineDialogSection>
+      </MantineDialogSections>
     </MantineModal>
   )
 }

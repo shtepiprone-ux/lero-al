@@ -1,0 +1,10 @@
+# Task 923 Review 56 rv56-02: the deleted account and the admin page's lookup; 2026-10-25T06:55:36.250Z
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-56/rv56-02-lookup-probe.mjs
+--- stdout ---
+Auth user of the deleted id: absent (error status 404)
+deleted id .single(): data null; error code PGRST116; details The result contains 0 rows
+deleted id .maybeSingle(): data null; error null
+synthetic id .single(): data null; error code PGRST116; details The result contains 0 rows
+synthetic id .maybeSingle(): data null; error null
+--- exit code: 0 ---

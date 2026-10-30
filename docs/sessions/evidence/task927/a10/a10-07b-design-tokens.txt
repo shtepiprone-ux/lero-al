@@ -1,0 +1,47 @@
+# a10-07 design tokens (exit 1 expected: the findings of C216, none in a changed path)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-26T07:45:19.545Z
+
+command: npm run check:design-tokens
+--- output ---
+
+> lero-al@0.1.0 check:design-tokens
+> node scripts/check-design-tokens.mjs --strict
+
+🔍  check:design-tokens — scanning 593 production src/**/*.{tsx,ts,css} files
+    + 166 canonical Mantine stories for Tailwind dimension utilities (path rule OR title-enrolled via mantine-story-scope.mjs, Task 827 R5)
+    (excludes globals.css, tests, non-Mantine stories, and allowlisted paths)
+
+  ── SHARED  (2 findings) ──
+  src/components/shared/Map.module.css  (2)
+    :37  [stale-marker:stale inline suppression (value not detected on this line)]  "line-height: 30px - restores Leaflet's stylesheet value from 640px up"
+    :37  [css-length:raw CSS length declaration]  "line-height: 30px"
+
+  ── MODULES  (1 finding) ──
+  src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx  (1)
+    :70  [raw-dimension-prop:raw numeric dimension/layout prop]  "size={20}"
+
+  ── OTHER  (1 finding) ──
+  src/design-system/mantine/input-chrome.css  (1)
+    :476  [stale-marker:stale inline suppression (value not detected on this line)]  "inset-block: -1px - the 1px border of the field"
+
+  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (0 findings) ──
+  (none found)
+  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.
+
+  Total: 2 raw style-value violation(s) | 2 stale-marker(s) | 0 missing-reason error(s) | 0 css-declaration literal(s) (report-only)
+  By category (regular violations):
+    css-length           1
+    raw-dimension-prop   1
+
+❌  check:design-tokens STRICT — 2 raw style-value violation(s) + 2 stale-marker(s) found.
+    Fix: replace raw values with design tokens from docs/design-system.md §22,
+    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),
+    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).
+    Docs: docs/design-system.md §22–23
+--- exit code: 1 ---
+
+finished: 2026-10-26T07:45:20.194Z
+exit code: 1

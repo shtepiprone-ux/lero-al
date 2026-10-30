@@ -1,0 +1,7 @@
+component-overflow rows (Story x state x root x locale x width with the rule) per component: Revision 3 -> Revision 4; "positioned" = rows in which at least one detail is a positioned / transformed element
+
+  admindashboardview: 40 -> 31 (-9); positioned 31
+  authsheet: 99 -> 100 (+1); positioned 0
+
+components with a change: 2; components unchanged: 20
+total rows with component-overflow: 996 -> 988 (-8); rows with a positioned / transformed detail in Revision 4: 201

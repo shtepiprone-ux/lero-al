@@ -1,0 +1,8 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:34:52.829Z
+cmd node docs/sessions/evidence/task923/r19-30-case-names.cjs   (SEC-X-SRV-SLUG-PLAIN is collected under its exact contract name and passes)
+ ok  SEC-X-SRV-SLUG-PLAIN critical=true layer=server boundary=unit
+     file src/modules/listings/lib/__tests__/generateSlug.security.test.ts
+     exact name collected once: true; status passed; tests in the file 5, not passed 0; vitest exit 0
+     contract testName: generateSlug [SEC-X-SRV-SLUG-PLAIN] every title gives a plain slug
+RESULT: every case is collected under its exact contract name and passes
+EXIT_CODE=0

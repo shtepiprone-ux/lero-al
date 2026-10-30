@@ -1,8 +1,8 @@
 ## GR-3e — Text buttons stack: each text button has its own row
 
-**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words, verbatim: *"я неодноразово вже казав,
-що текстові кнопки мають бути у стовпчик ( кожна у своєму рядку). Наразі я бачу. що другорядні текстові кнопки стоять
-… в одному рядку. … Зроби … золоте правило!"* The trigger: `ListingPreviewDialogView` put "View listing" and "Open
+**Owner rule, 2026-10-02 (Task 857 review 5, O78-12 return).** The owner's words: *"I have said many times already that text buttons must be in a
+column (each on its own row). Right now I see that the secondary
+text buttons stand … in one row. … Make … a golden rule!"* The trigger: `ListingPreviewDialogView` put "View listing" and "Open
 public page" side by side in a `Group`. The owner then confirmed the scope (option chosen verbatim): *"Yes, exactly that
 (Recommended)"*. That means a group of text buttons is a column, and a lone destructive text button in a footer stays where
 §23.6 puts it.
@@ -10,7 +10,7 @@ public page" side by side in a `Group`. The owner then confirmed the scope (opti
 A **text button** is a `Button` with a visible label and `variant="subtle"` or `variant="transparent"` (usually with a
 `leftSection` icon), or an `Anchor` styled as an action. An icon-only `ActionIcon` is not a text button.
 
-**Popups only. Owner clarification, 2026-10-02 (Task 857 review 7), verbatim:** *"я тобі писав про кнопки у попапах"*.
+**Popups only. Owner clarification, 2026-10-02 (Task 857 review 7):** *"I wrote to you about the buttons in popups"*.
 The rule covers text buttons inside a popup: a modal, drawer, bottom sheet, popover or menu. It does not cover text
 buttons on the page itself. The trigger for this clarification: Opus measured the chart-legend toggles of
 `MantineDashboardChartLegend` sharing a row in `AgentStatisticsView`, and those are page content.

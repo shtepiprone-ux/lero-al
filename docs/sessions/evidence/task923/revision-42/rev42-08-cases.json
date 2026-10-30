@@ -1,0 +1,131 @@
+[
+  {
+    "id": "SEC-X-SRV-ADMIN-USER-GONE",
+    "layer": "server",
+    "outcome": "deny",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "A staff viewer who opens the admin page of an account with no users row is sent to the Users list with the notice, and nothing of that id is read beyond the users lookup (D85, D86)",
+    "actor": "an active administrator (requireStaffPage double resolves)",
+    "resource": "the real AdminUserProfilePage of src/app/admin/users/[id]/page.tsx with an admin-client double whose users lookup answers no row",
+    "input": "AdminUserProfilePage({ params: { id: a synthetic UUID } })",
+    "response": "redirect('/admin/users?notice=user_gone') once, asserted with the message 'the list, not the 404 page'",
+    "forbiddenEffects": [
+      "notFound() called",
+      "a read of user_change_log, user_status_history or auth.admin.getUserById for that id",
+      "a rendered profile element returned"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUserGone.security.test.ts",
+    "testName": "AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list"
+  },
+  {
+    "id": "SEC-X-SRV-ADMIN-USER-DELETED",
+    "layer": "server",
+    "outcome": "deny",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "A staff viewer who opens the admin page of a deleted account (deleted_at set) is sent to the Users list with the notice, and none of the account's profile data is read or returned (D85, D86)",
+    "actor": "an active administrator (requireStaffPage double resolves)",
+    "resource": "the real AdminUserProfilePage with an admin-client double whose users lookup answers a synthetic row with deleted_at",
+    "input": "AdminUserProfilePage({ params: { id: that row's id } })",
+    "response": "redirect('/admin/users?notice=user_gone') once",
+    "forbiddenEffects": [
+      "notFound() called",
+      "a read of user_change_log, user_status_history or auth.admin.getUserById for that id",
+      "the row's name or phone in a returned element"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUserGone.security.test.ts",
+    "testName": "AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list"
+  },
+  {
+    "id": "SEC-X-SRV-ADMIN-USER-QUERY-ERROR",
+    "layer": "server",
+    "outcome": "error",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "A failed users lookup on the admin user page shows no account data: the viewer is sent to the Users list with the notice, as for a missing account",
+    "actor": "an active administrator (requireStaffPage double resolves)",
+    "resource": "the real AdminUserProfilePage with an admin-client double whose users lookup answers { data: null, error }",
+    "input": "AdminUserProfilePage({ params: { id: a synthetic UUID } }) while the lookup fails",
+    "response": "redirect('/admin/users?notice=user_gone') once",
+    "forbiddenEffects": [
+      "notFound() called",
+      "a read of user_change_log, user_status_history or auth.admin.getUserById for that id"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUserGone.security.test.ts",
+    "testName": "AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list"
+  },
+  {
+    "id": "SEC-X-SRV-ADMIN-USER-PRESENT",
+    "layer": "server",
+    "outcome": "allow",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "The admin page of an existing, undeleted account still renders its profile for a staff viewer (preservation)",
+    "actor": "an active administrator (requireStaffPage and requireViewer doubles)",
+    "resource": "the real AdminUserProfilePage with an admin-client double whose users lookup answers a synthetic row without deleted_at",
+    "input": "AdminUserProfilePage({ params: { id: that row's id } })",
+    "response": "a returned element whose AdminUserProfile receives that row; no redirect",
+    "forbiddenEffects": [
+      "redirect() called",
+      "notFound() called"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUserGone.security.test.ts",
+    "testName": "AdminUserProfilePage [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile"
+  },
+  {
+    "id": "SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN",
+    "layer": "frontend",
+    "outcome": "allow",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "The Users list explains the redirect from a deleted user's page with the localized notice (D86)",
+    "actor": "an active administrator arriving from the redirect",
+    "resource": "the real AdminUsersPage and AdminPageHeader on MantineProvider with the project theme and the real en messages; AdminUsersTable is a double",
+    "input": "AdminUsersPage({ searchParams: { notice: 'user_gone' } })",
+    "response": "one element with role alert whose text equals messages.en admin.pages.users_gone_notice",
+    "forbiddenEffects": [
+      "a second alert",
+      "the notice text in any other language"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx",
+    "testName": "AdminUsersPage [SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN] the redirect notice is shown"
+  },
+  {
+    "id": "SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED",
+    "layer": "frontend",
+    "outcome": "deny",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "The notice parameter selects a fixed text only: any other value shows no notice and is never rendered",
+    "actor": "an administrator opening a crafted link",
+    "resource": "the real AdminUsersPage and AdminPageHeader as above",
+    "input": "AdminUsersPage({ searchParams: { notice: '<img src=x onerror=alert(1)>' } }), then notice 'deleted'",
+    "response": "no element with role alert, asserted with the message 'an unknown notice is not shown'; the raw value is absent from the rendered HTML",
+    "forbiddenEffects": [
+      "the parameter's value in the DOM",
+      "an img element",
+      "an alert"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx",
+    "testName": "AdminUsersPage [SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED] an unknown notice is not shown"
+  },
+  {
+    "id": "SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT",
+    "layer": "frontend",
+    "outcome": "allow",
+    "boundary": "unit",
+    "critical": false,
+    "invariant": "The Users list without the notice parameter renders as before, with no notice (preservation)",
+    "actor": "an active administrator",
+    "resource": "the real AdminUsersPage and AdminPageHeader as above",
+    "input": "AdminUsersPage({ searchParams: {} })",
+    "response": "the users_title heading and no element with role alert",
+    "forbiddenEffects": [
+      "an alert",
+      "the users_gone_notice text"
+    ],
+    "testFile": "src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx",
+    "testName": "AdminUsersPage [SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT] no notice without the parameter"
+  }
+]

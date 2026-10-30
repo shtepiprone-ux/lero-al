@@ -1,0 +1,26 @@
+# rv51-02: the four real-boundary suites on the approved project (D66, D67); SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF from the URL host (length 20, value not printed); lines filtered to results and deleteAsset outcomes
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --config vitest.integration.config.ts --reporter=verbose src/lib/account/deleteAccount.integration.test.ts src/modules/cabinet/actions/reauth.integration.test.ts src/modules/cabinet/actions/reauthLimit.integration.test.ts src/lib/auth/sessionEnd.integration.test.ts
+started: 2026-10-24T13:22:50.506Z
+--- output ---
+  outcome: 'DRY_RUN'
+  outcome: 'DRY_RUN'
+  outcome: 'DRY_RUN'
+  outcome: 'DRY_RUN'
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 9942ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-OTHERS] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction 1087ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id 3528ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-STAFF-KEEP] A deleted staff member leaves the records of their actions with their name and without their id 467ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account 2273ms
+ ✓ src/lib/account/deleteAccount.integration.test.ts > [SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account 3601ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project 2369ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project 1615ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project 2175ms
+ ✓ src/modules/cabinet/actions/reauth.integration.test.ts > reauth > [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project 1562ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 3560ms
+ ✓ src/lib/auth/sessionEnd.integration.test.ts > [SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest 768ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-ALLOW] under the limit the right password works 2432ms
+ ✓ src/modules/cabinet/actions/reauthLimit.integration.test.ts > reauthLimit > [SEC-X-INT-REAUTH-LIMIT-DENY] past the limit even the right password is refused 1251ms
+ Test Files  4 passed (4)
+      Tests  14 passed (14)
+--- exit code: 0 ---

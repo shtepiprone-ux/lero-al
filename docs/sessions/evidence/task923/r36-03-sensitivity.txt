@@ -1,0 +1,7 @@
+R121 sensitivity record (Task 923 Revision 36)
+mutation: removed the new else-if branch of the focus return in src/modules/listings/components/ListingContact.tsx (the code with the flushSync commit of deviation 1)
+sha256 before the mutation: 931d6f451b948f5a9485ff6d80aacbb48750f952f0f502dd9240a5a8f9bdebef
+sha256 after the restore:   931d6f451b948f5a9485ff6d80aacbb48750f952f0f502dd9240a5a8f9bdebef
+equal: yes
+mutant run (r36-03-sensitivity-mutant.txt): 2 failed | 14 passed; failing: 'a focused Show number, after a verified reveal, leaves the focus on the tel: link' and 'a focused WhatsApp with an expired click activation leaves the focus on the Open WhatsApp link'
+restored run (r36-03-sensitivity-restored.txt):  Tests 16 passed (16)

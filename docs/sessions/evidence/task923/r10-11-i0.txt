@@ -1,0 +1,30 @@
+platform: win32 10.0.26300.0 PowerShell 5.1.26100.9711
+node: v22.22.3
+HEAD: 564008e85cba60d3257d34b6f66fc568d35df6d8
+branch: main
+date: 2026-10-19T09:39:54+02:00
+role: Sonnet (execute-task), Task 923 kickoff section 19 (Revision 10: R48, R49, R50)
+kickoff sha256 (cli.mjs hash --task, run in this session): e59cd18ebc57d2ea79d699bd682732f08b854355d4ef4dce8936f273f001568c
+git status --porcelain lines before the first write: 2623 (the tree holds many other tasks' uncommitted work; the full list is not copied here)
+
+cli.mjs plan, run in this session, all EXIT_CODE=0:
+  tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json  (Q0 docs, scope = the kickoff text only)
+  tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json                (Q4 product, 132 scope paths, 64 cases; governs R48 / R49)
+  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+cli.mjs receipt, run in this session, EXIT_CODE=0: the kickoff sidecar and the owner-fixes contract.
+
+sha256 of the files named by R48-R50 before the first write:
+821ce99fbddd279fc92e3f763d15d04c6eb73ce306535098a239603a08d4cc28  src/design-system/mantine/patterns/MantineDrawer.tsx
+202d3a19900d2c75f643ee4fb3ae215754a9b486f1fb9175b9bdbda3d31d9a2a  src/design-system/mantine/patterns/index.ts
+85f9681e3ee115b42aec86ba01b3c95469b2fdff8eb501e8feccdd1ac76c7070  src/modules/listings/components/ListingsFilters.tsx
+0b86d553d1d3e39c262fa31e60ebeb8d43273726fbbf51f637c016ff4942a297  src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+006debab4fec4adda060a04375708fe8e9b0b69fb84e96c1e918f3db97e4283f  src/stories/mantine/primitives/Table.stories.tsx
+7b83c1c99fc5df7b97f30a25ee93b4bc13529ab09e3dc11a98f80e5b6fee32d0  docs/sessions/2026-10-10-task923-rendered-state-census.md
+
+Scope facts (node check of the owner-fixes contract, this session):
+  IN SCOPE      src/design-system/mantine/patterns/MantineDrawer.tsx
+  IN SCOPE      src/design-system/mantine/patterns/__tests__/MantineDrawer.presentation.test.tsx
+  IN SCOPE      src/modules/listings/components/ListingsFilters.tsx
+  IN SCOPE      src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx
+  IN SCOPE      src/stories/mantine/primitives/Table.stories.tsx
+  NOT IN SCOPE  src/design-system/mantine/patterns/index.ts   <- R48 (a) says "Export it from patterns/index.ts"

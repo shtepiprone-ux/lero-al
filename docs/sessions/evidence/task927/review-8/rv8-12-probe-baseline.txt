@@ -1,0 +1,28 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-25T19:39:30.285Z
+command: node docs/sessions/evidence/task927/review-8/rv8-07-mobile-jump.mjs mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en
+--- output ---
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en mobile: 419 frames
+t=1939 top=800 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1971 top=776.1 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1987 top=727.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2004 top=659.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2020 top=589 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2037 top=526.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2054 top=475.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2071 top=435.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2088 top=404.1 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2104 top=379.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2120 top=360.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2137 top=346.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2154 top=336.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2170 top=329.9 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2188 top=326.2 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2204 top=325 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2221 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2257 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2487 top=285 h=515 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2520 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+--- exit code: 0 ---

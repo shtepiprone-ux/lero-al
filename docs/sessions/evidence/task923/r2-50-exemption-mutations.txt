@@ -1,0 +1,11 @@
+platform win32 v22.22.3
+PROVED  negative margin exempts only its own size: with the exemption removed, neg-margin-fullbleed fails component-overflow on portal:0: p "Full-bleed band" x 16..374 past div.stack 32..358
+PROVED  table box parent (the table algorithm places its own rows): with the exemption removed, table-rowspan fails component-overflow on portal:0: td "Spans two rows" y 143.6..204.4 past tr 143.6..173.6
+PROVED  slide clipped away by design: with the exemption removed, slide-carousel fails component-overflow on portal:0: div "" x 358..684 past div 32..358
+PROVED  text-hidden: text really outside the padding box: with the exemption removed, text-inner-box fails text-hidden on portal:0: div "short text" scroll 326x100 > client 326x40
+PROVED  viewport: hidden away by an ancestor inside the viewport: with the exemption removed, hidden-away-clipped fails viewport-overflow on portal:0: div "" x 32..632 outside 0..390
+PROVED  viewport: closed off-canvas fixed panel: with the exemption removed, offcanvas-closed-panel fails viewport-overflow on app: aside "Closed navigation panel" x -200..0 outside 0..390
+PROVED  action covered by a dialog in another portal root: with the exemption removed, stacked-dialogs fails action-covered on portal:0: button "Delete" centre 63.1,190 is covered by button
+
+every exemption is load-bearing for its benign fixture.
+EXIT_CODE=0

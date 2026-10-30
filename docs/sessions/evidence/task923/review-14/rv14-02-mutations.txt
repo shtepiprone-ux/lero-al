@@ -1,0 +1,6 @@
+cmd node docs/sessions/evidence/task923/r8-50-bound-mutations.mjs
+EXIT_CODE=0
+PROVED     R52's whole branch restored (R53 and R54 together): the whole stack counts as lying above the text and any opaque box covers it (an opaque card below an inert dialog hides the overlap): with it removed, the planted fixture html-text-over-inert-dialog-opaque-below goes green on portal:0 (t
+PROVED     R52's whole branch restored (R53 and R54 together): the whole stack counts as lying above the text and any opaque box covers it (an opaque card below an inert dialog hides the overlap): with it removed, the planted fixture html-text-overlap-in-inert-dialog goes green on portal:0 (text-ove
+PROVED     R53 guard undone (R54 untouched): for an inert layer the whole stack counts as lying above the text (a pinned card below an inert dialog hides the overlap): with it removed, the planted fixture html-text-overlap-in-inert-dialog-pinned-below goes green on portal:0 (text-overlap empty)
+58 of 58 proved.

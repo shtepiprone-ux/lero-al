@@ -1,0 +1,83 @@
+{
+  "takenAt": "2026-10-22T17:43:29.998Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 1,
+  "total": 1,
+  "records": [
+    {
+      "id": "M9-post-save-redirect-missing-path",
+      "kind": "mutation",
+      "file": "src/modules/listings/domain/listingSemanticHelpers.ts",
+      "cases": [
+        "SEC-X-FE-EDIT-MODERATION",
+        "after saving the owner goes to the public page only when it is public, else to the cabinet"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-FE-EDIT-MODERATION",
+          "passed": 3,
+          "total": 3,
+          "failed": 0
+        },
+        {
+          "caseId": "after saving the owner goes to the public page only when it is public, else to the cabinet",
+          "passed": 70,
+          "total": 70,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/domain/listingSemanticHelpers.ts\n+++ src/modules/listings/domain/listingSemanticHelpers.ts (mutated)\n@@ line 104 @@\n-  return `/${locale}/cabinet?tab=listings`\n+  return `/${locale}/cabinet/listings`",
+      "shaBefore": "e13866f1cba236fa310f6e57e43a323550368b4146854765461c702985f8484d",
+      "mutant": [
+        {
+          "caseId": "SEC-X-FE-EDIT-MODERATION",
+          "exit": 1,
+          "detected": true,
+          "fragment": null,
+          "failed": [
+            {
+              "name": "ListingFormShell.moderation [SEC-X-FE-EDIT-MODERATION] the owner sees the listing went to moderation",
+              "kind": "assertion",
+              "message": "AssertionError: expected \"vi.fn()\" to be called with arguments: [ '/sq/cabinet?tab=listings' ]"
+            }
+          ],
+          "suiteErrors": []
+        },
+        {
+          "caseId": "after saving the owner goes to the public page only when it is public, else to the cabinet",
+          "exit": 1,
+          "detected": true,
+          "fragment": null,
+          "failed": [
+            {
+              "name": "status vocabulary after saving the owner goes to the public page only when it is public, else to the cabinet",
+              "kind": "assertion",
+              "message": "AssertionError: expected '/en/cabinet/listings' to be '/en/cabinet?tab=listings' // Object.is equality"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "e13866f1cba236fa310f6e57e43a323550368b4146854765461c702985f8484d",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-FE-EDIT-MODERATION",
+          "exit": 0,
+          "passed": 3,
+          "total": 3,
+          "failed": 0
+        },
+        {
+          "caseId": "after saving the owner goes to the public page only when it is public, else to the cabinet",
+          "exit": 0,
+          "passed": 70,
+          "total": 70,
+          "failed": 0
+        }
+      ]
+    }
+  ]
+}

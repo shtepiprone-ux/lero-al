@@ -1,0 +1,11 @@
+# r55-05 part 3 (R169 (d)): comparison of the unit run's failures with the 17 IDs of rv62-11
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-55/r55-05-compare.mjs
+started: 2026-10-29T12:05:18.7097283Z
+--- output ---
+total 5913 passed 5896 failed 17 pending 0 todo 0 files 1344 suites; failed suites 15
+expected failing IDs (rv62-11): 17; actual failing IDs: 17
+expected but not failing: 0
+failing but not expected: 0
+exactly the 17 listed IDs: true
+--- exit code: 0 ---

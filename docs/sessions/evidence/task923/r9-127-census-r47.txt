@@ -1,0 +1,156 @@
+﻿rendered state census: 72 registered state(s), 1408 state job(s) + 896 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 34 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r9-127-census-r47
+  100/2338 jobs, 149 rows, 16 failing
+  200/2338 jobs, 286 rows, 36 failing
+  300/2338 jobs, 439 rows, 58 failing
+  400/2338 jobs, 614 rows, 60 failing
+  500/2338 jobs, 780 rows, 60 failing
+  600/2338 jobs, 944 rows, 60 failing
+  700/2338 jobs, 1110 rows, 60 failing
+  800/2338 jobs, 1274 rows, 60 failing
+  900/2338 jobs, 1443 rows, 60 failing
+  1000/2338 jobs, 1594 rows, 60 failing
+  1100/2338 jobs, 1755 rows, 60 failing
+  1200/2338 jobs, 1914 rows, 60 failing
+  1300/2338 jobs, 2074 rows, 60 failing
+  1400/2338 jobs, 2238 rows, 60 failing
+  1500/2338 jobs, 2389 rows, 60 failing
+  1600/2338 jobs, 2555 rows, 60 failing
+  1700/2338 jobs, 2710 rows, 60 failing
+  1800/2338 jobs, 2874 rows, 60 failing
+  1900/2338 jobs, 3050 rows, 60 failing
+  2000/2338 jobs, 3206 rows, 60 failing
+  2100/2338 jobs, 3358 rows, 60 failing
+  2200/2338 jobs, 3504 rows, 60 failing
+  2300/2338 jobs, 3660 rows, 60 failing
+
+rendered state census — rows 3734 (failing 80); {"statesRun":72,"locales":["sq","en","uk","it"],"widths":[320,390,639,640,768,1023,1024,1440],"boundCells":0,"stateJobs":1408,"rangeJobs":896,"closedJobs":34,"appRows":2338,"portalRows":1396,"runtimeSeconds":1851,"ruleKeys":22}
+rows failing per rule:
+  text-clamp             0
+  text-ellipsis          0
+  text-hidden            0
+  word-split             0
+  text-overlap           0
+  svg-text-clipped       0
+  viewport-overflow      0
+  component-overflow     0
+  action-hidden          0
+  action-covered         0
+  target-small           0
+  focus-open             0
+  focus-trigger          0
+  focus-trap             20
+  dismiss-escape         0
+  dismiss-close-control  0
+  dismiss-outside        0
+  open-failed            12
+  portal-count           12
+  error-screen           0
+  unregistered-portal    0
+  widths-mismatch        48
+rows with a not-applicable check, per rule (R13: recorded in the row, never silent):
+  action-covered         1076
+  action-hidden          1076
+  dismiss-close-control  228
+  dismiss-outside        240
+  focus-trigger          96
+  target-small           1076
+controls skipped by the action rules (R24 / R30: clipped away, out of the tab order, hidden from assistive technology): 0 in 0 row(s)
+controls excused from target-small by a registry row's exemptTargets and its dated owner decision (Task 923 R33, D9): 0 in 0 row(s)
+boxes excused from component-overflow by a registry row's exemptOverflow and its dated owner decision (Task 923 R33, D10): 0 in 0 row(s)
+Story x state x width with no pointer dismissal (neither close-control nor outside applies): 16
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1023
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1024
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 1440
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 320
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 390
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 639
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 640
+  mantine-primitives-filterspanelshell--default | mantine-primitives-filterspanelshell--default | 768
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1023
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1024
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 1440
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 320
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 390
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 639
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 640
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | 768
+widths states: 54; each measured at its in-range bound and at the first width outside it (rows per locale): 54 complete, 0 with a missing cell
+  patterns-mantine-admincurrenciesview--default~all {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-admincurrenciesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--default~eur {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-admincurrenciesview--default~eur-euroactive {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-admincurrenciesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-admincurrenciesview--default~usd {"min":640}: in-range 640px x4; first outside 639px x4
+  patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-admincurrenciesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-admincurrenciesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminexchangeprovidersview--pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminexchangeprovidersview--pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--audit-zero~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--audit-zero~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--default~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--empty~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--filtered-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--filtered-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--filtered-pending~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--hidden-eligible~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--paginated~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--paginated~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--paginated~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--premium-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--premium-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--premium-tab~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminlistingsview--visible-filter~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminlistingsview--visible-filter~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminlistingsview--visible-filter~public-visibility {"max":639}: in-range 639px x4; first outside 640px x4
+  patterns-mantine-adminpagesview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--deleting~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--deleting~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminpagesview--migration-pending~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminpagesview--migration-pending~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--all-tab~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--all-tab~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--default~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--default~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+  patterns-mantine-adminreportsview--empty~en-english {"min":1024}: in-range 1024px x4; first outside 1023px x4
+  patterns-mantine-adminreportsview--empty~open-menu {"max":1023}: in-range 1023px x4; first outside 1024px x4
+retried jobs (R16: one retry on a fresh page after a navigation error, a render timeout or an open timeout; a second failure is the violation): 13 (recovered 1, still failing 12)
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | en | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | it | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | sq | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | uk | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | en | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(2) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | it | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(2) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | sq | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(2) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | uk | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(2) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | en | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | it | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | sq | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | uk | 640 :: still failing :: first failure: open click ":scope > div:nth-child(3) > div:nth-child(2) > main:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) > td:nth-child(1) > button:nth-child(1)": locator.click: Timeout 4000ms exceeded.
+  patterns-mantine-adminpagesview--empty | patterns-mantine-adminpagesview--empty~open-menu | en | 1024 :: recovered :: first failure: navigation failed: page.goto: net::ERR_NO_BUFFER_SPACE at http://127.0.0.1:6043/iframe.html?id=patterns-mantine-adminpagesview--empty&viewMode=story&globals=locale:en
+jobs that hit the settle bound (R31: 8000ms; the page was measured as it was), by Story x state: 0 job(s) in 0 Story x state
+Story x state x root with a violation: 7
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~all | app :: widths-mismatch, open-failed, portal-count (16 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~alll-albanian-lekdefaultacti | app :: widths-mismatch (4 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur-euroactive | app :: widths-mismatch (4 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~eur | app :: widths-mismatch, open-failed, portal-count (16 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd-us-dollarinactive | app :: widths-mismatch (4 cell(s))
+  patterns-mantine-admincurrenciesview--default | patterns-mantine-admincurrenciesview--default~usd | app :: widths-mismatch, open-failed, portal-count (16 cell(s))
+  patterns-mantine-listingsfilters--default | patterns-mantine-listingsfilters--default | portal:0 :: focus-trap (20 cell(s))
+
+rows 3734 = 2338 app-root rows + 1396 portal-root rows; 1408 state jobs + 896 out-of-range widths jobs + 34 closed jobs; 13 retried job(s); runtime 1851s

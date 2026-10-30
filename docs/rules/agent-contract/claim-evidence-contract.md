@@ -6,13 +6,13 @@ locator or an explicit owner decision. The exact operational grammar and stop co
 `.claude/rules/shared/claim-evidence-contract.md`.
 
 `FACT` means the author opened the named current source/artifact and recorded a path, applicable line range, and
-literal observation that appears there. `OWNER DECISION` means a dated, verbatim owner choice; it defines desired
+literal observation that appears there. `OWNER DECISION` means a dated owner choice, faithfully translated into English; it defines desired
 behavior but never proves existing behavior. `INFERENCE`, `UNKNOWN`, `UNVERIFIED`, `CONTRADICTION`, and `ASSUMPTION`
 cannot support scope, a requirement, an AC, expected command output, a canonical owner, or an exclusion. Resolve the
 gap or return `BLOCKED`.
 
 Every new or revised implementation kickoff has one `## Claim ledger`. Its `C# FACT` rows use
-`source: path:line-line; observed: literal`; its `D# OWNER DECISION` rows use `owner: YYYY-MM-DD; decision: verbatim`.
+`source: path:line-line; observed: literal`; its `D# OWNER DECISION` rows use `owner: YYYY-MM-DD; decision: owner choice in English`.
 Every `R#` and `AC#` cites the supporting `C#` and/or `D#`. The evidence path/range/literal must resolve in the
 repository or retained evidence artifact. The absence of a row, an unresolved citation, or a non-publishable state is
 `BLOCKED — KICKOFF EVIDENCE GAP`.

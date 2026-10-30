@@ -1,0 +1,35 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T15:48:57.104Z
+command: npx vitest run --reporter=verbose updateListing.smoke createListing.smoke editAccessRestricted.security listingAccessRestricted.security closedListing.security
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/[locale]/listings/[slug]/edit/__tests__/editAccessRestricted.security.test.ts > editAccessRestricted > [SEC-X-SRV-RESTRICTED-EDIT] the edit link of a hidden listing shows the restricted page to a non-owner 6ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > happy path: valid payload → { slug }, status:pending inserted, user_id pinned 45ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > price_old is server-owned: payload price_old 123456 → inserted price_old null (Task 917) 1ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > validation_failed: schema rejects payload → { error: "validation_failed" } 1ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > unauthenticated: no session → { error: "unauthenticated" } 0ms
+ ✓ src/modules/listings/actions/__tests__/createListing.smoke.test.ts > createListing — smoke tests (Task 442) > insert error: DB fails → { error: "insert_failed" } + console.error logged (Guard 4) 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > happy path: owner edit of an active listing → { slug, status: 'pending' } (D53), one gateway move, one update 69ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > not_found: listing does not exist → { error: "not_found" }, no DB update 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > validation_failed: schema rejects payload → { error: "validation_failed" } 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > unauthenticated: no session → { error: "unauthenticated" } 0ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — smoke tests (Task 442) > update DB error → { error: 'update_failed' } + console.error logged (Guard 4) 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (a) lowered price: stored 100000/null → price 90000 writes price_old 100000 1ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (b) client price_old is ignored: unchanged price + payload price_old 5 writes null 0ms
+ ✓ src/modules/listings/actions/__tests__/updateListing.smoke.test.ts > updateListing — server-owned price_old (Task 917) > (c) currency change writes price_old null 0ms
+ ✓ src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts > closedListing > [SEC-X-SRV-CLOSED-PAGE] visitors open sold and rented, not archived 11ms
+ ✓ src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts > listingAccessRestricted > [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status 12ms
+ ✓ src/app/[locale]/listings/[slug]/__tests__/listingAccessRestricted.security.test.ts > listingAccessRestricted > [SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status 3ms
+
+ Test Files  5 passed (5)
+      Tests  17 passed (17)
+   Start at  17:48:58
+   Duration  2.25s (transform 619ms, setup 567ms, import 4.06s, tests 161ms, environment 1.78s)
+
+
+---- end ----
+EXIT_CODE=0

@@ -1,0 +1,22 @@
+Task 923 Revision 59 (R177-R178), kickoff section 86, AC159
+File: r59-00 - sha256 of every path the revision writes, taken before its first edit. Written first.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+HEAD: 29acfb269
+Command: sha256sum <path> (Git Bash), one call over the existing paths; new paths are listed as "new"
+Exit code: 0
+
+d988c854adda8f427aaef7e09f05b701e9ba6b280b0a08ad1b3535a51c53b34b  src/components/admin/AdminUserProfile.tsx
+b26d77ff7b50cfb0867dab3eda5c729fa69568e3b9b28a14ec44f3eeb6761827  src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+808b5e4e1892f007aba46b9f22f80271d06cd3f876ed816de9e5210847efcd16  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+f3763d24a526b75096121e3ebf38d41872cb47af5a364d50ec38d915be3299a8  docs/sessions/evidence/task923/security/d8-d9-report.json
+cab5e6b033f17f35b97b527a138cbcb5636463457b3a5e8506c6c7ed8a0d9af7  docs/sessions/2026-10-10-task923-rendered-state-census.md
+new  docs/sessions/evidence/task923/revision-59/r59-00-hashes-before.txt
+new  docs/sessions/evidence/task923/revision-59/r59-01-city-dirty-tests.txt
+new  docs/sessions/evidence/task923/revision-59/r59-02-planted-break-p7.txt
+new  docs/sessions/evidence/task923/revision-59/r59-03-report-and-verify.txt
+new  docs/sessions/evidence/task923/revision-59/r59-04-final-candidate.txt
+new  docs/sessions/evidence/task923/revision-59/r59-00b-hashes-after.txt
+
+Not written by this revision (contract of R178 (c)): the owner-fixes and Task 927 contracts and reports are rerun by verify only.
+Not written, rerun only: the view, its Story, `.claude/**`.

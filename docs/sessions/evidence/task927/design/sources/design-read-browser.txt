@@ -1,0 +1,231 @@
+=== Bash cat -n src/modules/auth/components/AuthSheet.tsx && echo ===== && cat -n src/lib/auth/browser.ts && ls src/app/auth src/app/auth/* 2>/dev/null; ls src/app/\[locale\]/auth 2>/dev/null at 2026-10-20T13:13:11.390Z
+<persisted-output>
+Output too large (40.3KB). Full output saved to: C:\Users\Nox\.claude-account2\projects\C--Claude-Code-Projects-lero-al\d80d2100-add4-4ad1-8705-6bc21932d5bb\tool-results\bcbtnwlvf.txt
+
+Preview (first 2KB):
+     1	'use client'
+     2	
+     3	import { useState, useEffect } from 'react'
+     4	import { useTranslations, useLocale } from 'next-intl'
+     5	import { useRouter } from 'next/navigation'
+     6	import { useRef } from 'react'
+     7	import { CheckCircle2, ImagePlus } from 'lucide-react'
+     8	import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+     9	import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
+    10	import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
+    11	import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
+    12	import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
+    13	import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
+    14	import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+    15	import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
+    16	import { allPasswordRulesMet } from '@/lib/passwordRules'
+    17	import { useLocations } from '@/modules/locations/hooks/useLocations'
+    18	import { LocationCombobox } from '@/components/shared/LocationCombobox'
+    19	import { useCompanies } from '@/modules/companies/hooks/useCompanies'
+    20	import { createCompanyAction } from '@/modules/companies/actions'
+    21	import { PhoneField } from '@/components/shared/PhoneField'
+    22	import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+    23	import { validateNationalPhone } from '@/lib/phone'
+    24	import { SITE_URL } from '@/lib/siteUrl'
+    25	
+    26	export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
+    27	
+    28	interface AuthSheetProps {
+    29	  open: boolean
+    30	  onOpenChange: (open: boolean) => void
+...
+</persisted-output>
+
+=== Bash cat -n src/lib/auth/browser.ts; echo ====; find src/app -path '*auth*' -name '*.ts*' | head -30; echo ====; cat -n src/modules/auth/lib/sanitizeReturnTo.ts at 2026-10-20T13:13:17.385Z
+     1	/**
+     2	 * auth-core / browser
+     3	 *
+     4	 * Browser-side authentication operations — the only permitted entry point for
+     5	 * auth state mutations and subscriptions in Client Components.
+     6	 *
+     7	 * Uses the singleton browser Supabase client from @/lib/supabase/client, which
+     8	 * carries the custom promise-queue mutex that serialises concurrent auth
+     9	 * operations and prevents the "Invalid Refresh Token: Refresh Token Not Found"
+    10	 * race condition caused by React Strict Mode double-invocation.
+    11	 *
+    12	 * All functions return the raw Supabase result so callers can inspect errors
+    13	 * without wrapping in try/catch (Supabase SDK never throws in normal usage).
+    14	 */
+    15	
+    16	import { createClient } from '@/lib/supabase/client'
+    17	import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
+    18	import type { User } from '@/types/database'
+    19	
+    20	// ── Sign-in ──────────────────────────────────────────────────────────────────
+    21	
+    22	export function signIn(email: string, password: string) {
+    23	  return createClient().auth.signInWithPassword({ email, password })
+    24	}
+    25	
+    26	export function signInWithOAuth(provider: 'google', redirectTo: string) {
+    27	  return createClient().auth.signInWithOAuth({
+    28	    provider,
+    29	    options: { redirectTo },
+    30	  })
+    31	}
+    32	
+    33	export function signUp(
+    34	  email: string,
+    35	  password: string,
+    36	  options: {
+    37	    emailRedirectTo: string
+    38	    data?: Record<string, unknown>
+    39	  }
+    40	) {
+    41	  return createClient().auth.signUp({ email, password, options })
+    42	}
+    43	
+    44	// ── Password recovery ────────────────────────────────────────────────────────
+    45	
+    46	export function requestPasswordReset(email: string, redirectTo: string) {
+    47	  return createClient().auth.resetPasswordForEmail(email, { redirectTo })
+    48	}
+    49	
+    50	export function updatePassword(password: string) {
+    51	  return createClient().auth.updateUser({ password })
+    52	}
+    53	
+    54	export function verifyOtp({ token_hash, type }: { token_hash: string; type: string }) {
+    55	  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    56	  return createClient().auth.verifyOtp({ token_hash, type: type as any })
+    57	}
+    58	
+    59	// ── Sign-out ─────────────────────────────────────────────────────────────────
+    60	
+    61	export function signOut(scope?: 'global' | 'local') {
+    62	  return createClient().auth.signOut(scope ? { scope } : undefined)
+    63	}
+    64	
+    65	// ── Session access ───────────────────────────────────────────────────────────
+    66	
+    67	export function getSession() {
+    68	  return createClient().auth.getSession()
+    69	}
+    70	
+    71	// Force-refreshes the access token using the stored refresh token.
+    72	// Called by the auth provider on recovery scenarios.
+    73	export function refreshSession() {
+    74	  return createClient().auth.refreshSession()
+    75	}
+    76	
+    77	// ── Auth state subscription ──────────────────────────────────────────────────
+    78	
+    79	export function onAuthStateChange(
+    80	  callback: (event: AuthChangeEvent, session: Session | null) => void
+    81	) {
+    82	  return createClient().auth.onAuthStateChange(callback)
+    83	}
+    84	
+    85	// ── Application profile resolution ───────────────────────────────────────────
+    86	//
+    87	// Fetches the application-level user profile row from the database.
+    88	// On first OAuth sign-in (no row yet), upserts the profile with metadata
+    89	// from the provider so the user can immediately use the application.
+    90	//
+    91	// Lives here (auth-core) because it is an integral part of the auth lifecycle:
+    92	// it is called exclusively from onAuthStateChange handlers.
+    93	
+    94	export async function resolveProfile(
+    95	  authUserId: string,
+    96	  userMeta: Record<string, unknown>
+    97	): Promise<User | null> {
+    98	  const supabase = createClient()
+    99	
+   100	  const { data } = await supabase
+   101	    .from('users')
+   102	    .select('*')
+   103	    .eq('id', authUserId)
+   104	    .single()
+   105	
+   106	  if (data) return data as User
+   107	
+   108	  const name =
+   109	    (userMeta?.full_name as string | undefined) ??
+   110	    (userMeta?.name as string | undefined) ??
+   111	    null
+   112	
+   113	  const { data: created } = await supabase
+   114	    .from('users')
+   115	    // Task 923 Revision 7, finding S58: creating must never touch a row that exists. When the read above failed (network, a temporary database error) "no data"
+   116	    // was taken for "no profile", and this upsert overwrote the real row with role "user" and "not verified": an administrator or a verified agent lost the role or
+   117	    // the badge. With `ignoreDuplicates` an existing row is left alone (and nothing is returned for it).
+   118	    .upsert(
+   119	      {
+   120	        id: authUserId,
+   121	        name,
+   122	        user_type: 'private',
+   123	        role: 'user',
+   124	        is_verified: false,
+   125	      },
+   126	      { onConflict: 'id', ignoreDuplicates: true },
+   127	    )
+   128	    .select()
+   129	    .single()
+   130	
+   131	  return (created as User | null) ?? null
+   132	}
+====
+src/app/api/auth/me/route.ts
+src/app/api/auth-email-hook/authEmailHook.security.test.ts
+src/app/api/auth-email-hook/route.ts
+src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts
+src/app/api/auth-email-hook/__tests__/route.security.test.ts
+src/app/api/cron/inactivity/__tests__/route.auth.test.ts
+src/app/api/cron/price-alerts/__tests__/route.auth.test.ts
+src/app/api/cron/saved-searches/__tests__/route.auth.test.ts
+src/app/auth/callback/route.ts
+src/app/auth/callback/__tests__/route.security.test.ts
+src/app/auth/confirm/route.ts
+src/app/auth/confirm/__tests__/route.security.test.ts
+src/app/auth/confirm/__tests__/route.test.ts
+src/app/[locale]/auth/confirm-email/page.tsx
+src/app/[locale]/auth/login/page.tsx
+src/app/[locale]/auth/register/page.tsx
+src/app/[locale]/auth/reset-password/page.tsx
+src/app/[locale]/auth/verified/page.tsx
+src/app/[locale]/auth/verified/VerifiedBridge.tsx
+src/app/[locale]/auth/verified/VerifiedCard.tsx
+src/app/[locale]/auth/verified/__tests__/page.test.tsx
+====
+     1	/**
+     2	 * Sanitizes a `next` redirect path to ensure it is a safe same-origin relative path.
+     3	 * (`next` is the canonical post-login redirect param across the whole codebase.)
+     4	 *
+     5	 * Accepts: relative paths that start with a single "/" (e.g. "/sq/cabinet").
+     6	 * Rejects:
+     7	 *   - undefined / null / empty string
+     8	 *   - protocol-relative URLs (//)
+     9	 *   - anything with a URL scheme (javascript:, data:, https:, etc.)
+    10	 *   - paths that do not start with /
+    11	 *   - backslashes (browser normalisation may expand \ to / in some contexts)
+    12	 *   - ASCII control characters (U+0000–U+001F)
+    13	 *   - path-traversal segments: ".." in raw or percent-encoded forms
+    14	 *     (%2e%2e, .%2e, %2e.) including with encoded slash (%2f)
+    15	 *
+    16	 * Admin-path enforcement (after login): the server-side admin layout guard
+    17	 * handles unauthorized access — a non-admin who lands on /admin is
+    18	 * immediately redirected away by the role check in app/admin/layout.tsx.
+    19	 * sanitizeReturnTo is a path-safety check only, NOT an authorization check.
+    20	 */
+    21	export function sanitizeReturnTo(raw: string | null | undefined): string | null {
+    22	  if (!raw) return null
+    23	  // Must start with / but not //
+    24	  if (!raw.startsWith('/') || raw.startsWith('//')) return null
+    25	  // Must not contain a URL scheme (javascript:, data:, vbscript:, etc.)
+    26	  if (/^[a-z][a-z0-9+.\-]*:/i.test(raw)) return null
+    27	  // Reject backslashes — browsers may normalise \ to / in some contexts.
+    28	  if (raw.includes('\\')) return null
+    29	  // Reject ASCII control characters (U+0000–U+001F).
+    30	  if (/[\x00-\x1f]/.test(raw)) return null
+    31	  // Reject path-traversal segments. Normalise %2e → . so that all encoded
+    32	  // forms (%2e%2e, .%2e, %2e.) collapse to "..", then test for ".." as a
+    33	  // path segment (followed by /, end-of-string, ?, #, or encoded slash %2f).
+    34	  const normalized = raw.replace(/%2e/gi, '.')
+    35	  if (/(^|\/)\.\.($|[/?#]|%2f)/i.test(normalized)) return null
+    36	  return raw
+    37	}

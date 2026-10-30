@@ -1,0 +1,13 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T17:43:08.804Z
+command: node docs/sessions/evidence/task923/r32-50-sensitivity.cjs
+---- output ----
+proved     M9-post-save-redirect-missing-path (SEC-X-FE-EDIT-MODERATION, after saving the owner goes to the public page only when it is public, else to the cabinet)
+           -> AssertionError: expected "vi.fn()" to be called with arguments: [ '/sq/cabinet?tab=listings' ]
+           -> AssertionError: expected '/en/cabinet/listings' to be '/en/cabinet?tab=listings' // Object.is equality
+1 of 1 proved.
+
+---- end ----
+EXIT_CODE=0

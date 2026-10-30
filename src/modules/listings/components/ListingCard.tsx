@@ -16,7 +16,7 @@ import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { convertPrice as convertPriceMulti } from '@/lib/getExchangeRate'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { cn } from '@/lib/utils'
-import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
+import type { MantineBadgeMeaning } from '@/design-system/mantine/patterns/MantineBadge'
 import styles from './ListingCard.module.css'
 
 export interface CardListingData extends ListingSnapshot {
@@ -56,7 +56,7 @@ interface ListingCardProps {
 // The sold/rented overlay colour is owned by `MantineListingCardPattern` (`overlay.tone`, Task 886 R40).
 
 // Tone -> Mantine theme color name (Task 617). The four closed-status colours (sold/rented/archived/expired) come
-// from `LISTING_STATUS_COLOR` (`listingStatusTone.ts`) — the one source shared with `ListingStatusBanner` (Task 741 R3).
+// from the badge registry (`badgeTones.ts`, `LISTING_STATUS_TONES`) — the one source shared with `ListingStatusBanner` (Task 741 R3, Task 859 R24).
 // Replaces the legacy `className` color override —
 // Mantine's `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules, so a Tailwind
 // `@layer utilities` className on a Mantine `Badge` can never win (Task 602/606/612/616/617
@@ -78,48 +78,48 @@ function isListingPriceReduced(listing: CardListingData): boolean {
 }
 
 function getBadges(listing: CardListingData) {
-  const badges: { label: string; color: string }[] = []
+  const badges: { label: string; meaning: MantineBadgeMeaning }[] = []
 
   // Status badges take priority for non-active listings
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'sold') {
-    badges.push({ label: 'status_sold', color: LISTING_STATUS_COLOR.sold })
+    badges.push({ label: 'status_sold', meaning: { variant: 'status', entity: 'listing', value: 'sold' } })
     return badges
   }
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'rented') {
-    badges.push({ label: 'status_rented', color: LISTING_STATUS_COLOR.rented })
+    badges.push({ label: 'status_rented', meaning: { variant: 'status', entity: 'listing', value: 'rented' } })
     return badges
   }
   if (isListingArchived(listing.status as ListingStatus)) {
-    badges.push({ label: 'status_archived', color: LISTING_STATUS_COLOR.archived })
+    badges.push({ label: 'status_archived', meaning: { variant: 'status', entity: 'listing', value: 'archived' } })
     return badges
   }
   if (listing.status === 'expired') {
-    badges.push({ label: 'status_expired', color: LISTING_STATUS_COLOR.expired })
+    badges.push({ label: 'status_expired', meaning: { variant: 'status', entity: 'listing', value: 'expired' } })
     return badges
   }
   // Task 741 R3b (owner D46-4, 2026-10-04): inactive and pending are labelled from the same map, gray / yellow.
   // They return early like the other non-active statuses, so neither gets `new` / `price_reduced`.
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes inactive vs pending individually; isListingHidden() merges them (and expired) and cannot be used here
   if (listing.status === 'inactive') {
-    badges.push({ label: 'status_inactive', color: LISTING_STATUS_COLOR.inactive })
+    badges.push({ label: 'status_inactive', meaning: { variant: 'status', entity: 'listing', value: 'inactive' } })
     return badges
   }
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes inactive vs pending individually; isListingHidden() merges them (and expired) and cannot be used here
   if (listing.status === 'pending') {
-    badges.push({ label: 'status_pending', color: LISTING_STATUS_COLOR.pending })
+    badges.push({ label: 'status_pending', meaning: { variant: 'status', entity: 'listing', value: 'pending' } })
     return badges
   }
 
   // Active listing badges
   const sevenDaysAgo = new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
   if (new Date(listing.created_at) > sevenDaysAgo) {
-    badges.push({ label: 'new', color: 'green' })
+    badges.push({ label: 'new', meaning: { variant: 'tone', tone: 'success' } })
   }
   // Premium is expressed through card styling, not a text badge
   if (isListingPriceReduced(listing)) {
-    badges.push({ label: 'price_reduced', color: 'sale' })
+    badges.push({ label: 'price_reduced', meaning: { variant: 'tone', tone: 'sale' } })
   }
   return badges
 }
@@ -161,7 +161,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   // (Task 741 Revision 3h, owner D46-9): the container is a thin data-mapper, so the grid and the list card cannot
   // drift. Only the photo (a different delivery variant), the favourite control (its position) and the wrapper class
   // differ between the two variants.
-  const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
+  const patternBadges = badges.map(b => ({ label: t(b.label), meaning: b.meaning }))
   const overlay = isClosed
     ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), tone: listing.status as 'sold' | 'rented' }
     : undefined

@@ -48,7 +48,7 @@ function ViewDemo({
     ? currencies.filter(c => c.code.toLowerCase().includes(q) || c.name_en.toLowerCase().includes(q) || c.name_sq.toLowerCase().includes(q))
     : currencies
   return (
-    <AdminPageFrame width="page">
+    <AdminPageFrame width="shell">
     <AdminCurrenciesView
       currencies={filtered}
       query={query}

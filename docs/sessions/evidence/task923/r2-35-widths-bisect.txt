@@ -1,0 +1,8 @@
+mantine-primitives-relativetime--default: closed 320..640 | opens 641..1440
+mantine-primitives-usermenu--default~akalba-krasniqi: opens 320..639 | unclickable 640 | opens 641..1440
+patterns-mantine-adminlistingsview--default~public-visibility: opens 320..640 | absent 641..1440
+patterns-mantine-adminsupportview--default~unassigned: opens 320..640 | absent 641..1440
+patterns-mantine-listingdetailview--public-listing~all-photos: opens 320..767 | absent 768..1440
+patterns-mantine-listingdetailview--public-listing-converted~all-photos: opens 320..767 | absent 768..1440
+patterns-mantine-listingdetailview--archived-listing~all-photos: opens 320..767 | absent 768..1440
+patterns-mantine-listingdetailview--staff-preview-published~all-photos: opens 320..767 | absent 768..1440

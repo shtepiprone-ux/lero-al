@@ -1,11 +1,10 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 import { ActionIcon, Divider, Group, Modal, Stack, Box, Text, ThemeIcon, useMantineTheme } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
-import { DIALOG_BLEED } from './MantineDialogSections'
 
 export interface MantineModalProps {
   /** Controlled open state */
@@ -22,7 +21,7 @@ export interface MantineModalProps {
   size?: string
   /**
    * Opts into the canonical dialog anatomy (Task 857 R44, docs §23.7): a header with an optional icon tile, the title
-   * and a muted description, a round close button (desktop), full-bleed dividers under the header and above the
+   * and a muted description, a round 44px close button (desktop, ActionIcon size `xl` — TailAdmin /modals, D78-22), full-bleed dividers under the header and above the
    * footer, and no extra gap between body and footer (the body's sections own their spacing). Task 915 moves every
    * other consumer onto it, then makes it the default and deletes this prop.
    */
@@ -31,6 +30,12 @@ export interface MantineModalProps {
   description?: ReactNode
   /** Icon shown in a light tile before the title (structured only). */
   icon?: ReactNode
+  /**
+   * Another dialog (a delete confirmation) is open above this one (Task 859 Revision 3, R36): this dialog is hidden
+   * from assistive technology and inert while it is covered, as WAI-ARIA requires of what lies under a modal.
+   * Structured only.
+   */
+  covered?: boolean
 }
 
 interface DialogHeadingProps {
@@ -44,7 +49,7 @@ interface DialogHeadingProps {
 /** Icon tile + title + description of a structured dialog (§23.7 "Header"), shared by the modal and the sheet. */
 function DialogHeading({ icon, title, description, asModalTitle }: DialogHeadingProps) {
   const titleText = (
-    <Text component="span" fz="lg" fw={600} lineClamp={2}>
+    <Text component="span" fz="lg" fw={600}>
       {title}
     </Text>
   )
@@ -53,36 +58,28 @@ function DialogHeading({ icon, title, description, asModalTitle }: DialogHeading
       {icon && <ThemeIcon variant="light" size="xl" radius="md">{icon}</ThemeIcon>}
       <Stack gap="tight" flex={1} miw={0}>
         {asModalTitle ? <Modal.Title>{titleText}</Modal.Title> : titleText}
-        {description && <Text fz="sm" c="dimmed" lineClamp={2}>{description}</Text>}
+        {description && <Text fz="sm" c="dimmed">{description}</Text>}
       </Stack>
     </Group>
   )
 }
 
-interface StructuredBodyProps {
-  children: ReactNode
-  footer?: ReactNode
-}
-
 /**
- * Body of a structured dialog (desktop): the content, then the footer. The footer is pinned to the bottom edge of the
- * scrolling modal (sticky, like the header), with a full-bleed divider above it, so its actions are always visible.
+ * Footer of a structured dialog (desktop): a full-width divider, then the actions. It is a direct child of the modal
+ * content, a sibling of the header and the body and outside the scroll region (the theme `Modal` entry makes the
+ * content a clipping flex column and the body the only scroller, R51), so a scrollbar never reaches it or the 24px
+ * corners and its actions are always visible.
  */
-function StructuredBody({ children, footer }: StructuredBodyProps) {
+function StructuredFooter({ children }: { children: ReactNode }) {
   return (
-    <>
-      <Box>{children}</Box>
-      {footer && (
-        <Box pos="sticky" bottom={0} bg="var(--mantine-color-body)" mx={DIALOG_BLEED} px="var(--mb-padding, var(--mantine-spacing-md))">
-          <Divider mx={DIALOG_BLEED} />
-          <Box py="md">{footer}</Box>
-        </Box>
-      )}
-    </>
+    <Box flex="none">
+      <Divider />
+      <Box px="var(--mb-padding, var(--mantine-spacing-md))" py="md">{children}</Box>
+    </Box>
   )
 }
 
-function StructuredModal({ opened, onClose, title, description, icon, children, footer, size, isMobile }: MantineModalProps & { isMobile: boolean }) {
+function StructuredModal({ opened, onClose, title, description, icon, children, footer, size, covered, isMobile }: MantineModalProps & { isMobile: boolean }) {
   const tc = useTranslations('common')
   const theme = useMantineTheme()
 
@@ -93,6 +90,7 @@ function StructuredModal({ opened, onClose, title, description, icon, children, 
         onClose={onClose}
         header={<DialogHeading icon={icon} title={title} description={description} />}
         footer={footer}
+        covered={covered}
       >
         <SheetContent>{children}</SheetContent>
       </ResponsiveBottomSheet>
@@ -100,15 +98,15 @@ function StructuredModal({ opened, onClose, title, description, icon, children, 
   }
 
   return (
-    <Modal.Root opened={opened} onClose={onClose} centered size={size}>
+    <Modal.Root opened={opened} onClose={onClose} centered size={size} {...(covered && { 'aria-hidden': true, inert: true })}>
       <Modal.Overlay />
       <Modal.Content>
-        {/* The header is sticky (Mantine's own); its divider lives inside it so it stays pinned too. */}
+        {/* The header, the body (the only scroll region) and the footer are siblings: only the body scrolls (R51). */}
         <Modal.Header p={0}>
           <Stack gap={0} w="100%">
             <Group justify="space-between" align="flex-start" wrap="nowrap" gap="md" p="var(--mb-padding, var(--mantine-spacing-md))">
               <DialogHeading icon={icon} title={title} description={description} asModalTitle />
-              <ActionIcon variant="light" color="gray" radius="pill" size="input-sm" aria-label={tc('close')} onClick={onClose}>
+              <ActionIcon variant="light" color="gray" radius="pill" size="xl" aria-label={tc('close')} onClick={onClose}>
                 <X size={theme.other.iconSize.standard} />
               </ActionIcon>
             </Group>
@@ -116,11 +114,48 @@ function StructuredModal({ opened, onClose, title, description, icon, children, 
           </Stack>
         </Modal.Header>
         <Modal.Body pb={footer ? 0 : undefined}>
-          <StructuredBody footer={footer}>{children}</StructuredBody>
+          <Box>{children}</Box>
         </Modal.Body>
+        {footer && <StructuredFooter>{footer}</StructuredFooter>}
       </Modal.Content>
     </Modal.Root>
   )
+}
+
+/**
+ * Focus goes back to what had it when the dialog opened, also when the dialog is UNMOUNTED instead of closed (a consumer that renders
+ * `{target && <XDialog opened />}`): Mantine returns the focus only on the `opened` true -> false transition, so an unmounted dialog left
+ * it on `body` (WCAG 2.4.3; the census `dismiss-*` focus-return rule, Task 923 R33). Focus the person has moved elsewhere is left alone.
+ */
+function useRestoreFocusOnClose(opened: boolean) {
+  useEffect(() => {
+    if (!opened || typeof document === 'undefined') return
+    const opener = document.activeElement
+    return () => {
+      if (!(opener instanceof HTMLElement) || opener === document.body || !opener.isConnected) return
+      const active = document.activeElement
+      if (!active || active === document.body || active.closest('[data-portal]')) opener.focus()
+    }
+  }, [opened])
+}
+
+/**
+ * The dialog body, with the one rule that an open dialog holds the focus. Mantine's focus trap moves it to the first control; when every control
+ * is disabled (an upload in progress) there is none, the focus stays on what opened the dialog and Tab leaves the dialog. Shortly after opening,
+ * the dialog element itself (focusable: `tabindex="-1"`) takes the focus if it is not inside, unless the dialog is inert (covered by another one).
+ * WAI-ARIA dialog pattern; Task 923 R33, Story 244.
+ */
+function DialogBody({ opened, children }: { opened: boolean; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!opened) return
+    const timer = window.setTimeout(() => {
+      const dialog = ref.current?.closest<HTMLElement>('[role="dialog"]')
+      if (dialog && !dialog.closest('[inert]') && !dialog.contains(document.activeElement)) dialog.focus({ preventScroll: true })
+    }, 250)
+    return () => window.clearTimeout(timer)
+  }, [opened])
+  return <div ref={ref}>{children}</div>
 }
 
 /**
@@ -139,29 +174,26 @@ function StructuredModal({ opened, onClose, title, description, icon, children, 
  * overlay content.
  *
  * Desktop (≥640px): centered Mantine `Modal` (`centered`, configurable `size`,
- * radius from theme.components.Modal default — 8px, §6l — Task 527 fix #11;
- * do NOT pass a hardcoded `radius` prop here, it would shadow the theme default)
- * with `title`, then a `<Stack gap="md">` (Task 521 —
- * matches the `MantineDialogDrawerPattern` body/actions rhythm) containing
- * exactly two slots: `<Box>{children}</Box>` and `footer`. `children` is
- * wrapped in a `Box` so a multi-element `children` (e.g. an array of several
- * `Text` paragraphs) collapses into ONE Stack item — Stack's `gap` is a CSS
- * row-gap applied BETWEEN its direct children, so without this wrapper a
- * multi-paragraph `children` would get the 16px gap inserted between every
- * paragraph too, not just once between body and footer. `footer=undefined`
- * renders no second Stack item, so no phantom gap. Standard X/backdrop/Esc
- * close; focus returns to the opener (Mantine default `returnFocus`).
+ * radius from theme.components.Modal default; do NOT pass a hardcoded `radius`
+ * prop here, it would shadow the theme default) with `title`, the body
+ * (`<Box>{children}</Box>`) and, when given, the `footer`. Task 859 R51: the
+ * header, the body and the footer are siblings inside the modal content; the
+ * theme `Modal` entry makes the content a clipping flex column and the body the
+ * ONLY scroll region, so a scrollbar never touches the header, the footer or a
+ * rounded corner (the same split the bottom sheet uses). Standard
+ * X/backdrop/Esc close; focus returns to the opener (Mantine default `returnFocus`).
  *
  * Mobile (<640px): the shared `ResponsiveBottomSheet` — edge-to-edge,
  * top-only radius, centered DragHandle, ≤90dvh internal scroll. Inside
  * `SheetContent` (Task 520 — the sheet's `body` is `padding:0` by design so
  * row-based consumers can render edge-to-edge tap rows; an arbitrary-content
  * consumer like this one must supply its own 16px gutter), the same
- * `<Stack gap="md">` + `<Box>{children}</Box>` + `footer` composition (Task
- * 521) as the desktop path — one 16px vertical gap between body and footer,
- * never between individual body paragraphs. The primitive does not impose a
- * stacked/row footer INTERNAL layout (that is caller composition, e.g. the
- * story's `Flex direction={{ base: 'column-reverse', sm: 'row' }}` footer).
+ * `<Box>{children}</Box>` body as the desktop path. Task 859 R60: the `footer`
+ * is the sheet's pinned `footer` slot (a non-scrolling flex sibling under a
+ * divider), never inside the scrolled body, as in the structured path. The
+ * primitive does not impose a stacked/row footer INTERNAL layout (that is
+ * caller composition, e.g. the story's
+ * `Flex direction={{ base: 'column-reverse', sm: 'row' }}` footer).
  * Backdrop tap + Esc close (foundation default), focus returns to the opener.
  *
  * SSR/hydration: isMobile=false on first render (Mantine v8
@@ -181,8 +213,11 @@ export function MantineModal({
   structured = false,
   description,
   icon,
+  covered,
 }: MantineModalProps) {
   const { isMobile } = useResponsiveDropdown()
+  useRestoreFocusOnClose(opened)
+  const body = <DialogBody opened={opened}>{children}</DialogBody>
 
   if (structured) {
     return (
@@ -194,32 +229,44 @@ export function MantineModal({
         icon={icon}
         footer={footer}
         size={size}
+        covered={covered}
         isMobile={isMobile}
       >
-        {children}
+        {body}
       </StructuredModal>
     )
   }
 
   if (isMobile) {
+    // Task 859 Revision 8 (R60, owner "all dialogs"): the footer goes to the sheet's pinned `footer` slot, as the
+    // structured path does, so it never scrolls away with a long body.
     return (
-      <ResponsiveBottomSheet opened={opened} onClose={onClose} title={title}>
+      <ResponsiveBottomSheet opened={opened} onClose={onClose} title={title} footer={footer}>
         <SheetContent>
-          <Stack gap="md">
-            <Box>{children}</Box>
-            {footer}
-          </Stack>
+          <Box>{body}</Box>
         </SheetContent>
       </ResponsiveBottomSheet>
     )
   }
 
   return (
-    <Modal opened={opened} onClose={onClose} title={title} centered size={size}>
-      <Stack gap="md">
-        <Box>{children}</Box>
-        {footer}
-      </Stack>
-    </Modal>
+    <Modal.Root opened={opened} onClose={onClose} centered size={size}>
+      <Modal.Overlay />
+      <Modal.Content>
+        <Modal.Header>
+          {title && <Modal.Title>{title}</Modal.Title>}
+          <Modal.CloseButton />
+        </Modal.Header>
+        <Modal.Body>
+          <Box>{body}</Box>
+        </Modal.Body>
+        {/* The footer is outside the scroll region (R51): it never scrolls behind the body. */}
+        {footer && (
+          <Box flex="none" px="var(--mb-padding, var(--mantine-spacing-md))" pb="md">
+            {footer}
+          </Box>
+        )}
+      </Modal.Content>
+    </Modal.Root>
   )
 }

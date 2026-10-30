@@ -1,0 +1,41 @@
+﻿# rv7-04: source lines for Task 927 Amendment 7
+platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T17:56:45.194Z
+src/modules/cabinet/components/ProfileTab.tsx:241: const result = await deleteOwnAccount(reauthMethod === 'google' ? {} : { password: deletePassword })
+src/modules/cabinet/components/ProfileTab.tsx:247: if (result.error === 'reauth_required') { setDeleteNeedsGoogle(true); return }
+src/modules/cabinet/components/ProfileTab.tsx:438: {/* ── Delete confirm dialog ───────────────────────────────────────────── */}
+src/modules/cabinet/components/ProfileTab.tsx:449: passwordConfirm={reauthMethod === 'google' ? undefined : {
+src/modules/cabinet/components/ProfileTab.tsx:457: googleConfirm={deleteNeedsGoogle ? {
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:10: export const DELETE_CONFIRM_WORD = 'DELETE'
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:31: * A typed confirmation (Task 923 R46): one more dialog section, after every other section, holds a labelled field. The red primary stays disabled
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:32: * until the typed text, trimmed and in upper case, equals `word`. The field is empty each time the dialog opens and takes the focus.
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:85: const typedOk = !typedConfirm || typed.trim().toUpperCase() === typedConfirm.word.toUpperCase()
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:98: <Button type="button" color="red" loading={loading} disabled={confirmDisabled || !typedOk || !passwordOk} onClick={onConfirm} data-testid={confirmTestId}>
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:110: {googleConfirm && (
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:118: {typedConfirm && (
+src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx:119: <MantineDialogSection>
+messages/en.json:614: "delete_account_type_confirm": "Type DELETE to confirm",
+messages/sq.json:614: "delete_account_type_confirm": "Shkruani DELETE për të konfirmuar",
+messages/uk.json:614: "delete_account_type_confirm": "Введіть DELETE для підтвердження",
+messages/it.json:614: "delete_account_type_confirm": "Digita DELETE per confermare",
+src/components/admin/AdminUserProfileDialogsView.tsx:150: typedConfirm={{ word: DELETE_CONFIRM_WORD, label: t('dialogs.delete_type_confirm') }}
+src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx:144: it('an account with no password sends none, and when the server asks for a new Google sign-in it is offered the Google confirmation button', async () => {
+src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx:150: expect(confirmButton().disabled).toBe(false)
+src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx:151: fireEvent.click(confirmButton())
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx:103: async function askDeletion(): Promise<GisDouble> {
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx:109: fireEvent.click(within(dialog).getByRole('button', { name: t.delete_account_confirm }))
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx:258: fireEvent.click(within(dialog).getByRole('button', { name: t.delete_account_confirm }))
+src/stories/mantine/primitives/Modal.stories.tsx:15: import { MantineDeleteConfirmModal, DELETE_CONFIRM_WORD } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
+src/stories/mantine/primitives/Modal.stories.tsx:325: typedConfirm={{ word: DELETE_CONFIRM_WORD, label: storyT(locale, 'cabinet.delete_account_type_confirm') }}
+src/stories/mantine/primitives/Modal.stories.tsx:352: // account with no password: `googleConfirm` is shown (the consumer shows it when the server asks for a new Google sign-in) and the primary is not tied to a field.
+src/stories/mantine/primitives/Modal.stories.tsx:444: <MantineStorySection label={t('modal_caption_delete_google_unavailable')}>
+src/stories/mantine/primitives/Modal.stories.tsx:453: googleConfirm={{
+src/stories/mantine/primitives/Modal.stories.tsx:469: 
+src/stories/mantine/primitives/Modal.stories.tsx:480: googleConfirm={{
+src/design-system/mantine/patterns/MantineDialogSections.tsx:57: <Box py="lg">{section}</Box>
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:795: | D54 | OWNER DECISION | Q3: yes. In the cabinet the account deletion asks for the password instead of the word DELETE. | owner: 2026-10-20; decision: `then instead of "DELETE", when an account is deleted in the profile, we should simply ask for the password. Otherwise I fully agree.` |
+census row: mantine-primitives-modal--delete-confirm-password~delete-google
+census row: mantine-primitives-modal--delete-confirm-password~delete-google-ready
+write set: src/modules/cabinet/components/ProfileTab.tsx: scope YES; policy no
+write set: src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx: scope YES; policy no
+write set: src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx: scope YES; policy no
+write set: src/stories/mantine/primitives/Modal.stories.tsx: scope YES; policy no

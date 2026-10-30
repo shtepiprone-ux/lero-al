@@ -1,0 +1,24 @@
+# R150-R155 AC150 r50-00-hashes-before: sha256 of the 12 paths of C1486 before the first edit (the new file absent), written before the first R150-R155 write
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: sha256sum <the 11 existing paths of C1486>; test -e src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx
+NODE_PATH: (unset)
+started: 2026-10-25T11:53:44.423Z
+--- stdout ---
+462a25291cc59225329ca59a98b0a3f0619d96e25f69248adfe5d51185137d5e *src/modules/auth/components/AuthSheet.tsx
+f1d96dcec45d59191ff488a0d82bb037e3ffbc2aaf337832107c4c57a6765a9c *src/lib/auth/browser.ts
+125fe5be8b7445c8458f90001ab39df7be0743892515c5cb1fb2cc9d95761a2a *src/modules/auth/lib/mapAuthError.ts
+df5a631b24a15761cf9fde55fcbab81ca3f15fa5c254cc6ed030ce5d2e0616e1 *src/modules/cabinet/actions/index.ts
+b87784940561b0285635f40d63d2c02cab4fdef9a84650f169c3ecc76339bdf2 *src/tests/integration/fixtures.ts
+5499a19094534ce22050be74be74458d093a2a73a6210b4eccce48a74fd6807b *src/modules/auth/components/__tests__/AuthSheet.test.tsx
+4512a048041b377e7800c29e8d1aaa88d4b13a601572d0ec4507be8cfeee62ff *src/modules/auth/components/AuthSheet.banned.security.test.tsx
+e3cdef9cf3ab8214af8207dd46046cca27ccfec153b4ac3366f94f7c7bb178ac *src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+20abc7bb6108712bf30803f3824e0d697c5ff682112346de05abe093cc0c913f *src/lib/auth/__tests__/browserAuth.security.test.ts
+421a443cdf74b9579e589d8d046db780f6e4a12a633235d93922d7cab52b3268 *src/lib/auth/__tests__/browser.smoke.test.ts
+65d9c2dad9518c095595462c55a02cc68f72e271a92298409dd61f38f522890f *src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+ABSENT (new file, not yet created): src/modules/auth/components/__tests__/AuthSheet.passwordCaptcha.security.test.tsx
+
+--- stderr ---
+
+--- exit code: 0 ---

@@ -1,0 +1,15 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-24T08:51:01.135Z
+command: node docs/sessions/evidence/task923/revision-42/rev42-04-header-notice-probe.mjs self-test
+---- output ----
+{"variant":"on","notice":{"rhythm":16,"gap":16,"width":358,"parentWidth":358},"off":false,"narrow":false}
+{"variant":"off","notice":{"rhythm":16,"gap":20,"width":358,"parentWidth":358},"off":true,"narrow":false}
+{"variant":"narrow","notice":{"rhythm":16,"gap":16,"width":179,"parentWidth":358},"off":false,"narrow":true}
+{"variant":"one-line ellipsis","cut":true,"latent":false}
+{"variant":"latent ellipsis","cut":false,"latent":true}
+self-test: PASS
+
+---- end ----
+EXIT_CODE=0

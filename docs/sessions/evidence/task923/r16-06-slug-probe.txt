@@ -1,0 +1,44 @@
+platform win32 10.0.26300 node v22.22.3; pg n/a from a scratchpad prefix via NODE_PATH; start 2026-10-20T07:30:26.008Z
+cmd node docs/sessions/evidence/task923/r16-slug-probe.cjs   (R65 (b): does generateSlug only produce slugs of the new INSERT rule? (reads the real function text, no database))
+real text of generateSlug (annotations removed):
+  function generateSlug(title) {
+    const base = title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80)
+    return `${base}-${Date.now().toString(36)}`
+  }
+
+realistic titles (the slug of generateSlug, its verdict under the R65 (b) rule):
+  ok      title "Apartament 2+1 në Tiranë" -> "apartament-21-ne-tirane-mvgd5s3f"
+  REFUSED title "Shitet apartament - 2+1" -> "shitet-apartament---21-mvgd5s3f"  (two hyphens in a row)
+  ok      title "Apartment for sale — Tirana" -> "apartment-for-sale-tirana-mvgd5s3f"
+  ok      title "Villa me pamje nga deti" -> "villa-me-pamje-nga-deti-mvgd5s3f"
+  REFUSED title "Продається квартира в центрі" -> "-mvgd5s3f"  (starts with a hyphen)
+  ok      title "Квартира 2+1" -> "21-mvgd5s3g"
+  REFUSED title "   " -> "-mvgd5s3g"  (starts with a hyphen)
+  REFUSED title "---" -> "-mvgd5s3g"  (starts with a hyphen)
+  REFUSED title "A - B" -> "a---b-mvgd5s3g"  (two hyphens in a row)
+  ok      title "ë ç" -> "e-c-mvgd5s3g"
+  ok      title "Apartament 3+1, 120 m2, kati 5/9 (ri)" -> "apartament-31-120-m2-kati-59-ri-mvgd5s3g"
+  ok      title "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..." -> "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..."
+  ok      title "ab ab ab ab ab ab ab ab ab ab ab ab ab a..." -> "ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-ab-..."
+  ok      title "Apartment_with_underscores" -> "apartment-with-underscores-mvgd5s3g"
+  REFUSED title "Zyrë me qira - qendër" -> "zyre-me-qira---qender-mvgd5s3g"  (two hyphens in a row)
+
+seeded pseudo-random sample: 20000 titles, 11418 produce a slug the rule refuses (57.1%)
+   10965  two hyphens in a row
+     453  starts with a hyphen
+  e.g. title "k, 1 яëa -- яbїç,e+abїeçëиa.-é _/./ яë+z1.e-b 3-&//и,ç&-/їи+éжя23&ekж " -> "k-1-ea----bceabecea-e-ez1e-b-3-c-e23ek-mvgd5s3g" (two hyphens in a row)
+  e.g. title "+)ж)-,(kk ç2їz)иç&я.b ..я -(-- -ж яëe ). їé-b" -> "kk-c2zcb-------ee-e-b-mvgd5s3g" (two hyphens in a row)
+  e.g. title ".3&-я b(zç  -/3.-,ç-)їç.&k--_ я& ç)  яkяя_" -> "3--bzc--3-c-ck---c-k-mvgd5s3g" (two hyphens in a row)
+  e.g. title " ak я& -1eжи.az( &-ї_ë . и&1,ç ,/ +),e+bbя&ї_k-aeé/я -1ç-/k" -> "ak--1eaz---e-1c-ebb-k-aee--1c-k-mvgd5s3g" (two hyphens in a row)
+  e.g. title "  _" -> "-mvgd5s3g" (starts with a hyphen)
+  e.g. title "-a/&é.&жя.жë-(()-ek-,(" -> "aee--ek-mvgd5s3g" (two hyphens in a row)
+
+RESULT: generateSlug does NOT only produce slugs of the R65 (b) rule
+EXIT_CODE=0

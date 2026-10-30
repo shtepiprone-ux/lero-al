@@ -1,0 +1,893 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-20T17:23:24.365Z",
+ "case": "SEC-X-SRV-REAUTH-EMAIL",
+ "results": [
+  {
+   "id": "SEC-X-SRV-REAUTH-EMAIL",
+   "testFile": "src/modules/cabinet/actions/__tests__/reauth.security.test.ts",
+   "testName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "initiateEmailChange no longer asks for re-authentication",
+     "from": "const failure = await reauthenticate(user, data.currentPassword)",
+     "to": "const failure = null as ReauthFailure | null"
+    }
+   ],
+   "failureMessage": "AssertionError: expected { pendingEmail: 'new@example.com' } to match object { reason: 'invalid_password' }\n(1 matching property omitted from actual)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauth.security.test.ts:106:50\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 14,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 13,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792516987277,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "status": "passed",
+         "title": "[SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "duration": 3.2449999999999477,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "status": "skipped",
+         "title": "the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "status": "skipped",
+         "title": "a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry stamped in the future is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry stamped in the future is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry with no timestamp is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry with no timestamp is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with no authentication methods at all is refused",
+         "status": "skipped",
+         "title": "a Google-only account with no authentication methods at all is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "status": "skipped",
+         "title": "claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "status": "skipped",
+         "title": "Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the refusal texts exist in all four languages and differ",
+         "status": "skipped",
+         "title": "the refusal texts exist in all four languages and differ",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "status": "skipped",
+         "title": "the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth no session is \"Unauthorized\", before any check",
+         "status": "skipped",
+         "title": "no session is \"Unauthorized\", before any check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "status": "skipped",
+         "title": "the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "status": "skipped",
+         "title": "Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792516987841,
+       "endTime": 1792516987844.245,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauth.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 14,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 13,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792516989126,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "status": "failed",
+         "title": "[SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "duration": 10.919100000000014,
+         "failureMessages": [
+          "AssertionError: expected { pendingEmail: 'new@example.com' } to match object { reason: 'invalid_password' }\n(1 matching property omitted from actual)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauth.security.test.ts:106:50\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "status": "skipped",
+         "title": "the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "status": "skipped",
+         "title": "a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry stamped in the future is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry stamped in the future is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry with no timestamp is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry with no timestamp is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with no authentication methods at all is refused",
+         "status": "skipped",
+         "title": "a Google-only account with no authentication methods at all is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "status": "skipped",
+         "title": "claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "status": "skipped",
+         "title": "Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the refusal texts exist in all four languages and differ",
+         "status": "skipped",
+         "title": "the refusal texts exist in all four languages and differ",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "status": "skipped",
+         "title": "the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth no session is \"Unauthorized\", before any check",
+         "status": "skipped",
+         "title": "no session is \"Unauthorized\", before any check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "status": "skipped",
+         "title": "the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "status": "skipped",
+         "title": "Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792516989705,
+       "endTime": 1792516989715.9192,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauth.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 14,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 13,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792516990983,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "status": "passed",
+         "title": "[SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+         "duration": 4.386500000000012,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "status": "skipped",
+         "title": "the right password is accepted: one token, one pending address, one pair of e-mails; the check opened a session that is ended at once",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "status": "skipped",
+         "title": "a Google-only account with a Google sign-in less than 10 minutes old is accepted; a password-method entry or a stale one is not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry stamped in the future is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry stamped in the future is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with an oauth entry with no timestamp is refused",
+         "status": "skipped",
+         "title": "a Google-only account with an oauth entry with no timestamp is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth a Google-only account with no authentication methods at all is refused",
+         "status": "skipped",
+         "title": "a Google-only account with no authentication methods at all is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "status": "skipped",
+         "title": "claims that cannot be read refuse a Google-only account, an account lookup that fails refuses everyone, and nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "status": "skipped",
+         "title": "Auth's own sign-in limit is reported as rate limited and still writes nothing; a password longer than 256 characters never reaches Auth",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the refusal texts exist in all four languages and differ",
+         "status": "skipped",
+         "title": "the refusal texts exist in all four languages and differ",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "status": "skipped",
+         "title": "the form learns which proof to ask for from the own account of the caller: password, google, or nothing readable",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth no session is \"Unauthorized\", before any check",
+         "status": "skipped",
+         "title": "no session is \"Unauthorized\", before any check",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "status": "skipped",
+         "title": "[SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "status": "skipped",
+         "title": "the right password deletes the account; a fresh Google sign-in deletes a Google-only account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "status": "skipped",
+         "title": "Auth's sign-in limit and an unreadable account both refuse the deletion without writing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792516991552,
+       "endTime": 1792516991556.3865,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/__tests__/reauth.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-EMAIL-DENY",
+   "testFile": "src/modules/cabinet/actions/reauth.integration.test.ts",
+   "testName": "reauth [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/cabinet/actions/index.ts",
+     "description": "initiateEmailChange no longer asks for re-authentication",
+     "from": "const failure = await reauthenticate(user, data.currentPassword)",
+     "to": "const failure = null as ReauthFailure | null"
+    }
+   ],
+   "failureMessage": "AssertionError: no password: expected undefined to be 'invalid_password' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/reauth.integration.test.ts:54:40\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792516992796,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "status": "passed",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "duration": 2025.9155,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792516993360,
+       "endTime": 1792516995385.9155,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/reauth.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792516997755,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "status": "failed",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "duration": 1181.1455,
+         "failureMessages": [
+          "AssertionError: no password: expected undefined to be 'invalid_password' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/reauth.integration.test.ts:54:40\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792516998329,
+       "endTime": 1792516999510.1455,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/reauth.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 4,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 3,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792517001747,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-ALLOW] reauth-email allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "status": "passed",
+         "title": "[SEC-X-INT-REAUTH-EMAIL-DENY] reauth-email refused on the real project",
+         "duration": 1093.2145,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-ALLOW] reauth-delete allowed on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "reauth"
+         ],
+         "fullName": "reauth [SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "status": "skipped",
+         "title": "[SEC-X-INT-REAUTH-DELETE-DENY] reauth-delete refused on the real project",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792517002336,
+       "endTime": 1792517003429.2146,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/cabinet/actions/reauth.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

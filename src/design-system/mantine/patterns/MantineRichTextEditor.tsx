@@ -36,7 +36,7 @@ import {
   Unlink,
   type LucideIcon,
 } from 'lucide-react'
-import { Button, FileInput, Flex, Input, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+import { Button, FileInput, Input, TextInput, useMantineTheme } from '@mantine/core'
 import { RichTextEditor } from '@mantine/tiptap'
 import { useEditor } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
@@ -46,6 +46,8 @@ import { Image } from '@tiptap/extension-image'
 import { Table, TableCell, TableHeader, TableRow } from '@tiptap/extension-table'
 import { Columns, Column } from '../richtext/columnsExtension'
 import { MantineModal } from './MantineModal'
+import { MantineDialogSections, MantineDialogSection } from './MantineDialogSections'
+import { MantineDialogFooter } from './MantineDialogFooter'
 import { MantineDropdownMenu, type DropdownMenuItemDef } from './MantineDropdownMenu'
 
 /** Every user-facing string of the editor. There is no English default: the caller supplies all of them. */
@@ -336,15 +338,31 @@ export function MantineRichTextEditor({
           linkEditorInternalLink: labels.linkInternal,
           linkEditorSave: labels.linkSave,
         }}
-        styles={error ? { root: { borderColor: 'var(--mantine-color-error)' } } : undefined}
+        styles={{
+          ...(error ? { root: { borderColor: 'var(--mantine-color-error)' } } : {}),
+          // the link editor's external-link toggle is a 44px touch target (Task 923 R33, Story 243)
+          linkEditorExternalControl: { minWidth: theme.other.touchTarget, minHeight: theme.other.touchTarget },
+          // the field's section is as wide as the toggle (an inherited custom property read by the link editor's TextInput)
+          linkEditor: { '--input-right-section-width': theme.other.touchTarget },
+        }}
       >
         <RichTextEditor.Toolbar aria-label={labels.toolbar}>
           {/* One group: five 44px controls take 220px and fit the 278px inner width at 320 (`subtle` pads the toolbar 4px; D868-7). */}
-          <RichTextEditor.ControlsGroup>
+          {/* The link control never takes focus on press (tiptap keeps the editor selection), so its popover had only `body` to return the focus to: the pressed
+              link control takes it in the capture phase (Task 923 R33, Story 243). On the group, so no element is added around the controls. */}
+          <RichTextEditor.ControlsGroup
+            onClickCapture={(event: React.MouseEvent<HTMLElement>) =>
+              (event.target as HTMLElement).closest<HTMLElement>(`button[aria-label="${labels.link}"]`)?.focus({ preventScroll: true })
+            }
+          >
             {menu(labels.menuFormat, Bold, formatItems)}
             {menu(labels.menuParagraph, Pilcrow, paragraphItems)}
             {menu(labels.menuInsert, Plus, insertItems)}
-            <RichTextEditor.Link {...touch} />
+            <RichTextEditor.Link
+              {...touch}
+              // the link popover is never wider than the viewport less the page gutter (the editor popover is not `MantinePopover`)
+              popoverProps={{ trapFocus: true, returnFocus: true, styles: { dropdown: { maxWidth: 'calc(100vw - 2 * var(--mantine-spacing-md))' } } }}
+            />
             {menu(labels.menuHistory, Undo2, historyItems)}
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
@@ -352,41 +370,45 @@ export function MantineRichTextEditor({
         <RichTextEditor.Content mih={theme.other.boxSize.richTextContentMinHeight} />
       </RichTextEditor>
 
-      <MantineModal opened={imageOpen} onClose={closeImageDialog} title={labels.imageDialogTitle}>
-        <Stack gap="md">
-          <FileInput
-            label={labels.imageFileLabel}
-            placeholder={labels.imageFilePlaceholder}
-            accept={IMAGE_MIME_TYPES.join(',')}
-            value={file}
-            onChange={handleFile}
-            error={fileError ?? undefined}
-            clearable
+      <MantineModal
+        structured
+        opened={imageOpen}
+        onClose={closeImageDialog}
+        title={labels.imageDialogTitle}
+        footer={
+          <MantineDialogFooter
+            secondary={<Button type="button" variant="default" onClick={closeImageDialog}>{labels.imageCancel}</Button>}
+            primary={
+              <Button
+                type="button"
+                loading={uploading}
+                disabled={!file || !!fileError || !alt.trim()}
+                onClick={handleUpload}
+              >
+                {labels.imageUpload}
+              </Button>
+            }
           />
-          <TextInput
-            label={labels.imageAltLabel}
-            value={alt}
-            onChange={e => setAlt(e.target.value)}
-          />
-          <Text size="xs" c="dimmed">{labels.imageHint}</Text>
-          <Flex
-            direction={{ base: 'column-reverse', sm: 'row' }}
-            gap="sm"
-            justify={{ base: 'stretch', sm: 'flex-end' }}
-          >
-            <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} onClick={closeImageDialog}>
-              {labels.imageCancel}
-            </Button>
-            <Button
-              w={{ base: '100%', sm: 'auto' }}
-              loading={uploading}
-              disabled={!file || !!fileError || !alt.trim()}
-              onClick={handleUpload}
-            >
-              {labels.imageUpload}
-            </Button>
-          </Flex>
-        </Stack>
+        }
+      >
+        <MantineDialogSections>
+          <MantineDialogSection description={labels.imageHint}>
+            <FileInput
+              label={labels.imageFileLabel}
+              placeholder={labels.imageFilePlaceholder}
+              accept={IMAGE_MIME_TYPES.join(',')}
+              value={file}
+              onChange={handleFile}
+              error={fileError ?? undefined}
+              clearable
+            />
+            <TextInput
+              label={labels.imageAltLabel}
+              value={alt}
+              onChange={e => setAlt(e.target.value)}
+            />
+          </MantineDialogSection>
+        </MantineDialogSections>
       </MantineModal>
     </Input.Wrapper>
   )

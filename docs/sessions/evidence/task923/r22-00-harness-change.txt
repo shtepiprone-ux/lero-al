@@ -1,0 +1,27 @@
+R94 (c): changes to docs/sessions/evidence/task923/db-catalog/rls-harness.cjs (the file is untracked, so the 'before' is a copy taken immediately before the edit)
+sha256 before: 72f764842d52e23911d308548189bbc2ffe2a24683637bd4637f8640e0deb21c
+sha256 after:  538f834424fb98bfe048181fd918e137046d0ec24dc2464953e94791228571cd
+
+--- before
++++ after
+@@ -108,7 +108,8 @@
+   const r = await who.client.from(table).update(patch).eq('id', rowId).select(col)
+   const after = (await sget(table, rowId, col))[col]
+   const before = baseline[col]
+-  const changed = JSON.stringify(after) !== JSON.stringify(before) && !(after == null && before == null)
++  const isTs = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(v) && !Number.isNaN(Date.parse(v))
++  const changed = (isTs(after) && isTs(before) ? Date.parse(after) !== Date.parse(before) : JSON.stringify(after) !== JSON.stringify(before)) && !(after == null && before == null)
+   rec(id, changed ? 'VULN' : 'PASS', `${table}.${col} written alone by its own owner`, 'unchanged', `${brief(r)}; ${col}: ${JSON.stringify(before)} -> ${JSON.stringify(after)}`)
+   await must(svc.from(table).update(restore || baseline).eq('id', rowId), 'restore ' + id)
+ }
+@@ -786,7 +787,7 @@
+     await must(svc.from('users').update(patch).eq('id', A.id), 'set status ' + id)
+     await must(svc.from('favorites').delete().eq('user_id', A.id), 'reset favourites ' + id)   // every case starts from the same state
+     const w1 = await A.client.from('users').update({ name: `${RUN} ${id}` }).eq('id', A.id).select('id')
+-    const w2 = await A.client.from('listings').insert({ user_id: A.id, slug: `${SLUG}-${String(id).replace(/_/g, '')}`, title: `${RUN} ${id}`, price: 1, listing_type: 'sale', property_type: 'apartment', status: 'pending', expires_at: new Date(Date.now() + 30 * 864e5).toISOString(), views_count: 0 }).select('id')
++    const w2 = await A.client.from('listings').insert({ user_id: A.id, slug: `${SLUG}-${String(id).replace(/_/g, '').toLowerCase()}`, title: `${RUN} ${id}`, price: 1, listing_type: 'sale', property_type: 'apartment', status: 'pending', expires_at: new Date(Date.now() + 30 * 864e5).toISOString(), views_count: 0 }).select('id')
+     if (w2.data && w2.data[0]) created.listings.add(w2.data[0].id)
+     const w3 = await A.client.from('favorites').insert({ user_id: A.id, listing_id: LBa.id }).select('id')
+     const w4 = await A.client.from('listings').update({ title: `${RUN} ${id} edited` }).eq('id', LAp.id).select('id')
+
+lines before: 910; lines after: 911

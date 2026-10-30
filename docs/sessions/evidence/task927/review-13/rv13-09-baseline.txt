@@ -1,0 +1,10 @@
+# rv13-09: Opus, baseline before Amendment 12: the nine server files that double accountHasPassword's read, and the two ProfileTab files
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+date: 2026-10-28T18:52:15Z
+command: npx vitest run src/lib/account/deleteAccount.security.test.ts src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts src/modules/cabinet/actions/__tests__/emailChange.security.test.ts src/modules/cabinet/actions/__tests__/reauth.security.test.ts src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+
+ Test Files  11 passed (11)
+      Tests  160 passed (160)
+exit code: 0

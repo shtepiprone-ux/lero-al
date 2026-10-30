@@ -1,0 +1,20 @@
+# R140 AC140 r43-06: read-only preflight and rollback end checks of the v4 pair, LF and CRLF (revision-43/rev43-04-blocks.cjs)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-43/rev43-04-blocks.cjs docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+NODE_PATH: C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/node_modules
+started: 2026-10-24T09:40:18.888Z
+--- stdout ---
+proposed-account-deletion.sql sha256 cdc690e47ced1e2c346f5ed1c2bdb1e0ac51b6c7aa3526b404b483d1cd4a6f23; proposed-account-deletion-rollback.sql sha256 9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1
+apply preflight: 6727 chars, first line "do $pre$"
+rollback end checks: 1381 chars, first line "do $chk$"
+apply preflight with LF: ok (read_only=on)
+apply preflight with CRLF: ok (read_only=on)
+rollback end checks with LF: ok (read_only=on)
+rollback end checks with CRLF: ok (read_only=on)
+failing 0
+
+--- stderr ---
+
+--- exit code: 0 ---

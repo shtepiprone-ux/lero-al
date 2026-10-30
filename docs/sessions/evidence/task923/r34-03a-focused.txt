@@ -1,0 +1,18 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-23T07:27:07.585Z
+command: npx vitest run src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  4 passed (4)
+      Tests  28 passed (28)
+   Start at  09:27:08
+   Duration  4.67s (transform 1.85s, setup 465ms, import 9.36s, tests 1.97s, environment 3.50s)
+
+
+---- end ----
+EXIT_CODE=0

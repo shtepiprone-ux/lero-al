@@ -1,0 +1,34 @@
+# r55-00d: sha256 of the paths written in step 4 (after r55-00b)
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: Get-FileHash -LiteralPath <path> -Algorithm SHA256 (a before-hash is given only where it could be derived; otherwise 'not taken')
+started: 2026-10-29T12:11:57.7050208Z
+--- output: path | before | after ---
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json | 115870570372134838535b385e19961869520fbd58ee88462a6903e498e1d27e (derived: the one stage line reverted to planned) | bdec0d62d2a7199d99fd76ebd4cd6f433bfc6ebebe5213f0cebe0a5b25755a29
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json | e131115d5b05df0c7b327b839b149188cb389a8fdfa2ddb90e61cc5894b4adcb (derived: the one stage line reverted to planned) | aad20e06633251cc694f08274076734200860834cb5d257574f0011920f8e4ce
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json | unchanged (stage was already implemented) | d6ae1d9574ed03f5cb3099d899c28b5488cbd9f51052ac9a98d3cace5835b44b
+docs/sessions/evidence/task923/security/d8-d9-report.json | not taken (written by the report script) | 2337ee9e28951b6c77c8e9c9df60b87d872d9e71aaec6691de573a0c932960cc
+docs/sessions/evidence/task923/security/owner-fixes-report.json | not taken (written by the report script) | de913a94f374cb09c0a6feda825b511517832cb07bfa935bf28c00d564213670
+docs/sessions/evidence/task927/security/report.json | not taken (written by the report script) | 04fbaa3cabbd0f860137f801bfacf440cb14f46bfb375f1b68709daa8c75bd41
+docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-STAFF.json | not taken (written by the owner's R168 harness run) | ec3ecdc207346920211ce4c8458b3def5cfcae998b1084cfc5f39d2f793926ce
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S59-DENY.json | not taken (written by the owner's R168 harness run) | 82f17b92e033e24b2294ff093a2f1f667bc28b6dc531e907a141bf8e89279bbc
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S59-ALLOW.json | not taken (written by the owner's R168 harness run) | 513c957f06452e75d9c69fdb4e87ee47e14f24ffe310d31362c21e947d0d8d73
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S61-DENY.json | not taken (written by the owner's R168 harness run) | 9a397609d137ec1b573246776d1cb10ee780f5173616c00cc57da85a1997fe25
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S61-ALLOW.json | not taken (written by the owner's R168 harness run) | 42983321446e2d904c92a03abe0c7682d883ba3dede2b2b9c85cbfa77b75b675
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-ACCESS-DENY.json | not taken (written by the owner's R168 harness run) | f18ebe9636cc3c358c131551f19b84c96c5a15112eb5d60c30d80afb092f2784
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-ACCESS-ALLOW.json | not taken (written by the owner's R168 harness run) | 2316f8ed31379d7f377c5d70db501962f1db88e198355c47a09a32266d9a1c45
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-REALTIME-DENY.json | not taken (written by the owner's R168 harness run) | 1e9d279d640462123badffc0f215f7baa4e51d92aac002e0e2ac3b346edb7032
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-REALTIME-ALLOW.json | not taken (written by the owner's R168 harness run) | 6863c29c49495c905f106fb98d3bbabc7a2506a74960328c276994afd0af73fd
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-LISTING-CHECKS-DENY.json | not taken (written by the owner's R168 harness run) | b5d626ac08d5e2dc50f79fc48a4999c400023913874e78242f0c168429198b29
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-LISTING-CHECKS-ALLOW.json | not taken (written by the owner's R168 harness run) | 60ba2bb9ad0a2ba6b88c1a4b7e090bbb58e75852d5b7e9eadecd2a7a156c1ea5
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-IMAGE-URL-DENY.json | not taken (written by the owner's R168 harness run) | c42fb1ec68b28e96b11aa36a9e9cda6ebc2a68ab8e4d4addda635f1b5c294e0b
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-IMAGE-URL-ALLOW.json | not taken (written by the owner's R168 harness run) | 4c1ad35137dd6d321694d1e3a935f07ae329454b0ed91f22dc09a7fb84ac8800
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-AVATARS-STORAGE-DENY.json | not taken (written by the owner's R168 harness run) | 4240b1bb3d9e32f5950818cbfbc4635bc770cf512ad3abe451b9e814021da3d9
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-CLOSED-READ-DENY.json | not taken (written by the owner's R168 harness run) | 213489b45de4aa6d9d8b4defd4974fb4125ca61930607864188ad9f307864b08
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-CLOSED-READ-ALLOW.json | not taken (written by the owner's R168 harness run) | 9043711d2efbbf474a0dcd083b96bb18ea4305ddec2d25604d8b8da811a8e8cb
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-PERMS-NO-SESSION.json | not taken (written by the owner's R168 harness run) | 9697990df380f96dc46e8751b1f84caac8f889cb70ff955bd170fcf2b7797352
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-REAUTH-FAILURES-NO-SESSION.json | not taken (written by the owner's R168 harness run) | 6015a5f88e1acdefbc2d734b1e054c96dfbccc80a8093dfcb006c71bd7400ea1
+docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-NO-SELF-RESTORE.json | not taken (written by the owner's R168 harness run) | c32f53e1a82b996830cbe33329409f8b68bad7a9c8480fe964cf68dba11f13a7
+docs/sessions/evidence/task923/security/sensitivity/SEC-X-INT-REVEAL-TABLE-DENY.json | not taken (written by the owner's R168 harness run) | e223359d5a13dcf380ed929be6a9eadf5cfd6a92be4a01eb01207cfc0ab3f458
+docs/sessions/evidence/task923/security/sensitivity/SEC-X-INT-REVEAL-TABLE-SERVER.json | not taken (written by the owner's R168 harness run) | 0970acdb6c0ad0df58d93d623a58d9df19c94177c83f600591a6faf71016b977
+The five product/harness paths and the two R166/R167 artifacts are unchanged since r55-00b (r55-00e.txt repeats the r55-00 manifest and equals r55-00b).
+--- exit code: 0 ---

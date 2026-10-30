@@ -1,0 +1,41 @@
+# R141-R144 AC141 r44-00: sha256 of every path before its edit (ABSENT = a new file), written before the first write
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "while read p; do if [ -e \"$p\" ]; then sha256sum \"$p\"; else echo \"ABSENT  $p\"; fi; done < /c/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/paths44.txt"
+NODE_PATH: (unset)
+started: 2026-10-24T11:36:22.502Z
+--- stdout ---
+ABSENT  src/lib/account/deleteAccount.ts
+ABSENT  src/lib/account/deleteAccount.security.test.ts
+ABSENT  src/lib/account/deleteAccount.integration.test.ts
+ABSENT  src/components/admin/__tests__/adminDeleteDialog.security.test.tsx
+df8731fd24541ab1bf2584a5e94e9b31dbb80ba4b40b49d8e21746fe3f44d3fe *src/modules/admin/actions/index.ts
+c5da90492b2e34093c2e7c5522c677577cb0830daa841ee8db6f5e6520f032e0 *src/modules/cabinet/actions/index.ts
+40222b7b134256e865361ba68cf649a5c85b2e23c188a697e45540e4561991a1 *src/modules/cabinet/components/ProfileTab.tsx
+a97ab9eb07b73fd297c647b82269d400f5e20af8183a256f76ec03efc6520002 *src/components/admin/AdminUserProfileDialogsView.tsx
+ea74c32ffb84e9c221a41e03e56beb11d959bee933116e261581086bf66775a7 *messages/en.json
+c754d6a15f10c3d01b1449aabedfc0ee6364f14723111ca2e052cbd1842311e8 *messages/sq.json
+a9c347eaec3bdab9fc197094ec8b765428cb6724409772ddda5889b2cdf89290 *messages/uk.json
+0a70d5962c691963e3ac2494d1ba5c3f7bdde567b5cc560884b828e873f3ca82 *messages/it.json
+cd6561305bcce6a166984f48f1396fa761b43778f69d5b6127e70cff1e568795 *src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts
+249445aec1ffcf2d4f1738a85734edaa999b68903c1c9c8c23b0315f2adc4cd2 *src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts
+2db70ecb8959be8ed3ac3526ae0039495a24e97fdfcad9c1753b4e149ae107e8 *src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+24b51e6dde0c8e8cac4f616c67ee39f3f9e7d57d28fe3f33e358f4a10186fa5f *src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+7709fffe2b4ed4eb87cd33f4acebf53cd9703800f5121fb43d9d899a63741ba1 *src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+2d150c9cb56578686acad0b4d95f11dfd0d94f53e99205b7e78c6c4e76226d2a *src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+1743e428e70aa3ec3e2365a7e2604b45f7a7159a3827a5d4b595117d09cb2a87 *src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+14f1b4752c7b25ab5f18823165b4193b6b05048ae93cdf60cac7db1ff3739361 *src/modules/admin/actions/__tests__/adminActorRank.security.test.ts
+a89bd5e54ef8dffefb215342b149805761696ee47af5d2ea4fa563d9c3d7478d *src/modules/admin/actions/__tests__/userAdministration.security.test.ts
+c222b973c4fcc91bc99a7c7dc0b467f6255a14264f82d7c178433f74828fb54c *src/__tests__/security/staffActions.test.ts
+79290c442e0d1f00ec14d844a6bf0125d36b0c6d00d10c9393a936c1d667e448 *src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx
+13b1472e6a6874ea7feaa0671b47563acea1379ecdcffc3c1dbcc82114401719 *src/lib/auth/sessionEnd.integration.test.ts
+863cc0484d42d28e6cdda77658c5024080aa82683cd75b4c80568d5ad66acf87 *src/modules/cabinet/actions/reauth.integration.test.ts
+ee2436be21b28e83d9dc7565d92a5adcf7fa94f1243f8302532ec3376b72659e *src/modules/cabinet/actions/reauthLimit.integration.test.ts
+5831088dbffeaedcee3657518b8650172b189469e614c8b19bbdf2fa020716c8 *tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+2d4954447f5f529060be09dcfd0f21b9d97d3f7cd75572618912a211c47eb0e8 *package.json
+994a7fb4f6140b124cd21a080a007eab2be9bb4f93bebdfd2114a2b0922183ba *package-lock.json
+
+--- stderr ---
+
+--- exit code: 0 ---

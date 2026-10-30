@@ -1,0 +1,19 @@
+platform: win32 x64
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-22T13:24:06.345Z
+command: npx vitest run --config vitest.integration.config.ts src/tests/integration/listingAccessState.integration.test.ts src/tests/integration/accessHardening.integration.test.ts
+env: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  2 passed (2)
+      Tests  9 passed (9)
+   Start at  15:24:07
+   Duration  26.01s (transform 83ms, setup 47ms, import 140ms, tests 25.58s, environment 0ms)
+
+
+---- end ----
+EXIT_CODE=0

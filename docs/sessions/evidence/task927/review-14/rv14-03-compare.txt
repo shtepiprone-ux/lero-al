@@ -1,0 +1,15 @@
+# rv14-03 compare (Opus) 2026-10-28T19:16:21Z v22.22.3
+command: node docs/sessions/evidence/task923/r34-03c-compare.mjs docs/sessions/evidence/task927/a12/a12-04-full.json <scratch>
+control: derivation on r33-full-suite.json gives 241 IDs; recorded r33-03d has 241; identical: true
+report docs/sessions/evidence/task927/a12/a12-04-full.json: total 5906, passed 5667, failed 239, failed suites 72
+failing IDs now: 237; baseline r32-03d: 241
+only in this run (not in the baseline): 0
+only in the baseline (not failing now): 4
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > logs a structured DRY_RUN entry
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — dry-run mode (default) > returns dryRun=true and does not call Cloudinary when unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — enabled mode > calls Cloudinary destroy when mode=enabled and asset is unreferenced
+  - src/lib/__tests__/cloudinaryDelete.test.ts > deleteAsset — reference check > skips when public_id is directly referenced in listing_images
+exit code: 0
+failing-ids identical to a12-04-failing-ids.txt
+task-area files with a failure: 1
+startTime 2026-10-28T19:07:43.706Z

@@ -1,11 +1,12 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Card, Text, Group, Stack, Button, Badge, Box, Divider, Overlay, rem, useMantineTheme } from '@mantine/core'
-import { Camera, MapPin } from 'lucide-react'
+import { Card, Text, Group, Stack, Button, Box, Divider, Overlay, rem, useMantineTheme } from '@mantine/core'
+import { MapPin } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { resolveGalleryOffsetValue } from './GalleryNavActionIcon'
 import styles from './MantineListingCardPattern.module.css'
+import { MantineBadge, type MantineBadgeMeaning } from './MantineBadge'
 
 // Task 741 Revision 3 — the label border colour per tone (same tokens the badges use via LISTING_STATUS_COLOR).
 const OVERLAY_TONE_BORDER = { sold: 'var(--status-info)', rented: 'var(--status-rented)' } as const
@@ -13,22 +14,12 @@ const OVERLAY_TONE_BORDER = { sold: 'var(--status-info)', rented: 'var(--status-
 export interface MantineListingCardBadge {
   label: string
   /**
-   * Mantine theme color name (`'green'|'yellow'|'red'|'gray'|'brand'|'blueLight'|'purple'` —
-   * see `theme.ts` `colors`). Task 617 — replaces the legacy `className` color override: Mantine's
-   * own `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules (no `@layer`
-   * wrapper), so a Tailwind `@layer utilities` className can never win regardless of specificity
-   * (the same cascade-layer trap documented for `ActionIcon`/`Card`, Task 602/606/612/616) — a
-   * `className` color override on this component would have silently done nothing.
-   *
-   * The pattern always renders these with `variant="filled"` (opaque, solid background + white
-   * text) — not the theme's default `variant="light"` — because every badge here sits directly
-   * on top of the listing photo (both `layout="grid"` and `layout="list"`); `light`'s translucent
-   * tint lets the photo bleed through and kills contrast, the exact defect the owner caught on
-   * the first Mantine-Badge pass (Task 617). `filled` is documented on the canonical
-   * `Mantine/Primitives/Badge` story before use here, per the "add missing variant to the
-   * primitive story first" rule.
+   * What the badge means (a registry status or a semantic tone, `badgeTones.ts`), never a colour: `MantineBadge`
+   * owns the colour. Every badge is the canonical solid look (opaque fill + white text, owner D78-26): it sits directly
+   * on top of the listing photo (both `layout="grid"` and `layout="list"`), where a translucent tint would let the photo
+   * bleed through and kill contrast (Task 617), and it is the same on every other surface.
    */
-  color?: string
+  meaning: MantineBadgeMeaning
 }
 
 export interface MantineListingCardFeature {
@@ -149,9 +140,9 @@ export function MantineListingCardPattern({
   const badgesPart = badges && badges.length > 0 && (
     <Group data-card-part="badges" gap="tight" wrap="wrap" pos="absolute" top={inset} left={inset}>
       {badges.map(b => (
-        <Badge key={b.label} variant="filled" color={b.color}>
+        <MantineBadge key={b.label} {...b.meaning}>
           {b.label}
-        </Badge>
+        </MantineBadge>
       ))}
     </Group>
   )
@@ -176,17 +167,11 @@ export function MantineListingCardPattern({
   )
 
   const photoCountPart = !!photoCount && photoCount > 0 && (
-    <Badge
-      data-card-part="photo-count"
-      variant="filled"
-      color="gray.9"
-      pos="absolute"
-      bottom={inset}
-      right={inset}
-      leftSection={<Camera size={theme.other.iconSize.badge} />}
-    >
-      {photoCount}
-    </Badge>
+    <Box data-card-part="photo-count" pos="absolute" bottom={inset} right={inset}>
+      <MantineBadge variant="tone" tone="neutral">
+        {photoCount}
+      </MantineBadge>
+    </Box>
   )
 
   const headPart = (
@@ -196,13 +181,13 @@ export function MantineListingCardPattern({
           {typeLabel}
         </Text>
       )}
-      <Text component="h3" fw={600} size="sm" lineClamp={2} className={styles.cardTitle}>
+      <Text component="h3" fw={600} size="sm" className={styles.cardTitle}>
         {data.title}
       </Text>
       {data.location && (
-        <Group gap="tight" wrap="nowrap" c="dimmed">
+        <Group gap="tight" wrap="nowrap" align="flex-start" c="dimmed">
           <MapPin size={theme.other.iconSize.badge} className={styles.icon} />
-          <Text size="xs" c="dimmed" truncate className={styles.locationText}>
+          <Text size="xs" c="dimmed" className={styles.locationText}>
             {data.location}
           </Text>
         </Group>

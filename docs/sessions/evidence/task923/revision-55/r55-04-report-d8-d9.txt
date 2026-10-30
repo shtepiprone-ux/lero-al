@@ -1,0 +1,11 @@
+# r55-04 part 2 (R169 (b)): report d8-d9
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/security/d8-d9-report.mjs  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>, NEXT_PUBLIC_SUPABASE_URL=<value read from .env.local, not printed>)
+started: 2026-10-29T11:49:58.4953254Z
+finished: 2026-10-29T11:55:34.3384247Z
+--- output (last 40 lines) ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+report written: docs/sessions/evidence/task923/security/d8-d9-report.json (228 cases, 65 with sensitivity)
+
+--- exit code: 0 ---

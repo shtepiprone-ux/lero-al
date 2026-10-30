@@ -8,9 +8,12 @@
  * nothing contests either element. Stays unlayered, same as MantineListingCardPattern.module.css's
  * D34-winning rules.
  *
- * D35: both `bg-overlay/NN` sites reproduce Tailwind's own compiled two-rule form — static
+ * D35: the `bg-overlay/NN` site reproduces Tailwind's own compiled two-rule form — static
  * fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
  * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
+ *
+ * Task 859 Revision 8 (R58): the `.orderBadge` rule is gone. The order/cover marker is `MantineBadge`
+ * (`photoMark.cover`) since Revision 7, so no consumer used it.
  */
 
 .hoverOverlay {
@@ -19,15 +22,5 @@
 @supports (color: color-mix(in lab, red, red)) {
   .hoverOverlay {
     background-color: color-mix(in oklab, var(--overlay) 50%, transparent);
-  }
-}
-
-.orderBadge {
-  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
-  color: var(--overlay-foreground); /* text-overlay-foreground */
-}
-@supports (color: color-mix(in lab, red, red)) {
-  .orderBadge {
-    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
   }
 }

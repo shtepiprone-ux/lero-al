@@ -1,0 +1,187 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T13:08:52.287Z",
+ "case": "SEC-X-SRV-VIEW-DENY",
+ "results": [
+  {
+   "id": "SEC-X-SRV-VIEW-DENY",
+   "testFile": "src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts",
+   "testName": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/app/api/listings/[slug]/view/route.ts",
+     "description": "the view route counts a view of a pending listing",
+     "from": ".in('status', ['active', 'sold', 'rented', 'archived'])",
+     "to": ".in('status', ['active', 'sold', 'rented', 'archived', 'pending'])"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/app/api/listings/[slug]/view/route.ts",
+     "originalSha256": "8a32596a8a460c949f0e80bfa8e283e9afa0ea0f8e17df37dd55e07569b2290c",
+     "restoredSha256": "8a32596a8a460c949f0e80bfa8e283e9afa0ea0f8e17df37dd55e07569b2290c"
+    }
+   ],
+   "failureMessage": "AssertionError: pending: not found: expected 200 to be 404 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts:45:48\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 1,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 0,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793279328004,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "status": "passed",
+         "title": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "duration": 11.32869999999997,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793279328561,
+       "endTime": 1793279328572.3286,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 1,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 0,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793279329869,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "status": "failed",
+         "title": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "duration": 10.491399999999999,
+         "failureMessages": [
+          "AssertionError: pending: not found: expected 200 to be 404 // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts:45:48\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793279330416,
+       "endTime": 1793279330426.4915,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 1,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 0,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793279331667,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "status": "passed",
+         "title": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+         "duration": 10.354799999999955,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793279332212,
+       "endTime": 1793279332222.3547,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/app/api/listings/[slug]/view/__tests__/viewRoute.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

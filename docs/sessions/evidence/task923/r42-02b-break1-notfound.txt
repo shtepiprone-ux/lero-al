@@ -1,0 +1,70 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/app/admin/users/__tests__/adminUserGone.security.test.ts --reporter=verbose
+date: 2026-10-24T08:12:17.153Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ × src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 2693ms
+   → the list, not the 404 page: expected { kind: 'notFound' } to deeply equal { kind: 'redirect', …(1) }
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 1ms
+ × src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 1ms
+   → expected { kind: 'notFound' } to deeply equal { kind: 'redirect', …(1) }
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 1ms
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  10:12:14
+   Duration  2.95s (transform 776ms, setup 96ms, import 25ms, tests 2.70s, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list
+AssertionError: the list, not the 404 page: expected { kind: 'notFound' } to deeply equal { kind: 'redirect', …(1) }
+
+- Expected
++ Received
+
+  {
+-   "kind": "redirect",
+-   "url": "/admin/users?notice=user_gone",
++   "kind": "notFound",
+  }
+
+ ❯ src/app/admin/users/__tests__/adminUserGone.security.test.ts:106:51
+    104|     state.userAnswer = { data: null, error: null }
+    105|     const outcome = await openPage()
+    106|     expect(outcome, 'the list, not the 404 page').toEqual({ kind: 'red…
+       |                                                   ^
+    107|     expect(state.redirect).toHaveBeenCalledTimes(1)
+    108|     expect(state.redirect).toHaveBeenCalledWith(USER_GONE)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list
+AssertionError: expected { kind: 'notFound' } to deeply equal { kind: 'redirect', …(1) }
+
+- Expected
++ Received
+
+  {
+-   "kind": "redirect",
+-   "url": "/admin/users?notice=user_gone",
++   "kind": "notFound",
+  }
+
+ ❯ src/app/admin/users/__tests__/adminUserGone.security.test.ts:128:21
+    126|     state.userAnswer = { data: null, error: { message: 'down' } } sati…
+    127|     const outcome = await openPage()
+    128|     expect(outcome).toEqual({ kind: 'redirect', url: USER_GONE })
+       |                     ^
+    129|     expect(state.redirect).toHaveBeenCalledTimes(1)
+    130|     expect(state.notFound).not.toHaveBeenCalled()
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+EXIT_CODE=1

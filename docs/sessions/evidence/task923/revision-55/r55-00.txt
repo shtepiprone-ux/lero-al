@@ -1,0 +1,13 @@
+# r55-00: sha256 of every path written by Revision 55 (R166, R167, R170) before its first edit; F27 adds the two paths of r54-00 gap
+platform: win32 x64; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/revision-55/r55-hash.mjs docs/sessions/evidence/task923/revision-55/r55-00.txt "r55-00: sha256 of every path written by Revision 55 (R166, R167, R170) before its first edit; F27 adds the two paths of r54-00 gap"
+started: 2026-10-29T11:17:05.930Z
+--- output ---
+f3ee08e570cddccecc1655f690dbe38766c2b623d5da9dd7c37d18532d4b379e  src/lib/account/deleteAccount.integration.test.ts
+01b29eeb956b33ffaa665ea35a7863e313182f011f0191fbce84194d2de132fc  docs/sessions/evidence/task923/security/sensitivity.mjs
+c1acf32f63593bf38f6faf6e4db40c89fff58610f19e58b0510f86afcb8a201a  docs/sessions/evidence/task923/security/db-break.cjs
+1a6cd37bb8f422619fce56e4da63bd742320fcd0db634313153ca5b3d4c0dd05  docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-DENY.json
+254260385d169008ee23f71b0a298af963c462abd83a79edac59a7628c27863c  docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-RESTRICTED-PAGE-DENY.json
+bf789d70a6f0386fa7349fbfedd6c3bd9afa1324bb5c9dab690bc3c16b815019  src/lib/auth/__tests__/moderatorKeys.security.test.ts
+8716b7667466072ba007512367dc9405c7c65f283a5206112204b25a2c33dc97  docs/sessions/evidence/task923/security/owner-fixes-report.mjs
+--- exit code: 0 ---

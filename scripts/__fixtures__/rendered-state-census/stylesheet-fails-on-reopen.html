@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: stylesheet-fails-on-reopen</title>
+<script>document.write(new URLSearchParams(location.search).get("load") === "2" ? '<link rel="stylesheet" href="census-target.css?__census_status=503">' : '<link rel="stylesheet" href="census-target.css">');</script>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); }
+  .dialog { position: fixed; left: 16px; right: 16px; top: 48px; padding: 16px; background: #fff; border-radius: 8px; }
+  .dialog h2 { margin: 0 0 8px; font-size: 18px; }
+  .dialog .footer { margin-top: 16px; display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 11 self-test fixture "stylesheet-fails-on-reopen". The 44px button rule is in census-target.css. The stylesheet is answered 503 on the SECOND load of the case only (the self-test appends ?load=<n>): the load that reopens the state for the next dismissal check. That reopen fails with a resource failure, the job is retried once on a fresh page and passes with its retry recorded. -->
+<div id="storybook-root">
+  <button id="open" type="button">Open dialog</button>
+  <p>Fixture page, not a product Story.</p>
+  
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-stylesheet-fails-on-reopen","story":"stylesheet-fails-on-reopen","open":{"kind":"mount"},"portals":1,"focus":"trap","dismiss":["escape","close-control","outside"],"closeSelector":"[data-census-close]"}</script>
+<script>
+(function () {
+  var portal = null;
+  var opener = document.getElementById('open');
+  function close() {
+    if (!portal) return;
+    portal.remove();
+    portal = null;
+    opener.focus();
+  }
+  function open() {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="backdrop"></div>' +
+      '<div class="dialog" role="dialog" aria-modal="true">' +
+      '<button type="button" data-census-close aria-label="Close" style="float:right">&times;</button>' +
+      '<h2>Dialog title</h2><p>Short body text.</p>' +
+      '<div class="footer"><button type="button">Save</button><button type="button">Cancel</button></div></div>';
+    document.body.appendChild(portal);
+    portal.querySelector('.backdrop').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').addEventListener('click', close);
+    portal.querySelector('[data-census-close]').focus();
+  }
+  opener.addEventListener('click', open);
+  open(); // a mount state
+  
+  document.addEventListener('keydown', function (e) {
+    if (!portal) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') {
+      var f = Array.prototype.slice.call(portal.querySelectorAll('button'));
+      var first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (!portal.contains(a)) { first.focus(); e.preventDefault(); }
+      else if (e.shiftKey && a === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && a === last) { first.focus(); e.preventDefault(); }
+    }
+  });
+})();
+</script>
+</body>
+</html>

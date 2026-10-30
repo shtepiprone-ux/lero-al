@@ -1,0 +1,26 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx src/lib/auth/__tests__/staffPage.security.test.ts --reporter=verbose
+date: 2026-10-24T08:25:19.042Z
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN] the redirect notice is shown 159ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED] an unknown notice is not shown 77ms
+ ✓ src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx > AdminUsersPage > [SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT] no notice without the parameter 19ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-GONE] a missing account opens the Users list 2739ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-DELETED] a deleted account opens the Users list 1ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-QUERY-ERROR] a failed lookup opens the Users list 0ms
+ ✓ src/app/admin/users/__tests__/adminUserGone.security.test.ts > AdminUserProfilePage > [SEC-X-SRV-ADMIN-USER-PRESENT] an existing account still renders its profile 1ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer 6652ms
+ ✓ src/lib/auth/__tests__/staffPage.security.test.ts > staffPage > an active administrator and an active moderator pass the guard, and it returns who they are (the control) 1ms
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  10:25:12
+   Duration  6.94s (transform 1.81s, setup 281ms, import 1.13s, tests 9.65s, environment 780ms)
+
+
+EXIT_CODE=0

@@ -1,0 +1,23 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a11/a11-01-greps.mjs
+
+## requestGoogleCredential in src/
+expected: nowhere
+hits: 0
+verdict: as expected
+
+## the line after `export function openGoogleAttempt` in src/lib/auth/googlePopup.ts
+expected: contains window.open(attempt.url, POPUP_NAME, POPUP_FEATURES)
+hits: 2
+  src/lib/auth/googlePopup.ts:59: export function openGoogleAttempt(attempt: GoogleAttempt): Promise<GooglePopupResult> {
+  src/lib/auth/googlePopup.ts:60: const popup = window.open(attempt.url, POPUP_NAME, POPUP_FEATURES)
+verdict: as expected
+
+## loadGoogleIdentity in src/modules/auth/components/AuthSheet.banned.security.test.tsx
+expected: nowhere
+hits: 0
+verdict: as expected
+
+exit code: 0

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Box } from '@mantine/core'
+import { Box, Group, Stack, Text } from '@mantine/core'
 
 export interface MantineStoryShellProps {
   children: ReactNode
@@ -92,5 +92,30 @@ export function MantineStoryShell({ children, width = 'full' }: MantineStoryShel
         </Box>
       </Box>
     </Box>
+  )
+}
+
+/**
+ * Task 859 Revision 8 (R56, GR-12 section 1) — the one owner of Story chrome for the `Mantine/Primitives/*` showcase
+ * pages: a vertical stack of captioned sections. A canonical Story passes data and a locale-backed `label`; it never
+ * writes a caption's size, colour or weight, nor the gap between sections (`check:ui-contract`). Both components read
+ * theme tokens only and take no `style`, `className` or colour prop.
+ */
+export function MantineStoryStack({ children }: { children: ReactNode }) {
+  return <Stack gap="lg">{children}</Stack>
+}
+
+/**
+ * One captioned section: the caption (12px, dimmed, medium, the caption every primitive Story used) above a wrapping
+ * row of the examples it describes. `label` is a locale-backed string supplied by the Story.
+ */
+export function MantineStorySection({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <Stack gap="xs">
+      <Text size="xs" c="dimmed" fw={500}>
+        {label}
+      </Text>
+      <Group gap="xs">{children}</Group>
+    </Stack>
   )
 }

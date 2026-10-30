@@ -1,0 +1,62 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/modules/listings/actions/__tests__/contactGateway.security.test.ts src/lib/captcha/__tests__/verifyTurnstile.test.ts src/modules/auth/actions/__tests__/captcha.security.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts
+started: 2026-10-23T13:27:41.860Z
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts (4 tests | 2 failed) 36ms
+     × happy path: valid captcha + email/password → { ok: true } 30ms
+     × captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase 4ms
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 125 passed (127)
+   Start at  15:27:43
+   Duration  1.14s (transform 370ms, setup 434ms, import 348ms, tests 93ms, environment 842ms)
+
+
+--- stderr ---
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > happy path: valid captcha + email/password → { ok: true }
+AssertionError: expected "vi.fn()" to be called with arguments: [ 'valid-turnstile-token' ]
+
+Number of calls: 0
+
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts:58:33
+     56|
+     57|     expect(result).toEqual({ ok: true })
+     58|     expect(mockVerifyTurnstile).toHaveBeenCalledWith('valid-turnstile-…
+       |                                 ^
+     59|     expect(mockSignUp).toHaveBeenCalledWith(expect.objectContaining({
+     60|       email: 'new@example.com',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts > signUpWithCaptcha — smoke tests (Task 441) > captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase
+AssertionError: expected { ok: true } to deeply equal { ok: false, reason: 'captcha_failed' }
+
+- Expected
++ Received
+
+  {
+-   "ok": false,
+-   "reason": "captcha_failed",
++   "ok": true,
+  }
+
+ ❯ src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts:90:20
+     88|     })
+     89|
+     90|     expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
+       |                    ^
+     91|     expect(mockSignUp).not.toHaveBeenCalled()
+     92|   })
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+
+exit code: 1

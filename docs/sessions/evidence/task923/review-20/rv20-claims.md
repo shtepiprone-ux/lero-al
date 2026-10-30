@@ -1,0 +1,93 @@
+| C558 | FACT | The inactivity cron selects an `email` column from `public.users` for the 12-month step… | source: `src/app/api/cron/inactivity/route.ts:72-72`; observed: `.select('id, email, preferred_locale, last_seen_at, created_at')` |
+| C559 | FACT | …and for the 3-month warning step. | source: `src/app/api/cron/inactivity/route.ts:134-134`; observed: `.select('id, email, preferred_locale, last_seen_at, created_at')` |
+| C560 | FACT | The captured columns of `public.users` have no `email`. | source: `docs/sessions/evidence/task923/review-20/rv20-users-columns.txt:3-3`; observed: `users has email column: false` |
+| C561 | FACT | The cron takes the data of that read and not its error, so the failed read looks like "nobody to process". | source: `src/app/api/cron/inactivity/route.ts:70-70`; observed: `const { data: finalUsers } = await db` |
+| C562 | FACT | Its status filter names `self_deleted`, which is not a status of the table. | source: `src/app/api/cron/inactivity/route.ts:74-74`; observed: `.not('status', 'in', '("blocked","inactive","self_deleted")')` |
+| C563 | FACT | `public.listings` has a staff policy… | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:946-946`; observed: `"policy": "Admins can manage all listings",` |
+| C564 | FACT | …for every command… | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:949-949`; observed: `"cmd": "ALL",` |
+| C565 | FACT | …that admits a moderator by role alone. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:950-950`; observed: `'moderator'::user_role` |
+| C566 | FACT | `authenticated` holds DELETE and UPDATE on `listings`. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:1794-1795`; observed: `"privileges": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,TRUNCATE,UPDATE"` |
+| C567 | FACT | The draft hardening guard lets only an active administrator's session past it. | source: `docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql:226-226`; observed: `if current_user not in ('authenticated', 'anon') or public.caller_is_admin() then return new; end if;` |
+| C568 | FACT | The guard fires on insert and update, not on delete. | source: `docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql:248-248`; observed: `create trigger listings_guard_protected before insert or update on public.listings` |
+| C569 | FACT | The staff Server Action requires `listings.delete`; the Data API path does not. | source: `src/modules/admin/actions/index.ts:135-135`; observed: `await assertPermission('listings.delete')` |
+| C570 | FACT | The owner's policy on `listing_images` covers every command with no condition on the URL. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:836-841`; observed: `"policy": "Users can manage own listing images",` |
+| C571 | FACT | The image URL rule lives only in the actions. | source: `src/modules/listings/actions/createListing.ts:10-10`; observed: `import { isValidImagePayload } from '@/lib/uploads/imageUrl'` |
+| C572 | FACT | A person may update their own `users` row through the Data API. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:1516-1520`; observed: `"qual": "(auth.uid() = id)",` |
+| C573 | FACT | The draft users guard protects eight columns; the URL, phone and name columns are not among them. | source: `docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql:207-214`; observed: `or new.public_id is distinct from old.public_id then` |
+| C574 | FACT | The listings read policy shows a visitor only active listings. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:960-960`; observed: `"qual": "((status = 'active'::listing_status) OR (auth.uid() = user_id))",` |
+| C575 | FACT | The listing page reads through the session client… | source: `src/app/[locale]/listings/[slug]/page.tsx:146-146`; observed: `const supabase = await createClient()` |
+| C576 | FACT | …asking for four statuses, three of which the policy hides from a visitor. | source: `src/app/[locale]/listings/[slug]/page.tsx:153-153`; observed: `.in('status', ['active', 'sold', 'rented', 'archived'])` |
+| C577 | FACT | The listings API reads through the session client… | source: `src/app/api/listings/route.ts:14-14`; observed: `const supabase = await createClient()` |
+| C578 | FACT | …for the closed tab too. | source: `src/app/api/listings/route.ts:19-19`; observed: `if (tab === 'closed') {` |
+| C579 | FACT | The e-mail change request carries the new address, the locale and an IP, and no current password. | source: `src/modules/cabinet/actions/index.ts:327-331`; observed: `newEmail: string` |
+| C580 | FACT | Deleting one's own account takes no argument. | source: `src/modules/cabinet/actions/index.ts:248-248`; observed: `export async function deleteOwnAccount(): Promise<{ error?: string }> {` |
+| C581 | FACT | The password change does ask for the current password. | source: `src/modules/cabinet/actions/index.ts:476-476`; observed: `currentPassword: string` |
+| C582 | FACT | The inquiry's sender e-mail is whatever the caller sends. | source: `src/modules/listings/actions/submitListingInquiry.ts:64-64`; observed: `const email   = input.email.trim().toLowerCase().slice(0, 200)` |
+| C583 | FACT | An inquiry from an unknown IP is never limited. | source: `src/modules/listings/actions/submitListingInquiry.ts:36-36`; observed: `if (ip === 'unknown') return false` |
+| C584 | FACT | The password change ends other sessions without reading the result. | source: `src/modules/cabinet/actions/index.ts:527-527`; observed: `await verifyClient.auth.signOut({ scope: 'others' })` |
+| C585 | FACT | `updateUserProfile` checks staff, not a permission key. | source: `src/modules/admin/actions/index.ts:155-155`; observed: `const actor = await resolveAdminActor()` |
+| C586 | FACT | `updateUserProfile` logs a failed write and returns success. | source: `src/modules/admin/actions/index.ts:169-171`; observed: `if (error) console.error('updateUserProfile failed', { error, userId })` |
+| C587 | FACT | `toggleUserVerified` does the same. | source: `src/modules/admin/actions/index.ts:180-183`; observed: `if (error) console.error('toggleUserVerified failed', { error, userId })` |
+| C588 | FACT | E-mail templates are written by any moderator. | source: `src/modules/notifications/actions/emailTemplates.ts:38-38`; observed: `const auth = await assertAdminOrModerator()` |
+| C589 | FACT | Creating an account needs `users.create`… | source: `src/modules/admin/actions/index.ts:538-538`; observed: `await assertPermission('users.create')` |
+| C590 | FACT | …and only the administrator profile type is gated further, so a moderator account needs no more. | source: `src/modules/admin/actions/index.ts:541-541`; observed: `if (data.profileType === 'admin') {` |
+| C591 | FACT | Changing an existing account's role needs `users.change_role`. | source: `src/modules/admin/actions/index.ts:475-475`; observed: `const canChangeRole = await roleHasPermission(myProfile.role as string, 'users.change_role')` |
+| C592 | FACT | The profile-type log row is written inside a try/catch, which never sees a PostgREST error (it is returned, not thrown). | source: `src/modules/admin/actions/index.ts:484-492`; observed: `await db.from('user_change_log').insert({` |
+| C593 | FACT | The status history row is written the same way. | source: `src/modules/admin/actions/index.ts:505-513`; observed: `await db.from('user_status_history').insert({` |
+| C594 | FACT | The status gateway sends the owner's notification without waiting for it. | source: `src/modules/listings/actions/applyListingTransition.ts:132-132`; observed: `}).catch(e => console.error('[notifications] listing_status_change notify failed', e))` |
+| C595 | FACT | The "password changed" e-mail is sent without waiting for it. | source: `src/modules/auth/actions/recovery.ts:107-107`; observed: `void sendPasswordChangedEmail({ to: email, name: profile?.name ?? null })` |
+| C596 | FACT | That action requires only a signed-in person with access, not a recovery. | source: `src/modules/auth/actions/recovery.ts:85-90`; observed: `if (!(await requireViewer()).ok) return` |
+| C597 | FACT | `updateListing` writes images through the session client, whose policy is the owner's. | source: `src/modules/listings/actions/updateListing.ts:32-32`; observed: `const supabase = await createClient()` |
+| C598 | FACT | `createListing` returns the database's own message to the browser. | source: `src/modules/listings/actions/createListing.ts:64-64`; observed: `return { error: insertError?.message ?? 'insert_failed' }` |
+| C599 | FACT | The avatar route checks the size after the upload, so a refused file stays in Cloudinary. | source: `src/app/api/upload-avatar/route.ts:78-80`; observed: `(result.width !== 256` |
+| C600 | FACT | The company logo route does the same. | source: `src/app/api/upload-company-logo/route.ts:75-77`; observed: `(result.width > 256` |
+| C601 | FACT | The staff listing delete returns nothing on a failure. | source: `src/modules/admin/actions/index.ts:138-140`; observed: `console.error('deleteListing failed', { error, listingId })` |
+| C602 | FACT | The expiry cron writes the status itself, outside the gateway. | source: `src/app/api/cron/listings-expiry/route.ts:52-52`; observed: `.update({ status: transition.nextStatus, updated_at: now })` |
+| C603 | FACT | Only the providers' own admin module reads `exchange_providers`; rates come from two fixed hosts. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:5-6`; observed: `rates are fetched from: https://iliria98.com/` |
+| C604 | FACT | The hard delete's only target check is the rank, which passes for an administrator's own id. | source: `src/modules/admin/actions/index.ts:695-700`; observed: `if (!(await actorMayActOn(me.id, userId))) return { error: 'forbidden' }` |
+| C605 | FACT | The property-type slug change takes the count and not its error. | source: `src/modules/admin/actions/propertyTypes.ts:106-106`; observed: `const { count } = await db.from('listings').select('*', { count: 'exact', head: true }).eq('property_type', current.slug)` |
+| C606 | FACT | The listing price has no upper bound. | source: `src/modules/listings/validations/index.ts:9-9`; observed: `price:        z.number().positive(),` |
+| C607 | FACT | The property types are a fixed list in code while staff manage a table of them. | source: `src/modules/listings/validations/index.ts:13-13`; observed: `property_type: z.enum(['apartment', 'house'` |
+| C608 | FACT | The active middleware builds the locale routing from the fixed config. | source: `src/middleware.ts:6-6`; observed: `const handleI18nRouting = createMiddleware(routing)` |
+| C609 | FACT | That config fixes the default locale. | source: `src/i18n/routing.ts:5-5`; observed: `defaultLocale: 'sq',` |
+| C610 | FACT | The root page that would read the staff setting runs after the middleware has already redirected `/`. | source: `src/app/page.tsx:15-15`; observed: `const locale = preferred ?? await getDefaultSiteLocale()` |
+| C611 | FACT | The setting-driven default exists only in `src/proxy.ts`. | source: `src/proxy.ts:36-36`; observed: `_cachedMiddleware = createIntlMiddleware({ ...routing, defaultLocale: locale })` |
+| C612 | FACT | The project runs Next 15.5.18, which loads `middleware.ts`. | source: `package.json:171-171`; observed: `"next": "15.5.18",` |
+| C613 | FACT | The admin user page reads the person's whole row with the service key… | source: `src/app/admin/users/[id]/page.tsx:29-29`; observed: `db.from('users').select('*').eq('id', id).single(),` |
+| C614 | FACT | …and their Auth e-mail… | source: `src/app/admin/users/[id]/page.tsx:68-68`; observed: `const { data: authUser } = await db.auth.admin.getUserById(id)` |
+| C615 | FACT | …before it reads the viewer, which it never refuses. | source: `src/app/admin/users/[id]/page.tsx:75-75`; observed: `const viewer = await requireViewer()` |
+| C616 | FACT | Its metadata reads the person's name with no check at all. | source: `src/app/admin/users/[id]/page.tsx:14-14`; observed: `const { data } = await db.from('users').select('name, last_name').eq('id', id).single()` |
+| C617 | FACT | Seventeen admin pages have no check of their own; nine of them read with the service key. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:36-37`; observed: `count without own check: 17` |
+| C618 | FACT | The admin layout is the only guard. | source: `src/app/admin/layout.tsx:40-40`; observed: `const viewer = await requireViewer()` |
+| C619 | FACT | The owner's report probe: on a partial navigation the layout guard ran zero times. | source: `docs/chat-gpt-reports/2026-10-20-full-admin-layout-probe.json:8-8`; observed: `"layoutGuardCalls": 0,` |
+| C620 | FACT | The probe states its own limit. | source: `docs/chat-gpt-reports/2026-10-20-full-admin-layout-probe.json:3-3`; observed: `Not a full HTTP/RSC-renderer/live Auth test.` |
+| C621 | FACT | An owner may edit a listing at any status. | source: `src/modules/listings/domain/listingPermissions.ts:58-59`; observed: `may edit at ANY status` |
+| C622 | FACT | An edit keeps the status it read, so an active listing stays active without moderation. | source: `src/modules/listings/actions/updateListing.ts:130-130`; observed: `return { slug: existing.slug, status: existing.status as ListingStatus }` |
+| C623 | FACT | Price alerts read every status except archived. | source: `src/app/api/cron/price-alerts/route.ts:64-64`; observed: `.neq('status', 'archived')` |
+| C624 | FACT | The confirm route verifies on GET… | source: `src/app/auth/confirm/route.ts:20-20`; observed: `export async function GET(request: NextRequest) {` |
+| C625 | FACT | …for six token types, sign-in and e-mail change among them. | source: `src/app/auth/confirm/route.ts:10-10`; observed: `const VALID_OTP_TYPES = ['signup', 'invite', 'recovery', 'magiclink', 'email_change', 'email'] as const` |
+| C626 | FACT | The security policy has no `script-src`. | source: `src/lib/security/headers.ts:13-13`; observed: `export const CSP_BASELINE = ["frame-ancestors 'none'", "base-uri 'self'", "form-action 'self'", "object-src 'none'"].join('; ')` |
+| C627 | FACT | The suspension end is saved as sent. | source: `src/modules/admin/actions/index.ts:467-467`; observed: `suspended_until: data.status === 'blocked' ? (data.suspendedUntil ?? null) : null,` |
+| C628 | FACT | A suspension end in the past lifts the Auth ban at once. | source: `src/lib/auth/accountAccess.ts:42-42`; observed: `if (accountHasAccess(status, suspendedUntil, now)) return 'none'` |
+| C629 | FACT | Lint fails with two errors. | source: `docs/sessions/evidence/task923/review-20/rv20-lint-summary.txt:4-4`; observed: `errors 2 warnings 252` |
+| C630 | FACT | The errors are in untracked test files. | source: `docs/sessions/evidence/task923/review-20/rv20-lint-summary.txt:2-3`; observed: `error src/modules/auth/components/__tests__/AuthSheet.test.tsx:58 react/display-name` |
+| C631 | FACT | The build ignores lint. | source: `next.config.ts:11-11`; observed: `eslint: { ignoreDuringBuilds: true },` |
+| C632 | FACT | The app has no not-found, error, sitemap or robots file. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:13-17`; observed: `not-found.tsx: 0` |
+| C633 | FACT | The global error page is Next's generic page. | source: `src/app/global-error.tsx:23-23`; observed: `<NextError statusCode={0} />` |
+| C634 | FACT | CMS images are accepted from any Cloudinary account. | source: `src/modules/cms/lib/sanitizeCmsHtml.ts:33-33`; observed: `const CLOUDINARY_HOST = 'res.cloudinary.com'` |
+| C635 | FACT | Reports and the three upload routes have no rate limit. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:8-11`; observed: `src/modules/listings/actions/reportListing.ts: 0` |
+| C636 | FACT | Nine local staff guards exist across six modules. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:39-47`; observed: `src/modules/admin/actions/currencies.ts:16:async function assertAdmin() {` |
+| C637 | FACT | The owner-contact daily number is still open. | source: `docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql:13-13`; observed: `NULL (= unlimited) until the owner sets it.` |
+| C638 | FACT | The middleware does not run on the admin panel or the API. | source: `src/middleware.ts:23-25`; observed: `admin panel has no [locale] segment in the URL` |
+| C639 | FACT | A Server Component cannot store a refreshed token; the write error is swallowed. | source: `src/lib/supabase/server.ts:20-20`; observed: `} catch {}` |
+| C640 | FACT | The sign-out of a banned or deleted account lives in that middleware step. | source: `src/lib/auth/middleware.ts:57-58`; observed: `await supabase.auth.signOut({ scope: 'local' })` |
+| C641 | FACT | The `avatars` Storage bucket is public… | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:2298-2299`; observed: `"public": true` |
+| C642 | FACT | …and staff sessions may upload into it. | source: `docs/sessions/evidence/task923/db-catalog/catalog.json:1596-1596`; observed: `"policy": "Admin/moderator upload avatars",` |
+| C643 | FACT | The code never calls Supabase Storage. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:3-3`; observed: `storage.from matches: 0` |
+| C644 | FACT | Google sign-in passes no destination. | source: `src/modules/auth/components/AuthSheet.tsx:98-98`; observed: `signInWithOAuth('google',` |
+| C645 | FACT | The companies page reads every member row with no range. | source: `src/app/admin/companies/page.tsx:22-25`; observed: `.select('company_id')` |
+| C646 | FACT | The admin user page wraps PostgREST reads in try/catch, which never sees their error. | source: `src/app/admin/users/[id]/page.tsx:42-50`; observed: `} catch {}` |
+| C647 | FACT | `public.listings` has no DELETE policy for an owner. | source: `docs/sessions/evidence/task923/review-20/rv20-grep-evidence.txt:53-53`; observed: `owner DELETE policy present: false` |
+| C648 | FACT | The owner's delete runs through the session client… | source: `src/modules/listings/actions/deleteListing.ts:31-31`; observed: `const supabase = await createClient()` |
+| C649 | FACT | …checks only the error (a refusal deletes zero rows and is no error), then cleans up and answers success. | source: `src/modules/listings/actions/deleteListing.ts:51-54`; observed: `if (error) {` |
+| C650 | FACT | A saved search is inserted with no count of the person's existing ones. | source: `src/modules/cabinet/actions/index.ts:112-114`; observed: `.from('saved_searches')` |

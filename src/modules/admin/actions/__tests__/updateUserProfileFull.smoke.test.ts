@@ -61,8 +61,11 @@ vi.mock('@/lib/auth/permissions', () => ({
   roleHasPermission: (...args: unknown[]) => mockRoleHasPermission(...args),
 }))
 
+// The Auth ban that follows a status change is tested in ../accountBan.security.test.ts (ids here are not UUIDs)
+vi.mock('@/lib/auth/accountAccess', async (orig) => ({ ...(await orig<typeof import('@/lib/auth/accountAccess')>()), syncAccountAccess: vi.fn().mockResolvedValue({ ok: true }) }))
+
 // Side-effect prevention — not under test but imported by the same file
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: vi.fn().mockResolvedValue({}),
 }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
@@ -115,7 +118,9 @@ beforeEach(() => {
   mockAdminFrom.mockImplementation((table: string) => {
     if (table === 'users') {
       return {
-        select: () => ({ eq: () => ({ single: mockOldUserSingle }) }),
+        // `in` is the rank check (Task 923 Revision 7): the acting administrator and an ordinary target
+        // `maybeSingle` is the caller's own row read by the real `requireViewer()` (Task 923 R44): the role comes from `mockMyProfileSingle`
+        select: () => ({ eq: () => ({ single: mockOldUserSingle, maybeSingle: async () => ({ data: { ...((await mockMyProfileSingle()) as { data: object }).data, status: 'active', suspended_until: null, deleted_at: null }, error: null }) }), in:() => Promise.resolve({ data: [{ id: CALLING_ADMIN_ID, role: 'admin' }, { id: TARGET_USER_ID, role: 'user' }] }) }),
         update: () => ({ eq: () => Promise.resolve({ error: null }) }),
         upsert: vi.fn().mockResolvedValue({ error: null }),
       }

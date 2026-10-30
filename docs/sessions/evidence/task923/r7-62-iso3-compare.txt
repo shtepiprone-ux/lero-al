@@ -1,0 +1,14 @@
+command: node docs/sessions/evidence/task923/r7-61-narrowed-compare.mjs docs/sessions/evidence/task923/r7-62-iso3-1 docs/sessions/evidence/task923/r7-62-iso3-2 docs/sessions/evidence/task923/r7-62-iso3-3
+platform win32 node v22.22.3
+runs docs/sessions/evidence/task923/r7-62-iso3-1 ; docs/sessions/evidence/task923/r7-62-iso3-2 ; docs/sessions/evidence/task923/r7-62-iso3-3; rows 6 / 6 / 6
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | app | en | 00320 :: component-overflow+text-hidden || component-overflow+text-hidden || component-overflow+text-hidden
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos | portal:0 | en | 00320 :: green || green || green
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | app | en | 00320 :: component-overflow+text-hidden || component-overflow+text-hidden || component-overflow+text-hidden
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~all-photos-3 | portal:0 | en | 00320 :: green || green || green
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | app | en | 00320 :: component-overflow+target-small+text-hidden || component-overflow+target-small+text-hidden || component-overflow+target-small+text-hidden
+same patterns-mantine-listingdetailview--archived-listing | patterns-mantine-listingdetailview--archived-listing~share-listing | portal:0 | en | 00320 :: green || green || green
+
+rows 6; rows with a difference 0
+differences allowed by AC32 (focus-open on adminshell--drawer-open): 0
+differences NOT allowed (AC32: isolate three times, sample, record, report PARTIALLY IMPLEMENTED): 0
+EXIT_CODE=0

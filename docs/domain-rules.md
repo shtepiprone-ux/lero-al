@@ -47,16 +47,22 @@ Inactivity is measured by `COALESCE(last_seen_at, created_at)` (users who never 
 
 | Threshold | Action |
 |-----------|--------|
-| 3 months (~91 days) | Send `InactivityWarningEmail` once (tracked by `inactivity_warning_sent_at`). Warning resets when user becomes active again. |
-| 12 months (~365 days) | **SOFT DELETE**: set `deleted_at = now()`, `status = 'inactive'`, archive all active listings, write to `user_status_history` (reason: `inactivity_12_months_auto_deactivation`), send `InactivityFinalEmail`. |
+| 3 months (~91 days) | Send `InactivityWarningEmail` once per absence (tracked by `inactivity_warning_sent_at`, which the presence ping clears when the person comes back, so a later absence is reminded again). |
+| 12 months (~365 days) | **Nothing is written yet** (Task 923 R77 (c)): the job only counts these accounts. No account is marked, no listing is archived and no final e-mail is sent. The target is owner decision D58 (2026-10-20): the account is deactivated and an e-mail says it will be deleted completely in 30 days; the person cannot sign in until pressing "Activate account" in that e-mail. The account lifecycle task builds it. |
 
-**Grace period:** 90 days after soft-delete. If the user signs in within 90 days, the presence route (`/api/presence`) automatically restores the account: clears `deleted_at`, sets `status = 'active'`, resets `inactivity_warning_sent_at`, writes `user_status_history` (reason: `reactivated_within_grace_period`). Archived listings are NOT automatically restored (require manual admin action).
+**No restore from a presence ping (D58, Task 923 R77 (e)):** `/api/presence` checks the viewer first; an account without access gets 401 and nothing is written. The former 90-day grace-period restore is removed.
 
-**After grace period:** Account remains soft-deleted. Data is retained indefinitely until a future cleanup task (not yet implemented) hard-deletes it. Hard-delete is explicitly out of scope for this task.
+## Account Deletion (owner decision D30, 2026-10-18; Task 923 R141–R146)
 
-**GDPR note:** Retained data after soft-delete includes email and profile fields. A future cleanup or explicit user-initiated deletion flow (Task TBD) should hard-delete this data to comply with right-to-erasure requests. Platform legal counsel should review the 90-day retention window against applicable law.
+Every deletion of an account is complete, for every role: by the person (`deleteOwnAccount`, after re-authentication) or by staff (`hardDeleteUser`, permission `users.hard_delete` and the rank rule). Both call the one owner, `src/lib/account/deleteAccount.ts`:
 
-**Tracking column:** `users.inactivity_warning_sent_at TIMESTAMPTZ` — set when warning email is sent; reset to NULL on presence update (user active again) and on account restore. Prevents duplicate warning emails within a single inactivity cycle.
+1. Through the service role it reads the files of the account: the avatar and own logo, the images of the person's listings (read through the listing), the logo of each company the person created, and the verification documents. Each read is paged until an empty page, so any number of rows is read. A failed read refuses the deletion and nothing is deleted.
+2. `auth.admin.deleteUser` removes the Auth user, the profile row and every dependent row (listings and their images included) in one database transaction. An error refuses, and no file is touched.
+3. Only then the Cloudinary files are released through `deleteAsset` (a dry run unless `CLOUDINARY_DELETE_MODE=enabled`) and the person's objects of the `avatars` bucket are removed. A file that is not removed never undoes the deletion; it is counted and logged.
+
+Nothing is soft-deleted or archived. In the database (deletion v4): a record of a staff member's action keeps the name without the id (D32); the person's views and contact clicks are deleted (D33); the reports and inquiries the person filed stay, with the name (D33); the company the person created is deleted and its other agents are left without a company (D31).
+
+**Tracking column:** `users.inactivity_warning_sent_at TIMESTAMPTZ` — set when warning email is sent; reset to NULL on presence update (user active again). Prevents duplicate warning emails within a single inactivity cycle.
 
 ## User Profile Data Model
 
@@ -72,13 +78,13 @@ Currency preference: `preferred_currency IN ('ALL', 'EUR')` — defaults to `'AL
 
 Status values: `active`, `blocked`, `inactive`, `self_deleted` (written to `user_status_history`).
 
-Listing archiving: when a user self-deletes, all their non-sold/non-rented listings are set to `archived` in one update.
+Listing archiving: a person's own deletion archives nothing; it deletes the listings with the account (see "Account Deletion").
 
 `user_status_history` logs every status transition: `old_status`, `new_status`, `reason` (required when `new_status = 'blocked'`), `changed_by`, `changed_at`.
 
 ## Owner-Deleted Listing Rule
 
-A user with `deleted_at IS NOT NULL` is considered deleted. Their archived listings remain accessible by direct URL but:
+A deleted account leaves no listing: its listings are deleted with it (see "Account Deletion"). No code in `src/` sets `users.deleted_at` since Task 923 (R77 (c), R141). A profile row that still carries `deleted_at` is treated as deleted: it has no access, and its listings remain accessible by direct URL but:
 - Do NOT appear in public index, search, or similar listings queries.
 - The `ListingContact` block on the detail page renders a "Owner deleted their account" placeholder instead of phone/WhatsApp/message buttons.
 

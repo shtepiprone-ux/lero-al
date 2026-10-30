@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminListingsTable } from '@/components/admin/AdminListingsTable'
@@ -6,6 +7,7 @@ import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { applyPublicEligibleButHidden } from '@/modules/listings/lib/visibility'
 import { applyAdminListingsVisibility } from './visibilityFilter'
+import { ilikeContains, orContains } from '@/lib/postgrest/escape'
 
 export const metadata = { title: 'Listings — Admin' }
 
@@ -14,6 +16,8 @@ export default async function AdminListingsPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const sp = await searchParams
@@ -38,7 +42,7 @@ export default async function AdminListingsPage({
     const { data: nameMatches } = await supabase
       .from('users')
       .select('id')
-      .or(`name.ilike.%${qTrimmed}%,last_name.ilike.%${qTrimmed}%`)
+      .or(orContains(['name', 'last_name'], qTrimmed))
       .limit(100)
     ownerIds = (nameMatches ?? []).map(u => u.id)
 
@@ -74,7 +78,7 @@ export default async function AdminListingsPage({
 
     // Each word must appear in title (AND). Multiple words use nested and() inside or().
     // id.ilike on UUID causes a DB type error → use only text columns in or().
-    const wordConds = words.map(w => `title.ilike.%${w}%`).join(',')
+    const wordConds = words.map(w => `title.ilike.${ilikeContains(w)}`).join(',')
     const titleFilter = words.length > 1 ? `and(${wordConds})` : wordConds
 
     const orParts: string[] = [titleFilter]

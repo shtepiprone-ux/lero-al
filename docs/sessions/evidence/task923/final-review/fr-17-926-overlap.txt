@@ -1,0 +1,20 @@
+# fr-17 (Opus) 2026-10-28T20:21:38.302Z base 7dd707aa154801ff2e44402e3976841cb377dddb; changed product paths 653; 926 scope 36, stage planned
+926 scope paths that are changed product paths: 17
+  src/modules/companies/actions.ts <- also in: D8_D9, owner_fixes
+  src/design-system/mantine/patterns/MantineCombobox.tsx <- also in: NONE
+  src/stories/mantine/primitives/Combobox.stories.tsx <- also in: NONE
+  src/stories/patterns/mantine/AuthSheet.stories.tsx <- also in: 927
+  src/modules/auth/components/AuthSheet.tsx <- also in: 927, D8_D9
+  src/modules/cabinet/components/ProfileTab.tsx <- also in: 927, D8_D9
+  src/modules/cabinet/actions/index.ts <- also in: 927, D8_D9, owner_fixes
+  src/components/admin/AdminUserProfileView.tsx <- also in: owner_fixes
+  src/components/admin/AdminUserProfile.tsx <- also in: D8_D9
+  src/modules/admin/actions/index.ts <- also in: D8_D9, owner_fixes
+  src/app/admin/users/page.tsx <- also in: D8_D9, owner_fixes
+  src/components/admin/AdminUsersTableView.tsx <- also in: NONE
+  src/types/database.ts <- also in: D8_D9
+  messages/sq.json <- also in: 927, D8_D9
+  messages/en.json <- also in: 927, D8_D9
+  messages/uk.json <- also in: 927, D8_D9
+  messages/it.json <- also in: 927, D8_D9
+926 scope paths not changed: 19

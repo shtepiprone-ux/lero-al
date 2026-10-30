@@ -1,35 +1,59 @@
 'use server'
 
-import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
+import { checkActorRank, checkStaff } from '@/lib/auth/staff'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
 import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
-import { createNotification } from '@/modules/notifications/lib/mutations'
+import type { PermissionKey } from '@/lib/auth/permissionKeys'
+import { createNotification } from '@/modules/notifications/lib/createNotification'
+import { orContains } from '@/lib/postgrest/escape'
+import { safeExternalUrl } from '@/lib/security/safeUrl'
 import { isCmsBodyEmpty } from '@/modules/cms/lib/isCmsBodyEmpty'
+import { resolveLinkTarget } from '@/lib/security/safeUrl'
+import { isE164, isProfileNameWithinBound, MAX_PROFILE_WEBSITE_LENGTH } from '@/lib/security/inputs'
+import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
+import { syncAccountAccess } from '@/lib/auth/accountAccess'
+import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
+import { deleteAsset } from '@/lib/cloudinaryDelete'
+import { deleteAccount } from '@/lib/account/deleteAccount'
+import { trustedAppOrigin, trustedRedirectUrl } from '@/lib/auth/trustedOrigin'
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
 // Resolves the authenticated admin actor for transition gateway calls.
 // Returns userId + role for the TransitionActorContext.
 
-async function resolveAdminActor() {
-  const user = await getUser()
-  if (!user) throw new Error('unauthenticated')
-  const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
-  if (!profile || (profile.role !== 'admin' && profile.role !== 'moderator')) {
-    throw new Error('forbidden')
-  }
-  return { userId: user.id, role: profile.role as string, source: 'admin_panel' as const }
+async function resolveAdminActor(permission?: PermissionKey) {
+  // one guard for every staff action (Task 923 R71 (k)): a blocked, deactivated, deleted or missing account of any role is refused here too. Every action that admits a
+  // moderator names its key (Task 923 R75): an administrator holds every key, a moderator only the keys that were switched on.
+  const staff = await checkStaff({ permission })
+  if (!staff.ok) throw new Error(staff.reason)
+  return { userId: staff.userId, role: staff.role as string, source: 'admin_panel' as const }
 }
 
-async function assertAdminAccess() {
-  await resolveAdminActor()
+async function assertAdminAccess(permission: PermissionKey) {
+  await resolveAdminActor(permission)
+}
+
+/**
+ * Rank check (Task 923 Revision 7, finding S44). Staff actions on a user account used to look only at the permission, never at WHO the account belongs to: a
+ * moderator who holds "delete users" could block, deactivate or delete an administrator, and one who holds "change roles" could make themselves one. An
+ * administrator account can only be acted on, or created, by an administrator.
+ *
+ * Fails closed (Task 923 R66 (a)): a failed read, or no row for the target, means the target's rank is unknown, and an unknown rank is no permission. The read used to
+ * ignore its error, so an empty answer counted as "not an administrator".
+ */
+// The rule itself lives in `@/lib/auth/staff` (`checkActorRank`) so the upload route that replaces another account's avatar applies the same one (Task 923 R66 (o)).
+const rankCheck = checkActorRank
+
+async function actorMayActOn(actorId: string, targetId: string): Promise<boolean> {
+  return (await rankCheck(actorId, targetId)).allowed
 }
 
 // ── Listings ────────────────────────────────────────────────────────────────
@@ -41,7 +65,7 @@ export async function updateListingStatus(
   listingId: string,
   toStatus: ListingStatus,
 ): Promise<{ error?: string }> {
-  const actor = await resolveAdminActor()
+  const actor = await resolveAdminActor('listings.moderate')
   const result = await applyListingTransitionByStatus(listingId, toStatus, actor)
   if (!result.ok) {
     if (result.reason !== 'not_found') {
@@ -115,19 +139,38 @@ export async function toggleListingPremium(id: string, isPremium: boolean): Prom
   return setListingPremium(id, isPremium)
 }
 
-export async function deleteListing(listingId: string) {
+export async function deleteListing(listingId: string): Promise<{ error?: string }> {
   await assertPermission('listings.delete')
   const db = createAdminClient()
-  const { error } = await db.from('listings').delete().eq('id', listingId)
-  if (error) {
-    console.error('deleteListing failed', { error, listingId })
-    return
+
+  // The listing's images are read first (they go with the listing), so the files can be released after it is gone (Task 923 R71 (g)). A failed read refuses:
+  // without it the files could never be found again.
+  const { data: images, error: imagesError } = await db.from('listing_images').select('url').eq('listing_id', listingId)
+  if (imagesError) {
+    console.error('deleteListing: image read failed', { code: imagesError.code, listingId })
+    return { error: 'delete_failed' }
   }
+
+  const { data: deleted, error } = await db.from('listings').delete().eq('id', listingId).select('id')
+  if (error || deleted?.length !== 1) {
+    // Task 923 R71 (c): the failure is reported, never an empty success; nothing deleted is no success either, and nothing is released or refreshed for it
+    console.error('deleteListing failed', { code: error?.code, rows: deleted?.length ?? 0, listingId })
+    return { error: 'delete_failed' }
+  }
+
+  // The files of the deleted listing are released through the one deletion wrapper (a file that something else still references is kept by it). A failure here is
+  // logged, not returned: the listing is already gone.
+  const publicIds = (images ?? []).map((i) => publicIdFromUrl(i.url)).filter((id): id is string => id !== null)
+  await Promise.allSettled(
+    publicIds.map((id) => deleteAsset(id, { reason: 'listing_deleted_by_staff' }).catch((err) => console.error('[deleteListing] image cleanup failed:', err))),
+  )
+
   revalidateTag('site-stats')
   revalidatePath('/admin/listings')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')
   }
+  return {}
 }
 
 // ── Users ────────────────────────────────────────────────────────────────────
@@ -135,24 +178,60 @@ export async function deleteListing(listingId: string) {
 export async function updateUserProfile(
   userId: string,
   data: { name?: string; phone?: string; company_name?: string }
-) {
-  await assertAdminAccess()
+): Promise<{ error?: string }> {
+  const actor = await resolveAdminActor('users.edit')
+  // Task 923 Revision 7, finding S44: `data` used to be written as it came. Its type allows three fields, but a caller can send any column (`role`, `is_verified`,
+  // `status` …), so a moderator could make themselves an administrator through this action. Only the three text fields are copied.
+  const patch: Record<string, string> = {}
+  for (const key of ['name', 'phone', 'company_name'] as const) {
+    const value = (data as Record<string, unknown> | null)?.[key]
+    if (typeof value !== 'string') continue
+    if (key === 'phone' && value !== '' && !isE164(value)) return { error: 'invalid_phone' }
+    // Task 923 R100: a name is stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; the database's own message never reaches the screen
+    if (key === 'name' && !isProfileNameWithinBound(value)) return { error: 'name_too_long' }
+    patch[key] = key === 'name' ? value.trim() : value
+  }
+  if (Object.keys(patch).length === 0) return {}
+  if (!(await actorMayActOn(actor.userId, userId))) return { error: 'forbidden' }
   const db = createAdminClient()
-  const { error } = await db.from('users').update(data).eq('id', userId)
-  if (error) console.error('updateUserProfile failed', { error, userId })
+  const { error } = await db.from('users').update(patch).eq('id', userId)
+  if (error) {
+    // Task 923 R71 (c): a refused write is reported, never an empty success
+    console.error('updateUserProfile failed', { error, userId })
+    return { error: 'update_failed' }
+  }
   revalidatePath('/admin/users')
+  return {}
 }
 
-export async function toggleUserVerified(userId: string, isVerified: boolean) {
-  await assertAdminAccess()
+export async function toggleUserVerified(userId: string, isVerified: boolean): Promise<{ error?: string }> {
+  const actor = await resolveAdminActor('users.verify')
+  if (typeof isVerified !== 'boolean') return { error: 'validation' }
+  if (!(await actorMayActOn(actor.userId, userId))) return { error: 'forbidden' }
   const db = createAdminClient()
   const { error } = await db.from('users').update({ is_verified: isVerified }).eq('id', userId)
-  if (error) console.error('toggleUserVerified failed', { error, userId })
+  if (error) {
+    // Task 923 R71 (c): a refused write is reported, never an empty success
+    console.error('toggleUserVerified failed', { error, userId })
+    return { error: 'update_failed' }
+  }
   revalidatePath('/admin/users')
   revalidatePath('/admin/badges')
+  return {}
 }
 
 // ── Locations ────────────────────────────────────────────────────────────────
+
+const LOCATION_CREATE_FIELDS = ['name_al', 'name_en', 'type', 'slug', 'parent_id', 'image_url', 'is_featured', 'display_order'] as const
+const LOCATION_UPDATE_FIELDS = ['name_al', 'name_en', 'type', 'slug', 'image_url', 'is_featured', 'display_order'] as const
+
+/** Copies only the named fields (Task 923 Revision 7, finding S44): a Server Action receives whatever the caller sent, not only what its type allows. */
+function pickFields(source: unknown, fields: readonly string[]): Record<string, unknown> {
+  const out: Record<string, unknown> = {}
+  if (!source || typeof source !== 'object') return out
+  for (const field of fields) if (Object.hasOwn(source, field)) out[field] = (source as Record<string, unknown>)[field]
+  return out
+}
 
 export async function createLocation(data: {
   name_al: string; name_en?: string; type: string; slug: string; parent_id?: number | null;
@@ -160,8 +239,8 @@ export async function createLocation(data: {
 }): Promise<{ error?: string }> {
   await assertPermission('locations.manage')
   const db = createAdminClient()
-  const { error } = await db.from('locations').insert(data)
-  if (error) { console.error('createLocation failed', { error }); return { error: error.message } }
+  const { error } = await db.from('locations').insert(pickFields(data, LOCATION_CREATE_FIELDS))
+  if (error) { console.error('createLocation failed', { error }); return { error: 'create_failed' } }
   revalidatePath('/admin/locations')
   return {}
 }
@@ -172,8 +251,8 @@ export async function updateLocation(
 ): Promise<{ error?: string }> {
   await assertPermission('locations.manage')
   const db = createAdminClient()
-  const { error } = await db.from('locations').update(data).eq('id', id)
-  if (error) { console.error('updateLocation failed', { error, id }); return { error: error.message } }
+  const { error } = await db.from('locations').update(pickFields(data, LOCATION_UPDATE_FIELDS)).eq('id', id)
+  if (error) { console.error('updateLocation failed', { error, id }); return { error: 'update_failed' } }
   revalidatePath('/admin/locations')
   return {}
 }
@@ -182,7 +261,7 @@ export async function toggleLocationFeatured(id: number, isFeatured: boolean): P
   await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').update({ is_featured: isFeatured }).eq('id', id)
-  if (error) { console.error('toggleLocationFeatured failed', { error, id }); return { error: error.message } }
+  if (error) { console.error('toggleLocationFeatured failed', { error, id }); return { error: 'update_failed' } }
   revalidatePath('/admin/locations')
   return {}
 }
@@ -191,15 +270,36 @@ export async function deleteLocation(id: number): Promise<{ error?: string }> {
   await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').delete().eq('id', id)
-  if (error) { console.error('deleteLocation failed', { error, id }); return { error: error.message } }
+  if (error) { console.error('deleteLocation failed', { error, id }); return { error: 'delete_failed' } }
   revalidatePath('/admin/locations')
   return {}
 }
 
 // ── Site settings ────────────────────────────────────────────────────────────
 
+/** The settings the admin form offers (Task 923 Revision 7, finding S44): a setting outside this list is refused instead of being added to the table. */
+const SETTING_KEYS = [
+  'site_name', 'tagline', 'contact_email', 'contact_phone', 'logo_url', 'logo_dark_url', 'favicon_url', 'social_facebook', 'social_instagram', 'social_linkedin',
+  'about_al', 'about_uk', 'meta_title', 'meta_desc', 'og_image', 'archived_noindex_days', 'default_locale',
+] as const
+/** settings whose value is an address that is output as a link or an image */
+const SETTING_URL_KEYS: readonly string[] = ['logo_url', 'logo_dark_url', 'favicon_url', 'social_facebook', 'social_instagram', 'social_linkedin', 'og_image']
+const SETTING_MAX_LENGTH = 5000
+
+function validSettingValue(key: string, value: unknown): boolean {
+  if (typeof value !== 'string' || value.length > SETTING_MAX_LENGTH) return false
+  if (key === 'default_locale') return ['sq', 'en', 'uk', 'it'].includes(value)
+  if (key === 'archived_noindex_days') return /^[1-9][0-9]{0,4}$/.test(value)
+  if (SETTING_URL_KEYS.includes(key)) return value === '' || resolveLinkTarget(value, 'sq') !== null
+  return true
+}
+
 export async function saveSettings(entries: Record<string, string>): Promise<{ error?: string }> {
   await assertPermission('settings.manage')
+  if (!entries || typeof entries !== 'object') return { error: 'validation' }
+  for (const [key, value] of Object.entries(entries)) {
+    if (!(SETTING_KEYS as readonly string[]).includes(key) || !validSettingValue(key, value)) return { error: 'validation' }
+  }
   const db = createAdminClient()
   const rows = Object.entries(entries).map(([key, value]) => ({
     key,
@@ -276,7 +376,7 @@ export async function updatePage(
       return { error: 'sq_body_required' }
     }
   }
-  const patch: Record<string, unknown> = { ...data, updated_at: new Date().toISOString() }
+  const patch: Record<string, unknown> = { ...pickFields(data, ['title', 'slug', 'content', 'is_published']), updated_at: new Date().toISOString() }
   if (data.content?.sq?.title) patch.title = data.content.sq.title
   const { error } = await db.from('pages').update(patch).eq('id', id)
   if (error) { console.error('updatePage failed', { error, id }); return { error: 'save_error' } }
@@ -315,26 +415,16 @@ function profileTypeFromDb(role: UserRole, user_type: string): ProfileType {
   return 'private'
 }
 
-function generateTempPassword(): string {
-  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const lower = 'abcdefghijklmnopqrstuvwxyz'
-  const digits = '0123456789'
-  const special = '!@#$%'
-  const all = upper + lower + digits + special
-  const arr = [
-    upper[Math.floor(Math.random() * upper.length)],
-    lower[Math.floor(Math.random() * lower.length)],
-    digits[Math.floor(Math.random() * digits.length)],
-    special[Math.floor(Math.random() * special.length)],
-    ...Array.from({ length: 8 }, () => all[Math.floor(Math.random() * all.length)]),
-  ]
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]]
-  }
-  return arr.join('')
+/**
+ * The website of a business profile as it may be stored: an http(s) address (a bare host becomes https), or null for nothing.
+ * Security (Task 923 Revision 7, S9): the value is later output as a link, so a `javascript:` / `data:` value is refused (`'invalid'`), never stored.
+ */
+function normalizeWebsite(raw: string | undefined, isBusiness: boolean): string | null | 'invalid' {
+  if (!isBusiness || !raw?.trim()) return null
+  const safe = safeExternalUrl(raw)
+  // Task 923 R100: the stored address is held to the length the `users` CHECK of hardening v8b allows, measured AFTER normalisation (a bare host gains `https://` and a slash)
+  return safe !== null && safe.length <= MAX_PROFILE_WEBSITE_LENGTH ? safe : 'invalid'
 }
-
 
 export async function updateUserProfileFull(
   userId: string,
@@ -356,21 +446,62 @@ export async function updateUserProfileFull(
     suspendedUntil?: string | null
   }
 ): Promise<{ error?: string }> {
-  const me = await getUser()
-  if (!me) return { error: 'Unauthorized' }
-  const supabase = await createClient()
-  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
-  if (!myProfile || (myProfile.role !== 'admin' && myProfile.role !== 'moderator')) {
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role is refused here too.
+  const viewer = await requireViewer()
+  if (!viewer.ok) return { error: viewer.reason === 'lookup_failed' ? 'Forbidden' : 'Unauthorized' }
+  if (viewer.role !== 'admin' && viewer.role !== 'moderator') {
     return { error: 'Forbidden' }
   }
+  const me = { id: viewer.userId }
+  const myProfile = { role: viewer.role }
+  // Task 923 R75: the full profile form needs `users.edit` (a moderator without it cannot save it); the status rule below (R66 (b)) is on top of it
+  if (!(await roleHasPermission(viewer.role, 'users.edit'))) return { error: 'Forbidden' }
 
-  const db = createAdminClient()
-  const { data: oldUser } = await db.from('users').select('role, user_type, status').eq('id', userId).single()
+  // numbers in the stored form only (Task 923 Revision 7, S54)
+  if (!isE164(data.phone) || (data.whatsapp && !isE164(data.whatsapp))) return { error: 'invalid_phone' }
+  // Task 923 R100: the name and the last name are stored trimmed and at most as long as the `users` CHECK of hardening v8b allows (checked before anything is read or written)
+  if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }
+  // Rank (Task 923 Revision 7, finding S44): an administrator account is edited only by an administrator, and only an administrator can make someone one.
+  if (!(await actorMayActOn(me.id, userId))) return { error: 'Forbidden' }
+  if (data.profileType === 'admin' && myProfile.role !== 'admin') return { error: 'Forbidden' }
+  // The arguments of a Server Action come from any caller; the status decides who may sign in (owner decision D9), so it is checked before anything is written.
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+  if (data.status !== 'active' && data.status !== 'blocked' && data.status !== 'inactive') return { error: 'invalid_status' }
+  // A staff member cannot cut off their own access: the Auth ban would end this very session at once and nobody could undo it from this account.
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+  if (userId === me.id && data.status !== 'active') return { error: 'Forbidden' }
+  // Task 923 R71 (j): a dated block is saved only with an end that parses and lies in the future. An end in the past used to be saved as "blocked" while the Auth ban
+  // was lifted at once (accountAccess.ts), so the screen said blocked and the person could sign in. Checked before anything is read or written.
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+  if (data.status === 'blocked' && data.suspendedUntil != null) {
+    const end = typeof data.suspendedUntil === 'string' ? Date.parse(data.suspendedUntil) : Number.NaN
+    if (!Number.isFinite(end) || end <= Date.now()) return { error: 'invalid_suspension' }
+  }
 
   const isBusiness = ['agent', 'developer'].includes(data.profileType)
+  const website = normalizeWebsite(data.website, isBusiness)
+  if (website === 'invalid') return { error: 'invalid_website' }
+  // Task 923 R100: a company logo is an address on this project's Cloudinary (`isTrustedImageUrl`), as the `users` CHECK of hardening v8b requires. The form only ever sends the
+  // address the upload route returned, so another address comes from a hostile request and gets the plain failure answer.
+  const companyLogoUrl = isBusiness ? (data.companyLogoUrl || null) : null
+  if (companyLogoUrl !== null && !isTrustedImageUrl(companyLogoUrl)) return { error: 'update_failed' }
+
+  const db = createAdminClient()
+  const { data: oldUser, error: oldUserError } = await db.from('users').select('role, user_type, status').eq('id', userId).single()
+  if (oldUserError || !oldUser) {
+    console.error('updateUserProfileFull: the account could not be read', { code: oldUserError?.code, userId })
+    return { error: 'update_failed' }
+  }
+  // Task 923 R66 (b): deactivating or reactivating an account needs `users.soft_delete` on every path, as deactivateUser / reactivateUser do. This form used to set
+  // `inactive` (and lift it) for any moderator, so the permission could be skipped by going through the full profile form.
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+  if (oldUser.status !== data.status && (data.status === 'inactive' || oldUser.status === 'inactive')) {
+    if (!(await hasPermission('users.soft_delete').catch(() => false))) return { error: 'Forbidden' }
+  }
+
   const update: Record<string, unknown> = {
-    name: data.firstName,
-    last_name: data.lastName ?? null,
+    name: data.firstName.trim(),
+    last_name: data.lastName?.trim() ?? null,
     phone: data.phone,
     whatsapp: data.whatsapp || null,
     location_id: data.locationId,
@@ -378,8 +509,8 @@ export async function updateUserProfileFull(
     block_reason: data.status === 'blocked' ? (data.blockReason ?? null) : null,
     suspended_until: data.status === 'blocked' ? (data.suspendedUntil ?? null) : null,
     company_name: isBusiness ? (data.companyName ?? null) : null,
-    company_logo_url: isBusiness ? (data.companyLogoUrl ?? null) : null,
-    website: isBusiness ? (data.website ?? null) : null,
+    company_logo_url: companyLogoUrl,
+    website,
     position: isBusiness ? (data.position ?? null) : null,
     year_started: isBusiness ? (data.yearStarted ?? null) : null,
   }
@@ -393,15 +524,15 @@ export async function updateUserProfileFull(
     if (oldUser) {
       const oldType = profileTypeFromDb(oldUser.role as UserRole, oldUser.user_type)
       if (oldType !== data.profileType) {
-        try {
-          await db.from('user_change_log').insert({
-            user_id: userId,
-            changed_by: me.id,
-            field_name: 'profile_type',
-            old_value: oldType,
-            new_value: data.profileType,
-          })
-        } catch {}
+        // Task 923 R71 (c): a PostgREST error is RETURNED, never thrown, so a try / catch around the call never saw it and the audit row was lost silently
+        const { error: logError } = await db.from('user_change_log').insert({
+          user_id: userId,
+          changed_by: me.id,
+          field_name: 'profile_type',
+          old_value: oldType,
+          new_value: data.profileType,
+        })
+        if (logError) console.error('updateUserProfileFull: user_change_log insert failed', { userId, changedBy: me.id, code: logError.code })
       }
     }
   }
@@ -414,20 +545,23 @@ export async function updateUserProfileFull(
 
   // Write status change history if status changed
   if (oldUser && oldUser.status !== data.status) {
-    try {
-      await db.from('user_status_history').insert({
-        user_id: userId,
-        old_status: oldUser.status,
-        new_status: data.status,
-        reason: data.status === 'blocked' ? (data.blockReason ?? null) : null,
-        changed_by: me.id,
-      })
-    } catch {}
+    const { error: historyError } = await db.from('user_status_history').insert({
+      user_id: userId,
+      old_status: oldUser.status,
+      new_status: data.status,
+      reason: data.status === 'blocked' ? (data.blockReason ?? null) : null,
+      changed_by: me.id,
+    })
+    if (historyError) console.error('updateUserProfileFull: user_status_history insert failed', { userId, changedBy: me.id, code: historyError.code })
   }
+
+  // Access follows the saved status in Supabase Auth (owner decision D9): a blocked / inactive account is banned at once, an active one is unbanned. The status
+  // is saved first, so the database already refuses the account's writes; if the ban cannot be set the administrator is told, never shown a success.
+  const access = await syncAccountAccess(userId, data.status, update.suspended_until)
 
   revalidatePath(`/admin/users/${userId}`)
   revalidatePath('/admin/users')
-  return {}
+  return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
 export async function createAdminUser(data: {
@@ -444,15 +578,29 @@ export async function createAdminUser(data: {
   yearStarted?: number | null
 }): Promise<{ userId?: string; error?: string }> {
   await assertPermission('users.create')
+  if (!isE164(data.phone) || (data.whatsapp && !isE164(data.whatsapp))) return { error: 'invalid_phone' }
+  // Task 923 R100: the name and the last name are stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; checked before the Auth account is created
+  if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }
+  // only an administrator creates an administrator account (Task 923 Revision 7, finding S44)
+  if (data.profileType === 'admin') {
+    const viewer = await requireViewer()
+    if (!viewer.ok || viewer.role !== 'admin') return { error: 'forbidden' }
+  }
+  // Task 923 R71 (b): a moderator or administrator account is a role change, so it needs `users.change_role` as well (updateUserProfileFull already asks for it). `users.create`
+  // alone used to be enough to make a moderator account.
+  if (data.profileType === 'admin' || data.profileType === 'moderator') {
+    if (!(await hasPermission('users.change_role').catch(() => false))) return { error: 'forbidden' }
+  }
+  const isBusiness = ['agent', 'developer'].includes(data.profileType)
+  const website = normalizeWebsite(data.website, isBusiness)
+  if (website === 'invalid') return { error: 'invalid_website' }
   const db = createAdminClient()
   const { role, user_type } = profileTypeToDb(data.profileType)
-  const isBusiness = ['agent', 'developer'].includes(data.profileType)
 
-  const { data: authData, error: authError } = await db.auth.admin.createUser({
-    email: data.email,
-    password: generateTempPassword(),
-    email_confirm: true,
-    user_metadata: { name: data.firstName },
+  // Task 923 R159 (R66 (i), owner D93): a staff-made account is created by an invitation. The e-mailed link signs the person in and opens the set-password page; no temporary password exists.
+  const { data: authData, error: authError } = await db.auth.admin.inviteUserByEmail(data.email, {
+    data: { name: data.firstName.trim() },
+    redirectTo: trustedRedirectUrl(`${trustedAppOrigin(null)}/auth/callback?next=/sq/auth/reset-password`),
   })
 
   if (authError) {
@@ -464,8 +612,8 @@ export async function createAdminUser(data: {
 
   const { error: profileError } = await db.from('users').upsert({
     id: authData.user.id,
-    name: data.firstName,
-    last_name: data.lastName ?? null,
+    name: data.firstName.trim(),
+    last_name: data.lastName?.trim() ?? null,
     phone: data.phone,
     whatsapp: data.whatsapp || null,
     role,
@@ -475,7 +623,7 @@ export async function createAdminUser(data: {
     status: 'active',
     is_verified: false,
     company_name: isBusiness ? (data.companyName ?? null) : null,
-    website:      isBusiness ? (data.website ?? null) : null,
+    website,
     position:     isBusiness ? (data.position ?? null) : null,
     year_started: isBusiness ? (data.yearStarted ?? null) : null,
   })
@@ -486,43 +634,8 @@ export async function createAdminUser(data: {
     return { error: 'create_profile_failed' }
   }
 
-  try {
-    await db.auth.admin.generateLink({ type: 'recovery', email: data.email })
-  } catch (e) {
-    console.error('createAdminUser: failed to send recovery email', e)
-  }
-
   revalidatePath('/admin/users')
   return { userId: authData.user.id }
-}
-
-export async function softDeleteUser(userId: string): Promise<{ error?: string }> {
-  const allowed = await hasPermission('users.soft_delete').catch(() => false)
-  if (!allowed) return { error: 'forbidden' }
-  const me = await getUser()
-  if (!me) return { error: 'Unauthorized' }
-
-  const db = createAdminClient()
-  const { error } = await db.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', userId)
-  if (error) {
-    console.error('softDeleteUser failed', { error, userId })
-    return { error: 'delete_failed' }
-  }
-
-  // Archive all non-terminal listings through the mutation gateway so they no longer appear as contactable.
-  const { data: listingsToArchive } = await db
-    .from('listings')
-    .select('id')
-    .eq('user_id', userId)
-    .not('status', 'in', '("sold","rented","archived")')
-  const actor = { userId: me.id, role: 'admin', source: 'admin_panel' as const }
-  await Promise.all(
-    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
-  )
-
-  revalidatePath('/admin/users')
-  revalidatePath('/admin/listings')
-  return {}
 }
 
 export async function deactivateUser(userId: string, reason: string): Promise<{ error?: string }> {
@@ -531,6 +644,9 @@ export async function deactivateUser(userId: string, reason: string): Promise<{ 
   if (!reason.trim()) return { error: 'reason_required' }
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
+  if (!(await actorMayActOn(me.id, userId))) return { error: 'forbidden' }
+  // A staff member cannot cut off their own access (the Auth ban would end this session at once).
+  if (userId === me.id) return { error: 'forbidden' }
 
   const db = createAdminClient()
   const { data: current } = await db.from('users').select('status').eq('id', userId).single()
@@ -538,19 +654,22 @@ export async function deactivateUser(userId: string, reason: string): Promise<{ 
   const { error } = await db.from('users').update({ status: 'inactive' }).eq('id', userId)
   if (error) { console.error('deactivateUser failed', { error, userId }); return { error: 'update_failed' } }
 
-  try {
-    await db.from('user_status_history').insert({
-      user_id: userId,
-      old_status: current?.status ?? null,
-      new_status: 'inactive',
-      reason: reason.trim(),
-      changed_by: me.id,
-    })
-  } catch {}
+  // Task 923 R71 (c): the audit row's error is read (it is returned, never thrown) and logged with the ids
+  const { error: historyError } = await db.from('user_status_history').insert({
+    user_id: userId,
+    old_status: current?.status ?? null,
+    new_status: 'inactive',
+    reason: reason.trim(),
+    changed_by: me.id,
+  })
+  if (historyError) console.error('deactivateUser: user_status_history insert failed', { userId, changedBy: me.id, code: historyError.code })
+
+  // A deactivated account has no access (owner decision D9): ban it in Auth now that the status is saved.
+  const access = await syncAccountAccess(userId, 'inactive', null)
 
   revalidatePath(`/admin/users/${userId}`)
   revalidatePath('/admin/users')
-  return {}
+  return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
 export async function reactivateUser(userId: string, reason: string): Promise<{ error?: string }> {
@@ -559,6 +678,7 @@ export async function reactivateUser(userId: string, reason: string): Promise<{ 
   if (!reason.trim()) return { error: 'reason_required' }
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
+  if (!(await actorMayActOn(me.id, userId))) return { error: 'forbidden' }
 
   const db = createAdminClient()
   const { data: current } = await db.from('users').select('status').eq('id', userId).single()
@@ -566,19 +686,22 @@ export async function reactivateUser(userId: string, reason: string): Promise<{ 
   const { error } = await db.from('users').update({ status: 'active' }).eq('id', userId)
   if (error) { console.error('reactivateUser failed', { error, userId }); return { error: 'update_failed' } }
 
-  try {
-    await db.from('user_status_history').insert({
-      user_id: userId,
-      old_status: current?.status ?? null,
-      new_status: 'active',
-      reason: reason.trim(),
-      changed_by: me.id,
-    })
-  } catch {}
+  // Task 923 R71 (c): the audit row's error is read (it is returned, never thrown) and logged with the ids
+  const { error: historyError } = await db.from('user_status_history').insert({
+    user_id: userId,
+    old_status: current?.status ?? null,
+    new_status: 'active',
+    reason: reason.trim(),
+    changed_by: me.id,
+  })
+  if (historyError) console.error('reactivateUser: user_status_history insert failed', { userId, changedBy: me.id, code: historyError.code })
+
+  // Reactivation lifts the Auth ban set by a block or a deactivation (owner decision D9).
+  const access = await syncAccountAccess(userId, 'active', null)
 
   revalidatePath(`/admin/users/${userId}`)
   revalidatePath('/admin/users')
-  return {}
+  return access.ok ? {} : { error: 'access_sync_failed' }
 }
 
 export async function hardDeleteUser(userId: string): Promise<{ error?: string }> {
@@ -586,34 +709,15 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
   if (!allowed) return { error: 'forbidden' }
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
+  // Task 923 R71 (h): the rank rule passes for an administrator's own id, so the only check left was no check: nobody deletes their own account from the panel
+  if (userId === me.id) return { error: 'forbidden' }
+  // The rank rule reads the actor's role in the same query as the target's; an unknown role refuses (Task 923 R71 (h)).
+  const rank = await rankCheck(me.id, userId)
+  if (!rank.allowed || !rank.actorRole) return { error: 'forbidden' }
 
-  const db = createAdminClient()
-
-  // 1. Archive all non-terminal listings through the mutation gateway before removing the user
-  //    so they remain in the system with a "deleted owner" notice rather than disappearing.
-  const { data: listingsToArchive } = await db
-    .from('listings')
-    .select('id')
-    .eq('user_id', userId)
-    .not('status', 'in', '("sold","rented","archived")')
-  const actor = { userId: me.id, role: 'admin', source: 'admin_panel' as const }
-  await Promise.all(
-    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
-  )
-
-  // 2. Remove the user profile row (cascades to related records via FK).
-  const { error: profileError } = await db.from('users').delete().eq('id', userId)
-  if (profileError) {
-    console.error('hardDeleteUser profile failed', { error: profileError, userId })
-    return { error: 'delete_failed' }
-  }
-
-  // 3. Remove from Supabase Auth (permanent — cannot be undone).
-  const { error: authError } = await db.auth.admin.deleteUser(userId)
-  if (authError) {
-    console.error('hardDeleteUser auth failed', { error: authError, userId })
-    return { error: 'profile_deleted_auth_failed' }
-  }
+  // Task 923 R142: one complete deletion for every role and path (owner decision D30): the account, its listings and their files go, nothing is archived first.
+  const result = await deleteAccount(userId, { reason: 'staff' })
+  if (!result.ok) return { error: 'delete_failed' }
 
   revalidatePath('/admin/users')
   revalidatePath('/admin/listings')
@@ -621,7 +725,8 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
 }
 
 export async function removeUserAvatar(userId: string): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  const actor = await resolveAdminActor('users.edit')
+  if (!(await actorMayActOn(actor.userId, userId))) return { error: 'forbidden' }
   const db = createAdminClient()
   const { error } = await db.from('users').update({ avatar_url: null }).eq('id', userId)
   if (error) {
@@ -636,7 +741,8 @@ export async function addLocation(data: {
   name_al: string
   region_id: number
 }): Promise<{ id?: number; error?: string }> {
-  await assertAdminAccess()
+  // Task 923 R66 (c): a write to `locations` needs `locations.manage` on every path; this one used to ask only for a staff role
+  await assertPermission('locations.manage')
   const db = createAdminClient()
   const slug = `${data.name_al.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}-${Date.now()}`
 
@@ -659,7 +765,7 @@ export async function approveLocationRequest(
   userId: string,
   locationId: number
 ): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertAdminAccess('locations.manage')
   const db = createAdminClient()
   const { error } = await db
     .from('users')
@@ -678,7 +784,7 @@ export async function approveLocationRequest(
 }
 
 export async function rejectLocationRequest(userId: string): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertAdminAccess('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('users').update({ location_request: null }).eq('id', userId)
 
@@ -701,7 +807,7 @@ export async function searchUsersForPicker(query: string): Promise<{
   id: string; name: string | null; last_name: string | null; phone: string | null;
   role: string; status: string | null; company_name: string | null;
 }[]> {
-  await assertAdminAccess()
+  await assertAdminAccess('support.manage')   // the picker belongs to the support tickets (it finds the requester and the reported user)
   const q = query.trim()
   if (q.length < 2) return []
   const db = createAdminClient()
@@ -720,7 +826,7 @@ export async function searchUsersForPicker(query: string): Promise<{
     .from('users')
     .select('id, name, last_name, phone, role, status, company_name')
     .is('deleted_at', null)
-    .or(`name.ilike.%${q}%,last_name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`)
+    .or(orContains(['name', 'last_name', 'phone', 'company_name'], q))
     .order('name', { ascending: true })
     .limit(8)
   return data ?? []
@@ -761,7 +867,7 @@ export async function createSupportTicket({
   subject: string
   reason: string
 }): Promise<{ id?: string; error?: string }> {
-  const actor = await resolveAdminActor()
+  const actor = await resolveAdminActor('support.manage')
   if (!(VALID_TICKET_TYPES as readonly string[]).includes(ticketType)) return { error: 'ticket_type_invalid' }
   if (!requesterUserId.trim()) return { error: 'requester_required' }
   if (ticketType === 'user_complaint') {
@@ -845,7 +951,7 @@ export async function updateTicketStatus(
   if (!(VALID_TICKET_STATUSES as readonly string[]).includes(newStatus)) {
     return { error: 'invalid_status' }
   }
-  const actor = await resolveAdminActor()
+  const actor = await resolveAdminActor('support.manage')
   const db = createAdminClient()
 
   const { data: ticket, error: fetchError } = await db

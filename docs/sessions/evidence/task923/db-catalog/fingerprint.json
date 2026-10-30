@@ -1,0 +1,1010 @@
+{
+ "takenAt": "2026-10-17T16:19:09.613Z",
+ "serverVersion": "17.6",
+ "extensions": [
+  "pg_cron",
+  "pg_net",
+  "pg_stat_statements",
+  "pgcrypto",
+  "plpgsql",
+  "supabase_vault",
+  "uuid-ossp"
+ ],
+ "triggers": [
+  {
+   "schema": "auth",
+   "tbl": "users",
+   "name": "on_auth_user_created",
+   "enabled": "O",
+   "def": "CREATE TRIGGER on_auth_user_created AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION handle_new_user()"
+  },
+  {
+   "schema": "public",
+   "tbl": "email_templates",
+   "name": "trg_email_templates_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_email_templates_updated_at BEFORE UPDATE ON public.email_templates FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listing_contact_events",
+   "name": "listing_contact_events_set_owner",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listing_contact_events_set_owner BEFORE INSERT ON public.listing_contact_events FOR EACH ROW EXECUTE FUNCTION listing_contact_events_set_owner()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_search_vector",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_search_vector BEFORE INSERT OR UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_listing_search_vector()"
+  },
+  {
+   "schema": "public",
+   "tbl": "listings",
+   "name": "listings_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER listings_updated_at BEFORE UPDATE ON public.listings FOR EACH ROW EXECUTE FUNCTION update_updated_at()"
+  },
+  {
+   "schema": "public",
+   "tbl": "support_tickets",
+   "name": "trg_support_tickets_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER trg_support_tickets_updated_at BEFORE UPDATE ON public.support_tickets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column()"
+  },
+  {
+   "schema": "public",
+   "tbl": "users",
+   "name": "on_user_created_notifications",
+   "enabled": "O",
+   "def": "CREATE TRIGGER on_user_created_notifications AFTER INSERT ON public.users FOR EACH ROW EXECUTE FUNCTION handle_new_user_notifications()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "enforce_bucket_name_length_trigger",
+   "enabled": "O",
+   "def": "CREATE TRIGGER enforce_bucket_name_length_trigger BEFORE INSERT OR UPDATE OF name ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.enforce_bucket_name_length()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_insert",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_insert BEFORE INSERT ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.protect_bucket_control_columns('service_role')"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_update",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_update BEFORE UPDATE OF lifecycle_configuration, lifecycle_configuration_generation ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.protect_bucket_control_columns()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_bucket_control_update_role",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_bucket_control_update_role AFTER UPDATE OF lifecycle_configuration, lifecycle_configuration_generation ON storage.buckets FOR EACH ROW EXECUTE FUNCTION storage.enforce_bucket_lifecycle_service_role('service_role')"
+  },
+  {
+   "schema": "storage",
+   "tbl": "buckets",
+   "name": "protect_buckets_delete",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_buckets_delete BEFORE DELETE ON storage.buckets FOR EACH STATEMENT EXECUTE FUNCTION storage.protect_delete()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "objects",
+   "name": "protect_objects_delete",
+   "enabled": "O",
+   "def": "CREATE TRIGGER protect_objects_delete BEFORE DELETE ON storage.objects FOR EACH STATEMENT EXECUTE FUNCTION storage.protect_delete()"
+  },
+  {
+   "schema": "storage",
+   "tbl": "objects",
+   "name": "update_objects_updated_at",
+   "enabled": "O",
+   "def": "CREATE TRIGGER update_objects_updated_at BEFORE UPDATE ON storage.objects FOR EACH ROW EXECUTE FUNCTION storage.update_updated_at_column()"
+  }
+ ],
+ "defaults": [
+  {
+   "tbl": "listing_views",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "listing_views",
+   "col": "listing_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "ip_hash",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listing_views",
+   "col": "viewed_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "listings",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "location_id",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "slug",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "title",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "description",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "price",
+   "data_type": "numeric",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "price_old",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "currency",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'ALL'::listing_currency"
+  },
+  {
+   "tbl": "listings",
+   "col": "listing_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "property_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "condition",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "wall_type",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "heating",
+   "data_type": "USER-DEFINED",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "rooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "bedrooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "bathrooms",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "toilets",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "area_gross",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "area_net",
+   "data_type": "numeric",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "floor",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "total_floors",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "year_built",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "address",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "lat",
+   "data_type": "double precision",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "lng",
+   "data_type": "double precision",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "views_count",
+   "data_type": "integer",
+   "nullable": "NO",
+   "def": "0"
+  },
+  {
+   "tbl": "listings",
+   "col": "is_premium",
+   "data_type": "boolean",
+   "nullable": "NO",
+   "def": "false"
+  },
+  {
+   "tbl": "listings",
+   "col": "status",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'active'::listing_status"
+  },
+  {
+   "tbl": "listings",
+   "col": "expires_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "(now() + '60 days'::interval)"
+  },
+  {
+   "tbl": "listings",
+   "col": "search_vector",
+   "data_type": "tsvector",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "created_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "updated_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "listings",
+   "col": "land_legal_status",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "land_zoning",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "land_development_potential",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "multi_storey_building",
+   "data_type": "boolean",
+   "nullable": "YES",
+   "def": "false"
+  },
+  {
+   "tbl": "listings",
+   "col": "offer_type",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "purchase_conditions",
+   "data_type": "ARRAY",
+   "nullable": "NO",
+   "def": "'{}'::text[]"
+  },
+  {
+   "tbl": "listings",
+   "col": "public_id",
+   "data_type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('listings_public_id_seq'::regclass)"
+  },
+  {
+   "tbl": "listings",
+   "col": "premium_until",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "listings",
+   "col": "market_type",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": "gen_random_uuid()"
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "user_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "listing_id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "recently_viewed",
+   "col": "viewed_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "NO",
+   "def": "now()"
+  },
+  {
+   "tbl": "users",
+   "col": "id",
+   "data_type": "uuid",
+   "nullable": "NO",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "phone",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "whatsapp",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "avatar_url",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "role",
+   "data_type": "USER-DEFINED",
+   "nullable": "NO",
+   "def": "'user'::user_role"
+  },
+  {
+   "tbl": "users",
+   "col": "user_type",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'private'::user_type"
+  },
+  {
+   "tbl": "users",
+   "col": "company_name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "is_verified",
+   "data_type": "boolean",
+   "nullable": "NO",
+   "def": "false"
+  },
+  {
+   "tbl": "users",
+   "col": "social_provider",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "created_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": "now()"
+  },
+  {
+   "tbl": "users",
+   "col": "last_name",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "status",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'active'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "block_reason",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "location_id",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "position",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "year_started",
+   "data_type": "integer",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "website",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "company_logo_url",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "deleted_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "location_request",
+   "data_type": "jsonb",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_currency",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'ALL'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "pending_email",
+   "data_type": "text",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "last_seen_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "company_id",
+   "data_type": "uuid",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "preferred_locale",
+   "data_type": "text",
+   "nullable": "NO",
+   "def": "'sq'::text"
+  },
+  {
+   "tbl": "users",
+   "col": "inactivity_warning_sent_at",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "suspended_until",
+   "data_type": "timestamp with time zone",
+   "nullable": "YES",
+   "def": null
+  },
+  {
+   "tbl": "users",
+   "col": "public_id",
+   "data_type": "bigint",
+   "nullable": "NO",
+   "def": "nextval('users_public_id_seq'::regclass)"
+  }
+ ],
+ "constraints": [
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_listing_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "listing_views",
+   "conname": "listing_views_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_development_potential_check",
+   "contype": "c",
+   "def": "CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_legal_status_check",
+   "contype": "c",
+   "def": "CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_land_zoning_check",
+   "contype": "c",
+   "def": "CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_location_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_offer_type_check",
+   "contype": "c",
+   "def": "CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_public_id_key",
+   "contype": "u",
+   "def": "UNIQUE (public_id)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_slug_key",
+   "contype": "u",
+   "def": "UNIQUE (slug)"
+  },
+  {
+   "tbl": "listings",
+   "conname": "listings_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_listing_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (listing_id) REFERENCES listings(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_user_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "recently_viewed",
+   "conname": "recently_viewed_user_id_listing_id_key",
+   "contype": "u",
+   "def": "UNIQUE (user_id, listing_id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_company_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_location_id_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (location_id) REFERENCES locations(id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_pkey",
+   "contype": "p",
+   "def": "PRIMARY KEY (id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_preferred_currency_fkey",
+   "contype": "f",
+   "def": "FOREIGN KEY (preferred_currency) REFERENCES currencies(code) ON UPDATE CASCADE"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_preferred_locale_check",
+   "contype": "c",
+   "def": "CHECK ((preferred_locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_public_id_key",
+   "contype": "u",
+   "def": "UNIQUE (public_id)"
+  },
+  {
+   "tbl": "users",
+   "conname": "users_status_check",
+   "contype": "c",
+   "def": "CHECK ((status = ANY (ARRAY['active'::text, 'blocked'::text, 'inactive'::text])))"
+  }
+ ],
+ "enums": [
+  {
+   "typname": "complaint_type_t",
+   "labels": "fraud_or_scam,fake_listing_or_profile,harassment_or_abuse,inappropriate_content,spam,payment_or_deposit_issue,duplicate_or_impersonation,other"
+  },
+  {
+   "typname": "heating_type",
+   "labels": "electric,wood,central,gas,none"
+  },
+  {
+   "typname": "listing_condition",
+   "labels": "new_build,good,needs_repair,needs_renovation,under_construction"
+  },
+  {
+   "typname": "listing_currency",
+   "labels": "ALL,EUR"
+  },
+  {
+   "typname": "listing_status",
+   "labels": "active,inactive,sold,rented,archived,pending,expired"
+  },
+  {
+   "typname": "listing_type",
+   "labels": "sale,rent"
+  },
+  {
+   "typname": "location_type",
+   "labels": "region,city,village,district"
+  },
+  {
+   "typname": "notification_type",
+   "labels": "new_message,saved_search_match,listing_status_change,support_reply,listing_expires_soon,agent_verified,marketing,report_outcome,price_change"
+  },
+  {
+   "typname": "property_type",
+   "labels": "apartment,house,land,commercial,office,garage,warehouse,other,room"
+  },
+  {
+   "typname": "report_reason",
+   "labels": "spam,fraud,duplicate,wrong_category,offensive,other"
+  },
+  {
+   "typname": "report_status",
+   "labels": "pending,reviewed,resolved,dismissed"
+  },
+  {
+   "typname": "ticket_status",
+   "labels": "open,in_progress,resolved,closed"
+  },
+  {
+   "typname": "user_role",
+   "labels": "admin,moderator,agent,user"
+  },
+  {
+   "typname": "user_type",
+   "labels": "private,agent"
+  },
+  {
+   "typname": "verification_status",
+   "labels": "pending,approved,rejected"
+  },
+  {
+   "typname": "wall_type",
+   "labels": "brick,concrete,panel,wood,other"
+  }
+ ],
+ "functions": [
+  {
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "ec503bd134de4ca1c72a268887e56497"
+  },
+  {
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "b4038349922e7430fb08a3d3d6f12c5f"
+  },
+  {
+   "name": "get_listing_owner_contact",
+   "args": "listing_id_param uuid",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "54a6b92e49ddc375144d49b9e3646577"
+  },
+  {
+   "name": "handle_new_user",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "8d5b26128233591638f0bd468210e760"
+  },
+  {
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "de28f9af8a7b8b90c2ceca4fd9ca274f"
+  },
+  {
+   "name": "listing_activity_owner_by_listing",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "e45c7bc7bb05020680c41c64181b0e06"
+  },
+  {
+   "name": "listing_activity_owner_series",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "51e9a07e1c78937b4fd06721a6eacb98"
+  },
+  {
+   "name": "listing_activity_platform_series",
+   "args": "p_from date, p_to date",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "0943fa451da9152916cbe865b09ddd9b"
+  },
+  {
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "99b8d9e3a5fa6aa922be6cc9be83bae8"
+  },
+  {
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "1942e0629b57d0a1a74f440cd8e42015"
+  },
+  {
+   "name": "recompute_listing_activity",
+   "args": "p_from date, p_to date, p_job_version text",
+   "securityDefiner": false,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "8a6609de54d4166a2d4b9b047bd73d7d"
+  },
+  {
+   "name": "record_listing_view",
+   "args": "p_listing_id uuid, p_user_id uuid, p_ip_hash text",
+   "securityDefiner": true,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "4c94f50300a8e8dfdd0d33a5283f4a61"
+  },
+  {
+   "name": "record_recently_viewed",
+   "args": "p_listing_id uuid, p_cap integer",
+   "securityDefiner": true,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "c259cab547f4f661c5c4b05db6831ef2"
+  },
+  {
+   "name": "rls_auto_enable",
+   "args": "",
+   "securityDefiner": true,
+   "acl": "{postgres=X/postgres,service_role=X/postgres}",
+   "md5": "6998ea6b4c2480f5d2e34b5dcf3f8d36"
+  },
+  {
+   "name": "update_listing_search_vector",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "51f8e92d29ddd0fd0c7c7d33b50f03e7"
+  },
+  {
+   "name": "update_updated_at",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "554a800ab248e3476ca97bc6336249f2"
+  },
+  {
+   "name": "update_updated_at_column",
+   "args": "",
+   "securityDefiner": false,
+   "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+   "md5": "b6d8cb8b6eb78d49af22581e4e458ce3"
+  }
+ ],
+ "policiesMd5": "dcc4679ea7b23856d98f274d293f38f7",
+ "policyCount": 119
+}

@@ -1,0 +1,12 @@
+platform=MINGW64_NT-10.0-26300 node=v22.22.3 cwd=/c/Claude_Code_Projects/lero-al date=2026-10-25T08:21:44+01:00
+command: npx vitest run src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx src/modules/auth/components/__tests__/AuthSheet.test.tsx src/modules/auth/components/AuthSheet.banned.security.test.tsx src/lib/auth/__tests__/googleIdentity.test.ts src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx src/components/layout/__tests__/Header.signOut.test.tsx src/app/api/auth/me/__tests__/route.security.test.ts
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  8 passed (8)
+      Tests  119 passed (119)
+   Start at  08:21:46
+   Duration  12.74s (transform 3.17s, setup 845ms, import 19.89s, tests 16.01s, environment 7.77s)
+
+exit 0

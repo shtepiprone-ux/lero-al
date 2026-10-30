@@ -1,14 +1,16 @@
 import React from 'react';
-import { Box } from '@mantine/core';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Avatar, Badge, ActionIcon, Group, Text } from '@mantine/core';
+import { Avatar, ActionIcon, Group } from '@mantine/core';
 import { ShieldOff, ChevronRight } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
+import { MantineStoryShell } from '@/stories/mantine/_MantineStoryShell';
 // Direct file import (not the `patterns` barrel) — check:story-coverage (scripts/check-story-coverage.mjs)
 // resolves import specifiers to concrete file paths and the manifest entry is the component file itself
 // (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s story header comment).
 import { MantineAdminSurfacePattern } from '@/design-system/mantine/patterns/MantineAdminSurfacePattern';
 import type { CardConfig } from '@/design-system/mantine/patterns';
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge';
+import type { ListingStatus } from '@/types/database';
 
 const meta: Meta<typeof MantineAdminSurfacePattern> = {
   title: 'Patterns/Mantine/AdminSurfacePattern',
@@ -24,7 +26,7 @@ const meta: Meta<typeof MantineAdminSurfacePattern> = {
           '## Mobile card anatomy (`card` prop)',
           'When `card` is provided, mobile (<sm) renders the **designed card hierarchy** (§7.2):',
           '- **Header:** id (muted xs) | actions (≥44px)',
-          '- **Primary row:** avatar + title (medium fw=500) + subtitle | status badge (top-aligned right)',
+          '- **Primary row:** avatar + title (medium weight) + subtitle | status badge (top-aligned right)',
           '- **Meta rows:** ONE divider, edge-anchored label left / value right. No per-field dividers.',
           '',
           '## Desktop table',
@@ -33,8 +35,8 @@ const meta: Meta<typeof MantineAdminSurfacePattern> = {
           '**Generic:** `<MantineAdminSurfacePattern<R>>` — row type narrowed from `TableRow`.',
           'Viewport and locale switched via Storybook toolbar.',
           '',
-          '**Gutter:** story wraps in `Box px={{ base: \'md\', sm: \'xl\' }} py="md"` — canonical responsive',
-          'admin page gutter. `skipCanvas:true` requires explicit container; full-bleed is bottom-sheet only.',
+          '**Gutter:** the story renders inside `MantineStoryShell`, which owns the responsive page gutter (GR-3d).',
+          '`skipCanvas:true` requires an explicit container; full-bleed is bottom-sheet only.',
         ].join('\n'),
       },
     },
@@ -45,11 +47,11 @@ type Story = StoryObj<typeof MantineAdminSurfacePattern>;
 
 type StoryRow = { id: string; name: string; company: string; status: string; date: string }
 
-const STATUS_COLOR: Record<string, string> = {
-  Active: 'green', Pending: 'yellow', Archived: 'gray',
-  Активний: 'green', Очікує: 'yellow', Архів: 'gray',
-  Aktiv: 'green', 'Në pritje': 'yellow', Arkivuar: 'gray',
-  Attivo: 'green', 'In attesa': 'yellow', Archiviato: 'gray',
+const STATUS_VALUE: Record<string, ListingStatus> = {
+  Active: 'active', Pending: 'pending', Archived: 'archived',
+  Активний: 'active', Очікує: 'pending', Архів: 'archived',
+  Aktiv: 'active', 'Në pritje': 'pending', Arkivuar: 'archived',
+  Attivo: 'active', 'In attesa': 'pending', Archiviato: 'archived',
 }
 
 const makeCardConfig = (l: string): CardConfig<StoryRow> => ({
@@ -69,25 +71,23 @@ const makeCardConfig = (l: string): CardConfig<StoryRow> => ({
       {row.name.slice(0, 2).toUpperCase()}
     </Avatar>
   ),
-  title: (row) => <Text size="sm" fw={500} c="gray.7" truncate="end">{row.name}</Text>,
+  title: (row) => row.name,
   subtitle: (row) => row.company,
   badge: (row) => (
-    <Badge color={STATUS_COLOR[row.status] ?? 'gray'} variant="light" size="sm">
-      {row.status}
-    </Badge>
+    <MantineBadge variant="status" entity="listing" value={STATUS_VALUE[row.status] ?? 'archived'}>{row.status}</MantineBadge>
   ),
   meta: [
     {
       label: storyT(l, 'storybook.mantine.admin_table_col_role'),
-      value: () => <Badge color="blueLight" variant="light" size="sm">Agent</Badge>,
+      value: () => <MantineBadge variant="status" entity="userRole" value="agent">{storyT(l, 'admin.users.role_agent')}</MantineBadge>,
     },
     {
       label: storyT(l, 'storybook.mantine.admin_table_col_phone'),
-      value: () => <Text size="sm" c="gray.7">+355 69 123 4567</Text>,
+      value: () => '+355 69 123 4567',
     },
     {
       label: storyT(l, 'storybook.mantine.admin_table_col_date'),
-      value: (row) => <Text size="sm" c="gray.7">{row.date}</Text>,
+      value: (row) => row.date,
     },
   ],
 })
@@ -101,7 +101,7 @@ const makeArgs = (l = 'en') => ({
       key: 'name',
       label: storyT(l, 'storybook.mantine.admin_table_col_name'),
       width: '40%',
-      render: (row: StoryRow) => <Text fw={500}>{row.name}</Text>,
+      render: (row: StoryRow) => row.name,
     },
     {
       key: 'status',
@@ -109,9 +109,7 @@ const makeArgs = (l = 'en') => ({
       align: 'center' as const,
       width: '30%',
       render: (row: StoryRow) => (
-        <Badge color={STATUS_COLOR[row.status] ?? 'gray'} variant="light" size="sm">
-          {row.status}
-        </Badge>
+        <MantineBadge variant="status" entity="listing" value={STATUS_VALUE[row.status] ?? 'archived'}>{row.status}</MantineBadge>
       ),
     },
     {
@@ -134,12 +132,12 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <MantineAdminSurfacePattern<StoryRow>
           {...makeArgs(l)}
           card={makeCardConfig(l)}
         />
-      </Box>
+      </MantineStoryShell>
     );
   },
 };

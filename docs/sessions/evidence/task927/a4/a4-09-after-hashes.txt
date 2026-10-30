@@ -1,0 +1,20 @@
+# a4-09: sha256 after the last edit of Task 927 Amendment 4 (the session record is hashed again after the report is appended)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a4/a4-00-hashes.mjs docs/sessions/evidence/task927/a4/a4-09-after-hashes.txt "<label>"
+date: 2026-10-23T20:26:44.025Z
+
+bc4e699df8b80430430369661dd9d1ec219f38f4d226072ad5f73fff9285b004  src/components/auth/GoogleSignInSlot.tsx
+9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab  src/components/auth/GoogleSignInButton.tsx
+b680968a4944bb3223fd5440e9bc559fccdbe5762ee7c6508829f401bd10ab19  src/stories/mantine/primitives/Modal.stories.tsx
+859707bf29dca6a0771a900fb0d25b32b6922405fa04317823a412da92354441  scripts/rendered-interaction-states.json
+74ce0ae45d3e26acb2f661b120ca68bfc4f74ba27a9640e368e4b4a8eacb0363  messages/sq.json
+d8177e82b62f23c35a9e53086990f96e31d96599aaa9ad679b56656c659a1199  messages/en.json
+a122909583b46d821decc91ed7a510b065b4af1e99f5c10032b4b979299b5e7a  messages/uk.json
+22be6236c24417d35d1c8dc98b9583b11af4b204d920b1fdb3336368d7493d96  messages/it.json
+62f110cde4b111808acb8a69fc4e09d3f01796fc73f16d5b622a5e8e7cd199ea  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+a17a86706a69cb75dea6c901942f035df2c177963371a8206fe7d446ae8b4967  docs/sessions/2026-10-10-task923-rendered-state-census.md
+db47417043b079f05a85ef5aed22bfc1825c4b1dc7fbf7e07dcf940cc7f01794  docs/sessions/evidence/task927/security/report.json
+
+exit code: 0

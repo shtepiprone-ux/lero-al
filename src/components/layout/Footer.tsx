@@ -1,6 +1,5 @@
 import { getLocale, getTranslations } from 'next-intl/server'
-import { getSetting } from '@/modules/admin/lib/settings'
-import { getFooterContent } from '@/modules/admin/actions/footer'
+import { getSetting, getFooterContent } from '@/modules/admin/lib/settings'
 import type { FooterLink } from '@/types/database'
 import { FooterView } from './FooterView'
 
@@ -28,7 +27,7 @@ export async function Footer() {
   const infoTitle   = footerData?.info_section_title   || t('information')
   const socialTitle = footerData?.social_section_title || t('follow_us')
   const copyrightTmpl = footerData?.copyright_template  || `© {year} ${siteName} — ${t('all_rights')}`
-  const copyright   = copyrightTmpl.replace('{year}', String(year))
+  const copyright   = copyrightTmpl.replaceAll('{year}', String(year))
 
   const fallback = (id: string, label: string, url: string, order: number): FooterLink => ({
     id, label, url, enabled: true, order,

@@ -1,0 +1,16 @@
+# rv66-12: the release gate after the D8_D9 contract is reviewed again (Task 923 Review 66, 2026-10-29)
+platform win32 (Git Bash MINGW64_NT-10.0-26300); node v22.22.3; cwd C:/Claude_Code_Projects/lero-al
+output: the exit codes and the lines named below, copied with the editor
+
+command: node scripts/workflow-gates/cli.mjs release
+exit 0
+
+command: npm run check:kickoff-evidence
+check:kickoff-evidence PASS — 0 changed active kickoff(s) verified.
+exit 0
+
+command: node scripts/workflow-gates/cli.mjs diff --phase release --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree
+exit 1
+- 14 BLOCKED lines, every one naming tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json ("Missing file: ..." for its planned test files).
+- The other output lines: 5 Git CRLF warnings for docs/sessions/evidence/task859/ files, and "Security scope: 10318 changed files, 9 task contract(s)."
+- This equals review-65/rv65-13-release-diff-contracts.txt (one contract with BLOCKED lines, Task 926). It is planned: the final commit takes the Task 926 kickoff and its sidecar out of the index (kickoff §80.3, step 5).

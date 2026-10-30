@@ -1,0 +1,12 @@
+# rv13-06: Opus, read-only listing of the development project's Google users (masked); second run, the first counted only listUsers' identities and found 0
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+date: 2026-10-28T18:45:06Z
+command: node docs/sessions/evidence/task927/review-13/rv13-06-providers.mjs
+
+users 9; with a google identity 3
+- p***4@gmail.com created 2026-10-28T18:27:24 updated 2026-10-28T18:42:00 providers ["google","email"] identities: google(created 2026-10-28T18:27:24, email p***5@gmail.com); email(created 2026-10-28T18:41:07, email p***4@gmail.com); google(created 2026-10-28T18:42:00, email p***4@gmail.com)
+- p***2@gmail.com created 2026-10-25T16:51:42 updated 2026-10-25T16:51:58 providers ["google"] identities: google(created 2026-10-25T16:51:42, email p***2@gmail.com)
+- a***7@gmail.com created 2026-06-18T14:25:35 updated 2026-10-24T07:14:21 providers ["email","google"] identities: email(created 2026-06-18T14:25:35, email a***7@gmail.com); google(created 2026-10-24T07:14:21, email a***7@gmail.com)
+exit code: 0

@@ -1,0 +1,44 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-10-scope-check.cjs <root>
+{"version":1,"stage":"planned","executionStatus":"draft","kind":"product","qa":"Q4","task":"tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md","rules":[".claude/rules/shared/security-testing.md",".claude/rules/shared/security-test-quality.md",".claude/rules/shared/security-test-environment.md",".claude/rules/shared/security-test-boundaries.md",".claude/rules/shared/workflow-gates.md"],"report":"docs/sessions/evidence/task923/security/d8-d9-report.json","inputs":["src/lib/auth/server.ts","src/lib/auth/permissions.ts","src/lib/supabase/admin.ts","src/lib/supabase/server.ts","src/lib/auth/authSheet.ts","src/components/admin/StatusChangeSelect.tsx","src/design-system/mantine/patterns/MantineModal.tsx","src/design-system/mantine/patterns/MantineDialogFooter.tsx","src/design-system/mantine/patterns/MantineDialogSections.tsx"],"cases":209,"critical":63,"scope":305}
+in scope     src/modules/listings/actions/contactGateway.ts
+NOT IN SCOPE src/modules/listings/lib/contactHumanCheck.ts
+in scope     src/components/auth/CaptchaWidget.tsx
+NOT IN SCOPE src/stories/patterns/mantine/AuthSheet.stories.tsx
+in scope     src/lib/captcha/verifyTurnstile.ts
+NOT IN SCOPE src/lib/captcha/__tests__/verifyTurnstile.test.ts
+in scope     src/modules/listings/components/ListingContact.tsx
+in scope     src/modules/listings/components/ListingInquiryDialog.tsx
+in scope     src/modules/listings/components/ListingInquiryDialogView.tsx
+NOT IN SCOPE src/design-system/mantine/patterns/MantineListingContactPattern.tsx
+in scope     messages/en.json
+in scope     messages/sq.json
+in scope     messages/uk.json
+in scope     messages/it.json
+in scope     src/modules/listings/actions/getListingOwnerContact.ts
+in scope     src/components/listing/WhatsAppContactButton.tsx
+NOT IN SCOPE src/modules/listings/components/ListingMobileCTA.tsx
+in scope     src/modules/listings/actions/contactEvents.ts
+in scope     src/modules/listings/actions/submitListingInquiry.ts
+in scope     src/__tests__/security/serverEntryGuards.test.ts
+in scope     src/modules/listings/actions/__tests__/visitorActions.security.test.ts
+in scope     src/modules/listings/actions/__tests__/contactEvents.test.ts
+in scope     src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts
+in scope     src/modules/listings/actions/contactSession.security.test.ts
+in scope     src/modules/listings/actions/contactSession.integration.test.ts
+in scope     src/modules/listings/actions/submitListingInquiry.test.ts
+in scope     src/modules/listings/actions/__tests__/submitListingInquiry.security.test.ts
+in scope     src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts
+in scope     src/modules/listings/components/ListingInquiryDialog.session.security.test.tsx
+in scope     src/modules/listings/components/__tests__/ListingContact.bot.security.test.tsx
+in scope     src/modules/listings/components/__tests__/ListingInquiryDialog.bot.security.test.tsx
+in scope     src/modules/listings/actions/__tests__/contactGateway.security.test.ts
+in scope     src/tests/integration/contactGateway.integration.test.ts
+NOT IN SCOPE scripts/story-coverage-exempt.json
+in scope     scripts/surface-census-baseline.json
+NOT IN SCOPE src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.smoke.test.tsx
+NOT IN SCOPE src/components/auth/__tests__/CaptchaWidget.language.test.tsx
+in scope     src/modules/auth/components/__tests__/AuthSheet.test.tsx
+NOT IN SCOPE src/components/auth/__tests__/CaptchaWidget.humanCheck.test.tsx
+NOT IN SCOPE src/modules/listings/components/__tests__/ListingDetailView.favorite.test.tsx
+evidence-like scope entries: docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql | docs/sessions/evidence/task923/db-catalog/proposed-hardening-rollback.sql | docs/sessions/evidence/task923/db-catalog/rls-harness.cjs | docs/sessions/evidence/task923/db-catalog/r16-v7-logic.cjs
+EXIT_CODE=0

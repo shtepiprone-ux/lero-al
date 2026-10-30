@@ -8,6 +8,7 @@
  * Locale defaults to 'sq' (Task 251 — outbound notification language policy).
  */
 import { BRAND_PRIMARY } from '@/design-system/brand'
+import { escapeHtml, escapeHtmlWithBreaks } from '@/lib/security/escapeHtml'
 import { sendEmail } from './send'
 
 const STRINGS: Record<string, {
@@ -75,15 +76,8 @@ function buildHtml(opts: {
 }): string {
   const s = getStrings(opts.locale)
   const year = new Date().getFullYear()
-  const safeMessage = opts.message
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br />')
-  const safeListingTitle = opts.listingTitle
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
+  const safeMessage = escapeHtmlWithBreaks(opts.message)
+  const safeListingTitle = escapeHtml(opts.listingTitle)
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -107,11 +101,11 @@ function buildHtml(opts: {
             </tr>
             <tr>
               <td style="font-size:12px;color:#71717a;padding:4px 0;">${s.nameLabel}:</td>
-              <td style="font-size:14px;color:#18181b;font-weight:500;">${opts.name}</td>
+              <td style="font-size:14px;color:#18181b;font-weight:500;">${escapeHtml(opts.name)}</td>
             </tr>
             <tr>
               <td style="font-size:12px;color:#71717a;padding:4px 0;">${s.emailLabel}:</td>
-              <td style="font-size:14px;color:#18181b;font-weight:500;">${opts.email}</td>
+              <td style="font-size:14px;color:#18181b;font-weight:500;">${escapeHtml(opts.email)}</td>
             </tr>
           </table>
           <div style="margin-bottom:16px;">

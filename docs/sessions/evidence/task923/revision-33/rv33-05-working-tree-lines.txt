@@ -1,0 +1,40 @@
+# working-tree snapshot, 2026-10-22T12:01:15.661Z
+== src/modules/listings/components/ListingFormShellView.tsx sha256 47e3109aee374232fe051a604b97ee8621fce24297a42d1bf24df985be0a92ca
+src/modules/listings/components/ListingFormShellView.tsx:6: import { Input } from '@/components/ui/input'
+src/modules/listings/components/ListingFormShellView.tsx:221: type="number"
+src/modules/listings/components/ListingFormShellView.tsx:223: onChange={e => patch({ price: e.target.value ? Number(e.target.value) : undefined })}
+== src/modules/listings/validations/index.ts sha256 fa303e4c93a28ce0a1f1f8fda98f97ed968ccb812983a0e144e59bb8b0779d38
+src/modules/listings/validations/index.ts:9: export const MAX_LISTING_PRICE = 10_000_000_000
+src/modules/listings/validations/index.ts:15: price:        z.number().positive().max(MAX_LISTING_PRICE),
+src/modules/listings/validations/index.ts:16: price_old:    z.number().positive().max(MAX_LISTING_PRICE).optional(),
+== src/modules/listings/components/ListingFormShell.tsx sha256 d3324b97d4ba937319d28ea2e2c662ff548f23b18e45b838af6e54253b22eb3c
+src/modules/listings/components/ListingFormShell.tsx:182: if (!data.price || data.price <= 0 || data.price > MAX_LISTING_PRICE) {
+== src/app/[locale]/listings/[slug]/page.tsx sha256 622e6c312f59b0aa5b8c732dcaac513e1ec1b039540b0d25808755d1d68eec05
+src/app/[locale]/listings/[slug]/page.tsx:81: if (!data) return {}
+src/app/[locale]/listings/[slug]/page.tsx:170: let archivedQuery = supabase.from('listings').select(LISTING_PAGE_SELECT).eq('slug', slug).in('status', ['archived'])
+src/app/[locale]/listings/[slug]/page.tsx:171: if (!isStaff) archivedQuery = archivedQuery.eq('user_id', viewer.userId)
+src/app/[locale]/listings/[slug]/page.tsx:176: if (!listing) notFound()
+== src/app/[locale]/listings/[slug]/edit/page.tsx sha256 992fb84cce6df943d60bc6ae9bd7108c334e72ee46091eebdb530e7f7313aa9c
+src/app/[locale]/listings/[slug]/edit/page.tsx:26: if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/listings/${slug}/edit`)}&session=lost`)
+src/app/[locale]/listings/[slug]/edit/page.tsx:45: if (!listing) notFound()
+src/app/[locale]/listings/[slug]/edit/page.tsx:60: if (!check.ok) redirect(`/${locale}/listings/${listing.slug}`)
+== src/modules/cabinet/components/ListingsTab.tsx sha256 fbf6371d6d795da3800677d35295f37c08f18dfa91546753dacb616144bbee2a
+src/modules/cabinet/components/ListingsTab.tsx:319: href={`/${activeLocale}/listings/${listing.slug}`}
+== src/modules/listings/components/ListingDetailView.tsx sha256 2b3d010aef3c7d18befc803b6832c22f10276bf299bd482e6650e14e0a8b3df1
+src/modules/listings/components/ListingDetailView.tsx:415: <ListingsPageFrame
+== scripts/workflow-gates/contract.mjs sha256 d6d9a66e82538aa92e50e02eebccac39d31d76bbb18b79c30b50f9f2efcdf790
+scripts/workflow-gates/contract.mjs:53: export const isPolicyPath = file => /^(?:\.claude\/|\.github\/workflows\/|scripts\/workflow-gates\/|scripts\/check-[^/]+|docs\/rules\/|docs\/(?:qa-profiles|qa-rules|golden-rules|agent-contract|rule-index)\.md$)/i.test(file);
+scripts/workflow-gates/contract.mjs:94: if (value.kind === 'product') check(!isPolicyPath(file), `Executor scope contains policy path ${file}; Opus must resolve policy work before product handoff`);
+== src/modules/listings/actions/createListing.ts sha256 07514ec3db741beb1c12d47014cf7ea51c224c84301b9e2dd6e3d452a9a0ce51
+src/modules/listings/actions/createListing.ts:29: supabase.from('property_types').select('slug').eq('is_active', true),
+src/modules/listings/actions/createListing.ts:30: supabase.from('currencies').select('code').eq('is_active', true),
+src/modules/listings/actions/createListing.ts:81: return { error: 'insert_failed' }
+== src/modules/listings/actions/updateListing.ts sha256 dd7679988d826e728c60c593fad156d32fe4d429e6cbcff2afeb6312e7a2278d
+src/modules/listings/actions/updateListing.ts:93: const writer = isOwner ? supabase : createAdminClient()
+== src/design-system/mantine/badgeTones.ts sha256 472978d76adacb6cb5500ed205d21d316d34e7cfbe636dccce54909e2dc0be22
+src/design-system/mantine/badgeTones.ts:135: /** Exchange-rate provider enabled state (`admin.currency.providers`). */
+src/design-system/mantine/badgeTones.ts:138: enabled: entry('success', 'admin.currency.providers.is_enabled'),
+src/design-system/mantine/badgeTones.ts:139: disabled: entry('neutral', 'admin.currency.providers.status_disabled'),
+src/design-system/mantine/badgeTones.ts:193: provider: PROVIDER_STATE_TONES,
+== src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts sha256 4f61633321ba18ba3f91bf0afa932f0f4dad6ae942918d5625f40ecb33a87f88
+src/app/[locale]/listings/[slug]/__tests__/closedListing.security.test.ts:103: expect(await open('slug-arch'), 'guest: archived').toBe('not found')

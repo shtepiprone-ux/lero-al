@@ -346,7 +346,8 @@ PRE-TASK (before writing any className)
 POST-TASK
 [ ] No new arbitrary values introduced (or each one has allowlist entry reason)
 [ ] No new utility chain duplication (checked against docs/tailwind-canonical-fragments.md)
-[ ] No whitespace-nowrap without overflow-hidden + truncate
+[ ] No semantic/translatable content is clipped with whitespace-nowrap, overflow-hidden, truncate or a line clamp;
+    mobile reflow follows GR-3j
 [ ] No fixed px widths on elements with translated text
 [ ] All listing grids include 2xl:grid-cols-4
 [ ] All public page containers use .container-wide or canonical max-w-*

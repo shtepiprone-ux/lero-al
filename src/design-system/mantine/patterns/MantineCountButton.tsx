@@ -1,8 +1,9 @@
 'use client'
 
 import type { ButtonProps } from '@mantine/core'
-import { Button, Badge, useMantineTheme } from '@mantine/core'
+import { Button, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { MantineBadge } from './MantineBadge'
 
 export interface MantineCountButtonProps extends ButtonProps {
   /** Active-count shown inline in the Button's `rightSection`. 0/undefined renders no badge. */
@@ -111,15 +112,8 @@ export function MantineCountButton({
   const isFilledHost = variant === undefined || variant === 'filled'
   const countBadge = count && count > 0
     ? isFilledHost
-      ? <Badge size="sm" variant="white" color="brand">{count}</Badge>
-      : (
-          <Badge
-            size="sm"
-            styles={{ root: { backgroundColor: 'var(--mantine-color-gray-2)', color: 'var(--mantine-color-gray-7)' } }}
-          >
-            {count}
-          </Badge>
-        )
+      ? <MantineBadge variant="count" emphasis="onBrand">{count}</MantineBadge>
+      : <MantineBadge variant="count" emphasis="neutral">{count}</MantineBadge>
     : undefined
 
   // See the `iconOnlyBelow` doc block above for the full SSR-safety rationale.

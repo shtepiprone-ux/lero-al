@@ -1,5 +1,6 @@
 'use client'
 
+import { createContext, useContext } from 'react'
 import type { ReactNode } from 'react'
 import { Drawer, Stack, Box } from '@mantine/core'
 import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
@@ -31,6 +32,21 @@ export interface MantineDrawerProps {
   side?: 'left' | 'right'
   /** Desktop drawer width (Mantine size token); default 'md'. Ignored <640. */
   size?: string
+}
+
+/**
+ * Task 923 R48 — the presentation the surrounding `MantineDrawer` has chosen: `'sheet'` is the bottom sheet below the 640px gate, `'side'` is the side
+ * drawer from it, and `null` means the caller is not inside a `MantineDrawer`.
+ *
+ * Content that exists in ONE presentation only (the bottom sheet has no close button of its own, so a panel adds one there) is mounted from this value
+ * and never hidden with `hiddenFrom` / `visibleFrom`: Mantine's focus trap treats an element as hidden only through its inline `display`, so a control
+ * that a CSS class hides still counts as tabbable and Tab leaves the dialog. The value is the `isMobile` this owner already reads from
+ * `useResponsiveDropdown`; a consumer adds no media query, breakpoint or prop of its own.
+ */
+const MantineDrawerPresentationContext = createContext<'sheet' | 'side' | null>(null)
+
+export function useMantineDrawerPresentation(): 'sheet' | 'side' | null {
+  return useContext(MantineDrawerPresentationContext)
 }
 
 /**
@@ -119,6 +135,9 @@ function DrawerBodyLayout({
  * footer-less consumers (Select/Popover/DropdownMenu/NavigationMenu/Combobox/Tooltip)
  * keep their original single-scroll-region body untouched.
  *
+ * The chosen presentation is provided to the children through `useMantineDrawerPresentation`
+ * (Task 923 R48), so content that belongs to one presentation only is mounted, not CSS-hidden.
+ *
  * SSR/hydration: isMobile=false on first render (Mantine v8 getInitialValueInEffect
  * =true). The overlay is controlled and closed by the caller on first paint, so no
  * flash occurs. Same documented caveat as MantineModal/MantinePopover/etc.
@@ -136,38 +155,42 @@ export function MantineDrawer({
 
   if (isMobile) {
     return (
-      <ResponsiveBottomSheet opened={opened} onClose={onClose} title={title} footer={footer}>
-        <SheetContent>
-          <Stack gap="md">
-            <Box>{children}</Box>
-          </Stack>
-        </SheetContent>
-      </ResponsiveBottomSheet>
+      <MantineDrawerPresentationContext.Provider value="sheet">
+        <ResponsiveBottomSheet opened={opened} onClose={onClose} title={title} footer={footer}>
+          <SheetContent>
+            <Stack gap="md">
+              <Box>{children}</Box>
+            </Stack>
+          </SheetContent>
+        </ResponsiveBottomSheet>
+      </MantineDrawerPresentationContext.Provider>
     )
   }
 
   return (
-    <Drawer
-      opened={opened}
-      onClose={onClose}
-      title={title}
-      position={side}
-      size={size}
-      styles={{
-        // Task 567 round-2 Fix 2: bottom border under the header, only when a title is
-        // present — same canonical gray-3 divider token as MantineResponsiveActionFooter's
-        // borderTop (zero invented value).
-        header: title ? { borderBottom: '1px solid var(--mantine-color-gray-3)' } : undefined,
-        // Task 567 round-2 Fix 4: content/body become non-scrolling flex columns — the true
-        // scroll region + pinned footer (DrawerBodyLayout) take over scrolling one level in.
-        // Task 852 R32: the rule itself now lives in the exported `drawerFlexColumnStyles`.
-        content: drawerFlexColumnStyles.content,
-        body: { ...drawerFlexColumnStyles.body, padding: 0 },
-      }}
-    >
-      <DrawerBodyLayout footer={footer} contentPadding="var(--mantine-spacing-md)">
-        {children}
-      </DrawerBodyLayout>
-    </Drawer>
+    <MantineDrawerPresentationContext.Provider value="side">
+      <Drawer
+        opened={opened}
+        onClose={onClose}
+        title={title}
+        position={side}
+        size={size}
+        styles={{
+          // Task 567 round-2 Fix 2: bottom border under the header, only when a title is
+          // present — same canonical gray-3 divider token as MantineResponsiveActionFooter's
+          // borderTop (zero invented value).
+          header: title ? { borderBottom: '1px solid var(--mantine-color-gray-3)' } : undefined,
+          // Task 567 round-2 Fix 4: content/body become non-scrolling flex columns — the true
+          // scroll region + pinned footer (DrawerBodyLayout) take over scrolling one level in.
+          // Task 852 R32: the rule itself now lives in the exported `drawerFlexColumnStyles`.
+          content: drawerFlexColumnStyles.content,
+          body: { ...drawerFlexColumnStyles.body, padding: 0 },
+        }}
+      >
+        <DrawerBodyLayout footer={footer} contentPadding="var(--mantine-spacing-md)">
+          {children}
+        </DrawerBodyLayout>
+      </Drawer>
+    </MantineDrawerPresentationContext.Provider>
   )
 }

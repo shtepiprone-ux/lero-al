@@ -1,19 +1,19 @@
 ## GR-3d — A Story shows the component at its real distance from the screen edge
 
-**Owner rule, 2026-09-29.** Task 877: the owner returned O78-6 and wrote, verbatim: *"Також, необхідно занести в
-правило, що під час створення Story необхідно дотримуватись канонічних відступів від країв екрану! Це постійна
-проблема. І ці Story не виключення, також мають цю проблему! Її необхідно виправити!"* The same day: *"достатньо буде
-зробити один і той самий профіль для всіх Story, щоб вони завжди мали однаковий відступ від країв екрану"*. Hardened
-the same day, verbatim: *"Необхідно жорстко впровадити правило, щоб Sonnet не мала прапва це ігнорувати!"*
+**Owner rule, 2026-09-29.** Task 877: the owner returned O78-6 and wrote: *"Also, it must be put into the rules that when a Story is created, the
+canonical gutters from the screen edges must be kept! This is a constant problem. And
+these Stories are no exception, they have this problem too! It must be fixed!"* The same day: *"it will be enough to make one and the same profile for all
+Stories, so that they always have the same gutter from the screen edges"*. Hardened
+the same day: *"A strict rule must be put in place so that Sonnet has no right to ignore it!"*
 
-**Clarified by the owner, 2026-10-01 (Task 890 review 2), verbatim:** *"Я просив, щоб був уніфікований відступ у сторі
-для того, щоб я розумів, як цей компонент буде виглядати на реальній сторінці. Якщо у компонента вже є свій рідний
-відступ, то не треба додавати відступ у Story."* The earlier text of this rule made `StoryPageGutter` the default and
+**Clarified by the owner, 2026-10-01 (Task 890 review 2):** *"I asked for a unified gutter in the Story so that I understand how
+this component will look on a real page. If the component already has its
+own native gutter, then no gutter should be added in the Story."* The earlier text of this rule made `StoryPageGutter` the default and
 then carved out narrow exemptions (O83-3, O83-4, O83-5, D78-10) one component at a time. Wrapping a component that
 already has its own gutter doubled the gutter. This version replaces all of that with one question.
 
-**Four sides, owner instruction 2026-10-01 (Task 890 review 3), verbatim:** *"треба щоб тест вимірював всі 4 сторони, і
-якщо немає відступу - додавати"*. The trigger was `Patterns/Mantine/DashboardGrid`: its left and right edges were
+**Four sides, owner instruction 2026-10-01 (Task 890 review 3):** *"the test must measure all 4 sides, and
+if there is no gutter - add one"*. The trigger was `Patterns/Mantine/DashboardGrid`: its left and right edges were
 correct, so every measurement passed, while the cards touched the top of the canvas. Until then this rule and every
 probe measured only left and right.
 
@@ -37,8 +37,8 @@ A card's or paper's internal padding is not a page gutter.
 | Overlay only (modal, drawer or bottom sheet in a portal) | Nothing. A Story with page content **and** an open overlay answers the question for the page content. | `n/a: overlay-only` |
 | `Mantine/Primitives/*` on `MantineStoryShell` | Nothing (known exception below). | `n/a: MantineStoryShell primitive` |
 
-**Shell chrome. Owner decision 2026-10-01 (Sprint 87 D87-1), verbatim option chosen:** *"Іменний список-виняток
-(Recommended)"*. Stories of shell chrome that the real page places at the screen edge (header, navbar, sidebar,
+**Shell chrome. Owner decision 2026-10-01 (Sprint 87 D87-1), option chosen:** *"A named exception
+list (Recommended)"*. Stories of shell chrome that the real page places at the screen edge (header, navbar, sidebar,
 drawer) are on a named list in the gate (Task 909), each with its reason, printed on every run: `AdminHeader`,
 `AdminSidebar`, `AdminLocaleSwitcher`, `AdminShell`. Only the owner adds to it. Every other Story has a gutter on all
 four sides.

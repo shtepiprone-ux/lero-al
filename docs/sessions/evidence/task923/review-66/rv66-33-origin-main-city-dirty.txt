@@ -1,0 +1,13 @@
+# rv66-33: the city change does not mark the profile form dirty, on origin/main and on the working tree
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-66/rv66-33-origin-main-city-dirty.mjs
+## origin/main 7dd707aa1
+git grep -n -F "locationId: { shouldValidate: true }" 7dd707aa154801ff2e44402e3976841cb377dddb -- src/components/admin/AdminUserProfile.tsx
+7dd707aa154801ff2e44402e3976841cb377dddb:src/components/admin/AdminUserProfile.tsx:98:  locationId: { shouldValidate: true },
+git grep -n -F "disabled={!isCreate && !isDirty}" 7dd707aa154801ff2e44402e3976841cb377dddb -- src/components/admin/AdminUserProfileView.tsx
+7dd707aa154801ff2e44402e3976841cb377dddb:src/components/admin/AdminUserProfileView.tsx:413:            disabled={!isCreate && !isDirty}
+## working tree
+git grep -n -F "locationId: { shouldValidate: true }"  -- src/components/admin/AdminUserProfile.tsx
+src/components/admin/AdminUserProfile.tsx:98:  locationId: { shouldValidate: true },
+git grep -n -F "disabled={!isCreate && !isDirty}"  -- src/components/admin/AdminUserProfileView.tsx
+src/components/admin/AdminUserProfileView.tsx:403:            disabled={!isCreate && !isDirty}
+exit 0

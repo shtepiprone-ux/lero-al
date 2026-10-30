@@ -1,0 +1,13 @@
+# fr-39 (Opus) 2026-10-28T22:36:56.449Z win32 node v22.22.3 cwd C:\Claude_Code_Projects\lero-al
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: taskSha256 151f402d0563 -> ef953fb67d75; executionStatus draft -> ready; stage planned; scope 595; cases 228
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: taskSha256 03359a347bcc -> 03359a347bcc; executionStatus draft -> ready; stage implemented; scope 132; cases 60
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: taskSha256 9b70f6a466d9 -> 24b6b043c1d3; executionStatus draft -> ready; stage planned; scope 64; cases 53
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json: taskSha256 d1f06900c8e3 -> c0fc5501b40e; executionStatus undefined -> undefined; stage planned; scope 1; cases 0
+$ node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+  exit 0; (no output)
+$ node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+  exit 0; (no output)
+$ node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+  exit 0; (no output)
+$ node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+  exit 0; (no output)

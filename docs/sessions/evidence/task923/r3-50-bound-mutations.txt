@@ -1,0 +1,15 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: node docs/sessions/evidence/task923/r3-50-bound-mutations.mjs
+PROVED     negative margin exempts only its own size: with it removed, the benign fixture neg-margin-fullbleed fails component-overflow on portal:0: p "Full-bleed band" x 16..374 past div.stack 32..358
+PROVED     table box parent (the table algorithm places its own rows): with it removed, the benign fixture table-rowspan fails component-overflow on portal:0: td "Spans two rows" y 143.6..204.4 past tr 143.6..173.6
+PROVED     slide clipped away by design: with it removed, the benign fixture slide-carousel fails component-overflow on portal:0: div "" x 358..684 past div 32..358
+PROVED     text-hidden: text really outside the padding box: with it removed, the benign fixture text-inner-box fails text-hidden on portal:0: div "short text" scroll 326x100 > client 326x40
+PROVED     viewport: hidden away by an ancestor inside the viewport: with it removed, the benign fixture hidden-away-clipped fails viewport-overflow on portal:0: div "" x 32..632 outside 0..390
+PROVED     viewport: closed off-canvas fixed panel: with it removed, the benign fixture offcanvas-closed-panel fails viewport-overflow on app: aside "Closed navigation panel" x -200..0 outside 0..390
+PROVED     action covered by a dialog in another portal root: with it removed, the benign fixture stacked-dialogs fails action-covered on portal:0: button "Delete" centre 63.1,190 is covered by button
+PROVED     R15 bound 1: the overlay panel: with it removed, the planted fixture abs-past-panel goes green on portal:0 (component-overflow empty)
+PROVED     R15 bound 2: the clipping ancestor: with it removed, the planted fixture abs-past-clipper goes green on portal:0 (component-overflow empty)
+
+9 of 9 proved.
+EXIT_CODE=0

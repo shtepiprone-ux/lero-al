@@ -1,0 +1,38 @@
+# R150-R155 AC150 r50-06b-full-vitest: full vitest run, JSON reporter (exit 1 expected: the baseline's failing tests)
+platform: win32 x64 (win32 x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run --reporter=json --outputFile=test-results/r50-full-suite.json
+NODE_PATH: (unset)
+started: 2026-10-25T12:02:01.392Z
+--- stdout ---
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/r50-full-suite.json
+
+--- stderr ---
+Warning: A vi.mock("next-intl/server") call in "C:/Claude_Code_Projects/lero-al/src/__tests__/instrumentation.test.ts" is not at the top level of the module. Although it appears nested, it will be hoisted and executed before any tests run. Move it to the top level to reflect its actual execution order. This will become an error in a future version.
+See: https://vitest.dev/guide/mocking/modules#how-it-works
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: navigation to another Document
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: navigation to another Document
+Not implemented: Window's alert() method
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+
+--- exit code: 1 ---

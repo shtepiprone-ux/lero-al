@@ -1,8 +1,8 @@
 ## GR-3g — A line follows a rounded corner; a clip never cuts it
 
-**Owner rule, 2026-10-03 (Task 857, owner matrix O78-12).** The owner's words, verbatim: *"не приймаю, кути
-обрізаються. Це постівйна проблема у тебе і Sonnet. Необхідно зробити правило, що якщо є бордер, він обов'язково має
-бути заокругденим а не обрізатись!"*
+**Owner rule, 2026-10-03 (Task 857, owner matrix O78-12).** The owner's words: *"I do not accept this, the corners are clipped. This is a
+constant problem with you and Sonnet. A rule must be made that
+if there is a border, it must be rounded and not clipped!"*
 
 The trigger was `MantineNavRowList`. Its list is a `Paper withBorder radius="md"` (6px, 1px border) with
 `overflow: hidden`. The keyboard focus line of a row is an inset 1px `box-shadow` with square corners. At the list's

@@ -1,0 +1,73 @@
+== src/components/auth/GoogleSignInButton.tsx:12-12
+12:   onCredential: (result: { credential: string; nonce: string }) => Promise<void>
+== src/components/auth/GoogleSignInButton.tsx:51-51
+51:     api.renderButton(host, {
+== src/modules/auth/components/AuthSheet.tsx:161-161
+161:       <GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} onCredential={handleGoogle} />
+== src/modules/auth/components/AuthSheet.tsx:217-217
+217:       googleControl={<GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} loginHint={account.sub} onCredential={handleGoogle} />}
+== src/modules/cabinet/components/ProfileTab.tsx:461-466
+461:             <GoogleSignInButton
+462:               clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+463:               purpose="reauth"
+464:               loginHint={email ?? undefined}
+465:               onCredential={result => handleGoogleCredential(result, repeatDeleteAfterGoogle, setDeleteError)}
+466:             />
+== src/modules/cabinet/components/CabinetEmailChangeSection.tsx:93-98
+93:         <GoogleSignInButton
+94:           clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+95:           purpose="reauth"
+96:           loginHint={email ?? undefined}
+97:           onCredential={handleGoogleCredential}
+98:         />
+== src/middleware.ts:90-93
+90:   //   auth/*              — Supabase OAuth callback and confirmation live outside the [locale] tree and handle the session themselves
+91:   // Every other /api route and /admin are INCLUDED so that an expired or refused session is renewed or ended there too (R45 (a)); locale routing stays off on them.
+92:   matcher: [
+93:     '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+== package.json:171-171
+171:     "next": "15.5.18",
+== src/design-system/mantine/theme.ts:821-821
+821:       googleButton: '2.5rem',    // 40px — Google's large Sign in with Google button (Task 927 D19; Google's branding guidelines; measured in review-8/rv8-01)
+== src/design-system/mantine/theme.ts:766-766
+766:       comfortable: 18,
+== src/design-system/mantine/theme.ts:969-969
+969:       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (TailAdmin text-sm)
+== src/design-system/mantine/theme.ts:1012-1018
+1012:           ...((props.variant === 'outline' || props.variant === 'default') && props.color === undefined
+1013:             ? {
+1014:                 '--button-bg': 'var(--mantine-color-white)',
+1015:                 '--button-color': 'var(--mantine-color-gray-7)',
+1016:                 '--button-bd': '1px solid var(--mantine-color-gray-2)',
+1017:                 '--button-hover': 'var(--mantine-color-gray-0)', // §6l hover:bg-gray-50
+1018:               }
+== src/design-system/mantine/theme.ts:1051-1051
+1051:           minHeight: '2.75rem',
+== src/lib/auth/useGoogleOneTap.ts:69-69
+69:         api.prompt()
+== src/lib/auth/googleIdentity.ts:158-164
+158: export async function createNoncePair(): Promise<NoncePair> {
+159:   const bytes = crypto.getRandomValues(new Uint8Array(32))
+160:   const nonce = btoa(String.fromCharCode(...bytes))
+161:   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(nonce))
+162:   const hashedNonce = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('')
+163:   return { nonce, hashedNonce }
+164: }
+== src/components/auth/GoogleSignInSlot.tsx:34-41
+34:       {status === 'loading' && (
+35:         <Center role="status" aria-label={t('google_loading')} h={theme.other.boxSize.googleButton}>
+36:           <Loader size="sm" />
+37:         </Center>
+38:       )}
+39:       {status === 'unavailable' && <Alert color="red">{purpose === 'reauth' ? t('google_reauth_unavailable') : t('google_unavailable')}</Alert>}
+40:       <Center>
+41:         <Box ref={hostRef} w="100%" maw={GOOGLE_BUTTON_MAX_WIDTH} h={theme.other.boxSize.googleButton} hidden={status !== 'ready'} />
+== .storybook/main.ts:49-49
+49:   staticDirs: ['../public'],
+== scripts/rendered-interaction-states.json:807-808
+807:       "exemptTargets": ".nsm7Bb-HzV7m-LgbsSe",
+808:       "exemptText": ".nsm7Bb-HzV7m-LgbsSe",
+== src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx:46-46
+46: interface GisDouble { initialize: ReturnType<typeof vi.fn>; renderButton: ReturnType<typeof vi.fn>; cancel: ReturnType<typeof vi.fn>; prompt: ReturnType<typeof vi.fn> }
+== src/modules/cabinet/components/ProfileTab.tsx:247-247
+247:       if (result.error === 'reauth_required') { setDeleteNeedsGoogle(true); return }

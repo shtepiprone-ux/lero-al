@@ -1,0 +1,173 @@
+=== Read C:\Claude_Code_Projects\lero-al\src\stories\mantine\primitives\Modal.stories.tsx offset=349 limit=85 at 2026-10-20T14:23:17.202Z
+349	// DeleteConfirmPassword (Task 923 R80, owner decision D54): the same confirmation with `passwordConfirm`, which replaces the typed word in the cabinet. The red primary
+350	// stays disabled while the field is empty; the demo action (labelled) answers "wrong password" once so that the field's own error is shown. The second section is the
+351	// account with no password: `googleConfirm` is shown (the consumer shows it when the server asks for a new Google sign-in) and the primary is not tied to a field.
+352	function ModalDeleteConfirmPasswordSection({ locale }: { locale: string }) {
+353	  const [opened, setOpened] = useState(false)
+354	  const [loading, setLoading] = useState(false)
+355	  const [password, setPassword] = useState('')
+356	  const [error, setError] = useState<string | undefined>(undefined)
+357	  const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+358	
+359	  return (
+360	    <MantineStorySection label={t('modal_caption_delete')}>
+361	      <Button
+362	        variant="default"
+363	        onClick={() => {
+364	          setPassword('')
+365	          setError(undefined)
+366	          setOpened(true)
+367	        }}
+368	      >
+369	        {t('action_delete')}
+370	      </Button>
+371	      <MantineDeleteConfirmModal
+372	        opened={opened}
+373	        onClose={() => setOpened(false)}
+374	        title={t('dialog_confirm_title')}
+375	        message={t('dialog_confirm_body')}
+376	        confirmLabel={t('action_delete')}
+377	        cancelLabel={t('action_cancel')}
+378	        loading={loading}
+379	        passwordConfirm={{
+380	          label: storyT(locale, 'cabinet.delete_account_password_confirm'),
+381	          value: password,
+382	          onChange: (value) => { setPassword(value); setError(undefined) },
+383	          error,
+384	          showLabel: storyT(locale, 'common.show_password'),
+385	          hideLabel: storyT(locale, 'common.hide_password'),
+386	        }}
+387	        onConfirm={() => {
+388	          setLoading(true)
+389	          window.setTimeout(() => {
+390	            setLoading(false)
+391	            setError(storyT(locale, 'cabinet.password_error_invalid_current'))
+392	          }, 800)
+393	        }}
+394	      />
+395	    </MantineStorySection>
+396	  )
+397	}
+398	
+399	function ModalDeleteConfirmGoogleSection({ locale }: { locale: string }) {
+400	  const [opened, setOpened] = useState(false)
+401	  const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+402	
+403	  return (
+404	    <MantineStorySection label={t('modal_caption_delete')}>
+405	      <Button variant="default" onClick={() => setOpened(true)}>{t('action_delete')}</Button>
+406	      <MantineDeleteConfirmModal
+407	        opened={opened}
+408	        onClose={() => setOpened(false)}
+409	        title={t('dialog_confirm_title')}
+410	        message={t('dialog_confirm_body')}
+411	        confirmLabel={t('action_delete')}
+412	        cancelLabel={t('action_cancel')}
+413	        googleConfirm={{ message: storyT(locale, 'cabinet.delete_account_google_required'), label: storyT(locale, 'cabinet.reauth_google_confirm'), onConfirm: () => setOpened(false) }}
+414	        onConfirm={() => setOpened(false)}
+415	      />
+416	    </MantineStorySection>
+417	  )
+418	}
+419	
+420	export const DeleteConfirmPassword: Story = {
+421	  render: (_args, context) => {
+422	    const locale = (context?.globals?.locale as string) ?? 'en'
+423	
+424	    return (
+425	      <MantineStoryShell>
+426	        <MantineStoryStack>
+427	          <ModalDeleteConfirmPasswordSection locale={locale} />
+428	          <ModalDeleteConfirmGoogleSection locale={locale} />
+429	        </MantineStoryStack>
+430	      </MantineStoryShell>
+431	    )
+432	  },
+433	}
+
+=== Read C:\Claude_Code_Projects\lero-al\src\stories\mantine\primitives\Modal.stories.tsx offset=349 limit=85 at undefined
+349	// DeleteConfirmPassword (Task 923 R80, owner decision D54): the same confirmation with `passwordConfirm`, which replaces the typed word in the cabinet. The red primary
+350	// stays disabled while the field is empty; the demo action (labelled) answers "wrong password" once so that the field's own error is shown. The second section is the
+351	// account with no password: `googleConfirm` is shown (the consumer shows it when the server asks for a new Google sign-in) and the primary is not tied to a field.
+352	function ModalDeleteConfirmPasswordSection({ locale }: { locale: string }) {
+353	  const [opened, setOpened] = useState(false)
+354	  const [loading, setLoading] = useState(false)
+355	  const [password, setPassword] = useState('')
+356	  const [error, setError] = useState<string | undefined>(undefined)
+357	  const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+358	
+359	  return (
+360	    <MantineStorySection label={t('modal_caption_delete')}>
+361	      <Button
+362	        variant="default"
+363	        onClick={() => {
+364	          setPassword('')
+365	          setError(undefined)
+366	          setOpened(true)
+367	        }}
+368	      >
+369	        {t('action_delete')}
+370	      </Button>
+371	      <MantineDeleteConfirmModal
+372	        opened={opened}
+373	        onClose={() => setOpened(false)}
+374	        title={t('dialog_confirm_title')}
+375	        message={t('dialog_confirm_body')}
+376	        confirmLabel={t('action_delete')}
+377	        cancelLabel={t('action_cancel')}
+378	        loading={loading}
+379	        passwordConfirm={{
+380	          label: storyT(locale, 'cabinet.delete_account_password_confirm'),
+381	          value: password,
+382	          onChange: (value) => { setPassword(value); setError(undefined) },
+383	          error,
+384	          showLabel: storyT(locale, 'common.show_password'),
+385	          hideLabel: storyT(locale, 'common.hide_password'),
+386	        }}
+387	        onConfirm={() => {
+388	          setLoading(true)
+389	          window.setTimeout(() => {
+390	            setLoading(false)
+391	            setError(storyT(locale, 'cabinet.password_error_invalid_current'))
+392	          }, 800)
+393	        }}
+394	      />
+395	    </MantineStorySection>
+396	  )
+397	}
+398	
+399	function ModalDeleteConfirmGoogleSection({ locale }: { locale: string }) {
+400	  const [opened, setOpened] = useState(false)
+401	  const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+402	
+403	  return (
+404	    <MantineStorySection label={t('modal_caption_delete')}>
+405	      <Button variant="default" onClick={() => setOpened(true)}>{t('action_delete')}</Button>
+406	      <MantineDeleteConfirmModal
+407	        opened={opened}
+408	        onClose={() => setOpened(false)}
+409	        title={t('dialog_confirm_title')}
+410	        message={t('dialog_confirm_body')}
+411	        confirmLabel={t('action_delete')}
+412	        cancelLabel={t('action_cancel')}
+413	        googleConfirm={{ message: storyT(locale, 'cabinet.delete_account_google_required'), label: storyT(locale, 'cabinet.reauth_google_confirm'), onConfirm: () => setOpened(false) }}
+414	        onConfirm={() => setOpened(false)}
+415	      />
+416	    </MantineStorySection>
+417	  )
+418	}
+419	
+420	export const DeleteConfirmPassword: Story = {
+421	  render: (_args, context) => {
+422	    const locale = (context?.globals?.locale as string) ?? 'en'
+423	
+424	    return (
+425	      <MantineStoryShell>
+426	        <MantineStoryStack>
+427	          <ModalDeleteConfirmPasswordSection locale={locale} />
+428	          <ModalDeleteConfirmGoogleSection locale={locale} />
+429	        </MantineStoryStack>
+430	      </MantineStoryShell>
+431	    )
+432	  },
+433	}

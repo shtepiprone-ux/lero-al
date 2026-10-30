@@ -1,0 +1,518 @@
+{
+  "generated": "2026-10-18",
+  "rows": [
+    {
+      "file": "src/app/[locale]/listings/[slug]/edit/page.tsx",
+      "line": 51,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/app/admin/email-templates/page.tsx",
+      "line": 25,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: myProfile } = await supabase.from('users').select('role').eq('id', me!.id).single()"
+    },
+    {
+      "file": "src/app/admin/layout.tsx",
+      "line": 45,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/app/admin/listings/[id]/preview/page.tsx",
+      "line": 34,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": true,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/app/admin/users/[id]/page.tsx",
+      "line": 77,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": true,
+      "text": "const { data: myProfile } = await supabase.from('users').select('role').eq('id', me!.id).single()"
+    },
+    {
+      "file": "src/app/admin/users/new/page.tsx",
+      "line": 25,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', me.id).single()"
+    },
+    {
+      "file": "src/app/api/upload-avatar/route.ts",
+      "line": 56,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: myProfile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/lib/auth/permissions.ts",
+      "line": 41,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/lib/auth/staff.ts",
+      "line": 17,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await db.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/currencies.ts",
+      "line": 21,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/exchangeProviders.ts",
+      "line": 17,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/footer.ts",
+      "line": 19,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/index.ts",
+      "line": 29,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": true,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/index.ts",
+      "line": 54,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": true,
+      "text": "const { data } = await db.from('users').select('role').eq('id', userId).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/index.ts",
+      "line": 441,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": true,
+      "text": "const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/permissions.ts",
+      "line": 38,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/permissions.ts",
+      "line": 49,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/permissions.ts",
+      "line": 109,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/admin/actions/propertyTypes.ts",
+      "line": 16,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/cabinet/statistics/access.ts",
+      "line": 21,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": "const { data, error } = await supabase.from('users').select('role').eq('id', authUser.id).single()"
+    },
+    {
+      "file": "src/modules/companies/actions.ts",
+      "line": 12,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await db.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/contacts/actions/index.ts",
+      "line": 153,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await db.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/listings/actions/changeListingStatus.ts",
+      "line": 28,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/modules/listings/actions/reportListing.ts",
+      "line": 132,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": true,
+      "text": "const { data: profile } = await db.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "line": 46,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": true,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/modules/locations/actions/popularLocationActions.ts",
+      "line": 13,
+      "client": "service role (bypasses RLS)",
+      "sameFileAccessCheck": false,
+      "text": "const { data } = await db.from('users').select('role').eq('id', user.id).single()"
+    },
+    {
+      "file": "src/modules/notifications/actions/emailTemplates.ts",
+      "line": 17,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    },
+    {
+      "file": "src/modules/notifications/actions/emailTemplates.ts",
+      "line": 35,
+      "client": "session (RLS applies)",
+      "sameFileAccessCheck": false,
+      "text": ".select('role')"
+    }
+  ],
+  "entries": [
+    {
+      "file": "src/app/api/auth-email-hook/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/auth/me/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/cron/inactivity/route.ts",
+      "accountCheck": "partial (own status or deleted_at read)",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/cron/listing-activity/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/cron/listings-expiry/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/cron/price-alerts/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/cron/saved-searches/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": true
+    },
+    {
+      "file": "src/app/api/exchange-rate/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/listings/[slug]/view/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/listings/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/presence/route.ts",
+      "accountCheck": "partial (own status or deleted_at read)",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/property-types/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/upload-avatar/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/upload-cms-image/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/upload-company-logo/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/api/upload-popular-location-photo/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/auth/callback/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/app/auth/confirm/route.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/clearHistory.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/currencies.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/exchangeProviders.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/footer.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/index.ts",
+      "accountCheck": "partial (own status or deleted_at read)",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/locale.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/permissions.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/admin/actions/propertyTypes.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/auth/actions/captcha.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/auth/actions/recovery.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/cabinet/actions/index.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/companies/actions.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/contacts/actions/index.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/changeListingStatus.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/collectionActions.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/contactEvents.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/createListing.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/deleteListing.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": true,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/favoriteActions.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/getListingOwnerContact.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/recentlyViewedActions.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/reportListing.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/submitListingInquiry.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": false,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/listings/actions/updateListing.ts",
+      "accountCheck": "requireViewer/getBlockedError",
+      "roleOnlyGuard": true,
+      "serviceRole": false,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/locations/actions/popularLocationActions.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/notifications/actions/emailTemplates.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": true,
+      "serviceRole": true,
+      "noPerson": false
+    },
+    {
+      "file": "src/modules/notifications/lib/mutations.ts",
+      "accountCheck": "none",
+      "roleOnlyGuard": false,
+      "serviceRole": false,
+      "noPerson": false
+    }
+  ]
+}

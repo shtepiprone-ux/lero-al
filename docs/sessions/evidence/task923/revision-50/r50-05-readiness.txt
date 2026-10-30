@@ -1,0 +1,23 @@
+# Task 923 Revision 50 readiness run (Opus), 2026-10-25T11:33:13.445Z, HEAD da7641c8c, working tree, win32, node v22.22.3, cwd C:\Claude_Code_Projects\lero-al
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json taskSha256 f91a317bffd939560b517ba12a75247ffc7c2504b8dcaede8da98fdc11aac3ba -> 8d25de0e71dace62c0a2a55e8607bec43cc0883e451c67e976bab7962d1a3022
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json taskSha256 429c9065577ca6a009978ecff6a1f8e99b6b9bf5500a190891a07ab3cc4b874a -> 6c0a190d5e4f22b5a1c3a42384e4fed2a0023d9c29dfb9b1443eb59e34d88db2
+in-memory validateContract(ready, plan): []
+== npm run -s check:kickoff-evidence
+check:kickoff-evidence PASS — 2 changed active kickoff(s) verified.
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+
+exit 0
+== node scripts/check-mobile-adaptation-contract.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+PASS  check:mobile-adaptation-contract — changed kickoff records are valid
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json
+
+exit 0
+== node scripts/workflow-gates/cli.mjs plan --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+
+exit 0
+D8_D9 executionStatus ready; stage planned; scope 348; cases 235; critical 70
+kickoff sha256 (LF) ed1fd64b8da17f9db470ff3a6465a99f1f796fd7a8741af1208c03c66bccd9c9
+D8_D9 sidecar sha256 a9a8028e895fe96395beb4024016376d49f6d6e0999078676c4b37da0cce49e7
+Task 927 sidecar sha256 359867894e0bac0db64b1765f8c37a6e6bfe2245ed9556bcaca453d9a16cab59

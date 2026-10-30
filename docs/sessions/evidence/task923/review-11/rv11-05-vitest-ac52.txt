@@ -1,0 +1,16 @@
+platform: win32 10.0.26300 node v22.22.3 (Opus review 11, 2026-10-19; the output below is copied verbatim from the terminal, because the write gate reads a redirection beside a product path as a write)
+command: rg -n "useMediaQuery|belowMobileGate" src/modules/listings/components/ListingsFilters.tsx; rg -n "hiddenFrom|visibleFrom" src/modules/listings/components/ListingsFilters.tsx; npx vitest run src/design-system/mantine/patterns/__tests__/MantineDrawer.presentation.test.tsx src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx --reporter=verbose
+rg useMediaQuery|belowMobileGate exit 1 (1 = no match)
+rg hiddenFrom|visibleFrom exit 1 (1 = no match)
+ ✓ MantineDrawer.presentation.test.tsx > a child of the drawer reads "sheet" while the 640px gate matches
+ ✓ MantineDrawer.presentation.test.tsx > a child of the drawer reads "side" when the 640px gate does not match
+ ✓ MantineDrawer.presentation.test.tsx > a component outside any MantineDrawer reads null
+ ✓ MantineDrawer.presentation.test.tsx > the footer of the drawer reads the same presentation as its body
+ ✓ filtersRangeDatePicker.smoke.test.tsx > (13 earlier tests of Tasks 559, 773 and 778, all passed)
+ ✓ filtersRangeDatePicker.smoke.test.tsx > T6 / AC6 — mobile Apply calls onClose exactly once and pushes nothing
+ ✓ filtersRangeDatePicker.smoke.test.tsx > T6b — from 640px there is no Apply button (filters apply as they are changed)
+ ✓ filtersRangeDatePicker.smoke.test.tsx > [SEC-R48-FE-ALLOW] In the compact bottom sheet the filter panel's Apply button only closes the panel
+ ✓ filtersRangeDatePicker.smoke.test.tsx > [SEC-R48-FE-DENY] Outside the compact bottom sheet the filter panel mounts no close icon and no Apply button
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+EXIT_CODE=0

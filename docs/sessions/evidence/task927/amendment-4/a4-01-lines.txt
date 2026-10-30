@@ -1,0 +1,21 @@
+# Working-tree lines cited by Task 927 Amendment 4 (Opus, 2026-10-23), copied by a4-01-lines.mjs
+== src/components/auth/GoogleSignInSlot.tsx line(s) 26, working tree, file sha256 6e83fb616a3ec51d703d74931dc63e73e45bf33b4a065301469c8f39f2928097
+    <Box>
+== src/components/auth/GoogleSignInSlot.tsx line(s) 34, working tree, file sha256 6e83fb616a3ec51d703d74931dc63e73e45bf33b4a065301469c8f39f2928097
+        <Box ref={hostRef} w="100%" hidden={status !== 'ready'} />
+== src/components/auth/GoogleSignInButton.tsx line(s) 9, working tree, file sha256 3477931c8d221a6561880b62f121fffabe656e005018241bf2c7474978e5525a
+/** Google's own limit for the rendered button (GIS reference: "The maximum width is 400 pixels"). */
+== src/components/auth/GoogleSignInButton.tsx line(s) 61, working tree, file sha256 3477931c8d221a6561880b62f121fffabe656e005018241bf2c7474978e5525a
+      width: String(Math.min(Math.round(widthRef.current), GOOGLE_BUTTON_MAX_WIDTH)),
+== src/stories/mantine/primitives/Modal.stories.tsx line(s) 273, 315, 361, 408, 444, working tree, file sha256 9133795e191aa4c7efe3556c30029de511facc01feba080d475823703af2e956
+    <MantineStorySection label={t('modal_caption_delete')}>
+    <MantineStorySection label={t('modal_caption_delete')}>
+    <MantineStorySection label={t('modal_caption_delete')}>
+    <MantineStorySection label={t('modal_caption_delete')}>
+    <MantineStorySection label={t('modal_caption_delete')}>
+== src/stories/mantine/primitives/Modal.stories.tsx line(s) 456, working tree, file sha256 9133795e191aa4c7efe3556c30029de511facc01feba080d475823703af2e956
+          control: <GoogleSignInButton clientId={undefined} purpose="reauth" onCredential={async () => {}} />,
+== scripts/rendered-interaction-states.json line(s) 758, working tree, file sha256 e6704201985cef3732ab03ed308d8ea9f55deedd879aebf61c12275b268468a5
+      "id": "mantine-primitives-modal--delete-confirm-password~delete-google",
+== tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json line(s) 3, working tree, file sha256 2d3eea6f7b93b59e0b3c92a0f52ad3d6f5f1217ca6302d871cd3405b91e30c82
+  "stage": "implemented",

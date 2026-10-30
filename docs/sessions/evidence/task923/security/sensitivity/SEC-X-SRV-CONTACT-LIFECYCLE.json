@@ -1,0 +1,226 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:35:31.516Z",
+ "case": "SEC-X-SRV-CONTACT-LIFECYCLE",
+ "results": [
+  {
+   "id": "SEC-X-SRV-CONTACT-LIFECYCLE",
+   "testFile": "src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts",
+   "testName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/submitListingInquiry.ts",
+     "description": "submitListingInquiry no longer checks that the listing is active",
+     "from": "  if ((listing.status as ListingStatus) !== 'active') return { error: 'validation' }\n",
+     "to": ""
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/listings/actions/submitListingInquiry.ts",
+     "originalSha256": "bd8ce1af0ecae6e746aef96dfc24031d78731963a2ebd896158a171780ce8af1",
+     "restoredSha256": "bd8ce1af0ecae6e746aef96dfc24031d78731963a2ebd896158a171780ce8af1"
+    }
+   ],
+   "failureMessage": "AssertionError: a pending listing: inquiry: expected {} to deeply equal { error: 'validation' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts:72:70\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259327735,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "status": "passed",
+         "title": "[SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "duration": 7.870699999999999,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "status": "skipped",
+         "title": "an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259328250,
+       "endTime": 1793259328257.8706,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259329400,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "status": "failed",
+         "title": "[SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "duration": 8.28449999999998,
+         "failureMessages": [
+          "AssertionError: a pending listing: inquiry: expected {} to deeply equal { error: 'validation' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts:72:70\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "status": "skipped",
+         "title": "an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259329876,
+       "endTime": 1793259329884.2844,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 2,
+     "numPassedTestSuites": 2,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259330953,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "status": "passed",
+         "title": "[SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+         "duration": 7.9056999999999675,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "contactLifecycle"
+         ],
+         "fullName": "contactLifecycle an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "status": "skipped",
+         "title": "an active listing of a live owner, and of an owner whose suspension has ended, is served (the controls)",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259331434,
+       "endTime": 1793259331441.9058,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/contactLifecycle.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

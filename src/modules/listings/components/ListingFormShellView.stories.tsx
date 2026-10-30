@@ -88,12 +88,25 @@ export const Owner: Story = {
   },
 }
 
-// ── Staff mode — sidebar adds the "Change status" block (StatusChangeControl) ─
+// ── Staff mode — sidebar adds the "Change status" block (canonical StatusChangeSelect, Task 923 R35) ─
 export const Staff: Story = {
   args: {
     statusControl: {
       currentStatus: 'pending',
       listingId: 'story-listing-1',
+      canPublish: true,
+      onStatusChange: noopStatusChange,
+    },
+  },
+}
+
+// ── Owner of the listing with the status control: `active` is not offered (D6, D22) ──
+export const OwnerStatusControl: Story = {
+  args: {
+    statusControl: {
+      currentStatus: 'pending',
+      listingId: 'story-listing-1',
+      canPublish: false,
       onStatusChange: noopStatusChange,
     },
   },
@@ -108,6 +121,7 @@ export const StaffStatusControlOpen: Story = {
     statusControl: {
       currentStatus: 'pending',
       listingId: 'story-listing-1',
+      canPublish: true,
       onStatusChange: noopStatusChange,
     },
   },
@@ -120,7 +134,7 @@ export const StaffStatusControlOpen: Story = {
     },
   },
   play: async ({ canvasElement }) => {
-    const trigger = canvasElement.querySelector<HTMLButtonElement>('button.cursor-pointer')
+    const trigger = canvasElement.querySelector<HTMLInputElement>('[data-testid="status-change-control"] input')
     if (trigger) {
       const { userEvent } = await import('storybook/test')
       await userEvent.click(trigger)

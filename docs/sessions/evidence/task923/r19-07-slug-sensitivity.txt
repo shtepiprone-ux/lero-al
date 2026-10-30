@@ -1,0 +1,13 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:30:09.517Z
+cmd node docs/sessions/evidence/task923/r19-07-slug-sensitivity.mjs   (SEC-X-SRV-SLUG-PLAIN: baseline pass, each of three breaks fails the assertion, restored pass)
+PROVED     SEC-X-SRV-SLUG-PLAIN [hyphen collapse removed] baseline=passed mutant=failed kind=assertion restored=passed
+           first failure line: AssertionError: expected [ { …(2) }, …(4) ] to deeply equal []
+PROVED     SEC-X-SRV-SLUG-PLAIN [trim after the cut removed] baseline=passed mutant=failed kind=assertion restored=passed
+           first failure line: AssertionError: expected [ { …(2) }, { …(2) }, { …(2) }, …(2) ] to deeply equal []
+PROVED     SEC-X-SRV-SLUG-PLAIN [base listing removed] baseline=passed mutant=failed kind=assertion restored=passed
+           first failure line: AssertionError: expected [ { …(2) }, …(4) ] to deeply equal []
+
+3 of 3 sensitivity runs proved.
+artifact r19-07-slug-sensitivity.json sha256 6548655e164804897c75ff0633d08b0c37ebe839ba216c47e73202c09c78d502
+restored file sha256 5a034dd8da0548d4d816be6f93f297b617478202be931e6c27b25f21a30371a1
+EXIT_CODE=0

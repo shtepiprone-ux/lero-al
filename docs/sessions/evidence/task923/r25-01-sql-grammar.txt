@@ -1,0 +1,6 @@
+platform win32 10.0.26300 node v22.22.3; plpgsql-parser 18.5.10 installed into the session scratchpad via NODE_PATH (not installed in the repository); no database connection; start 2026-10-21T18:29:18.309Z
+cmd node - (an inline script with the procedure of r16-syntax.cjs: PostgreSQL grammar check of hardening v8a: apply, rollback and dry run; statements and the PL/pgSQL bodies of functions and DO blocks)
+proposed-hardening-v8a.sql: 34 statements, 3 plpgsql bodies parsed OK (2 of them DO blocks)
+proposed-hardening-v8a-rollback.sql: 31 statements, 1 plpgsql bodies parsed OK (1 of them DO blocks)
+proposed-hardening-v8a.dryrun.sql: 34 statements, 3 plpgsql bodies parsed OK (2 of them DO blocks)
+EXIT_CODE=0

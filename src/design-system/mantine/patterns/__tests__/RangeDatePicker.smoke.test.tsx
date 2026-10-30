@@ -131,7 +131,7 @@ function pressKey(el: HTMLElement, key: 'Enter' | ' ') {
   if (isButton && downNotPrevented && upNotPrevented && key === ' ') fireEvent.click(el)
 }
 
-describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () => {
+describe('RangeDatePicker — desktop (Task 558/561)', () => {
   beforeEach(() => stubMatchMedia(false))
 
   it('picking from+to (fresh, no pre-existing value) then Apply fires ONE onChange({from,to})', () => {
@@ -270,7 +270,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () =
   })
 })
 
-describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () => {
+describe('RangeDatePicker — mobile (Task 558/561)', () => {
   beforeEach(() => stubMatchMedia(true))
 
   it('tapping days alone does NOT fire onChange; only Confirm commits', () => {
@@ -331,7 +331,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () =>
   })
 })
 
-describe('RangeDatePicker — single selection mode (Task 893)', { timeout: 15_000 }, () => {
+describe('RangeDatePicker — single selection mode (Task 893)', () => {
   // Planted-violation P3 (docs/sessions/evidence/task893/07-plant-p3.txt): making `pickStaged` fall back to
   // the range `pickDay` in single mode makes the two "second click replaces" tests FAIL — the 2nd click
   // builds the range {DAY_10, DAY_15} instead of restaging one day.
@@ -399,7 +399,7 @@ describe('RangeDatePicker — single selection mode (Task 893)', { timeout: 15_0
   })
 })
 
-describe('RangeDatePicker — trigger (Task 558)', { timeout: 15_000 }, () => {
+describe('RangeDatePicker — trigger (Task 558)', () => {
   beforeEach(() => stubMatchMedia(false))
 
   it('clear-X commits onChange({undefined,undefined}) and does NOT open the panel', () => {
@@ -610,7 +610,7 @@ describe('pickVisibleMonthIdx (Task 891 review 6, F17)', () => {
 // The month window used to be fixed around today, and `jumpTo` returned silently for a month outside it, so
 // choosing 2030 left the field at the current year. Planted-violation P9 (evidence r2-plant-p9.txt): restoring
 // the silent `return` for an out-of-window target makes T-M1, T-M2 and T-M4 FAIL.
-describe('RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19)', { timeout: 20_000 }, () => {
+describe('RangeDatePicker — mobile year/month selection outside the window (Task 893 R18/R19)', () => {
   const thisYear = today.getFullYear()
 
   beforeEach(() => {

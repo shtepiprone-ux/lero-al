@@ -429,6 +429,32 @@ describe('Check 8: uk.json Latin-only storybook values', () => {
     })
     expect(hasRule(gate(root).violations, 'uk-latin-only')).toBe(false)
   })
+
+  it('GOOD — a masked e-mail address in uk passes (Task 927 R29)', () => {
+    const root = tmpRoot()
+    const masked = { c8: { first: 'ar•••••@example.com', single: 'a•••••@example.com' } }
+    writeMessages(root, {
+      en: { storybook: masked },
+      sq: { storybook: masked },
+      uk: { storybook: masked },
+      it: { storybook: masked },
+    })
+    expect(hasRule(gate(root).violations, 'uk-latin-only')).toBe(false)
+  })
+
+  it('BAD — a masked value that is not an address still triggers uk-latin-only (Task 927 R29)', () => {
+    for (const value of ['Arta•••••', 'arta•••••@']) {
+      const root = tmpRoot()
+      const msgs = { c8: { masked: value } }
+      writeMessages(root, {
+        en: { storybook: msgs },
+        sq: { storybook: msgs },
+        uk: { storybook: msgs },
+        it: { storybook: msgs },
+      })
+      expect(hasRule(gate(root).violations, 'uk-latin-only')).toBe(true)
+    }
+  })
 })
 
 // ── Check 9: Runtime component hardcoded literals ─────────────────────────────

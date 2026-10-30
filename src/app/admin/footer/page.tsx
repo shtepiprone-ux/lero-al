@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminFooterManager } from '@/components/admin/AdminFooterManager'
@@ -7,6 +8,8 @@ import { getAllFooterContent } from '@/modules/admin/actions/footer'
 export const metadata = { title: 'Footer — Admin' }
 
 export default async function AdminFooterPage() {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   await getAdminLocale()
   const t = await getTranslations('admin.pages')
   const { data, initialized, error } = await getAllFooterContent()

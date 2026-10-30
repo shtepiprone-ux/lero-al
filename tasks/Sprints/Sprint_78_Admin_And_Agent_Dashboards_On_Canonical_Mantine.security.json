@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "kind": "docs",
+  "qaProfile": "Q0",
+  "task": "tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md",
+  "taskSha256": "62a170f5c038c30c395688744c8151e82d986674785c414861868d62ceec1583",
+  "scope": [
+    "tasks/Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "cases": [],
+  "notApplicable": "The Sprint 78 plan records task state, ordering and owner decisions only; it changes no runtime behavior, dependency, executable gate or deployment configuration. Each task's product work is governed by that task's own adjacent security contract."
+}

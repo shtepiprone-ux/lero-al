@@ -1,4 +1,7 @@
 import { createHash } from 'crypto'
+import {
+  CONDITIONS, HEATING_TYPES, LAYOUT_FEATURES, MARKET_TYPES, OFFER_TYPES, PURCHASE_CONDITIONS, WALL_TYPES,
+} from '../constants'
 
 /**
  * Canonical saved-search filter keys.
@@ -29,36 +32,58 @@ export interface CanonicalFilters {
   purchaseConditions?: string[]
 }
 
+// ── Limits (Task 923 Revision 7, findings S53 / S52) ─────────────────────────
+// The filters of a saved search are sent by the browser to a Server Action and stored as they come out of here, so they are limited to what the search page
+// itself accepts: known words, whole numbers that fit a database integer, short lists.
+
+const MAX_INT = 2_147_483_647
+const MAX_ROOMS_LISTED = 20
+const PROPERTY_TYPE_SLUG = /^[a-z0-9_]{1,64}$/
+const words = (list: readonly { value: string }[]) => list.map((i) => i.value)
+const ALLOWED = {
+  condition:          words(CONDITIONS),
+  heating:            words(HEATING_TYPES),
+  wallType:           words(WALL_TYPES),
+  marketType:         words(MARKET_TYPES),
+  offerType:          words(OFFER_TYPES),
+  layoutFeatures:     words(LAYOUT_FEATURES),
+  purchaseConditions: words(PURCHASE_CONDITIONS),
+}
+
 /**
  * Extract canonical filters from raw URL search params.
  * Drops pagination, tab, sort, currency, and temporal keys.
  * Normalizes types: string numbers → numbers, empty arrays → omitted.
+ *
+ * A list can arrive both ways the application writes it: one comma-separated value (`rooms=2,3`, what the search page and the hero search produce) or repeated
+ * parameters (`rooms=2&rooms=3`); both mean the same and give the same result. Unknown words and out-of-range numbers are dropped.
  */
 export function canonicalizeFilters(sp: URLSearchParams | Record<string, string | string[] | undefined>): CanonicalFilters {
+  /** every value given under the key (a repeated parameter, an array, a comma-separated text), text only */
+  function all(key: string): string[] {
+    const given: unknown[] = sp instanceof URLSearchParams ? sp.getAll(key) : [Object.hasOwn(sp, key) ? sp[key] : undefined].flat()
+    return given.filter((v): v is string => typeof v === 'string').flatMap((v) => v.split(',')).map((v) => v.trim()).filter(Boolean)
+  }
   function s(key: string): string {
-    if (sp instanceof URLSearchParams) return sp.get(key) ?? ''
-    const v = sp[key]
-    return Array.isArray(v) ? (v[0] ?? '') : (v ?? '')
+    const first = sp instanceof URLSearchParams ? sp.get(key) : (Object.hasOwn(sp, key) ? [sp[key]].flat()[0] : undefined)
+    return typeof first === 'string' ? first : ''
   }
   function n(key: string): number | undefined {
     const v = parseInt(s(key))
-    return isNaN(v) ? undefined : v
+    return Number.isNaN(v) || Math.abs(v) > MAX_INT ? undefined : v
   }
-  function m(key: string): string[] {
-    if (sp instanceof URLSearchParams) {
-      return sp.getAll(key).filter(Boolean)
-    }
-    const v = sp[key]
-    if (Array.isArray(v)) return v.filter(Boolean)
-    return v ? [v] : []
+  /** the known words of a list filter, once each, sorted */
+  function known(key: string, allowed: readonly string[]): string[] {
+    return [...new Set(all(key).filter((v) => allowed.includes(v)))].sort()
   }
 
   const canonical: CanonicalFilters = {}
 
-  const listingType = s('type'); if (listingType) canonical.listingType = listingType
-  const propertyType = s('property_type'); if (propertyType) canonical.propertyType = propertyType
+  const listingType = s('type'); if (listingType === 'sale' || listingType === 'rent') canonical.listingType = listingType
+  const propertyType = s('property_type'); if (PROPERTY_TYPE_SLUG.test(propertyType)) canonical.propertyType = propertyType
   const locationId = n('location_id'); if (locationId) canonical.locationId = locationId
-  const rooms = m('rooms').map(Number).filter(v => !isNaN(v) && v > 0); if (rooms.length) canonical.rooms = rooms.sort((a, b) => a - b)
+  const rooms = [...new Set(all('rooms').map(Number).filter((v) => Number.isInteger(v) && v > 0 && v < 100))].sort((a, b) => a - b).slice(0, MAX_ROOMS_LISTED)
+  if (rooms.length) canonical.rooms = rooms
   const priceMin = n('price_min'); if (priceMin) canonical.priceMin = priceMin
   const priceMax = n('price_max'); if (priceMax) canonical.priceMax = priceMax
   const areaMin = n('area_min'); if (areaMin) canonical.areaMin = areaMin
@@ -69,16 +94,13 @@ export function canonicalizeFilters(sp: URLSearchParams | Record<string, string 
   const floorsTotalMax = n('floors_total_max'); if (floorsTotalMax) canonical.floorsTotalMax = floorsTotalMax
   const yearBuiltMin = n('year_built_min'); if (yearBuiltMin) canonical.yearBuiltMin = yearBuiltMin
   const yearBuiltMax = n('year_built_max'); if (yearBuiltMax) canonical.yearBuiltMax = yearBuiltMax
-  function ms(key: string): string[] {
-    return s(key).split(',').map(v => v.trim()).filter(Boolean).sort()
-  }
-  const condition = ms('condition'); if (condition.length) canonical.condition = condition
-  const heating = ms('heating'); if (heating.length) canonical.heating = heating
-  const wallType = ms('wall_type'); if (wallType.length) canonical.wallType = wallType
-  const marketType = s('market_type'); if (marketType) canonical.marketType = marketType
-  const layoutFeatures = m('layout_features').sort(); if (layoutFeatures.length) canonical.layoutFeatures = layoutFeatures
-  const offerType = ms('offer_type'); if (offerType.length) canonical.offerType = offerType
-  const purchaseConditions = m('purchase_conditions').sort(); if (purchaseConditions.length) canonical.purchaseConditions = purchaseConditions
+  const condition = known('condition', ALLOWED.condition); if (condition.length) canonical.condition = condition
+  const heating = known('heating', ALLOWED.heating); if (heating.length) canonical.heating = heating
+  const wallType = known('wall_type', ALLOWED.wallType); if (wallType.length) canonical.wallType = wallType
+  const marketType = s('market_type'); if (ALLOWED.marketType.includes(marketType)) canonical.marketType = marketType
+  const layoutFeatures = known('layout_features', ALLOWED.layoutFeatures); if (layoutFeatures.length) canonical.layoutFeatures = layoutFeatures
+  const offerType = known('offer_type', ALLOWED.offerType); if (offerType.length) canonical.offerType = offerType
+  const purchaseConditions = known('purchase_conditions', ALLOWED.purchaseConditions); if (purchaseConditions.length) canonical.purchaseConditions = purchaseConditions
 
   return canonical
 }
@@ -114,8 +136,9 @@ function normalizeMultiValueForParams(value: unknown): string | undefined {
 
 /**
  * Convert canonical filters back to URLSearchParams for restoring the search URL.
- * The 4 multi-value fields (condition/heating/wallType/offerType) accept both the
- * new string[] shape and the legacy string shape from old DB rows (backward-compat).
+ * The multi-value fields (condition / heating / wallType / offerType, and since Task 923 Revision 7 also rooms / layoutFeatures / purchaseConditions) are written
+ * as ONE comma-separated value: that is what the search page reads in full. Repeated parameters were read only up to the first. The 4 older multi-value fields
+ * accept both the new string[] shape and the legacy string shape from old DB rows (backward-compat).
  */
 export function canonicalToSearchParams(filters: CanonicalFilters): URLSearchParams {
   const p = new URLSearchParams()
@@ -128,14 +151,16 @@ export function canonicalToSearchParams(filters: CanonicalFilters): URLSearchPar
   if (filters.areaMax)      p.set('area_max', String(filters.areaMax))
   if (filters.floorMin)     p.set('floor_min', String(filters.floorMin))
   if (filters.floorMax)     p.set('floor_max', String(filters.floorMax))
+  if (filters.floorsTotalMin) p.set('floors_total_min', String(filters.floorsTotalMin))
+  if (filters.floorsTotalMax) p.set('floors_total_max', String(filters.floorsTotalMax))
   const cond = normalizeMultiValueForParams(filters.condition); if (cond) p.set('condition', cond)
   const heat = normalizeMultiValueForParams(filters.heating);   if (heat) p.set('heating', heat)
   const wall = normalizeMultiValueForParams(filters.wallType);  if (wall) p.set('wall_type', wall)
   if (filters.marketType) p.set('market_type', filters.marketType)
   const offr = normalizeMultiValueForParams(filters.offerType); if (offr) p.set('offer_type', offr)
-  filters.rooms?.forEach(r => p.append('rooms', String(r)))
-  filters.layoutFeatures?.forEach(f => p.append('layout_features', f))
-  filters.purchaseConditions?.forEach(c => p.append('purchase_conditions', c))
+  if (filters.rooms?.length) p.set('rooms', filters.rooms.join(','))
+  const layout = normalizeMultiValueForParams(filters.layoutFeatures);         if (layout) p.set('layout_features', layout)
+  const purchase = normalizeMultiValueForParams(filters.purchaseConditions);   if (purchase) p.set('purchase_conditions', purchase)
   if (filters.yearBuiltMin) p.set('year_built_min', String(filters.yearBuiltMin))
   if (filters.yearBuiltMax) p.set('year_built_max', String(filters.yearBuiltMax))
   return p

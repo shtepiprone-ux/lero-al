@@ -1,0 +1,53 @@
+# fr-33 (Opus) 2026-10-28T22:24:37.644Z win32 node v22.22.3; D8_D9 scope 595
+
+## R159 (R66 (i)): 7
+  src/modules/admin/actions/index.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/createAdminUser.security.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/admin/actions/__tests__/profileBounds.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/userWebsite.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/userAdministration.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/adminPermissions.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/__tests__/security/staffActions.test.ts: scope yes; product yes; policy no; exists yes
+
+## R160 (R70 (g)): 2
+  src/modules/cms/lib/sanitizeCmsHtml.ts: scope yes; product yes; policy no; exists yes
+  src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts: scope yes; product yes; policy no; exists no
+
+## R161 (the 222 failures): 17
+  src/__tests__/instrumentation.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/__tests__/rls-write-guards.smoke.test.ts: scope yes; product yes; policy no; exists yes
+  src/components/layout/__tests__/headerFooterContainers.test.tsx: scope yes; product yes; policy no; exists yes
+  src/lib/auth/__tests__/authCore.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/lib/auth/__tests__/controller.test.ts: scope yes; product yes; policy no; exists yes
+  src/lib/auth/__tests__/sessionMiddleware.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/companies/__tests__/companyActions.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/adminLocale.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/adminOperations.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/permissions.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/listings/actions/__tests__/reportListing.smoke.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/notifications/lib/__tests__/mutations.smoke.test.ts: scope yes; product yes; policy no; exists yes
+
+## R162 (unwritten cases): 13
+  src/tests/integration/accessHardening.integration.test.ts: scope yes; product yes; policy no; exists yes
+  src/lib/auth/middleware.security.test.ts: scope yes; product yes; policy no; exists yes
+  src/modules/admin/actions/__tests__/createAdminUser.security.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/admin/actions/adminPermissions.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/listings/actions/contactLifecycle.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/listings/actions/listingSlugGuard.integration.test.ts: scope yes; product yes; policy no; exists yes
+  src/app/api/upload-avatar/uploadAvatar.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts: scope yes; product yes; policy no; exists no
+  src/tests/integration/adminPage.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/listings/actions/deleteListing.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/listings/actions/updateListing.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/tests/integration/moderatorKeys.integration.test.ts: scope yes; product yes; policy no; exists no
+  src/modules/admin/actions/__tests__/permissions.security.test.ts: scope yes; product yes; policy no; exists yes
+
+## R163 (sensitivity): 1
+  docs/sessions/evidence/task923/security/sensitivity.mjs: scope yes; product no; policy no; exists yes
+
+product paths outside the scope or policy paths: 0

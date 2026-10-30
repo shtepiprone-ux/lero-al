@@ -1,0 +1,92 @@
+platform: win32 x64 Microsoft Windows [Version 10.0.26300.9711]
+node: v22.22.3
+cwd: C:/Claude_Code_Projects/lero-al
+command: npx vitest run --reporter=verbose listingDomain.test ListingFormShell.moderation.security ListingFormShell.bounds.security ListingFormShell.create.security ListingFormShellView.price.security
+---- output ----
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx > ListingFormShell.moderation > [SEC-X-FE-EDIT-MODERATION] the owner sees the listing went to moderation 36ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx > ListingFormShell.moderation > an answer `active` (a staff edit) shows the normal success text and the public page (the control) 5ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.moderation.security.test.tsx > ListingFormShell.moderation > a failed move to review (`transition_failed`) is an error on the form: no success text, no redirect 5ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.create.security.test.tsx > ListingFormShell > [SEC-X-FE-SLUG-CREATE] a hyphen or Cyrillic title is sent as typed and a refusal is shown 50ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShell.bounds.security.test.tsx > ListingFormShell > [SEC-X-FE-LISTING-BOUNDS] a price above the ceiling is refused in the form 64ms
+ ✓ src/modules/listings/components/__tests__/ListingFormShellView.price.security.test.tsx > ListingFormShellView > [SEC-X-FE-PRICE-DIGITS] typed or pasted spaces are dropped from the price 108ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts a minimal listing 3ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > strips every field it does not know, so the owner, status, counters and premium flag cannot ride along 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > trims the title BEFORE checking its length: five spaces are not a title 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses a title of 4 characters 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses a title of 151 characters 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts a title of 5 characters 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts a title of 150 characters 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > blank description and address become "not given" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price 0 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price -1 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price null 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price null 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price "100" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price null 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the price undefined 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the currency "USD" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the currency "all" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the currency "" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the currency 5 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the listing type "lease" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the listing type "SALE" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the listing type "" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the property type "castle" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the property type "Apartment" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the property type "" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses the property type null 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses rooms 51 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses rooms -1 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses rooms 2.5 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses bathrooms 21 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses area 100001 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses area 0 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses lat 91 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses lng -181 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses description over 5000 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses address over 300 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses location 0 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses location 1.5 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses unknown condition 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses unknown purchase condition 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses year before the minimum 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > refuses year six years ahead 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts year five years ahead 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts the minimum year 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts lat/lng at the edge 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: what it lets through > accepts rooms 0 and 50 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > an apartment cannot have a negative floor 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > a garage can, but only with the multi-storey box ticked 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > a floor of 0 and the technical limits 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > the floor cannot be above the number of floors of the building 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > land needs its legal status, zoning and development potential 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > listingSchema: floors and required fields > other types need none of them 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > step1Schema and the account schemas > step 1 keeps only its own fields 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > step1Schema and the account schemas > login needs an e-mail address and a password of 6 characters 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > step1Schema and the account schemas > register trims the name BEFORE its length rule, takes only the two account types and drops an empty company 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > step1Schema and the account schemas > register does not let a role or a verified flag through 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > every one of the ten types has a schema and the filters are a subset of the fields 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > an unknown or empty type falls back to "other" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > only garage, parking, warehouse and other allow underground floors 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > apartments have no building-floors field, houses have it instead of the floor 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > every visible field has a component in the form registry 2ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > property type rules > the filter-only component draws nothing 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > every status belongs to exactly one group 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > an unknown status throws instead of being guessed 1ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > only "active" is public 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > a sold, rented or archived listing cannot be edited 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > after saving the owner goes to the public page only when it is public, else to the cabinet 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > the group and attribute lists are complete 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > status vocabulary > the query helpers add the right condition and nothing for "ALL" 0ms
+ ✓ src/modules/listings/domain/__tests__/listingDomain.test.ts > form mode > "edit" is edit mode, "create" is not 0ms
+
+ Test Files  5 passed (5)
+      Tests  76 passed (76)
+   Start at  19:58:32
+   Duration  3.51s (transform 1.03s, setup 450ms, import 3.59s, tests 298ms, environment 3.90s)
+
+---- end ----
+EXIT_CODE=0

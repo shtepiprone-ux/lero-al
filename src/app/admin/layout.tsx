@@ -2,8 +2,7 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { createClient } from '@/lib/supabase/server'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
 const ADMIN_LOCALE_COOKIE = 'admin-locale'
@@ -36,17 +35,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const jar = await cookies()
   const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
 
-  const user = await getUser()
-  if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role is not an administrator or
+  // a moderator, and a failed lookup does not open the admin area.
+  const viewer = await requireViewer()
+  if (!viewer.ok && viewer.reason === 'unauthenticated') redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
 
-  const supabase = await createClient()
-  const { data: profile } = await supabase
-    .from('users')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  const isAuthorized = profile?.role === 'admin' || profile?.role === 'moderator'
+  const isAuthorized = viewer.ok && (viewer.role === 'admin' || viewer.role === 'moderator')
   if (!isAuthorized) redirect(`/${locale}`)
 
   const settings = await getAllSettings()

@@ -1,0 +1,15 @@
+# Task 923: the owner's check after Review 52, 2026-10-24 (the owner's message, translated faithfully from Ukrainian; the terminal log is quoted as pasted)
+Storybook, the Delete dialog in four locales and six widths: I confirm, everything is OK.
+The admin deletion: in fact, when I pressed the button "Delete the user permanently", I did not type DELETE; the system simply deleted the user.
+And also: when I deleted the user in the admin panel on lero.al, the user keeps their session on localhost. How the hell is that possible?
+And if this user presses the button "My cabinet", the commands loop in the terminal:
+ GET /uk/auth/login?next=%2Fuk%2Fcabinet&session=lost 200 in 2284ms
+ GET /uk/auth/login?next=%2Fuk%2Fcabinet&session=lost 200 in 325ms
+ GET /uk/cabinet 200 in 275ms
+ GET /uk/cabinet 200 in 186ms
+ GET /uk/auth/login?next=%2Fuk%2Fcabinet&session=lost 200 in 291ms
+ GET /uk/auth/login?next=%2Fuk%2Fcabinet&session=lost 200 in 297ms
+ GET /uk/cabinet 200 in 266ms
+ GET /uk/cabinet 200 in 306ms
+(the same four lines repeat; 30 lines were pasted)
+And after the user is deleted, the photos are not deleted from Cloudinary.

@@ -1,16 +1,24 @@
-## GR-7 — Every task, at every step, by every role: audit all four references in depth, then use only the best UI/UX practice of 2026
+## GR-7 — Reference research, subject to the Opus canonical-reuse exception
+
+**Owner narrowing, 2026-10-20.** At task creation/revision and review, Opus must first inspect ready Mantine
+components and their Stories and reuse a suitable component instead of creating a duplicate. The owner confirms
+these Stories are already adapted. The binding sequence and inherited-design exception are in
+[canonical-component-reuse.md](../../../.claude/rules/shared/canonical-component-reuse.md). Covered design requires
+no fresh reference audit, live check, measurement, or GR-7 audit receipt; record the inherited owner/Story instead.
+For mixed scope, research only uncovered new decisions or reproduced defects. The historical blanket requirements
+below apply subject to this later decision, including every revision and review.
 
 **Owner rule, 2026-10-03.** The owner asked for row checkboxes, a bulk-delete button and per-row edit/delete icons in
-every table, and wrote, verbatim: *"Я бачу, що ти взагалі тупо не дослідив проект референсу, просто навмання пишеш
-задачі, авось проканає. … Так от, відтепер ти досконало вивчаєш референси, співставляєш UI/UX з нашими даними у
-проекті lero.al і тільки потім пишеш задачу. Пропиши це у правило!"* … *"Шукаєш найкращий UI/UX візуал, підставляєш
-наші дані, і тільки потім пишеш задачу для Sonet!"*
+every table, and wrote: *"I see that you did not research the reference project at all, you just write tasks at random,
+hoping it will pass. … So, from now on you study the references thoroughly, compare the UI/UX with
+our data in the lero.al project, and only then write the task. Put this into the rule!"* … *"You look for the best UI/UX visual, put in our
+data, and only then write the task for Sonnet!"*
 
-**Restated and widened by the owner, 2026-10-04, verbatim:** *"обов'язково, обов'язково …, і тільки спробуй пропустити
-перед створенням кожної задачі, перед виконанням кожної задачі, перед рев'ю кожної задачі - ти (як оркестратор,
-архітектор, дизайнер, рев'ювер, QA) і Sonnet (як виконавець) маєте завжди (обов'язково!) перевіряти референси та всі
-стоірнки на цих референсах (детальний аналіз, а не поверхневий!)"* and *"Обов'язкове правило - завжди використовувати
-тільки найкращі UI/UX практики 2026 року!"* The 2026-10-03 version had three defects. It named three references, not
+**Restated and widened by the owner, 2026-10-04:** *"mandatory, mandatory …, and just try to skip it: before creating every task, before
+executing every task, before reviewing every task - you (as orchestrator, architect, designer, reviewer,
+QA) and Sonnet (as executor) must always (mandatory!) check the references and all the
+pages of these references (a detailed analysis, not a superficial one!)"* and *"A mandatory rule - always use only
+the best UI/UX practices of 2026!"* The 2026-10-03 version had three defects. It named three references, not
 four. It bound only task design and review, so Sonnet never ran it. And it let Opus decide which tasks "rely on a
 reference".
 
@@ -22,7 +30,7 @@ reference".
 4. TailAdmin — https://demo.tailadmin.com/ (the bundled copy, `docs/tailadmin-style-reference.md`, is supplementary and
    never replaces the live site)
 
-**When it runs. Every task, three times, no exemptions:**
+**Default moments, subject to the 2026-10-20 Opus exception above:**
 
 | Moment | Who | Before what |
 |---|---|---|

@@ -7,28 +7,55 @@
 # FAIL-CLOSED AFTER ROLE IDENTIFICATION: unexpected gate errors block the Opus response instead of silently
 # publishing unverified governance artifacts. Unknown role signals still exit 0 so this Opus-only gate never creates
 # a prohibited Git handoff demand for Sonnet.
-# LOOP-SAFE: honours stop_hook_active and never blocks twice in a row.
+# Re-entrant: every attempt is checked; a corrected later response can recover in the same session.
 
 $ErrorActionPreference = 'Stop'
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+[Console]::InputEncoding = $utf8
+[Console]::OutputEncoding = $utf8
+$OutputEncoding = $utf8
+. (Join-Path $PSScriptRoot 'session-role.ps1')
+function Get-OptionalValue([object]$Value, [string]$Name) {
+    if ($null -eq $Value) { return $null }
+    $property = $Value.PSObject.Properties[$Name]
+    if ($null -eq $property) { return $null }
+    return $property.Value
+}
 try {
     $raw = [Console]::In.ReadToEnd()
     $inp = $null
     if ($raw) { try { $inp = $raw | ConvertFrom-Json } catch { } }
 
-    if ($inp -and $inp.stop_hook_active -eq $true) { exit 0 }   # already blocked once - let it through
-
     # This is an Opus governance gate. Sonnet executors must never be asked for Git handoffs.
     # Stop events can omit model and agent_type. Never infer an Opus role from dirty task/doc
     # files: that creates an impossible Git demand for a Sonnet executor. Unknown role fails open.
-    $model = if ($inp -and $inp.PSObject.Properties.Name -contains 'model') { [string]$inp.model } else { '' }
-    $agentType = if ($inp -and $inp.PSObject.Properties.Name -contains 'agent_type') { [string]$inp.agent_type } else { '' }
-    if ($agentType -eq 'executor' -or $model -match '(?i)sonnet') { exit 0 }
+    $role = Get-LeroSessionRole $inp
+    if ($role -eq 'executor') { exit 0 }
 
     $assistantTexts = @()
+    $pendingWrites = @{}
+    $successfulWrites = @()
     if ($inp -and $inp.transcript_path -and (Test-Path -LiteralPath $inp.transcript_path)) {
         $lines = Get-Content -LiteralPath $inp.transcript_path -Encoding UTF8
         foreach ($line in $lines) {
             try { $event = $line | ConvertFrom-Json } catch { continue }
+            $content = Get-OptionalValue (Get-OptionalValue $event 'message') 'content'
+            foreach ($block in @($content)) {
+                if ((Get-OptionalValue $event 'type') -eq 'assistant' -and (Get-OptionalValue $block 'type') -eq 'tool_use' -and (Get-OptionalValue $block 'name') -in @('Write', 'Edit')) {
+                    $id = Get-OptionalValue $block 'id'
+                    $toolInput = Get-OptionalValue $block 'input'
+                    $writtenPath = Get-OptionalValue $toolInput 'file_path'
+                    if (-not $writtenPath) { $writtenPath = Get-OptionalValue $toolInput 'path' }
+                    if ($id -and $writtenPath) { $pendingWrites[[string]$id] = [string]$writtenPath }
+                }
+                if ((Get-OptionalValue $block 'type') -eq 'tool_result') {
+                    $resultId = Get-OptionalValue $block 'tool_use_id'
+                    if ($resultId -and $pendingWrites.ContainsKey([string]$resultId)) {
+                        if ((Get-OptionalValue $block 'is_error') -ne $true) { $successfulWrites += $pendingWrites[[string]$resultId] }
+                        $pendingWrites.Remove([string]$resultId)
+                    }
+                }
+            }
             if ($event.type -eq 'assistant' -and $event.message.content) {
                 $text = ($event.message.content | Where-Object { $_.type -eq 'text' } | ForEach-Object { $_.text }) -join "`n"
                 if ($text) { $assistantTexts += $text }
@@ -40,12 +67,32 @@ try {
     # only the literal Opus preflight receipts emitted by the task-design/review gates. The
     # Sonnet SessionStart additionalContext is not persisted in every transcript and must not be
     # relied upon as a negative role marker.
-    $isOpus = $agentType -eq 'orchestrator' -or $model -match '(?i)opus'
+    $isOpus = $role -eq 'orchestrator'
     if (-not $isOpus -and $assistantTexts.Count -gt 0) {
         $assistantTranscript = $assistantTexts -join "`n"
         $isOpus = $assistantTranscript -match '(?i)\b(TASK-DESIGN|REVIEW) PREFLIGHT COMPLETE\b'
     }
     if (-not $isOpus) { exit 0 }
+
+    # An incomplete report cannot depend on the unavailable validation it is reporting.
+    # Classify before Git/backlog and ownership shortcuts, using the same parser as the Node Stop hook.
+    $currentMessage = Get-OptionalValue $inp 'last_assistant_message'
+    $last = if ($null -ne $currentMessage) { [string]$currentMessage } elseif ($assistantTexts.Count -gt 0) { $assistantTexts[$assistantTexts.Count - 1] } else { '' }
+    $classifier = Join-Path $PSScriptRoot '..\..\scripts\workflow-gates\response-state.mjs'
+    $classificationJson = @{ text = $last } | ConvertTo-Json -Compress -Depth 3
+    $classificationOutput = @($classificationJson | & node $classifier)
+    if ($LASTEXITCODE -ne 0 -or $classificationOutput.Count -ne 1) { throw 'Response state classifier failed.' }
+    $classification = $classificationOutput[0] | ConvertFrom-Json
+    $isBlocked = Get-OptionalValue $classification 'isBlocked'
+    if ($isBlocked -isnot [bool]) { throw 'Response state classifier returned invalid metadata.' }
+    if ($isBlocked) {
+        $classificationErrors = @(Get-OptionalValue $classification 'errors')
+        if ($classificationErrors.Count -gt 0) {
+            [Console]::Error.WriteLine($classificationErrors -join "`n")
+            exit 2
+        }
+        exit 0
+    }
 
     $root = $env:CLAUDE_PROJECT_DIR
     if (-not $root) { $root = (Get-Location).Path }
@@ -54,7 +101,7 @@ try {
     # GR-5 (owner rule 2026-09-27) - the WHOLE backlog is checked on EVERY Opus response, even one
     # that wrote no file. The diff-only check below could not see a closed sprint that was already
     # sitting in docs/backlog.md; the owner found Sprints 68 and 80-82 there on 2026-09-27.
-    # Only exit code 1 (violations) blocks; a script/runtime failure (2, missing node) fails open.
+    # Every nonzero exit is an evidence gap, including missing/broken checker runtimes.
     $backlogProblem = $null
     if (Test-Path -LiteralPath 'scripts/check-backlog-active.mjs') {
         # PowerShell 5.1 turns redirected native stderr into a terminating error under 'Stop', which
@@ -64,23 +111,49 @@ try {
         $backlogOut = & node scripts/check-backlog-active.mjs 2>&1 | Out-String
         $backlogExit = $LASTEXITCODE
         $ErrorActionPreference = $prevEap
-        if ($backlogExit -eq 1) {
+        if ($backlogExit -ne 0) {
             $backlogProblem = "GR-5 VIOLATED - docs/backlog.md is not active-state only (npm run check:backlog-active):`n" + $backlogOut.Trim()
         }
     }
+    else {
+        $backlogProblem = 'GR-5 EVIDENCE GAP - scripts/check-backlog-active.mjs is unavailable.'
+    }
 
-    $status = & git --no-optional-locks status --porcelain 2>$null
+    $status = & git --no-optional-locks status --porcelain -z 2>$null
+    if ($LASTEXITCODE -ne 0) { throw 'Read-only Git status failed; handoff scope is unavailable.' }
     if (-not $status -and -not $backlogProblem) { exit 0 }
     if (-not $status) {
         [Console]::Error.WriteLine("BLOCKED by .claude/hooks/orchestrator-response-gate.ps1 (docs/golden-rules.md):`n`n$backlogProblem`n`nFix it in this turn: archive row per closed item, delete it from the backlog, then emit the owner-run commit block. Do not explain the block to the owner as a tooling problem - it is the rule working.")
         exit 2
     }
 
-    $paths = @($status | ForEach-Object { ($_ -replace '^..\s+','').Trim() })
+    $paths = @()
+    $entries = ($status -join "`n").Split([char]0)
+    for ($entryIndex = 0; $entryIndex -lt $entries.Count; $entryIndex++) {
+        $entry = $entries[$entryIndex]
+        if ($entry.Length -lt 3 -or $entry[2] -ne ' ') { continue }
+        $paths += $entry.Substring(3).Replace('\', '/')
+        # Porcelain -z emits a rename/copy destination followed by its original path.
+        if ($entry.Substring(0, 2) -match '[RC]') { $entryIndex++ }
+    }
+    $ownedPaths = @()
+    $rootPrefix = [System.IO.Path]::GetFullPath($root).TrimEnd('\', '/') + [System.IO.Path]::DirectorySeparatorChar
+    foreach ($writtenPath in $successfulWrites) {
+        $fullPath = if ([System.IO.Path]::IsPathRooted($writtenPath)) {
+            [System.IO.Path]::GetFullPath($writtenPath)
+        } else {
+            [System.IO.Path]::GetFullPath((Join-Path $root $writtenPath))
+        }
+        if ($fullPath.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            $ownedPaths += $fullPath.Substring($rootPrefix.Length).Replace('\', '/')
+        }
+    }
 
     # Artifacts whose authorship is task design / governance - GR-6 demands a commit block.
     $designRe = '^(tasks/|CLAUDE\.md|\.claude/|docs/(?:rules/|backlog\.md|backlog-archive\.md|golden-rules\.md|agent-contract\.md|orchestrator-role\.md|orchestrator-procedures\.md|rule-index\.md|component-catalog\.md|qa-profiles\.md))'
-    $design = @($paths | Where-Object { $_ -match $designRe })
+    # Dirty state can belong to the owner or another executor. Only successful writes recorded in
+    # this session can impose this Opus handoff; a read-only audit must not claim someone else's work.
+    $design = @($paths | Where-Object { $_ -match $designRe -and $_ -in $ownedPaths })
     if ($design.Count -eq 0 -and -not $backlogProblem) { exit 0 }
 
     # Changed active kickoffs must carry mechanically traceable claims. This runs only for Opus governance responses;
@@ -125,8 +198,6 @@ try {
         }
     }
 
-    # Last assistant message from the already-read transcript.
-    $last = if ($assistantTexts.Count -gt 0) { $assistantTexts[$assistantTexts.Count - 1] } else { '' }
     if (-not $last -and ($kickoffEvidenceProblem -or $mobileAdaptationProblem)) {
         $gaps = @()
         if ($kickoffEvidenceProblem) { $gaps += $kickoffEvidenceProblem }
@@ -156,6 +227,11 @@ try {
     # check missed `git commit -m "Co-Authored-By: ..."`; inspect the whole commit block instead.
     # \u2010-\u2015 closes common Unicode-hyphen spelling bypasses without putting non-ASCII in this PS 5.1 source.
     $hasCommitCommand = $last -match '(?im)^\s*git(?:\s+\S+)*\s+commit\b'
+    $joinedCommandLines = $last -replace '`[ \t]*\r?\n', ' '
+    $commitCommandText = ([regex]::Matches($joinedCommandLines, '(?im)^[ \t]*git(?:[ \t]+\S+)*[ \t]+commit\b[^\r\n]*') | ForEach-Object { $_.Value }) -join "`n"
+    if ($hasCommitCommand -and $commitCommandText -match '(?i)(?:^|\s)--author(?:[=\s]|$)') {
+        $problems += 'GR-6 VIOLATED. Owner commit handoffs must not override identity with --author.'
+    }
     $hasAgentAttribution = $last -match '(?i)\bco[\s\-\u2010-\u2015]*authored[\s\-\u2010-\u2015]*by\b'
     if ($hasCommitCommand -and $hasAgentAttribution) {
         $problems += "GR-6 VIOLATED. Owner-run commit handoffs are unattributed: Co-Authored-By and every AI/agent attribution are forbidden anywhere in the git commit command or message."

@@ -1,9 +1,9 @@
 import { notFound, redirect } from 'next/navigation'
+import { requireStaffPage } from '@/lib/auth/staff'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
-import { createClient } from '@/lib/supabase/server'
-import { getUser } from '@/lib/auth/server'
+import { requireViewer } from '@/lib/auth/requireViewer'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { formatPrice } from '@/lib/formatters'
@@ -22,17 +22,17 @@ interface Props {
 }
 
 export default async function AdminListingPreviewPage({ params }: Props) {
+  // Task 923 R68 (a): the viewer is checked before the first read of any kind: the layout is not a guard for the page below it
+  await requireStaffPage()
   const { id } = await params
   const locale = await getAdminLocale()
 
   // Defensive in-route staff guard (admin layout already redirects non-staff,
   // this is a belt-and-suspenders check for this specific data-bypassing route).
-  const user = await getUser()
-  if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
-
-  const supabase = await createClient()
-  const { data: profile } = await supabase.from('users').select('role').eq('id', user.id).single()
-  const isAuthorized = profile?.role === 'admin' || profile?.role === 'moderator'
+  // The role comes from requireViewer() (Task 923 R44): a blocked, deactivated, deleted or missing account of any role is refused here too.
+  const viewer = await requireViewer()
+  if (!viewer.ok && viewer.reason === 'unauthenticated') redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
+  const isAuthorized = viewer.ok && (viewer.role === 'admin' || viewer.role === 'moderator')
   if (!isAuthorized) redirect(`/${locale}`)
 
   const db = createAdminClient()

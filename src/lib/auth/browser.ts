@@ -19,15 +19,14 @@ import type { User } from '@/types/database'
 
 // ── Sign-in ──────────────────────────────────────────────────────────────────
 
-export function signIn(email: string, password: string) {
-  return createClient().auth.signInWithPassword({ email, password })
+// Supabase's CAPTCHA protection refuses a password sign-in without a token (Task 923 R150).
+export function signIn(email: string, password: string, captchaToken: string) {
+  return createClient().auth.signInWithPassword({ email, password, options: { captchaToken } })
 }
 
-export function signInWithOAuth(provider: 'google', redirectTo: string) {
-  return createClient().auth.signInWithOAuth({
-    provider,
-    options: { redirectTo },
-  })
+// Google sign-in (Task 927): Google Identity Services returns an ID token in the browser; `nonce` is the RAW nonce whose SHA-256 hex Google was given.
+export function signInWithGoogleIdToken(token: string, nonce: string) {
+  return createClient().auth.signInWithIdToken({ provider: 'google', token, nonce })
 }
 
 export function signUp(
@@ -112,13 +111,19 @@ export async function resolveProfile(
 
   const { data: created } = await supabase
     .from('users')
-    .upsert({
-      id: authUserId,
-      name,
-      user_type: 'private',
-      role: 'user',
-      is_verified: false,
-    })
+    // Task 923 Revision 7, finding S58: creating must never touch a row that exists. When the read above failed (network, a temporary database error) "no data"
+    // was taken for "no profile", and this upsert overwrote the real row with role "user" and "not verified": an administrator or a verified agent lost the role or
+    // the badge. With `ignoreDuplicates` an existing row is left alone (and nothing is returned for it).
+    .upsert(
+      {
+        id: authUserId,
+        name,
+        user_type: 'private',
+        role: 'user',
+        is_verified: false,
+      },
+      { onConflict: 'id', ignoreDuplicates: true },
+    )
     .select()
     .single()
 

@@ -1,0 +1,35 @@
+Opus review 24, 2026-10-21, platform win32 10.0.26300.0 node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD fcb9be6ab8f025fe04309b5726a584ea4b5ed4c0
+(production runs HEAD's code; these are the HEAD lines that hardening v7.1 depends on. Read-only git; excerpts keep HEAD's own line numbers.)
+
+cmd git show HEAD:src/modules/listings/actions/createListing.ts | cat -n | sed -n 15,24p
+    15	function generateSlug(title: string): string {
+    16	  const base = title
+    21	    .replace(/[\s_]+/g, '-')
+    22	    .replace(/^-+|-+$/g, '')
+    23	    .slice(0, 80)
+    24	  return `${base}-${Date.now().toString(36)}`
+EXIT_CODE=0
+
+cmd git show HEAD:src/lib/auth/blockCheck.ts | cat -n | sed -n 22,30p
+    22	export async function getBlockedError(userId: string): Promise<BlockedError | null> {
+    23	  const supabase = await createClient()
+    24	  const { data: profile } = await supabase
+    25	    .from('users')
+    26	    .select('status, suspended_until')
+    27	    .eq('id', userId)
+    28	    .single()
+    30	  if (!profile || profile.status !== 'blocked') return null
+EXIT_CODE=0
+
+cmd git status --short -- src/lib/auth/accountAccess.ts src/lib/uploads src/modules/listings/lib/generateSlug.ts
+?? src/lib/auth/accountAccess.ts
+?? src/lib/uploads/
+?? src/modules/listings/lib/generateSlug.ts
+EXIT_CODE=0
+
+cmd git grep -n "getBlockedError" HEAD -- src (callers outside tests)
+20 lines
+EXIT_CODE=0
+
+Reading: with v7.1 applied, a blocked or deleted person's own session reads no row of public.users (the restrictive select policy, proposed-hardening.sql:446).
+HEAD's getBlockedError then returns null ("allowed") at line 30, and every server action that checks it and then writes with the service role lets that person act.

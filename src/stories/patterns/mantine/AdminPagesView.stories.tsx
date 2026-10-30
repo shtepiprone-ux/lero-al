@@ -95,7 +95,7 @@ function ViewDemo({ variant = 'default' }: { variant?: Variant }) {
   )
   const [deleteTarget, setDeleteTarget] = useState<Page | null>(variant === 'deleteConfirm' ? fixture[0] : null)
   return (
-    <AdminPageFrame width="narrow">
+    <AdminPageFrame width="shell">
       <AdminPagesView
         pages={pages}
         activeLocale="sq"

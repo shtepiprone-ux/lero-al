@@ -1,0 +1,26 @@
+{
+  "id": "P-FULL-ADMIN-LAYOUT-SKIP",
+  "scope": "Actual installed Next15 walker chooses subtree; createComponentTree is explicit observer double. Actual admin/users page run with synthetic DB and presentation adapters. Not a full HTTP/RSC-renderer/live Auth test.",
+  "partialNavigation": {
+    "componentStarts": [
+      "__PAGE__"
+    ],
+    "layoutGuardCalls": 0,
+    "dbCalls": 1,
+    "returnedSyntheticUserFields": [
+      "id",
+      "name",
+      "phone",
+      "role",
+      "status"
+    ],
+    "syntheticPhoneProp": "+355690000099"
+  },
+  "forcedLayoutControl": {
+    "componentStarts": [
+      "admin"
+    ],
+    "layoutGuardCalls": 1,
+    "denied": true
+  }
+}

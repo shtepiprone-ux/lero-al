@@ -1,8 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Badge, Group, Stack, Text } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
-import { MantineStoryShell } from '../_MantineStoryShell'
+import { BADGE_STATUS_REGISTRY, type BadgeStatusEntity } from '@/design-system/mantine/badgeTones'
+import { MantineBadge, type MantineBadgeProps } from '@/design-system/mantine/patterns/MantineBadge'
+import { MantineStoryShell, MantineStorySection, MantineStoryStack } from '../_MantineStoryShell'
 
+// Task 859 Revision 7 (R49/R50, owner decision D78-26): the canonical badge is `MantineBadge`, the one component that
+// renders a Mantine `Badge`. Its meaning (entity + value, or a semantic tone) lives in `badgeTones.ts`; its one look is
+// the `Badge` theme entry (pill, solid fill at the colour's index-7 stop, white text, 12px/500), the same as the
+// `ListingCard` Story and on every other surface. `Default` shows the tones, the sizes and the counts (a badge is text only, D78-29);
+// `Statuses` shows every registry entity x every value with its label. Every caption is a locale key, and the
+// captioned sections come from the Story-chrome owner (`MantineStorySection`), so this Story writes no presentation
+// (Task 859 Revision 8, R56).
 const meta: Meta = {
   title: 'Mantine/Primitives/Badge',
   parameters: {
@@ -17,77 +26,79 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const t = (key: string) => storyT(locale, key)
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
     return (
       <MantineStoryShell>
-        <Stack gap="lg">
-          {/* Semantic status variants */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              {t('storybook.mantine.admin_table_col_status')}
-            </Text>
-            <Group gap="xs">
-              <Badge color="green">{t('storybook.mantine.admin_status_active')}</Badge>
-              <Badge color="yellow">{t('storybook.mantine.admin_status_pending')}</Badge>
-              <Badge color="red">{t('storybook.mantine.badge_blocked')}</Badge>
-              <Badge color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
-              <Badge color="brand">{t('storybook.mantine.badge_brand')}</Badge>
-              {/* Task 617 — added for MantineListingCardPattern's sold/rented status badges
-                  (globals.css --status-info / --status-rented have no prior Mantine color). */}
-              <Badge color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
-              <Badge color="purple">{t('storybook.mantine.badge_purple')}</Badge>
-              {/* Task 619 — dedicated price-reduced crimson (owner-provided #dd0939), distinct
-                  from both `brand` (coral) and `red` (error/Blocked). */}
-              <Badge color="sale">{t('storybook.mantine.badge_sale')}</Badge>
-            </Group>
-          </Stack>
+        <MantineStoryStack>
+          {/* Semantic tones (the `tone` variant) */}
+          <MantineStorySection label={t('admin_table_col_status')}>
+            <MantineBadge variant="tone" tone="success">{t('admin_status_active')}</MantineBadge>
+            <MantineBadge variant="tone" tone="warning">{t('admin_status_pending')}</MantineBadge>
+            <MantineBadge variant="tone" tone="danger">{t('badge_blocked')}</MantineBadge>
+            <MantineBadge variant="tone" tone="neutral">{t('admin_status_archived')}</MantineBadge>
+            <MantineBadge variant="tone" tone="brand">{t('badge_brand')}</MantineBadge>
+            <MantineBadge variant="tone" tone="info">{t('badge_info')}</MantineBadge>
+            <MantineBadge variant="tone" tone="purple">{t('badge_purple')}</MantineBadge>
+            <MantineBadge variant="tone" tone="sale">{t('badge_sale')}</MantineBadge>
+          </MantineStorySection>
 
-          {/* Size comparison: xs vs sm (theme default) */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              xs / sm (default)
-            </Text>
-            <Group gap="xs" align="center">
-              <Badge color="green" size="xs">{t('storybook.mantine.admin_status_active')}</Badge>
-              <Badge color="green" size="sm">{t('storybook.mantine.admin_status_active')}</Badge>
-            </Group>
-          </Stack>
+          {/* Size comparison: xs / sm (theme default) / lg */}
+          <MantineStorySection label={t('badge_caption_sizes')}>
+            <MantineBadge variant="tone" tone="success" size="xs">{t('admin_status_active')}</MantineBadge>
+            <MantineBadge variant="tone" tone="success" size="sm">{t('admin_status_active')}</MantineBadge>
+            <MantineBadge variant="tone" tone="success" size="lg">{t('admin_status_active')}</MantineBadge>
+          </MantineStorySection>
 
           {/* Negative flow: long uk label ("Заблокований") — no clip at 320px */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              long label / no clip
-            </Text>
-            <Group gap="xs">
-              <Badge color="red">{t('storybook.mantine.badge_blocked')}</Badge>
-              <Badge color="yellow">{t('storybook.mantine.admin_status_pending')}</Badge>
-              <Badge color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
-            </Group>
-          </Stack>
+          <MantineStorySection label={t('badge_caption_long_label')}>
+            <MantineBadge variant="tone" tone="danger">{t('badge_blocked')}</MantineBadge>
+            <MantineBadge variant="tone" tone="warning">{t('admin_status_pending')}</MantineBadge>
+            <MantineBadge variant="tone" tone="neutral">{t('admin_status_archived')}</MantineBadge>
+          </MantineStorySection>
 
-          {/* Task 617 — `variant="filled"` (opaque, solid background + white text). The theme
-              default `variant="light"` (all sections above) mixes a translucent tint, which reads
-              poorly when a badge sits directly on top of a photo (e.g. MantineListingCardPattern's
-              corner status badges) — the underlying image can bleed through and kill contrast.
-              `filled` has no transparency, so it stays legible over any photo. Demoed on a gray
-              swatch below to make the "sits on a photo" case visible even in this plain story. */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              {t('storybook.mantine.badge_filled_caption')}
-            </Text>
-            <Group gap="xs" p="md" style={{ backgroundColor: 'var(--mantine-color-gray-3)', borderRadius: 'var(--mantine-radius-lg)' }}>
-              <Badge variant="filled" color="green">{t('storybook.mantine.admin_status_active')}</Badge>
-              <Badge variant="filled" color="yellow">{t('storybook.mantine.admin_status_pending')}</Badge>
-              <Badge variant="filled" color="red">{t('storybook.mantine.badge_blocked')}</Badge>
-              <Badge variant="filled" color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
-              <Badge variant="filled" color="brand">{t('storybook.mantine.badge_brand')}</Badge>
-              <Badge variant="filled" color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
-              <Badge variant="filled" color="purple">{t('storybook.mantine.badge_purple')}</Badge>
-              <Badge variant="filled" color="sale">{t('storybook.mantine.badge_sale')}</Badge>
-            </Group>
-          </Stack>
-        </Stack>
+          {/* The `count` variant: a number, optionally round (Mantine's native counter), on its host's emphasis. */}
+          <MantineStorySection label={t('badge_caption_counts')}>
+            <MantineBadge variant="count">3</MantineBadge>
+            <MantineBadge variant="count" circle>3</MantineBadge>
+            <MantineBadge variant="count" emphasis="neutral">3</MantineBadge>
+            <MantineBadge variant="count" emphasis="neutral" circle>3</MantineBadge>
+          </MantineStorySection>
+
+          {/* count emphasis="onBrand" sits inside a filled brand Button (MantineCountButton). */}
+          <MantineStorySection label={t('badge_caption_counts_on_brand')}>
+            <Button rightSection={<MantineBadge variant="count" emphasis="onBrand" circle>3</MantineBadge>}>
+              {t('badge_brand')}
+            </Button>
+          </MantineStorySection>
+        </MantineStoryStack>
+      </MantineStoryShell>
+    )
+  },
+}
+
+// Every status entity of the registry x every value, with its translated label (`labelKey` is a root message key).
+export const Statuses: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+
+    return (
+      <MantineStoryShell>
+        <MantineStoryStack>
+          {(Object.keys(BADGE_STATUS_REGISTRY) as BadgeStatusEntity[]).map(entity => (
+            <MantineStorySection key={entity} label={storyT(locale, `storybook.mantine.badge_entity_${entity}`)}>
+              {Object.entries(BADGE_STATUS_REGISTRY[entity]).map(([value, entry]) => (
+                <MantineBadge
+                  key={value}
+                  {...({ variant: 'status', entity, value } as MantineBadgeProps)}
+                  data-testid={`badge-${entity}-${value}`}
+                >
+                  {storyT(locale, entry.labelKey)}
+                </MantineBadge>
+              ))}
+            </MantineStorySection>
+          ))}
+        </MantineStoryStack>
       </MantineStoryShell>
     )
   },

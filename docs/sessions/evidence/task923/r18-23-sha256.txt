@@ -1,0 +1,16 @@
+platform win32 10.0.26300 node v22.22.3; pg n/a from a scratchpad prefix via NODE_PATH; start 2026-10-20T20:03:24.243Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-sha256.cjs   (SHA-256 of the v7 hardening and rollback files after R81 (b) change 16)
+the four files (v7 hardening + rollback, v3 deletion + rollback):
+  a8b0ae690d0786747b34e4c582612a1d7b4dc5eb095ae4066a3dc0230455e438  proposed-hardening.sql
+  52bd460f8c8cbe688f6bc24dae726728725e3c2414be827a27097c0327813db5  proposed-hardening-rollback.sql
+  de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a  proposed-account-deletion.sql
+  13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982  proposed-account-deletion-rollback.sql
+the retained copies of the previous versions (the files that were reviewed):
+  217bd678092faaf33e5c084dacb8de787e669080853d2d69614d8579697b8726  proposed-hardening.v6.sql.bak
+  2f09fca869f24e501518a580fc1c051b6065df671ce22badebc04b676399456a  proposed-hardening-rollback.v6.sql.bak
+  c5e61f0a006b61bfe60a0571cd6f033b66886a6a4f89a5b53c8a33be15a64bd8  proposed-account-deletion.v2.sql.bak
+  4b01bb9dce4ed484460439e45c949efb25d5225f30fb65b12498ab58cf0b7c8a  proposed-account-deletion-rollback.v2.sql.bak
+reviewed hash c5e61f0a... (C469 deletion v2 (review 16, withdrawn by review 17)) is the hash of: proposed-account-deletion.v2.sql.bak
+reviewed hash 217bd678... (section 26 item 1 hardening v6 (approved by review 17, withdrawn by review 18)) is the hash of: proposed-hardening.v6.sql.bak
+RESULT: no new file has a reviewed hash; the copies of the previous versions have the reviewed ones
+EXIT_CODE=0

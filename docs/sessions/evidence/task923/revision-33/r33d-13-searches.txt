@@ -1,0 +1,15 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al
+== command: grep -rln --include=*.ts --include=*.tsx "components/listing/WhatsAppContactButton" src
+count: 0
+== command: grep -rln --include=*.ts --include=*.tsx "components/ListingMobileCTA" src
+count: 0
+== command: grep -rln --include=*.ts --include=*.tsx "actions/getListingOwnerContact" src
+src/__tests__/security/serverEntryGuards.test.ts
+src/modules/listings/components/ListingContact.tsx
+src/modules/listings/components/ListingMobileCTA.tsx
+count: 3
+== command: grep -rln --include=*.ts --include=*.tsx "actions/contactEvents" src
+src/components/listing/WhatsAppContactButton.tsx
+src/modules/listings/components/ListingContact.tsx
+src/modules/listings/components/ListingMobileCTA.tsx
+count: 3

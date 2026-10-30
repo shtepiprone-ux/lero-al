@@ -2,17 +2,21 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
-import { Avatar, Badge, Button, Divider, Flex, Group, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
+import { Avatar, Button, Divider, Group, Stack, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { Star } from 'lucide-react'
 import { formatPrice } from '@/lib/formatters'
 import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { tiraneAbsoluteLabel } from '@/lib/dashboard/period'
+import { SquareArrowRightUpIcon, ListIcon } from '@solar-icons/react/broken'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
+import { MantineNavRowList } from '@/design-system/mantine/patterns/MantineNavRowList'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
-import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
 import type { RecentListingRow } from '@/modules/admin/dashboard/types'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AdminDashboardRecentListingsProps {
   listings: RecentListingRow[]
@@ -33,7 +37,7 @@ function initials(name: string): string {
  * `UnstyledButton` opening the preview `MantineModal` (Epic K §11 preserved), a premium star
  * (lucide, `iconSize.compact`, theme `yellow` — the same "closest theme color to gold" choice
  * `MantineListingDetailPattern.tsx` already made for a premium badge), price hidden below `sm`
- * (unchanged from the legacy behavior), and a status `Badge` colored from `LISTING_STATUS_COLOR`
+ * (unchanged from the legacy behavior), and a status `MantineBadge` (`listing` entity)
  * (844). The buyer/owner name pairs with an `Avatar` (initials fallback — no photo in
  * `RecentListingRow`), matching the owner's `techzaa.in` reference (kickoff §3.2). No legacy
  * shadcn primitives, no Tailwind utility classes, no style-merge helper.
@@ -47,6 +51,7 @@ function initials(name: string): string {
 export function AdminDashboardRecentListings({ listings, locale, emptyText }: AdminDashboardRecentListingsProps) {
   const t = useTranslations('admin.dashboard')
   const tl = useTranslations('listing')
+  const tc = useTranslations('common')
   const theme = useMantineTheme()
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const selected = listings.find((listing) => listing.id === selectedId) ?? null
@@ -77,13 +82,14 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                   column, line 2 is the badge + time — the same `hiddenFrom="sm"` /
                   `visibleFrom="sm"` split `MantineDashboardWorkList.tsx:135-160` already uses. */}
               <Stack gap="xs" hiddenFrom="sm">
-                <Group gap="sm" wrap="nowrap" align="flex-start">
+                {/* D2/D7 (GR-3j): the avatar is centred on the whole text block, one line or several. */}
+                <Group gap="sm" wrap="nowrap" align="center">
                   <Avatar radius="xl" size="md" color="brand">
                     {initials(listing.ownerName)}
                   </Avatar>
                   <Stack gap="micro" flex={1} miw={0}>
                     <Group gap="xs" wrap="nowrap">
-                      <Text size="sm" fw={600} c="gray.8" lineClamp={2} flex={1}>
+                      <Text size="sm" fw={600} c="gray.8" flex={1} miw={0}>
                         {listing.title}
                       </Text>
                       {listing.isPremium && (
@@ -95,15 +101,15 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                         />
                       )}
                     </Group>
-                    <Text size="xs" c="gray.5" lineClamp={1}>
+                    <Text size="xs" c="gray.5">
                       {listing.ownerName}
                     </Text>
                   </Stack>
                 </Group>
                 <Group gap="sm" wrap="wrap">
-                  <Badge color={LISTING_STATUS_COLOR[listing.status]} variant="light">
+                  <MantineBadge variant="status" entity="listing" value={listing.status}>
                     {statusLabel(listing.status)}
-                  </Badge>
+                  </MantineBadge>
                   {/* R16 (review 2, F8): RelativeTime has no sizing parent of its own and inherits
                       the body text color/size — the same meta-text wrap MantineDashboardWorkList.tsx:151
                       already uses. */}
@@ -125,7 +131,7 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                   </Avatar>
                   <Stack gap="micro" miw={0}>
                     <Group gap="xs" wrap="nowrap">
-                      <Text size="sm" fw={600} c="gray.8" lineClamp={1}>
+                      <Text size="sm" fw={600} c="gray.8" miw={0}>
                         {listing.title}
                       </Text>
                       {listing.isPremium && (
@@ -137,7 +143,7 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                         />
                       )}
                     </Group>
-                    <Text size="xs" c="gray.5" lineClamp={1}>
+                    <Text size="xs" c="gray.5">
                       {listing.ownerName}
                     </Text>
                   </Stack>
@@ -146,9 +152,9 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                   <Text size="sm" fw={500} c="gray.8">
                     {formatPrice(listing.price, listing.currency, locale)}
                   </Text>
-                  <Badge color={LISTING_STATUS_COLOR[listing.status]} variant="light">
+                  <MantineBadge variant="status" entity="listing" value={listing.status}>
                     {statusLabel(listing.status)}
-                  </Badge>
+                  </MantineBadge>
                   <Text component="span" size="xs" c="gray.5">
                     <RelativeTime
                       date={listing.createdAt}
@@ -165,64 +171,60 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
       </Stack>
 
       <MantineModal
+        structured
         opened={selected !== null}
         onClose={() => setSelectedId(null)}
         title={selected?.title}
         footer={
-          selected && (
-            <Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm">
-              <Button
-                component={Link}
-                href={`/${locale}/listings/${selected.slug}`}
-                target="_blank"
-                rel="noopener"
-                variant="outline"
-                fullWidth
-              >
-                {t('dialog_view_site')}
-              </Button>
-              <Button component={Link} href="/admin/listings" variant="outline" fullWidth>
-                {t('dialog_view_admin')}
-              </Button>
-            </Flex>
-          )
+          <MantineDialogFooter
+            primary={<Button type="button" variant="default" onClick={() => setSelectedId(null)}>{tc('close')}</Button>}
+          />
         }
       >
         {selected && (
-          <Stack gap="xs">
-            <Group justify="space-between" wrap="nowrap">
-              <Text size="sm" c="gray.5">
-                {t('dialog_owner')}
-              </Text>
-              <Text size="sm" fw={500}>
-                {selected.ownerName}
-              </Text>
-            </Group>
-            <Group justify="space-between" wrap="nowrap">
-              <Text size="sm" c="gray.5">
-                {t('dialog_status')}
-              </Text>
-              <Badge color={LISTING_STATUS_COLOR[selected.status]} variant="light">
-                {statusLabel(selected.status)}
-              </Badge>
-            </Group>
-            <Group justify="space-between" wrap="nowrap">
-              <Text size="sm" c="gray.5">
-                {t('dialog_price')}
-              </Text>
-              <Text size="sm" fw={500}>
-                {formatPrice(selected.price, selected.currency, locale)}
-              </Text>
-            </Group>
-            <Group justify="space-between" wrap="nowrap">
-              <Text size="sm" c="gray.5">
-                {t('dialog_created')}
-              </Text>
-              <Text component="span" size="sm" fw={500}>
-                <RelativeTime date={selected.createdAt} absoluteLabel={tiraneAbsoluteLabel(selected.createdAt, locale)} />
-              </Text>
-            </Group>
-          </Stack>
+          <MantineDialogSections>
+            <MantineDialogSection>
+              <MantineDetailList
+                items={[
+                  { label: t('dialog_owner'), value: selected.ownerName },
+                  {
+                    label: t('dialog_status'),
+                    value: (
+                      <Group gap={0} justify="flex-end">
+                        <MantineBadge variant="status" entity="listing" value={selected.status}>
+                          {statusLabel(selected.status)}
+                        </MantineBadge>
+                      </Group>
+                    ),
+                  },
+                  { label: t('dialog_price'), value: formatPrice(selected.price, selected.currency, locale) },
+                  {
+                    label: t('dialog_created'),
+                    value: <RelativeTime date={selected.createdAt} absoluteLabel={tiraneAbsoluteLabel(selected.createdAt, locale)} />,
+                  },
+                ]}
+              />
+            </MantineDialogSection>
+            <MantineDialogSection>
+              <MantineNavRowList
+                items={[
+                  {
+                    key: 'site',
+                    icon: <SquareArrowRightUpIcon size={theme.other.iconSize.standard} aria-hidden="true" />,
+                    label: t('dialog_view_site'),
+                    href: `/${locale}/listings/${selected.slug}`,
+                    external: true,
+                  },
+                  {
+                    key: 'admin',
+                    icon: <ListIcon size={theme.other.iconSize.standard} aria-hidden="true" />,
+                    label: t('dialog_view_admin'),
+                    href: '/admin/listings',
+                  },
+                ]}
+              />
+            </MantineDialogSection>
+          </MantineDialogSections>
         )}
       </MantineModal>
     </>

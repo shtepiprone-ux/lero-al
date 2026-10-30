@@ -1,0 +1,24 @@
+Task 923 Revision 8 design (Opus, 2026-10-18) - admin tables at 640px under owner decision D24 (tables become cards only below 640)
+probe: docs/sessions/evidence/task923/design-r8/table-fit-640.mjs (raw table-fit-640.json); columns: table-columns-768.mjs (raw table-columns-768.json)
+built Storybook storybook-static/ (2026-10-17 05:08); min-content width of the table measured at 768, container width measured at 640
+container width at 640 for every admin table Story: 592
+verdict, worst locale:
+patterns-mantine-adminlistingsview--default: overflows by 70px (uk 662 vs 592)
+patterns-mantine-adminexchangeprovidersview--default: overflows by 108px (uk 700 vs 592)
+patterns-mantine-adminreportsview--default: overflows by 45px (uk 637 vs 592)
+admin-admincompaniesmanager--default: overflows by 74px (uk 666 vs 592)
+admin-adminpropertytypesmanager--default: overflows by 124px (uk 716 vs 592)
+patterns-mantine-admincurrenciesview--default: fits (uk 515 vs 592)
+patterns-mantine-adminpagesview--default: fits (uk 480 vs 592)
+patterns-mantine-adminsupportview--default: fits (uk 507 vs 592)
+patterns-mantine-adminuserstable--default: fits (uk 453 vs 592)
+columns shown at 768 (min-content px, en / uk; a 0 is a column already hidden below a larger breakpoint):
+adminlistingsview: Listing 200 / 200 | Price 131 / 131 | Status 221 / 270 | actions 62 / 62
+adminexchangeprovidersview: Provider name 332 / 332 | Priority 90 / 109 | Mode 116 / 129 | actions 130 / 130
+adminreportsview: Reason 155 / 199 | Listing 200 / 200 | Status 151 / 177 | actions 62 / 62
+admincompaniesmanager: Logo 84 / 98 | Name 246 / 246 | Agents 112 / 117 | Created 138 / 145 | actions 62 / 62
+adminpropertytypesmanager: Slug 146 / 182 | SQ 131 / 131 | EN/UK/IT 193 / 193 | Active 127 / 150 | actions 62 / 62
+other exposure of a column value (for §7.3 step 4(c)): src/components/admin/ListingPreviewDialogView.tsx shows created_at and no price
+Mantine 8.3.18 below-breakpoint form (node_modules/@mantine/core/esm/core/MantineProvider/MantineClasses/MantineClasses.mjs:17):
+const maxWidthBreakpoint = isPxBreakpoint ? `${pxValue - 0.1}px` : em(pxValue - 0.1);
+the project helper src/design-system/mantine/belowMobileGate.ts:17 gives the same 39.99375em for the 40em gate

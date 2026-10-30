@@ -1,0 +1,458 @@
+{
+  "at": "2026-10-23T14:31:46.632Z",
+  "storybookIndexMtime": "2026-10-23T13:28:10.283Z",
+  "css": {
+    "inFlowZeroBoxGap": 32,
+    "absoluteZeroBoxGap": 16
+  },
+  "rows": [
+    {
+      "story": "register",
+      "locale": "sq",
+      "width": 320,
+      "note": [
+        16,
+        723.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "sq",
+      "width": 1440,
+      "note": [
+        1076,
+        554,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "en",
+      "width": 320,
+      "note": [
+        16,
+        723.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "en",
+      "width": 1440,
+      "note": [
+        1076,
+        554,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "uk",
+      "width": 320,
+      "note": [
+        16,
+        723.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "uk",
+      "width": 1440,
+      "note": [
+        1076,
+        554,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "it",
+      "width": 320,
+      "note": [
+        16,
+        723.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register",
+      "locale": "it",
+      "width": 1440,
+      "note": [
+        1076,
+        554,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "sq",
+      "width": 320,
+      "note": [
+        16,
+        981.1,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "sq",
+      "width": 1440,
+      "note": [
+        1076,
+        861.1,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "en",
+      "width": 320,
+      "note": [
+        16,
+        981.1,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "en",
+      "width": 1440,
+      "note": [
+        1076,
+        861.1,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "uk",
+      "width": 320,
+      "note": [
+        16,
+        981.1,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "uk",
+      "width": 1440,
+      "note": [
+        1076,
+        861.1,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "it",
+      "width": 320,
+      "note": [
+        16,
+        981.1,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "register-agent",
+      "locale": "it",
+      "width": 1440,
+      "note": [
+        1076,
+        861.1,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "sq",
+      "width": 320,
+      "note": [
+        16,
+        800.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "sq",
+      "width": 1440,
+      "note": [
+        1076,
+        233,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "en",
+      "width": 320,
+      "note": [
+        16,
+        800.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "en",
+      "width": 1440,
+      "note": [
+        1076,
+        233,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "uk",
+      "width": 320,
+      "note": [
+        16,
+        800.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "uk",
+      "width": 1440,
+      "note": [
+        1076,
+        233,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "it",
+      "width": 320,
+      "note": [
+        16,
+        800.5,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "forgot-password",
+      "locale": "it",
+      "width": 1440,
+      "note": [
+        1076,
+        233,
+        348,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": 28,
+      "belowTag": "BUTTON"
+    },
+    {
+      "story": "captcha",
+      "locale": "sq",
+      "width": 320,
+      "note": [
+        16,
+        28,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "sq",
+      "width": 1440,
+      "note": [
+        49,
+        61,
+        1342,
+        27.5
+      ],
+      "fromAbove": 61,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "en",
+      "width": 320,
+      "note": [
+        16,
+        28,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "en",
+      "width": 1440,
+      "note": [
+        49,
+        61,
+        1342,
+        27.5
+      ],
+      "fromAbove": 61,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "uk",
+      "width": 320,
+      "note": [
+        16,
+        28,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "uk",
+      "width": 1440,
+      "note": [
+        49,
+        61,
+        1342,
+        27.5
+      ],
+      "fromAbove": 61,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "it",
+      "width": 320,
+      "note": [
+        16,
+        28,
+        288,
+        27.5
+      ],
+      "fromAbove": 28,
+      "toBelow": null,
+      "belowTag": null
+    },
+    {
+      "story": "captcha",
+      "locale": "it",
+      "width": 1440,
+      "note": [
+        49,
+        61,
+        1342,
+        27.5
+      ],
+      "fromAbove": 61,
+      "toBelow": null,
+      "belowTag": null
+    }
+  ]
+}

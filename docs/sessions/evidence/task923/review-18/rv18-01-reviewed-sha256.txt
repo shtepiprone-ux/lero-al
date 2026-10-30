@@ -1,0 +1,4 @@
+platform win32; sha256sum from the Bash tool; Opus review 18, 2026-10-19
+217bd678092faaf33e5c084dacb8de787e669080853d2d69614d8579697b8726 *db-catalog/proposed-hardening.sql
+2f09fca869f24e501518a580fc1c051b6065df671ce22badebc04b676399456a *db-catalog/proposed-hardening-rollback.sql
+EXIT_CODE=0

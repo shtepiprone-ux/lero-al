@@ -52,9 +52,12 @@ const mockListingsSelectAfterInsert = vi.fn().mockReturnValue({ single: mockList
 const mockListingsInsert     = vi.fn().mockReturnValue({ select: mockListingsSelectAfterInsert })
 const mockListingImagesInsert = vi.fn().mockResolvedValue({ error: null })
 
+// The catalogues the action reads before any write (Task 923 R100, R104 (a)): from('property_types' | 'currencies').select(col).eq('is_active', true)
 const mockFrom = vi.fn((table: string) => {
   if (table === 'listings')      return { insert: mockListingsInsert }
   if (table === 'listing_images') return { insert: mockListingImagesInsert }
+  if (table === 'property_types') return { select: () => ({ eq: () => Promise.resolve({ data: [{ slug: 'apartment' }], error: null }) }) }
+  if (table === 'currencies')     return { select: () => ({ eq: () => Promise.resolve({ data: [{ code: 'ALL' }, { code: 'EUR' }], error: null }) }) }
   return {}
 })
 
@@ -127,7 +130,7 @@ describe('createListing — smoke tests (Task 442)', () => {
     expect(mockListingsInsert).not.toHaveBeenCalled()
   })
 
-  it('insert error: DB fails → { error: dbError.message } + console.error logged (Guard 4)', async () => {
+  it('insert error: DB fails → { error: "insert_failed" } + console.error logged (Guard 4)', async () => {
     const dbError = { message: 'constraint violation on listings' }
     mockListingsSingle.mockResolvedValue({ data: null, error: dbError })
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
@@ -136,7 +139,7 @@ describe('createListing — smoke tests (Task 442)', () => {
     const result = await createListing({ ...PARSED_DATA, images: [] } as unknown as Parameters<typeof createListing>[0])
 
     // Guard 4: DB failure must surface a typed error — never a silent black hole.
-    expect(result).toEqual({ error: 'constraint violation on listings' })
+    expect(result).toEqual({ error: 'insert_failed' })
     expect(consoleSpy).toHaveBeenCalledWith(
       'Failed to create listing',
       expect.objectContaining({ error: dbError, userId: USER_ID }),

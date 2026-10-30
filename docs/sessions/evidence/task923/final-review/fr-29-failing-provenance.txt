@@ -1,0 +1,26 @@
+# fr-29 (Opus) 2026-10-28T22:12:31.486Z base 7dd707aa154801ff2e44402e3976841cb377dddb; failing IDs 237, files 24
+failing IDs by file kind: {"NEW":181,"unchanged":17,"CHANGED":39}
+NEW	3	src/__tests__/instrumentation.test.ts
+unchanged	5	src/app/api/cron/listings-expiry/__tests__/route.test.ts
+unchanged	1	src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+NEW	7	src/components/layout/__tests__/headerFooterContainers.test.tsx
+NEW	4	src/lib/auth/__tests__/authCore.security.test.ts
+CHANGED	1	src/lib/auth/__tests__/controller.test.ts
+unchanged	1	src/lib/auth/__tests__/permissions.test.ts
+NEW	2	src/lib/auth/__tests__/sessionMiddleware.test.ts
+CHANGED	4	src/modules/__tests__/rls-write-guards.smoke.test.ts
+NEW	1	src/modules/admin/actions/__tests__/adminLocale.test.ts
+NEW	53	src/modules/admin/actions/__tests__/adminOperations.security.test.ts
+unchanged	3	src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+CHANGED	8	src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts
+NEW	34	src/modules/admin/actions/__tests__/permissions.security.test.ts
+unchanged	2	src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts
+unchanged	3	src/modules/cabinet/statistics/__tests__/access.test.ts
+NEW	16	src/modules/companies/__tests__/companyActions.security.test.ts
+NEW	5	src/modules/listings/actions/__tests__/changeListingStatus.security.test.ts
+CHANGED	10	src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts
+unchanged	2	src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts
+CHANGED	8	src/modules/listings/actions/__tests__/reportListing.smoke.test.ts
+NEW	24	src/modules/locations/actions/__tests__/popularLocationActions.security.test.ts
+NEW	32	src/modules/notifications/actions/__tests__/emailTemplates.security.test.ts
+CHANGED	8	src/modules/notifications/lib/__tests__/mutations.smoke.test.ts

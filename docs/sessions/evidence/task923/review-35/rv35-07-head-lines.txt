@@ -1,0 +1,5 @@
+# HEAD 0a92ba302 lines cited by Task 923 claim rows whose working-tree source changed (Revision 32, rv35-07-refresh-locators.mjs)
+== tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json at HEAD 0a92ba302, lines 3408-3408
+      "layer": "server",
+== tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json at HEAD 0a92ba302, lines 3047-3047
+      "id": "SEC-X-SRV-CLOSED-PAGE",

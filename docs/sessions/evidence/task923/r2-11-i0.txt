@@ -1,0 +1,22 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+HEAD 429a93982
+porcelain lines 1607
+51c6fde110ba58fda66b2b409d010b2461daaf5c *scripts/check-rendered-state-census.mjs
+84e1e7c8ce9ed67f9508b8edc3681f8e164d1962 *scripts/rendered-state-census/discover.mjs
+70e3d98ba5318e53b0d457ff7c9fc71bc762f1b1 *scripts/rendered-state-census/in-page.mjs
+149f67d6315dde34404bfae55b5010f49a16947c *scripts/rendered-state-census/registry.mjs
+a8cabb69c0eb355169b08a9468b3e4747c3b9ecf *scripts/rendered-state-census/runner.mjs
+0b79441c7c0980c2b88a753bec58fa8a4225b1a9 *scripts/rendered-state-census/verify.mjs
+31a9267733e20b9f7e0c84663337667c501b5f44 *scripts/rendered-interaction-states.json
+c1881cd70f24863704a56453daa8f80ae164fe64 *scripts/__fixtures__/rendered-state-census/app-root-only.html
+f34dbd82d100a9f023fabf9c70283679543fac4e *scripts/__fixtures__/rendered-state-census/clean.html
+8a5a65fe24825233fc890a568f6e2481d4cb40da *scripts/__fixtures__/rendered-state-census/escape-does-not-close.html
+79fd13b34b46a3ca53e67ca30f7d568469c4e834 *scripts/__fixtures__/rendered-state-census/focus-escapes-trap.html
+8916e11cad25b1c8925e695ebfb4d9e09d2e67b3 *scripts/__fixtures__/rendered-state-census/portal-clamp-only.html
+53d2f66a3c2ec9ab331fe8ae9b1e575cc63f278c *scripts/__fixtures__/rendered-state-census/portal-overflow-only.html
+825c55400d5df901a0707bae55cd7b4fead16d7f *scripts/__fixtures__/rendered-state-census/portal-word-split-only.html
+b29215025bfa3cf24b808d20ae4de23c0ef08e74 *scripts/__fixtures__/rendered-state-census/registered-opens-nothing.html
+d52e405591b68c6072d52097b609e4ac1443550f *scripts/__fixtures__/rendered-state-census/unregistered-portal.html
+3d0d92519973443e6fb73658954285c372ef1c33 *scripts/__tests__/rendered-state-census.test.ts
+b5e449cc24c7e0b2e8afb5b0f2302919ef6fe144 *package.json

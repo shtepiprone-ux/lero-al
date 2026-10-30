@@ -1,0 +1,2717 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-18T15:51:57.046Z",
+ "case": "SEC-S44-SRV-DENY",
+ "results": [
+  {
+   "id": "SEC-S44-SRV-DENY",
+   "testFile": "src/modules/admin/actions/__tests__/userAdministration.security.test.ts",
+   "testName": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "updateUserProfile also copies role and status from the caller, so a staff member can change them through it",
+     "from": "  for (const key of ['name', 'phone', 'company_name'] as const) {\n",
+     "to": "  for (const key of ['name', 'phone', 'company_name', 'role', 'status'] as unknown as readonly ('name' | 'phone' | 'company_name')[]) {\n"
+    }
+   ],
+   "failureMessage": "AssertionError: expected { id: 'tgt', role: 'admin', …(5) } to match object { name: 'New', role: 'user', …(3) }\n(2 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/userAdministration.security.test.ts:313:23\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 8,
+     "numPassedTestSuites": 8,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 72,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 71,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338701702,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name drops every other column a caller sends",
+         "status": "skipped",
+         "title": "drops every other column a caller sends",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot make themselves an administrator through it",
+         "status": "skipped",
+         "title": "a moderator cannot make themselves an administrator through it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name takes text only",
+         "status": "skipped",
+         "title": "takes text only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot edit an administrator; an administrator can",
+         "status": "skipped",
+         "title": "a moderator cannot edit an administrator; an administrator can",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a plain user cannot use it at all",
+         "status": "skipped",
+         "title": "a plain user cannot use it at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified is refused and changes nothing",
+         "status": "skipped",
+         "title": "toggleUserVerified is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar is refused and changes nothing",
+         "status": "skipped",
+         "title": "removeUserAvatar is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "softDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "deactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission reactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "reactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission hardDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "hardDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull is refused and changes nothing",
+         "status": "skipped",
+         "title": "updateUserProfileFull is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified works when an administrator does it",
+         "status": "skipped",
+         "title": "toggleUserVerified works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar works when an administrator does it",
+         "status": "skipped",
+         "title": "removeUserAvatar works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser works when an administrator does it",
+         "status": "skipped",
+         "title": "softDeleteUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser works when an administrator does it",
+         "status": "skipped",
+         "title": "deactivateUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull works when an administrator does it",
+         "status": "skipped",
+         "title": "updateUserProfileFull works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator still works on an ordinary account",
+         "status": "skipped",
+         "title": "a moderator still works on an ordinary account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator can still edit themselves and another moderator",
+         "status": "skipped",
+         "title": "a moderator can still edit themselves and another moderator",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "status": "skipped",
+         "title": "a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator the same moderator can set the other account types",
+         "status": "skipped",
+         "title": "the same moderator can set the other account types",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator an administrator can promote",
+         "status": "skipped",
+         "title": "an administrator can promote",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator without the role permission changes nobody's type, and the other fields still save",
+         "status": "skipped",
+         "title": "a moderator without the role permission changes nobody's type, and the other fields still save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator creating an administrator account needs an administrator; other types do not",
+         "status": "skipped",
+         "title": "creating an administrator account needs an administrator; other types do not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator without the permission no account is created at all",
+         "status": "skipped",
+         "title": "without the permission no account is created at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses \"true\" as the value",
+         "status": "skipped",
+         "title": "refuses \"true\" as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses 1 as the value",
+         "status": "skipped",
+         "title": "refuses 1 as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses null as the value",
+         "status": "skipped",
+         "title": "refuses null as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses undefined as the value",
+         "status": "skipped",
+         "title": "refuses undefined as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns createLocation drops unknown columns",
+         "status": "skipped",
+         "title": "createLocation drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updateLocation cannot move the row or change its id",
+         "status": "skipped",
+         "title": "updateLocation cannot move the row or change its id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updatePage drops unknown columns",
+         "status": "skipped",
+         "title": "updatePage drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a page cannot publish with an empty Albanian body",
+         "status": "skipped",
+         "title": "a page cannot publish with an empty Albanian body",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a slug that another page uses is refused",
+         "status": "skipped",
+         "title": "a slug that another page uses is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns without the permission nothing is written",
+         "status": "skipped",
+         "title": "without the permission nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings stores the settings the form offers",
+         "status": "skipped",
+         "title": "stores the settings the form offers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses an unknown key and writes nothing",
+         "status": "skipped",
+         "title": "refuses an unknown key and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a key that tries to be clever and writes nothing",
+         "status": "skipped",
+         "title": "refuses a key that tries to be clever and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a language that does not exist and writes nothing",
+         "status": "skipped",
+         "title": "refuses a language that does not exist and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses zero days and writes nothing",
+         "status": "skipped",
+         "title": "refuses zero days and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses days that are not a number and writes nothing",
+         "status": "skipped",
+         "title": "refuses days that are not a number and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a javascript logo and writes nothing",
+         "status": "skipped",
+         "title": "refuses a javascript logo and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a script social link and writes nothing",
+         "status": "skipped",
+         "title": "refuses a script social link and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a data image and writes nothing",
+         "status": "skipped",
+         "title": "refuses a data image and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value over 5000 characters and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value over 5000 characters and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is not text and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is not text and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is an object and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is an object and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings one bad entry stops the whole save",
+         "status": "skipped",
+         "title": "one bad entry stops the whole save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses null as the whole payload",
+         "status": "skipped",
+         "title": "refuses null as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses undefined as the whole payload",
+         "status": "skipped",
+         "title": "refuses undefined as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses \"site_name=x\" as the whole payload",
+         "status": "skipped",
+         "title": "refuses \"site_name=x\" as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses 5 as the whole payload",
+         "status": "skipped",
+         "title": "refuses 5 as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings needs the settings permission",
+         "status": "skipped",
+         "title": "needs the settings permission",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings accepts exactly 5000 characters",
+         "status": "skipped",
+         "title": "accepts exactly 5000 characters",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"067 123 4567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"067 123 4567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"355691234567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"355691234567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile accepts a valid number and lets staff clear it",
+         "status": "skipped",
+         "title": "updateUserProfile accepts a valid number and lets staff clear it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull saves valid numbers",
+         "status": "skipped",
+         "title": "updateUserProfileFull saves valid numbers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"355691234567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"355691234567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 3.0533000000000357,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "status": "skipped",
+         "title": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338702222,
+       "endTime": 1792338702225.0532,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/userAdministration.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 8,
+     "numPassedTestSuites": 7,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 72,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 71,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338703146,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name drops every other column a caller sends",
+         "status": "skipped",
+         "title": "drops every other column a caller sends",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot make themselves an administrator through it",
+         "status": "skipped",
+         "title": "a moderator cannot make themselves an administrator through it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name takes text only",
+         "status": "skipped",
+         "title": "takes text only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot edit an administrator; an administrator can",
+         "status": "skipped",
+         "title": "a moderator cannot edit an administrator; an administrator can",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a plain user cannot use it at all",
+         "status": "skipped",
+         "title": "a plain user cannot use it at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified is refused and changes nothing",
+         "status": "skipped",
+         "title": "toggleUserVerified is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar is refused and changes nothing",
+         "status": "skipped",
+         "title": "removeUserAvatar is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "softDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "deactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission reactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "reactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission hardDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "hardDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull is refused and changes nothing",
+         "status": "skipped",
+         "title": "updateUserProfileFull is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified works when an administrator does it",
+         "status": "skipped",
+         "title": "toggleUserVerified works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar works when an administrator does it",
+         "status": "skipped",
+         "title": "removeUserAvatar works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser works when an administrator does it",
+         "status": "skipped",
+         "title": "softDeleteUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser works when an administrator does it",
+         "status": "skipped",
+         "title": "deactivateUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull works when an administrator does it",
+         "status": "skipped",
+         "title": "updateUserProfileFull works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator still works on an ordinary account",
+         "status": "skipped",
+         "title": "a moderator still works on an ordinary account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator can still edit themselves and another moderator",
+         "status": "skipped",
+         "title": "a moderator can still edit themselves and another moderator",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "status": "skipped",
+         "title": "a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator the same moderator can set the other account types",
+         "status": "skipped",
+         "title": "the same moderator can set the other account types",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator an administrator can promote",
+         "status": "skipped",
+         "title": "an administrator can promote",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator without the role permission changes nobody's type, and the other fields still save",
+         "status": "skipped",
+         "title": "a moderator without the role permission changes nobody's type, and the other fields still save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator creating an administrator account needs an administrator; other types do not",
+         "status": "skipped",
+         "title": "creating an administrator account needs an administrator; other types do not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator without the permission no account is created at all",
+         "status": "skipped",
+         "title": "without the permission no account is created at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses \"true\" as the value",
+         "status": "skipped",
+         "title": "refuses \"true\" as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses 1 as the value",
+         "status": "skipped",
+         "title": "refuses 1 as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses null as the value",
+         "status": "skipped",
+         "title": "refuses null as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses undefined as the value",
+         "status": "skipped",
+         "title": "refuses undefined as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns createLocation drops unknown columns",
+         "status": "skipped",
+         "title": "createLocation drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updateLocation cannot move the row or change its id",
+         "status": "skipped",
+         "title": "updateLocation cannot move the row or change its id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updatePage drops unknown columns",
+         "status": "skipped",
+         "title": "updatePage drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a page cannot publish with an empty Albanian body",
+         "status": "skipped",
+         "title": "a page cannot publish with an empty Albanian body",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a slug that another page uses is refused",
+         "status": "skipped",
+         "title": "a slug that another page uses is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns without the permission nothing is written",
+         "status": "skipped",
+         "title": "without the permission nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings stores the settings the form offers",
+         "status": "skipped",
+         "title": "stores the settings the form offers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses an unknown key and writes nothing",
+         "status": "skipped",
+         "title": "refuses an unknown key and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a key that tries to be clever and writes nothing",
+         "status": "skipped",
+         "title": "refuses a key that tries to be clever and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a language that does not exist and writes nothing",
+         "status": "skipped",
+         "title": "refuses a language that does not exist and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses zero days and writes nothing",
+         "status": "skipped",
+         "title": "refuses zero days and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses days that are not a number and writes nothing",
+         "status": "skipped",
+         "title": "refuses days that are not a number and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a javascript logo and writes nothing",
+         "status": "skipped",
+         "title": "refuses a javascript logo and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a script social link and writes nothing",
+         "status": "skipped",
+         "title": "refuses a script social link and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a data image and writes nothing",
+         "status": "skipped",
+         "title": "refuses a data image and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value over 5000 characters and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value over 5000 characters and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is not text and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is not text and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is an object and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is an object and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings one bad entry stops the whole save",
+         "status": "skipped",
+         "title": "one bad entry stops the whole save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses null as the whole payload",
+         "status": "skipped",
+         "title": "refuses null as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses undefined as the whole payload",
+         "status": "skipped",
+         "title": "refuses undefined as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses \"site_name=x\" as the whole payload",
+         "status": "skipped",
+         "title": "refuses \"site_name=x\" as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses 5 as the whole payload",
+         "status": "skipped",
+         "title": "refuses 5 as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings needs the settings permission",
+         "status": "skipped",
+         "title": "needs the settings permission",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings accepts exactly 5000 characters",
+         "status": "skipped",
+         "title": "accepts exactly 5000 characters",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"067 123 4567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"067 123 4567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"355691234567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"355691234567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile accepts a valid number and lets staff clear it",
+         "status": "skipped",
+         "title": "updateUserProfile accepts a valid number and lets staff clear it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull saves valid numbers",
+         "status": "skipped",
+         "title": "updateUserProfileFull saves valid numbers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"355691234567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"355691234567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "failed",
+         "title": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 8.480199999999968,
+         "failureMessages": [
+          "AssertionError: expected { id: 'tgt', role: 'admin', …(5) } to match object { name: 'New', role: 'user', …(3) }\n(2 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/userAdministration.security.test.ts:313:23\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "status": "skipped",
+         "title": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338703661,
+       "endTime": 1792338703669.4802,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/userAdministration.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 8,
+     "numPassedTestSuites": 8,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 72,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 71,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338704599,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name drops every other column a caller sends",
+         "status": "skipped",
+         "title": "drops every other column a caller sends",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot make themselves an administrator through it",
+         "status": "skipped",
+         "title": "a moderator cannot make themselves an administrator through it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name takes text only",
+         "status": "skipped",
+         "title": "takes text only",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a moderator cannot edit an administrator; an administrator can",
+         "status": "skipped",
+         "title": "a moderator cannot edit an administrator; an administrator can",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "updateUserProfile writes only name, phone and company_name"
+         ],
+         "fullName": "updateUserProfile writes only name, phone and company_name a plain user cannot use it at all",
+         "status": "skipped",
+         "title": "a plain user cannot use it at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified is refused and changes nothing",
+         "status": "skipped",
+         "title": "toggleUserVerified is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar is refused and changes nothing",
+         "status": "skipped",
+         "title": "removeUserAvatar is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "softDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "deactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission reactivateUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "reactivateUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission hardDeleteUser is refused and changes nothing",
+         "status": "skipped",
+         "title": "hardDeleteUser is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull is refused and changes nothing",
+         "status": "skipped",
+         "title": "updateUserProfileFull is refused and changes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission toggleUserVerified works when an administrator does it",
+         "status": "skipped",
+         "title": "toggleUserVerified works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission removeUserAvatar works when an administrator does it",
+         "status": "skipped",
+         "title": "removeUserAvatar works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission softDeleteUser works when an administrator does it",
+         "status": "skipped",
+         "title": "softDeleteUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission deactivateUser works when an administrator does it",
+         "status": "skipped",
+         "title": "deactivateUser works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission updateUserProfileFull works when an administrator does it",
+         "status": "skipped",
+         "title": "updateUserProfileFull works when an administrator does it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator still works on an ordinary account",
+         "status": "skipped",
+         "title": "a moderator still works on an ordinary account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "rank: an administrator account is out of reach for a moderator with every permission"
+         ],
+         "fullName": "rank: an administrator account is out of reach for a moderator with every permission a moderator can still edit themselves and another moderator",
+         "status": "skipped",
+         "title": "a moderator can still edit themselves and another moderator",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "status": "skipped",
+         "title": "a moderator with the role permission cannot set the account type \"admin\" on anyone, themselves included",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator the same moderator can set the other account types",
+         "status": "skipped",
+         "title": "the same moderator can set the other account types",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator an administrator can promote",
+         "status": "skipped",
+         "title": "an administrator can promote",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator a moderator without the role permission changes nobody's type, and the other fields still save",
+         "status": "skipped",
+         "title": "a moderator without the role permission changes nobody's type, and the other fields still save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator creating an administrator account needs an administrator; other types do not",
+         "status": "skipped",
+         "title": "creating an administrator account needs an administrator; other types do not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "only an administrator makes an administrator"
+         ],
+         "fullName": "only an administrator makes an administrator without the permission no account is created at all",
+         "status": "skipped",
+         "title": "without the permission no account is created at all",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses \"true\" as the value",
+         "status": "skipped",
+         "title": "refuses \"true\" as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses 1 as the value",
+         "status": "skipped",
+         "title": "refuses 1 as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses null as the value",
+         "status": "skipped",
+         "title": "refuses null as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "toggleUserVerified"
+         ],
+         "fullName": "toggleUserVerified refuses undefined as the value",
+         "status": "skipped",
+         "title": "refuses undefined as the value",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns createLocation drops unknown columns",
+         "status": "skipped",
+         "title": "createLocation drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updateLocation cannot move the row or change its id",
+         "status": "skipped",
+         "title": "updateLocation cannot move the row or change its id",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns updatePage drops unknown columns",
+         "status": "skipped",
+         "title": "updatePage drops unknown columns",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a page cannot publish with an empty Albanian body",
+         "status": "skipped",
+         "title": "a page cannot publish with an empty Albanian body",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns a slug that another page uses is refused",
+         "status": "skipped",
+         "title": "a slug that another page uses is refused",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "locations and pages write only their own columns"
+         ],
+         "fullName": "locations and pages write only their own columns without the permission nothing is written",
+         "status": "skipped",
+         "title": "without the permission nothing is written",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings stores the settings the form offers",
+         "status": "skipped",
+         "title": "stores the settings the form offers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses an unknown key and writes nothing",
+         "status": "skipped",
+         "title": "refuses an unknown key and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a key that tries to be clever and writes nothing",
+         "status": "skipped",
+         "title": "refuses a key that tries to be clever and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a language that does not exist and writes nothing",
+         "status": "skipped",
+         "title": "refuses a language that does not exist and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses zero days and writes nothing",
+         "status": "skipped",
+         "title": "refuses zero days and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses days that are not a number and writes nothing",
+         "status": "skipped",
+         "title": "refuses days that are not a number and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a javascript logo and writes nothing",
+         "status": "skipped",
+         "title": "refuses a javascript logo and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a script social link and writes nothing",
+         "status": "skipped",
+         "title": "refuses a script social link and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a data image and writes nothing",
+         "status": "skipped",
+         "title": "refuses a data image and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value over 5000 characters and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value over 5000 characters and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is not text and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is not text and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses a value that is an object and writes nothing",
+         "status": "skipped",
+         "title": "refuses a value that is an object and writes nothing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings one bad entry stops the whole save",
+         "status": "skipped",
+         "title": "one bad entry stops the whole save",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses null as the whole payload",
+         "status": "skipped",
+         "title": "refuses null as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses undefined as the whole payload",
+         "status": "skipped",
+         "title": "refuses undefined as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses \"site_name=x\" as the whole payload",
+         "status": "skipped",
+         "title": "refuses \"site_name=x\" as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings refuses 5 as the whole payload",
+         "status": "skipped",
+         "title": "refuses 5 as the whole payload",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings needs the settings permission",
+         "status": "skipped",
+         "title": "needs the settings permission",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "saveSettings"
+         ],
+         "fullName": "saveSettings accepts exactly 5000 characters",
+         "status": "skipped",
+         "title": "accepts exactly 5000 characters",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"067 123 4567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"067 123 4567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"355691234567\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"355691234567\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"javascript:alert(1)\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "status": "skipped",
+         "title": "updateUserProfile refuses the phone \"+355691234567?x=1\"",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfile accepts a valid number and lets staff clear it",
+         "status": "skipped",
+         "title": "updateUserProfile accepts a valid number and lets staff clear it",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"067 123 4567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"355691234567\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"javascript:alert(1)\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"+355691234567?x=1\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "status": "skipped",
+         "title": "updateUserProfileFull refuses the phone \"\" and whatsapp undefined",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) updateUserProfileFull saves valid numbers",
+         "status": "skipped",
+         "title": "updateUserProfileFull saves valid numbers",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"067 123 4567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"355691234567\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"355691234567\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"javascript:alert(1)\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"+355691234567?x=1\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "phone numbers written by staff are in the stored form (finding S54)"
+         ],
+         "fullName": "phone numbers written by staff are in the stored form (finding S54) createAdminUser refuses the phone \"\": no account is made",
+         "status": "skipped",
+         "title": "createAdminUser refuses the phone \"\": no account is made",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 2.9466999999999643,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "status": "skipped",
+         "title": "[SEC-S45-SRV-DENY] Only an administrator acts on, edits or creates an administrator account",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338705119,
+       "endTime": 1792338705121.9468,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/userAdministration.security.test.ts"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "SEC-S44-INT-DENY",
+   "testFile": "src/modules/admin/actions/userProfileFields.integration.test.ts",
+   "testName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+   "boundary": "integration",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/admin/actions/index.ts",
+     "description": "updateUserProfile also copies role and status from the caller, so a staff member can change them through it",
+     "from": "  for (const key of ['name', 'phone', 'company_name'] as const) {\n",
+     "to": "  for (const key of ['name', 'phone', 'company_name', 'role', 'status'] as unknown as readonly ('name' | 'phone' | 'company_name')[]) {\n"
+    }
+   ],
+   "failureMessage": "AssertionError: the role is unchanged: expected 'admin' to be 'user' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts:40:53\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338706041,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 417.01300000000015,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338707461,
+       "endTime": 1792338707878.013,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 0,
+     "numFailedTestSuites": 1,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338710385,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "failed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 414.5283000000002,
+         "failureMessages": [
+          "AssertionError: the role is unchanged: expected 'admin' to be 'user' // Object.is equality\n    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts:40:53\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338711842,
+       "endTime": 1792338712256.5283,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 1,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 2,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 1,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1792338714146,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "passed",
+         "title": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+         "duration": 444.095,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "status": "skipped",
+         "title": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1792338715627,
+       "endTime": 1792338716071.095,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/userProfileFields.integration.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

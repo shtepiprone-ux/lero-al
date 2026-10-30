@@ -1,9 +1,11 @@
 'use client'
 
 import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea, useMantineTheme, type MantineBreakpoint } from '@mantine/core'
+import { Table, Card, Stack, Group, Box, Text, Divider, Paper, ScrollArea, useMantineTheme, type MantineBreakpoint } from '@mantine/core'
 import { ChevronRight } from 'lucide-react'
-import { useMediaQuery } from '@mantine/hooks'
+import { MantineBadge } from './MantineBadge'
+import { MantineDetailList, type MantineDetailListItem } from './MantineDetailList'
+import type { BadgeSemanticTone } from '../badgeTones'
 
 // useLayoutEffect on the client (cards only mount client-side after the mobile
 // media query flips); falls back to useEffect during SSR to avoid the warning.
@@ -68,11 +70,14 @@ function CardPrimaryRow({
   title,
   subtitle,
   badge,
+  trailing,
 }: {
   avatar?: ReactNode
   title: ReactNode
   subtitle?: ReactNode
   badge?: ReactNode
+  /** Task 859 R79(f): the chevron of a row that opens and has no actions — the last child of the primary row. */
+  trailing?: ReactNode
 }) {
   const zoneRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLDivElement>(null)
@@ -134,20 +139,28 @@ function CardPrimaryRow({
   // D868-4), avatar + name below — no overlap.
   if (badgeOwnRow && badge != null) {
     return (
-      <Stack gap="xs">
+      // Task 859 R69(b), GR-3h: the badge row and the avatar + name row are two blocks of the card's own rhythm
+      // (`sm`, 12px), the same step as every other block of the card.
+      <Stack gap="sm">
         <Group justify="flex-start" wrap="nowrap">
           {/* marginRight token has no visual effect on the only child of a start-aligned row; it only keeps
               the measured name↔badge gap identical to the inline layout (no oscillation). */}
           <div ref={badgeRef} style={{ marginRight: 'var(--mantine-spacing-xs)' }}>{badge}</div>
         </Group>
-        <Group gap="sm" wrap="nowrap" align="flex-start">
+        {/* Task 859 R79(c), D2/D7: the avatar, the text zone and the chevron are centred on each other — on one
+            line of name and on several. */}
+        <Group gap="sm" wrap="nowrap" align="center">
           {avatar}
           <div ref={zoneRef} style={{ flex: 1, minWidth: 0 }}>
             <div ref={titleRef} style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{title}</div>
             {subtitle != null && (
-              <Text size="xs" c="gray.5" truncate="end" component="div">{subtitle}</Text>
+              // GR-3i: the subtitle wraps (a name is never cut), like the title.
+              <div style={{ overflowWrap: 'anywhere' }}>
+                <Text size="xs" c="gray.5" component="div">{subtitle}</Text>
+              </div>
             )}
           </div>
+          {trailing}
         </Group>
       </Stack>
     )
@@ -156,7 +169,7 @@ function CardPrimaryRow({
   // States 1 & 2: badge floats right inside the text zone. The first name shares the
   // badge's line; the surname (and subtitle) wrap to full-width lines below it.
   return (
-    <Group gap="sm" wrap="nowrap" align="flex-start">
+    <Group gap="sm" wrap="nowrap" align="center">
       {avatar}
       <div ref={zoneRef} style={{ flex: 1, minWidth: 0, display: 'flow-root' }}>
         {badge != null && (
@@ -164,47 +177,63 @@ function CardPrimaryRow({
             {badge}
           </div>
         )}
-        <div ref={titleRef} style={{ minWidth: 0 }}>{title}</div>
+        {/* GR-3i: title and subtitle wrap (a name is never cut). */}
+        <div ref={titleRef} style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{title}</div>
         {subtitle != null && (
-          <div style={{ clear: 'right' }}>
-            <Text size="xs" c="gray.5" truncate="end" component="div">{subtitle}</Text>
+          <div style={{ clear: 'right', overflowWrap: 'anywhere' }}>
+            <Text size="xs" c="gray.5" component="div">{subtitle}</Text>
           </div>
         )}
       </div>
+      {trailing}
     </Group>
   )
 }
 
 /**
- * Structured card layout config for mobile admin surfaces.
+ * Structured card layout config for mobile admin surfaces (Task 859 R79, GR-3j `record-card`).
  *
- * When provided as `card` prop, mobile renders the designed card hierarchy:
- *   - Header: id (muted xs, left) | actions (right, ≥44px targets)
- *   - Divider
- *   - Primary row: badge beside the title on one line, or, when it does not fit, on its own row above the
- *     avatar + title, aligned to the start of the card's content box (Task 868 D868-4); title (fw=500) + subtitle (dimmed)
- *   - Divider (ONE, above meta — no per-field dividers)
- *   - Meta: edge-anchored `Group justify="space-between"` rows (label left / value right)
+ * When provided as `card` prop, mobile renders the designed card hierarchy, always in this order:
+ *   id → primary → badges → fields / detail → actions
+ *   - Id (only when the row has one): muted xs text, then a divider. There is no header row for a chevron or actions.
+ *   - Primary row: avatar, text zone and (for a row that opens with no actions) the chevron, centred on each other;
+ *     badge beside the title on one line, or, when it does not fit, on its own row above the avatar + title,
+ *     aligned to the start of the card's content box (Task 868 D868-4); title (fw=500) + subtitle (dimmed)
+ *   - Badges row (Task 859 R69): a row of badges under the primary row — one step of the card's `sm` (12px) rhythm
+ *   - Divider (ONE, above the fields — no per-field dividers)
+ *   - Fields: `MantineDetailList variant="plain"` — each field is its label, then its complete value on the next
+ *     line(s); never a label-left / value-right row
+ *   - Actions: the card's last block, right-aligned and wrapping, no divider before it
  *
- * When absent, falls back to the generic 38%/62% aligned label:value layout (backward-compatible).
- * Null returns from value functions are skipped (row not rendered).
+ * When absent, each row is a card with the same shell whose fields are its columns (label above the cell).
+ * An empty field value (`null`, `undefined`, `false`, `''`) is skipped (the label is not rendered either).
  */
 export interface CardConfig<R> {
-  /** Header left — row identifier (e.g. "#101"). */
+  /** Row identifier (e.g. "#101"), the first block of the card. The card has no header row without it. */
   id?: (row: R) => ReactNode
-  /** Header right — action buttons (verify/revoke, detail). Must have ≥44px touch targets. */
+  /** The card's last block — action buttons (verify/revoke, detail). Must have ≥44px touch targets. */
   actions?: (row: R) => ReactNode
   /** Primary row left — entity avatar or icon. */
   avatar?: (row: R) => ReactNode
   /** Primary row — main name or title. */
   title: (row: R) => ReactNode
-  /** Primary row under title — muted secondary line (company, email). */
+  /** Primary row under title — muted secondary text line (company, email). Text only, and it wraps: never put objects
+   *  (badges, chips, buttons) in it, use `badges` (Task 859 R69, GR-3h); never truncate a name (GR-3i). */
   subtitle?: (row: R) => ReactNode
   /** Status badge — beside the title on one line; when it needs its own row it sits above the avatar+title row, start-aligned (Task 868 D868-4). */
   badge?: (row: R) => ReactNode
-  /** Compact meta rows below ONE divider. Null/undefined returns are skipped. */
-  meta?: { label: string; value: (row: R) => ReactNode }[]
-  /** Task 877 (R1): free-form region below ONE divider, used where `meta[]` is absent. */
+  /**
+   * A row of badges, or text mixed with badges, under the primary row (Task 859 R69, GR-3h). It is one rhythm step of
+   * the card's `Stack gap="sm"`: title ↔ badge row = badge row ↔ divider = 12px by construction. Never put objects in
+   * `subtitle`.
+   */
+  badges?: (row: R) => ReactNode
+  /**
+   * Labelled fields below ONE divider (label above value, `MantineDetailList`). Either a fixed list of
+   * `{ label, value(row) }` or one function returning the row's `{ label, value }` items. An empty value skips its field.
+   */
+  meta?: { label: ReactNode; value: (row: R) => ReactNode }[] | ((row: R) => MantineDetailListItem[])
+  /** Task 877 (R1): free-form region for content that is not a labelled field, below the fields (or the divider). */
   detail?: (row: R) => ReactNode
 }
 
@@ -213,7 +242,7 @@ export interface TableColumn<R = TableRow> {
   /** Task 877: widened from `string` to `ReactNode` (adapters pass a translated node). */
   label: ReactNode
   isBadge?: boolean
-  badgeColor?: string
+  badgeTone?: BadgeSemanticTone
   /** Horizontal alignment for this column's header and cells. */
   align?: 'left' | 'center' | 'right'
   /** Width for the desktop table column (e.g. '20%', 120). */
@@ -248,13 +277,13 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
   /** Optional header slot rendered above the table inside the card (title + actions). */
   tableHeader?: ReactNode
   /**
-   * The breakpoint below which cards render instead of the table. `'sm'` (default, 640px) is the
-   * original `useMediaQuery` path, byte-for-byte unchanged. `'md'` (768px, Task 854, spec §17.1)
-   * renders BOTH layouts and switches with Mantine's CSS `hiddenFrom`/`visibleFrom` — no
-   * `useMediaQuery`, so there is no first-paint flash on a public-site page. `'lg'` (1024px, Task 857 R32)
-   * uses the same CSS switch as `'md'`, for a table that cannot fit before 1024 (named exception, §7.3 rule 2).
+   * The breakpoint below which cards render instead of the table. Every value renders BOTH layouts and switches with
+   * Mantine's CSS `hiddenFrom`/`visibleFrom` — no media-query hook, so there is no first-paint flash and the cards show
+   * only BELOW the breakpoint (Mantine's own form: the breakpoint less 0.1px). `'md'` (default, 768px) is the record-cards range
+   * of every table (owner decision D36, Task 923 R47; Task 854, spec §17.1); `'lg'` (1024px, Task 857 R32) is for a table that
+   * cannot fit before 1024 (named exception, §7.3 rule 2). There is no `'sm'`: a table keeps its record cards below 768px.
    */
-  cardsBelow?: 'sm' | 'md' | 'lg'
+  cardsBelow?: 'md' | 'lg'
   /** Task 877 (R1): makes the table row and the card clickable (`tabIndex=0`, Enter/Space) with a
    * trailing chevron. Omitted → no row interaction, render unchanged. */
   onRowClick?: (row: R) => void
@@ -267,24 +296,21 @@ export interface MantineDataTableToCardsProps<R extends { id: string } = TableRo
 /**
  * Canonical data table → card list responsive pattern.
  *
- * Mobile (<sm / 640px): stacked Cards.
- *   With `card` prop: designed hierarchy (header / primary / meta) per CardConfig.
- *   Without `card` prop: generic aligned label:value rows (38%/62% rhythm).
+ * Compact (below `cardsBelow`, default `md` / 768px, D36): stacked Cards.
+ *   With `card` prop: designed hierarchy (id / primary / badges / fields / actions) per CardConfig.
+ *   Without `card` prop: the same card shell, its fields the columns (label above value).
  *   All spacing via theme tokens — no raw px.
- *   Touch target: mih="2.75rem" on generic rows (rem — touch-target exemption).
  *
- * Desktop (sm+): TailAdmin CRM card-wrapped Table (§6b).
+ * Wide (from `cardsBelow`): TailAdmin CRM card-wrapped Table (§6b).
  *   Paper(radius 2xl, gray-2 border, overflow hidden) > ScrollArea > Table.
  *   verticalSpacing/horizontalSpacing from theme (sm=12px / xl=24px per §6b).
  *   Thead: bg-gray-50 + border-y gray-100. Th: 12px fw=500 gray-500, NOT uppercase.
  *   Td: 14px gray-700, whitespace-nowrap by default — `TableColumn.wrap` (Task 891, D854-1 = A)
  *   sets that one column's Th/Td to `whitespace: normal` instead. Row dividers gray-100, hover gray-50.
  *
- * Responsive API: `cardsBelow="sm"` (default) uses `useMediaQuery('(max-width: 40em)')` — SSR
- * caveat: returns false on first render; admin pages are auth-gated, no visible flash.
- * `cardsBelow="md"` (Task 854) renders both layouts and switches with `hiddenFrom`/`visibleFrom`
- * (CSS media queries, no JS, no first-paint flash) — for public-site pages, spec §17.1.
- * `cardsBelow="lg"` (Task 857 R32) is the same CSS switch at 1024px.
+ * Responsive API: every `cardsBelow` value (`"md"` default, `"lg"`) renders both layouts and switches with
+ * `hiddenFrom`/`visibleFrom` (CSS media queries, no JS, no first-paint flash; the record-list family allows no
+ * media-query hook). Cards appear only below the breakpoint, so at exactly 768px `"md"` shows the table (Task 923 R47, D36).
  *
  * Spacing rule (§7.1): ALL spacing uses theme tokens. Raw px forbidden (touch-target rem exempt).
  * Card anatomy rule (§7.2): CardConfig is the ONLY canonical admin card design.
@@ -296,15 +322,12 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
   rowClassName,
   card,
   tableHeader,
-  cardsBelow = 'sm',
+  cardsBelow = 'md',
   onRowClick,
   stickyColumnIndex,
   ariaLabel,
 }: MantineDataTableToCardsProps<R>) {
   const theme = useMantineTheme()
-  // Only consulted for the default 'sm' (useMediaQuery) path; the 'md' (CSS-switch) path ignores it.
-  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
-
   if (rows.length === 0) {
     return (
       <Text c="dimmed" ta="center" py="xl">
@@ -342,12 +365,24 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
     const value = (row as TableRow)[col.key]
     if (col.isBadge) {
       return (
-        <Badge color={col.badgeColor ?? 'gray'} variant="light" size="sm">
+        <MantineBadge variant="tone" tone={col.badgeTone ?? 'neutral'}>
           {value ?? '—'}
-        </Badge>
+        </MantineBadge>
       )
     }
     return <Text size="sm" c="gray.7">{value ?? '—'}</Text>
+  }
+
+  // Task 859 R79 (GR-3j `record-card`): the card shell is one — radius, padding and the `sm` rhythm are the same for a
+  // card with a `card` config and for the generic one, so one record has one look.
+  const hasContent = (v: ReactNode) => v != null && v !== false && v !== ''
+
+  function cardFields(cfg: CardConfig<R>, row: R): MantineDetailListItem[] {
+    if (!cfg.meta) return []
+    const items: MantineDetailListItem[] = typeof cfg.meta === 'function'
+      ? cfg.meta(row)
+      : cfg.meta.map((m) => ({ label: m.label, value: m.value(row) }))
+    return items.filter((item) => hasContent(item.value))
   }
 
   function renderDesignedCard(row: R): ReactNode {
@@ -355,12 +390,17 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
     // Task 877 (R1, review 1 §16.2 item 2): `actions` is called ONCE; the automatic chevron appears only
     // when it returns nothing (the legacy card list's `trailing ?? chevron` rule).
     const actionsContent = cfg.actions?.(row)
-    const hasActions = actionsContent != null && actionsContent !== false
+    const hasActions = hasContent(actionsContent)
     const autoChevron = !!onRowClick && !hasActions
-    const hasHeader = !!(cfg.id || hasActions || autoChevron)
-    const hasHeaderContent = !!(cfg.id || hasActions)
+    const idContent = cfg.id?.(row)
+    const hasId = hasContent(idContent)
     const subtitleContent = cfg.subtitle?.(row)
     const badgeContent = cfg.badge?.(row)
+    const badgesContent = cfg.badges?.(row)
+    const hasBadges = badgesContent != null && badgesContent !== false
+    const fields = cardFields(cfg, row)
+    const detailContent = cfg.detail?.(row)
+    const hasDetail = hasContent(detailContent)
 
     return (
       <Card
@@ -373,55 +413,66 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
         {...rowActivation(row)}
       >
         <Stack gap="sm">
-          {/* HEADER: id → left edge ↔ actions → right edge */}
-          {hasHeader && (
-            <Group justify="space-between" wrap="nowrap" align="center">
-              <Text size="xs" c="gray.5">{cfg.id?.(row)}</Text>
-              <Group gap="xs" wrap="nowrap">
-                {hasActions ? actionsContent : null}
-                {autoChevron && rowChevron}
-              </Group>
-            </Group>
+          {/* ID (R79(d)): the header row exists only when the row has an id, and holds the id only. */}
+          {hasId && (
+            <>
+              <Text size="xs" c="gray.5">{idContent}</Text>
+              <Divider color="gray.1" />
+            </>
           )}
-          {hasHeaderContent && <Divider color="gray.1" />}
 
           {/* PRIMARY: three measured states (see CardPrimaryRow).
               States 1 & 2 keep the badge inline (right of the first name, surname wraps
               below); state 3 lifts the badge to its own row above avatar + name when the
-              surname is too wide to sit beside it — no overlap, no truncation, no hardcoded px. */}
+              surname is too wide to sit beside it — no overlap, no truncation, no hardcoded px.
+              A row that opens and has no actions ends this row with its chevron (R79(f)). */}
           <CardPrimaryRow
             avatar={cfg.avatar?.(row)}
             title={cfg.title(row)}
             subtitle={subtitleContent}
             badge={badgeContent}
+            trailing={autoChevron ? rowChevron : undefined}
           />
 
-          {/* META: ONE divider above; each row label → left edge ↔ value → right edge */}
-          {cfg.meta && cfg.meta.length > 0 && (
-            <>
-              <Divider color="gray.1" />
-              <Stack gap="xs">
-                {cfg.meta.map((m) => {
-                  const val = m.value(row)
-                  if (val == null) return null
-                  return (
-                    <Group key={m.label} justify="space-between" wrap="nowrap" align="center" gap="md">
-                      <Text size="xs" c="gray.5" style={{ flexShrink: 0 }}>{m.label}</Text>
-                      <div style={{ textAlign: 'right', minWidth: 0 }}>{val}</div>
-                    </Group>
-                  )
-                })}
-              </Stack>
-            </>
-          )}
+          {/* BADGES (Task 859 R69, GR-3h): a row of objects is its own block, one step of the card's rhythm — the same
+              gap (`sm`, 12px) to the title above as to the divider below. A flex row (not a block of inline content),
+              so a bare badge has no line-box strut and sits exactly one step from the title and from the divider. */}
+          {hasBadges && <Group gap="xs" wrap="wrap">{badgesContent}</Group>}
 
-          {/* DETAIL (Task 877): free-form region below ONE divider, where meta[] is absent */}
-          {!cfg.meta?.length && cfg.detail && (
-            <>
-              <Divider color="gray.1" />
-              {cfg.detail(row)}
-            </>
-          )}
+          {/* FIELDS (R79(a), GR-3j `key-value-stack`): ONE divider above; each field is its label, then its complete
+              value below it — `MantineDetailList` is the one owner of a labelled field. */}
+          {(fields.length > 0 || hasDetail) && <Divider color="gray.1" />}
+          {fields.length > 0 && <MantineDetailList variant="plain" items={fields} />}
+
+          {/* DETAIL (Task 877): free-form region, for content that is not a labelled field */}
+          {hasDetail && detailContent}
+
+          {/* ACTIONS (R79(e)): the card's last block, one step of the card's rhythm, no divider before it. */}
+          {hasActions && <Group justify="flex-end" gap="xs" wrap="wrap">{actionsContent}</Group>}
+        </Stack>
+      </Card>
+    )
+  }
+
+  // R79(b): without a `card` config the fields of a card are the columns (label = column label, value = the cell),
+  // through the same `MantineDetailList`; a row that opens shows its chevron in the actions position.
+  function renderGenericCard(row: R): ReactNode {
+    return (
+      <Card
+        key={row.id}
+        withBorder
+        radius="2xl"
+        padding="lg"
+        className={rowClassName?.(row)}
+        {...(onRowClick ? { role: 'button' } : {})}
+        {...rowActivation(row)}
+      >
+        <Stack gap="sm">
+          <MantineDetailList
+            variant="plain"
+            items={columns.map((col) => ({ label: col.label, value: renderCell(col, row) }))}
+          />
+          {onRowClick && rowChevron}
         </Stack>
       </Card>
     )
@@ -429,54 +480,7 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
 
   const cardsMarkup = (
     <Stack gap="sm">
-      {rows.map((row) =>
-        card
-          ? renderDesignedCard(row)
-          : (
-            <Card
-              key={row.id}
-              withBorder
-              className={rowClassName?.(row)}
-              {...(onRowClick ? { role: 'button' } : {})}
-              {...rowActivation(row)}
-            >
-              {columns.map((col, idx) => (
-                <Group
-                  key={col.key}
-                  gap="sm"
-                  wrap="nowrap"
-                  align="center"
-                  py="xs"
-                  mih={theme.other.touchTarget}
-                  style={
-                    idx < columns.length - 1
-                      ? { borderBottom: '1px solid var(--mantine-color-gray-2)' }
-                      : undefined
-                  }
-                >
-                  <Text size="xs" c="dimmed" fw={500} style={{ width: '38%', flexShrink: 0 }}>
-                    {col.label}
-                  </Text>
-                  <Box
-                    style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent:
-                        col.align === 'left'
-                          ? 'flex-start'
-                          : col.align === 'center'
-                            ? 'center'
-                            : 'flex-end',
-                    }}
-                  >
-                    {renderCell(col, row)}
-                  </Box>
-                </Group>
-              ))}
-            </Card>
-          )
-      )}
+      {rows.map((row) => (card ? renderDesignedCard(row) : renderGenericCard(row)))}
     </Stack>
   )
 
@@ -572,26 +576,12 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
     </Paper>
   )
 
-  if (cardsBelow === 'md') {
-    // CSS-driven switch (no `useMediaQuery`, no first-paint flash): both trees render, and Mantine's
-    // `hiddenFrom`/`visibleFrom` toggle their `display` via a media query. Task 854, spec §17.1.
-    return (
-      <>
-        <Box hiddenFrom="md">{cardsMarkup}</Box>
-        <Box visibleFrom="md">{tableMarkup}</Box>
-      </>
-    )
-  }
-
-  if (cardsBelow === 'lg') {
-    // Same CSS switch at 1024px (Task 857 R32).
-    return (
-      <>
-        <Box hiddenFrom="lg">{cardsMarkup}</Box>
-        <Box visibleFrom="lg">{tableMarkup}</Box>
-      </>
-    )
-  }
-
-  return isMobile ? cardsMarkup : tableMarkup
+  // CSS-driven switch (no media-query hook, no first-paint flash): both trees render, and Mantine's
+  // `hiddenFrom`/`visibleFrom` toggle their `display` via a media query. Task 854 (md), Task 857 R32 (lg), Task 923 R47 (md default, D36).
+  return (
+    <>
+      <Box hiddenFrom={cardsBelow}>{cardsMarkup}</Box>
+      <Box visibleFrom={cardsBelow}>{tableMarkup}</Box>
+    </>
+  )
 }

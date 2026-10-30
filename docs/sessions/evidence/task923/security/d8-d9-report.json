@@ -1,0 +1,1774 @@
+{
+ "version": 1,
+ "status": "passed",
+ "generatedAt": "2026-10-29T20:16:45.686Z",
+ "contractSha256": "bc530a1b0549e07e6331127cb9620e5674299a7ec6404bd67a5235863d307dd6",
+ "scopeSha256": "a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74",
+ "errors": [],
+ "vulnerabilities": [],
+ "cleanup": {
+  "verified": true,
+  "remaining": 0,
+  "errors": []
+ },
+ "cases": [
+  {
+   "id": "SEC-D8-SRV-DOMAIN-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-D8-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-D8-SRV-OWNER-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-D8-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "status gateway: publishing is staff-only [SEC-D8-SRV-DENY] the owner cannot set active from any other status and nothing is written, re-stamped or notified",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D8-SRV-DENY.json",
+    "artifactSha256": "77b57cee2103e650c2513e081d4b978996bd0e3fc9222987115e8f5dbb2b2038"
+   }
+  },
+  {
+   "id": "SEC-D8-SRV-DENY-OTHER",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D8-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-D8-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D8-FE-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-D8-FE-ERR",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D9-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 7,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "account access sync [SEC-D9-SRV-DENY] a blocked, suspended or inactive account is banned in Auth with the matching duration",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D9-SRV-DENY.json",
+    "artifactSha256": "a1c25cefcce390e6ad104f8eaa90dd425731cd205094de5e13f48f448d2360d0"
+   }
+  },
+  {
+   "id": "SEC-D9-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-D9-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-D9-SRV-ADMIN-DENY",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "admin actions that change account access [SEC-D9-SRV-ADMIN-DENY] a caller without permission, or acting on a higher rank, changes nothing and bans nobody",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D9-SRV-ADMIN-DENY.json",
+    "artifactSha256": "863a3eccd6f85b5637e71721a85c594fd3a9ee7ab4548a5f5d6843e0e4839273"
+   }
+  },
+  {
+   "id": "SEC-D9-SRV-ADMIN-ALLOW",
+   "status": "passed",
+   "assertionCount": 17
+  },
+  {
+   "id": "SEC-D9-SRV-ADMIN-ERR",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-D9-SRV-LIFT-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-D9-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D9-FE-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-D9-FE-ERR",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-CS-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contact actions need a signed-in active person [SEC-CS-SRV-DENY] a guest, a session without a profile and a blocked or inactive account get nothing from the inquiry and contact-event actions",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-CS-SRV-DENY.json",
+    "artifactSha256": "1bac96275abd0b7b100b2143326de7c59b6da6e42ea230c490ab4fce6af1da86"
+   }
+  },
+  {
+   "id": "SEC-CS-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-CS-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-CS-FE-DENY",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-CS-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-CS-FE-ERR",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-D8-INT-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-D8-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-D9-INT-DENY",
+   "status": "passed",
+   "assertionCount": 14
+  },
+  {
+   "id": "SEC-D9-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-D9-INT-ADMIN-DENY",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-D9-INT-ADMIN-ALLOW",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-CS-INT-DENY",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-CS-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-DB-S59-DENY",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-S59-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S59-DENY.json",
+    "artifactSha256": "43aec3d9a610921f9b30b0d38140a8af6f339264105e4bf1db56957028ea2c2f"
+   }
+  },
+  {
+   "id": "SEC-DB-S59-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-S59-ALLOW] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S59-ALLOW.json",
+    "artifactSha256": "96e834ce4c0144a38a4af4d24d6f55e95e2f5b7cccb7df0d2588544064814863"
+   }
+  },
+  {
+   "id": "SEC-DB-S61-DENY",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S61-DENY.json",
+    "artifactSha256": "90cae90820f401db3ea23ed4cc3b580d06aada01a9ec8e373c0ee906dfa320d1"
+   }
+  },
+  {
+   "id": "SEC-DB-S61-ALLOW",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-S61-ALLOW] A session cannot write a listing status, premium, counters, expiry, public id or owner",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-S61-ALLOW.json",
+    "artifactSha256": "e155f71d7bbcaa80a44e16d56f933d2b3c7a3a280212cd3f7e19155a94e6a028"
+   }
+  },
+  {
+   "id": "SEC-DB-S62-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-DB-ACCESS-DENY",
+   "status": "passed",
+   "assertionCount": 20,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-ACCESS-DENY.json",
+    "artifactSha256": "9bc6466a1aedf02ff7882007c9db0ff1905918e0f946ed87e5385579152c367f"
+   }
+  },
+  {
+   "id": "SEC-DB-ACCESS-ALLOW",
+   "status": "passed",
+   "assertionCount": 10,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-ACCESS-ALLOW] A blocked, deleted or signed-out account reads and writes nothing on its next database request",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-ACCESS-ALLOW.json",
+    "artifactSha256": "acd622d4891368d6c0141b23d46f3895b57388b018043903420b32dc52648d1c"
+   }
+  },
+  {
+   "id": "SEC-DB-ERR",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D9-SRV-MISSING-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-D27-SRV-STAFF-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-SRV-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-SRV-STAFF-DENY.json",
+    "artifactSha256": "e8f3e9e4918812d7f2fa6e565a065f59a60447d64e8d7e232dbb255e5cffeb32"
+   }
+  },
+  {
+   "id": "SEC-D27-SRV-STAFF-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-SRV-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-SRV-STAFF-ALLOW.json",
+    "artifactSha256": "d10e059222c359edb924281ed8d02aa112ba573fb0f968c0ed53d6af291f3974"
+   }
+  },
+  {
+   "id": "SEC-D27-SRV-STAFF-ERR",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D27-SRV-VIEWER-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-SRV-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-SRV-VIEWER-DENY.json",
+    "artifactSha256": "e309a7b07632b34076d7afa453204cd79597618dc2a93efdeb8e0f4036b2a692"
+   }
+  },
+  {
+   "id": "SEC-D27-SRV-VIEWER-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D27-SRV-STATIC-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-D27-INT-STAFF-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-INT-STAFF-DENY] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-INT-STAFF-DENY.json",
+    "artifactSha256": "454ea6dda043728b712bef1dfe39411a73fe2cfb2dbb8dc0494c1d888b78bea4"
+   }
+  },
+  {
+   "id": "SEC-D27-INT-STAFF-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-INT-STAFF-ALLOW] A blocked, suspended, deactivated, deleted or missing account gets no staff power, whatever its role",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-INT-STAFF-ALLOW.json",
+    "artifactSha256": "ca12007d16425521237493c8967478855ca8b2e5e9cb3bbe202b5992d02a1ce5"
+   }
+  },
+  {
+   "id": "SEC-DB-REALTIME-DENY",
+   "status": "passed",
+   "assertionCount": 9,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change after the block",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-REALTIME-DENY.json",
+    "artifactSha256": "b9fae5ad0393e41738df36e6aff4443ec6b5c4e178b4d221b7babb53601db4e6"
+   }
+  },
+  {
+   "id": "SEC-D27-INT-VIEWER-DENY",
+   "status": "passed",
+   "assertionCount": 2,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-INT-VIEWER-DENY] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-INT-VIEWER-DENY.json",
+    "artifactSha256": "55343e1320ed5c9ea309dc6abac54a5aaaef062d9782c8b215be387a423519d4"
+   }
+  },
+  {
+   "id": "SEC-D27-INT-VIEWER-ALLOW",
+   "status": "passed",
+   "assertionCount": 2,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D27-INT-VIEWER-ALLOW] A blocked, suspended, deactivated, deleted or missing account of any role is not a viewer, and a deleted one is blocked",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D27-INT-VIEWER-ALLOW.json",
+    "artifactSha256": "482459afc480f64afe8ac5343cb41ac12b62eae57241ec0b216532ea593683ae"
+   }
+  },
+  {
+   "id": "SEC-DB-REALTIME-ALLOW",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DB-REALTIME-ALLOW] A blocked account receives no further realtime change after the block",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-REALTIME-ALLOW.json",
+    "artifactSha256": "4d0e9a236d42577e8adf843ab5b6b2cdc784cad02a3a68811395fcf9ff39010b"
+   }
+  },
+  {
+   "id": "SEC-D29-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D29-SRV-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D29-SRV-DENY.json",
+    "artifactSha256": "bf493f49c71a22c7813fbaf248ba4c0a904d3a791210678f019d24df7242fec6"
+   }
+  },
+  {
+   "id": "SEC-D29-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D29-SRV-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D29-SRV-ALLOW.json",
+    "artifactSha256": "7936992c917733509bc186125cfdab6ee16e42f366f9ab3a9bb74daa6da29c25"
+   }
+  },
+  {
+   "id": "SEC-D29-INT-DENY",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D29-INT-DENY] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D29-INT-DENY.json",
+    "artifactSha256": "e79219226d5af6bbff110aa07682af57ae7aff61a82fe1cb60d97cd82d109186"
+   }
+  },
+  {
+   "id": "SEC-D29-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 1,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-D29-INT-ALLOW] A banned, deleted or no-access session is ended by the server on the next page request and the person is a guest",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-D29-INT-ALLOW.json",
+    "artifactSha256": "b017d57d951355e729b3628371af40ec0b0b8dc3d92997e88c0df28e4aa35f37"
+   }
+  },
+  {
+   "id": "SEC-D29-FE-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-D29-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-DEL-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 25,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-SRV-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-SRV-ALLOW.json",
+    "artifactSha256": "74a697e93feadfcf2fdc4d50ce7dc7f7a6e8a068b3205d3ea9f1a7bf3292a7b2"
+   }
+  },
+  {
+   "id": "SEC-DEL-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 19
+  },
+  {
+   "id": "SEC-DEL-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 10,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-SRV-DENY] Only the person or a staff member whose rank allows it can delete an account",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-SRV-DENY.json",
+    "artifactSha256": "98c90d749bfecfca880b4b9c09f49880e95071565c169b6f22925cb3f464cb3d"
+   }
+  },
+  {
+   "id": "SEC-DEL-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 22,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its listings and their files for every role, in one database transaction",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-ALLOW.json",
+    "artifactSha256": "07980cc362565aec3ecad451123b79f77f2d86d16fb4ae4d1ae9bce4cb913d5f"
+   }
+  },
+  {
+   "id": "SEC-DEL-INT-STAFF",
+   "status": "passed",
+   "assertionCount": 7,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-INT-STAFF] A deleted staff member leaves the records of their actions with their name and without their id",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-STAFF.json",
+    "artifactSha256": "1be3875150ac0143f61ce0c5f98b888f7a67cd624a78ca1ef497e37f429c2ad2"
+   }
+  },
+  {
+   "id": "SEC-DEL-INT-DENY",
+   "status": "passed",
+   "assertionCount": 10,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-INT-DENY] Only the person or a staff member whose rank allows it can delete an account",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-DENY.json",
+    "artifactSha256": "c5e6fe3ec47d316c9ac76b06606534b4eb9796832d692326cb07f433d64b0f30"
+   }
+  },
+  {
+   "id": "SEC-DEL-FE-DENY",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-DEL-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-DEL-INT-OTHERS",
+   "status": "passed",
+   "assertionCount": 13
+  },
+  {
+   "id": "SEC-DEL-INT-SELF",
+   "status": "passed",
+   "assertionCount": 7,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-DEL-INT-SELF] Only the person or a staff member whose rank allows it can delete an account",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DEL-INT-SELF.json",
+    "artifactSha256": "c89ce585666f57326109474eda158c9cb2cd6cfb42317603b6bf4f29da56a2fc"
+   }
+  },
+  {
+   "id": "SEC-DEL-INT-STAFF-KEEP",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-DEL-FE-OWNER-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-DEL-FE-OWNER-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-DEL-FE-ADMIN",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-X-SRV-RANK-FAILCLOSED",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-STATUS-PERM",
+   "status": "passed",
+   "assertionCount": 12,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "adminPermissions [SEC-X-SRV-STATUS-PERM] the full profile form cannot deactivate or reactivate without users.soft_delete",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-STATUS-PERM.json",
+    "artifactSha256": "a768a4b9b17140d54eec08ad850a4a2a0952829ad330b0fc889078c2594a41e8"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-LOCATIONS-PERM",
+   "status": "passed",
+   "assertionCount": 23,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "adminPermissions [SEC-X-SRV-LOCATIONS-PERM] every locations write path requires locations.manage",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-LOCATIONS-PERM.json",
+    "artifactSha256": "4f1bc556b421ec565315bbb1b27ae0d75ba715b51d9b20026cd73215fe50cc87"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-EMAIL-TOKEN-ONCE",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-ONCE] a link whose claim matched no row changes nothing",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-EMAIL-TOKEN-ONCE.json",
+    "artifactSha256": "4b59136845f576cab83b181c4a1f5ab6999ee9af69f3a71e0deab206cae3eff3"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-EMAIL-TOKEN-LATEST",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "emailChange [SEC-X-SRV-EMAIL-TOKEN-LATEST] an earlier link is dead once a newer request exists",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-EMAIL-TOKEN-LATEST.json",
+    "artifactSha256": "bd14ae0f4f08f22796ef583220868e19bacebcc5cec2db40c20584295796256d"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-EMAIL-SESSIONS-END",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "emailChange [SEC-X-SRV-EMAIL-SESSIONS-END] a completed change ends all sessions and a failed one keeps the link usable",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-EMAIL-SESSIONS-END.json",
+    "artifactSha256": "6af77e6b3d933ffacc843457d8d984ccbc1bc44f83b0453915a76d23796568c6"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-EMAIL-RESEND-LIMIT",
+   "status": "passed",
+   "assertionCount": 14
+  },
+  {
+   "id": "SEC-X-SRV-CLEANUP-FAILCLOSED",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-LIFECYCLE",
+   "status": "passed",
+   "assertionCount": 2,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactLifecycle [SEC-X-SRV-CONTACT-LIFECYCLE] no contact path serves a listing whose contact is locked",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-CONTACT-LIFECYCLE.json",
+    "artifactSha256": "f55f68948f8671ae2213b7f64076941b5f78a7eba9deb7c73c471177aad8a587"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-LIMIT",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-X-SRV-SLUG-SCRIPT",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "SimilarListings [SEC-X-SRV-SLUG-SCRIPT] a hostile slug stays inside the JSON",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-SLUG-SCRIPT.json",
+    "artifactSha256": "342d343cefd0ea508e21fc13e81778dd8bcf6bc237710765cf8e0948bd3adf04"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-HOOK-DELIVERY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-SRV-ADMIN-INVITE",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-X-SRV-SENTRY-SCRUB",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-X-SRV-AUTOLIFT-CAS",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-FOOTER-SHAPE",
+   "status": "passed",
+   "assertionCount": 14
+  },
+  {
+   "id": "SEC-X-SRV-GALLERY-ATOMIC",
+   "status": "passed",
+   "assertionCount": 12
+  },
+  {
+   "id": "SEC-X-FE-SIGNOUT-CLEARS",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-FE-RESET-RETRY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-FE-SPECULATION-ESCAPE",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-INT-STATUS-PERM-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-STATUS-PERM-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-INT-LOCATIONS-PERM-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-X-INT-LOCATIONS-PERM-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-TOKEN-ONCE-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-TOKEN-ONCE-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-TOKEN-LATEST-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-TOKEN-LATEST-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-SESSIONS-END-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-EMAIL-SESSIONS-END-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-LIFECYCLE-ALLOW",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-LIFECYCLE-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-INT-SLUG-SCRIPT-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-INT-SLUG-SCRIPT-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-AVATAR-RANK",
+   "status": "passed",
+   "assertionCount": 12,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "uploadAvatar [SEC-X-SRV-AVATAR-RANK] a moderator cannot replace an administrator avatar",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-AVATAR-RANK.json",
+    "artifactSha256": "5799799786898f384154fdc8c2faba9c8a0ffa6f1399bd4970e22d926714c9a4"
+   }
+  },
+  {
+   "id": "SEC-X-INT-AVATAR-RANK-ALLOW",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-INT-AVATAR-RANK-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-SRV-ADMINPAGE-GUARD",
+   "status": "passed",
+   "assertionCount": 1,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "staffPage [SEC-X-SRV-ADMINPAGE-GUARD] no admin page or metadata reads for a non-staff viewer",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-ADMINPAGE-GUARD.json",
+    "artifactSha256": "d6257fd50073f1be1111cd5142bc7c0439b1427834e8523d53f16a4ba3ec4605"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-REAUTH-EMAIL",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "reauth [SEC-X-SRV-REAUTH-EMAIL] an e-mail change needs re-authentication",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REAUTH-EMAIL.json",
+    "artifactSha256": "390c10831ab5991ca7c12a73755f7c31e307f27f5ae1054e0d27c254f3bb387e"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-REAUTH-DELETE",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "reauth [SEC-X-SRV-REAUTH-DELETE] deleting the own account needs re-authentication",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REAUTH-DELETE.json",
+    "artifactSha256": "709f97a5af57f00b4eaeb9129777a99591f7b7279db3704644e1553f0fa21b3e"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-OWNER-DELETE",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-OWNER-DELETE.json",
+    "artifactSha256": "6b72fdcc3614272b8183688652831f0d8af4ae73d970325a0858df3aec40fdb9"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-SESSION-REFRESH-SCOPE",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-SIGNOUT-OTHERS",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-INQUIRY-SENDER",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-RECOVERY-MAIL",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-SRV-CSP-REPORT-ONLY",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-CMS-OWN-CLOUD",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-CREATE-STAFF-ROLE",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-STAFF-WRITE-RESULT",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-NO-DB-MESSAGE",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-SRV-SELF-DELETE",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-X-SRV-SUSPEND-FUTURE",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-UPLOAD-SIZE-FIRST",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-INACTIVITY-DRYRUN",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-DB-X-LISTING-CHECKS-ALLOW",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-LISTING-CHECKS-ALLOW] valid values are accepted",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-LISTING-CHECKS-ALLOW.json",
+    "artifactSha256": "fed8e1d73d2a48d36b7b9a404c8f2dac43fc0dfff1aa50644ed90d4bb9264187"
+   }
+  },
+  {
+   "id": "SEC-DB-X-LISTING-CHECKS-DENY",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-LISTING-CHECKS-DENY.json",
+    "artifactSha256": "bb109491c034ad5a0c70d1936ddc64859a37a8277256de02059e81d420962610"
+   }
+  },
+  {
+   "id": "SEC-DB-X-IMAGE-URL-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-IMAGE-URL-ALLOW.json",
+    "artifactSha256": "2759e734fd62311944addfdec9b5ebe7ea6d835487af370fb4e5141f7684cadb"
+   }
+  },
+  {
+   "id": "SEC-DB-X-IMAGE-URL-DENY",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-IMAGE-URL-DENY.json",
+    "artifactSha256": "070bfee65c4980e6d5db42ea435c6eeb2818cc878b791948fd134d9faa7f6e58"
+   }
+  },
+  {
+   "id": "SEC-DB-X-AVATARS-STORAGE-ALLOW",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-ALLOW] the upload route still works",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-AVATARS-STORAGE-ALLOW.json",
+    "artifactSha256": "9b52835ee5212a411e42c4f1a46b0b47dc758dca48b1917c8c3049bb5fb0c8cc"
+   }
+  },
+  {
+   "id": "SEC-DB-X-AVATARS-STORAGE-DENY",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-AVATARS-STORAGE-DENY] a staff session cannot write to Storage",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-AVATARS-STORAGE-DENY.json",
+    "artifactSha256": "8276a8e0d1894a1fa610573f83982989c5d2e1ea049e018a9f6be67b0b5099c6"
+   }
+  },
+  {
+   "id": "SEC-X-INT-ADMINPAGE-GUARD-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-INT-ADMINPAGE-GUARD-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-EMAIL-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-EMAIL-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-DELETE-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-DELETE-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-INT-OWNER-DELETE-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-OWNER-DELETE-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-SRV-RATE-REPORT",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-SRV-EDIT-MODERATION",
+   "status": "passed",
+   "assertionCount": 12,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "updateListing [SEC-X-SRV-EDIT-MODERATION] only an active listing goes to pending, before the content is written",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-EDIT-MODERATION.json",
+    "artifactSha256": "38f8485565a7efe3de90ee5e40735688120e9eb547947d7c66e800d2a9fd245e"
+   }
+  },
+  {
+   "id": "SEC-X-INT-EDIT-MODERATION-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-INT-EDIT-MODERATION-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-SRV-CLOSED-PAGE",
+   "status": "passed",
+   "assertionCount": 29
+  },
+  {
+   "id": "SEC-X-FE-EDIT-MODERATION",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-DB-X-CLOSED-READ-ALLOW",
+   "status": "passed",
+   "assertionCount": 4,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-CLOSED-READ-ALLOW] a guest reads sold and rented",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-CLOSED-READ-ALLOW.json",
+    "artifactSha256": "10971b857e3d3bec50eb955fc373478167339c6c4a2b10c310e02b230d5b55dc"
+   }
+  },
+  {
+   "id": "SEC-DB-X-CLOSED-READ-DENY",
+   "status": "passed",
+   "assertionCount": 9,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-CLOSED-READ-DENY.json",
+    "artifactSha256": "66e2c197cde5a6218878b5544181316175c08a28e0316ae14bc3600d42573f47"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-MOD-KEYS",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "moderatorKeys [SEC-X-SRV-MOD-KEYS] every moderator action checks its key",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-MOD-KEYS.json",
+    "artifactSha256": "db9ccd2747e367e14a357ac1358a136a939f6f29ce9a4ee12c9806371477bd9c"
+   }
+  },
+  {
+   "id": "SEC-X-INT-MOD-KEYS-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-INT-MOD-KEYS-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-X-SRV-INACTIVITY-REMIND",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-PERMS-ADMIN-ONLY",
+   "status": "passed",
+   "assertionCount": 15
+  },
+  {
+   "id": "SEC-X-SRV-JOBS-PAUSED",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-X-SRV-NO-AUTO-RESTORE",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-RATES-LAST-GOOD",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-FE-DELETE-PASSWORD",
+   "status": "passed",
+   "assertionCount": 18
+  },
+  {
+   "id": "SEC-DB-X-PERMS-NO-SESSION",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-PERMS-NO-SESSION] a browser session cannot touch the switches",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-PERMS-NO-SESSION.json",
+    "artifactSha256": "1a60d00e882610cfd6ddc56a8b1c855bb5439d22fcb8c7d844b1261af4a5b308"
+   }
+  },
+  {
+   "id": "SEC-X-INT-PERMS-ADMIN-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-FE-SIGNOUT-OTHERS",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-X-SRV-REAUTH-LIMIT",
+   "status": "passed",
+   "assertionCount": 14,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "reauthLimit [SEC-X-SRV-REAUTH-LIMIT] failed re-authentications are limited per person",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REAUTH-LIMIT.json",
+    "artifactSha256": "f545fdad4f5b014041e99bcba1b10fcb5d5decb23e157aabdef20f9963a8750e"
+   }
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-LIMIT-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-REAUTH-LIMIT-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-DB-X-REAUTH-FAILURES-NO-SESSION",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-REAUTH-FAILURES-NO-SESSION] a browser session cannot touch the failure rows",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-REAUTH-FAILURES-NO-SESSION.json",
+    "artifactSha256": "b027a2e4349eb3b729de5fbff6694ffca6b74fff5b002d2e8e231253d4198601"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-RATES-BACKOFF",
+   "status": "passed",
+   "assertionCount": 12
+  },
+  {
+   "id": "SEC-X-SRV-SLUG-PLAIN",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "generateSlug [SEC-X-SRV-SLUG-PLAIN] every title gives a plain slug",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-SLUG-PLAIN.json",
+    "artifactSha256": "7b59aea09b1cc8cc71cb4a1b01425721ae8b5550068cab645b23e506a4b8a636"
+   }
+  },
+  {
+   "id": "SEC-X-INT-SLUG-PLAIN-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-DB-X-NO-SELF-RESTORE",
+   "status": "passed",
+   "assertionCount": 8,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "accessHardening [SEC-DB-X-NO-SELF-RESTORE] no restore function is reachable from a session",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-DB-X-NO-SELF-RESTORE.json",
+    "artifactSha256": "70f0eb8d02ed5439754fbf436854e66fb5f270fa7e7b5388e327d34b7fc9441a"
+   }
+  },
+  {
+   "id": "SEC-X-INT-SLUG-PLAIN-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-DB-X-RESTORE-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-FE-EMAIL-SECTION-DENY",
+   "status": "passed",
+   "assertionCount": 20
+  },
+  {
+   "id": "SEC-X-FE-EMAIL-SECTION-ALLOW",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-EMAIL-ERRORS-SAME",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-BLOCKCHECK-NO-ROW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-SRV-BLOCKCHECK-ACTIVE",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-X-FE-CONTACT-BOT-DENY",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-X-FE-CONTACT-BOT-ALLOW",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-FE-INQUIRY-BOT-DENY",
+   "status": "passed",
+   "assertionCount": 13
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-BOT-DENY",
+   "status": "passed",
+   "assertionCount": 7,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-SRV-CONTACT-BOT-DENY] no contact without a verified human check",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-CONTACT-BOT-DENY.json",
+    "artifactSha256": "744159640497e28a84905671e20ec2bf1129ea588d02b85b94dbcc739b175223"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-BOT-ALLOW",
+   "status": "passed",
+   "assertionCount": 14
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-BOT-ERR",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-INQUIRY-BOT-DENY",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-RPC-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-RPC-ALLOW",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-FE-SLUG-CREATE",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+   "status": "passed",
+   "assertionCount": 10
+  },
+  {
+   "id": "SEC-X-SRV-LISTING-BOUNDS-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-FE-LISTING-BOUNDS",
+   "status": "passed",
+   "assertionCount": 11
+  },
+  {
+   "id": "SEC-X-SRV-PROFILE-BOUNDS-DENY",
+   "status": "passed",
+   "assertionCount": 20
+  },
+  {
+   "id": "SEC-X-SRV-PROFILE-BOUNDS-ALLOW",
+   "status": "passed",
+   "assertionCount": 17
+  },
+  {
+   "id": "SEC-X-FE-PROFILE-BOUNDS",
+   "status": "passed",
+   "assertionCount": 15
+  },
+  {
+   "id": "SEC-X-SRV-EXCHANGE-REMOVED",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+   "status": "passed",
+   "assertionCount": 13,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-RESTRICTED-PAGE-DENY.json",
+    "artifactSha256": "b732f00de7b6d1803148d3bb9ef2160b2609e91586c49ebbf5a5e70799a08a9b"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-RESTRICTED-PAGE-ALLOW",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-SRV-RESTRICTED-EDIT",
+   "status": "passed",
+   "assertionCount": 16
+  },
+  {
+   "id": "SEC-X-FE-RESTRICTED-VIEW",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-X-INT-RESTRICTED-STATE-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-INT-RESTRICTED-STATE-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-FE-PRICE-DIGITS",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-SESSION-DENY",
+   "status": "passed",
+   "assertionCount": 15,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-SRV-CONTACT-SESSION-DENY] only a verified caller, by its own id",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-CONTACT-SESSION-DENY.json",
+    "artifactSha256": "cd9d3f8bbbc9795fe8bc99e3063d89b1b166566749c5cee389c9cc8182daac1e"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-CONTACT-ENTRY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-GATEWAY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-INT-CONTACT-SESSION-DENY",
+   "status": "passed",
+   "assertionCount": 8
+  },
+  {
+   "id": "SEC-X-SRV-REVEAL-LIMIT",
+   "status": "passed",
+   "assertionCount": 9,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-SRV-REVEAL-LIMIT] the account limits of D77 and D79",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REVEAL-LIMIT.json",
+    "artifactSha256": "0dd1b2c8b2953155e442704ce8f129a099ae81a1914c2aedd5986848787c1f50"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-REVEAL-IP",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-SRV-REVEAL-IP] the IP limit of D80 and the shared bucket",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REVEAL-IP.json",
+    "artifactSha256": "555df810c748d81899c2c5c309e838d83527d87837431b6b3d8c9017b9ccf79e"
+   }
+  },
+  {
+   "id": "SEC-X-SRV-REVEAL-REPEAT",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-SRV-REVEAL-FAILCLOSED",
+   "status": "passed",
+   "assertionCount": 12,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-SRV-REVEAL-FAILCLOSED] a limit that cannot be read refuses",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-REVEAL-FAILCLOSED.json",
+    "artifactSha256": "3f42814f97867a9349f362ec6bc33cb7c2576142406a533b290f159509d0bfbc"
+   }
+  },
+  {
+   "id": "SEC-X-INT-REVEAL-TABLE-DENY",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-INT-REVEAL-TABLE-DENY] a session cannot touch the reveal record",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-INT-REVEAL-TABLE-DENY.json",
+    "artifactSha256": "302c993436a03471b0874da80c6c9a8fefd24f822349091f49b8215f93590d56"
+   }
+  },
+  {
+   "id": "SEC-X-INT-REVEAL-TABLE-SERVER",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-INT-REVEAL-TABLE-SERVER] the server reads and writes the reveal record",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-INT-REVEAL-TABLE-SERVER.json",
+    "artifactSha256": "cf3b0ed4bad119189f0f747015881975406fe8cc397f2afc35666e425d373e8c"
+   }
+  },
+  {
+   "id": "SEC-X-INT-REVEAL-RECORD",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-INT-REVEAL-LIMIT",
+   "status": "passed",
+   "assertionCount": 9,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "contactGateway [SEC-X-INT-REVEAL-LIMIT] the real gateway refuses a reveal past the hour limit",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-INT-REVEAL-LIMIT.json",
+    "artifactSha256": "3ecda447b5e5967f98fc4e77a31a51c74ea87832edd0ba358cb86dbfabd1190b"
+   }
+  },
+  {
+   "id": "SEC-X-FE-CONTACT-LIMIT",
+   "status": "passed",
+   "assertionCount": 12
+  },
+  {
+   "id": "SEC-X-FE-CONTACT-SESSION-RESET",
+   "status": "passed",
+   "assertionCount": 19
+  },
+  {
+   "id": "SEC-X-SRV-ADMIN-USER-GONE",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-X-SRV-ADMIN-USER-DELETED",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-ADMIN-USER-QUERY-ERROR",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-SRV-ADMIN-USER-PRESENT",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-FE-ADMIN-USERS-NOTICE-SHOWN",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-FE-ADMIN-USERS-NOTICE-NOT-REFLECTED",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-FE-ADMIN-USERS-NOTICE-ABSENT",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-D29-FE-STALE-DENY",
+   "status": "passed",
+   "assertionCount": 32
+  },
+  {
+   "id": "SEC-D29-FE-STALE-ALLOW",
+   "status": "passed",
+   "assertionCount": 20
+  },
+  {
+   "id": "SEC-X-FE-LOGIN-CAPTCHA-ALLOW",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-X-FE-LOGIN-CAPTCHA-DENY",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-X-FE-LOGIN-CAPTCHA-ERR",
+   "status": "passed",
+   "assertionCount": 13
+  },
+  {
+   "id": "SEC-X-SRV-REAUTH-VERIFY-KEY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-X-SRV-VIEW-DENY",
+   "status": "passed",
+   "assertionCount": 14,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner's own",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-VIEW-DENY.json",
+    "artifactSha256": "2439868e3afe85d86274b6d5358a77b37f2870676c3564d6325cca2d471f0a9d"
+   }
+  },
+  {
+   "id": "SEC-DB-S62-ALLOW",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-X-SRV-PROFILE-PROTECTED-DENY",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-X-SRV-PROFILE-PROTECTED-DENY] A session cannot change the protected profile columns role, status, verification, block, suspension, deletion or public id",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity/SEC-X-SRV-PROFILE-PROTECTED-DENY.json",
+    "artifactSha256": "433c8b5c2a75c0f63130a7674b5b67edf559d5bd77e497cf6426c078147a0422"
+   }
+  }
+ ]
+}

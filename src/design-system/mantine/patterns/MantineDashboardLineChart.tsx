@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import type { ApexOptions } from 'apexcharts'
-import { Box, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Box, Stack, Text, px, useMantineTheme } from '@mantine/core'
 import { MantineDashboardChartStateFrame, type DashboardChartState } from './MantineDashboardChartStateFrame'
 import { MantineDashboardChartLegend } from './MantineDashboardChartLegend'
 import { resolveThemeColor } from './dashboardChartTheme'
-import { useApexTooltipMirror } from './useApexTooltipMirror'
+import { useApexFluidBox } from './useApexFluidBox'
+import { chartLabelSize, labelStride, plotWidthOf, textWidth, useChartLabelFont, widestLine } from './dashboardChartLabels'
 
 // ApexCharts reads `window` at import time — never safe to render during SSR (Next.js §"client
 // heavy libs", same pattern as `MapWrapper.tsx`'s Leaflet map).
@@ -104,10 +105,20 @@ export function MantineDashboardLineChart({
   ariaLabel,
 }: MantineDashboardLineChartProps) {
   const theme = useMantineTheme()
-  const mirrorRef = useApexTooltipMirror()
+  const { ref: chartBoxRef, boxWidth, chartWidth } = useApexFluidBox()
   const [hiddenKeys, setHiddenKeys] = useState<Set<string>>(new Set())
 
   const visibleSeries = mode === 'single' ? series : series.filter((s) => !hiddenKeys.has(s.key))
+
+  // Task 923 Revision 7 (Material: axis labels stay horizontal and never inhibit reading the chart): the date labels are thinned to the
+  // ones that fit the plot with a gap between them, so on a phone they no longer touch ("Jan Feb Mar Apr May").
+  const dateNames = data.map((d) => dateLabel(d.date))
+  const labelFont = useChartLabelFont(theme, dateNames)
+  const labelGap = Number(px(theme.spacing.xs))
+  const yTop = Math.max(0, ...visibleSeries.flatMap((s) => data.map((d) => Number(d[s.key] ?? 0))))
+  const stride = boxWidth > 0
+    ? labelStride(plotWidthOf(boxWidth, textWidth(valueLabel(yTop), labelFont), labelGap), widestLine([dateNames], labelFont), labelGap, data.length)
+    : 1
 
   const toggleSeries = (key: string) => {
     setHiddenKeys((prev) => {
@@ -160,10 +171,10 @@ export function MantineDashboardLineChart({
     xaxis: {
       categories: data.map((d) => d.date),
       labels: {
-        formatter: (v: string) => dateLabel(v),
-        style: { colors: axisTextColor, fontFamily: theme.fontFamily },
+        formatter: (v: string) => (data.findIndex((d) => d.date === v) % stride === 0 ? dateLabel(v) : ''),
+        style: { colors: axisTextColor, fontFamily: theme.fontFamily, fontSize: `${chartLabelSize(theme)}px` },
         rotate: 0,
-        hideOverlappingLabels: true,
+        hideOverlappingLabels: false,
       },
       tickPlacement: 'on',
       axisBorder: { show: false },
@@ -200,7 +211,7 @@ export function MantineDashboardLineChart({
       loadingAriaLabel={loadingAriaLabel}
     >
       <Stack gap="md">
-        <Box ref={mirrorRef} h={theme.other.boxSize.dashboardChartMinHeight}>
+        <Box ref={chartBoxRef} h={theme.other.boxSize.dashboardChartMinHeight}>
           {visibleSeries.length === 0 ? (
             <Stack align="center" justify="center" h="100%" gap="xs">
               <Text size="sm" c="dimmed">
@@ -208,7 +219,7 @@ export function MantineDashboardLineChart({
               </Text>
             </Stack>
           ) : (
-            <ReactApexChart options={options} series={apexSeries} type="area" height="100%" width="100%" aria-label={ariaLabel} />
+            <ReactApexChart options={options} series={apexSeries} type="area" height="100%" width={chartWidth} aria-label={ariaLabel} />
           )}
         </Box>
 

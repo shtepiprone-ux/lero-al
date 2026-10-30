@@ -1,0 +1,22 @@
+{
+  "id": "P-FULL-MODERATOR-ADMIN-AVATAR",
+  "scope": "Real removeUserAvatar action and upload-avatar POST; same moderator viewer, explicit DB/provider doubles, real multipart parsing; no network or real media effects",
+  "controlRemove": {
+    "error": "forbidden"
+  },
+  "removeUpdates": 0,
+  "uploadStatus": 200,
+  "uploadBody": {
+    "url": "https://res.cloudinary.com/audit/image/upload/synthetic.png"
+  },
+  "uploads": 1,
+  "updates": [
+    {
+      "table": "users",
+      "id": "00000000-0000-4000-8000-000000000002",
+      "data": {
+        "avatar_url": "https://res.cloudinary.com/audit/image/upload/synthetic.png"
+      }
+    }
+  ]
+}

@@ -1,0 +1,397 @@
+{
+ "version": 1,
+ "status": "passed",
+ "generatedAt": "2026-10-29T15:23:46.575Z",
+ "contractSha256": "de2cfca04966658a87dcc6a40cf7783a2d7b4303489ebd3653897b72cc851868",
+ "scopeSha256": "86039ff1eefef80125883e9ad7c0842ec43207fa567c1ad059afc1583385c78e",
+ "errors": [],
+ "vulnerabilities": [],
+ "cleanup": {
+  "verified": true,
+  "remaining": 0,
+  "errors": []
+ },
+ "cases": [
+  {
+   "id": "SEC-S01-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S01-SRV-DENY] createNotification is not reachable as a public Server Action",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S01-SRV-DENY.json",
+    "artifactSha256": "2e878e66b91fd412b6b98d1476edecb8f91b59547ef24bac515427d34a75fd20"
+   }
+  },
+  {
+   "id": "SEC-S01-INT-DENY",
+   "status": "passed",
+   "assertionCount": 1,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S01-INT-DENY] createNotification is not reachable as a public Server Action",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S01-INT-DENY.json",
+    "artifactSha256": "77140ab636e30b28dd47f62480e5de39cf512f1225e5732e4f3e6f6527925575"
+   }
+  },
+  {
+   "id": "SEC-S01-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 2,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S01-INT-ALLOW] createNotification is not reachable as a public Server Action",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S01-INT-ALLOW.json",
+    "artifactSha256": "ca62c73cbb27ded81f9f68c26520a4a7d921735edd3ed32cbd9d72e5834cb63b"
+   }
+  },
+  {
+   "id": "SEC-S02-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S03-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S04-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S05-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S06-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S07-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-S08-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S09-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 1
+  },
+  {
+   "id": "SEC-S09-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S09-FE-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S09-FE-ERR",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S10-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S11-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S15-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S17-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S17-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S18-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S20-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S20-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S21-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S22-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S27-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S27-SRV-ALLOW",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S28-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S28-SRV-DENY.json",
+    "artifactSha256": "0ac28fa5534e2379b15318aa3236fd55a4ee190c5e8b6e7e80b4659c8012151c"
+   }
+  },
+  {
+   "id": "SEC-S28-INT-DENY",
+   "status": "passed",
+   "assertionCount": 1,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S28-INT-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S28-INT-DENY.json",
+    "artifactSha256": "7505d9aa8927edf3d365d33fecb6a1142ed3ab83ba32697a6ecaab705f3c03d7"
+   }
+  },
+  {
+   "id": "SEC-S28-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 2,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S28-INT-ALLOW] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S28-INT-ALLOW.json",
+    "artifactSha256": "09b74d993a8787c04a2ab122692cc480e0e7bea7b9aab5f8fefd0a3dc7f24cd4"
+   }
+  },
+  {
+   "id": "SEC-S29-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S30-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S33-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S34-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-S35-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S36-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S37-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S38-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S39-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S41-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S42-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S43-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S44-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S44-SRV-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S44-SRV-DENY.json",
+    "artifactSha256": "72922fd652bb71c33933bc0df3a42c379f61ad61e2890f0608b9210d31106d8a"
+   }
+  },
+  {
+   "id": "SEC-S44-INT-DENY",
+   "status": "passed",
+   "assertionCount": 6,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S44-INT-DENY] updateUserProfile writes only the three text fields, never role, status or verification",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S44-INT-DENY.json",
+    "artifactSha256": "b889b39755ed74131f07911621132385145b5c0dd2602b5454fd3e43c0b876bd"
+   }
+  },
+  {
+   "id": "SEC-S44-INT-ALLOW",
+   "status": "passed",
+   "assertionCount": 3,
+   "sensitivity": {
+    "baseline": "passed",
+    "mutant": "failed",
+    "failureKind": "assertion",
+    "restored": "passed",
+    "testName": "[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, never role, status or verification",
+    "artifact": "docs/sessions/evidence/task923/security/sensitivity-owner-fixes/SEC-S44-INT-ALLOW.json",
+    "artifactSha256": "21b26c0c0fff166d53c3fbb67d08e4caba0ba06e5d8635a007e5442769896731"
+   }
+  },
+  {
+   "id": "SEC-S45-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 9
+  },
+  {
+   "id": "SEC-S46-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S48-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S49-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S50-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-S52-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S53-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  },
+  {
+   "id": "SEC-S54-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-S55-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 7
+  },
+  {
+   "id": "SEC-S56-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S56-SRV-ERR",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-S57-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 6
+  },
+  {
+   "id": "SEC-S58-SRV-DENY",
+   "status": "passed",
+   "assertionCount": 3
+  },
+  {
+   "id": "SEC-RP-FE-ERR",
+   "status": "passed",
+   "assertionCount": 4
+  },
+  {
+   "id": "SEC-R48-FE-ALLOW",
+   "status": "passed",
+   "assertionCount": 2
+  },
+  {
+   "id": "SEC-R48-FE-DENY",
+   "status": "passed",
+   "assertionCount": 5
+  }
+ ]
+}

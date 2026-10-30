@@ -1,0 +1,9 @@
+platform win32 10.0.26300.0 node v22.22.3; no extra module; start 2026-10-21T09:41:20.876Z
+cmd node docs/sessions/evidence/task923/r19-12-mojibake-summary.cjs   (check:mojibake over the whole tree: the flagged PATHS only; none is a file of Revision 18)
+gate exit code 1
+check:mojibake FAILED - 158 artifact(s), 0 invalid-UTF-8 file(s):
+flagged files: 2
+  docs/sessions/evidence/task927/base/unit-base-failures.txt
+  docs/sessions/evidence/task927/validation/unit-final-failures.txt
+flagged files written by Revision 18: 0
+EXIT_CODE=0

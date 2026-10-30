@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { usePresence } from '@/hooks/usePresence'
 import { User, LayoutList, Bookmark } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import { ProfileTab } from '@/modules/cabinet/components/ProfileTab'
@@ -85,10 +85,10 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <h1 className="text-lg font-bold truncate">{profile?.name ?? '—'}</h1>
               {profile?.user_type === 'agent' && (
-                <Badge variant="secondary" className="text-xs">{t('user_type_agent')}</Badge>
+                <MantineBadge variant="status" entity="userRole" value="agent">{t('user_type_agent')}</MantineBadge>
               )}
               {profile?.is_verified && (
-                <Badge variant="success" className="text-xs">✓ {t('verified')}</Badge>
+                <MantineBadge variant="status" entity="agentVerification" value="verified">✓ {t('verified')}</MantineBadge>
               )}
             </div>
             <p className="text-sm text-muted-foreground">
@@ -118,14 +118,9 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
                 <Icon className="h-4 w-4 shrink-0" />
                 <span className="hidden sm:inline">{label}</span>
                 {count !== undefined && count > 0 && (
-                  <span className={cn(
-                    'text-xs font-bold rounded-full px-1.5 py-0.5 min-w-5 text-center leading-none',
-                    activeTab === key
-                      ? 'bg-primary-foreground/20 text-primary-foreground'
-                      : 'bg-muted text-muted-foreground'
-                  )}>
+                  <MantineBadge variant="count" emphasis={activeTab === key ? 'onBrand' : 'neutral'}>
                     {count}
-                  </span>
+                  </MantineBadge>
                 )}
               </TabsTrigger>
             ))}

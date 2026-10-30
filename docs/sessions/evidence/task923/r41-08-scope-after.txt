@@ -1,0 +1,15 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r41-08-scope-after.mjs
+date: 2026-10-23T19:10:01.419Z
+--- output ---
+contract: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md stage=planned executionStatus=ready scope=329 paths
+src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx                                     isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/CabinetEmailChangeSection.security.test.tsx                 isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx                   isProductPath=true isPolicyPath=false inScope=true
+src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx                 isProductPath=true isPolicyPath=false inScope=true
+every changed product path is in scope; no policy path changed
+
+
+EXIT_CODE=0

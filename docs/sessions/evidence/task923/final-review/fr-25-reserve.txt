@@ -1,0 +1,5 @@
+# fr-25 (Opus) 2026-10-28T22:08:46.602Z
+docs/backlog-reserved.md: added | **934**
+docs/backlog-reserved.md: added | **933**
+docs/backlog-reserved.md: added | **932**
+docs/backlog.md: registry moved to 934 / 935

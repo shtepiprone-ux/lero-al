@@ -1,0 +1,254 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: npx vitest run src/components/layout/__tests__/headerFooterContainers.test.tsx
+started: 2026-10-25T09:25:04.621Z
+--- stdout ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx (21 tests | 21 failed) 73ms
+     × a signed-in person gets the bell and is authenticated; a guest gets neither 16ms
+     × the global sign-in event opens the sheet on the requested view, "login" when none is given, and closing reports it 3ms
+     × the global listener is removed with the header 2ms
+     × opening from the header's own buttons uses the view they ask for 1ms
+     × the mobile drawer opens and closes 3ms
+     × navigation goes through the router 1ms
+       × keeps the rest of the address and syncs the admin language 7ms
+       × the bare language address goes to the new language home 1ms
+       × a segment that only STARTS like a language is kept whole 2ms
+       × the query string and hash are not copied into the new path 2ms
+       × an address with a double slash stays inside the site (it is always under the language) 1ms
+     × the admin app opens in a new tab with no opener and no referrer 2ms
+     × signing out from a page that needs a session goes to the language home; from a public page it just refreshes 1ms
+     × during sign-out the header keeps showing the person it had, then follows the real user 1ms
+     × splits the site name into brand and domain 13ms
+     × without database content every field comes from the translations and the built-in links 4ms
+     × a failing footer service gives the same page as no content, not an error 2ms
+     × database text wins field by field; an empty field falls back on its own 2ms
+     × the copyright template gets the current year in every place it is written 2ms
+     × only enabled links are shown; a list with none enabled falls back to the built-in ones 3ms
+     × a database record with no lists at all still renders 2ms
+
+ Test Files  1 failed (1)
+      Tests  21 failed (21)
+   Start at  10:25:06
+   Duration  2.88s (transform 164ms, setup 110ms, import 1.27s, tests 73ms, environment 864ms)
+
+
+--- stderr ---
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 21 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > a signed-in person gets the bell and is authenticated; a guest gets neither
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > the global sign-in event opens the sheet on the requested view, "login" when none is given, and closing reports it
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > the global listener is removed with the header
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > opening from the header's own buttons uses the view they ask for
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > the mobile drawer opens and closes
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > navigation goes through the router
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > switching language > keeps the rest of the address and syncs the admin language
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > switching language > the bare language address goes to the new language home
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > switching language > a segment that only STARTS like a language is kept whole
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > switching language > the query string and hash are not copied into the new path
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > switching language > an address with a double slash stays inside the site (it is always under the language)
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > the admin app opens in a new tab with no opener and no referrer
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > signing out from a page that needs a session goes to the language home; from a public page it just refreshes
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Header > during sign-out the header keeps showing the person it had, then follows the real user
+Error: [vitest] No "useTranslations" export is defined on the "next-intl" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("next-intl"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Header src/components/layout/Header.tsx:23:13
+     21|   const pathname = usePathname()
+     22|
+     23|   const t = useTranslations('auth')
+       |             ^
+     24|
+     25|   const { user, status, signOut, isSigningOut } = useUser()
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ ❯ beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > splits the site name into brand and domain
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:185:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > without database content every field comes from the translations and the built-in links
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:191:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a failing footer service gives the same page as no content, not an error
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:200:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > database text wins field by field; an empty field falls back on its own
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:206:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > the copyright template gets the current year in every place it is written
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:214:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > only enabled links are shown; a list with none enabled falls back to the built-in ones
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:220:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/21]⎯
+
+ FAIL  src/components/layout/__tests__/headerFooterContainers.test.tsx > Footer > a database record with no lists at all still renders
+Error: [vitest] No "getFooterContent" export is defined on the "@/modules/admin/lib/settings" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/modules/admin/lib/settings"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ Footer src/components/layout/Footer.tsx:16:5
+     14|     getTranslations('nav'),
+     15|     getSetting('site_name', 'Lero.al'),
+     16|     getFooterContent(locale).catch(() => null),
+       |     ^
+     17|   ])
+     18|
+ ❯ footer src/components/layout/__tests__/headerFooterContainers.test.tsx:180:13
+ ❯ src/components/layout/__tests__/headerFooterContainers.test.tsx:227:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/21]⎯
+
+
+exit code: 1

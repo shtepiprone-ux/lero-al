@@ -1,0 +1,3 @@
+platform: MINGW64_NT-10.0-26300 3.6.5-22c95533.x86_64; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; start 2026-10-29T20:36:37+01:00
+command: npx vitest run --reporter=json --outputFile=docs/sessions/evidence/task923/review-66/rv66-03-unit-full.json
+exit code: 1 end 2026-10-29T20:38:28+01:00

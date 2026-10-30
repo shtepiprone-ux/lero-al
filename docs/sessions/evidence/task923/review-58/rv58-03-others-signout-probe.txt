@@ -1,0 +1,18 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-58/rv58-03-others-signout-probe.mjs
+date: 2026-10-25T12:32:14.053Z
+@supabase/ssr 0.10.3
+anon key (before R153): before the check, the verify client's session is the browser's: true
+anon key (before R153): password check ok
+anon key (before R153): after the check, the verify client's session is the browser's: false; the check's own: true
+anon key (before R153): signOut others ok
+anon key (before R153): browser session ended (Auth session missing!); phone session ended (Auth session missing!); the check's session alive
+service-role key (R153): before the check, the verify client's session is the browser's: true
+service-role key (R153): password check ok
+service-role key (R153): after the check, the verify client's session is the browser's: false; the check's own: true
+service-role key (R153): signOut others ok
+service-role key (R153): browser session ended (Auth session missing!); phone session ended (Auth session missing!); the check's session alive
+clean-up: zz_synth_rv58o_ users left 0
+exit code: 0

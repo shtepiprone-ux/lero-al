@@ -1,13 +1,13 @@
 ## GR-3h — Vertical rhythm: every block keeps its container's canonical spacing, or the task is not done
 
 **Owner rule, 2026-10-09 (Task 859, review 13, owner visual check of `Patterns/Mantine/AdminSupportView`).** The
-owner's words, verbatim: *"Не витримані відступи на мобільних екранах. Це пропустила Sonnet і ти вже протягом 13
-рев'ю. Наразі бейджі притиснуті до заголовків. Необхідно внести у правильне місце у правилах, що об'єкти мають
-витримувати канонічні відступи між собою, бо це буде повторюватись все життя!"*; on the reviewer's first measurement,
-which covered only 320 and 390: *"насправді бейджі не мають відступів починаючи з 767px, ти дуже паршиво провів
-аудит"*; and on the reviewer's first draft of this rule, which invented a minimum gap of `xs` instead of using the
-card's own rhythm: *"Це повна хуйня, відступ має бути такий самий як і між бейджем і сепаратором."* · *"От і запиши в
-правила, що обов'язково має дотримуватись вертикальний ритм, інакше задача не може бути виконаною!"*
+owner's words: *"The gaps on mobile screens are not kept. Sonnet missed this, and so have you, for 13 reviews.
+Right now the badges are pressed against the headings. It must be put in the right place in
+the rules that objects must keep the canonical gaps between each other, because this will keep repeating forever!"*; on the reviewer's first measurement,
+which covered only 320 and 390: *"in fact the badges have no gaps starting
+from 767px, you did a very poor audit"*; and on the reviewer's first draft of this rule, which invented a minimum gap of `xs` instead of using the
+card's own rhythm: *"This is complete bullshit, the gap must be the same as between the badge and the separator."* · *"So write it into the rules that the vertical rhythm
+must be kept, otherwise the task cannot be complete!"*
 
 **The trigger.** The admin record card (`MantineDataTableToCards`, below 768px) stacks its sections — header, divider,
 primary row, divider, detail — in one `Stack gap="sm"`: **12px** between every section (measured,

@@ -10,7 +10,6 @@
 
 import type {
   DBCurrency,
-  DBExchangeProvider,
   DBPropertyType,
   EmailTemplate,
   Company,
@@ -95,50 +94,6 @@ export const FIXTURE_CURRENCIES: DBCurrency[] = [
     decimals: 2,
     created_at: D3,
     updated_at: D3,
-  },
-]
-
-// ── DBExchangeProvider fixtures ───────────────────────────────────────────────
-
-export const FIXTURE_PROVIDERS: DBExchangeProvider[] = [
-  {
-    id: 1,
-    name: 'BankOfAlbania',
-    endpoint_url: 'https://api.bankofalbania.example/rates',
-    api_key: null,
-    refresh_interval_min: 60,
-    priority: 1,
-    mode: 'auto',
-    is_enabled: true,
-    notes: null,
-    created_at: D1,
-    updated_at: D1,
-  },
-  {
-    id: 2,
-    name: 'ExchangeRatesAPI',
-    endpoint_url: 'https://api.exchangeratesapi.example/latest',
-    api_key: 'key-redacted',
-    refresh_interval_min: 30,
-    priority: 2,
-    mode: 'hybrid',
-    is_enabled: true,
-    notes: null,
-    created_at: D2,
-    updated_at: D3,
-  },
-  {
-    id: 3,
-    name: 'ManualRates',
-    endpoint_url: 'https://internal.example/manual',
-    api_key: null,
-    refresh_interval_min: 1440,
-    priority: 10,
-    mode: 'manual',
-    is_enabled: false,
-    notes: null,
-    created_at: D4,
-    updated_at: D4,
   },
 ]
 
@@ -741,4 +696,70 @@ export const FIXTURE_INQUIRY_REPLIES: ReplyRow[] = [
     replied_by: 'u-admin',
     replier: null,
   },
+]
+
+// ── Task 859 additions: /admin/support Views (labelled fixture data) ─────────
+
+export const FIXTURE_SUPPORT_TICKETS_EXTRA: SupportTicketRow[] = [
+  {
+    id: 'tkt-004',
+    subject: 'Fatura e pagesës për paketën Premium nuk u gjenerua pas pagesës së kryer me kartë',
+    status: 'open' as TicketStatus,
+    ticket_type: 'support',
+    complaint_type: null,
+    reason: 'Pagesa u debitua dy herë dhe asnjë faturë nuk u dërgua në email.',
+    assigned_to: null,
+    created_at: D4,
+    updated_at: D5,
+    reporter: { id: 'usr-005', name: 'Driton Berisha' },
+    reported: null,
+    created_by_admin: { id: 'usr-003', name: 'Marco Rossi' },
+  },
+  {
+    id: 'tkt-005',
+    subject: 'Ankesë për ngacmim në mesazhet private',
+    status: 'closed' as TicketStatus,
+    ticket_type: 'user_complaint',
+    complaint_type: 'harassment_or_abuse' as ComplaintType,
+    reason: 'Përdoruesi dërgon mesazhe të përsëritura edhe pas bllokimit.',
+    assigned_to: 'usr-003',
+    created_at: D3,
+    updated_at: D5,
+    reporter: { id: 'usr-004', name: 'Gentiana Hoxha' },
+    reported: { id: 'usr-006', name: null },
+    created_by_admin: null,
+  },
+]
+
+export const FIXTURE_SUPPORT_TIMELINE_EVENTS: SupportTicketEventRow[] = [
+  {
+    id: 'ev-s-001',
+    ticket_id: 'tkt-002',
+    actor_user_id: 'usr-004',
+    actor_role: 'user',
+    event_type: 'created',
+    old_status: null,
+    new_status: 'open',
+    note: null,
+    created_at: D2,
+    actor: { name: 'Gentiana Hoxha' },
+  },
+  {
+    id: 'ev-s-002',
+    ticket_id: 'tkt-002',
+    actor_user_id: 'usr-003',
+    actor_role: 'moderator',
+    event_type: 'status_changed',
+    old_status: 'open',
+    new_status: 'in_progress',
+    note: 'Po verifikoj fotot me pronarin.',
+    created_at: D3,
+    actor: { name: 'Marco Rossi' },
+  },
+]
+
+export const FIXTURE_PICKER_USERS = [
+  { id: 'a1a1a1a1-0000-0000-0000-000000000001', name: 'Agim', last_name: 'Krasniqi', phone: '+355691234567', role: 'agent', status: 'active', company_name: 'Tirana Real Estate Group' },
+  { id: 'b2b2b2b2-0000-0000-0000-000000000002', name: 'Blerina', last_name: 'Hoxha', phone: null, role: 'user', status: 'blocked', company_name: null },
+  { id: 'c3c3c3c3-0000-0000-0000-000000000003', name: 'Driton', last_name: 'Berisha', phone: '+355697654321', role: 'moderator', status: 'inactive', company_name: 'Berisha Real Estate' },
 ]

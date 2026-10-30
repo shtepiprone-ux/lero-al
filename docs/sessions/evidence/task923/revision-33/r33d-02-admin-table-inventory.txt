@@ -1,0 +1,13 @@
+platform: win32 x64; node: v22.22.3; cwd: C:/Claude_Code_Projects/lero-al; command: node docs/sessions/evidence/task923/revision-33/r33d-02-admin-table-inventory.cjs <root>
+files scanned: 546; tables seen: 36; written only from the admin directories: 10
+currencies | admin writers: src/modules/admin/actions/currencies.ts | readers outside admin: src/lib/getExchangeRateServer.ts, src/modules/cabinet/actions/index.ts, src/modules/currency/lib/queries.ts, src/modules/listings/actions/createListing.ts, src/modules/listings/actions/updateListing.ts
+pages | admin writers: src/modules/admin/actions/index.ts | readers outside admin: src/app/[locale]/[slug]/page.tsx, src/lib/cloudinaryDelete.ts
+property_types | admin writers: src/modules/admin/actions/propertyTypes.ts | readers outside admin: src/modules/listings/actions/createListing.ts, src/modules/listings/actions/updateListing.ts
+role_permission_events | admin writers: src/modules/admin/actions/permissions.ts | readers outside admin: NONE
+role_permissions | admin writers: src/modules/admin/actions/permissions.ts | readers outside admin: src/lib/auth/permissions.ts
+site_footer | admin writers: src/modules/admin/actions/footer.ts | readers outside admin: NONE
+site_settings | admin writers: src/modules/admin/actions/index.ts | readers outside admin: src/lib/cloudinaryDelete.ts
+support_ticket_events | admin writers: src/modules/admin/actions/index.ts | readers outside admin: NONE
+support_tickets | admin writers: src/modules/admin/actions/index.ts | readers outside admin: NONE
+user_change_log | admin writers: src/modules/admin/actions/index.ts | readers outside admin: NONE
+EXIT_CODE=0

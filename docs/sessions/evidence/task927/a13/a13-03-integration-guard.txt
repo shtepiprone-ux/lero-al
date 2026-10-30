@@ -1,0 +1,37 @@
+# a13-03: the integration file without SECURITY_TEST_* (the target guard; the database is not reached)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+started: 2026-10-28T19:31:22.149Z
+
+command: npx vitest run --config vitest.integration.config.ts src/lib/auth/googleSignIn.integration.test.ts
+--- output ---
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+ ❯ src/lib/auth/googleSignIn.integration.test.ts (0 test)
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  20:31:23
+   Duration  160ms (transform 28ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/auth/googleSignIn.integration.test.ts [ src/lib/auth/googleSignIn.integration.test.ts ]
+Error: Refusing to run: set SECURITY_TEST_TARGET=development. The suite creates and deletes users and must only ever run against the approved development target.
+ ❯ loadIntegrationEnv src/tests/integration/environment.ts:50:11
+     48|
+     49|   if (process.env.SECURITY_TEST_TARGET !== 'development') {
+     50|     throw new Error('Refusing to run: set SECURITY_TEST_TARGET=develop…
+       |           ^
+     51|   }
+     52|   if (process.env.SECURITY_TEST_PROJECT_REF !== projectRef) {
+ ❯ src/tests/integration/setup.ts:7:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+--- exit code: 1 ---
+
+finished: 2026-10-28T19:31:23.365Z
+exit code: 1

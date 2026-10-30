@@ -1,0 +1,17 @@
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-4/rv4-01-captcha-probe.mjs
+date: 2026-10-25T10:34:04.264Z
+anon password grant, admin account, no captcha token: 400 captcha_failed captcha protection: request disallowed (no captcha_token found)
+anon password grant, agent1 account, no captcha token: 400 captcha_failed captcha protection: request disallowed (no captcha_token found)
+anon password grant, a bogus captcha token: 400 captcha_failed captcha protection: request disallowed (invalid-input-response)
+anon id_token grant, no captcha token: 400 Bad ID token
+anon refresh_token grant, no captcha token: 400 validation_failed Refresh token is not valid
+service-role password grant, unknown account: 400 invalid_credentials Invalid login credentials
+ssr verify client, anon key, unknown account: captcha_failed captcha protection: request disallowed (no captcha_token found)
+ssr verify client, anon key, admin account with its password: captcha_failed captcha protection: request disallowed (no captcha_token found)
+ssr verify client, service-role key, unknown account: invalid_credentials Invalid login credentials
+ssr verify client, service-role key, admin account with its password: session ok
+ssr verify client, service-role key, signOut local of the verify session: session ok
+exit code: 0

@@ -1,0 +1,5 @@
+R36 design-tokens baseline comparison (kickoff 60 R124 (f), C1113)
+now:      docs/sessions/evidence/task923/r36-06d-check-design-tokens.txt
+baseline: docs/sessions/evidence/task923/review-39/rv39-09-design-tokens.txt
+lines compared: findings block from '── SHARED' to 'By category' (15 lines)
+result: IDENTICAL - no finding outside the baseline (3 findings: Map.module.css x2, input-chrome.css x1)

@@ -1,0 +1,35 @@
+# R140 AC140 r43-08: sha256 of the v4 pair against the v3 hashes; unchanged-state checks
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "set -u; E=docs/sessions/evidence/task923; D=$E/db-catalog\necho \"== v4 pair ==\"; sha256sum $D/proposed-account-deletion.sql $D/proposed-account-deletion-rollback.sql\necho \"== v3 pair (the .bak copies) ==\"; sha256sum $D/proposed-account-deletion.v3.sql.bak $D/proposed-account-deletion-rollback.v3.sql.bak\na4=$(sha256sum $D/proposed-account-deletion.sql|cut -d\" \" -f1); b4=$(sha256sum $D/proposed-account-deletion-rollback.sql|cut -d\" \" -f1)\n[ \"$a4\" != de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a ] && [ \"$b4\" != 13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982 ] && echo \"neither v4 equals its v3 hash: YES\" || echo \"A v4 EQUALS ITS v3 HASH\"\necho \"== dated captures of Revisions 9, 14 and 16 byte-equal (baseline taken before the first write) ==\"\nsha256sum $E/r9-61-deletion-schema-facts.txt $E/r14-03-capture.json $E/r16-00-capture.json $E/r14-03-capture.txt $E/r16-00-capture.txt\necho \"== migration file must not exist ==\"; ls supabase/migrations/20261018010000_task923_account_deletion.sql 2>&1 || true\necho \"== package.json / package-lock.json (dirty before the session; baseline 2d495444... / 994a7fb4...) ==\"; sha256sum package.json package-lock.json\necho \"== sha256 of the r43 captures ==\"; sha256sum $E/r43-01-account-references.json $E/r43-01-deletion-schema-facts.txt $E/r43-02-capture-r14.json $E/r43-03-capture-r16.json"
+NODE_PATH: (unset)
+started: 2026-10-24T09:40:32.173Z
+--- stdout ---
+== v4 pair ==
+cdc690e47ced1e2c346f5ed1c2bdb1e0ac51b6c7aa3526b404b483d1cd4a6f23 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql
+9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+== v3 pair (the .bak copies) ==
+de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.v3.sql.bak
+13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.v3.sql.bak
+neither v4 equals its v3 hash: YES
+== dated captures of Revisions 9, 14 and 16 byte-equal (baseline taken before the first write) ==
+5ec6c40198fcf651bf95d86e32ccd131eefdf99e0fdb1cd2f948a12a24609bc9 *docs/sessions/evidence/task923/r9-61-deletion-schema-facts.txt
+74a6419066bd31c442824092822518965ccb69d2e633735fedf2ef0ebe10b9cb *docs/sessions/evidence/task923/r14-03-capture.json
+8233617694d41e94909ea6855b89114277a7fd6bee6e7ef0397adf19f8043e16 *docs/sessions/evidence/task923/r16-00-capture.json
+e7fb55ff876ee843375623eddf60b1054181c03c69302f8e767d335b81641db2 *docs/sessions/evidence/task923/r14-03-capture.txt
+466be6dcc3b4c7174b7765f361121ff2887a09a39dd2b6c93cd09bf08afdb3f1 *docs/sessions/evidence/task923/r16-00-capture.txt
+== migration file must not exist ==
+ls: cannot access 'supabase/migrations/20261018010000_task923_account_deletion.sql': No such file or directory
+== package.json / package-lock.json (dirty before the session; baseline 2d495444... / 994a7fb4...) ==
+2d4954447f5f529060be09dcfd0f21b9d97d3f7cd75572618912a211c47eb0e8 *package.json
+994a7fb4f6140b124cd21a080a007eab2be9bb4f93bebdfd2114a2b0922183ba *package-lock.json
+== sha256 of the r43 captures ==
+e8b745185a4f10dbf51bc1d8c294122df486140312f0fc03d2483fa4a4385054 *docs/sessions/evidence/task923/r43-01-account-references.json
+3b7b6988a2762f06869e0320651ee996d91eee1924acae63b6b5ba8308b8aae2 *docs/sessions/evidence/task923/r43-01-deletion-schema-facts.txt
+6ebbd32ca13f841dcb54d665f020506a60945f98dedfd573eb7f580698a6389d *docs/sessions/evidence/task923/r43-02-capture-r14.json
+6391f7d5c51e26c9c43ab8bb1473f4b048186096137da3837ba59798076c200e *docs/sessions/evidence/task923/r43-03-capture-r16.json
+
+--- stderr ---
+
+--- exit code: 0 ---

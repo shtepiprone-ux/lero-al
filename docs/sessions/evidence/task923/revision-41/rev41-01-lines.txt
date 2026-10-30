@@ -1,0 +1,19 @@
+# Working-tree lines cited by Task 923 Revision 41 (Opus, 2026-10-23), copied by rev41-01-lines.mjs
+== src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx line 92, working tree, file sha256 2cfd7b863375eef0266c24910cae0d846442c60b95e620bfa7fafc0611f13f8b
+            placeholder={t('email_change_hint')}
+== src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx line 78, working tree, file sha256 2cfd7b863375eef0266c24910cae0d846442c60b95e620bfa7fafc0611f13f8b
+          <Anchor component="button" type="button" size="sm" onClick={onResend} disabled={sending}>
+== src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx line 95, working tree, file sha256 10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073
+  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
+== src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx line 232, working tree, file sha256 10f0be6c3293141957da7f29c6dedb9c9dadc4e17eae69f54509b62d618db073
+  fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: NEW_ADDRESS } })
+== src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx line 164, working tree, file sha256 fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2
+    const address = screen.getByPlaceholderText(t.email_change_hint) as HTMLInputElement
+== src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx line 188, working tree, file sha256 fb9d85059e0c33feec48343c0e6316e5c3a200a2b10191f34d640c0af2d231d2
+    fireEvent.change(screen.getByPlaceholderText(t.email_change_hint), { target: { value: 'new@example.com' } })
+== src/modules/auth/components/AuthSheet.tsx line 139, working tree, file sha256 2b4ff7e605e15ebe967843fce9a94ebafda6570328afa81b38b4592b92a08bd0
+        <Group justify="space-between" wrap="nowrap">
+== scope of tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json (328 paths)
+scope has ProfileTab.googleReauth.security.test.tsx: false
+== scope of tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json (30 paths)
+scope has ProfileTab.googleReauth.security.test.tsx: true

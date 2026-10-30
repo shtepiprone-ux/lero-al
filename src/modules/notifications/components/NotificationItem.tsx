@@ -249,7 +249,6 @@ export function NotificationItem({ notification, onRead }: Props) {
         <Text
           size="xs"
           c="dimmed"
-          lineClamp={2}
           mt="micro"
           style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}
         >

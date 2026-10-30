@@ -1,0 +1,18 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r40-scope-check.mjs; Write-Output 'hook refusal (Edit of scripts/rendered-state-census/registry.mjs, 2026-10-23): SECURITY TEST CONTRACT MISSING ... tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: outside its scope: scripts/rendered-state-census/registry.mjs (Opus amends the contract).'
+date: 2026-10-23T17:19:07.076Z
+--- output ---
+contract: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.md stage=planned executionStatus=ready scope=320 paths
+scripts/rendered-state-census/registry.mjs                                   isProductPath=true isPolicyPath=false inScope=false
+scripts/rendered-state-census/in-page.mjs                                    isProductPath=true isPolicyPath=false inScope=false
+scripts/rendered-state-census/runner.mjs                                     isProductPath=true isPolicyPath=false inScope=false
+scripts/rendered-state-census/verify.mjs                                     isProductPath=true isPolicyPath=false inScope=false
+scripts/__fixtures__/rendered-state-census/vendor-label-exempt.html          isProductPath=false isPolicyPath=false inScope=false
+scripts/__fixtures__/rendered-state-census/vendor-label-unexempt.html        isProductPath=false isPolicyPath=false inScope=false
+scripts/rendered-interaction-states.json                                     isProductPath=false isPolicyPath=false inScope=true
+hook refusal (Edit of scripts/rendered-state-census/registry.mjs, 2026-10-23): SECURITY TEST CONTRACT MISSING ... tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: outside its scope: scripts/rendered-state-census/registry.mjs (Opus amends the contract).
+
+
+EXIT_CODE=0

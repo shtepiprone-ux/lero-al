@@ -1,0 +1,53 @@
+Task 923 review 20 - read-only searches, working tree at HEAD fe07bb62e, 2026-10-20
+[1] Supabase Storage calls in src (grep -rn 'storage.from(' src):
+storage.from matches: 0
+[2] exchange_providers readers in product src (tests excluded):
+  src/modules/admin/actions/exchangeProviders.ts
+  rates are fetched from: https://iliria98.com/ https://open.er-api.com/v6/latest/ 
+[3] rate-limit words (rate, limit, throttl) per entry point:
+  src/modules/listings/actions/reportListing.ts: 0
+  src/app/api/upload-avatar/route.ts: 0
+  src/app/api/upload-company-logo/route.ts: 0
+  src/app/api/upload-cms-image/route.ts: 0
+[4] error / not-found / sitemap / robots files under src/app:
+  not-found.tsx: 0
+  error.tsx: 0
+  sitemap.ts: 0
+  robots.ts: 0
+  public robots.txt or sitemap.xml: 0
+[5] admin page.tsx files with no own staff check (no requireViewer, getStaffRole, hasPermission, assertPermission):
+  src/app/admin/companies/page.tsx
+  src/app/admin/currency/page.tsx
+  src/app/admin/footer/page.tsx
+  src/app/admin/inquiries/page.tsx
+  src/app/admin/inquiries/sales/page.tsx
+  src/app/admin/inquiries/support/page.tsx
+  src/app/admin/legal/page.tsx
+  src/app/admin/listings/page.tsx
+  src/app/admin/locations/page.tsx
+  src/app/admin/page.tsx
+  src/app/admin/pages/page.tsx
+  src/app/admin/permissions/page.tsx
+  src/app/admin/popular-locations/page.tsx
+  src/app/admin/property-types/page.tsx
+  src/app/admin/settings/page.tsx
+  src/app/admin/support/page.tsx
+  src/app/admin/users/page.tsx
+  count without own check: 17
+  of them reading with the service key: 9
+[6] local staff guards defined per module:
+  src/modules/admin/actions/currencies.ts:16:async function assertAdmin() {
+  src/modules/admin/actions/exchangeProviders.ts:12:async function assertAdmin() {
+  src/modules/admin/actions/footer.ts:14:async function assertAdminUser(): Promise<string | null> {
+  src/modules/admin/actions/index.ts:35:async function assertAdminAccess() {
+  src/modules/admin/actions/propertyTypes.ts:11:async function assertAdmin() {
+  src/modules/companies/actions.ts:8:async function assertAdminOrMod(): Promise<string | null> {
+  src/modules/contacts/actions/index.ts:149:async function assertAdminOrModerator(): Promise<string | null> {
+  src/modules/notifications/actions/emailTemplates.ts:9:async function assertAdminOrModerator() {
+  src/modules/notifications/actions/emailTemplates.ts:20:async function assertAdmin() {
+[7] policies on public.listings in db-catalog/catalog.json (cmd policy):
+  ALL Admins can manage all listings
+  SELECT Listings viewable by everyone
+  INSERT Users can create listings
+  UPDATE Users can update own listings
+  owner DELETE policy present: false

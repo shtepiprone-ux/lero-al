@@ -1,0 +1,21 @@
+# R140 AC140 r43-02: read-only capture 2 (rev43-02-capture-r14.cjs)
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "E=docs/sessions/evidence/task923; node $E/revision-43/rev43-02-capture-r14.cjs --i-confirm-dev-database; rc=$?; echo \"capture exit: $rc\"; sha256sum $E/r43-02-capture-r14.json; exit $rc"
+NODE_PATH: C:/Users/Nox/AppData/Local/Temp/claude/C--Claude-Code-Projects-lero-al/1f5412a7-d6ca-413a-9686-142d8e8541b1/scratchpad/node_modules
+started: 2026-10-24T09:39:22.860Z
+--- stdout ---
+captured 2026-10-24T09:39:20.248Z
+view public.public_user_profiles: owner postgres, options ["security_invoker=false"], acl {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres}, md5 67e32527c05ca1f97f3e19594297dd47, 9 columns
+functions named: public.admin_search_users_by_email(q text) secdef=true config=["search_path=auth, public, pg_temp"] | public.clear_user_history(p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid) secdef=true config=["search_path=public, pg_temp"] | public.handle_new_user_notifications() secdef=true config=["search_path=public, pg_temp"] | public.listing_contact_events_set_owner() secdef=true config=["search_path=public, pg_temp"] | public.process_saved_search_notify(p_now timestamp with time zone) secdef=true config=["search_path=public, pg_temp"] | public.rls_auto_enable() secdef=true config=["search_path=pg_catalog, pg_temp"]
+SECURITY DEFINER functions of public: 15; without pg_temp last: none
+constraints captured: 43; rules: {"c":24,"n":14,"a":5}
+triggers on the tables of the design: email_templates.trg_email_templates_updated_at[O] listing_contact_events.listing_contact_events_set_owner[O] listings.listings_guard_protected[O] listings.listings_price_rule[O] listings.listings_search_vector[O] listings.listings_updated_at[O] support_tickets.trg_support_tickets_updated_at[O] users.on_user_created_notifications[O] users.users_guard_protected[O]
+columns captured: 218
+capture exit: 0
+6ebbd32ca13f841dcb54d665f020506a60945f98dedfd573eb7f580698a6389d *docs/sessions/evidence/task923/r43-02-capture-r14.json
+
+--- stderr ---
+
+--- exit code: 0 ---

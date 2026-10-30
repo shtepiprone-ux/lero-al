@@ -1,0 +1,19 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: npm test
+start 2026-10-15T23:00:23Z
+
+> lero-al@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
+
+
+ Test Files  155 passed (155)
+      Tests  2573 passed (2573)
+   Start at  01:00:24
+   Duration  67.19s (transform 20.04s, setup 20.39s, import 449.90s, tests 172.18s, environment 473.95s)
+
+end 2026-10-15T23:01:31Z
+EXIT_CODE=0

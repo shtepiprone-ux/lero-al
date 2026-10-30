@@ -1,0 +1,14 @@
+# a7-99 sha256 after the last edit
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a7/a7-00-hashes.mjs docs/sessions/evidence/task927/a7/a7-99-after-hashes.txt "a7-99 sha256 after the last edit"
+date: 2026-10-25T18:13:29.749Z
+paths: 4
+
+da8ff5575d75ca0a80514b0f22bc998a58a8d074d5305acaed9ea11efc428edf  src/modules/cabinet/components/ProfileTab.tsx
+3494dc35b21609a4f561f51f4ef79512bf30757f09c128d6fbd54a1a95f5371f  src/modules/cabinet/components/__tests__/ProfileTab.deletePassword.security.test.tsx
+9b86d0b9c73dbd176cb6cbd1cd40001827d5d417044f082122be7115e541accf  src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+69594f7154b7d303529aa3b546379dcc4d0fa3c4be53ed13e8193aaa325dceb6  src/stories/mantine/primitives/Modal.stories.tsx
+
+exit code: 0

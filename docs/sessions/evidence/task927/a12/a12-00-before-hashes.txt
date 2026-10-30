@@ -1,0 +1,24 @@
+# a12-00: sha256 before the first edit (Amendment 12, R59-R63)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/a12/a12-00-hashes.mjs docs/sessions/evidence/task927/a12/a12-00-before-hashes.txt "a12-00: sha256 before the first edit (Amendment 12, R59-R63)"
+date: 2026-10-28T19:02:41.511Z
+paths: 14
+
+ABSENT  docs/sessions/evidence/task927/a12/a12-account-has-password.sql
+ABSENT  docs/sessions/evidence/task927/a12/a12-account-has-password.dryrun.sql
+ABSENT  docs/sessions/evidence/task927/a12/a12-account-has-password-rollback.sql
+bb660c4dfaeef80b35b9e7034c905128b5d6c32bba35b2f735413ba780a528a7  src/modules/cabinet/actions/index.ts
+c08ec220136d1fcd5ab1cda39505e2fb661f4212f0131ae434138d8aab03816c  src/lib/account/deleteAccount.security.test.ts
+2b614466603b35b81c9d34d54d03724bb0702a8f9358fb3cb8503df163c822d1  src/modules/cabinet/actions/__tests__/cabinetActions.security.test.ts
+0fe70ad5873589c7734f1a2f22ca81116bcb2f81db3eb4cb1f6b5733b833428a  src/modules/cabinet/actions/__tests__/cabinetFailures.security.test.ts
+b38b250a251b790aa419d6afe150139936d5705a3958c3edf64acf3bcbbf5a83  src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+bbe19df841e4a1ffbc092c7c82fff00aa0f75ff9e427a935f737bb8f63e9a319  src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts
+5a8d5a6767c9c4f85474056fe725b82519e34baba3076d8a66a1183cf0cad206  src/modules/cabinet/actions/__tests__/emailChange.security.test.ts
+3fda96ca7ac9f43b40c6ad2d4100e87a69af4b148222625213392cf83867d0c5  src/modules/cabinet/actions/__tests__/reauth.security.test.ts
+df22ac2b7f0a0ba002662df22213eb0100bc3552a4f76a92ab5c42545aff407d  src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts
+c60463d2210fb765df750459ffaef5f04813b84b7407c25cdb76b9ff660ebed7  src/modules/cabinet/actions/__tests__/reauthLimit.security.test.ts
+53d47599a104aced71ae64fec9658fa0d094b9ae1eb7ca9f07138f38af7b17f0  src/lib/auth/googleSignIn.integration.test.ts
+
+exit code: 0

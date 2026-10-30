@@ -1,8 +1,8 @@
 ## GR-10 — No canonical component, or a canonical that differs from the original: the work is not accepted
 
 **Owner rule, 2026-10-04 (Task 741, O46-3).** The owner returned `ListingsShellView`, which still rendered the
-hand-built listing cards in grid and list. Verbatim: *"Запиши собі золоте правило, якщо немає канонічного компоненту, або
-він не відповідає оригіналу - не приймати виконання як якісне (це стосується всіх задач!)!"*
+hand-built listing cards in grid and list. Their words: *"Write yourself a golden rule: if there is no canonical component, or it does not match
+the original - do not accept the work as quality work (this applies to all tasks!)!"*
 
 **Applies to:** every task, at task creation, execution and review, and every Story handed to the owner.
 

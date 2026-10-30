@@ -1,0 +1,23 @@
+# R140 AC140 r43-00: sha256 of the generator and the v3 pair before any edit, byte copies .v3.sql.bak, sha256 of the copies
+platform: win32 x64 (Windows_NT)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: bash -c "set -e; D=docs/sessions/evidence/task923/db-catalog\necho \"== before any edit ==\"; sha256sum $D/gen-sql-deletion.cjs $D/proposed-account-deletion.sql $D/proposed-account-deletion-rollback.sql\ntest ! -e $D/proposed-account-deletion.v3.sql.bak; test ! -e $D/proposed-account-deletion-rollback.v3.sql.bak\ncp -n $D/proposed-account-deletion.sql $D/proposed-account-deletion.v3.sql.bak; cp -n $D/proposed-account-deletion-rollback.sql $D/proposed-account-deletion-rollback.v3.sql.bak\necho \"== the two copies ==\"; sha256sum $D/proposed-account-deletion.v3.sql.bak $D/proposed-account-deletion-rollback.v3.sql.bak\necho \"== expected ==\"; echo \"de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a  apply v3\"; echo \"13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982  rollback v3\"\na=$(sha256sum $D/proposed-account-deletion.v3.sql.bak | cut -d\" \" -f1); b=$(sha256sum $D/proposed-account-deletion-rollback.v3.sql.bak | cut -d\" \" -f1)\na0=$(sha256sum $D/proposed-account-deletion.sql | cut -d\" \" -f1); b0=$(sha256sum $D/proposed-account-deletion-rollback.sql | cut -d\" \" -f1)\n[ \"$a\" = de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a ] && [ \"$b\" = 13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982 ] && [ \"$a\" = \"$a0\" ] && [ \"$b\" = \"$b0\" ] && echo \"each copy equals its v3 hash and the expected value: YES\" || { echo \"MISMATCH\"; exit 1; }"
+NODE_PATH: (unset)
+started: 2026-10-24T09:39:03.292Z
+--- stdout ---
+== before any edit ==
+4c1e73e78653398f6c1ed55783109e57feb0f914a83858df51318032a2248052 *docs/sessions/evidence/task923/db-catalog/gen-sql-deletion.cjs
+de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql
+13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql
+== the two copies ==
+de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.v3.sql.bak
+13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982 *docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.v3.sql.bak
+== expected ==
+de5729cb4bef07c070d73327cd5d36fc485dbdfab9e49c969b5c06c87d3e260a  apply v3
+13f9a54d40af96095fa6a2e851936cf0b96e1321e7cbd104b38f8a001b969982  rollback v3
+each copy equals its v3 hash and the expected value: YES
+
+--- stderr ---
+
+--- exit code: 0 ---

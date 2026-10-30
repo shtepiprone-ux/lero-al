@@ -83,8 +83,8 @@ function renderTable(props: Partial<React.ComponentProps<typeof AdminTable<Row>>
   )
 }
 
-// Task 857 R20: `AdminTable` passes `cardsBelow="md"`, so BOTH trees are in the DOM (Mantine's `hiddenFrom` /
-// `visibleFrom` switch them by CSS). Queries are scoped to the tree they assert on.
+// Task 857 R20: `AdminTable` renders the pattern with its default `cardsBelow="md"` (768px, Task 923 R47, D36), so BOTH trees are in
+// the DOM (Mantine's `hiddenFrom` / `visibleFrom` switch them by CSS). Queries are scoped to the tree they assert on.
 const tableScope = () => within(screen.getByRole('table'))
 const cardsScope = () => within(document.querySelector('.mantine-hidden-from-md') as HTMLElement)
 

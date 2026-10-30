@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: hidden-drawer-popover</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  .popover { position: fixed; left: 16px; right: 16px; top: 80px; padding: 16px; background: #fff; border: 1px solid #ccc; border-radius: 8px; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 7 self-test fixture "hidden-drawer-popover" (Story 059). Mantine's one portal root holds a kept-mounted, CLOSED Drawer (display: none)
+     next to a non-modal popover. The popover does not move the focus and does not trap it, so the declared mode "trigger" is right; a hidden Drawer must not
+     make the overlay "modal" (which would be measured as "trap"). -->
+<div id="storybook-root">
+  <button id="open" type="button">Open info</button>
+  <p>Fixture page, not a product Story.</p>
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-hidden-drawer-popover","story":"hidden-drawer-popover","open":{"kind":"click","selector":"#open"},"portals":1,"focus":"trigger","dismiss":["escape","outside"],"trigger":"#open"}</script>
+<script>
+(function () {
+  var portal = null;
+  var opener = document.getElementById('open');
+  function close() { if (!portal) return; portal.remove(); portal = null; }
+  function open() {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="mantine-Drawer-content" style="display:none"><p>navigation</p></div>' +
+      '<div class="popover" role="note"><p>About this series: a short explanation.</p></div>';
+    document.body.appendChild(portal);
+  }
+  opener.addEventListener('click', open);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('mousedown', function (e) { if (portal && !portal.contains(e.target) && e.target !== opener) close(); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# rv64-11 independent full unit run (rv64-10) vs the 17 expected IDs (rv62-11) and the executor run (r56-05)
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-64/rv64-11-unit-compare.mjs
+mine: total 5915 passed 5898 failed 17 skipped 0 todo 0 files 1345
+executor: total 5915 passed 5898 failed 17
+expected IDs: 17
+missing (expected, not failing): 0
+extra (failing, not expected): 0
+same failing IDs as the executor: true
+[SEC-X-SRV-VIEW-DENY]: collected 1, statuses passed
+[SEC-X-SRV-PROFILE-PROTECTED-DENY]: collected 1, statuses passed

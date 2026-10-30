@@ -1,0 +1,7 @@
+platform win32 10.0.26300 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-20T07:41:35.212Z
+cmd node docs/sessions/evidence/task923/db-catalog/r16-syntax.cjs   (R62-R65: PostgreSQL grammar of the four files (syntax only))
+proposed-hardening.sql: 66 statements, 13 plpgsql bodies parsed OK
+proposed-hardening-rollback.sql: 37 statements, 7 plpgsql bodies parsed OK
+proposed-account-deletion.sql: 83 statements, 3 plpgsql bodies parsed OK
+proposed-account-deletion-rollback.sql: 59 statements, 2 plpgsql bodies parsed OK
+EXIT_CODE=0

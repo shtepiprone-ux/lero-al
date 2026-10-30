@@ -1,0 +1,41 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/review-39/rv39-20-authsheet-baseline-probe.mjs C:/Claude_Code_Projects/lero-al docs/sessions/evidence/task923/r36-07d-authsheet-geometry.json
+started: 2026-10-23T13:31:11.266Z
+{"inFlowZeroBoxGap":32,"absoluteZeroBoxGap":16}
+{"story":"register","locale":"sq","width":320,"note":[16,723.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"sq","width":1440,"note":[1076,554,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"en","width":320,"note":[16,723.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"en","width":1440,"note":[1076,554,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"uk","width":320,"note":[16,723.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"uk","width":1440,"note":[1076,554,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"it","width":320,"note":[16,723.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register","locale":"it","width":1440,"note":[1076,554,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"sq","width":320,"note":[16,981.1,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"sq","width":1440,"note":[1076,861.1,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"en","width":320,"note":[16,981.1,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"en","width":1440,"note":[1076,861.1,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"uk","width":320,"note":[16,981.1,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"uk","width":1440,"note":[1076,861.1,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"it","width":320,"note":[16,981.1,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"register-agent","locale":"it","width":1440,"note":[1076,861.1,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"sq","width":320,"note":[16,800.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"sq","width":1440,"note":[1076,233,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"en","width":320,"note":[16,800.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"en","width":1440,"note":[1076,233,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"uk","width":320,"note":[16,800.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"uk","width":1440,"note":[1076,233,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"it","width":320,"note":[16,800.5,288,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"forgot-password","locale":"it","width":1440,"note":[1076,233,348,27.5],"fromAbove":28,"toBelow":28,"belowTag":"BUTTON"}
+{"story":"captcha","locale":"sq","width":320,"note":[16,28,288,27.5],"fromAbove":28,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"sq","width":1440,"note":[49,61,1342,27.5],"fromAbove":61,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"en","width":320,"note":[16,28,288,27.5],"fromAbove":28,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"en","width":1440,"note":[49,61,1342,27.5],"fromAbove":61,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"uk","width":320,"note":[16,28,288,27.5],"fromAbove":28,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"uk","width":1440,"note":[49,61,1342,27.5],"fromAbove":61,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"it","width":320,"note":[16,28,288,27.5],"fromAbove":28,"toBelow":null,"belowTag":null}
+{"story":"captcha","locale":"it","width":1440,"note":[49,61,1342,27.5],"fromAbove":61,"toBelow":null,"belowTag":null}
+
+
+exit code: 0

@@ -1,0 +1,16 @@
+command: rg -n "width: '[0-9]+%'" src --glob '*.tsx' (Opus review 10, 2026-10-19, Windows, cwd C:\Claude_Code_Projects\lero-al). Column shares only: TableColumn objects passed to MantineDataTableToCards / AdminTable.
+src\stories\mantine\primitives\Table.stories.tsx:84:      width: '35%',
+src\stories\mantine\primitives\Table.stories.tsx:91:      width: '20%',
+src\stories\mantine\primitives\Table.stories.tsx:101:      width: '20%',
+src\stories\mantine\primitives\Table.stories.tsx:109:      width: '25%',
+src\stories\patterns\mantine\AdminSurfacePattern.stories.tsx:103:      width: '40%',
+src\stories\patterns\mantine\AdminSurfacePattern.stories.tsx:110:      width: '30%',
+src\stories\patterns\mantine\AdminSurfacePattern.stories.tsx:119:      width: '30%',
+src\design-system\mantine\patterns\__tests__\MantineDashboardLayout.test.tsx:133:    expect(screen.getByText('wide').parentElement).toHaveStyle({ width: '100%' })
+src\components\shared\Combobox.tsx:136:        width: '100%',
+src\design-system\mantine\patterns\responsiveBottomSheet.tsx:32:  title: { width: '100%' },
+src\components\auth\CaptchaWidget.tsx:84:        style={{ width: '100%', lineHeight: 0 }}
+src\design-system\mantine\patterns\MantineAdminSurfacePattern.tsx:95:          style={{ flex: 1, width: '100%' }}
+src\components\admin\__tests__\AdminUsersTable.smoke.test.tsx:111:    React.createElement('button', { onClick, disabled, type: 'button', style: fullWidth ? { width: '100%' } : undefined, ...p }, children)
+---
+result: no production TableColumn passes a percentage share; the only shares are Story fixtures (Table.stories.tsx, AdminSurfacePattern.stories.tsx)

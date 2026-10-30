@@ -1,0 +1,15 @@
+# fr-38 (Opus) 2026-10-28T22:36:20.428Z win32 node v22.22.3; total 413, failed 0, passed 413
+ok	10 tests, 0 failed	src/__tests__/security/clientSinks.test.ts	unchanged: a sanitizer consumer
+ok	193 tests, 0 failed	src/__tests__/security/staffActions.test.ts	unchanged: createAdminUser is refused before any Auth call, and it names no createUser
+ok	1 tests, 0 failed	src/components/admin/__tests__/AdminUserProfile.bounds.security.test.tsx	unchanged: it mocks the action
+ok	12 tests, 0 failed	src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx	unchanged: it mocks the action
+ok	18 tests, 0 failed	src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.smoke.test.tsx	unchanged: a sanitizer consumer
+ok	9 tests, 0 failed	src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts	unchanged: a sanitizer consumer
+ok	5 tests, 0 failed	src/modules/admin/actions/__tests__/adminPermissions.security.test.ts	unchanged: its Auth admin double answers any method name, and it names no createUser
+ok	2 tests, 0 failed	src/modules/admin/actions/__tests__/profileBounds.security.test.ts	R159 change: its createUser double and assertions
+ok	5 tests, 0 failed	src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts	unchanged: createUser is in a double of other actions
+ok	71 tests, 0 failed	src/modules/admin/actions/__tests__/userAdministration.security.test.ts	R159 change: its createUser double and assertions
+ok	20 tests, 0 failed	src/modules/admin/actions/__tests__/userWebsite.security.test.ts	R159 change: its createUser double and assertions
+ok	2 tests, 0 failed	src/modules/cms/components/__tests__/CmsPageView.sanitize.test.tsx	unchanged: a sanitizer consumer
+ok	15 tests, 0 failed	src/modules/cms/lib/__tests__/isCmsBodyEmpty.test.ts	unchanged: cloud demo with no cloud name set
+ok	50 tests, 0 failed	src/modules/cms/lib/__tests__/sanitizeCmsHtml.test.ts	unchanged: cloud demo with no cloud name set (fr-34)

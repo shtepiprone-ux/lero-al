@@ -1,0 +1,19 @@
+platform: win32 10.0.26300 (x64)
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task923/r42-run.mjs docs/sessions/evidence/task923/r42-00-sha256-before.txt sha src/app/admin/users/[id]/page.tsx src/app/admin/users/page.tsx src/components/admin/AdminPageHeader.tsx src/stories/patterns/mantine/AdminPageHeader.stories.tsx src/app/admin/users/__tests__/adminUserGone.security.test.ts src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx messages/sq.json messages/en.json messages/uk.json messages/it.json tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+date: 2026-10-24T08:09:57.083Z
+--- output ---
+1ce31b2a97e28bac217ca04ac4edb525800c6396b236478d75773c591eb36a53  src/app/admin/users/[id]/page.tsx
+fe51f87aaaa16b6d53828e14859e723b3f5c472f3bdf271ced4c54230c404e73  src/app/admin/users/page.tsx
+91b347d8382c1c5cfcdccb57f629eed6e891ac1ebbda1803b86a3a858a02a4c8  src/components/admin/AdminPageHeader.tsx
+3820a6279bcb2224d86eccc9efecb2a9fc267d67ee260e6e5bfec85f38ba42e0  src/stories/patterns/mantine/AdminPageHeader.stories.tsx
+ABSENT  src/app/admin/users/__tests__/adminUserGone.security.test.ts
+ABSENT  src/app/admin/users/__tests__/adminUsersNotice.security.test.tsx
+74ce0ae45d3e26acb2f661b120ca68bfc4f74ba27a9640e368e4b4a8eacb0363  messages/sq.json
+d8177e82b62f23c35a9e53086990f96e31d96599aaa9ad679b56656c659a1199  messages/en.json
+a122909583b46d821decc91ed7a510b065b4af1e99f5c10032b4b979299b5e7a  messages/uk.json
+22be6236c24417d35d1c8dc98b9583b11af4b204d920b1fdb3336368d7493d96  messages/it.json
+3f1b2e51b58b4464498e37b0ef1738b774d630219c7123c66ffc548e85e03dc4  tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+
+EXIT_CODE=0

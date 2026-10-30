@@ -1,0 +1,220 @@
+platform win32 node v22.22.3
+cwd /c/Claude_Code_Projects/lero-al
+command: npm run check:rendered-state-census:discover -- --out docs/sessions/evidence/task923/r4-81-discover
+
+
+> lero-al@0.1.0 check:rendered-state-census:discover
+> node scripts/check-rendered-state-census.mjs --discover --out docs/sessions/evidence/task923/r4-81-discover
+
+discovery: 456 in-scope Stories closed at 390 / en; 557 registry rows over 260 Stories; 4072 candidate trigger(s) clicked (no cap)
+registry rows: 557; per Story family: Mantine/Primitives 78, Patterns/Mantine 479
+  per open kind: click 459, mount 98; per focus mode: inside 113, trap 259, trigger 185; with widths: 185 ({"max":1023} 67, {"max":639} 14, {"max":767} 12, {"min":1024} 67, {"min":640} 18, {"min":768} 7)
+(a) in-scope Stories showing a portal on mount with no "mount" row: 0
+(b) in-scope Stories whose file imports an overlay component, with no registry row, one of whose triggers opens a portal: 0
+    (informational, not a violation: 26 of the 26 Stories that import an overlay component and have no row render no trigger that opens a portal - every candidate was clicked)
+  - patterns-mantine-dashboardbarchart--empty  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--error  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--grouped  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--horizontal  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardbarchart--one-series-hidden  (./src/stories/patterns/mantine/DashboardBarChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--empty  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--error  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--one-segment-hidden  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboarddonut--with-counts  (./src/stories/patterns/mantine/DashboardDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--empty  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--error  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--loading  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--one-series-hidden  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardlinechart--single-mode  (./src/stories/patterns/mantine/DashboardLineChart.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--empty  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--error  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradar--one-series-hidden  (./src/stories/patterns/mantine/DashboardRadar.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--empty  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--error  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardradialprogress--loading  (./src/stories/patterns/mantine/DashboardRadialProgress.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardsemidonut--multiple-segments-hidden  (./src/stories/patterns/mantine/DashboardSemiDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dashboardsemidonut--one-segment-hidden  (./src/stories/patterns/mantine/DashboardSemiDonut.stories.tsx imports MantineCombobox)
+  - patterns-mantine-dialogfooter--default  (./src/stories/patterns/mantine/DialogFooter.stories.tsx imports MantineDialogFooter)
+  - patterns-mantine-dialogfooter--single-button  (./src/stories/patterns/mantine/DialogFooter.stories.tsx imports MantineDialogFooter)
+  - patterns-mantine-dialogsections--default  (./src/stories/patterns/mantine/DialogSections.stories.tsx imports MantineDialogSections)
+  - patterns-mantine-dialogsections--single-section  (./src/stories/patterns/mantine/DialogSections.stories.tsx imports MantineDialogSections)
+(c) candidate triggers that open a portal and are not the trigger of an in-range row, at 390 / 1440 / each widths bound: 0 Stories
+Stories that failed to render: 2
+  - patterns-mantine-dashboardperiodcontrol--custom-range-too-long  (render finished, sb-show-errordisplay=true)
+  - patterns-mantine-dashboardperiodcontrol--custom-range-too-long  (render finished, sb-show-errordisplay=true)
+(R17, informational - not a failing list) candidate triggers per Story x width: found 4245, clicked 4072, not operable 173 (26 of them in a Story with no "mount" row at that width)
+  - mantine-primitives-collectionssection--create-dialog-open @390 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-dialog-open @390 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-dialog-open @390 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-dialog-open @1440 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-dialog-open @1440 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-dialog-open @1440 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @390 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @390 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @390 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @1440 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @1440 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--create-error @1440 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @390 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @390 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @390 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @1440 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @1440 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--delete-confirm-open @1440 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @390 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @390 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @390 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @1440 button "New collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @1440 button "Rename": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-collectionssection--rename-dialog-open @1440 button "Delete collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-lightboxview--default @390 button "Open lightbox (multi-image)": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-lightboxview--default @390 button "Open lightbox (single image)": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-lightboxview--default @1440 button "Open lightbox (multi-image)": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-lightboxview--default @1440 button "Open lightbox (single image)": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @390 button "Select dates": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @390 button "28.01.2026 — 05.02.2026": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @390 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @640 button "Select dates": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @640 button "28.01.2026 — 05.02.2026": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @640 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @1440 button "28.01.2026 — 05.02.2026": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--default @1440 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--open-bounded-no-value @390 button "Select dates": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--single-date-selected @390 button "05.02.2026": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--single-date-selected @390 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--single-date-selected @640 button "05.02.2026": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--single-date-selected @640 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-rangedatepicker--single-date @390 button "Select dates": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-recentlyviewedgridview--populated @390 button "Next listings": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-recentlyviewedgridview--populated @390 button "Add to favorites": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-recentlyviewedgridview--populated @390 button "Copy listing ID": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-recentlyviewedgridview--populated @1440 button "Next listings": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-recentlyviewedgridview--populated @1440 button "Add to favorites": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-recentlyviewedgridview--populated @1440 button "Copy listing ID": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - mantine-primitives-responsivebottomsheet--default @390 button "Open sheet": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-responsivebottomsheet--default @1440 button "Open sheet": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-savetocollectionbutton--dialog-open @390 button "Save to collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-savetocollectionbutton--dialog-open @1440 button "Save to collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-savetocollectionbutton--saving @390 button "Save to collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-savetocollectionbutton--saving @1440 button "Save to collection": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-usermenu--default @640 button "AKAlba Krasniqi": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-usermenu--default @640 button "DBDriton Berisha": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-usermenu--default @640 button "BHBlerim Hoxha": locator.click: Timeout 2500ms exceeded.
+  - mantine-primitives-usermenu--default @1440 button "BHBlerim Hoxha": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 button "New currency": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 input "EUR, ALL…": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 div "ALLL · Albanian LekDefaultActi": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 div "EUR€ · EuroActive": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @390 div "USD$ · US DollarInactive": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "New currency": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 input "EUR, ALL…": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "ALL": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "EUR": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "USD": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "Logout": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--delete-confirm @1440 button "EN English": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 button "New currency": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 input "EUR, ALL…": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 div "ALLL · Albanian LekDefaultActi": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 div "EUR€ · EuroActive": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @390 div "USD$ · US DollarInactive": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "New currency": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 input "EUR, ALL…": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "ALL": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "EUR": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "USD": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "Logout": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admincurrenciesview--detail @1440 button "EN English": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @390 button "AKModern Apartment in Tirana C": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @390 button "AKCozy Studio in Sauk District": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @390 button "BHModern Apartment in Tirana C": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @1440 button "AKModern Apartment in Tirana C": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @1440 button "AKCozy Studio in Sauk District": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-admindashboardrecentlistings--modal-open @1440 button "BHModern Apartment in Tirana C": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "New provider": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "Disable": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "Edit": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "Delete": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @390 button "Enable": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "New provider": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "BankOfAlbania": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "Disable": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "Edit": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "Delete": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "ExchangeRatesAPI": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "ManualRates": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "Enable": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "Logout": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminexchangeprovidersview--delete-confirm @1440 button "EN English": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @390 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @390 button "+ New page": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @390 button "Edit": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @390 button "Delete": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @1440 button "+ New page": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @1440 button "Edit": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @1440 button "Delete": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @1440 button "Logout": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminpagesview--delete-confirm @1440 button "EN English": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminshell--drawer-open @390 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-adminshell--drawer-open @1023 button "Open menu": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-dashboardperiodcontrol--custom-open @390 button "01.09.2026 — 10.09.2026": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-dashboardperiodcontrol--custom-open @390 button "Clear": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listingdetailpattern--default @390 button "": locator.click: Timeout 2500ms exceeded.  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listinggallerypattern--default @390 button "": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @390 button "Modern Apartment in Tirana": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Previous": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Next": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 1": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 2": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 3": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 4": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 5": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 6": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 7": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 8": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listinggallerypattern--default @1440 button "Modern Apartment in Tirana 9": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-listingsshellview--loading-more @640 button "Premium only": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 input "All locations": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Reset filters": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Advanced filters2": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Active listings": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Sold & Rented": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "For sale — Remove filter": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "2 rooms — Remove filter": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Save search": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 input "Newest first": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Grid": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "List": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Add to favorites": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Copy listing ID": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Remove from favorites": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "1": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "2": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "3": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-listingsshellview--loading-more @640 button "Next page": not attempted: the Story could not be reloaded (render did not reach finished/errored within 20s)  [NO MOUNT ROW AT THIS WIDTH]
+  - patterns-mantine-richtexteditor--image-uploading @390 button "Add link": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @390 button "Text format": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @390 button "Paragraph": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @390 button "Insert": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @390 button "History": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @1440 button "Add link": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @1440 button "Text format": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @1440 button "Paragraph": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @1440 button "Insert": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-richtexteditor--image-uploading @1440 button "History": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-savesearchbutton--open-modal @390 button "Save search": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-savesearchbutton--open-modal @1440 button "Save search": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-savesearchbutton--pending @390 button "Save search": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-savesearchbutton--pending @1440 button "Save search": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--no-results @390 input "Requester": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--no-results @640 input "Requester": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--results @390 input "Requester": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--results @640 input "Requester": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--searching @390 input "Requester": locator.click: Timeout 2500ms exceeded.
+  - patterns-mantine-userpickerfieldview--searching @640 input "Requester": locator.click: Timeout 2500ms exceeded.
+discovery runtime 1044s
+EXIT_CODE=0

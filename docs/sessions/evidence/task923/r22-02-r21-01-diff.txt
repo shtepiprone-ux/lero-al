@@ -1,0 +1,247 @@
+R94 (e): the status of every id in r21-01 and r22-01.
+sources: docs/sessions/evidence/task923/r21-01-rls-harness-post-apply.txt, docs/sessions/evidence/task923/r22-01-rls-harness-post-apply.txt
+
+R01     r21=ok    r22=ok   
+R02     r21=ok    r22=ok   
+R03     r21=ok    r22=ok   
+R04     r21=ok    r22=ok   
+R05     r21=ok    r22=ok   
+R06     r21=ok    r22=ok   
+R07     r21=ok    r22=ok   
+R09a    r21=ok    r22=ok   
+R09b    r21=ok    r22=ok   
+R09c    r21=ok    r22=ok   
+R09d    r21=ok    r22=ok   
+R09e    r21=ok    r22=ok   
+R09f    r21=ok    r22=ok   
+R09g    r21=ok    r22=ok   
+R09h    r21=ok    r22=ok   
+W01     r21=ok    r22=ok   
+W02     r21=ok    r22=ok   
+W03     r21=ok    r22=ok   
+W04     r21=ok    r22=ok   
+W05     r21=ok    r22=ok   
+W06     r21=ok    r22=ok   
+W07     r21=ok    r22=ok   
+W08     r21=ok    r22=ok   
+F01     r21=ok    r22=ok   
+F02     r21=ok    r22=ok   
+F03     r21=ok    r22=ok   
+F04     r21=ok    r22=ok   
+F05     r21=ok    r22=ok   
+F06     r21=ok    r22=ok   
+V01     r21=ok    r22=ok   
+V02     r21=ok    r22=ok   
+V03     r21=ok    r22=ok   
+V04     r21=ok    r22=ok   
+V05     r21=ok    r22=ok   
+V06     r21=info  r22=info 
+V07     r21=ok    r22=ok   
+V08a    r21=ok    r22=ok   
+V08b    r21=ok    r22=ok   
+V08c    r21=ok    r22=ok   
+V08d    r21=ok    r22=ok   
+V09     r21=ok    r22=ok   
+V10     r21=ok    r22=ok   
+P01     r21=ok    r22=ok   
+P02     r21=ok    r22=ok   
+P03     r21=ok    r22=ok   
+P04     r21=ok    r22=ok   
+P05     r21=ok    r22=ok   
+P06     r21=ok    r22=ok   
+P07     r21=ok    r22=ok   
+P08     r21=ok    r22=ok   
+S01     r21=ok    r22=ok   
+S02     r21=ok    r22=ok   
+S03     r21=ok    r22=ok   
+S04     r21=ok    r22=ok   
+U01     r21=ok    r22=ok   
+U02     r21=ok    r22=ok   
+U03     r21=ok    r22=ok   
+U04     r21=ok    r22=ok   
+U05     r21=ok    r22=ok   
+U06     r21=VULN  r22=ok   
+U07     r21=ok    r22=ok   
+U08     r21=ok    r22=ok   
+L01     r21=ok    r22=ok   
+L02     r21=ok    r22=ok   
+L03     r21=ok    r22=ok   
+L04     r21=ok    r22=ok   
+L05     r21=VULN  r22=ok   
+L06     r21=ok    r22=ok   
+L07     r21=ok    r22=ok   
+I01     r21=ok    r22=ok   
+I02     r21=ok    r22=ok   
+I03     r21=ok    r22=ok   
+I04     r21=ok    r22=ok   
+I05     r21=ok    r22=ok   
+I06     r21=ok    r22=ok   
+BL01a   r21=ok    r22=ok   
+BL01b   r21=ok    r22=ok   
+BL01c   r21=ok    r22=ok   
+BL01d   r21=ok    r22=ok   
+BL01e   r21=ok    r22=ok   
+BL01f   r21=ok    r22=ok   
+BL01g   r21=ok    r22=ok   
+BL02a   r21=ok    r22=ok   
+BL02b   r21=ok    r22=ok   
+BL02c   r21=ok    r22=ok   
+BL02d   r21=ok    r22=ok   
+BL02e   r21=ok    r22=ok   
+BL02f   r21=ok    r22=ok   
+BL02g   r21=ok    r22=ok   
+BL03a   r21=ok    r22=ok   
+BL03b   r21=ok    r22=ok   
+BL03c   r21=ok    r22=ok   
+BL03d   r21=ok    r22=ok   
+BL03e   r21=ok    r22=ok   
+BL03f   r21=ok    r22=ok   
+BL03g   r21=ok    r22=ok   
+BL04a   r21=ok    r22=ok   
+BL04b   r21=BRKN  r22=ok   
+BL04c   r21=ok    r22=ok   
+BL04d   r21=ok    r22=ok   
+BL04e   r21=ok    r22=ok   
+BL04f   r21=ok    r22=ok   
+BL04g   r21=ok    r22=ok   
+BL05a   r21=ok    r22=ok   
+BL05b   r21=BRKN  r22=ok   
+BL05c   r21=ok    r22=ok   
+BL05d   r21=ok    r22=ok   
+BL05e   r21=ok    r22=ok   
+BL05f   r21=ok    r22=ok   
+BL05g   r21=ok    r22=ok   
+BL06    r21=ok    r22=ok   
+BL07    r21=ok    r22=ok   
+N01ua   r21=ok    r22=ok   
+N01ub   r21=ok    r22=ok   
+N01uc   r21=ok    r22=ok   
+N01ud   r21=ok    r22=ok   
+N01ue   r21=ok    r22=ok   
+N01uf   r21=ok    r22=ok   
+N01ug   r21=ok    r22=ok   
+N01ga   r21=ok    r22=ok   
+N01gb   r21=ok    r22=ok   
+N01gc   r21=ok    r22=ok   
+N01gd   r21=ok    r22=ok   
+N01ge   r21=ok    r22=ok   
+N01gf   r21=ok    r22=ok   
+N01gg   r21=ok    r22=ok   
+N01ma   r21=ok    r22=ok   
+N01mb   r21=ok    r22=ok   
+N01mc   r21=ok    r22=ok   
+N01md   r21=ok    r22=ok   
+N01me   r21=ok    r22=ok   
+N01mf   r21=ok    r22=ok   
+N01mg   r21=ok    r22=ok   
+N01aa   r21=ok    r22=ok   
+N01ab   r21=ok    r22=ok   
+N01ac   r21=ok    r22=ok   
+N01ad   r21=ok    r22=ok   
+N01ae   r21=ok    r22=ok   
+N01af   r21=ok    r22=ok   
+N01ag   r21=ok    r22=ok   
+N02a    r21=ok    r22=ok   
+N02b    r21=ok    r22=ok   
+N02c    r21=ok    r22=ok   
+N02d    r21=ok    r22=ok   
+N02e    r21=ok    r22=ok   
+N02f    r21=ok    r22=ok   
+N02g    r21=ok    r22=ok   
+N03a    r21=ok    r22=ok   
+N03b    r21=ok    r22=ok   
+N03c    r21=ok    r22=ok   
+N03d    r21=ok    r22=ok   
+N03e    r21=ok    r22=ok   
+N03f    r21=ok    r22=ok   
+N03g    r21=ok    r22=ok   
+N04a    r21=ok    r22=ok   
+N04b    r21=ok    r22=ok   
+N04c    r21=ok    r22=ok   
+N05a    r21=ok    r22=ok   
+N05b    r21=ok    r22=ok   
+N05c    r21=info  r22=info 
+N05d    r21=ok    r22=ok   
+N06a    r21=ok    r22=ok   
+N06b    r21=ok    r22=ok   
+N07a    r21=ok    r22=ok   
+N07b    r21=ok    r22=ok   
+N07c    r21=ok    r22=ok   
+N08a    r21=ok    r22=ok   
+N08b    r21=ok    r22=ok   
+N08c    r21=ok    r22=ok   
+N08d    r21=ok    r22=ok   
+V701    r21=ok    r22=ok   
+V702    r21=ok    r22=ok   
+V703    r21=ok    r22=ok   
+V704    r21=ok    r22=ok   
+V705    r21=ok    r22=ok   
+V706    r21=ok    r22=ok   
+V707    r21=info  r22=info 
+V710    r21=ok    r22=ok   
+V711    r21=ok    r22=ok   
+V712    r21=ok    r22=ok   
+V713    r21=ok    r22=ok   
+V714    r21=ok    r22=ok   
+V715    r21=ok    r22=ok   
+V716    r21=ok    r22=ok   
+V717    r21=ok    r22=ok   
+V718    r21=ok    r22=ok   
+V720    r21=ok    r22=ok   
+V721    r21=ok    r22=ok   
+V722    r21=ok    r22=ok   
+V723    r21=ok    r22=ok   
+V724    r21=ok    r22=ok   
+V725    r21=ok    r22=ok   
+V730    r21=ok    r22=ok   
+V731    r21=ok    r22=ok   
+V732    r21=ok    r22=ok   
+V740    r21=ok    r22=ok   
+V741    r21=ok    r22=ok   
+V742    r21=ok    r22=ok   
+V743    r21=ok    r22=ok   
+V744    r21=ok    r22=ok   
+V750    r21=ok    r22=ok   
+V751    r21=ok    r22=ok   
+V752    r21=ok    r22=ok   
+V753    r21=ok    r22=ok   
+H01a    r21=ok    r22=ok   
+H01b    r21=ok    r22=ok   
+H01c    r21=ok    r22=ok   
+H01d    r21=ok    r22=ok   
+H01e    r21=ok    r22=ok   
+H02     r21=ok    r22=ok   
+DX00    r21=info  r22=info 
+DX01    r21=VULN  r22=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so the backfill has not run
+DX02a   r21=VULN  r22=VULN  | error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+DX02b   r21=VULN  r22=VULN  | error PGRST204 Could not find the 'updated_by_name' column of 'pages' in the schema cache
+DX02c   r21=VULN  r22=VULN  | no row: the INSERT of DX02a failed
+DX02d   r21=VULN  r22=VULN  | no row: the INSERT of DX02a failed
+DX02e   r21=VULN  r22=VULN  | no row: the INSERT of DX02a failed
+DX03a   r21=VULN  r22=VULN  | blocked: Database error deleting user
+DX03b   r21=VULN  r22=VULN  | the row was not created
+DX03c   r21=VULN  r22=VULN  | error 42703 column user_status_history.changed_by_name does not exist
+DX03d1  r21=VULN  r22=VULN  | blocked: Database error deleting user
+DX03d2  r21=VULN  r22=VULN  | error 42703 column email_templates.updated_by_name does not exist
+DX04a   r21=VULN  r22=VULN  | views_count 2 -> 2
+DX04b   r21=VULN  r22=VULN  | 2 row(s), one with a null user id
+DX04c   r21=VULN  r22=VULN  | rows 1, views_count 0
+DX05a   r21=VULN  r22=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX05b   r21=VULN  r22=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX05c   r21=VULN  r22=VULN  | no company with a creator can be recorded: error PGRST204 Could not find the 'created_by' column of 'companies' in the schema cache
+DX06a   r21=VULN  r22=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06b   r21=VULN  r22=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06c   r21=VULN  r22=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06d   r21=VULN  r22=VULN  | the deletion SQL is not applied: updated_by_name does not exist, so no privilege protects it (the first run after the apply asserts it)
+DX06e   r21=ok    r22=ok   
+DX06f   r21=ok    r22=ok   
+DX06g   r21=ok    r22=ok   
+E01     r21=ok    r22=ok   
+E02     r21=ok    r22=ok   
+
+r21-01 counts: ok=208 VULN=23 BRKN=2 info=4 (ids 237)
+r22-01 counts: ok=212 VULN=21 BRKN=0 info=4 (ids 237)
+transitions: ok->ok=208, info->info=4, VULN->ok=2, BRKN->ok=2, VULN->VULN=21
+ids whose status changed (4): U06 L05 BL04b BL05b
+ids ok in r21-01 and not ok in r22-01: 0
+non-ok ids in r22-01: DX01 DX02a DX02b DX02c DX02d DX02e DX03a DX03b DX03c DX03d1 DX03d2 DX04a DX04b DX04c DX05a DX05b DX05c DX06a DX06b DX06c DX06d

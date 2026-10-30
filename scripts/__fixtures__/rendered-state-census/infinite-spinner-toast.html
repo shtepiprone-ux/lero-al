@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rendered state census fixture: infinite-spinner-toast</title>
+<style>
+  html, body { margin: 0; font: 16px/1.4 sans-serif; }
+  #storybook-root { padding: 16px; }
+  button { min-width: 44px; min-height: 44px; font: inherit; }
+  .spinner { width: 24px; height: 24px; border: 3px solid #999; border-top-color: #333; border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .toast { position: fixed; right: 16px; bottom: 16px; width: 240px; padding: 12px; background: #fff; border: 1px solid #888; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+</style>
+</head>
+<body>
+<!-- Task 923 Revision 5 self-test fixture "infinite-spinner-toast". R26 (a), benign: the app root holds an infinite CSS animation (a loader); a click opens a non-modal toast portal (focus: trigger, dismiss: close-control) that closes itself 2500ms after it opens. waitStable counts only animations that can end, so the toast is measured while it is open. -->
+<div id="storybook-root">
+  <button id="open" type="button">Open notification</button>
+  <p>Fixture page, not a product Story.</p>
+  <div class="spinner" aria-hidden="true"></div>
+</div>
+<script type="application/json" id="census-state">{"id":"fixture-infinite-spinner-toast","story":"infinite-spinner-toast","open":{"kind":"click","selector":"#open"},"portals":1,"focus":"trigger","dismiss":["close-control"],"trigger":"#open","closeSelector":"[data-census-close]"}</script>
+<script>
+(function () {
+  var portal = null;
+  var timer = null;
+  var opener = document.getElementById('open');
+  function close() {
+    if (!portal) return;
+    clearTimeout(timer);
+    portal.remove();
+    portal = null;
+  }
+  opener.addEventListener('click', function () {
+    if (portal) return;
+    portal = document.createElement('div');
+    portal.setAttribute('data-portal', 'true');
+    portal.innerHTML = '<div class="toast" role="status"><span>Saved.</span><button type="button" data-census-close aria-label="Close">&times;</button></div>';
+    document.body.appendChild(portal);
+    portal.querySelector('[data-census-close]').addEventListener('click', close);
+    timer = setTimeout(close, 2500);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# rv67-44: the final commit's path manifest, closing evidence only
+platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-44-closing-evidence-manifest.mjs
+HEAD 29acfb269e814ea37a94567f6cb1f9e97a40be41; origin/main 7dd707aa154801ff2e44402e3976841cb377dddb
+closing documents read: 1346; contracts 8; files named by reports 76
+new evidence files: 4921 (459.0 MB); cited, kept: 631 (87.4 MB, images 1); not cited, left on disk untracked: 4290 (371.7 MB, images 849)
+kickoff sources checked: 1991, of them 18 under node_modules/ (installed by npm ci)
+included: 1500 paths (40 deletions); 99.5 MB
+  cited image kept: docs/sessions/evidence/task927/review-11/signin-assets/signin-assets.zip (cited by docs/sessions/2026-10-10-task923-rendered-state-census.md)
+Task 926 leaves the index (git rm --cached): tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.md, tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json
+problems: 0
+exit 0

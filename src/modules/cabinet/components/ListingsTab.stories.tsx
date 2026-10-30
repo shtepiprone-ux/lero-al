@@ -1,18 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations, useLocale } from 'next-intl'
 import { Eye, Phone, Pencil, Maximize2 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { Button } from '@/components/ui/button'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { formatPrice } from '@/lib/formatters'
 import { formatVisibility } from '@/modules/listings/lib/visibility'
 import type { ListingStatus } from '@/types/database'
-
-// Badge variants — identical to ListingsTab.tsx
-const STATUS_VARIANT: Record<ListingStatus, 'warning' | 'success' | 'neutral' | 'info' | 'rented'> = {
-  pending: 'warning', active: 'success', inactive: 'neutral',
-  sold: 'info', rented: 'rented', archived: 'neutral', expired: 'warning',
-}
 
 // Frozen anchor "today" (no Date.now()/new Date() wall-clock in fixtures per Storybook
 // governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
@@ -55,24 +49,24 @@ function CabinetRowsView() {
             <div className="flex-1 min-w-0 flex flex-col justify-between gap-1">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <Badge variant={STATUS_VARIANT[status]} className="text-xs px-1.5 py-0 h-5">
+                  <MantineBadge variant="status" entity="listing" value={status}>
                     {t(`status_${status}`)}
-                  </Badge>
+                  </MantineBadge>
                   {(() => {
                     const vis = formatVisibility({ status, expires_at: listing.expires_at })
                     if (!vis.visible) {
                       return (
-                        <span className="inline-flex items-center px-1.5 py-0 h-5 rounded-md border border-destructive/30 bg-destructive/10 text-destructive text-xs font-medium whitespace-normal break-words">
+                        <MantineBadge variant="status" entity="listingVisibility" value="hidden">
                           {t(vis.labelKey as Parameters<typeof t>[0])}
-                        </span>
+                        </MantineBadge>
                       )
                     }
                     return null
                   })()}
                   {listing.is_premium && (
-                    <Badge className="text-xs px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
+                    <MantineBadge variant="status" entity="listingFlag" value="premium">
                       {t('filter_PREMIUM')}
-                    </Badge>
+                    </MantineBadge>
                   )}
                   <span className="text-xs text-muted-foreground">
                     {(tl as (k: string) => string)(listing.listing_type)} · {(tl as (k: string) => string)(`property_type_${listing.property_type}`)}

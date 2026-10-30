@@ -1,0 +1,34 @@
+node v22.22.3; cwd /c/Claude_Code_Projects/lero-al; command: node rv33r-07-route-probe.mjs
+listing 35-mviht7po: status archived
+guest @320 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/auth/login?next=%2Fuk%2Flistings%2F35-mviht7po leaks=[] hOverflow=0 title="Lero.al"
+guest @320 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/auth/login?next=%2Fuk%2Flistings%2F35-mviht7po%2Fedit leaks=[] hOverflow=0 title="Редагувати оголошення | Lero.al"
+guest @320 /en/listings/35-mviht7po -> 200 /en/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/en/auth/login?next=%2Fen%2Flistings%2F35-mviht7po leaks=[] hOverflow=0 title="Lero.al"
+guest @320 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+guest @1440 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/auth/login?next=%2Fuk%2Flistings%2F35-mviht7po leaks=[] hOverflow=0 title="Lero.al"
+guest @1440 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/auth/login?next=%2Fuk%2Flistings%2F35-mviht7po%2Fedit leaks=[] hOverflow=0 title="Редагувати оголошення | Lero.al"
+guest @1440 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+AGENT1: /api/auth/me 200; is the listing's owner: false
+AGENT1 @320 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT1 @320 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/listings leaks=[] hOverflow=1 title="Редагувати оголошення | Lero.al"
+AGENT1 @320 /en/listings/35-mviht7po -> 200 /en/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/en/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT1 @320 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+AGENT1 @1440 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT1 @1440 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/listings leaks=[] hOverflow=0 title="Редагувати оголошення | Lero.al"
+AGENT1 @1440 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+AGENT2: /api/auth/me 200; is the listing's owner: false
+AGENT2 @320 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT2 @320 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/listings leaks=[] hOverflow=0 title="Редагувати оголошення | Lero.al"
+AGENT2 @320 /en/listings/35-mviht7po -> 200 /en/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/en/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT2 @320 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=["456000"] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+AGENT2 @1440 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=true notFound=false robots=noindex, follow action=/uk/listings leaks=[] hOverflow=0 title="Lero.al"
+AGENT2 @1440 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=true notFound=false robots=null action=/uk/listings leaks=[] hOverflow=0 title="Редагувати оголошення | Lero.al"
+AGENT2 @1440 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+ADMIN: /api/auth/me 200; is the listing's owner: false
+ADMIN @320 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=false notFound=false robots=noindex, follow action=/uk/listings leaks=["Тестове оголошення 35","456000"] hOverflow=0 title="Lero.al"
+ADMIN @320 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=false notFound=false robots=null action=/uk/listings leaks=["Тестове оголошення 35","456000"] hOverflow=1 title="Редагувати оголошення | Lero.al"
+ADMIN @320 /en/listings/35-mviht7po -> 200 /en/listings/35-mviht7po | restricted=false notFound=false robots=noindex, follow action=/en/listings leaks=["Тестове оголошення 35","456000"] hOverflow=0 title="Lero.al"
+ADMIN @320 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+ADMIN @1440 /uk/listings/35-mviht7po -> 200 /uk/listings/35-mviht7po | restricted=false notFound=false robots=noindex, follow action=/uk/listings leaks=["Тестове оголошення 35","456000"] hOverflow=0 title="Lero.al"
+ADMIN @1440 /uk/listings/35-mviht7po/edit -> 200 /uk/listings/35-mviht7po/edit | restricted=false notFound=false robots=null action=/uk/listings leaks=["Тестове оголошення 35","456000"] hOverflow=0 title="Редагувати оголошення | Lero.al"
+ADMIN @1440 /uk/listings/zz-does-not-exist-123 -> 200 /uk/listings/zz-does-not-exist-123 | restricted=false notFound=true robots=null action=null leaks=[] hOverflow=0 title="Lero.al — Real estate marketplace in Albania"
+EXIT=0

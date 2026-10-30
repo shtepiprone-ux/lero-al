@@ -1,37 +1,29 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
-import { AlertTriangle, ExternalLink, Flag, RotateCcw, Trash2 } from 'lucide-react'
 import {
-  Anchor,
-  Badge,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Group,
-  Paper,
-  SimpleGrid,
-  Stack,
-  Text,
-  Textarea,
-  useMantineTheme,
-} from '@mantine/core'
-import { MantineModal, MantineSelect } from '@/design-system/mantine/patterns'
+  CheckCircleIcon,
+  CloseCircleIcon,
+  EyeIcon,
+  RestartIcon,
+  SquareArrowRightUpIcon,
+  TrashBinTrashIcon,
+  UserIcon,
+} from '@solar-icons/react/broken'
+import { Box, Button, Text, Textarea, useMantineTheme } from '@mantine/core'
+import { MantineSelect } from '@/design-system/mantine/patterns/MantineSelect'
+import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
+import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
+import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
+import { MantineNavRowList, type MantineNavRow } from '@/design-system/mantine/patterns/MantineNavRowList'
+import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import type { ReportRow } from '@/components/admin/AdminReportsManager'
 import type { ReportStatus } from '@/types/database'
+import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export const REPORT_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dismissed']
-
-/** Badge colour per report status (kickoff 858 R4): pending yellow, reviewed gray, resolved green, dismissed red. */
-export const REPORT_STATUS_COLOR: Record<ReportStatus, string> = {
-  pending: 'yellow',
-  reviewed: 'gray',
-  resolved: 'green',
-  dismissed: 'red',
-}
 
 export interface ReportDetailDialogViewProps {
   report: ReportRow
@@ -45,7 +37,7 @@ export interface ReportDetailDialogViewProps {
   onNotesChange: (value: string) => void
   selectedStatus: ReportStatus
   onSelectedStatusChange: (status: ReportStatus) => void
-  /** Delete confirmation is open (second `MantineModal` over the detail dialog). */
+  /** Delete confirmation is open (the canonical `MantineDeleteConfirmModal` over the detail dialog). */
   showDeleteConfirm: boolean
   /** Moderator / override / reopen transition. */
   onAction: (status: ReportStatus) => void
@@ -57,8 +49,12 @@ export interface ReportDetailDialogViewProps {
 
 /**
  * Presentational View of the `/admin/reports` detail dialog (Task 858, Container/Presentational split of
- * `ReportDetailDialog`). `useTranslations` / `useMantineTheme` only: no state, no server action, no toast.
- * The dialog and its delete confirmation are the canonical `MantineModal` (bottom sheet below 640px).
+ * `ReportDetailDialog`; Task 859 Revision 2, R29: the canonical dialog anatomy, §23.7). A structured `MantineModal`
+ * (bottom sheet below 640px): the facts as `MantineDetailList`, the comment, the moderation section (notes, the
+ * status override as a select) and navigation rows for the secondary moderation actions (review, dismiss, apply) and
+ * the links (listing, owner profile). The footer is a `MantineDialogFooter` pair: Delete (the resting destructive
+ * action) and the one primary of the state (Resolve, Reopen or Close). The delete confirmation is the canonical
+ * `MantineDeleteConfirmModal`. `useTranslations` / `useMantineTheme` only: no state, no server action, no toast.
  */
 export function ReportDetailDialogView({
   report,
@@ -81,6 +77,7 @@ export function ReportDetailDialogView({
   const tl = useTranslations('listing')
   const tc = useTranslations('common')
   const theme = useMantineTheme()
+  const iconSize = theme.other.iconSize.standard
 
   const reasonKey = `report_reason_${report.reason}` as Parameters<typeof tl>[0]
   const listingUrl = report.listing ? `/${locale}/listings/${report.listing.slug}` : null
@@ -93,84 +90,86 @@ export function ReportDetailDialogView({
     label: t(`status_${s}` as Parameters<typeof t>[0]),
   }))
 
-  const caption = (text: string) => <Text size="xs" c="dimmed">{text}</Text>
+  const actionRow = (key: string, icon: MantineNavRow['icon'], label: string, status: ReportStatus): MantineNavRow => ({
+    key,
+    icon,
+    label,
+    onClick: () => { if (!isPending) onAction(status) },
+  })
+
+  const moderationRows: MantineNavRow[] = [
+    ...(reportStatus === 'pending'
+      ? [actionRow('review', <EyeIcon size={iconSize} aria-hidden="true" />, t('action_review'), 'reviewed')]
+      : []),
+    ...(isOpen
+      ? [actionRow('dismiss', <CloseCircleIcon size={iconSize} aria-hidden="true" />, t('action_dismiss'), 'dismissed')]
+      : []),
+    ...(canOverrideReportStatus && selectedStatus !== report.status
+      ? [actionRow('apply', <CheckCircleIcon size={iconSize} aria-hidden="true" />, t('action_apply'), selectedStatus)]
+      : []),
+  ]
+
+  const linkRows: MantineNavRow[] = [
+    ...(listingUrl && report.listing
+      ? [{
+          key: 'listing',
+          icon: <SquareArrowRightUpIcon size={iconSize} aria-hidden="true" />,
+          label: report.listing.title,
+          description: t('col_listing'),
+          href: listingUrl,
+          external: true,
+        }]
+      : []),
+    ...(report.listing?.owner
+      ? [{
+          key: 'owner',
+          icon: <UserIcon size={iconSize} aria-hidden="true" />,
+          label: t('open_profile'),
+          href: `/admin/users/${report.listing.owner.id}`,
+        }]
+      : []),
+  ]
+
+  const primary = isOpen ? (
+    <Button type="button" loading={isPending} disabled={isPending} onClick={() => onAction('resolved')}>
+      {t('action_resolve')}
+    </Button>
+  ) : isTerminal && canOverrideReportStatus ? (
+    <Button
+      type="button"
+      leftSection={<RestartIcon size={iconSize} aria-hidden="true" />}
+      loading={isPending}
+      disabled={isPending}
+      onClick={() => onAction('pending')}
+      data-testid="reopen-btn"
+    >
+      {t('action_reopen')}
+    </Button>
+  ) : (
+    <Button type="button" variant="default" onClick={onClose}>
+      {tc('close')}
+    </Button>
+  )
 
   const footer = (
-    <Flex
-      data-testid="report-dialog-footer"
-      direction={{ base: 'column-reverse', sm: 'row' }}
-      justify="space-between"
-      gap="sm"
-    >
-      {canDeleteReports ? (
-        <Button
-          variant="subtle"
-          color="red"
-          w={{ base: '100%', sm: 'auto' }}
-          leftSection={<Trash2 size={theme.other.iconSize.compact} />}
-          disabled={isPending}
-          onClick={onRequestDelete}
-          data-testid="delete-btn"
-        >
-          {t('action_delete')}
-        </Button>
-      ) : (
-        <Box visibleFrom="sm" />
-      )}
-      <Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm">
-        {isOpen && (
-          <>
-            {reportStatus === 'pending' && (
-              <Button
-                variant="default"
-                w={{ base: '100%', sm: 'auto' }}
-                loading={isPending}
-                disabled={isPending}
-                onClick={() => onAction('reviewed')}
-              >
-                {t('action_review')}
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              color="red"
-              w={{ base: '100%', sm: 'auto' }}
-              loading={isPending}
-              disabled={isPending}
-              onClick={() => onAction('dismissed')}
-            >
-              {t('action_dismiss')}
-            </Button>
-            <Button
-              w={{ base: '100%', sm: 'auto' }}
-              loading={isPending}
-              disabled={isPending}
-              onClick={() => onAction('resolved')}
-            >
-              {t('action_resolve')}
-            </Button>
-          </>
-        )}
-        {isTerminal && canOverrideReportStatus && (
+    <MantineDialogFooter
+      secondary={
+        canDeleteReports ? (
           <Button
-            variant="outline"
-            w={{ base: '100%', sm: 'auto' }}
-            leftSection={<RotateCcw size={theme.other.iconSize.compact} />}
-            loading={isPending}
+            type="button"
+            variant="default"
+            c="red.7"
+            leftSection={<TrashBinTrashIcon size={iconSize} aria-hidden="true" />}
             disabled={isPending}
-            onClick={() => onAction('pending')}
-            data-testid="reopen-btn"
+            onClick={onRequestDelete}
+            data-testid="delete-btn"
           >
-            {t('action_reopen')}
+            {t('action_delete')}
           </Button>
-        )}
-        {!isOpen && !canOverrideReportStatus && (
-          <Button variant="default" w={{ base: '100%', sm: 'auto' }} onClick={onClose}>
-            {tc('close')}
-          </Button>
-        )}
-      </Flex>
-    </Flex>
+        ) : undefined
+      }
+      primary={primary}
+    />
   )
 
   return (
@@ -178,90 +177,43 @@ export function ReportDetailDialogView({
       <MantineModal
         opened
         onClose={onClose}
-        title={
-          <Group gap="xs" wrap="nowrap">
-            <Flag size={theme.other.iconSize.standard} />
-            {t('detail_title')}
-          </Group>
-        }
+        structured
+        title={t('detail_title')}
+        description={tl(reasonKey)}
         footer={footer}
+        covered={showDeleteConfirm}
       >
-        <Stack gap="lg">
-          <SimpleGrid cols={2} spacing="md" verticalSpacing="md">
-            <Stack gap="tight">
-              {caption(t('col_status'))}
-              <Box>
-                <Badge variant="light" size="sm" color={REPORT_STATUS_COLOR[reportStatus]}>
-                  {t(`status_${reportStatus}` as Parameters<typeof t>[0])}
-                </Badge>
-              </Box>
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('col_reason'))}
-              <Text size="sm" fw={500}>{tl(reasonKey)}</Text>
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('col_reporter'))}
-              <Text size="sm" fw={500}>{report.reporter?.name ?? t('anonymous')}</Text>
-            </Stack>
-            <Stack gap="tight">
-              {caption(t('col_date'))}
-              <Text size="sm" fw={500} component="div">
-                <RelativeTime date={report.created_at} />
-              </Text>
-            </Stack>
-          </SimpleGrid>
+        <MantineDialogSections>
+          <MantineDialogSection>
+            <MantineDetailList
+              items={[
+                {
+                  label: t('col_status'),
+                  value: (
+                    <MantineBadge variant="status" entity="report" value={reportStatus}>
+                      {t(`status_${reportStatus}` as Parameters<typeof t>[0])}
+                    </MantineBadge>
+                  ),
+                },
+                { label: t('col_reason'), value: tl(reasonKey) },
+                { label: t('col_reporter'), value: report.reporter?.name ?? t('anonymous') },
+                { label: t('col_date'), value: <RelativeTime date={report.created_at} /> },
+                {
+                  label: t('col_owner'),
+                  value: report.listing?.owner ? (report.listing.owner.name ?? '—') : t('owner_not_found'),
+                },
+              ]}
+            />
+          </MantineDialogSection>
 
-          <Paper withBorder radius="md" p="sm">
-            <Stack gap="sm">
-              {caption(t('col_listing'))}
-              {listingUrl ? (
-                <Anchor href={listingUrl} target="_blank" rel="noopener noreferrer" size="sm" fw={500}>
-                  <Group gap="tight" wrap="nowrap" align="flex-start">
-                    <Text component="span" inherit lineClamp={2}>{report.listing?.title}</Text>
-                    <Box component="span" flex="none" display="flex">
-                      <ExternalLink size={theme.other.iconSize.badge} />
-                    </Box>
-                  </Group>
-                </Anchor>
-              ) : (
-                <Text size="sm" c="dimmed">—</Text>
-              )}
-              <Group justify="space-between" wrap="nowrap" align="center">
-                <Stack gap="tight">
-                  {caption(t('col_owner'))}
-                  {report.listing?.owner ? (
-                    <Text size="sm" fw={500}>{report.listing.owner.name ?? '—'}</Text>
-                  ) : (
-                    <Text size="sm" c="dimmed">{t('owner_not_found')}</Text>
-                  )}
-                </Stack>
-                {report.listing?.owner && (
-                  <Button
-                    component={Link}
-                    href={`/admin/users/${report.listing.owner.id}`}
-                    variant="subtle"
-                    size="compact-sm"
-                  >
-                    {t('open_profile')}
-                  </Button>
-                )}
-              </Group>
-            </Stack>
-          </Paper>
-
-          <Stack gap="tight">
-            {caption(t('comment_label'))}
-            <Paper bg="gray.0" p="sm" radius="md">
-              <Text size="sm" c={report.comment ? undefined : 'dimmed'} fs={report.comment ? undefined : 'italic'}>
-                {report.comment ?? t('no_comment')}
-              </Text>
-            </Paper>
-          </Stack>
+          <MantineDialogSection title={t('comment_label')}>
+            <Text size="sm" c={report.comment ? undefined : 'dimmed'} fs={report.comment ? undefined : 'italic'}>
+              {report.comment ?? t('no_comment')}
+            </Text>
+          </MantineDialogSection>
 
           {(isOpen || canOverrideReportStatus) && (
-            <Stack gap="md">
-              <Divider label={t('section_moderation')} labelPosition="left" />
+            <MantineDialogSection title={t('section_moderation')}>
               {isOpen && (
                 <Textarea
                   label={t('notes_label')}
@@ -274,67 +226,40 @@ export function ReportDetailDialogView({
                 />
               )}
               {canOverrideReportStatus && (
-                <Flex
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={{ base: 'stretch', sm: 'flex-end' }}
-                  gap="sm"
-                  data-testid="status-override-section"
-                >
-                  <Box flex={{ base: 'none', sm: 1 }}>
-                    <MantineSelect
-                      label={t('change_status_label')}
-                      data={statusItems}
-                      value={selectedStatus}
-                      allowDeselect={false}
-                      onChange={v => { if (v) onSelectedStatusChange(v as ReportStatus) }}
-                    />
-                  </Box>
-                  <Button
-                    w={{ base: '100%', sm: 'auto' }}
-                    loading={isPending}
-                    disabled={isPending || selectedStatus === report.status}
-                    onClick={() => onAction(selectedStatus)}
-                  >
-                    {t('action_apply')}
-                  </Button>
-                </Flex>
+                <Box data-testid="status-override-section">
+                  <MantineSelect
+                    label={t('change_status_label')}
+                    data={statusItems}
+                    value={selectedStatus}
+                    allowDeselect={false}
+                    onChange={v => { if (v) onSelectedStatusChange(v as ReportStatus) }}
+                  />
+                </Box>
               )}
-            </Stack>
+              {moderationRows.length > 0 && <MantineNavRowList items={moderationRows} />}
+            </MantineDialogSection>
           )}
-        </Stack>
+
+          {linkRows.length > 0 && (
+            <MantineDialogSection>
+              <MantineNavRowList items={linkRows} />
+            </MantineDialogSection>
+          )}
+        </MantineDialogSections>
       </MantineModal>
 
-      <MantineModal
+      <MantineDeleteConfirmModal
         opened={showDeleteConfirm}
         onClose={onCancelDelete}
-        title={
-          <Group gap="xs" wrap="nowrap" c="red.7">
-            <AlertTriangle size={theme.other.iconSize.standard} />
-            <Text component="span" inherit>{t('confirm_delete_title')}</Text>
-          </Group>
-        }
-        footer={
-          <Flex direction={{ base: 'column-reverse', sm: 'row' }} gap="sm" justify={{ base: 'stretch', sm: 'flex-end' }}>
-            <Button variant="outline" color="gray" w={{ base: '100%', sm: 'auto' }} disabled={isPending} onClick={onCancelDelete}>
-              {tc('cancel')}
-            </Button>
-            <Button
-              color="red"
-              w={{ base: '100%', sm: 'auto' }}
-              loading={isPending}
-              disabled={isPending}
-              onClick={onConfirmDelete}
-              data-testid="confirm-delete-btn"
-            >
-              {t('action_confirm_delete')}
-            </Button>
-          </Flex>
-        }
-      >
-        <Stack gap="md" data-testid="delete-confirm-dialog">
-          <Text size="sm" c="gray.7">{t('confirm_delete_body')}</Text>
-        </Stack>
-      </MantineModal>
+        title={t('confirm_delete_title')}
+        message={t('confirm_delete_body')}
+        confirmLabel={t('action_confirm_delete')}
+        cancelLabel={tc('cancel')}
+        loading={isPending}
+        onConfirm={onConfirmDelete}
+        confirmTestId="confirm-delete-btn"
+        bodyTestId="delete-confirm-dialog"
+      />
     </>
   )
 }

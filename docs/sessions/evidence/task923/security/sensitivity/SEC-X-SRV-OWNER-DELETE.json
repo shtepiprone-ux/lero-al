@@ -1,0 +1,643 @@
+{
+ "version": 1,
+ "generatedAt": "2026-10-29T07:36:40.253Z",
+ "case": "SEC-X-SRV-OWNER-DELETE",
+ "results": [
+  {
+   "id": "SEC-X-SRV-OWNER-DELETE",
+   "testFile": "src/modules/listings/actions/__tests__/deleteListing.security.test.ts",
+   "testName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+   "boundary": "unit",
+   "baseline": "passed",
+   "mutant": "failed",
+   "failureKind": "assertion",
+   "restored": "passed",
+   "mutation": [
+    {
+     "file": "src/modules/listings/actions/deleteListing.ts",
+     "description": "deleteListingAction no longer requires exactly one deleted row",
+     "from": "  if (error || deleted?.length !== 1) {\n",
+     "to": "  if (error) {\n"
+    }
+   ],
+   "restoredFiles": [
+    {
+     "file": "src/modules/listings/actions/deleteListing.ts",
+     "originalSha256": "2b4558b826611ef96c2b3be9104f206601878ca4e16f3eadc1a5ceafe8cee359",
+     "restoredSha256": "2b4558b826611ef96c2b3be9104f206601878ca4e16f3eadc1a5ceafe8cee359"
+    }
+   ],
+   "failureMessage": "AssertionError: expected {} to deeply equal { error: 'delete_failed' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/deleteListing.security.test.ts:186:17\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20",
+   "raw": {
+    "baseline": {
+     "numTotalTestSuites": 3,
+     "numPassedTestSuites": 3,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 15,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 14,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259396500,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "status": "skipped",
+         "title": "person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction the owner deletes their listing and its images are cleaned up",
+         "status": "skipped",
+         "title": "the owner deletes their listing and its images are cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member with the listings.delete permission may delete another person's listing",
+         "status": "skipped",
+         "title": "a staff member with the listings.delete permission may delete another person's listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member WITHOUT that permission may not",
+         "status": "skipped",
+         "title": "a staff member WITHOUT that permission may not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an anonymous caller is refused and nothing is touched",
+         "status": "skipped",
+         "title": "an anonymous caller is refused and nothing is touched",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "status": "skipped",
+         "title": "a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an id that is not a plain string is refused before any query",
+         "status": "skipped",
+         "title": "an id that is not a plain string is refused before any query",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure of the permission check means \"forbidden\", not a crash",
+         "status": "skipped",
+         "title": "a failure of the permission check means \"forbidden\", not a crash",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure to clean up an image does not undo the delete or fail the call",
+         "status": "skipped",
+         "title": "a failure to clean up an image does not undo the delete or fail the call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction images that are not Cloudinary listing images are not sent for deletion",
+         "status": "skipped",
+         "title": "images that are not Cloudinary listing images are not sent for deletion",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a database failure is returned and nothing is cleaned up or refreshed",
+         "status": "skipped",
+         "title": "a database failure is returned and nothing is cleaned up or refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "status": "passed",
+         "title": "[SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "duration": 3.4024,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "status": "skipped",
+         "title": "a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259396963,
+       "endTime": 1793259396966.4023,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/deleteListing.security.test.ts"
+      }
+     ]
+    },
+    "mutant": {
+     "numTotalTestSuites": 3,
+     "numPassedTestSuites": 1,
+     "numFailedTestSuites": 2,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 15,
+     "numPassedTests": 0,
+     "numFailedTests": 1,
+     "numPendingTests": 14,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259398133,
+     "success": false,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "status": "skipped",
+         "title": "person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction the owner deletes their listing and its images are cleaned up",
+         "status": "skipped",
+         "title": "the owner deletes their listing and its images are cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member with the listings.delete permission may delete another person's listing",
+         "status": "skipped",
+         "title": "a staff member with the listings.delete permission may delete another person's listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member WITHOUT that permission may not",
+         "status": "skipped",
+         "title": "a staff member WITHOUT that permission may not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an anonymous caller is refused and nothing is touched",
+         "status": "skipped",
+         "title": "an anonymous caller is refused and nothing is touched",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "status": "skipped",
+         "title": "a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an id that is not a plain string is refused before any query",
+         "status": "skipped",
+         "title": "an id that is not a plain string is refused before any query",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure of the permission check means \"forbidden\", not a crash",
+         "status": "skipped",
+         "title": "a failure of the permission check means \"forbidden\", not a crash",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure to clean up an image does not undo the delete or fail the call",
+         "status": "skipped",
+         "title": "a failure to clean up an image does not undo the delete or fail the call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction images that are not Cloudinary listing images are not sent for deletion",
+         "status": "skipped",
+         "title": "images that are not Cloudinary listing images are not sent for deletion",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a database failure is returned and nothing is cleaned up or refreshed",
+         "status": "skipped",
+         "title": "a database failure is returned and nothing is cleaned up or refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "status": "failed",
+         "title": "[SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "duration": 7.394600000000025,
+         "failureMessages": [
+          "AssertionError: expected {} to deeply equal { error: 'delete_failed' }\n    at C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/deleteListing.security.test.ts:186:17\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+         ],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "status": "skipped",
+         "title": "a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259398590,
+       "endTime": 1793259398597.3945,
+       "status": "failed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/deleteListing.security.test.ts"
+      }
+     ]
+    },
+    "restored": {
+     "numTotalTestSuites": 3,
+     "numPassedTestSuites": 3,
+     "numFailedTestSuites": 0,
+     "numPendingTestSuites": 0,
+     "numTotalTests": 15,
+     "numPassedTests": 1,
+     "numFailedTests": 0,
+     "numPendingTests": 14,
+     "numTodoTests": 0,
+     "snapshot": {
+      "added": 0,
+      "failure": false,
+      "filesAdded": 0,
+      "filesRemoved": 0,
+      "filesRemovedList": [],
+      "filesUnmatched": 0,
+      "filesUpdated": 0,
+      "matched": 0,
+      "total": 0,
+      "unchecked": 0,
+      "uncheckedKeysByFile": [],
+      "unmatched": 0,
+      "updated": 0,
+      "didUpdate": false
+     },
+     "startTime": 1793259399696,
+     "success": true,
+     "testResults": [
+      {
+       "assertionResults": [
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "status": "skipped",
+         "title": "person B cannot delete person A's listing: it stays, its images are not cleaned up, nothing is refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction the owner deletes their listing and its images are cleaned up",
+         "status": "skipped",
+         "title": "the owner deletes their listing and its images are cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member with the listings.delete permission may delete another person's listing",
+         "status": "skipped",
+         "title": "a staff member with the listings.delete permission may delete another person's listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a staff member WITHOUT that permission may not",
+         "status": "skipped",
+         "title": "a staff member WITHOUT that permission may not",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an anonymous caller is refused and nothing is touched",
+         "status": "skipped",
+         "title": "an anonymous caller is refused and nothing is touched",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "status": "skipped",
+         "title": "a listing that does not exist is \"not_found\" and nothing is cleaned up",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction an id that is not a plain string is refused before any query",
+         "status": "skipped",
+         "title": "an id that is not a plain string is refused before any query",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure of the permission check means \"forbidden\", not a crash",
+         "status": "skipped",
+         "title": "a failure of the permission check means \"forbidden\", not a crash",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a failure to clean up an image does not undo the delete or fail the call",
+         "status": "skipped",
+         "title": "a failure to clean up an image does not undo the delete or fail the call",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction images that are not Cloudinary listing images are not sent for deletion",
+         "status": "skipped",
+         "title": "images that are not Cloudinary listing images are not sent for deletion",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListingAction"
+         ],
+         "fullName": "deleteListingAction a database failure is returned and nothing is cleaned up or refreshed",
+         "status": "skipped",
+         "title": "a database failure is returned and nothing is cleaned up or refreshed",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-DENY] Only the owner or a holder of listings.delete deletes a listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [],
+         "fullName": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "status": "skipped",
+         "title": "[SEC-S27-SRV-ALLOW] the owner deletes their own listing",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing [SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "status": "passed",
+         "title": "[SEC-X-SRV-OWNER-DELETE] a delete of zero rows is a failure",
+         "duration": 2.9249000000000365,
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        },
+        {
+         "ancestorTitles": [
+          "deleteListing"
+         ],
+         "fullName": "deleteListing a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "status": "skipped",
+         "title": "a failed read of the images refuses before anything is deleted, and no database message reaches the caller",
+         "failureMessages": [],
+         "meta": {},
+         "tags": []
+        }
+       ],
+       "startTime": 1793259400167,
+       "endTime": 1793259400169.9248,
+       "status": "passed",
+       "message": "",
+       "name": "C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/__tests__/deleteListing.security.test.ts"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

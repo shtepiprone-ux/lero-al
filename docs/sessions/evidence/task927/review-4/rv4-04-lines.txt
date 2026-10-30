@@ -1,0 +1,107 @@
+﻿platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-4/rv4-04-lines.mjs
+date: 2026-10-25T10:40:28.982Z
+src/modules/auth/components/AuthSheet.tsx:77:     const { error } = await signIn(email, password)
+src/modules/auth/components/AuthSheet.tsx:79:     if (error) { setErrorKey(mapAuthError(error.message)); return }
+src/modules/auth/components/AuthSheet.tsx:147:       <Text ta="center" size="sm" c="dimmed">
+src/modules/auth/components/AuthSheet.tsx:148:         {t('no_account')}{' '}
+src/modules/auth/components/AuthSheet.tsx:149:         <Anchor component="button" type="button" size="sm" c="brand" onClick={onRegister}>
+src/modules/auth/components/AuthSheet.tsx:228:     setCaptchaFailed(false)
+src/modules/auth/components/AuthSheet.tsx:236:       widgetRef.current?.reset()
+src/modules/auth/components/AuthSheet.tsx:237:       setCaptchaToken(null)
+src/modules/auth/components/AuthSheet.tsx:238:       setCaptchaFailed(true)
+src/modules/auth/components/AuthSheet.tsx:277:       <CaptchaWidget
+src/modules/auth/components/AuthSheet.tsx:278:         ref={widgetRef}
+src/modules/auth/components/AuthSheet.tsx:279:         onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
+src/modules/auth/components/AuthSheet.tsx:280:         onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
+src/modules/auth/components/AuthSheet.tsx:281:         onExpire={() => setCaptchaToken(null)}
+src/modules/auth/components/AuthSheet.tsx:284:       <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
+src/modules/auth/components/AuthSheet.tsx:627:     if (!captchaToken) return
+src/modules/auth/components/AuthSheet.tsx:656:         setCaptchaToken(null)
+src/modules/auth/components/AuthSheet.tsx:657:         setErrorKey('captcha_error_failed')
+src/modules/auth/components/AuthSheet.tsx:660:         widgetRef.current?.reset()
+src/modules/auth/components/AuthSheet.tsx:661:         setCaptchaToken(null)
+src/modules/auth/components/AuthSheet.tsx:662:       }
+src/modules/auth/components/AuthSheet.tsx:752:       <CaptchaWidget
+src/modules/auth/components/AuthSheet.tsx:753:         ref={widgetRef}
+src/modules/auth/components/AuthSheet.tsx:754:         onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
+src/modules/auth/components/AuthSheet.tsx:755:         onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
+src/modules/auth/components/AuthSheet.tsx:756:         onExpire={() => setCaptchaToken(null)}
+src/modules/auth/components/AuthSheet.tsx:759:       <Button type="submit" fullWidth loading={loading} disabled={loading || !allPasswordMet || !captchaToken}>
+src/lib/auth/browser.ts:22: export function signIn(email: string, password: string) {
+src/lib/auth/browser.ts:23:   return createClient().auth.signInWithPassword({ email, password })
+src/modules/auth/lib/mapAuthError.ts:6:   if (m.includes('invalid login credentials') || m.includes('invalid credentials') || m.includes('user is banned')) return 'error_invalid_credentials'
+src/modules/auth/lib/mapAuthError.ts:11:   return 'error_generic'
+src/modules/auth/lib/mapAuthError.ts:12: }
+src/modules/cabinet/actions/index.ts:4: import { headers, cookies } from 'next/headers'
+src/modules/cabinet/actions/index.ts:39: async function createVerifyClient() {
+src/modules/cabinet/actions/index.ts:40:   const cookieStore = await cookies()
+src/modules/cabinet/actions/index.ts:41:   return createServerClient(
+src/modules/cabinet/actions/index.ts:42:     process.env.NEXT_PUBLIC_SUPABASE_URL!,
+src/modules/cabinet/actions/index.ts:43:     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+src/modules/cabinet/actions/index.ts:44:     {
+src/modules/cabinet/actions/index.ts:45:       cookies: {
+src/modules/cabinet/actions/index.ts:46:         getAll: () => cookieStore.getAll(),
+src/modules/cabinet/actions/index.ts:47:         setAll: () => {},
+src/modules/cabinet/actions/index.ts:56:   const { error } = await verifyClient.auth.signInWithPassword({ email, password })
+src/modules/cabinet/actions/index.ts:59:     return msg.includes('rate limit') || msg.includes('too many') ? 'rate_limited' : 'invalid'
+src/modules/cabinet/actions/index.ts:62:   try { await verifyClient.auth.signOut({ scope: 'local' }) } catch { /* best effort */ }
+src/modules/cabinet/actions/index.ts:164:     if (outcome === 'rate_limited') return 'rate_limited'      // Auth's own limit: not a wrong password, nothing is counted
+src/modules/cabinet/actions/index.ts:165:     await noteReauthFailure(user.id)
+src/modules/cabinet/actions/index.ts:166:     return 'invalid_password'
+src/modules/cabinet/actions/index.ts:405:   if (failure) return { error: failure === 'reauth_unavailable' ? 'delete_failed' : failure }
+src/modules/cabinet/actions/index.ts:470:   const failure = await reauthenticate(user, data.currentPassword)
+src/modules/cabinet/actions/index.ts:473:   if (failure) return { error: emailError('failed', data.locale) }
+src/modules/cabinet/actions/index.ts:661:     const { error: verifyError } = await verifyClient.auth.signInWithPassword({
+src/modules/cabinet/actions/index.ts:668:       if (msg.includes('rate limit') || msg.includes('too many')) return { ok: false, reason: 'rate_limited' }
+src/modules/cabinet/actions/index.ts:669:       await noteReauthFailure(user.id)
+src/modules/cabinet/actions/index.ts:670:       return { ok: false, reason: 'invalid_current' }
+src/modules/cabinet/actions/index.ts:708:     return { ok: false, reason: 'server_error' }
+src/tests/integration/fixtures.ts:2:  * Synthetic fixtures for the real-boundary suites: users with REAL Supabase Auth sessions (password sign-in with the anon key), listings, and a clean-up that
+src/tests/integration/fixtures.ts:35:   const admin = createClient(env.url, env.serviceKey, clientOptions)
+src/tests/integration/fixtures.ts:41:   async function signIn(email: string, password: string) {
+src/tests/integration/fixtures.ts:42:     const client = anonymousClient()
+src/tests/integration/fixtures.ts:43:     const result = await client.auth.signInWithPassword({ email, password })
+src/tests/integration/fixtures.ts:64:     const { client, result } = await signIn(email, password)
+src/tests/integration/fixtures.ts:65:     if (result.error || !result.data.session) throw new Error(`fixture: could not sign in user ${tag}`)
+src/modules/cabinet/actions/reauth.integration.test.ts:14: vi.mock('next/headers', () => ({ headers: async () => new Headers(), cookies: async () => ({ getAll: () => [] }) }))
+src/modules/cabinet/actions/reauth.integration.test.ts:18: import { deleteOwnAccount, initiateEmailChange } from './index'
+src/modules/cabinet/actions/__tests__/reauthIdToken.security.test.ts:53:   createServerClient: () => ({ auth: { signInWithPassword: async () => { state.verifySignIns += 1; return { error: { message: 'Invalid login credentials' } } }, signOut: async () => ({ error: null }) } }),
+src/components/auth/CaptchaWidget.tsx:69:     onSuccess?.('dev-noop-token')
+src/components/auth/CaptchaWidget.tsx:211: 
+src/components/auth/CaptchaWidget.tsx:218: undefined
+src/modules/auth/components/__tests__/AuthSheet.test.tsx:188:     expect(browser.signIn).toHaveBeenCalledWith('alba@example.com', 'secret')
+src/modules/auth/components/AuthSheet.banned.security.test.tsx:62:     expect(browser.signIn).toHaveBeenCalledWith('alba@example.com', 'secret')
+src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx:203:   await waitFor(() => expect(browser.signIn).toHaveBeenCalledWith('alba@example.com', 'secret'))
+src/lib/auth/__tests__/browser.smoke.test.ts:56:     expect(result.data.session).toMatchObject({ user: { id: 'user-1' } })
+src/lib/auth/__tests__/browserAuth.security.test.ts:80:     await browser.signIn('a@b.cc', 'pw')
+src/lib/auth/__tests__/browserAuth.security.test.ts:81:     expect(auth.signInWithPassword).toHaveBeenCalledWith({ email: 'a@b.cc', password: 'pw' })
+messages/en.json:397:     "captcha_error_failed": "Security verification failed. Please try again.",
+messages/sq.json:397:     "captcha_error_failed": "Verifikimi i sigurisë dështoi. Ju lutemi provoni sërish.",
+messages/uk.json:397:     "captcha_error_failed": "Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз.",
+messages/uk.json:2870:       "google_welcome_demo_name": "Арта Красніки",
+messages/uk.json:2871:       "google_welcome_demo_long_name": "Александра-Костянтина Пападопулі-Дімітракопулу",
+messages/uk.json:2872:       "google_welcome_demo_email": "ар•••••@example.com"
+messages/it.json:397:     "captcha_error_failed": "Verifica di sicurezza fallita. Riprova.",
+src/stories/patterns/mantine/AuthSheet.stories.tsx:59:       <AuthSheet key="login" open onOpenChange={() => {}} initialView="login" />
+src/stories/patterns/mantine/AuthSheet.stories.tsx:133:         <AuthSheet key={`login-error-${locale}`} open onOpenChange={() => {}} initialView="login" />
+.storybook files naming TURNSTILE: 0 of 4
+integration suites that sign a synthetic user in with a password: 15
+  src/lib/account/deleteAccount.integration.test.ts
+  src/lib/auth/accountAccess.integration.test.ts
+  src/lib/auth/sessionEnd.integration.test.ts
+  src/lib/auth/staffAccess.integration.test.ts
+  src/modules/admin/actions/accountBan.integration.test.ts
+  src/modules/admin/actions/userProfileFields.integration.test.ts
+  src/modules/cabinet/actions/emailChange.integration.test.ts
+  src/modules/cabinet/actions/reauth.integration.test.ts
+  src/modules/cabinet/actions/reauthLimit.integration.test.ts
+  src/modules/listings/actions/contactSession.integration.test.ts
+  src/modules/listings/actions/listingSlugGuard.integration.test.ts
+  src/modules/listings/actions/ownerPublish.integration.test.ts
+  src/tests/integration/accessHardening.integration.test.ts
+  src/tests/integration/contactGateway.integration.test.ts
+  src/tests/integration/listingAccessState.integration.test.ts
+exit code: 0

@@ -1,18 +1,16 @@
 /**
- * Guard 1 smoke — hardDeleteUser: admin hard-delete lifecycle (Task 443, Epic RS Slice 4).
+ * Guard 1 smoke — hardDeleteUser: admin hard-delete lifecycle (Task 443, Epic RS Slice 4; Task 923 R142: one complete deletion, `deleteAccount`).
  *
  * Covers the critical-flow-registry.md row:
- *   "Hard-delete user (admin)" — happy path (listings archived → profile deleted →
- *   auth.admin.deleteUser called = email freed) + every failure/edge path.
+ *   "Hard-delete user (admin)" — happy path (the permission, the session, the rank rule, then `deleteAccount(userId, { reason: 'staff' })`) + every failure/edge path.
  *
  * Key assertions:
- *   - Happy: listings archived BEFORE profile delete; profile delete BEFORE auth delete;
- *     auth.admin.deleteUser called exactly once (email-reuse guard).
+ *   - Happy: `deleteAccount` is called exactly once, for the target, with the reason `staff`; nothing is archived first (the account goes with its listings).
  *   - Permission denied (hasPermission false) → { error: 'forbidden' } + zero side effects.
  *   - Permission throws → still { error: 'forbidden' } + zero side effects.
  *   - No session → { error: 'Unauthorized' } + zero side effects.
- *   - Profile delete error → { error: 'delete_failed' } + console.error + auth.admin.deleteUser NOT called.
- *   - Auth delete error → { error: 'profile_deleted_auth_failed' } + console.error.
+ *   - Own id and a rank refusal → { error: 'forbidden' } + `deleteAccount` NOT called.
+ *   - `deleteAccount` fails → { error: 'delete_failed' }: there is no partial-deletion answer any more (the Auth user and the profile go in one transaction).
  *
  * Command: npx vitest run src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts
  */
@@ -33,14 +31,16 @@ vi.mock('@/lib/auth/server', () => ({
   getUser: (...args: unknown[]) => mockGetUser(...args),
 }))
 
-const mockDeleteUserAuth = vi.fn()
-const mockUsersDeleteEq = vi.fn()
-const mockListingsNotChain = vi.fn()
+const mockDeleteAccount = vi.fn()
+vi.mock('@/lib/account/deleteAccount', () => ({
+  deleteAccount: (...args: unknown[]) => mockDeleteAccount(...args),
+}))
+
+// The rank read (Task 923 R66 (a)) is the one thing the action still asks the service-role client.
 const mockAdminFrom = vi.fn()
 vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: vi.fn(() => ({
     from: (table: string) => mockAdminFrom(table),
-    auth: { admin: { deleteUser: (...args: unknown[]) => mockDeleteUserAuth(...args) } },
   })),
 }))
 
@@ -55,7 +55,7 @@ vi.mock('@/lib/supabase/server', () => ({
     from: () => ({ select: vi.fn().mockReturnThis(), eq: vi.fn().mockReturnThis(), single: vi.fn().mockResolvedValue({ data: null }) }),
   }),
 }))
-vi.mock('@/modules/notifications/lib/mutations', () => ({
+vi.mock('@/modules/notifications/lib/createNotification', () => ({
   createNotification: vi.fn().mockResolvedValue({}),
 }))
 
@@ -64,8 +64,6 @@ vi.mock('@/modules/notifications/lib/mutations', () => ({
 const ADMIN_ID = 'admin-user-1'
 const TARGET_USER_ID = 'target-user-1'
 
-const LISTINGS_TO_ARCHIVE = [{ id: 'listing-1' }, { id: 'listing-2' }]
-
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
 beforeEach(() => {
@@ -73,107 +71,37 @@ beforeEach(() => {
 
   mockHasPermission.mockResolvedValue(true)
   mockGetUser.mockResolvedValue({ id: ADMIN_ID })
-  mockDeleteUserAuth.mockResolvedValue({ error: null })
+  mockDeleteAccount.mockResolvedValue({ ok: true, filesNotRemoved: 0 })
   mockApplyTransition.mockResolvedValue({ ok: true })
 
-  // Ordering tracker: records call order across seams to verify invariants
-  callOrder.length = 0
-
-  mockUsersDeleteEq.mockImplementation(() => {
-    callOrder.push('users.delete')
-    return Promise.resolve({ error: null })
-  })
-
-  mockListingsNotChain.mockImplementation(() => {
-    callOrder.push('listings.select')
-    return Promise.resolve({ data: LISTINGS_TO_ARCHIVE })
-  })
-
-  mockDeleteUserAuth.mockImplementation((...args: unknown[]) => {
-    callOrder.push('auth.admin.deleteUser')
-    void args
-    return Promise.resolve({ error: null })
-  })
-
-  mockApplyTransition.mockImplementation((...args: unknown[]) => {
-    callOrder.push('applyTransition')
-    void args
-    return Promise.resolve({ ok: true })
-  })
-
-  mockAdminFrom.mockImplementation((table: string) => {
-    if (table === 'listings') {
-      return {
-        select: () => ({
-          eq: () => ({
-            not: mockListingsNotChain,
-          }),
-        }),
-      }
-    }
-    if (table === 'users') {
-      return {
-        delete: () => ({ eq: mockUsersDeleteEq }),
-        select: vi.fn().mockReturnThis(),
-        eq: vi.fn().mockReturnThis(),
-        single: vi.fn().mockResolvedValue({ data: null }),
-        update: () => ({ eq: () => Promise.resolve({ error: null }) }),
-        upsert: vi.fn().mockResolvedValue({ error: null }),
-      }
-    }
-    return {
-      select: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
-      not: vi.fn().mockReturnThis(),
-      single: vi.fn().mockResolvedValue({ data: null }),
-      delete: vi.fn().mockReturnThis(),
-      update: vi.fn().mockReturnThis(),
-      insert: vi.fn().mockResolvedValue({ error: null }),
-    }
-  })
+  mockAdminFrom.mockImplementation(() => ({
+    select: vi.fn().mockReturnThis(),
+    // rank check (Task 923 Revision 7): the acting administrator and an ordinary target
+    in: vi.fn().mockResolvedValue({ data: [{ id: ADMIN_ID, role: 'admin' }, { id: TARGET_USER_ID, role: 'user' }] }),
+  }))
 })
-
-const callOrder: string[] = []
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
-describe('hardDeleteUser — smoke tests (Guard 1, Task 443)', () => {
+describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', () => {
   // ── Happy path ────────────────────────────────────────────────────────────
 
-  it('happy path — permitted admin: listings archived → profile deleted → auth.admin.deleteUser called → {}', async () => {
+  it('happy path — permitted admin: deleteAccount(target, { reason: "staff" }) runs once → {}', async () => {
     const { hardDeleteUser } = await import('../index')
     const result = await hardDeleteUser(TARGET_USER_ID)
 
     expect(result).toEqual({})
+    expect(mockDeleteAccount).toHaveBeenCalledTimes(1)
+    expect(mockDeleteAccount).toHaveBeenCalledWith(TARGET_USER_ID, { reason: 'staff' })
+    // the account goes with its listings: nothing is archived first
+    expect(mockApplyTransition).not.toHaveBeenCalled()
+  })
 
-    // Listings archived via transition gateway
-    expect(mockApplyTransition).toHaveBeenCalledTimes(LISTINGS_TO_ARCHIVE.length)
-    for (const listing of LISTINGS_TO_ARCHIVE) {
-      expect(mockApplyTransition).toHaveBeenCalledWith(
-        listing.id,
-        'archived',
-        expect.objectContaining({ role: 'admin', source: 'admin_panel' }),
-      )
-    }
+  it('a file that could not be removed does not make the deletion fail: ok with filesNotRemoved is still {}', async () => {
+    mockDeleteAccount.mockResolvedValue({ ok: true, filesNotRemoved: 3 })
 
-    // Profile row deleted
-    expect(mockUsersDeleteEq).toHaveBeenCalledWith('id', TARGET_USER_ID)
-
-    // auth.admin.deleteUser called exactly once (email-reuse guard)
-    expect(mockDeleteUserAuth).toHaveBeenCalledTimes(1)
-    expect(mockDeleteUserAuth).toHaveBeenCalledWith(TARGET_USER_ID)
-
-    // Ordering: listing-archive(s) BEFORE users.delete BEFORE auth.admin.deleteUser
-    const transitionIndices = callOrder
-      .map((c, i) => (c === 'applyTransition' ? i : -1))
-      .filter(i => i >= 0)
-    const deleteIndex = callOrder.indexOf('users.delete')
-    const authDeleteIndex = callOrder.indexOf('auth.admin.deleteUser')
-
-    for (const ti of transitionIndices) {
-      expect(ti).toBeLessThan(deleteIndex)
-    }
-    expect(deleteIndex).toBeLessThan(authDeleteIndex)
+    const { hardDeleteUser } = await import('../index')
+    expect(await hardDeleteUser(TARGET_USER_ID)).toEqual({})
   })
 
   // ── Permission failures ───────────────────────────────────────────────────
@@ -186,8 +114,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443)', () => {
 
     expect(result).toEqual({ error: 'forbidden' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
-    expect(mockUsersDeleteEq).not.toHaveBeenCalled()
-    expect(mockDeleteUserAuth).not.toHaveBeenCalled()
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
   })
 
   it('forbidden — hasPermission throws → { error: "forbidden" } + zero side effects', async () => {
@@ -198,8 +125,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443)', () => {
 
     expect(result).toEqual({ error: 'forbidden' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
-    expect(mockUsersDeleteEq).not.toHaveBeenCalled()
-    expect(mockDeleteUserAuth).not.toHaveBeenCalled()
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
   })
 
   // ── Unauthorized ──────────────────────────────────────────────────────────
@@ -212,53 +138,38 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443)', () => {
 
     expect(result).toEqual({ error: 'Unauthorized' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
-    expect(mockUsersDeleteEq).not.toHaveBeenCalled()
-    expect(mockDeleteUserAuth).not.toHaveBeenCalled()
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
   })
 
-  // ── Profile delete error ──────────────────────────────────────────────────
+  // ── Own id and rank ───────────────────────────────────────────────────────
 
-  it('profile delete error → { error: "delete_failed" } + console.error + auth.admin.deleteUser NOT called', async () => {
-    const profileError = { message: 'FK constraint', code: '23503' }
-    mockUsersDeleteEq.mockImplementation(() => {
-      callOrder.push('users.delete')
-      return Promise.resolve({ error: profileError })
-    })
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  it('forbidden — a staff member cannot delete their own account from the panel', async () => {
+    const { hardDeleteUser } = await import('../index')
+    expect(await hardDeleteUser(ADMIN_ID)).toEqual({ error: 'forbidden' })
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
+  })
+
+  it('forbidden — the rank rule refuses a moderator who targets an administrator', async () => {
+    mockGetUser.mockResolvedValue({ id: 'moderator-1' })
+    mockAdminFrom.mockImplementation(() => ({
+      select: vi.fn().mockReturnThis(),
+      in: vi.fn().mockResolvedValue({ data: [{ id: 'moderator-1', role: 'moderator' }, { id: TARGET_USER_ID, role: 'admin' }] }),
+    }))
+
+    const { hardDeleteUser } = await import('../index')
+    expect(await hardDeleteUser(TARGET_USER_ID)).toEqual({ error: 'forbidden' })
+    expect(mockDeleteAccount).not.toHaveBeenCalled()
+  })
+
+  // ── Deletion failure ──────────────────────────────────────────────────────
+
+  it('deleteAccount fails → { error: "delete_failed" }', async () => {
+    mockDeleteAccount.mockResolvedValue({ ok: false, error: 'delete_failed' })
 
     const { hardDeleteUser } = await import('../index')
     const result = await hardDeleteUser(TARGET_USER_ID)
 
     expect(result).toEqual({ error: 'delete_failed' })
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'hardDeleteUser profile failed',
-      expect.objectContaining({ error: profileError, userId: TARGET_USER_ID }),
-    )
-    // Critical: auth.admin.deleteUser must NOT be called when profile delete fails
-    expect(mockDeleteUserAuth).not.toHaveBeenCalled()
-
-    consoleSpy.mockRestore()
-  })
-
-  // ── Auth delete error ─────────────────────────────────────────────────────
-
-  it('auth delete error → { error: "profile_deleted_auth_failed" } + console.error', async () => {
-    const authError = { message: 'User not found in auth', code: 'user_not_found' }
-    mockDeleteUserAuth.mockImplementation(() => {
-      callOrder.push('auth.admin.deleteUser')
-      return Promise.resolve({ error: authError })
-    })
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
-    const { hardDeleteUser } = await import('../index')
-    const result = await hardDeleteUser(TARGET_USER_ID)
-
-    expect(result).toEqual({ error: 'profile_deleted_auth_failed' })
-    expect(consoleSpy).toHaveBeenCalledWith(
-      'hardDeleteUser auth failed',
-      expect.objectContaining({ error: authError, userId: TARGET_USER_ID }),
-    )
-
-    consoleSpy.mockRestore()
+    expect(mockDeleteAccount).toHaveBeenCalledTimes(1)
   })
 })

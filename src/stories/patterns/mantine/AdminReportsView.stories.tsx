@@ -71,7 +71,7 @@ function ViewDemo({ initialFilter, reports = FIXTURE_REPORTS }: { initialFilter:
   for (const r of reports) counts[r.status] = (counts[r.status] ?? 0) + 1
   const shown = filter === 'all' ? reports : reports.filter(r => r.status === filter)
   return (
-    <AdminPageFrame width="page">
+    <AdminPageFrame width="shell">
       <AdminReportsView reports={shown} filter={filter} counts={counts} onFilterChange={setFilter} onSelect={() => {}} />
     </AdminPageFrame>
   )

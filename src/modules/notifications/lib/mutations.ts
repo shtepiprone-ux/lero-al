@@ -1,46 +1,16 @@
 'use server'
 
-import { createAdminClient } from '@/lib/supabase/admin'
+// Only the two actions a signed-in person runs on their OWN notifications live here (row-level security limits them to the caller's rows).
+// The service-role writer is `createNotification.ts`: it must not be a Server Action (Task 923 Revision 7, S1).
+
 import { createClient } from '@/lib/supabase/server'
-import type { NotificationType } from '@/types/database'
-
-// ── Creation (service-role — bypasses RLS) ────────────────────────────────────
-
-export async function createNotification({
-  userId,
-  type,
-  title,
-  body,
-  link,
-  templateId,
-  templateParams,
-}: {
-  userId: string
-  type: NotificationType
-  title: string
-  body: string
-  link?: string
-  templateId?: string
-  templateParams?: Record<string, unknown>
-}): Promise<void> {
-  const db = createAdminClient()
-  const { error } = await db.from('notifications').insert({
-    user_id: userId,
-    type,
-    title,
-    body,
-    link: link ?? null,
-    template_id: templateId ?? null,
-    template_params: templateParams ?? null,
-  })
-  if (error) {
-    console.error('[notifications] createNotification failed', { error, userId, type })
-  }
-}
+import { requireViewer } from '@/lib/auth/requireViewer'
 
 // ── Read state (user-scoped — RLS enforces ownership) ─────────────────────────
 
 export async function markNotificationRead(id: string): Promise<void> {
+  // Task 923 R44: a person whose account has no access changes nothing (checked before the database is touched).
+  if (!(await requireViewer()).ok) return
   const supabase = await createClient()
   const { error } = await supabase
     .from('notifications')
@@ -53,6 +23,7 @@ export async function markNotificationRead(id: string): Promise<void> {
 }
 
 export async function markAllNotificationsRead(): Promise<void> {
+  if (!(await requireViewer()).ok) return
   const supabase = await createClient()
   const { error } = await supabase
     .from('notifications')

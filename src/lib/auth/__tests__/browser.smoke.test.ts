@@ -24,14 +24,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const mockSignInWithPassword = vi.fn()
 const mockSignOut = vi.fn()
-const mockSignInWithOAuth = vi.fn()
+const mockSignInWithIdToken = vi.fn()
 
 vi.mock('@/lib/supabase/client', () => ({
   createClient: () => ({
     auth: {
       signInWithPassword: (...args: unknown[]) => mockSignInWithPassword(...args),
       signOut: (...args: unknown[]) => mockSignOut(...args),
-      signInWithOAuth: (...args: unknown[]) => mockSignInWithOAuth(...args),
+      signInWithIdToken: (...args: unknown[]) => mockSignInWithIdToken(...args),
     },
   }),
 }))
@@ -50,11 +50,11 @@ describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () =
     mockSignInWithPassword.mockResolvedValue({ data: { session: fakeSession }, error: null })
 
     const { signIn } = await import('@/lib/auth/browser')
-    const result = await signIn('valid@example.com', 'correct-pass')
+    const result = await signIn('valid@example.com', 'correct-pass', 'zz-captcha-token')
 
     expect(result.error).toBeNull()
     expect(result.data.session).toMatchObject({ user: { id: 'user-1' } })
-    expect(mockSignInWithPassword).toHaveBeenCalledWith({ email: 'valid@example.com', password: 'correct-pass' })
+    expect(mockSignInWithPassword).toHaveBeenCalledWith({ email: 'valid@example.com', password: 'correct-pass', options: { captchaToken: 'zz-captcha-token' } })
   })
 
   it('login wrong creds: error propagated, session is null (no false success)', async () => {
@@ -64,7 +64,7 @@ describe('browser auth — signIn / signOut smoke tests (Guard, Task 441)', () =
     })
 
     const { signIn } = await import('@/lib/auth/browser')
-    const result = await signIn('wrong@example.com', 'bad-pass')
+    const result = await signIn('wrong@example.com', 'bad-pass', 'zz-captcha-token')
 
     // Guard: error must NOT be swallowed — callers rely on error.message for localized UI
     expect(result.error).not.toBeNull()

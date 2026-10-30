@@ -1,0 +1,430 @@
+{
+  "takenAt": "2026-10-22T13:23:37.229Z",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "proved": 9,
+  "total": 9,
+  "records": [
+    {
+      "id": "M1-drop-owner-filter",
+      "kind": "mutation",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-PAGE-DENY"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 180 @@\n-      if (!isStaff) hiddenQuery = hiddenQuery.eq('user_id', viewer.userId)",
+      "shaBefore": "6f5764da6b746653862f2c14bc53a3e0b3a209632ad7b6fbe448a316fa349a7c",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+              "kind": "assertion",
+              "message": "AssertionError: stranger on inactive: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality"
+            },
+            {
+              "name": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-ALLOW] the owner and staff open their listing in every non-public status",
+              "kind": "assertion",
+              "message": "AssertionError: owner on inactive: only the owner's read is limited to the viewer's own listings: expected false to be true // Object.is equality"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "6f5764da6b746653862f2c14bc53a3e0b3a209632ad7b6fbe448a316fa349a7c",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 0,
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M2-listing-in-restricted-branch",
+      "kind": "mutation",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-PAGE-DENY"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/app/[locale]/listings/[slug]/page.tsx\n+++ src/app/[locale]/listings/[slug]/page.tsx (mutated)\n@@ line 189 @@\n+    const leaked = (await (await import('@/lib/supabase/admin')).createAdminClient().from('listings').select(LISTING_PAGE_SELECT).eq('slug', slug).single()).data\n+    if (leaked) return <ListingDetailView listing={leaked} />",
+      "shaBefore": "6f5764da6b746653862f2c14bc53a3e0b3a209632ad7b6fbe448a316fa349a7c",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+              "kind": "assertion",
+              "message": "AssertionError: guest on inactive: the restricted view, not the listing: expected [Function ListingDetailView] to be [Function ListingAccessRestrictedView] // Object.is equality"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "6f5764da6b746653862f2c14bc53a3e0b3a209632ad7b6fbe448a316fa349a7c",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 0,
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M3-hidden-for-missing-slug",
+      "kind": "mutation",
+      "file": "src/modules/listings/lib/listingAccessState.ts",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-PAGE-DENY"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/lib/listingAccessState.ts\n+++ src/modules/listings/lib/listingAccessState.ts (mutated)\n@@ line 23 @@\n-  if (!data) return 'missing'\n+  if (!data) return 'hidden'",
+      "shaBefore": "1165a64db72ce915554bf66733dd10530e93cf88a1564d4eac3c51373b7a965c",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "listingAccessRestricted [SEC-X-SRV-RESTRICTED-PAGE-DENY] a visitor gets the restricted page and no listing data for every non-public status",
+              "kind": "assertion",
+              "message": "AssertionError: guest: a slug that does not exist is not found: expected undefined to be 'NEXT_NOT_FOUND' // Object.is equality"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "1165a64db72ce915554bf66733dd10530e93cf88a1564d4eac3c51373b7a965c",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-PAGE-DENY",
+          "exit": 0,
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M4-one-ceiling-for-both-currencies",
+      "kind": "mutation",
+      "file": "src/modules/listings/validations/index.ts",
+      "cases": [
+        "SEC-X-SRV-LISTING-BOUNDS-DENY",
+        "SEC-X-FE-LISTING-BOUNDS"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        },
+        {
+          "caseId": "SEC-X-FE-LISTING-BOUNDS",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/validations/index.ts\n+++ src/modules/listings/validations/index.ts (mutated)\n@@ line 10 @@\n-export const MAX_LISTING_PRICE_BY_CURRENCY = { EUR: 10_000_000_000, ALL: 1_000_000_000_000 } as const\n+export const MAX_LISTING_PRICE_BY_CURRENCY = { EUR: 1_000_000_000_000, ALL: 1_000_000_000_000 } as const",
+      "shaBefore": "f337417f1396b9298e08847d04c1392ad1a09122772affd63c8e49b75e45152a",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "listingBounds [SEC-X-SRV-LISTING-BOUNDS-DENY] an out-of-range price or an inactive catalogue value is refused before any write",
+              "kind": "assertion",
+              "message": "AssertionError: create: a euro price above the euro ceiling: expected { slug: 'a-flat-in-tirana-mvjkl0fn' } to deeply equal { error: 'validation_failed' }"
+            }
+          ],
+          "suiteErrors": []
+        },
+        {
+          "caseId": "SEC-X-FE-LISTING-BOUNDS",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "ListingFormShell [SEC-X-FE-LISTING-BOUNDS] a price above the ceiling is refused in the form",
+              "kind": "assertion",
+              "message": "AssertionError: EUR 10000000001: expected '' to be 'error_price' // Object.is equality"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "f337417f1396b9298e08847d04c1392ad1a09122772affd63c8e49b75e45152a",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-LISTING-BOUNDS-DENY",
+          "exit": 0,
+          "passed": 2,
+          "total": 2,
+          "failed": 0
+        },
+        {
+          "caseId": "SEC-X-FE-LISTING-BOUNDS",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M5-guest-redirect-before-state-check",
+      "kind": "mutation",
+      "file": "src/app/[locale]/listings/[slug]/edit/page.tsx",
+      "cases": [
+        "SEC-X-SRV-RESTRICTED-EDIT"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/app/[locale]/listings/[slug]/edit/page.tsx\n+++ src/app/[locale]/listings/[slug]/edit/page.tsx (mutated)\n@@ line 56 @@\n-    if ((await getListingAccessState(slug)) === 'hidden') return restrictedPage(locale, slug, 'sign-in')",
+      "shaBefore": "d485b854876294f0224b6b776d6956bb684db9ee8672ed75e70d59e0f6c950b7",
+      "mutant": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "editAccessRestricted [SEC-X-SRV-RESTRICTED-EDIT] the edit link of a hidden listing shows the restricted page to a non-owner",
+              "kind": "assertion",
+              "message": "AssertionError: slug-archived: the page rendered an element and threw nothing: expected 'NEXT_REDIRECT /en/auth/login?next=%2F…' to be undefined"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "d485b854876294f0224b6b776d6956bb684db9ee8672ed75e70d59e0f6c950b7",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-SRV-RESTRICTED-EDIT",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M6-action-rendered-twice",
+      "kind": "mutation",
+      "file": "src/modules/listings/components/ListingAccessRestrictedView.tsx",
+      "cases": [
+        "SEC-X-FE-RESTRICTED-VIEW"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-FE-RESTRICTED-VIEW",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/components/ListingAccessRestrictedView.tsx\n+++ src/modules/listings/components/ListingAccessRestrictedView.tsx (mutated)\n@@ line 57 @@\n-          <Button component={Link} href={actionHref} color=\"brand\" w={FULL_BELOW_SM}>\n-            {actionLabel}\n-          </Button>\n+          <><Button component={Link} href={actionHref} color=\"brand\" w={FULL_BELOW_SM}>{actionLabel}</Button><Button component={Link} href={actionHref} color=\"brand\" w={FULL_BELOW_SM}>{actionLabel}</Button></>",
+      "shaBefore": "3eaa4b5d7b94af7a03c0c14d6639f7a4ca2408328c5dcc41d022aecb641d4ac8",
+      "mutant": [
+        {
+          "caseId": "SEC-X-FE-RESTRICTED-VIEW",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "ListingAccessRestrictedView [SEC-X-FE-RESTRICTED-VIEW] the restricted page shows only its own strings and one action",
+              "kind": "assertion",
+              "message": "AssertionError: sq guest: one action: expected [ [ 'Hyr', …(1) ], [ 'Hyr', …(1) ] ] to deeply equal [ [ 'Hyr', …(1) ] ]"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "3eaa4b5d7b94af7a03c0c14d6639f7a4ca2408328c5dcc41d022aecb641d4ac8",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-FE-RESTRICTED-VIEW",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "M7-drop-parsePriceDigits",
+      "kind": "mutation",
+      "file": "src/modules/listings/components/ListingFormShellView.tsx",
+      "cases": [
+        "SEC-X-FE-PRICE-DIGITS"
+      ],
+      "status": "proved",
+      "baseline": [
+        {
+          "caseId": "SEC-X-FE-PRICE-DIGITS",
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ],
+      "diff": "--- src/modules/listings/components/ListingFormShellView.tsx\n+++ src/modules/listings/components/ListingFormShellView.tsx (mutated)\n@@ line 226 @@\n-                      onChange={e => patch({ price: parsePriceDigits(e.target.value) })}\n+                      onChange={e => patch({ price: e.target.value ? Number(e.target.value) : undefined })}",
+      "shaBefore": "79092abb00d2654fd458681f052d33202e17aaecb90e5e2d3bb1c0e2237cc79f",
+      "mutant": [
+        {
+          "caseId": "SEC-X-FE-PRICE-DIGITS",
+          "exit": 1,
+          "detected": true,
+          "failed": [
+            {
+              "name": "ListingFormShellView [SEC-X-FE-PRICE-DIGITS] typed or pasted spaces are dropped from the price",
+              "kind": "assertion",
+              "message": "AssertionError: pasted with ordinary spaces: one patch with the exact price: expected [ { price: NaN } ] to deeply equal [ { price: 20000000000 } ]"
+            }
+          ],
+          "suiteErrors": []
+        }
+      ],
+      "shaAfterRestore": "79092abb00d2654fd458681f052d33202e17aaecb90e5e2d3bb1c0e2237cc79f",
+      "restored": true,
+      "restoredRun": [
+        {
+          "caseId": "SEC-X-FE-PRICE-DIGITS",
+          "exit": 0,
+          "passed": 1,
+          "total": 1,
+          "failed": 0
+        }
+      ]
+    },
+    {
+      "id": "C1-closed-read",
+      "kind": "negative control",
+      "file": "src/tests/integration/accessHardening.integration.test.ts",
+      "cases": [
+        "SEC-DB-X-CLOSED-READ-DENY"
+      ],
+      "env": "SEC_NEGATIVE_CONTROL=closed-read",
+      "status": "proved",
+      "baseline": {
+        "exit": 0,
+        "passed": 7,
+        "total": 7,
+        "failed": 0,
+        "suiteErrors": []
+      },
+      "control": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "accessHardening [SEC-DB-X-CLOSED-READ-DENY] a guest reads no hidden listing or photo",
+            "message": "AssertionError: a guest (anon, no session): the archived listing is not readable: expected [ { …(3) } ] to deeply equal []",
+            "kind": "assertion"
+          }
+        ],
+        "suiteErrors": [],
+        "failedOnDenyAssertion": true,
+        "cleanupVerified": true
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 7,
+        "total": 7,
+        "failed": 0,
+        "suiteErrors": []
+      }
+    },
+    {
+      "id": "C2-listing-checks",
+      "kind": "negative control",
+      "file": "src/tests/integration/accessHardening.integration.test.ts",
+      "cases": [
+        "SEC-DB-X-LISTING-CHECKS-DENY"
+      ],
+      "env": "SEC_NEGATIVE_CONTROL=listing-checks",
+      "status": "proved",
+      "baseline": {
+        "exit": 0,
+        "passed": 7,
+        "total": 7,
+        "failed": 0,
+        "suiteErrors": []
+      },
+      "control": {
+        "exit": 1,
+        "failed": [
+          {
+            "name": "accessHardening [SEC-DB-X-LISTING-CHECKS-DENY] invalid values are refused",
+            "message": "AssertionError: a title of 4 characters: refused with a check violation: expected undefined to be '23514' // Object.is equality",
+            "kind": "assertion"
+          }
+        ],
+        "suiteErrors": [],
+        "failedOnDenyAssertion": true,
+        "cleanupVerified": true
+      },
+      "restoredRun": {
+        "exit": 0,
+        "passed": 7,
+        "total": 7,
+        "failed": 0,
+        "suiteErrors": []
+      }
+    }
+  ]
+}

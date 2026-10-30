@@ -19,8 +19,8 @@ node.exe scripts\check-surface-census.mjs --surface $surface
 
 Every tier-3 node is **filed as a numbered task in the same response**. A node passed over silently voids the receipt.
 
-**Container exemption. Owner decision 2026-09-23 (Task 872, Sprint 81 D81-2), verbatim option chosen:**
-*"View-stories достатньо (Recommended)"*. It resolves the conflict between this rule and `docs/component-rules.md` →
+**Container exemption. Owner decision 2026-09-23 (Task 872, Sprint 81 D81-2), option chosen:**
+*"View Stories are enough (Recommended)"*. It resolves the conflict between this rule and `docs/component-rules.md` →
 "Container / Presentational Primitive Split" (owner P0, 2026-07-10, which forbids a Story that mocks hooks). The
 exemption holds only when **all** of the following are true:
 
@@ -34,12 +34,12 @@ The census cannot yet recognise the split, so the container stays as baselined d
 separately: `tier1 <a> migrated+enrolled+story + <e> container-exempt (<names>)`. A node that fails any of the three
 conditions is not exempt.
 
-**Non-visual provider exemption. Owner decision 2026-09-24 (Task 876, Sprint 81 D81-4), verbatim:** *"AuthContext /
-AuthProvider є non-visual state provider: він рендерить лише Context.Provider та children, не створює DOM/UI, має 0
-className і не імпортує legacy UI primitives. Зміна лише його state/command contract не розширює GR‑1 на весь
-src/app/[locale]/layout.tsx. Він не отримує Story або manifest entry; baseline entry layout лишається. GR‑1
-застосовується до кожного візуального consumer-а, який показує цей стан; його canonical View Story має перевіряти
-pending UI. Виняток не поширюється на provider, який сам рендерить будь-який UI."* The census for such a change is
+**Non-visual provider exemption. Owner decision 2026-09-24 (Task 876, Sprint 81 D81-4):** *"AuthContext / AuthProvider is a non-visual state provider: it renders only Context.Provider and children, creates
+no DOM/UI, has 0 className and imports no legacy UI primitives. A change to only
+its state/command contract does not extend GR‑1 to the whole src/app/[locale]/layout.tsx. It gets no Story
+or manifest entry; the baseline entry for the layout stays. GR‑1 applies to every visual
+consumer that shows this state; its canonical View Story must check the pending UI. The
+exemption does not cover a provider that itself renders any UI."* The census for such a change is
 the census of the visual consumer's surface, not of the provider's parent layout. A provider that renders any element
 other than `Context.Provider` and `children` is not exempt.
 

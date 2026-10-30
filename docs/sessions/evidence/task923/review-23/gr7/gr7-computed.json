@@ -1,0 +1,288 @@
+[
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/profile",
+  "width": 1440,
+  "field": {
+   "text": "Musharof",
+   "w": 286,
+   "h": 44,
+   "radius": "8px",
+   "border": "1px rgb(208, 213, 221)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(29, 41, 57)",
+   "font": "14px/20px 400"
+  },
+  "label": {
+   "text": "First Name",
+   "w": 286,
+   "h": 20,
+   "radius": "0px",
+   "border": "0px rgb(228, 231, 236)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(52, 64, 84)",
+   "font": "14px/20px 500"
+  },
+  "gapLabelToField": 6,
+  "gapFieldToNextField": -44,
+  "primary": {
+   "text": "Save Changes",
+   "w": 120,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "color": "rgb(255, 255, 255)",
+   "font": "14px/20px 500"
+  },
+  "error": null
+ },
+ {
+  "ref": "tailadmin",
+  "url": "https://demo.tailadmin.com/profile",
+  "width": 390,
+  "field": {
+   "text": "Musharof",
+   "w": 302,
+   "h": 44,
+   "radius": "8px",
+   "border": "1px rgb(208, 213, 221)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(29, 41, 57)",
+   "font": "14px/20px 400"
+  },
+  "label": {
+   "text": "First Name",
+   "w": 302,
+   "h": 20,
+   "radius": "0px",
+   "border": "0px rgb(228, 231, 236)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(52, 64, 84)",
+   "font": "14px/20px 500"
+  },
+  "gapLabelToField": 6,
+  "gapFieldToNextField": 46,
+  "primary": {
+   "text": "Save Changes",
+   "w": 144,
+   "h": 40,
+   "radius": "8px",
+   "border": "0px rgb(228, 231, 236)",
+   "bg": "rgb(70, 95, 255)",
+   "color": "rgb(255, 255, 255)",
+   "font": "14px/20px 500"
+  },
+  "error": null
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/settings.html",
+  "width": 1440,
+  "field": null,
+  "label": null,
+  "gapLabelToField": null,
+  "gapFieldToNextField": null,
+  "primary": {
+   "text": "Save Changes",
+   "w": 127,
+   "h": 38,
+   "radius": "8px",
+   "border": "1px rgb(59, 76, 184)",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "font": "12.25px/18.375px 500"
+  },
+  "error": {
+   "text": "*Note :",
+   "w": 40,
+   "h": 17,
+   "radius": "0px",
+   "border": "0px rgb(255, 103, 70)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(255, 103, 70)",
+   "font": "12px/18px 400"
+  }
+ },
+ {
+  "ref": "omah",
+  "url": "https://omah.dexignzone.com/xhtml/account/settings.html",
+  "width": 390,
+  "field": null,
+  "label": null,
+  "gapLabelToField": null,
+  "gapFieldToNextField": null,
+  "primary": {
+   "text": "Save Changes",
+   "w": 127,
+   "h": 38,
+   "radius": "8px",
+   "border": "1px rgb(59, 76, 184)",
+   "bg": "rgb(59, 76, 184)",
+   "color": "rgb(255, 255, 255)",
+   "font": "12.25px/18.375px 500"
+  },
+  "error": {
+   "text": "*Note :",
+   "w": 40,
+   "h": 17,
+   "radius": "0px",
+   "border": "0px rgb(255, 103, 70)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(255, 103, 70)",
+   "font": "12px/18px 400"
+  }
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/agents-add.html",
+  "width": 1440,
+  "field": {
+   "text": "",
+   "w": 374,
+   "h": 39,
+   "radius": "5.6px",
+   "border": "1px rgb(234, 237, 241)",
+   "bg": "rgb(255, 255, 255)",
+   "color": "rgb(93, 113, 134)",
+   "font": "14px/21px 400"
+  },
+  "label": {
+   "text": "Agent Name",
+   "w": 80,
+   "h": 21,
+   "radius": "0px",
+   "border": "0px rgb(93, 113, 134)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "font": "14px/21px 500"
+  },
+  "gapLabelToField": 6,
+  "gapFieldToNextField": -39,
+  "primary": {
+   "text": "Create Agent",
+   "w": 126,
+   "h": 39,
+   "radius": "5.6px",
+   "border": "1px rgb(96, 74, 227)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(96, 74, 227)",
+   "font": "14px/21px 400"
+  },
+  "error": {
+   "text": "",
+   "w": 18,
+   "h": 18,
+   "radius": "0px",
+   "border": "0px rgb(233, 103, 103)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(233, 103, 103)",
+   "font": "18px/27px 400"
+  }
+ },
+ {
+  "ref": "lahomes",
+  "url": "https://techzaa.in/lahomes/admin/agents-add.html",
+  "width": 390,
+  "field": {
+   "text": "",
+   "w": 310,
+   "h": 39,
+   "radius": "5.6px",
+   "border": "1px rgb(234, 237, 241)",
+   "bg": "rgb(255, 255, 255)",
+   "color": "rgb(93, 113, 134)",
+   "font": "14px/21px 400"
+  },
+  "label": {
+   "text": "Agent Name",
+   "w": 80,
+   "h": 21,
+   "radius": "0px",
+   "border": "0px rgb(93, 113, 134)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(93, 113, 134)",
+   "font": "14px/21px 500"
+  },
+  "gapLabelToField": 6,
+  "gapFieldToNextField": 47,
+  "primary": {
+   "text": "Create Agent",
+   "w": 350,
+   "h": 39,
+   "radius": "5.6px",
+   "border": "1px rgb(96, 74, 227)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(96, 74, 227)",
+   "font": "14px/21px 400"
+  },
+  "error": {
+   "text": "",
+   "w": 18,
+   "h": 18,
+   "radius": "0px",
+   "border": "0px rgb(233, 103, 103)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(233, 103, 103)",
+   "font": "18px/27px 400"
+  }
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/form-validation",
+  "width": 1440,
+  "field": null,
+  "label": null,
+  "gapLabelToField": null,
+  "gapFieldToNextField": null,
+  "primary": {
+   "text": "Submit",
+   "w": 94,
+   "h": 49,
+   "radius": "7px",
+   "border": "1px rgb(245, 88, 77)",
+   "bg": "rgb(245, 88, 77)",
+   "color": "rgb(255, 255, 255)",
+   "font": "14px/21px 400"
+  },
+  "error": {
+   "text": "*",
+   "w": 6,
+   "h": 17,
+   "radius": "0px",
+   "border": "0px rgb(247, 43, 80)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(247, 43, 80)",
+   "font": "12.25px/18.375px 400"
+  }
+ },
+ {
+  "ref": "kamr",
+  "url": "https://kamr-vite.vercel.app/form-validation",
+  "width": 390,
+  "field": null,
+  "label": null,
+  "gapLabelToField": null,
+  "gapFieldToNextField": null,
+  "primary": {
+   "text": "Submit",
+   "w": 70,
+   "h": 37,
+   "radius": "7px",
+   "border": "1px rgb(245, 88, 77)",
+   "bg": "rgb(245, 88, 77)",
+   "color": "rgb(255, 255, 255)",
+   "font": "11.382px/17.073px 400"
+  },
+  "error": {
+   "text": "*",
+   "w": 6,
+   "h": 17,
+   "radius": "0px",
+   "border": "0px rgb(247, 43, 80)",
+   "bg": "rgba(0, 0, 0, 0)",
+   "color": "rgb(247, 43, 80)",
+   "font": "12.25px/18.375px 400"
+  }
+ }
+]

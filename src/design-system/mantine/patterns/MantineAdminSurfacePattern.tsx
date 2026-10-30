@@ -1,9 +1,9 @@
 'use client'
 
-import { Stack, Group, Flex, TextInput, Button, Badge, Text, ActionIcon, useMantineTheme } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { Stack, Group, Flex, Box, TextInput, Button, Text, ActionIcon } from '@mantine/core'
 import { MantineDataTableToCards, type TableColumn, type TableRow, type CardConfig } from './MantineDataTableToCards'
 import { MantinePagination } from './MantinePagination'
+import { MantineBadge } from './MantineBadge'
 
 export interface AdminFilter {
   key: string
@@ -64,18 +64,15 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
   rowClassName,
   card,
 }: MantineAdminSurfacePatternProps<R>) {
-  const theme = useMantineTheme()
-  const isMobile = useMediaQuery(`(max-width: ${theme.other.mobileGate})`)
-
   return (
     <Stack gap="md">
       <Group justify="space-between" align="center" gap="xs">
         <Text fw={700} size="lg">
           {title}
         </Text>
-        <Badge color="gray" variant="light" size="lg">
+        <MantineBadge variant="tone" tone="neutral" size="lg">
           {rows.length}
-        </Badge>
+        </MantineBadge>
       </Group>
 
       {/* Task 785 (sites 1-2): the `styles={{root:{'@media...'}}}` blocks below never emitted CSS
@@ -117,15 +114,16 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
       <MantineDataTableToCards columns={columns} rows={rows} rowClassName={rowClassName} card={card} />
 
       {totalPages > 1 && (
-        <Group justify={isMobile ? 'center' : 'flex-end'}>
-          <MantinePagination
-            total={totalPages}
-            value={currentPage}
-            onChange={onPageChange}
-            color="brand"
-            size={isMobile ? 'sm' : 'md'}
-          />
-        </Group>
+        // Task 923 R39 (d): centred with the small controls below 640px, right-aligned with the medium ones from 640px. Both render and
+        // Mantine's visibility props choose; no viewport hook (the record-list family allows none).
+        <Flex justify={{ base: 'center', sm: 'flex-end' }}>
+          <Box hiddenFrom="sm">
+            <MantinePagination total={totalPages} value={currentPage} onChange={onPageChange} color="brand" size="sm" />
+          </Box>
+          <Box visibleFrom="sm">
+            <MantinePagination total={totalPages} value={currentPage} onChange={onPageChange} color="brand" size="md" />
+          </Box>
+        </Flex>
       )}
     </Stack>
   )

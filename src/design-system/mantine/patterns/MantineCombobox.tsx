@@ -26,6 +26,8 @@ export interface MantineComboboxOption {
   description?: string
   /** Extra text matched against on filter — never displayed. */
   searchText?: string
+  /** Node shown in the row before the description (for example a status badge). Not part of the trigger text. */
+  adornment?: ReactNode
 }
 
 export interface MantineComboboxProps {
@@ -51,7 +53,7 @@ export interface MantineComboboxProps {
   clearLabel?: string
   /** Localized "no results" text — the primitive does not own an i18n hook (matches every other Mantine pattern in this codebase); the consumer supplies it. */
   noResultsLabel: string
-  /** `aria-label` for `variant="button"` when the trigger has no visible text (icon-only is NOT expected for this primitive — pass a label regardless). */
+  /** `aria-label` of the trigger input (both variants); for `variant="button"` when the trigger has no visible text (icon-only is NOT expected for this primitive — pass a label regardless). */
   triggerAriaLabel?: string
   /** Optional title shown at the top of the mobile bottom sheet. */
   sheetTitle?: ReactNode
@@ -256,14 +258,17 @@ export function MantineCombobox({
 
   const renderDesktopOption = (opt: MantineComboboxOption) => (
     <Combobox.Option value={opt.value} key={opt.value} active={value === opt.value}>
-      <Group justify="space-between" wrap="nowrap" gap="sm">
+      {/* `wrap="wrap"` and the name's `min-content` width: the right-hand group drops under the name when the row is too narrow, and the name always has
+          the width of its longest word, never 0 (GR-3i; Task 923 R33, Story 258). */}
+      <Group justify="space-between" wrap="wrap" gap="sm">
         {/* Plain span (not <Text>) — inherits font-size/color from the themed `.mantine-Combobox-option`
             element (theme.ts Combobox.styles.option, §6l 14px/gray-7), matching the established
             Menu.Item pattern (MantineDropdownMenu renders `{item.label}` bare, no Text wrapper). */}
-        <span style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 0 }}>
+        <span style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 'min-content', flex: '1 1 auto' }}>
           {opt.dropdownLabel ?? opt.label}
         </span>
         <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
+          {opt.adornment}
           {opt.description && (
             <Text size="xs" c="gray.5">
               {opt.description}
@@ -328,6 +333,7 @@ export function MantineCombobox({
                 onInputChange?.(raw)
               }}
               inputMode={inputMode}
+              aria-label={triggerAriaLabel}
               onClick={() => {
                 if (disabled) return
                 if (isMobile) openDrawer()
@@ -467,16 +473,17 @@ export function MantineCombobox({
                   py="sm"
                   px="md"
                 >
-                  <Group justify="space-between" align="center" wrap="nowrap" gap="sm">
+                  <Group justify="space-between" align="center" wrap="wrap" gap="sm">
                     <Text
                       size="sm"
                       c={value === opt.value ? 'brand.7' : 'gray.7'}
                       fw={value === opt.value ? 500 : 400}
-                      style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 0 }}
+                      style={{ wordBreak: 'break-word', whiteSpace: 'normal', minWidth: 'min-content', flex: '1 1 auto' }}
                     >
                       {opt.dropdownLabel ?? opt.label}
                     </Text>
                     <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
+                      {opt.adornment}
                       {opt.description && (
                         <Text size="xs" c="gray.5">
                           {opt.description}

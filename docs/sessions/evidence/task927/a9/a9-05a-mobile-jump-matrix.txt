@@ -1,0 +1,255 @@
+# a9-05 part 1: rv8-07-mobile-jump.mjs on the fresh build, served on localhost, default mobile emulation (no SB_URL, no FIX_HOST)
+platform: win32 10.0.26300
+node: v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+command: node docs/sessions/evidence/task927/review-8/rv8-07-mobile-jump.mjs <state> <width> <locale>
+started: 2026-10-25T21:11:38.301Z
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 en: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 en mobile: 266 frames
+t=4597 top=800 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4627 top=775.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4644 top=724.3 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4661 top=653.7 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4677 top=579.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4694 top=514.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4710 top=461.3 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4727 top=419.5 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4744 top=386.5 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4760 top=361 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4777 top=341.3 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4793 top=326.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4810 top=316.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4826 top=309.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4844 top=305.2 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4861 top=304 h=496 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=4896 top=304 h=496 loader=false btn=229+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=5128 top=304 h=496 loader=false btn=229+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=5160 top=304 h=496 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 uk: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 320 uk mobile: 420 frames
+t=1896 top=800 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1925 top=775 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1942 top=724.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1958 top=653.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1974 top=579.3 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1991 top=514.2 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2008 top=461.5 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2025 top=419.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2042 top=386.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2058 top=360.9 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2075 top=341.3 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2091 top=326.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2108 top=316.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2125 top=309.1 h=496 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2142 top=305.2 h=496 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2161 top=304 h=496 loader=false btn=229+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2359 top=304 h=496 loader=false btn=229+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2391 top=304 h=496 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 en mobile: 420 frames
+t=1909 top=800 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1941 top=776.2 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1957 top=727.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1975 top=659.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1992 top=588.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2008 top=526.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2024 top=475.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2042 top=435.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2058 top=404 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2075 top=379.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2091 top=360.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2108 top=346.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2124 top=336.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2142 top=329.9 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2159 top=326.2 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2175 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2195 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2425 top=325 h=475 loader=false btn=208+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2458 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 uk: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 390 uk mobile: 420 frames
+t=1831 top=800 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1859 top=775.2 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1875 top=724.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1894 top=653.5 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1910 top=579.2 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1926 top=514.5 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1942 top=461.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1959 top=419.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1976 top=386.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1992 top=360.9 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2009 top=341.4 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2025 top=326.6 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2043 top=316.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2059 top=309.1 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2076 top=305.2 h=496 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2093 top=304 h=496 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2128 top=304 h=496 loader=false btn=229+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2360 top=304 h=496 loader=false btn=229+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2392 top=304 h=496 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 en: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 en mobile: 421 frames
+t=1857 top=800 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1889 top=776.2 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1907 top=727.9 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1923 top=659.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1941 top=588.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1956 top=526.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1973 top=475.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1989 top=435.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2006 top=404 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2023 top=379.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2040 top=360.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2057 top=346.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2072 top=336.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2096 top=329.9 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2106 top=326.2 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2123 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2142 top=325 h=475 loader=false btn=208+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2373 top=325 h=475 loader=false btn=208+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2406 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 uk: ok
+@mantine-primitives-modal--delete-confirm-password~delete-google-ready 639 uk mobile: 420 frames
+t=1843 top=800 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1873 top=776.1 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1890 top=727.4 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1907 top=659.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1923 top=588.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1940 top=526.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1957 top=475.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1974 top=435.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=1990 top=404.1 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2008 top=379.5 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2024 top=360.8 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2040 top=346.7 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2057 top=336.6 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2074 top=329.9 h=475 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2091 top=326.2 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2106 top=325 h=475 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT
+t=2127 top=325 h=475 loader=false btn=208+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT
+t=2357 top=325 h=475 loader=false btn=208+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT
+t=2390 top=325 h=475 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT
+
+## patterns-mantine-authsheet--welcome-back 320 en: ok
+@patterns-mantine-authsheet--welcome-back 320 en mobile: 413 frames
+t=357 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=359 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=610 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=645 top=366.8 h=433.2 loader=false btn=233.2+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=876 top=366.8 h=433.2 loader=false btn=233.2+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=909 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--welcome-back 320 uk: ok
+@patterns-mantine-authsheet--welcome-back 320 uk mobile: 414 frames
+t=366 top=346.8 h=453.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=369 top=346.8 h=453.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=618 top=346.8 h=453.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=652 top=346.8 h=453.2 loader=false btn=233.2+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=884 top=346.8 h=453.2 loader=false btn=233.2+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=916 top=346.8 h=453.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--welcome-back 390 en: ok
+@patterns-mantine-authsheet--welcome-back 390 en mobile: 414 frames
+t=366 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=368 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=620 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=656 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=887 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=920 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--welcome-back 390 uk: ok
+@patterns-mantine-authsheet--welcome-back 390 uk mobile: 414 frames
+t=361 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=364 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=585 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=621 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=851 top=366.8 h=433.2 loader=false btn=233.2+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=885 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--welcome-back 639 en: ok
+@patterns-mantine-authsheet--welcome-back 639 en mobile: 414 frames
+t=363 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=366 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=645 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=681 top=366.8 h=433.2 loader=false btn=233.2+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=896 top=366.8 h=433.2 loader=false btn=233.2+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=928 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--welcome-back 639 uk: ok
+@patterns-mantine-authsheet--welcome-back 639 uk mobile: 413 frames
+t=377 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=381 top=366.8 h=433.2 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=622 top=366.8 h=433.2 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BUTTON:button
+t=658 top=366.8 h=433.2 loader=false btn=233.2+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=BUTTON:button
+t=922 top=366.8 h=433.2 loader=false btn=233.2+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=BUTTON:button
+t=956 top=366.8 h=433.2 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=BUTTON:button
+
+## patterns-mantine-authsheet--login 320 en: FAIL | h changes after the button appears: 524.1 -> 614.1
+@patterns-mantine-authsheet--login 320 en mobile: 414 frames
+t=363 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=366 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=624 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=659 top=275.9 h=524.1 loader=false btn=384.1+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=841 top=275.9 h=524.1 loader=false btn=384.1+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=874 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=2010 top=185.9 h=614.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+## patterns-mantine-authsheet--login 320 uk: FAIL | h changes after the button appears: 524.1 -> 634.1
+@patterns-mantine-authsheet--login 320 uk mobile: 414 frames
+t=442 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=445 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=667 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=704 top=275.9 h=524.1 loader=false btn=384.1+40x288 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=1001 top=275.9 h=524.1 loader=false btn=384.1+40x288 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=1034 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=2036 top=165.9 h=634.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+## patterns-mantine-authsheet--login 390 en: ok | EXCEPTION (Review 9 F9, captcha alert): h 524.1 -> 594.1 at t=2118 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+@patterns-mantine-authsheet--login 390 en mobile: 413 frames
+t=365 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=367 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=584 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=618 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=850 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=883 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=2118 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+## patterns-mantine-authsheet--login 390 uk: FAIL | h changes after the button appears: 524.1 -> 614.1
+@patterns-mantine-authsheet--login 390 uk mobile: 413 frames
+t=361 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=364 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=610 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=645 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=876 top=275.9 h=524.1 loader=false btn=384.1+40x358 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=909 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=1911 top=185.9 h=614.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+## patterns-mantine-authsheet--login 639 en: ok | EXCEPTION (Review 9 F9, captcha alert): h 524.1 -> 594.1 at t=1913 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+@patterns-mantine-authsheet--login 639 en mobile: 414 frames
+t=366 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=369 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=596 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=632 top=275.9 h=524.1 loader=false btn=384.1+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=862 top=275.9 h=524.1 loader=false btn=384.1+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=895 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=1913 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+## patterns-mantine-authsheet--login 639 uk: ok | EXCEPTION (Review 9 F9, captcha alert): h 524.1 -> 594.1 at t=1983 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+@patterns-mantine-authsheet--login 639 uk mobile: 413 frames
+t=372 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=BODY
+t=375 top=275.9 h=524.1 loader=true btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=600 top=275.9 h=524.1 loader=false btn=- iframes=0 btns=0 hostKids=-1/ vv=800 sy=0 focus=INPUT:email
+t=634 top=275.9 h=524.1 loader=false btn=384.1+40x400 iframes=1 btns=1 hostKids=1/40 vv=800 sy=0 focus=INPUT:email
+t=900 top=275.9 h=524.1 loader=false btn=384.1+40x400 iframes=1 btns=1 hostKids=1/82 vv=800 sy=0 focus=INPUT:email
+t=932 top=275.9 h=524.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+t=1983 top=205.9 h=594.1 loader=false btn=- iframes=1 btns=0 hostKids=1/44 vv=800 sy=0 focus=INPUT:email
+
+runs 18; runs with a problem: 3; reported exceptions (Login captcha alert, F9): 3
+finished: 2026-10-25T21:14:10.545Z
+exit code: 1

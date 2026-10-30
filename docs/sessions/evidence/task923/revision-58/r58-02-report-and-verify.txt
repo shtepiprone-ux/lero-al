@@ -1,0 +1,67 @@
+Task 923 Revision 58, R176 (a)-(b) - the D8_D9 report run, the stage, and the three verify runs.
+Platform: Windows 11 Pro 10.0.26300.0 | PowerShell 5.1.26100.9711 | Node v22.22.3
+cwd: C:\Claude_Code_Projects\lero-al
+Environment of every command below (set inside each PowerShell process, no value printed or saved):
+  NEXT_PUBLIC_SUPABASE_URL read by name from .env.local; SECURITY_TEST_PROJECT_REF = first host label of that URL (20 characters); SECURITY_TEST_TARGET=development.
+No cli.mjs command wrote a file. Output and exit codes were copied here with the editor.
+
+== 1. R176 (a): the D8_D9 report
+Command: node docs/sessions/evidence/task923/security/d8-d9-report.mjs
+Started 2026-10-29T18:54:39+01:00   Ended 2026-10-29T18:59:38+01:00
+Output:
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+report written: docs/sessions/evidence/task923/security/d8-d9-report.json (231 cases, 67 with sensitivity)
+EXIT=0
+
+== 2. R176 (b): the stage
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json line 3: "stage": "planned" -> "stage": "implemented" (editor, one line). The owner-fixes and Task 927 contracts were not edited.
+
+== 3. verify on the D8_D9 contract
+Command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+Started 2026-10-29T19:00:02+01:00   Ended 2026-10-29T19:05:24+01:00
+Output:
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/external.json
+EXIT=0
+
+== 4. verify on the owner-fixes contract, FIRST run (failed)
+Command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+Started 2026-10-29T19:05:33+01:00   Ended 2026-10-29T19:05:49+01:00
+Output:
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+BLOCKED: Mapped security tests failed, timed out or produced no JSON result
+EXIT=1
+Cause, read from that run's external.json (unit.json: 1142 passed, 0 failed): two cases of src/__tests__/security/serverActionManifest.integration.test.ts failed,
+  [SEC-S01-INT-ALLOW] "the public submitListingInquiry action is in the manifest, so the check reads a real manifest: expected 0 to be greater than or equal to 1"
+  [SEC-S28-INT-ALLOW] "changeListingStatusAction (the use server bridge that calls the gateway) is in the manifest: expected 0 to be greater than or equal to 1"
+The test reads .next/server/server-reference-manifest.json. At that moment it was dated 2026-10-29 18:01 (before this session), had 21 node entries and none of those two actions: a development compile, not a production build.
+No file of this revision is read by those two cases. The fix is a production build, which R176 (c) requires anyway: see section 6.
+
+== 5. dev-server check (the two read-only commands of review-50/rv50-06-dev-server.txt)
+Started 2026-10-29T19:06:27+01:00
+node processes whose command line names next or storybook: 0
+listening sockets on 3000-3003 or 6006: 0
+Both 0: continued. (The trailing "EXIT=" printed empty in that call; the commands are read-only.)
+
+== 6. npm run build (the same run is r58-03 run 5; it came after the check above)
+Started 2026-10-29T19:06:33+01:00   Ended 2026-10-29T19:08:15+01:00   EXIT=0   Full output in r58-03.
+
+== 7. verify on the owner-fixes contract, SECOND run, after the build
+Command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+Started 2026-10-29T19:08:27+01:00   Ended 2026-10-29T19:08:46+01:00
+Output:
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+EXIT=0
+
+== 8. verify on the Task 927 contract
+Command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+Started 2026-10-29T19:08:46+01:00   Ended 2026-10-29T19:09:04+01:00
+Output:
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/5549fbfe47cf7692/external.json
+EXIT=0
+
+Result: the D8_D9 report is rewritten (231 cases, 67 with sensitivity); verify exits 0 on all three contracts (the owner-fixes one on its second run).

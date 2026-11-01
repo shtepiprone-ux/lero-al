@@ -1,0 +1,1 @@
+﻿{"baseRefName":"main","headRefName":"task/rules-pr-policy","headRefOid":"23206fb7fd4c30b6778a6169a811e1d61699c0ba","mergeStateStatus":"BLOCKED","number":11,"state":"OPEN"}

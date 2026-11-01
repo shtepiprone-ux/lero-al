@@ -1,0 +1,34 @@
+﻿commit 23206fb7fd4c30b6778a6169a811e1d61699c0ba
+governance: PR-only main, push-handoff guard and CI status tooling
+
+ .claude/hooks/block-mutating-git.ps1               |  17 +-
+ .claude/hooks/orchestrator-response-gate.ps1       |   6 +
+ .claude/rules/README.md                            |   3 +
+ .claude/rules/create/03-publication.md             |   4 +
+ .claude/rules/review/03-decision-closure.md        |   8 +-
+ .claude/rules/shared/git-publication.md            |  67 ++++++
+ .claude/rules/shared/role-boundaries.md            |   2 +
+ .claude/rules/shared/workflow-ci.md                |  65 ++++++
+ .claude/rules/shared/workflow-contract.md          |  62 ++++++
+ .claude/rules/shared/workflow-evidence.md          |  35 ++++
+ .claude/rules/shared/workflow-gates.md             | 158 +-------------
+ .claude/settings.json                              |  13 ++
+ .claude/skills/review-task/SKILL.md                |   2 +-
+ CLAUDE.md                                          |   3 +
+ docs/orchestrator-procedures.md                    |  14 +-
+ docs/orchestrator-role.md                          |   9 +-
+ docs/rules/golden/gr-6-owner-git-handoff.md        |   8 +-
+ scripts/workflow-gates/check-workflow.mjs          |  23 ++-
+ scripts/workflow-gates/ci-status.mjs               |  57 +++++
+ scripts/workflow-gates/contract.mjs                |  13 +-
+ scripts/workflow-gates/diff-hook.selftest.mjs      |  14 ++
+ scripts/workflow-gates/git-policy.selftest.mjs     |  23 +++
+ scripts/workflow-gates/hooks.selftest.mjs          |  14 ++
+ scripts/workflow-gates/main.ruleset.json           |  25 ++-
+ scripts/workflow-gates/prepush.mjs                 | 229 +++++++++++++++++++++
+ .../workflow-gates/publication-safety.selftest.mjs | 190 +++++++++++++++++
+ scripts/workflow-gates/publication.json            |  16 +-
+ scripts/workflow-gates/push-safety.mjs             | 185 +++++++++++++++++
+ scripts/workflow-gates/security-hook.mjs           |   4 +-
+ scripts/workflow-gates/workflow.selftest.mjs       |  14 +-
+ 30 files changed, 1099 insertions(+), 184 deletions(-)

@@ -1,0 +1,851 @@
+{
+  "timestamp": "2026-11-01T11-15-43-115Z",
+  "shard": "3/6",
+  "complete": false,
+  "expected": 720,
+  "scanned": 711,
+  "errors": [
+    {
+      "storyId": "mantine-primitives-favoritesshell--populated",
+      "viewport": "mobile-320",
+      "locale": "en",
+      "reason": "Story render/play failed"
+    },
+    {
+      "storyId": "mantine-primitives-favoritesshell--populated",
+      "viewport": "mobile-375",
+      "locale": "en",
+      "reason": "Story render/play failed"
+    },
+    {
+      "storyId": "mantine-primitives-favoritesshell--populated",
+      "viewport": "desktop-1280",
+      "locale": "en",
+      "reason": "Story render/play failed"
+    }
+  ],
+  "storyIds": [
+    "mantine-primitives-appimage--default",
+    "mantine-primitives-card--default",
+    "mantine-primitives-collectionssection--populated",
+    "mantine-primitives-drawer--default",
+    "mantine-primitives-favoritesshell--populated",
+    "mantine-primitives-gallerydesktopnavigation--default",
+    "mantine-primitives-herosearch--container",
+    "mantine-primitives-lightboxview--swipe-track-mode",
+    "mantine-primitives-listingstatusbanner--default",
+    "mantine-primitives-modal--delete-confirm",
+    "mantine-primitives-navigationmenu--default",
+    "mantine-primitives-pagination--in-centered-group",
+    "mantine-primitives-progress--default",
+    "mantine-primitives-rangedatepicker--single-date",
+    "mantine-primitives-responsivebottomsheet--default",
+    "mantine-primitives-select--default",
+    "mantine-primitives-skeleton--default",
+    "mantine-primitives-table--default",
+    "mantine-primitives-textinput--default",
+    "patterns-mantine-activefilterchips--default",
+    "patterns-mantine-admindashboardrecentlistings--default",
+    "patterns-mantine-admindashboardview--adm-02-error",
+    "patterns-mantine-admindashboardview--trends-error",
+    "patterns-mantine-admininquiriesview--long-subject",
+    "patterns-mantine-adminlistingsview--hidden-eligible",
+    "patterns-mantine-adminpageframe--form",
+    "patterns-mantine-adminpageheader--default",
+    "patterns-mantine-adminpagesview--empty",
+    "patterns-mantine-adminpermissionsview--saving",
+    "patterns-mantine-adminsidebar--content-active",
+    "patterns-mantine-adminsupportview--unassigned-landing",
+    "patterns-mantine-admintable--wrapped-title-column",
+    "patterns-mantine-adminuseravatarfieldview--with-image",
+    "patterns-mantine-adminuserprofiledialogsview--delete",
+    "patterns-mantine-adminuserprofileview--edit-blocked",
+    "patterns-mantine-adminuserprofileview--view-location-request",
+    "patterns-mantine-adminuserstable--paginated",
+    "patterns-mantine-agentstatisticsview--agt-10-filtered-empty",
+    "patterns-mantine-authformpattern--auth-card",
+    "patterns-mantine-authsheet--register",
+    "patterns-mantine-avatarcropmodal--saving",
+    "patterns-mantine-cabinetemailchangesectionview--ready-to-submit",
+    "patterns-mantine-cabinetpasswordsectionview--empty",
+    "patterns-mantine-cabinetpasswordsectionview--submitting",
+    "patterns-mantine-cmspageview--title-only",
+    "patterns-mantine-currencydetaildialogview--default",
+    "patterns-mantine-dashboardbarchart--default",
+    "patterns-mantine-dashboardcard--default",
+    "patterns-mantine-dashboardchartstateframe--empty",
+    "patterns-mantine-dashboarddonut--error",
+    "patterns-mantine-dashboardheader--default",
+    "patterns-mantine-dashboardlinechart--error",
+    "patterns-mantine-dashboardperiodcontrol--default",
+    "patterns-mantine-dashboardradialprogress--empty",
+    "patterns-mantine-dashboardsparkline--all-zero",
+    "patterns-mantine-dashboardstatcard--error",
+    "patterns-mantine-dashboardstatrows--loading",
+    "patterns-mantine-detaillist--default",
+    "patterns-mantine-dialogsections--default",
+    "patterns-mantine-googlesigninslot--failed",
+    "patterns-mantine-googlewelcomeback--initials",
+    "patterns-mantine-homepagelistinggrids--loading",
+    "patterns-mantine-listingaccessrestrictedview--guest",
+    "patterns-mantine-listingcardtrack--grid-single-item",
+    "patterns-mantine-listingdetailpattern--default",
+    "patterns-mantine-listingdetailview--staff-preview-unpublished",
+    "patterns-mantine-listingpreviewdialogview--delete-confirm",
+    "patterns-mantine-listingsfilterbar--default",
+    "patterns-mantine-listingsshellview--closed-empty",
+    "patterns-mantine-listingssortbar--list-view-selected",
+    "patterns-mantine-listingsstatustabs--default",
+    "patterns-mantine-notificationpattern--default",
+    "patterns-mantine-pageeditordialogview--saving",
+    "patterns-mantine-premiumdialogview--premium-active",
+    "patterns-mantine-reportdetaildialogview--saving",
+    "patterns-mantine-resetpasswordview--form-partial",
+    "patterns-mantine-richtexteditor--image-uploading",
+    "patterns-mantine-statuschangeselect--default",
+    "patterns-mantine-ticketdetaildialogview--with-timeline",
+    "patterns-mantine-userpickerfieldview--selected"
+  ],
+  "mode": "full",
+  "mantineOnly": true,
+  "storiesScanned": 80,
+  "storiesExcluded": 0,
+  "nonMantineExcluded": 111,
+  "localesChecked": [
+    "sq",
+    "uk",
+    "it"
+  ],
+  "leakCount": 104,
+  "leaksBlocking": false,
+  "leaks": [
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Vacation homes"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "City apartments"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Investment properties"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Vacation homes"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "City apartments"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Investment properties"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Vacation homes"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "City apartments"
+    },
+    {
+      "storyId": "mantine-primitives-collectionssection--populated",
+      "storyLabel": "Mantine/Primitives/CollectionsSection/Populated",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Investment properties"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi-Berisha Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Invoice for the October promotion package"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Fatmir Gashi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi-Berisha Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Invoice for the October promotion package"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Fatmir Gashi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi-Berisha Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Invoice for the October promotion package"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Fatmir Gashi"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-admininquiriesview--long-subject",
+      "storyLabel": "Patterns/Mantine/AdminInquiriesView/Long Subject",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "storyLabel": "Patterns/Mantine/AdminListingsView/Hidden Eligible",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminlistingsview--hidden-eligible",
+      "storyLabel": "Patterns/Mantine/AdminListingsView/Hidden Eligible",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpageframe--form",
+      "storyLabel": "Patterns/Mantine/AdminPageFrame/Form",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpageframe--form",
+      "storyLabel": "Patterns/Mantine/AdminPageFrame/Form",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpagesview--empty",
+      "storyLabel": "Patterns/Mantine/AdminPagesView/Empty",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpagesview--empty",
+      "storyLabel": "Patterns/Mantine/AdminPagesView/Empty",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Administrator"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Jun 17, 2026"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Admin User"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Jun 18, 2026"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Jun 18, 2026, 10:00 AM"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Admin User"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Admin User"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminpermissionsview--saving",
+      "storyLabel": "Patterns/Mantine/AdminPermissionsView/Saving",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminsupportview--unassigned-landing",
+      "storyLabel": "Patterns/Mantine/AdminSupportView/Unassigned Landing",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Driton Berisha"
+    },
+    {
+      "storyId": "patterns-mantine-adminsupportview--unassigned-landing",
+      "storyLabel": "Patterns/Mantine/AdminSupportView/Unassigned Landing",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Driton Berisha"
+    },
+    {
+      "storyId": "patterns-mantine-adminsupportview--unassigned-landing",
+      "storyLabel": "Patterns/Mantine/AdminSupportView/Unassigned Landing",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Driton Berisha"
+    },
+    {
+      "storyId": "patterns-mantine-adminsupportview--unassigned-landing",
+      "storyLabel": "Patterns/Mantine/AdminSupportView/Unassigned Landing",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminsupportview--unassigned-landing",
+      "storyLabel": "Patterns/Mantine/AdminSupportView/Unassigned Landing",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserprofileview--edit-blocked",
+      "storyLabel": "Patterns/Mantine/AdminUserProfileView/Edit Blocked",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserprofileview--edit-blocked",
+      "storyLabel": "Patterns/Mantine/AdminUserProfileView/Edit Blocked",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserprofileview--view-location-request",
+      "storyLabel": "Patterns/Mantine/AdminUserProfileView/View Location Request",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserprofileview--view-location-request",
+      "storyLabel": "Patterns/Mantine/AdminUserProfileView/View Location Request",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Moderator"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Administrator"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Tirana Real Estate Group"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Online"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Tirana Real Estate Group"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Tirana Real Estate Group"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Online"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "sq",
+      "viewport": "desktop-1280",
+      "token": "Tirana Real Estate Group · #101"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "uk",
+      "viewport": "desktop-1280",
+      "token": "Tirana Real Estate Group · #101"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Footer"
+    },
+    {
+      "storyId": "patterns-mantine-adminuserstable--paginated",
+      "storyLabel": "Patterns/Mantine/AdminUsersTable/Paginated",
+      "locale": "it",
+      "viewport": "desktop-1280",
+      "token": "Tirana Real Estate Group · #101"
+    },
+    {
+      "storyId": "patterns-mantine-googlewelcomeback--initials",
+      "storyLabel": "Patterns/Mantine/GoogleWelcomeBack/Initials",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Arta Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-googlewelcomeback--initials",
+      "storyLabel": "Patterns/Mantine/GoogleWelcomeBack/Initials",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Arta Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-listingcardtrack--grid-single-item",
+      "storyLabel": "Patterns/Mantine/ListingCardTrack/Grid Single Item",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Tirana, Albania"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Zoom in"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Zoom out"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "A JavaScript library for interactive maps"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Leaflet"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "OpenStreetMap"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Elira Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Zoom in"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Zoom out"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "A JavaScript library for interactive maps"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Leaflet"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "OpenStreetMap"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Elira Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Zoom in"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Zoom out"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "A JavaScript library for interactive maps"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Leaflet"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "OpenStreetMap"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Elira Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "token": "Close popup"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "token": "Close popup"
+    },
+    {
+      "storyId": "patterns-mantine-listingdetailview--staff-preview-unpublished",
+      "storyLabel": "Patterns/Mantine/ListingDetailView/Staff Preview Unpublished",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "token": "Close popup"
+    },
+    {
+      "storyId": "patterns-mantine-pageeditordialogview--saving",
+      "storyLabel": "Patterns/Mantine/PageEditorDialogView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Slug"
+    },
+    {
+      "storyId": "patterns-mantine-pageeditordialogview--saving",
+      "storyLabel": "Patterns/Mantine/PageEditorDialogView/Saving",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Slug"
+    },
+    {
+      "storyId": "patterns-mantine-pageeditordialogview--saving",
+      "storyLabel": "Patterns/Mantine/PageEditorDialogView/Saving",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Slug"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "The listing shows a price that does not match the real one."
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "The listing shows a price that does not match the real one."
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Blerina Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Agim Krasniqi"
+    },
+    {
+      "storyId": "patterns-mantine-reportdetaildialogview--saving",
+      "storyLabel": "Patterns/Mantine/ReportDetailDialogView/Saving",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "The listing shows a price that does not match the real one."
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Gentiana Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "token": "Po verifikoj fotot me pronarin."
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Gentiana Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "token": "Po verifikoj fotot me pronarin."
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Gentiana Hoxha"
+    },
+    {
+      "storyId": "patterns-mantine-ticketdetaildialogview--with-timeline",
+      "storyLabel": "Patterns/Mantine/TicketDetailDialogView/With Timeline",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "token": "Po verifikoj fotot me pronarin."
+    }
+  ]
+}

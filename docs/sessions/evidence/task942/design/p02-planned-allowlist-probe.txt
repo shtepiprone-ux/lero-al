@@ -1,0 +1,9 @@
+HEAD ad6e1b08e; contact entry line 60, detail-page entry line 56, ROOT line 25
+strict run exit 0:
+   ✅ Listing public-visibility invariant gate PASSED — 0 violations.
+      Anchor VISIBILITY_POLICY_ANCHOR present in src/modules/listings/lib/visibility.ts.
+      Allowlist: 8 entries, 0 stale.
+      Scanned 1129 files.
+--verify-gate exit 0: Self-test: 34 passed, 0 failed | ✅ Gate self-test PASSED — detector is live and precise.
+detector on the literal: {"allowed":0,"other":["5 .eq('status', 'active')"]}
+PLANNED ALLOWLIST PROBE PASSED

@@ -1,0 +1,11 @@
+ad6e1b08e src/modules/listings/actions/contactEvents.ts -> docs/sessions/evidence/task942/design/sources/src__modules__listings__actions__contactEvents.ts.txt (112 lines)
+ad6e1b08e src/app/[locale]/listings/[slug]/page.tsx -> docs/sessions/evidence/task942/design/sources/src__app___locale___listings___slug___page.tsx.txt (331 lines)
+ad6e1b08e src/modules/listings/lib/visibility.ts -> docs/sessions/evidence/task942/design/sources/src__modules__listings__lib__visibility.ts.txt (166 lines)
+ad6e1b08e scripts/workflow-gates/security-hook.mjs -> docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__security-hook.mjs.txt (307 lines)
+ad6e1b08e scripts/workflow-gates/contract.mjs -> docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__contract.mjs.txt (412 lines)
+ad6e1b08e scripts/workflow-gates/publication.mjs -> docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__publication.mjs.txt (87 lines)
+ad6e1b08e scripts/workflow-gates/selftests.mjs -> docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__selftests.mjs.txt (13 lines)
+ad6e1b08e scripts/workflow-gates/pipeline.json -> docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__pipeline.json.txt (355 lines)
+ad6e1b08e package.json -> docs/sessions/evidence/task942/design/sources/package.json.txt (223 lines)
+ad6e1b08e .claude/rules/shared/git-publication.md -> docs/sessions/evidence/task942/design/sources/.claude__rules__shared__git-publication.md.txt (68 lines)
+ad6e1b08e tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md line 3351 -> docs/sessions/evidence/task942/design/sources/task923-kickoff-R66-row.txt

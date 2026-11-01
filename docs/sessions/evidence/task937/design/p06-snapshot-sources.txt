@@ -1,0 +1,6 @@
+ad6e1b08e src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx -> docs/sessions/evidence/task937/design/sources/src__design-system__mantine__patterns__MantineListingGalleryPattern.tsx.txt (175 lines)
+ad6e1b08e src/components/shared/Map.module.css -> docs/sessions/evidence/task937/design/sources/src__components__shared__Map.module.css.txt (40 lines)
+ad6e1b08e src/design-system/mantine/input-chrome.css -> docs/sessions/evidence/task937/design/sources/src__design-system__mantine__input-chrome.css.txt (478 lines)
+ad6e1b08e src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx -> docs/sessions/evidence/task937/design/sources/src__modules__cabinet__components__CabinetEmailChangeSectionView.tsx.txt (123 lines)
+ad6e1b08e scripts/check-listing-visibility.mjs -> docs/sessions/evidence/task937/design/sources/scripts__check-listing-visibility.mjs.txt (459 lines)
+ad6e1b08e docs/sessions/evidence/task927/base/unit-base-failures.txt: 261 lines (hash in p03)

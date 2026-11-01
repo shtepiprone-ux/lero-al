@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "executionStatus": "ready",
+  "kind": "governance",
+  "qaProfile": "Q1",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
+  "taskSha256": "1dc481d48969afa1a10a5744c206ecaf68154868ddc1f9d01639c9fb98fe93c0",
+  "scope": [
+    "scripts/check-listing-visibility.mjs",
+    "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
+    "docs/sessions/evidence/task942/impl/completion-report.md",
+    "docs/sessions/evidence/task942/impl/governance-report.json",
+    "docs/sessions/evidence/task942/impl/base-runs.txt",
+    "docs/sessions/evidence/task942/impl/gate-after.txt",
+    "docs/sessions/evidence/task942/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md"
+  ],
+  "report": "docs/sessions/evidence/task942/impl/governance-report.json",
+  "sensitivity": "docs/sessions/evidence/task942/sensitivity/sensitivity.json",
+  "cases": [
+    {
+      "id": "GOV-942-CI-GATE-ALLOW",
+      "invariant": "The listing-visibility gate passes on the current tree with every allowlist entry matching a real hit",
+      "actor": "CI Governance Check job",
+      "resource": "scripts/check-listing-visibility.mjs strict run",
+      "input": "node scripts/check-listing-visibility.mjs from the repository root",
+      "response": "exit 0 with 0 violations and Allowlist: 8 entries, 0 stale.",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "process",
+      "critical": false,
+      "forbiddenEffects": [
+        "a stale allowlist entry left in place",
+        "the gate passing by an exclusion or a whole-file entry"
+      ],
+      "testFile": "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
+      "testName": "[GOV-942-CI-GATE-ALLOW] The listing-visibility gate passes on the current tree with every allowlist entry matching a real hit"
+    },
+    {
+      "id": "GOV-942-CI-PATH-DENY",
+      "invariant": "An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported",
+      "actor": "Any author of a listings read",
+      "resource": "detectVisibilityViolations and ALLOWLIST",
+      "input": "a from('listings') block ending in .eq('status', 'active') under the contact-event path, another action path and the detail page path",
+      "response": "no violation for the contact-event path; exactly one violation at line 5 for each other path; no detail-page entry and one contact-event entry with the new fingerprint",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an inline public-visibility literal accepted outside its pinned file",
+        "an allowlist entry matching by fingerprint alone"
+      ],
+      "testFile": "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
+      "testName": "[GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported"
+    },
+    {
+      "id": "GOV-942-CI-STALE-ERROR",
+      "invariant": "An allowlist entry that matches no real listings-query hit, or whose source cannot be read, is reported stale",
+      "actor": "CI Governance Check job",
+      "resource": "staleAllowlistEntries",
+      "input": "the current ALLOWLIST plus the old contact-event entry with a repository reader; an entry whose reader returns null; one whose reader throws; one whose fingerprint appears only outside a listings block",
+      "response": "exactly the old entry from the repository run; each of the other three entries returned",
+      "layer": "ci",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an unreadable source treated as a match",
+        "an exception instead of a stale result"
+      ],
+      "testFile": "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
+      "testName": "[GOV-942-CI-STALE-ERROR] An allowlist entry that matches no real listings-query hit, or whose source cannot be read, is reported stale"
+    },
+    {
+      "id": "GOV-942-HOOK-EXECUTOR-DENY",
+      "invariant": "Only Opus may change the listing-visibility gate and its allowlist",
+      "actor": "Sonnet executor session",
+      "resource": "evaluateHook PreToolUse for scripts/check-listing-visibility.mjs",
+      "input": "Edit and Write of scripts/check-listing-visibility.mjs with model sonnet, then with model opus",
+      "response": "POLICY-EDIT AUTHORITY REQUIRED for sonnet; [] for opus",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an executor widening the allowlist",
+        "an Opus edit refused"
+      ],
+      "testFile": "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
+      "testName": "[GOV-942-HOOK-EXECUTOR-DENY] Only Opus may change the listing-visibility gate and its allowlist"
+    }
+  ]
+}

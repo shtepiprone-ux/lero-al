@@ -1,0 +1,11 @@
+file: docs/sessions/evidence/task927/base/unit-base-failures.txt
+non-ASCII census before: {"U+FEFF":1,"U+00E2":126,"U+20AC":79,"U+201D":79,"U+2020":47,"U+2019":47}
+non-ASCII census after:  {"U+FEFF":1,"U+2014":79,"U+2192":47}
+em dash mojibake: before 79, after 0
+arrow mojibake:   before 47, after 0
+signature lead characters left: 0
+lines before 261, after 261
+ASCII text unchanged: yes
+sha256 before 97cd5cc02902895d1b3c8acb3691d316dba42e7e6ab7f2b3e885f81f340e834e
+sha256 after  19b24328f27ad4fce6008910cd93270a22a8a1f80e684bf4d0c405a95c18b9bb
+MOJIBAKE REPAIR PROBE PASSED

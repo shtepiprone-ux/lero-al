@@ -1,0 +1,2 @@
+Task 942 design (Opus, 2026-11-01): does the detail page filter by expiry? Command: grep -c -E "expires_at|applyPublicVisibility" docs/sessions/evidence/task942/design/sources/src__app___locale___listings___slug___page.tsx.txt
+count: 0

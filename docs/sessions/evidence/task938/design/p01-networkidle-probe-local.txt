@@ -1,0 +1,25 @@
+domcontentloaded 512ms
+load 779ms
+failed 1093ms GET /sq/_vercel/insights/script.js net::ERR_ABORTED
+failed 1094ms GET /sq/_vercel/speed-insights/script.js net::ERR_ABORTED
+failed 1413ms GET /sq/listings net::ERR_ABORTED
+failed 1516ms GET /sq/listings/11-mr7ucly4 net::ERR_ABORTED
+status 200
+networkidle reached after 2358ms
+still open:
+requests by count (top 15):
+   3x POST o4511243338973184.ingest.de.sentry.io/api/4511243349131344/envelope/
+   2x GET bmxkzcxaojgmpgzawwtn.supabase.co/rest/v1/listings
+   1x GET /sq
+   1x GET /_next/static/css/c544fa2ea94be1d2.css
+   1x GET /_next/static/css/e35dfb38818993df.css
+   1x GET /_next/static/css/0b89d2fc98e92825.css
+   1x GET /_next/static/css/edcfcf3df0addd02.css
+   1x GET /_next/static/css/3866f2dff9d54f61.css
+   1x GET /_next/static/css/68ebf7252c8f6c37.css
+   1x GET /_next/static/css/95bfa718fcac63d4.css
+   1x GET /_next/static/chunks/webpack-b8ccc6386ca4d681.js
+   1x GET /_next/static/chunks/4bd1b696-bc62c0f5edf56f0e.js
+   1x GET /_next/static/chunks/3434-d3490b24b30e08ab.js
+   1x GET /_next/static/chunks/main-app-1ec330e4d952606d.js
+   1x GET /_next/static/chunks/app/global-error-d6d5e94cdb9fdec2.js

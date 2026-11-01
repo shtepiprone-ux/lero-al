@@ -7,6 +7,9 @@ the moment a rule becomes relevant. `CLAUDE.md` is the entry point; a role's `SK
 
 Read [shared/workflow-gates.md](shared/workflow-gates.md) for every task. It owns the executable plan, write,
 verification, CI-summary and release gates; the numbered role phases invoke it at their boundary.
+Its required companions are `shared/workflow-contract.md`, `shared/workflow-evidence.md` and `shared/workflow-ci.md`.
+Before any Git handoff read `shared/git-publication.md`: task-branch commit, branch push + PR, merge after green PR
+checks and post-merge main CI are separate boundaries for every model.
 
 1. Read the role parent in `.claude/skills/<workflow>/SKILL.md`. It is deliberately short and establishes the gate.
 2. Read the numbered phase file it names **before** starting that phase. Never treat a parent summary as permission

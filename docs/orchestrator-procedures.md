@@ -549,8 +549,9 @@ For every other decision, the final chat response contains only these four headi
 2. `Next actions — Sonnet` — only concrete executor remediation or outstanding evidence, with verification; otherwise
    `None.`
 3. `Next actions — owner` — only owner decisions, manual checks, and owner-native validation; otherwise `None.`
-4. `Git handoff` — explicit-path `git add`, `git commit`, and verified `git push` commands only after `APPROVED` or
-   `APPROVED WITH NOTES`; include changed `docs/backlog.md`, `docs/backlog-archive.md`, and every other reconciled
+4. `Git handoff` — follow `.claude/rules/shared/git-publication.md`: task-branch commit; branch push + PR only after
+   `APPROVED` or `APPROVED WITH NOTES`; merge only after green PR checks. Include changed
+   `docs/backlog.md`, `docs/backlog-archive.md`, and every other reconciled
    state artifact. Otherwise `None - no Git handoff for <DECISION>.`
 
 Do not praise the implementation; replay the executor report; list passing checks, requirements, or validation
@@ -639,9 +640,12 @@ Mutating git is owner-only and native PowerShell only, including:
 
 After verified task design that changed task/docs artifacts, a `NEEDS REVISION` kickoff amendment, or an `APPROVED` /
 `APPROVED WITH NOTES` review, the orchestrator may emit explicit-path commit commands for the owner to run, but must
-not run them. Only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus append
-`git push <verified-remote> <verified-branch>` for the owner. Inspect the current branch and remote/upstream read-only
-first and replace both placeholders with verified values; never emit a bare `git push`. A task-design handoff and
+not run them. Follow `.claude/rules/shared/git-publication.md` (owner decision 2026-11-01, PR-only main): the
+owner commits on a task branch; only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus emit
+`git push -u origin <task-branch>` plus `gh pr create` for the owner, and the merge only after green
+`ci-status.mjs --pr`. After the merge, exact-SHA `ci-status.mjs` success on main is required before reporting
+publication complete. Inspect the current branch read-only
+first and replace the placeholder with the verified branch; never emit a bare push or a push to main. A task-design handoff and
 each non-approved review must omit a push command. For `NEEDS REVISION`, stage only the amended kickoff and
 Opus-authored state artifacts, never implementation paths. Never emit `git add -A`, `git add -u`, or wildcard staging.
 Every allowed `git commit` handoff is an unattributed owner commit. Do not emit `Co-Authored-By` in any case or

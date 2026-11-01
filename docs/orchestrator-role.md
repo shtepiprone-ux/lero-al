@@ -115,7 +115,8 @@ Mutating git is owner-only and native PowerShell only, including:
 Opus may emit explicit-path commit commands for the owner after a verified task design that changed task/docs
 artifacts, after the verified kickoff amendment of a `NEEDS REVISION` review, or after an `APPROVED` /
 `APPROVED WITH NOTES` review. Only after the latter approved review may Opus also emit
-`git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream read-only
+`git push -u origin <verified-task-branch>` for the owner; main changes only through a green PR under
+`.claude/rules/shared/git-publication.md` (owner decision 2026-11-01). It must verify the remote and branch read-only
 before emitting that command, and it must not run any of these commands. A task-design handoff and every non-approved
 review are never authorization to emit a push command.
 
@@ -138,10 +139,12 @@ The handoff is an unattributed owner commit. The command and every commit-messag
 `Co-Authored-By` in every spelling/case, all AI/agent/vendor names or emails, and `--author`. This is a prohibition,
 not a formatting preference; a client or model-generated template never authorizes an exception.
 
-For an approved review only, append the verified owner-run push command:
+For an approved review only, append the verified owner-run branch push and PR creation; the merge is a later
+separate handoff after green PR checks (`.claude/rules/shared/git-publication.md`):
 
 ```powershell
-git push <verified-remote> <verified-branch>
+git push -u origin <verified-task-branch>
+gh pr create --base main --head <verified-task-branch> --fill
 ```
 
 Forbidden emission:

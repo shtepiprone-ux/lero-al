@@ -42,11 +42,22 @@ export function planDigest(root, contract) {
   delete plan.stage; delete plan.review;
   return digest(root, [], plan);
 }
+export function workflowRuleInputs(root, paths) {
+  const main = '.claude/rules/shared/workflow-gates.md';
+  const expanded = [...paths];
+  // Legacy synthetic/unsplit rule fixtures have no companion section. The current split contract requires all
+  // sections for both complete-read enforcement and proof freshness; a missing companion remains an error.
+  if (paths.includes(main) && readFileSync(safePath(root, main), 'utf8').includes('## Required companions')) {
+    expanded.push(...['workflow-contract', 'workflow-evidence', 'workflow-ci', 'git-publication']
+      .map(name => `.claude/rules/shared/${name}.md`));
+  }
+  return [...new Set(expanded)];
+}
 export function scopeDigest(root, contract) {
   const configs = readdirSync(root).filter(file => /^(?:next|vitest(?:\.[a-z0-9_-]+)?)\.config\.[cm]?[jt]s$/.test(file));
   const runtime = ['package.json', 'package-lock.json', 'tsconfig.json', '.nvmrc', 'src/tests/setup.ts', 'src/tests/integration/setup.ts', ...configs]
     .filter(file => existsSync(resolve(root, file)));
-  const files = [...new Set([...contract.scope, ...(contract.inputs || []), ...(contract.rules || []), ...contract.cases.map(row => row.testFile), ...runtime])];
+  const files = [...new Set([...contract.scope, ...(contract.inputs || []), ...workflowRuleInputs(root, contract.rules || []), ...contract.cases.map(row => row.testFile), ...runtime])];
   return digest(root, files);
 }
 // The planner and the write hook must agree on paths Sonnet cannot implement.

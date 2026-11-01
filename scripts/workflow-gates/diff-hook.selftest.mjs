@@ -37,6 +37,20 @@ function setup(fn) {
 }
 
 const reviewPreflight = 'REVIEW PREFLIGHT COMPLETE - loaded: review-task; review/01-preflight; shared/role-boundaries; selected Agent Contract fragments; rule index; QA profile.';
+test('split workflow companions must be fully read before an executor product write', () => setup(f => {
+  const names = ['workflow-contract', 'workflow-evidence', 'workflow-ci', 'git-publication'];
+  writeFileSync(join(f.root, '.claude/rules/shared/workflow-gates.md'), '## Required companions\nRead all companion sections.');
+  const files = names.map(name => `.claude/rules/shared/${name}.md`);
+  for (const file of files) writeFileSync(join(f.root, file), 'Synthetic required companion policy.');
+  const event = { hook_event_name: 'PreToolUse', model: 'sonnet', tool_name: 'Write', tool_input: { file_path: 'src/profile.ts', content: 'export {}' } };
+  const transcript = f.transcript(f.receipt);
+  assert.match(evaluateHook(f.root, event, transcript).join('\n'), /workflow-contract\.md.*workflow-evidence\.md/);
+  const extraReads = files.flatMap((file, index) => [
+    { type: 'assistant', message: { content: [{ type: 'tool_use', name: 'Read', id: `companion-${index}`, input: { file_path: file } }] } },
+    { type: 'user', message: { content: [{ type: 'tool_result', tool_use_id: `companion-${index}`, content: `1\u2192${readFileSync(join(f.root, file), 'utf8')}` }] } },
+  ]).map(entry => JSON.stringify(entry)).join('\n');
+  assert.deepEqual(evaluateHook(f.root, event, transcript + '\n' + extraReads), []);
+}));
 const deferredReview36 = `${reviewPreflight}
 
 Review 36: R108–R109 прийнято

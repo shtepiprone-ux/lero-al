@@ -156,6 +156,19 @@
           {
             "type": "command",
             "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/push-safety.mjs"],
+            "timeout": 60,
+            "onFailure": "block",
+            "statusMessage": "Checking exact-commit push evidence for every model"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
             "args": [
               "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/security-hook.mjs"
             ],

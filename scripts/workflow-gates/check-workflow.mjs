@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,6 +7,9 @@ export function validateWorkflow(workflow, policy) {
   const errors = [];
   const pins = JSON.parse(readFileSync(new URL('./actions.json', import.meta.url), 'utf8')).pins;
   const check = (ok, reason) => { if (!ok) errors.push(reason); };
+  const coreJobs = ['governance', 'unit', 'contracts', 'hooks', 'storybook-build', 'homepage-grid', 'locale-leak', 'click-shield'];
+  check(Array.isArray(policy.requiredJobs) && new Set(policy.requiredJobs).size === policy.requiredJobs.length
+    && coreJobs.every(id => policy.requiredJobs.includes(id)), 'Required-job registry must retain every core job without duplicates');
   check(workflow.permissions?.contents === 'read' && Object.keys(workflow.permissions).length === 1, 'Workflow permissions must be contents:read only');
   for (const event of ['pull_request', 'push', 'merge_group', 'workflow_dispatch']) check(workflow.on?.[event], `Missing ${event} trigger`);
   check(!workflow.on?.pull_request_target, 'Untrusted PR code must not execute on pull_request_target');
@@ -89,15 +92,27 @@ export function validateSettings(root, settings) {
   for (const [event, scripts] of Object.entries(required)) for (const script of scripts) {
     if (!settings.hooks?.[event]?.some(g => g.hooks?.some(h => h.args?.includes(`\${CLAUDE_PROJECT_DIR}/.claude/hooks/${script}.ps1`)))) errors.push(`${event}: missing mandatory ${script}`);
   }
+  if (!settings.hooks?.Stop?.some(g => g.hooks?.some(h => h.args?.includes('${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/push-safety.mjs')))) errors.push('Stop: role-independent push-evidence guard is not registered');
   return errors;
+}
+
+export function validateRuleSizes(root) {
+  const paths = ['create', 'review', 'execute'].flatMap(dir => readdirSync(join(root, '.claude/rules', dir))
+    .filter(file => file.endsWith('.md')).map(file => `.claude/rules/${dir}/${file}`));
+  paths.push(...['create-task', 'review-task', 'execute-task'].map(role => `.claude/skills/${role}/SKILL.md`));
+  paths.push(...['workflow-gates', 'workflow-contract', 'workflow-evidence', 'workflow-ci', 'git-publication'].map(name => `.claude/rules/shared/${name}.md`));
+  return paths.filter(path => statSync(join(root, path)).size > 8192).map(path => `Operational rule exceeds 8 KiB: ${path}`);
 }
 export function validateRuleset(ruleset) {
   const errors = [];
   if (ruleset.target !== 'branch' || ruleset.enforcement !== 'active'
     || JSON.stringify(ruleset.conditions?.ref_name) !== JSON.stringify({ include: ['refs/heads/main'], exclude: [] })) errors.push('Ruleset must enforce main only');
   if (!Array.isArray(ruleset.bypass_actors) || ruleset.bypass_actors.length) errors.push('Ruleset must have no bypass actors');
-  if (ruleset.rules?.some(r => !['deletion', 'non_fast_forward'].includes(r.type))) errors.push('Owner direct-push policy cannot require PRs or checks that run only after the push');
-  for (const type of ['deletion', 'non_fast_forward']) if (!ruleset.rules?.some(r => r.type === type)) errors.push(`Ruleset missing ${type}`);
+  // Owner decision 2026-11-01: main accepts changes only through a PR whose two stable summaries passed in Actions.
+  for (const type of ['deletion', 'non_fast_forward', 'pull_request', 'required_status_checks']) if (!ruleset.rules?.some(r => r.type === type)) errors.push(`Ruleset missing ${type}`);
+  const checks = ruleset.rules?.find(r => r.type === 'required_status_checks')?.parameters;
+  if (checks && (checks.strict_required_status_checks_policy !== true || JSON.stringify(checks.required_status_checks)
+    !== JSON.stringify(['Governance Required', 'Release Security Required'].map(context => ({ context, integration_id: 15368 }))))) errors.push('Ruleset must require both stable summaries from GitHub Actions on an up-to-date branch');
   return errors;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -108,7 +123,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const policy = JSON.parse(readFileSync(join(root, 'scripts/workflow-gates/pipeline.json'), 'utf8'));
     const settings = JSON.parse(readFileSync(join(root, '.claude/settings.json'), 'utf8'));
     const ruleset = JSON.parse(readFileSync(join(root, 'scripts/workflow-gates/main.ruleset.json'), 'utf8'));
-    const errors = [...validateWorkflow(workflow, policy), ...validateSettings(root, settings), ...validateRuleset(ruleset)];
+    const errors = [...validateWorkflow(workflow, policy), ...validateSettings(root, settings), ...validateRuleset(ruleset), ...validateRuleSizes(root)];
     for (const role of ['executor', 'orchestrator']) {
       if (!/^tools:.*\bPowerShell\b/m.test(readFileSync(join(root, `.claude/agents/${role}.md`), 'utf8'))) errors.push(`${role}: required PowerShell receipt tool unavailable`);
     }

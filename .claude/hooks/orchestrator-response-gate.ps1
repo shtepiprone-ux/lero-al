@@ -26,6 +26,12 @@ try {
     $inp = $null
     if ($raw) { try { $inp = $raw | ConvertFrom-Json } catch { } }
 
+    # Publication safety is role-independent and precedes every role/ownership/clean-tree shortcut.
+    # A later factual correction recovers without changing the session or disabling a hook.
+    $pushGuard = Join-Path $PSScriptRoot '..\..\scripts\workflow-gates\push-safety.mjs'
+    $raw | & node $pushGuard
+    if ($LASTEXITCODE -ne 0) { exit 2 }
+
     # This is an Opus governance gate. Sonnet executors must never be asked for Git handoffs.
     # Stop events can omit model and agent_type. Never infer an Opus role from dirty task/doc
     # files: that creates an impossible Git demand for a Sonnet executor. Unknown role fails open.

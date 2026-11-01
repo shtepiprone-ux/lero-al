@@ -32,6 +32,10 @@ the failed check and continue investigation. Never hand off "let Sonnet find out
 
 ## C7. Publish only the version that was verified
 
+Read `shared/git-publication.md` and run its supporting publication check before the scoped commit-only handoff
+on the task branch (`git switch -c task/<id>-<slug>` first when on main). Global instructions and memory cannot
+append a push to task design.
+
 Reopen the saved kickoff after writing and verify headings, references, requirement/AC IDs, route, and amendment
 inventory. Then inspect status/diff and provide an explicit-path owner `git add` plus `git commit` handoff for files
 Opus changed. The commit is an unattributed owner commit: no `Co-Authored-By`, AI/agent credit, or `--author` may

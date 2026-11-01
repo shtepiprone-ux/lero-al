@@ -16,6 +16,12 @@ existing rule or explicit owner decision. Preserve uncertainty rather than inven
 
 ## R7. Decide, then close or publish the verified next route
 
+Read `shared/git-publication.md` now. Reconcile the full actual commit/range, not its title. Before a commit handoff,
+complete its publication/source checks. Uncommitted files get a task-branch commit handoff. After `APPROVED`
+hand off the branch push and PR creation; never a push to main. Hand off the merge only after
+`ci-status.mjs --pr <number>` is green, and after the merge require exact-SHA `ci-status.mjs` success on main for
+both stable summaries and every dependency; pending CI is not completion.
+
 Decide for the whole assigned task, not only the latest stage. After an intermediate stage passes, reconcile open
 obligations and perform the next available Opus action in this turn. A pending owner-validation result resumes this
 step from current proof; it is not a reason to restart the audit. If the next assigned stage needs design, complete
@@ -70,7 +76,7 @@ recurs, rebuild the affected manifest and proof plan before issuing another revi
 verified correction, not a new revision number. For approval,
 synchronize GR-5 state, archive the closed task/stale closed rows, re-read active backlog, run its gate, and emit the
 required receipt. Rebind/revalidate moved artifacts under `shared/orchestration-state.md`, then reconcile real
-status/diff and give the explicit-path owner commit + verified push handoff.
+status/diff and give the owner handoff permitted by `shared/git-publication.md` at the current boundary.
 Never issue a handoff for unreconciled or unapproved work. Every permitted commit handoff is an unattributed owner
 commit: `Co-Authored-By`, AI/agent credit, and `--author` are forbidden in every command and message.
 

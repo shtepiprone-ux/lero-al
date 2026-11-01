@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "executionStatus": "ready",
+  "kind": "governance",
+  "qaProfile": "Q1",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
+  "taskSha256": "e22cc41fed8711746245033d2e6bad1d6f1450e1bea75ea3e60ed9e639a4ceea",
+  "scope": [
+    "scripts/workflow-gates/security-hook.mjs",
+    "scripts/workflow-gates/shell-mutation.selftest.mjs",
+    "scripts/workflow-gates/publication.json",
+    "docs/sessions/evidence/task943/impl/completion-report.md",
+    "docs/sessions/evidence/task943/impl/governance-report.json",
+    "docs/sessions/evidence/task943/impl/base-runs.txt",
+    "docs/sessions/evidence/task943/impl/probes-after.txt",
+    "docs/sessions/evidence/task943/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PROGRAM-DENY.txt",
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PRETOOL-DENY.txt"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md"
+  ],
+  "report": "docs/sessions/evidence/task943/impl/governance-report.json",
+  "sensitivity": "docs/sessions/evidence/task943/sensitivity/sensitivity.json",
+  "cases": [
+    {
+      "id": "GOV-943-HOOK-SOURCE-ALLOW",
+      "invariant": "Reading a scope file as the source of a copy, link or redirection input is not a write of it",
+      "actor": "Opus approver or any session copying a scope file elsewhere",
+      "resource": "shellWriteTargets and governanceIndependenceErrors",
+      "input": "cp, Copy-Item, install, ln -s, dd if= and tee with a scope file only as the source; the Task 941 read-only commands",
+      "response": "no scope file among the targets; governanceIndependenceErrors empty",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an independent approver refused for copying a scope file out of the project",
+        "a Task 941 read-only command reported as a write again"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-SOURCE-ALLOW] Reading a scope file as the source of a copy, link or redirection input is not a write of it"
+    },
+    {
+      "id": "GOV-943-HOOK-PROGRAM-DENY",
+      "invariant": "A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written",
+      "actor": "Implementing session",
+      "resource": "shellWriteTargets and governanceIndependenceErrors",
+      "input": "every program row of the kickoff table in Bash and PowerShell form, including a write chained after a read-only command",
+      "response": "the scope file among the targets and a GOVERNANCE INDEPENDENCE error for it",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving its own governance change after writing through cp, mv, tee or sed -i"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written"
+    },
+    {
+      "id": "GOV-943-HOOK-DIRECTORY-DENY",
+      "invariant": "Deleting, moving or copying into a directory counts every affected file under it",
+      "actor": "Implementing session",
+      "resource": "shellWriteTargets",
+      "input": "rm -rf D, Remove-Item -Recurse -Force D, mv D Z and a recursive copy into D",
+      "response": "the affected scope files under D among the targets",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a scope file deleted or replaced through its directory without being counted"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-DIRECTORY-DENY] Deleting, moving or copying into a directory counts every affected file under it"
+    },
+    {
+      "id": "GOV-943-HOOK-API-DENY",
+      "invariant": "File-changing Node, .NET and Python APIs in a command are recognised as write words",
+      "actor": "Implementing session",
+      "resource": "shellWriteTargets",
+      "input": "node -e with each listed fs API, [IO.File]::WriteAllText, [System.IO.File]::Delete and python -c with shutil.copy, each naming a scope file",
+      "response": "the scope file among the targets",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a scope file changed through an unlisted file API without being counted"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-API-DENY] File-changing Node, .NET and Python APIs in a command are recognised as write words"
+    },
+    {
+      "id": "GOV-943-HOOK-PRETOOL-DENY",
+      "invariant": "The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item",
+      "actor": "Sonnet executor",
+      "resource": "evaluateHook PreToolUse",
+      "input": "executor events: cp, sed -i and Copy-Item into scripts/check-example.mjs; cp into src/lib/example.ts without a receipt",
+      "response": "POLICY-EDIT AUTHORITY REQUIRED for the policy writes; SECURITY TEST CONTRACT MISSING for the product write",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "Sonnet changing a policy file",
+        "a product file changed outside a valid task contract"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item"
+    },
+    {
+      "id": "GOV-943-HOOK-MALFORMED-ERROR",
+      "invariant": "Incomplete or unparseable mutating commands never throw and fail closed",
+      "actor": "Any session",
+      "resource": "shellWriteTargets",
+      "input": "cp without positionals, Copy-Item -Destination without value, dd of= without value, an unterminated quote with rm and a scope file, find -delete, xargs rm",
+      "response": "no exception; no target for the incomplete commands; the scope file or the files under the named directory for the others",
+      "layer": "hook",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an exception instead of a result",
+        "an unparseable delete classified as no write"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-MALFORMED-ERROR] Incomplete or unparseable mutating commands never throw and fail closed"
+    },
+    {
+      "id": "GOV-943-CI-DELETE-DENY",
+      "invariant": "CI refuses a deleted hook file outside every changed governance contract scope",
+      "actor": "CI diff check",
+      "resource": "validateDiff",
+      "input": "fixture root whose diff lists scripts/workflow-gates/security-hook.mjs, absent from the tree, with no governance contract",
+      "response": "outside every changed governance contract scope",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a hook deletion reaching main without a governance contract"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-CI-DELETE-DENY] CI refuses a deleted hook file outside every changed governance contract scope"
+    }
+  ]
+}

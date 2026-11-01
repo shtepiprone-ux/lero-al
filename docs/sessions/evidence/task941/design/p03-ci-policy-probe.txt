@@ -1,0 +1,2 @@
+platform win32; node v22.22.3
+validateDiff errors: ["scripts/workflow-gates/security-hook.mjs: outside every changed governance contract scope"]

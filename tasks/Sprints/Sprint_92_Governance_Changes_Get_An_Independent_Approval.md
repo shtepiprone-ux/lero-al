@@ -1,6 +1,6 @@
 # Sprint 92 — rule, hook and gate changes get an independent approval
 
-**Opened:** 2026-11-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (935)
+**Opened:** 2026-11-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 3 (935, 940, 931) · **Reserved:** 937, 938, 939
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -30,6 +30,9 @@ wrote none of its files. CI refuses an executable policy change outside such a c
 | **D3** | (2026-11-01, AskUserQuestion) Does 935 also approve the PR #11 changes? | *"Yes, cover PR #11 (Recommended)"* | 935's contract scope lists PR #11's 30 files; its PR replaces PR #11 (935 R8, R9). |
 | **D4** | (2026-11-01) How is the gap filed? | *"create a separate task"* | Sprint 92 and Task 935. |
 | **D6** | (2026-11-01, AskUserQuestion) PR #11's CI fails because a reviewed Task 923 contract's review hash includes rule files that PR #11 changed. How is a contract made stale only by rule files handled? | *"Rebase with an audit record (Recommended)"* | 935 R10: the independent governance approver writes `review.rulesRebase` with evidence; any non-rule change keeps the review stale. |
+| **D7** | (2026-11-01, AskUserQuestion) Where are the fixes of PR #12's red checks published? | *"Everything in PR #12 (Recommended)"* | Each CI-fix task commits on `task/935-governance-approval-route`; PR #12 merges once every required check is green. |
+| **D8** | (2026-11-01, AskUserQuestion) How are the red checks split? | *"A separate task for each check (Recommended)"* | 931 unit tests, 937 Governance Check static gates, 938 Click-Shield, 939 Locale Leak; 940 is the gate prerequisite of D9. Task Security Contracts passed on run 41300859846 and gets no task. |
+| **D9** | (2026-11-01, AskUserQuestion) The reviewed Task 923 D8/D9 contract is pinned in every PR and its digest covers 598 files, three of them 931's tests; how is that resolved? | *"Governance task: audited rebase (Recommended)"* | Task 940: a later independently reviewed contract may rebase a pinned reviewed contract for files of its scope that are not tests of its cases; runtime files stay outside. |
 
 ## Tasks
 
@@ -38,11 +41,21 @@ The single state source for this sprint's tasks.
 | # | State | Scope |
 |---|---|---|
 | **935** | ✅ `APPROVED WITH NOTES` 2026-11-01 by an independent Opus session (D2), review `docs/sessions/evidence/task935/review/review-935.md`; Task 923 D8/D9 review rebased (D6, `rules-rebase-923.md`); open: branch push, PR into main, merge after green required checks, PR #11 closed unmerged | **Governance contracts and independent approval.** Contract kind `governance`, its release phase, the `governance-report` command, the approval hook's independence check, CI's diff check for executable policy files, the audited rule-only rebase of reviewed contracts (D6), `GOV-935-*` cases and the PR #11 coverage → [kickoff](../Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md). |
+| **940** | 📝 kickoff filed 2026-11-01, ready; Opus implements in a fresh session (D1), another Opus session approves (D2); first in the order | **Audited scope rebase of reviewed contracts (D9).** `review.rebases` chain with `rules` and `scope` entries, its diff check, the validated hook exemption (935 note N1), the approver's scope rebase of the 935 contract → [kickoff](Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md). |
+| **931** | 📝 kickoff filed 2026-11-01, ready; Sonnet implements; its reviewer writes the Task 923 scope rebase once 940 is reviewed | **The full unit suite green again.** The 17 failing tests of 7 files moved onto the code Task 923 shipped, two critical-flow registry rows, six planted breaks → [kickoff](Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md). Moved here from the Sprint 78 reservation by D7. |
+| **937** | reserved 2026-11-01 (D8) | **Governance Check static gates green on PR #12** → `docs/backlog-reserved.md`. |
+| **938** | reserved 2026-11-01 (D8) | **Click-Shield gate green on PR #12** → `docs/backlog-reserved.md`. |
+| **939** | reserved 2026-11-01 (D8) | **Locale Leak shards green on PR #12** → `docs/backlog-reserved.md`. |
+
+Order: 940 → 931 → 937 → 938 → 939, each committed on `task/935-governance-approval-route` (D7). Any of them that changes a file
+of the Task 923 D8/D9 scope needs its reviewer's scope rebase entry (940); a change to a runtime file (`package.json`, lock file,
+configs) would stale that contract with no rebase and needs an owner decision first.
 
 ## Exit criteria
 
 1. 935 is approved by an Opus session that did not implement it, through the hook it adds.
-2. The 935 PR is merged after green required checks, and PR #11 is closed unmerged.
+2. The 935 PR (PR #12) is merged after green required checks, and PR #11 is closed unmerged.
+3. 940, 931, 937, 938 and 939 are reviewed and committed on PR #12's branch before that merge (D7).
 
 ## Security test contract
 

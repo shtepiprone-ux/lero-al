@@ -1,0 +1,7 @@
+review.scopeSha256         a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74
+rulesRebase.rebasedScope   a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302
+current scopeDigest        a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302
+digest after editing permissions.test.ts                      CHANGED
+digest after editing getModeratorPermissions.smoke.test.ts    CHANGED
+digest after editing access.test.ts                           CHANGED
+digest after editing route.test.ts                            UNCHANGED

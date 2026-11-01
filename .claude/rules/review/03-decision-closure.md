@@ -61,8 +61,13 @@ runtime evidence. Never infer an executable CI gate or release readiness from th
 Governance approval path (owner decisions 2026-11-01, Task 935): a `governance` contract is approved only by an Opus
 session that wrote none of its scope files; the Stop hook refuses `APPROVED` from an implementing session. Rerun
 `cli.mjs governance-report`, then write the `review` block and stage `reviewed`. A reviewed contract stale only through
-rule files of this change gets `review.rulesRebase` with its evidence from you, never from the implementer; then
-recompute the review hashes and run `cli.mjs diff --phase release` before the publication handoff.
+rule files of this change gets a `rules` entry in `review.rebases` (`## Changed rule files` evidence; an existing
+`review.rulesRebase` is never rewritten) from you, never from the implementer; then recompute the review hashes and
+run `cli.mjs diff --phase release` before the publication handoff.
+Scope rebase (owner D9, Task 940): when an approved task changed files of another reviewed contract's scope, the
+approver of that task (never its implementer) appends a `scope` entry to that contract's `review.rebases` after its
+own review block, with `## Changed scope files` evidence, then runs `cli.mjs diff --phase release`. Tests of that
+contract's cases and runtime files are never rebased.
 
 For `NEEDS REVISION`, disable a confirmed unusable saved route as `shared/orchestration-state.md` requires, then
 investigate and persist the consolidated, verified correction within this already authorized review cycle. Do not

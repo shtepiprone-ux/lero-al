@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "status": "passed",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
+  "contractSha256": "d62b740186c138691dc0c8f995321952a1d5325dbd171f2b36bda21b3050d61a",
+  "scopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "cases": [
+    {
+      "id": "GOV-940-VAL-SCOPE-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-SCOPE-ALLOW] A reviewed contract stale only through a non-test scope file owned by a later reviewed contract is accepted with a valid scope entry"
+    },
+    {
+      "id": "GOV-940-VAL-SCOPE-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-SCOPE-DENY] A scope entry never hides a case test file, an out-of-scope file, an unapproved owner or a broken chain",
+      "sensitivity": {
+        "id": "GOV-940-VAL-SCOPE-DENY",
+        "testName": "[GOV-940-VAL-SCOPE-DENY] A scope entry never hides a case test file, an out-of-scope file, an unapproved owner or a broken chain",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-VAL-SCOPE-DENY.txt",
+        "artifactSha256": "eb2889168890c5471897a1c4108515fa7228794cc6b7fc30dbef6e5dce6bb11d"
+      }
+    },
+    {
+      "id": "GOV-940-VAL-CHAIN-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-CHAIN-ALLOW] A legacy rules rebase followed by a scope entry forms a valid chain for the review and the report"
+    },
+    {
+      "id": "GOV-940-VAL-MALFORMED-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-MALFORMED-ERROR] A malformed rebases value yields a named error and keeps the review stale"
+    },
+    {
+      "id": "GOV-940-CI-SCOPE-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-CI-SCOPE-ALLOW] A diff adding a rules entry and a scope entry with both approving contracts in the diff passes"
+    },
+    {
+      "id": "GOV-940-CI-SCOPE-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-CI-SCOPE-DENY] A re-signed scope entry never hides an unlisted change and needs its approving contract in the diff",
+      "sensitivity": {
+        "id": "GOV-940-CI-SCOPE-DENY",
+        "testName": "[GOV-940-CI-SCOPE-DENY] A re-signed scope entry never hides an unlisted change and needs its approving contract in the diff",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-CI-SCOPE-DENY.txt",
+        "artifactSha256": "6bf17226bd793be9e467aeee373cf7a356cb2db75b6b79a6ddb2348efee75ec2"
+      }
+    },
+    {
+      "id": "GOV-940-HOOK-EXEMPT-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-EXEMPT-ALLOW] A valid rules entry by the receipt contract exempts the approver write to the rebased contract"
+    },
+    {
+      "id": "GOV-940-HOOK-FORGED-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file",
+      "sensitivity": {
+        "id": "GOV-940-HOOK-FORGED-DENY",
+        "testName": "[GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-HOOK-FORGED-DENY.txt",
+        "artifactSha256": "60c9b1d8c9ef9367c66033c7031cca2048bce5d3e842d477dfe48f3deff234d5"
+      }
+    },
+    {
+      "id": "GOV-940-HOOK-SCOPE-ENTRY-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-SCOPE-ENTRY-DENY] A scope entry naming the receipt contract never exempts a write"
+    }
+  ],
+  "errors": []
+}

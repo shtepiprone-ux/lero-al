@@ -1,0 +1,62 @@
+# Sensitivity proof GOV-940-HOOK-FORGED-DENY (Task 940, Opus implementer, 2026-11-01, node v22.22.3, native Windows 11)
+
+Break: restore the unvalidated exemption of governanceIndependenceErrors (R5): remove the isEvidencePath and rulesEntryErrors conditions
+File: scripts/workflow-gates/security-hook.mjs (sha256 before the break and after the restore: 643d6e01ff09ebfbaf9477f645ed9ff47ef972ac2d118376c1aaff6050b3b8f6)
+Test file: scripts/workflow-gates/scope-rebase.selftest.mjs (sha256 f2dc9830d3a245d771ca0324389eaf88f33798736199cfee8a62a3fa59d129ff, unchanged for all three runs)
+Original line(s):
+      if (typeof entry.evidence !== 'string' || !isEvidencePath(entry.evidence)) continue;
+      let problems; try { problems = rulesEntryErrors(root, other, entry); } catch { continue; }
+      if (problems.length) continue;
+Mutant line(s) as applied with the Edit tool (one break at a time):
+133-    for (const { kind, entry } of rebaseChain(other).entries) {
+134-      if (kind !== 'rules' || !entry || typeof entry !== 'object' || typeof entry.by !== 'string' || pathKey(entry.by) !== pathKey(receiptPath)) continue;
+135:      // SENSITIVITY BREAK 3: the pre-Task 940 exemption, without isEvidencePath or rulesEntryErrors.
+136-      exempt.add(pathKey(path));
+137-      exempt.add(pathKey(entry.evidence));
+138-    }
+
+Command (each run): node --test --test-reporter=tap --test-name-pattern="GOV-940-HOOK-FORGED-DENY" scripts/workflow-gates/scope-rebase.selftest.mjs
+
+## Baseline (before the break)
+ok 1 - [GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file
+# pass 1
+# fail 0
+# skipped 0
+exit=0
+
+## Mutant (break applied)
+not ok 1 - [GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file
+# pass 0
+# fail 1
+# skipped 0
+exit=1
+  ---
+  type: 'test'
+  location: '<repo>/scripts\\workflow-gates\\scope-rebase.selftest.mjs:286:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /GOVERNANCE INDEPENDENCE: this session wrote scripts\/workflow-gates\/example\.mjs; an implementing session cannot approve/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    <repo>/scripts/workflow-gates/scope-rebase.selftest.mjs:290:12
+    withBuild (<repo>/scripts/workflow-gates/scope-rebase.selftest.mjs:136:67)
+    TestContext.<anonymous> (<repo>/scripts/workflow-gates/scope-rebase.selftest.mjs:287:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+
+## Restored (break removed, file hash identical to the baseline)
+ok 1 - [GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file
+# pass 1
+# fail 0
+# skipped 0
+exit=0

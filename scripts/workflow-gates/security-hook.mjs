@@ -2,7 +2,8 @@
 import { readFileSync, existsSync, realpathSync } from 'node:fs';
 import { resolve, relative, isAbsolute, dirname, basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateContract, validateReport, validateGovernanceReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs } from './contract.mjs';
+import { validateContract, validateReport, validateGovernanceReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs,
+  isEvidencePath, rebaseChain, rulesEntryErrors } from './contract.mjs';
 import { readJson, allContracts } from './cli.mjs';
 import { sessionRole } from './session-role.mjs';
 import { blockedResponse, plainResponseLines, hasGitHandoff } from './response-state.mjs';
@@ -117,7 +118,9 @@ export function shellWriteTargets(root, command) {
   return files;
 }
 // Owner decision 2026-11-01 (Task 935 D2): a session that wrote any governance scope file cannot approve it. The
-// approver's rule-only rebase of another reviewed contract (its `review.rulesRebase` and evidence) is not such a write.
+// approver's rule-only rebase of another reviewed contract (a `rules` chain entry by the receipt contract and its
+// evidence) is not such a write, but only while that entry passes its rules validation (Task 940 R5, review note N1).
+// A `scope` entry never exempts a write.
 export function governanceIndependenceErrors(root, contract, receiptPath, transcript) {
   const calls = successfulCalls(transcript);
   const written = [...calls.filter(call => ['Write', 'Edit'].includes(call.name)).map(call => projectPath(root, call.input?.file_path || call.input?.path)),
@@ -125,11 +128,15 @@ export function governanceIndependenceErrors(root, contract, receiptPath, transc
       .flatMap(call => shellWriteTargets(root, call.input.command))];
   const exempt = new Set();
   for (const path of allContracts(root)) {
+    if (path === receiptPath) continue;
     let other; try { other = readJson(root, path); } catch { continue; }
-    const rebase = other?.review?.rulesRebase;
-    if (rebase && typeof rebase.by === 'string' && pathKey(rebase.by) === pathKey(receiptPath) && path !== receiptPath) {
+    for (const { kind, entry } of rebaseChain(other).entries) {
+      if (kind !== 'rules' || !entry || typeof entry !== 'object' || typeof entry.by !== 'string' || pathKey(entry.by) !== pathKey(receiptPath)) continue;
+      if (typeof entry.evidence !== 'string' || !isEvidencePath(entry.evidence)) continue;
+      let problems; try { problems = rulesEntryErrors(root, other, entry); } catch { continue; }
+      if (problems.length) continue;
       exempt.add(pathKey(path));
-      if (typeof rebase.evidence === 'string') exempt.add(pathKey(rebase.evidence));
+      exempt.add(pathKey(entry.evidence));
     }
   }
   const errors = [];

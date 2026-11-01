@@ -71,6 +71,7 @@
     "scripts/workflow-gates/review-evidence.mjs",
     "scripts/workflow-gates/run.mjs",
     "scripts/workflow-gates/runner.selftest.mjs",
+    "scripts/workflow-gates/scope-rebase.selftest.mjs",
     "scripts/workflow-gates/security-contract.selftest.mjs",
     "scripts/workflow-gates/security-hook.mjs",
     "scripts/workflow-gates/selftests.mjs",

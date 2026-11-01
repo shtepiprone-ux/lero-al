@@ -1,6 +1,6 @@
 # Sprint 92 — rule, hook and gate changes get an independent approval
 
-**Opened:** 2026-11-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 4 (935, 940, 941, 931) · **Reserved:** 937, 938, 939
+**Opened:** 2026-11-01 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 8 (935, 940, 941, 943, 931, 937, 942, 939) · **Reserved:** 938
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -34,6 +34,7 @@ wrote none of its files. CI refuses an executable policy change outside such a c
 | **D8** | (2026-11-01, AskUserQuestion) How are the red checks split? | *"A separate task for each check (Recommended)"* | 931 unit tests, 937 Governance Check static gates, 938 Click-Shield, 939 Locale Leak; 940 is the gate prerequisite of D9. Task Security Contracts passed on run 41300859846 and gets no task. |
 | **D9** | (2026-11-01, AskUserQuestion) The reviewed Task 923 D8/D9 contract is pinned in every PR and its digest covers 598 files, three of them 931's tests; how is that resolved? | *"Governance task: audited rebase (Recommended)"* | Task 940: a later independently reviewed contract may rebase a pinned reviewed contract for files of its scope that are not tests of its cases; runtime files stay outside. |
 | **D10** | (2026-11-01) The Task 940 approver session was refused approval because the hook counted a read-only `grep`/`sed -n` as writes to scope files; what is done? | *"Yes, fix the hook"*, then *"Yes, prepare the kickoff for the hook"* | Task 941: a command made only of read-only programs is not a write; every other command keeps today's detection. Designed in the session that found it; implemented and approved by two other fresh sessions (D1, D2). |
+| **D11** | (2026-11-01) Task 941 leaves undetected the writes made by `cp`, `mv`, `tee`, `sed -i` and similar commands; is that gap closed? | *"I want to close this hole too, write the kickoff"* | Task 943: copy, move, delete, tee, in-place edit, touch, truncate, link, `dd` and PowerShell item commands and the file APIs of Node, .NET and Python count as writes, for the independence check and the pre-write guard. After 941; same D1/D2 route. |
 
 ## Tasks
 
@@ -44,12 +45,14 @@ The single state source for this sprint's tasks.
 | **935** | ✅ `APPROVED WITH NOTES` 2026-11-01 by an independent Opus session (D2), review `docs/sessions/evidence/task935/review/review-935.md`; Task 923 D8/D9 review rebased (D6, `rules-rebase-923.md`); open: branch push, PR into main, merge after green required checks, PR #11 closed unmerged | **Governance contracts and independent approval.** Contract kind `governance`, its release phase, the `governance-report` command, the approval hook's independence check, CI's diff check for executable policy files, the audited rule-only rebase of reviewed contracts (D6), `GOV-935-*` cases and the PR #11 coverage → [kickoff](../Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md). |
 | **940** | ✅ `APPROVED WITH NOTES` 2026-11-01 by an independent Opus session (D2), review `docs/sessions/evidence/task940/review/review-940.md`; Task 935 contract rebased (D9, `scope-rebase-935.md`); open: Task 931's 923 rebase re-stales the 935 contract (cross-task obligation in the review), branch push, merge after green required checks | **Audited scope rebase of reviewed contracts (D9).** `review.rebases` chain with `rules` and `scope` entries, its diff check, the validated hook exemption (935 note N1), the approver's scope rebase of the 935 contract → [kickoff](../Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md). |
 | **941** | 📝 kickoff filed 2026-11-01, ready; starts only after the 940 approval is committed; Opus implements in a fresh session (D1), another Opus session approves (D2) and writes the 935 and 940 scope rebases | **A read-only shell command is not a write (D10).** `isReadOnlyShellCommand` in the security hook, `shellWriteTargets` reporting only redirection targets for read-only commands and unchanged detection for every other command, `GOV-941-*` cases → [kickoff](Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md). |
+| **943** | 📝 kickoff filed 2026-11-01, ready; starts only after 941 is reviewed and committed; Opus implements in a fresh session (D1), another Opus session approves (D2) and writes the 935, 940 and 941 scope rebases | **Commands that change files are writes (D11).** A program table for `cp`, `mv`, `rm`, `tee`, `sed -i`, `touch`, `truncate`, `ln`, `install`, `dd`, `xargs`/`find -delete` and the PowerShell item cmdlets, directory expansion, Node/.NET/Python file API words, `GOV-943-*` cases → [kickoff](Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md). |
 | **931** | 📝 kickoff filed 2026-11-01, ready; Sonnet implements; its reviewer writes the Task 923 scope rebase once 940 is reviewed | **The full unit suite green again.** The 17 failing tests of 7 files moved onto the code Task 923 shipped, two critical-flow registry rows, six planted breaks → [kickoff](Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md). Moved here from the Sprint 78 reservation by D7. |
-| **937** | reserved 2026-11-01 (D8) | **Governance Check static gates green on PR #12** → `docs/backlog-reserved.md`. |
-| **938** | reserved 2026-11-01 (D8) | **Click-Shield gate green on PR #12** → `docs/backlog-reserved.md`. |
-| **939** | reserved 2026-11-01 (D8) | **Locale Leak shards green on PR #12** → `docs/backlog-reserved.md`. |
+| **937** | 📝 kickoff filed 2026-11-01, ready (D8); Sonnet implements; its reviewer writes the Task 923 scope rebase for the four UI files | **Governance Check green, product half.** The tracked NUL pathspec file, the mojibake allowlist entry and the exact repair of a Task 927 listing, the gallery's `overflow-clip` moved to a style object with the remove-only baseline update, two design-token markers and one theme icon size, `SEC-937-*` cases → [kickoff](Sprint_92_kickoff_prompt_Task_937_Governance_Check_Product_Findings.md). |
+| **942** | 📝 kickoff filed 2026-11-01, ready (D8); starts only when no other governance implementation is uncommitted; Opus implements in a fresh session (D1), another Opus session approves (D2); no scope rebase due | **Governance Check green, listing-visibility allowlist.** The contact-event entry takes the reviewed Task 923 R66 (f) fingerprint, the stale detail-page entry goes, an exported stale check and a guarded main, `GOV-942-*` cases → [kickoff](Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md). |
+| **938** | reserved 2026-11-01 (D8); design **BLOCKED** 2026-11-01 (`docs/sessions/evidence/task938/design/status.md`): the failure predates PR #12; the CI-equivalent reproduction waits until a leftover local server on port 3101 is stopped | **Click-Shield gate green on PR #12** → `docs/backlog-reserved.md`. |
+| **939** | 📝 kickoff filed 2026-11-01, ready (D8); Sonnet implements; no reviewed scope touched | **Locale Leak shards green on PR #12.** An inert Storybook Supabase client stub through an exact alias, the mobile branch of the CustomRangeTooLong play, `SEC-939-*` cases → [kickoff](Sprint_92_kickoff_prompt_Task_939_Locale_Leak_Shards_Green.md). |
 
-Order: 940 → 941 → 931 → 937 → 938 → 939, each committed on `task/935-governance-approval-route` (D7). Any of them that changes a file
+Order: 940 → 941 → 943 → 942 → 931 → 937 → 939 → 938 (once unblocked), each committed on `task/935-governance-approval-route` (D7). Any of them that changes a file
 of the Task 923 D8/D9 scope needs its reviewer's scope rebase entry (940); a change to a runtime file (`package.json`, lock file,
 configs) would stale that contract with no rebase and needs an owner decision first.
 
@@ -57,7 +60,7 @@ configs) would stale that contract with no rebase and needs an owner decision fi
 
 1. 935 is approved by an Opus session that did not implement it, through the hook it adds.
 2. The 935 PR (PR #12) is merged after green required checks, and PR #11 is closed unmerged.
-3. 940, 941, 931, 937, 938 and 939 are reviewed and committed on PR #12's branch before that merge (D7).
+3. 940, 941, 943, 942, 931, 937, 938 and 939 are reviewed and committed on PR #12's branch before that merge (D7).
 
 ## Security test contract
 

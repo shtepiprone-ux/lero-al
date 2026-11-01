@@ -1,0 +1,6 @@
+platform win32; node v22.22.3
+executor cp into a policy file: []
+executor sed -i on a policy file: []
+executor Copy-Item into a policy file: []
+executor cp into a product file: []
+control: executor Set-Content into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]

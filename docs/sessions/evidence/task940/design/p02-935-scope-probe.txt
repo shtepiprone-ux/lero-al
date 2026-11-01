@@ -1,0 +1,6 @@
+935 review.scopeSha256  3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0
+935 current scopeDigest 3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0
+in 935 scope: true | digest after editing scripts/workflow-gates/contract.mjs CHANGED
+in 935 scope: true | digest after editing scripts/workflow-gates/cli.mjs CHANGED
+in 935 scope: true | digest after editing scripts/workflow-gates/security-hook.mjs CHANGED
+in 935 scope: true | digest after editing .claude/rules/review/03-decision-closure.md CHANGED

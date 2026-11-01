@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "executionStatus": "ready",
+  "kind": "governance",
+  "qaProfile": "Q1",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
+  "taskSha256": "7f9a50db1d82a73e74a788c9e004bc8f198a9dbc781e61401bb1dfd965ee1a6a",
+  "scope": [
+    "scripts/workflow-gates/contract.mjs",
+    "scripts/workflow-gates/cli.mjs",
+    "scripts/workflow-gates/security-hook.mjs",
+    "scripts/workflow-gates/scope-rebase.selftest.mjs",
+    "scripts/workflow-gates/publication.json",
+    ".claude/rules/review/03-decision-closure.md",
+    "docs/sessions/evidence/task940/impl/completion-report.md",
+    "docs/sessions/evidence/task940/impl/governance-report.json",
+    "docs/sessions/evidence/task940/impl/base-runs.txt",
+    "docs/sessions/evidence/task940/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task940/sensitivity/GOV-940-VAL-SCOPE-DENY.txt",
+    "docs/sessions/evidence/task940/sensitivity/GOV-940-CI-SCOPE-DENY.txt",
+    "docs/sessions/evidence/task940/sensitivity/GOV-940-HOOK-FORGED-DENY.txt"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md"
+  ],
+  "report": "docs/sessions/evidence/task940/impl/governance-report.json",
+  "sensitivity": "docs/sessions/evidence/task940/sensitivity/sensitivity.json",
+  "cases": [
+    {
+      "id": "GOV-940-VAL-SCOPE-ALLOW",
+      "invariant": "A reviewed contract stale only through a non-test scope file owned by a later reviewed contract is accepted with a valid scope entry",
+      "actor": "Opus approver of the later task",
+      "resource": "validateContract release phase",
+      "input": "fixture reviewed product contract, one changed non-test scope file, scope entry by a reviewed contract scoping it, current evidence",
+      "response": "empty error list; without the entry Independent review scope is stale",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a scope change accepted without an entry",
+        "the entry rewriting review.scopeSha256"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-SCOPE-ALLOW] A reviewed contract stale only through a non-test scope file owned by a later reviewed contract is accepted with a valid scope entry"
+    },
+    {
+      "id": "GOV-940-VAL-SCOPE-DENY",
+      "invariant": "A scope entry never hides a case test file, an out-of-scope file, an unapproved owner or a broken chain",
+      "actor": "Any session writing a scope entry",
+      "resource": "validateContract release phase",
+      "input": "variants: case test file listed, file outside the rebased scope, by not reviewed, by not scoping the file, by is the rebased contract, stale evidence hash, evidence outside docs/sessions/evidence, missing heading, broken digest chain",
+      "response": "Independent review scope is stale plus a named rebases error for each variant",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a mapped security test changed under a rebase",
+        "a self-approved rebase",
+        "a stale review accepted"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-SCOPE-DENY] A scope entry never hides a case test file, an out-of-scope file, an unapproved owner or a broken chain"
+    },
+    {
+      "id": "GOV-940-VAL-CHAIN-ALLOW",
+      "invariant": "A legacy rules rebase followed by a scope entry forms a valid chain for the review and the report",
+      "actor": "Opus approver of the later task",
+      "resource": "scopeHashErrors and validateReport",
+      "input": "fixture reviewed contract with legacy rulesRebase then a rebases scope entry; report scopeSha256 equal to review.scopeSha256",
+      "response": "empty error lists for validateContract release and validateReport",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "the legacy rulesRebase rewritten",
+        "the report accepted at an unrelated digest"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-CHAIN-ALLOW] A legacy rules rebase followed by a scope entry forms a valid chain for the review and the report"
+    },
+    {
+      "id": "GOV-940-VAL-MALFORMED-ERROR",
+      "invariant": "A malformed rebases value yields a named error and keeps the review stale",
+      "actor": "Any session writing review.rebases",
+      "resource": "validateContract release phase",
+      "input": "rebases not an array, entry not an object, unknown kind, missing field",
+      "response": "stale message plus a named rebases error for each shape",
+      "layer": "validator",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a malformed rebase silently ignored",
+        "an exception instead of an error"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-VAL-MALFORMED-ERROR] A malformed rebases value yields a named error and keeps the review stale"
+    },
+    {
+      "id": "GOV-940-CI-SCOPE-ALLOW",
+      "invariant": "A diff adding a rules entry and a scope entry with both approving contracts in the diff passes",
+      "actor": "CI release diff",
+      "resource": "validateDiff release phase",
+      "input": "contract present at the base with an empty chain; diff adds a legacy rules entry and a scope entry; injected base reader; both by contracts selected and valid",
+      "response": "empty error list",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid two-task rebase refused"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-CI-SCOPE-ALLOW] A diff adding a rules entry and a scope entry with both approving contracts in the diff passes"
+    },
+    {
+      "id": "GOV-940-CI-SCOPE-DENY",
+      "invariant": "A re-signed scope entry never hides an unlisted change and needs its approving contract in the diff",
+      "actor": "CI release diff",
+      "resource": "validateDiff release phase",
+      "input": "variants: unlisted change of a case test file, of package.json and of another scope file under a re-signed entry; by outside the diff; edited earlier entry; removed earlier entry",
+      "response": "Independent review scope is stale or a named rebases diff error for each variant",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an unlisted change reaching main under a rebase",
+        "an unapproved rebase reaching main"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-CI-SCOPE-DENY] A re-signed scope entry never hides an unlisted change and needs its approving contract in the diff"
+    },
+    {
+      "id": "GOV-940-HOOK-EXEMPT-ALLOW",
+      "invariant": "A valid rules entry by the receipt contract exempts the approver write to the rebased contract",
+      "actor": "Opus governance approver",
+      "resource": "governanceIndependenceErrors",
+      "input": "transcript with a successful Write to another contract carrying a valid rules entry by the receipt contract with evidence under docs/sessions/evidence",
+      "response": "empty error list",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "the approver blocked from writing its rules rebase"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-EXEMPT-ALLOW] A valid rules entry by the receipt contract exempts the approver write to the rebased contract"
+    },
+    {
+      "id": "GOV-940-HOOK-FORGED-DENY",
+      "invariant": "A forged or invalid rules entry does not exempt a write to a governance scope file",
+      "actor": "Implementing session",
+      "resource": "governanceIndependenceErrors",
+      "input": "transcript writing a scope file; a contract whose rules entry names the receipt with evidence outside the evidence tree or failing the rules checks",
+      "response": "GOVERNANCE INDEPENDENCE error for the written file",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving its own governance change"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file"
+    },
+    {
+      "id": "GOV-940-HOOK-SCOPE-ENTRY-DENY",
+      "invariant": "A scope entry naming the receipt contract never exempts a write",
+      "actor": "Implementing session",
+      "resource": "governanceIndependenceErrors",
+      "input": "transcript writing a scope file listed by a contract whose scope entry names the receipt",
+      "response": "GOVERNANCE INDEPENDENCE error for the written file",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a scope rebase used as an independence bypass"
+      ],
+      "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
+      "testName": "[GOV-940-HOOK-SCOPE-ENTRY-DENY] A scope entry naming the receipt contract never exempts a write"
+    }
+  ]
+}

@@ -1,0 +1,446 @@
+{
+  "version": 1,
+  "stage": "reviewed",
+  "executionStatus": "ready",
+  "implementation": {
+    "role": "Opus"
+  },
+  "kind": "governance",
+  "qaProfile": "Q1",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
+  "taskSha256": "2a3fb8042f62023169d102300f97fa8ac84db2143c18614cd7c04622a48458ec",
+  "scope": [
+    "tasks/Sprints/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
+    "scripts/workflow-gates/cli.mjs",
+    "scripts/workflow-gates/governance-contract.selftest.mjs",
+    ".claude/rules/shared/security-testing.md",
+    "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json",
+    "docs/sessions/evidence/task935/impl/governance-report.json",
+    "docs/sessions/evidence/task935/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task935/review/rules-rebase-923.md",
+    ".claude/hooks/block-mutating-git.ps1",
+    ".claude/hooks/orchestrator-response-gate.ps1",
+    ".claude/rules/README.md",
+    ".claude/rules/create/03-publication.md",
+    ".claude/rules/review/03-decision-closure.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md",
+    ".claude/rules/shared/workflow-ci.md",
+    ".claude/rules/shared/workflow-contract.md",
+    ".claude/rules/shared/workflow-evidence.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/settings.json",
+    ".claude/skills/review-task/SKILL.md",
+    "CLAUDE.md",
+    "docs/orchestrator-procedures.md",
+    "docs/orchestrator-role.md",
+    "docs/rules/golden/gr-6-owner-git-handoff.md",
+    "scripts/workflow-gates/check-workflow.mjs",
+    "scripts/workflow-gates/ci-status.mjs",
+    "scripts/workflow-gates/contract.mjs",
+    "scripts/workflow-gates/diff-hook.selftest.mjs",
+    "scripts/workflow-gates/git-policy.selftest.mjs",
+    "scripts/workflow-gates/hooks.selftest.mjs",
+    "scripts/workflow-gates/main.ruleset.json",
+    "scripts/workflow-gates/prepush.mjs",
+    "scripts/workflow-gates/publication-safety.selftest.mjs",
+    "scripts/workflow-gates/publication.json",
+    "scripts/workflow-gates/push-safety.mjs",
+    "scripts/workflow-gates/security-hook.mjs",
+    "scripts/workflow-gates/workflow.selftest.mjs"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md"
+  ],
+  "cases": [
+    {
+      "id": "GOV-935-VAL-ALLOW",
+      "invariant": "A governance contract over policy paths with full case coverage validates",
+      "actor": "Opus implementer",
+      "resource": "validateContract",
+      "input": "fixture governance contract: policy-only scope, Q1, GOV cases covering allow/deny/error and hook/ci",
+      "response": "empty error list",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a product contract accepting policy paths",
+        "Q0 accepted for a governance contract"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-ALLOW] A governance contract over policy paths with full case coverage validates"
+    },
+    {
+      "id": "GOV-935-VAL-DENY-PRODUCT-PATH",
+      "invariant": "A governance contract containing a product path is refused",
+      "actor": "Opus implementer",
+      "resource": "validateContract",
+      "input": "fixture governance contract whose scope includes src/app/page.tsx",
+      "response": "error naming the product path",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "the product path validated as governance scope"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-DENY-PRODUCT-PATH] A governance contract containing a product path is refused"
+    },
+    {
+      "id": "GOV-935-VAL-DENY-COVERAGE",
+      "invariant": "A governance contract without allow, deny, error, hook and ci coverage is refused",
+      "actor": "Opus implementer",
+      "resource": "validateContract",
+      "input": "fixture governance contracts each missing one outcome or one layer",
+      "response": "one coverage error per missing outcome or layer",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an incomplete case set accepted"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-DENY-COVERAGE] A governance contract without allow, deny, error, hook and ci coverage is refused"
+    },
+    {
+      "id": "GOV-935-VAL-RELEASE-DENY",
+      "invariant": "A governance contract is not releasable without an independent reviewed Opus approval and current hashes",
+      "actor": "CI release job",
+      "resource": "validateContract phase release",
+      "input": "fixture governance contracts: planned stage, implemented stage, missing review, stale evidence/scope/report hash, implementation.role not Opus",
+      "response": "one release error per defect",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "release of an unreviewed governance change",
+        "a stale review accepted"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-RELEASE-DENY] A governance contract is not releasable without an independent reviewed Opus approval and current hashes"
+    },
+    {
+      "id": "GOV-935-VAL-RELEASE-ALLOW",
+      "invariant": "A reviewed governance contract with current hashes is releasable",
+      "actor": "CI release job",
+      "resource": "validateContract phase release",
+      "input": "fixture reviewed governance contract with current review, evidence, scope and report hashes",
+      "response": "empty error list",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid reviewed contract refused"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-RELEASE-ALLOW] A reviewed governance contract with current hashes is releasable"
+    },
+    {
+      "id": "GOV-935-REPORT-ERROR",
+      "invariant": "The governance report fails on a failing, missing or unproven case",
+      "actor": "Opus implementer",
+      "resource": "cli.mjs governance-report and validateGovernanceReport",
+      "input": "fixture contract with one failing mapped test, one unmapped case, one critical case without sensitivity",
+      "response": "nonzero exit, report status failed, named errors",
+      "layer": "validator",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a failed or missing case reported as passed"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-REPORT-ERROR] The governance report fails on a failing, missing or unproven case"
+    },
+    {
+      "id": "GOV-935-VAL-REBASE-ALLOW",
+      "invariant": "A reviewed contract stale only through rule files inside a reviewed governance contract is accepted with a valid rulesRebase",
+      "actor": "Opus approver",
+      "resource": "validateContract and validateDiff",
+      "input": "fixture reviewed product contract, one changed .claude/rules file in the by-contract scope, valid rulesRebase and evidence",
+      "response": "empty error list",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a rule-only change forcing an unaudited rewrite of review.scopeSha256"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-REBASE-ALLOW] A reviewed contract stale only through rule files inside a reviewed governance contract is accepted with a valid rulesRebase"
+    },
+    {
+      "id": "GOV-935-VAL-REBASE-DENY",
+      "invariant": "A rulesRebase never hides a non-rule change or an unapproved rule change",
+      "actor": "Opus approver",
+      "resource": "validateContract and validateDiff",
+      "input": "fixture rebases with a changed scope or test file, a non-governance or unreviewed by-contract, a rule file outside the by scope, a stale evidence hash",
+      "response": "Independent review scope is stale or a named rebase error for each",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a product code change accepted under an old review"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-VAL-REBASE-DENY] A rulesRebase never hides a non-rule change or an unapproved rule change"
+    },
+    {
+      "id": "GOV-935-HOOK-SELF-APPROVE-DENY",
+      "invariant": "The session that wrote a governance scope file cannot approve it",
+      "actor": "Opus implementing session",
+      "resource": "security-hook.mjs Stop approval",
+      "input": "transcript with a successful Write to a scope file, governance receipt, APPROVED",
+      "response": "GOVERNANCE INDEPENDENCE error, exit code 2",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a self-approval accepted"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-HOOK-SELF-APPROVE-DENY] The session that wrote a governance scope file cannot approve it"
+    },
+    {
+      "id": "GOV-935-HOOK-INDEPENDENT-ALLOW",
+      "invariant": "An independent session with a reviewed contract and passing report may approve",
+      "actor": "Opus approving session",
+      "resource": "security-hook.mjs Stop approval",
+      "input": "transcript without scope writes, governance receipt, reviewed contract, passing report, APPROVED",
+      "response": "no error",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an independent approval refused"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-HOOK-INDEPENDENT-ALLOW] An independent session with a reviewed contract and passing report may approve"
+    },
+    {
+      "id": "GOV-935-HOOK-PUSH-INLINE-DENY",
+      "invariant": "A push command written inline, in a table cell or after a label is a push handoff",
+      "actor": "any session",
+      "resource": "push-safety.mjs Stop guard",
+      "input": "replies with the push command in inline code, a table cell and labelled prose",
+      "response": "each reply is checked as a push handoff and refused without the required conditions",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an unchecked push handoff"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-HOOK-PUSH-INLINE-DENY] A push command written inline, in a table cell or after a label is a push handoff"
+    },
+    {
+      "id": "GOV-935-HOOK-PUSH-MAIN-DENY",
+      "invariant": "A push handoff to main, HEAD, a refspec or a bare push is refused",
+      "actor": "Opus approving session",
+      "resource": "push-safety.mjs handoffErrors",
+      "input": "APPROVED replies whose push targets main, HEAD, a refspec, or has no branch",
+      "response": "main-only-via-PR error for each",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a direct push to main handed off"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-HOOK-PUSH-MAIN-DENY] A push handoff to main, HEAD, a refspec or a bare push is refused"
+    },
+    {
+      "id": "GOV-935-HOOK-PUSH-BRANCH-ALLOW",
+      "invariant": "An approved single task-branch push with an active ruleset is allowed",
+      "actor": "Opus approving session",
+      "resource": "push-safety.mjs handoffErrors",
+      "input": "APPROVED reply with one task-branch push, injected active ruleset",
+      "response": "no error",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid task-branch push refused"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-HOOK-PUSH-BRANCH-ALLOW] An approved single task-branch push with an active ruleset is allowed"
+    },
+    {
+      "id": "GOV-935-HOOK-RULESET-ERROR",
+      "invariant": "A push handoff fails closed when the main ruleset is missing, inactive or unreadable",
+      "actor": "Opus approving session",
+      "resource": "push-safety.mjs rulesetErrors",
+      "input": "injected missing, inactive and throwing ruleset sources",
+      "response": "ruleset error for each",
+      "layer": "hook",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a push handed off without server-side protection"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-HOOK-RULESET-ERROR] A push handoff fails closed when the main ruleset is missing, inactive or unreadable"
+    },
+    {
+      "id": "GOV-935-HOOK-MERGE-ADMIN-DENY",
+      "invariant": "A merge handoff with an admin or auto flag, or in the same reply as a push, is refused",
+      "actor": "Opus approving session",
+      "resource": "push-safety.mjs handoffErrors",
+      "input": "replies with the PR merge command plus the admin flag, plus the auto flag, and together with a push",
+      "response": "merge-form error for each",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a merge that bypasses required checks"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-HOOK-MERGE-ADMIN-DENY] A merge handoff with an admin or auto flag, or in the same reply as a push, is refused"
+    },
+    {
+      "id": "GOV-935-HOOK-GIT-WRITE-DENY",
+      "invariant": "A read-only repository subcommand with an output-file write is refused",
+      "actor": "any session",
+      "resource": "block-mutating-git.ps1 PreToolUse",
+      "input": "read-only subcommands carrying an output-file option",
+      "response": "deny decision",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a repository file written through a read-only command"
+      ],
+      "testFile": "scripts/workflow-gates/git-policy.selftest.mjs",
+      "testName": "[GOV-935-HOOK-GIT-WRITE-DENY] A read-only repository subcommand with an output-file write is refused"
+    },
+    {
+      "id": "GOV-935-CI-DIFF-DENY",
+      "invariant": "A changed executable policy file outside every governance contract scope fails the diff check",
+      "actor": "CI Task Security Contracts job",
+      "resource": "cli.mjs validateDiff",
+      "input": "diff with a changed scripts/workflow-gates .mjs file and no governance contract",
+      "response": "outside every changed governance contract scope",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an executable policy change merged without a contract"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-CI-DIFF-DENY] A changed executable policy file outside every governance contract scope fails the diff check"
+    },
+    {
+      "id": "GOV-935-CI-DIFF-ALLOW",
+      "invariant": "A changed executable policy file inside a reviewed governance contract passes the release diff check",
+      "actor": "CI Task Security Contracts job",
+      "resource": "cli.mjs validateDiff phase release",
+      "input": "diff with the policy file and its reviewed governance contract",
+      "response": "no error for that file",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a covered governance change refused"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-CI-DIFF-ALLOW] A changed executable policy file inside a reviewed governance contract passes the release diff check"
+    },
+    {
+      "id": "GOV-935-CI-REBASE-DENY",
+      "invariant": "A rulesRebase whose by-contract is not in the same diff is refused",
+      "actor": "CI Task Security Contracts job",
+      "resource": "cli.mjs validateDiff",
+      "input": "diff with a rebased contract but without its governance by-contract",
+      "response": "named rebase error",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a rebase accepted without its approving governance change"
+      ],
+      "testFile": "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "testName": "[GOV-935-CI-REBASE-DENY] A rulesRebase whose by-contract is not in the same diff is refused"
+    },
+    {
+      "id": "GOV-935-CI-PR-STATUS-ALLOW",
+      "invariant": "A green pull_request run with the release-only job skipped counts as green",
+      "actor": "owner merge check",
+      "resource": "ci-status.mjs ciErrors PR mode",
+      "input": "injected PR run, all required jobs success, Release Security Required skipped",
+      "response": "no error",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a green PR reported red"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-CI-PR-STATUS-ALLOW] A green pull_request run with the release-only job skipped counts as green"
+    },
+    {
+      "id": "GOV-935-CI-PR-STATUS-DENY",
+      "invariant": "A failed, pending or mismatched PR run is not green",
+      "actor": "owner merge check",
+      "resource": "ci-status.mjs ciErrors PR mode",
+      "input": "injected PR runs with a failed job, a pending job and a different head SHA",
+      "response": "error for each",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a merge on a red or stale PR run"
+      ],
+      "testFile": "scripts/workflow-gates/publication-safety.selftest.mjs",
+      "testName": "[GOV-935-CI-PR-STATUS-DENY] A failed, pending or mismatched PR run is not green"
+    },
+    {
+      "id": "GOV-935-CI-RULESET-DENY",
+      "invariant": "The ruleset manifest without every PR-only rule and both required checks is refused",
+      "actor": "CI Governance Check",
+      "resource": "check-workflow.mjs validateRuleset",
+      "input": "manifests missing pull_request, required checks, strict mode or one context",
+      "response": "validation error for each",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an unprotected main accepted as configured"
+      ],
+      "testFile": "scripts/workflow-gates/workflow.selftest.mjs",
+      "testName": "[GOV-935-CI-RULESET-DENY] The ruleset manifest without every PR-only rule and both required checks is refused"
+    }
+  ],
+  "report": "docs/sessions/evidence/task935/impl/governance-report.json",
+  "sensitivity": "docs/sessions/evidence/task935/sensitivity/sensitivity.json",
+  "review": {
+    "role": "Opus",
+    "decision": "APPROVED WITH NOTES",
+    "evidence": "docs/sessions/evidence/task935/review/review-935.md",
+    "evidenceSha256": "17862f21ff92c58171f990c21e5dd4e03dddb6dd976146433563443e2a2a89a5",
+    "scopeSha256": "3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0",
+    "reportSha256": "c609d4f797df34c8bd3caba8e872598dc2a1d8accf55bb5db5758b3c7b4382cd"
+  }
+}

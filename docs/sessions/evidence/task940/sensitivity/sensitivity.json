@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
+  "cases": [
+    {
+      "id": "GOV-940-VAL-SCOPE-DENY",
+      "testName": "[GOV-940-VAL-SCOPE-DENY] A scope entry never hides a case test file, an out-of-scope file, an unapproved owner or a broken chain",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-VAL-SCOPE-DENY.txt",
+      "artifactSha256": "eb2889168890c5471897a1c4108515fa7228794cc6b7fc30dbef6e5dce6bb11d"
+    },
+    {
+      "id": "GOV-940-CI-SCOPE-DENY",
+      "testName": "[GOV-940-CI-SCOPE-DENY] A re-signed scope entry never hides an unlisted change and needs its approving contract in the diff",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-CI-SCOPE-DENY.txt",
+      "artifactSha256": "6bf17226bd793be9e467aeee373cf7a356cb2db75b6b79a6ddb2348efee75ec2"
+    },
+    {
+      "id": "GOV-940-HOOK-FORGED-DENY",
+      "testName": "[GOV-940-HOOK-FORGED-DENY] A forged or invalid rules entry does not exempt a write to a governance scope file",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "artifact": "docs/sessions/evidence/task940/sensitivity/GOV-940-HOOK-FORGED-DENY.txt",
+      "artifactSha256": "60c9b1d8c9ef9367c66033c7031cca2048bce5d3e842d477dfe48f3deff234d5"
+    }
+  ]
+}

@@ -61,9 +61,13 @@ export function workflowRuleInputs(root, paths, overrides) {
   }
   return [...new Set(expanded)];
 }
+const RUNTIME_CONFIG = /^(?:next|vitest(?:\.[a-z0-9_-]+)?)\.config\.[cm]?[jt]s$/;
+const RUNTIME_FILES = ['package.json', 'package-lock.json', 'tsconfig.json', '.nvmrc', 'src/tests/setup.ts', 'src/tests/integration/setup.ts'];
+// Runtime files bound into every scope digest; a scope rebase never accepts them (owner D9, Task 940).
+export const isRuntimeFile = file => RUNTIME_FILES.includes(file) || RUNTIME_CONFIG.test(file);
 export function scopeDigest(root, contract, overrides) {
-  const configs = readdirSync(root).filter(file => /^(?:next|vitest(?:\.[a-z0-9_-]+)?)\.config\.[cm]?[jt]s$/.test(file));
-  const runtime = ['package.json', 'package-lock.json', 'tsconfig.json', '.nvmrc', 'src/tests/setup.ts', 'src/tests/integration/setup.ts', ...configs]
+  const configs = readdirSync(root).filter(file => RUNTIME_CONFIG.test(file));
+  const runtime = [...RUNTIME_FILES, ...configs]
     .filter(file => existsSync(resolve(root, file)));
   let files = [...new Set([...contract.scope, ...(contract.inputs || []), ...workflowRuleInputs(root, contract.rules || [], overrides), ...contract.cases.map(row => row.testFile), ...runtime])];
   // A governance report records this digest, so its own bytes cannot be part of it (a fixed point is impossible).
@@ -90,44 +94,102 @@ function readContractFile(root, file) {
   try { return JSON.parse(readFileSync(safePath(root, file), 'utf8')); }
   catch (error) { throw new Error(/Missing file/.test(error.message) ? error.message : `Malformed or unreadable JSON: ${file}`); }
 }
-// The rebase evidence names the changed rule files as `- <path>` bullets under `## Changed rule files`.
-export function rebaseFiles(text) {
-  const section = String(text).replace(/\r\n/g, '\n').split(/^## /m).find(part => /^Changed rule files\s*\n/.test(part));
+// Rebase evidence names its files as `- <path>` bullets under `## Changed rule files` or `## Changed scope files`.
+function evidenceList(text, heading) {
+  const section = String(text).replace(/\r\n/g, '\n').split(/^## /m).find(part => new RegExp(`^${heading}\\s*\\n`).test(part));
   if (!section) return [];
   return [...section.matchAll(/^- `?([^`\s]+)`?\s*$/gm)].map(match => match[1]);
 }
-// Task 935 R10: a reviewed contract made stale only by rule files that a reviewed governance contract approved.
-export function rulesRebaseErrors(root, contract, current = scopeDigest(root, contract)) {
-  const rebase = contract.review?.rulesRebase, errors = [];
-  const check = (ok, message) => { if (!ok) errors.push(message); };
-  if (!rebase || typeof rebase !== 'object' || Array.isArray(rebase)) return ['rulesRebase must be an object'];
-  check(rebase.originalScopeSha256 === contract.review.scopeSha256, 'originalScopeSha256 is not the reviewed scope digest');
-  check(rebase.rebasedScopeSha256 === current, 'rebasedScopeSha256 is not the current scope digest');
-  let listed = [];
+export const rebaseFiles = text => evidenceList(text, 'Changed rule files');
+export const scopeRebaseFiles = text => evidenceList(text, 'Changed scope files');
+const REBASE_FIELDS = ['by', 'evidence', 'evidenceSha256', 'originalScopeSha256', 'rebasedScopeSha256'];
+// Task 940 R1: the legacy `review.rulesRebase` is the implicit first `rules` entry, followed by `review.rebases` in
+// order. Malformed `rebases` values are named errors and never enter the chain.
+export function rebaseChain(contract) {
+  const review = contract?.review, entries = [], errors = [];
+  if (review?.rulesRebase) entries.push({ kind: 'rules', entry: review.rulesRebase, label: 'rulesRebase', legacy: true });
+  if (review && typeof review === 'object' && Object.hasOwn(review, 'rebases')) {
+    if (!Array.isArray(review.rebases)) errors.push('rebases: must be an array');
+    else review.rebases.forEach((entry, i) => {
+      const label = `rebases: entry ${i + 1}`;
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return errors.push(`${label} must be an object`);
+      if (!['rules', 'scope'].includes(entry.kind)) return errors.push(`${label} has unknown kind ${JSON.stringify(entry.kind)}`);
+      const missing = REBASE_FIELDS.filter(field => typeof entry[field] !== 'string' || !entry[field]);
+      if (missing.length) return errors.push(`${label} is missing ${missing.join(', ')}`);
+      entries.push({ kind: entry.kind, entry, label, legacy: false });
+    });
+  }
+  return { entries, errors };
+}
+function rebaseEvidence(root, entry, errors, list) {
   try {
-    check(isEvidencePath(rebase.evidence || ''), 'evidence must be under docs/sessions/evidence/');
-    safePath(root, rebase.evidence);
-    check(rebase.evidenceSha256 === digest(root, [rebase.evidence]), 'evidence hash is stale');
-    listed = rebaseFiles(readFileSync(safePath(root, rebase.evidence), 'utf8'));
-  } catch (error) { errors.push(`evidence unavailable (${error.message})`); }
+    if (!isEvidencePath(entry.evidence || '')) errors.push('evidence must be under docs/sessions/evidence/');
+    safePath(root, entry.evidence);
+    if (entry.evidenceSha256 !== digest(root, [entry.evidence])) errors.push('evidence hash is stale');
+    return list(readFileSync(safePath(root, entry.evidence), 'utf8'));
+  } catch (error) { errors.push(`evidence unavailable (${error.message})`); return []; }
+}
+// Task 935 R10 / Task 940 R2: rule files of this contract that a reviewed governance contract approved.
+export function rulesEntryErrors(root, contract, entry) {
+  const errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return ['rulesRebase must be an object'];
+  const listed = rebaseEvidence(root, entry, errors, rebaseFiles);
   check(listed.length > 0, 'evidence lists no changed rule files');
   const inputs = workflowRuleInputs(root, contract.rules || []);
   for (const file of listed) check(/^\.claude\/rules\/.+\.md$/.test(file) && inputs.includes(file), `${file} is not a rule input of this contract`);
   try {
-    const by = readContractFile(root, rebase.by);
-    check(by.kind === 'governance' && by.stage === 'reviewed', `${rebase.by} is not a reviewed governance contract`);
-    for (const file of listed) check(Array.isArray(by.scope) && by.scope.includes(file), `${file} is outside the scope of ${rebase.by}`);
+    const by = readContractFile(root, entry.by);
+    check(by.kind === 'governance' && by.stage === 'reviewed', `${entry.by} is not a reviewed governance contract`);
+    for (const file of listed) check(Array.isArray(by.scope) && by.scope.includes(file), `${file} is outside the scope of ${entry.by}`);
   } catch (error) { errors.push(`approving governance contract unavailable (${error.message})`); }
   return errors;
 }
-// A recorded scope hash is current, or it is the original of a valid rule-only rebase.
+// Task 940 R3 (owner D9): non-test, non-runtime scope files of this contract owned by a later reviewed contract.
+export function scopeEntryErrors(root, contract, entry) {
+  const errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  const listed = rebaseEvidence(root, entry, errors, scopeRebaseFiles);
+  check(listed.length > 0, 'evidence lists no changed scope files');
+  const scope = Array.isArray(contract.scope) ? contract.scope : [];
+  const tests = new Set((Array.isArray(contract.cases) ? contract.cases : []).map(row => row?.testFile));
+  for (const file of listed) {
+    check(scope.includes(file), `${file} is not in the scope of this contract`);
+    check(!tests.has(file), `${file} is a test file of a case of this contract; case tests are never rebased`);
+    check(!isRuntimeFile(file), `${file} is a runtime file; runtime files are never rebased`);
+  }
+  try {
+    const by = readContractFile(root, entry.by);
+    check(by.task !== contract.task, `${entry.by} is the rebased contract itself`);
+    check(['product', 'governance'].includes(by.kind) && by.stage === 'reviewed', `${entry.by} is not a reviewed product or governance contract`);
+    for (const file of listed) check(Array.isArray(by.scope) && by.scope.includes(file), `${file} is outside the scope of ${entry.by}`);
+  } catch (error) { errors.push(`approving contract unavailable (${error.message})`); }
+  return errors;
+}
+// Task 940 R1 (c): entry 1 starts at the reviewed digest, each entry continues the previous one, the last one is current.
+export function rebaseChainErrors(root, contract, current = scopeDigest(root, contract)) {
+  const { entries, errors } = rebaseChain(contract);
+  let previous = contract.review?.scopeSha256;
+  entries.forEach(({ kind, entry, label, legacy }, i) => {
+    if (legacy && (typeof entry !== 'object' || Array.isArray(entry))) { errors.push(`${label}: rulesRebase must be an object`); previous = undefined; return; }
+    const problems = [];
+    if (entry.originalScopeSha256 !== previous) problems.push(i === 0 ? 'originalScopeSha256 is not the reviewed scope digest' : 'originalScopeSha256 does not continue the previous rebase entry');
+    if (i === entries.length - 1 && entry.rebasedScopeSha256 !== current) problems.push('rebasedScopeSha256 is not the current scope digest');
+    problems.push(...(kind === 'rules' ? rulesEntryErrors : scopeEntryErrors)(root, contract, entry));
+    errors.push(...problems.map(problem => `${label}: ${problem}`));
+    previous = entry.rebasedScopeSha256;
+  });
+  return errors;
+}
+// A recorded scope hash is current, or it is the reviewed digest of a valid rebase chain (Task 940 R1 (d)).
 export function scopeHashErrors(root, contract, recorded, stale) {
   const current = scopeDigest(root, contract);
-  if (recorded === current) return [];
-  if (!contract.review?.rulesRebase) return [stale];
-  const problems = rulesRebaseErrors(root, contract, current);
-  if (!problems.length && recorded === contract.review.rulesRebase.originalScopeSha256) return [];
-  return [stale, ...problems.map(problem => `rulesRebase: ${problem}`)];
+  const { entries, errors: shape } = rebaseChain(contract);
+  if (recorded === current) return shape;
+  if (!entries.length && !shape.length) return [stale];
+  const problems = rebaseChainErrors(root, contract, current);
+  if (!problems.length && recorded === contract.review.scopeSha256) return [];
+  return [stale, ...problems];
 }
 
 export function validateContract(root, value, { phase = 'plan' } = {}) {

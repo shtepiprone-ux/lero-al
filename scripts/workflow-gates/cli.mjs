@@ -4,7 +4,7 @@ import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync, rmSync
 import { join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateContract, validateReport, validateGovernanceReport, requiredResults, safePath, digest, planDigest, scopeDigest,
-  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles } from './contract.mjs';
+  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles, scopeRebaseFiles, rebaseChain } from './contract.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 export function readJson(root, file) {
@@ -55,28 +55,46 @@ export function gitBaseReader(root, base) {
 }
 const canonicalJson = value => JSON.stringify(value, (_, v) => v && typeof v === 'object' && !Array.isArray(v)
   ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) : v);
-// Task 935 R10(c): the base contents of the listed rule files must reproduce the reviewed scope (a new rebase), or
-// the base already carried this exact rebase. Any other changed digest input (scope, inputs, tests, runtime) stays stale.
+// Task 935 R10(c) / Task 940 R4: the rebase chain at the diff base must be a prefix of the current chain. The entries
+// after it are new: the base contents of every file they list must reproduce the last digest of the base chain (the
+// reviewed digest when it is empty), and each approving contract must be part of this diff and validate. Any other
+// changed digest input (scope, inputs, case tests, runtime) stays stale. A retained chain adds nothing here; the
+// file-level chain check still compares its last digest with the current scope.
 export function diffRebaseErrors(root, path, contract, { readBase, selected, issuesByPath, phase }) {
-  const rebase = contract.review?.rulesRebase;
-  if (!rebase) return [];
-  if (typeof readBase !== 'function') return ['rulesRebase: the diff base is required to verify a rule-only rebase'];
-  let listed = [];
-  try { listed = rebaseFiles(readFileSync(safePath(root, rebase.evidence), 'utf8')); }
-  catch (error) { return [`rulesRebase: evidence unavailable (${error.message})`]; }
-  const baseDigest = scopeDigest(root, contract, new Map(listed.map(file => [file, readBase(file)])));
+  const { entries } = rebaseChain(contract);
+  if (!entries.length) return [];
+  if (typeof readBase !== 'function') {
+    return [entries[0].legacy ? 'rulesRebase: the diff base is required to verify a rule-only rebase' : 'rebases: the diff base is required to verify a rebase'];
+  }
   let previous = null;
   try { previous = JSON.parse(readBase(path) ?? 'null'); } catch { previous = null; }
-  const prior = previous?.review?.rulesRebase;
-  if (prior && canonicalJson(prior) === canonicalJson(rebase)) {
-    return baseDigest === rebase.rebasedScopeSha256 ? [] : ['rulesRebase: digest inputs changed after the retained rebase; the review is stale'];
+  // R4 (e): a review written inside this diff (absent or different at the base) has no base anchor; (c) still applies.
+  const reviewedAtBase = Boolean(previous?.review?.scopeSha256) && previous.review.scopeSha256 === contract.review?.scopeSha256;
+  const base = reviewedAtBase ? rebaseChain(previous).entries : [];
+  const same = (a, b) => a.legacy === b.legacy && canonicalJson(a.entry) === canonicalJson(b.entry);
+  let first = 0;
+  while (first < base.length && first < entries.length && same(base[first], entries[first])) first += 1;
+  const errors = base.slice(first).map((entry, i) => `${entry.label}: the entry recorded at the diff base was ${first + i < entries.length ? 'edited or replaced' : 'removed'}`);
+  const fresh = entries.slice(first);
+  if (!fresh.length) return errors;
+  if (reviewedAtBase) {
+    const listed = new Set();
+    for (const { kind, entry, label } of fresh) {
+      try { for (const file of (kind === 'rules' ? rebaseFiles : scopeRebaseFiles)(readFileSync(safePath(root, entry.evidence), 'utf8'))) listed.add(file); }
+      catch (error) { errors.push(`${label}: evidence unavailable (${error.message})`); }
+    }
+    const anchor = first === 0 ? previous.review.scopeSha256 : base[first - 1].entry.rebasedScopeSha256;
+    if (scopeDigest(root, contract, new Map([...listed].map(file => [file, readBase(file)]))) !== anchor) {
+      errors.push('Independent review scope is stale', fresh.length === 1 && fresh[0].legacy
+        ? 'rulesRebase: files other than the listed rule files changed since the review'
+        : 'rebases: files other than the listed files changed since the review');
+    }
   }
-  const errors = [];
-  const anchored = baseDigest === rebase.originalScopeSha256
-    || (prior && previous.review?.scopeSha256 === contract.review?.scopeSha256 && prior.rebasedScopeSha256 === baseDigest);
-  if (!anchored) errors.push('Independent review scope is stale', 'rulesRebase: files other than the listed rule files changed since the review');
-  if (!selected.includes(rebase.by)) errors.push(`rulesRebase: approving governance contract ${rebase.by} is not part of this diff`);
-  else if (issuesByPath.get(rebase.by)?.length) errors.push(`rulesRebase: approving governance contract ${rebase.by} does not validate at phase ${phase}`);
+  for (const { entry, label, legacy } of fresh) {
+    const owner = legacy ? 'approving governance contract' : 'approving contract';
+    if (!selected.includes(entry.by)) errors.push(`${label}: ${owner} ${entry.by} is not part of this diff`);
+    else if (issuesByPath.get(entry.by)?.length) errors.push(`${label}: ${owner} ${entry.by} does not validate at phase ${phase}`);
+  }
   return errors;
 }
 export function validateDiff(root, files, { phase = 'verify', base, readBase = base ? gitBaseReader(root, base) : undefined } = {}) {
@@ -113,7 +131,7 @@ export function validateDiff(root, files, { phase = 'verify', base, readBase = b
   }
   for (const { path, contract } of contracts) {
     const issues = [...issuesByPath.get(path)];
-    if (phase !== 'plan' && contract.review?.rulesRebase) {
+    if (phase !== 'plan') {
       for (const issue of diffRebaseErrors(root, path, contract, { readBase, selected, issuesByPath, phase })) if (!issues.includes(issue)) issues.push(issue);
     }
     errors.push(...issues.map(e => `${path}: ${e}`));

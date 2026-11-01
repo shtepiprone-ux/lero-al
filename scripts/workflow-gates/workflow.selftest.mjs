@@ -47,11 +47,17 @@ test('prepared direct-push safety ruleset offers no bypass actor', () => {
   assert.match(errors, /bypass/);
 });
 
-test('owner direct-main policy is preserved without mandatory PRs or pre-existing commit checks', () => {
+test('owner PR policy (2026-11-01) requires a PR and both stable Actions summaries on an up-to-date branch', () => {
   const ruleset = read('scripts/workflow-gates/main.ruleset.json');
-  assert.equal(ruleset.rules.some(r => ['pull_request', 'required_status_checks'].includes(r.type)), false);
-  const plant = structuredClone(ruleset); plant.rules.push({ type: 'pull_request' });
-  assert.match(validateRuleset(plant).join('\n'), /direct.push/i);
+  for (const type of ['pull_request', 'required_status_checks']) {
+    const plant = structuredClone(ruleset); plant.rules = plant.rules.filter(r => r.type !== type);
+    assert.match(validateRuleset(plant).join('\n'), new RegExp(type), type);
+  }
+  for (const mutate of [p => p.required_status_checks.pop(), p => { p.strict_required_status_checks_policy = false; },
+    p => { delete p.required_status_checks[0].integration_id; }]) {
+    const plant = structuredClone(ruleset); mutate(plant.rules.find(r => r.type === 'required_status_checks').parameters);
+    assert.match(validateRuleset(plant).join('\n'), /stable summaries/);
+  }
 });
 
 test('disabled mandatory steps and narrowed hook matchers cannot pass structural validation', () => {

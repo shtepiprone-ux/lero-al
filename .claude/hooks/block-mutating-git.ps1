@@ -6,12 +6,15 @@
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+$utf8 = New-Object System.Text.UTF8Encoding($false)
+[Console]::InputEncoding = $utf8
+[Console]::OutputEncoding = $utf8
 
 $readOnlyGitSubcommands = @(
     'status', 'diff', 'show', 'log', 'grep', 'hash-object', 'rev-list',
     'rev-parse', 'ls-files', 'ls-tree', 'cat-file', 'merge-base',
     'check-attr', 'check-ignore', 'describe', 'blame', 'shortlog',
-    'for-each-ref', 'name-rev', 'remote', 'branch'
+    'for-each-ref', 'name-rev', 'remote', 'branch', 'ls-remote'
 )
 
 $safeGitGlobalOptions = @(
@@ -94,6 +97,9 @@ function Get-GitSubcommand([string[]]$Arguments) {
 }
 
 function Test-ReadOnlyGitInvocation([string[]]$Arguments) {
+    foreach ($argument in $Arguments) {
+        if ($argument -match '^--(?:output|ext-diff|textconv|upload-pack)(?:=|$)') { return $false }
+    }
     $subcommand = Get-GitSubcommand $Arguments
     if ($null -eq $subcommand -or $subcommand -notin $readOnlyGitSubcommands) {
         return $false
@@ -108,7 +114,7 @@ function Test-ReadOnlyGitInvocation([string[]]$Arguments) {
 
     if ($subcommand -eq 'hash-object') {
         foreach ($argument in $Arguments) {
-            if ($argument -in @('-w', '--write')) {
+            if ($argument -eq '--write' -or $argument -cmatch '^-[^-]*w') {
                 return $false
             }
         }
@@ -200,11 +206,18 @@ function Find-GitPolicyViolation([string]$Command, [int]$Depth = 0) {
         }
 
         if (-not $commandName) {
+            if ($commandAst.InvocationOperator -in @('Ampersand', 'Dot')) {
+                return 'Dynamic executable names cannot be verified against the read-only Git policy; use a literal executable.'
+            }
             continue
         }
 
         $leaf = Get-ExecutableLeaf $commandName
         $arguments = @($elements | Select-Object -Skip 1)
+
+        if ($leaf -match '^(?:node|python[0-9.]*|ruby|perl)(?:\.exe)?$' -and (Test-ContainsGitText ($arguments -join ' '))) {
+            return 'Git execution through an interpreter cannot bypass the owner-only Git policy.'
+        }
 
         if ($leaf -in $shellWrappers) {
             $payload = Get-WrapperPayload $leaf $arguments

@@ -106,3 +106,17 @@ test('PS 5.1: the final transcript message includes every text block and superse
   assert.equal(run(event, [['APPROVED', 'BLOCKED']]).status, 2);
   assert.equal(run(event, ['APPROVED', ['Evidence missing.', 'BLOCKED']]).status, 0);
 });
+
+test('incident: an APPROVED response cannot offer an untested push even with no owned writes', { skip: !windows }, () => {
+  const response = 'APPROVED\n```powershell\ngit push origin main\n```';
+  for (const event of [{ model: 'opus' }, {}, { model: 'sonnet' }, { stop_hook_active: true }]) {
+    const result = run({ ...event, last_assistant_message: response }, [], { writes: [], cleanStatus: true });
+    assert.equal(result.status, 2, result.stderr || 'Untested push escaped through a role/ownership shortcut');
+  }
+});
+
+test('incident recovery: a later factual blocked reply needs no push evidence or new session', { skip: !windows }, () => {
+  const result = run({ last_assistant_message: 'Local verification is incomplete.\nBLOCKED', stop_hook_active: true },
+    ['APPROVED\ngit push origin main'], { writes: [], cleanStatus: true });
+  assert.equal(result.status, 0, result.stderr);
+});

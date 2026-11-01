@@ -1,7 +1,9 @@
 ## GR-6 — Completed Opus task-design/review cycles provide the owner-run Git handoff
 
 Binds `CLAUDE.md` → Git policy. **Task design** ends with `git add` + `git commit`, explicit paths, **never** `git
-push`. **An approved review** ends with `git add` + `git commit` + `git push <verified-remote> <verified-branch>`.
+push`. **An approved review** follows `.claude/rules/shared/git-publication.md` (owner decision 2026-11-01):
+task-branch commit, then the branch push and PR, a separate merge handoff only after green PR checks, and exact-SHA
+main CI before publication is reported complete. Never a push to main. Automatic handoff requirements never waive these gates.
 A **non-approved review** contains no git command **for the implementation** — and that does **not** suppress the
 task-design block for documents the same response authored. Conflating the two is how the block went missing on
 2026-09-10.
@@ -19,8 +21,8 @@ identity trailer; do not substitute a different Claude model or address to evade
 
 **Role boundary:** GR-6 and `.claude/hooks/orchestrator-response-gate.ps1` are Opus-only. Sonnet's executor
 handoff ends with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BLOCKED` and contains
-no `git add`, `git commit`, or `git push` command. Missing or ambiguous hook role metadata fails open; it never
-turns a Sonnet backlog/session-log write into a Git-handoff demand.
+no `git add`, `git commit`, or `git push` command. Missing role metadata never creates a Sonnet Git-handoff demand.
+The separate publication guard checks push evidence for every role, including unknown roles, before any shortcut.
 
 **Receipt:** `GR-6 HANDOFF EMITTED — <task-design | approved-review | none: no artifact written>.`
 

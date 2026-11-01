@@ -2,7 +2,7 @@
 import { readFileSync, existsSync, realpathSync } from 'node:fs';
 import { resolve, relative, isAbsolute, dirname, basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateContract, validateReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest } from './contract.mjs';
+import { validateContract, validateReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs } from './contract.mjs';
 import { readJson, allContracts } from './cli.mjs';
 import { sessionRole } from './session-role.mjs';
 import { blockedResponse, plainResponseLines, hasGitHandoff } from './response-state.mjs';
@@ -232,7 +232,7 @@ export function evaluateHook(root, event, transcript) {
       if (!isTaskDocument(contract.task || '')) errors.push('Execution requires an active task; archived receipts retain review evidence only');
       const outside = files.filter(file => !inScope(root, contract.scope, file));
       if (!errors.length && !outside.length) {
-        const required = [...new Set([contract.task, ...contract.rules])];
+        const required = [...new Set([contract.task, ...workflowRuleInputs(root, contract.rules)])];
         const read = completedReads(root, transcript, required);
         const unread = required.filter(file => !read.includes(file));
         if (!unread.length) return [];

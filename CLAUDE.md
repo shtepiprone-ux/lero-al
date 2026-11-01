@@ -59,6 +59,9 @@ new adaptation decisions require the mobile contract's source basis.
 
 ## Evidence, scope, and Git
 
+- Before any Git handoff read `.claude/rules/shared/git-publication.md`. Owner decision 2026-11-01: main changes
+  only through a PR. Commit on a task branch, push that branch after `APPROVED`, merge only after
+  `ci-status.mjs --pr` confirms green PR checks, then confirm the main push run with `ci-status.mjs`.
 - A report is not proof. Before publishing or revising a kickoff, use the claim-to-evidence contract: a material fact
   has a current source/artifact locator and literal observation; uncertainty is `BLOCKED`, never a plausible route.
 - Project files are English only, owner quotes included (faithful translation); only product localization data may

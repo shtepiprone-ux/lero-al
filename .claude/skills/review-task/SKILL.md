@@ -40,7 +40,7 @@ newly-enrolled component → token-owner → Story contract as `NEEDS REVISION`.
 | R4. Verify assertions and execution | same phase: inspect fixtures/mocks, independently run required tests, inspect deliberate-break and cleanup proof | actual collected assertions and boundary evidence for the reviewed candidate |
 | R5. Verify applicable UI and integration | same phase: canonical owner, direct/composition/route proof, locales/widths/portals and non-Q0 build | required final artifacts match the candidate; justified N/A for unrelated UI checks |
 | R6. Complete the finding set | `review/03-decision-closure.md`: reconcile all ACs, root causes and regressions | consolidated findings attributed to implementation, task design or environment |
-| R7. Decide and close or continue | same phase: recheck hashes; apply shared readiness to corrections and next assigned stages | whole-task approval, verified next route, or concrete external blocker |
+| R7. Decide and close or continue | same phase and `shared/git-publication.md`: recheck hashes, readiness, PR checks and post-merge CI at their boundaries | whole-task approval, verified next route, or concrete external blocker; main changes only through a green PR |
 
 Do not issue a final verdict after the first defect while other in-scope criteria remain unchecked. Report urgent
 findings immediately and continue the independent audit; genuinely unavailable evidence produces a bounded partial

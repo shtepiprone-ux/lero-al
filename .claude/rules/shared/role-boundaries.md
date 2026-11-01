@@ -55,6 +55,8 @@ If the owner says "begin" or "continue", resume the same cycle from its checkpoi
 
 ## Evidence and Git
 
+- `shared/git-publication.md` governs commit/push/CI boundaries for all models. Unknown role metadata never waives
+  push evidence; successful task review never means that remote CI has finished.
 - A claim is `FACT` only when the current session inspected the supporting source, command output, or rendered proof.
   The mandatory claim ledger, literal-observation format, and stop states are in `shared/claim-evidence-contract.md`.
   Otherwise label it `INFERENCE`, `UNVERIFIED`/`UNKNOWN`, `CONFLICT`, or `BLOCKED`; an unresolved label cannot enter

@@ -1,0 +1,6 @@
+rule inputs: .claude/rules/shared/security-testing.md, .claude/rules/shared/security-test-quality.md, .claude/rules/shared/security-test-environment.md, .claude/rules/shared/security-test-boundaries.md, .claude/rules/shared/workflow-gates.md, .claude/rules/shared/workflow-contract.md, .claude/rules/shared/workflow-evidence.md, .claude/rules/shared/workflow-ci.md, .claude/rules/shared/git-publication.md
+changed since d8a07a3c7: .claude/rules/shared/security-testing.md, .claude/rules/shared/workflow-gates.md, .claude/rules/shared/workflow-contract.md, .claude/rules/shared/workflow-evidence.md, .claude/rules/shared/workflow-ci.md, .claude/rules/shared/git-publication.md
+review.scopeSha256  a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74
+base-recomputed     a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74 MATCH
+current             a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302
+all changed in 935 scope: true

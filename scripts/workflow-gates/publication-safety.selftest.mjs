@@ -60,39 +60,67 @@ test('push detection covers executable fences, global options, chained commands,
   for (const text of ['Push is currently blocked.', '> git push origin main', 'git commit -m "fix: push safety"',
     'Use git to publish after review.']) assert.deepEqual(pushCommands(text), [], text);
 });
-test('incident 2026-11-01: inline code, table cells and labelled prose are push handoffs too', () => {
+const orchestrator = { agent_type: 'orchestrator' };
+const activeRules = async () => [];
+// Incident 2026-11-01: inline code, table cells and labelled prose are push handoffs too.
+test('[GOV-935-HOOK-PUSH-INLINE-DENY] A push command written inline, in a table cell or after a label is a push handoff', async () => {
   for (const [text, command] of [
     ['APPROVED\nУ окремому вікні PowerShell виконай: `git push origin main`', 'git push origin main'],
     ['| 2 | `git push origin main` |', 'git push origin main'],
     ['**Push:** git push origin main', 'git push origin main'],
     ['The command `git push` requires verification.', 'git push'],
     ['Run `git push -u origin task/923-fix` now.', 'git push -u origin task/923-fix'],
-  ]) assert.deepEqual(pushCommands(text), [command], text);
+  ]) {
+    assert.deepEqual(pushCommands(text), [command], text);
+    // A detected handoff is checked: without the orchestrator role and conditions it is refused.
+    assert.ok((await handoffErrors('.', { last_assistant_message: text }, { rules: activeRules })).length, text);
+  }
 });
-const orchestrator = { agent_type: 'orchestrator' };
-const activeRules = async () => [];
-test('main is reachable only through a PR: direct, bare, forced or refspec pushes are rejected', async () => {
+test('[GOV-935-HOOK-PUSH-MAIN-DENY] A push handoff to main, HEAD, a refspec or a bare push is refused', async () => {
+  const mainOnlyViaPr = ['git push origin main', 'git push', 'git push origin', 'git push origin HEAD', 'git push origin task/x:main', 'git push -u origin task/x main'];
   for (const command of ['git push origin main', 'git push', 'git push origin', 'git push origin HEAD', 'git push origin task/x:main',
     'git push --force origin task/x', 'git push origin +task/x', 'git push origin --delete task/x', 'git push --tags origin task/x',
     'git push -u origin task/x main', 'git push origin refs/heads/task/x']) {
     const errors = await handoffErrors('.', { ...orchestrator, last_assistant_message: `APPROVED\n\`${command}\`` }, { rules: activeRules });
     assert.ok(errors.length, command);
+    if (mainOnlyViaPr.includes(command)) assert.match(errors.join('\n'), /Direct push to main is prohibited/, command);
   }
+});
+test('[GOV-935-HOOK-PUSH-BRANCH-ALLOW] An approved single task-branch push with an active ruleset is allowed', async () => {
   for (const command of ['git push -u origin task/923-fix', 'git push origin task/main-nav', 'git push --set-upstream origin fix/locale.6']) {
     assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: `APPROVED\n\`${command}\`` }, { rules: activeRules }), [], command);
   }
 });
-test('a branch push or merge handoff needs the orchestrator, APPROVED and an active GitHub ruleset', async () => {
+test('a branch push or merge handoff needs the orchestrator and APPROVED', async () => {
   const text = 'APPROVED\n`git push -u origin task/923-fix`';
   for (const event of [{}, { model: 'sonnet' }, { agent_type: 'executor' }]) {
     assert.ok((await handoffErrors('.', { ...event, last_assistant_message: text }, { rules: activeRules })).length);
   }
   assert.ok((await handoffErrors('.', { ...orchestrator, last_assistant_message: '`git push -u origin task/923-fix`' }, { rules: activeRules })).length);
+  assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: 'APPROVED\n`gh pr merge 12 --squash --delete-branch`' }, { rules: activeRules }), []);
+});
+test('[GOV-935-HOOK-RULESET-ERROR] A push handoff fails closed when the main ruleset is missing, inactive or unreadable', async () => {
+  const text = 'APPROVED\n`git push -u origin task/923-fix`';
   assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: text }, { rules: async () => ['inactive'] }), ['inactive']);
+  await assert.rejects(handoffErrors('.', { ...orchestrator, last_assistant_message: text }, { rules: async () => { throw new Error('unreadable'); } }), /unreadable/);
+  const realFetch = globalThis.fetch;
+  try {
+    for (const [fetch, pattern] of [
+      [async () => { throw new Error('offline'); }, /GitHub branch rules are unavailable: offline/],
+      [async () => ({ ok: false, status: 404 }), /HTTP 404/],
+      [async () => ({ ok: true, json: async () => null }), /GitHub branch rules for main are unavailable/],
+      [async () => ({ ok: true, json: async () => [] }), /main is not protected by the active pull_request rule/],
+    ]) {
+      globalThis.fetch = fetch;
+      assert.match((await handoffErrors('.', { ...orchestrator, last_assistant_message: text })).join('\n'), pattern);
+    }
+  } finally { globalThis.fetch = realFetch; }
+});
+test('[GOV-935-HOOK-MERGE-ADMIN-DENY] A merge handoff with an admin or auto flag, or in the same reply as a push, is refused', async () => {
+  const text = 'APPROVED\n`git push -u origin task/923-fix`';
   for (const merge of ['gh pr merge 12 --squash --admin', 'gh pr merge 12 --auto --squash', 'gh pr merge --squash', 'gh pr merge 12']) {
     assert.ok((await handoffErrors('.', { ...orchestrator, last_assistant_message: `APPROVED\n\`${merge}\`` }, { rules: activeRules })).length, merge);
   }
-  assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: 'APPROVED\n`gh pr merge 12 --squash --delete-branch`' }, { rules: activeRules }), []);
   assert.ok((await handoffErrors('.', { ...orchestrator, last_assistant_message: `${text}\n\`gh pr merge 12 --squash\`` }, { rules: activeRules })).length);
 });
 test('GitHub branch rules must enforce PR, both stable checks, force-push and deletion protection', () => {
@@ -117,17 +145,30 @@ test('role, clean tree and stale transcripts cannot bypass a push; later correct
     assert.deepEqual(await handoffErrors('.', { transcript_path: path, last_assistant_message: 'Evidence unavailable.\nBLOCKED' }), []);
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
-test('a PR run expects pull_request-excluded summaries to be skipped; main requires them to succeed', () => {
+// A PR run expects pull_request-excluded summaries to be skipped; main requires them to succeed.
+function pullRequestRun() {
   const sha = current.head;
   const prRun = { id: 7, head_sha: sha, head_branch: 'task/x', event: 'pull_request', path: '.github/workflows/governance-pr.yml', status: 'completed', conclusion: 'success' };
   const jobs = Object.values(workflow.jobs).flatMap(job => (job.strategy?.matrix?.shard || [null]).map(shard => ({
     name: shard === null ? job.name : job.name.replace('${{ matrix.shard }}', String(shard)),
     status: 'completed', conclusion: /pull_request/.test(job.if || '') ? 'skipped' : 'success', head_sha: sha, run_id: 7,
   })));
+  return { sha, prRun, jobs };
+}
+test('[GOV-935-CI-PR-STATUS-ALLOW] A green pull_request run with the release-only job skipped counts as green', () => {
+  const { sha, prRun, jobs } = pullRequestRun();
+  assert.ok(jobs.some(j => j.name === 'Release Security Required' && j.conclusion === 'skipped'));
   assert.deepEqual(ciErrors(prRun, jobs, sha, workflow, { event: 'pull_request', branch: 'task/x' }), []);
+});
+test('[GOV-935-CI-PR-STATUS-DENY] A failed, pending or mismatched PR run is not green', () => {
+  const { sha, prRun, jobs } = pullRequestRun();
   assert.ok(ciErrors(prRun, jobs, sha, workflow).length, 'a PR run is never main-push evidence');
   const red = structuredClone(jobs); red.find(j => j.name === 'Governance Required').conclusion = 'failure';
   assert.ok(ciErrors(prRun, red, sha, workflow, { event: 'pull_request', branch: 'task/x' }).length);
+  const pending = structuredClone(jobs); Object.assign(pending.find(j => j.name === 'Governance Required'), { status: 'in_progress', conclusion: null });
+  assert.match(ciErrors(prRun, pending, sha, workflow, { event: 'pull_request', branch: 'task/x' }).join('\n'), /Governance Required/);
+  assert.ok(ciErrors({ ...prRun, status: 'in_progress', conclusion: null }, jobs, sha, workflow, { event: 'pull_request', branch: 'task/x' }).length);
+  assert.ok(ciErrors(prRun, jobs, current.base, workflow, { event: 'pull_request', branch: 'task/x' }).length, 'a run for another head SHA');
 });
 test('post-push CI success requires the exact SHA, all matrix children, terminal summaries and current attempt', () => {
   const sha = current.head;

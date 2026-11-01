@@ -1,0 +1,870 @@
+﻿TAP version 13
+# Subtest: split workflow companions must be fully read before an executor product write
+ok 1 - split workflow companions must be fully read before an executor product write
+  ---
+  duration_ms: 58.7693
+  type: 'test'
+  ...
+# Subtest: Review 36 cannot finish by accepting a stage and deferring the next assigned revision
+ok 2 - Review 36 cannot finish by accepting a stage and deferring the next assigned revision
+  ---
+  duration_ms: 74.6273
+  type: 'test'
+  ...
+# Subtest: an open-task review handoff requires a current ready active contract; a corrected later route recovers
+ok 3 - an open-task review handoff requires a current ready active contract; a corrected later route recovers
+  ---
+  duration_ms: 63.1633
+  type: 'test'
+  ...
+# Subtest: review continuation cannot use a quoted, duplicate, missing, archived or sensitive route reference
+ok 4 - review continuation cannot use a quoted, duplicate, missing, archived or sensitive route reference
+  ---
+  duration_ms: 7.5351
+  type: 'test'
+  ...
+# Subtest: a genuine blocked review can finish without a speculative route or Git; full approval still needs release proof
+ok 5 - a genuine blocked review can finish without a speculative route or Git; full approval still needs release proof
+  ---
+  duration_ms: 9.1033
+  type: 'test'
+  ...
+# Subtest: review continuation leaves executor reports, a new task-design phase and owner informational questions alone
+ok 6 - review continuation leaves executor reports, a new task-design phase and owner informational questions alone
+  ---
+  duration_ms: 6.8801
+  type: 'test'
+  ...
+# Subtest: product source changes cannot slip through without an accompanying task contract
+ok 7 - product source changes cannot slip through without an accompanying task contract
+  ---
+  duration_ms: 21.1263
+  type: 'test'
+  ...
+# Subtest: a modified kickoff requires a matching current sidecar even without a source diff
+ok 8 - a modified kickoff requires a matching current sidecar even without a source diff
+  ---
+  duration_ms: 7.3396
+  type: 'test'
+  ...
+# Subtest: pre-write blocks missing, stale and wrong-scope contracts; a later valid correction recovers
+ok 9 - pre-write blocks missing, stale and wrong-scope contracts; a later valid correction recovers
+  ---
+  duration_ms: 61.7898
+  type: 'test'
+  ...
+# Subtest: a denied write names its failed condition: stale read, out of scope, or no receipt (Task 923 review 9)
+ok 10 - a denied write names its failed condition: stale read, out of scope, or no receipt (Task 923 review 9)
+  ---
+  duration_ms: 41.2288
+  type: 'test'
+  ...
+# Subtest: read-only shell calls, missing optional metadata, malformed and shell writes have explicit outcomes
+ok 11 - read-only shell calls, missing optional metadata, malformed and shell writes have explicit outcomes
+  ---
+  duration_ms: 10.0922
+  type: 'test'
+  ...
+# Subtest: publishing a kickoff is blocked without its security contract, including a repeated stop
+ok 12 - publishing a kickoff is blocked without its security contract, including a repeated stop
+  ---
+  duration_ms: 5.2579
+  type: 'test'
+  ...
+# Subtest: task publication may pass before future tests exist; implementation may not
+ok 13 - task publication may pass before future tests exist; implementation may not
+  ---
+  duration_ms: 21.6632
+  type: 'test'
+  ...
+# Subtest: only successful complete Read results count, including corrected chunks in the same session
+ok 14 - only successful complete Read results count, including corrected chunks in the same session
+  ---
+  duration_ms: 13.8201
+  type: 'test'
+  ...
+# Subtest: Sonnet cannot edit shared policy; an explicit Opus role does not inherit an earlier Sonnet restriction
+ok 15 - Sonnet cannot edit shared policy; an explicit Opus role does not inherit an earlier Sonnet restriction
+  ---
+  duration_ms: 5.6612
+  type: 'test'
+  ...
+# Subtest: the executor policy boundary covers the paths rejected by task publication
+ok 16 - the executor policy boundary covers the paths rejected by task publication
+  ---
+  duration_ms: 7.2913
+  type: 'test'
+  ...
+# Subtest: unit execution has no live credentials; real-boundary execution requires exact approved target identity
+ok 17 - unit execution has no live credentials; real-boundary execution requires exact approved target identity
+  ---
+  duration_ms: 0.5349
+  type: 'test'
+  ...
+# Subtest: a task cannot bypass contract validation by omitting kickoff from its name
+ok 18 - a task cannot bypass contract validation by omitting kickoff from its name
+  ---
+  duration_ms: 5.7178
+  type: 'test'
+  ...
+# Subtest: direct Git metadata writes require the owner even for Opus
+ok 19 - direct Git metadata writes require the owner even for Opus
+  ---
+  duration_ms: 6.1215
+  type: 'test'
+  ...
+# Subtest: Stop uses the current API message even when the asynchronously written transcript is stale
+ok 20 - Stop uses the current API message even when the asynchronously written transcript is stale
+  ---
+  duration_ms: 5.6474
+  type: 'test'
+  ...
+# Subtest: a separate Q0 task can accompany a product task without waiving its security contract
+ok 21 - a separate Q0 task can accompany a product task without waiving its security contract
+  ---
+  duration_ms: 15.7164
+  type: 'test'
+  ...
+# Subtest: a successful Read with truncated content is not proof of full-file coverage
+ok 22 - a successful Read with truncated content is not proof of full-file coverage
+  ---
+  duration_ms: 6.9122
+  type: 'test'
+  ...
+# Subtest: an unsuccessful task write does not create a publication obligation
+ok 23 - an unsuccessful task write does not create a publication obligation
+  ---
+  duration_ms: 6.4278
+  type: 'test'
+  ...
+# Subtest: Sonnet may record implementation but cannot rewrite or approve its own planned expectations
+ok 24 - Sonnet may record implementation but cannot rewrite or approve its own planned expectations
+  ---
+  duration_ms: 8.3986
+  type: 'test'
+  ...
+# Subtest: a fully read draft remains unwritable until Opus publishes it; Sonnet cannot promote it
+ok 25 - a fully read draft remains unwritable until Opus publishes it; Sonnet cannot promote it
+  ---
+  duration_ms: 26.8493
+  type: 'test'
+  ...
+# Subtest: the newest task receipt replaces older write authority, including a blocked or missing replacement
+ok 26 - the newest task receipt replaces older write authority, including a blocked or missing replacement
+  ---
+  duration_ms: 32.1443
+  type: 'test'
+  ...
+# Subtest: visible and durable task receipts select the current contract in transcript order
+ok 27 - visible and durable task receipts select the current contract in transcript order
+  ---
+  duration_ms: 26.1058
+  type: 'test'
+  ...
+# Subtest: registered helper and documentation scope obeys draft readiness, reads and the current receipt
+ok 28 - registered helper and documentation scope obeys draft readiness, reads and the current receipt
+  ---
+  duration_ms: 73.0313
+  type: 'test'
+  ...
+# Subtest: unregistered executable helpers require a scoped plan and belong to the executor
+ok 29 - unregistered executable helpers require a scoped plan and belong to the executor
+  ---
+  duration_ms: 26.9277
+  type: 'test'
+  ...
+# Subtest: recognized literal helper writes through Bash and PowerShell obey the same boundary as Write/Edit
+ok 30 - recognized literal helper writes through Bash and PowerShell obey the same boundary as Write/Edit
+  ---
+  duration_ms: 27.2328
+  type: 'test'
+  ...
+# Subtest: reviewed execution stays frozen until Opus reopens and readies the affected route
+ok 31 - reviewed execution stays frozen until Opus reopens and readies the affected route
+  ---
+  duration_ms: 29.8595
+  type: 'test'
+  ...
+# Subtest: permission and evidence lifecycle: draft, execution, stale proof, reviewed closure and archived refusal
+ok 32 - permission and evidence lifecycle: draft, execution, stale proof, reviewed closure and archived refusal
+  ---
+  duration_ms: 163.1783
+  type: 'test'
+  ...
+# Subtest: Node Stop treats BLOCKED as the terminal status and rejects a mixed handoff
+ok 33 - Node Stop treats BLOCKED as the terminal status and rejects a mixed handoff
+  ---
+  duration_ms: 4.7478
+  type: 'test'
+  ...
+# Subtest: Node Stop checks all text blocks of the final message without retaining earlier verdicts
+ok 34 - Node Stop checks all text blocks of the final message without retaining earlier verdicts
+  ---
+  duration_ms: 5.1894
+  type: 'test'
+  ...
+# Subtest: a successful durable receipt tool result authorizes the same verified plan as visible prose
+ok 35 - a successful durable receipt tool result authorizes the same verified plan as visible prose
+  ---
+  duration_ms: 14.0413
+  type: 'test'
+  ...
+# Subtest: changed required text invalidates old Read evidence until that text is read again
+ok 36 - changed required text invalidates old Read evidence until that text is read again
+  ---
+  duration_ms: 26.5082
+  type: 'test'
+  ...
+# Subtest: unknown authority cannot use a receipt to write product or policy, while read-only calls remain usable
+ok 37 - unknown authority cannot use a receipt to write product or policy, while read-only calls remain usable
+  ---
+  duration_ms: 7.3461
+  type: 'test'
+  ...
+# Subtest: a move out of product scope still requires authorization for the removed production path
+ok 38 - a move out of product scope still requires authorization for the removed production path
+  ---
+  duration_ms: 15.6333
+  type: 'test'
+  ...
+# Subtest: Windows casing cannot hide Git metadata and writes on a different drive stay outside scope
+ok 39 - Windows casing cannot hide Git metadata and writes on a different drive stay outside scope
+  ---
+  duration_ms: 5.7256
+  type: 'test'
+  ...
+# Subtest: a junction alias cannot hide a future product write from preflight
+ok 40 - a junction alias cannot hide a future product write from preflight
+  ---
+  duration_ms: 19.1949
+  type: 'test'
+  ...
+# Subtest: Git policy rejects output-file writes hidden inside read-only subcommands
+ok 41 - Git policy rejects output-file writes hidden inside read-only subcommands
+  ---
+  duration_ms: 1392.0395
+  type: 'test'
+  ...
+# Subtest: Git policy rejects dynamic and literal interpreter-based Git mutation
+ok 42 - Git policy rejects dynamic and literal interpreter-based Git mutation
+  ---
+  duration_ms: 1384.7405
+  type: 'test'
+  ...
+# Subtest: Git policy permits ordinary inspection and source searches, with missing optional metadata
+ok 43 - Git policy permits ordinary inspection and source searches, with missing optional metadata
+  ---
+  duration_ms: 2188.4172
+  type: 'test'
+  ...
+# Subtest: PS 5.1: stop_hook_active cannot bypass a still-invalid Opus handoff
+ok 44 - PS 5.1: stop_hook_active cannot bypass a still-invalid Opus handoff
+  ---
+  duration_ms: 643.6984
+  type: 'test'
+  ...
+# Subtest: PS 5.1: a corrected later handoff recovers in the same transcript
+ok 45 - PS 5.1: a corrected later handoff recovers in the same transcript
+  ---
+  duration_ms: 595.4415
+  type: 'test'
+  ...
+# Subtest: PS 5.1: a checker runtime error and missing checker fail closed
+ok 46 - PS 5.1: a checker runtime error and missing checker fail closed
+  ---
+  duration_ms: 1071.746
+  type: 'test'
+  ...
+# Subtest: PS 5.1: optional event fields and Sonnet require no prohibited Git handoff
+ok 47 - PS 5.1: optional event fields and Sonnet require no prohibited Git handoff
+  ---
+  duration_ms: 830.4268
+  type: 'test'
+  ...
+# Subtest: PowerShell hooks remain ASCII for Windows PowerShell 5.1
+ok 48 - PowerShell hooks remain ASCII for Windows PowerShell 5.1
+  ---
+  duration_ms: 8.072
+  type: 'test'
+  ...
+# Subtest: PS 5.1: unrelated dirty files do not demand a handoff from a read-only Opus audit
+ok 49 - PS 5.1: unrelated dirty files do not demand a handoff from a read-only Opus audit
+  ---
+  duration_ms: 515.9453
+  type: 'test'
+  ...
+# Subtest: PS 5.1: quoted/space-containing paths cannot bypass an owned-write handoff
+ok 50 - PS 5.1: quoted/space-containing paths cannot bypass an owned-write handoff
+  ---
+  duration_ms: 516.6722
+  type: 'test'
+  ...
+# Subtest: PS 5.1: owner commit handoffs cannot override the author identity
+ok 51 - PS 5.1: owner commit handoffs cannot override the author identity
+  ---
+  duration_ms: 1029.5693
+  type: 'test'
+  ...
+# Subtest: PS 5.1: stale transcript cannot allow the current invalid response or block its valid correction
+ok 52 - PS 5.1: stale transcript cannot allow the current invalid response or block its valid correction
+  ---
+  duration_ms: 975.9928
+  type: 'test'
+  ...
+# Subtest: PS 5.1: an evidenced finding may report a blocked correction without publishing a speculative handoff
+ok 53 - PS 5.1: an evidenced finding may report a blocked correction without publishing a speculative handoff
+  ---
+  duration_ms: 1329.2158
+  type: 'test'
+  ...
+# Subtest: PS 5.1: BLOCKED cannot accompany approval or a Git handoff
+ok 54 - PS 5.1: BLOCKED cannot accompany approval or a Git handoff
+  ---
+  duration_ms: 1575.8935
+  type: 'test'
+  ...
+# Subtest: PS 5.1: an incomplete report needs neither a healthy backlog checker nor available Git
+ok 55 - PS 5.1: an incomplete report needs neither a healthy backlog checker nor available Git
+  ---
+  duration_ms: 843.9962
+  type: 'test'
+  ...
+# Subtest: PS 5.1: terminal status is checked before ownership shortcuts; quoted or earlier BLOCKED is not a stop
+ok 56 - PS 5.1: terminal status is checked before ownership shortcuts; quoted or earlier BLOCKED is not a stop
+  ---
+  duration_ms: 1304.3046
+  type: 'test'
+  ...
+# Subtest: PS 5.1: the final transcript message includes every text block and supersedes earlier verdicts
+ok 57 - PS 5.1: the final transcript message includes every text block and supersedes earlier verdicts
+  ---
+  duration_ms: 844.5606
+  type: 'test'
+  ...
+# Subtest: incident: an APPROVED response cannot offer an untested push even with no owned writes
+ok 58 - incident: an APPROVED response cannot offer an untested push even with no owned writes
+  ---
+  duration_ms: 1346.2638
+  type: 'test'
+  ...
+# Subtest: incident recovery: a later factual blocked reply needs no push evidence or new session
+ok 59 - incident recovery: a later factual blocked reply needs no push evidence or new session
+  ---
+  duration_ms: 418.4689
+  type: 'test'
+  ...
+# Subtest: actual locale CLI rejects failed rendering instead of reporting zero leaks
+ok 60 - actual locale CLI rejects failed rendering instead of reporting zero leaks
+  ---
+  duration_ms: 116.1528
+  type: 'test'
+  ...
+# Subtest: actual detector fails on a planted English leak and closes every page
+ok 61 - actual detector fails on a planted English leak and closes every page
+  ---
+  duration_ms: 117.2176
+  type: 'test'
+  ...
+# Subtest: restored clean rendering passes with complete tuple coverage
+ok 62 - restored clean rendering passes with complete tuple coverage
+  ---
+  duration_ms: 98.96
+  type: 'test'
+  ...
+# Subtest: owner migration mode retains leaks as warnings but does not excuse incomplete rendering
+ok 63 - owner migration mode retains leaks as warnings but does not excuse incomplete rendering
+  ---
+  duration_ms: 195.8681
+  type: 'test'
+  ...
+# Subtest: finished render phase cannot erase a reported Storybook play failure
+ok 64 - finished render phase cannot erase a reported Storybook play failure
+  ---
+  duration_ms: 184.7028
+  type: 'test'
+  ...
+# Subtest: uncaught browser exceptions cannot pass as a clean locale render
+ok 65 - uncaught browser exceptions cannot pass as a clean locale render
+  ---
+  duration_ms: 88.9624
+  type: 'test'
+  ...
+# Subtest: prepush covers all eight mandatory jobs and all six locale shards from actual CI commands
+ok 66 - prepush covers all eight mandatory jobs and all six locale shards from actual CI commands
+  ---
+  duration_ms: 3.119
+  type: 'test'
+  ...
+# Subtest: no red, omitted, duplicated, skipped or timed-out job can authorize push
+ok 67 - no red, omitted, duplicated, skipped or timed-out job can authorize push
+  ---
+  duration_ms: 0.7146
+  type: 'test'
+  ...
+# Subtest: stale tree, base, runtime, policy, environment, worktree and expired receipts fail closed
+ok 68 - stale tree, base, runtime, policy, environment, worktree and expired receipts fail closed
+  ---
+  duration_ms: 0.6148
+  type: 'test'
+  ...
+# Subtest: a changed CI command is executed or rejected; unsupported shell code cannot be silently skipped
+ok 69 - a changed CI command is executed or rejected; unsupported shell code cannot be silently skipped
+  ---
+  duration_ms: 3.1177
+  type: 'test'
+  ...
+# Subtest: push detection covers executable fences, global options, chained commands, exe paths and wrappers
+ok 70 - push detection covers executable fences, global options, chained commands, exe paths and wrappers
+  ---
+  duration_ms: 1.8351
+  type: 'test'
+  ...
+# Subtest: incident 2026-11-01: inline code, table cells and labelled prose are push handoffs too
+ok 71 - incident 2026-11-01: inline code, table cells and labelled prose are push handoffs too
+  ---
+  duration_ms: 0.7914
+  type: 'test'
+  ...
+# Subtest: main is reachable only through a PR: direct, bare, forced or refspec pushes are rejected
+ok 72 - main is reachable only through a PR: direct, bare, forced or refspec pushes are rejected
+  ---
+  duration_ms: 1.511
+  type: 'test'
+  ...
+# Subtest: a branch push or merge handoff needs the orchestrator, APPROVED and an active GitHub ruleset
+ok 73 - a branch push or merge handoff needs the orchestrator, APPROVED and an active GitHub ruleset
+  ---
+  duration_ms: 0.6995
+  type: 'test'
+  ...
+# Subtest: GitHub branch rules must enforce PR, both stable checks, force-push and deletion protection
+ok 74 - GitHub branch rules must enforce PR, both stable checks, force-push and deletion protection
+  ---
+  duration_ms: 0.5861
+  type: 'test'
+  ...
+# Subtest: role, clean tree and stale transcripts cannot bypass a push; later correction recovers
+ok 75 - role, clean tree and stale transcripts cannot bypass a push; later correction recovers
+  ---
+  duration_ms: 2.5181
+  type: 'test'
+  ...
+# Subtest: a PR run expects pull_request-excluded summaries to be skipped; main requires them to succeed
+ok 76 - a PR run expects pull_request-excluded summaries to be skipped; main requires them to succeed
+  ---
+  duration_ms: 1.0416
+  type: 'test'
+  ...
+# Subtest: post-push CI success requires the exact SHA, all matrix children, terminal summaries and current attempt
+ok 77 - post-push CI success requires the exact SHA, all matrix children, terminal summaries and current attempt
+  ---
+  duration_ms: 0.5972
+  type: 'test'
+  ...
+# Subtest: split workflow policy stays bound to retained security evidence
+ok 78 - split workflow policy stays bound to retained security evidence
+  ---
+  duration_ms: 21.4178
+  type: 'test'
+  ...
+# Subtest: prepush blocks unpublished inputs and local env auto-loading without reading secret content
+ok 79 - prepush blocks unpublished inputs and local env auto-loading without reading secret content
+  ---
+  duration_ms: 1.6068
+  type: 'test'
+  ...
+# Synthetic gate failure
+# Subtest: real prepush child execution retains nonzero exits and raw log digest
+ok 80 - real prepush child execution retains nonzero exits and raw log digest
+  ---
+  duration_ms: 80.9904
+  type: 'test'
+  ...
+# Subtest: tracked byte inspection detects hidden edits independently of Git status flags
+ok 81 - tracked byte inspection detects hidden edits independently of Git status flags
+  ---
+  duration_ms: 60.0691
+  type: 'test'
+  ...
+# Subtest: only an actual final plain BLOCKED line selects the incomplete-report path
+ok 82 - only an actual final plain BLOCKED line selects the incomplete-report path
+  ---
+  duration_ms: 2.6203
+  type: 'test'
+  ...
+# Subtest: incomplete reports distinguish historical verdict mentions from contradictory terminal statuses
+ok 83 - incomplete reports distinguish historical verdict mentions from contradictory terminal statuses
+  ---
+  duration_ms: 0.325
+  type: 'test'
+  ...
+# Subtest: a blocked response cannot carry canonical Git write handoffs including native PowerShell invocation
+ok 84 - a blocked response cannot carry canonical Git write handoffs including native PowerShell invocation
+  ---
+  duration_ms: 0.1671
+  type: 'test'
+  ...
+# Subtest: the PowerShell-facing classifier accepts BOM JSON and fails closed without echoing malformed input
+ok 85 - the PowerShell-facing classifier accepts BOM JSON and fails closed without echoing malformed input
+  ---
+  duration_ms: 202.0525
+  type: 'test'
+  ...
+# Subtest: homepage command budget covers the measured 17m55s CI sensitivity run
+ok 86 - homepage command budget covers the measured 17m55s CI sensitivity run
+  ---
+  duration_ms: 1.4665
+  type: 'test'
+  ...
+# Subtest: actual runner applies the registered group timeout and continues after the timed-out command
+ok 87 - actual runner applies the registered group timeout and continues after the timed-out command
+  ---
+  duration_ms: 1331.4392
+  type: 'test'
+  ...
+# Subtest: actual gate runner continues independent checks after failure and retains the real nonzero verdict
+ok 88 - actual gate runner continues independent checks after failure and retains the real nonzero verdict
+  ---
+  duration_ms: 139.3499
+  type: 'test'
+  ...
+# Subtest: mapped test runner checks real collection output and strips credentials from unit children
+ok 89 - mapped test runner checks real collection output and strips credentials from unit children
+  ---
+  duration_ms: 173.6324
+  type: 'test'
+  ...
+# Subtest: installed runner selects the dedicated boundary configuration and rejects missing or unknown projects
+ok 90 - installed runner selects the dedicated boundary configuration and rejects missing or unknown projects
+  ---
+  duration_ms: 185.9499
+  type: 'test'
+  ...
+# Subtest: real installed Vitest retains project setup and rejects a collected security test with no assertions
+ok 91 - real installed Vitest retains project setup and rejects a collected security test with no assertions
+  ---
+  duration_ms: 1455.227
+  type: 'test'
+  ...
+# Subtest: an empty or incomplete unit report cannot turn a no-op test command into CI success
+ok 92 - an empty or incomplete unit report cannot turn a no-op test command into CI success
+  ---
+  duration_ms: 0.3988
+  type: 'test'
+  ...
+# Subtest: unit totals and every collected status must agree; partial or skipped success is not green
+ok 93 - unit totals and every collected status must agree; partial or skipped success is not green
+  ---
+  duration_ms: 0.3056
+  type: 'test'
+  ...
+# Subtest: Windows execution keeps executable-extension discovery without forwarding private credentials
+ok 94 - Windows execution keeps executable-extension discovery without forwarding private credentials
+  ---
+  duration_ms: 204.8099
+  type: 'test'
+  ...
+# Subtest: digests sort object keys by UTF-16 code unit, independent of the runtime ICU locale
+ok 95 - digests sort object keys by UTF-16 code unit, independent of the runtime ICU locale
+  ---
+  duration_ms: 2.5435
+  type: 'test'
+  ...
+# Subtest: accepts a concrete plan with both layers, allow/deny/error and exact paths
+ok 96 - accepts a concrete plan with both layers, allow/deny/error and exact paths
+  ---
+  duration_ms: 19.5527
+  type: 'test'
+  ...
+# Subtest: draft and blocked execution cannot authorize a saved plan; ready and legacy plans retain their checks
+ok 97 - draft and blocked execution cannot authorize a saved plan; ready and legacy plans retain their checks
+  ---
+  duration_ms: 45.7308
+  type: 'test'
+  ...
+# Subtest: a product plan cannot assign executor-forbidden policy paths, and a corrected scope recovers
+ok 98 - a product plan cannot assign executor-forbidden policy paths, and a corrected scope recovers
+  ---
+  duration_ms: 76.1184
+  type: 'test'
+  ...
+# Subtest: rejects missing server cases and docs-only N/A for runtime work
+ok 99 - rejects missing server cases and docs-only N/A for runtime work
+  ---
+  duration_ms: 19.8861
+  type: 'test'
+  ...
+# Subtest: rejects duplicate IDs, placeholders, path escapes and a stale kickoff hash
+ok 100 - rejects duplicate IDs, placeholders, path escapes and a stale kickoff hash
+  ---
+  duration_ms: 15.9225
+  type: 'test'
+  ...
+# Subtest: a planned future test may not be claimed as executed
+ok 101 - a planned future test may not be claimed as executed
+  ---
+  duration_ms: 17.1562
+  type: 'test'
+  ...
+# Subtest: the reported 9-VULN/exit-zero incident is rejected regardless of exit code
+ok 102 - the reported 9-VULN/exit-zero incident is rejected regardless of exit code
+  ---
+  duration_ms: 54.6748
+  type: 'test'
+  ...
+# Subtest: rejects skipped, missing, vacuous, stale and non-assertion mutation proof
+ok 103 - rejects skipped, missing, vacuous, stale and non-assertion mutation proof
+  ---
+  duration_ms: 35.5584
+  type: 'test'
+  ...
+# Subtest: required CI summary rejects failure, cancellation, skipped, missing and unexpected jobs
+ok 104 - required CI summary rejects failure, cancellation, skipped, missing and unexpected jobs
+  ---
+  duration_ms: 0.5705
+  type: 'test'
+  ...
+# Subtest: locale shards are disjoint, deterministic, complete and reject invalid/empty shards
+ok 105 - locale shards are disjoint, deterministic, complete and reject invalid/empty shards
+  ---
+  duration_ms: 0.5844
+  type: 'test'
+  ...
+# Subtest: release requires independent review bound to the current source, report and evidence
+ok 106 - release requires independent review bound to the current source, report and evidence
+  ---
+  duration_ms: 41.326
+  type: 'test'
+  ...
+# Subtest: archiving preserves reviewed evidence but cannot authorize a new execution
+ok 107 - archiving preserves reviewed evidence but cannot authorize a new execution
+  ---
+  duration_ms: 20.2831
+  type: 'test'
+  ...
+# Subtest: a fresh archived review can emit its closure receipt without authorizing another execution
+ok 108 - a fresh archived review can emit its closure receipt without authorizing another execution
+  ---
+  duration_ms: 137.4033
+  type: 'test'
+  ...
+# Subtest: changing a mapped test outside the write scope invalidates old security evidence
+ok 109 - changing a mapped test outside the write scope invalidates old security evidence
+  ---
+  duration_ms: 34.8521
+  type: 'test'
+  ...
+# Subtest: changing the real-boundary project configuration invalidates retained security proof
+ok 110 - changing the real-boundary project configuration invalidates retained security proof
+  ---
+  duration_ms: 34.5862
+  type: 'test'
+  ...
+# Subtest: Q5 is not an existing QA profile and critical cases cannot downgrade to Q1
+ok 111 - Q5 is not an existing QA profile and critical cases cannot downgrade to Q1
+  ---
+  duration_ms: 13.4376
+  type: 'test'
+  ...
+# Subtest: integration configuration, shipped assets and locale resources belong to product scope
+ok 112 - integration configuration, shipped assets and locale resources belong to product scope
+  ---
+  duration_ms: 0.5324
+  type: 'test'
+  ...
+# Subtest: root runtime configuration that ships with the application belongs to product scope
+ok 113 - root runtime configuration that ships with the application belongs to product scope
+  ---
+  duration_ms: 0.2625
+  type: 'test'
+  ...
+# Subtest: executable script helpers are product work while enforcement scripts remain policy
+ok 114 - executable script helpers are product work while enforcement scripts remain policy
+  ---
+  duration_ms: 0.0887
+  type: 'test'
+  ...
+# Subtest: a future file cannot escape through an existing parent junction
+ok 115 - a future file cannot escape through an existing parent junction
+  ---
+  duration_ms: 2.565
+  type: 'test'
+  ...
+# Subtest: changes to required policy or installed test setup invalidate retained security evidence
+ok 116 - changes to required policy or installed test setup invalidate retained security evidence
+  ---
+  duration_ms: 46.3435
+  type: 'test'
+  ...
+# Subtest: SessionStart role survives events without model metadata and follows a model switch
+ok 117 - SessionStart role survives events without model metadata and follows a model switch
+  ---
+  duration_ms: 11.7825
+  type: 'test'
+  ...
+# Subtest: missing metadata stays unknown and cannot silently retain an old role
+ok 118 - missing metadata stays unknown and cannot silently retain an old role
+  ---
+  duration_ms: 6.4575
+  type: 'test'
+  ...
+# Subtest: PreToolUse enforces the captured executor role without a nonstandard model field
+ok 119 - PreToolUse enforces the captured executor role without a nonstandard model field
+  ---
+  duration_ms: 8.1618
+  type: 'test'
+  ...
+# Subtest: PS 5.1 router uses captured ordinary Opus sessions and named orchestrators
+ok 120 - PS 5.1 router uses captured ordinary Opus sessions and named orchestrators
+  ---
+  duration_ms: 816.9412
+  type: 'test'
+  ...
+# Subtest: PS 5.1: a forwarded Sonnet report selects the full review workflow without a separate review request
+ok 121 - PS 5.1: a forwarded Sonnet report selects the full review workflow without a separate review request
+  ---
+  duration_ms: 1738.0221
+  type: 'test'
+  ...
+# Subtest: PS 5.1: report wording preserves an explicit summary or task-design request
+ok 122 - PS 5.1: report wording preserves an explicit summary or task-design request
+  ---
+  duration_ms: 1891.0472
+  type: 'test'
+  ...
+# Subtest: PS 5.1 bootstrap loads an ordinary executor when a resumed SessionStart omits model
+ok 123 - PS 5.1 bootstrap loads an ordinary executor when a resumed SessionStart omits model
+  ---
+  duration_ms: 394.4037
+  type: 'test'
+  ...
+# Subtest: PS 5.1 role reader matches Node hashing and handles missing optional fields
+ok 124 - PS 5.1 role reader matches Node hashing and handles missing optional fields
+  ---
+  duration_ms: 350.7701
+  type: 'test'
+  ...
+# Subtest: captured named-agent authority has the same priority as direct hook authority
+ok 125 - captured named-agent authority has the same priority as direct hook authority
+  ---
+  duration_ms: 4.2503
+  type: 'test'
+  ...
+# Subtest: /clear keeps the role of its own Claude Code process; a new process with a reused id does not
+ok 126 - /clear keeps the role of its own Claude Code process; a new process with a reused id does not
+  ---
+  duration_ms: 7.3741
+  type: 'test'
+  ...
+# Subtest: an unknown saved role falls back to the model of the latest main-thread assistant entry
+ok 127 - an unknown saved role falls back to the model of the latest main-thread assistant entry
+  ---
+  duration_ms: 9.205
+  type: 'test'
+  ...
+# Subtest: PS 5.1 role reader resolves the transcript model through the shared resolver
+ok 128 - PS 5.1 role reader resolves the transcript model through the shared resolver
+  ---
+  duration_ms: 356.0744
+  type: 'test'
+  ...
+# Subtest: actual workflow keeps every mandatory job, summary and release blocker
+ok 129 - actual workflow keeps every mandatory job, summary and release blocker
+  ---
+  duration_ms: 2.0244
+  type: 'test'
+  ...
+# Subtest: workflow rejects path filters, a skipped summary, omitted dependency and nonblocking checks
+ok 130 - workflow rejects path filters, a skipped summary, omitted dependency and nonblocking checks
+  ---
+  duration_ms: 0.8636
+  type: 'test'
+  ...
+# Subtest: workflow rejects privileged PR trigger, persistent credentials, missing shard and unprotected secret job
+ok 131 - workflow rejects privileged PR trigger, persistent credentials, missing shard and unprotected secret job
+  ---
+  duration_ms: 0.6166
+  type: 'test'
+  ...
+# Subtest: actual hook registration is complete and fails closed on runtime failure
+ok 132 - actual hook registration is complete and fails closed on runtime failure
+  ---
+  duration_ms: 2.1091
+  type: 'test'
+  ...
+# Subtest: prepared direct-push safety ruleset offers no bypass actor
+ok 133 - prepared direct-push safety ruleset offers no bypass actor
+  ---
+  duration_ms: 0.4762
+  type: 'test'
+  ...
+# Subtest: owner PR policy (2026-11-01) requires a PR and both stable Actions summaries on an up-to-date branch
+ok 134 - owner PR policy (2026-11-01) requires a PR and both stable Actions summaries on an up-to-date branch
+  ---
+  duration_ms: 0.7822
+  type: 'test'
+  ...
+# Subtest: disabled mandatory steps and narrowed hook matchers cannot pass structural validation
+ok 135 - disabled mandatory steps and narrowed hook matchers cannot pass structural validation
+  ---
+  duration_ms: 1.7964
+  type: 'test'
+  ...
+# Subtest: a later main push cannot cancel or replace the verification of an earlier pushed commit
+ok 136 - a later main push cannot cancel or replace the verification of an earlier pushed commit
+  ---
+  duration_ms: 1.2724
+  type: 'test'
+  ...
+# Subtest: artifact actions run on the supported node24 runtime pins
+ok 137 - artifact actions run on the supported node24 runtime pins
+  ---
+  duration_ms: 0.7009
+  type: 'test'
+  ...
+# Subtest: CI retains the dated locale migration exception while render failures stay blocking
+ok 138 - CI retains the dated locale migration exception while render failures stay blocking
+  ---
+  duration_ms: 0.4696
+  type: 'test'
+  ...
+# Subtest: publication checks real imports, not source snippets, and refuses missing command dependencies
+ok 139 - publication checks real imports, not source snippets, and refuses missing command dependencies
+  ---
+  duration_ms: 8.4091
+  type: 'test'
+  ...
+# Subtest: Linux and native Windows CI both discover the complete gate regression suite
+ok 140 - Linux and native Windows CI both discover the complete gate regression suite
+  ---
+  duration_ms: 0.225
+  type: 'test'
+  ...
+# Subtest: badge namespace access cannot bypass the existing canonical owner rule
+ok 141 - badge namespace access cannot bypass the existing canonical owner rule
+  ---
+  duration_ms: 2.6137
+  type: 'test'
+  ...
+# Subtest: a named structured prop must actually be true and cannot be overridden by a later spread
+ok 142 - a named structured prop must actually be true and cannot be overridden by a later spread
+  ---
+  duration_ms: 2.6179
+  type: 'test'
+  ...
+# Subtest: import aliases preserve the same dialog/footer/button ancestry rule
+ok 143 - import aliases preserve the same dialog/footer/button ancestry rule
+  ---
+  duration_ms: 1.2196
+  type: 'test'
+  ...
+1..143
+# tests 143
+# suites 0
+# pass 143
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13936.5856
+exit=0

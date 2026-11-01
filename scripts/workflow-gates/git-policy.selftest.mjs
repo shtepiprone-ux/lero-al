@@ -11,7 +11,7 @@ function denied(command, extra = {}) {
   assert.equal(result.status, 0, result.stderr);
   return result.stdout ? JSON.parse(result.stdout).hookSpecificOutput?.permissionDecision === 'deny' : false;
 }
-test('Git policy rejects output-file writes hidden inside read-only subcommands', { skip: !windows }, () => {
+test('[GOV-935-HOOK-GIT-WRITE-DENY] A read-only repository subcommand with an output-file write is refused', { skip: !windows }, () => {
   for (const command of ['git diff --output=owned.txt', 'git log --output owned.txt', 'git show --ext-diff', 'git hash-object -wt file.txt']) assert.equal(denied(command), true, command);
 });
 test('Git policy rejects dynamic and literal interpreter-based Git mutation', { skip: !windows }, () => {

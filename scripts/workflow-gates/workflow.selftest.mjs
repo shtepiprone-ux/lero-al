@@ -47,7 +47,8 @@ test('prepared direct-push safety ruleset offers no bypass actor', () => {
   assert.match(errors, /bypass/);
 });
 
-test('owner PR policy (2026-11-01) requires a PR and both stable Actions summaries on an up-to-date branch', () => {
+// Owner PR policy (2026-11-01): a PR and both stable Actions summaries on an up-to-date branch.
+test('[GOV-935-CI-RULESET-DENY] The ruleset manifest without every PR-only rule and both required checks is refused', () => {
   const ruleset = read('scripts/workflow-gates/main.ruleset.json');
   for (const type of ['pull_request', 'required_status_checks']) {
     const plant = structuredClone(ruleset); plant.rules = plant.rules.filter(r => r.type !== type);

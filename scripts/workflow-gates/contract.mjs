@@ -27,9 +27,16 @@ export function safePath(root, file, mustExist = true) {
   }
   return target;
 }
-export function digest(root, files, data) {
+// `overrides` maps a path to replacement bytes/text, or null for an absent file (diff-base recomputation, Task 935 R10).
+export function digest(root, files, data, overrides) {
   const parts = [...files].sort().map(file => {
     const target = safePath(root, file, false);
+    if (overrides?.has(file)) {
+      const replaced = overrides.get(file);
+      if (replaced === null || replaced === undefined) return [file, { absent: true }];
+      const bytes = Buffer.isBuffer(replaced) ? replaced : Buffer.from(String(replaced), 'utf8');
+      return [file, sha256(bytes.includes(0) ? bytes : bytes.toString('utf8').replace(/\r\n/g, '\n'))];
+    }
     if (!existsSync(target)) return [file, { absent: true }];
     const bytes = readFileSync(target);
     const value = bytes.includes(0) ? bytes : bytes.toString('utf8').replace(/\r\n/g, '\n');
@@ -42,23 +49,26 @@ export function planDigest(root, contract) {
   delete plan.stage; delete plan.review;
   return digest(root, [], plan);
 }
-export function workflowRuleInputs(root, paths) {
+export function workflowRuleInputs(root, paths, overrides) {
   const main = '.claude/rules/shared/workflow-gates.md';
   const expanded = [...paths];
   // Legacy synthetic/unsplit rule fixtures have no companion section. The current split contract requires all
   // sections for both complete-read enforcement and proof freshness; a missing companion remains an error.
-  if (paths.includes(main) && readFileSync(safePath(root, main), 'utf8').includes('## Required companions')) {
+  const text = overrides?.has(main) ? String(overrides.get(main) ?? '') : paths.includes(main) ? readFileSync(safePath(root, main), 'utf8') : '';
+  if (paths.includes(main) && text.includes('## Required companions')) {
     expanded.push(...['workflow-contract', 'workflow-evidence', 'workflow-ci', 'git-publication']
       .map(name => `.claude/rules/shared/${name}.md`));
   }
   return [...new Set(expanded)];
 }
-export function scopeDigest(root, contract) {
+export function scopeDigest(root, contract, overrides) {
   const configs = readdirSync(root).filter(file => /^(?:next|vitest(?:\.[a-z0-9_-]+)?)\.config\.[cm]?[jt]s$/.test(file));
   const runtime = ['package.json', 'package-lock.json', 'tsconfig.json', '.nvmrc', 'src/tests/setup.ts', 'src/tests/integration/setup.ts', ...configs]
     .filter(file => existsSync(resolve(root, file)));
-  const files = [...new Set([...contract.scope, ...(contract.inputs || []), ...workflowRuleInputs(root, contract.rules || []), ...contract.cases.map(row => row.testFile), ...runtime])];
-  return digest(root, files);
+  let files = [...new Set([...contract.scope, ...(contract.inputs || []), ...workflowRuleInputs(root, contract.rules || [], overrides), ...contract.cases.map(row => row.testFile), ...runtime])];
+  // A governance report records this digest, so its own bytes cannot be part of it (a fixed point is impossible).
+  if (contract.kind === 'governance') files = files.filter(file => file !== contract.report);
+  return digest(root, files, undefined, overrides);
 }
 // The planner and the write hook must agree on paths Sonnet cannot implement.
 export const isPolicyPath = file => /^(?:\.claude\/|\.github\/workflows\/|scripts\/workflow-gates\/|scripts\/check-[^/]+|docs\/rules\/|docs\/(?:qa-profiles|qa-rules|golden-rules|agent-contract|rule-index)\.md$)/i.test(file);
@@ -67,6 +77,58 @@ export const isProductPath = file => /^(?:src\/|public\/|messages\/|(?:supabase|
   || (/^scripts\/.+\.(?:[cm]?[jt]sx?|ps1|py|sh)$/i.test(file) && !isPolicyPath(file));
 export const isTaskDocument = file => /^tasks\/(?!Archive\/|Templates\/|Epics\/)(?!(?:README|index)\.md$).+\.md$/i.test(file);
 const isDoc = file => /\.md$/.test(file) && /^(?:docs\/|tasks\/|\.claude\/rules\/|CLAUDE\.md$)/.test(file);
+// Task 935: rules, hooks, settings, CI workflows and gate scripts are implemented by Opus under a governance contract.
+export const REQUIRED_GOVERNANCE_RULES = ['security-testing', 'workflow-gates', 'git-publication', 'role-boundaries']
+  .map(name => `.claude/rules/shared/${name}.md`);
+export const isEvidencePath = file => /^docs\/sessions\/evidence\/[^/].*[^/]$/.test(file);
+export const isGovernanceScopePath = file => !isProductPath(file)
+  && (isPolicyPath(file) || isDoc(file) || /^tasks\/.+\.security\.json$/.test(file) || isEvidencePath(file));
+export const isExecutablePolicyPath = file => isPolicyPath(file) && !/\.md$/i.test(file);
+
+function readContractFile(root, file) {
+  if (!/^tasks\/.+\.security\.json$/.test(file || '')) throw new Error(`not a task security contract path: ${file}`);
+  try { return JSON.parse(readFileSync(safePath(root, file), 'utf8')); }
+  catch (error) { throw new Error(/Missing file/.test(error.message) ? error.message : `Malformed or unreadable JSON: ${file}`); }
+}
+// The rebase evidence names the changed rule files as `- <path>` bullets under `## Changed rule files`.
+export function rebaseFiles(text) {
+  const section = String(text).replace(/\r\n/g, '\n').split(/^## /m).find(part => /^Changed rule files\s*\n/.test(part));
+  if (!section) return [];
+  return [...section.matchAll(/^- `?([^`\s]+)`?\s*$/gm)].map(match => match[1]);
+}
+// Task 935 R10: a reviewed contract made stale only by rule files that a reviewed governance contract approved.
+export function rulesRebaseErrors(root, contract, current = scopeDigest(root, contract)) {
+  const rebase = contract.review?.rulesRebase, errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  if (!rebase || typeof rebase !== 'object' || Array.isArray(rebase)) return ['rulesRebase must be an object'];
+  check(rebase.originalScopeSha256 === contract.review.scopeSha256, 'originalScopeSha256 is not the reviewed scope digest');
+  check(rebase.rebasedScopeSha256 === current, 'rebasedScopeSha256 is not the current scope digest');
+  let listed = [];
+  try {
+    check(isEvidencePath(rebase.evidence || ''), 'evidence must be under docs/sessions/evidence/');
+    safePath(root, rebase.evidence);
+    check(rebase.evidenceSha256 === digest(root, [rebase.evidence]), 'evidence hash is stale');
+    listed = rebaseFiles(readFileSync(safePath(root, rebase.evidence), 'utf8'));
+  } catch (error) { errors.push(`evidence unavailable (${error.message})`); }
+  check(listed.length > 0, 'evidence lists no changed rule files');
+  const inputs = workflowRuleInputs(root, contract.rules || []);
+  for (const file of listed) check(/^\.claude\/rules\/.+\.md$/.test(file) && inputs.includes(file), `${file} is not a rule input of this contract`);
+  try {
+    const by = readContractFile(root, rebase.by);
+    check(by.kind === 'governance' && by.stage === 'reviewed', `${rebase.by} is not a reviewed governance contract`);
+    for (const file of listed) check(Array.isArray(by.scope) && by.scope.includes(file), `${file} is outside the scope of ${rebase.by}`);
+  } catch (error) { errors.push(`approving governance contract unavailable (${error.message})`); }
+  return errors;
+}
+// A recorded scope hash is current, or it is the original of a valid rule-only rebase.
+export function scopeHashErrors(root, contract, recorded, stale) {
+  const current = scopeDigest(root, contract);
+  if (recorded === current) return [];
+  if (!contract.review?.rulesRebase) return [stale];
+  const problems = rulesRebaseErrors(root, contract, current);
+  if (!problems.length && recorded === contract.review.rulesRebase.originalScopeSha256) return [];
+  return [stale, ...problems.map(problem => `rulesRebase: ${problem}`)];
+}
 
 export function validateContract(root, value, { phase = 'plan' } = {}) {
   const errors = [];
@@ -77,19 +139,23 @@ export function validateContract(root, value, { phase = 'plan' } = {}) {
   if (Object.hasOwn(value, 'executionStatus')) check(value.executionStatus === 'ready',
     'Execution status must be ready; draft or blocked contracts cannot authorize execution or publication');
   if (phase !== 'plan' && value.kind === 'product') check(['implemented', 'reviewed'].includes(value.stage), 'Product verification requires an implemented or reviewed contract');
-  if (phase === 'release' && value.kind === 'product') {
+  if (phase !== 'plan' && value.kind === 'governance') {
+    check(['implemented', 'reviewed'].includes(value.stage), 'Governance verification requires an implemented or reviewed contract');
+    check(value.implementation?.role === 'Opus', 'Governance implementation.role must be Opus (owner decision 2026-11-01)');
+  }
+  if (phase === 'release' && ['product', 'governance'].includes(value.kind)) {
     check(value.stage === 'reviewed', 'Merge/release requires independently reviewed stage');
     const review = value.review;
     check(review?.role === 'Opus' && ['APPROVED', 'APPROVED WITH NOTES'].includes(review?.decision), 'Independent Opus review decision missing');
     try {
       safePath(root, review?.evidence);
       check(review?.evidenceSha256 === digest(root, [review?.evidence]), 'Independent review evidence hash is stale');
-      check(review?.scopeSha256 === scopeDigest(root, value), 'Independent review scope is stale');
+      errors.push(...scopeHashErrors(root, value, review?.scopeSha256, 'Independent review scope is stale'));
       safePath(root, value.report);
       check(review?.reportSha256 === digest(root, [value.report]), 'Independent review report is stale');
     } catch (error) { errors.push(error.message); }
   }
-  check(['product', 'docs'].includes(value.kind), 'kind must be product or docs');
+  check(['product', 'docs', 'governance'].includes(value.kind), 'kind must be product, docs or governance');
   check(/^Q[0-4]$/.test(value.qaProfile || ''), 'Select an existing QA profile (Q0 through Q4)');
   let taskText = '';
   try {
@@ -103,10 +169,13 @@ export function validateContract(root, value, { phase = 'plan' } = {}) {
   for (const file of scope) {
     try { safePath(root, file, false); } catch (error) { errors.push(error.message); }
     if (value.kind === 'product') check(!isPolicyPath(file), `Executor scope contains policy path ${file}; Opus must resolve policy work before product handoff`);
+    if (value.kind === 'governance') check(isGovernanceScopePath(file), `Governance scope contains a product or unrelated path ${file}`);
   }
+  if (value.kind === 'governance') check(scope.some(isExecutablePolicyPath), 'Governance scope must contain an executable (non-Markdown) policy path');
   const rules = Array.isArray(value.rules) ? value.rules : [];
   check(rules.includes('.claude/rules/shared/security-testing.md'), 'Load the mandatory security-testing rule');
   if (value.kind === 'product') for (const file of REQUIRED_PRODUCT_RULES) check(rules.includes(file), `Mandatory product rule missing: ${file}`);
+  if (value.kind === 'governance') for (const file of REQUIRED_GOVERNANCE_RULES) check(rules.includes(file), `Mandatory governance rule missing: ${file}`);
   for (const file of rules) {
     try { safePath(root, file); } catch (error) { errors.push(error.message); }
   }
@@ -114,6 +183,10 @@ export function validateContract(root, value, { phase = 'plan' } = {}) {
   if (value.kind === 'docs') {
     check(value.qaProfile === 'Q0' && scope.every(isDoc), 'N/A is permitted only for Q0 documentation/rules/task records');
     check(concrete(value.notApplicable) && cases.length === 0, 'Q0 requires a concrete runtime N/A explanation and no runtime claims');
+    return errors;
+  }
+  if (value.kind === 'governance') {
+    errors.push(...governanceCaseErrors(root, value, cases, phase));
     return errors;
   }
   check(value.qaProfile !== 'Q0', 'Product work cannot use Q0');
@@ -174,7 +247,7 @@ export function validateReport(root, contract, report) {
     && Array.isArray(report.cleanup.errors) && report.cleanup.errors.length === 0, 'Synthetic cleanup is not verified; a failed query is not zero remaining');
   try {
     check(report.contractSha256 === planDigest(root, contract), 'Security report contract hash is stale');
-    check(report.scopeSha256 === scopeDigest(root, contract), 'Security report scope hash is stale');
+    errors.push(...scopeHashErrors(root, contract, report.scopeSha256, 'Security report scope hash is stale'));
   } catch (error) { errors.push(error.message); }
   const rows = Array.isArray(report.cases) ? report.cases : [];
   check(new Set(rows.map(c => c?.id)).size === rows.length, 'Security report has duplicate cases');
@@ -189,6 +262,72 @@ export function validateReport(root, contract, report) {
       check(s?.baseline === 'passed' && s?.mutant === 'failed' && s?.failureKind === 'assertion'
         && s?.restored === 'passed' && s?.testName === row.testName, `${row.id}: sensitivity requires baseline pass, intended assertion failure, restored pass`);
       try { safePath(root, s?.artifact); check(s?.artifactSha256 === digest(root, [s?.artifact]), `${row.id}: sensitivity artifact is stale`); }
+      catch { errors.push(`${row.id}: sensitivity artifact is missing or invalid`); }
+    }
+  }
+  return errors;
+}
+
+// Task 935 R1: governance cases replace the frontend/server rows with the hook, CI and validator layers.
+function governanceCaseErrors(root, value, cases, phase) {
+  const errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  check(/^Q[1-4]$/.test(value.qaProfile || ''), 'Governance work requires Q1 through Q4');
+  const retainedReview = phase !== 'plan' && value.stage === 'reviewed' && /^tasks\/Archive\/.+\.md$/i.test(value.task || '');
+  check(isTaskDocument(value.task || '') || retainedReview, 'Governance execution requires an active task; archived tasks are retained review evidence only');
+  const ids = new Set(), tests = new Set();
+  for (const row of cases) {
+    if (!row || typeof row !== 'object') { errors.push('Case must be an object'); continue; }
+    check(/^GOV-[A-Z0-9]+(?:-[A-Z0-9]+)+$/.test(row.id || ''), 'Case ID must be GOV-<stable identifier>');
+    check(!ids.has(row.id), `duplicate case ID: ${row.id}`); ids.add(row.id);
+    for (const field of ['invariant', 'actor', 'resource', 'input', 'response']) check(concrete(row[field]), `${row.id}: concrete ${field} required`);
+    check(['hook', 'ci', 'validator'].includes(row.layer), `${row.id}: invalid governance layer`);
+    check(['allow', 'deny', 'error'].includes(row.outcome), `${row.id}: invalid outcome`);
+    check(['unit', 'process'].includes(row.boundary), `${row.id}: governance boundary must be unit or process`);
+    check(typeof row.critical === 'boolean', `${row.id}: critical must be explicit`);
+    check(Array.isArray(row.forbiddenEffects) && row.forbiddenEffects.length > 0 && row.forbiddenEffects.every(concrete), `${row.id}: forbiddenEffects required`);
+    check(typeof row.testName === 'string' && row.testName.includes(`[${row.id}]`), `${row.id}: exact testName must include [case ID]`);
+    const testKey = `${row.testFile}\0${row.testName}`;
+    check(!tests.has(testKey), `${row.id}: duplicate mapped test cannot count as two cases`); tests.add(testKey);
+    try {
+      check(/^scripts\/workflow-gates\/[a-z0-9_-]+\.selftest\.mjs$/.test(row.testFile || ''), `${row.id}: testFile must be a scripts/workflow-gates/<name>.selftest.mjs file`);
+      safePath(root, row.testFile, phase !== 'plan');
+    } catch (error) { errors.push(error.message); }
+  }
+  for (const outcome of ['allow', 'deny', 'error']) check(cases.some(c => c?.outcome === outcome), `governance: missing ${outcome} case`);
+  for (const layer of ['hook', 'ci']) check(cases.some(c => c?.layer === layer), `governance: missing ${layer} case`);
+  for (const field of ['report', 'sensitivity']) {
+    try { check(isEvidencePath(value[field] || ''), `${field} must be a path under docs/sessions/evidence/`); safePath(root, value[field], false); }
+    catch (error) { errors.push(`${field}: ${error.message}`); }
+  }
+  return errors;
+}
+
+// Task 935 R3: `cli.mjs governance-report` writes this record; approval and CI only validate it.
+export function validateGovernanceReport(root, contract, report) {
+  const errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  if (!report || typeof report !== 'object' || Array.isArray(report)) return ['Governance report is missing'];
+  check(report.version === 1 && report.status === 'passed', 'Governance report must be version 1 and passed');
+  check(Array.isArray(report.errors) && report.errors.length === 0, 'Governance report contains errors or has no errors array');
+  try {
+    check(report.contractSha256 === planDigest(root, contract), 'Governance report contract hash is stale');
+    errors.push(...scopeHashErrors(root, contract, report.scopeSha256, 'Governance report scope hash is stale'));
+  } catch (error) { errors.push(error.message); }
+  const rows = Array.isArray(report.cases) ? report.cases : [];
+  const cases = Array.isArray(contract.cases) ? contract.cases : [];
+  check(new Set(rows.map(c => c?.id)).size === rows.length, 'Governance report has duplicate cases');
+  check(rows.every(row => cases.some(c => c.id === row?.id)), 'Governance report contains unknown cases');
+  for (const row of cases) {
+    const proof = rows.find(c => c?.id === row.id);
+    if (!proof) { errors.push(`${row.id}: missing result`); continue; }
+    check(proof.status === 'passed' && proof.testName === row.testName && proof.testFile === row.testFile,
+      `${row.id}: result is ${proof.status || 'missing'} for its exact mapped test, including skipped/TODO`);
+    if (row.critical) {
+      const s = proof.sensitivity;
+      check(s?.baseline === 'passed' && s?.mutant === 'failed' && s?.failureKind === 'assertion' && s?.restored === 'passed'
+        && s?.testName === row.testName, `${row.id}: sensitivity requires baseline pass, intended assertion failure, restored pass`);
+      try { check(isEvidencePath(s?.artifact || '') && s?.artifactSha256 === digest(root, [s.artifact]), `${row.id}: sensitivity artifact is stale`); safePath(root, s?.artifact); }
       catch { errors.push(`${row.id}: sensitivity artifact is missing or invalid`); }
     }
   }

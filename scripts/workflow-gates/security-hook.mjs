@@ -2,7 +2,7 @@
 import { readFileSync, existsSync, realpathSync } from 'node:fs';
 import { resolve, relative, isAbsolute, dirname, basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateContract, validateReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs } from './contract.mjs';
+import { validateContract, validateReport, validateGovernanceReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs } from './contract.mjs';
 import { readJson, allContracts } from './cli.mjs';
 import { sessionRole } from './session-role.mjs';
 import { blockedResponse, plainResponseLines, hasGitHandoff } from './response-state.mjs';
@@ -104,6 +104,42 @@ function registeredWrites(root, files) {
   }
   return enrolled;
 }
+// Shell writes the PreToolUse guard recognizes: write cmdlets/APIs naming a project path, and output redirection.
+export function shellWriteTargets(root, command) {
+  const files = [];
+  if (/\b(?:Set-Content|Add-Content|Out-File|apply_patch|writeFileSync|write_text|writeFile)\b/i.test(command)) {
+    files.push(...[...command.matchAll(/(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g)].map(m => projectPath(root, m[0].replaceAll('\\', '/'))));
+  }
+  // Redirection writes its target, not every source filename mentioned by a read/test command.
+  for (const match of command.matchAll(/(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g)) {
+    files.push(projectPath(root, match[1] || match[2] || match[3]));
+  }
+  return files;
+}
+// Owner decision 2026-11-01 (Task 935 D2): a session that wrote any governance scope file cannot approve it. The
+// approver's rule-only rebase of another reviewed contract (its `review.rulesRebase` and evidence) is not such a write.
+export function governanceIndependenceErrors(root, contract, receiptPath, transcript) {
+  const calls = successfulCalls(transcript);
+  const written = [...calls.filter(call => ['Write', 'Edit'].includes(call.name)).map(call => projectPath(root, call.input?.file_path || call.input?.path)),
+    ...calls.filter(call => ['PowerShell', 'Bash'].includes(call.name) && typeof call.input?.command === 'string')
+      .flatMap(call => shellWriteTargets(root, call.input.command))];
+  const exempt = new Set();
+  for (const path of allContracts(root)) {
+    let other; try { other = readJson(root, path); } catch { continue; }
+    const rebase = other?.review?.rulesRebase;
+    if (rebase && typeof rebase.by === 'string' && pathKey(rebase.by) === pathKey(receiptPath) && path !== receiptPath) {
+      exempt.add(pathKey(path));
+      if (typeof rebase.evidence === 'string') exempt.add(pathKey(rebase.evidence));
+    }
+  }
+  const errors = [];
+  for (const file of new Set(written.filter(Boolean))) {
+    if (!exempt.has(pathKey(file)) && inScope(root, contract.scope, file)) {
+      errors.push(`GOVERNANCE INDEPENDENCE: this session wrote ${file}; an implementing session cannot approve (owner decision 2026-11-01)`);
+    }
+  }
+  return errors;
+}
 function currentReceipt(text) {
   const candidate = [...text.matchAll(/^SECURITY TASK PREFLIGHT COMPLETE - contract:[^\r\n]*$/gm)].at(-1);
   if (!candidate) return { error: 'No valid receipt: run `node scripts/workflow-gates/cli.mjs receipt --contract <path>` through the PowerShell tool for the current task.' };
@@ -174,9 +210,14 @@ export function evaluateHook(root, event, transcript) {
       else {
         try {
           const contract = readJson(root, receipt.path);
-          errors.push(...validateContract(root, contract, { phase: /^\s*APPROVED(?: WITH NOTES)?\s*$/m.test(last) ? 'release' : 'verify' }));
+          const approving = /^\s*APPROVED(?: WITH NOTES)?\s*$/m.test(last);
+          errors.push(...validateContract(root, contract, { phase: approving ? 'release' : 'verify' }));
           if (contract.kind === 'product') errors.push(...validateReport(root, contract, readJson(root, contract.report)));
-          if (/^\s*APPROVED(?: WITH NOTES)?\s*$/m.test(last) && contract.stage !== 'reviewed') errors.push('Independent approval requires reviewed stage');
+          if (contract.kind === 'governance') {
+            if (approving) errors.push(...governanceIndependenceErrors(root, contract, receipt.path, transcript));
+            errors.push(...validateGovernanceReport(root, contract, readJson(root, contract.report)));
+          }
+          if (approving && contract.stage !== 'reviewed') errors.push('Independent approval requires reviewed stage');
         } catch (error) { errors.push(error.message); }
       }
     }
@@ -193,13 +234,7 @@ export function evaluateHook(root, event, transcript) {
     files = [file];
   } else if (['PowerShell', 'Bash'].includes(event.tool_name)) {
     if (typeof input.command !== 'string') return ['Missing shell command'];
-    if (/\b(?:Set-Content|Add-Content|Out-File|apply_patch|writeFileSync|write_text|writeFile)\b/i.test(input.command)) {
-      files = [...input.command.matchAll(/(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g)].map(m => projectPath(root, m[0].replaceAll('\\', '/')));
-    }
-    // Redirection writes its target, not every source filename mentioned by a read/test command.
-    for (const match of input.command.matchAll(/(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g)) {
-      files.push(projectPath(root, match[1] || match[2] || match[3]));
-    }
+    files = shellWriteTargets(root, input.command);
   }
   if (files.some(file => /^(?:\.git(?:\/|$))/i.test(file))) return ['OWNER GIT REQUIRED: agents cannot write Git metadata'];
   const explicitExecutor = role === 'executor';

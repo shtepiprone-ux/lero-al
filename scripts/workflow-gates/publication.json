@@ -55,6 +55,7 @@
     "scripts/workflow-gates/diff-hook.selftest.mjs",
     "scripts/workflow-gates/eslint.config.mjs",
     "scripts/workflow-gates/git-policy.selftest.mjs",
+    "scripts/workflow-gates/governance-contract.selftest.mjs",
     "scripts/workflow-gates/hooks.selftest.mjs",
     "scripts/workflow-gates/locale-runtime.selftest.mjs",
     "scripts/workflow-gates/main.ruleset.json",

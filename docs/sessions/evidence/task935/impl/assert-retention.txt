@@ -1,0 +1,7 @@
+﻿REMOVED: assert.deepEqual(pushCommands(text), [command], text);
+KEPT AS: assert.deepEqual(pushCommands(text), [command], text);
+
+REMOVED: assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: 'APPROVED\n`gh pr merge 12 --squash --delete-branch`' }, { rules: activeRules }), []);
+KEPT AS: assert.deepEqual(await handoffErrors('.', { ...orchestrator, last_assistant_message: 'APPROVED\n`gh pr merge 12 --squash --delete-branch`' }, { rules: activeRules }), []);
+
+Removed assert lines without a retained identical assertion: 0

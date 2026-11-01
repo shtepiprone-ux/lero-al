@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "kind": "docs",
+  "qaProfile": "Q0",
+  "task": "tasks/Sprints/Sprint_92_Governance_Changes_Get_An_Independent_Approval.md",
+  "taskSha256": "f417c849b64d03cc81df726f64292adce385242207da60254f49ecfa0ab7a06b",
+  "scope": [
+    "tasks/Sprints/Sprint_92_Governance_Changes_Get_An_Independent_Approval.md"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "cases": [],
+  "notApplicable": "The Sprint 92 plan records task state, ordering and owner decisions only; it changes no runtime behavior, dependency, executable gate or deployment configuration. Task 935 is governed by its own adjacent governance contract."
+}

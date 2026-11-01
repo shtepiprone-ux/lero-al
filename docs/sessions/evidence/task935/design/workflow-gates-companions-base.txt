@@ -1,0 +1,2 @@
+﻿d8a07a3c7 workflow-gates.md '## Required companions' count=0
+HEAD workflow-gates.md:43: ## Required companions

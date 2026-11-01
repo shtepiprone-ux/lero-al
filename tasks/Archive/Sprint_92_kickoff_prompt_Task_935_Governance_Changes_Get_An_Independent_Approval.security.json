@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "reviewed",
   "executionStatus": "ready",
   "implementation": {
     "role": "Opus"
   },
   "kind": "governance",
   "qaProfile": "Q1",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
-  "taskSha256": "b84477125e416cccd00384800c2502e8038758de6d2d7f3b609f35c55cf9d271",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
+  "taskSha256": "2a3fb8042f62023169d102300f97fa8ac84db2143c18614cd7c04622a48458ec",
   "scope": [
     "tasks/Sprints/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
     "scripts/workflow-gates/cli.mjs",
@@ -434,5 +434,13 @@
     }
   ],
   "report": "docs/sessions/evidence/task935/impl/governance-report.json",
-  "sensitivity": "docs/sessions/evidence/task935/sensitivity/sensitivity.json"
+  "sensitivity": "docs/sessions/evidence/task935/sensitivity/sensitivity.json",
+  "review": {
+    "role": "Opus",
+    "decision": "APPROVED WITH NOTES",
+    "evidence": "docs/sessions/evidence/task935/review/review-935.md",
+    "evidenceSha256": "17862f21ff92c58171f990c21e5dd4e03dddb6dd976146433563443e2a2a89a5",
+    "scopeSha256": "3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0",
+    "reportSha256": "c609d4f797df34c8bd3caba8e872598dc2a1d8accf55bb5db5758b3c7b4382cd"
+  }
 }

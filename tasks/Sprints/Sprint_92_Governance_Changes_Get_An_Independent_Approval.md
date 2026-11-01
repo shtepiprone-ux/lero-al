@@ -37,7 +37,7 @@ The single state source for this sprint's tasks.
 
 | # | State | Scope |
 |---|---|---|
-| **935** | `KICKOFF FILED` 2026-11-01, P1, Q1; executor: Opus, fresh session (D1); approver: another fresh Opus session (D2) | **Governance contracts and independent approval.** Contract kind `governance`, its release phase, the `governance-report` command, the approval hook's independence check, CI's diff check for executable policy files, the audited rule-only rebase of reviewed contracts (D6), `GOV-935-*` cases and the PR #11 coverage → [kickoff](Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md). |
+| **935** | ✅ `APPROVED WITH NOTES` 2026-11-01 by an independent Opus session (D2), review `docs/sessions/evidence/task935/review/review-935.md`; Task 923 D8/D9 review rebased (D6, `rules-rebase-923.md`); open: branch push, PR into main, merge after green required checks, PR #11 closed unmerged | **Governance contracts and independent approval.** Contract kind `governance`, its release phase, the `governance-report` command, the approval hook's independence check, CI's diff check for executable policy files, the audited rule-only rebase of reviewed contracts (D6), `GOV-935-*` cases and the PR #11 coverage → [kickoff](../Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md). |
 
 ## Exit criteria
 

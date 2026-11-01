@@ -4770,6 +4770,13 @@
     "evidence": "docs/sessions/evidence/task923/review-67/rv67-10-review-decision.md",
     "evidenceSha256": "8c15a1a9b47b2ef9ecf9cbd061903856558600dd65c1935dc671ed3366525cc7",
     "scopeSha256": "a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74",
-    "reportSha256": "c96d161682f2e9460dd8abd0c2bfaf96f87623c20e5864a90a984a4cb82af36c"
+    "reportSha256": "c96d161682f2e9460dd8abd0c2bfaf96f87623c20e5864a90a984a4cb82af36c",
+    "rulesRebase": {
+      "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json",
+      "evidence": "docs/sessions/evidence/task935/review/rules-rebase-923.md",
+      "evidenceSha256": "c7e34f36090e96072b899574a6fe9d3139e0b2e230174d5c97c4c3c1e6c23d8b",
+      "originalScopeSha256": "a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74",
+      "rebasedScopeSha256": "a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302"
+    }
   }
 }

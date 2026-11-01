@@ -1,9 +1,9 @@
 {
   "version": 1,
   "status": "passed",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
-  "contractSha256": "30387df4ea12c1b79769bb232be90fd4bfaaa4ccd2ce7a2afe5cfb56df8c5dda",
-  "scopeSha256": "9c7848c8592634962b98afd80a443d4c15becde7c8361fd1666dc87df496cb19",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md",
+  "contractSha256": "fae23dd5f5dbd0c57d9b059b29653310c4806d59e56c181056551f4095285a83",
+  "scopeSha256": "3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [

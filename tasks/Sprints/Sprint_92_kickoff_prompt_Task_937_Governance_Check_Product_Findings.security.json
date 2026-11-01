@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "executionStatus": "ready",
+  "kind": "product",
+  "qaProfile": "Q1",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_937_Governance_Check_Product_Findings.md",
+  "taskSha256": "b4ac439ede544ff18eeda3323344bc5a16b75f3bd92deec559a56f5f83b1bdba",
+  "scope": [
+    "docs/sessions/evidence/task923/review-67/rv67-46-squash-paths.nul",
+    "scripts/mojibake-allowlist.json",
+    "docs/sessions/evidence/task927/base/unit-base-failures.txt",
+    "src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx",
+    "scripts/enrolled-tailwind-baseline.json",
+    "src/components/shared/Map.module.css",
+    "src/design-system/mantine/input-chrome.css",
+    "src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx",
+    "src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.security.test.tsx",
+    "src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts",
+    "src/modules/cabinet/actions/index.ts"
+  ],
+  "inputs": [
+    "src/modules/cabinet/components/CabinetEmailChangeSection.tsx",
+    "src/design-system/mantine/theme.ts",
+    "src/modules/listings/components/ListingStatusBanner.tsx",
+    "scripts/check-design-tokens.mjs",
+    "scripts/check-enrolled-tailwind.mjs",
+    "scripts/check-mojibake.mjs",
+    "scripts/check-file-integrity.mjs",
+    "src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx",
+    "src/stories/patterns/mantine/CabinetEmailChangeSectionView.stories.tsx",
+    "docs/sessions/evidence/task937/design/p02-design-token-fix-probe.mjs",
+    "docs/sessions/evidence/task937/design/p03-mojibake-repair-probe.mjs",
+    "docs/sessions/evidence/task923/security/owner-fixes-report.mjs"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/security-test-quality.md",
+    ".claude/rules/shared/security-test-environment.md",
+    ".claude/rules/shared/workflow-gates.md"
+  ],
+  "report": "docs/sessions/evidence/task937/security/report.json",
+  "cases": [
+    {
+      "id": "SEC-937-FE-PENDING-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A pending address is shown only in the info alert, with the theme icon, and the resend action reaches the container once",
+      "actor": "Signed-in user-937 with a pending address",
+      "resource": "CabinetEmailChangeSectionView",
+      "input": "pendingEmail pending-937@example.test, sending false, one click on resend",
+      "response": "the info alert contains the address; its icon SVG has width and height 20; onResend called once",
+      "forbiddenEffects": [
+        "the pending address rendered outside the alert",
+        "onResend called more than once per click"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.security.test.tsx",
+      "testName": "CabinetEmailChangeSectionView (Task 937) [SEC-937-FE-PENDING-ALLOW] a pending address shows only in the info alert with the theme icon and resend reaches the container once"
+    },
+    {
+      "id": "SEC-937-FE-RESEND-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "No second resend request while one is in flight",
+      "actor": "Signed-in user-937 with a resend in flight",
+      "resource": "CabinetEmailChangeSectionView resend action",
+      "input": "pendingEmail set, sending true, click on the resend action",
+      "response": "the resend action is disabled and shows the loading label; onResend is not called",
+      "forbiddenEffects": [
+        "onResend called while sending",
+        "an enabled resend action while sending"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.security.test.tsx",
+      "testName": "CabinetEmailChangeSectionView (Task 937) [SEC-937-FE-RESEND-DENY] while a resend is in flight the action is disabled and a click calls nothing"
+    },
+    {
+      "id": "SEC-937-FE-ERROR",
+      "layer": "frontend",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A refusal is announced as an alert with exactly the container's localized text",
+      "actor": "Signed-in user-937 whose resend was refused",
+      "resource": "CabinetEmailChangeSectionView error alert",
+      "input": "error 'Too many requests. Try again later.' with a pending address",
+      "response": "one role=alert element whose text equals the given error",
+      "forbiddenEffects": [
+        "the error rendered without role alert",
+        "any other text added to the error"
+      ],
+      "testFile": "src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.security.test.tsx",
+      "testName": "CabinetEmailChangeSectionView (Task 937) [SEC-937-FE-ERROR] a refusal renders as an alert with exactly the container's text"
+    },
+    {
+      "id": "SEC-937-SRV-RESEND-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A resend retires only the session user's earlier links and stores one new link for that user",
+      "actor": "Session user user-937 under the hourly limit with an active link",
+      "resource": "resendEmailVerification",
+      "input": "locale en",
+      "response": "the retire update is filtered by user_id user-937 and consumed_at null; one new token row for user-937; the mail sender called once for the pending address; result without error",
+      "forbiddenEffects": [
+        "a retire update without the user_id filter",
+        "a token stored for another user"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts",
+      "testName": "resendEmailVerification (Task 937) [SEC-937-SRV-RESEND-ALLOW] a resend retires only the session user's links and stores one new link for that user"
+    },
+    {
+      "id": "SEC-937-SRV-RESEND-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An anonymous caller cannot trigger a verification e-mail",
+      "actor": "Anonymous caller (resolveAuthUser returns null)",
+      "resource": "resendEmailVerification",
+      "input": "locale en",
+      "response": "{ error: 'Unauthorized' }",
+      "forbiddenEffects": [
+        "the admin client created",
+        "a token write",
+        "a mail sent"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts",
+      "testName": "resendEmailVerification (Task 937) [SEC-937-SRV-RESEND-DENY] an anonymous caller is refused before any database client"
+    },
+    {
+      "id": "SEC-937-SRV-RESEND-ERROR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A failed retire step stores no new link and sends no mail",
+      "actor": "Session user user-937 under the hourly limit with an active link",
+      "resource": "resendEmailVerification",
+      "input": "the retire update resolves an error",
+      "response": "the localized failed error; console.error once with the error code only",
+      "forbiddenEffects": [
+        "a new token stored",
+        "a mail sent",
+        "the raw database message returned"
+      ],
+      "testFile": "src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts",
+      "testName": "resendEmailVerification (Task 937) [SEC-937-SRV-RESEND-ERROR] a failed retire step stores no new link and sends no mail"
+    }
+  ]
+}

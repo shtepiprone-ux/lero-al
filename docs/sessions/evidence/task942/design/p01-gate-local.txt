@@ -1,0 +1,16 @@
+ℹ️  Scope: inspects from('listings') blocks in src/**/*.{ts,tsx} minus excluded paths — direct chains, derived variables (including a multi-line `let q = supabase` / `.from('listings')` declaration), and same-file arrow factories (call sites, their continuation lines, variables assigned from them). CANNOT see: factories declared with `function`, factories whose from('listings') is on a later line than the declaration, factories imported from another module / passed as arguments / stored on objects, or predicates built with dynamic strings.
+   Allowlist: 9 entries, 2 stale.
+
+❌ Stale allowlist entries (no longer match — remove them):
+   src/app/[locale]/listings/[slug]/page.tsx — fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])" — reason: single-row detail page, multi-status display filter
+   src/modules/listings/actions/contactEvents.ts — fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])" — reason: single-row WhatsApp contact-event lookup by id (service role, Task 850) — link-reachable status set, not a public list read
+
+❌ 1 inline visibility literal(s) on listings reads:
+
+   src/modules/listings/actions/contactEvents.ts:58  .eq('status', 'active')
+
+   Remediation: route this read through `applyPublicVisibility` or
+   `applyPublicEligibleButHidden` in `src/modules/listings/lib/visibility.ts`.
+
+❌ 3 issue(s) — gate FAILED.
+exit=1

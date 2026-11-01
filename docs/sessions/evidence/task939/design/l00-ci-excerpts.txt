@@ -1,0 +1,28 @@
+# Task 939 design: excerpts of PR #12 CI run 41300859846 (head c2f918a59), Locale Leak Detection jobs; raw logs fetched with gh run view --job <id> --log on 2026-11-01
+## shard 1/6 (failed)
+    Shard: 1/6 | Stories: 80/478 | Locales: sq/uk/it | Viewports: 3
+ mantine-primitives-favoritesshell--empty: 36/720 tuples, 3 render errors
+......... mantine-primitives-filterspanelshell--default: 45/720 tuples, 3 render errors
+Incomplete locale scan: 711/720 tuples; 3 render errors. Report: /home/runner/work/lero-al/lero-al/.screenshots/locale-leak/2026-11-01T11-15-25-425Z-shard-1-6/report.json
+##[error]Process completed with exit code 1.
+## shard 2/6 (failed)
+    Shard: 2/6 | Stories: 80/478 | Locales: sq/uk/it | Viewports: 3
+ mantine-primitives-favoritesshell--error: 36/720 tuples, 3 render errors
+......... mantine-primitives-footerview--default: 45/720 tuples, 3 render errors
+Incomplete locale scan: 705/720 tuples; 5 render errors. Report: /home/runner/work/lero-al/lero-al/.screenshots/locale-leak/2026-11-01T11-15-47-647Z-shard-2-6/report.json
+##[error]Process completed with exit code 1.
+## shard 3/6 (failed)
+    Shard: 3/6 | Stories: 80/478 | Locales: sq/uk/it | Viewports: 3
+ mantine-primitives-favoritesshell--populated: 36/720 tuples, 3 render errors
+......... mantine-primitives-gallerydesktopnavigation--default: 45/720 tuples, 3 render errors
+Incomplete locale scan: 711/720 tuples; 3 render errors. Report: /home/runner/work/lero-al/lero-al/.screenshots/locale-leak/2026-11-01T11-15-43-115Z-shard-3-6/report.json
+##[error]Process completed with exit code 1.
+## shard 4/6 (failed)
+    Shard: 4/6 | Stories: 80/478 | Locales: sq/uk/it | Viewports: 3
+ mantine-primitives-favoritesshell--type-filter-no-matches: 36/720 tuples, 3 render errors
+......... mantine-primitives-gallerynavactionicon--default: 45/720 tuples, 3 render errors
+Incomplete locale scan: 711/720 tuples; 3 render errors. Report: /home/runner/work/lero-al/lero-al/.screenshots/locale-leak/2026-11-01T11-15-29-633Z-shard-4-6/report.json
+##[error]Process completed with exit code 1.
+## shard 5/6 (passed)
+    Shard: 5/6 | Stories: 79/478 | Locales: sq/uk/it | Viewports: 3
+❌  Locale leak detector: 105 leak(s) found:

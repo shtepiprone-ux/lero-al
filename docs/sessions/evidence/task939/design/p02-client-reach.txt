@@ -1,0 +1,66 @@
+src/stories/mantine/primitives/FavoriteButton.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/FavoritesShell.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/FiltersPanelShell.stories.tsx
+    via src/components/shared/FiltersPanel.tsx -> src/components/shared/useHomepageFilters.ts -> src/modules/currency/hooks/useCurrencies.ts -> src/modules/currency/lib/queries.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/HeaderView.stories.tsx
+    via src/components/layout/HeaderView.tsx -> src/modules/auth/components/AuthSheet.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/HeroSearch.stories.tsx
+    via src/components/shared/HeroSearch.tsx -> src/modules/locations/hooks/useLocations.ts -> src/modules/locations/lib/queries.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/ListingCard.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/RecentlyViewedGridView.stories.tsx
+    via src/modules/listings/components/RecentlyViewedGridView.tsx -> src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/FavoriteButton.tsx -> src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/SaveToCollectionButton.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/mantine/primitives/SimilarListingsView.stories.tsx
+    via src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/FavoriteButton.tsx -> src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminCurrenciesView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminDashboardView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminInquiriesView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminListingsView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminPageFrame.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminPagesView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminPermissionsView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminReportsView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminShell.stories.tsx
+    via src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminSidebar.stories.tsx
+    via src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminSupportView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminUserProfileView.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AdminUsersTable.stories.tsx
+    via src/stories/_StoryAdminShell.tsx -> src/components/admin/AdminShell.tsx -> src/components/admin/AdminSidebar.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/AuthSheet.stories.tsx
+    via src/modules/auth/components/AuthSheet.tsx -> src/lib/auth/browser.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/HomepageListingGrids.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingCardPattern.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingCardTrack.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingContactPattern.stories.tsx
+    via src/modules/listings/components/ListingContact.tsx -> src/modules/listings/components/SaveToCollectionButton.tsx -> src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingDetailPattern.stories.tsx
+    via src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingDetailView.stories.tsx
+    via src/modules/listings/components/ListingDetailView.tsx -> src/modules/listings/components/FavoriteButton.tsx -> src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingsFilterBar.stories.tsx
+    via src/modules/listings/components/ListingsFilterBar.tsx -> src/modules/listings/hooks/useListingsUrlFilters.ts -> src/modules/currency/hooks/useCurrencies.ts -> src/modules/currency/lib/queries.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingsFilters.stories.tsx
+    via src/modules/listings/components/ListingsFilters.tsx -> src/modules/listings/hooks/useListingsUrlFilters.ts -> src/modules/currency/hooks/useCurrencies.ts -> src/modules/currency/lib/queries.ts -> src/lib/supabase/client.ts
+src/stories/patterns/mantine/ListingsShellView.stories.tsx
+    via src/modules/listings/components/ListingsShellView.tsx -> src/modules/listings/components/ListingCard.tsx -> src/modules/listings/components/FavoriteButton.tsx -> src/modules/auth/context/AuthContext.tsx -> src/lib/auth/controller.ts -> src/lib/supabase/client.ts
+
+32 of 192 Story files reach src/lib/supabase/client.ts

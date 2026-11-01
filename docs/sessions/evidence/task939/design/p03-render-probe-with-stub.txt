@@ -1,0 +1,44 @@
+mantine-primitives-favoritesshell--empty mobile-320 en: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--empty mobile-320 sq: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--empty desktop-1280 en: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--empty desktop-1280 sq: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--error mobile-320 en: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--error mobile-320 sq: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--error desktop-1280 en: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--error desktop-1280 sq: phase=finished events=1
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--populated mobile-320 en: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--populated mobile-320 sq: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--populated desktop-1280 en: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--populated desktop-1280 sq: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--type-filter-no-matches mobile-320 en: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--type-filter-no-matches mobile-320 sq: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--type-filter-no-matches desktop-1280 en: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+mantine-primitives-favoritesshell--type-filter-no-matches desktop-1280 sq: phase=finished events=2
+   console.error: Failed to load resource: the server responded with a status of 404 (Not Found)
+patterns-mantine-dashboardperiodcontrol--custom-range-too-long mobile-320 en: phase=finished events=2
+   console.error: Error rendering story 'patterns-mantine-dashboardperiodcontrol--custom-range-too-long':
+   console.error: TestingLibraryElementError: Unable to find role="button" and name "Next"
+patterns-mantine-dashboardperiodcontrol--custom-range-too-long mobile-320 sq: phase=finished events=2
+   console.error: Error rendering story 'patterns-mantine-dashboardperiodcontrol--custom-range-too-long':
+   console.error: TestingLibraryElementError: Unable to find role="button" and name "Tjetra"
+patterns-mantine-dashboardperiodcontrol--custom-range-too-long desktop-1280 en: phase=finished events=0
+patterns-mantine-dashboardperiodcontrol--custom-range-too-long desktop-1280 sq: phase=finished events=0
+mantine-primitives-alert--default mobile-320 en: phase=finished events=0
+mantine-primitives-alert--default mobile-320 sq: phase=finished events=0
+mantine-primitives-alert--default desktop-1280 en: phase=finished events=0
+mantine-primitives-alert--default desktop-1280 sq: phase=finished events=0

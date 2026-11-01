@@ -1,0 +1,21 @@
+# Task 938 design: excerpts of Click-Shield job logs fetched read-only with gh run view --job <id> --log on 2026-11-01 (timestamps and job prefix trimmed).
+## PR #12 run 41300859846 (head c2f918a59), job 124831270836
+03.0153381Z [sitemap] listings read failed { index: 0, code: undefined }
+46.3331969Z    [base] /sq × mobile-320: ❌ EMPTY CANDIDATE SET (checked=0), excluded(below/above-fold)=0 — page.goto: Timeout 30000ms exceeded.
+47.1675975Z    [drawer] /sq × mobile-320: ❌ SCENARIO OVERLAY NEVER OPENED — page.goto: Timeout 30000ms exceeded.
+24.3860267Z    [modal] /sq/ci/click-shield-modal × mobile-390: ✅ PASS — checked=15, excluded(below/above-fold)=0, 0 interceptions (dialog present: true)
+51.5427690Z    Scenarios: 3  Cells: 48  Elements checked: 260  Excluded (below/above-fold): 0  Interceptions: 0  Cleared (transient): 0  Empty-candidate cells: 16  Scenario-open failures: 16
+51.5432811Z    [drawer] cells=16  checked=0  excluded=0  violations=0
+51.5433233Z    [modal] cells=16  checked=260  excluded=0  violations=0
+51.5642382Z ##[error]Process completed with exit code 2.
+## main push run 41018456451 (head d8a07a3c7, 2026-10-30), job 123940025881
+41.8989515Z [sitemap] listings read failed { index: 0, code: undefined }
+25.2219389Z    [base] /sq × mobile-320: ❌ EMPTY CANDIDATE SET (checked=0), excluded(below/above-fold)=0 — page.goto: Timeout 30000ms exceeded.
+55.2894553Z    [base] /sq × mobile-375: ❌ EMPTY CANDIDATE SET (checked=0), excluded(below/above-fold)=0 — page.goto: Timeout 30000ms exceeded.
+30.0367428Z    Scenarios: 3  Cells: 48  Elements checked: 260  Excluded (below/above-fold): 0  Interceptions: 0  Cleared (transient): 0  Empty-candidate cells: 16  Scenario-open failures: 16
+## PR #11 run 41284148492 (head 23206fb7f), job 124781914474
+s	2026-11-01T07:35:49.7202546Z    Scenarios: 3  Cells: 48  Elements checked: 260  Excluded (below/above-fold): 0  Interceptions: 0  Cleared (transient): 0  Empty-candidate cells: 16  Scenario-open failures: 16
+## main push runs 39036771876 (2026-10-17) and 37668475795 (2026-10-07): the job stopped earlier, at check:css-vars
+51.0506683Z ❌  check:css-vars — 1 blocking finding(s). Baseline is 0.
+## last green run 31954550755 (2026-08-16), job 95183050907
+39.4149455Z    Scenarios: 3  Cells: 48  Elements checked: 1352  Excluded (below/above-fold): 0  Interceptions: 0  Cleared (transient): 15  Empty-candidate cells: 0  Scenario-open failures: 0

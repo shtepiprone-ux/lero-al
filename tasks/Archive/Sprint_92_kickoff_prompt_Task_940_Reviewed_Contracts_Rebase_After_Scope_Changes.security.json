@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "reviewed",
   "implementation": {
     "role": "Opus"
   },
   "executionStatus": "ready",
   "kind": "governance",
   "qaProfile": "Q1",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
-  "taskSha256": "7f9a50db1d82a73e74a788c9e004bc8f198a9dbc781e61401bb1dfd965ee1a6a",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
+  "taskSha256": "f413236b4f3de47a5050df4b3d7fe84dd7bd49795b0202bb27e85ed73eea7033",
   "scope": [
     "scripts/workflow-gates/contract.mjs",
     "scripts/workflow-gates/cli.mjs",
@@ -192,5 +192,13 @@
       "testFile": "scripts/workflow-gates/scope-rebase.selftest.mjs",
       "testName": "[GOV-940-HOOK-SCOPE-ENTRY-DENY] A scope entry naming the receipt contract never exempts a write"
     }
-  ]
+  ],
+  "review": {
+    "role": "Opus",
+    "decision": "APPROVED WITH NOTES",
+    "evidence": "docs/sessions/evidence/task940/review/review-940.md",
+    "evidenceSha256": "4833deaa660efab375b6a283152b599b181fc551a85f3c8e49511f76c438da6a",
+    "scopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
+    "reportSha256": "6ff031e9e563d5bcb9bc0e322c0ebba076fdbd04983ede5251fd6eb32fb421a9"
+  }
 }

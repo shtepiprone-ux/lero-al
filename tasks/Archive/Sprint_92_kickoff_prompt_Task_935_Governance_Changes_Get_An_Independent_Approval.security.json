@@ -441,6 +441,16 @@
     "evidence": "docs/sessions/evidence/task935/review/review-935.md",
     "evidenceSha256": "17862f21ff92c58171f990c21e5dd4e03dddb6dd976146433563443e2a2a89a5",
     "scopeSha256": "3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0",
-    "reportSha256": "c609d4f797df34c8bd3caba8e872598dc2a1d8accf55bb5db5758b3c7b4382cd"
+    "reportSha256": "c609d4f797df34c8bd3caba8e872598dc2a1d8accf55bb5db5758b3c7b4382cd",
+    "rebases": [
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json",
+        "evidence": "docs/sessions/evidence/task940/review/scope-rebase-935.md",
+        "evidenceSha256": "79a186afe0646e81d41b04a5595a2b060f9dece3c849f0f123324b59048ba9df",
+        "originalScopeSha256": "3ecf552263ac4ac3c742d215cfe26f96c27a8e2fb7c50c03f1e5f44e5294a2d0",
+        "rebasedScopeSha256": "a3fb3748747e9ae60e4bce1f9365c9bcdf818c052214fceeb77cee41f1637349"
+      }
+    ]
   }
 }

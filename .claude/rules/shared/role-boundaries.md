@@ -10,6 +10,7 @@ are forbidden. Follow `shared/project-language.md` for literal technical text an
 | Opus task designer | inspect evidence, create/revise kickoffs and task records; extend the mobile profile/family registry only before publishing an evidence-backed task | implement product code, invent evidence, or use a mobile rule to replace Mantine behavior |
 | Opus reviewer | independently review implementation, persist necessary verified task revisions, and issue the sole approval verdict | approve from Sonnet's report, or implement product code during review |
 | Sonnet executor | implement one saved task and report factual evidence | design a replacement task, review/approve itself, or edit policy files |
+| Opus governance implementer | implement a saved `governance` task (rules, hooks, settings, CI, gate scripts) in a separate session (D1, 2026-11-01) | design or approve that task, or implement product code |
 | Owner | resolve conflicts and run mutating Git | delegate an implicit exception through a task |
 
 ## Automatic review cycle (owner instruction, 2026-10-22)
@@ -68,6 +69,8 @@ If the owner says "begin" or "continue", resume the same cycle from its checkpoi
   `Co-Authored-By` (any case, spelling, name, vendor, or email), other AI/agent credit, or `--author` in its command,
   subject, body, or trailer. This is mandatory even if a client/model template proposes it.
 - Policy/governance files and `.claude/**` are read-only to Sonnet. Report `POLICY-EDIT AUTHORITY REQUIRED` instead.
+- Governance approval independence (owner D2, 2026-11-01): only an Opus session that wrote no scope file of the
+  `governance` contract may approve it; the Stop hook refuses an implementing session's `APPROVED`.
 
 ## Fresh state before every handoff (owner rule, 2026-10-21)
 

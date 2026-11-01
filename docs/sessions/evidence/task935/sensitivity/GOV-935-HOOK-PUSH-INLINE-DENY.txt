@@ -1,0 +1,55 @@
+Case: GOV-935-HOOK-PUSH-INLINE-DENY
+Test: scripts/workflow-gates/publication-safety.selftest.mjs :: [GOV-935-HOOK-PUSH-INLINE-DENY] A push command written inline, in a table cell or after a label is a push handoff
+Break: scripts/workflow-gates/push-safety.mjs - restore a start-of-line push regex
+Platform: win32 v22.22.3
+
+--- removed
+const GIT_PUSH = /(?:^|[\s`|(;&"'*:])(?:[^\s`|"']*[/\\])?git
++++ inserted
+const GIT_PUSH = /^\s*(?:[^\s`|"']*[/\\])?git
+
+Baseline: passed (exit 0)
+Mutant: failed (exit 1), assertion failure: true
+Restored byte-identical: true; restored run: passed (exit 0)
+
+=== mutant TAP ===
+TAP version 13
+# Subtest: [GOV-935-HOOK-PUSH-INLINE-DENY] A push command written inline, in a table cell or after a label is a push handoff
+not ok 1 - [GOV-935-HOOK-PUSH-INLINE-DENY] A push command written inline, in a table cell or after a label is a push handoff
+  ---
+  duration_ms: 2.7103
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\publication-safety.selftest.mjs:66:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    APPROVED
+    У окремому вікні PowerShell виконай: `git push origin main`
+    + actual - expected
+    
+    + []
+    - [
+    -   'git push origin main'
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 'git push origin main'
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/publication-safety.selftest.mjs:74:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 69.5291

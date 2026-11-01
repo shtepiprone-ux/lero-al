@@ -3,7 +3,8 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { validateContract, validateReport, requiredResults, safePath, digest, isProductPath, isTaskDocument } from './contract.mjs';
+import { validateContract, validateReport, validateGovernanceReport, requiredResults, safePath, digest, planDigest, scopeDigest,
+  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles } from './contract.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 export function readJson(root, file) {
@@ -18,6 +19,10 @@ export function validateReceipt(root, contract) {
     if (contract?.stage !== 'reviewed') errors.push('An archived closure receipt requires reviewed stage');
     if (contract?.kind === 'product') {
       try { errors.push(...validateReport(root, contract, readJson(root, contract.report))); }
+      catch (error) { errors.push(error.message); }
+    }
+    if (contract?.kind === 'governance') {
+      try { errors.push(...validateGovernanceReport(root, contract, readJson(root, contract.report))); }
       catch (error) { errors.push(error.message); }
     }
   }
@@ -41,11 +46,46 @@ export function changedFiles(root, { base, head = 'HEAD', working = false }) {
   if (working) files.push(...git(['ls-files', '--others', '--exclude-standard', '-z']).split('\0').filter(Boolean));
   return [...new Set(files)];
 }
-export function validateDiff(root, files, { phase = 'verify' } = {}) {
+// Read-only `git show <base>:<file>`; null when the file did not exist at the base.
+export function gitBaseReader(root, base) {
+  return file => {
+    try { return execFileSync('git', ['--no-optional-locks', 'show', `${base}:${file}`], { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] }); }
+    catch { return null; }
+  };
+}
+const canonicalJson = value => JSON.stringify(value, (_, v) => v && typeof v === 'object' && !Array.isArray(v)
+  ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) : v);
+// Task 935 R10(c): the base contents of the listed rule files must reproduce the reviewed scope (a new rebase), or
+// the base already carried this exact rebase. Any other changed digest input (scope, inputs, tests, runtime) stays stale.
+export function diffRebaseErrors(root, path, contract, { readBase, selected, issuesByPath, phase }) {
+  const rebase = contract.review?.rulesRebase;
+  if (!rebase) return [];
+  if (typeof readBase !== 'function') return ['rulesRebase: the diff base is required to verify a rule-only rebase'];
+  let listed = [];
+  try { listed = rebaseFiles(readFileSync(safePath(root, rebase.evidence), 'utf8')); }
+  catch (error) { return [`rulesRebase: evidence unavailable (${error.message})`]; }
+  const baseDigest = scopeDigest(root, contract, new Map(listed.map(file => [file, readBase(file)])));
+  let previous = null;
+  try { previous = JSON.parse(readBase(path) ?? 'null'); } catch { previous = null; }
+  const prior = previous?.review?.rulesRebase;
+  if (prior && canonicalJson(prior) === canonicalJson(rebase)) {
+    return baseDigest === rebase.rebasedScopeSha256 ? [] : ['rulesRebase: digest inputs changed after the retained rebase; the review is stale'];
+  }
+  const errors = [];
+  const anchored = baseDigest === rebase.originalScopeSha256
+    || (prior && previous.review?.scopeSha256 === contract.review?.scopeSha256 && prior.rebasedScopeSha256 === baseDigest);
+  if (!anchored) errors.push('Independent review scope is stale', 'rulesRebase: files other than the listed rule files changed since the review');
+  if (!selected.includes(rebase.by)) errors.push(`rulesRebase: approving governance contract ${rebase.by} is not part of this diff`);
+  else if (issuesByPath.get(rebase.by)?.length) errors.push(`rulesRebase: approving governance contract ${rebase.by} does not validate at phase ${phase}`);
+  return errors;
+}
+export function validateDiff(root, files, { phase = 'verify', base, readBase = base ? gitBaseReader(root, base) : undefined } = {}) {
   const errors = [], contracts = [];
   const paths = allContracts(root);
   const tasks = files.filter(f => isTaskDocument(f) && existsSync(join(root, f)));
   const product = files.filter(isProductPath);
+  // Task 935 R5: every changed executable policy file (deletions included) needs a governance contract.
+  const policy = files.filter(isExecutablePolicyPath);
   const retained = [];
   const registryPath = 'scripts/workflow-gates/release-blockers.json';
   if (existsSync(join(root, registryPath))) {
@@ -58,21 +98,76 @@ export function validateDiff(root, files, { phase = 'verify' } = {}) {
     const path = `${task.slice(0, -3)}.security.json`;
     if (!selected.includes(path)) errors.push(`${task}: missing ${path}`);
   }
+  const issuesByPath = new Map();
   for (const path of selected) {
     try {
       const contract = readJson(root, path);
       const affectsProduct = product.some(file => contract.scope?.includes(file));
-      const selectedPhase = affectsProduct || contract.stage !== 'planned' ? phase : 'plan';
+      const affectsPolicy = contract.kind === 'governance' && policy.some(file => contract.scope?.includes(file));
+      const selectedPhase = affectsProduct || affectsPolicy || contract.stage !== 'planned' ? phase : 'plan';
       const issues = validateContract(root, contract, { phase: selectedPhase });
       if (path !== `${contract.task?.slice(0, -3)}.security.json`) issues.push('Contract must be adjacent to its kickoff with the same basename');
-      errors.push(...issues.map(e => `${path}: ${e}`));
-      contracts.push({ path, contract, affectsProduct });
-    } catch (error) { errors.push(`${path}: ${error.message}`); }
+      issuesByPath.set(path, issues);
+      contracts.push({ path, contract, affectsProduct, affectsPolicy });
+    } catch (error) { issuesByPath.set(path, [error.message]); errors.push(`${path}: ${error.message}`); }
+  }
+  for (const { path, contract } of contracts) {
+    const issues = [...issuesByPath.get(path)];
+    if (phase !== 'plan' && contract.review?.rulesRebase) {
+      for (const issue of diffRebaseErrors(root, path, contract, { readBase, selected, issuesByPath, phase })) if (!issues.includes(issue)) issues.push(issue);
+    }
+    errors.push(...issues.map(e => `${path}: ${e}`));
   }
   for (const file of product) {
     if (!contracts.some(c => c.contract.kind === 'product' && c.contract.scope?.includes(file))) errors.push(`${file}: outside every changed product contract scope`);
   }
+  for (const file of policy) {
+    if (!contracts.some(c => c.contract.kind === 'governance' && c.contract.scope?.includes(file))) errors.push(`${file}: outside every changed governance contract scope`);
+  }
   return { errors, contracts };
+}
+
+// Task 935 R3: TAP lines of `node --test`; `#` and `\` in names are escaped by the reporter.
+export function parseTap(output) {
+  const results = [];
+  for (const line of String(output).split(/\r?\n/)) {
+    const match = /^\s*(not ok|ok) \d+ - (.*)$/.exec(line);
+    if (!match) continue;
+    const directive = /(?<!\\) # (SKIP|TODO)\b/i.exec(match[2]);
+    const name = (directive ? match[2].slice(0, directive.index) : match[2]).replace(/\\#/g, '#').replace(/\\\\/g, '\\');
+    results.push({ name, status: directive ? directive[1].toLowerCase() === 'skip' ? 'skipped' : 'todo' : match[1] === 'ok' ? 'passed' : 'failed' });
+  }
+  return results;
+}
+export function governanceReport(root, contract, { run = file => spawnSync(process.execPath, ['--test', '--test-reporter=tap', file],
+  { cwd: root, env: unitEnvironment(process.env), encoding: 'utf8', timeout: 5 * 60 * 1000, maxBuffer: 64 * 1024 * 1024 }) } = {}) {
+  const errors = validateContract(root, contract, { phase: 'verify' }).map(error => `contract: ${error}`);
+  const results = new Map();
+  for (const file of new Set(contract.cases.map(row => row.testFile))) {
+    try { safePath(root, file); } catch (error) { errors.push(`${file}: ${error.message}`); results.set(file, []); continue; }
+    const child = run(file);
+    if (child.status !== 0 || child.error) errors.push(`${file}: test process exited with ${child.error ? child.error.message : `code ${child.status}`}`);
+    results.set(file, parseTap(child.stdout));
+  }
+  let sensitivity = [];
+  try {
+    if (existsSync(safePath(root, contract.sensitivity, false))) sensitivity = readJson(root, contract.sensitivity).cases || [];
+  } catch (error) { errors.push(`sensitivity: ${error.message}`); }
+  const cases = contract.cases.map(row => {
+    const matches = (results.get(row.testFile) || []).filter(result => result.name === row.testName);
+    const status = matches.length === 1 ? matches[0].status : matches.length ? 'duplicate' : 'missing';
+    if (status !== 'passed') errors.push(`${row.id}: mapped test is ${status}`);
+    const record = { id: row.id, status, testFile: row.testFile, testName: row.testName };
+    const proof = sensitivity.filter(s => s?.id === row.id);
+    if (proof.length === 1) record.sensitivity = proof[0];
+    if (row.critical && proof.length !== 1) errors.push(`${row.id}: critical case has no single sensitivity record`);
+    return record;
+  });
+  const report = { version: 1, status: errors.length ? 'failed' : 'passed', task: contract.task, contractSha256: planDigest(root, contract),
+    scopeSha256: scopeDigest(root, contract), node: process.version, platform: process.platform, cases, errors };
+  if (!errors.length) report.errors.push(...validateGovernanceReport(root, contract, report).map(error => `report: ${error}`));
+  if (report.errors.length) report.status = 'failed';
+  return report;
 }
 
 // Run mapped local and real-boundary suites separately. Unit children receive no live credentials.
@@ -146,14 +241,34 @@ async function main() {
       errors.push(...runMappedTests(ROOT, contract));
       errors.push(...validateReport(ROOT, contract, readJson(ROOT, contract.report)));
     }
+    if (command === 'verify' && !errors.length && contract.kind === 'governance') {
+      try { errors.push(...validateGovernanceReport(ROOT, contract, readJson(ROOT, contract.report))); }
+      catch (error) { errors.push(error.message); }
+    }
+  } else if (command === 'governance-report') {
+    const path = option('--contract');
+    const contract = readJson(ROOT, path);
+    if (contract.kind !== 'governance') throw new Error('governance-report requires a governance contract');
+    const report = governanceReport(ROOT, contract);
+    const target = safePath(ROOT, contract.report, false);
+    mkdirSync(resolve(target, '..'), { recursive: true });
+    writeFileSync(target, `${JSON.stringify(report, null, 2)}\n`);
+    for (const row of report.cases) console.log(`${row.status === 'passed' ? 'PASS' : 'FAIL'} ${row.id} (${row.status})`);
+    console.log(`Governance report: ${report.status}, ${report.cases.length} case(s), written to ${contract.report}.`);
+    errors = report.errors;
   } else if (command === 'diff') {
-    const files = changedFiles(ROOT, { base: option('--base', process.env.GATES_BASE_SHA), head: option('--head', process.env.GATES_HEAD_SHA || 'HEAD'), working: args.includes('--working-tree') });
-    const result = validateDiff(ROOT, files, { phase }); errors = result.errors;
+    const base = option('--base', process.env.GATES_BASE_SHA);
+    const files = changedFiles(ROOT, { base, head: option('--head', process.env.GATES_HEAD_SHA || 'HEAD'), working: args.includes('--working-tree') });
+    const result = validateDiff(ROOT, files, { phase, base }); errors = result.errors;
     if (!errors.length && phase !== 'plan') {
       for (const { contract } of result.contracts.filter(c => c.contract.kind === 'product' && (c.affectsProduct || c.contract.stage !== 'planned'))) {
         errors.push(...runMappedTests(ROOT, contract));
         try { errors.push(...validateReport(ROOT, contract, readJson(ROOT, contract.report))); }
         catch (error) { errors.push(error.message); }
+      }
+      for (const { path, contract } of result.contracts.filter(c => c.contract.kind === 'governance' && (c.affectsPolicy || c.contract.stage !== 'planned'))) {
+        try { errors.push(...validateGovernanceReport(ROOT, contract, readJson(ROOT, contract.report)).map(error => `${path}: ${error}`)); }
+        catch (error) { errors.push(`${path}: ${error.message}`); }
       }
     }
     console.log(`Security scope: ${files.length} changed files, ${result.contracts.length} task contract(s).`);
@@ -197,7 +312,7 @@ async function main() {
     const out = resolve(ROOT, 'test-results/workflow-gates'); mkdirSync(out, { recursive: true });
     writeFileSync(join(out, 'rules-inventory.json'), JSON.stringify({ version: 1, files: rows }, null, 2));
     console.log(`Inventoried ${rows.length} rule/role documents; SHA-256 inventory retained in test-results/workflow-gates/rules-inventory.json.`);
-  } else throw new Error('Use plan, receipt, verify, diff, hash, inventory, required, target, unit-report or release');
+  } else throw new Error('Use plan, receipt, verify, governance-report, diff, hash, inventory, required, target, unit-report or release');
   if (errors.length) { errors.forEach(e => console.error(`BLOCKED: ${e}`)); process.exitCode = 1; }
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(`BLOCKED: ${error.message}`); process.exitCode = 1; });

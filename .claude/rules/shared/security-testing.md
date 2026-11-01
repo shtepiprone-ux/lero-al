@@ -36,6 +36,15 @@ must record the exact files and why no runtime behavior, dependency, executable 
 changes. Q0 still validates rule references/structure and any affected enforcement claims. A low QA profile,
 small diff, screenshot, typecheck, or build cannot waive frontend/server security tests for product work.
 
+### Governance tasks
+
+Rules, hooks, settings, CI workflows and gate scripts use contract kind `governance` (owner decisions 2026-11-01,
+Task 935). The hook layer replaces the frontend row and the CI/validator layer replaces the server row: cases
+`GOV-<id>` with layer `hook`, `ci` or `validator`, at least one allow, deny and error case and one hook and one CI
+case, each mapped to an exact `scripts/workflow-gates/<name>.selftest.mjs` test. Critical cases need a sensitivity
+record (baseline pass, isolated break failing with an assertion, restored pass). QA is Q1–Q4; Q0 N/A never applies.
+`cli.mjs governance-report` produces the report; CI refuses a changed non-Markdown policy file outside a governance scope.
+
 Sonnet checks this section before implementation. Missing criteria are `BLOCKED — SECURITY TEST CONTRACT MISSING`;
 Sonnet reports the gap without inventing policy. An older task revised after this decision must be brought into
 the contract before execution. Opus cannot approve a product task with either required security row unverified.

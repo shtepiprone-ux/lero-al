@@ -1,8 +1,8 @@
 {
   "version": 1,
   "status": "passed",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
-  "contractSha256": "d62b740186c138691dc0c8f995321952a1d5325dbd171f2b36bda21b3050d61a",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md",
+  "contractSha256": "033632222e22506cbdbb96e9da41b46d88bf6ec9276f0092f9fd3e47dddfd304",
   "scopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
   "node": "v22.22.3",
   "platform": "win32",

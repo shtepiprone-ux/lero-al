@@ -9,11 +9,11 @@ write: redirection | targets ["scripts/workflow-gates/cli.mjs"]
 write: grep redirected into a scope file | targets ["scripts/workflow-gates/publication.json"]
 governanceIndependenceErrors(940 contract, transcript with only the read-only command) | []
 
-# Run note (Task 941 implementer, Opus, 2026-11-02; lines 1-10 above are the unmodified probe output on the final candidate)
-# The design probe as saved exits 1 with ENOENT: its CONTRACT constant names tasks/Sprints/...Task_940...security.json, which was
-# archived to tasks/Archive/ after the probe ran (commit 01b8259fa). On success it would also overwrite the design artifact
-# docs/sessions/evidence/task941/design/p01-false-positive-probe.txt. This run evaluates the saved probe source with exactly two
-# substitutions, each asserted unique before the run: the Task 940 path prefix tasks/Sprints/ -> tasks/Archive/, and removal of
-# its writeFileSync line (stdout was redirected here instead); import.meta.url is bound to the probe file URL.
-# Line 9 differs from the design run: grep ... > publication.json is read-only under R1, so under R2 only its redirection
-# target publication.json is reported (the real write stays detected; the read cli.mjs and the bogus publication.js are gone).
+# Run note (Task 941 revision 1, Opus governance implementer, fresh session, 2026-11-02; lines 1-10 above are the unmodified
+# probe output on the revision 1 candidate, hook sha256 a5ee689c0c33e94a8d34aaa3a1d10a9c17e9cb7975bbfa3a91186398368cf537)
+# Substitutions (exactly two, each asserted to occur once in the saved probe source before the run):
+#   1. the Task 940 path prefix tasks/Sprints/ -> tasks/Archive/ (the contract was archived after the design run, C53);
+#   2. removal of its line writeFileSync(join(here, 'p01-false-positive-probe.txt'), text); (stdout saved here instead).
+# Binding, not a content change: import.meta.url is bound to the probe file URL, so its relative paths resolve as saved.
+# Lines 2-5 and 10 are []; lines 6-8 are identical to the design run (diff of lines 6-8, exit 0); line 9, a read-only grep
+# redirected into publication.json (C52), reports exactly ["scripts/workflow-gates/publication.json"], as AC1 requires.

@@ -47,6 +47,9 @@ test('[GOV-941-HOOK-READONLY-ALLOW] A command made only of read-only programs is
     ['Bash', 'git diff -- scripts/workflow-gates/cli.mjs'],
     ['Bash', "sed -n '1,5p' scripts/workflow-gates/cli.mjs"],
     ['PowerShell', "Get-Content scripts/workflow-gates/cli.mjs | Select-String -Pattern 'Set-Content'"],
+    // Revision 1: a Windows path and a `#` inside a single-quoted pattern stay read-only.
+    ['PowerShell', "Get-Content scripts\\workflow-gates\\cli.mjs | Select-String -Pattern 'Set-Content'"],
+    ['Bash', "grep -n '#.*writeFileSync' scripts/workflow-gates/cli.mjs"],
   ];
   for (const [, command] of commands) {
     assert.equal(isReadOnlyShellCommand(command), true, command);
@@ -75,9 +78,12 @@ test('[GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope fil
     ['Bash', `grep -n 'a' ${Y} >&${X}`],
     ['Bash', `cat ${Y} <>${X}`],
     ['PowerShell', `Get-Content ${Y} *> '${X}'`],
-    ['Bash', `grep -n 'writeFileSync' ${Y} > $PWD/${X}`],
     ['Bash', `grep -n 'a' ${Y} > /c/Claude_Code_Projects/lero-al/${X}`],
-    ['PowerShell', `Select-String -Pattern 'a' -Path ${Y} > $pwd\\${X.replaceAll('/', '\\')}`],
+    // Revision 1 (C35-C41, C58, C59): a quote inside a comment or after `--%` hides the next command from a quote-aware split.
+    ['Bash', `cat ${Y} # '\necho x > ${X} # '`],
+    ['PowerShell', `Get-Content ${Y} # '\nSet-Content '${X}' 'x' # '`],
+    ['PowerShell', `Get-Content ${Y} <# ' #> ; Set-Content '${X}' 'x' <# ' #>`],
+    ['PowerShell', `git log --% -1 '\nSet-Content '${X}' 'x'; git log --% -1 '`],
   ];
   for (const variant of variants) {
     const [, command] = variant;
@@ -110,10 +116,91 @@ test('[GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely 
     assert.ok(shellWriteTargets(root, command).includes(X), command);
   }
   for (const command of [undefined, null, 42, {}, ['grep']]) assert.equal(isReadOnlyShellCommand(command), false, String(command));
-  // Programs or options outside the read-only list keep the previous detection too.
-  for (const command of [`sed -i 's/a/b/' ${X} # writeFileSync`, `git log --output=${X} # writeFileSync`, `git grep -O x ${X} # Set-Content`,
-    `rg --pre-glob '*' x ${X} # writeFileSync`, `rg --hostname-bin ${X} a # writeFileSync`, `sed -n 1w ${X} ${Y} # writeFileSync`,
-    `git grep --open=x a ${X} # writeFileSync`, `git grep -lOx a ${X} # writeFileSync`]) {
+  // Programs or options outside the read-only list keep the previous detection too (R1 (c); no `#`, which R1 (a) rejects).
+  for (const command of [`sed -i 's/a/b/' ${X} writeFileSync`, `git log --output=${X} writeFileSync`, `git grep -O x ${X} Set-Content`,
+    `rg --pre-glob x a ${X} writeFileSync`, `rg --hostname-bin ${X} a writeFileSync`, `sed -n 1w ${X} ${Y} writeFileSync`,
+    `git grep --open=x a ${X} writeFileSync`, `git grep -lOx a ${X} writeFileSync`]) {
+    assert.equal(isReadOnlyShellCommand(command), false, command);
+    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), command);
+    assert.ok(shellWriteTargets(root, command).includes(X), command);
+  }
+  // Revision 1 (C35-C46, C55-C72): every R1 (a) form and every R1 (c)-(d) form the review measured, each with X and a write word.
+  const revision1 = [
+    `grep -n a ${Y} # writeFileSync ${X}`,
+    `rg $'--pre' 'writeFileSync' ${X}`,
+    `rg $"--pre" 'writeFileSync' ${X}`,
+    `grep -n a ${Y} @args writeFileSync ${X}`,
+    `git log --% -1 %OPT% -- ${X} writeFileSync`,
+    `Get-Content ${Y} -OutVariable v; rg @v 'writeFileSync' ${X}`,
+    `cat --pre=x; rg "$_" 'writeFileSync' ${X}`,
+    `cat --output=${X}; git log -1 "$_" -S writeFileSync`,
+    `head -i; sed -n 1p "$_" 'writeFileSync' ${X}`,
+    `cat '\\044\\050touch ${X}\\051'; grep -c 'writeFileSync' "\${_@P}"`,
+    `rg --pr\\e 'x' 'writeFileSync' ${X}`,
+    `git log --out\\put=${X} -S writeFileSync`,
+    `sed -n 1p * 'writeFileSync' ${X}`,
+    `rg a *pre=x 'writeFileSync' ${X}`,
+    `sed -n 1p '*' 'writeFileSync' ${X}`,
+    `sed -n 1p '{-i,${X}}' 'writeFileSync'`,
+    `sed -n 1p '"-i"' 'writeFileSync' ${X}`,
+    `sed -n 1p "'-i'" 'writeFileSync' ${X}`,
+    `git log -1 '--out"put"=${X}' -S writeFileSync`,
+    `sed -n 1p '@opts.txt' 'writeFileSync' ${X}`,
+    // Implementer findings of revision 1 (completion report I1-I3, B1 and two interpretations), fail-closed beyond the literal R1:
+    // a word that begins with a quoted span and continues (PowerShell passes `'x'-i` as `x` and `-i`),
+    `sed -n 1p 'x'-i ${X} writeFileSync`,
+    `sed -n 1p 'x'"-i" ${X} writeFileSync`,
+    `git log -1 'x'--output=${X} writeFileSync`,
+    // the text before a redirection operator, which is an argument of the program,
+    `sed -n 1p -i>o.txt ${X} writeFileSync`,
+    `rg --pre=x>o.txt 'writeFileSync' ${X}`,
+    `git log -1 --output=${X}>o.txt -S writeFileSync`,
+    // a doubled quote (one literal quote for PowerShell),
+    `sed -n 1p "a ""-i"" b" ${X} writeFileSync`,
+    `sed -n 1p 'a ''-i'' b' ${X} writeFileSync`,
+    // a backslash before a separator, a backslash or the end (a Bash escape or line continuation),
+    `grep -n a\\ ${Y} writeFileSync ${X}`,
+    `grep -n a\\\\b ${Y} writeFileSync ${X}`,
+    `grep -n a ${Y} writeFileSync ${X} \\`,
+    `rg --pr\\\ne=x 'writeFileSync' ${X}`,
+    // a single quote or a backslash inside a double-quoted span, and `--%` inside a word.
+    `grep -n "a'b" ${Y} writeFileSync ${X}`,
+    `grep -n "a\\b" ${Y} writeFileSync ${X}`,
+    `grep -n a--%b ${Y} writeFileSync ${X}`,
+  ];
+  for (const command of revision1) {
+    assert.equal(isReadOnlyShellCommand(command), false, command);
+    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), command);
+    assert.ok(shellWriteTargets(root, command).includes(X), command);
+  }
+  // R1 (a) is an exact allowlist: every other ASCII character outside quotes, and also `$`, `\` and `'` inside double quotes, is refused.
+  const allowed = /[A-Za-z0-9 \t\r\n\-_./:=,+%~;|&<>*?[\]\\"'`]/;
+  for (let code = 0; code < 128; code++) {
+    const ch = String.fromCharCode(code);
+    if (allowed.test(ch)) continue;
+    for (const command of [`grep -n a${ch}b ${Y} writeFileSync ${X}`, `grep -n "a${ch}b" ${Y} writeFileSync ${X}`]) {
+      assert.equal(isReadOnlyShellCommand(command), false, JSON.stringify(command));
+      assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), JSON.stringify(command));
+    }
+  }
+  for (const ch of [' ', ' ', 'é', '–']) {
+    const command = `grep -n a${ch}b ${Y} writeFileSync ${X}`;
+    assert.equal(isReadOnlyShellCommand(command), false, JSON.stringify(command));
+    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), JSON.stringify(command));
+  }
+  // Allowed characters outside and inside quotes keep a plain grep read-only (the allowlist is not wider than needed).
+  for (const ch of 'Az09-_./:=,+%~*?[]') {
+    for (const command of [`grep -n a${ch}b ${Y} writeFileSync ${X}`, `grep -n "a${ch}b" ${Y} writeFileSync ${X}`]) {
+      assert.equal(isReadOnlyShellCommand(command), true, command);
+      assert.deepEqual(shellWriteTargets(root, command), [], command);
+    }
+  }
+  // A `$` inside single quotes is not an expansion, and `$` is an allowed sed or git argument character (R1 (d)).
+  assert.equal(isReadOnlyShellCommand(`sed -n '1,$p' ${Y}`), true);
+  assert.deepEqual(shellWriteTargets(root, `sed -n '1,$p' ${Y}`), []);
+  // The first candidate's `$PWD`/`$pwd` targets are no longer read-only: equality only, because the pre-change detection does
+  // not report X for `> $pwd\X` without a write word (an unchanged pre-941 limit).
+  for (const command of [`grep -n 'writeFileSync' ${Y} > $PWD/${X}`, `Select-String -Pattern 'a' -Path ${Y} > $pwd\\${X.replaceAll('/', '\\')}`]) {
     assert.equal(isReadOnlyShellCommand(command), false, command);
     assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), command);
   }
@@ -126,6 +213,10 @@ test('[GOV-941-HOOK-PRETOOL-DENY] The pre-write guard allows a read-only search 
     /POLICY-EDIT AUTHORITY REQUIRED/);
   assert.match(evaluateHook(root, event("Select-String -Pattern 'x' -Path scripts/check-example.mjs > scripts/check-example.mjs"), '').join('\n'),
     /POLICY-EDIT AUTHORITY REQUIRED/);
+  // Revision 1 (C40, C41): a redirection hidden after a Bash comment that contains a quote is still refused.
+  const bash = command => ({ hook_event_name: 'PreToolUse', agent_type: 'executor', tool_name: 'Bash', tool_input: { command } });
+  assert.match(evaluateHook(root, bash("cat README.md # '\necho x > scripts/check-example.mjs # '"), '').join('\n'), /POLICY-EDIT AUTHORITY REQUIRED/);
+  assert.match(evaluateHook(root, bash("cat README.md # '\necho x > .git/hooks/pre-commit # '"), '').join('\n'), /OWNER GIT REQUIRED/);
 }));
 
 test('[GOV-941-CI-POLICY-DENY] CI refuses a change to the hook file outside every changed governance contract scope', () => withRoot(root => {

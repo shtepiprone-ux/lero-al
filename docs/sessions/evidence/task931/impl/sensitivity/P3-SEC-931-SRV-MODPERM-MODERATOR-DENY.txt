@@ -1,0 +1,31 @@
+# P3 — getModeratorPermissions admits a moderator
+case: SEC-931-SRV-MODPERM-MODERATOR-DENY
+production file: src/modules/admin/actions/permissions.ts
+test file: src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts
+date: 2026-11-01T13:09:04.604Z node v22.22.3 win32
+
+## 1. baseline (unmodified code): exit 0; case results: [["getModeratorPermissions [SEC-931-SRV-MODPERM-MODERATOR-DENY] moderator → rejects forbidden; admin client from(role_permissions) never called","passed"]]
+
+## 2. planted break applied (one replacement):
+--- find
+if (viewer.role !== 'admin') throw new Error('forbidden')--- replace
+if (viewer.role !== 'admin' && viewer.role !== 'moderator') throw new Error('forbidden')
+
+## 3. with the break: exit 1
+case results: [["getModeratorPermissions [SEC-931-SRV-MODPERM-MODERATOR-DENY] moderator → rejects forbidden; admin client from(role_permissions) never called","failed"]]
+failure message of [SEC-931-SRV-MODPERM-MODERATOR-DENY]:
+Error: promise resolved "{ 'listings.delete': { …(3) }, …(20) }" instead of rejecting
+    at _Assertion.__VITEST_REJECTS__ (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1747:17)
+    at _Assertion.propertyGetter (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1570:27)
+    at Reflect.get (<anonymous>)
+    at Object.proxyGetter [as get] (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1659:22)
+    at C:/Claude_Code_Projects/lero-al/src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts:119:43
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+named case failed with an assertion (not a compile/import/type error): true
+
+## 4. restored in finally; bytes identical to the original: true
+restored run: exit 0; case results: [["getModeratorPermissions [SEC-931-SRV-MODPERM-MODERATOR-DENY] moderator → rejects forbidden; admin client from(role_permissions) never called","passed"]]
+git diff --exit-code -- src/modules/admin/actions/permissions.ts: exit 0
+
+RESULT P3: PASS (fails with the break, passes restored, file unchanged)

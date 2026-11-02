@@ -1,0 +1,8 @@
+Task 931 revision probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2c8c51adf)
+Command: node docs/sessions/evidence/task931/design/d04-935-rebase-probe.mjs
+923 contract listed in 935 scope: true
+923 contract is a 935 case test file: false
+923 contract is a runtime file: false
+935 digest after a later write to the 923 contract: CHANGED
+923 contract listed in 931 scope: false
+exit=0

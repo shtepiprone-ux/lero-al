@@ -1,0 +1,49 @@
+﻿anchor HEAD; diff base d8a07a3c7841022207fd5331f53e5a80b4d7c7e2
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+  chain entries 2; last recorded digest 05f4c95126b3e67d05ecc8bbecac0121e71cdd98bd4a4a0cd39c8fba6f0f3b47
+  digest with HEAD contents of the listed files a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302 (DIFFERS)
+  listed files changed since HEAD: 3/3
+  current scope digest 05f4c95126b3e67d05ecc8bbecac0121e71cdd98bd4a4a0cd39c8fba6f0f3b47
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json
+  chain entries 2; last recorded digest 9cc079cb216857dfe6a1d535f88f2c88ace4c5653557385a7f6400347c9eb34a
+  digest with HEAD contents of the listed files a3fb3748747e9ae60e4bce1f9365c9bcdf818c052214fceeb77cee41f1637349 (DIFFERS)
+  listed files changed since HEAD: 1/1
+  current scope digest 9cc079cb216857dfe6a1d535f88f2c88ace4c5653557385a7f6400347c9eb34a
+tasks/Archive/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json
+  stage reviewed; taskDigest 1a032d1f6d42a71f621ebb9ef17721779a897b0288dcb00318e61567f20a15b5 (recorded 1a032d1f6d42a71f621ebb9ef17721779a897b0288dcb00318e61567f20a15b5); planDigest 7e3141ef293a01ba29f020f3421dedc74d872035d3b04ac372db74d1be866ba4
+  release errors: []
+  report errors: []
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+  stage reviewed; taskDigest 34905356ac67fa1661d6457313f1d95059ac1a4a1f08ec4455f9349dc7d3c585 (recorded 34905356ac67fa1661d6457313f1d95059ac1a4a1f08ec4455f9349dc7d3c585); planDigest bc530a1b0549e07e6331127cb9620e5674299a7ec6404bd67a5235863d307dd6
+  release errors: []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json
+  stage reviewed; taskDigest 2a3fb8042f62023169d102300f97fa8ac84db2143c18614cd7c04622a48458ec (recorded 2a3fb8042f62023169d102300f97fa8ac84db2143c18614cd7c04622a48458ec); planDigest fae23dd5f5dbd0c57d9b059b29653310c4806d59e56c181056551f4095285a83
+  release errors: []
+  report errors: []
+validateDiff release, base d8a07a3c7841022207fd5331f53e5a80b4d7c7e2: 7883 changed file(s)
+  923: no error
+  931: no error
+  935: no error
+  other: 22 error(s)
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Governance verification requires an implemented or reviewed contract
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Governance implementation.role must be Opus (owner decision 2026-11-01)
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Merge/release requires independently reviewed stage
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Independent Opus review decision missing
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Invalid or sensitive repository path
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Missing file: scripts/workflow-gates/shell-write.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Missing file: scripts/workflow-gates/shell-write.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Missing file: scripts/workflow-gates/shell-write.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Missing file: scripts/workflow-gates/shell-write.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Missing file: scripts/workflow-gates/shell-write.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Governance verification requires an implemented or reviewed contract
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Governance implementation.role must be Opus (owner decision 2026-11-01)
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Merge/release requires independently reviewed stage
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Independent Opus review decision missing
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Invalid or sensitive repository path
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs
+    tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json: Missing file: scripts/workflow-gates/shell-mutation.selftest.mjs

@@ -1,0 +1,36 @@
+# P1 — requireStaffPage no longer refuses a signed-in viewer whose role is not admin or moderator
+case: SEC-931-FE-PAGE-DENY
+production file: src/lib/auth/staff.ts
+test file: src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+date: 2026-11-01T13:08:42.237Z node v22.22.3 win32
+
+## 1. baseline (unmodified code): exit 0; case results: [["AdminListingsPage — listing summary columns (T9) [SEC-931-FE-PAGE-DENY] a non-staff viewer is refused by requireStaffPage before any listings read","passed"]]
+
+## 2. planted break applied (one replacement):
+--- find
+  if (viewer.role !== 'admin' && viewer.role !== 'moderator') notFound()
+--- replace
+  // PLANTED P1: the staff-role check is dropped
+
+
+## 3. with the break: exit 1
+case results: [["AdminListingsPage — listing summary columns (T9) [SEC-931-FE-PAGE-DENY] a non-staff viewer is refused by requireStaffPage before any listings read","failed"]]
+failure message of [SEC-931-FE-PAGE-DENY]:
+Error: promise resolved "{ …(10) }" instead of rejecting
+    at _Assertion.__VITEST_REJECTS__ (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1747:17)
+    at _Assertion.propertyGetter (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1570:27)
+    at Reflect.get (<anonymous>)
+    at Object.proxyGetter [as get] (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1659:22)
+    at C:/Claude_Code_Projects/lero-al/src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx:505:74
+    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+named case failed with an assertion (not a compile/import/type error): true
+
+## 4. restored in finally; bytes identical to the original: true
+restored run: exit 0; case results: [["AdminListingsPage — listing summary columns (T9) [SEC-931-FE-PAGE-DENY] a non-staff viewer is refused by requireStaffPage before any listings read","passed"]]
+git diff --exit-code -- src/lib/auth/staff.ts: exit 0
+
+RESULT P1: PASS (fails with the break, passes restored, file unchanged)

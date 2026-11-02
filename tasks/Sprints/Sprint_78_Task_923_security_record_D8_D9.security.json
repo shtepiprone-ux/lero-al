@@ -4777,6 +4777,16 @@
       "evidenceSha256": "c7e34f36090e96072b899574a6fe9d3139e0b2e230174d5c97c4c3c1e6c23d8b",
       "originalScopeSha256": "a036d22822ad264ff5717aa08f85b5e49d4d95ca36a9bb66810152f43da32c74",
       "rebasedScopeSha256": "a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302"
-    }
+    },
+    "rebases": [
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json",
+        "evidence": "docs/sessions/evidence/task931/review/scope-rebase-923.md",
+        "evidenceSha256": "947f9371fd53c085bf080e6ddd5f44051ca2779c2095b0012525ad3a719aa441",
+        "originalScopeSha256": "a46e25d54ad70b4daedae8ddde0c4c31daf638b73a1a012092e9e5e1faf61302",
+        "rebasedScopeSha256": "05f4c95126b3e67d05ecc8bbecac0121e71cdd98bd4a4a0cd39c8fba6f0f3b47"
+      }
+    ]
   }
 }

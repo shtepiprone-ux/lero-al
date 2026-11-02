@@ -18,3 +18,17 @@ at `c2f918a59`.
 | C6 evidence gate | `node scripts/check-kickoff-evidence.mjs --files <kickoff>` | PASS | PASS (EXECUTED) |
 | C6 ready candidate | canonical `validateContract({...sidecar, executionStatus:'ready'}, {phase:'plan'})` in memory | no errors | PASS (EXECUTED) |
 | C7 publication | `node scripts/workflow-gates/cli.mjs plan --contract <sidecar>` after saving `ready`; `cli.mjs diff --phase plan --working-tree`; `publication.mjs --base HEAD` | plan exit 0; diff-plan exit 0 (5 task contracts); publication 0 dependency errors; final digests: kickoff 49cbaf3ba44dc1adfffb40a128333cf812d2dd56a4e5fd20d472218af87b3d23, sidecar file 5c41a9ed0aabdd91c56c1890507f1514d1afa29668b735d5890d598c5944213f | PASS (EXECUTED) |
+
+## Revision 2026-11-01 — cross-task dependency on the Task 935 rebase chain (Opus)
+
+HEAD at the probes: `2c8c51adf`. The sidecar was set to `draft` before the edit and saved `ready` after the in-memory check
+(`shared/orchestration-state.md`); stage stays `implemented`, and the implementation awaits review.
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| R1 dependency | `d04-935-rebase-probe.mjs` → `d04-935-rebase-probe.txt` | the 923 D8/D9 contract is in the 935 scope, is not a 935 case test and is not a runtime file; a later write to it changes the 935 digest; it was not in the 931 scope | PASS (EXECUTED) |
+| R2 route | kickoff R10 (a)-(e), ledger C26-C29, AC8; sidecar scope gains the 923 contract file | the R10 write to the 923 contract is followed by a 935 scope entry by the reviewed 931 contract, chained on the last 935 entry present at that moment | PASS |
+| R3 ready candidate | `d05-ready-candidate.mjs` → `d05-ready-candidate.txt` | ready candidate plan errors `[]`; simulated 935 entry by the reviewed 931 contract `[]`; the same entry without the 923 file in the 931 scope fails with "is outside the scope of" | PASS (EXECUTED) |
+| R4 CI lint | `ids.cjs` (introduced in `dfc2fedcf`) fails CI lint with `@typescript-eslint/no-require-imports`; replaced by `ids.mjs` with the same output | `eslint ids.mjs d04 d05` exit 0; `ids.mjs` smoke run on a temporary report printed the expected FAILED line and file count | PASS (EXECUTED) |
+| R5 gates | `cli.mjs plan --contract <sidecar>`; `check-kickoff-evidence.mjs --files <kickoff>`; `publication.mjs --base HEAD` | plan exit 0; kickoff evidence PASS; publication 82 explicit files, 0 dependency errors; kickoff taskSha256 ffaf511e4a78be07b1266f9530e850dbcd73f578ce59edf1a423f50bca6304c7 | PASS (EXECUTED) |
+| R6 Task 941 | 941 kickoff R5 and AC6 | 941 already rebases 935 and 940 after its own write; no edit needed | PASS |

@@ -35,8 +35,13 @@ The gallery comment explains why the frame must clip rather than hide (C14), so 
 e-mail section view is presentational (C33); a sibling already sizes the same info icon with `theme.other.iconSize.roomy` from a
 static theme import (C22). The resend action behind that view refuses an anonymous caller and retires only the session user's
 earlier links (C30, C31). Four of the changed product files are in the reviewed Task 923 D8/D9 scope (C27); the gate data files and
-the evidence files are not (C28), so the reviewer rebases that contract after Task 940 is reviewed (D9). The UI receipts of §6 were
-run through the real write hook (C29).
+the evidence files are not (C28), so the reviewer rebases that contract (D9). That write changes the 923 D8/D9 contract file, which the
+reviewed Task 931 revision 3 and Task 935 contracts scope (C34); an approving contract must scope every file it lists, so this sidecar
+scopes the 923 contract file and its reviewer also rebases those two contracts. No other contract binds a file of this change set
+except through `src/modules/cabinet/actions/index.ts`, which is edited only for a planted break and restored (C35). Task 931
+revision 3 lands first: it removes the load-dependent test failures of the full suite and adds a guard against hand-written query
+doubles that this task's new server test must pass (C36), and the release check of Task 943 R11 finds any reviewed contract left
+stale (C37). The UI receipts of §6 were run through the real write hook (C29).
 
 ## Claim ledger
 
@@ -75,6 +80,10 @@ run through the real write hook (C29).
 | C31 | FACT | The resend action retires only the session user's earlier links. | source: `src/modules/cabinet/actions/index.ts:592-592`; observed: `.eq('user_id', userId)` |
 | C32 | FACT | The Governance Check job ran 51 static gates with 5 failures. | source: `docs/sessions/evidence/task937/design/l00-ci-excerpts.txt:32-32`; observed: `static: 46/51 gates passed; 5 failed.` |
 | C33 | FACT | The e-mail section view is presentational. | source: `docs/sessions/evidence/task937/design/sources/src__modules__cabinet__components__CabinetEmailChangeSectionView.tsx.txt:35-35`; observed: `No hooks besides` |
+| C34 | FACT | The reviewed Task 931 revision 3 and Task 935 contracts scope the 923 D8/D9 contract file that R12 writes (executed probe). | source: `docs/sessions/evidence/task937/design/p10-change-set-bindings.txt:6-21`; observed: `scopes written contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json` |
+| C35 | FACT | Apart from the 923 D8/D9 scope, the change set is bound only through the planted-break file (executed probe). | source: `docs/sessions/evidence/task937/design/p10-change-set-bindings.txt:8-19`; observed: `binds scope src/modules/cabinet/actions/index.ts` |
+| C36 | FACT | Task 931 revision 3 adds a guard test against hand-written query doubles in every unit test file. | source: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md:163-163`; observed: `queryDoubles.guard.test.ts` |
+| C37 | FACT | Task 943 R11 adds a release check for reviewed contracts outside the diff. | source: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md:216-216`; observed: `reviewedFreshnessErrors(root, selected, { files, readBase })` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D8 | OWNER DECISION | Each red CI check gets its own task. | owner: 2026-11-01; decision: `A separate task for each check (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract for its non-test scope files (Task 940). | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
@@ -93,8 +102,11 @@ update command only), `src/components/shared/Map.module.css`, `src/design-system
 `src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts`; the stage/report fields of this task's sidecar;
 evidence under `docs/sessions/evidence/task937/impl/` and `docs/sessions/evidence/task937/security/`. Edited only temporarily for
 the planted breaks of R10 and restored byte-for-byte: `src/modules/cabinet/actions/index.ts` and the e-mail section view. Written
-by the reviewer only (R12): a `review.rebases` entry of `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json` and
-its evidence.
+by the reviewer only (R12): `review.rebases` entries of `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`,
+`tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json` and
+`tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json`, with their evidence.
+The sidecar scope lists the 923 contract file only so that this contract can approve the 931 and 935 entries; the executor never
+writes it.
 
 Out of scope: `scripts/check-listing-visibility.mjs` and every other gate script (Task 942; policy paths); any rendered change;
 other gallery debt (Task 794); the untracked `.nul` and `.DS_Store` files of other sessions' local evidence (never staged); the
@@ -119,10 +131,10 @@ report nothing for tracked files.
 | R6 [C18; C24] | **Input-chrome marker.** The stale marker of `input-chrome.css:476` is removed; the comment keeps its reason ("the 1px border of the field") without the marker. | P1 | AC1 |
 | R7 [C20; C21; C22; C25; C33] | **E-mail section icon.** `size={20}` becomes `size={theme.other!.iconSize!.roomy}` with `import { theme } from '@/design-system/mantine/theme'` (no hook, as in C22). | P1 | AC1, AC5 |
 | R8 [C20; C33] | **Frontend security tests** in `CabinetEmailChangeSectionView.security.test.tsx` on the real view inside `MantineProvider` with the project theme and real messages. | P1 | AC2 |
-| R9 [C30; C31] | **Server security tests** in `resendEmailVerification.security.test.ts` on the real `resendEmailVerification` with doubles at `resolveAuthUser`, `createAdminClient`, the hourly request counter and the mail sender. | P1 | AC2 |
+| R9 [C30; C31] | **Server security tests** in `resendEmailVerification.security.test.ts` on the real `resendEmailVerification`; `createAdminClient` returns the client of `createFakeDb` (`src/tests/fakeSupabase.ts`) seeded with an active link of the session user and one of another user, whose link stays unchanged; explicit doubles only at `resolveAuthUser`, the hourly request counter and the mail sender; no hand-written query double, so the Task 931 revision 3 guard passes for this file (C36). | P1 | AC2 |
 | R10 [C30; C31; C33] | **Planted breaks**, one at a time, then restored: P1 the view's resend action ignores `sending` → SEC-937-FE-RESEND-DENY fails; P2 the resend retire step drops `.eq('user_id', userId)` → SEC-937-SRV-RESEND-ALLOW fails; P3 the resend action drops its `if (!userId)` guard → SEC-937-SRV-RESEND-DENY fails. Each with the failed assertion and `git diff --exit-code -- <file>` exit 0 after restore. | P1 | AC3 |
 | R11 [C14; C21] | **Rendered no-change proof.** On `npm run build-storybook`: in `Patterns/Mantine/ListingGalleryPattern` Default at 320, 375 and 639 the mobile frame's computed `overflow-x` and `overflow-y` are `clip` and its class list has no `overflow-clip`; in the CabinetEmailChangeSectionView Story with a pending address, the alert icon's SVG is 20×20 at 320 and 1280. | P1 | AC4 |
-| R12 [C27; D9] | **Task 923 rebase (reviewer).** After approving 937 and only once Task 940 is reviewed, the reviewer appends a `scope` entry by this task's contract to the 923 D8/D9 `review.rebases`, with evidence `docs/sessions/evidence/task937/review/scope-rebase-923.md` listing the four UI files. | P1 | AC6 |
+| R12 [C27; C34; C35; C37; D9] | **Rebases (reviewer), in order, after approving 937.** (a) A `scope` entry by this contract appended to the 923 D8/D9 `review.rebases`, evidence `docs/sessions/evidence/task937/review/scope-rebase-923.md` listing the four UI files; (b) a `scope` entry by this contract appended to the `review.rebases` of `tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json`, evidence `docs/sessions/evidence/task937/review/scope-rebase-931.md`, and (c) the same on the 935 contract, evidence `docs/sessions/evidence/task937/review/scope-rebase-935.md`, each listing `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`; every new entry continues the last entry of its chain present at that moment (the Task 931 revision 3 and Task 943 entries among them), with `rebasedScopeSha256` the digest after (a); (d) the planted-break file `src/modules/cabinet/actions/index.ts` has no diff; (e) rerun this task's report harness, since its scope digest covers the 923 contract file; (f) only then the review block; (g) the scoped `validateDiff` harness of Task 940 AC7 (phase `release`, base `origin/main`, working tree) reports no error for the 923 D8/D9, 931, 935 and 937 contracts and `reviewedFreshnessErrors` (C37) returns `[]`. | P1 | AC6 |
 
 ## Acceptance criteria
 
@@ -131,7 +143,7 @@ report nothing for tracked files.
 - **AC3 [R10].** Three planted-break transcripts under `docs/sessions/evidence/task937/impl/sensitivity/`, each failing with an assertion and passing after restore.
 - **AC4 [R11].** The R11 probe transcript shows `clip`/`clip`, no `overflow-clip` class, and a 20×20 icon at the named widths.
 - **AC5 [R4; R7].** `git diff` of the gallery shows only line 98 and its comment; of the e-mail view only the import and the icon size; the baseline diff only lowers `overflow-hidden` to 1.
-- **AC6 [R1–R11].** Full suite `npm test -- --allowOnly=false --passWithNoTests=false --retry=0 --reporter=default --reporter=json --outputFile=test-results/unit.json` then `node scripts/workflow-gates/cli.mjs unit-report` exit 0 (failures only in the seven files of Task 931 while it is unmerged are named, not fixed here); `npm run typecheck` exits 0; `npx eslint` on the changed TS/TSX files exits 0; `npm run check:ui-contract` exits 0; `npm run build` exits 0; the report harness writes `docs/sessions/evidence/task937/security/report.json` and `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented. Reviewer, after R12 and Task 942: the Governance Check job of PR #12 is green.
+- **AC6 [R1–R12].** Full suite `npm test -- --allowOnly=false --passWithNoTests=false --retry=0 --reporter=default --reporter=json --outputFile=test-results/unit.json` then `node scripts/workflow-gates/cli.mjs unit-report` exit 0 with 0 failed (Task 931 revision 3 is reviewed before this task starts, so no known failure remains; any failing test is reported `BLOCKED`, never named and passed over); `npm run typecheck` exits 0; `npx eslint` on the changed TS/TSX files exits 0; `npm run check:ui-contract` exits 0; `npm run build` exits 0; the report harness writes `docs/sessions/evidence/task937/security/report.json` and `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented; the guard test `src/tests/__tests__/queryDoubles.guard.test.ts` of Task 931 revision 3 passes. Reviewer, after R12: every check of R12 (g) passes and `cli.mjs verify` of this sidecar exits 0; after Task 942 and the owner's push, `node scripts/workflow-gates/ci-status.mjs --pr 12` shows the Governance Check job green on the pushed SHA (until then the decision is `PARTIALLY VERIFIED`).
 
 ## Security test contract
 
@@ -150,7 +162,8 @@ report nothing for tracked files.
 
 1. **Owner** (separate PowerShell window, `C:\Claude_Code_Projects\lero-al`): commit this kickoff set on
    `task/935-governance-approval-route` with the command Opus gives (D7).
-2. **Sonnet, fresh session:** `node scripts/workflow-gates/cli.mjs receipt --contract <this sidecar>`; save the before runs of the four
+2. **Sonnet, fresh session**, only after Task 931 revision 3 and Task 943 are reviewed and committed:
+   `node scripts/workflow-gates/cli.mjs receipt --contract <this sidecar>`; save the before runs of the four
    gates of AC1 to `docs/sessions/evidence/task937/impl/before/`.
 3. R1, R2, R3 (with the before/after hash and census check).
 4. Before the first UI edit, register these three receipts exactly, each through the PowerShell tool as the only statement of its
@@ -164,8 +177,8 @@ report nothing for tracked files.
 8. The report harness and `cli.mjs verify`; every AC command; set stage `implemented`; write
    `docs/sessions/evidence/task937/impl/completion-report.md`; end with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No Git command
    (the owner's commit stages the deletion of R1 by its explicit path).
-9. **Opus reviewer:** review; on approval, the review block and stage `reviewed`; R12 when Task 940 is reviewed (otherwise the
-   decision stays approved and R12 waits, stated plainly); the explicit-path commit command and the branch push.
+9. **Opus reviewer:** review; on approval, stage `reviewed`, then R12 (a)-(g) in that order (the review block is written at (f));
+   the explicit-path commit command and the branch push.
 
 ## 7. Completion report
 
@@ -184,4 +197,4 @@ gate outputs before and after; the R3 hashes; the R11 transcript; one of `IMPLEM
 | `role-boundaries.md` | Sonnet implements product and data files; the policy gate change is Task 942 (Opus); Opus reviews and writes the 923 rebase. |
 | `git-publication.md` | Commit on PR #12's branch (D7); push only after approval; merge only after green checks. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33; owner decisions: D7, D8, D9; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37; owner decisions: D7, D8, D9; blocked claims: NONE.

@@ -1,0 +1,10 @@
+Task 931 revision 3 self-audit probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02)
+Command: node docs/sessions/evidence/task931/design/d12-reviewed-digest-freshness.mjs
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json [product] rebases 2; review current false; review errors []; report errors []
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json [product] rebases 0; review current false; review errors ["review scope hash is stale"]; report errors ["report scope hash is stale"]
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [product] rebases 0; review current false; review errors ["review scope hash is stale"]; report errors ["report scope hash is stale"]
+tasks/Archive/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [product] rebases 0; review current true; review errors []; report errors []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json [governance] rebases 2; review current false; review errors []; report errors []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json [governance] rebases 0; review current true; review errors []; report errors []
+exit=0
+Census (same session): 18 contract files under tasks/Sprints and tasks/Archive, all parseable, 6 reviewed, each with scope and review.scopeSha256.

@@ -32,3 +32,17 @@ HEAD at the probes: `2c8c51adf`. The sidecar was set to `draft` before the edit 
 | R4 CI lint | `ids.cjs` (introduced in `dfc2fedcf`) fails CI lint with `@typescript-eslint/no-require-imports`; replaced by `ids.mjs` with the same output | `eslint ids.mjs d04 d05` exit 0; `ids.mjs` smoke run on a temporary report printed the expected FAILED line and file count | PASS (EXECUTED) |
 | R5 gates | `cli.mjs plan --contract <sidecar>`; `check-kickoff-evidence.mjs --files <kickoff>`; `publication.mjs --base HEAD` | plan exit 0; kickoff evidence PASS; publication 82 explicit files, 0 dependency errors; kickoff taskSha256 ffaf511e4a78be07b1266f9530e850dbcd73f578ce59edf1a423f50bca6304c7 | PASS (EXECUTED) |
 | R6 Task 941 | 941 kickoff R5 and AC6 | 941 already rebases 935 and 940 after its own write; no edit needed | PASS |
+
+## Revision 3 readiness (Opus, 2026-11-02, native Windows, Node v22.22.3, HEAD 2693c6b9a)
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| C1 cause | `d06-digest-turn-budget.txt`, CI run 41415423554 | a busy libuv thread pool, not CPU load, exhausts the turn budget; a leaked attempt opens during the next test | PASS (EXECUTED) |
+| C2 reproduction | `d17-busy-pool-preload.mjs`, `d17-busy-pool-run.mjs` → `d17-busy-pool-run.txt` | five class A files: idle 122/122 twice; busy 28 failed twice, the same tests | PASS (EXECUTED) |
+| C2 whole suite under load | `d18-busy-pool-full-suite.mjs` → `d18-busy-pool-full-suite.txt`; causes `d22-busy-failure-causes.txt`; rerun of d17 `d17b-busy-pool-rerun.txt` | 34 failed in 8 files: the Google files; a contact-session test with a 2 s find default (added to class A); staffPage and adminUserGone (class B, test timeout); two real child-process tests (wall-clock limit, out of scope, named in R5 (c)); class A failures vary 17-28 per run, so AC2 needs repeated busy runs | PASS (EXECUTED), kickoff revised (R5, AC2, scope 101, 923 D8/D9 26 case files) |
+| C3 class B | `d16-guard-criterion.txt`, `d19-fake-capabilities.txt`, `d07-class-b-manifest.txt` | 70 guard hits, 0 integration; the fake lacks lt, gt, like, ilike, error injection and evaluates no `or()` | PASS (EXECUTED) |
+| C3 contracts | `d15-rev3-rebase-plan.txt`, `d20-affected-cases.txt` | 923 D8/D9 25+32 files (58 cases), owner fixes 11+1 (13), 927 7+4 (37), 935 scopes the 923 contract; no runtime file | PASS (EXECUTED) |
+| C4 proof | sidecar 23 cases (17 kept, N1 renamed, 6 new); R11 sixteen planted breaks | each planted production line verified at its cited line | PASS (ANALYTICAL) |
+| C5 mobile | `check-mobile-adaptation-contract.mjs --files <kickoff>` | `Scope: none` | PASS (EXECUTED) |
+| C6/C7 | `check-kickoff-evidence.mjs --files`, `cli.mjs plan` (931 revision 3, 937, 943); digest `10ad7967…bea5` | all exit 0; sidecar `ready`, built by `d21-build-rev3-sidecar.mjs` | PASS (EXECUTED) |
+| Cross-task | Task 937 revision 2 (R12, AC6, R9, route), Task 943 R11 (deleted contracts) | written and validated in this session (owner D14) | PASS (EXECUTED) |

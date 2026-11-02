@@ -1,0 +1,28 @@
+Task 943 revision 1 self-audit probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02)
+Command: node docs/sessions/evidence/task943/design/p08-testname-literal-probe.mjs
+Sprint_78_Task_923_security_record_D8_D9.security.json: cases 231; literal ok 45; misses 186
+  miss SEC-D8-SRV-DOMAIN-DENY id:true prefix:false rest:false file:src/modules/listings/domain/ownerStatusRules.security.test.ts
+  miss SEC-D8-SRV-ALLOW id:true prefix:false rest:false file:src/modules/listings/actions/ownerPublish.security.test.ts
+  miss SEC-D8-SRV-OWNER-ALLOW id:true prefix:false rest:false file:src/modules/listings/actions/ownerPublish.security.test.ts
+  misses with the [id] still in the file: 186 of 186
+Sprint_78_Task_923_security_record_owner_fixes.security.json: cases 60; literal ok 59; misses 1
+  miss SEC-S55-SRV-DENY id:true prefix:true rest:false file:src/modules/cabinet/actions/__tests__/cabinetSessions.security.test.ts
+  misses with the [id] still in the file: 1 of 1
+Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: cases 53; literal ok 46; misses 7
+  miss SEC-927-FE-ALLOW id:true prefix:true rest:false file:src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx
+  miss SEC-927-FE-REAUTH-DENY-SWITCH id:true prefix:true rest:false file:src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx
+  miss SEC-927-FE-ONETAP-ALLOW id:true prefix:true rest:false file:src/components/layout/__tests__/Header.google.security.test.tsx
+  misses with the [id] still in the file: 7 of 7
+Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json: cases 17; literal ok 0; misses 17
+  miss SEC-931-FE-PAGE-ALLOW id:true prefix:false rest:false file:src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+  miss SEC-931-FE-PAGE-DENY id:true prefix:false rest:false file:src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+  miss SEC-931-FE-STATUS-ERROR id:true prefix:false rest:false file:src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx
+  misses with the [id] still in the file: 17 of 17
+exit=0
+Shapes read in the same session: the sidecar testName of SEC-D8-SRV-ALLOW is `status gateway: publishing is staff-only [SEC-D8-SRV-ALLOW]
+an administrator and a moderator publish a pending listing and the owner is notified` (Vitest full name: describe titles, then the
+test title); its file text is `it('[SEC-D8-SRV-ALLOW] an administrator and a moderator ...` (ownerPublish.security.test.ts:55); the
+SEC-S55-SRV-DENY file text escapes a quote (`check\'s`, cabinetSessions.security.test.ts:191).
+Conclusion: every case of the four contracts keeps `[<id>]` in its file; a static match of the testName text is infeasible. The
+exact full name is enforced by the CI rerun: `runMappedTests` requires exactly one passing assertion with `fullName === testName`
+(scripts/workflow-gates/cli.mjs:240).

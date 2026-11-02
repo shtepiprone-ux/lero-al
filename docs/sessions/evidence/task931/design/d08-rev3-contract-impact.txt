@@ -1,0 +1,43 @@
+Task 931 revision 3 probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a)
+Command: node docs/sessions/evidence/task931/design/d08-rev3-contract-impact.mjs
+src/tests/fakeSupabase.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/tests/__tests__/fakeSupabase.test.ts: no contract
+src/lib/auth/__tests__/googlePopup.test.ts: Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope CASE-TEST
+src/components/layout/__tests__/Header.google.security.test.tsx: Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/auth/components/__tests__/AuthSheet.google.security.test.tsx: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/auth/components/__tests__/AuthSheet.test.tsx: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope
+src/modules/cabinet/components/__tests__/ProfileTab.googleReauth.security.test.tsx: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope CASE-TEST
+src/app/[locale]/[slug]/__tests__/page.errors.test.ts: no contract
+src/app/api/cron/listings-expiry/__tests__/route.test.ts: Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [stage reviewed/ready] scope CASE-TEST
+src/app/auth/confirm/__tests__/route.test.ts: no contract
+src/lib/__tests__/exchangeRateServer.test.ts: Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/__tests__/exchangeRates.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/auth/__tests__/blockCheck.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/auth/__tests__/permissions.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/auth/__tests__/staffPage.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/auth/blockCheck.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/lib/auth/requireViewer.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/__tests__/rls-write-guards.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/admin/actions/__tests__/adminGetters.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope
+src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/admin/actions/__tests__/pages-and-footer-validation.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/admin/actions/__tests__/userWebsite.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/auth/actions/__tests__/recovery.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST; Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/cabinet/actions/__tests__/changePassword.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/contactEvents.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/createListing.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/deleteListing.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST; Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/listingImages.security.test.ts: Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/listings/actions/__tests__/reStampExpiresAt.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/reportListing.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/updateListing.smoke.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/listings/actions/__tests__/visitorActions.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope; Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/listings/actions/ownerPublish.security.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope CASE-TEST
+src/modules/listings/actions/submitListingInquiry.test.ts: Sprint_78_Task_923_security_record_D8_D9.security.json [stage reviewed/ready] scope
+src/modules/notifications/lib/__tests__/notifications.security.test.ts: Sprint_78_Task_923_security_record_owner_fixes.security.json [stage reviewed/ready] scope CASE-TEST
+reviewed contracts other than 931 with a changed case test: 19
+exit=0

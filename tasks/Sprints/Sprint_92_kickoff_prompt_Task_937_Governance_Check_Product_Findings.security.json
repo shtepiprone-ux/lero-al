@@ -5,7 +5,7 @@
   "kind": "product",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_937_Governance_Check_Product_Findings.md",
-  "taskSha256": "b4ac439ede544ff18eeda3323344bc5a16b75f3bd92deec559a56f5f83b1bdba",
+  "taskSha256": "1850b7bf8751952673e7ac5a83fedfe43c6af171794e6fb0b688dcde1d5c6ece",
   "scope": [
     "docs/sessions/evidence/task923/review-67/rv67-46-squash-paths.nul",
     "scripts/mojibake-allowlist.json",
@@ -17,7 +17,8 @@
     "src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx",
     "src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.security.test.tsx",
     "src/modules/cabinet/actions/__tests__/resendEmailVerification.security.test.ts",
-    "src/modules/cabinet/actions/index.ts"
+    "src/modules/cabinet/actions/index.ts",
+    "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json"
   ],
   "inputs": [
     "src/modules/cabinet/components/CabinetEmailChangeSection.tsx",

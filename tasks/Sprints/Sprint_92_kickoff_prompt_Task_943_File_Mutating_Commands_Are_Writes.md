@@ -1,7 +1,9 @@
 # Task 943 — Commands that copy, move, delete or edit files in place are counted as writes by the security hook
 
 Sprint 92. P1. QA profile **Q1** (non-UI gate code and its tests, `docs/qa-profiles.md`). Kickoff by Opus, 2026-11-01, at the
-owner's instruction to close the gap that Task 941 leaves out of scope (D11).
+owner's instruction to close the gap that Task 941 leaves out of scope (D11). **Revision 1, 2026-11-02** (D12, D13): this task also
+carries the gate and rule holes found since — the audited rebase of a changed case test (R7), the untracked exempting contract (R8),
+the two review-closure rule gaps (R9) and reviewed contracts going stale outside the diff (R11, with two rebases in R6) — because the owner forbids a new task (D13) and these touch the same gate files.
 
 ## 1. Mode, task type and rule bundle
 
@@ -21,6 +23,16 @@ Consequences: a session that changed governance scope files only this way passes
 change a policy or out-of-scope product file through `cp`, `sed -i` or `Copy-Item` without being stopped (C4, C16–C18), although
 the same write through `Set-Content` is refused (C19). After this task these commands report the files they change, for both
 consumers.
+
+Revision 1 adds four more holes. (a) A changed case test can never be rebased (C37): hardening the case tests of reviewed
+contracts that Task 931 revision 3 must fix (19 among its first 39 files alone, C39) — among them the CI-red `googlePopup.test.ts` (C40, C41) — would leave those
+contracts stale for ever; the owner chose an audited case-test rebase (D12), which CI can bound because it reruns the cases of every
+touched product contract (C38). (b) The independence exemption trusts any contract on disk, tracked or not (C42), although a valid
+rules entry is now required (C43, Task 935 note N1 closed by Task 940 R5); this is Task 940 note N3. (c) The closure rule lets
+`APPROVED WITH NOTES` leave notes with no destination (C44), and nothing requires the CI job a task exists to fix to be green on the
+reviewed SHA (C41). (d) No gate notices a reviewed contract going stale while its own file is not in the diff (C50): the 923
+owner-fixes and 927 reviews have been stale since rule changes on this branch, with no rebase, unnoticed (C54, C55); a `rules` entry
+by the reviewed 935 contract carries both (C56).
 
 ## 3. Verified context
 
@@ -81,6 +93,32 @@ in the publication manifest (C35).
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12, merged once all checks are green. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract when the changed files are in its scope but are not tests of its cases, with its cases rerun green. | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
 | D11 | OWNER DECISION | The hook must also detect writes by cp, mv, tee, sed -i and similar commands, as its own task. | owner: 2026-11-01; decision: `I want to close this hole too, write the kickoff` |
+| C37 | FACT | A scope rebase refuses every case test of the rebased contract. | source: `scripts/workflow-gates/contract.mjs:158-158`; observed: `case tests are never rebased` |
+| C38 | FACT | The CI diff check reruns the mapped cases of every touched product contract. | source: `scripts/workflow-gates/cli.mjs:283-283`; observed: `errors.push(...runMappedTests(ROOT, contract));` |
+| C39 | FACT | Task 931 revision 3 changes 19 case tests of reviewed contracts other than 931 (executed probe). | source: `docs/sessions/evidence/task931/design/d08-rev3-contract-impact.txt:42-42`; observed: `reviewed contracts other than 931 with a changed case test: 19` |
+| C40 | FACT | With the libuv thread pool busy, one cold WebCrypto digest takes 207118 event-loop turns against the 500-turn wait of the Google tests (executed probe). | source: `docs/sessions/evidence/task931/design/d06-digest-turn-budget.txt:5-5`; observed: `cold digest: 207118 turns` |
+| C41 | FACT | PR #12 CI on head 2693c6b9a fails two tests of googlePopup.test.ts after Task 931 was approved. | source: `docs/sessions/evidence/task931/design/d06-digest-turn-budget.txt:9-9`; observed: `googlePopup.test.ts 2 failed` |
+| C42 | FACT | The contract list of the hook walks the disk, so an untracked contract is included. | source: `scripts/workflow-gates/cli.mjs:34-34`; observed: `readdirSync(join(root, dir), { withFileTypes: true })` |
+| C43 | FACT | An exempting rules entry must name an evidence path (Task 935 note N1, closed by Task 940 R5). | source: `scripts/workflow-gates/security-hook.mjs:135-135`; observed: `!isEvidencePath(entry.evidence)) continue;` |
+| C44 | FACT | The closure rule allows approval with notes and names no destination for them. | source: `.claude/rules/review/03-decision-closure.md:34-34`; observed: `only P3/notes remain` |
+| C45 | FACT | The closure rule holds the scope-rebase paragraph of owner decision D9. | source: `.claude/rules/review/03-decision-closure.md:67-67`; observed: `Scope rebase (owner D9, Task 940)` |
+| C46 | FACT | The Task 940 hook self-tests build their fixture root in a plain temporary folder, not a Git repository. | source: `scripts/workflow-gates/scope-rebase.selftest.mjs:33-33`; observed: `const root = mkdtempSync(join(tmpdir(), prefix));` |
+| C47 | FACT | Git separates a tracked contract, an untracked one and a folder outside any repository (executed probe). | source: `docs/sessions/evidence/task943/design/p06-git-worktree-probe.txt:10-10`; observed: `exists on disk, but not in 'HEAD'` |
+| C48 | FACT | A static testName match is infeasible: most reviewed testNames carry describe titles before the case ID (executed probe). | source: `docs/sessions/evidence/task943/design/p08-testname-literal-probe.txt:3-3`; observed: `cases 231; literal ok 45; misses 186` |
+| C49 | FACT | The mapped-case rerun requires the exact full Vitest name. | source: `scripts/workflow-gates/cli.mjs:240-240`; observed: `a.file === row.testFile && a.fullName === row.testName` |
+| C50 | FACT | The CI diff selects every contract whose file changed. | source: `scripts/workflow-gates/cli.mjs:113-113`; observed: `paths.filter(p => files.includes(p)` |
+| C51 | FACT | Integration cases run only with the approved development project identity. | source: `scripts/workflow-gates/cli.mjs:198-198`; observed: `if (environment.SECURITY_TEST_TARGET !== 'development'` |
+| C52 | FACT | The CI diff anchor check of rebase entries reads only rules and scope file lists. | source: `scripts/workflow-gates/cli.mjs:83-83`; observed: `(kind === 'rules' ? rebaseFiles : scopeRebaseFiles)` |
+| C53 | FACT | The reviewed Task 935 and Task 940 contracts scope `cli.mjs`. | source: `tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json:14-14`; observed: `"scripts/workflow-gates/cli.mjs",` (the 935 contract has the same line 14) |
+| C54 | FACT | Two reviewed contracts are stale with no rebase entry (executed probe). | source: `docs/sessions/evidence/task931/design/d12-reviewed-digest-freshness.txt:4-4`; observed: `owner_fixes.security.json [product] rebases 0; review current false; review errors ["review scope hash is stale"]` |
+| C55 | FACT | They went stale through shared rule files changed on the PR #12 branch (executed probe). | source: `docs/sessions/evidence/task931/design/d13-stale-cause.txt:5-6`; observed: `23206fb7f governance: PR-only main, push-handoff guard and CI status tooling` |
+| C56 | FACT | The digest with the base bytes of the six rule files equals each recorded review digest (executed probe). | source: `docs/sessions/evidence/task931/design/d14-rules-rebase-feasibility.txt:4-4`; observed: `MATCH true` |
+| C57 | FACT | Only CI runs the diff command; no self-test calls it. | source: `.github/workflows/governance-pr.yml:191-191`; observed: `"run": "node scripts/workflow-gates/cli.mjs diff --phase release",` |
+| C58 | FACT | The reviewed Task 935 contract scopes the task-design publication phase file. | source: `tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json:24-24`; observed: `".claude/rules/create/03-publication.md",` |
+| C59 | FACT | `allContracts` lists only contract files present in the working tree, and `validateDiff` selects only from that list, so a contract deleted by a diff is never validated. | source: `scripts/workflow-gates/cli.mjs:31-37`; observed: `return readdirSync(join(root, dir), { withFileTypes: true }).flatMap(e => e.isDirectory()` |
+| D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it. Write it into your mandatory rules so you never forget such points and never skip them!` |
+| D12 | OWNER DECISION | D9 is extended: a later independently reviewed contract may rebase a changed case test of a reviewed contract when every case ID and test name are kept, the cases pass in CI, and the approver states each changed assertion; implemented in Task 943 before Task 931. | owner: 2026-11-02; decision: `Extend D9 (Recommended)` |
+| D13 | OWNER DECISION | No new task: every found and potential hole is closed inside the current tasks. | owner: 2026-11-02; decision: `no new task, everything within the current task; close every hole already found and every potential one` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -93,9 +131,18 @@ stage/implementation/report/sensitivity fields of this task's `.security.json`, 
 `docs/sessions/evidence/task943/impl/completion-report.md`, `docs/sessions/evidence/task943/impl/governance-report.json`,
 `docs/sessions/evidence/task943/impl/base-runs.txt`, `docs/sessions/evidence/task943/impl/probes-after.txt`,
 `docs/sessions/evidence/task943/sensitivity/sensitivity.json`, `docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PROGRAM-DENY.txt`
-and `docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PRETOOL-DENY.txt`. Written by the approver only (R6): `scope` entries in
-the `review.rebases` of the 935, 940 and 941 contracts with evidence `docs/sessions/evidence/task943/review/scope-rebase-935.md`,
-`…/scope-rebase-940.md` and `…/scope-rebase-941.md`.
+and `docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PRETOOL-DENY.txt`; revision 1 adds
+`scripts/workflow-gates/contract.mjs` and `scripts/workflow-gates/cli.mjs` (R7), new `scripts/workflow-gates/case-test-rebase.selftest.mjs` and its `publication.json`
+entry (R10), `.claude/rules/review/03-decision-closure.md` (R7 move, R9), `.claude/rules/create/03-publication.md` (R9 c), new
+`.claude/rules/review/04-contract-rebases.md` (R7), and
+`docs/sessions/evidence/task943/sensitivity/GOV-943-TESTS-REBASE-DENY.txt`,
+`docs/sessions/evidence/task943/sensitivity/GOV-943-EXEMPT-UNTRACKED-DENY.txt`,
+`docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt`; R8 edits `security-hook.mjs` and R11 `cli.mjs`, both
+already in scope.
+Written by the approver only (R6): `scope` entries in the `review.rebases` of the 935, 940 and 941 contracts with evidence
+`docs/sessions/evidence/task943/review/scope-rebase-935.md`, `…/scope-rebase-940.md` and `…/scope-rebase-941.md`; `rules` entries
+by the 935 contract in the 923 owner-fixes and 927 contracts with evidence `…/rules-rebase-923-owner-fixes.md` and
+`…/rules-rebase-927.md`.
 
 Out of scope: product code; every existing self-test file, including Task 941's `shell-write.selftest.mjs` (C26), which must pass
 unchanged; `isReadOnlyShellCommand` and its allowlist (941); mutating Git commands, already refused by their own hook (C22); the
@@ -126,10 +173,28 @@ PowerShell named parameter takes the next token as its value); positionals are t
 trees, reported as the directory path itself); `.git` and anything under it are reported as given, so the existing Git-metadata
 refusal of the pre-write guard still applies.
 
+## 5b. Case-test rebase entry (R7, D12)
+
+A `review.rebases` entry `{ kind: 'tests', by, evidence, evidenceSha256, originalScopeSha256, rebasedScopeSha256 }` takes its place
+in the same chain as `rules` and `scope` entries (`rebaseChainErrors` unchanged in ordering). Its evidence file under
+`docs/sessions/evidence/` has a `## Changed case test files` list (one `- \`path\`` per line, the format of `scopeRebaseFiles`) and a
+`## Case assertions` list with one line per affected case, `- <CASE-ID>: <what each changed assertion checked before> -> <after>`.
+`testsEntryErrors(root, contract, entry)` returns one named error for each of: the list is empty; a listed file is not the
+`testFile` of a case of the rebased contract; a listed file is a runtime file; for a case whose `testFile` is listed, the file text no
+longer contains `[<id>]`, or `## Case assertions` has no line for that ID; `by` is the
+rebased contract itself, unreadable, not `product`/`governance`, not `reviewed`, or does not scope a listed file; the evidence is not an
+evidence path or its hash is stale. A `scope` entry keeps refusing case tests (C37). `testsEntryErrors` does not match the
+`testName` text: it is the Vitest full name with describe titles, and source text escapes characters (C48). The exact name is bound
+by the rerun instead: writing the entry changes the rebased contract file, which selects that reviewed contract in the CI diff (C50),
+and `runMappedTests` requires exactly one passing test whose full name equals `testName` (C38, C49). The approver therefore runs
+`node scripts/workflow-gates/cli.mjs verify --contract <rebased contract>` after writing the entry and keeps the entry only when it
+exits 0, with the development project identity that `integrationTargetErrors` requires for integration cases
+(`SECURITY_TEST_TARGET=development`, `SECURITY_TEST_PROJECT_REF`, `NEXT_PUBLIC_SUPABASE_URL`; C51); `04-contract-rebases.md` states it.
+
 ## 6. Current and required behaviour
 
 Preserved: every target reported today stays reported (write words, redirections; C2, C14, C19); `isReadOnlyShellCommand` and the
-result for read-only commands (941); the CI policy-diff check (C20); both consumers (C3, C4) unchanged in code. Changed: the files
+result for read-only commands (941); the CI policy-diff check (C20); both consumers (C3, C4) unchanged in code apart from the R8 tracked check in the exemption loop. Changed: the files
 changed by the commands of section 5 and by the API words of R3 are reported as targets, so the independence check counts them and
 the pre-write guard decides on them exactly as on a `Set-Content` write.
 
@@ -140,9 +205,15 @@ the pre-write guard decides on them exactly as on a `Set-Content` write.
 | R1 [C24; C25; C27] | **Prerequisite and preservation.** Task 941 is reviewed and committed before the first write. For every command, the new result is a superset of the 941 result; for commands that 941 R1 (a) rejects as unparseable, the result is the 941 result plus, only when a program name of section 5 occurs in the command as a separate word, every project path matched by the existing path pattern of the write-word branch (C2), so the 941 equality case stays green. | P1 | AC1, AC5 |
 | R2 [C1; C5; C6; C7; C8; C9; C10; C11; C16; C17; C18; D11] | **Program targets.** For a parseable command that is not read-only, `shellWriteTargets` adds, for each simple command, the targets of section 5, resolved through `projectPath`; targets outside the project stay as `projectPath` resolves them and never match a scope. A missing destination or option value adds nothing and never throws. | P1 | AC1, AC2, AC3, AC5 |
 | R3 [C2; C12; C13] | **API words.** The write-word test of C2 also matches `appendFile`, `appendFileSync`, `copyFile`, `copyFileSync`, `cpSync`, `renameSync`, `rmSync`, `unlinkSync`, `truncateSync`, `createWriteStream`, `fs.rename`, `fs.rm`, `fs.unlink`, `fs.truncate`, `fs.cp`, `fs.promises`, `WriteAllText`, `WriteAllLines`, `WriteAllBytes`, `AppendAllText`, `AppendAllLines`, `File]::Copy`, `File]::Move`, `File]::Delete`, `File]::Replace`, `shutil.copy`, `shutil.copyfile`, `shutil.move`, `os.remove`, `os.unlink`, `os.replace`, `os.rename` and `write_bytes`, with the existing path collection unchanged. | P1 | AC4 |
-| R4 [C3; C4; C15; C19] | **Consumers.** `governanceIndependenceErrors` and the pre-write guard keep calling `shellWriteTargets`; nothing else in their code changes. | P1 | AC2, AC3 |
+| R4 [C3; C4; C15; C19] | **Consumers.** `governanceIndependenceErrors` and the pre-write guard keep calling `shellWriteTargets`; nothing else in their code changes, except the tracked check that R8 adds to the exemption loop of `governanceIndependenceErrors`. | P1 | AC2, AC3 |
 | R5 [C20; C21; C26; C35] | **Proof.** The seven GOV-943 cases live in the new `scripts/workflow-gates/shell-mutation.selftest.mjs`, listed in `publication.json`; no existing self-test file changes. | P1 | AC6 |
-| R6 [C28; C29; C30; C31; C32; C33; D7; D9] | **Rebases (approver).** After approving 943, the approver appends a `scope` entry by 943's contract to the `review.rebases` of the 935, 940 and 941 contracts, each with `## Changed scope files` evidence listing `scripts/workflow-gates/security-hook.mjs` and `scripts/workflow-gates/publication.json`, and recomputes nothing else in them. | P1 | AC7 |
+| R6 [C28; C29; C30; C31; C32; C33; C45; D7; D9] | **Rebases (approver).** After approving 943, the approver appends a `scope` entry by 943's contract to the `review.rebases` of the 935, 940 and 941 contracts, each with `## Changed scope files` evidence listing the files of this task's diff that the rebased contract scopes (for 935 and 940: `scripts/workflow-gates/security-hook.mjs`, `scripts/workflow-gates/publication.json`, `scripts/workflow-gates/contract.mjs`, `scripts/workflow-gates/cli.mjs` (C53), `.claude/rules/review/03-decision-closure.md`, and for 935 also `.claude/rules/create/03-publication.md` (C58); for 941: the first two), and recomputes nothing else in them. The approver also appends a `rules` entry by the 935 contract to the `review.rebases` of `tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json` and `tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json` (C54–C56), each with `## Changed rule files` evidence listing `.claude/rules/shared/` `security-testing.md`, `workflow-gates.md`, `workflow-contract.md`, `workflow-evidence.md`, `workflow-ci.md` and `git-publication.md`, the base-bytes digest match of the d14 probe rerun at that time, and `cli.mjs verify --contract <that contract>` exit 0 with the development project identity (C51). | P1 | AC7 |
+| R7 [C37; C38; C39; C45; C48; C49; C50; C51; C52; D12] | **Case-test rebase.** `contract.mjs` implements section 5b: `rebaseChain` accepts `kind: 'tests'`, `rebaseChainErrors` validates it with the new exported `testsEntryErrors`, and the new exported `testsRebaseFiles` reads `## Changed case test files`; `scopeEntryErrors` is unchanged. In `cli.mjs`, `diffRebaseErrors` reads the listed files of a `tests` entry with `testsRebaseFiles` (today it knows only `rules` and `scope` lists, C52), so its diff-base check that no file other than the listed ones changed since the review covers `tests` entries; nothing else in `cli.mjs` changes apart from R11. The file `03-decision-closure.md` is 7879 bytes against the 8 KiB limit, so its "Governance approval path" and "Scope rebase" paragraphs (C45) move unchanged to new `.claude/rules/review/04-contract-rebases.md`, which `03-decision-closure.md` R7 names in one sentence, and that new file gains one paragraph stating D12: who writes the entry (the approver, never the implementer), its two evidence sections, the approver's
+`cli.mjs verify` run of the rebased contract after the entry, exit 0 to keep it (section 5b), and that removing, renaming or weakening a case is never rebased but needs a revision of the owning task. | P1 | AC8 |
+| R8 [C42; C43; C46; C47] | **Tracked exempting contract.** When `<root>/.git` exists (file or directory), `governanceIndependenceErrors` exempts a contract path and its evidence only when the contract file is tracked at `HEAD`: `execFileSync('git', ['cat-file', '-e', 'HEAD:' + path], { cwd: root, stdio: 'ignore' })`, no shell; a non-zero exit or a spawn error exempts nothing. When `<root>/.git` does not exist, the exemption is unchanged: the fixture roots of the existing Task 935/940 hook self-tests are plain temporary folders (C46), and the project root always has `.git` (C47). | P1 | AC9 |
+| R9 [C41; C44; C58; D14] | **Closure rules.** `03-decision-closure.md`: (a) every note of an `APPROVED WITH NOTES` review is, before the verdict, either fixed in the cycle, written as an R/AC into a named saved kickoff (its path in the note), or a `BLOCKED` owner question; a note kept only in a review file is an incomplete review; (b) a task whose objective is a CI job is approved only after `ci-status.mjs --pr <n>` (or exact-SHA `ci-status.mjs`) shows that job green on the reviewed SHA; before that the decision is `PARTIALLY VERIFIED`; (c) owner D14, in `03-decision-closure.md` and in C7 of `.claude/rules/create/03-publication.md`: a design, review or self-audit session writes and verifies every kickoff revision, new route and cross-task text correction it finds necessary before its final handoff, or names it `BLOCKED` with the missing owner decision; a final report that lists such work as not yet done is an incomplete handoff, and a `draft` sidecar is not a substitute for the revised text. Both files stay at or under 8 KiB (`validateRuleSizes`). | P1 | AC10 |
+| R10 [C35] | **Proof of R7, R8 and R11.** The five new GOV-943 cases live in new `scripts/workflow-gates/case-test-rebase.selftest.mjs`, listed in `publication.json`; no existing self-test file changes. | P1 | AC11 |
+| R11 [C50; C54; C55; C57; C59] | **Reviewed-contract freshness.** New exported `reviewedFreshnessErrors(root, selected, { files, readBase })` in `cli.mjs` returns, for every path of `allContracts(root)` not in `selected` whose contract has stage `reviewed`, the errors of `scopeHashErrors(root, contract, contract.review.scopeSha256, 'Independent review scope is stale')` and, for its report, of `scopeHashErrors(root, contract, report.scopeSha256, 'Security report scope hash is stale')`, each prefixed with the path; an unreadable contract or report is a named error. It also returns `reviewed contract removed: <path>` for every path of `files` under `tasks/` ending in `.security.json` that is absent at head and whose base contents (`readBase`) parse to stage `reviewed`, unless a contract with the same file name exists at head under `tasks/` with stage `reviewed` (a move to the archive, or a revision under the same kickoff name, whose own freshness `validateDiff` or this function checks); today a deleted contract is checked by nothing (C59), and deleting a stale reviewed contract is never a way around its rebase. The `diff` command calls it at phase `release` with the paths `validateDiff` selected, the changed `files` and `gitBaseReader(ROOT, base)`, and adds its errors; `validateDiff` itself is unchanged, so no existing self-test changes (C57). | P1 | AC12 |
 
 ## Acceptance criteria
 
@@ -174,15 +245,39 @@ every scope.
   `find D -name x -delete` and `ls D | xargs rm` report the files under D.
 - **AC6 [R5].** GOV-943-CI-DELETE-DENY passes (`validateDiff` refuses a deleted `scripts/workflow-gates/security-hook.mjs` outside
   every governance scope, C20). `node scripts/workflow-gates/publication.mjs --base HEAD` reports 0 dependency errors;
-  `node scripts/workflow-gates/selftests.mjs` exits 0 with at least the base count after 941 plus 7 passing tests and 0 skipped (C21
-  is the count before 941); `node scripts/workflow-gates/check-workflow.mjs` exits 0;
+  `node scripts/workflow-gates/selftests.mjs` meets AC11 (C21 is the count before 941); `node scripts/workflow-gates/check-workflow.mjs` exits 0;
   `node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` exits 0;
   `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` passes every case;
   `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented; `npm run check:kickoff-evidence`
   passes.
+- **AC8 [R7].** GOV-943-TESTS-REBASE-ALLOW, GOV-943-TESTS-REBASE-DENY and GOV-943-TESTS-REBASE-ERROR pass on fixture roots built
+  with `mkdtempSync`; ALLOW and DENY include `validateDiff` at phase `release` with an injected base reader (the contract reviewed at
+  the base): only the listed case test changed → no rebase error; a second, unlisted case test also changed → `rebases: files other
+  than the listed files changed since the review`. Sensitivity: making `testsEntryErrors` skip the `[<id>]` presence check fails GOV-943-TESTS-REBASE-DENY with an
+  assertion; restored passes (artifact `GOV-943-TESTS-REBASE-DENY.txt`). `scope-rebase.selftest.mjs` passes unchanged.
+- **AC9 [R8].** GOV-943-EXEMPT-UNTRACKED-DENY passes on a fixture Git repository (`git init -q` in a `mkdtempSync` folder, the
+  commit made with `-c user.name=fixture -c user.email=fixture@example.test commit -q --no-gpg-sign`, as
+  `governance-contract.selftest.mjs:315-321` does): a rules entry by the receipt contract, valid under `rulesEntryErrors`, exempts the
+  approver's write when its contract is committed, and the same entry in an untracked contract file yields `GOVERNANCE INDEPENDENCE`
+  for that file; with `git` unavailable (`process.env.PATH`, and `Path` on Windows, set to `''` for the call and restored after; spawn error
+  ENOENT, C47 probe line 8) the committed contract exempts nothing. Sensitivity: dropping
+  the tracked check fails it with an assertion; restored passes (artifact `GOV-943-EXEMPT-UNTRACKED-DENY.txt`). `scope-rebase.selftest.mjs`
+  and `governance-contract.selftest.mjs`, including GOV-940-HOOK-EXEMPT-ALLOW on its non-Git fixture, pass unchanged.
+- **AC10 [R9].** `node scripts/workflow-gates/check-workflow.mjs` exits 0 (rule sizes included); the three rule texts of R9 are present
+  in `03-decision-closure.md`, and the text of R9 (c) also in C7 of `.claude/rules/create/03-publication.md`.
+- **AC11 [R10].** `node scripts/workflow-gates/selftests.mjs` exits 0 with at least the base count after 941 plus 12 passing tests and
+  0 skipped; `cli.mjs governance-report` passes all twelve GOV-943 cases.
+- **AC12 [R11].** GOV-943-CI-STALE-REVIEW-DENY passes on a fixture root: a reviewed contract outside `selected` whose scope file
+  changed yields `Independent review scope is stale` for its path; the same contract with a valid rebase chain, a fresh reviewed
+  contract, a planned contract and a selected stale contract yield nothing from `reviewedFreshnessErrors`; a contract reviewed at
+  the base and deleted at head yields `reviewed contract removed`, the same contract moved to `tasks/Archive/` or replaced by a
+  reviewed contract of the same file name yields nothing. Sensitivity: skipping the
+  reviewed contracts outside `selected` fails it with an assertion; restored passes (artifact `GOV-943-CI-STALE-REVIEW-DENY.txt`).
 - **AC7 [R6].** After the approver's rebases, the scoped harness of Task 940 AC7 (`validateDiff` and `changedFiles` from
-  `scripts/workflow-gates/cli.mjs`, phase `release`, base `origin/main`, working tree) reports no error for the 935, 940, 941 and 943
-  contracts.
+  `scripts/workflow-gates/cli.mjs`, phase `release`, base `origin/main`, working tree) reports no error for the 935, 940, 941, 943,
+  923 owner-fixes and 927 contracts, and `reviewedFreshnessErrors` for that selection returns `[]`; `cli.mjs verify` of the 923
+  owner-fixes and 927 contracts exits 0 with the development project identity (the only step of this task that uses credentials and
+  the network: the approver's, never a case fixture).
 
 ## Security test contract
 
@@ -190,11 +285,11 @@ every scope.
 |---|---|
 | Assets and boundaries | The shell write detection `shellWriteTargets` (C1, C2) and its two consumers: the governance independence check of the Stop hook (`governanceIndependenceErrors`, C3) and the pre-write guard (`evaluateHook` PreToolUse, C4, C19); the CI policy-diff check of `validateDiff` (C20) as the preserved outer layer. Owner: Opus (D1). |
 | Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-943-HOOK-SOURCE-ALLOW, GOV-943-HOOK-PROGRAM-DENY, GOV-943-HOOK-DIRECTORY-DENY, GOV-943-HOOK-API-DENY, GOV-943-HOOK-PRETOOL-DENY and GOV-943-HOOK-MALFORMED-ERROR on the real `shellWriteTargets`, `governanceIndependenceErrors` and `evaluateHook` with synthetic transcripts, contracts and fixture directories. |
-| Server security | The CI layer replaces this row: GOV-943-CI-DELETE-DENY on the real `validateDiff` with a fixture root. |
+| Server security | The CI layer replaces this row: GOV-943-CI-DELETE-DENY on the real `validateDiff` with a fixture root; GOV-943-TESTS-REBASE-ALLOW, GOV-943-TESTS-REBASE-DENY and GOV-943-TESTS-REBASE-ERROR on the real `testsEntryErrors`, `rebaseChainErrors`, `validateContract` and `validateDiff` (its `diffRebaseErrors` anchor check); GOV-943-CI-STALE-REVIEW-DENY on the real `reviewedFreshnessErrors` and `scopeHashErrors`; the hook layer adds GOV-943-EXEMPT-UNTRACKED-DENY on the real `governanceIndependenceErrors` in a fixture Git repository. |
 | Database/integrations | Not applicable: no database, Storage, Realtime or provider path. |
-| Cases | The seven GOV-943 cases of the sidecar, each with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
+| Cases | The twelve GOV-943 cases of the sidecar, each with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
 | Fixtures and environment | Temporary directories from `mkdtempSync` as the project root, synthetic contracts, transcripts, files and directories; no credentials, no network, no repository writes outside temporary folders. |
-| Sensitivity proof | Critical cases GOV-943-HOOK-PROGRAM-DENY and GOV-943-HOOK-PRETOOL-DENY: the breaks named in AC2 and AC3; baseline pass, isolated break failing with an assertion, restored pass; artifacts under `docs/sessions/evidence/task943/sensitivity/`. |
+| Sensitivity proof | Critical cases GOV-943-HOOK-PROGRAM-DENY, GOV-943-HOOK-PRETOOL-DENY, GOV-943-TESTS-REBASE-DENY, GOV-943-EXEMPT-UNTRACKED-DENY and GOV-943-CI-STALE-REVIEW-DENY: the breaks named in AC2, AC3, AC8, AC9 and AC12; baseline pass, isolated break failing with an assertion, restored pass; artifacts under `docs/sessions/evidence/task943/sensitivity/`. |
 | Execution | `node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json`, then `cli.mjs verify` on the same path; native Windows PowerShell 5.1, Node 22.22.3; QA Q1. |
 
 ## 7. Ordered route
@@ -205,20 +300,20 @@ every scope.
    (today `planned`, C27) and `git status --short tasks scripts/workflow-gates` shows no change to the 941 sidecar or the hook file.
    Otherwise this task stops as `BLOCKED` (R1).
 3. **Opus implementer, fresh session** (D1): read this kickoff and its bundle; save the base run of `selftests.mjs` to
-   `docs/sessions/evidence/task943/impl/base-runs.txt` before the first write. Implement R1–R4, then R5 with the seven cases. Record
-   `implementation: { "role": "Opus" }`, stage `implemented`, `report` and `sensitivity` in the sidecar; run the two sensitivity
-   breaks and keep their artifacts; rerun the p01 and p02 probes (AC2, AC3). Do not write R6: the approver does. Work on the hook
+   `docs/sessions/evidence/task943/impl/base-runs.txt` before the first write. Implement R1–R4, then R5 with the seven cases, then
+   R7–R11 with the five new cases. Record `implementation: { "role": "Opus" }`, stage `implemented`, `report` and `sensitivity` in
+   the sidecar; run the five sensitivity breaks and keep their artifacts; rerun the p01 and p02 probes (AC2, AC3). Do not write R6: the approver does. Work on the hook
    file through the Edit tool: a shell command that copies or rewrites the hook is itself a write the hook now detects.
 4. Run `cli.mjs governance-report` and every AC command; write the completion report, including the out-of-scope write forms that
    stay undetected (section 4); end with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the
    owner. No push.
-5. **Opus approver, another fresh session** (D2): review R1–R6; on approval write the `review` block and stage `reviewed`, write R6
-   with its three evidence files, run AC7, and hand off the explicit-path commit under `shared/git-publication.md`. PR #12 merges only
+5. **Opus approver, another fresh session** (D2): review R1–R11; on approval write the `review` block and stage `reviewed`, write R6
+   with its five evidence files, run AC7, and hand off the explicit-path commit under `shared/git-publication.md`. PR #12 merges only
    after green PR checks (D7).
 
 ## 8. Completion report
 
-Per requirement: changed files, evidence path, status; each GOV-943 case with its result; both sensitivity diffs with the failed
+Per requirement: changed files, evidence path, status; each GOV-943 case with its result; the five sensitivity diffs with the failed
 assertion; base and final self-test totals; the p01/p02 probes before and after; proof that no existing self-test file changed; the
 write forms that stay undetected; one of `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
@@ -227,9 +322,9 @@ write forms that stay undetected; one of `IMPLEMENTED - AWAITING ORCHESTRATOR RE
 | Rule | How this kickoff complies |
 |---|---|
 | `claim-evidence-contract.md` | Every R cites ledger rows; sources are retained snapshots and executed probes under `docs/sessions/evidence/task943/design/`. |
-| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for both critical cases, Q1. |
+| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for the five critical cases, Q1. |
 | `role-boundaries.md` | Opus implements policy (D1); Sonnet is not routed; approval by an independent session (D2). |
 | `git-publication.md` | Task-branch commit on PR #12's branch (D7); merge only after green checks. |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36; owner decisions: D1, D2, D7, D9, D11; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59; owner decisions: D1, D2, D7, D9, D11, D12, D13, D14; blocked claims: NONE.

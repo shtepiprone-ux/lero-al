@@ -1,0 +1,33 @@
+# P5 — the paused cron job writes a status to the NULL-expiry active rows
+case: SEC-931-SRV-CRON-DENY
+production file: src/app/api/cron/listings-expiry/route.ts
+test file: src/app/api/cron/listings-expiry/__tests__/route.test.ts
+date: 2026-11-01T13:09:16.922Z node v22.22.3 win32
+
+## 1. baseline (unmodified code): exit 0; case results: [["POST /api/cron/listings-expiry [SEC-931-SRV-CRON-DENY] NULL-expiry active rows reported but NOT mutated","passed"]]
+
+## 2. planted break applied (one replacement):
+--- find
+  const summary = {
+--- replace
+  await db.from('listings').update({ status: 'expired' }).eq('status', 'active').is('expires_at', null) // PLANTED P5
+  const summary = {
+
+
+## 3. with the break: exit 1
+case results: [["POST /api/cron/listings-expiry [SEC-931-SRV-CRON-DENY] NULL-expiry active rows reported but NOT mutated","failed"]]
+failure message of [SEC-931-SRV-CRON-DENY]:
+AssertionError: expected [ { …(2) } ] to have a length of +0 but got 1
+    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1389:20)
+    at Proxy.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/expect/dist/index.js:1156:15)
+    at Proxy.methodWrapper (file:///C:/Claude_Code_Projects/lero-al/node_modules/chai/index.js:1700:25)
+    at C:/Claude_Code_Projects/lero-al/src/app/api/cron/listings-expiry/__tests__/route.test.ts:140:25
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at file:///C:/Claude_Code_Projects/lero-al/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+named case failed with an assertion (not a compile/import/type error): true
+
+## 4. restored in finally; bytes identical to the original: true
+restored run: exit 0; case results: [["POST /api/cron/listings-expiry [SEC-931-SRV-CRON-DENY] NULL-expiry active rows reported but NOT mutated","passed"]]
+git diff --exit-code -- src/app/api/cron/listings-expiry/route.ts: exit 0
+
+RESULT P5: PASS (fails with the break, passes restored, file unchanged)

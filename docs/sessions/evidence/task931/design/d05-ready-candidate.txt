@@ -1,0 +1,8 @@
+Task 931 revision readiness (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2c8c51adf)
+Command: node docs/sessions/evidence/task931/design/d05-ready-candidate.mjs
+saved executionStatus draft; stage implemented
+ready candidate plan errors: []
+935 digest changed by the 923 write: true
+935 scope entry by the reviewed 931 contract: []
+same entry without the 923 file in the 931 scope: ["tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json is outside the scope of tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json"]
+exit=0

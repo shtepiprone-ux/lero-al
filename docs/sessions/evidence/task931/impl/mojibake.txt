@@ -1,0 +1,13 @@
+﻿npm run check:mojibake - extract of the retained run (exit 1). The raw output (531 KB) quotes the foreign artifacts verbatim and would itself trip the check, so only this extract is kept.
+check:mojibake ? scanning 18767 text file(s), tracked and untracked-not-ignored, under docs/ src/ app/ components/ modules/ messages/ tasks/ scripts/ + root *.md
+node.exe : check:mojibake FAILED ? 2546 artifact(s), 0 invalid-UTF-8 file(s):
+offending files listed by the run (7):
+docs/sessions/evidence/task923/r33-13a-mojibake.txt
+docs/sessions/evidence/task923/review-48/rv48-14-mojibake.txt
+docs/sessions/evidence/task927/a3/sensitivity/run-sensitivity-summary.txt
+docs/sessions/evidence/task927/base/unit-base-failures.txt
+docs/sessions/evidence/task927/validation/unit-final-failures.txt
+docs/sessions/evidence/task937/design/g00-clean.log
+docs/sessions/evidence/task937/design/g00-governance-check-job.log
+lines of the raw output that name a Task 931 path, a src path, the registry or a Sprint_9x task file (other than the scan header): 0
+mojibake exit=1

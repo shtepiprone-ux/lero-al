@@ -24,7 +24,7 @@
  *   npx vitest run src/modules/listings/actions/applyListingTransition.test.ts (comprehensive gateway)
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import {
   resolveTransition,
   canSetStatusPrivileged,
@@ -87,6 +87,10 @@ describe('pure engine — canSetStatusPrivileged', () => {
 
 type DbParam = NonNullable<Parameters<typeof applyListingTransitionByStatus>[3]>
 
+// The update double behaves like the database (Task 923 R67 (e), Task 931): it applies each `.eq(column, value)` to the CURRENT row and answers
+// `.select('id')` with the rows it changed — the same contract as the comprehensive gateway test (applyListingTransition.test.ts).
+const writes: Array<{ payload: Record<string, unknown>; filters: Array<[string, unknown]> }> = []
+
 function makeMockDb(
   currentListing: { id: string; status: string; user_id: string } | null,
   updateResult: { error: null | { message: string } } = { error: null },
@@ -94,8 +98,20 @@ function makeMockDb(
   const singleFn    = () => Promise.resolve({ data: currentListing })
   const eqSelectFn  = () => ({ single: singleFn })
   const selectFn    = () => ({ eq: eqSelectFn })
-  const eqUpdateFn  = () => Promise.resolve(updateResult)
-  const updateFn    = () => ({ eq: eqUpdateFn })
+  const updateFn    = (payload: Record<string, unknown>) => {
+    const filters: Array<[string, unknown]> = []
+    const chain = {
+      eq: (column: string, value: unknown) => { filters.push([column, value]); return chain },
+      select: () => {
+        writes.push({ payload, filters: [...filters] })
+        if (updateResult.error) return Promise.resolve({ data: null, error: updateResult.error })
+        const matches = !!currentListing
+          && filters.every(([column, value]) => (currentListing as Record<string, unknown>)[column] === value)
+        return Promise.resolve({ data: matches ? [{ id: currentListing!.id }] : [], error: null })
+      },
+    }
+    return chain
+  }
   const fromFn      = () => ({ select: selectFn, update: updateFn })
   return { from: fromFn } as unknown as DbParam
 }
@@ -108,10 +124,15 @@ const adminActor: TransitionActorContext = { userId: ADMIN_ID, role: 'admin', so
 const strangerActor: TransitionActorContext = { userId: 'stranger-99', role: 'user', source: 'cabinet' }
 
 describe('gateway — applyListingTransitionByStatus (smoke)', () => {
-  it('owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }', async () => {
+  beforeEach(() => { writes.length = 0 })
+
+  it('[SEC-931-SRV-TRANSITION-ALLOW] owner: active → sold (privileged) → { ok: true, nextStatus: "sold" }', async () => {
     const db = makeMockDb({ id: 'l1', status: 'active', user_id: OWNER_ID })
     const result = await applyListingTransitionByStatus('l1', 'sold', ownerActor, db)
     expect(result).toEqual({ ok: true, nextStatus: 'sold', listingId: 'l1' })
+    // compare-and-set: the write matches the id AND the status it was decided on
+    expect(writes).toHaveLength(1)
+    expect(writes[0].filters).toEqual([['id', 'l1'], ['status', 'active']])
   })
 
   it('admin: pending → active (privileged) → { ok: true, nextStatus: "active" }', async () => {

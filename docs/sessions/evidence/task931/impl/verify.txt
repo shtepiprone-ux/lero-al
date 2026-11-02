@@ -1,0 +1,2 @@
+﻿JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/85a73d3df1cdbe3f/unit.json
+verify exit=0

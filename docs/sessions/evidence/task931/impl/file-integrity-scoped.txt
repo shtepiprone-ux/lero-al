@@ -1,0 +1,9 @@
+﻿
+> lero-al@0.1.0 check:file-integrity
+> node scripts/check-file-integrity.mjs --files src/app/api/cron/listings-expiry/__tests__/route.test.ts src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx src/lib/auth/__tests__/permissions.test.ts src/modules/admin/actions/__tests__/getModeratorPermissions.smoke.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts src/modules/cabinet/statistics/__tests__/access.test.ts docs/critical-flow-registry.md docs/sessions/evidence/task931/security/report.mjs docs/sessions/evidence/task931/security/report.json docs/sessions/evidence/task931/impl/sensitivity/run-plants.mjs
+
+🔍  check:file-integrity — 11 explicit file(s) (--files)
+    Checking 11 file(s) — NUL bytes · BOM · JSON parse · node --check · truncation
+
+✅  check:file-integrity PASSED — all 11 file(s) clean
+file-integrity --files exit=0

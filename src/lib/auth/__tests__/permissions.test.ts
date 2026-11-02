@@ -17,11 +17,14 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 // ── Module mocks (hoisted before any imports) ─────────────────────────────────
 
-const mockGetUser = vi.fn()
-vi.mock('@/lib/auth/server', () => ({
-  getUser: (...args: unknown[]) => mockGetUser(...args),
+// hasPermission / assertPermission take the role from requireViewer() (Task 923 R44, Task 931 R4): this is the viewer boundary double.
+const mockRequireViewer = vi.fn()
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: (...args: unknown[]) => mockRequireViewer(...args),
 }))
 
+// Kept for the roleHasPermission tests: they assert that no client factory is called for the roles that need no read, and that the
+// user-scoped client is never used for role_permissions.
 const mockCreateClient = vi.fn()
 vi.mock('@/lib/supabase/server', () => ({
   createClient: (...args: unknown[]) => mockCreateClient(...args),
@@ -157,27 +160,20 @@ describe('roleHasPermission', () => {
 describe('hasPermission / assertPermission — moderator end-to-end', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    mockGetUser.mockResolvedValue({ id: 'mod-1' })
-    mockCreateClient.mockResolvedValue({
-      from: () => ({
-        select: () => ({
-          eq: () => ({
-            single: () => Promise.resolve({ data: { role: 'moderator' } }),
-          }),
-        }),
-      }),
-    })
+    mockRequireViewer.mockResolvedValue({ ok: true, userId: 'mod-1', role: 'moderator' })
   })
 
-  it('hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)', async () => {
-    const { client } = adminClientReturning({ allowed: true })
+  it('[SEC-931-SRV-PERM-ALLOW] hasPermission → true for a moderator whose key is stored allowed:true (admin-client read)', async () => {
+    const { client, mockFrom } = adminClientReturning({ allowed: true })
     mockCreateAdminClient.mockReturnValue(client)
 
     const { hasPermission } = await import('@/lib/auth/permissions')
     const result = await hasPermission('reports.delete')
 
     expect(result).toBe(true)
-    expect(mockCreateClient).toHaveBeenCalled()
+    expect(mockRequireViewer).toHaveBeenCalledTimes(1)
+    expect(mockFrom).toHaveBeenCalledWith('role_permissions')
+    expect(mockCreateClient).not.toHaveBeenCalled()
   })
 
   it('assertPermission rejects forbidden for the same moderator with { allowed: false }', async () => {
@@ -186,5 +182,33 @@ describe('hasPermission / assertPermission — moderator end-to-end', () => {
 
     const { assertPermission } = await import('@/lib/auth/permissions')
     await expect(assertPermission('reports.delete')).rejects.toThrow('forbidden')
+  })
+
+  it('[SEC-931-SRV-PERM-DENY] a viewer refused by requireViewer has no permission and role_permissions is not read', async () => {
+    const { client, mockFrom } = adminClientReturning({ allowed: true })
+    mockCreateAdminClient.mockReturnValue(client)
+    const { hasPermission, assertPermission } = await import('@/lib/auth/permissions')
+
+    for (const reason of ['unauthenticated', 'lookup_failed'] as const) {
+      mockRequireViewer.mockResolvedValue({ ok: false, reason })
+      await expect(hasPermission('reports.delete')).resolves.toBe(false)
+      await expect(assertPermission('reports.delete')).rejects.toThrow('forbidden')
+    }
+
+    expect(mockFrom).not.toHaveBeenCalled()
+    expect(mockCreateAdminClient).not.toHaveBeenCalled()
+    expect(mockCreateClient).not.toHaveBeenCalled()
+  })
+
+  it('a viewer without a role has no permission and role_permissions is not read', async () => {
+    mockRequireViewer.mockResolvedValue({ ok: true, userId: 'norole-1', role: null })
+    const { client, mockFrom } = adminClientReturning({ allowed: true })
+    mockCreateAdminClient.mockReturnValue(client)
+
+    const { hasPermission } = await import('@/lib/auth/permissions')
+    await expect(hasPermission('reports.delete')).resolves.toBe(false)
+
+    expect(mockFrom).not.toHaveBeenCalled()
+    expect(mockCreateAdminClient).not.toHaveBeenCalled()
   })
 })

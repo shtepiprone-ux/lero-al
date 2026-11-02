@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "stage": "planned",
+  "stage": "reviewed",
   "executionStatus": "ready",
   "kind": "product",
   "qaProfile": "Q4",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md",
-  "taskSha256": "49cbaf3ba44dc1adfffb40a128333cf812d2dd56a4e5fd20d472218af87b3d23",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md",
+  "taskSha256": "1a032d1f6d42a71f621ebb9ef17721779a897b0288dcb00318e61567f20a15b5",
   "scope": [
     "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
     "src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts",
@@ -20,7 +20,8 @@
     "src/modules/admin/actions/permissions.ts",
     "src/modules/auth/actions/captcha.ts",
     "src/modules/cabinet/statistics/access.ts",
-    "src/app/api/cron/listings-expiry/route.ts"
+    "src/app/api/cron/listings-expiry/route.ts",
+    "tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json"
   ],
   "inputs": [
     "src/lib/auth/requireViewer.ts",
@@ -294,5 +295,13 @@
       "testFile": "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
       "testName": "POST /api/cron/listings-expiry [SEC-931-SRV-CRON-ERROR] a failed read answers 500 read_failed and writes nothing"
     }
-  ]
+  ],
+  "review": {
+    "role": "Opus",
+    "decision": "APPROVED WITH NOTES",
+    "evidence": "docs/sessions/evidence/task931/review/review-931.md",
+    "evidenceSha256": "af312572508dd1b51e5da227443c9d0e7a0502319ad86629757554fdf1d57e1f",
+    "scopeSha256": "734192a4d63f9ef8f5b44705d7b75a15569fc566ea01f5e8c404f8735a71e551",
+    "reportSha256": "a21b95057429f1b3fb4c6c3694632a29e1d8bedb89b6e27b02f2c21040fa71e3"
+  }
 }

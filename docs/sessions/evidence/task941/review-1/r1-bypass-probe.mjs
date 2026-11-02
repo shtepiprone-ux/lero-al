@@ -42,25 +42,52 @@ const forms = [
   ['F3-bash-last-arg-git-output', 'bash', 'cat --output=%T% 2>/dev/null; git log -1 "$_"', 'gitrepo'],
   ['F3-bash-last-arg-sed-in-place', 'bash', 'head -i 2>/dev/null; sed -n 1p "$_" %T%', 'inplace'],
   ['F3-bash-last-arg-rg-pre', 'bash', "cat --pre=bash 2>/dev/null; rg \"$_\" 'writeFileSync' %T%", 'classifier-only'],
+  // Second self-check (same day): PowerShell stop-parsing (`--%`) and splatting (`@v`).
+  ['F4-ps-stop-parsing-hides-command', 'powershell', "git log --% -1 '\nSet-Content '%T%' 'x'; git log --% -1 '"],
+  ['F4-ps-stop-parsing-env-option', 'powershell', 'git log --% -1 %R941OPT% -- %T%', 'gitrepo'],
+  ['F4-ps-outvariable-splat-option', 'powershell', 'Get-Content opts.txt -OutVariable v; git log -1 @v -- %T%', 'gitrepo'],
+  // Windows PowerShell 5.1 does not escape a quote inside an argument it passes to a native program.
+  ['F5-ps-embedded-double-quote', 'powershell', `git log -1 'a" --output=%T% "b'`, 'gitrepo'],
+  ['F5-ps-embedded-single-quote', 'powershell', `git log -1 "a' --output=%T% 'b"`, 'gitrepo'],
+  // Third self-check (same day): Bash prompt expansion `${_@P}` decodes octal escapes, then runs command substitution.
+  ['F6-bash-prompt-expansion-runs-command', 'bash', "cat '\\044\\050touch %T%\\051' 2>/dev/null; grep -c zzz \"${_@P}\""],
+  // Fifth self-check (same day): an MSYS program started from PowerShell expands a quoted glob itself.
+  ['F7-ps-quoted-glob-msys-sed', 'powershell', "sed -n 1p '*'", 'glob'],
+  // An MSYS program expands a quoted brace list itself, with no matching file needed.
+  ['F7-ps-quoted-brace-msys-sed', 'powershell', "sed -n 1p '{-i,%T%}'", 'inplace-rel'],
+  // A program started from PowerShell 5.1 re-reads a quote inside a quoted argument as quoting (C62 covered splitting only).
+  ['F8-ps-nested-quote-msys-sed', 'powershell', `sed -n 1p '"-i"' %T%`, 'inplace-rel'],
+  ['F8-ps-nested-quote-git-output', 'powershell', `git log -1 '--out"put"=%T%'`, 'gitrepo-rel'],
+  ['F8-bash-nested-quote-git-output', 'bash', `git log -1 '--out"put"=%T%'`, 'gitrepo-rel'],
+  // An MSYS program started from a non-MSYS process may read an @file argument as more arguments (sedopts.txt holds -i).
+  ['F9-ps-quoted-at-file-msys-sed', 'powershell', "sed -n 1p '@sedopts.txt' %T%", 'inplace-rel'],
+  ['F9-ps-quoted-at-file-git-output', 'powershell', "git log -1 '@opts.txt'", 'gitrepo-rel'],
 ];
 const lines = [`commit ${commit}; node ${process.version}; platform ${process.platform}`,
   `bash ${execFileSync('bash', ['--version'], { encoding: 'utf8' }).split('\n')[0]}`];
-for (const [id, shell, form, mode] of forms) {
+for (const [id, shell, form, modeAsWritten] of forms) {
+  // A mode ending in -rel runs the real command with the relative name target.txt (a Windows path breaks brace and quote forms).
+  const rel = typeof modeAsWritten === 'string' && modeAsWritten.endsWith('-rel');
+  const mode = rel ? modeAsWritten.slice(0, -4) : modeAsWritten;
   let ran = 'not run';
   if (mode !== 'classifier-only') {
     const dir = mkdtempSync(join(tmpdir(), 'r941-'));
     try {
       const target = join(dir, 'target.txt');
       save(join(dir, 'README.md'), '# probe\n');
-      let command = form.replaceAll('%T%', shell === 'bash' ? target.replaceAll('\\', '/') : target);
+      let command = form.replaceAll('%T%', rel ? 'target.txt' : shell === 'bash' ? target.replaceAll('\\', '/') : target);
       if (mode === 'glob') { save(join(dir, '-i'), ''); save(target, 'one\ntwo\n'); command = form; }
       if (mode === 'inplace') save(target, 'one\ntwo\n');
       if (mode === 'gitrepo') {
         execFileSync('git', ['init', '-q'], { cwd: dir });
         execFileSync('git', ['-c', 'user.name=probe', '-c', 'user.email=probe@example.invalid', 'commit', '-q', '--allow-empty', '-m', 'probe'], { cwd: dir });
       }
+      // F4: the option text comes from a file or an environment variable the command itself does not name.
+      save(join(dir, 'opts.txt'), `--output=${target}\n`);
+      save(join(dir, 'sedopts.txt'), '-i\n');
+      const env = { ...process.env, R941OPT: `--output=${target}` };
       const args = shell === 'bash' ? ['-c', command] : ['-NoProfile', '-NonInteractive', '-Command', command];
-      try { execFileSync(shell === 'bash' ? 'bash' : 'powershell.exe', args, { cwd: dir, encoding: 'utf8', stdio: 'pipe' }); } catch { /* the outcome is the file */ }
+      try { execFileSync(shell === 'bash' ? 'bash' : 'powershell.exe', args, { cwd: dir, encoding: 'utf8', stdio: 'pipe', env }); } catch { /* the outcome is the file */ }
       ran = mode === 'glob' || mode === 'inplace' ? `target content after run ${JSON.stringify(readFileSync(target, 'utf8'))} (before "one\\ntwo\\n")`
         : `hidden write happened: ${existsSync(target)}`;
     } finally { rmSync(dir, { recursive: true, force: true }); }

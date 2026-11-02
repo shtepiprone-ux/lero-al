@@ -111,42 +111,63 @@ const READ_ONLY_PROGRAMS = new Set(['cd', 'pwd', 'ls', 'cat', 'head', 'tail', 'w
   'set-location', 'get-location', 'get-content', 'get-childitem', 'get-item', 'select-string', 'test-path', 'resolve-path',
   'select-object', 'measure-object']);
 const READ_ONLY_GIT = new Set(['log', 'show', 'diff', 'status', 'rev-parse', 'ls-files', 'blame', 'grep', 'cat-file']);
+// Task 941 revision 1, R1 (a): an allowlist, because each review pass over a list of forbidden forms found another
+// one. Outside single-quoted spans only these characters occur (the quote characters delimit spans); this rejects
+// comments (`#`, `<#`), every expansion (`$`), splatting and here-strings (`@`), subexpressions and script blocks
+// (`(`, `{`), history and negation (`!`) and every non-ASCII character. A double-quoted span also has no `$` or `\`.
+const UNQUOTED_CHAR = /[A-Za-z0-9 \t\r\n\-_./:=,+%~;|&<>*?[\]\\]/;
+const DOUBLE_QUOTED_CHAR = /[A-Za-z0-9 \t\r\n\-_./:=,+%~;|&<>*?[\]]/;
+// R1 (d): every argument of rg, sed and git uses only these characters, read as the shell reads it. This rejects the
+// globs and brace lists an MSYS program started from PowerShell expands itself, `@file` arguments and inner quotes.
+const ARGUMENT_CHARS = /^[A-Za-z0-9 \-_./:=,+%|$\\~^]*$/;
+// Characters that end a word in both shells.
+const WORD_END = /[ \t\r\n;|&<>]/;
 // Splits a command into simple commands of words whose characters are marked quoted or unquoted; null when the
-// command cannot be classified safely. Besides backticks, substitutions, heredocs and unterminated quotes, it refuses
-// what Bash and PowerShell read differently or what runs a command inside an argument: a backslash before a quote
-// (a Bash escape, a PowerShell literal), typographic quotes and here-strings (PowerShell quotes), and an unquoted
-// `(` or `{` (PowerShell subexpressions and script blocks).
+// command cannot be classified safely. Besides the allowlist it refuses backticks, substitutions, heredocs and
+// unterminated quotes, and what Bash and PowerShell read differently: a backslash before a quote (a Bash escape, a
+// PowerShell literal) or before a separator, a backslash or the end (a Bash escape or line continuation, a
+// PowerShell literal), typographic quotes (PowerShell quotes), a doubled quote (PowerShell reads `''` and `""` inside
+// a span as one literal quote, Bash as two spans), a word that begins with a quoted span and continues after it
+// (PowerShell ends that word at the closing quote: `'x'-i` reaches a native program as `x` and `-i`, Bash as `x-i`)
+// and a `--%` word (PowerShell stop-parsing).
 function shellCommands(command) {
   if (typeof command !== 'string' || /`|\$\(|<\(|>\(|<<|\\['"]|[‘-„]/.test(command)) return null;
   const commands = [[]];
-  let word = null, quote = '';
+  let word = null, quote = '', quoteBeganWord = false;
   const end = () => { if (word) commands.at(-1).push(word); word = null; };
   for (let i = 0; i < command.length; i++) {
-    const ch = command[i];
-    if (quote) { if (ch === quote) quote = ''; else word.push({ ch, quoted: true }); continue; }
-    if (ch === "'" || ch === '"') {
-      if (word?.at(-1)?.ch === '@' && !word.at(-1).quoted) return null;
-      word ||= []; quote = ch; continue;
+    const ch = command[i], next = command[i + 1];
+    if (quote) {
+      if (ch !== quote) {
+        if (quote === '"' && !DOUBLE_QUOTED_CHAR.test(ch)) return null;
+        word.push({ ch, quoted: true }); continue;
+      }
+      quote = '';
+      if (next === ch || (quoteBeganWord && next !== undefined && !WORD_END.test(next))) return null;
+      continue;
     }
-    if (ch === '(' || ch === '{') return null;
+    if (ch === "'" || ch === '"') { quoteBeganWord = !word; word ||= []; quote = ch; continue; }
+    if (!UNQUOTED_CHAR.test(ch)) return null;
+    if (ch === '\\' && (next === undefined || next === '\\' || WORD_END.test(next))) return null;
     // `&` directly after `>` or `<` belongs to the redirection (`2>&1`); every other `&` separates commands.
     if (/[;|\r\n]/.test(ch) || (ch === '&' && !/[<>]/.test(command[i - 1] || ''))) { end(); commands.push([]); continue; }
     if (ch === ' ' || ch === '\t') { end(); continue; }
-    // PowerShell also separates words at other whitespace (U+00A0, U+2028, …), which Bash keeps inside a word.
-    if (/\s/.test(ch)) return null;
     (word ||= []).push({ ch, quoted: false });
   }
   if (quote) return null;
   end();
-  return commands.filter(words => words.length).map(words => words.map(chars => ({ chars, text: chars.map(c => c.ch).join(''),
+  const words = commands.filter(list => list.length).map(list => list.map(chars => ({ chars, text: chars.map(c => c.ch).join(''),
     redirect: chars.some(c => !c.quoted && (c.ch === '>' || c.ch === '<')) })));
+  return words.some(list => list.some(w => w.text.includes('--%'))) ? null : words;
 }
 // Separates the arguments of a simple command from its redirections; returns the files its `>`/`>>` redirections
-// write (`>&1` duplicates a stream; `>&file` and `<>file` still write the file).
+// write (`>&1` duplicates a stream; `>&file` and `<>file` still write the file). Text before the first operator of a
+// redirection word is an argument unless it is a stream number or PowerShell's `*` (`rg --pre=x>out` passes
+// `--pre=x` to rg).
 function redirections(words) {
   const args = [], targets = [];
   for (let i = 0; i < words.length; i++) {
-    if (!words[i].redirect) { args.push(words[i].text); continue; }
+    if (!words[i].redirect) { args.push(words[i]); continue; }
     let op = '', text = '';
     const finish = target => { if (target && (op === 'write' || (op === 'dup' && !/^\d*-?$/.test(target)))) targets.push(target); };
     const { chars } = words[i];
@@ -154,6 +175,7 @@ function redirections(words) {
       const { ch, quoted } = chars[j];
       if (quoted || (ch !== '>' && ch !== '<')) { text += ch; continue; }
       if (op) finish(text);
+      else if (!/^(?:\d*|\*)$/.test(text)) args.push({ chars: chars.slice(0, j), text });
       text = '';
       if (ch === '<') op = 'read';
       else if (chars[j + 1]?.ch === '&' && !chars[j + 1].quoted) { op = 'dup'; j++; }
@@ -169,16 +191,21 @@ const gitWriteOption = arg => {
   return /^-[^-]*O/.test(arg) || (name.length > 2 && name.startsWith('--')
     && ['--output', '--open-files-in-pager'].some(option => option.startsWith(name) || name.startsWith(option)));
 };
-function readOnlySimpleCommand(words) {
-  if (words[0].redirect) return false;
-  const [program, ...rest] = redirections(words).args;
+// R1 (c)–(d) for one reading of the words: the text as written, or with each unquoted backslash dropped (Bash).
+function readOnlyArguments([program, ...rest]) {
   const name = program.toLowerCase();
   if (READ_ONLY_PROGRAMS.has(name)) return true;
+  if (!['rg', 'sed', 'git'].includes(name) || !rest.every(arg => ARGUMENT_CHARS.test(arg))) return false;
   // `--pre` and `--hostname-bin` make ripgrep run a program.
   if (name === 'rg') return !rest.some(arg => arg.startsWith('--pre') || arg.startsWith('--hostname-bin'));
   if (name === 'sed') return rest.length >= 3 && rest[0] === '-n' && /^[0-9]+(,([0-9]+|\$))?p$/.test(rest[1]) && rest.slice(2).every(arg => !arg.startsWith('-'));
-  if (name === 'git') return READ_ONLY_GIT.has(rest[0]) && !rest.some(gitWriteOption);
-  return false;
+  return READ_ONLY_GIT.has(rest[0]) && !rest.some(gitWriteOption);
+}
+function readOnlySimpleCommand(words) {
+  if (words[0].redirect) return false;
+  const { args } = redirections(words);
+  return readOnlyArguments(args.map(arg => arg.text))
+    && readOnlyArguments(args.map(arg => arg.chars.filter(c => c.quoted || c.ch !== '\\').map(c => c.ch).join('')));
 }
 export function isReadOnlyShellCommand(command) {
   const commands = shellCommands(command);

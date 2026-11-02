@@ -1,0 +1,18 @@
+commit 758508105; node v22.22.3; platform win32
+bash GNU bash, version 5.2.37(1)-release (x86_64-pc-msys)
+F1-bash-line-comment-redirect | real bash: hidden write happened: true | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F1-bash-line-comment-set-content | real bash: not run | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F1-ps-line-comment-set-content | real powershell: hidden write happened: true | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F1-ps-block-comment-set-content | real powershell: hidden write happened: true | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F1-bash-line-comment-product | real bash: hidden write happened: true | readOnly=true | after=[] | before941=["src/profile.ts"] | executor PreToolUse=[]
+F1-bash-line-comment-git-metadata | real bash: hidden write happened: true | readOnly=true | after=[] | before941=[".git/hooks/pre-commit"] | executor PreToolUse=[]
+F2-bash-backslash-option | real bash: bash prints [--pre][--output=%T%] | readOnly=false | after=[] | before941=[] | executor PreToolUse=[]
+F2-bash-ansi-c-option | real bash: bash prints [--pre][--output=%T%] | readOnly=false | after=[] | before941=[] | executor PreToolUse=[]
+F2-rg-backslash-pre | real bash: not run | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F2-rg-ansi-c-pre | real bash: not run | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F2-git-backslash-output | real bash: not run | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=[]
+F2-git-ansi-c-output | real bash: not run | readOnly=true | after=[] | before941=[] | executor PreToolUse=[]
+F2-sed-glob-in-place | real bash: target content after run "one\n" (before "one\ntwo\n") | readOnly=true | after=[] | before941=[] | executor PreToolUse=[]
+F3-bash-last-arg-git-output | real bash: hidden write happened: true | readOnly=true | after=["../../dev/null"] | before941=["../../dev/null"] | executor PreToolUse=[]
+F3-bash-last-arg-sed-in-place | real bash: target content after run "one\n" (before "one\ntwo\n") | readOnly=true | after=["../../dev/null"] | before941=["../../dev/null"] | executor PreToolUse=[]
+F3-bash-last-arg-rg-pre | real bash: not run | readOnly=true | after=["../../dev/null"] | before941=["scripts/workflow-gates/security-hook.mjs","../../dev/null"] | executor PreToolUse=[]

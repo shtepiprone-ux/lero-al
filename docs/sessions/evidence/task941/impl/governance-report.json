@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "status": "passed",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
+  "contractSha256": "86d80b50c78182e498708fe635e15e6100ef721dc1e6ec8e54cacbe5fbf4defb",
+  "scopeSha256": "f9a118eba0735325e76dc78e66898dde08d2e2b5502442978c8aefb304d9c5a8",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "cases": [
+    {
+      "id": "GOV-941-HOOK-READONLY-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-write.selftest.mjs",
+      "testName": "[GOV-941-HOOK-READONLY-ALLOW] A command made only of read-only programs is not a write of the files it reads, even when it names a write word"
+    },
+    {
+      "id": "GOV-941-HOOK-WRITE-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-write.selftest.mjs",
+      "testName": "[GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command",
+      "sensitivity": {
+        "id": "GOV-941-HOOK-WRITE-DENY",
+        "testName": "[GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task941/sensitivity/GOV-941-HOOK-WRITE-DENY.txt",
+        "artifactSha256": "666e6876a6bcefb5569241e92b516ba13aef851192deb4b3394545f799779a48"
+      }
+    },
+    {
+      "id": "GOV-941-HOOK-MALFORMED-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-write.selftest.mjs",
+      "testName": "[GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely keeps the previous fail-closed detection"
+    },
+    {
+      "id": "GOV-941-HOOK-PRETOOL-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-write.selftest.mjs",
+      "testName": "[GOV-941-HOOK-PRETOOL-DENY] The pre-write guard allows a read-only search of a policy file and still refuses a chained policy write"
+    },
+    {
+      "id": "GOV-941-CI-POLICY-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-write.selftest.mjs",
+      "testName": "[GOV-941-CI-POLICY-DENY] CI refuses a change to the hook file outside every changed governance contract scope"
+    }
+  ],
+  "errors": []
+}

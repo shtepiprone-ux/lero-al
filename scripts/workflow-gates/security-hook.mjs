@@ -105,11 +105,100 @@ function registeredWrites(root, files) {
   }
   return enrolled;
 }
+// Task 941 (owner D10, 2026-11-01): programs whose invocation, as checked below, only reads. A command made only of
+// them writes nothing but its unquoted redirection targets; every other command keeps the write-word detection.
+const READ_ONLY_PROGRAMS = new Set(['cd', 'pwd', 'ls', 'cat', 'head', 'tail', 'wc', 'cut', 'grep', 'egrep', 'fgrep',
+  'set-location', 'get-location', 'get-content', 'get-childitem', 'get-item', 'select-string', 'test-path', 'resolve-path',
+  'select-object', 'measure-object']);
+const READ_ONLY_GIT = new Set(['log', 'show', 'diff', 'status', 'rev-parse', 'ls-files', 'blame', 'grep', 'cat-file']);
+// Splits a command into simple commands of words whose characters are marked quoted or unquoted; null when the
+// command cannot be classified safely. Besides backticks, substitutions, heredocs and unterminated quotes, it refuses
+// what Bash and PowerShell read differently or what runs a command inside an argument: a backslash before a quote
+// (a Bash escape, a PowerShell literal), typographic quotes and here-strings (PowerShell quotes), and an unquoted
+// `(` or `{` (PowerShell subexpressions and script blocks).
+function shellCommands(command) {
+  if (typeof command !== 'string' || /`|\$\(|<\(|>\(|<<|\\['"]|[‘-„]/.test(command)) return null;
+  const commands = [[]];
+  let word = null, quote = '';
+  const end = () => { if (word) commands.at(-1).push(word); word = null; };
+  for (let i = 0; i < command.length; i++) {
+    const ch = command[i];
+    if (quote) { if (ch === quote) quote = ''; else word.push({ ch, quoted: true }); continue; }
+    if (ch === "'" || ch === '"') {
+      if (word?.at(-1)?.ch === '@' && !word.at(-1).quoted) return null;
+      word ||= []; quote = ch; continue;
+    }
+    if (ch === '(' || ch === '{') return null;
+    // `&` directly after `>` or `<` belongs to the redirection (`2>&1`); every other `&` separates commands.
+    if (/[;|\r\n]/.test(ch) || (ch === '&' && !/[<>]/.test(command[i - 1] || ''))) { end(); commands.push([]); continue; }
+    if (ch === ' ' || ch === '\t') { end(); continue; }
+    // PowerShell also separates words at other whitespace (U+00A0, U+2028, …), which Bash keeps inside a word.
+    if (/\s/.test(ch)) return null;
+    (word ||= []).push({ ch, quoted: false });
+  }
+  if (quote) return null;
+  end();
+  return commands.filter(words => words.length).map(words => words.map(chars => ({ chars, text: chars.map(c => c.ch).join(''),
+    redirect: chars.some(c => !c.quoted && (c.ch === '>' || c.ch === '<')) })));
+}
+// Separates the arguments of a simple command from its redirections; returns the files its `>`/`>>` redirections
+// write (`>&1` duplicates a stream; `>&file` and `<>file` still write the file).
+function redirections(words) {
+  const args = [], targets = [];
+  for (let i = 0; i < words.length; i++) {
+    if (!words[i].redirect) { args.push(words[i].text); continue; }
+    let op = '', text = '';
+    const finish = target => { if (target && (op === 'write' || (op === 'dup' && !/^\d*-?$/.test(target)))) targets.push(target); };
+    const { chars } = words[i];
+    for (let j = 0; j < chars.length; j++) {
+      const { ch, quoted } = chars[j];
+      if (quoted || (ch !== '>' && ch !== '<')) { text += ch; continue; }
+      if (op) finish(text);
+      text = '';
+      if (ch === '<') op = 'read';
+      else if (chars[j + 1]?.ch === '&' && !chars[j + 1].quoted) { op = 'dup'; j++; }
+      else op = 'write';
+    }
+    if (text) finish(text);
+    else if (words[i + 1] && !words[i + 1].redirect) finish(words[++i].text);
+  }
+  return { args, targets };
+}
+const gitWriteOption = arg => {
+  const name = arg.split('=')[0];
+  return /^-[^-]*O/.test(arg) || (name.length > 2 && name.startsWith('--')
+    && ['--output', '--open-files-in-pager'].some(option => option.startsWith(name) || name.startsWith(option)));
+};
+function readOnlySimpleCommand(words) {
+  if (words[0].redirect) return false;
+  const [program, ...rest] = redirections(words).args;
+  const name = program.toLowerCase();
+  if (READ_ONLY_PROGRAMS.has(name)) return true;
+  // `--pre` and `--hostname-bin` make ripgrep run a program.
+  if (name === 'rg') return !rest.some(arg => arg.startsWith('--pre') || arg.startsWith('--hostname-bin'));
+  if (name === 'sed') return rest.length >= 3 && rest[0] === '-n' && /^[0-9]+(,([0-9]+|\$))?p$/.test(rest[1]) && rest.slice(2).every(arg => !arg.startsWith('-'));
+  if (name === 'git') return READ_ONLY_GIT.has(rest[0]) && !rest.some(gitWriteOption);
+  return false;
+}
+export function isReadOnlyShellCommand(command) {
+  const commands = shellCommands(command);
+  return Boolean(commands) && commands.every(readOnlySimpleCommand);
+}
+const PROJECT_FILE = /(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g;
+const PROJECT_FILE_SUFFIX = new RegExp(`${PROJECT_FILE.source}$`);
 // Shell writes the PreToolUse guard recognizes: write cmdlets/APIs naming a project path, and output redirection.
 export function shellWriteTargets(root, command) {
+  if (isReadOnlyShellCommand(command)) {
+    // A target the hook cannot resolve itself (`$PWD/…`, `~/…`, a Git Bash `/c/…` path) also reports the project file
+    // path it ends with, which the write-word branch reported before Task 941.
+    return [...new Set(shellCommands(command).flatMap(words => redirections(words).targets).flatMap(target => {
+      const embedded = target.match(PROJECT_FILE_SUFFIX)?.[0];
+      return [projectPath(root, target), ...(embedded ? [projectPath(root, embedded.replaceAll('\\', '/'))] : [])];
+    }))];
+  }
   const files = [];
   if (/\b(?:Set-Content|Add-Content|Out-File|apply_patch|writeFileSync|write_text|writeFile)\b/i.test(command)) {
-    files.push(...[...command.matchAll(/(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g)].map(m => projectPath(root, m[0].replaceAll('\\', '/'))));
+    files.push(...[...command.matchAll(PROJECT_FILE)].map(m => projectPath(root, m[0].replaceAll('\\', '/'))));
   }
   // Redirection writes its target, not every source filename mentioned by a read/test command.
   for (const match of command.matchAll(/(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g)) {

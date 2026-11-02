@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
+  "cases": [
+    {
+      "id": "GOV-941-HOOK-WRITE-DENY",
+      "testName": "[GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "artifact": "docs/sessions/evidence/task941/sensitivity/GOV-941-HOOK-WRITE-DENY.txt",
+      "artifactSha256": "666e6876a6bcefb5569241e92b516ba13aef851192deb4b3394545f799779a48"
+    }
+  ]
+}

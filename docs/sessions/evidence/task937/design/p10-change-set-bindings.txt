@@ -1,0 +1,25 @@
+Task 937 revision 2 design probe (Opus, native Windows, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, Task 931 revision 3 sidecar saved, 2026-11-02)
+Command: node docs/sessions/evidence/task937/design/p10-change-set-bindings.mjs
+937 change set 12 files; runtime files in it 0
+tasks/Archive/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [product, reviewed]
+  scopes written contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json [governance, reviewed]
+  scopes written contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+tasks/Sprints/Sprint_78_kickoff_prompt_Task_926_Company_Created_In_The_Cabinet.security.json [product, planned]
+  binds scope src/modules/cabinet/actions/index.ts
+tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json [product, reviewed]
+  binds scope src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+  binds scope src/components/shared/Map.module.css
+  binds scope src/design-system/mantine/input-chrome.css
+  binds scope src/modules/cabinet/components/CabinetEmailChangeSectionView.tsx
+  binds scope src/modules/cabinet/actions/index.ts
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json [product, reviewed]
+  binds scope src/modules/cabinet/actions/index.ts
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [product, reviewed]
+  binds scope src/modules/cabinet/actions/index.ts
+tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [product, planned]
+  scopes written contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json
+exit=0
+Reading: the archived Task 931 pair is retired by Task 931 revision 3 R13 before Task 937 starts, and the revision 3 sidecar
+(planned here, reviewed by then) takes its place as a scope owner of the 923 D8/D9 contract file. `index.ts` is edited by Task 937
+only for planted break P2/P3 and restored byte-for-byte, so no digest of the four contracts that scope it changes.

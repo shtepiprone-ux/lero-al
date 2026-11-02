@@ -1,0 +1,16 @@
+Task 931 revision 3 design probe, second invocation (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02, right after d18)
+Command: node docs/sessions/evidence/task931/design/d17-busy-pool-run.mjs 2
+idle run 1: exit 0; preload marks 0; total 122 passed 122 failed 0
+idle run 2: exit 0; preload marks 0; total 122 passed 122 failed 0
+busy run 1: exit 1; preload marks 8; total 122 passed 100 failed 22
+    googlePopup.test.ts: the same 8 tests as in d17-busy-pool-run.txt
+    AuthSheet.google.security.test.tsx: SEC-927-FE-ALLOW, SEC-927-FE-DENY-REDIRECT, SEC-927-FE-DENY-BANNED, SEC-927-FE-DENY-REPLAY, SEC-927-FE-ERR-NOLEAK, SEC-927-FE-ERR-POPUP, SEC-927-FE-ERR-POPUP-TIMEOUT, "a window the person closed ends the attempt without a notice, and the button works again", SEC-927-FE-POPUP-SYNC-OPEN
+    ProfileTab.googleReauth.security.test.tsx: SEC-927-FE-REAUTH-ALLOW, -DENY-ACCOUNT, -DENY-SWITCH, -ERR, -ONE-CONFIG
+busy run 2: exit 1; preload marks 8; total 122 passed 105 failed 17
+    googlePopup.test.ts: the same 8 tests
+    AuthSheet.google.security.test.tsx: SEC-927-FE-ALLOW, SEC-927-FE-DENY-REDIRECT, SEC-927-FE-DENY-BANNED, SEC-927-FE-DENY-REPLAY
+    ProfileTab.googleReauth.security.test.tsx: the same 5 tests
+exit=0
+Reading: idle the five files always pass; under the busy pool 17 to 28 of 122 fail in four runs (d17 and this file). googlePopup and
+ProfileTab fail the same tests every time; the AuthSheet and Header failures vary with timing, so a single busy run can pass a file
+that is still defective. The revision 3 acceptance therefore needs repeated busy runs (two by the executor, two by the reviewer).

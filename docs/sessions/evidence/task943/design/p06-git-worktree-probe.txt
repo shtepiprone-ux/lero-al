@@ -1,0 +1,14 @@
+Task 943 revision 1 self-audit probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02)
+Command: node docs/sessions/evidence/task943/design/p06-git-worktree-probe.mjs 2>$null
+project root, rev-parse --is-inside-work-tree: exit 0: true
+project root, cat-file -e HEAD:<tracked 943 sidecar>: exit 0: (no output)
+project root, cat-file -e HEAD:<untracked path>: exit 128: fatal: path 'tasks/Sprints/not_a_real.security.json' does not exist in 'HEAD'
+plain tmp folder, rev-parse --is-inside-work-tree: exit 128: fatal: not a git repository (or any of the parent directories): .git
+missing binary: spawn error ENOENT
+git with an empty PATH: spawn error ENOENT
+fixture repo, tracked a: exit 0: (no output)
+fixture repo, untracked b: exit 128: fatal: path 'tasks/b.security.json' exists on disk, but not in 'HEAD'
+exit=0
+Conclusion for R8: a tracked contract (exit 0), an untracked contract (exit 128) and a missing Git (ENOENT, also with an empty
+PATH) are distinguishable without parsing stderr; the plain temporary folder of the Task 940 self-tests has no `.git`, so the R8
+tracked check does not apply there and GOV-940-HOOK-EXEMPT-ALLOW stays unchanged.

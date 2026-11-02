@@ -1,0 +1,32 @@
+Task 931 revision 3 self-audit probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02)
+Command: node docs/sessions/evidence/task931/design/d13-stale-cause.mjs tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+  review digest recorded in: d8a07a3c7 2026-10-30 docs(Task923, Task927): Reviews and revisions to Review 67, squashed; closing evidence only, no screenshots
+  changed: .claude/rules/shared/git-publication.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/security-testing.md
+    94288edbb governance(Task935): governance contracts, independent approval hook, CI policy
+  changed: .claude/rules/shared/workflow-ci.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-contract.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-evidence.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-gates.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json
+  review digest recorded in: d8a07a3c7 2026-10-30 docs(Task923, Task927): Reviews and revisions to Review 67, squashed; closing evidence only, no screenshots
+  changed: .claude/rules/shared/git-publication.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/security-testing.md
+    94288edbb governance(Task935): governance contracts, independent approval hook, CI policy
+  changed: .claude/rules/shared/workflow-ci.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-contract.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-evidence.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+  changed: .claude/rules/shared/workflow-gates.md
+    23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+exit=0
+Read-only Git, same session: `git merge-base --is-ancestor 23206fb7f origin/main` and the same for 94288edbb both exit non-zero (both commits are on the PR #12 branch only); origin/main is d8a07a3c7. The Task 935 approver wrote a rules rebase for the 923 D8/D9 contract only (`docs/sessions/evidence/task935/review/rules-rebase-923.md`), not for these two.

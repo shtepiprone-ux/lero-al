@@ -1,0 +1,11 @@
+Task 931 revision 3 / Task 943 revision 1 bindings probe (Opus, native Windows PowerShell 5.1, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02)
+Command: node docs/sessions/evidence/task931/design/d10-inputs-rules-impact.mjs
+case-test files of Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json [reviewed]: 7
+case-test files of Sprint_78_Task_923_security_record_D8_D9.security.json [reviewed]: 40
+case-test files of Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json [reviewed]: 5
+case-test files of Sprint_78_Task_923_security_record_owner_fixes.security.json [reviewed]: 10
+bindings: {"scope":111,"inputs":0,"rules":0,"caseTest":62} over 94 files and 18 contracts
+exit=0
+No `INPUTS`/`RULES` line was printed, so no changed file is an `inputs` or expanded `rules` binding of any contract. The
+case-test bindings of 923 D8/D9, 923 owner fixes and 927 are repaired only by D12 `tests` rebase entries (Task 943 R7); the
+5 of 931 are re-reviewed with revision 3.

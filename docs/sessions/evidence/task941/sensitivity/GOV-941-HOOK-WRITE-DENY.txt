@@ -1,0 +1,81 @@
+# Sensitivity proof GOV-941-HOOK-WRITE-DENY (Task 941, Opus governance implementer, 2026-11-02, node v22.22.3, native Windows 11)
+
+Break: classify only the first simple command, ignoring the separators of R1 (b) (AC2)
+File: scripts/workflow-gates/security-hook.mjs (sha256 before the break and after the restore: 86d020c1003e3b4d620b20d69fe58f6d3dec65c785c03d95af5111248ee16748)
+Test file: scripts/workflow-gates/shell-write.selftest.mjs (sha256 da933712bec279bcc6359757d6c1fe90ef376e6c42896a99d3b716afae86598d, unchanged for all three runs)
+Original line:
+  return Boolean(commands) && commands.every(readOnlySimpleCommand);
+Mutant line as applied with the Edit tool (grep -n of the mutated file):
+185:  return Boolean(commands) && commands.slice(0, 1).every(readOnlySimpleCommand); // SENSITIVITY BREAK
+
+Command (each run): node --test --test-reporter=tap --test-name-pattern="GOV-941-HOOK-WRITE-DENY" scripts/workflow-gates/shell-write.selftest.mjs
+
+## Baseline (before the break)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.9278
+exit=0
+
+## Mutant (break applied)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+not ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-write.selftest.mjs:62:1'
+  failureType: 'testCodeFailure'
+  error: `grep -n 'writeFileSync' scripts/workflow-gates/reader.mjs; node -e "require('fs').writeFileSync('scripts/workflow-gates/example.mjs', 'x')": []`
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    <repo>/scripts/workflow-gates/shell-write.selftest.mjs:84:12
+    withRoot (<repo>/scripts/workflow-gates/shell-write.selftest.mjs:17:16)
+    TestContext.<anonymous> (<repo>/scripts/workflow-gates/shell-write.selftest.mjs:62:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.9548
+exit=1
+
+## Restored (break removed with the Edit tool)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90.2242
+exit=0

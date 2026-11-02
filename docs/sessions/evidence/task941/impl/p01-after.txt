@@ -1,0 +1,19 @@
+platform win32; node v22.22.3; root C:\Claude_Code_Projects\lero-al
+read-only grep (this session, turn 1) | targets []
+read-only grep + sed -n (Task 940 approver session) | targets []
+read-only PowerShell Select-String | targets []
+read-only grep naming a product path (designer session, refused as ORCHESTRATOR BOUNDARY) | targets []
+write: Set-Content | targets ["scripts/workflow-gates/cli.mjs"]
+write: node -e writeFileSync | targets ["scripts/workflow-gates/cli.mjs"]
+write: redirection | targets ["scripts/workflow-gates/cli.mjs"]
+write: grep redirected into a scope file | targets ["scripts/workflow-gates/publication.json"]
+governanceIndependenceErrors(940 contract, transcript with only the read-only command) | []
+
+# Run note (Task 941 implementer, Opus, 2026-11-02; lines 1-10 above are the unmodified probe output on the final candidate)
+# The design probe as saved exits 1 with ENOENT: its CONTRACT constant names tasks/Sprints/...Task_940...security.json, which was
+# archived to tasks/Archive/ after the probe ran (commit 01b8259fa). On success it would also overwrite the design artifact
+# docs/sessions/evidence/task941/design/p01-false-positive-probe.txt. This run evaluates the saved probe source with exactly two
+# substitutions, each asserted unique before the run: the Task 940 path prefix tasks/Sprints/ -> tasks/Archive/, and removal of
+# its writeFileSync line (stdout was redirected here instead); import.meta.url is bound to the probe file URL.
+# Line 9 differs from the design run: grep ... > publication.json is read-only under R1, so under R2 only its redirection
+# target publication.json is reported (the real write stays detected; the read cli.mjs and the bogus publication.js are gone).

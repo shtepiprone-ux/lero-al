@@ -1,0 +1,20 @@
+﻿REPORTED :: cp -t scripts/workflow-gates docs/fixture-scope.mjs
+REPORTED :: mv -t scripts/workflow-gates docs/fixture-scope.mjs
+MISSED   :: echo 'scripts/workflow-gates/*.mjs'; rm scripts/workflow-gates/*.mjs; echo '
+MISSED   :: if true; then rm scripts/workflow-gates/fixture-scope.mjs; fi
+MISSED   :: if true; then echo; else rm scripts/workflow-gates/fixture-scope.mjs; fi
+MISSED   :: for f in a; do rm scripts/workflow-gates/fixture-scope.mjs; done
+MISSED   :: until true; do cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs; done
+MISSED   :: if true; then cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs; fi
+REPORTED :: case a in a) rm scripts/workflow-gates/fixture-scope.mjs;; esac
+REPORTED :: true || { rm scripts/workflow-gates/fixture-scope.mjs; }
+MISSED   :: python -c "f = open('scripts/workflow-gates/fixture-scope.mjs', 'w'); f.write('x')"
+MISSED   :: python -c "with open('scripts/workflow-gates/fixture-scope.mjs', 'wb') as f: pass"
+MISSED   :: node -e "require('fs').open('scripts/workflow-gates/fixture-scope.mjs', 'w', () => 0)"
+MISSED   :: bash -lc 'cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs'
+MISSED   :: bash -c -- 'rm scripts/workflow-gates/fixture-scope.mjs'
+MISSED   :: sh -ec "rm scripts/workflow-gates/fixture-scope.mjs"
+executor [] :: if true; then rm package.json; fi
+executor [] :: python -c "open('package.json','w').write('{}')"
+executor [] :: bash -lc 'rm package.json'
+executor ["SECURITY TEST CONTRACT MISSING: load a valid saved task contract for these exact paths, then emit SECURITY TASK PREFLIGHT COMPLETE - contract: tasks/<kickoff basename>.security.json. No valid receipt: run `node scripts/workflow-gates/cli.mjs receipt --contract <path>` through the PowerShell tool for the current task."] :: for f in a; do echo x > package.json; done

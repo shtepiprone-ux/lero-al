@@ -1,0 +1,5 @@
+﻿tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json: entries 4; rebaseChainErrors []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json: entries 2; rebaseChainErrors []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: entries 2; rebaseChainErrors []
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: entries 1; rebaseChainErrors []
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: entries 1; rebaseChainErrors []

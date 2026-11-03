@@ -4,12 +4,21 @@ Sprint 92. P1. QA profile **Q1** (non-UI gate code and its tests, `docs/qa-profi
 owner's instruction to file a governance task so that deliberate breaks are made only on copies (D15), with the scope and placement
 the owner chose (D16, D17). D15 is a later explicit owner instruction for this subject; D13 (no new task) is not reopened for any
 other subject.
+**Revision 1, 2026-11-03**, by the Task 943 review 2 session (6f2564f3), at the owner's choice D18 (that session's 943 verdict
+was then withdrawn because the Stop hook's independence check counted its own commands as writes; a further fresh session
+approves 943): the shell write forms that review found missed by the 943 hook, which already existed before 943, are closed
+here in the same hook file instead of a new task or a new 943 revision (C58–C70): shell compound-command keywords, clustered
+nested-shell flags, `open(…, 'w')` and .NET create calls, `pathlib` and directory-delete calls, `xcopy`, `robocopy`, `rimraf`,
+`shx`, `perl -i`, `env -C`, and a glob of a parser-rejected command left unexpanded because the same text is quoted elsewhere.
+R8, R9, AC12, the case GOV-944-HOOK-SHELL-FORMS-DENY, C58–C70 and D18 are added; sections 1, 2, 4, 5, the security contract, the
+route, the completion report and AC10 are amended.
 
 ## 1. Mode, task type and rule bundle
 
 Governance task. **Implementer: Opus, in a fresh implementation session started for this task (D1); Sonnet does not execute it**,
 because every executor path in scope is a policy path (C31). **Approver: Opus, in another fresh session that wrote none of the scope
-files (D2).** Neither may be the session that designed this kickoff (session 3d40df28). Types (`docs/rule-index.md`): workflow
+files (D2).** Neither may be the session that designed this kickoff (session 3d40df28) or the session that wrote revision 1
+(session 6f2564f3, the Task 943 review 2 session). Types (`docs/rule-index.md`): workflow
 gates / governance tooling. Bundle: `.claude/rules/shared/workflow-gates.md` with `workflow-contract.md`, `workflow-evidence.md`,
 `workflow-ci.md`, `git-publication.md`; `security-testing.md`; `security-test-quality.md`; `role-boundaries.md`;
 `claim-evidence-contract.md`; `task-readiness.md`; `orchestration-state.md`; `.claude/rules/review/02-adversarial-ui.md`;
@@ -26,7 +35,9 @@ outside terminal. The rule already asks for a disposable copy or an in-memory in
 After this task: (1) `cli.mjs sensitivity` makes a break only in the memory of the test process and records it (D16); (2) a
 governance sensitivity record not made that way is refused, except in the four contracts that predate the command (D16); (3) the
 pre-write guard refuses an Edit or Write that would leave a module loaded by a hook unparseable or unable to load (D16; a
-missing imported file or a removed export kills the hook the same way, C52, C53).
+missing imported file or a removed export kills the hook the same way, C52, C53); (4) revision 1 (D18): the shell write forms of
+R8, which the reviewed 943 hook reports nothing for (C58–C66, C68) although an executor `if true; then rm package.json; fi` changes a
+product file unrefused (C67), are reported, so the independence check counts them and the pre-write guard decides on them.
 
 ## 3. Verified context
 
@@ -115,6 +126,19 @@ the project may be created (C40), which the in-memory method respects. Task 942'
 | C55 | FACT | The same link refuses the removed export (executed, self-audit 2). | source: `docs/sessions/evidence/task944/design/p11-link-run.txt:7-7`; observed: `does not provide an export named 'isEvidencePath'` |
 | C56 | FACT | The live hook graph links without evaluation (executed, self-audit 2). | source: `docs/sessions/evidence/task944/design/p11-link-run.txt:5-5`; observed: `B0 link, live graph: linked` |
 | C57 | FACT | The hook-loaded modules import no bare package specifier (executed, self-audit 2). | source: `docs/sessions/evidence/task944/design/p12-bare-specifiers.txt:3-3`; observed: `other specifiers: 0` |
+| C58 | FACT | The reviewed 943 hook reports nothing for a write after the shell keyword `then` (executed, revision 1). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:2-2`; observed: `(reviewed hook misses): if true; then rm` |
+| C59 | FACT | The reviewed 943 hook reports nothing for a write after the shell keyword `do` (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:5-5`; observed: `(reviewed hook misses): for f in a; do rm` |
+| C60 | FACT | The reviewed 943 hook reports nothing for a nested shell with a clustered `-lc` flag (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:9-9`; observed: `(reviewed hook misses): bash -lc 'rm` |
+| C61 | FACT | The reviewed 943 hook reports nothing for a Python `open` with a write mode (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:13-13`; observed: `(reviewed hook misses): python -c "open('scripts/workflow-gates/fixture-scope.mjs','w')` |
+| C62 | FACT | The reviewed 943 hook reports nothing for a .NET `File]::Create` call (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:18-18`; observed: `[IO.File]::Create('scripts/workflow-gates/fixture-scope.mjs')` |
+| C63 | FACT | The reviewed 943 hook reports nothing for a `pathlib` `unlink` (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:20-20`; observed: `Path('scripts/workflow-gates/fixture-scope.mjs').unlink()` |
+| C64 | FACT | The reviewed 943 hook reports no file under a directory deleted by `shutil.rmtree` (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:23-23`; observed: `(reviewed hook misses): python -c "import shutil; shutil.rmtree('scripts/workflow-gates')"` |
+| C65 | FACT | The reviewed 943 hook reports nothing for `xcopy` and `robocopy` writes (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:27-30`; observed: `robocopy docs/src scripts/workflow-gates /MIR` |
+| C66 | FACT | The reviewed 943 hook reports nothing for `rimraf`, `shx`, `perl -i` and `env -C` writes (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:31-40`; observed: `(reviewed hook misses): env -C scripts/workflow-gates rm fixture-scope.mjs` |
+| C67 | FACT | The reviewed 943 pre-write guard allows an executor `rm package.json` after `then` (executed in the Task 943 review 2). | source: `docs/sessions/evidence/task943/review/r2-adv2.txt:17-17`; observed: `executor [] :: if true; then rm package.json; fi` |
+| C68 | FACT | A glob of a parser-rejected command is not expanded when the same text is quoted elsewhere in it (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:41-41`; observed: `(reviewed hook misses): echo 'scripts/workflow-gates/*.mjs'; rm scripts/workflow-gates/*.mjs` |
+| C69 | FACT | A prototype of R8 on a copy of the reviewed hook reports every R8 form, refuses each executor form, keeps the controls silent and passes the seven hook-importing self-tests unchanged (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:100-113`; observed: `FAILURES 0` |
+| C70 | FACT | Over the frozen 2318-command corpus the prototype drops no target and adds no guarded target, executor refusal or governance scope file (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:108-108`; observed: `drops 0; with added targets 2; with an added guarded target 0; executor commands newly refused 0; with an added governance scope file 0` |
 | D1 | OWNER DECISION | Governance tasks are implemented by Opus in a separate session. | owner: 2026-11-01; decision: `Opus, a separate session (Recommended)` |
 | D2 | OWNER DECISION | Approval independence is enforced by the hook. | owner: 2026-11-01; decision: `Yes, the hook blocks (Recommended)` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12, merged once all checks are green. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
@@ -124,6 +148,7 @@ the project may be created (C40), which the in-memory method respects. Task 942'
 | D15 | OWNER DECISION | File a governance task: deliberate breaks are made only on copies. | owner: 2026-11-03; decision: `file a governance task about deliberate breaks only on copies` |
 | D16 | OWNER DECISION | Scope: the in-memory runner, the rule and record check, and the pre-write syntax guard for hook-loaded modules. | owner: 2026-11-03; decision: `Runner + guard (Recommended)` |
 | D17 | OWNER DECISION | Placement: Sprint 92, committed on PR #12's branch after Task 943 is reviewed and committed and before Task 942. | owner: 2026-11-03; decision: `Sprint 92, after 943 (Recommended)` |
+| D18 | OWNER DECISION | Task 943 is approved now, and the shell write forms its review 2 found are written as requirements of Task 944, not as a 943 revision. | owner: 2026-11-03; decision: `Approve 943, forms into 944` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -141,6 +166,8 @@ fields of this task's `.security.json`, and the evidence files `docs/sessions/ev
 `docs/sessions/evidence/task944/impl/real-repo-guard.txt`, `docs/sessions/evidence/task944/sensitivity/sensitivity.json`, and for
 each critical case `<id>` of GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY and GOV-944-HOOK-SYNTAX-DENY the break spec
 `docs/sessions/evidence/task944/sensitivity/<id>.break.json` and the artifact `docs/sessions/evidence/task944/sensitivity/<id>.txt`.
+Revision 1 (R8, R9): `security-hook.mjs` (already in scope), new `scripts/workflow-gates/shell-forms.selftest.mjs` and its
+`publication.json` entry, and for the critical case GOV-944-HOOK-SHELL-FORMS-DENY its break spec and artifact under the same names.
 Written by the approver only (R7): `scope` entries in the `review.rebases` of the 935, 940, 941 and 943 contracts with evidence
 `docs/sessions/evidence/task944/review/scope-rebase-935.md`, `…/scope-rebase-940.md`, `…/scope-rebase-941.md` and
 `…/scope-rebase-943.md`.
@@ -150,7 +177,9 @@ Out of scope: product code; every existing self-test file (each must pass unchan
 contract that reads them); the PowerShell hooks; Bash and PowerShell writes to a hook-loaded module (the shell guard cannot know the
 resulting text; R3 covers Edit and Write); the sensitivity method of product contracts; the sensitivity records of the four legacy
 contracts (935, 940, 941, 943), which are not redone; Task 942's own implementation (its route is revised in this design session,
-D14, section 6 step 0).
+D14, section 6 step 0). Revision 1: the write forms that Task 943 section 4 leaves undetected stay undetected (a path in a
+variable, a script file run by an interpreter, `-EncodedCommand`, a folder change through a variable, `-`, `~` or `popd`), and
+`isReadOnlyShellCommand` (Task 941) is unchanged.
 
 ## 5. Current and required behaviour
 
@@ -158,7 +187,8 @@ Preserved: every existing self-test and its expectations; the five result fields
 contracts' records; every pre-write decision for a write that does not touch a hook-loaded module or that parses; the guard's
 fail-closed catch. Changed: a command produces sensitivity evidence without touching the live tree; a non-legacy governance report
 refuses a record that the command did not make; an Edit or Write whose result does not parse is refused when the file is loaded by a
-hook.
+hook. Revision 1: every target the reviewed 943 hook reports stays reported (C70); the R8 forms add their targets, so the
+independence check counts them and the pre-write guard decides on them as on any other shell target.
 
 ## Requirements
 
@@ -171,6 +201,8 @@ hook.
 | R5 [C27; C28; C29; C30; C31] | **Proof files.** The eight GOV-944 cases live in the new `sensitivity.selftest.mjs` (AC1–AC4) and `hook-syntax.selftest.mjs` (AC5–AC7); the two new tests, `sensitivity-register.mjs`, `sensitivity-hooks.mjs` and `hook-load-check.mjs` are listed in `publication.json`; no existing self-test file changes. Fixtures are temporary folders from `mkdtempSync`. | P1 | AC10 |
 | R6 [C12; C17; D15; D16] | **Own sensitivity through the runner.** The records of the three critical cases are produced only by `cli.mjs sensitivity` with the break specs named in section 4; this task is not legacy, so R2 applies to its own report. | P1 | AC9 |
 | R7 [C33; C34; C35; C36; D7; D9] | **Rebases (approver).** After approving 944, the approver appends a `scope` entry by 944's contract to the `review.rebases` of the 935, 940, 941 and 943 contracts, each with `## Changed scope files` evidence listing the files of this task's diff that the rebased contract scopes (for 935, 940 and 943: `scripts/workflow-gates/security-hook.mjs`, `scripts/workflow-gates/contract.mjs`, `scripts/workflow-gates/cli.mjs`, `scripts/workflow-gates/publication.json`; for 941: the first and the last), and recomputes nothing else in them. | P1 | AC11 |
+| R8 [C58; C59; C60; C61; C62; C63; C64; C65; C66; C67; C68; C69; C70; D13; D18] | **Shell write forms (revision 1).** `shellWriteTargets` in `security-hook.mjs` (Task 943 section 5, R12–R15 terms) also reports: (a) after the shell reserved words `if`, `then`, `else`, `elif`, `do`, `while`, `until` and `!` (case-sensitive, no options), which are skipped before the program like `sudo`, and before a folder-change program of R12 (c), in parsed commands and in the lenient reading of R13 (e); `shx` is skipped like `npx`; for `env`, the values of `--chdir`, `--unset` and `--split-string` are skipped like those of `-C`, `-u` and `-S`, and `-C <folder>`, `-C<folder>`, `--chdir <folder>` or `--chdir=<folder>` resolves the program's targets in that folder, resolved from the current folder as in R12 (c) (C58, C59, C66, C67); (b) for `bash`, `sh`, `zsh` and `dash`, a single-dash option word made only of letters that contains `c` (`-lc`, `-ec`, `-xc`) is the text flag of R13 (b), and a `--` right after the text flag is skipped; the flags of `cmd`, `powershell` and `pwsh` are unchanged, so `-ExecutionPolicy` is no text flag (C60); (c) W3 literal path arguments of: `open(` or `openSync(` with a quoted mode or flags (also as `mode=`/`flags=`) containing `w`, `a`, `x` or `+`, never a read mode or no mode; `]::Create(`, `]::OpenWrite(`, `]::CreateText(` and `]::AppendText(`; `Path('…')` followed by `.unlink()`, `.touch()`, `.open('<write mode>')`, `.rename('…')` or `.replace('…')` (both paths); and `rmSync`, `rmdirSync` and, after the R14 (c) qualifier, `rm`, `rmdir`, `rmtree` and `Delete`, whose literal path also adds every file under it when it names a project directory (the 943 section 5 walk) (C61–C64); (d) the programs `xcopy` (a copy program whose `/<letters or digits>[:value]` switch words are dropped; targets: the destination, the destination plus the source name, and every file under a source directory mapped into both), `robocopy <source> <destination> [names…]` (each name in the destination, otherwise every file under the source mapped into the destination; with `/MIR` or `/PURGE` also every file under the destination; with `/MOV` or `/MOVE` every file under the source), `rimraf` (a delete program) and `perl` with an in-place option (`-i`, `-i<suffix>`, in a cluster such as `-pi`), read like `sed` with `-e`/`-E` as script options and the letters `I`, `M`, `m`, `d`, `D`, `x` and `0` taking an attached value; `perl` with `-i` is a conditional R1 fallback word like `sed`, and `xcopy`, `robocopy` and `rimraf` are R1 fallback words (C65, C66); (e) in the lenient reading a word is literal, never glob-expanded, only when no occurrence of the same text in the command is unquoted (C68). Each addition is skipped when its target is already reported, so the result is a superset of the reviewed 943 result; `isReadOnlyShellCommand` is unchanged. Feasibility: `docs/sessions/evidence/task944/design/p14-shell-forms-run.mjs` applies `p14-shell-forms-pairs.json` to a copy of the reviewed hook (a design prototype to read, not code to paste): every form reports X, every executor form is refused, the controls report no X, the seven hook-importing self-tests pass unchanged (C69), and over the frozen corpus no target is dropped and no guarded target, executor refusal or governance scope file is added; the 5000-folder-change commands take 1937 ms and 7529 ms (C70). | P1 | AC12 |
+| R9 [C29; C30; C69] | **Proof of R8.** GOV-944-HOOK-SHELL-FORMS-DENY lives in the new `scripts/workflow-gates/shell-forms.selftest.mjs`, listed in `publication.json`; no existing self-test file changes, and every case of the reviewed 943 and 941 contracts still passes (C69). Its record is made by `cli.mjs sensitivity` (R6). | P1 | AC10, AC12 |
 
 ## Acceptance criteria
 
@@ -211,10 +243,10 @@ hook.
   writing, `evaluateHook` for a PreToolUse Edit of `scripts/workflow-gates/contract.mjs` with the incident's replacement (C6)
   returning `HOOK MODULE SYNTAX`, the same Edit with a `/* … */` break (C25) returning no `HOOK MODULE SYNTAX`, the two load-only
   variants of C52 and C53 returning `HOOK MODULE SYNTAX`, and the computed closure containing at least the 11 files of C23.
-- **AC9 [R6].** The three records in `docs/sessions/evidence/task944/sensitivity/sensitivity.json` have `method: 'in-memory'` and
+- **AC9 [R6].** The four records (three before revision 1) in `docs/sessions/evidence/task944/sensitivity/sensitivity.json` have `method: 'in-memory'` and
   current `breakSha256` and `artifactSha256`; `git grep -n "SENSITIVITY BREAK" -- scripts` prints nothing;
   `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` passes every case.
-- **AC10 [R4; R5].** `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 8 more passing tests than the base run
+- **AC10 [R4; R5; R9].** `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 9 more passing tests than the base run
   in `base-runs.txt`; `git diff --exit-code` on every self-test file that exists at the base; `node
   scripts/workflow-gates/check-workflow.mjs` exits 0; `node node_modules/eslint/bin/eslint.js --config
   scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` exits 0; `node scripts/workflow-gates/publication.mjs --base HEAD`
@@ -223,18 +255,44 @@ hook.
 - **AC11 [R7].** After the approver's rebases, the scoped harness of Task 940 AC7 (`validateDiff` and `changedFiles` from
   `scripts/workflow-gates/cli.mjs`, phase `release`, base `origin/main`, working tree) reports no error for the 935, 940, 941, 943
   and 944 contracts, and `reviewedFreshnessErrors` for that selection returns `[]`.
+- **AC12 [R8; R9].** GOV-944-HOOK-SHELL-FORMS-DENY passes on a fixture root with X a governance scope file
+  `scripts/workflow-gates/fixture-scope.mjs`, D its folder and N its file name: `if true; then rm X; fi`,
+  `if true; then echo; else rm X; fi`, `if false; then :; elif true; then cp Y X; fi`, `for f in a; do rm X; done`,
+  `while false; do rm X; done`, `until true; do cp Y X; done`, `if true; then cd D; rm N; fi`, `bash -lc 'rm X'`,
+  `bash -ec 'cp Y X'`, `sh -xc "rm X"`, `bash -c -- 'rm X'`, `python -c "open('X','w').write('x')"`, `python3 -c "f = open('X', 'a')"`,
+  `python -c "with open('X', mode='wb') as f: pass"`, `node -e "require('fs').openSync('X','w')"`,
+  `node -e "require('fs').open('X', 'r+', () => 0)"`, `powershell -Command "[IO.File]::Create('X')"`,
+  `powershell -Command "[System.IO.File]::OpenWrite('X')"`, `python -c "from pathlib import Path; Path('X').unlink()"`,
+  `python -c "import pathlib; pathlib.Path('Y').rename('X')"`, `python -c "from pathlib import Path; Path('X').touch()"`,
+  `python -c "import shutil; shutil.rmtree('D')"`, `node -e "require('fs').rmSync('D', { recursive: true })"`,
+  `node -e "require('fs').rmdirSync('D', { recursive: true })"`, `powershell -Command "[IO.Directory]::Delete('D', $true)"`,
+  `xcopy Y X`, `xcopy Y D\ /Y` (backslash spelling), `robocopy <folder of Y> D N`, `robocopy <folder holding N> D /MIR`, `npx rimraf X`,
+  `rimraf D`, `npx shx rm X`, `npx shx cp Y X`, `perl -pi -e 's/a/b/' X`, `perl -i.bak -pe 's/a/b/' X`, `perl -pi -e 's/a/b/' X '`,
+  `env -C D rm N`, `env --chdir=D rm N`, `env --chdir D rm N` and `echo 'D/*.mjs'; rm D/*.mjs; echo '` (Y a fixture file named N
+  outside D) each report X and yield `GOVERNANCE INDEPENDENCE` for X, and each executor form with X replaced by
+  `scripts/check-example.mjs` (D by `scripts`) is refused with `POLICY-EDIT AUTHORITY REQUIRED` or `SECURITY TEST CONTRACT
+  MISSING`. Controls report no X: `if [ -f X ]; then cat X; fi`, `for f in X; do grep -n a X; done`, `bash -lc 'cat X'`,
+  `bash -ec 'cp X docs/z.mjs'`, `python -c "print(open('X').read())"`, `python -c "open('X', 'r')"`,
+  `python -c "open('X', encoding='utf8')"`, `node -e "require('fs').openSync('X','r')"`,
+  `powershell -Command "[IO.File]::ReadAllText('X')"`, `powershell -Command "[IO.Directory]::CreateDirectory('D/new')"`,
+  `xcopy X docs/z.mjs`, `robocopy D docs/out N`, `perl -ne 'print' X`, `perl -Ilib -e 'print 1' X`, `env -C docs cat N`,
+  `echo 'D/*.mjs'; echo '` and `grep -rn "then rm X" docs`. Sensitivity (through `cli.mjs sensitivity`, R6): a break spec that
+  stops the R8 (a) keyword skip fails GOV-944-HOOK-SHELL-FORMS-DENY with an assertion; restored passes (artifact
+  `GOV-944-HOOK-SHELL-FORMS-DENY.txt`). `node scripts/workflow-gates/selftests.mjs` shows every GOV-941 and GOV-943 case passing.
+  The Task 943 AC15 F8 commands (5000 folder changes, parsed and parser-rejected, `design/p14-shell-forms-run.mjs` section D) still
+  return within 15 s on the final hook from native Windows, each timing in the completion report (C70).
 
 ## Security test contract
 
 | Field | Content |
 |---|---|
 | Assets and boundaries | The pre-write guard and Stop gate (`evaluateHook` in `security-hook.mjs`, C1–C5, C42), its load checker (`hook-load-check.mjs`, R3) and every module a hook loads (C23); the governance report validator (`validateGovernanceReport`, C12) and its producer (`governanceReport`, C13); the new runner and loader (R1). Owner: Opus (D1). |
-| Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SYNTAX-ALLOW and GOV-944-HOOK-CLOSURE-ERROR on the real `evaluateHook` with fixture roots, plus the read-only real-repository probe of AC8. |
+| Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SYNTAX-ALLOW and GOV-944-HOOK-CLOSURE-ERROR on the real `evaluateHook` with fixture roots, plus the read-only real-repository probe of AC8; revision 1: GOV-944-HOOK-SHELL-FORMS-DENY on the real `shellWriteTargets`, `governanceIndependenceErrors` and `evaluateHook` with fixture roots and synthetic transcripts. |
 | Server security | The CI and validator layer replaces this row: GOV-944-VAL-RECORD-ALLOW and GOV-944-VAL-RECORD-DENY on the real `validateGovernanceReport` and `governanceReport`; GOV-944-SENS-RUN-ALLOW, GOV-944-SENS-RUN-DENY and GOV-944-SENS-LIVE-ERROR on the real `runSensitivity` with real child `node --test` processes. |
 | Database/integrations | Not applicable: no database, Storage, Realtime or provider path; no credentials. |
-| Cases | The eight GOV-944 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook, ci and validator layers. |
+| Cases | The nine GOV-944 cases of the sidecar (revision 1 adds GOV-944-HOOK-SHELL-FORMS-DENY) with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook, ci and validator layers. |
 | Fixtures and environment | Temporary folders from `mkdtempSync` with synthetic contracts, gate modules, selftests, settings and hook scripts; removed after each test; no writes in the repository except the R6 evidence; no network. |
-| Sensitivity proof | Critical cases GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY and GOV-944-HOOK-SYNTAX-DENY: the breaks named in AC2, AC4 and AC5, each as a break spec run by `cli.mjs sensitivity` (R6), never as an edit of a live file; baseline pass, mutant failing with `ERR_ASSERTION`, restored pass; artifacts under `docs/sessions/evidence/task944/sensitivity/`. |
+| Sensitivity proof | Critical cases GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY, GOV-944-HOOK-SYNTAX-DENY and (revision 1) GOV-944-HOOK-SHELL-FORMS-DENY: the breaks named in AC2, AC4, AC5 and AC12, each as a break spec run by `cli.mjs sensitivity` (R6), never as an edit of a live file; baseline pass, mutant failing with `ERR_ASSERTION`, restored pass; artifacts under `docs/sessions/evidence/task944/sensitivity/`. |
 | Execution | `node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json`, then `cli.mjs verify` on the same path; native Windows PowerShell 5.1 or Git Bash, Node 22.22.3; QA Q1. |
 
 ## 6. Ordered route
@@ -247,19 +305,22 @@ hook.
    prints nothing. Otherwise wait; do not mix two governance implementations in one working tree.
 3. **Opus implementer, fresh session** (D1): read this kickoff and its bundle; save the base runs of `node
    scripts/workflow-gates/selftests.mjs` and `npm run build` to `docs/sessions/evidence/task944/impl/base-runs.txt` before the first
-   write. Implement R1, R2, R3 with the eight cases (R5), then R4. Record `implementation: { "role": "Opus" }`, stage `implemented`,
-   `report` and `sensitivity` in the sidecar. Write the three break specs and run each with `node scripts/workflow-gates/cli.mjs
+   write. Implement R1, R2, R3 with the eight cases (R5), then R4, then (revision 1) R8 with its case (R9) through the Edit tool on
+   the hook (`design/p14-shell-forms-pairs.json` is a design prototype to read, not code to paste); the R3 guard then checks each
+   hook Edit. Record `implementation: { "role": "Opus" }`, stage `implemented`,
+   `report` and `sensitivity` in the sidecar. Write the four break specs and run each with `node scripts/workflow-gates/cli.mjs
    sensitivity --contract <this sidecar> --break <spec>` (R6); never plant a break by editing a file. Write AC8's probe output.
 4. Run `cli.mjs governance-report` and every AC command; write the completion report; end with
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the owner. No push.
-5. **Opus approver, another fresh session** (D2): review R1–R7; on approval write the `review` block and stage `reviewed`, write R7
+5. **Opus approver, another fresh session** (D2; not session 3d40df28 or 6f2564f3): review R1–R9; on approval write the `review` block and stage `reviewed`, write R7
    with its evidence, run AC11, and hand off the explicit-path commit and the push of the branch under `shared/git-publication.md`.
    PR #12 merges only after green PR checks (D7). Task 942 starts after this commit.
 
 ## 7. Completion report
 
-Per requirement: changed files, evidence path, status; each GOV-944 case with its result; the three break specs and the failed
-assertion of each mutant; base and final self-test totals; proof that no existing self-test file changed; the AC8 probe; one of
+Per requirement: changed files, evidence path, status; each GOV-944 case with its result; the four break specs and the failed
+assertion of each mutant; base and final self-test totals; proof that no existing self-test file changed; the AC8 probe; for R8
+each AC12 form with its result and the write forms that stay undetected; one of
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
 ## 8. Rule compliance

@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
-  "taskSha256": "952e9c6da647e48b10747937ca2d5ca9dc076b05b9f6ffa8811e829d588d775b",
+  "taskSha256": "39ef848c595b5b291563011170910a8a4e08df19160f2801f6ba74b5b0800236",
   "scope": [
     "scripts/workflow-gates/cli.mjs",
     "scripts/workflow-gates/contract.mjs",
@@ -192,7 +192,7 @@
       "invariant": "A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written",
       "actor": "Implementing session or Sonnet executor",
       "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
-      "input": "revision 1 (owner D18): the R8 forms of the kickoff with X a fixture governance scope file and D its folder, each also as an executor event with X replaced by scripts/check-example.mjs; read controls through the same programs and APIs",
+      "input": "revision 1 (owner D18): the R8 forms of the kickoff with X a fixture governance scope file and D its folder, each also as an executor event with X replaced by scripts/check-example.mjs; read controls through the same programs and APIs; revision 2: the require('fs').promises forms of R8 (f) and their read controls",
       "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls",
       "layer": "hook",
       "outcome": "deny",

@@ -1,0 +1,12 @@
+# Task 943 review 3 (session e50584bc): timing
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T18:38:08.903Z; 11424 ms
+command: node docs/sessions/evidence/task943/review/r2-timing.mjs C:\Claude_Code_Projects\lero-al
+exit 0
+
+## stdout
+F5 evaluateHook without a role: rm -rf docs: 165 ms | 1 results
+F5 evaluateHook without a role: cp -r docs backup/: 1186 ms | 0 results
+F8 shellWriteTargets parsed (48900 chars): 2130 ms | 2 results
+F8 shellWriteTargets parser-rejected (48901 chars): 7770 ms | 5001 results
+
+## stderr

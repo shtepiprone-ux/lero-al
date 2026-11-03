@@ -208,6 +208,14 @@
         "evidenceSha256": "58524009398521299541a33b7cc8b8062c70fd586ddd5bfbc28080b2df21fca7",
         "originalScopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
         "rebasedScopeSha256": "1c4379305cb8b87a53e17897e12454a3f5f906e083e9cb2204769d85b016a58f"
+      },
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json",
+        "evidence": "docs/sessions/evidence/task943/review/scope-rebase-940.md",
+        "evidenceSha256": "472ee2246f3019af1927212ccc936a97ed62be371d07db291497344e4d79d1e0",
+        "originalScopeSha256": "1c4379305cb8b87a53e17897e12454a3f5f906e083e9cb2204769d85b016a58f",
+        "rebasedScopeSha256": "2ca83fb4fbacc528048b4b62c1ba61ce062a7e15e7b3ddff833f0ede895afae4"
       }
     ]
   }

@@ -1,0 +1,21 @@
+# Task 943 review 3 (session e50584bc): adv
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T18:37:35.625Z; 71 ms
+command: node docs/sessions/evidence/task943/review/r1-adv-probe.mjs
+exit 0
+
+## stdout
+REPORTED | readOnly=false | sed "-i" 's/a/b/' scripts/workflow-gates/fixture-scope.mjs | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | sed "-i" 's/a/b/' scripts/workflow-gates/fixture-scope.mjs ' | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | sed '-i' 's/a/b/' scripts/workflow-gates/fixture-scope.mjs " | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | find scripts/workflow-gates/fixture-scope.mjs "-delete" ' | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | bash -c 'cp docs/y.mjs scripts/workflow-gates/fixture-scope.mjs' | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | bash -c "rm -f scripts/workflow-gates/fixture-scope.mjs" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | sh -c 'sed -i s/a/b/ scripts/workflow-gates/fixture-scope.mjs' | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | powershell -Command "Copy-Item docs/y.mjs scripts/workflow-gates/fixture-scope.mjs" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | powershell -NoProfile -Command "Remove-Item scripts/workflow-gates/fixture-scope.mjs" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | pwsh -c "Set-Content scripts/workflow-gates/fixture-scope.mjs x" | targets=["scripts/workflow-gates/fixture-scope.mjs","x"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | cmd /c "copy docs/y.mjs scripts/workflow-gates/fixture-scope.mjs" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | cmd /d /c "del scripts/workflow-gates/fixture-scope.mjs" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+REPORTED | readOnly=false | node -e "require('child_process').execSync('rm scripts/workflow-gates/fixture-scope.mjs')" | targets=["scripts/workflow-gates/fixture-scope.mjs"] | executor guard on check-example=["POLICY-EDIT AUTHORITY REQUIRED"]
+
+## stderr

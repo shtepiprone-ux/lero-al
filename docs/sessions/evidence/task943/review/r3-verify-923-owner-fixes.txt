@@ -1,0 +1,11 @@
+# Task 943 review 3 (session e50584bc): verify 923-owner-fixes
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T18:50:37.333Z; 16673 ms; development project identity from the .env.local Supabase URL (values not printed)
+command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json
+exit 0
+
+## stdout
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
+JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
+
+## stderr
+

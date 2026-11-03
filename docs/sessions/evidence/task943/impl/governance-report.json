@@ -1,8 +1,8 @@
 {
   "version": 1,
   "status": "passed",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
-  "contractSha256": "1a9948a71700ecd1a2284fba0bbdd9d6900d7d1dc514891f6aa863eefc70bcad",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
+  "contractSha256": "71686b6082e2a8e7847be1851fda46397ed406d53468e51ca96b503b79f27660",
   "scopeSha256": "b82dbac3822a5cf3bd165ac5de5e02c2fb4055dbae6e57b6f55dc89739eb755e",
   "node": "v22.22.3",
   "platform": "win32",

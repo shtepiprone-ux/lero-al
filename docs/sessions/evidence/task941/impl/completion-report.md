@@ -437,3 +437,164 @@ the 941 sidecar (stage, implementation), `docs/sessions/evidence/task941/impl/ba
 `…/sensitivity/sensitivity.json`, `…/sensitivity/GOV-941-HOOK-WRITE-DENY.txt`. `publication.json` is unchanged.
 
 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW
+
+Revision 1 status (commit `db04c936f`): implemented, awaiting review; review 2 found it `NEEDS REVISION`
+(`docs/sessions/evidence/task941/review-2/review-2.md`). Superseded by revision 2 below.
+
+---
+
+# Revision 2 — completion report (Opus governance implementer, fresh session, D1, 2026-11-03)
+
+Kickoff revision 2: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md`, task digest
+`ae702fea10f7c24b62399128991f6b99cd1019c1164e6d7cdaa43aa26802a41d` (`cli.mjs hash --task`, exit 0, equal to the sidecar `taskSha256`).
+Session: a fresh session; it designed neither the kickoff nor revision 1 nor revision 2 (the review 1 and review 2 sessions did) and
+did not implement Task 940; as an implementer of 941 it must not approve 941 (D2). Platform: native Windows 11, Windows PowerShell
+5.1.26100.9818, MSYS Bash 5.2.37 (Git for Windows), Node v22.22.3, cwd `C:\Claude_Code_Projects\lero-al`, branch
+`task/935-governance-approval-route`, HEAD `766bdb0183f5ba0aece40cefbd6f2ac4e4a1ae52`.
+
+## Prerequisite (route step 2, revision 2)
+
+`git status --short` of the kickoff, its sidecar, `docs/backlog.md`, `docs/sessions/evidence/task941` and `scripts/workflow-gates`
+printed nothing before the first write (exit 0; the revision 2 set is committed in `766bdb018`).
+
+## Revision 2 base run (before the first write)
+
+`docs/sessions/evidence/task941/impl/base-runs.txt`, heading `## Revision 2 base run`: `node scripts/workflow-gates/selftests.mjs`
+on HEAD `766bdb018` from Windows PowerShell 5.1: 178 pass, 0 fail, 0 skipped, exit 0 (as C89).
+
+## Requirements
+
+| R | Changed files | Status | Evidence |
+|---|---|---|---|
+| R1 (a) carriage return | `security-hook.mjs` `shellCommands`: the whole-string refusal also matches a carriage return not directly before a line feed (`\r(?!\n)`); a CR before LF still ends a command (separator, as before) | IMPLEMENTED, fail-closed interpretation N1 below | GOV-941-HOOK-MALFORMED-ERROR (three C73–C79 forms, a lone CR inside a double-quoted span, a trailing lone CR), GOV-941-HOOK-READONLY-ALLOW (CR LF between two read-only commands), GOV-941-HOOK-PRETOOL-DENY (C76) |
+| R1 (b) `cd`/`Set-Location` | `security-hook.mjs`: new `changesFolder` and the last line of `isReadOnlyShellCommand`: when a simple command's first word is `cd` or `Set-Location` (case-insensitive, as written and with each unquoted backslash dropped) and any simple command of the command has a `>`/`>>` target of R2 (`redirections(words).targets`), the command is not read-only | IMPLEMENTED | GOV-941-HOOK-MALFORMED-ERROR (both AC3 forms, `CD`, `set-location` after the redirected command, a redirected `cd` itself; inclusion of every pre-change target and X), GOV-941-HOOK-READONLY-ALLOW (`cd` without a redirection); a `cd` with only `2>&1` stays read-only with `[]` |
+| R1 (c)–(d), R2 | unchanged | IMPLEMENTED (unchanged since revision 1) | the existing assertions of the five cases pass unchanged |
+| R3 consumers | `git diff -U0` of the hook: four hunks at new lines 132–134, 136, 212–215, 218–219 (comment of `shellCommands`, its first line, `changesFolder`, `isReadOnlyShellCommand`); `shellWriteTargets`, `governanceIndependenceErrors` and the PreToolUse guard are unchanged | IMPLEMENTED | GOV-941-HOOK-PRETOOL-DENY; `diff-hook.selftest.mjs` and `governance-contract.selftest.mjs` pass unchanged |
+| R4 proof | `shell-write.selftest.mjs` (assertions added to cases 1, 3 and 4; no assertion removed or changed); `publication.json` unchanged (already lists the file, line 80) | IMPLEMENTED | `governance-report.json` (final run below) |
+| R5 rebases | none (approver only) | NOT WRITTEN BY DESIGN | — |
+
+Sidecar: stage `implemented`, `implementation.role` `Opus`; every planned field unchanged.
+
+Interpretation N1 (fail-closed, for the approver to confirm): R1 (a) states the carriage-return rule for the text outside
+single-quoted spans. The implementation refuses a lone carriage return anywhere in the command, also inside a single-quoted span,
+so the set of read-only commands only shrinks relative to the literal rule; no AC1 command contains one. Task 943's premise
+(C48: 943 builds on the set that 941 R1 (a) rejects, which revisions only widen) still holds.
+
+## Cases (five; final `governance-report` run below)
+
+| Case | Revision 2 assertions added |
+|---|---|
+| GOV-941-HOOK-READONLY-ALLOW | `cd scripts/workflow-gates; grep -n 'writeFileSync' cli.mjs` and `grep -n 'writeFileSync' scripts/workflow-gates/cli.mjs` + CR + LF + `sed -n '1,5p' scripts/workflow-gates/cli.mjs` give `true` and `[]`, and are part of the transcript whose `governanceIndependenceErrors` is `[]` |
+| GOV-941-HOOK-WRITE-DENY (critical) | none (AC2 is unchanged in revision 2) |
+| GOV-941-HOOK-MALFORMED-ERROR | `sed -n 1p X` + CR + `cat -i X writeFileSync`, `git log -1 --format=%H` + CR + `cat --output=X -S writeFileSync`, `grep -n 'a' Y` + CR + `cat X writeFileSync`, `grep -n "a` + CR + `b" Y writeFileSync X` and a trailing lone CR: `false`, targets equal to the pre-change copy, X included. `cd scripts/workflow-gates; grep -c writeFileSync X > security-hook.mjs`, `Set-Location scripts/workflow-gates; Select-String -Pattern 'writeFileSync' -Path X > security-hook.mjs`, `CD …`, `grep … >> security-hook.mjs; set-location …` and `cd … > security-hook.mjs; grep …`: `false`, every pre-change target included, X included. Control: `cd scripts/workflow-gates; grep -c writeFileSync X 2>&1` is `true` with `[]`; `sed -n '1,$p' Y` stays read-only (existing assertion) |
+| GOV-941-HOOK-PRETOOL-DENY | executor Bash event `sed -n 1p scripts/check-example.mjs` + CR + `cat -i scripts/check-example.mjs writeFileSync` returns `POLICY-EDIT AUTHORITY REQUIRED` |
+| GOV-941-CI-POLICY-DENY | none, unchanged |
+
+Run against the revision 1 candidate's hook (`git show HEAD:scripts/workflow-gates/security-hook.mjs` placed in a copy of
+`scripts/workflow-gates/` in the session scratchpad, outside the project), the amended test file passes cases 1, 2 and 5 and fails
+cases 3 and 4 (`not ok 3`, `not ok 4`): the new assertions test the revision 2 behaviour.
+
+## Sensitivity (critical case, two isolated breaks in one artifact)
+
+`docs/sessions/evidence/task941/sensitivity/GOV-941-HOOK-WRITE-DENY.txt`, gate digest `7a3330c3e7f7c8a86e09c7bca600b992d1648f48390a766957ed7e25fb97a65f`
+(`cli.mjs hash --task <artifact>`, the `digest` of `contract.mjs`) in `sensitivity.json`. The revision 2 pass is at the top; the revision 1 pass is kept below it unchanged as history. Hook sha256
+`436dc436e9da681dd9f6fdc324b4c704afa7c42cf60fe5c31f55d7fac7d8acd8` before break 1, after restore 1 and after restore 2; test file
+sha256 `e36fcdaf7bb3d244b62dcf88b1647ff69584fc3a4d2b5c8e8aca0a47c2ff26fe` unchanged in all five runs; each exit code is
+`$LASTEXITCODE` read directly after `node` in PowerShell.
+
+| Break (Edit tool, then restored with the Edit tool) | Mutant | Restored |
+|---|---|---|
+| 1: `commands.every(readOnlySimpleCommand)` → `commands.slice(0, 1).every(readOnlySimpleCommand)` (now inside the first `if` of `isReadOnlyShellCommand`) | `not ok 1`, `ERR_ASSERTION` on `grep -n 'a' scripts/workflow-gates/reader.mjs && Set-Content 'scripts/workflow-gates/example.mjs' 'x': []`, exit 1 | `ok 1`, exit 0 |
+| 2: `#` added to the R1 (a) allowlist `UNQUOTED_CHAR` | `not ok 1`, `ERR_ASSERTION` on the comment-hidden `cat scripts/workflow-gates/reader.mjs # '` + line feed + `echo x > scripts/workflow-gates/example.mjs # '`: `[]`, exit 1 | `ok 1`, exit 0 |
+
+## Review 1 probe (route step 3)
+
+From the project root in Windows PowerShell with `C:\Program Files\Git\bin` first on `PATH`:
+`node docs/sessions/evidence/task941/review-1/r1-bypass-probe.mjs 758508105`, exit 0, on the working tree. `readOnly=false` on all
+29 form lines F1–F9 (the same 29 identifiers as listed in the revision 1 section above), and on every line `after=` equals
+`before941=`. Header and two example lines:
+
+```text
+commit 758508105; node v22.22.3; platform win32
+bash GNU bash, version 5.2.37(1)-release (x86_64-pc-msys)
+F1-bash-line-comment-redirect | real bash: hidden write happened: true | readOnly=false | after=["scripts/workflow-gates/security-hook.mjs"] | before941=["scripts/workflow-gates/security-hook.mjs"] | executor PreToolUse=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+F9-ps-quoted-at-file-git-output | real powershell: hidden write happened: false | readOnly=false | after=[] | before941=[] | executor PreToolUse=[]
+```
+
+## Review 2 probe (route step 3)
+
+`node docs/sessions/evidence/task941/review-2/r2-probe.mjs` from the same root, exit 0. Classifier lines, verbatim:
+
+```text
+node v22.22.3; bash GNU bash, version 5.2.37(1)-release (x86_64-pc-msys)
+G1-cr-sed-in-place | readOnly=false | after=["scripts/workflow-gates/security-hook.mjs","scripts/workflow-gates/security-hook.mjs"] | before941=["scripts/workflow-gates/security-hook.mjs","scripts/workflow-gates/security-hook.mjs"] | independence=1 error(s) | executor PreToolUse(scripts/check-example.mjs)=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+G1-cr-git-output | readOnly=false | after=["scripts/workflow-gates/security-hook.mjs"] | before941=["scripts/workflow-gates/security-hook.mjs"] | independence=1 error(s) | executor PreToolUse(scripts/check-example.mjs)=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+G1-crlf-control | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs","scripts/workflow-gates/security-hook.mjs"] | independence=0 error(s) | executor PreToolUse(scripts/check-example.mjs)=[]
+G2-cd-redirect | readOnly=false | after=["scripts/workflow-gates/security-hook.mjs","security-hook.mjs"] | before941=["scripts/workflow-gates/security-hook.mjs","security-hook.mjs"] | independence=1 error(s) | executor PreToolUse(scripts/check-example.mjs)=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+G2-set-location-redirect | readOnly=false | after=["scripts/workflow-gates/security-hook.mjs","security-hook.mjs"] | before941=["scripts/workflow-gates/security-hook.mjs","security-hook.mjs"] | independence=1 error(s) | executor PreToolUse(scripts/check-example.mjs)=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+G2-cd-read-control | readOnly=true | after=[] | before941=["scripts/workflow-gates/security-hook.mjs"] | independence=0 error(s) | executor PreToolUse(scripts/check-example.mjs)=[]
+```
+
+`readOnly=false`, a non-empty executor PreToolUse result and `after=` equal to `before941=` on `G1-cr-sed-in-place`,
+`G1-cr-git-output`, `G2-cd-redirect` and `G2-set-location-redirect`; `readOnly=true` on `G1-crlf-control` and `G2-cd-read-control`.
+The real-shell lines of the same run (`G1-cr-sed-in-place | real bash: T after "one\n"`, `G1-cr-git-output | real bash: T after ""`,
+`G1-crlf-target-control | real bash: U exists=true; files=["U"]`, `G1-ps-lone-cr | real powershell: W exists=true`,
+`G2-cd-redirect | real bash: s/T after ""`, `G2-set-location-redirect | real powershell: s/T after ""`) reproduce C73, C78, C81,
+C82, C83 and C84.
+
+## p01 probe (AC1)
+
+`docs/sessions/evidence/task941/impl/p01-after.txt` (rewritten with a revision 2 run note): run with exactly the two substitutions
+stated in its run note, each asserted to occur once; lines 2–5 and 10 `[]`; lines 6–8 identical to the design run (diff exit 0);
+line 9 `["scripts/workflow-gates/publication.json"]`; lines 1–10 identical to the revision 1 run (diff exit 0).
+
+## AC commands (final candidate, hook sha256 `436dc436…`)
+
+| AC | Command | Result |
+|---|---|---|
+| AC4 | `git diff --exit-code` on every tracked `scripts/workflow-gates/*.selftest.mjs` except `shell-write.selftest.mjs` (12 files) | exit 0 |
+| AC5 | `node scripts/workflow-gates/selftests.mjs` | 178 pass (173 + 5), 0 fail, 0 skipped, exit 0 |
+| AC5 | `node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` | exit 0 |
+| AC5 | `node scripts/workflow-gates/check-workflow.mjs` | `Workflow structure and hook registration passed.`, exit 0 |
+| AC5 | `node scripts/workflow-gates/publication.mjs --base HEAD` | `83 explicit files, 0 dependency errors`, exit 0 |
+| AC5 | `cli.mjs governance-report`, `cli.mjs verify`, `npm run check:kickoff-evidence` | run after the last edit of this report; output in the implementer's final handoff; the approver reruns them |
+| AC6 | approver only | not run by the implementer |
+
+Not run (no revision 2 AC requires it): the revision 1 transcript replay (`test-results/task941-r1/qa-replay.mjs`). Revision 2
+only moves commands from the read-only branch to the unchanged pre-change branch, so it can only restore pre-941 targets
+(INFERENCE from R2); the review 2 rerun of that replay on revision 1 is `docs/sessions/evidence/task941/review-2/r2-qa-replay-rerun.txt`.
+Residual pre-941 limits, unchanged and out of scope (C91, C92): a glob, an 8.3 short name or a trailing dot in a redirection target.
+
+## Implementer self-check after the handoff (owner request, 2026-11-03)
+
+No defect found in the revision 2 candidate; nothing in the hook or the test file changed after the handoff. Checks:
+- Isolated mutations of each revision 2 protection, each on a copy of `scripts/workflow-gates/` in the session scratchpad (the
+  project hook untouched), running `node --test scripts/workflow-gates/shell-write.selftest.mjs` there. Every mutant is killed:
+  M1 lone carriage return allowed again (`|\r(?!\n)` removed): `not ok 3` MALFORMED-ERROR, `not ok 4` PRETOOL-DENY, exit 1;
+  M2 `cd` rule removed: `not ok 3`, exit 1; M3 `set-location` missing from the folder-change list: `not ok 3`, exit 1;
+  M4 folder-change name compared case-sensitively: `not ok 3`, exit 1; M5 only the first simple command checked for a folder
+  change: `not ok 3`, exit 1. Cases 1, 2 and 5 pass in all five mutants.
+- The review 1 probe claim is recomputed by script from the saved probe output: 29 form lines, 29 with `readOnly=false`, 29 with
+  `after=` equal to `before941=`.
+- Every revision 2 evidence file and both code files use LF only (no CRLF, no lone CR); `base-runs.txt` keeps its existing
+  leading BOM, and `git diff --numstat` shows 0 deleted lines in `base-runs.txt`, `completion-report.md` and the sensitivity
+  artifact (append only); the sensitivity artifact contains no BOM.
+- Limit, not a 941 defect (executed through the real working-tree hook): `cd scripts/workflow-gates; grep -c writeFileSync
+  cli.mjs > security-hook.mjs` is now not read-only, but the pre-change detection it falls back to reports only the root-level
+  `security-hook.mjs`, so `governanceIndependenceErrors` for a contract scoping `scripts/workflow-gates/security-hook.mjs` returns 0
+  errors; the same holds when the `cd` or `Set-Location` is a separate earlier tool call (the shell folder persists between
+  calls). 941 R2 requires the pre-change result for such commands and AC3 asserts inclusion only; Task 943 R12 (c) (folder
+  changes inside one command) and R12 (d) (the transcript entry's `cwd`) own both forms
+  (`tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md`, R12).
+
+## Final runs (revision 2)
+
+This report is in the contract's scope digest, so `cli.mjs governance-report`, `cli.mjs verify` and
+`npm run check:kickoff-evidence` run after its last edit.
+
+Changed files of revision 2: `scripts/workflow-gates/security-hook.mjs`, `scripts/workflow-gates/shell-write.selftest.mjs`,
+the 941 sidecar (stage, implementation), `docs/sessions/evidence/task941/impl/base-runs.txt` (appended),
+`…/impl/p01-after.txt`, `…/impl/completion-report.md` (appended), `…/impl/governance-report.json`,
+`…/sensitivity/sensitivity.json`, `…/sensitivity/GOV-941-HOOK-WRITE-DENY.txt`. `publication.json` is unchanged.
+
+IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW

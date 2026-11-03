@@ -2,8 +2,8 @@
   "version": 1,
   "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
-  "contractSha256": "c40abee1a4ed40c655f78502c9484be222016c18fb200096203245c0d6cb4faa",
-  "scopeSha256": "83bc6adc1286c2d203543a135518765e0c05c20cec5b7d460641180a068eb701",
+  "contractSha256": "7d7ababbad48e377285900f12d3af0d254ad4632360b5d2c96893229ea0118e3",
+  "scopeSha256": "3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [
@@ -26,7 +26,7 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task941/sensitivity/GOV-941-HOOK-WRITE-DENY.txt",
-        "artifactSha256": "cada94ad61a0adeca4e68119c6eba86f48c7b37cbd61d4b8117de5fd9d2c33dd"
+        "artifactSha256": "7a3330c3e7f7c8a86e09c7bca600b992d1648f48390a766957ed7e25fb97a65f"
       }
     },
     {

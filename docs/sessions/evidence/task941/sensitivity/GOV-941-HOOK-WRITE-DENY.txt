@@ -1,3 +1,154 @@
+# Sensitivity proof GOV-941-HOOK-WRITE-DENY (Task 941 revision 2, Opus governance implementer, fresh session, 2026-11-03, node v22.22.3, native Windows 11, Windows PowerShell 5.1)
+
+Two isolated breaks of AC2, each applied alone with the Edit tool and restored with the Edit tool before the next.
+File: scripts/workflow-gates/security-hook.mjs (sha256 before break 1, after restore 1 and after restore 2: 436dc436e9da681dd9f6fdc324b4c704afa7c42cf60fe5c31f55d7fac7d8acd8)
+Test file: scripts/workflow-gates/shell-write.selftest.mjs (sha256 e36fcdaf7bb3d244b62dcf88b1647ff69584fc3a4d2b5c8e8aca0a47c2ff26fe, unchanged for all five runs)
+Command (each run): node --test --test-reporter=tap --test-name-pattern="GOV-941-HOOK-WRITE-DENY" scripts/workflow-gates/shell-write.selftest.mjs
+exit= is $LASTEXITCODE read directly after node in PowerShell.
+
+## Baseline (before both breaks)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  duration_ms: 24.4495
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 88.9939
+exit=0
+
+## Break 1: classify only the first simple command, ignoring the separators of R1 (b)
+Original line:
+  if (!commands || !commands.every(readOnlySimpleCommand)) return false;
+Mutant line as applied with the Edit tool (Select-String of the mutated file):
+218:  if (!commands || !commands.slice(0, 1).every(readOnlySimpleCommand)) return false; // SENSITIVITY BREAK 1
+
+### Break 1 mutant
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+not ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  duration_ms: 10.5273
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-write.selftest.mjs:68:1'
+  failureType: 'testCodeFailure'
+  error: "grep -n 'a' scripts/workflow-gates/reader.mjs && Set-Content 'scripts/workflow-gates/example.mjs' 'x': []"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:93:12
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:17:16)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:68:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 74.6726
+exit=1
+
+### Break 1 restored (break removed with the Edit tool)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  duration_ms: 23.8686
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.634
+exit=0
+
+## Break 2: add # to the R1 (a) character allowlist
+Original line:
+  const UNQUOTED_CHAR = /[A-Za-z0-9 \t\r\n\-_./:=,+%~;|&<>*?[\]\\]/;
+Mutant line as applied with the Edit tool (Select-String of the mutated file):
+118:const UNQUOTED_CHAR = /[A-Za-z0-9 \t\r\n\-_./:=,+%~;|&<>*?[\]\\#]/; // SENSITIVITY BREAK 2
+
+### Break 2 mutant
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+not ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  duration_ms: 20.3472
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-write.selftest.mjs:68:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    cat scripts/workflow-gates/reader.mjs # '
+    echo x > scripts/workflow-gates/example.mjs # ': []
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:93:12
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:17:16)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-write.selftest.mjs:68:157)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 87.5714
+exit=1
+
+### Break 2 restored (break removed with the Edit tool)
+TAP version 13
+# Subtest: [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+ok 1 - [GOV-941-HOOK-WRITE-DENY] Every real shell write of a governance scope file is still counted, including one chained after a read-only command
+  ---
+  duration_ms: 23.1799
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 85.2168
+exit=0
+
+## Revision 1 pass (kept unchanged as history; superseded by the revision 2 pass above)
+
 # Sensitivity proof GOV-941-HOOK-WRITE-DENY (Task 941 revision 1, Opus governance implementer, fresh session, 2026-11-02, node v22.22.3, native Windows 11)
 
 Two isolated breaks of AC2, each applied alone with the Edit tool and restored with the Edit tool before the next.

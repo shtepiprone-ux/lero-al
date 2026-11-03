@@ -1,0 +1,7 @@
+﻿941 review digest equals the digest of the current tree: false
+digests: reviewed 3cf59b3205ba, intermediate 255b4de31313, current b3a71f4836c4
+rebaseChainErrors with scope then tests entry: []
+review scopeHashErrors: []
+report scopeHashErrors: []
+validateContract release: []
+control, one scope entry listing the case test: ["rebases: entry 1: scripts/workflow-gates/shell-write.selftest.mjs is a test file of a case of this contract; case tests are never rebased"]

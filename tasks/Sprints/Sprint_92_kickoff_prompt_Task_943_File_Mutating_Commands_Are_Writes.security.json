@@ -1,14 +1,11 @@
 {
   "version": 1,
-  "stage": "implemented",
-  "implementation": {
-    "role": "Opus"
-  },
-  "executionStatus": "blocked",
+  "stage": "planned",
+  "executionStatus": "ready",
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
-  "taskSha256": "0c338222de5eac16f9e05c94ec038679311ddb030a4055b13df5f3ca934e8399",
+  "taskSha256": "1b6dcea3a266221b98c7c08da799373735ab5dcce08753d611477048b48977f6",
   "scope": [
     "scripts/workflow-gates/security-hook.mjs",
     "scripts/workflow-gates/shell-mutation.selftest.mjs",
@@ -29,7 +26,9 @@
     "docs/sessions/evidence/task943/sensitivity/GOV-943-TESTS-REBASE-DENY.txt",
     "docs/sessions/evidence/task943/sensitivity/GOV-943-EXEMPT-UNTRACKED-DENY.txt",
     "docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt",
-    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-TARGET-SPELLING-DENY.txt"
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-TARGET-SPELLING-DENY.txt",
+    "scripts/workflow-gates/shell-write.selftest.mjs",
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-NESTED-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -45,7 +44,7 @@
       "invariant": "Reading a scope file as the source of a copy, link or redirection input is not a write of it",
       "actor": "Opus approver or any session copying a scope file elsewhere",
       "resource": "shellWriteTargets and governanceIndependenceErrors",
-      "input": "cp, Copy-Item, install, ln -s, dd if= and tee with a scope file only as the source; the Task 941 read-only commands",
+      "input": "cp, Copy-Item, install, ln -s, dd if= and tee with a scope file only as the source; the Task 941 read-only commands; revision 4: an executor node -e that only calls the string method replace on a product path, with shutil.copy and fs.rm literal paths as write controls; R15 controls: prettier --check, eslint without --fix, npm run, tar -t, a ForEach-Object that only reads, a quoted * in a sed script and npm install with an absolute --prefix outside the root; third self-audit controls: curl to stdout, scp to a remote host, npm pkg get and a child-process call that only runs git status",
       "response": "no scope file among the targets; governanceIndependenceErrors empty",
       "layer": "hook",
       "outcome": "allow",
@@ -63,7 +62,7 @@
       "invariant": "A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written",
       "actor": "Implementing session",
       "resource": "shellWriteTargets and governanceIndependenceErrors",
-      "input": "every program row of the kickoff table in Bash and PowerShell form, including a write chained after a read-only command",
+      "input": "every program row of the kickoff table in Bash and PowerShell form, including a write chained after a read-only command; revision 4 (R15): prettier --write, eslint --fix, npm install, tar -x -C, unzip -d, Expand-Archive and Export-Csv",
       "response": "the scope file among the targets and a GOVERNANCE INDEPENDENCE error for it",
       "layer": "hook",
       "outcome": "deny",
@@ -167,7 +166,7 @@
       "invariant": "A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it",
       "actor": "Implementing session or Sonnet executor",
       "resource": "shellWriteTargets, projectPath, governanceIndependenceErrors and evaluateHook PreToolUse",
-      "input": "revision 2: a redirection glob; cd, Set-Location and Push-Location before a relative write; a transcript tool_use entry and a PreToolUse event with a cwd below the root, and a transcript entry whose cwd is outside the root; Set-Content, Add-Content, Out-File and node -e writeFileSync naming a project-root product file, and node -e writeFileSync naming a bare scope file after cd; on win32 trailing dots and spaces, a folder with a trailing dot and an 8.3 short name in a redirection and a Write tool call; revision 3: a Bash >| redirection with and without a space, a 2 prefix or a quoted word, after cd, and inside .git with a target spelled as a read-only program name",
+      "input": "revision 2: a redirection glob; cd, Set-Location and Push-Location before a relative write; a transcript tool_use entry and a PreToolUse event with a cwd below the root, and a transcript entry whose cwd is outside the root; Set-Content, Add-Content, Out-File and node -e writeFileSync naming a project-root product file, and node -e writeFileSync naming a bare scope file after cd; on win32 trailing dots and spaces, a folder with a trailing dot and an 8.3 short name in a redirection and a Write tool call; revision 3: a Bash >| redirection with and without a space, a 2 prefix or a quoted word, after cd, and inside .git with a target spelled as a read-only program name; revision 4: an executor Write and Edit of a relative policy path with a cwd below the root, and the same Write with a cwd outside the root",
       "response": "the real file among the targets, GOVERNANCE INDEPENDENCE for a scope file, POLICY-EDIT AUTHORITY REQUIRED for a policy file, OWNER GIT REQUIRED for Git metadata and SECURITY TEST CONTRACT MISSING for a product file",
       "layer": "hook",
       "outcome": "deny",
@@ -179,6 +178,24 @@
       ],
       "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
       "testName": "[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it"
+    },
+    {
+      "id": "GOV-943-HOOK-NESTED-DENY",
+      "invariant": "A file changed by a program that another program runs is counted as written",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "section 5 programs inside bash, sh, cmd, powershell and pwsh command strings, eval, iex, Invoke-Expression and Start-Process; after exec, timeout, nice, stdbuf and builtin cd; a quoted in-place or delete option of a parser-rejected sed or find; a path-less Remove-Item, Move-Item, Clear-Content or Rename-Item fed by a pipeline; read and copy-out controls through the same programs; sub-review forms: find with -exec sed -i {} + or -exec rm {} ;, a parser-rejected sed -i with a glob, Set-Content and Out-File naming package.json with a variable value, and cmd /d /c with cd /d before a relative redirection; second self-audit: nested shells and evaluators whose quoted text holds $, a folder change or a write, script blocks of Invoke-Command, Start-Job and dot-sourcing, and a quoted bracketed path; third self-audit: curl -o, wget -O, Invoke-WebRequest -OutFile, scp to a local file, npm pkg set, npm version and child-process command strings of node -e and python -c",
+      "response": "the scope file among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED for the executor form; no scope file for the controls",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through a nested shell or runner",
+        "Sonnet changing a policy file through a nested shell, an evaluator or a pipeline the guard does not read"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written"
     },
     {
       "id": "GOV-943-TESTS-REBASE-ALLOW",

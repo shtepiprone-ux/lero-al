@@ -1,157 +1,165 @@
-# Task 943 completion report (Opus governance implementer)
+# Task 943 completion report (Opus governance implementer, revision 4)
 
-Session `1450b70d-ee65-4372-870d-cde8f826647e`, fresh (transcript started 2026-11-03 08:35), not the designer of the
-kickoff and not the Task 941 review 2 or review 3 session (D1). Native Windows 11, Node v22.22.3, Git Bash 5.2.37.
-Base: HEAD `93612ccead6874a92448fa2a23cf1b8be6da59d8`; the Task 941 sidecar is archived with `"stage": "reviewed"` and
-`git status --short tasks scripts/workflow-gates` showed no change to it or to the hook before the first write (route step 2).
+Session `9466dccd-46fa-43be-af96-65034de74bc1`, a fresh session started for this task (`/clear`, 2026-11-03): not the designer
+of the kickoff, not the Task 941 review 2 or review 3 session and not the Task 943 review 1 session that wrote revision 4
+(D1, route step 3). It may not approve this task (D2). Native Windows 11, PowerShell 5.1, Node v22.22.3, Git Bash 5.2.37.
+The revision 3 implementation (session `1450b70d`, commit `8899d9c42`) is the starting point; its report is in Git history.
 
-**Status: PARTIALLY IMPLEMENTED.** Every requirement R1–R5 and R7–R12 is implemented and all thirteen GOV-943 cases pass,
-but AC1, AC6 and AC11 require `node scripts/workflow-gates/selftests.mjs` to exit 0 with the Task 941 test file unchanged,
-and the kickoff makes that impossible (finding K1). R6 belongs to the approver and was not written.
+Route checks before the first revision 4 write: HEAD `8332807fe453c9bbe54383b193259311f8236fc1`; the archived Task 941 sidecar
+reads `"stage": "reviewed"`; `git status --short tasks scripts/workflow-gates` showed no change to it or to the hook; the hook
+sha256 was `35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd`, line 1 of `design/p15-run.txt`; `cli.mjs plan`
+and `cli.mjs receipt` of this sidecar exited 0. The revision 4 base run is appended to `base-runs.txt` (191 tests, 190 pass,
+1 fail: GOV-941-HOOK-MALFORMED-ERROR, the K1 conflict; exit 1).
 
-## K1 — kickoff conflict (BLOCKED, needs a kickoff revision or an owner decision)
-
-R2 and section 5 make every file positional of an in-place `sed` a target. Two assertions of the unchanged Task 941 file
-`scripts/workflow-gates/shell-write.selftest.mjs` (GOV-941-HOOK-MALFORMED-ERROR) require equality with the pre-change
-function for parseable `sed -i` commands whose last positional is the word `writeFileSync`:
-
-- line 123: `sed -i 's/a/b/' scripts/workflow-gates/example.mjs writeFileSync`;
-- line 158: `sed -n 1p -i>o.txt scripts/workflow-gates/example.mjs writeFileSync`.
-
-The implementation reports `writeFileSync` as an additional target of both (a file positional of `sed -i`), so the deepEqual
-fails (`test-results/task943-impl/conflict.mjs`, rerun output: `["scripts/workflow-gates/example.mjs","writeFileSync"]`).
-R1 states that no asserted result of the five hook-importing files changes, but that check covered R12 (C102, C120), not the
-section 5 rows. No implementation satisfies both R2 (`sed -i`: every file positional) and R1/AC1 (941 file unchanged and
-green). Changing the 941 equality to inclusion weakens a reviewed case, which `04-contract-rebases.md` (owner D12) forbids
-as a rebase; it needs a revision of Task 941, or R2 needs a narrower `sed` row. That is a design decision for a design
-session or the owner; the implementer did not choose one.
+**Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW.** R1–R5 and R7–R15 are implemented; all fourteen GOV-943 cases pass;
+R6 and AC7 belong to the approver and were not written.
 
 ## Requirements
 
 | R | Status | Implementation | Evidence |
 |---|---|---|---|
-| R1 | implemented; AC1 blocked by K1 | `baseShellWriteTargets` keeps the 941 result; the R1 fallback adds the PROJECT_FILE paths of a parser-rejected command naming a section 5 program (`namesWriteProgram`) | `selftests-final` below; corpus check |
-| R2 | implemented | `programTargets` (section 5 table, PowerShell parameters with unique prefixes, `-t`/`--target-directory`, recursive copies, directories, root `.`) | GOV-943-HOOK-PROGRAM-DENY, -DIRECTORY-DENY, -SOURCE-ALLOW, -MALFORMED-ERROR |
-| R3 | implemented | `WRITE_WORD` holds every R3 word | GOV-943-HOOK-API-DENY (path held in a variable, so only the word can report it) |
-| R4 | implemented | both consumers still call `shellWriteTargets`; changes are R8 (tracked check) and R12 (d) (transcript `cwd`, event `cwd`) | GOV-943-HOOK-PRETOOL-DENY, -TARGET-SPELLING-DENY |
-| R5 | implemented | eight cases in `scripts/workflow-gates/shell-mutation.selftest.mjs`, listed in `publication.json` | governance report |
+| R1 | implemented | revision 3 superset kept; K1: the two equality assertions of GOV-941-HOOK-MALFORMED-ERROR expect the pre-change result followed by `writeFileSync` for exactly the two R1 commands (constant `K1`, helper `expectedTargets`); every other command keeps `previousTargets` | `git diff` below; GOV-941 cases pass; corpus: 0 Task 941 targets dropped |
+| R2 | implemented (rev. 3) | `programTargets` | GOV-943-HOOK-PROGRAM-DENY, -DIRECTORY-DENY, -SOURCE-ALLOW, -MALFORMED-ERROR |
+| R3 | implemented (rev. 3) | `WRITE_WORD` | GOV-943-HOOK-API-DENY |
+| R4 | implemented | consumers still call `shellWriteTargets`; changes: R8, R12 (d) (transcript and event `cwd`, revision 4: Write/Edit in the event `cwd`) and R14 (b) | GOV-943-HOOK-PRETOOL-DENY, -TARGET-SPELLING-DENY |
+| R5 | implemented | nine cases in `shell-mutation.selftest.mjs` (revision 4 adds GOV-943-HOOK-NESTED-DENY), listed in `publication.json` | governance report |
 | R6 | not written (approver) | — | — |
-| R7 | implemented | `testsRebaseFiles`, `testsEntryErrors`, `rebaseChain` accepts `tests`, `rebaseChainErrors` dispatches it; `diffRebaseErrors` reads `tests` lists; `03-decision-closure.md` paragraphs moved unchanged to `04-contract-rebases.md` with the D12 paragraph | GOV-943-TESTS-REBASE-ALLOW/-DENY/-ERROR |
-| R8 | implemented | `git cat-file -e HEAD:<path>` through `execFileSync` without a shell, only when `<root>/.git` exists | GOV-943-EXEMPT-UNTRACKED-DENY |
-| R9 | implemented | (a), (b) and (c) in `03-decision-closure.md`; (c) also in C7 of `create/03-publication.md`; sizes 7829 and 3987 bytes | `check-workflow.mjs` exit 0 |
-| R10 | implemented | five cases in `scripts/workflow-gates/case-test-rebase.selftest.mjs`, listed in `publication.json` | governance report |
-| R11 | implemented | `reviewedFreshnessErrors` in `cli.mjs`, called by `diff` at phase `release`; `validateDiff` unchanged | GOV-943-CI-STALE-REVIEW-DENY; real-repository run below |
-| R12 | implemented | (a) `win32Spelling` + `canonicalPath` (`realpathSync.native`) before the inside/outside decision; (b) `globSync` per folder; (c) parsed and raw folder changes; (d) `shellFolder` from the transcript entry and the event `cwd`; (e) W2/W3; (f) quote stripping; (g) `noclobberCommands` (parsed) and `RAW_NOCLOBBER` (raw) | GOV-943-HOOK-TARGET-SPELLING-DENY; probes p09, p11, p14 |
+| R7–R11 | implemented (rev. 3), unchanged | `contract.mjs`, `cli.mjs`, rule files, `case-test-rebase.selftest.mjs` | GOV-943-TESTS-REBASE-*, -EXEMPT-UNTRACKED-DENY, -CI-STALE-REVIEW-DENY |
+| R12 | implemented | revision 4 (d): the pre-write guard resolves a Write/Edit path at the root and in the event `cwd`, and refuses it as outside the project when either resolution leaves the root | GOV-943-HOOK-TARGET-SPELLING-DENY (executor Write and Edit with `cwd` `<root>/scripts`, Write with an outside `cwd`) |
+| R13 | implemented | (a) `programIndex` skips the runners; `builtin cd`/`command cd`; (b) `evaluatedText` + recursion of `uncachedShellWriteTargets`, depth ≤ 3; (c) quoted `-i`/`-delete` in `WRITE_PROGRAM_WORDS`, R1 paths in every raw folder; (d) `PIPED_PROGRAMS`; (e) `lenientTargets`; (f) `CHILD_CALL` | GOV-943-HOOK-NESTED-DENY; `r1-adv-probe`, `r1-audit2-probe` |
+| R14 | implemented | (a) `/d` dropped in parsed and raw folder changes; (b) `registeredWrites` builds the scope-key set once; (c) `API_QUALIFIER`; (d) `seenFolders` | NESTED-DENY, SOURCE-ALLOW; AC15 timings |
+| R15 | implemented | `OTHER_WRITERS` and `otherWriterTargets` (not section 5 words of the R1 fallback); `npx`/`pnpx`/`bunx` skipped as wrappers | PROGRAM-DENY, NESTED-DENY, SOURCE-ALLOW |
 
-Changed files: `scripts/workflow-gates/security-hook.mjs`, `contract.mjs`, `cli.mjs`, `publication.json`, new
-`shell-mutation.selftest.mjs` and `case-test-rebase.selftest.mjs`, `.claude/rules/review/03-decision-closure.md`,
-`.claude/rules/create/03-publication.md`, new `.claude/rules/review/04-contract-rebases.md`, the stage and
-`implementation` fields of this task's sidecar, and the evidence under `docs/sessions/evidence/task943/impl/` and
-`docs/sessions/evidence/task943/sensitivity/`.
+Revision 4 changed files: `scripts/workflow-gates/security-hook.mjs`, `shell-mutation.selftest.mjs`,
+`shell-write.selftest.mjs` (the two R1 assertions only), the `stage`/`implementation` fields of this sidecar, and
+`docs/sessions/evidence/task943/impl/` (`base-runs.txt` appended, `probes-after.txt`, `governance-report.json`, this report) and
+`docs/sessions/evidence/task943/sensitivity/` (seven artifacts, `sensitivity.json`). `contract.mjs` and `cli.mjs` were broken
+and restored for sensitivity only; `git diff --quiet` on both exits 0.
 
-## Cases (governance report `docs/sessions/evidence/task943/impl/governance-report.json`)
+## Cases (`docs/sessions/evidence/task943/impl/governance-report.json`)
 
-All thirteen pass: GOV-943-HOOK-SOURCE-ALLOW, -HOOK-PROGRAM-DENY, -HOOK-DIRECTORY-DENY, -HOOK-API-DENY, -HOOK-PRETOOL-DENY,
--HOOK-MALFORMED-ERROR, -CI-DELETE-DENY, -HOOK-TARGET-SPELLING-DENY, -TESTS-REBASE-ALLOW, -TESTS-REBASE-DENY,
+All fourteen pass: GOV-943-HOOK-SOURCE-ALLOW, -HOOK-PROGRAM-DENY, -HOOK-DIRECTORY-DENY, -HOOK-API-DENY, -HOOK-PRETOOL-DENY,
+-HOOK-MALFORMED-ERROR, -CI-DELETE-DENY, -HOOK-TARGET-SPELLING-DENY, -HOOK-NESTED-DENY, -TESTS-REBASE-ALLOW, -TESTS-REBASE-DENY,
 -TESTS-REBASE-ERROR, -EXEMPT-UNTRACKED-DENY, -CI-STALE-REVIEW-DENY. `cli.mjs verify --contract <this sidecar>` exits 0.
-Against the HEAD hook (copy under `test-results/task943-impl/head/`), seven of the eight `shell-mutation` cases fail and
-GOV-943-CI-DELETE-DENY passes, as it asserts preserved behaviour.
+Against the committed revision 3 hook (`test-results/task943-impl/against-rev3.mjs`, gitignored), the final
+`shell-mutation.selftest.mjs` fails SOURCE-ALLOW (F7 control), PROGRAM-DENY (`npx prettier --write X: []`), TARGET-SPELLING-DENY
+(Write/Edit `cwd`) and NESTED-DENY (`bash -c 'cp Y X': []`), and passes the other five.
 
-AC13 platform line (native Windows run of this machine, `test-results/task943-impl/selftests-final.txt`):
+AC13 platform line (native Windows run, `test-results/task943-impl/selftests-final-r4.txt`):
 `GOV-943-HOOK-TARGET-SPELLING-DENY platform parts run on win32: trailing-dots, msys, device-prefixes, junction, admin-share, short-names`.
 
 ## Sensitivity (`docs/sessions/evidence/task943/sensitivity/`)
 
-Each break was applied and restored with the Edit tool on the final source; baseline and restored runs carry the same
-source sha256. Failed assertion of each mutant:
+Every break was applied and restored with the Edit tool on the final source, `node --check` after each edit; the five hook
+artifacts carry the final hook sha256 `f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf` in their baseline
+and restored runs, the four `shell-mutation` artifacts test-file sha256 `8dc8403f…5516`; `contract.mjs` and `cli.mjs` are
+byte-identical to HEAD after their breaks. Failed assertion of each mutant:
 
 | Case | Break | Failed assertion |
 |---|---|---|
 | GOV-943-HOOK-PROGRAM-DENY | `tee` removed from the table | `echo x \| tee -a scripts/workflow-gates/fixture-scope.mjs: []` |
 | GOV-943-HOOK-PRETOOL-DENY | `Copy-Item` removed from the table | `did not match /POLICY-EDIT AUTHORITY REQUIRED/` (input `''`) |
 | GOV-943-TESTS-REBASE-DENY | `[<id>]` presence check skipped | `case ID removed from the test file` |
-| GOV-943-EXEMPT-UNTRACKED-DENY | tracked check dropped | `did not match /GOVERNANCE INDEPENDENCE: this session wrote tasks\/product_kickoff…/` |
+| GOV-943-EXEMPT-UNTRACKED-DENY | tracked check dropped | `did not match /GOVERNANCE INDEPENDENCE: this session wrote tasks\/product_kickoff\.security\.json/` |
 | GOV-943-CI-STALE-REVIEW-DENY | contracts outside `selected` skipped | `did not match /tasks\/product_kickoff\.security\.json: Independent review scope is stale/` |
 | GOV-943-HOOK-TARGET-SPELLING-DENY | R12 (c) dropped (parsed and raw) | `cd D; cat Y > hook.mjs: ["hook.mjs"]` |
+| GOV-943-HOOK-NESTED-DENY | R13 (b) text evaluation dropped | `bash -c 'cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs': []` |
 
 ## Totals and checks
 
-- Base (`base-runs.txt`, before the first write): 178 tests, 178 pass, exit 0.
-- Final (`test-results/task943-impl/selftests-final.txt`): 191 tests, 190 pass, 1 fail (GOV-941-HOOK-MALFORMED-ERROR, K1),
-  0 skipped, exit 1. 191 = 178 + 13.
-- `git diff --exit-code` on `shell-write`, `diff-hook`, `governance-contract`, `scope-rebase` and `session-role` self-tests: exit 0.
-- `publication.mjs --base HEAD`: 86 explicit files, 0 dependency errors, exit 0. `check-workflow.mjs`: exit 0.
-  `eslint --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates`: exit 0.
-  `npm run check:kickoff-evidence`: PASS, exit 0.
-- Probes (`probes-after.txt`, checked by `test-results/task943-impl/check-probes.mjs`): p01 lines 2–21 report X (before:
-  `design/p01-undetected-writes-probe.txt`, all `targets []`); p02 lines 2–5 refuse (before: `design/p02-pretool-probe.txt`,
-  `[]`); p09 lines 4, 10–13, 19, 20, 22, 23, 29, 30, 32–36, p11 lines 3–14 and p14 lines 9–18 report the file or a refusal;
-  p14 controls 19–21 are `[]`, `[]`, `["out.txt"]`. p01 and p02 ran as copies printing to stdout, because the originals
-  overwrite their design output; the design folder is unchanged (`git status --short` empty).
-- Real repository, `cli.mjs diff --phase release --base origin/main --working-tree`: R11 reports exactly the contracts that
-  R6 rebases — 935, 940, 941 (review scope stale) and 923 owner-fixes, 927 (review and report stale).
+- Revision 4 base (`base-runs.txt`, before the first revision 4 write): 191 tests, 190 pass, 1 fail (K1), exit 1.
+- Final: `node scripts/workflow-gates/selftests.mjs` 192 tests, 192 pass, 0 fail, 0 skipped, exit 0; 192 = 178 (after 941,
+  `base-runs.txt` first run) + 14.
+- No existing self-test file changed apart from the two R1 assertions: `git diff --quiet` exits 0 for `diff-hook`,
+  `governance-contract`, `scope-rebase`, `session-role` and `case-test-rebase`; the `shell-write.selftest.mjs` diff adds the `K1`
+  set and `expectedTargets` and changes the expected value of the two loops holding the two R1 commands
+  (`[...previousTargets, 'writeFileSync']` for those two, `previousTargets` for every other command); no command, case ID or
+  test name changed.
+- `publication.mjs --base HEAD`: 86 explicit files, 0 dependency errors. `check-workflow.mjs`: exit 0.
+  `eslint --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates`: exit 0. `npm run check:kickoff-evidence`: PASS.
+- Probes (`probes-after.txt`, final hook): p01 lines 2–21 report X (before: `design/p01-undetected-writes-probe.txt`, all
+  `targets []`); p02 lines 2–5 refuse (before: `design/p02-pretool-probe.txt`, `[]`); p09 lines 4, 10–13, 19, 20, 22, 23, 29,
+  30, 32–36 and p11 lines 3–14 report the file or a refusal; p14 lines 9–18 non-empty, controls 19–21 `[]`, `[]`, `["out.txt"]`;
+  `r1-adv-probe` `REPORTED` on all 13 lines; `r1-audit2-probe` `REFUSED` on lines 1–31 and `ALLOWED` on lines 32–44. p01 and p02
+  ran as copies under `test-results/` whose save prints to stdout (their output therefore appears twice); the design folder is
+  unchanged.
+- AC15 timings (native Windows, `probes-after.txt`): `evaluateHook` without a role on the real root: `rm -rf docs` 157 ms,
+  `cp -r docs backup/` 1156 ms (limit 5 s); `shellWriteTargets` on the `p15-run.mjs` 5000-folder-change commands: parsed
+  2086 ms, parser-rejected 8003 ms (limit 15 s; the prototype measured 2054 ms and 8069 ms, `design/p15-run.txt` lines 100–101).
+- Q1 profile (`docs/qa-profiles.md`): `npm run check:mojibake` and `npm run check:file-integrity` exit 1 on the repository, but
+  on files outside this task only (mojibake: `docs/sessions/evidence/task923/…`; file integrity: the two untracked
+  `docs/sessions/evidence/task923/review-67/*.nul` files); neither reports a line for a file of this task. No changed file has a
+  BOM; `base-runs.txt` holds CRLF lines from the PowerShell append, which the contract digest normalises.
+  `npm run build` (Next.js production build, native PowerShell, output `test-results/task943-impl/build.txt`): exit 0.
 
-## Corpus impact (frozen 2318-command corpus of C103, sha256 `1eb5de48…155b9`; `test-results/task943-impl/corpus-impact.mjs`)
+## Corpus impact (frozen 2318-command corpus, sha256 `1eb5de48…155b9`; `test-results/task943-impl/corpus-rev4.mjs`)
 
-Against the HEAD hook: 121 commands gain targets, 43 gain a policy, product or Git-metadata target, and 41 executor
-commands are refused that HEAD allowed. Inspected samples are real writes the hook missed (`sed -i` and `cp`/`rm` of
-product files) and, per R1, PROJECT_FILE paths named in parser-rejected commands that name a section 5 program (heredoc
-prose). Five commands lose a target string only through R12 (a) normalisation (trailing space or dot removed, case and 8.3
-alias canonicalised). Slowest single `shellWriteTargets`: 8 ms.
+Final hook against the committed revision 3 hook: 67 commands gain targets; 30 of them gain a target under the guarded
+definition of `design/p15-run.mjs` line 151 (policy, product, `tasks/`, `docs/` or `.git`), 6 when `tasks/` and `docs/` are not
+counted; 6 executor commands are newly refused (5 `SECURITY TEST CONTRACT MISSING`, 1 `POLICY-EDIT AUTHORITY REQUIRED`); no
+governance scope file is added; slowest single call 4 ms. 67, 30 and 6 equal the prototype's counts (`design/p15-run.txt`
+line 112 and its executor-guard line). 14 commands lose a revision 3
+target: all are arguments of a bare string method (`.replace(…)`, …) that R14 (c) no longer reads as a file API; none of
+them is a Task 941 target (`corpus-dropped.mjs`), so the R1 superset holds.
 
-## Implementer decisions and deviations for review
+## Sub-review findings F1–F8
 
-1. **R1 fallback condition.** A first version took the bare words `sed`, `find` and `xargs` as section 5 programs: on the
-   corpus, 168 executor commands were newly refused, most of them read-only `grep`/`sed -n` chains. The fallback now uses
-   the condition of each section 5 row: `sed` with an in-place option, `find` with `-delete`/`-exec`/`-execdir`/`-ok`/`-okdir`,
-   `xargs` followed by a write program (MALFORMED-ERROR asserts both sides).
-2. **Project root.** `rm -rf .`, `find . -delete` and `mv .` first reported nothing (`projectPath('.')` is `''`); the root is
-   now walked (DIRECTORY-DENY asserts it; the guard answers `OWNER GIT REQUIRED` because `.git` is reported as given).
-3. **Performance.** Path canonicalisation is memoised within one top-level call (`withPathCache`); independence check after
-   `rm -rf .` went from 132 s to 0.5 s, `rm -rf .` targets take about 0.2 s. No result changes.
-4. **`>|` in nested shells.** The raw `>|` pattern also runs for nested shells and interpreters, not only parser-rejected
-   commands, fail-closed like the existing raw `>` pattern.
-5. **Non-string commands.** `shellWriteTargets` returns `[]` for a non-string command; the HEAD version threw.
-6. **`publication.json`.** Besides the two self-tests, the new rule file `.claude/rules/review/04-contract-rebases.md` is listed,
-   as every other owned rule file is.
-7. **Wrapper options.** An adversarial self-check (`test-results/task943-impl/adversarial.mjs`: 53 write forms outside the
-   self-tests, 13 read forms) found `sudo -u admin rm X` and `env -i A=1 rm X` unreported; the options of a leading wrapper
-   (and the value of `sudo -u/-g/…`, `env -u/-C/-S`) are now skipped (PROGRAM-DENY asserts both). After the fix every write
-   form reports X except `cp -rT docs/sub D`, which correctly reports `D/f.mjs` (X is not affected), and no read form reports X.
-8. **Incident.** During the first attempt at sensitivity break 3 a mutant comment (`//`) made `contract.mjs` unparseable;
-   every hook-guarded tool was blocked until the owner restored the line. All final mutants use block comments with
-   `node --check` after each edit; all six proofs were rerun on the final source.
+| ID | Closed by |
+|---|---|
+| F1 | R13 (e): NESTED-DENY executor `Set-Content package.json $x` and `"$x" \| Out-File -FilePath package.json` → `SECURITY TEST CONTRACT MISSING` |
+| F2 | R13 (e): NESTED-DENY `find D -name '*.mjs' -exec sed -i 's/a/b/' {} +` and `find D -name x -exec rm {} \;` report X |
+| F3 | R14 (a): NESTED-DENY executor `cmd /d /c "cd /d <root>/scripts && echo x > check-example.mjs"` → `POLICY-EDIT AUTHORITY REQUIRED` |
+| F4 | R13 (e): NESTED-DENY `sed -i "s/a/$x/" D/*.mjs` reports X |
+| F5 | R14 (b): AC15 timings 157 ms and 1156 ms (revision 3: 10971 ms and 22008 ms) |
+| F6 | R12 (d) revision 4: TARGET-SPELLING-DENY executor Write and Edit with `cwd` `<root>/scripts`, Write with an outside `cwd` |
+| F7 | R14 (c): SOURCE-ALLOW executor `node -e` with `'src/app/page.tsx'.replace(…)` and `'a'.replace('src/app/page.tsx', 'y')` → `[]`; `shutil.copy` and `require('fs').rm` still report X |
+| F8 | R14 (d): AC15 timings 2086 ms and 8003 ms |
+
+## Implementer decisions for review
+
+1. **Runners before an evaluator or nested shell.** Section 5 defines the program as the first word after the wrappers and
+   runners, and R13 (b) applies to a simple command "whose program is" `bash`, `eval`, …. The design prototype tested only the
+   first word, so `sudo bash -c 'rm X'`, `exec bash -c …`, `timeout 5 bash -c …` and `env A=1 sh -c …` reported nothing
+   (`test-results/task943-impl/residual.mjs`). The wrapper skip is now the shared `programIndex`, used by `programTargets` and
+   `evaluatedText`; the four forms are in NESTED-DENY. The corpus counts did not change.
+2. **Structure.** The R15 row is the separate function `otherWriterTargets`; the lenient reading is `lenientTargets`.
+   Behaviour follows `design/p15-r13-pairs.txt`.
+3. **K1 form.** The expected value changes only in the two loops that hold the two R1 commands (AC1 permits one constant).
+4. **Live hook during this session.** A diagnostic `node -e` of this session whose text held
+   `execSync('rm package.json')` was refused (`ORCHESTRATOR BOUNDARY`) by the new R13 (f) rule; diagnostics were then run as
+   script files under `test-results/`. This is the intended fail-closed reading of command text.
+5. **Fail-closed false positive of R13 (f).** In a parser-rejected command, child-process string literals are read even
+   inside quoted text: the executor command `grep -n "execSync('rm src/a.ts')" docs/x.md` is refused with
+   `SECURITY TEST CONTRACT MISSING` (`test-results/task943-impl/audit.mjs`). R13 (f) prescribes this raw-text reading, as the
+   existing raw `>` regex does for quoted text (C119); it is listed here for the reviewer, not changed.
+
+## Implementer self-audit (owner request after the first report)
+
+`test-results/task943-impl/audit.mjs` (gitignored) on the final hook: 17 further write forms (wrapper with options before a
+nested shell, `nohup sh -c`, `powershell -NoProfile -ExecutionPolicy Bypass -Command`, `Start-Process` with a quoted
+argument list and with `cmd /c`, a recursive pipeline into `Remove-Item -Force`, `rm --`, nested `cmd` with `cd` and a
+backslash path, a doubly nested `bash -c`, a parser-rejected `eval`, `subprocess.run(…, shell=True)`, `spawnSync` with an
+argument array, `sed -i''`, `Copy-Item -Destination -Force`, `git show > X`, `tee > /dev/null`, `find | xargs sed -i`) all
+report X; 25 of 26 common executor commands (`npm test`, `npx vitest run`, `npx tsc --noEmit`, `npm run build`,
+`npx eslint src`, `npx prettier --check src`, `git status`, `curl … | head`, `timeout 60 npm test`,
+`tar -czf test-results/x.tgz src`, `npm run lint -- --fix`, …) stay allowed, the exception being decision 5; whole-root
+forms (`npx eslint --fix .`, `npx prettier --write .`, `unzip`, `tar -xf`, `rm -rf .`, `Get-ChildItem . | Remove-Item`) answer
+in under 0.2 s with `OWNER GIT REQUIRED`; `governanceIndependenceErrors` on this session's own transcript (1328 lines) takes
+40 ms and returns 6 `GOVERNANCE INDEPENDENCE` errors, so this session cannot approve the task. Found and fixed by the
+self-audit: the inaccurate corpus wording of the first report, a doc comment left above `programIndex` instead of
+`programTargets` after the refactor (moved; every hook sensitivity break, the probes, the corpus run and the self-tests were
+rerun on the final hook), and the missing Q1 checks above.
 
 ## Write forms that stay undetected
 
 Out of scope by section 4: a script file run by an interpreter (`node x.mjs`, `python x.py`), `perl -i`, editors, programs not
-in section 5, and a folder change through a variable, `-`, `~` or `popd`/`Pop-Location`. Also undetected: a section 5 program
-inside a nested shell or interpreter string (`bash -c 'cp Y X'`), because R12 (c) gives nested commands only the raw
-redirection and API positions; a `find -exec rm {} \;` names only the paths written in its text (the parser rejects `\;`);
-and a write through an API whose path is not a literal and whose word is not in R3.
-
-## Independent sub-review findings (after this report; implementation paused)
-
-A fresh-context sub-agent reviewed the uncommitted candidate adversarially (probes in `test-results/task943-subreview/`);
-the implementer reproduced F1, F2, F3, F5 and F7 (`test-results/task943-impl/verify-subreview.mjs`). Meanwhile a design
-session set this sidecar to `executionStatus: "blocked"` and drafted revision 4 (`design/p15-*`, R13), so no code was
-changed after these findings; they are input for that revision.
-
-| ID | P | Defect (reproduced) | Requirement |
-|---|---|---|---|
-| F1 | P1 | A parser-rejected command loses W2: `Set-Content package.json $x` and `"$x" \| Out-File -FilePath package.json` report `[]` and the executor guard allows them (control without `$` is refused) | R12 (e) |
-| F2 | P1 | `find D -name '*.mjs' -exec sed -i 's/a/b/' {} +` and `… -exec rm {} \;` report `[]` and are allowed: `{`/`\;` make the command unparseable and the R1 fallback names no file under D. The MALFORMED-ERROR assertion uses `-exec rm` without `{}`, which parses, so it does not cover the real form | section 5 `find` row, AC5 |
-| F3 | P1 | `cmd /d /c "cd /d <abs>/scripts && echo x > check-example.mjs"` is allowed: the raw folder pattern captures `/d` as the folder | R12 (c) |
-| F4 | P2 | (sub-agent) a glob in a parser-rejected `sed -i … scripts/workflow-gates/*.mjs` is not expanded, so the independence check misses the scope file | R12 (b) |
-| F5 | P1 | `evaluateHook` without a role on the real root: `rm -rf docs` 10971 ms, `cp -r docs backup/` 22008 ms, beyond the 15 s hook timeout (`onFailure: block`); the cost is `registeredWrites` (every target × every contract × `inScope`) | usability of R2 directory walks |
-| F6 | P3 | (sub-agent) R12 (d) is not applied to Write/Edit paths in the pre-write guard (Write normally sends absolute paths) | R12 (d) |
-| F7 | P3 | `node -e "'a'.replace('src/app/page.tsx','y')"` is refused: API_TWO matches the bare string method `replace` | R3/W3 scope |
-| F8 | P3 | (sub-agent) inputs of 35 KB with 5000 `cd` words take 14.6 s | performance |
-
-Spec gaps (not code defects): a section 5 program inside a nested shell (`bash -c 'cp Y X'`) or after `exec` is not parsed
-(listed above as undetected). Revision 4 drafts cover `exec`, more wrappers, evaluators and pipeline-fed cmdlets; F1–F5
-are not visibly covered by `design/p15-r13-pairs.txt`.
+listed in section 5 or R15 (for example `npx rimraf X`), a folder change through a variable, `-`, `~` or
+`popd`/`Pop-Location`, a path held in a variable (including `$_`), and an `-EncodedCommand` string. The hook recognizes
+listed forms only; the CI policy-diff check (C20) is the outer layer. Found during this implementation and left for a
+revision (section 4: new forms are added by a revision, not by the implementer): a nested shell whose `-c` is inside an option
+cluster, `bash -lc '…'` (`residual.mjs`: MISSED; `bash -e -c '…'` is reported).
 
 ## Outcome
 
-`PARTIALLY IMPLEMENTED` — K1 blocks AC1, AC6 and AC11; R6 and AC7 remain with the approver.
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. R6 (the `scope` rebases of 935, 940 and 941, the `tests` rebase of 941 and the
+`rules` rebases of the 923 owner-fixes and 927 contracts) and AC7 remain with the approver, in another fresh session.

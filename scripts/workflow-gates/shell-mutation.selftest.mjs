@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Task 943 (owner D11, 2026-11-01; revision 2 D13/D14): commands that copy, move, delete or edit files in place, the file
-// APIs that do the same, and every spelling, folder change and shell folder that reaches a file are counted as writes.
+// APIs that do the same, and every spelling, folder change and shell folder that reaches a file are counted as writes;
+// revision 4: also through nested shells, evaluators, runners, pipelines, child processes and the R15 programs.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -70,6 +71,28 @@ test('[GOV-943-HOOK-SOURCE-ALLOW] Reading a scope file as the source of a copy, 
   const scope = [X, 'scripts/workflow-gates/security-hook.mjs', 'scripts/workflow-gates/cli.mjs', '.claude/rules/review/03-decision-closure.md',
     'scripts/workflow-gates/diff-hook.selftest.mjs', 'src/profile.ts'];
   assert.equal(independence(root, scope, [...sources, ...readOnly]), '');
+  // Revision 4, R14 (c) (sub-review F7, AC15): the string method `replace` on a product path is no write; the qualified
+  // API calls stay writes.
+  for (const command of [`node -e "console.log('src/app/page.tsx'.replace('page', 'x'))"`, `node -e "console.log('a'.replace('src/app/page.tsx', 'y'))"`]) {
+    assert.deepEqual(evaluateHook(root, executor(command), ''), [], command);
+  }
+  assert.ok(shellWriteTargets(root, `python -c "import shutil; shutil.copy('${Y}', '${X}')"`).includes(X));
+  assert.ok(shellWriteTargets(root, `node -e "require('fs').rm('${X}', () => 0)"`).includes(X));
+  // R15 and R13 (AC16): read-only forms of the R15 programs, downloads to standard output, a remote copy out of the project,
+  // a child process that only reads, a pipeline that only reads, a quoted `*` in a sed script and an absolute `--prefix`
+  // outside the root report no X and no file of the project root.
+  const outside = mkdtempSync(join(tmpdir(), 'lero-shell-mutation-outside-'));
+  try {
+    const reads = [`npx prettier --check ${X}`, `npx eslint ${D}`, 'npm run build', `tar -tzf ${Y}.tgz`, 'curl -sS https://example.test/x.js',
+      `scp ${X} host:/tmp/x`, 'npm pkg get name', `node -e "require('child_process').execSync('git status')"`,
+      `Get-ChildItem ${D} | ForEach-Object { Get-Content $_.FullName }`, `sed -i "s#import * as R#x#" ${Y}; echo $y`,
+      `npm install left-pad --prefix ${outside.replaceAll('\\', '/')}`];
+    for (const command of reads) {
+      const targets = shellWriteTargets(root, command);
+      assert.ok(!targets.includes(X) && !targets.some(target => /^[^/]+$/.test(target)), `${command}: ${JSON.stringify(targets)}`);
+    }
+    assert.equal(independence(root, [X, 'package.json', 'README.md'], reads.map(command => ['Bash', command])), '');
+  } finally { rmSync(outside, { recursive: true, force: true }); }
 }));
 
 test('[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written', () => withRoot(root => {
@@ -88,6 +111,9 @@ test('[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, 
     ['PowerShell', `New-Item -ItemType File -Path ${X} -Force`], ['PowerShell', `ni ${X}`], ['PowerShell', `New-Item -Path ${D} -Name ${basename(X)}`],
     ['PowerShell', `Clear-Content ${X}`], ['PowerShell', `clc ${X}`], ['PowerShell', `sc ${X} 'x'`], ['PowerShell', `ac ${X} 'x'`],
     ['PowerShell', `Set-Content -Path:${X} -Value x`],
+    // Revision 4, R15 (AC16): formatters, archivers and Expand-Archive write the files they name or extract into.
+    ['Bash', `npx prettier --write ${X}`], ['Bash', `npx eslint --fix ${D}`], ['Bash', `tar -xzf ${Y}.tgz -C ${D}`],
+    ['Bash', `unzip -o ${Y}.zip -d ${D}`], ['PowerShell', `Expand-Archive -Path ${Y}.zip -DestinationPath ${D} -Force`],
   ];
   for (const form of forms) {
     const [, command] = form;
@@ -98,6 +124,9 @@ test('[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, 
   // A rename also reports the new name beside the source.
   assert.ok(shellWriteTargets(root, `Rename-Item -Path ${X} -NewName other.mjs`).includes(`${D}/other.mjs`));
   assert.match(independence(root, [X], forms), wrote(X));
+  // R15: a package manager and Export-Csv writing project-root product files are refused for an executor.
+  assert.match(refusal(root, executor('npm install left-pad')), /SECURITY TEST CONTRACT MISSING/);
+  assert.match(refusal(root, executor('Get-Process | Export-Csv -Path package.json', 'PowerShell')), /SECURITY TEST CONTRACT MISSING/);
 }));
 
 test('[GOV-943-HOOK-DIRECTORY-DENY] Deleting, moving or copying into a directory counts every affected file under it', () => withRoot(root => {
@@ -220,6 +249,13 @@ test('[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it rea
     assert.match(independence(root, scope, [['Bash', `echo x > ../${basename(root)}/D/hook.mjs`, join(parent, 'elsewhere')]]), wrote(H));
     assert.match(independence(root, scope, [['Write', { file_path: 'hook.mjs', content: 'x' }, join(root, 'D')]]), wrote(H));
     assert.match(refusal(root, executor('echo x > check-example.mjs', 'Bash', join(root, 'scripts'))), /POLICY-EDIT AUTHORITY REQUIRED/);
+    // Revision 4, R12 (d) (C128): an executor Write or Edit of a relative path resolves in the event's working directory too.
+    const fileEvent = (tool, cwd, input) => ({ hook_event_name: 'PreToolUse', agent_type: 'executor', tool_name: tool, cwd, tool_input: input });
+    assert.match(refusal(root, fileEvent('Write', join(root, 'scripts'), { file_path: 'check-example.mjs', content: 'x' })), /POLICY-EDIT AUTHORITY REQUIRED/);
+    assert.match(refusal(root, fileEvent('Edit', join(root, 'scripts'), { file_path: 'check-example.mjs', old_string: 'a', new_string: 'b' })),
+      /POLICY-EDIT AUTHORITY REQUIRED/);
+    assert.match(refusal(root, fileEvent('Write', join(parent, 'elsewhere'), { file_path: 'check-example.mjs', content: 'x' })),
+      /Write outside the project cannot be verified/);
     // R12 (e): write words naming a project-root product file.
     for (const [tool, command] of [['PowerShell', 'Set-Content package.json x'], ['PowerShell', 'Set-Content -Path next.config.ts -Value x'],
       ['PowerShell', 'Add-Content tsconfig.json x'], ['PowerShell', "'x' | Out-File -FilePath package.json"],
@@ -272,3 +308,65 @@ test('[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it rea
     console.log(`GOV-943-HOOK-TARGET-SPELLING-DENY platform parts run on ${process.platform}: ${parts.join(', ') || 'none'}`);
   } finally { rmSync(parent, { recursive: true, force: true }); }
 });
+
+// Revision 4, R13 (b)-(d): section 5 programs run through a nested shell, an evaluator, Start-Process, a runner, a pipeline
+// into a path-less cmdlet or a quoted option of a parser-rejected command. `x` is the written file, `d` its folder and
+// `name` its file name.
+const nestedForms = (x, d, name) => [
+  `bash -c 'cp ${Y} ${x}'`, `bash -c "rm -f ${x}"`, `sh -c 'sed -i s/a/b/ ${x}'`, `bash -c 'cd ${d}; rm ${name}'`,
+  `powershell -Command "Copy-Item ${Y} ${x}"`, `powershell -NoProfile -Command "Remove-Item ${x}"`, `cmd /c "copy ${Y} ${x}"`,
+  `cmd /d /c "del ${x}"`, `eval "cp ${Y} ${x}"`, `iex "Remove-Item ${x}"`, `Invoke-Expression "Remove-Item ${x}"`,
+  `Start-Process cp -ArgumentList ${Y},${x}`, `exec cp ${Y} ${x}`, `timeout 5 rm ${x}`, `timeout -s KILL 5 rm ${x}`, `nice -n 5 rm ${x}`,
+  `stdbuf -o0 rm ${x}`, `builtin cd ${d}; rm ${name}`, `sed "-i" 's/a/b/' ${x} '`, `find ${x} "-delete" '`, `Get-ChildItem ${d} | Remove-Item`,
+  `Get-Item ${x} | Remove-Item`, `Get-Item ${x} | Move-Item -Destination docs`, `Get-Item ${x} | Clear-Content`,
+  `Get-Item ${x} | Rename-Item -NewName other.mjs`,
+  // The program of R13 (b) is the section 5 program word, after the wrappers and runners of R13 (a).
+  `sudo bash -c 'rm ${x}'`, `exec bash -c 'rm ${x}'`, `timeout 5 bash -c 'rm ${x}'`, `env A=1 sh -c 'rm ${x}'`,
+];
+
+test('[GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written', () => withRoot(root => {
+  const P = 'scripts/check-example.mjs';
+  put(root, P);
+  for (const command of nestedForms(X, D, basename(X))) {
+    const targets = shellWriteTargets(root, command);
+    assert.ok(targets.includes(X), `${command}: ${JSON.stringify(targets)}`);
+    assert.match(independence(root, [X], [['Bash', command]]), wrote(X), command);
+  }
+  for (const command of nestedForms(P, 'scripts', basename(P))) {
+    assert.match(refusal(root, executor(command)), /POLICY-EDIT AUTHORITY REQUIRED/, command);
+  }
+  // R13 (e) (sub-review F1, F2, F4): `find -exec` with a braced placeholder and a parser-rejected `sed -i` with a glob.
+  for (const command of [`find ${D} -name '*.mjs' -exec sed -i 's/a/b/' {} +`, `find ${D} -name x -exec rm {} \\;`, `sed -i "s/a/$x/" ${D}/*.mjs`]) {
+    const targets = shellWriteTargets(root, command);
+    assert.ok(targets.includes(X), `${command}: ${JSON.stringify(targets)}`);
+  }
+  assert.match(refusal(root, executor('Set-Content package.json $x', 'PowerShell')), /SECURITY TEST CONTRACT MISSING/);
+  assert.match(refusal(root, executor('"$x" | Out-File -FilePath package.json', 'PowerShell')), /SECURITY TEST CONTRACT MISSING/);
+  // R14 (a) (sub-review F3, AC15): `cd /d` inside a nested cmd.
+  const absolute = `${root.replaceAll('\\', '/')}/scripts`;
+  assert.match(refusal(root, executor(`cmd /d /c "cd /d ${absolute} && echo x > check-example.mjs"`)), /POLICY-EDIT AUTHORITY REQUIRED/);
+  // AC16 (R13 (e), (f) and R15): quoted text holding `$`, a folder change or a write; script blocks; a quoted bracketed
+  // path; downloads, remote copies, `npm pkg` and `npm version`; child-process command strings.
+  const url = 'https://example.test/x.js';
+  for (const [command, expected] of [
+    ['bash -c "rm package.json $y"', 'SECURITY'], ['bash -c "cd scripts; rm check-example.mjs; echo $y"', 'POLICY'],
+    ['powershell -Command "Remove-Item package.json; $x = 1"', 'SECURITY'], ['eval "rm package.json $y"', 'SECURITY'],
+    ['Invoke-Command -ScriptBlock { Remove-Item package.json }', 'SECURITY'], ['. { Remove-Item package.json }', 'SECURITY'],
+    ['Start-Job { Remove-Item package.json }', 'SECURITY'], ['rm "src/app/[locale]/page.tsx" $y', 'SECURITY'],
+    [`curl -sSL -o package.json ${url}`, 'SECURITY'], [`wget -q -O ${P} ${url}`, 'POLICY'],
+    [`Invoke-WebRequest -Uri ${url} -OutFile package.json`, 'SECURITY'], [`scp host:/tmp/x ${P}`, 'POLICY'],
+    ['npm pkg set name=x', 'SECURITY'], ['npm version patch --no-git-tag-version', 'SECURITY'],
+    [`node -e "require('child_process').execSync('rm package.json')"`, 'SECURITY'],
+    [`python -c "import subprocess; subprocess.run(['rm', 'package.json'])"`, 'SECURITY'],
+  ]) {
+    const pattern = expected === 'POLICY' ? /POLICY-EDIT AUTHORITY REQUIRED/ : /SECURITY TEST CONTRACT MISSING/;
+    assert.match(refusal(root, executor(command)), pattern, command);
+  }
+  // Controls: reading through the same programs, and copying X out of its folder, report no X.
+  for (const command of [`bash -c 'cp ${X} ${Z}'`, `bash -c 'grep -n a ${X}'`, `eval "cat ${X}"`, `powershell -Command "Get-Content ${X}"`,
+    `cmd /c "type ${X}"`, `timeout 5 cat ${X}`, `Get-Item ${X} | Copy-Item -Destination docs/`, `Get-Content ${X} | Select-String a`,
+    `Start-Process cat -ArgumentList ${X}`]) {
+    const targets = shellWriteTargets(root, command);
+    assert.ok(!targets.includes(X), `${command}: ${JSON.stringify(targets)}`);
+  }
+}));

@@ -1,0 +1,82 @@
+# Sensitivity proof GOV-943-HOOK-NESTED-DENY (Task 943 revision 4, Opus governance implementer, fresh session 9466dccd, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC14): drop the R13 (b) text evaluation of an evaluator, nested shell or Start-Process. Applied and restored with the Edit tool on scripts/workflow-gates/security-hook.mjs; `node --check` ran after each edit.
+Original: if (inner && depth < 3) {
+Mutant:   if (/* SENSITIVITY BREAK */ false && inner && depth < 3) {
+Run on the final revision 4 source.
+## Baseline
+scripts/workflow-gates/security-hook.mjs sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 8dc8403f018894c91102f084b55bd12dadef95305e80f80724f7130708615516
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-NESTED-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+ok 1 - [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+  ---
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 128.4283
+exit=0 (spawnSync status of the node process)
+Mutant lines as applied:
+737:      if (/* SENSITIVITY BREAK */ false && inner && depth < 3) {
+
+## Mutant
+scripts/workflow-gates/security-hook.mjs sha256 4880bf87edb544b29ccb58d4bdb95036015ae7eacd75d7041a98f850adcd75a4; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 8dc8403f018894c91102f084b55bd12dadef95305e80f80724f7130708615516
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-NESTED-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+not ok 1 - [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+  ---
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-mutation.selftest.mjs:327:1'
+  failureType: 'testCodeFailure'
+  error: "bash -c 'cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs': []"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:332:12
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:27:12)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:327:118)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.827
+exit=1 (spawnSync status of the node process)
+## Restored
+scripts/workflow-gates/security-hook.mjs sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 8dc8403f018894c91102f084b55bd12dadef95305e80f80724f7130708615516
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-NESTED-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+ok 1 - [GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written
+  ---
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 128.7365
+exit=0 (spawnSync status of the node process)

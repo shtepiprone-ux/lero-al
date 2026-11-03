@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "status": "failed",
+  "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
-  "contractSha256": "8f8eb8cb9fe77afe49657bb72375ff77caafe6259ab32ad8d25ed3f41a6a5bc7",
-  "scopeSha256": "7f45fcc908af9dbb0f3bb124143e7149a7120f79f3495a0aa487ec125bbcd5fe",
+  "contractSha256": "1a9948a71700ecd1a2284fba0bbdd9d6900d7d1dc514891f6aa863eefc70bcad",
+  "scopeSha256": "b82dbac3822a5cf3bd165ac5de5e02c2fb4055dbae6e57b6f55dc89739eb755e",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [
@@ -26,7 +26,7 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PROGRAM-DENY.txt",
-        "artifactSha256": "fbc228cefcb2080ea3d3e14ad735c326b8abc8adb0556c685888af99467c72d9"
+        "artifactSha256": "f666efbd282efb35d3cd62071f5a7ae72907f7c8f6bfeaec29a9cea4f52115c1"
       }
     },
     {
@@ -54,7 +54,7 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PRETOOL-DENY.txt",
-        "artifactSha256": "8ca5dacb51f26641fc27f69124a149b8454ec3aaac605ef8cefcef558a641d77"
+        "artifactSha256": "b2be4361cfebbc858762e1870efb66f6d29ebb4e14f0b86b9e047fab98a7a228"
       }
     },
     {
@@ -82,7 +82,23 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-TARGET-SPELLING-DENY.txt",
-        "artifactSha256": "9b0b3df59b58f3a63fea64b25b31c89601620a4a3d8800818ac219b9ed403109"
+        "artifactSha256": "f90f23050411c8eaf04dd4539d60f990e579ed4691948ccb171b316e358a645e"
+      }
+    },
+    {
+      "id": "GOV-943-HOOK-NESTED-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written",
+      "sensitivity": {
+        "id": "GOV-943-HOOK-NESTED-DENY",
+        "testName": "[GOV-943-HOOK-NESTED-DENY] A file changed by a program that another program runs is counted as written",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-NESTED-DENY.txt",
+        "artifactSha256": "7b072e864aebc0185e1d98d846423c82eb8f99629fee508bc95545e6399365cb"
       }
     },
     {
@@ -104,7 +120,7 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-TESTS-REBASE-DENY.txt",
-        "artifactSha256": "b009c73c11685c5b21364c88bad041cf5fa5823857bb2adef07fd4dc6f5e48e1"
+        "artifactSha256": "11addd472774ba38fc28412a2d9b27950826ef03a678989db878f0564d7c3a60"
       }
     },
     {
@@ -126,7 +142,7 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-EXEMPT-UNTRACKED-DENY.txt",
-        "artifactSha256": "d6cd42b6237f68f21d95574eeec0706676a9f7e7d8ba228ee7094c469e41f66d"
+        "artifactSha256": "3a1c86f57067200ccf1d4daf67ac8c2105610c61d148e95f89f30e7eba746839"
       }
     },
     {
@@ -142,11 +158,9 @@
         "failureKind": "assertion",
         "restored": "passed",
         "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt",
-        "artifactSha256": "2c6b8c0bd0e1814011aa382974dca6f0a7f37c11a91dfa36c4a3ea032e461c60"
+        "artifactSha256": "dab4eb6e41d5f27b21ad933e0466f7fb06627e48ef20a5e98cc94867ad3bc74c"
       }
     }
   ],
-  "errors": [
-    "contract: Execution status must be ready; draft or blocked contracts cannot authorize execution or publication"
-  ]
+  "errors": []
 }

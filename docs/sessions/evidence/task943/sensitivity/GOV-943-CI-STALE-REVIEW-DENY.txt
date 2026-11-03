@@ -1,15 +1,18 @@
-# Sensitivity proof GOV-943-CI-STALE-REVIEW-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+# Sensitivity proof GOV-943-CI-STALE-REVIEW-DENY (Task 943 revision 4, Opus governance implementer, fresh session 9466dccd, 2026-11-03, node v22.22.3, native Windows 11)
 
 Break (AC12): reviewedFreshnessErrors skips the reviewed contracts outside selected. Applied and restored with the Edit tool on scripts/workflow-gates/cli.mjs; `node --check` ran after each edit.
 Original: if (selected.includes(path)) continue;
 Mutant:   if (/* SENSITIVITY BREAK */ true || selected.includes(path)) continue;
-Final run on the final source (an earlier run was repeated after later implementation changes).
+Run on the final revision 4 source.
 ## Baseline
 scripts/workflow-gates/cli.mjs sha256 0ee1cb5df0c93d2588504eb663a9f0950a0b47f7b2dae5d0c084c5dad70afe37; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
 Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-CI-STALE-REVIEW-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
 TAP version 13
 # Subtest: [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
 ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
+  ---
+  type: 'test'
+  ...
 1..1
 # tests 1
 # suites 0
@@ -18,8 +21,8 @@ ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with 
 # cancelled 0
 # skipped 0
 # todo 0
+# duration_ms 385.1795
 exit=0 (spawnSync status of the node process)
-
 Mutant lines as applied:
 157:    if (/* SENSITIVITY BREAK */ true || selected.includes(path)) continue;
 
@@ -29,6 +32,8 @@ Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-CI-STALE-RE
 TAP version 13
 # Subtest: [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
 not ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
+  ---
+  type: 'test'
   location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\case-test-rebase.selftest.mjs:208:1'
   failureType: 'testCodeFailure'
   error: |-
@@ -49,6 +54,7 @@ not ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff w
     Test.run (node:internal/test_runner/test:1047:25)
     Test.start (node:internal/test_runner/test:944:17)
     startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
 1..1
 # tests 1
 # suites 0
@@ -57,14 +63,17 @@ not ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff w
 # cancelled 0
 # skipped 0
 # todo 0
+# duration_ms 145.6912
 exit=1 (spawnSync status of the node process)
-
 ## Restored
 scripts/workflow-gates/cli.mjs sha256 0ee1cb5df0c93d2588504eb663a9f0950a0b47f7b2dae5d0c084c5dad70afe37; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
 Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-CI-STALE-REVIEW-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
 TAP version 13
 # Subtest: [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
 ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check
+  ---
+  type: 'test'
+  ...
 1..1
 # tests 1
 # suites 0
@@ -73,5 +82,5 @@ ok 1 - [GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with 
 # cancelled 0
 # skipped 0
 # todo 0
+# duration_ms 392.7486
 exit=0 (spawnSync status of the node process)
-

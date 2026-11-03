@@ -1,0 +1,89 @@
+# Sensitivity run of GOV-944-SENS-RUN-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
+node v22.22.3; platform win32; UTC 2026-11-03T22:24:18.513Z
+contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json
+break spec: docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json sha256 479075985b341815183bc7b29cb591527c3acc1073d40073f9e05477aede3c17
+testName: [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+target: scripts/workflow-gates/cli.mjs digest before 8f64fb403a3496f6c41a0318641e94f0591690c2968688067c2f13c7b472b7fa after 8f64fb403a3496f6c41a0318641e94f0591690c2968688067c2f13c7b472b7fa
+test file: scripts/workflow-gates/sensitivity.selftest.mjs digest before 47fba01e285647aeb3d13070898e78c958f887226e42b21f9918e4eb348b873c after 47fba01e285647aeb3d13070898e78c958f887226e42b21f9918e4eb348b873c
+
+## baseline
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-944-SENS-RUN-DENY\] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing$ scripts/workflow-gates/sensitivity.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+ok 1 - [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+  ---
+  duration_ms: 992.9557
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1055.2326
+--- end TAP
+
+## mutant
+command: NODE_OPTIONS=--import=file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity-register.mjs SENSITIVITY_BREAK=C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task944\sensitivity\GOV-944-SENS-RUN-DENY.break.json node --test --test-reporter=tap --test-name-pattern=^\[GOV-944-SENS-RUN-DENY\] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing$ scripts/workflow-gates/sensitivity.selftest.mjs
+exit code: 1
+--- TAP
+TAP version 13
+# Subtest: [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+not ok 1 - [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+  ---
+  duration_ms: 971.918
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\sensitivity.selftest.mjs:94:1'
+  failureType: 'testCodeFailure'
+  error: 'typeError'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity.selftest.mjs:116:14
+    withFixture (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity.selftest.mjs:60:12)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity.selftest.mjs:112:3)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1060.5841
+--- end TAP
+
+## restored
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-944-SENS-RUN-DENY\] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing$ scripts/workflow-gates/sensitivity.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+ok 1 - [GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing
+  ---
+  duration_ms: 1001.1779
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1062.9653
+--- end TAP

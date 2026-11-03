@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-944-SENS-RUN-DENY",
+  "target": "scripts/workflow-gates/cli.mjs",
+  "find": "&& /code: 'ERR_ASSERTION'/.test(tapResultBlock(mutant.child.stdout, row.testName));",
+  "replace": "&& (true || /code: 'ERR_ASSERTION'/.test(tapResultBlock(mutant.child.stdout, row.testName)));"
+}

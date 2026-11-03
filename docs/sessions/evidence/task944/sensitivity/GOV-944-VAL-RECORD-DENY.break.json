@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-944-VAL-RECORD-DENY",
+  "target": "scripts/workflow-gates/contract.mjs",
+  "find": "if (!SENSITIVITY_LEGACY_TASKS.includes(contract.task)) errors.push",
+  "replace": "if (!SENSITIVITY_LEGACY_TASKS.includes(contract.task) && false) errors.push"
+}

@@ -22,6 +22,8 @@ If the saved route itself is confirmed unexecutable, disable its affected sideca
 Inspect exact collected test names/assertions, fixtures, mocks, target config and allow/deny/error controls under
 `shared/security-testing.md`. Run the mapped/focused checks yourself on the candidate and examine their raw results;
 verify actual collection, no skipped required cases and the intended assertion failure in sensitivity evidence.
+A governance sensitivity record outside the four legacy contracts that lacks method in-memory and its current break
+spec is NEEDS REVISION, and so is any break planted in a live file.
 Mocks prove only their local boundary; source scans do not prove real RLS. Verify synthetic cleanup and forbidden
 effects. Preserve byte/hash restoration proof for a deliberate break, and never mutate a live boundary without its
 task/environment authorization. A proposed break that cannot safely run is missing evidence, not a passing test.

@@ -405,6 +405,29 @@ function governanceCaseErrors(root, value, cases, phase) {
   return errors;
 }
 
+// Task 944 R2 (owner D16, 2026-11-03): the governance contracts whose sensitivity records predate `cli.mjs sensitivity`,
+// by exact repository task path (943 before and after its closure move). A file name alone never matches.
+export const SENSITIVITY_LEGACY_TASKS = Object.freeze([
+  'tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.md',
+  'tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.md',
+  'tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md',
+  'tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md',
+  'tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md',
+]);
+// R2: a non-legacy critical record must be the one `cli.mjs sensitivity` writes: method in-memory and a current break
+// spec of the same case under the evidence tree.
+function inMemoryRecordErrors(root, id, record) {
+  const fail = detail => [`${id}: sensitivity must come from cli.mjs sensitivity (${detail})`];
+  if (record?.method !== 'in-memory') return fail('method is not in-memory');
+  if (typeof record.break !== 'string' || !isEvidencePath(record.break)) return fail('break is not a break spec under docs/sessions/evidence/');
+  let spec;
+  try {
+    if (record.breakSha256 !== digest(root, [record.break])) return fail('breakSha256 does not match the current break spec');
+    spec = JSON.parse(readFileSync(safePath(root, record.break), 'utf8'));
+  } catch { return fail('the break spec is missing or malformed'); }
+  if (spec?.case !== id) return fail(`the break spec is for case ${spec?.case}`);
+  return [];
+}
 // Task 935 R3: `cli.mjs governance-report` writes this record; approval and CI only validate it.
 export function validateGovernanceReport(root, contract, report) {
   const errors = [];
@@ -431,6 +454,7 @@ export function validateGovernanceReport(root, contract, report) {
         && s?.testName === row.testName, `${row.id}: sensitivity requires baseline pass, intended assertion failure, restored pass`);
       try { check(isEvidencePath(s?.artifact || '') && s?.artifactSha256 === digest(root, [s.artifact]), `${row.id}: sensitivity artifact is stale`); safePath(root, s?.artifact); }
       catch { errors.push(`${row.id}: sensitivity artifact is missing or invalid`); }
+      if (!SENSITIVITY_LEGACY_TASKS.includes(contract.task)) errors.push(...inMemoryRecordErrors(root, row.id, s));
     }
   }
   return errors;

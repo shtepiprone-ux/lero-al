@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
+  "cases": [
+    {
+      "id": "GOV-944-SENS-RUN-DENY",
+      "testName": "[GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json",
+      "breakSha256": "479075985b341815183bc7b29cb591527c3acc1073d40073f9e05477aede3c17",
+      "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.txt",
+      "artifactSha256": "22cc21984e5afdd01f34417678404349888112e675a67da0040b2851eb79faa8"
+    },
+    {
+      "id": "GOV-944-VAL-RECORD-DENY",
+      "testName": "[GOV-944-VAL-RECORD-DENY] A non-legacy governance report refuses a critical sensitivity record that cli.mjs sensitivity did not make",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json",
+      "breakSha256": "d5517bc63fafd712109b8252930c18316170c525151c03bb62ef4a2b2802b585",
+      "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.txt",
+      "artifactSha256": "44c9282aa2c214581375bed391af9d70c46e7ab594f40cb709d9785d13e40ec7"
+    },
+    {
+      "id": "GOV-944-HOOK-SYNTAX-DENY",
+      "testName": "[GOV-944-HOOK-SYNTAX-DENY] An Edit or Write that would leave a hook-loaded module unparseable is refused for every role",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json",
+      "breakSha256": "3f6040bb804824dd0c247fc1712b2ea558290a0746655cae04cba4514479bb10",
+      "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt",
+      "artifactSha256": "f0acd22803171971d31b3ed8127f598d08bc11024a0626cb29710747df9a80d7"
+    },
+    {
+      "id": "GOV-944-HOOK-SHELL-FORMS-DENY",
+      "testName": "[GOV-944-HOOK-SHELL-FORMS-DENY] A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json",
+      "breakSha256": "3bf37ba9022878af4c0f5104d05a9586c3720532cbed8b9f631f9a9c0cd7346e",
+      "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt",
+      "artifactSha256": "d151b82444c98d176c2799414048729c9be892b307b551e80df4d430e64763e0"
+    }
+  ]
+}

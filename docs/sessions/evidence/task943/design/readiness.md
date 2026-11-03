@@ -97,3 +97,26 @@ Order: 941 → 943 → Task 931 revision 3 (Sonnet; its case-test rebases need R
 | Fourth self-audit | AC13 inputs traced against R12 and the candidate; R12 (c) and (d) wording | (d) no longer limited to folders inside the root, (c) uses `path.resolve`; AC13 and the case input extended; `review-2.md` "Fourth self-audit" | PASS (EXECUTED) |
 | Independent audit (fresh agent) | `p11-absolute-spelling-probe.mjs` reproduces F1 MSYS/alias-root absolute paths, F2 junction/device/UNC, F3 no 8.3 alias for `hook.mjs`, F4 nested `cd` and `process.chdir` | R12 (a) canonicalises before the outside test (missing drive keeps lexical, C100), (c) raw-text folder words, new (f) quote stripping, AC13 long-named fixture; ledger C87–C100; compatibility rerun: no asserted result changed | PASS (EXECUTED) |
 | C6/C7 | digest `070c5909…bde2a3fb` (after the independent audit; earlier `cff06eba…91fe0c` after the fourth self-audit; earlier `91bce235…1c29a`, `41de5d4a…02bf2`, `4a3ce8a5…46e6`); in-memory `validateContract` ready `[]`; `cli.mjs plan` 941, 943, 931, 937; `check-workflow.mjs`; `publication.mjs --base HEAD` | all exit 0; `0 dependency errors` | PASS (EXECUTED) |
+
+## Revision 3 (Opus, 2026-11-03, the Task 941 review 3 session, which approved 941; native Windows, Node v22.22.3, HEAD b7c3fc9f6; owner D13, D14)
+
+| Check | Source / command | Observation | Result |
+|---|---|---|---|
+| Hole | `node docs/sessions/evidence/task941/review/r3-probe.mjs` (941 review 3) and `node docs/sessions/evidence/task943/design/p14-noclobber-prototype.mjs` (real Git Bash 5.2.37 runs in temporary folders) | the Bash noclobber-override redirection writes its word, also with a space, a `2` prefix, a quoted word and after `cd`, and overwrites `.git/HEAD` from inside `.git`; the hook reports no target before and after 941 and the executor guard allows it | FAIL (found) |
+| Why not 941 | 941 R1 (b) names only `&` as part of a redirection, R2 only `>`/`>>`, and R2 keeps the pre-change result for every other command, whose pattern never matches the operator | the fix is a target rule, the subject of 943 (D13, D14) | design decision |
+| Fix | kickoff R12 (g), AC13 forms and controls, the p14 rerun in AC13 and route step 3, R1 citing C120, case GOV-943-HOOK-TARGET-SPELLING-DENY input and response; claims C108–C120 | quote-aware for parsed commands with (c), raw-text for rejected ones with (c) and (f) | written |
+| Feasibility | `p14-noclobber-run.txt` | the prototype reports every form (lines 9–18), controls unchanged (19–21), guard refusals for its paths (22–23); corpus sha256 `1eb5de48…155b9` (as C103): 2 commands change, 0 with a guarded target; no self-test contains the operator (line 27) | PASS (EXECUTED) |
+| Route | step 2 names the archived 941 sidecar (stage `reviewed`); steps 3 and 5 exclude the 941 review 3 session | the 941 closure is committed with this set by the owner | PASS |
+| C6/C7 (superseded by the self-audit row below) | `cli.mjs hash --task` 943 = sidecar `taskSha256` `0d7b36ca…cbc418`; `cli.mjs plan` 943; `check-kickoff-evidence.mjs --files` 943; `check-mobile-adaptation-contract.mjs --files` 943; `npm run check:kickoff-evidence` | all exit 0, but only for the changed kickoff | PASS (EXECUTED), incomplete |
+
+### Revision 3 self-audit (same session, owner: "check the quality of your work", 2026-11-03)
+
+| Check | Source / command | Observation | Result |
+|---|---|---|---|
+| Locators into 943 (readiness section 1) | `check-kickoff-evidence.mjs --files` on 931, 937 and archived 941; search of every `…Task_943…md:<line>` locator in `tasks`, `docs`, `scripts`, `.claude` | the revision 3 insertions moved the cited 943 lines: 931 C28/C29 and 937 C37 failed; re-pointed to 943 lines 268 and 308, their sidecar task hashes updated; archived 941 C48 (943 line 271 at its review) is skipped by the checker and kept as reviewed history, noted in `review-941.md` | FAIL (found), fixed |
+| Draft during edit (`shared/orchestration-state.md`) | edit sequence of 943, 931, 937 | the sidecars stayed `ready` while their kickoffs were edited instead of `draft` → in-memory check → `ready`; final state validated below | process deviation, recorded |
+| Composition (g) + (c) | `p14-noclobber-run.txt` lines 28–31 (the revision 2 prototype run on the db04c936f hook it was written for, in a temporary root) | (a)–(f) alone report `[]` for every AC13 form of (g); with the word taken as a W1 target (c) gives `D/hook.mjs`, `D/cat`, `.git/head` (C121, C122) | PASS (EXECUTED) |
+| p12 currency | `p12-r12-prototype.mjs` on the current hook | its 941 R1 (b) emulation anchor is absent because 941 revision 2 contains the rule; C101–C106 stay bound to db04c936f; the route never runs p12 | observation |
+| AC13 Git refusal | `scripts/workflow-gates/security-hook.mjs:369` | the Git-metadata test is case-insensitive, so `.git/head` is refused | PASS (ANALYTICAL) |
+| Wording | R12 (g) stream number, AC13 "respectively" | corrected | PASS |
+| C6/C7 final | `cli.mjs hash --task` = sidecar `taskSha256` for 943 `0c338222…4e8399`, 931 `6d0809cc…46895`, 937 `0d4697f2…3e8564`; `cli.mjs plan` 931, 937, 943 and the Sprint 92 record; `check-kickoff-evidence.mjs --files` 931, 937, 943; `npm run check:kickoff-evidence` | see the final run in `docs/sessions/evidence/task941/review/review-941.md` "Self-audit" | PASS (EXECUTED) |

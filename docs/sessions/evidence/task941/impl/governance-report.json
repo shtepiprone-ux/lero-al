@@ -1,8 +1,8 @@
 {
   "version": 1,
   "status": "passed",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
-  "contractSha256": "7d7ababbad48e377285900f12d3af0d254ad4632360b5d2c96893229ea0118e3",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
+  "contractSha256": "ed2d855089b2393e47258ae0e6da372ece70229ec06cee57b28808e2f79f0afc",
   "scopeSha256": "3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5",
   "node": "v22.22.3",
   "platform": "win32",

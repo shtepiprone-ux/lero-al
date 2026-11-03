@@ -125,6 +125,24 @@
     "evidence": "docs/sessions/evidence/task941/review/review-941.md",
     "evidenceSha256": "b464feca525f4cf5a929761abe0f4e11ca559f2b9b8eed8b8e2b581f9198831e",
     "scopeSha256": "3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5",
-    "reportSha256": "8e8e14df09ff96d06624e92d2f989b2accbb13fc2b6f3bc38ed5e03303c49b62"
+    "reportSha256": "8e8e14df09ff96d06624e92d2f989b2accbb13fc2b6f3bc38ed5e03303c49b62",
+    "rebases": [
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json",
+        "evidence": "docs/sessions/evidence/task943/review/scope-rebase-941.md",
+        "evidenceSha256": "62d74b8b1e001995e91c2204d1af1b23945461e4d611622dcf696123c0af1d71",
+        "originalScopeSha256": "3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5",
+        "rebasedScopeSha256": "28fede2a27134a1d64219fcbac25b3ad23a57945f801c2542bf1bc3023036aa3"
+      },
+      {
+        "kind": "tests",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json",
+        "evidence": "docs/sessions/evidence/task943/review/tests-rebase-941.md",
+        "evidenceSha256": "13f1d46c3a9678b59795c3b33a5ff835382ec85bd987571c728c33c70c1e35a1",
+        "originalScopeSha256": "28fede2a27134a1d64219fcbac25b3ad23a57945f801c2542bf1bc3023036aa3",
+        "rebasedScopeSha256": "17e727cdccdca7519b6ec4751b6c3029f1639e52f38d9a4cdb1e07e95b4b2de4"
+      }
+    ]
   }
 }

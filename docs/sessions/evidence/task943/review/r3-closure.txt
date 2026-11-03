@@ -1,0 +1,60 @@
+# Task 943 review 3 (session e50584bc): closure
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T18:38:20.327Z; 3198 ms
+command: node docs/sessions/evidence/task943/review/r2-closure.mjs
+exit 0
+
+## stdout
+943 code base b85f5a66b; scripts/.claude files changed since it: [".claude/rules/create/03-publication.md",".claude/rules/review/03-decision-closure.md",".claude/rules/review/04-contract-rebases.md","scripts/workflow-gates/case-test-rebase.selftest.mjs","scripts/workflow-gates/cli.mjs","scripts/workflow-gates/contract.mjs","scripts/workflow-gates/publication.json","scripts/workflow-gates/security-hook.mjs","scripts/workflow-gates/shell-mutation.selftest.mjs","scripts/workflow-gates/shell-write.selftest.mjs"]
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json
+  latest recorded cfb7e1f248c4f5c78bb0b2ae22065e63409dc0b582f52d12feb4712c14ef7f44; current 57f2f78a67c86177d170475b8afc761652da6762c689bb1929c3c5b02442bf65
+  all listed files at base: cfb7e1f248c4f5c78bb0b2ae22065e63409dc0b582f52d12feb4712c14ef7f44 EQUALS RECORDED (only these files changed)
+    scripts/workflow-gates/security-hook.mjs: in scope true; CHANGED since base
+    scripts/workflow-gates/publication.json: in scope true; CHANGED since base
+    scripts/workflow-gates/contract.mjs: in scope true; CHANGED since base
+    scripts/workflow-gates/cli.mjs: in scope true; CHANGED since base
+    .claude/rules/review/03-decision-closure.md: in scope true; CHANGED since base
+    .claude/rules/create/03-publication.md: in scope true; CHANGED since base
+  listed scope files that are case tests: []; tests files that are case tests: []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json
+  latest recorded 1c4379305cb8b87a53e17897e12454a3f5f906e083e9cb2204769d85b016a58f; current 2ca83fb4fbacc528048b4b62c1ba61ce062a7e15e7b3ddff833f0ede895afae4
+  all listed files at base: 1c4379305cb8b87a53e17897e12454a3f5f906e083e9cb2204769d85b016a58f EQUALS RECORDED (only these files changed)
+    scripts/workflow-gates/security-hook.mjs: in scope true; CHANGED since base
+    scripts/workflow-gates/publication.json: in scope true; CHANGED since base
+    scripts/workflow-gates/contract.mjs: in scope true; CHANGED since base
+    scripts/workflow-gates/cli.mjs: in scope true; CHANGED since base
+    .claude/rules/review/03-decision-closure.md: in scope true; CHANGED since base
+  listed scope files that are case tests: []; tests files that are case tests: []
+tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json
+  latest recorded 3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5; current 17e727cdccdca7519b6ec4751b6c3029f1639e52f38d9a4cdb1e07e95b4b2de4
+  all listed files at base: 3cf59b3205ba848c95ce87460963ed825d2ff6f3a70efda9776996896c42e6a5 EQUALS RECORDED (only these files changed)
+    scripts/workflow-gates/security-hook.mjs: in scope true; CHANGED since base
+    scripts/workflow-gates/publication.json: in scope true; CHANGED since base
+    scripts/workflow-gates/shell-write.selftest.mjs: in scope true; CHANGED since base
+  listed scope files that are case tests: []; tests files that are case tests: ["scripts/workflow-gates/shell-write.selftest.mjs"]
+  intermediate (scope entry rebasedScopeSha256, case test at base): 28fede2a27134a1d64219fcbac25b3ad23a57945f801c2542bf1bc3023036aa3
+935 scopes all six rule files: true
+tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: kind product; stage reviewed; rebases 0; six are rule inputs true; digest with origin/main rule bytes 86039ff1eefef80125883e9ad7c0842ec43207fa567c1ad059afc1583385c78e; review 86039ff1eefef80125883e9ad7c0842ec43207fa567c1ad059afc1583385c78e; MATCH true; current f3d1b17a82730078feeda3c512ea44303ee1aac3e467b37a297b6a60d86def45; integration cases 6
+tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: kind product; stage reviewed; rebases 0; six are rule inputs true; digest with origin/main rule bytes 3c78d47c2a2253e11a01da311285b4acdf8266ea45f3827ad2a120ae834cd7c6; review 3c78d47c2a2253e11a01da311285b4acdf8266ea45f3827ad2a120ae834cd7c6; MATCH true; current 6ee714dbd4c7adb4f1068e2537d6211ec0a253a2f1991b8324c01b28ad96d2ac; integration cases 4
+reviewed contracts: 7
+reviewedFreshnessErrors with nothing selected (14):
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json: Independent review scope is stale
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json: rebases: entry 3: rebasedScopeSha256 is not the current scope digest
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json: Security report scope hash is stale
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json: rebases: entry 3: rebasedScopeSha256 is not the current scope digest
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json: Independent review scope is stale
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json: rebases: entry 1: rebasedScopeSha256 is not the current scope digest
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json: Security report scope hash is stale
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json: rebases: entry 1: rebasedScopeSha256 is not the current scope digest
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Independent review scope is stale
+  tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json: Security report scope hash is stale
+  tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Independent review scope is stale
+  tasks/Sprints/Sprint_78_Task_923_security_record_owner_fixes.security.json: Security report scope hash is stale
+  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Independent review scope is stale
+  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: Security report scope hash is stale
+
+## stderr
+warning: in the working copy of 'docs/sessions/evidence/task859/research-review/r16-ref-dialog-title.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/sessions/evidence/task859/review-16/r16-cards.jsonl', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/sessions/evidence/task859/review-16/r16-check-kickoff-evidence.txt', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/sessions/evidence/task859/review-16/r16-dialogs.jsonl', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/sessions/evidence/task859/review-16/r16-picker.jsonl', CRLF will be replaced by LF the next time Git touches it

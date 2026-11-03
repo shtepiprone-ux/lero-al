@@ -1,9 +1,8 @@
 # Task 935 contract — scope rebase by Task 943 (Task 943 R6, owner decision D9, 2026-11-03)
 
-**DRAFT (owner D19, 2026-11-03): prepared by the withdrawn review 2 session and not applied.** The next fresh approver reruns the verification below, rewrites the first paragraph as its own, and writes the entry.
-
-Written by the independent Task 943 governance approver session (D2, review 2, session 6f2564f3) after the Task 943 review
-block, never by an implementer.
+Written by the independent Task 943 governance approver, review 3 (Opus session `e50584bc`, D2), after the Task 943 review block,
+never by an implementer. This session designed, implemented and reviewed none of the earlier 943 or 944 work; it reran the
+verification below itself (the draft of the withdrawn review 2 session `6f2564f3` was only a template).
 
 - Rebased contract: `tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json`
   (kind `governance`, stage `reviewed`, three earlier `scope` entries; latest recorded digest
@@ -22,8 +21,9 @@ block, never by an implementer.
 - `.claude/rules/review/03-decision-closure.md`
 - `.claude/rules/create/03-publication.md`
 
-## Verification (native Windows, PowerShell 5.1, Node v22.22.3, read-only)
+## Verification (native Windows 11, Node v22.22.3, read-only, this session)
 
-`node docs/sessions/evidence/task943/review/r2-closure.mjs` (`r2-closure-output.txt`): the 935 scope digest with the base contents
-of the six files equals the latest recorded digest (EQUALS RECORDED); each of the six changed since the base; listed files that are
-case tests: none.
+`node test-results/943-r3/run.mjs closure` ran `docs/sessions/evidence/task943/review/r2-closure.mjs` and kept
+`docs/sessions/evidence/task943/review/r3-closure.txt`: the 935 scope digest with the base contents of the six files equals the
+latest recorded digest (`EQUALS RECORDED (only these files changed)`); each of the six `CHANGED since base`; listed files that are
+case tests: `[]`.

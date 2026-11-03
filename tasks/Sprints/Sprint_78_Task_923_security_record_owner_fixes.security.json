@@ -1206,6 +1206,16 @@
     "evidence": "docs/sessions/evidence/task923/review-65/rv65-10-review-decision.md",
     "evidenceSha256": "43b12ed1161e9f8fd47aa176beb2f3399a8727b5999d364f4a27bfbe3b4180f4",
     "scopeSha256": "86039ff1eefef80125883e9ad7c0842ec43207fa567c1ad059afc1583385c78e",
-    "reportSha256": "dd501bcb68283455a64f32b59c09ed583c28f91744572c662ba44b2cd2cf9d58"
+    "reportSha256": "dd501bcb68283455a64f32b59c09ed583c28f91744572c662ba44b2cd2cf9d58",
+    "rebases": [
+      {
+        "kind": "rules",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json",
+        "evidence": "docs/sessions/evidence/task943/review/rules-rebase-923-owner-fixes.md",
+        "evidenceSha256": "c4e4b3cbd37d59aeb8ea6098c04ded872c41b5b0f76a70a9ec25d225a0c11216",
+        "originalScopeSha256": "86039ff1eefef80125883e9ad7c0842ec43207fa567c1ad059afc1583385c78e",
+        "rebasedScopeSha256": "f3d1b17a82730078feeda3c512ea44303ee1aac3e467b37a297b6a60d86def45"
+      }
+    ]
   }
 }

@@ -86,3 +86,28 @@ the revision header says so. Revision 1 does not depend on it: route step 2 stil
 
 Final digests after revision 1: task `952e9c6da647e48b10747937ca2d5ca9dc076b05b9f6ffa8811e829d588d775b`, planDigest
 `604358afaf053405824c0a53e5192ac2f5bc61aa5a007181363e7cd67d487b7b`; `cli.mjs plan` exit 0; `check-kickoff-evidence --files` PASS.
+
+## Revision 2 (Task 943 review 3 session e50584bc, under D18 and D14, 2026-11-03)
+
+Native Windows 11, PowerShell 5.1, Node v22.22.3, cwd `C:\Claude_Code_Projects\lero-al`, reviewed 943 hook sha256
+`f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf` (commit `04545b0ea`). This session is the approver of
+Task 943; it designs this revision only and may neither implement nor approve 944.
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| Finding | `docs/sessions/evidence/task943/review/r3-adversarial.txt` (EXECUTED, 48 write forms and 19 controls chosen by the review) | 47 forms reported; `node -e "require('fs').promises.rm('X')"` reports no target and its executor form is allowed: the R14 (c) qualifier lists `fs.promises.` and `).` but not `).promises.` | confirmed (C71) |
+| Destination | `.claude/rules/review/03-decision-closure.md` R7; owner D18 (943 misses of listed forms go to 944 R8) | a P3 note of an `APPROVED WITH NOTES` review needs an R/AC in a named saved kickoff | R8 (f), AC12 |
+| Feasibility | `node docs/sessions/evidence/task944/design/p15-promises-qualifier-run.mjs` → `p15-promises-qualifier-run.txt` (EXECUTED, exit 0) | p14 pairs plus `p15-promises-qualifier-pairs.json` on a copy: 7 forms the reviewed hook misses report X; 7 executor forms refused (`POLICY-EDIT AUTHORITY REQUIRED`); 6 controls silent; seven hook-importing self-tests unchanged pass; corpus: 0 dropped, 2 commands with added non-guarded targets (the revision 1 result), 0 executor refusals, 0 governance scope files; 1923 ms / 7490 ms on the 5000-folder-change commands; `FAILURES 0` | PASS (C72) |
+| Manifest | `API_QUALIFIER` is read only by `API_ONE` and `API_TWO` in `apiArguments`; the revision 1 pair `R8 (d)` uses it unchanged | one qualifier alternative; no consumer, case or self-test change | PASS |
+| Write authority, route, rebases | sidecar scope and route unchanged | R8 (f) edits only `security-hook.mjs` and adds AC12 inputs to the new `shell-forms.selftest.mjs`, both already in scope | unchanged |
+| Contract | `node test-results/943-r3/digest.mjs <944 sidecar>`; `cli.mjs plan --contract <944 sidecar>`; `node scripts/check-kickoff-evidence.mjs --files <944 kickoff>` | `validateContract` plan `[]`; plan exit 0; PASS, 1 changed active kickoff | PASS |
+
+The evidence receipt of the kickoff now lists C58–C72 and D18; revision 1 had added C58–C70 and D18 without extending it.
+Final digests after revision 2: task `39ef848c595b5b291563011170910a8a4e08df19160f2801f6ba74b5b0800236`, planDigest
+`448fd6dd6eba8c6fa2def3d8f3d06e3f7aa3e409dc72aca7275f22bc8398a755`; `executionStatus` `ready`, stage `planned`.
+
+Process deviation (owner-requested self-audit of the same session, 2026-11-03): `shared/orchestration-state.md` requires the
+affected sidecar to be set to `draft` before an active route is edited. This revision edited the kickoff and the ready sidecar
+directly and validated the final saved pair afterwards (`cli.mjs plan` exit 0, `check-kickoff-evidence` PASS). No executor
+session was started on 944 in between (944 starts only after 943 is committed, route step 2), so no execution could use the
+half-edited route; the final contract above is the one that was validated.

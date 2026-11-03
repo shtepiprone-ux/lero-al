@@ -1,0 +1,133 @@
+# Task 943 review 3 (session e50584bc): sens
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T18:38:04.583Z; 4318 ms
+command: node test-results/943-r3/sens.mjs
+exit 0
+
+## stdout
+live hook sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf; copy f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+## baseline (copy of the final hook): exit 0; hook sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+## mutant - GOV-943-HOOK-NESTED-DENY (AC14): R13 (b) parsed text evaluation dropped: exit 1; hook sha256 3f938c743161bed8dfe7a05fb56e95a4fe1319a9b027d3b82358c5f66123b8e9
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  not ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: "bash -c 'cp docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs': []" | code: 'ERR_ASSERTION'
+## mutant - GOV-943-HOOK-PROGRAM-DENY (AC2): tee removed from the table: exit 1; hook sha256 c6ad30f844fcedce0e8a6e1c5cbf2cf8ea708e83094dedb4d426eac403f8fb2f
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  not ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: 'echo x | tee -a scripts/workflow-gates/fixture-scope.mjs: []' | code: 'ERR_ASSERTION'
+## mutant - GOV-943-HOOK-PRETOOL-DENY (AC3): Copy-Item removed from the table: exit 1; hook sha256 0995ae9f468b600a71541830ac43e77f11c5574fd5ecb0ec5d7a5623af88055f
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  not ok [GOV-943-HOOK-PROGRAM-DENY]
+  not ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  not ok [GOV-943-HOOK-PRETOOL-DENY]
+  not ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  not ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: 'Copy-Item docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs: []' | code: 'ERR_ASSERTION'
+  failure: error: 'Copy-Item -Recurse -Path docs/ydir -Destination scripts/workflow-gates: []' | code: 'ERR_ASSERTION'
+  failure: error: |- | code: 'ERR_ASSERTION'
+  failure: error: |- | code: 'ERR_ASSERTION'
+  failure: error: 'powershell -Command "Copy-Item docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs": []' | code: 'ERR_ASSERTION'
+## mutant - own break: R13 (f) child-process strings not read: exit 1; hook sha256 ad6001960b706c755f0706aae01cc4100361b48ba82b99b4b2d64290644d0620
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  not ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: `node -e "require('child_process').execSync('rm package.json')"` | code: 'ERR_ASSERTION'
+## mutant - own break: R15 prettier removed from OTHER_WRITERS: exit 1; hook sha256 3bff6fb6ec9b3ecad944c4ee695575dda2f4618e9b23d8cddce64df993de3290
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  not ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: 'npx prettier --write scripts/workflow-gates/fixture-scope.mjs: []' | code: 'ERR_ASSERTION'
+## mutant - own break: R12 (d) revision 4 Write/Edit event cwd ignored: exit 1; hook sha256 fc7c0b9d9ae734f647276e1870783dd04e685981f1ad0271e2d81498a9cec510
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  not ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: |- | code: 'ERR_ASSERTION'
+## mutant - own break: R14 (c) generic API names unqualified: exit 1; hook sha256 c6bb89594d08a6198ee6ced9eb79fa9f5f1de31f5c8d943e33e75d5f8d5765ce
+  not ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: |- | code: 'ERR_ASSERTION'
+## mutant - own break: R13 (d) pipeline rule dropped: exit 1; hook sha256 6799ef3b948a64f0f9a652c713681589fe666571f0587fb889ace2f70d2d0716
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  not ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: 'Get-ChildItem scripts/workflow-gates | Remove-Item: []' | code: 'ERR_ASSERTION'
+## mutant - own break: R13 (e) lenient reading dropped: exit 1; hook sha256 be82063e10bb9c9ff4c3775593519ac7e15db7c979cdbccc7aaac04df12b5f00
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  not ok [GOV-943-HOOK-NESTED-DENY]
+  failure: error: "find scripts/workflow-gates -name '*.mjs' -exec sed -i 's/a/b/' {} +: []" | code: 'ERR_ASSERTION'
+## restored: exit 0; hook sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+  ok [GOV-943-HOOK-SOURCE-ALLOW]
+  ok [GOV-943-HOOK-PROGRAM-DENY]
+  ok [GOV-943-HOOK-DIRECTORY-DENY]
+  ok [GOV-943-HOOK-API-DENY]
+  ok [GOV-943-HOOK-PRETOOL-DENY]
+  ok [GOV-943-HOOK-MALFORMED-ERROR]
+  ok [GOV-943-CI-DELETE-DENY]
+  ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  ok [GOV-943-HOOK-NESTED-DENY]
+restored copy equals live: true; live hook sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+
+## stderr

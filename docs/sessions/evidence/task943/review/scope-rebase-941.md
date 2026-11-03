@@ -1,9 +1,9 @@
 # Task 941 contract — scope rebase by Task 943 (Task 943 R6, owner decision D9, 2026-11-03)
 
-**DRAFT (owner D19, 2026-11-03): prepared by the withdrawn review 2 session and not applied.** The next fresh approver reruns the verification below, rewrites the first paragraph as its own, and writes the entry.
-
-Written by the independent Task 943 governance approver session (D2, review 2, session 6f2564f3) after the Task 943 review
-block, never by an implementer. A `tests` entry (`tests-rebase-941.md`) follows this entry.
+Written by the independent Task 943 governance approver, review 3 (Opus session `e50584bc`, D2), after the Task 943 review block,
+never by an implementer. This session designed, implemented and reviewed none of the earlier 943 or 944 work; it reran the
+verification below itself (the draft of the withdrawn review 2 session `6f2564f3` was only a template). A `tests` entry
+(`tests-rebase-941.md`) follows this entry.
 
 - Rebased contract: `tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json`
   (kind `governance`, stage `reviewed`, no earlier rebase; reviewed digest
@@ -21,8 +21,9 @@ block, never by an implementer. A `tests` entry (`tests-rebase-941.md`) follows 
 - `scripts/workflow-gates/security-hook.mjs`
 - `scripts/workflow-gates/publication.json`
 
-## Verification (native Windows, PowerShell 5.1, Node v22.22.3, read-only)
+## Verification (native Windows 11, Node v22.22.3, read-only, this session)
 
-`node docs/sessions/evidence/task943/review/r2-closure.mjs` (`r2-closure-output.txt`): the 941 scope digest with the base contents
-of the three changed files equals the reviewed digest (EQUALS RECORDED); each changed since the base; only the test file is a case
-test.
+`node test-results/943-r3/run.mjs closure` ran `docs/sessions/evidence/task943/review/r2-closure.mjs` and kept
+`docs/sessions/evidence/task943/review/r3-closure.txt`: the 941 scope digest with the base contents of the three changed files
+equals the reviewed digest (`EQUALS RECORDED (only these files changed)`); each `CHANGED since base`; only the test file is a case
+test; intermediate digest `28fede2a27134a1d64219fcbac25b3ad23a57945f801c2542bf1bc3023036aa3`.

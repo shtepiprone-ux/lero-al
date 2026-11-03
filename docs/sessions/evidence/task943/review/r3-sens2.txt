@@ -1,0 +1,37 @@
+# Task 943 review 3 (session e50584bc): sens2
+platform win32 10.0.26300; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-03T19:20:35.573Z; 4785 ms
+command: node test-results/943-r3/sens2.mjs
+exit 0
+
+## stdout
+live hook sha256 f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+artifact GOV-943-HOOK-PROGRAM-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 true; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-HOOK-PRETOOL-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 true; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-TESTS-REBASE-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 false; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-EXEMPT-UNTRACKED-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 true; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-CI-STALE-REVIEW-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 false; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-HOOK-TARGET-SPELLING-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 true; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+artifact GOV-943-HOOK-NESTED-DENY: digest EQUALS sensitivity.json; mentions final hook sha256 true; baseline/mutant/restored passed/failed/passed; failureKind assertion; ERR_ASSERTION in text true
+## baseline - GOV-943-TESTS-REBASE-DENY (AC8): [<id>] presence check skipped: exit 0; ok [GOV-943-TESTS-REBASE-DENY]
+## mutant - GOV-943-TESTS-REBASE-DENY (AC8): [<id>] presence check skipped: exit 1; not ok [GOV-943-TESTS-REBASE-DENY]
+  failure: error: 'case ID removed from the test file' | code: 'ERR_ASSERTION'
+## restored - GOV-943-TESTS-REBASE-DENY (AC8): [<id>] presence check skipped: exit 0; ok [GOV-943-TESTS-REBASE-DENY]
+  restored contract.mjs equals live: true
+## baseline - GOV-943-EXEMPT-UNTRACKED-DENY (AC9): tracked check dropped: exit 0; ok [GOV-943-EXEMPT-UNTRACKED-DENY]
+## mutant - GOV-943-EXEMPT-UNTRACKED-DENY (AC9): tracked check dropped: exit 1; not ok [GOV-943-EXEMPT-UNTRACKED-DENY]
+  failure: error: |- | code: 'ERR_ASSERTION'
+## restored - GOV-943-EXEMPT-UNTRACKED-DENY (AC9): tracked check dropped: exit 0; ok [GOV-943-EXEMPT-UNTRACKED-DENY]
+  restored security-hook.mjs equals live: true
+## baseline - GOV-943-CI-STALE-REVIEW-DENY (AC12): reviewed contracts outside selected skipped: exit 0; ok [GOV-943-CI-STALE-REVIEW-DENY]
+## mutant - GOV-943-CI-STALE-REVIEW-DENY (AC12): reviewed contracts outside selected skipped: exit 1; not ok [GOV-943-CI-STALE-REVIEW-DENY]
+  failure: error: |- | code: 'ERR_ASSERTION'
+## restored - GOV-943-CI-STALE-REVIEW-DENY (AC12): reviewed contracts outside selected skipped: exit 0; ok [GOV-943-CI-STALE-REVIEW-DENY]
+  restored cli.mjs equals live: true
+## baseline - GOV-943-HOOK-TARGET-SPELLING-DENY (AC13): R12 (c) parsed folder change dropped: exit 0; ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+## mutant - GOV-943-HOOK-TARGET-SPELLING-DENY (AC13): R12 (c) parsed folder change dropped: exit 1; not ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  failure: error: 'cd D; cat Y > hook.mjs: ["hook.mjs"]' | code: 'ERR_ASSERTION'
+## restored - GOV-943-HOOK-TARGET-SPELLING-DENY (AC13): R12 (c) parsed folder change dropped: exit 0; ok [GOV-943-HOOK-TARGET-SPELLING-DENY]
+  restored security-hook.mjs equals live: true
+live hook sha256 after f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf
+
+## stderr

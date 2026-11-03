@@ -1090,6 +1090,16 @@
     "evidence": "docs/sessions/evidence/task923/review-65/rv65-10-review-decision.md",
     "evidenceSha256": "43b12ed1161e9f8fd47aa176beb2f3399a8727b5999d364f4a27bfbe3b4180f4",
     "scopeSha256": "3c78d47c2a2253e11a01da311285b4acdf8266ea45f3827ad2a120ae834cd7c6",
-    "reportSha256": "18f7ef3b6a7fedc62b5e3011166ef6eb07664e43b12e3d478b87214661d15021"
+    "reportSha256": "18f7ef3b6a7fedc62b5e3011166ef6eb07664e43b12e3d478b87214661d15021",
+    "rebases": [
+      {
+        "kind": "rules",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json",
+        "evidence": "docs/sessions/evidence/task943/review/rules-rebase-927.md",
+        "evidenceSha256": "d370dc383df82a044b4b2ac84e6857f3e25f79e25e6f89f2a13ec99e4e8098f8",
+        "originalScopeSha256": "3c78d47c2a2253e11a01da311285b4acdf8266ea45f3827ad2a120ae834cd7c6",
+        "rebasedScopeSha256": "6ee714dbd4c7adb4f1068e2537d6211ec0a253a2f1991b8324c01b28ad96d2ac"
+      }
+    ]
   }
 }

@@ -1,0 +1,19 @@
+# Task 944 design baseline p03 (session 3d40df28, 2026-11-03T09:22:05Z), node v22.22.3, native Windows 11, cwd /c/Claude_Code_Projects/lero-al
+HEAD 93612ccead6874a92448fa2a23cf1b8be6da59d8; working tree carries the uncommitted Task 943 implementation (git status --short scripts/workflow-gates below)
+ M scripts/workflow-gates/cli.mjs
+ M scripts/workflow-gates/contract.mjs
+ M scripts/workflow-gates/publication.json
+ M scripts/workflow-gates/security-hook.mjs
+?? scripts/workflow-gates/case-test-rebase.selftest.mjs
+?? scripts/workflow-gates/shell-mutation.selftest.mjs
+Command: node --test --test-reporter=tap scripts/workflow-gates/*.selftest.mjs (tail)
+exit=1
+not ok 174 - [GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely keeps the previous fail-closed detection
+# tests 191
+# suites 0
+# pass 190
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15330.9377

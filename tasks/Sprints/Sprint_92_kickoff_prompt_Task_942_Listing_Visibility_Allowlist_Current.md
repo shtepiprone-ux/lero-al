@@ -1,7 +1,9 @@
 # Task 942 — The listing-visibility gate allowlist matches the reviewed contact-event rule
 
 Sprint 92. P1. QA profile **Q1** (non-UI gate code and its tests, `docs/qa-profiles.md`). Kickoff by Opus, 2026-11-01. Published
-on PR #12 (D7) as the policy half of the red Governance Check job (D8); the product half is Task 937.
+on PR #12 (D7) as the policy half of the red Governance Check job (D8); the product half is Task 937. **Revision 1 (2026-11-03,
+by the Task 944 design session, D14):** the AC2 break runs through `cli.mjs sensitivity` from a saved break spec, never as an edit
+of the live gate (D17, C39); this task starts only after Task 944 is reviewed and committed. Nothing else changed.
 
 ## 1. Mode, task type and rule bundle
 
@@ -81,10 +83,13 @@ Task 940 approval and changes none of the cited files).
 | C36 | FACT | No task contract and no publication-manifest entry names the gate script (executed). | source: `docs/sessions/evidence/task942/design/p06-contract-scope-grep.txt:3-3`; observed: `matches: NONE` |
 | C37 | FACT | The design was made on HEAD ad6e1b08e. | source: `docs/sessions/evidence/task942/design/p00-head.txt:1-1`; observed: `ad6e1b08ec9cf21d29550b037040c02ed6772eae` |
 | C38 | FACT | The pre-write guard's refusal text for Sonnet policy writes. | source: `docs/sessions/evidence/task942/design/sources/scripts__workflow-gates__security-hook.mjs.txt:262-262`; observed: `POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement` |
+| C39 | FACT | The AC2 break text occurs exactly once in the gate script (executed, Task 944 design). | source: `docs/sessions/evidence/task944/design/p06-942-break-text.txt:3-5`; observed: `return ALLOWLIST.some(e => norm === e.path && matchedText.includes(e.fingerprint));` |
 | D1 | OWNER DECISION | Governance tasks are implemented by Opus in a separate session. | owner: 2026-11-01; decision: `Opus, a separate session (Recommended)` |
 | D2 | OWNER DECISION | Approval independence is enforced by the hook. | owner: 2026-11-01; decision: `Yes, the hook blocks (Recommended)` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D8 | OWNER DECISION | Each red CI check gets its own task. | owner: 2026-11-01; decision: `A separate task for each check (Recommended)` |
+| D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it.` |
+| D17 | OWNER DECISION | Task 944 (sensitivity breaks only in memory) is committed on PR #12's branch after Task 943 and before Task 942, so 942 makes its break through the new runner. | owner: 2026-11-03; decision: `Sprint 92, after 943 (Recommended)` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -95,8 +100,9 @@ In scope (the implementer writes exactly these): `scripts/check-listing-visibili
 `scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs`, the stage/implementation/report/sensitivity fields of this
 task's `.security.json`, and the evidence files `docs/sessions/evidence/task942/impl/completion-report.md`,
 `docs/sessions/evidence/task942/impl/governance-report.json`, `docs/sessions/evidence/task942/impl/base-runs.txt`,
-`docs/sessions/evidence/task942/impl/gate-after.txt`, `docs/sessions/evidence/task942/sensitivity/sensitivity.json` and
-`docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt`.
+`docs/sessions/evidence/task942/impl/gate-after.txt`, `docs/sessions/evidence/task942/sensitivity/sensitivity.json`,
+`docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.break.json` and
+`docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt` (the last two written as revision 1 describes).
 
 Out of scope: every product file, including `src/modules/listings/actions/contactEvents.ts` and the detail page (their behaviour is
 the reviewed Task 923 rule, C6, C7); the detector's patterns, block extraction, exclusions and its 34 self-test fixtures; the
@@ -123,12 +129,16 @@ function; the command-line body runs only when the file is the entry point, so a
 - **AC1 [R1].** GOV-942-CI-GATE-ALLOW passes: spawning `node scripts/check-listing-visibility.mjs` from the repository root exits 0
   with `0 violations` and `Allowlist: 8 entries, 0 stale.`; `npm run check:listing-visibility` exits 0 (output saved to
   `docs/sessions/evidence/task942/impl/gate-after.txt`); `npm run check:listing-visibility:verify` reports `34 passed, 0 failed`.
-- **AC2 [R1; R2].** GOV-942-CI-PATH-DENY passes: for the source block `const { data } = await db` / `.from('listings')` /
+- **AC2 [R1; R2; C39; D17].** GOV-942-CI-PATH-DENY passes: for the source block `const { data } = await db` / `.from('listings')` /
   `.select('id')` / `.eq('id', id)` / `.eq('status', 'active')` / `.maybeSingle()`, `detectVisibilityViolations` returns `[]` for
   path `src/modules/listings/actions/contactEvents.ts` and exactly one violation at line 5 for
   `src/modules/listings/actions/otherAction.ts` and for `src/app/[locale]/listings/[slug]/page.tsx`; `ALLOWLIST` has no entry for
   that page and exactly one contact-event entry with fingerprint `.eq('status', 'active')`. Sensitivity: making the allowlist
-  match by fingerprint alone (ignoring the path) fails GOV-942-CI-PATH-DENY with an assertion; restored passes.
+  match by fingerprint alone (ignoring the path) fails GOV-942-CI-PATH-DENY with an assertion; restored passes. The break is the
+  spec `docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.break.json` =
+  `{ "version": 1, "case": "GOV-942-CI-PATH-DENY", "target": "scripts/check-listing-visibility.mjs", "find": "norm === e.path && ", "replace": "" }`
+  (C39), run with `node scripts/workflow-gates/cli.mjs sensitivity --contract <this sidecar> --break <that spec>` (Task 944 R1),
+  which writes the artifact and the record with `method: 'in-memory'`; the live gate file is never edited for the break.
 - **AC3 [R2].** GOV-942-CI-STALE-ERROR passes: `staleAllowlistEntries` with the current `ALLOWLIST` plus the old contact-event
   entry (C14) and a reader of the repository files returns exactly the old entry; an entry whose reader returns `null`, and one
   whose reader throws, are returned (fail closed); an entry whose fingerprint appears only outside a `from('listings')` block is
@@ -155,21 +165,22 @@ function; the command-line body runs only when the file is the entry point, so a
 | Database/integrations | Not applicable: the gate reads source files only; no database, Storage, Realtime or provider path. |
 | Cases | The four GOV-942 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
 | Fixtures and environment | The repository source tree read-only and in-memory source strings; no temporary writes in the repository, no credentials, no network. |
-| Sensitivity proof | Critical case GOV-942-CI-PATH-DENY: the break named in AC2; baseline pass, isolated break failing with an assertion, restored pass; artifact `docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt`. |
+| Sensitivity proof | Critical case GOV-942-CI-PATH-DENY: the break named in AC2, as the saved break spec run by `cli.mjs sensitivity` (in memory, D17); baseline pass, isolated break failing with an assertion, restored pass; artifact `docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt`. |
 | Execution | `node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json`, then `cli.mjs verify` on the same path; native Windows PowerShell 5.1, Node 22.22.3; QA Q1. |
 
 ## 6. Ordered route
 
 1. **Owner** (separate PowerShell window, `C:\Claude_Code_Projects\lero-al`): stay on `task/935-governance-approval-route` (D7);
    commit this kickoff set with the command Opus gives.
-2. **Prerequisite, before the first write of step 3:** `git status --short scripts` prints nothing (no other governance task's
-   implementation, such as Task 941's, is uncommitted in the tree). Otherwise wait until that task's commit; do not mix two
-   governance implementations in one working tree.
+2. **Prerequisite, before the first write of step 3:** Task 944 is reviewed and committed (D17), and `git status --short scripts`
+   prints nothing (no other governance task's implementation, such as Task 943's or 944's, is uncommitted in the tree). Otherwise
+   wait until that task's commit; do not mix two governance implementations in one working tree.
 3. **Opus implementer, fresh session** (D1): read this kickoff and its bundle; save the base runs of
    `node scripts/check-listing-visibility.mjs` (exit 1, C3), `npm run check:listing-visibility:verify` and
    `node scripts/workflow-gates/selftests.mjs` to `docs/sessions/evidence/task942/impl/base-runs.txt` before the first write.
    Implement R1 and R2, then R3 with the four cases. Record `implementation: { "role": "Opus" }`, stage `implemented`, `report`
-   and `sensitivity` in the sidecar; run the AC2 sensitivity break and keep its artifact.
+   and `sensitivity` in the sidecar; write the AC2 break spec and run it with `cli.mjs sensitivity` (never edit the gate to plant
+   the break); keep the artifact and record it writes.
 4. Run `cli.mjs governance-report` and every AC command; write the completion report; end with
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the owner. No push.
 5. **Opus approver, another fresh session** (D2): review R1–R3; on approval write the `review` block and stage `reviewed`, and hand
@@ -192,4 +203,4 @@ assertion; base and final gate and self-test totals; proof that no existing self
 | `git-publication.md` | Task-branch commit on PR #12's branch (D7); merge only after green checks. |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38; owner decisions: D1, D2, D7, D8; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39; owner decisions: D1, D2, D7, D8, D14, D17; blocked claims: NONE.

@@ -11,6 +11,10 @@ import { validateDiff } from './cli.mjs';
 const RECEIPT = 'tasks/gov_kickoff.security.json';
 const X = 'scripts/workflow-gates/example.mjs';
 const Y = 'scripts/workflow-gates/reader.mjs';
+// Task 943 revision 4 (R1, C123-C127): `sed -i` really edits its second file positional `writeFileSync` in these two
+// parseable commands, which Task 943 R2 reports after the pre-change result.
+const K1 = new Set([`sed -i 's/a/b/' ${X} writeFileSync`, `sed -n 1p -i>o.txt ${X} writeFileSync`]);
+const expectedTargets = (root, command) => [...previousTargets(root, command), ...(K1.has(command) ? ['writeFileSync'] : [])];
 
 function withRoot(fn) {
   const root = mkdtempSync(join(tmpdir(), 'lero-shell-write-'));
@@ -124,7 +128,7 @@ test('[GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely 
     `rg --pre-glob x a ${X} writeFileSync`, `rg --hostname-bin ${X} a writeFileSync`, `sed -n 1w ${X} ${Y} writeFileSync`,
     `git grep --open=x a ${X} writeFileSync`, `git grep -lOx a ${X} writeFileSync`]) {
     assert.equal(isReadOnlyShellCommand(command), false, command);
-    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), command);
+    assert.deepEqual(shellWriteTargets(root, command), expectedTargets(root, command), command);
     assert.ok(shellWriteTargets(root, command).includes(X), command);
   }
   // Revision 1 (C35-C46, C55-C72): every R1 (a) form and every R1 (c)-(d) form the review measured, each with X and a write word.
@@ -173,7 +177,7 @@ test('[GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely 
   ];
   for (const command of revision1) {
     assert.equal(isReadOnlyShellCommand(command), false, command);
-    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), command);
+    assert.deepEqual(shellWriteTargets(root, command), expectedTargets(root, command), command);
     assert.ok(shellWriteTargets(root, command).includes(X), command);
   }
   // R1 (a) is an exact allowlist: every other ASCII character outside quotes, and also `$`, `\` and `'` inside double quotes, is refused.

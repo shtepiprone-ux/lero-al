@@ -1,0 +1,75 @@
+# Sensitivity proof GOV-943-EXEMPT-UNTRACKED-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC9): drop the R8 tracked check from the exemption loop. Applied and restored with the Edit tool on scripts/workflow-gates/security-hook.mjs; `node --check` ran after each edit.
+Original: if (repository && !tracked(path)) continue;
+Mutant:   if (/* SENSITIVITY BREAK */ false && repository && !tracked(path)) continue;
+Final run on the final source (an earlier run was repeated after later implementation changes).
+## Baseline
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-EXEMPT-UNTRACKED-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+ok 1 - [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+
+Mutant lines as applied:
+644:      if (/* SENSITIVITY BREAK */ false && repository && !tracked(path)) continue;
+
+## Mutant
+scripts/workflow-gates/security-hook.mjs sha256 902f0b58e7ea31ff244745ac99e8e513380dcf2279c681a0c1d3fb9c7a16a73a; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-EXEMPT-UNTRACKED-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+not ok 1 - [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\case-test-rebase.selftest.mjs:169:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /GOVERNANCE INDEPENDENCE: this session wrote tasks\/product_kickoff\.security\.json/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/case-test-rebase.selftest.mjs:190:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+exit=1 (spawnSync status of the node process)
+
+## Restored
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-EXEMPT-UNTRACKED-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+ok 1 - [GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+

@@ -36,6 +36,15 @@ Use one decision only:
   adaptation proof;
 - `PARTIALLY VERIFIED` or `BLOCKED` when evidence/access cannot support a final verdict.
 
+Before an `APPROVED WITH NOTES` verdict, every note is fixed in this cycle, written as an R/AC into a named saved
+kickoff (its path in the note), or a `BLOCKED` owner question; a note kept only in a review file is an incomplete
+review. A task whose objective is a CI job is approved only after `ci-status.mjs --pr <n>` (or exact-SHA
+`ci-status.mjs`) shows that job green on the reviewed SHA; before that the decision is `PARTIALLY VERIFIED`.
+Owner D14 (2026-11-02): a design, review or self-audit session writes and verifies every kickoff revision, new route
+and cross-task text correction it finds necessary before its final handoff, or names it `BLOCKED` with the missing
+owner decision; a final report that lists such work as not yet done is an incomplete handoff, and a `draft` sidecar
+is not a substitute for the revised text.
+
 For an accepted intermediate stage with outstanding assigned implementation/evidence, use task-level
 `PARTIALLY VERIFIED` and identify the accepted scope. It permits a commit-only design handoff once the next route
 is saved and verified; it is not whole-task approval and permits no implementation commit/push. If a concrete
@@ -58,16 +67,8 @@ tests, false-positive sensitivity proof, or substituted mock evidence for a requ
 Use `NEEDS REVISION` for deficient tests/implementation; use `PARTIALLY VERIFIED`/`BLOCKED` for genuinely unavailable
 runtime evidence. Never infer an executable CI gate or release readiness from the presence of these Markdown rules.
 
-Governance approval path (owner decisions 2026-11-01, Task 935): a `governance` contract is approved only by an Opus
-session that wrote none of its scope files; the Stop hook refuses `APPROVED` from an implementing session. Rerun
-`cli.mjs governance-report`, then write the `review` block and stage `reviewed`. A reviewed contract stale only through
-rule files of this change gets a `rules` entry in `review.rebases` (`## Changed rule files` evidence; an existing
-`review.rulesRebase` is never rewritten) from you, never from the implementer; then recompute the review hashes and
-run `cli.mjs diff --phase release` before the publication handoff.
-Scope rebase (owner D9, Task 940): when an approved task changed files of another reviewed contract's scope, the
-approver of that task (never its implementer) appends a `scope` entry to that contract's `review.rebases` after its
-own review block, with `## Changed scope files` evidence, then runs `cli.mjs diff --phase release`. Tests of that
-contract's cases and runtime files are never rebased.
+Before approving a `governance` contract or writing a `rules`, `scope` or `tests` rebase entry, read and apply
+[04-contract-rebases.md](04-contract-rebases.md).
 
 For `NEEDS REVISION`, disable a confirmed unusable saved route as `shared/orchestration-state.md` requires, then
 investigate and persist the consolidated, verified correction within this already authorized review cycle. Do not

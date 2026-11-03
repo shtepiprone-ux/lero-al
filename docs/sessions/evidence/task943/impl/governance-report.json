@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "status": "failed",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
+  "contractSha256": "8f8eb8cb9fe77afe49657bb72375ff77caafe6259ab32ad8d25ed3f41a6a5bc7",
+  "scopeSha256": "7f45fcc908af9dbb0f3bb124143e7149a7120f79f3495a0aa487ec125bbcd5fe",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "cases": [
+    {
+      "id": "GOV-943-HOOK-SOURCE-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-SOURCE-ALLOW] Reading a scope file as the source of a copy, link or redirection input is not a write of it"
+    },
+    {
+      "id": "GOV-943-HOOK-PROGRAM-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written",
+      "sensitivity": {
+        "id": "GOV-943-HOOK-PROGRAM-DENY",
+        "testName": "[GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PROGRAM-DENY.txt",
+        "artifactSha256": "fbc228cefcb2080ea3d3e14ad735c326b8abc8adb0556c685888af99467c72d9"
+      }
+    },
+    {
+      "id": "GOV-943-HOOK-DIRECTORY-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-DIRECTORY-DENY] Deleting, moving or copying into a directory counts every affected file under it"
+    },
+    {
+      "id": "GOV-943-HOOK-API-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-API-DENY] File-changing Node, .NET and Python APIs in a command are recognised as write words"
+    },
+    {
+      "id": "GOV-943-HOOK-PRETOOL-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item",
+      "sensitivity": {
+        "id": "GOV-943-HOOK-PRETOOL-DENY",
+        "testName": "[GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-PRETOOL-DENY.txt",
+        "artifactSha256": "8ca5dacb51f26641fc27f69124a149b8454ec3aaac605ef8cefcef558a641d77"
+      }
+    },
+    {
+      "id": "GOV-943-HOOK-MALFORMED-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-MALFORMED-ERROR] Incomplete or unparseable mutating commands never throw and fail closed"
+    },
+    {
+      "id": "GOV-943-CI-DELETE-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-CI-DELETE-DENY] CI refuses a deleted hook file outside every changed governance contract scope"
+    },
+    {
+      "id": "GOV-943-HOOK-TARGET-SPELLING-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it",
+      "sensitivity": {
+        "id": "GOV-943-HOOK-TARGET-SPELLING-DENY",
+        "testName": "[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-TARGET-SPELLING-DENY.txt",
+        "artifactSha256": "9b0b3df59b58f3a63fea64b25b31c89601620a4a3d8800818ac219b9ed403109"
+      }
+    },
+    {
+      "id": "GOV-943-TESTS-REBASE-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/case-test-rebase.selftest.mjs",
+      "testName": "[GOV-943-TESTS-REBASE-ALLOW] A later reviewed contract may rebase a changed case test of a reviewed contract when every case of that file keeps its ID and test name and is named in the evidence"
+    },
+    {
+      "id": "GOV-943-TESTS-REBASE-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/case-test-rebase.selftest.mjs",
+      "testName": "[GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test",
+      "sensitivity": {
+        "id": "GOV-943-TESTS-REBASE-DENY",
+        "testName": "[GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-TESTS-REBASE-DENY.txt",
+        "artifactSha256": "b009c73c11685c5b21364c88bad041cf5fa5823857bb2adef07fd4dc6f5e48e1"
+      }
+    },
+    {
+      "id": "GOV-943-TESTS-REBASE-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/case-test-rebase.selftest.mjs",
+      "testName": "[GOV-943-TESTS-REBASE-ERROR] A tests entry with malformed evidence or chain fields is an error, never an exemption"
+    },
+    {
+      "id": "GOV-943-EXEMPT-UNTRACKED-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/case-test-rebase.selftest.mjs",
+      "testName": "[GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check",
+      "sensitivity": {
+        "id": "GOV-943-EXEMPT-UNTRACKED-DENY",
+        "testName": "[GOV-943-EXEMPT-UNTRACKED-DENY] Only a contract tracked in Git at HEAD can exempt an approver's rule-rebase write from the independence check",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-EXEMPT-UNTRACKED-DENY.txt",
+        "artifactSha256": "d6cd42b6237f68f21d95574eeec0706676a9f7e7d8ba228ee7094c469e41f66d"
+      }
+    },
+    {
+      "id": "GOV-943-CI-STALE-REVIEW-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/case-test-rebase.selftest.mjs",
+      "testName": "[GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check",
+      "sensitivity": {
+        "id": "GOV-943-CI-STALE-REVIEW-DENY",
+        "testName": "[GOV-943-CI-STALE-REVIEW-DENY] A reviewed contract outside the diff with a stale review digest fails the release check",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "artifact": "docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt",
+        "artifactSha256": "2c6b8c0bd0e1814011aa382974dca6f0a7f37c11a91dfa36c4a3ea032e461c60"
+      }
+    }
+  ],
+  "errors": [
+    "contract: Execution status must be ready; draft or blocked contracts cannot authorize execution or publication"
+  ]
+}

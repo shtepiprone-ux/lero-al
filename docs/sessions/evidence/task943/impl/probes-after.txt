@@ -1,0 +1,159 @@
+# Task 943 probes after the implementation (Opus governance implementer, session 1450b70d, 2026-11-03)
+HEAD 93612ccead6874a92448fa2a23cf1b8be6da59d8 with the working tree; node v22.22.3; platform win32
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd
+
+## p01-undetected-writes-probe (run as a copy whose save into the design folder prints to stdout instead; design source sha256 356fff06bfd55d168fa03cc60d5067a10888e3cc0caf3283c49823e1f4aad560)
+platform win32; node v22.22.3; root C:\Claude_Code_Projects\lero-al
+cp: targets ["scripts/workflow-gates/cli.mjs"]
+mv (destination): targets ["docs/sessions/evidence/task943/design/p01-undetected-writes-probe.mjs","scripts/workflow-gates/cli.mjs"]
+mv (source): targets ["scripts/workflow-gates/cli.mjs","docs/moved.mjs"]
+tee: targets ["scripts/workflow-gates/cli.mjs"]
+sed -i: targets ["scripts/workflow-gates/cli.mjs"]
+rm: targets ["scripts/workflow-gates/cli.mjs"]
+touch: targets ["scripts/workflow-gates/cli.mjs"]
+ln -s: targets ["scripts/workflow-gates/cli.mjs"]
+install: targets ["scripts/workflow-gates/cli.mjs"]
+dd of=: targets ["scripts/workflow-gates/cli.mjs"]
+Copy-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Move-Item: targets ["scripts/workflow-gates/cli.mjs","docs/moved.mjs"]
+Remove-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Rename-Item: targets ["scripts/workflow-gates/cli.mjs","scripts/workflow-gates/other.mjs"]
+New-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Clear-Content: targets ["scripts/workflow-gates/cli.mjs"]
+node fs.copyFileSync: targets ["docs/sessions/evidence/task943/design/p01-undetected-writes-probe.mjs","scripts/workflow-gates/cli.mjs"]
+node fs.rmSync: targets ["scripts/workflow-gates/cli.mjs"]
+node fs.appendFileSync: targets ["scripts/workflow-gates/cli.mjs"]
+.NET WriteAllText: targets ["scripts/workflow-gates/cli.mjs"]
+control: Set-Content (detected today): targets ["scripts/workflow-gates/cli.mjs","x"]
+governanceIndependenceErrors(940 contract, transcript of every command above except the control): ["GOVERNANCE INDEPENDENCE: this session wrote scripts/workflow-gates/cli.mjs; an implementing session cannot approve (owner decision 2026-11-01)"]
+platform win32; node v22.22.3; root C:\Claude_Code_Projects\lero-al
+cp: targets ["scripts/workflow-gates/cli.mjs"]
+mv (destination): targets ["docs/sessions/evidence/task943/design/p01-undetected-writes-probe.mjs","scripts/workflow-gates/cli.mjs"]
+mv (source): targets ["scripts/workflow-gates/cli.mjs","docs/moved.mjs"]
+tee: targets ["scripts/workflow-gates/cli.mjs"]
+sed -i: targets ["scripts/workflow-gates/cli.mjs"]
+rm: targets ["scripts/workflow-gates/cli.mjs"]
+touch: targets ["scripts/workflow-gates/cli.mjs"]
+ln -s: targets ["scripts/workflow-gates/cli.mjs"]
+install: targets ["scripts/workflow-gates/cli.mjs"]
+dd of=: targets ["scripts/workflow-gates/cli.mjs"]
+Copy-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Move-Item: targets ["scripts/workflow-gates/cli.mjs","docs/moved.mjs"]
+Remove-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Rename-Item: targets ["scripts/workflow-gates/cli.mjs","scripts/workflow-gates/other.mjs"]
+New-Item: targets ["scripts/workflow-gates/cli.mjs"]
+Clear-Content: targets ["scripts/workflow-gates/cli.mjs"]
+node fs.copyFileSync: targets ["docs/sessions/evidence/task943/design/p01-undetected-writes-probe.mjs","scripts/workflow-gates/cli.mjs"]
+node fs.rmSync: targets ["scripts/workflow-gates/cli.mjs"]
+node fs.appendFileSync: targets ["scripts/workflow-gates/cli.mjs"]
+.NET WriteAllText: targets ["scripts/workflow-gates/cli.mjs"]
+control: Set-Content (detected today): targets ["scripts/workflow-gates/cli.mjs","x"]
+governanceIndependenceErrors(940 contract, transcript of every command above except the control): ["GOVERNANCE INDEPENDENCE: this session wrote scripts/workflow-gates/cli.mjs; an implementing session cannot approve (owner decision 2026-11-01)"]
+exit=0
+
+## p02-pretool-probe (run as a copy whose save into the design folder prints to stdout instead; design source sha256 4c8ad3ef616981eb4e0db726a7945daf19899b8ab64e31d53a9abc85c43bd22a)
+platform win32; node v22.22.3
+executor cp into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor sed -i on a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor Copy-Item into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor cp into a product file: ["SECURITY TEST CONTRACT MISSING: load a valid saved task contract for these exact paths, then emit SECURITY TASK PREFLIGHT COMPLETE - contract: tasks/<kickoff basename>.security.json. No valid receipt: run `node scripts/workflow-gates/cli.mjs receipt --contract <path>` through the PowerShell tool for the current task."]
+control: executor Set-Content into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+platform win32; node v22.22.3
+executor cp into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor sed -i on a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor Copy-Item into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+executor cp into a product file: ["SECURITY TEST CONTRACT MISSING: load a valid saved task contract for these exact paths, then emit SECURITY TASK PREFLIGHT COMPLETE - contract: tasks/<kickoff basename>.security.json. No valid receipt: run `node scripts/workflow-gates/cli.mjs receipt --contract <path>` through the PowerShell tool for the current task."]
+control: executor Set-Content into a policy file: ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+exit=0
+
+## p09-target-spelling-probe (run unchanged from the design folder; design source sha256 361ba5b19d9b7f97fce7b0edeaeff8e571bd2f8a907ce4d0d062c5f859cf14ef)
+node v22.22.3; GNU bash, version 5.2.37(1)-release (x86_64-pc-msys); hook sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd
+T1-glob bash 'cat Y > D/hoo?.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T1-glob powershell 'Get-Content Y > D/hoo?.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T1-glob hook 'cat Y > scripts/workflow-gates/security-hoo?.mjs' | targets=["scripts/workflow-gates/security-hoo?.mjs","scripts/workflow-gates/security-hook.mjs"]
+T1-glob node fs.globSync('scripts/workflow-gates/security-hoo?.mjs') = ["scripts/workflow-gates/security-hook.mjs"]
+T2-cd bash 'cd D; cat Y > hook.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T2-cd bash 'cd D && echo x > hook.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T2-cd powershell 'Set-Location D; Get-Content Y > hook.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T2-cd powershell 'Push-Location D; Set-Content hook.mjs x' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T2-cd hook 'cd scripts/workflow-gates; cat Y > security-hook.mjs' | targets=["security-hook.mjs","scripts/workflow-gates/security-hook.mjs"]
+T2-cd hook 'cd scripts/workflow-gates && echo x > security-hook.mjs' | targets=["security-hook.mjs","scripts/workflow-gates/security-hook.mjs"]
+T2-cd hook 'Push-Location scripts/workflow-gates; Set-Content security-hook.mjs x' | targets=["security-hook.mjs","x","scripts/workflow-gates/security-hook.mjs","scripts/workflow-gates/x"]
+T3-cwd hook independence, entry cwd "<root>/scripts/workflow-gates", 'echo x > security-hook.mjs' | errors=1
+T3-cwd hook independence control, entry cwd <root>, 'echo x > scripts/workflow-gates/security-hook.mjs' | errors=1
+T4-short fixture short name of LongFileName.mjs: LONGFI~1.MJS
+T4-short bash 'cat Y > D/LONGFI~1.MJS' | real: D/hook.mjs=old; D/LongFileName.mjs=changed; D=["hook.mjs","LongFileName.mjs"]
+T4-short powershell 'Get-Content Y > D/LONGFI~1.MJS' | real: D/hook.mjs=old; D/LongFileName.mjs=changed; D=["hook.mjs","LongFileName.mjs"]
+T4-short project short names: security-hook.mjs=SECURI~2.MJS; workflow-gates=WORKFL~1
+T4-short hook "scripts/workflow-gates/SECURI~2.MJS" | shell targets=["scripts/workflow-gates/security-hook.mjs"] | realpathSync="scripts/workflow-gates/SECURI~2.MJS" | realpathSync.native="scripts/workflow-gates/security-hook.mjs"
+T4-short hook independence for a Write tool call to "scripts/workflow-gates/SECURI~2.MJS" on the project root | errors=1
+T4-short hook independence control for a Shell redirection to "scripts/workflow-gates/security-hook.mjs" on the project root | errors=1
+T4-short hook "scripts/WORKFL~1/security-hook.mjs" | shell targets=["scripts/workflow-gates/security-hook.mjs"] | realpathSync="scripts/WORKFL~1/security-hook.mjs" | realpathSync.native="scripts/workflow-gates/security-hook.mjs"
+T4-short hook independence for a Write tool call to "scripts/WORKFL~1/security-hook.mjs" on the project root | errors=1
+T4-short hook independence control for a Shell redirection to "scripts/workflow-gates/security-hook.mjs" on the project root | errors=1
+T5-dot powershell 'Get-Content Y > D/hook.mjs.' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T5-dot powershell 'Get-Content Y > "D/hook.mjs. ."' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T5-dot powershell 'Get-Content Y > D./hook.mjs' | real: D/hook.mjs=changed; D/LongFileName.mjs=old; D=["hook.mjs","LongFileName.mjs"]
+T5-dot bash 'cat Y > D/hook.mjs.' | real: D/hook.mjs=old; D/LongFileName.mjs=old; D=["hook.mjs","hook.mjs.","LongFileName.mjs"]
+T5-dot hook 'Get-Content Y > scripts/workflow-gates/security-hook.mjs.' | targets=["scripts/workflow-gates/security-hook.mjs"]
+T5-dot hook 'Get-Content Y > scripts/workflow-gates./security-hook.mjs' | targets=["scripts/workflow-gates/security-hook.mjs"]
+T5-dot node existsSync("scripts/workflow-gates/security-hook.mjs.")=false
+T6-root hook "Set-Content package.json x" | targets=["package.json","x"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "Set-Content -Path next.config.ts -Value x" | targets=["next.config.ts"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "Add-Content tsconfig.json x" | targets=["tsconfig.json","x"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "'x' | Out-File -FilePath package.json" | targets=["package.json"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "node -e \"require('fs').writeFileSync('package.json','x')\"" | targets=["package.json"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "Set-Content src/example.ts x" | targets=["src/example.ts","x"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+T6-root hook "echo x > package.json" | targets=["package.json"] | executor PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+exit=0
+
+## p11-absolute-spelling-probe (run unchanged from the design folder; design source sha256 f0366df871824ff1ceacc541c39c3584537bb8bf9292d7c7cde6a1f708cb9c5d)
+node v22.22.3
+fixture short names: root=LONGFI~1; hook.mjs=null; LongScopeFileName.mjs=LONGSC~1.MJS
+F1-msys-absolute | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F1-short-root-absolute | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F1-write-tool-short-root | independence errors=1
+F2-junction | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F2-device-dot | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F2-device-question | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F2-unc-admin-share | real: D/hook.mjs=changed | targets=["D/hook.mjs"] | independence errors=1
+F4-nested-bash | real: D/hook.mjs=changed | targets=["hook.mjs'","D/hook.mjs'","hook.mjs","D/hook.mjs"] | independence errors=1
+F4-nested-cmd | real: D/hook.mjs=changed | targets=["hook.mjs\"","D/hook.mjs\"","hook.mjs","D/hook.mjs"] | independence errors=1
+F4-node-chdir | real: D/hook.mjs=changed | targets=["hook.mjs","D/hook.mjs"] | independence errors=1
+real-root executor "echo x > /c<root>/package.json" | targets=["package.json"] | PreToolUse=["SECURITY TEST CONTRACT MISSING"]
+real-root executor "echo x > 'C:\\CLAUDE~2/lero-al/scripts/workflow-gates/security-hook.mjs'" | targets=["scripts/workflow-gates/security-hook.mjs"] | PreToolUse=["POLICY-EDIT AUTHORITY REQUIRED"]
+real-root short names: project folder=none; parent folder=CLAUDE~2
+exit=0
+
+## p14-noclobber-prototype (run unchanged from the design folder; design source sha256 d9e5831fd3626c227e8da5b4259fcc80f082779364a24ba9cde7892fa0a48c75)
+HEAD 93612ccead6874a92448fa2a23cf1b8be6da59d8; node v22.22.3
+real bash | noclobber-word | "grep -c a Y >|out" | files=["Y","out","s/Y"]
+real bash | noclobber-space | "grep -c a Y >| out" | files=["Y","out","s/Y"]
+real bash | noclobber-stderr | "grep -c a Y 2>|err" | files=["Y","err","s/Y"]
+real bash | noclobber-quoted | "grep -c a Y >|'q t'" | files=["Y","q t","s/Y"]
+real bash | noclobber-after-cd | "cd s; grep -c a Y >|out" | files=["Y","s/Y","s/out"]
+real bash | noclobber-set-o | "set -o noclobber; echo x > Y; echo x >| Y; cat Y > out" | files=["Y","out","s/Y"]
+real bash | quoted-control | "grep -c '>|out' Y" | files=["Y","s/Y"]
+classify | read-only: target is a program name | readOnly=true | current=["cat"] | prototype=["cat"]
+classify | read-only: program name after cd (R12 (c) resolves it against .git) | readOnly=true | current=["head",".git/head"] | prototype=["head",".git/head"]
+classify | read-only: quoted program name | readOnly=true | current=["ls"] | prototype=["ls"]
+classify | not read-only: word target | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs","out"] | prototype=["scripts/workflow-gates/security-hook.mjs","out"]
+classify | read-only space | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs"] | prototype=["scripts/workflow-gates/security-hook.mjs"]
+classify | read-only stderr | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs"] | prototype=["scripts/workflow-gates/security-hook.mjs"]
+classify | read-only quoted target | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs"] | prototype=["scripts/workflow-gates/security-hook.mjs"]
+classify | not read-only | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs"] | prototype=["scripts/workflow-gates/security-hook.mjs"]
+classify | not read-only, write word | readOnly=false | current=["scripts/workflow-gates/security-hook.mjs","Set-Content"] | prototype=["scripts/workflow-gates/security-hook.mjs","Set-Content"]
+classify | git metadata | readOnly=false | current=[".git/HEAD"] | prototype=[".git/HEAD"]
+classify | control: quoted in a read-only grep | readOnly=true | current=[] | prototype=[]
+classify | control: plain pipe | readOnly=true | current=[] | prototype=[]
+classify | control: > only | readOnly=true | current=["out.txt"] | prototype=["out.txt"]
+guard | "grep -c a README.md >| .git/HEAD" | current=["OWNER GIT REQUIRED: agents cannot write Git metadata"] | the same paths as a > target=OWNER GIT REQUIRED: agents cannot write Git metadata
+guard | "echo x >| scripts/workflow-gates/security-hook.mjs" | current=["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"] | the same paths as a > target=POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement
+corpus | 2318 commands, sha256 1eb5de48147f002a02d0f2f81530b6d544736980098b4c0a9db7080c5f0155b9 | commands whose result changes 0 | of them with an added policy, product, tasks, docs or .git target 0
+selftests | 15 self-test files | files containing the noclobber operator: ["shell-mutation.selftest.mjs"]
+composition | "cd D; cat ../Y >| hook.mjs" | p12 as written=[] | p12 with the >| read as >=["hook.mjs","D/hook.mjs"]
+composition | "cd D; grep -c a ../Y >|cat" | p12 as written=[] | p12 with the >| read as >=["cat","D/cat"]
+composition | "cd .git; grep -c a ../README.md >|head" | p12 as written=[] | p12 with the >| read as >=["head",".git/head"]
+composition | "cat Y >| D/hook.mjs" | p12 as written=[] | p12 with the >| read as >=["D/hook.mjs"]
+exit=0
+

@@ -129,9 +129,11 @@ const WORD_END = /[ \t\r\n;|&<>]/;
 // PowerShell literal), typographic quotes (PowerShell quotes), a doubled quote (PowerShell reads `''` and `""` inside
 // a span as one literal quote, Bash as two spans), a word that begins with a quoted span and continues after it
 // (PowerShell ends that word at the closing quote: `'x'-i` reaches a native program as `x` and `-i`, Bash as `x-i`)
-// and a `--%` word (PowerShell stop-parsing).
+// and a `--%` word (PowerShell stop-parsing). Revision 2 (C73-C82): a carriage return not directly before a line feed
+// is refused anywhere, because Bash keeps it inside a word (the next words stay arguments of the same program) while
+// PowerShell 5.1 reads it as a line break.
 function shellCommands(command) {
-  if (typeof command !== 'string' || /`|\$\(|<\(|>\(|<<|\\['"]|[‘-„]/.test(command)) return null;
+  if (typeof command !== 'string' || /`|\$\(|<\(|>\(|<<|\\['"]|[‘-„]|\r(?!\n)/.test(command)) return null;
   const commands = [[]];
   let word = null, quote = '', quoteBeganWord = false;
   const end = () => { if (word) commands.at(-1).push(word); word = null; };
@@ -207,9 +209,14 @@ function readOnlySimpleCommand(words) {
   return readOnlyArguments(args.map(arg => arg.text))
     && readOnlyArguments(args.map(arg => arg.chars.filter(c => c.quoted || c.ch !== '\\').map(c => c.ch).join('')));
 }
+// Revision 2, R1 (b) (C83-C87): after `cd` or `Set-Location` a relative redirection target names a file in another
+// folder, which the hook cannot resolve; such a command is not read-only when any of its simple commands writes a target.
+const changesFolder = words => words.length > 0 && !words[0].redirect && [words[0].text,
+  words[0].chars.filter(c => c.quoted || c.ch !== '\\').map(c => c.ch).join('')].some(name => ['cd', 'set-location'].includes(name.toLowerCase()));
 export function isReadOnlyShellCommand(command) {
   const commands = shellCommands(command);
-  return Boolean(commands) && commands.every(readOnlySimpleCommand);
+  if (!commands || !commands.every(readOnlySimpleCommand)) return false;
+  return !(commands.some(changesFolder) && commands.some(words => redirections(words).targets.length > 0));
 }
 const PROJECT_FILE = /(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g;
 const PROJECT_FILE_SUFFIX = new RegExp(`${PROJECT_FILE.source}$`);

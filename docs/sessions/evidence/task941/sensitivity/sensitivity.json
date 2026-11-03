@@ -10,7 +10,7 @@
       "failureKind": "assertion",
       "restored": "passed",
       "artifact": "docs/sessions/evidence/task941/sensitivity/GOV-941-HOOK-WRITE-DENY.txt",
-      "artifactSha256": "cada94ad61a0adeca4e68119c6eba86f48c7b37cbd61d4b8117de5fd9d2c33dd"
+      "artifactSha256": "7a3330c3e7f7c8a86e09c7bca600b992d1648f48390a766957ed7e25fb97a65f"
     }
   ]
 }

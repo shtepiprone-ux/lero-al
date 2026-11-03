@@ -50,6 +50,9 @@ test('[GOV-941-HOOK-READONLY-ALLOW] A command made only of read-only programs is
     // Revision 1: a Windows path and a `#` inside a single-quoted pattern stay read-only.
     ['PowerShell', "Get-Content scripts\\workflow-gates\\cli.mjs | Select-String -Pattern 'Set-Content'"],
     ['Bash', "grep -n '#.*writeFileSync' scripts/workflow-gates/cli.mjs"],
+    // Revision 2 (C80, C87): a `cd` without a write redirection, and a carriage return directly before a line feed.
+    ['Bash', "cd scripts/workflow-gates; grep -n 'writeFileSync' cli.mjs"],
+    ['Bash', "grep -n 'writeFileSync' scripts/workflow-gates/cli.mjs\r\nsed -n '1,5p' scripts/workflow-gates/cli.mjs"],
   ];
   for (const [, command] of commands) {
     assert.equal(isReadOnlyShellCommand(command), true, command);
@@ -195,6 +198,36 @@ test('[GOV-941-HOOK-MALFORMED-ERROR] A command that cannot be classified safely 
       assert.deepEqual(shellWriteTargets(root, command), [], command);
     }
   }
+  // Revision 2 (C73-C79): a lone carriage return keeps the next words inside the first program's word list in Bash.
+  const revision2 = [
+    `sed -n 1p ${X}\rcat -i ${X} writeFileSync`,
+    `git log -1 --format=%H\rcat --output=${X} -S writeFileSync`,
+    `grep -n 'a' ${Y}\rcat ${X} writeFileSync`,
+    `grep -n "a\rb" ${Y} writeFileSync ${X}`,
+    `grep -n a ${Y} writeFileSync ${X}\r`,
+  ];
+  for (const command of revision2) {
+    assert.equal(isReadOnlyShellCommand(command), false, JSON.stringify(command));
+    assert.deepEqual(shellWriteTargets(root, command), previousTargets(root, command), JSON.stringify(command));
+    assert.ok(shellWriteTargets(root, command).includes(X), JSON.stringify(command));
+  }
+  // Revision 2 (C83-C86): after `cd` or `Set-Location` a redirection target is relative to another folder. Inclusion, not
+  // equality: Task 943 R12 (c) adds the target resolved against the changed folder, which the pre-change function does not report.
+  const folder = X.slice(0, X.lastIndexOf('/'));
+  const hook = 'security-hook.mjs';
+  for (const command of [`cd ${folder}; grep -c writeFileSync ${X} > ${hook}`,
+    `Set-Location ${folder}; Select-String -Pattern 'writeFileSync' -Path ${X} > ${hook}`,
+    `CD ${folder}; grep -c writeFileSync ${X} > ${hook}`,
+    `grep -c writeFileSync ${X} >> ${hook}; set-location ${folder}`,
+    `cd ${folder} > ${hook}; grep -c writeFileSync ${X}`]) {
+    assert.equal(isReadOnlyShellCommand(command), false, command);
+    const targets = shellWriteTargets(root, command);
+    for (const target of previousTargets(root, command)) assert.ok(targets.includes(target), `${command}: ${target}`);
+    assert.ok(targets.includes(X), command);
+  }
+  // A `cd` whose commands only duplicate a stream (`2>&1`) writes no target and stays read-only.
+  assert.equal(isReadOnlyShellCommand(`cd ${folder}; grep -c writeFileSync ${X} 2>&1`), true);
+  assert.deepEqual(shellWriteTargets(root, `cd ${folder}; grep -c writeFileSync ${X} 2>&1`), []);
   // A `$` inside single quotes is not an expansion, and `$` is an allowed sed or git argument character (R1 (d)).
   assert.equal(isReadOnlyShellCommand(`sed -n '1,$p' ${Y}`), true);
   assert.deepEqual(shellWriteTargets(root, `sed -n '1,$p' ${Y}`), []);
@@ -217,6 +250,9 @@ test('[GOV-941-HOOK-PRETOOL-DENY] The pre-write guard allows a read-only search 
   const bash = command => ({ hook_event_name: 'PreToolUse', agent_type: 'executor', tool_name: 'Bash', tool_input: { command } });
   assert.match(evaluateHook(root, bash("cat README.md # '\necho x > scripts/check-example.mjs # '"), '').join('\n'), /POLICY-EDIT AUTHORITY REQUIRED/);
   assert.match(evaluateHook(root, bash("cat README.md # '\necho x > .git/hooks/pre-commit # '"), '').join('\n'), /OWNER GIT REQUIRED/);
+  // Revision 2 (C76): an in-place edit hidden after a lone carriage return is still refused.
+  assert.match(evaluateHook(root, bash('sed -n 1p scripts/check-example.mjs\rcat -i scripts/check-example.mjs writeFileSync'), '').join('\n'),
+    /POLICY-EDIT AUTHORITY REQUIRED/);
 }));
 
 test('[GOV-941-CI-POLICY-DENY] CI refuses a change to the hook file outside every changed governance contract scope', () => withRoot(root => {

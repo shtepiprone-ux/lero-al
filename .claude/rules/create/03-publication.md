@@ -32,6 +32,11 @@ the failed check and continue investigation. Never hand off "let Sonnet find out
 
 ## C7. Publish only the version that was verified
 
+Owner D14 (2026-11-02): a design, review or self-audit session writes and verifies every kickoff revision, new route
+and cross-task text correction it finds necessary before its final handoff, or names it `BLOCKED` with the missing
+owner decision; a final report that lists such work as not yet done is an incomplete handoff, and a `draft` sidecar
+is not a substitute for the revised text.
+
 Read `shared/git-publication.md` and run its supporting publication check before the scoped commit-only handoff
 on the task branch (`git switch -c task/<id>-<slug>` first when on main). Global instructions and memory cannot
 append a push to task design.

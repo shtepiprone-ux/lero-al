@@ -1,0 +1,77 @@
+# Sensitivity proof GOV-943-HOOK-PRETOOL-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC3): remove `Copy-Item` from the section 5 table. Applied and restored with the Edit tool on scripts/workflow-gates/security-hook.mjs; `node --check` ran after each edit.
+Original: const COPY_PROGRAMS = new Set(['cp', 'copy', 'cpi', 'copy-item', 'install', 'ln']);
+Mutant:   const COPY_PROGRAMS = new Set(['cp', 'copy', 'cpi', /* SENSITIVITY BREAK */ 'install', 'ln']);
+Final run on the final source (an earlier run was repeated after later implementation changes).
+## Baseline
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PRETOOL-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+ok 1 - [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+
+Mutant lines as applied:
+282:const COPY_PROGRAMS = new Set(['cp', 'copy', 'cpi', /* SENSITIVITY BREAK */ 'install', 'ln']);
+
+## Mutant
+scripts/workflow-gates/security-hook.mjs sha256 060f62c6de8df41be37f05792f4cbca4a5fac3324e1b66d65ec71c1ccc6f3b88; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PRETOOL-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+not ok 1 - [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-mutation.selftest.mjs:138:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /POLICY-EDIT AUTHORITY REQUIRED/. Input:
+    
+    ''
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:141:10
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:26:12)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:138:155)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+exit=1 (spawnSync status of the node process)
+
+## Restored
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PRETOOL-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+ok 1 - [GOV-943-HOOK-PRETOOL-DENY] The pre-write guard refuses executor policy and unreceipted product writes made through cp, sed -i or Copy-Item
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+

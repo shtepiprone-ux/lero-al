@@ -1,0 +1,75 @@
+# Sensitivity proof GOV-943-HOOK-TARGET-SPELLING-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC13): drop R12 (c): no folder change of a parsed command and of the raw text. Applied and restored with the Edit tool on scripts/workflow-gates/security-hook.mjs; `node --check` ran after each edit.
+Original: if (movedFolder(value)) folders = …; if (!movedFolder(value)) continue;
+Mutant:   if (/* SENSITIVITY BREAK */ false && movedFolder(value)) folders = …; if (/* SENSITIVITY BREAK */ true || !movedFolder(value)) continue;
+Final run on the final source (an earlier run was repeated after later implementation changes).
+## Baseline
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-TARGET-SPELLING-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# GOV-943-HOOK-TARGET-SPELLING-DENY platform parts run on win32: trailing-dots, msys, device-prefixes, junction, admin-share, short-names
+# Subtest: [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+ok 1 - [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+
+Mutant lines as applied:
+583:        if (/* SENSITIVITY BREAK */ false && movedFolder(value)) folders = folders.map(folder => resolve(folder, spelling(value)));
+601:      if (/* SENSITIVITY BREAK */ true || !movedFolder(value)) continue;
+
+## Mutant
+scripts/workflow-gates/security-hook.mjs sha256 f712a64735b304cbcff2d3169cb58bb5aca71e8fc4ecd9d588a983ae19d9c898; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-TARGET-SPELLING-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+not ok 1 - [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-mutation.selftest.mjs:195:1'
+  failureType: 'testCodeFailure'
+  error: 'cd D; cat Y > hook.mjs: ["hook.mjs"]'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    reports (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:206:14)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:217:85)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+exit=1 (spawnSync status of the node process)
+
+## Restored
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-TARGET-SPELLING-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# GOV-943-HOOK-TARGET-SPELLING-DENY platform parts run on win32: trailing-dots, msys, device-prefixes, junction, admin-share, short-names
+# Subtest: [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+ok 1 - [GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+

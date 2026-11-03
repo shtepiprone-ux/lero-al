@@ -17,6 +17,7 @@
     ".claude/rules/review/01-preflight.md",
     ".claude/rules/review/02-adversarial-ui.md",
     ".claude/rules/review/03-decision-closure.md",
+    ".claude/rules/review/04-contract-rebases.md",
     ".claude/rules/shared/claim-evidence-contract.md",
     ".claude/rules/shared/enforcement-model.md",
     ".claude/rules/shared/git-publication.md",
@@ -48,6 +49,7 @@
     "scripts/check-kickoff-evidence.mjs",
     "scripts/check-locale-leak.mjs",
     "scripts/workflow-gates/actions.json",
+    "scripts/workflow-gates/case-test-rebase.selftest.mjs",
     "scripts/workflow-gates/check-workflow.mjs",
     "scripts/workflow-gates/ci-status.mjs",
     "scripts/workflow-gates/cli.mjs",
@@ -77,6 +79,7 @@
     "scripts/workflow-gates/selftests.mjs",
     "scripts/workflow-gates/session-role.mjs",
     "scripts/workflow-gates/session-role.selftest.mjs",
+    "scripts/workflow-gates/shell-mutation.selftest.mjs",
     "scripts/workflow-gates/shell-write.selftest.mjs",
     "scripts/workflow-gates/vitest-runner.mjs",
     "scripts/workflow-gates/workflow.selftest.mjs"

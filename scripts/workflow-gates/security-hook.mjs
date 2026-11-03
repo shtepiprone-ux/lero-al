@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import { readFileSync, existsSync, realpathSync } from 'node:fs';
+import { readFileSync, existsSync, realpathSync, globSync, readdirSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { resolve, relative, isAbsolute, dirname, basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateContract, validateReport, validateGovernanceReport, isProductPath, isPolicyPath as policyPath, isTaskDocument, safePath, planDigest, workflowRuleInputs,
@@ -54,7 +55,8 @@ function successfulCalls(transcript) {
   for (const [index, line] of transcript.split('\n').entries()) {
     let event; try { event = JSON.parse(line); } catch { continue; }
     for (const block of event?.message?.content || []) {
-      if (event.type === 'assistant' && block.type === 'tool_use' && block.id) pending.set(block.id, block);
+      // Task 943 R12 (d): the transcript entry records the shell folder the call started in.
+      if (event.type === 'assistant' && block.type === 'tool_use' && block.id) pending.set(block.id, { ...block, shellFolder: event.cwd });
       if (block.type === 'tool_result' && pending.has(block.tool_use_id)) {
         const call = pending.get(block.tool_use_id); pending.delete(block.tool_use_id);
         if (block.is_error !== true) completed.push({ ...call, result: block.content, index });
@@ -81,9 +83,58 @@ function executorContractEdit(root, file, event) {
     return [];
   } catch { return ['CONTRACT AUTHORITY: Sonnet may only edit implementation stage on an existing plan with Write/Edit']; }
 }
-function projectPath(root, file) {
+// Task 943 R12 (a): Windows spellings that reach the same file. MSYS `/c/…`, the `\\?\` and `\\.\` prefixes and an
+// administrative share `\\<host>\c$\…` (reported as the local drive, fail-closed) become a drive path; Windows drops the
+// trailing dots and spaces of the last segment and one trailing dot of every other segment.
+function win32Spelling(file) {
+  const parts = file.replaceAll('\\', '/').replace(/^\/([A-Za-z])\//, '$1:/').replace(/^\/\/[?.]\//, '')
+    .replace(/^\/\/[^/]+\/([A-Za-z])\$\//, '$1:/').split('/');
+  return parts.map((segment, i) => {
+    if (segment === '' || segment === '.' || segment === '..') return segment;
+    const trimmed = i === parts.length - 1 ? segment.replace(/[. ]+$/, '') : segment.replace(/\.$/, '');
+    return trimmed && trimmed !== '.' && trimmed !== '..' ? trimmed : segment;
+  }).join('/');
+}
+const spelling = file => (process.platform === 'win32' ? win32Spelling(file) : file);
+// Path results are memoised for the duration of one top-level call (`withPathCache`): a directory walk can resolve tens of
+// thousands of paths against the same ancestors and scope entries, and the file system is read, never changed, meanwhile.
+let pathCache = null;
+const withPathCache = fn => (...args) => {
+  if (pathCache) return fn(...args);
+  pathCache = new Map();
+  try { return fn(...args); } finally { pathCache = null; }
+};
+const memo = (key, compute) => {
+  if (!pathCache) return compute();
+  if (!pathCache.has(key)) pathCache.set(key, compute());
+  return pathCache.get(key);
+};
+// The long canonical path of the deepest existing ancestor (8.3 aliases, junctions and links resolved) joined with the
+// missing tail, or null when no ancestor exists.
+function canonicalPath(target) {
+  return memo(`canonical\0${target}`, () => {
+    if (existsSync(target)) { try { return realpathSync.native(target); } catch { return null; } }
+    const parent = dirname(target);
+    if (parent === target) return null;
+    const base = canonicalPath(parent);
+    return base === null ? null : join(base, basename(target));
+  });
+}
+function projectPath(root, file, folder = root) {
   if (typeof file !== 'string') return '';
-  const target = resolve(root, file);
+  return memo(`project\0${root}\0${folder}\0${file}`, () => uncachedProjectPath(root, file, folder));
+}
+function uncachedProjectPath(root, file, folder) {
+  if (typeof file !== 'string') return '';
+  if (process.platform === 'win32') {
+    // Canonicalise before deciding inside or outside the root; a missing drive keeps the lexical result.
+    const target = resolve(folder, win32Spelling(file));
+    const real = canonicalPath(target);
+    const base = real === null ? null : canonicalPath(resolve(root));
+    if (real === null || base === null) return relative(root, target).replaceAll('\\', '/');
+    return relative(base, real).replaceAll('\\', '/');
+  }
+  const target = resolve(folder, file);
   const lexical = relative(root, target).replaceAll('\\', '/');
   if (lexical === '..' || lexical.startsWith('../') || isAbsolute(lexical)) return lexical;
   let ancestor = target;
@@ -220,8 +271,256 @@ export function isReadOnlyShellCommand(command) {
 }
 const PROJECT_FILE = /(?:src|public|messages|tasks|database|migrations|supabase|\.claude|\.github|scripts|docs)[/\\][^\s'";|<>]+\.(?:[cm]?[jt]sx?|sql|css|json|md|ps1|py|sh|ya?ml|svg)/g;
 const PROJECT_FILE_SUFFIX = new RegExp(`${PROJECT_FILE.source}$`);
-// Shell writes the PreToolUse guard recognizes: write cmdlets/APIs naming a project path, and output redirection.
-export function shellWriteTargets(root, command) {
+// Task 943 R3: the C2 write words plus the Node, .NET and Python APIs that copy, move, delete, truncate or append.
+const WRITE_WORD = new RegExp(`\\b(?:${['Set-Content', 'Add-Content', 'Out-File', 'apply_patch', 'writeFileSync', 'write_text', 'writeFile',
+  'appendFileSync', 'appendFile', 'copyFileSync', 'copyFile', 'cpSync', 'renameSync', 'rmSync', 'unlinkSync', 'truncateSync',
+  'createWriteStream', 'fs\\.rename', 'fs\\.rm', 'fs\\.unlink', 'fs\\.truncate', 'fs\\.cp', 'fs\\.promises', 'WriteAllText',
+  'WriteAllLines', 'WriteAllBytes', 'AppendAllText', 'AppendAllLines', 'File\\]::Copy', 'File\\]::Move', 'File\\]::Delete',
+  'File\\]::Replace', 'shutil\\.copy', 'shutil\\.copyfile', 'shutil\\.move', 'os\\.remove', 'os\\.unlink', 'os\\.replace',
+  'os\\.rename', 'write_bytes'].join('|')})\\b`, 'i');
+// Task 943 section 5: programs that copy, move, delete, create or edit the files they name.
+const COPY_PROGRAMS = new Set(['cp', 'copy', 'cpi', 'copy-item', 'install', 'ln']);
+const MOVE_PROGRAMS = new Set(['mv', 'move', 'mi', 'move-item']);
+const DELETE_PROGRAMS = new Set(['rm', 'del', 'erase', 'ri', 'unlink', 'remove-item']);
+const TEE_PROGRAMS = new Set(['tee', 'tee-object']);
+const CONTENT_PROGRAMS = new Set(['clear-content', 'clc', 'sc', 'ac', 'set-content', 'add-content', 'out-file']);
+const RENAME_PROGRAMS = new Set(['rename-item', 'ren', 'rni']);
+const WRITE_PROGRAMS = new Set([...COPY_PROGRAMS, ...MOVE_PROGRAMS, ...DELETE_PROGRAMS, ...TEE_PROGRAMS, ...CONTENT_PROGRAMS,
+  ...RENAME_PROGRAMS, 'sed', 'touch', 'truncate', 'dd', 'new-item', 'ni', 'xargs', 'find']);
+// R1: a section 5 program name as a separate word of a command the parser rejects. `sed`, `find` and `xargs` are section 5
+// programs only with the condition of their row: an in-place option, an action that deletes or runs a program, and a
+// following write program.
+const WORD = name => `(?<![^\\s;|&(){}'"])(?:${name})(?![^\\s;|&(){}'"])`;
+const UNCONDITIONAL_PROGRAMS = [...WRITE_PROGRAMS].filter(name => !['sed', 'find', 'xargs'].includes(name));
+const WRITE_PROGRAM_WORDS = [
+  new RegExp(WORD(UNCONDITIONAL_PROGRAMS.join('|')), 'i'),
+  new RegExp(`${WORD('sed')}[^;|&\\r\\n]*?\\s(?:-[A-Za-z]*i|--in-place)`, 'i'),
+  new RegExp(`${WORD('find')}[^;|&\\r\\n]*?\\s-(?:delete|exec|execdir|ok|okdir)(?![\\w-])`, 'i'),
+  new RegExp(`${WORD('xargs')}[^;|&\\r\\n]*?${WORD(UNCONDITIONAL_PROGRAMS.join('|'))}`, 'i'),
+];
+const namesWriteProgram = command => WRITE_PROGRAM_WORDS.some(pattern => pattern.test(command));
+const PS_ALIASES = new Set(['copy', 'cpi', 'move', 'mi', 'del', 'erase', 'ri', 'ni', 'clc', 'sc', 'ac', 'ren', 'rni']);
+const PS_VALUE = ['path', 'literalpath', 'destination', 'filepath', 'name', 'newname', 'value', 'encoding', 'itemtype', 'filter',
+  'include', 'exclude', 'credential', 'stream', 'width', 'inputobject', 'delimiter', 'target', 'variable'];
+const PS_SWITCH = ['force', 'recurse', 'append', 'nonewline', 'passthru', 'whatif', 'confirm', 'noclobber', 'container'];
+// A PowerShell named parameter: its full name in any program (PowerShell aliases `cp`, `mv`, `rm`), or a unique prefix of
+// it in a PowerShell cmdlet or alias.
+function psParameter(head, powershell) {
+  const name = head.toLowerCase();
+  const all = [...PS_VALUE, ...PS_SWITCH];
+  if (all.includes(name) && name.length > 1) return name;
+  const prefixed = powershell && name ? all.filter(parameter => parameter.startsWith(name)) : [];
+  return prefixed.length === 1 ? prefixed[0] : null;
+}
+// Options are tokens starting with `-`; a PowerShell named parameter or a listed short (`short`) or long (`long`) option
+// takes the next token (or its attached value) as its value; the remaining tokens are positionals.
+function parseArguments(program, args, short = '', long = []) {
+  const powershell = program.includes('-') || PS_ALIASES.has(program);
+  const named = new Map(), flags = new Set(), positionals = [];
+  const set = (key, value) => { if (value !== undefined && value !== '') named.set(key, [...(named.get(key) || []), value]); };
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === '--') { positionals.push(...args.slice(i + 1)); break; }
+    if (!arg.startsWith('-') || arg === '-') { positionals.push(arg); continue; }
+    const [head, ...attached] = arg.slice(1).split(':');
+    const parameter = arg.startsWith('--') ? null : psParameter(head, powershell);
+    if (parameter) {
+      if (PS_VALUE.includes(parameter)) set(parameter, attached.length ? attached.join(':') : args[++i]);
+      else flags.add(parameter);
+      continue;
+    }
+    if (arg.startsWith('--')) {
+      const equals = arg.indexOf('=');
+      const option = arg.slice(2, equals === -1 ? undefined : equals);
+      if (long.includes(option)) set(`--${option}`, equals === -1 ? args[++i] : arg.slice(equals + 1));
+      else flags.add(`--${option}`);
+      continue;
+    }
+    for (let j = 1; j < arg.length; j++) {
+      if (short.includes(arg[j])) { set(`-${arg[j]}`, arg.slice(j + 1) || args[++i]); break; }
+      flags.add(`-${arg[j]}`);
+    }
+  }
+  const values = (...keys) => keys.flatMap(key => named.get(key) || []);
+  return { named, flags, positionals, values };
+}
+// "Every file under a directory": never enters node_modules, .next or .git, which are reported as the directory itself.
+const GENERATED_DIRECTORY = /^(?:node_modules|\.next|\.git)$/i;
+function filesUnder(root, directory) {
+  if (directory.split('/').some(segment => GENERATED_DIRECTORY.test(segment))) return [];
+  const files = [];
+  const walk = dir => {
+    let entries; try { entries = readdirSync(resolve(root, dir), { withFileTypes: true }); } catch { return; }
+    for (const entry of entries) {
+      const path = dir ? `${dir}/${entry.name}` : entry.name;
+      if (entry.isDirectory() && !GENERATED_DIRECTORY.test(entry.name)) walk(path); else files.push(path);
+    }
+  };
+  walk(directory);
+  return files;
+}
+const insideProject = path => path !== '' && path !== '..' && !path.startsWith('../') && !isAbsolute(path);
+function isDirectory(target) { try { return statSync(target).isDirectory(); } catch { return false; } }
+// Targets of one simple command of section 5, resolved in `folder`: [project paths]. `all` holds every simple command's
+// words for `xargs`, whose paths arrive through the pipeline.
+function programTargets(root, folder, texts, all) {
+  // A leading `sudo`, `env`, `command`, `nohup` or `time` is skipped with its own options (`sudo -u admin`, `env -i`) and
+  // the variable assignments before the program.
+  const WRAPPER_VALUES = { sudo: /^-[ugCDhpRrTt]$/, env: /^-[uCS]$/ };
+  let index = 0, wrapper = null;
+  while (index < texts.length) {
+    const word = texts[index];
+    if (/^(?:sudo|env|command|nohup|time)$/i.test(word)) { wrapper = word.toLowerCase(); index++; continue; }
+    if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(word)) { index++; continue; }
+    if (wrapper && word.startsWith('-')) { index += WRAPPER_VALUES[wrapper]?.test(word) ? 2 : 1; continue; }
+    break;
+  }
+  if (index >= texts.length) return [];
+  const program = basename(texts[index].replaceAll('\\', '/')).toLowerCase().replace(/\.exe$/, '');
+  const args = texts.slice(index + 1);
+  if (!WRITE_PROGRAMS.has(program)) return [];
+  // R12 (b): a target with `*`, `?` or `[` also adds every path the glob matches in its folder.
+  const paths = raw => {
+    if (typeof raw !== 'string' || !raw) return [];
+    const found = [projectPath(root, raw, folder)];
+    if (/[*?[]/.test(raw)) {
+      try {
+        for (const match of globSync(spelling(raw), { cwd: folder, exclude: entry => GENERATED_DIRECTORY.test(basename(String(entry?.name ?? entry))) })) {
+          found.push(projectPath(root, match, folder));
+        }
+      } catch { /* an invalid pattern adds only its literal */ }
+    }
+    return found;
+  };
+  // The project root itself (`.`, project path '') is a directory of the project too.
+  const projectDirectory = path => (path === '' || insideProject(path)) && isDirectory(resolve(root, path));
+  const withFiles = raw => paths(raw).flatMap(path => [path, ...(projectDirectory(path) ? filesUnder(root, path) : [])]);
+  const joined = (directory, name) => `${directory.replace(/[\\/]+$/, '')}/${name}`;
+  const leaf = source => basename(source.replaceAll('\\', '/').replace(/\/+$/, ''));
+  const under = source => paths(source).filter(projectDirectory)
+    .flatMap(path => filesUnder(root, path).map(file => (path ? file.slice(path.length + 1) : file)));
+  if (COPY_PROGRAMS.has(program) || MOVE_PROGRAMS.has(program)) {
+    const parsed = parseArguments(program, args, program === 'install' ? 'tSmog' : 'tS', ['target-directory', 'suffix', 'mode', 'owner', 'group']);
+    const sources = [...parsed.values('path', 'literalpath'), ...parsed.positionals];
+    const destinations = parsed.values('destination', '-t', '--target-directory');
+    if (!destinations.length && parsed.positionals.length && sources.length >= 2) destinations.push(sources.pop());
+    const move = MOVE_PROGRAMS.has(program);
+    const recursive = move || ['recurse', '-r', '-R', '-a', '--recursive', '--archive'].some(flag => parsed.flags.has(flag));
+    const found = move ? sources.flatMap(withFiles) : [];
+    for (const destination of destinations) {
+      found.push(...paths(destination));
+      const folderLike = /[\\/]$/.test(destination) || isDirectory(resolve(folder, spelling(destination)));
+      for (const source of sources) {
+        if (folderLike) found.push(...paths(joined(destination, leaf(source))));
+        if (!recursive) continue;
+        for (const file of under(source)) {
+          if (folderLike) found.push(...paths(joined(joined(destination, leaf(source)), file)));
+          found.push(...paths(joined(destination, file)));
+        }
+      }
+    }
+    return found;
+  }
+  if (DELETE_PROGRAMS.has(program)) {
+    const parsed = parseArguments(program, args);
+    return [...parsed.values('path', 'literalpath'), ...parsed.positionals].flatMap(withFiles);
+  }
+  if (TEE_PROGRAMS.has(program)) {
+    const parsed = parseArguments(program, args);
+    return [...parsed.values('filepath', 'literalpath'), ...parsed.positionals].flatMap(paths);
+  }
+  if (CONTENT_PROGRAMS.has(program)) {
+    const parsed = parseArguments(program, args);
+    return [...parsed.values('path', 'literalpath', 'filepath'), ...parsed.positionals].flatMap(paths);
+  }
+  if (program === 'sed') {
+    let inPlace = false, script = false;
+    const positionals = [];
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+      if (arg === '--') { positionals.push(...args.slice(i + 1)); break; }
+      if (arg.startsWith('--')) {
+        const option = arg.slice(2).split('=')[0];
+        if (option === 'in-place') inPlace = true;
+        else if (['expression', 'file', 'line-length'].includes(option)) { script ||= option !== 'line-length'; if (!arg.includes('=')) i++; }
+        continue;
+      }
+      if (arg.startsWith('-') && arg.length > 1) {
+        for (let j = 1; j < arg.length; j++) {
+          if (arg[j] === 'i') { inPlace = true; break; } // the rest of the word is the backup suffix
+          if ('efl'.includes(arg[j])) { script ||= arg[j] !== 'l'; if (j === arg.length - 1) i++; break; }
+        }
+        continue;
+      }
+      positionals.push(arg);
+    }
+    return inPlace ? (script ? positionals : positionals.slice(1)).flatMap(paths) : [];
+  }
+  if (program === 'touch' || program === 'truncate') {
+    const parsed = program === 'touch' ? parseArguments(program, args, 'dtr', ['date', 'reference', 'time'])
+      : parseArguments(program, args, 'sr', ['size', 'reference']);
+    return parsed.positionals.flatMap(paths);
+  }
+  if (program === 'dd') return args.filter(arg => /^of=/i.test(arg)).map(arg => arg.slice(3)).flatMap(paths);
+  if (program === 'new-item' || program === 'ni') {
+    const parsed = parseArguments(program, args);
+    const locations = [...parsed.values('path', 'literalpath'), ...parsed.positionals];
+    const names = parsed.values('name');
+    if (!names.length) return locations.flatMap(paths);
+    return (locations.length ? locations : ['.']).flatMap(location => names.map(name => joined(location, name))).flatMap(paths);
+  }
+  if (RENAME_PROGRAMS.has(program)) {
+    const parsed = parseArguments(program, args);
+    const positionals = [...parsed.positionals];
+    const sources = parsed.values('path', 'literalpath');
+    if (!sources.length && positionals.length) sources.push(positionals.shift());
+    const names = [...parsed.values('newname'), ...positionals];
+    return sources.flatMap(source => [...paths(source),
+      ...names.flatMap(name => paths(joined(dirname(source.replaceAll('\\', '/')), name)))]);
+  }
+  // `xargs` followed by a program above, or `find` with an action that deletes or runs a program.
+  const run = program === 'xargs' ? args.some(arg => WRITE_PROGRAMS.has(basename(arg.replaceAll('\\', '/')).toLowerCase().replace(/\.exe$/, '')))
+    : args.some(arg => /^-(?:delete|exec|execdir|ok|okdir)$/i.test(arg));
+  if (!run) return [];
+  const named = program === 'xargs' ? all.flat() : texts.slice(index + 1);
+  return named.filter(word => !word.startsWith('-')).flatMap(withFiles);
+}
+// R12 (e) W3: literal path arguments of the API write calls (both arguments of a copy, move or replace).
+const API_ONE = /\b(?:writeFileSync|writeFile|appendFileSync|appendFile|createWriteStream|truncateSync|truncate|rmSync|rm|unlinkSync|unlink|WriteAllText|WriteAllLines|WriteAllBytes|AppendAllText|AppendAllLines|Delete|remove)\s*\(\s*r?['"]([^'"]+)['"]/gi;
+const API_TWO = /\b(?:copyFileSync|copyFile|cpSync|cp|renameSync|rename|Copy|Move|Replace|copyfile|copy|move|replace)\s*\(\s*r?['"]([^'"]+)['"]\s*,\s*r?['"]([^'"]+)['"]/gi;
+const API_PATHLIB = /Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*write_(?:text|bytes)/g;
+function apiArguments(text) {
+  return [...[...text.matchAll(API_ONE)].map(m => m[1]), ...[...text.matchAll(API_TWO)].flatMap(m => [m[1], m[2]]),
+    ...[...text.matchAll(API_PATHLIB)].map(m => m[1])];
+}
+// R12 (c): folder changes.
+const FOLDER_PROGRAM = /^(?:cd|chdir|pushd|set-location|sl|push-location)$/i;
+const RAW_FOLDER_WORD = /(?:^|[\s;&|('"])(?:cd|chdir|pushd|set-location|sl|push-location)\s+(?:-(?:Path|LiteralPath)\s+)?['"]?([A-Za-z0-9_.~/\\:-]+)|\b(?:process|os)\.chdir\(\s*['"]([^'"]+)['"]/gi;
+const NESTED_SHELL = /(?:^|[\s;&|('"])(?:bash|sh|cmd(?:\.exe)?|powershell(?:\.exe)?|pwsh)\s+(?:\/d\s+)?(?:-c|\/c|-Command)\b|(?:^|[\s;&|('"])(?:node|python3?)\s+(?:-e|-c|--eval)\b/i;
+const RAW_REDIRECT = /(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g;
+// R12 (g): the Bash `>|` redirection (write despite noclobber), optionally after a stream number.
+const RAW_NOCLOBBER = /(?<![=<>])>\|[ \t]*(?:"([^"]+)"|'([^']+)'|([^\s;|&<>'"]+))/g;
+const movedFolder = value => typeof value === 'string' && value !== '' && value !== '-' && !value.startsWith('~') && !value.startsWith('$');
+// R12 (g): the 941 split ends a simple command at the `|` of `>|`; the first word of the next one is its target and the
+// rest are arguments of the first.
+function noclobberCommands(commands) {
+  const out = [];
+  const endsWithRedirect = words => { const last = words.at(-1)?.chars.at(-1); return Boolean(last) && !last.quoted && last.ch === '>'; };
+  for (let i = 0; i < commands.length; i++) {
+    let words = [...commands[i]];
+    const targets = [];
+    while (endsWithRedirect(words) && i + 1 < commands.length) {
+      const [target, ...rest] = commands[++i];
+      targets.push(target.text);
+      const operator = words.pop();
+      words = [...words, ...rest, operator];
+    }
+    out.push({ words, noclobber: targets });
+  }
+  return out;
+}
+// The Task 941 result, with the R3 write words and, for a command the parser rejects, the R1 fallback.
+function baseShellWriteTargets(root, command) {
   if (isReadOnlyShellCommand(command)) {
     // A target the hook cannot resolve itself (`$PWD/…`, `~/…`, a Git Bash `/c/…` path) also reports the project file
     // path it ends with, which the write-word branch reported before Task 941.
@@ -231,24 +530,108 @@ export function shellWriteTargets(root, command) {
     }))];
   }
   const files = [];
-  if (/\b(?:Set-Content|Add-Content|Out-File|apply_patch|writeFileSync|write_text|writeFile)\b/i.test(command)) {
+  if (WRITE_WORD.test(command)) {
     files.push(...[...command.matchAll(PROJECT_FILE)].map(m => projectPath(root, m[0].replaceAll('\\', '/'))));
   }
   // Redirection writes its target, not every source filename mentioned by a read/test command.
-  for (const match of command.matchAll(/(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g)) {
+  for (const match of command.matchAll(RAW_REDIRECT)) {
     files.push(projectPath(root, match[1] || match[2] || match[3]));
   }
+  if (!shellCommands(command) && namesWriteProgram(command)) {
+    for (const match of command.matchAll(PROJECT_FILE)) {
+      const path = projectPath(root, match[0].replaceAll('\\', '/'));
+      if (!files.includes(path)) files.push(path);
+    }
+  }
   return files;
+}
+// Shell writes the PreToolUse guard recognizes: write cmdlets/APIs naming a project path, output redirection (Task 941),
+// the programs of Task 943 section 5, and (R12) the spellings and folders that reach the same file. `start` is the
+// absolute shell folder the command runs in (R12 (d)); resolution against the root always stays.
+export const shellWriteTargets = withPathCache(uncachedShellWriteTargets);
+function uncachedShellWriteTargets(root, command, start) {
+  if (typeof command !== 'string') return [];
+  const result = baseShellWriteTargets(root, command);
+  // A directory walk can add tens of thousands of paths; a Set keeps the duplicate check linear.
+  const seen = new Set(result);
+  const add = path => { if (path && !seen.has(path)) { seen.add(path); result.push(path); } };
+  const starts = [resolve(root), ...(typeof start === 'string' && isAbsolute(start) ? [resolve(start)] : [])];
+  const readOnly = isReadOnlyShellCommand(command);
+  const commands = shellCommands(command);
+  const resolveIn = (raw, folders, glob) => {
+    for (const folder of new Set([resolve(root), ...folders])) {
+      add(projectPath(root, raw, folder));
+      if (!glob || !/[*?[]/.test(raw)) continue;
+      try {
+        for (const match of globSync(spelling(raw), { cwd: folder, exclude: entry => GENERATED_DIRECTORY.test(basename(String(entry?.name ?? entry))) })) {
+          add(projectPath(root, match, folder));
+        }
+      } catch { /* an invalid pattern adds only its literal */ }
+    }
+  };
+  if (commands) {
+    let folders = [...starts];
+    const merged = noclobberCommands(commands);
+    const all = merged.map(entry => redirections(entry.words).args.map(arg => arg.text));
+    for (const { words, noclobber } of merged) {
+      const { args, targets } = redirections(words);
+      const texts = args.map(arg => arg.text);
+      for (const target of [...targets, ...noclobber]) resolveIn(target, folders, true);
+      if (FOLDER_PROGRAM.test(texts[0] || '')) {
+        const parsed = parseArguments(texts[0].toLowerCase(), texts.slice(1));
+        const value = [...parsed.values('path', 'literalpath'), ...parsed.positionals][0];
+        if (movedFolder(value)) folders = folders.map(folder => resolve(folder, spelling(value)));
+        continue;
+      }
+      if (readOnly) continue;
+      for (const folder of new Set([resolve(root), ...folders])) {
+        for (const path of programTargets(root, folder, texts, all)) add(path);
+      }
+      for (const raw of apiArguments(texts.join(' '))) resolveIn(raw, folders, false);
+    }
+  }
+  if (readOnly || (commands && !NESTED_SHELL.test(command))) return result;
+  // A command the parser rejects, or a nested shell or interpreter: every folder-change word of the raw text, quoted
+  // text included, adds a folder for the raw-text write positions.
+  const folders = [...starts];
+  for (const first of starts) {
+    let current = first;
+    for (const match of command.matchAll(RAW_FOLDER_WORD)) {
+      const value = match[1] || match[2];
+      if (!movedFolder(value)) continue;
+      current = resolve(current, spelling(value));
+      folders.push(current);
+    }
+  }
+  for (const pattern of [RAW_REDIRECT, RAW_NOCLOBBER]) {
+    for (const match of command.matchAll(pattern)) {
+      const raw = match[1] || match[2] || match[3];
+      resolveIn(raw, folders, false);
+      // R12 (f): a nested shell leaves its closing quote on the target.
+      if (match[3]) resolveIn(raw.replace(/^['"]+|['"]+$/g, ''), folders, false);
+    }
+  }
+  for (const raw of apiArguments(command)) resolveIn(raw, folders, false);
+  return result;
 }
 // Owner decision 2026-11-01 (Task 935 D2): a session that wrote any governance scope file cannot approve it. The
 // approver's rule-only rebase of another reviewed contract (a `rules` chain entry by the receipt contract and its
 // evidence) is not such a write, but only while that entry passes its rules validation (Task 940 R5, review note N1).
 // A `scope` entry never exempts a write.
-export function governanceIndependenceErrors(root, contract, receiptPath, transcript) {
+export const governanceIndependenceErrors = withPathCache(uncachedGovernanceIndependenceErrors);
+function uncachedGovernanceIndependenceErrors(root, contract, receiptPath, transcript) {
   const calls = successfulCalls(transcript);
-  const written = [...calls.filter(call => ['Write', 'Edit'].includes(call.name)).map(call => projectPath(root, call.input?.file_path || call.input?.path)),
+  // Task 943 R12 (d): also resolve against the shell folder recorded for the call, inside or outside the root.
+  const folderOf = call => (typeof call.shellFolder === 'string' && isAbsolute(call.shellFolder) ? call.shellFolder : undefined);
+  const written = [...calls.filter(call => ['Write', 'Edit'].includes(call.name)).flatMap(call => [projectPath(root, call.input?.file_path || call.input?.path),
+      ...(folderOf(call) ? [projectPath(root, call.input?.file_path || call.input?.path, folderOf(call))] : [])]),
     ...calls.filter(call => ['PowerShell', 'Bash'].includes(call.name) && typeof call.input?.command === 'string')
-      .flatMap(call => shellWriteTargets(root, call.input.command))];
+      .flatMap(call => shellWriteTargets(root, call.input.command, folderOf(call)))];
+  // Task 943 R8: in a Git repository only a contract tracked at HEAD can exempt a write (no shell; any failure exempts nothing).
+  const repository = existsSync(join(root, '.git'));
+  const tracked = path => {
+    try { execFileSync('git', ['cat-file', '-e', `HEAD:${path}`], { cwd: root, stdio: 'ignore' }); return true; } catch { return false; }
+  };
   const exempt = new Set();
   for (const path of allContracts(root)) {
     if (path === receiptPath) continue;
@@ -258,6 +641,7 @@ export function governanceIndependenceErrors(root, contract, receiptPath, transc
       if (typeof entry.evidence !== 'string' || !isEvidencePath(entry.evidence)) continue;
       let problems; try { problems = rulesEntryErrors(root, other, entry); } catch { continue; }
       if (problems.length) continue;
+      if (repository && !tracked(path)) continue;
       exempt.add(pathKey(path));
       exempt.add(pathKey(entry.evidence));
     }
@@ -309,7 +693,8 @@ function reviewContinuationErrors(root, last, messages, transcript) {
   } catch (error) { return [`REVIEW CONTINUATION: next route unavailable or invalid (${error.message})`]; }
 }
 
-export function evaluateHook(root, event, transcript) {
+export const evaluateHook = withPathCache(uncachedEvaluateHook);
+function uncachedEvaluateHook(root, event, transcript) {
   const messages = assistantMessages(transcript);
   const durable = successfulCalls(transcript).filter(call => ['PowerShell', 'Bash'].includes(call.name)
     && /(?:^|[\\/])cli\.mjs\s+receipt\s+--contract\s/.test(call.input?.command || ''))
@@ -364,7 +749,8 @@ export function evaluateHook(root, event, transcript) {
     files = [file];
   } else if (['PowerShell', 'Bash'].includes(event.tool_name)) {
     if (typeof input.command !== 'string') return ['Missing shell command'];
-    files = shellWriteTargets(root, input.command);
+    // Task 943 R12 (d): the event's working directory, which follows `cd`.
+    files = shellWriteTargets(root, input.command, typeof event.cwd === 'string' && isAbsolute(event.cwd) ? event.cwd : undefined);
   }
   if (files.some(file => /^(?:\.git(?:\/|$))/i.test(file))) return ['OWNER GIT REQUIRED: agents cannot write Git metadata'];
   const explicitExecutor = role === 'executor';

@@ -1,0 +1,73 @@
+# Sensitivity proof GOV-943-HOOK-PROGRAM-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC2): remove `tee` from the section 5 table. Applied and restored with the Edit tool on scripts/workflow-gates/security-hook.mjs; `node --check` ran after each edit.
+Original: const TEE_PROGRAMS = new Set(['tee', 'tee-object']);
+Mutant:   const TEE_PROGRAMS = new Set([/* SENSITIVITY BREAK */ 'tee-object']);
+Final run on the final source (an earlier run was repeated after later implementation changes).
+## Baseline
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PROGRAM-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+ok 1 - [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+
+Mutant lines as applied:
+285:const TEE_PROGRAMS = new Set([/* SENSITIVITY BREAK */ 'tee-object']);
+
+## Mutant
+scripts/workflow-gates/security-hook.mjs sha256 dd54991a97cdc625f893460820d0fce4bbe38900c14b0a0c756e2f40e1143752; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PROGRAM-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+not ok 1 - [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-mutation.selftest.mjs:75:1'
+  failureType: 'testCodeFailure'
+  error: 'echo x | tee -a scripts/workflow-gates/fixture-scope.mjs: []'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:95:12
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:26:12)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-mutation.selftest.mjs:75:184)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+exit=1 (spawnSync status of the node process)
+
+## Restored
+scripts/workflow-gates/security-hook.mjs sha256 35b508014df04741bad213f2d6994aa82db1b38f5350975a19b6db29f8d43ddd; scripts/workflow-gates/shell-mutation.selftest.mjs sha256 f83040e307f0d9744545165ce6ab4c4d25e5a18dda398289637453ed13a53e37
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-HOOK-PROGRAM-DENY scripts/workflow-gates/shell-mutation.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+ok 1 - [GOV-943-HOOK-PROGRAM-DENY] A scope file changed by a copy, move, delete, tee, in-place edit, touch, truncate, link, dd or PowerShell item command is counted as written
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+

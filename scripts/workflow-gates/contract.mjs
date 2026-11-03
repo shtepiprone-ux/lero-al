@@ -102,6 +102,14 @@ function evidenceList(text, heading) {
 }
 export const rebaseFiles = text => evidenceList(text, 'Changed rule files');
 export const scopeRebaseFiles = text => evidenceList(text, 'Changed scope files');
+// Task 943 R7 (owner D12): `## Changed case test files` of a `tests` entry, and its `## Case assertions` lines
+// `- <CASE-ID>: <what each changed assertion checked before> -> <after>`.
+export const testsRebaseFiles = text => evidenceList(text, 'Changed case test files');
+function caseAssertionIds(text) {
+  const section = String(text).replace(/\r\n/g, '\n').split(/^## /m).find(part => /^Case assertions\s*\n/.test(part));
+  if (!section) return null;
+  return new Set([...section.matchAll(/^- `?([A-Z0-9][A-Z0-9-]*)`?:\s*\S.*?\s->\s*\S/gm)].map(match => match[1]));
+}
 const REBASE_FIELDS = ['by', 'evidence', 'evidenceSha256', 'originalScopeSha256', 'rebasedScopeSha256'];
 // Task 940 R1: the legacy `review.rulesRebase` is the implicit first `rules` entry, followed by `review.rebases` in
 // order. Malformed `rebases` values are named errors and never enter the chain.
@@ -113,7 +121,7 @@ export function rebaseChain(contract) {
     else review.rebases.forEach((entry, i) => {
       const label = `rebases: entry ${i + 1}`;
       if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return errors.push(`${label} must be an object`);
-      if (!['rules', 'scope'].includes(entry.kind)) return errors.push(`${label} has unknown kind ${JSON.stringify(entry.kind)}`);
+      if (!['rules', 'scope', 'tests'].includes(entry.kind)) return errors.push(`${label} has unknown kind ${JSON.stringify(entry.kind)}`);
       const missing = REBASE_FIELDS.filter(field => typeof entry[field] !== 'string' || !entry[field]);
       if (missing.length) return errors.push(`${label} is missing ${missing.join(', ')}`);
       entries.push({ kind: entry.kind, entry, label, legacy: false });
@@ -166,6 +174,38 @@ export function scopeEntryErrors(root, contract, entry) {
   } catch (error) { errors.push(`approving contract unavailable (${error.message})`); }
   return errors;
 }
+// Task 943 R7 (owner D12): changed case test files of this contract, approved by a later reviewed contract that scopes
+// them. Every case of a listed file keeps its `[<id>]` and is named in `## Case assertions`; the exact test name is bound
+// by the approver's `cli.mjs verify` rerun of this contract, which requires one passing test with that full name.
+export function testsEntryErrors(root, contract, entry) {
+  const errors = [];
+  const check = (ok, message) => { if (!ok) errors.push(message); };
+  if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return ['tests entry must be an object'];
+  let text = '';
+  const listed = rebaseEvidence(root, entry, errors, value => { text = value; return testsRebaseFiles(value); });
+  check(listed.length > 0, 'evidence lists no changed case test files');
+  const assertions = caseAssertionIds(text);
+  if (listed.length && assertions === null) errors.push('evidence has no Case assertions section');
+  const cases = (Array.isArray(contract.cases) ? contract.cases : []).filter(row => row && typeof row === 'object');
+  for (const file of listed) {
+    const rows = cases.filter(row => row.testFile === file);
+    check(rows.length > 0, `${file} is not the test file of a case of this contract`);
+    check(!isRuntimeFile(file), `${file} is a runtime file; runtime files are never rebased`);
+    let source = null;
+    try { source = readFileSync(safePath(root, file), 'utf8'); } catch (error) { errors.push(`${file} is unavailable (${error.message})`); }
+    for (const row of rows) {
+      if (source !== null) check(source.includes(`[${row.id}]`), `${row.id}: ${file} no longer contains [${row.id}]; a removed or renamed case needs a revision of its task`);
+      if (assertions) check(assertions.has(row.id), `${row.id}: Case assertions has no line for this case`);
+    }
+  }
+  try {
+    const by = readContractFile(root, entry.by);
+    check(by.task !== contract.task, `${entry.by} is the rebased contract itself`);
+    check(['product', 'governance'].includes(by.kind) && by.stage === 'reviewed', `${entry.by} is not a reviewed product or governance contract`);
+    for (const file of listed) check(Array.isArray(by.scope) && by.scope.includes(file), `${file} is outside the scope of ${entry.by}`);
+  } catch (error) { errors.push(`approving contract unavailable (${error.message})`); }
+  return errors;
+}
 // Task 940 R1 (c): entry 1 starts at the reviewed digest, each entry continues the previous one, the last one is current.
 export function rebaseChainErrors(root, contract, current = scopeDigest(root, contract)) {
   const { entries, errors } = rebaseChain(contract);
@@ -175,7 +215,7 @@ export function rebaseChainErrors(root, contract, current = scopeDigest(root, co
     const problems = [];
     if (entry.originalScopeSha256 !== previous) problems.push(i === 0 ? 'originalScopeSha256 is not the reviewed scope digest' : 'originalScopeSha256 does not continue the previous rebase entry');
     if (i === entries.length - 1 && entry.rebasedScopeSha256 !== current) problems.push('rebasedScopeSha256 is not the current scope digest');
-    problems.push(...(kind === 'rules' ? rulesEntryErrors : scopeEntryErrors)(root, contract, entry));
+    problems.push(...({ rules: rulesEntryErrors, scope: scopeEntryErrors, tests: testsEntryErrors }[kind])(root, contract, entry));
     errors.push(...problems.map(problem => `${label}: ${problem}`));
     previous = entry.rebasedScopeSha256;
   });

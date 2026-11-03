@@ -1,0 +1,73 @@
+# Sensitivity proof GOV-943-TESTS-REBASE-DENY (Task 943, Opus governance implementer, fresh session 1450b70d, 2026-11-03, node v22.22.3, native Windows 11)
+
+Break (AC8): testsEntryErrors skips the [<id>] presence check. Applied and restored with the Edit tool on scripts/workflow-gates/contract.mjs; `node --check` ran after each edit.
+Original: if (source !== null) check(source.includes(`[${row.id}]`),
+Mutant:   if (/* SENSITIVITY BREAK */ false && source !== null) check(source.includes(`[${row.id}]`),
+Final run on the final source (an earlier run was repeated after later implementation changes).
+## Baseline
+scripts/workflow-gates/contract.mjs sha256 764f8a58cadf13c4bc3b08901c08a02ecd235e14675f14e481d26d77bb6ef941; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-TESTS-REBASE-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+ok 1 - [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+
+Mutant lines as applied:
+197:      if (/* SENSITIVITY BREAK */ false && source !== null) check(source.includes(`[${row.id}]`), `${row.id}: ${file} no longer contains [${row.id}]; a removed or renamed case needs a revision of its task`);
+
+## Mutant
+scripts/workflow-gates/contract.mjs sha256 632b6406eef923390b4b9843a0bff248aed68cbb24e3c55fd8825f67f1452708; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-TESTS-REBASE-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+not ok 1 - [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\case-test-rebase.selftest.mjs:108:1'
+  failureType: 'testCodeFailure'
+  error: 'case ID removed from the test file'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: ''
+  operator: 'match'
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/case-test-rebase.selftest.mjs:124:12
+    withBuild (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/case-test-rebase.selftest.mjs:96:51)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/case-test-rebase.selftest.mjs:121:51)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+exit=1 (spawnSync status of the node process)
+
+## Restored
+scripts/workflow-gates/contract.mjs sha256 764f8a58cadf13c4bc3b08901c08a02ecd235e14675f14e481d26d77bb6ef941; scripts/workflow-gates/case-test-rebase.selftest.mjs sha256 bfd86578560f7638fd5dee9f5d056de6280b94b4ea5ee50b1ae88a6b153ed5b5
+Command: node --test --test-reporter=tap --test-name-pattern=GOV-943-TESTS-REBASE-DENY scripts/workflow-gates/case-test-rebase.selftest.mjs
+TAP version 13
+# Subtest: [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+ok 1 - [GOV-943-TESTS-REBASE-DENY] A tests entry is refused when a case ID or test name is gone, a case is not named in the evidence, the file is no case test or a runtime file, the approving contract does not scope it or is not reviewed, and a scope entry still refuses a case test
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+exit=0 (spawnSync status of the node process)
+

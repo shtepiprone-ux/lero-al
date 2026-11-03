@@ -4,7 +4,7 @@ import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync, rmSync
 import { join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateContract, validateReport, validateGovernanceReport, requiredResults, safePath, digest, planDigest, scopeDigest,
-  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles, scopeRebaseFiles, rebaseChain } from './contract.mjs';
+  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles, scopeRebaseFiles, testsRebaseFiles, rebaseChain, scopeHashErrors } from './contract.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 export function readJson(root, file) {
@@ -80,7 +80,8 @@ export function diffRebaseErrors(root, path, contract, { readBase, selected, iss
   if (reviewedAtBase) {
     const listed = new Set();
     for (const { kind, entry, label } of fresh) {
-      try { for (const file of (kind === 'rules' ? rebaseFiles : scopeRebaseFiles)(readFileSync(safePath(root, entry.evidence), 'utf8'))) listed.add(file); }
+      const list = { rules: rebaseFiles, scope: scopeRebaseFiles, tests: testsRebaseFiles }[kind];
+      try { for (const file of list(readFileSync(safePath(root, entry.evidence), 'utf8'))) listed.add(file); }
       catch (error) { errors.push(`${label}: evidence unavailable (${error.message})`); }
     }
     const anchor = first === 0 ? previous.review.scopeSha256 : base[first - 1].entry.rebasedScopeSha256;
@@ -143,6 +144,36 @@ export function validateDiff(root, files, { phase = 'verify', base, readBase = b
     if (!contracts.some(c => c.contract.kind === 'governance' && c.contract.scope?.includes(file))) errors.push(`${file}: outside every changed governance contract scope`);
   }
   return { errors, contracts };
+}
+// Task 943 R11: a reviewed contract outside the diff selection goes stale when a shared file of its digest changes (C50,
+// C54), and a deleted contract is validated by nothing (C59). Every reviewed contract not in `selected` must keep a
+// current review and report digest (or a valid rebase chain); a contract reviewed at the base may leave the head only
+// as a reviewed contract with the same file name (a move to the archive or a revision of the same kickoff).
+export function reviewedFreshnessErrors(root, selected, { files = [], readBase } = {}) {
+  const errors = [];
+  const paths = allContracts(root);
+  const reviewedAt = path => { try { return readJson(root, path).stage === 'reviewed'; } catch { return false; } };
+  for (const path of paths) {
+    if (selected.includes(path)) continue;
+    let contract;
+    try { contract = readJson(root, path); } catch (error) { errors.push(`${path}: reviewed freshness: contract unavailable (${error.message})`); continue; }
+    if (contract?.stage !== 'reviewed') continue;
+    try { errors.push(...scopeHashErrors(root, contract, contract.review?.scopeSha256, 'Independent review scope is stale').map(error => `${path}: ${error}`)); }
+    catch (error) { errors.push(`${path}: reviewed freshness: review digest unavailable (${error.message})`); }
+    try {
+      const report = readJson(root, contract.report);
+      errors.push(...scopeHashErrors(root, contract, report?.scopeSha256, 'Security report scope hash is stale').map(error => `${path}: ${error}`));
+    } catch (error) { errors.push(`${path}: reviewed freshness: security report unavailable (${error.message})`); }
+  }
+  for (const file of files) {
+    if (!/^tasks\/.+\.security\.json$/.test(file) || paths.includes(file)) continue;
+    let base = null;
+    try { base = JSON.parse((typeof readBase === 'function' ? readBase(file) : null) ?? 'null'); } catch { base = null; }
+    if (base?.stage !== 'reviewed') continue;
+    const name = file.split('/').at(-1);
+    if (!paths.some(path => path.split('/').at(-1) === name && reviewedAt(path))) errors.push(`reviewed contract removed: ${file}`);
+  }
+  return errors;
 }
 
 // Task 935 R3: TAP lines of `node --test`; `#` and `\` in names are escaped by the reporter.
@@ -288,6 +319,10 @@ async function main() {
         try { errors.push(...validateGovernanceReport(ROOT, contract, readJson(ROOT, contract.report)).map(error => `${path}: ${error}`)); }
         catch (error) { errors.push(`${path}: ${error.message}`); }
       }
+    }
+    // Task 943 R11: reviewed contracts outside the selection stay fresh, and no reviewed contract silently disappears.
+    if (phase === 'release') {
+      errors.push(...reviewedFreshnessErrors(ROOT, result.contracts.map(entry => entry.path), { files, readBase: gitBaseReader(ROOT, base) }));
     }
     console.log(`Security scope: ${files.length} changed files, ${result.contracts.length} task contract(s).`);
   } else if (command === 'hash') {

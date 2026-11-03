@@ -5,7 +5,7 @@
   "kind": "product",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_937_Governance_Check_Product_Findings.md",
-  "taskSha256": "1850b7bf8751952673e7ac5a83fedfe43c6af171794e6fb0b688dcde1d5c6ece",
+  "taskSha256": "2ecce758f2bc52018f6f89ee5a693a101a5d99275ba7930dbf640f736ed4135e",
   "scope": [
     "docs/sessions/evidence/task923/review-67/rv67-46-squash-paths.nul",
     "scripts/mojibake-allowlist.json",

@@ -1,0 +1,96 @@
+
+// ---- Task 943 R12 feasibility prototype (appended to a copy of security-hook.mjs by p12-r12-prototype.mjs) ----
+// R12 widens only write positions, never every path mentioned in a command:
+//   W1 redirection targets (quote-aware for a parseable command; the pre-change regex, plus (f) quote stripping, otherwise),
+//   W2 Set-Content/Add-Content/Out-File (and aliases) path positions, W3 literal path arguments of API write calls.
+// (c) a folder change applies to the write positions after it, in order; nested shells and interpreters, and commands the
+// parser rejects, use every folder-change word of the raw text. (d) the tool call's shell folder is a further start folder.
+// (b) globs expand only W1 of a parseable command and W2. The base result (today's targets, normalised by (a)) is kept.
+const R12_SET_FAMILY = /^(?:set-content|add-content|out-file|sc|ac|clear-content|clc)$/i;
+const R12_FOLDER_PROGRAM = /^(?:cd|chdir|pushd|set-location|sl|push-location)$/i;
+const R12_REDIRECT = /(?<![=<>])>{1,2}(?![=>])\s*(?:"([^"]+)"|'([^']+)'|([^\s;|]+))/g;
+const R12_FOLDER_WORD = /(?:^|[\s;&|('"])(?:cd|chdir|pushd|set-location|sl|push-location)\s+(?:-(?:Path|LiteralPath)\s+)?['"]?([A-Za-z0-9_.~/\\:-]+)|\b(?:process|os)\.chdir\(\s*['"]([^'"]+)['"]/gi;
+const R12_NESTED = /(?:^|[\s;&|('"])(?:bash|sh|cmd(?:\.exe)?|powershell(?:\.exe)?|pwsh)\s+(?:\/d\s+)?(?:-c|\/c|-Command)\b|(?:^|[\s;&|('"])(?:node|python3?)\s+(?:-e|-c|--eval)\b/i;
+const R12_API_ONE = /\b(?:writeFileSync|writeFile|appendFileSync|appendFile|createWriteStream|truncateSync|truncate|rmSync|unlinkSync|unlink|WriteAllText|WriteAllLines|WriteAllBytes|AppendAllText|AppendAllLines|Delete)\s*\(\s*r?['"]([^'"]+)['"]/g;
+const R12_API_TWO = /\b(?:copyFileSync|copyFile|cpSync|renameSync|rename|Copy|Move|Replace|copyfile|copy|move|replace)\s*\(\s*r?['"]([^'"]+)['"]\s*,\s*r?['"]([^'"]+)['"]/g;
+const R12_PATHLIB = /Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*write_(?:text|bytes)/g;
+const R12_SPELL = path => (process.platform === 'win32' ? win32Spelling(path) : path);
+function r12ApiArguments(text) {
+  const found = [];
+  for (const m of text.matchAll(R12_API_ONE)) found.push(m[1]);
+  for (const m of text.matchAll(R12_API_TWO)) found.push(m[1], m[2]);
+  for (const m of text.matchAll(R12_PATHLIB)) found.push(m[1]);
+  return found;
+}
+function r12SetFamily(texts) {
+  const found = [];
+  if (!R12_SET_FAMILY.test(texts[0] || '')) return found;
+  for (let i = 1; i < texts.length; i++) {
+    if (/^-(?:path|literalpath|filepath)$/i.test(texts[i])) { if (texts[i + 1]) found.push(texts[++i]); continue; }
+    if (/^-(?:nonewline|force|append|passthru|whatif|confirm)$/i.test(texts[i])) continue;
+    if (texts[i].startsWith('-')) { i++; continue; } // -Value, -Encoding, -Width, … take a value
+    found.push(texts[i]);
+  }
+  return found;
+}
+// Returns [raw path, folders, globbable, rule] for every write position of the command.
+function r12Positions(command, starts) {
+  const positions = [];
+  const commands = shellCommands(command);
+  const readOnly = isReadOnlyShellCommand(command);
+  if (commands) {
+    let folders = [...starts];
+    for (const words of commands) {
+      const { args, targets } = redirections(words);
+      const texts = args.map(arg => arg.text);
+      if (!readOnly && R12_FOLDER_PROGRAM.test(texts[0] || '')) {
+        const value = texts.slice(1).find((t, i, all) => !t.startsWith('-') && !/^-(?:path|literalpath)$/i.test(all[i - 1] || ''))
+          ?? texts[texts.findIndex(t => /^-(?:path|literalpath)$/i.test(t)) + 1];
+        if (value && value !== '-' && value !== '~' && !value.startsWith('$')) folders = folders.map(f => resolve(f, R12_SPELL(value)));
+        continue;
+      }
+      for (const target of targets) positions.push([target, folders, true, readOnly ? 'read-only redirection' : 'redirection']);
+      if (!readOnly) for (const path of r12SetFamily(texts)) positions.push([path, folders, true, '(e) Set-Content-family path']);
+      if (!readOnly) for (const path of r12ApiArguments(texts.join(' '))) positions.push([path, folders, false, '(e) API write argument']);
+    }
+  }
+  if (readOnly || (commands && !R12_NESTED.test(command))) return positions;
+  // Raw-text fallback: a command the parser rejects, or a nested shell or interpreter, whose inner folder changes the parser
+  // cannot see. Every folder-change word of the raw text is a further folder for the raw write positions.
+  const folders = [...starts];
+  for (const s of starts) {
+    let current = s;
+    for (const m of command.matchAll(R12_FOLDER_WORD)) {
+      const value = m[1] || m[2];
+      if (!value || value === '-' || value === '~' || value.startsWith('$')) continue;
+      current = resolve(current, R12_SPELL(value));
+      folders.push(current);
+    }
+  }
+  for (const m of command.matchAll(R12_REDIRECT)) {
+    const target = m[1] || m[2] || m[3];
+    positions.push([target, folders, false, 'redirection (raw text)']);
+    if (!m[1] && !m[2]) positions.push([target.replace(/^['"]+|['"]+$/g, ''), folders, false, '(f) quote-stripped redirection']);
+  }
+  for (const path of r12ApiArguments(command)) positions.push([path, folders, false, '(e) API write argument (raw text)']);
+  return positions;
+}
+export const R12_WHY = new Map();
+export function shellWriteTargets(root, command, start) {
+  const base = baseShellWriteTargets(root, command);
+  if (typeof command !== 'string') return base;
+  const starts = [root, ...(typeof start === 'string' && isAbsolute(start) && resolve(start) !== resolve(root) ? [start] : [])];
+  const result = [...base];
+  R12_WHY.clear();
+  const add = (path, why) => { if (path && !result.includes(path)) { result.push(path); R12_WHY.set(path, why); } };
+  for (const [raw, folders, globbable, rule] of r12Positions(command, starts)) {
+    for (const folder of new Set([root, ...folders])) {
+      const via = resolve(folder) === resolve(root) ? '' : ' via folder ' + (relative(root, folder).replaceAll('\\', '/') || '.');
+      add(projectPath(root, raw, folder), rule + via);
+      if (globbable && /[*?[]/.test(raw)) {
+        try { for (const match of globSync(raw, { cwd: folder })) add(projectPath(root, match, folder), '(b) glob of ' + rule + via); } catch { /* no match */ }
+      }
+    }
+  }
+  return result;
+}

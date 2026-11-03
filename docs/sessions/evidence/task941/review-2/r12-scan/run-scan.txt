@@ -1,0 +1,34 @@
+control "cd D; echo x > hook.mjs" -> ["(c) folder change"]
+control "cat Y > D/hoo?.mjs" -> ["(b) glob target D/hoo?.mjs"]
+control "Get-Content Y > D/hook.mjs." -> ["(a) spelling target D/hook.mjs."]
+control "node -e \"require('fs').writeFileSync('package.json','x')\"" -> ["(e) word package.json"]
+control "cd D; node -e \"require('fs').writeFileSync('hook.mjs','x')\"" -> ["(c) folder change","(e) word hook.mjs"]
+control "grep -n a scripts/x.mjs" -> []
+diff-hook.selftest.mjs: # pass 40, # fail 0; hook inputs an R12 trigger would extend: 9; lines spawning the real hook: [71]
+  diff-hook.copy.test.mjs:138	evaluateHook	"<tmp>\\lero-diff-hook-y2A6TU\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-y2A6TU\src\profile.ts
+  diff-hook.copy.test.mjs:139	evaluateHook	"<tmp>\\lero-diff-hook-y2A6TU\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-y2A6TU\src\profile.ts
+  diff-hook.copy.test.mjs:140	evaluateHook	"<tmp>\\lero-diff-hook-y2A6TU\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-y2A6TU\src\profile.ts
+  diff-hook.copy.test.mjs:144	evaluateHook	"<tmp>\\lero-diff-hook-y2A6TU\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-y2A6TU\src\profile.ts
+  diff-hook.copy.test.mjs:146	evaluateHook	"<tmp>\\lero-diff-hook-y2A6TU\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-y2A6TU\src\profile.ts
+  diff-hook.copy.test.mjs:154	evaluateHook	"<tmp>\\lero-diff-hook-uoCc6P\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-uoCc6P\src\profile.ts
+  diff-hook.copy.test.mjs:155	evaluateHook	"<tmp>\\lero-diff-hook-uoCc6P\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-uoCc6P\src\profile.ts
+  diff-hook.copy.test.mjs:157	evaluateHook	"<tmp>\\lero-diff-hook-uoCc6P\\src\\profile.ts"	(a) Write/Edit spelling <tmp>\lero-diff-hook-uoCc6P\src\profile.ts
+  diff-hook.copy.test.mjs:466	evaluateHook	"Z:\\outside-audit\\profile.ts"	(a) Write/Edit spelling Z:\outside-audit\profile.ts
+governance-contract.selftest.mjs: # pass 17, # fail 0; hook inputs an R12 trigger would extend: 0; lines spawning the real hook: [197]
+scope-rebase.selftest.mjs: # pass 9, # fail 0; hook inputs an R12 trigger would extend: 9; lines spawning the real hook: []
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\tasks\product_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\docs\sessions\evidence\rebase\rules-rebase.md; (a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\docs\sessions\evidence\gov\review.md
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\tasks\product_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\docs\sessions\evidence\rebase\rules-rebase.md
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-6WpK09\scripts\workflow-gates\example.mjs
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-8KCpOP\scripts\workflow-gates\example.mjs
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-8KCpOP\scripts\workflow-gates\example.mjs
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-e4BJwH\tasks\product_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-rebase-e4BJwH\docs\sessions\evidence\rebase\rules-rebase.md
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-sFMAuT\tasks\product_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-rebase-sFMAuT\docs\sessions\evidence\rebase\rules-rebase.md
+  scope-rebase.copy.test.mjs:272	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-rebase-Q4OVhU\tasks\product_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-rebase-Q4OVhU\docs\sessions\evidence\rebase\rules-rebase.md
+  scope-rebase.copy.test.mjs:320	governanceIndependenceErrors	"<transcript>"	(a) Write/Edit spelling <tmp>\lero-scope-entry-dOopbx\tasks\other_kickoff.security.json; (a) Write/Edit spelling <tmp>\lero-scope-entry-dOopbx\docs\sessions\evidence\rebase\scope-other.md
+session-role.selftest.mjs: # pass 12, # fail 0; hook inputs an R12 trigger would extend: 0; lines spawning the real hook: []
+shell-write.selftest.mjs: # pass 5, # fail 0; hook inputs an R12 trigger would extend: 5; lines spawning the real hook: []
+  shell-write.copy.test.mjs:56	shellWriteTargets	"grep -n -E 'Set-Content|echo injected > src/profile.ts' scripts/workflow-gates/diff-hook.selftest.mjs"	(f) trailing quote target src/profile.ts'
+  shell-write.copy.test.mjs:60	governanceIndependenceErrors	"<transcript>"	(f) trailing quote target src/profile.ts'
+  shell-write.copy.test.mjs:90	shellWriteTargets	"grep -n 'a' scripts/workflow-gates/reader.mjs > /c/Claude_Code_Projects/lero-al/scripts/workflow-gates/example.mjs"	(a) spelling target /c/Claude_Code_Projects/lero-al/scripts/workflow-gates/example.mjs
+  shell-write.copy.test.mjs:90	shellWriteTargets	"grep -n 'a' scripts/workflow-gates/reader.mjs > /c/Claude_Code_Projects/lero-al/scripts/workflow-gates/example.mjs"	(a) spelling target /c/Claude_Code_Projects/lero-al/scripts/workflow-gates/example.mjs
+  shell-write.copy.test.mjs:91	governanceIndependenceErrors	"<transcript>"	(a) spelling target /c/Claude_Code_Projects/lero-al/scripts/workflow-gates/example.mjs

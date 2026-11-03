@@ -199,6 +199,16 @@
     "evidence": "docs/sessions/evidence/task940/review/review-940.md",
     "evidenceSha256": "4833deaa660efab375b6a283152b599b181fc551a85f3c8e49511f76c438da6a",
     "scopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
-    "reportSha256": "6ff031e9e563d5bcb9bc0e322c0ebba076fdbd04983ede5251fd6eb32fb421a9"
+    "reportSha256": "6ff031e9e563d5bcb9bc0e322c0ebba076fdbd04983ede5251fd6eb32fb421a9",
+    "rebases": [
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json",
+        "evidence": "docs/sessions/evidence/task941/review/scope-rebase-940.md",
+        "evidenceSha256": "58524009398521299541a33b7cc8b8062c70fd586ddd5bfbc28080b2df21fca7",
+        "originalScopeSha256": "5281d99052146b1a5c6d9c937340430576e78d14389542c3d38f354e11d1aa81",
+        "rebasedScopeSha256": "1c4379305cb8b87a53e17897e12454a3f5f906e083e9cb2204769d85b016a58f"
+      }
+    ]
   }
 }

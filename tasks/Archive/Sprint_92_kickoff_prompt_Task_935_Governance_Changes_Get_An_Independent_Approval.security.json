@@ -458,6 +458,14 @@
         "evidenceSha256": "f8ebae85e2ff4f1b2c2d61c56579eb5f5d399acd994c7bf2e7a930aa65336507",
         "originalScopeSha256": "a3fb3748747e9ae60e4bce1f9365c9bcdf818c052214fceeb77cee41f1637349",
         "rebasedScopeSha256": "9cc079cb216857dfe6a1d535f88f2c88ace4c5653557385a7f6400347c9eb34a"
+      },
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json",
+        "evidence": "docs/sessions/evidence/task941/review/scope-rebase-935.md",
+        "evidenceSha256": "3388710def79e443b99ad7a713c6e1dc64be0db7bea4894ab6e367cf30cb7ee0",
+        "originalScopeSha256": "9cc079cb216857dfe6a1d535f88f2c88ace4c5653557385a7f6400347c9eb34a",
+        "rebasedScopeSha256": "cfb7e1f248c4f5c78bb0b2ae22065e63409dc0b582f52d12feb4712c14ef7f44"
       }
     ]
   }

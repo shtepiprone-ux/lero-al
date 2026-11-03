@@ -1,0 +1,409 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-941 - a read-only shell command is not counted as a write by the security hook",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "d8a07a3c7841022207fd5331f53e5a80b4d7c7e2",
+    "reviewedRevision": "b7c3fc9f64cb14f5ab261303e1ad39c3a83730bc (revision 2 implementation) on 766bdb018 (revision 2 kickoff); first code commit 758508105; review 3 closure in the working tree",
+    "reviewedPaths": [
+      "scripts/workflow-gates/security-hook.mjs",
+      "scripts/workflow-gates/shell-write.selftest.mjs",
+      "scripts/workflow-gates/publication.json",
+      "tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json",
+      "tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.md",
+      "docs/sessions/evidence/task941"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 6,
+      "verified": 6,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-11-03-task941-read-only-commands-are-not-writes.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC6 / R5",
+    "reviewer": "Opus"
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1, R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "isReadOnlyShellCommand, shellWriteTargets",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:135-136",
+          "scripts/workflow-gates/security-hook.mjs:212-219"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-941-HOOK-READONLY-ALLOW, p01 design probe with the two AC1 substitutions"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/review/r3-p01-rerun.txt",
+          "command": "node docs/sessions/evidence/task941/review/r3-p01-rerun.mjs",
+          "observable": "lines 2-5 and 10 report []; lines 6-8 equal the design run; line 9 reports exactly [\"scripts/workflow-gates/publication.json\"]; all ten lines equal the implementer's p01-after.txt",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3 on commit b7c3fc9f6",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-HOOK-READONLY-ALLOW, p01 design probe with the two AC1 substitutions"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A cd without a redirection or a CR LF separator could be classified as a write.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/r3-r2-probe-rerun.txt",
+          "result": "REFUTED: G1-crlf-control and G2-cd-read-control are readOnly=true with after=[]."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC2 / R1, R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "shellCommands, isReadOnlyShellCommand",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:135-136",
+          "scripts/workflow-gates/security-hook.mjs:216-219"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-941-HOOK-WRITE-DENY and its two sensitivity breaks"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/review/r3-mutations.txt",
+          "command": "node docs/sessions/evidence/task941/review/r3-mutations.mjs",
+          "observable": "baseline 5 pass; S1 (first simple command only) and S2 (# allowed) exit 1 with WRITE-DENY failing on ERR_ASSERTION only",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3 on temporary copies of the b7c3fc9f6 gate folder",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-HOOK-WRITE-DENY and its two sensitivity breaks"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The implementer's sensitivity artifact could be stale or bound to another candidate.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/closure-output.txt",
+          "result": "REFUTED: report errors [] for the archived 941 contract, which validates the artifact digest."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC3 / R1, R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "shellCommands, changesFolder, isReadOnlyShellCommand",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:135-136",
+          "scripts/workflow-gates/security-hook.mjs:212-219"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-941-HOOK-MALFORMED-ERROR: lone carriage return forms, cd and Set-Location with a write redirection, the review 1 forms"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/review/r3-r1-probe-rerun.txt",
+          "command": "node docs/sessions/evidence/task941/review-1/r1-bypass-probe.mjs 758508105",
+          "observable": "29 form lines, all readOnly=false",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3 with Git Bash on PATH, commit b7c3fc9f6",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-HOOK-MALFORMED-ERROR: lone carriage return forms, cd and Set-Location with a write redirection, the review 1 forms"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task941/review/r3-probe.txt",
+          "command": "node docs/sessions/evidence/task941/review/r3-probe.mjs",
+          "observable": "H2-H4: 24 further folder-change and line-break forms readOnly=false with targets equal to the pre-941 function; the H4-nel-in-single control (NEL inside single quotes) is readOnly=true by design, and r3-unicode-quote-probe.txt shows no write hidden behind NEL or U+2028 inside single quotes in Git Bash or PowerShell 5.1",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3, commit b7c3fc9f6",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-HOOK-MALFORMED-ERROR: lone carriage return forms, cd and Set-Location with a write redirection, the review 1 forms"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A NEL or U+2028 inside single quotes, which the classifier accepts, could end the quote and hide a write.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/r3-unicode-quote-probe.txt",
+          "result": "REFUTED: no hidden write in Git Bash or PowerShell 5.1 for either character; both positive controls write."
+        },
+        {
+          "claim": "Removing the lone-CR refusal or the cd rule would go unnoticed by the tests.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/r3-mutations.txt",
+          "result": "REFUTED: M1, M2, M4, M7 and M8 each fail MALFORMED-ERROR with ERR_ASSERTION."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "governanceIndependenceErrors, evaluateHook PreToolUse",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:247-260",
+          "scripts/workflow-gates/security-hook.mjs:385-385"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-941-HOOK-PRETOOL-DENY and unchanged existing self-test files"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/review/r3-r2-probe-rerun.txt",
+          "command": "node docs/sessions/evidence/task941/review-2/r2-probe.mjs",
+          "observable": "executor PreToolUse returns POLICY-EDIT AUTHORITY REQUIRED for G1-cr-sed-in-place, G1-cr-git-output, G2-cd-redirect and G2-set-location-redirect",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3, commit b7c3fc9f6",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-HOOK-PRETOOL-DENY and unchanged existing self-test files"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An existing self-test file could have been edited to pass.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/review-941.md",
+          "result": "REFUTED: git diff --name-only 758508105^ HEAD over *.selftest.mjs lists only shell-write.selftest.mjs; 178/178 self-tests pass."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5 / R4",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/shell-write.selftest.mjs",
+        "symbol": "GOV-941 cases",
+        "diffHunks": [
+          "scripts/workflow-gates/shell-write.selftest.mjs:41-266"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-941-CI-POLICY-DENY, selftests, publication, check-workflow, eslint, governance-report, verify, check:kickoff-evidence"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/impl/governance-report.json",
+          "command": "node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json",
+          "observable": "5/5 GOV-941 cases passed; selftests 178 pass 0 fail 0 skipped; publication 0 dependency errors; check-workflow, eslint, verify and check:kickoff-evidence exit 0",
+          "freshness": "approver native runs 2026-11-03 win32 v22.22.3 on commit b7c3fc9f6; report regenerated on the archived path",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-941-CI-POLICY-DENY, selftests, publication, check-workflow, eslint, governance-report, verify, check:kickoff-evidence"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The new self-test file could be missing from the publication manifest.",
+          "kind": "EXECUTED",
+          "path": "scripts/workflow-gates/publication.json",
+          "result": "REFUTED: line 80 lists scripts/workflow-gates/shell-write.selftest.mjs."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC6 / R5",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json",
+        "symbol": "review.rebases scope entries by the 941 contract (935 and 940)",
+        "diffHunks": [
+          "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json:462-469"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "935, 940 and 941 contracts at phase release against origin/main"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Contract metadata only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Contracts are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task941/review/ac6-output.txt",
+          "command": "node docs/sessions/evidence/task941/review/ac6-diff-harness.mjs d8a07a3c7841022207fd5331f53e5a80b4d7c7e2",
+          "observable": "935: no error; 940: no error; 941: no error",
+          "freshness": "approver native run 2026-11-03 win32 v22.22.3 on the closure working tree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "935, 940 and 941 contracts at phase release against origin/main"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A scope entry could hide another changed file of the rebased contract.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task941/review/closure-output.txt",
+          "result": "REFUTED: each scope digest with only the two 941 files at their 758508105^ contents equals the latest recorded digest (EQUALS RECORDED)."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Contract metadata; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ]
+}

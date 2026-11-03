@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "stage": "planned",
+  "executionStatus": "ready",
+  "kind": "governance",
+  "qaProfile": "Q1",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
+  "taskSha256": "fc31c710b69019f8220ef6bc800299a250086e6b6048a5ea69ffdfa0a6c0ab5c",
+  "scope": [
+    "scripts/workflow-gates/cli.mjs",
+    "scripts/workflow-gates/contract.mjs",
+    "scripts/workflow-gates/security-hook.mjs",
+    "scripts/workflow-gates/sensitivity-register.mjs",
+    "scripts/workflow-gates/sensitivity-hooks.mjs",
+    "scripts/workflow-gates/sensitivity.selftest.mjs",
+    "scripts/workflow-gates/hook-syntax.selftest.mjs",
+    "scripts/workflow-gates/hook-load-check.mjs",
+    "scripts/workflow-gates/publication.json",
+    ".claude/rules/shared/task-readiness.md",
+    ".claude/rules/review/02-adversarial-ui.md",
+    "docs/sessions/evidence/task944/impl/completion-report.md",
+    "docs/sessions/evidence/task944/impl/governance-report.json",
+    "docs/sessions/evidence/task944/impl/base-runs.txt",
+    "docs/sessions/evidence/task944/impl/real-repo-guard.txt",
+    "docs/sessions/evidence/task944/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.txt",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.txt",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt"
+  ],
+  "rules": [
+    ".claude/rules/shared/security-testing.md",
+    ".claude/rules/shared/workflow-gates.md",
+    ".claude/rules/shared/git-publication.md",
+    ".claude/rules/shared/role-boundaries.md",
+    ".claude/rules/shared/security-test-quality.md"
+  ],
+  "report": "docs/sessions/evidence/task944/impl/governance-report.json",
+  "sensitivity": "docs/sessions/evidence/task944/sensitivity/sensitivity.json",
+  "cases": [
+    {
+      "id": "GOV-944-SENS-RUN-ALLOW",
+      "invariant": "A sensitivity break exists only in the memory of the test process and yields a complete record while the live files stay unchanged",
+      "actor": "Opus governance implementer",
+      "resource": "runSensitivity, sensitivity-register.mjs and sensitivity-hooks.mjs",
+      "input": "fixture governance contract with a critical case, a gate module, its selftest and a break spec that disables the gate's check; then a second spec for the same case",
+      "response": "no error; record with method in-memory, baseline passed, mutant failed, failureKind assertion, restored passed, break, breakSha256, artifact and artifactSha256; artifact with three TAP outputs; unchanged gate and test digests; the second run replaces the record",
+      "layer": "validator",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a live gate or test file changed by a sensitivity run",
+        "two records for one case"
+      ],
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-RUN-ALLOW] A sensitivity break exists only in the memory of the test process and yields a complete record while the live files stay unchanged"
+    },
+    {
+      "id": "GOV-944-SENS-RUN-DENY",
+      "invariant": "Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing",
+      "actor": "Opus governance implementer",
+      "resource": "runSensitivity",
+      "input": "variants: a break the test does not detect; a line comment that swallows the rest of the line; find absent; find twice; replace equal to find; a target outside scope and inputs; the case test file as target; an unknown and a non-critical case; a spec outside the evidence tree; a product contract",
+      "response": "a named SENSITIVITY error per variant, exit 1, no artifact, no record and unchanged live digests",
+      "layer": "validator",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a syntax or load error recorded as an assertion failure",
+        "a record written for a break that the test did not detect"
+      ],
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing"
+    },
+    {
+      "id": "GOV-944-SENS-LIVE-ERROR",
+      "invariant": "A live file that changes during a sensitivity run, or a missing test file, ends the run with a named error and no record",
+      "actor": "Opus governance implementer",
+      "resource": "runSensitivity",
+      "input": "a fixture test that rewrites its gate file during the run; a contract whose case test file is missing",
+      "response": "SENSITIVITY: a live file changed during the run, and a named error for the missing file; no record; no exception",
+      "layer": "validator",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a record made while the live tree changed",
+        "an uncaught exception"
+      ],
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-LIVE-ERROR] A live file that changes during a sensitivity run, or a missing test file, ends the run with a named error and no record"
+    },
+    {
+      "id": "GOV-944-VAL-RECORD-ALLOW",
+      "invariant": "An in-memory record with a current break spec is accepted, and a legacy contract's record is validated as before",
+      "actor": "CI verify and the Stop gate",
+      "resource": "validateGovernanceReport and SENSITIVITY_LEGACY_TASKS",
+      "input": "a non-legacy fixture contract with an in-memory record and a current spec digest; a fixture contract whose task is the Task 941 kickoff name with a record without method",
+      "response": "no sensitivity error for either contract",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid in-memory record refused",
+        "a legacy contract made invalid"
+      ],
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-VAL-RECORD-ALLOW] An in-memory record with a current break spec is accepted, and a legacy contract's record is validated as before"
+    },
+    {
+      "id": "GOV-944-VAL-RECORD-DENY",
+      "invariant": "A non-legacy governance report refuses a critical sensitivity record that cli.mjs sensitivity did not make",
+      "actor": "Governance implementer writing a record by hand",
+      "resource": "validateGovernanceReport and governanceReport",
+      "input": "non-legacy fixture contract: a record without method; break outside the evidence tree; a stale breakSha256; a break spec of another case",
+      "response": "the named message sensitivity must come from cli.mjs sensitivity per variant, and governanceReport status failed",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a hand-written or live-edit record accepted as sensitivity proof",
+        "a passed governance report with such a record"
+      ],
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-VAL-RECORD-DENY] A non-legacy governance report refuses a critical sensitivity record that cli.mjs sensitivity did not make"
+    },
+    {
+      "id": "GOV-944-HOOK-SYNTAX-DENY",
+      "invariant": "An Edit or Write that would leave a hook-loaded module unparseable is refused for every role",
+      "actor": "Any Opus or Sonnet session",
+      "resource": "evaluateHook PreToolUse and the hook-module closure",
+      "input": "fixture root whose settings run scripts/workflow-gates/hook.mjs importing ./lib.mjs: an Edit of lib.mjs with a line comment that swallows the rest of the line; a Write of unparseable text to hook.mjs; an Edit making a script named in a .claude/hooks ps1 file unparseable; an Edit with a two-line LF old_string that makes a CRLF lib.mjs unparseable; an Edit of hook.mjs importing a file not written yet; an Edit of lib.mjs removing an export hook.mjs imports; an Edit of lib.mjs adding a bare package import; orchestrator and executor sessions",
+      "response": "HOOK MODULE SYNTAX for each write",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "a write that makes every hook refuse all tools",
+        "a session locked out of the Edit that would repair the module"
+      ],
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SYNTAX-DENY] An Edit or Write that would leave a hook-loaded module unparseable is refused for every role"
+    },
+    {
+      "id": "GOV-944-HOOK-SYNTAX-ALLOW",
+      "invariant": "A parseable write of a hook-loaded module, any write of a module no hook loads, and a repairing Edit are not refused by the syntax guard",
+      "actor": "Opus governance implementer",
+      "resource": "evaluateHook PreToolUse and the hook-module closure",
+      "input": "a parseable Edit of lib.mjs; an unparseable Write to a .mjs that no hook loads; an Edit that repairs an unparseable closure module; a CommonJS .cjs closure module with require; a Write of new.mjs followed by an Edit of hook.mjs importing it; a fixture lib.mjs whose top level would write a marker file",
+      "response": "no HOOK MODULE SYNTAX error; no marker file, because no module is evaluated",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid edit of a gate module refused",
+        "a repair of a broken module refused"
+      ],
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SYNTAX-ALLOW] A parseable write of a hook-loaded module, any write of a module no hook loads, and a repairing Edit are not refused by the syntax guard"
+    },
+    {
+      "id": "GOV-944-HOOK-CLOSURE-ERROR",
+      "invariant": "An unreadable closure input, an import cycle, an absent old_string or a failing guard step never throws out of evaluateHook",
+      "actor": "Any session",
+      "resource": "hookModuleSyntaxErrors, evaluateHook PreToolUse and the hook-module closure",
+      "input": "a fixture root without settings.json; a malformed settings.json; a root without a .claude/hooks folder; two closure modules importing each other; an Edit of a closure module whose old_string does not occur; an injected readText that throws",
+      "response": "no guard error and no exception for the first four; HOOK MODULE SYNTAX old_string not found for the absent old_string; HOOK MODULE SYNTAX guard error for the throwing reader, with no exception out of evaluateHook",
+      "layer": "hook",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "an exception that turns into SECURITY GATE BLOCKED for every tool",
+        "an endless closure walk"
+      ],
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-CLOSURE-ERROR] An unreadable closure input, an import cycle, an absent old_string or a failing guard step never throws out of evaluateHook"
+    }
+  ]
+}

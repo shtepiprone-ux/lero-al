@@ -1,0 +1,6 @@
+# Task 944 design probe p07 (session 3d40df28, 2026-11-03T09:33:12Z), node v22.22.3, native Windows 11, cwd /c/Claude_Code_Projects/lero-al
+Command: node docs/sessions/evidence/task944/design/p07-name-pattern-probe.mjs
+GOV-943-HOOK-PRETOOL-DENY: exit 0; results 1; named 1 passed
+GOV-943-TESTS-REBASE-DENY: exit 0; results 1; named 1 passed
+mutant: exit 1; named failed; ERR_ASSERTION in TAP: true
+exit=0

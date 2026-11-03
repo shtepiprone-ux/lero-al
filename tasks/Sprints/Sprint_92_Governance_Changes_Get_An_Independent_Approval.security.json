@@ -1,10 +1,11 @@
 {
   "version": 1,
   "stage": "planned",
+  "executionStatus": "ready",
   "kind": "docs",
   "qaProfile": "Q0",
   "task": "tasks/Sprints/Sprint_92_Governance_Changes_Get_An_Independent_Approval.md",
-  "taskSha256": "5383fb2a58f3d124f9d3cbdea3339051fd99f55396a7f5155188c5f6fb8c8047",
+  "taskSha256": "c77af5deb11a21bb0830d804a465cad99a05856613a34aab56a0b8b5bc76e797",
   "scope": [
     "tasks/Sprints/Sprint_92_Governance_Changes_Get_An_Independent_Approval.md"
   ],

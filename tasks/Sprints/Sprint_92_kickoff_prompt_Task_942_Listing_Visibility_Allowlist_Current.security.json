@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "1dc481d48969afa1a10a5744c206ecaf68154868ddc1f9d01639c9fb98fe93c0",
+  "taskSha256": "881a18930e02a27b9628870429634df2948d87508a176a99091ffd30167ee366",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -14,6 +14,7 @@
     "docs/sessions/evidence/task942/impl/base-runs.txt",
     "docs/sessions/evidence/task942/impl/gate-after.txt",
     "docs/sessions/evidence/task942/sensitivity/sensitivity.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.break.json",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt"
   ],
   "rules": [

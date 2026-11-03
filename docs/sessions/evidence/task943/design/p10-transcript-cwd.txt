@@ -1,0 +1,4 @@
+line 353 | assistant | cwd=<root> | tool_use Bash: "cd /c/Claude_Code_Projects/lero-al/docs/sessions/evidence/ta"
+line 354 | user | cwd=<root>/docs/sessions/evidence/task941/review-2 | tool_result
+line 359 | assistant | cwd=<root>/docs/sessions/evidence/task941/review-2 | tool_use Bash: "cd /c/Claude_Code_Projects/lero-al && head -c 3 docs/session"
+line 360 | user | cwd=<root> | tool_result

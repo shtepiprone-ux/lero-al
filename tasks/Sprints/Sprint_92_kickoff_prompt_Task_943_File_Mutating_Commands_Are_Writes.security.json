@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md",
-  "taskSha256": "a22a264faec4808dca994df65a80e20270934eef2f2199749d0f286078b423f5",
+  "taskSha256": "5928113fc82ac830cc8f037ed23ae951fb1033302528c888082443fd4c5ab37c",
   "scope": [
     "scripts/workflow-gates/security-hook.mjs",
     "scripts/workflow-gates/shell-mutation.selftest.mjs",
@@ -25,7 +25,8 @@
     ".claude/rules/create/03-publication.md",
     "docs/sessions/evidence/task943/sensitivity/GOV-943-TESTS-REBASE-DENY.txt",
     "docs/sessions/evidence/task943/sensitivity/GOV-943-EXEMPT-UNTRACKED-DENY.txt",
-    "docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt"
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-CI-STALE-REVIEW-DENY.txt",
+    "docs/sessions/evidence/task943/sensitivity/GOV-943-HOOK-TARGET-SPELLING-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -157,6 +158,24 @@
       ],
       "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
       "testName": "[GOV-943-CI-DELETE-DENY] CI refuses a deleted hook file outside every changed governance contract scope"
+    },
+    {
+      "id": "GOV-943-HOOK-TARGET-SPELLING-DENY",
+      "invariant": "A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, projectPath, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "revision 2: a redirection glob; cd, Set-Location and Push-Location before a relative write; a transcript tool_use entry and a PreToolUse event with a cwd below the root, and a transcript entry whose cwd is outside the root; Set-Content, Add-Content, Out-File and node -e writeFileSync naming a project-root product file, and node -e writeFileSync naming a bare scope file after cd; on win32 trailing dots and spaces, a folder with a trailing dot and an 8.3 short name in a redirection and a Write tool call",
+      "response": "the real file among the targets, GOVERNANCE INDEPENDENCE for a scope file, POLICY-EDIT AUTHORITY REQUIRED for a policy file and SECURITY TEST CONTRACT MISSING for a product file",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through another spelling of a scope file",
+        "Sonnet changing a policy or product file through a spelling the guard does not resolve"
+      ],
+      "testFile": "scripts/workflow-gates/shell-mutation.selftest.mjs",
+      "testName": "[GOV-943-HOOK-TARGET-SPELLING-DENY] A write is counted for the file it reaches, whatever spelling, folder change or shell folder names it"
     },
     {
       "id": "GOV-943-TESTS-REBASE-ALLOW",

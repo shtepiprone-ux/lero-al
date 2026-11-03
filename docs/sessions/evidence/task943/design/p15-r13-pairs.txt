@@ -1,0 +1,318 @@
+@@FROM
+  const WRAPPER_VALUES = { sudo: /^-[ugCDhpRrTt]$/, env: /^-[uCS]$/ };
+@@TO
+  const WRAPPER_VALUES = { sudo: /^-[ugCDhpRrTt]$/, env: /^-[uCS]$/, nice: /^-n$/, ionice: /^-[cnp]$/, timeout: /^-[sk]$/, stdbuf: /^-[ioe]$/, doas: /^-[uC]$/, npx: /^-p$/, pnpx: /^-p$/, bunx: /^-p$/ };
+@@END
+@@FROM
+    if (/^(?:sudo|env|command|nohup|time)$/i.test(word)) { wrapper = word.toLowerCase(); index++; continue; }
+@@TO
+    if (/^(?:sudo|env|command|nohup|time|exec|nice|ionice|timeout|stdbuf|builtin|doas|npx|pnpx|bunx)$/i.test(word)) {
+      wrapper = word.toLowerCase(); index++;
+      // R13 (a): `timeout` takes its options and then a duration before the program.
+      if (wrapper === 'timeout') { while (texts[index]?.startsWith('-')) index += WRAPPER_VALUES.timeout.test(texts[index]) ? 2 : 1; index++; }
+      continue;
+    }
+@@END
+@@FROM
+  if (!WRITE_PROGRAMS.has(program)) return [];
+@@TO
+  // R15 (revision 4, review 1 second self-audit): other programs that write the files they name.
+  const OTHER_WRITERS = new Set(['prettier', 'eslint', 'npm', 'pnpm', 'yarn', 'bun', 'tar', 'unzip', 'expand-archive', 'compress-archive', 'export-csv', 'export-clixml',
+    'curl', 'wget', 'invoke-webrequest', 'iwr', 'invoke-restmethod', 'irm', 'scp', 'rsync']);
+  if (!WRITE_PROGRAMS.has(program) && !OTHER_WRITERS.has(program)) return [];
+@@END
+@@FROM
+  if (COPY_PROGRAMS.has(program) || MOVE_PROGRAMS.has(program)) {
+@@TO
+  if (OTHER_WRITERS.has(program)) {
+    const lower = args.map(arg => arg.toLowerCase());
+    const plain = args.filter(arg => !arg.startsWith('-'));
+    const valueOf = (...names) => {
+      for (let i = 0; i < args.length; i++) {
+        const [name, attached] = lower[i].split(/[=:](.*)/s);
+        if (names.includes(name)) return attached !== undefined ? args[i].slice(name.length + 1) : args[i + 1];
+      }
+      return undefined;
+    };
+    const valueWords = names => args.filter((arg, i) => i > 0 && names.includes(lower[i - 1]));
+    const files = list => list.filter(word => !word.startsWith('-')).flatMap(withFiles);
+    if (program === 'prettier') return lower.some(arg => arg === '--write' || arg === '-w') ? files(plain) : [];
+    if (program === 'eslint') return lower.some(arg => arg === '--fix') ? files(plain.filter(word => !valueWords(['--config', '-c', '--ext', '--format', '-f', '--rule', '--plugin', '--parser', '--output-file', '-o']).includes(word))).concat(paths(valueOf('--output-file', '-o'))) : [];
+    // Downloads write their output file; a remote copy writes a local destination (a `host:path` word is remote).
+    const remote = word => /^[^/\\]{2,}:/.test(word);
+    if (program === 'curl') {
+      const urlName = url => { try { return basename(new URL(url).pathname) || undefined; } catch { return undefined; } };
+      // `-o` (lower case) names the output file; `-O` writes the last segment of the URL.
+      const out = args.find((arg, i) => args[i - 1] === '-o') ?? valueOf('--output');
+      const named = args.some(arg => arg === '-O' || arg === '--remote-name') ? plain.map(urlName).filter(Boolean) : [];
+      return [...paths(out), ...named.flatMap(paths)];
+    }
+    if (program === 'wget') {
+      const out = args.find((arg, i) => args[i - 1] === '-O') ?? valueOf('--output-document');
+      const dir = args.find((arg, i) => args[i - 1] === '-P') ?? valueOf('--directory-prefix');
+      if (out) return paths(out);
+      return plain.map(url => { try { return basename(new URL(url).pathname); } catch { return ''; } }).filter(Boolean).flatMap(name => paths(dir ? joined(dir, name) : name));
+    }
+    if (['invoke-webrequest', 'iwr', 'invoke-restmethod', 'irm'].includes(program)) return paths(valueOf('-outfile'));
+    if (program === 'scp' || program === 'rsync') {
+      const positionals = plain.filter(word => !valueWords(['-p', '-i', '-o', '-e', '-f', '-l']).includes(word));
+      const destination = positionals.length >= 2 ? positionals.at(-1) : undefined;
+      return destination && !remote(destination) ? [...paths(destination), ...positionals.slice(0, -1).filter(source => !remote(source)).flatMap(source => /[\\/]$/.test(destination) || isDirectory(resolve(folder, spelling(destination))) ? paths(joined(destination, leaf(source))) : [])] : [];
+    }
+    if (program === 'npm' && /^(?:pkg|version)$/i.test(plain[0] || '')) {
+      // `npm pkg set|delete|fix` edits package.json; `npm version` also the lockfile.
+      if (plain[0].toLowerCase() === 'pkg' && !/^(?:set|delete|fix)$/i.test(plain[1] || '')) return [];
+      const prefix = valueOf('--prefix');
+      return (plain[0].toLowerCase() === 'pkg' ? ['package.json'] : ['package.json', 'package-lock.json']).map(name => (prefix ? joined(prefix, name) : name)).flatMap(paths);
+    }
+    if (['npm', 'pnpm', 'yarn', 'bun'].includes(program)) {
+      const sub = (plain[0] || (program === 'yarn' ? 'install' : '')).toLowerCase();
+      if (lower.includes('-g') || lower.includes('--global')) return [];
+      // `--prefix`, `-C`, `--dir` or `--cwd` names the folder whose manifest and lockfile change.
+      const prefix = valueOf('--prefix', '-c', '--dir', '--cwd');
+      return /^(?:install|i|ci|add|remove|uninstall|rm|un|update|up|upgrade|dedupe|prune|link)$/.test(sub)
+        ? ['package.json', 'package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'bun.lockb'].map(name => (prefix ? joined(prefix, name) : name)).flatMap(paths) : [];
+    }
+    if (program === 'tar') {
+      const bundle = args.findIndex((arg, i) => /^-?[A-Za-z]+$/.test(arg) && (i === 0 || arg.startsWith('-')) && /[cxrut]/.test(arg.replace(/^-/, '')));
+      const modes = bundle === -1 ? '' : args[bundle].replace(/^-/, '');
+      const extract = modes.includes('x') || lower.includes('--extract') || lower.includes('--get');
+      const create = /[cru]/.test(modes) || ['--create', '--append', '--update'].some(flag => lower.includes(flag));
+      const archive = valueOf('--file', '-f') ?? (modes.includes('f') ? args[bundle + 1] : undefined);
+      return [...(create ? paths(archive) : []), ...(extract ? withFiles(valueOf('-c', '--directory') ?? '.') : [])];
+    }
+    if (program === 'unzip') return withFiles(valueOf('-d') ?? '.');
+    if (program === 'expand-archive') return withFiles(valueOf('-destinationpath') ?? plain[1] ?? '.');
+    if (program === 'compress-archive') return paths(valueOf('-destinationpath') ?? plain[1]);
+    return paths(valueOf('-path', '-literalpath') ?? plain[0]);
+  }
+  // R13 (d): a delete, move, rename or content cmdlet with no path takes its paths from the pipeline: every project path
+  // named by the other simple commands and every file under each named project directory (the xargs rule).
+  const PIPED = new Set([...DELETE_PROGRAMS, ...MOVE_PROGRAMS, ...RENAME_PROGRAMS, 'clear-content', 'clc', 'set-content', 'sc', 'add-content', 'ac']);
+  const piped = [];
+  if (PIPED.has(program) && all.length > 1) {
+    const parsed = parseArguments(program, args);
+    if (!parsed.values('path', 'literalpath').length && !parsed.positionals.length) {
+      piped.push(...all.filter(words => words.join('\0') !== texts.join('\0')).flatMap(words => words.slice(1))
+        .filter(word => !word.startsWith('-')).flatMap(withFiles));
+      if (!MOVE_PROGRAMS.has(program)) return piped;
+    }
+  }
+  if (COPY_PROGRAMS.has(program) || MOVE_PROGRAMS.has(program)) {
+@@END
+@@FROM
+    return found;
+  }
+  if (DELETE_PROGRAMS.has(program)) {
+@@TO
+    return [...piped, ...found];
+  }
+  if (DELETE_PROGRAMS.has(program)) {
+@@END
+@@FROM
+      if (FOLDER_PROGRAM.test(texts[0] || '')) {
+        const parsed = parseArguments(texts[0].toLowerCase(), texts.slice(1));
+@@TO
+      // R13 (a): `builtin cd` and `command cd` change the folder too.
+      const lead = /^(?:builtin|command)$/i.test(texts[0] || '') ? 1 : 0;
+      if (FOLDER_PROGRAM.test(texts[lead] || '')) {
+        const parsed = parseArguments(texts[lead].toLowerCase(), texts.slice(lead + 1));
+@@END
+@@FROM
+(?:-[A-Za-z]*i|--in-place)`, 'i'),
+@@TO
+['"]?(?:-[A-Za-z]*i|--in-place)`, 'i'),
+@@END
+@@FROM
+-(?:delete|exec|execdir|ok|okdir)(?![\\w-])`, 'i'),
+@@TO
+['"]?-(?:delete|exec|execdir|ok|okdir)(?![\\w-])`, 'i'),
+@@END
+@@FROM
+const RAW_REDIRECT = /
+@@TO
+// R13 (e): words of the lenient reading that held a quoted character; their glob characters are literal.
+const LITERAL_WORDS = new Set();
+// R13 (b): programs that run a command given as text or as a program with an argument list.
+const EVALUATOR = /^(?:eval|iex|invoke-expression)$/i;
+const SHELL_PROGRAM = /^(?:bash|sh|zsh|dash|cmd|powershell|pwsh)(?:\.exe)?$/i;
+const START_PROCESS = /^(?:start-process|saps)$/i;
+// The command text an evaluator, nested shell or Start-Process runs, or null.
+function evaluatedText(texts) {
+  const program = basename((texts[0] || '').replaceAll('\\', '/'));
+  if (EVALUATOR.test(program)) return texts.slice(1).filter(word => !/^-command$/i.test(word)).join(' ');
+  if (START_PROCESS.test(program)) {
+    const parsed = parseArguments('start-process', texts.slice(1));
+    const file = [...parsed.values('filepath'), ...parsed.positionals][0];
+    const list = parsed.named.get('argumentlist') || parsed.positionals.slice(1);
+    return file ? [file, ...list.flatMap(value => value.split(/[\s,]+/))].filter(Boolean).join(' ') : null;
+  }
+  if (!SHELL_PROGRAM.test(program)) return null;
+  const flag = texts.findIndex((word, i) => i > 0 && /^(?:-c|\/c|\/k|-com(?:m(?:a(?:n(?:d)?)?)?)?)$/i.test(word));
+  return flag === -1 ? null : texts.slice(flag + 1).join(' ');
+}
+const RAW_REDIRECT = /
+@@END
+@@FROM
+const PS_VALUE = ['path', 'literalpath', 'destination', 'filepath', 'name', 'newname', 'value', 'encoding', 'itemtype', 'filter',
+@@TO
+const PS_VALUE = ['path', 'literalpath', 'destination', 'filepath', 'argumentlist', 'name', 'newname', 'value', 'encoding', 'itemtype', 'filter',
+@@END
+@@FROM
+function uncachedShellWriteTargets(root, command, start) {
+@@TO
+function uncachedShellWriteTargets(root, command, start, depth = 0) {
+@@END
+@@FROM
+      for (const raw of apiArguments(texts.join(' '))) resolveIn(raw, folders, false);
+    }
+  }
+@@TO
+      for (const raw of apiArguments(texts.join(' '))) resolveIn(raw, folders, false);
+      // R13 (b): the command text an evaluator, nested shell or Start-Process runs, in each current folder.
+      const inner = evaluatedText(texts);
+      if (inner && depth < 3) for (const folder of new Set([resolve(root), ...folders])) for (const path of uncachedShellWriteTargets(root, inner, folder, depth + 1)) add(path);
+    }
+  }
+@@END
+@@FROM
+  for (const raw of apiArguments(command)) resolveIn(raw, folders, false);
+  return result;
+@@TO
+  for (const raw of apiArguments(command)) resolveIn(raw, folders, false);
+  // R13 (f) (third self-audit): the string arguments of a child-process call in raw text (`execSync('…')`,
+  // `subprocess.run(['rm', 'x'])`, `os.system('…')`) are a command, read with its targets in every raw folder.
+  const CHILD_CALL = /\b(?:execSync|execFileSync|execFile|exec|spawnSync|spawn|system|popen|Popen|run|call|check_call|check_output)\s*\(\s*\[?((?:\s*r?(?:'[^']*'|"[^"]*")\s*,?)+)/g;
+  if (depth < 3) for (const match of command.matchAll(CHILD_CALL)) {
+    const inner = [...match[1].matchAll(/'([^']*)'|"([^"]*)"/g)].map(m => m[1] ?? m[2]).join(' ');
+    if (inner.trim()) for (const folder of new Set(folders)) for (const path of uncachedShellWriteTargets(root, inner, folder, depth + 1)) add(path);
+  }
+  // R13 (c): for a parser-rejected command naming a section 5 program, the R1 paths in every raw folder too.
+  if (!commands && namesWriteProgram(command)) {
+    for (const match of command.matchAll(PROJECT_FILE)) resolveIn(match[0].replaceAll('\\', '/'), folders, false);
+  }
+  // R13 (e): a parser-rejected command is also read leniently: split at `;`, `|`, `&` and line breaks, quotes, backticks and
+  // brackets dropped, words at blanks; each part gets the section 5 targets and W2 in every raw folder (sub-review F1, F2, F4).
+  // Folder changes apply in order, as for a parsed command; only file-like words (with `/`, `\` or `.`) become targets.
+  if (!commands && !readOnly) {
+    // A heredoc or here-string body is data for its command, unless a shell reads it (`bash <<EOF`); its text is dropped
+    // before the split (review 1 second self-audit: prose in `cat >> file <<'EOF'` named a governance file).
+    const shellReader = line => /(?:^|[\s;&|(])(?:bash|sh|zsh|dash|pwsh|powershell)(?:\.exe)?(?:\s+-\S+)*\s*(?:-\s*)?<</i.test(line);
+    const text = command
+      .replace(/^([^\n]*?<<-?\s*['"]?([A-Za-z_][A-Za-z0-9_]*)['"]?[^\n]*)\n[\s\S]*?\n[ \t]*\2[ \t]*(?=\n|$)/gm, (all, head) => (shellReader(head) ? all : head))
+      .replace(/@(['"])\r?\n[\s\S]*?\r?\n\1@/g, ' ');
+    LITERAL_WORDS.clear();
+    // Words: a quoted span stays inside one word, unquoted brackets and backticks separate words, and a word with a quoted
+    // character is never glob-expanded (a quoted `*` in a sed script is no glob; `"src/app/[locale]/x.tsx"` stays literal).
+    const parts = text.split(/[;|&\r\n]+/).map(part => {
+      const words = [];
+      let word = '', quote = '', quoted = false;
+      const end = () => { if (word) { words.push(word); if (quoted) LITERAL_WORDS.add(word); } word = ''; quoted = false; };
+      for (const ch of part) {
+        if (quote) { if (ch === quote) quote = ''; else word += ch; continue; }
+        if (ch === "'" || ch === '"') { quote = ch; quoted = true; continue; }
+        if (/[\s`(){}]/.test(ch)) { end(); continue; }
+        word += ch;
+      }
+      end();
+      return words;
+    }).filter(words => words.length);
+    const fileLike = word => /[\\/.]/.test(word) && !/^\.\.?$/.test(word);
+    let current = [...starts];
+    for (let words of parts) {
+      // A nested shell, evaluator or Start-Process inside a parser-rejected command: the part is read as the words it runs,
+      // so a folder change or a section 5 program inside the quoted text counts (review 1 second self-audit).
+      for (let inner = evaluatedText(words); inner !== null && words.length > 1; inner = evaluatedText(words)) words = inner.split(/\s+/).filter(Boolean);
+      // A script-block caller (`Invoke-Command`, `Start-Job`, `ForEach-Object`, dot-sourcing) runs the block that follows.
+      while (words.length > 1 && /^(?:invoke-command|icm|start-job|sajb|start-threadjob|foreach-object|foreach|%|\.)$/i.test(words[0])) {
+        words = words.slice(1);
+        while (words.length > 1 && words[0].startsWith('-')) words = words.slice(1);
+      }
+      const lead = /^(?:builtin|command)$/i.test(words[0] || '') ? 1 : 0;
+      if (FOLDER_PROGRAM.test(words[lead] || '')) {
+        const value = words.slice(lead + 1).filter(word => !/^(?:\/d|-Path|-LiteralPath)$/i.test(word))[0];
+        if (movedFolder(value)) current = current.map(folder => resolve(folder, spelling(value)));
+        continue;
+      }
+      for (const folder of new Set([resolve(root), ...current])) {
+        // No pipeline or xargs rule here: a `|` inside quoted text would make a false pipeline (p15-lenient-pipeline-noise.txt).
+        // Every word is read (a subcommand such as `npm install` has no dot); only file-like targets are kept.
+        for (const path of programTargets(root, folder, words, [words])) if (fileLike(path)) add(path);
+      }
+    }
+    LITERAL_WORDS.clear();
+  }
+  return result;
+@@END
+@@FROM
+    const file = projectPath(root, input.file_path || input.path);
+    if (!file) return ['Missing write path'];
+    if (file === '..' || file.startsWith('../') || isAbsolute(file)) return ['Write outside the project cannot be verified'];
+    files = [file];
+@@TO
+    // R12 (d) for Write/Edit: a relative path is also resolved in the event's working directory.
+    const raw = input.file_path || input.path;
+    const file = projectPath(root, raw);
+    if (!file) return ['Missing write path'];
+    const folder = typeof event.cwd === 'string' && isAbsolute(event.cwd) ? event.cwd : null;
+    files = [...new Set([file, ...(folder ? [projectPath(root, raw, folder)] : [])])];
+    if (files.some(path => path === '..' || path.startsWith('../') || isAbsolute(path))) return ['Write outside the project cannot be verified'];
+@@END
+@@FROM
+  if (candidates.length) for (const path of allContracts(root)) {
+    // Enrollment requires preflight; it never authorizes a write. Authorization uses only the current valid plan.
+    let contract; try { contract = readJson(root, path); } catch { continue; }
+    for (const file of candidates) if (inScope(root, contract?.scope, file)) enrolled.add(file);
+  }
+@@TO
+  // Sub-review F5: the scope keys of every contract are built once per call, so a directory walk stays linear.
+  if (candidates.length) {
+    const keys = new Set();
+    for (const path of allContracts(root)) {
+      // Enrollment requires preflight; it never authorizes a write. Authorization uses only the current valid plan.
+      let contract; try { contract = readJson(root, path); } catch { continue; }
+      if (Array.isArray(contract?.scope)) for (const entry of contract.scope) if (typeof entry === 'string') keys.add(pathKey(projectPath(root, entry)));
+    }
+    for (const file of candidates) if (keys.has(pathKey(file))) enrolled.add(file);
+  }
+@@END
+@@FROM
+const API_ONE = /\b(?:writeFileSync|writeFile|appendFileSync|appendFile|createWriteStream|truncateSync|truncate|rmSync|rm|unlinkSync|unlink|WriteAllText|WriteAllLines|WriteAllBytes|AppendAllText|AppendAllLines|Delete|remove)\s*\(\s*r?['"]([^'"]+)['"]/gi;
+const API_TWO = /\b(?:copyFileSync|copyFile|cpSync|cp|renameSync|rename|Copy|Move|Replace|copyfile|copy|move|replace)\s*\(\s*r?['"]([^'"]+)['"]\s*,\s*r?['"]([^'"]+)['"]/gi;
+@@TO
+// Sub-review F7: a generic name (`rm`, `copy`, `replace`, …) is an API call only after `fs.`, `fs.promises.`, `fsp.`, `os.`,
+// `shutil.` or `]::`, so a string method such as `'a'.replace('x','y')` is no write.
+const API_QUALIFIER = String.raw`(?:\bfs\.(?:promises\.)?|\bfsp\.|\bos\.|\bshutil\.|\]::|\)\.)`;
+const API_ONE = new RegExp(String.raw`(?:\b(?:writeFileSync|writeFile|appendFileSync|appendFile|createWriteStream|truncateSync|rmSync|unlinkSync|WriteAllText|WriteAllLines|WriteAllBytes|AppendAllText|AppendAllLines)|${API_QUALIFIER}(?:truncate|rm|unlink|Delete|remove))\s*\(\s*r?['"]([^'"]+)['"]`, 'gi');
+const API_TWO = new RegExp(String.raw`(?:\b(?:copyFileSync|copyFile|cpSync|renameSync)|${API_QUALIFIER}(?:cp|rename|Copy|Move|Replace|copyfile|copy|move|replace))\s*\(\s*r?['"]([^'"]+)['"]\s*,\s*r?['"]([^'"]+)['"]`, 'gi');
+@@END
+@@FROM
+push-location)\s+(?:-(?:Path|LiteralPath)\s+)?['"]?
+@@TO
+push-location)\s+(?:\/[dD]\s+)?(?:-(?:Path|LiteralPath)\s+)?['"]?
+@@END
+@@FROM
+        const value = [...parsed.values('path', 'literalpath'), ...parsed.positionals][0];
+@@TO
+        // Sub-review F3: `cd /d <folder>` (cmd) names the folder after its `/d` option.
+        const value = [...parsed.values('path', 'literalpath'), ...parsed.positionals.filter(word => !/^\/d$/i.test(word))][0];
+@@END
+@@FROM
+  const folders = [...starts];
+  for (const first of starts) {
+@@TO
+  const folders = [...starts];
+  // Sub-review F8: each raw folder is kept once.
+  const seenFolders = new Set(starts);
+  for (const first of starts) {
+@@END
+@@FROM
+      folders.push(current);
+@@TO
+      if (!seenFolders.has(current)) { seenFolders.add(current); folders.push(current); }
+@@END
+@@FROM
+    if (/[*?[]/.test(raw)) {
+@@TO
+    if (/[*?[]/.test(raw) && !LITERAL_WORDS.has(raw)) {
+@@END

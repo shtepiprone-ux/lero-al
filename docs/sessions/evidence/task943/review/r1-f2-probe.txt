@@ -1,0 +1,6 @@
+# Task 943 review 1: executor pre-write guard, Write/Edit with a relative path and an event cwd (candidate hook sha256 35b508014df0…)
+# command: node docs/sessions/evidence/task943/review/r1-f2-probe.mjs
+Bash relative, cwd scripts (AC13 control): ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]
+Write relative, cwd scripts: []
+Edit relative, cwd scripts: []
+Write absolute (control): ["POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement"]

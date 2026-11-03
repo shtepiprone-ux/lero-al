@@ -1,0 +1,7 @@
+# Task 943 review 1: corpus commands whose added targets are governance rule or hook files when the lenient reading (R13 (e) draft) also applies the pipeline rule (d); prototype test-results/task943-r4/security-hook.mjs before that rule was limited to parsed commands; command text cut at 160 characters
+command "$u = (Select-String -Path .env.local -Pattern '^NEXT_PUBLIC_SUPABASE_URL=' | Select-Object -First 1).Line.Split('=', 2)[1].Trim('\"', \"'\", ' ')\n$env:NEXT_PU
+  added ["=","Select-String",".env.local","^NEXT_PUBLIC_SUPABASE_URL=","1",".Line.Split",",","2"]
+command "cd /c/Claude_Code_Projects/lero-al && grep -ln \"ORCHESTRATOR BOUNDARY\" .claude/hooks/*.ps1; f=$(grep -ln \"ORCHESTRATOR BOUNDARY\" .claude/hooks/*.ps1 | head
+  added [".artifacts/actionrow_fail.txt",".artifacts/ai886-378-after.png",".artifacts/analyze7.mjs",".artifacts/apply886.mjs",".artifacts/authform886.current",".artifacts/authform886.head",".artifacts/build-storybook-10.log",".artifacts/build-storybook-2.log"]
+command "cd /c/Claude_Code_Projects/lero-al && node - <<'EOF'\nconst fs=require('fs');const p='src/modules/admin/actions/__tests__/adminCatalog.security.test.ts';let t=
+  added [".artifacts/actionrow_fail.txt",".artifacts/ai886-378-after.png",".artifacts/analyze7.mjs",".artifacts/apply886.mjs",".artifacts/authform886.current",".artifacts/authform886.head",".artifacts/build-storybook-10.log",".artifacts/build-storybook-2.log"]

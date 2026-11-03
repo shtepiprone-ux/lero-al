@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "status": "passed",
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
+  "contractSha256": "5fdc0621948947201706b0c3ba136ed13b13a15f3674e09869cd8e458b07aa68",
+  "scopeSha256": "ad5bf169fb756194b56c1f18f4a5f5db82ee11bbc60978aae4ae9517312f9af1",
+  "node": "v22.22.3",
+  "platform": "win32",
+  "cases": [
+    {
+      "id": "GOV-944-SENS-RUN-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-RUN-ALLOW] A sensitivity break exists only in the memory of the test process and yields a complete record while the live files stay unchanged"
+    },
+    {
+      "id": "GOV-944-SENS-RUN-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing",
+      "sensitivity": {
+        "id": "GOV-944-SENS-RUN-DENY",
+        "testName": "[GOV-944-SENS-RUN-DENY] Only a break that fails the named test with an assertion produces a record; every other break or spec is refused and writes nothing",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json",
+        "breakSha256": "479075985b341815183bc7b29cb591527c3acc1073d40073f9e05477aede3c17",
+        "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.txt",
+        "artifactSha256": "22cc21984e5afdd01f34417678404349888112e675a67da0040b2851eb79faa8"
+      }
+    },
+    {
+      "id": "GOV-944-SENS-LIVE-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-SENS-LIVE-ERROR] A live file that changes during a sensitivity run, or a missing test file, ends the run with a named error and no record"
+    },
+    {
+      "id": "GOV-944-VAL-RECORD-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-VAL-RECORD-ALLOW] An in-memory record with a current break spec is accepted, and a legacy contract's record is validated as before"
+    },
+    {
+      "id": "GOV-944-VAL-RECORD-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "testName": "[GOV-944-VAL-RECORD-DENY] A non-legacy governance report refuses a critical sensitivity record that cli.mjs sensitivity did not make",
+      "sensitivity": {
+        "id": "GOV-944-VAL-RECORD-DENY",
+        "testName": "[GOV-944-VAL-RECORD-DENY] A non-legacy governance report refuses a critical sensitivity record that cli.mjs sensitivity did not make",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json",
+        "breakSha256": "d5517bc63fafd712109b8252930c18316170c525151c03bb62ef4a2b2802b585",
+        "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.txt",
+        "artifactSha256": "44c9282aa2c214581375bed391af9d70c46e7ab594f40cb709d9785d13e40ec7"
+      }
+    },
+    {
+      "id": "GOV-944-HOOK-SYNTAX-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SYNTAX-DENY] An Edit or Write that would leave a hook-loaded module unparseable is refused for every role",
+      "sensitivity": {
+        "id": "GOV-944-HOOK-SYNTAX-DENY",
+        "testName": "[GOV-944-HOOK-SYNTAX-DENY] An Edit or Write that would leave a hook-loaded module unparseable is refused for every role",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json",
+        "breakSha256": "3f6040bb804824dd0c247fc1712b2ea558290a0746655cae04cba4514479bb10",
+        "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt",
+        "artifactSha256": "f0acd22803171971d31b3ed8127f598d08bc11024a0626cb29710747df9a80d7"
+      }
+    },
+    {
+      "id": "GOV-944-HOOK-SYNTAX-ALLOW",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SYNTAX-ALLOW] A parseable write of a hook-loaded module, any write of a module no hook loads, and a repairing Edit are not refused by the syntax guard"
+    },
+    {
+      "id": "GOV-944-HOOK-CLOSURE-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "testName": "[GOV-944-HOOK-CLOSURE-ERROR] An unreadable closure input, an import cycle, an absent old_string or a failing guard step never throws out of evaluateHook"
+    },
+    {
+      "id": "GOV-944-HOOK-SHELL-FORMS-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-forms.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SHELL-FORMS-DENY] A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written",
+      "sensitivity": {
+        "id": "GOV-944-HOOK-SHELL-FORMS-DENY",
+        "testName": "[GOV-944-HOOK-SHELL-FORMS-DENY] A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json",
+        "breakSha256": "3bf37ba9022878af4c0f5104d05a9586c3720532cbed8b9f631f9a9c0cd7346e",
+        "artifact": "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt",
+        "artifactSha256": "d151b82444c98d176c2799414048729c9be892b307b551e80df4d430e64763e0"
+      }
+    }
+  ],
+  "errors": []
+}

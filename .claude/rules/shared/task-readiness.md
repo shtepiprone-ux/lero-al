@@ -63,7 +63,8 @@ forbidden effects. Inspect actual assertions in reused tests and run them on the
 pre-existing failures with matching test identities and causes; a failing total alone is not a comparator.
 
 For a gate or critical security invariant specify what deliberate break reaches which assertion and how it is
-restored. Confirm the break is allowed in this task/environment. A read-only DB task cannot require mutating its
+restored. For a governance gate module the break is a saved break spec run by cli.mjs sensitivity; a kickoff never
+instructs editing a live file to plant a break (Task 944). Confirm the break is allowed in this task/environment. A read-only DB task cannot require mutating its
 schema/policies for sensitivity; use a demonstrated same-check negative control when the security contract permits
 it, or sequence an authorized sensitivity prerequisite. Timeout, missing credentials and import errors are not
 assertion failures. Never reduce a security/QA requirement simply to make readiness pass.

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-944-HOOK-SYNTAX-DENY",
+  "target": "scripts/workflow-gates/security-hook.mjs",
+  "find": "  return [...closure.values()].sort();",
+  "replace": "  return [];"
+}

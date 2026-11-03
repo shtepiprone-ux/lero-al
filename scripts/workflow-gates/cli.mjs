@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
-import { join, resolve, relative } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join, resolve, relative, posix } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { validateContract, validateReport, validateGovernanceReport, requiredResults, safePath, digest, planDigest, scopeDigest,
-  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles, scopeRebaseFiles, testsRebaseFiles, rebaseChain, scopeHashErrors } from './contract.mjs';
+  isProductPath, isTaskDocument, isExecutablePolicyPath, rebaseFiles, scopeRebaseFiles, testsRebaseFiles, rebaseChain, scopeHashErrors,
+  isEvidencePath } from './contract.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 export function readJson(root, file) {
@@ -224,6 +225,112 @@ export function unitEnvironment(environment) {
   const allowed = /^(?:path|pathext|systemroot|comspec|windir|temp|tmp|home|userprofile|appdata|localappdata|ci|github_actions|github_workspace|number_of_processors|processor_architecture|tz|lang|lc_all)$/i;
   return { ...Object.fromEntries(Object.entries(environment).filter(([key]) => allowed.test(key))), NODE_ENV: 'test' };
 }
+
+// Task 944 R1 (owner D15, D16, 2026-11-03): a governance sensitivity break exists only in the memory of the mutant's test
+// process (sensitivity-register.mjs and sensitivity-hooks.mjs through NODE_OPTIONS). The live tree is never edited, so a
+// break can no longer leave a hook-loaded module unparseable and every tool refused (the 2026-11-03 incident).
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const lf = text => String(text).replace(/\r\n/g, '\n');
+const SENSITIVITY_REGISTER = fileURLToPath(new URL('./sensitivity-register.mjs', import.meta.url));
+const SENSITIVITY_SPEC_KEYS = ['case', 'find', 'replace', 'target', 'version'];
+// The TAP lines of the named result: its `ok`/`not ok` line and its indented YAML diagnostic block (`---` … `...`).
+export function tapResultBlock(output, name) {
+  const lines = String(output).split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const match = /^(\s*)(?:not ok|ok) \d+ - /.exec(lines[i]);
+    if (!match || parseTap(lines[i])[0]?.name !== name) continue;
+    const indent = match[1].length + 2;
+    const block = [lines[i]];
+    if (lines[i + 1]?.trim() !== '---') return lines[i];
+    for (let j = i + 1; j < lines.length; j++) {
+      block.push(lines[j]);
+      if (j > i + 1 && lines[j].trim() === '...' && lines[j].length - lines[j].trimStart().length === indent) break;
+    }
+    return block.join('\n');
+  }
+  return '';
+}
+// R1 (b)-(f): every refusal returns { error } with a message starting `SENSITIVITY:` and writes no file; success writes the
+// artifact and the record and returns { record, artifact }.
+export function runSensitivity(root, contractPath, breakPath) {
+  const refuse = message => ({ error: `SENSITIVITY: ${message}` });
+  let contract;
+  try { contract = readJson(root, contractPath); } catch (error) { return refuse(`the contract is unavailable (${error.message})`); }
+  if (contract?.kind !== 'governance') return refuse('the contract is not a governance contract; this command proves governance cases only');
+  const scope = Array.isArray(contract.scope) ? contract.scope : [];
+  const inputs = Array.isArray(contract.inputs) ? contract.inputs : [];
+  if (typeof breakPath !== 'string' || !isEvidencePath(breakPath)) return refuse(`the break spec ${breakPath} is outside the evidence tree docs/sessions/evidence/`);
+  if (!scope.includes(breakPath)) return refuse(`the break spec ${breakPath} is not listed in the contract scope`);
+  let spec;
+  try { spec = readJson(root, breakPath); } catch (error) { return refuse(`the break spec is unavailable or malformed (${error.message})`); }
+  if (!spec || typeof spec !== 'object' || Array.isArray(spec) || spec.version !== 1
+    || Object.keys(spec).sort().join() !== SENSITIVITY_SPEC_KEYS.join() || !['case', 'target', 'find', 'replace'].every(key => typeof spec[key] === 'string')) {
+    return refuse('the break spec is malformed; it must be { "version": 1, "case", "target", "find", "replace" } with string values');
+  }
+  const row = (Array.isArray(contract.cases) ? contract.cases : []).find(c => c?.id === spec.case);
+  if (!row) return refuse(`unknown case ${spec.case}`);
+  if (row.critical !== true) return refuse(`case ${spec.case} is not critical`);
+  const id = row.id;
+  let target;
+  try { target = safePath(root, spec.target); } catch (error) { return refuse(`the target ${spec.target} is missing or invalid (${error.message})`); }
+  if (!/\.(?:mjs|cjs|js)$/.test(spec.target)) return refuse(`the target ${spec.target} is not a .mjs, .cjs or .js file`);
+  if (spec.target === row.testFile) return refuse(`the target ${spec.target} is the test file of ${id}`);
+  if (!scope.includes(spec.target) && !inputs.includes(spec.target)) return refuse(`the target ${spec.target} is in neither the scope nor the inputs of the contract`);
+  try { safePath(root, row.testFile); } catch (error) { return refuse(`the test file ${row.testFile} of ${id} is missing or invalid (${error.message})`); }
+  const find = lf(spec.find), replace = lf(spec.replace);
+  if (!find) return refuse('find is empty');
+  if (replace === find) return refuse('replace equals find');
+  const count = lf(readFileSync(target, 'utf8')).split(find).length - 1;
+  if (count !== 1) return refuse(`find occurs ${count} times in ${spec.target}, not exactly once`);
+  let sensitivityFile, sensitivity;
+  try {
+    if (!isEvidencePath(contract.sensitivity || '')) throw new Error('not a path under docs/sessions/evidence/');
+    sensitivityFile = safePath(root, contract.sensitivity, false);
+    sensitivity = existsSync(sensitivityFile) ? readJson(root, contract.sensitivity) : { version: 1, task: contract.task, cases: [] };
+    if (!sensitivity || typeof sensitivity !== 'object' || !Array.isArray(sensitivity.cases)) throw new Error('no cases array');
+  } catch (error) { return refuse(`the sensitivity file ${contract.sensitivity} is invalid (${error.message})`); }
+
+  const args = ['--test', '--test-reporter=tap', `--test-name-pattern=^${escapeRegExp(row.testName)}$`, row.testFile];
+  const environment = unitEnvironment(process.env);
+  const added = { NODE_OPTIONS: `--import=${pathToFileURL(SENSITIVITY_REGISTER).href}`, SENSITIVITY_BREAK: safePath(root, breakPath) };
+  const digests = () => ({ target: digest(root, [spec.target]), test: digest(root, [row.testFile]) });
+  const before = digests();
+  const runs = [['baseline', {}], ['mutant', added], ['restored', {}]].map(([name, extra]) => {
+    const child = spawnSync(process.execPath, args, { cwd: root, env: { ...environment, ...extra }, encoding: 'utf8',
+      timeout: 5 * 60 * 1000, maxBuffer: 64 * 1024 * 1024 });
+    return { name, extra, child, results: parseTap(child.stdout ?? '').filter(result => result.name === row.testName) };
+  });
+  const after = digests();
+  if (before.target !== after.target || before.test !== after.test) return refuse('a live file changed during the run');
+  const [baseline, mutant, restored] = runs;
+  const passed = r => !r.child.error && r.child.status === 0 && r.results.length === 1 && r.results[0].status === 'passed';
+  const assertion = !mutant.child.error && mutant.results.length === 1 && mutant.results[0].status === 'failed'
+    && /code: 'ERR_ASSERTION'/.test(tapResultBlock(mutant.child.stdout, row.testName));
+  if (!passed(baseline) || !assertion || !passed(restored)) {
+    const detail = !passed(baseline) ? 'baseline did not pass' : !assertion ? 'the mutant did not fail the named test with ERR_ASSERTION' : 'restored did not pass';
+    return refuse(`the break did not fail ${id} with an assertion (${detail})`);
+  }
+
+  const artifact = posix.join(posix.dirname(breakPath), `${id}.txt`);
+  const breakSha256 = digest(root, [breakPath]);
+  const text = [`# Sensitivity run of ${id} by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process`,
+    `node ${process.version}; platform ${process.platform}; UTC ${new Date().toISOString()}`,
+    `contract: ${contractPath}`, `break spec: ${breakPath} sha256 ${breakSha256}`, `testName: ${row.testName}`,
+    `target: ${spec.target} digest before ${before.target} after ${after.target}`,
+    `test file: ${row.testFile} digest before ${before.test} after ${after.test}`,
+    ...runs.flatMap(({ name, extra, child }) => ['', `## ${name}`,
+      `command: ${Object.keys(extra).length ? `NODE_OPTIONS=${extra.NODE_OPTIONS} SENSITIVITY_BREAK=${extra.SENSITIVITY_BREAK} ` : ''}node ${args.join(' ')}`,
+      `exit code: ${child.status}`, '--- TAP', String(child.stdout ?? '').replace(/\r\n/g, '\n').trimEnd(), '--- end TAP']), ''].join('\n');
+  writeFileSync(safePath(root, artifact, false), text);
+  const record = { id, testName: row.testName, baseline: 'passed', mutant: 'failed', failureKind: 'assertion', restored: 'passed',
+    method: 'in-memory', break: breakPath, breakSha256, artifact, artifactSha256: digest(root, [artifact]) };
+  const index = sensitivity.cases.findIndex(entry => entry?.id === id);
+  sensitivity.cases = index === -1 ? [...sensitivity.cases, record]
+    : sensitivity.cases.filter((entry, i) => entry?.id !== id || i === index).map(entry => (entry?.id === id ? record : entry));
+  mkdirSync(resolve(sensitivityFile, '..'), { recursive: true });
+  writeFileSync(sensitivityFile, `${JSON.stringify(sensitivity, null, 2)}\n`);
+  return { record, artifact };
+}
 export function integrationTargetErrors(environment) {
   const ref = environment.SECURITY_TEST_PROJECT_REF;
   if (environment.SECURITY_TEST_TARGET !== 'development' || !/^[a-z0-9]{20}$/.test(ref || '')) return ['Approved development project identity is required for boundary tests'];
@@ -305,6 +412,11 @@ async function main() {
     for (const row of report.cases) console.log(`${row.status === 'passed' ? 'PASS' : 'FAIL'} ${row.id} (${row.status})`);
     console.log(`Governance report: ${report.status}, ${report.cases.length} case(s), written to ${contract.report}.`);
     errors = report.errors;
+  } else if (command === 'sensitivity') {
+    // Task 944 R1: `sensitivity --contract <sidecar> --break <break spec>`; every refusal exits 1.
+    const result = runSensitivity(ROOT, option('--contract'), option('--break'));
+    if (result.error) { console.error(result.error); process.exitCode = 1; return; }
+    console.log(`SENSITIVITY PASSED - ${result.record.id}`);
   } else if (command === 'diff') {
     const base = option('--base', process.env.GATES_BASE_SHA);
     const files = changedFiles(ROOT, { base, head: option('--head', process.env.GATES_HEAD_SHA || 'HEAD'), working: args.includes('--working-tree') });
@@ -365,7 +477,7 @@ async function main() {
     const out = resolve(ROOT, 'test-results/workflow-gates'); mkdirSync(out, { recursive: true });
     writeFileSync(join(out, 'rules-inventory.json'), JSON.stringify({ version: 1, files: rows }, null, 2));
     console.log(`Inventoried ${rows.length} rule/role documents; SHA-256 inventory retained in test-results/workflow-gates/rules-inventory.json.`);
-  } else throw new Error('Use plan, receipt, verify, governance-report, diff, hash, inventory, required, target, unit-report or release');
+  } else throw new Error('Use plan, receipt, verify, governance-report, sensitivity, diff, hash, inventory, required, target, unit-report or release');
   if (errors.length) { errors.forEach(e => console.error(`BLOCKED: ${e}`)); process.exitCode = 1; }
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => { console.error(`BLOCKED: ${error.message}`); process.exitCode = 1; });

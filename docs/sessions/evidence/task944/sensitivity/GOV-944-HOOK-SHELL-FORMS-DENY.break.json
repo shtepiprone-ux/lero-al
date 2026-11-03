@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-944-HOOK-SHELL-FORMS-DENY",
+  "target": "scripts/workflow-gates/security-hook.mjs",
+  "find": "    if (SHELL_KEYWORD.test(word)) { index++; continue; }",
+  "replace": "    if (false && SHELL_KEYWORD.test(word)) { index++; continue; }"
+}

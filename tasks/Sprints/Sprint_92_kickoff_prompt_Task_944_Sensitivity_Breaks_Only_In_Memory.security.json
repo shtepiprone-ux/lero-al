@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
-  "taskSha256": "fc31c710b69019f8220ef6bc800299a250086e6b6048a5ea69ffdfa0a6c0ab5c",
+  "taskSha256": "952e9c6da647e48b10747937ca2d5ca9dc076b05b9f6ffa8811e829d588d775b",
   "scope": [
     "scripts/workflow-gates/cli.mjs",
     "scripts/workflow-gates/contract.mjs",
@@ -28,7 +28,10 @@
     "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json",
     "docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.txt",
     "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json",
-    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt"
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt",
+    "scripts/workflow-gates/shell-forms.selftest.mjs",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json",
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -183,6 +186,24 @@
       ],
       "testFile": "scripts/workflow-gates/hook-syntax.selftest.mjs",
       "testName": "[GOV-944-HOOK-CLOSURE-ERROR] An unreadable closure input, an import cycle, an absent old_string or a failing guard step never throws out of evaluateHook"
+    },
+    {
+      "id": "GOV-944-HOOK-SHELL-FORMS-DENY",
+      "invariant": "A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "revision 1 (owner D18): the R8 forms of the kickoff with X a fixture governance scope file and D its folder, each also as an executor event with X replaced by scripts/check-example.mjs; read controls through the same programs and APIs",
+      "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through if/then, for/do, bash -lc, open(..., 'w') or a similar listed form",
+        "Sonnet changing a policy or product file through such a form without a refusal"
+      ],
+      "testFile": "scripts/workflow-gates/shell-forms.selftest.mjs",
+      "testName": "[GOV-944-HOOK-SHELL-FORMS-DENY] A file changed by a shell compound command, a clustered nested-shell flag, an open or create call with a write mode, a pathlib or directory-delete call, a Windows or npm copy or delete tool, perl -i or env -C is counted as written"
     }
   ]
 }

@@ -60,3 +60,29 @@ it during this design; this session wrote none of its files).
 - Task 943 must be reviewed and committed first (D17); its working tree currently fails GOV-941-HOOK-MALFORMED-ERROR (C27).
 - A transcript excerpt of the 943 implementer session was not copied into the repository (the extraction was refused by the
   permission classifier); the incident evidence is this session's own tool output (`p00-incident.md`) and the 943 artifacts.
+
+## Revision 1 (Task 943 review 2 session 6f2564f3, owner D18, 2026-11-03)
+
+Native Windows 11, PowerShell 5.1, Node v22.22.3, cwd `C:\Claude_Code_Projects\lero-al`, reviewed 943 hook sha256
+`f7413e0e38b07c485c4a640af250fe3b5ed7f967fc8b9c5f918059d7edca17bf` (commit `04545b0ea`).
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| Finding | `docs/sessions/evidence/task943/review/r2-adv.txt`, `r2-adv2.txt`, `r2-adv3.txt` (EXECUTED) | shell keywords, clustered shell flags, `open(…,'w')`, .NET create, `pathlib`, directory deletes, `xcopy`, `robocopy`, `rimraf`, `shx`, `perl -i`, `env -C` and the quoted-twin glob report no target on the reviewed hook; executor `if true; then rm package.json; fi` allowed | confirmed |
+| Owner decision | AskUserQuestion, 2026-11-03 | D18: approve 943, forms into 944 | recorded |
+| Feasibility | `node docs/sessions/evidence/task944/design/p14-shell-forms-run.mjs` → `p14-shell-forms-run.txt` (EXECUTED, exit 0) | 40 forms the reviewed hook misses report X; every executor form refused; 18 controls silent; seven hook-importing self-tests unchanged pass; corpus: 0 dropped, 2 commands with added non-guarded targets, 0 executor refusals, 0 governance scope files; 1937 ms / 7529 ms on the 5000-folder-change commands; `FAILURES 0` | PASS |
+| Manifest | callers of `programIndex`, `evaluatedText`, `apiArguments`, `lenientTargets`; both consumers unchanged | the additions live inside `shellWriteTargets`; `isReadOnlyShellCommand` untouched; no existing self-test changes (new `shell-forms.selftest.mjs`) | PASS |
+| Write authority | sidecar scope | every new path is a policy or evidence path; implementer Opus (D1), not Sonnet | PASS |
+| Sensitivity | AC12 | break spec stopping the R8 (a) keyword skip, run by `cli.mjs sensitivity` (R1, R6) | named |
+| Rebases | R7 | R8 changes only `security-hook.mjs` and `publication.json`, already listed for 935, 940, 941 and 943 | unchanged |
+| Evidence gate | `node scripts/check-kickoff-evidence.mjs --files <944 kickoff>` | PASS, 1 changed active kickoff | PASS |
+| Contract | in-memory ready `validateContract` `[]`; `cli.mjs plan --contract <944 sidecar>` exit 0 after `ready` | 9 cases, 4 critical | PASS |
+
+AC12 also keeps the Task 943 AC15 F8 bound under the 15 s hook timeout (the reviewed 943 hook measured 10533 ms for the
+parser-rejected command in the 943 review 2, `docs/sessions/evidence/task943/review/r2-timing.txt`; the prototype 7529 ms).
+
+The same session's 943 verdict was withdrawn afterwards (owner D19, `docs/sessions/evidence/task943/review/review-943-r2.md`);
+the revision header says so. Revision 1 does not depend on it: route step 2 still requires 943 reviewed and committed first.
+
+Final digests after revision 1: task `952e9c6da647e48b10747937ca2d5ca9dc076b05b9f6ffa8811e829d588d775b`, planDigest
+`604358afaf053405824c0a53e5192ac2f5bc61aa5a007181363e7cd67d487b7b`; `cli.mjs plan` exit 0; `check-kickoff-evidence --files` PASS.

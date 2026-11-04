@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
-  "taskSha256": "39ef848c595b5b291563011170910a8a4e08df19160f2801f6ba74b5b0800236",
+  "taskSha256": "bcaf51ca1faa4a2cb34ecd72c09a4e9d435fe12a25c15648a3f871006a858f5d",
   "scope": [
     "scripts/workflow-gates/cli.mjs",
     "scripts/workflow-gates/contract.mjs",
@@ -34,7 +34,8 @@
     "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt",
     "scripts/workflow-gates/shell-forms.selftest.mjs",
     "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json",
-    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt"
+    "docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt",
+    "scripts/workflow-gates/governance-contract.selftest.mjs"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",

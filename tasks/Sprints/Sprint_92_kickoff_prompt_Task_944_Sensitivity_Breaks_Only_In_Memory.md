@@ -16,13 +16,21 @@ route, the completion report and AC10 are amended.
 one more listed-form miss of the reviewed 943 hook, a generic file API name after `require('fs').promises.` (C71), and closes it
 here with the other R8 forms: R8 (f), its AC12 forms and controls, C71 and C72 are added and the evidence receipt now lists
 C58–C72 and D18.
+**Revision 3, 2026-11-03**, by the Task 944 review 1 session (c819b1d2), verdict NEEDS REVISION on commit 1778c14b3 for one
+task-design defect (K1): R2 refuses the hand-written non-legacy critical record that one unnamed existing test of
+`governance-contract.selftest.mjs` saves and expects to pass (C73–C76), while section 4 and AC10 required every existing self-test
+file to pass unchanged; the failing test also fails the governance CI job (C77). R1–R6, R8 and R9 of that commit are reviewed
+and kept. Correction under D12 and D13: R10 gives that one fixture record the in-memory fields (C79), the file enters the scope,
+and the approver adds a `tests` rebase of the only contract whose cases use the file, 935 (C78, C80). R10, AC13, C73–C80 and D12
+are added; sections 1, 4, 5, 6, 7, R7, AC10 and AC11 are amended.
 
 ## 1. Mode, task type and rule bundle
 
 Governance task. **Implementer: Opus, in a fresh implementation session started for this task (D1); Sonnet does not execute it**,
 because every executor path in scope is a policy path (C31). **Approver: Opus, in another fresh session that wrote none of the scope
 files (D2).** Neither may be the session that designed this kickoff (session 3d40df28) or the session that wrote revision 1
-(session 6f2564f3, the Task 943 review 2 session). Types (`docs/rule-index.md`): workflow
+(session 6f2564f3, the Task 943 review 2 session), nor the session that wrote revision 3 (session c819b1d2, the Task 944 review
+1 session). R10 (revision 3) is implemented by the Task 944 implementer session or another fresh Opus implementation session. Types (`docs/rule-index.md`): workflow
 gates / governance tooling. Bundle: `.claude/rules/shared/workflow-gates.md` with `workflow-contract.md`, `workflow-evidence.md`,
 `workflow-ci.md`, `git-publication.md`; `security-testing.md`; `security-test-quality.md`; `role-boundaries.md`;
 `claim-evidence-contract.md`; `task-readiness.md`; `orchestration-state.md`; `.claude/rules/review/02-adversarial-ui.md`;
@@ -145,10 +153,19 @@ the project may be created (C40), which the in-memory method respects. Task 942'
 | C70 | FACT | Over the frozen 2318-command corpus the prototype drops no target and adds no guarded target, executor refusal or governance scope file (executed). | source: `docs/sessions/evidence/task944/design/p14-shell-forms-run.txt:108-108`; observed: `drops 0; with added targets 2; with an added guarded target 0; executor commands newly refused 0; with an added governance scope file 0` |
 | C71 | FACT | The reviewed 943 hook reports nothing for a generic file API name after `require('fs').promises.`, and its pre-write guard allows the executor form (executed in the Task 943 review 3 and revision 2). | source: `docs/sessions/evidence/task944/design/p15-promises-qualifier-run.txt:2-15`; observed: `PASS executor refused (reviewed hook allows): node -e "require('fs').promises.rm('scripts/check-example.mjs')"` |
 | C72 | FACT | A prototype of R8 (f) with the revision 1 pairs on a copy of the reviewed hook reports the seven `.promises.` forms, refuses their executor forms, keeps six read controls silent, passes the seven hook-importing self-tests unchanged and leaves the corpus result of revision 1 unchanged (executed, revision 2). | source: `docs/sessions/evidence/task944/design/p15-promises-qualifier-run.txt:16-35`; observed: `FAILURES 0` |
+| C73 | FACT | One unnamed test of `governance-contract.selftest.mjs` saves a critical GOV-T-HOOK-DENY sensitivity record whose fields end at `artifact` and `artifactSha256`, with no `method`, `break` or `breakSha256` (retained snapshot, revision 3). | source: `docs/sessions/evidence/task944/review-1/sources/scripts__workflow-gates__governance-contract.selftest.mjs.txt:162-167`; observed: `failureKind: 'assertion', restored: 'passed', artifact: 'docs/sessions/evidence/gov/break.txt'` |
+| C74 | FACT | That test's fixture contract has the task path `tasks/gov_kickoff.md`, which is not in `SENSITIVITY_LEGACY_TASKS`. | source: `docs/sessions/evidence/task944/review-1/sources/scripts__workflow-gates__governance-contract.selftest.mjs.txt:34-34`; observed: `task: 'tasks/gov_kickoff.md'` |
+| C75 | FACT | That test asserts that the governance report has no errors and status passed. | source: `docs/sessions/evidence/task944/review-1/sources/scripts__workflow-gates__governance-contract.selftest.mjs.txt:169-169`; observed: `assert.deepEqual(report.errors, []); assert.equal(report.status, 'passed');` |
+| C76 | FACT | On commit 1778c14b3 the self-test run fails exactly that test with the R2 message (executed, review 1). | source: `docs/sessions/evidence/task944/review-1/r1-selftests.txt:338-349`; observed: `'report: GOV-T-HOOK-DENY: sensitivity must come from cli.mjs sensitivity (method is not in-memory)'` |
+| C77 | FACT | The governance PR workflow runs the self-test runner. | source: `.github/workflows/governance-pr.yml:78-78`; observed: `"run": "node scripts/workflow-gates/selftests.mjs"` |
+| C78 | FACT | Only the Task 935 contract maps cases to `governance-contract.selftest.mjs`: 13 cases (executed, review 1). | source: `docs/sessions/evidence/task944/review-1/r1-k1-owners.txt:2-3`; observed: `Task_935_Governance_Changes_Get_An_Independent_Approval.security.json cases 13:` |
+| C79 | FACT | With the R10 fixture record applied in memory, all 17 tests of that file pass and the live file is unchanged (executed, review 1). | source: `docs/sessions/evidence/task944/review-1/r1-k1-probe.txt:15-126`; observed: `# pass 17` |
+| C80 | FACT | A case-test rebase lists the changed file and one Case assertions line per case of that file. | source: `.claude/rules/review/04-contract-rebases.md:21-21`; observed: `one line per affected case` |
 | D1 | OWNER DECISION | Governance tasks are implemented by Opus in a separate session. | owner: 2026-11-01; decision: `Opus, a separate session (Recommended)` |
 | D2 | OWNER DECISION | Approval independence is enforced by the hook. | owner: 2026-11-01; decision: `Yes, the hook blocks (Recommended)` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12, merged once all checks are green. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract when the changed files are in its scope but are not tests of its cases, with its cases rerun green. | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
+| D12 | OWNER DECISION | D9 is extended: a later independently reviewed contract may rebase a changed case test of a reviewed contract when every case ID and test name are kept, the cases pass in CI, and the approver states each changed assertion. | owner: 2026-11-02; decision: `Extend D9 (Recommended)` |
 | D13 | OWNER DECISION | No new task: every found and potential hole is closed inside the current tasks. | owner: 2026-11-02; decision: `no new task, everything within the current task; close every hole already found and every potential one` |
 | D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it.` |
 | D15 | OWNER DECISION | File a governance task: deliberate breaks are made only on copies. | owner: 2026-11-03; decision: `file a governance task about deliberate breaks only on copies` |
@@ -174,11 +191,16 @@ each critical case `<id>` of GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY and 
 `docs/sessions/evidence/task944/sensitivity/<id>.break.json` and the artifact `docs/sessions/evidence/task944/sensitivity/<id>.txt`.
 Revision 1 (R8, R9): `security-hook.mjs` (already in scope), new `scripts/workflow-gates/shell-forms.selftest.mjs` and its
 `publication.json` entry, and for the critical case GOV-944-HOOK-SHELL-FORMS-DENY its break spec and artifact under the same names.
+Revision 3 (R10): `scripts/workflow-gates/governance-contract.selftest.mjs`, only the fixture record of its unnamed test `the
+governance report passes only on every mapped case and records current hashes and sensitivity`; then the files of the
+implementer's reruns already listed above (`governance-report.json`, `completion-report.md`).
 Written by the approver only (R7): `scope` entries in the `review.rebases` of the 935, 940, 941 and 943 contracts with evidence
 `docs/sessions/evidence/task944/review/scope-rebase-935.md`, `…/scope-rebase-940.md`, `…/scope-rebase-941.md` and
-`…/scope-rebase-943.md`.
+`…/scope-rebase-943.md`, and (revision 3) a `tests` entry in the 935 contract with evidence
+`docs/sessions/evidence/task944/review/tests-rebase-935.md`.
 
-Out of scope: product code; every existing self-test file (each must pass unchanged); `security-testing.md`,
+Out of scope: product code; every other existing self-test file (each must pass unchanged), and every other line of
+`governance-contract.selftest.mjs`; `security-testing.md`,
 `security-test-quality.md` and `workflow-evidence.md` (C10 already states the method; changing them would stale every reviewed
 contract that reads them); the PowerShell hooks; Bash and PowerShell writes to a hook-loaded module (the shell guard cannot know the
 resulting text; R3 covers Edit and Write); the sensitivity method of product contracts; the sensitivity records of the four legacy
@@ -189,7 +211,8 @@ variable, a script file run by an interpreter, `-EncodedCommand`, a folder chang
 
 ## 5. Current and required behaviour
 
-Preserved: every existing self-test and its expectations; the five result fields of a sensitivity record (C12) and the legacy
+Preserved: every existing self-test and its expectations (revision 3: the one R10 fixture record gains the fields R2 requires;
+the test's name and every assertion stay); the five result fields of a sensitivity record (C12) and the legacy
 contracts' records; every pre-write decision for a write that does not touch a hook-loaded module or that parses; the guard's
 fail-closed catch. Changed: a command produces sensitivity evidence without touching the live tree; a non-legacy governance report
 refuses a record that the command did not make; an Edit or Write whose result does not parse is refused when the file is loaded by a
@@ -206,9 +229,15 @@ independence check counts them and the pre-write guard decides on them as on any
 | R4 [C10; C37; C38; C45; C46] | **Rule text.** (a) `task-readiness.md` section 4, after the sentence that asks which break reaches which assertion (C45): `For a governance gate module the break is a saved break spec run by cli.mjs sensitivity; a kickoff never instructs editing a live file to plant a break (Task 944).` (b) `review/02-adversarial-ui.md`, after the sensitivity sentence (C46): `A governance sensitivity record outside the four legacy contracts that lacks method in-memory and its current break spec is NEEDS REVISION, and so is any break planted in a live file.` The file stays under 8 KiB. | P1 | AC10 |
 | R5 [C27; C28; C29; C30; C31] | **Proof files.** The eight GOV-944 cases live in the new `sensitivity.selftest.mjs` (AC1–AC4) and `hook-syntax.selftest.mjs` (AC5–AC7); the two new tests, `sensitivity-register.mjs`, `sensitivity-hooks.mjs` and `hook-load-check.mjs` are listed in `publication.json`; no existing self-test file changes. Fixtures are temporary folders from `mkdtempSync`. | P1 | AC10 |
 | R6 [C12; C17; D15; D16] | **Own sensitivity through the runner.** The records of the three critical cases are produced only by `cli.mjs sensitivity` with the break specs named in section 4; this task is not legacy, so R2 applies to its own report. | P1 | AC9 |
-| R7 [C33; C34; C35; C36; D7; D9] | **Rebases (approver).** After approving 944, the approver appends a `scope` entry by 944's contract to the `review.rebases` of the 935, 940, 941 and 943 contracts, each with `## Changed scope files` evidence listing the files of this task's diff that the rebased contract scopes (for 935, 940 and 943: `scripts/workflow-gates/security-hook.mjs`, `scripts/workflow-gates/contract.mjs`, `scripts/workflow-gates/cli.mjs`, `scripts/workflow-gates/publication.json`; for 941: the first and the last), and recomputes nothing else in them. | P1 | AC11 |
+| R7 [C33; C34; C35; C36; D7; D9] | **Rebases (approver).** After approving 944, the approver appends a `scope` entry by 944's contract to the `review.rebases` of the 935, 940, 941 and 943 contracts, each with `## Changed scope files` evidence listing the files of this task's diff that the rebased contract scopes (for 935, 940 and 943: `scripts/workflow-gates/security-hook.mjs`, `scripts/workflow-gates/contract.mjs`, `scripts/workflow-gates/cli.mjs`, `scripts/workflow-gates/publication.json`; for 941: the first and the last), and recomputes nothing else in them. Revision 3 (R10; C78; C80; D12): after the 935 `scope`
+entry the approver appends a `tests` entry by 944's contract to the 935 contract, with evidence
+`docs/sessions/evidence/task944/review/tests-rebase-935.md` whose `## Changed case test files` lists
+`scripts/workflow-gates/governance-contract.selftest.mjs` and whose `## Case assertions` has one line for each of the 13 cases of
+C78 (the changed test is none of them), and keeps it only when `node scripts/workflow-gates/cli.mjs verify --contract <935
+contract>` exits 0. | P1 | AC11 |
 | R8 [C58; C59; C60; C61; C62; C63; C64; C65; C66; C67; C68; C69; C70; C71; C72; D13; D18] | **Shell write forms (revision 1).** `shellWriteTargets` in `security-hook.mjs` (Task 943 section 5, R12–R15 terms) also reports: (a) after the shell reserved words `if`, `then`, `else`, `elif`, `do`, `while`, `until` and `!` (case-sensitive, no options), which are skipped before the program like `sudo`, and before a folder-change program of R12 (c), in parsed commands and in the lenient reading of R13 (e); `shx` is skipped like `npx`; for `env`, the values of `--chdir`, `--unset` and `--split-string` are skipped like those of `-C`, `-u` and `-S`, and `-C <folder>`, `-C<folder>`, `--chdir <folder>` or `--chdir=<folder>` resolves the program's targets in that folder, resolved from the current folder as in R12 (c) (C58, C59, C66, C67); (b) for `bash`, `sh`, `zsh` and `dash`, a single-dash option word made only of letters that contains `c` (`-lc`, `-ec`, `-xc`) is the text flag of R13 (b), and a `--` right after the text flag is skipped; the flags of `cmd`, `powershell` and `pwsh` are unchanged, so `-ExecutionPolicy` is no text flag (C60); (c) W3 literal path arguments of: `open(` or `openSync(` with a quoted mode or flags (also as `mode=`/`flags=`) containing `w`, `a`, `x` or `+`, never a read mode or no mode; `]::Create(`, `]::OpenWrite(`, `]::CreateText(` and `]::AppendText(`; `Path('…')` followed by `.unlink()`, `.touch()`, `.open('<write mode>')`, `.rename('…')` or `.replace('…')` (both paths); and `rmSync`, `rmdirSync` and, after the R14 (c) qualifier, `rm`, `rmdir`, `rmtree` and `Delete`, whose literal path also adds every file under it when it names a project directory (the 943 section 5 walk) (C61–C64); (d) the programs `xcopy` (a copy program whose `/<letters or digits>[:value]` switch words are dropped; targets: the destination, the destination plus the source name, and every file under a source directory mapped into both), `robocopy <source> <destination> [names…]` (each name in the destination, otherwise every file under the source mapped into the destination; with `/MIR` or `/PURGE` also every file under the destination; with `/MOV` or `/MOVE` every file under the source), `rimraf` (a delete program) and `perl` with an in-place option (`-i`, `-i<suffix>`, in a cluster such as `-pi`), read like `sed` with `-e`/`-E` as script options and the letters `I`, `M`, `m`, `d`, `D`, `x` and `0` taking an attached value; `perl` with `-i` is a conditional R1 fallback word like `sed`, and `xcopy`, `robocopy` and `rimraf` are R1 fallback words (C65, C66); (e) in the lenient reading a word is literal, never glob-expanded, only when no occurrence of the same text in the command is unquoted (C68); (f) (revision 2) the Task 943 R14 (c) qualifier also accepts `).promises.`, so a generic name of R14 (c) or of (c) above after `require('fs').promises.`, `require('node:fs').promises.` or `(await import('fs')).promises.` counts as it does after `).`: `require('fs').promises.rm('X')`, `.unlink('X')`, `.truncate('X')`, `.rename('Y', 'X')`, `.cp('Y', 'X')`, and `.rm('D', { recursive: true })` with every file under D, while `readFile`, `stat`, `readdir` and a string method stay no write (C71, C72). Each addition is skipped when its target is already reported, so the result is a superset of the reviewed 943 result; `isReadOnlyShellCommand` is unchanged. Feasibility: `docs/sessions/evidence/task944/design/p14-shell-forms-run.mjs` applies `p14-shell-forms-pairs.json` to a copy of the reviewed hook (a design prototype to read, not code to paste): every form reports X, every executor form is refused, the controls report no X, the seven hook-importing self-tests pass unchanged (C69), and over the frozen corpus no target is dropped and no guarded target, executor refusal or governance scope file is added; the 5000-folder-change commands take 1937 ms and 7529 ms (C70). Feasibility of (f): `docs/sessions/evidence/task944/design/p15-promises-qualifier-run.mjs` applies the p14 pairs and `p15-promises-qualifier-pairs.json` to a copy of the reviewed hook: the seven `.promises.` forms, which the reviewed hook misses, report X and their executor forms are refused, the six controls report no X, the seven hook-importing self-tests pass unchanged, and the corpus result equals that of revision 1 (2 commands with added non-guarded targets, nothing dropped), with `FAILURES 0` (C72). | P1 | AC12 |
 | R9 [C29; C30; C69] | **Proof of R8.** GOV-944-HOOK-SHELL-FORMS-DENY lives in the new `scripts/workflow-gates/shell-forms.selftest.mjs`, listed in `publication.json`; no existing self-test file changes, and every case of the reviewed 943 and 941 contracts still passes (C69). Its record is made by `cli.mjs sensitivity` (R6). | P1 | AC10, AC12 |
+| R10 [C73; C74; C75; C76; C77; C78; C79; D12; D13] | **Existing fixture record (revision 3).** In `scripts/workflow-gates/governance-contract.selftest.mjs`, the unnamed test `the governance report passes only on every mapped case and records current hashes and sensitivity` saves a hand-written non-legacy critical record (C73, C74) and asserts a passing report (C75), which R2 refuses (C76). Its fixture, before it saves the sensitivity file, saves the break spec `docs/sessions/evidence/gov/break.json` in the fixture root as `{ version: 1, case: 'GOV-T-HOOK-DENY', target: 'scripts/workflow-gates/example.mjs', find: 'true', replace: 'false' }` with the file's `saveJson`, and the GOV-T-HOOK-DENY record gains `method: 'in-memory'`, `break: 'docs/sessions/evidence/gov/break.json'` and `breakSha256: digest(f.root, ['docs/sessions/evidence/gov/break.json'])`. Nothing else in the file changes: the test name, every assertion, every other test and every `[<id>]` stay. The change is made with the Edit tool; R2 is not weakened and no task path is added to `SENSITIVITY_LEGACY_TASKS`. Feasibility (C79): this exact replacement applied in memory passes all 17 tests of the file with the live file unchanged (`docs/sessions/evidence/task944/review-1/r1-k1-probe.txt`). | P1 | AC10, AC13 |
 
 ## Acceptance criteria
 
@@ -253,14 +282,16 @@ independence check counts them and the pre-write guard decides on them as on any
   current `breakSha256` and `artifactSha256`; `git grep -n "SENSITIVITY BREAK" -- scripts` prints nothing;
   `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` passes every case.
 - **AC10 [R4; R5; R9].** `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 9 more passing tests than the base run
-  in `base-runs.txt`; `git diff --exit-code` on every self-test file that exists at the base; `node
+  in `base-runs.txt` and 0 failed (revision 3: 201 tests, 201 passing); `git diff --exit-code d17d9d5a8` on every self-test file
+  that exists at the base except `governance-contract.selftest.mjs`, whose change AC13 bounds; `node
   scripts/workflow-gates/check-workflow.mjs` exits 0; `node node_modules/eslint/bin/eslint.js --config
   scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` exits 0; `node scripts/workflow-gates/publication.mjs --base HEAD`
   reports 0 dependency errors; `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented;
   `npm run check:kickoff-evidence` passes.
 - **AC11 [R7].** After the approver's rebases, the scoped harness of Task 940 AC7 (`validateDiff` and `changedFiles` from
   `scripts/workflow-gates/cli.mjs`, phase `release`, base `origin/main`, working tree) reports no error for the 935, 940, 941, 943
-  and 944 contracts, and `reviewedFreshnessErrors` for that selection returns `[]`.
+  and 944 contracts, and `reviewedFreshnessErrors` for that selection returns `[]`; (revision 3) the 935 contract's chain ends
+  with the `tests` entry of R7 and `node scripts/workflow-gates/cli.mjs verify --contract <935 contract>` exits 0.
 - **AC12 [R8; R9].** GOV-944-HOOK-SHELL-FORMS-DENY passes on a fixture root with X a governance scope file
   `scripts/workflow-gates/fixture-scope.mjs`, D its folder and N its file name: `if true; then rm X; fi`,
   `if true; then echo; else rm X; fi`, `if false; then :; elif true; then cp Y X; fi`, `for f in a; do rm X; done`,
@@ -293,6 +324,11 @@ independence check counts them and the pre-write guard decides on them as on any
   `GOV-944-HOOK-SHELL-FORMS-DENY.txt`). `node scripts/workflow-gates/selftests.mjs` shows every GOV-941 and GOV-943 case passing.
   The Task 943 AC15 F8 commands (5000 folder changes, parsed and parser-rejected, `design/p14-shell-forms-run.mjs` section D) still
   return within 15 s on the final hook from native Windows, each timing in the completion report (C70).
+- **AC13 [R10].** `node --test scripts/workflow-gates/governance-contract.selftest.mjs` exits 0 with 17 passing and 0 failed
+  tests; `git diff d17d9d5a8 -- scripts/workflow-gates/governance-contract.selftest.mjs` adds only the break spec save and the three
+  record fields of R10 and removes no line except the `saveJson` line of the sensitivity record that it extends; `git diff 1778c14b3 --
+  scripts/workflow-gates/contract.mjs` prints nothing (R2 unchanged); `node scripts/workflow-gates/cli.mjs governance-report
+  --contract <this sidecar>` passes every case.
 
 ## Security test contract
 
@@ -324,15 +360,27 @@ independence check counts them and the pre-write guard decides on them as on any
    sensitivity --contract <this sidecar> --break <spec>` (R6); never plant a break by editing a file. Write AC8's probe output.
 4. Run `cli.mjs governance-report` and every AC command; write the completion report; end with
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the owner. No push.
-5. **Opus approver, another fresh session** (D2; not session 3d40df28 or 6f2564f3): review R1–R9; on approval write the `review` block and stage `reviewed`, write R7
-   with its evidence, run AC11, and hand off the explicit-path commit and the push of the branch under `shared/git-publication.md`.
+   **Revision 3 state:** steps 0–4 are done for R1–R9 in commit 1778c14b3 (review 1: kept, NEEDS REVISION only for K1). The
+   current route starts at 4a.
+4a. **Owner:** commit the revision 3 kickoff set with the command Opus gives (no push).
+4b. **Opus implementer** (D1; the Task 944 implementer session or another fresh Opus implementation session, never c819b1d2):
+   read this kickoff; `git status --short scripts` prints nothing before the first write. Implement R10 with the Edit tool only in
+   `governance-contract.selftest.mjs`; change no other code file and redo none of R1–R9. Rerun `node
+   scripts/workflow-gates/selftests.mjs`, `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` and every
+   AC10 and AC13 command; the four sensitivity records stay valid because their targets and break specs do not change (rerun a
+   sensitivity run only if `cli.mjs verify` or the governance report names one stale). Add an R10 section to
+   `completion-report.md` and replace its K1 status; end with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path
+   commit command for the owner. No push.
+5. **Opus approver, another fresh session** (D2; not session 3d40df28, 6f2564f3 or c819b1d2): review R1–R10; on approval write the `review` block and stage `reviewed`, write R7
+   with its evidence (the 935 `scope` entry, then its `tests` entry), run AC11, and hand off the explicit-path commit and the push of the branch under `shared/git-publication.md`.
    PR #12 merges only after green PR checks (D7). Task 942 starts after this commit.
 
 ## 7. Completion report
 
 Per requirement: changed files, evidence path, status; each GOV-944 case with its result; the four break specs and the failed
 assertion of each mutant; base and final self-test totals; proof that no existing self-test file changed; the AC8 probe; for R8
-each AC12 form with its result and the write forms that stay undetected; one of
+each AC12 form with its result and the write forms that stay undetected; for R10 (revision 3) the diff of
+`governance-contract.selftest.mjs` and the AC13 results; one of
 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
 ## 8. Rule compliance
@@ -346,4 +394,4 @@ each AC12 form with its result and the write forms that stay undetected; one of
 | `git-publication.md` | Task-branch commit on PR #12's branch (D7, D17); push only after approval; merge only after green checks. |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72; owner decisions: D1, D2, D7, D9, D13, D14, D15, D16, D17, D18; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80; owner decisions: D1, D2, D7, D9, D12, D13, D14, D15, D16, D17, D18; blocked claims: NONE.

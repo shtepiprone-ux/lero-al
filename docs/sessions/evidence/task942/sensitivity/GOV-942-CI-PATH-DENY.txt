@@ -1,0 +1,91 @@
+# Sensitivity run of GOV-942-CI-PATH-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
+node v22.22.3; platform win32; UTC 2026-11-04T13:02:06.371Z
+contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json
+break spec: docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.break.json sha256 896498057c878a8eddd3daa6b8ac5c4c2d15e63d4048c18696e9fdaf514bc58e
+testName: [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+target: scripts/check-listing-visibility.mjs digest before a5714bcba7828ab608fc663e5976b0453d469e6ecc17f77df8522997e5a40b36 after a5714bcba7828ab608fc663e5976b0453d469e6ecc17f77df8522997e5a40b36
+test file: scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs digest before 9b4e26d7ec3bbe0fddcf2d5890a0ec58cff08308e143c2668ef59494b9ce8c5a after 9b4e26d7ec3bbe0fddcf2d5890a0ec58cff08308e143c2668ef59494b9ce8c5a
+
+## baseline
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-CI-PATH-DENY\] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported$ scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+ok 1 - [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+  ---
+  duration_ms: 2.0215
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 68.0832
+--- end TAP
+
+## mutant
+command: NODE_OPTIONS=--import=file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity-register.mjs SENSITIVITY_BREAK=C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task942\sensitivity\GOV-942-CI-PATH-DENY.break.json node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-CI-PATH-DENY\] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported$ scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs
+exit code: 1
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+not ok 1 - [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+  ---
+  duration_ms: 2.3893
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\listing-visibility-allowlist.selftest.mjs:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    one violation for src/modules/listings/actions/otherAction.ts
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 99.7149
+--- end TAP
+
+## restored
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-CI-PATH-DENY\] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported$ scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+ok 1 - [GOV-942-CI-PATH-DENY] An allowlist entry permits its literal only in its own file; the same literal anywhere else is reported
+  ---
+  duration_ms: 1.9452
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 67.5908
+--- end TAP

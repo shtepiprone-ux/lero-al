@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-942-HOOK-SHELL-FORMS-DENY",
+  "target": "scripts/workflow-gates/security-hook.mjs",
+  "find": "  return folder;\n}\n// Targets of one simple command of section 5",
+  "replace": "  return start;\n}\n// Targets of one simple command of section 5"
+}

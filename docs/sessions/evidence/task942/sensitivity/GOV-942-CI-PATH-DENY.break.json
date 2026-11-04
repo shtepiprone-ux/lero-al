@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-942-CI-PATH-DENY",
+  "target": "scripts/check-listing-visibility.mjs",
+  "find": "norm === e.path && ",
+  "replace": ""
+}

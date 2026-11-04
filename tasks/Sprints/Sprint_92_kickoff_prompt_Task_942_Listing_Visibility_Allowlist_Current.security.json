@@ -1,6 +1,9 @@
 {
   "version": 1,
-  "stage": "planned",
+  "stage": "implemented",
+  "implementation": {
+    "role": "Opus"
+  },
   "executionStatus": "ready",
   "kind": "governance",
   "qaProfile": "Q1",

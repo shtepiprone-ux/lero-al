@@ -12,13 +12,19 @@ security contract are amended. R1–R3 and the other four cases keep their meani
 **Revision 3 (2026-11-04, by the Task 944 review 4 session, D13, D14, under the route of D20):** the self-audit of that review found
 four more spellings of the Task 944 R8 (c) API forms that the hook reports nothing for (C54–C57), which an executor can run unrefused
 (C58). R4 (f), its AC6 list and C54–C59 are added, and the case input of GOV-942-HOOK-SHELL-FORMS-DENY names the second list.
+**Revision 4 (2026-11-04, by the Task 942 implementation session, in its self-audit, D13, D14, D24):** R1–R5 are implemented at
+C60. The self-audit found 23 write forms outside R4 that the hook reports nothing for (C61), and the owner decided they are done
+according to the best programming practices (D24). The forms are closed by class, through one reader per kind of input, not by
+one more expression per spelling. R6–R10, AC8, AC9, the case GOV-942-HOOK-SHELL-CLASSES-DENY and C60–C69 are added; sections 1–8, AC5
+and the security contract are amended. R1–R5 and the other five cases keep their meaning.
 
 ## 1. Mode, task type and rule bundle
 
 Governance task. **Implementer: Opus, in a fresh implementation session started for this task (D1); Sonnet does not execute it**,
 because the gate script and the hook are policy paths (C25) and a product contract refuses policy paths (C26). **Approver: Opus, in
 another fresh session that wrote none of the scope files (D2).** Neither may be the session that designed this kickoff or the
-session that wrote revision 2 (the Task 944 review 3 session) or revision 3 (the Task 944 review 4 session). Types
+session that wrote revision 2 (the Task 944 review 3 session), revision 3 (the Task 944 review 4 session) or revision 4 (the session
+that implemented R1–R5, which therefore implements nothing of R6–R10). Types
 (`docs/rule-index.md`): workflow gates / governance tooling. Bundle: `.claude/rules/shared/workflow-gates.md` with
 `workflow-contract.md`, `workflow-evidence.md`, `workflow-ci.md`, `git-publication.md`; `security-testing.md`;
 `role-boundaries.md`; `claim-evidence-contract.md`; `task-readiness.md`; `orchestration-state.md`;
@@ -38,6 +44,12 @@ allowlist and its stale check are proven by named self-tests.
 Revision 2: the hook also reports the write forms of R4 (C40–C46), so the independence check counts them and the pre-write guard
 decides on them. The hook stays list-based, and CI's policy-diff check (C24) stays the outer layer.
 
+Revision 4: each round of Tasks 943, 944 and 942 added spellings, and each review found more, because one expression per spelling
+cannot close a class. The 23 forms of C61 are closed through one reader per kind of input: a call's arguments (R6), the `env` options
+(R7), a package manager's command line (R8) and the raw text (R9). A hook that counts every non-read-only command naming a file as a
+write would be shorter, but it breaks the reviewed read controls (C63), so the hook stays a workflow control (C62), not a complete
+parser: other write forms stay outside it, and CI stays the barrier (C24).
+
 ## 3. Verified context
 
 The allowlist pins path and fingerprint together (C12) and stale entries fail the gate (C13); the two stale rows are the old
@@ -52,8 +64,10 @@ for the five contracts that scope it (C52), which R5 rebases; the manifest check
 a CI gate (C32), so neither new self-test is added to `publication.json` (that file is a scope file of reviewed contracts). A
 prototype of R4 on a copy of the hook reports every form, refuses each executor form and keeps every read control silent (C49);
 the nine hook-importing self-tests pass against it unchanged (C51); over the frozen corpus it drops no target and adds no guarded
-target, executor refusal or governance scope file (C50), and the 5000-folder-change commands stay under 15 s (C53). A
-governance contract needs hook and CI cases (C27) in a `scripts/workflow-gates/<name>.selftest.mjs` file (C28) that the runner
+target, executor refusal or governance scope file (C50), and the 5000-folder-change commands stay under 15 s (C53). A prototype of
+R6–R9 on the committed hook reports all 47 forms of its list, refuses each executor form and keeps the controls silent (C64, C65);
+the whole self-test suite passes against it unchanged (C66); over the frozen corpus it changes nothing (C67); the timing and
+hostile-length runs stay inside the hook timeout (C68, C69). A governance contract needs hook and CI cases (C27) in a `scripts/workflow-gates/<name>.selftest.mjs` file (C28) that the runner
 discovers by name (C30), and an Opus implementation role (C29). Design HEAD: C37 (the later commit `01b8259fa` records only the
 Task 940 approval and changes none of the cited files).
 
@@ -120,6 +134,16 @@ Task 940 approval and changes none of the cited files).
 | C57 | FACT | It reports nothing for the Task 944 R8 (c) API forms with `\"` quotes inside a double-quoted command text (executed). | source: `docs/sessions/evidence/task944/review/r4-forms-diagnosis.txt:23-23`; observed: `MISSED` |
 | C58 | FACT | The pre-write guard allows an executor such a form on a policy file (executed). | source: `docs/sessions/evidence/task944/review/r4-ac12.txt:10-10`; observed: `executor ALLOWED` |
 | C59 | FACT | On the R4 prototype, the R4 (f) pairs report each of 16 forms, refuse each executor form, keep the controls silent and pass the hook-importing self-tests unchanged (executed). | source: `docs/sessions/evidence/task942/design/p10-more-forms-run.txt:67-67`; observed: `FAILURES 0` |
+| C60 | FACT | The R1–R5 implementer commit is the base of revision 4 (executed). | source: `docs/sessions/evidence/task942/design/p12-head.txt:2-2`; observed: `c00337ef5e5d5cef0c2503e704c89c67fc6ad17c` |
+| C61 | FACT | The completion report lists 23 write forms that the hook reports nothing for (executed). | source: `docs/sessions/evidence/task942/impl/completion-report.md:115-115`; observed: `reports nothing for the 23 forms below` |
+| C62 | FACT | The local hooks are workflow controls, not a sandbox. | source: `.claude/rules/shared/workflow-ci.md:33-33`; observed: `Local hooks are workflow controls.` |
+| C63 | FACT | A reviewed case requires that reading a scope file stays silent. | source: `scripts/workflow-gates/shell-mutation.selftest.mjs:45-45`; observed: `Reading a scope file as the source of a copy` |
+| C64 | FACT | The R6–R9 prototype reports every form of its list (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:63-63`; observed: `forms 47; already reported by the current hook 3` |
+| C65 | FACT | The prototype refuses each executor form and keeps the controls silent (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:161-161`; observed: `FAILURES 0` |
+| C66 | FACT | The whole self-test suite passes unchanged with the prototype loaded in place of the hook (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:154-154`; observed: `# tests 206, # pass 206, # fail 0, # skipped 0` |
+| C67 | FACT | Over the frozen corpus the prototype drops, adds and newly refuses nothing (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:156-156`; observed: `corpus: dropped 0; with added targets 0; with an added guarded target 0; executor commands newly refused 0; with an added governance scope file 0` |
+| C68 | FACT | The 5000-folder-change commands stay under 15 s on the prototype (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:160-160`; observed: `PASS timing parser-rejected 5000 folder changes under 15 s on the prototype` |
+| C69 | FACT | The slowest hostile command of about 50 000 characters stays under 3 s on the prototype (executed). | source: `docs/sessions/evidence/task942/design/p11-class-forms-run.txt:141-141`; observed: `PASS hostile open calls, 50000 characters` |
 | D1 | OWNER DECISION | Governance tasks are implemented by Opus in a separate session. | owner: 2026-11-01; decision: `Opus, a separate session (Recommended)` |
 | D2 | OWNER DECISION | Approval independence is enforced by the hook. | owner: 2026-11-01; decision: `Yes, the hook blocks (Recommended)` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
@@ -129,6 +153,7 @@ Task 940 approval and changes none of the cited files).
 | D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it.` |
 | D17 | OWNER DECISION | Task 944 (sensitivity breaks only in memory) is committed on PR #12's branch after Task 943 and before Task 942, so 942 makes its break through the new runner. | owner: 2026-11-03; decision: `Sprint 92, after 943 (Recommended)` |
 | D20 | OWNER DECISION | Task 944 is approved with notes, and the write forms its review 3 found outside AC12 are written into Task 942. | owner: 2026-11-04; decision: `Approve, the forms into 942 (Recommended)` |
+| D24 | OWNER DECISION | The 23 write forms of the Task 942 completion report are closed according to the best programming practices. | owner: 2026-11-04; decision: `It must be done according to the best programming practices` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -144,6 +169,9 @@ task's `.security.json`, and the evidence files `docs/sessions/evidence/task942/
 `docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt` (the last two written as revision 1 describes).
 Revision 2 (R4): `scripts/workflow-gates/security-hook.mjs`, new `scripts/workflow-gates/shell-forms-residual.selftest.mjs`, and for
 the critical case GOV-942-HOOK-SHELL-FORMS-DENY its break spec and artifact under the same names in the same folder.
+Revision 4 (R6–R10): `scripts/workflow-gates/security-hook.mjs`, new `scripts/workflow-gates/shell-forms-classes.selftest.mjs`, new
+`docs/sessions/evidence/task942/impl/base-runs-r6.txt`, a `## Revision 4` section appended at the end of the completion report, and
+for the critical case GOV-942-HOOK-SHELL-CLASSES-DENY its break spec and artifact under the same names in the same folder.
 Written by the approver only (R5): `scope` entries in the `review.rebases` of the 935, 940, 941, 943 and 944 contracts with evidence
 `docs/sessions/evidence/task942/review/scope-rebase-935.md`, `…-940.md`, `…-941.md`, `…-943.md` and `…-944.md`.
 
@@ -151,19 +179,23 @@ Out of scope: every product file, including `src/modules/listings/actions/contac
 the reviewed Task 923 rule, C6, C7); the detector's patterns, block extraction, exclusions and its 34 self-test fixtures; the
 other seven allowlist entries; `scripts/workflow-gates/publication.json` and every existing self-test file (C32, C36); widening the
 detector to see status constants (a recorded limitation, C9); the other red jobs of PR #12 (Tasks 937, 938, 939). Revision 2:
-`isReadOnlyShellCommand`, the rest of `security-hook.mjs` beyond R4, and every write form that Tasks 943 and 944 leave undetected
-(a path or folder in a variable, a script file run by an interpreter, `-EncodedCommand`, a folder change inside backticks or
-`$(…)`, a `.NET` file mode held in a variable); a redirection after `env -C` is not an R4 form, because the shell opens it in the
-current folder, not in the `env` folder.
+`isReadOnlyShellCommand`, the rest of `security-hook.mjs` beyond R4 and R6–R9, and every write form that Tasks 943 and 944 leave
+undetected (a path or folder in a variable, a script file run by an interpreter, `-EncodedCommand`, a folder change inside backticks
+or `$(…)`, a `.NET` file mode held in a variable); a redirection after `env -C` is not an R4 form, because the shell opens it in the
+current folder, not in the `env` folder. Revision 4: a new kind of input, such as a `.NET` stream constructor or the file API of an
+interpreter outside section 5, is no part of R6–R9; a form found later goes to the completion report and to a revision (C48).
 
 ## 5. Current and required behaviour
 
 Preserved: the detector (C16) and its fixtures (C20); the output lines, exit codes and the `--report` and `--verify-gate` modes of
 the command line; the path-and-fingerprint matching (C12); stale entries failing the gate (C13); CI's two gate steps (C33, C34).
 Revision 2: every target the Task 944 hook reports stays reported (C50); every existing self-test passes unchanged (C51).
+Revision 4: every target of the R4 hook stays reported, with one correction: the value of `--package` is no program, so `npx --package
+rm x y` no longer reports `x` and `y` as `rm` targets; every self-test committed at C60 passes unchanged (C66).
 Changed: the allowlist holds the current contact-event fingerprint and no detail-page entry; the stale check is an exported pure
 function; the command-line body runs only when the file is the entry point, so a self-test can import the module. Revision 2: the
-R4 forms add their targets, so the independence check counts them and the pre-write guard decides on them.
+R4 forms add their targets, so the independence check counts them and the pre-write guard decides on them. Revision 4: the same for
+the classes of R6–R9.
 
 ## Requirements
 
@@ -174,6 +206,11 @@ R4 forms add their targets, so the independence check counts them and the pre-wr
 | R3 [C22; C23; C24; C27; C28; C29; C30; C32; C36] | **Proof.** The four GOV-942 cases live in the new `scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs`; no existing self-test file and no `publication.json` entry changes. | P1 | AC5 |
 | R4 [C40; C41; C42; C43; C44; C45; C46; C47; C48; C49; C50; C51; C53; C54; C55; C56; C57; C58; C59; D13; D14; D20] | **Remaining shell write forms (revisions 2 and 3).** `shellWriteTargets` in `security-hook.mjs` also reports: (a) a section 5 program directly after or before a backtick, through the `WORD` pattern of the R1 fallback of a command the parser rejects (C41); (b) `perl` `-0` with its octal digits or `x` and hex digits inside an option cluster (`-0pi`, `-0777pi`, `-0x1Fpi`): `-0` takes only those digits and the cluster goes on, in the parsed reading and in the R1 fallback, while `-I`, `-M`, `-m`, `-d`, `-D` and `-x` keep their attached value (C40); (c) the folder of `env -C <folder>`, `-C<folder>`, `--chdir <folder>` or `--chdir=<folder>` also applies to the command text of a nested shell or evaluator that `env` runs and to the API paths of an interpreter that `env` runs, in parsed commands, in the raw-text reading of a command the parser rejects and in the lenient reading (C42); (d) `npm exec`, `npm x`, `pnpm exec`, `pnpm dlx`, `yarn exec`, `yarn dlx` and `bun x` are skipped like `npx` with their options, and `yarn` directly before `rimraf` or `shx` is skipped, never before any other word, so `yarn install` keeps its package-file targets (C43); (e) `open(` and `openSync(` accept `file=` before the quoted path (C44), `removedirs` joins the qualified directory-delete names of Task 944 R8 (c) (C45), and `]::Open(` with a quoted mode or a `[…FileMode]::` mode of `Create`, `CreateNew`, `Append`, `Truncate` or `OpenOrCreate` is a W3 literal path, never `Open` or `OpenRead` (C46); (f) (revision 3) (i) `open(` and `openSync(` read a `mode=` or `flags=` after other keyword arguments (C54); (ii) `Path('…').open(` reads a write mode as `mode=` and after other keyword arguments (C55); (iii) a directory delete call of Task 944 R8 (c) accepts `path=` before its quoted path (C56); (iv) the raw reading of a command treats `\"` as a quote for the API forms, so they match inside a double-quoted command text (C57), while a search text keeps the reading the single-quoted spelling already has. Each addition is skipped when its target is already reported, so the result is a superset of the Task 944 result; `isReadOnlyShellCommand` is unchanged. Feasibility: `docs/sessions/evidence/task942/design/p07-shell-forms-run.mjs` applies its `PAIRS` to a copy of the hook (a design prototype to read, not code to paste) with the results of C49, C50, C51 and C53; `docs/sessions/evidence/task942/design/p10-more-forms-run.mjs` adds its `PAIRS` on that prototype for (f), with the result of C59 and a corpus result of 0 added targets. | P1 | AC6 |
 | R5 [C24; C52; D9; D20] | **Proof and rebases.** GOV-942-HOOK-SHELL-FORMS-DENY lives in the new `scripts/workflow-gates/shell-forms-residual.selftest.mjs`, not listed in `publication.json` (C32). After approving this task, the approver appends a `scope` entry by this contract to the `review.rebases` of the 935, 940, 941, 943 and 944 contracts, each with `## Changed scope files` evidence listing `scripts/workflow-gates/security-hook.mjs`, and recomputes nothing else in them. | P1 | AC6, AC7 |
+| R6 [C61; C62; C63; C64; C65; D13; D14; D24] | **One reader of a call's arguments (revision 4).** One function splits the arguments of a call at its top-level commas, with quotes and brackets respected, and scans a bounded length. It replaces the expressions of `open(` and `openSync(`, the `open` branch of the pathlib expression and `]::Open(`, for these results: (a) `open(` and `openSync(` read the path from the first positional string or `file=` and the mode from the next positional, `mode=`, `flags=` or a literal `**{'mode': …}`, in any keyword order; a quoted mode with `w`, `a`, `x` or `+`, a constant `O_WRONLY`, `O_RDWR`, `O_CREAT`, `O_TRUNC` or `O_APPEND`, or a nonzero flag number writes, and `0`, `'r'`, `O_RDONLY` or no mode does not; (b) `Path('…').open(` reads its mode the same way; (c) `]::Open(` reads a `FileMode` of `CreateNew`, `Create`, `Append`, `Truncate` or `OpenOrCreate` in any spelling (quoted, `[…FileMode]::`, a cast) or as 1, 2, 4, 5 or 6, or a `FileAccess` of `Write` or `ReadWrite` or 2 or 3, and `Open`, 3 and `Read` do not write; (d) a directory delete call also accepts `name=` before its quoted path. | P1 | AC8 |
+| R7 [C61; C64; C65; D13; D14; D24] | **One reading of the `env` options (revision 4).** The name of a wrapper or `env` is compared without its folder and `.exe`, so `/usr/bin/env` and `/usr/bin/sudo` read like `env` and `sudo`. A cluster of `i`, `0` and `v` may end in `-C`, `-u` or `-S`, attached or with the next word (`-iC d`, `-iCd`). The raw reading of R4 (c) reads the same cluster, a folder before `env`, and `--unset` and `--split-string` with a value. | P1 | AC8 |
+| R8 [C61; C64; C65; D13; D14; D24] | **One reading of a package manager's command line (revision 4).** For `npm`, `pnpm`, `yarn` and `bun`, the manager's own options before its subcommand are skipped, with `--prefix`, `-C`, `--dir`, `--cwd`, `-w`, `--workspace`, `--filter` and `-F` taking a value. The runners of R4 (d) then apply; `<manager> run` before `rimraf` or `shx` runs that program; `pnpm`, `yarn` and `bun` directly before `rimraf` or `shx` run that program, never before another word and never for `npm`. `--package` takes a value like `-p` for `npx`, `pnpx`, `bunx` and the runners. The text after `-c`, `--call` or `--call=` of a runner is a command text, read like the text of a nested shell. | P1 | AC8 |
+| R9 [C61; C64; C65; D13; D14; D24] | **One list of raw readings (revision 4).** The raw reading runs on the command text and on one normalised text, with `\"` and the PowerShell `` `" `` read as a quote, for the folder words, the API forms and the child-process calls. The lenient reading splits a nested command text into words with its quotes respected. | P1 | AC8 |
+| R10 [C24; C48; C62; C66; C67; C68; C69; D13; D24] | **Proof and limit (revision 4).** GOV-942-HOOK-SHELL-CLASSES-DENY lives in the new `scripts/workflow-gates/shell-forms-classes.selftest.mjs`, not listed in `publication.json` (C32). Every branch of R6–R9 has its own isolated in-memory break reported in the completion report. The completion report lists the write forms that stay undetected, as AC6 does, and each newly found one goes to a revision (C48); CI stays the barrier (C24, C62). | P1 | AC8, AC9 |
 
 ## Acceptance criteria
 
@@ -198,9 +235,9 @@ R4 forms add their targets, so the independence check counts them and the pre-wr
   every case); `node --check scripts/check-listing-visibility.mjs` exits 0.
 - **AC5 [R3].** GOV-942-HOOK-EXECUTOR-DENY passes: `evaluateHook` for a PreToolUse `Edit` and a `Write` of
   `scripts/check-listing-visibility.mjs` with model `sonnet` returns `POLICY-EDIT AUTHORITY REQUIRED`, and with model `opus`
-  returns `[]` (C22, C23). `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 5 more passing tests than the
-  base run; `git diff --exit-code` on every existing `scripts/workflow-gates/*.selftest.mjs` file and on
-  `scripts/workflow-gates/publication.json`; `node scripts/workflow-gates/check-workflow.mjs` exits 0;
+  returns `[]` (C22, C23). `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 6 more passing tests than the
+  base run of `impl/base-runs.txt`; `git diff --exit-code c00337ef5` on every `scripts/workflow-gates/*.selftest.mjs` file committed at
+  C60 and on `scripts/workflow-gates/publication.json`; `node scripts/workflow-gates/check-workflow.mjs` exits 0;
   `node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` exits 0;
   `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` passes every case;
   `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented. Approver, after Task 937:
@@ -221,37 +258,49 @@ R4 forms add their targets, so the independence check counts them and the pre-wr
 - **AC7 [R5].** After the approver's rebases, the scoped harness of Task 944 AC11
   (`docs/sessions/evidence/task944/review/r3-ac11-harness.mjs`, extended with this contract) reports no error for the 935, 940, 941,
   943, 944 and 942 contracts, and `reviewedFreshnessErrors` for that selection returns `[]`.
+- **AC8 [R6; R7; R8; R9; R10].** GOV-942-HOOK-SHELL-CLASSES-DENY passes on the fixture root of AC6: each form of the `forms(x, d, n)`
+  list of `docs/sessions/evidence/task942/design/p11-class-forms-run.mjs` reports X and yields `GOVERNANCE INDEPENDENCE` for X, its
+  executor form (X by `scripts/check-example.mjs`, D by `scripts`, N by `check-example.mjs`) is refused with `POLICY-EDIT AUTHORITY
+  REQUIRED` or `SECURITY TEST CONTRACT MISSING`, each command of that file's `CONTROLS` list reports no X, and `constructor exec x`
+  returns `[]`. Sensitivity: a break spec that stops the option walk of R8 fails the case with an assertion, run with `cli.mjs
+  sensitivity`; restored passes; the live hook is never edited for the break. GOV-942-HOOK-SHELL-FORMS-DENY is rerun with
+  `cli.mjs sensitivity`, because its target changed. The completion report names one in-memory break per branch of R6–R9, each
+  failing with an assertion, a timeout or an exception, and 0 survivors.
+- **AC9 [R10].** The frozen corpus of AC6, the hook of C60 against the final hook, drops no target and adds no executor refusal and no
+  governance scope file; the Task 943 AC15 F8 commands return within 15 s and each `hostile` command of the p11 file within 3 s on native
+  Windows; both results are in the completion report. Approver: the Governance Check job of PR #12, the first Linux run of these
+  self-tests, is green.
 
 ## Security test contract
 
 | Field | Content |
 |---|---|
 | Assets and boundaries | The listing public-visibility invariant gate (`scripts/check-listing-visibility.mjs`): its allowlist (C12–C15), its stale check (C13, C18) and its detector (C16); the pre-write guard that keeps the gate an Opus-only file (C22, C23, C38) and its shell write detection (`shellWriteTargets`, `governanceIndependenceErrors`, R4); CI's policy-diff check (C24) as the outer layer. Owner: Opus (D1). |
-| Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-942-HOOK-EXECUTOR-DENY and GOV-942-HOOK-SHELL-FORMS-DENY on the real `evaluateHook`, `shellWriteTargets` and `governanceIndependenceErrors`. |
+| Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-942-HOOK-EXECUTOR-DENY, GOV-942-HOOK-SHELL-FORMS-DENY and GOV-942-HOOK-SHELL-CLASSES-DENY on the real `evaluateHook`, `shellWriteTargets` and `governanceIndependenceErrors`. |
 | Server security | The CI layer replaces this row: GOV-942-CI-GATE-ALLOW (process: the real gate on the real tree), GOV-942-CI-PATH-DENY and GOV-942-CI-STALE-ERROR (unit: the real exported detector, allowlist and stale check). |
 | Database/integrations | Not applicable: the gate reads source files only; no database, Storage, Realtime or provider path. |
-| Cases | The five GOV-942 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
-| Fixtures and environment | The repository source tree read-only and in-memory source strings; for GOV-942-HOOK-SHELL-FORMS-DENY a temporary folder from `mkdtempSync` with synthetic files and transcripts, removed after the test; no other temporary writes, no credentials, no network. |
-| Sensitivity proof | Critical cases GOV-942-CI-PATH-DENY and GOV-942-HOOK-SHELL-FORMS-DENY: the breaks named in AC2 and AC6, each as a saved break spec run by `cli.mjs sensitivity` (in memory, D17); baseline pass, isolated break failing with an assertion, restored pass; artifacts `docs/sessions/evidence/task942/sensitivity/<case ID>.txt`. |
+| Cases | The six GOV-942 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
+| Fixtures and environment | The repository source tree read-only and in-memory source strings; for GOV-942-HOOK-SHELL-FORMS-DENY and GOV-942-HOOK-SHELL-CLASSES-DENY a temporary folder from `mkdtempSync` with synthetic files and transcripts, removed after the test; no other temporary writes, no credentials, no network. |
+| Sensitivity proof | Critical cases GOV-942-CI-PATH-DENY, GOV-942-HOOK-SHELL-FORMS-DENY and GOV-942-HOOK-SHELL-CLASSES-DENY: the breaks named in AC2, AC6 and AC8, each as a saved break spec run by `cli.mjs sensitivity` (in memory, D17); baseline pass, isolated break failing with an assertion, restored pass; artifacts `docs/sessions/evidence/task942/sensitivity/<case ID>.txt`. |
 | Execution | `node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json`, then `cli.mjs verify` on the same path; native Windows PowerShell 5.1, Node 22.22.3; QA Q1. |
 
 ## 6. Ordered route
 
-1. **Owner** (separate PowerShell window, `C:\Claude_Code_Projects\lero-al`): stay on `task/935-governance-approval-route` (D7);
-   commit this kickoff set with the command Opus gives.
-2. **Prerequisite, before the first write of step 3:** Task 944 is reviewed and committed (D17), and `git status --short scripts`
-   prints nothing (no other governance task's implementation, such as Task 943's or 944's, is uncommitted in the tree). Otherwise
-   wait until that task's commit; do not mix two governance implementations in one working tree.
-3. **Opus implementer, fresh session** (D1): read this kickoff and its bundle; save the base runs of
-   `node scripts/check-listing-visibility.mjs` (exit 1, C3), `npm run check:listing-visibility:verify` and
-   `node scripts/workflow-gates/selftests.mjs` to `docs/sessions/evidence/task942/impl/base-runs.txt` before the first write.
-   Implement R1 and R2, then R3 with the four cases, then R4 through the Edit tool on the hook with the fifth case (R5); the Task
-   944 guard checks each hook Edit. Record `implementation: { "role": "Opus" }`, stage `implemented`, `report` and `sensitivity`
-   in the sidecar; write the two break specs and run each with `cli.mjs sensitivity` (never edit a gate or the hook to plant a
-   break); keep the artifacts and records it writes.
-4. Run `cli.mjs governance-report` and every AC command; write the completion report; end with
+1. **Done:** R1–R5 are implemented and committed at C60 by the implementation session of this task. **Current start step: 2.**
+2. **Owner** (separate PowerShell window, `C:\Claude_Code_Projects\lero-al`): stay on `task/935-governance-approval-route` (D7);
+   commit this revision with the command Opus gives. **Prerequisite, before the first write of step 3:** `git status --short scripts`
+   prints nothing (no other governance task's implementation is uncommitted in the tree). Otherwise wait until that task's commit; do
+   not mix two governance implementations in one working tree.
+3. **Opus implementer, fresh session** (D1; not the session of revision 4): read this kickoff and its bundle; read
+   `docs/sessions/evidence/task942/design/p11-class-forms-run.mjs`, a design prototype to read, not code to paste. Save the base
+   run of `node scripts/workflow-gates/selftests.mjs` to `docs/sessions/evidence/task942/impl/base-runs-r6.txt` before the first write.
+   Implement R6, R7, R8 and R9 through the Edit tool on the hook, then R10 with the sixth case; the Task 944 guard checks each hook
+   Edit. Set stage `implemented` in the sidecar, write the new break spec and run the two hook cases with `cli.mjs sensitivity`
+   (never edit a gate or the hook to plant a break); keep the artifacts and records it writes.
+4. Run `cli.mjs governance-report` and every AC command, append the `## Revision 4` section to the completion report and run
+   `cli.mjs governance-report` again, because that report is part of the scope digest; end with
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the owner. No push.
-5. **Opus approver, another fresh session** (D2): review R1–R5; on approval write the `review` block and stage `reviewed`, write the
+5. **Opus approver, another fresh session** (D2): review R1–R10; on approval write the `review` block and stage `reviewed`, write the
    five R5 `scope` entries with their evidence, run AC7, and hand off the explicit-path commit under `shared/git-publication.md`.
    PR #12 merges only after green PR checks (D7).
 
@@ -259,17 +308,17 @@ R4 forms add their targets, so the independence check counts them and the pre-wr
 
 Per requirement: changed files, evidence path, status; each GOV-942 case with its result; each sensitivity diff with the failed
 assertion; base and final gate and self-test totals; proof that no existing self-test file and no manifest entry changed; for R4
-each AC6 form with its result, the corpus and timing results and the write forms that stay undetected; one of
-`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+each AC6 form with its result, the corpus and timing results and the write forms that stay undetected; for R6–R10 the same for each
+AC8 form and each break of R10; one of `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
 ## 8. Rule compliance
 
 | Rule | How this kickoff complies |
 |---|---|
 | `claim-evidence-contract.md` | Every R cites ledger rows; sources are retained snapshots and executed probes under `docs/sessions/evidence/task942/design/`, the Task 937 design snapshot of the gate and the Task 944 review 3 evidence. |
-| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for the two critical cases, Q1. |
+| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for the three critical cases, Q1. |
 | `role-boundaries.md` | Opus implements policy (D1); Sonnet is not routed (C25, C26); approval by an independent session (D2). |
 | `git-publication.md` | Task-branch commit on PR #12's branch (D7); merge only after green checks. |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59; owner decisions: D1, D2, D7, D8, D9, D13, D14, D17, D20; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69; owner decisions: D1, D2, D7, D8, D9, D13, D14, D17, D20, D24; blocked claims: NONE.

@@ -1,0 +1,3 @@
+c00337ef5 Task 942 R1-R5 implementer commit, the base of revision 4
+c00337ef5e5d5cef0c2503e704c89c67fc6ad17c
+governance(Task942): listing-visibility allowlist matches the reviewed contact-event rule, gate importable with a tested

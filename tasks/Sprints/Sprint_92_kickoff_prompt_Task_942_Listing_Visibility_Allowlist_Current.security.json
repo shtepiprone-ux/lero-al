@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "planned",
   "implementation": {
     "role": "Opus"
   },
@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "9abdde2226e5549f6cb03643025457748f2926dd7ddb01eaa64dc77b8457cfdb",
+  "taskSha256": "d36d4661411ef6cd215f7080300e739cef7f83856775fd896951c532f65c7f61",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -26,7 +26,11 @@
     "scripts/workflow-gates/shell-forms-classes.selftest.mjs",
     "docs/sessions/evidence/task942/impl/base-runs-r6.txt",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.break.json",
-    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.txt"
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.txt",
+    "scripts/workflow-gates/shell-forms-reader.selftest.mjs",
+    "docs/sessions/evidence/task942/impl/base-runs-r11.txt",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-READER-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-READER-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -145,6 +149,28 @@
       ],
       "testFile": "scripts/workflow-gates/shell-forms-classes.selftest.mjs",
       "testName": "[GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written"
+    },
+    {
+      "id": "GOV-942-HOOK-SHELL-READER-DENY",
+      "invariant": "A file changed through a call with its path past the reader's bound, a Windows launcher, a manager option, a repeated text flag, the text of env -S, corepack, a deeper escaped quote or a literal spread is counted as written, and a nested text in many folders costs one reading",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "revision 5: the forms list of p13-reader-forms-run.mjs with X a fixture governance scope file and D its folder, each also as an executor event on scripts/check-example.mjs; the read controls of the CONTROLS list and the hostile commands of that file",
+      "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls; each hostile command returns inside its limit",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through one of these forms",
+        "Sonnet changing a policy or product file through such a form without a refusal",
+        "a target the hook of C60 reported lost through the reader's bound",
+        "a target of the hook of C60 or C87 lost because the word after a runner's option is read one way only",
+        "a command of a few kilobytes running past the hook timeout",
+        "a read of a scope file reported as a write"
+      ],
+      "testFile": "scripts/workflow-gates/shell-forms-reader.selftest.mjs",
+      "testName": "[GOV-942-HOOK-SHELL-READER-DENY] A file changed through a call with its path past the reader's bound, a Windows launcher, a manager option, a repeated text flag, the text of env -S, corepack, a deeper escaped quote or a literal spread is counted as written, and a nested text in many folders costs one reading"
     }
   ]
 }

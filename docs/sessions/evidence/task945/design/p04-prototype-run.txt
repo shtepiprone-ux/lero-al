@@ -1,0 +1,29 @@
+PASS session start records the tree: exit 0; 59 ms
+PASS a read-only session does nothing and stops at once: exit 0; 58 ms
+PASS a document write runs no check: exit 0; 57 ms
+PASS a clean code write passes: exit 0; 457 ms
+PASS QUALITY a lint failure in the written file is shown at once: exit 2; 441 ms; CODE CHECK FAILED after a write to src/owner.ts. Fix this now, before anything else: / "C:/Program Files/nodejs/node.exe" tests/lint.mjs "src/owner.ts": exit 1
+PASS the same failed version is not rerun on the next command: exit 0; 64 ms
+PASS Stop still refuses the failed version: exit 2; 494 ms; CODE CHECK FAILED: how src/owner.ts affects the rest of the project. Fix this before finishing: / "C:/Program Files/nodejs/node.exe" tests/lint.mjs "src/owner.ts": exit 1
+PASS IMPACT a changed signature is reported in the consumer the session never touched: exit 2; 453 ms; CODE CHECK FAILED after a write to src/owner.ts. Fix this now, before anything else: / "C:/Program Files/nodejs/node.exe" "C:/Claude_Code_Projects/lero-al/node_modules/ty
+PASS the fix clears the write stage: exit 0; 439 ms
+PASS a write through a shell form with no parsing is seen by its hash: exit 0; 440 ms
+PASS IMPACT Stop refuses while a test of the consumers fails: exit 2; 110 ms; CODE CHECK FAILED: how src/owner.ts affects the rest of the project. Fix this before finishing: / "C:/Program Files/nodejs/node.exe" tests/check-impact.mjs: exit 1
+PASS Stop still refuses on the next attempt: nothing was fixed: exit 2; 116 ms; CODE CHECK FAILED: how src/owner.ts affects the rest of the project. Fix this before finishing: / "C:/Program Files/nodejs/node.exe" tests/check-impact.mjs: exit 1
+PASS the file back at its committed text has nothing left to check: exit 0; 60 ms
+PASS a fixed version passes Stop: exit 0; 494 ms
+PASS an unchanged passed file costs no second run: exit 0; 59 ms
+PASS NOTE no test reaches a new file: stopped once: exit 2; 507 ms; CODE CHECK NOTE: no test reaches src/uncovered/a.ts. Its effect on other code is proven only by the type check. Add a test, or say so in your report. This stops you once 
+PASS NOTE the same version does not stop again: exit 0; 60 ms
+PASS a whole-tree gate with findings only outside the change does not block: exit 0; 605 ms
+PASS the same gate blocks once the changed file holds a finding: exit 2; 602 ms; CODE CHECK FAILED: how src/each/known-bad.ts affects the rest of the project. Fix this before finishing: / "C:/Program Files/nodejs/node.exe" tests/tree-gate.mjs: exit 1
+PASS a {file} command runs per file and names the bad one: exit 2; 549 ms; CODE CHECK FAILED after a write to src/each/one.ts, src/each/two.ts. Fix this now, before anything else: / "C:/Program Files/nodejs/node.exe" tests/lint.mjs "src/each/one
+PASS removing them clears the session: exit 0; 60 ms
+PASS IMPACT a rename is reported in the consumer that still imports the old path: exit 2; 446 ms; CODE CHECK FAILED after a write to src/renamed-owner.ts. Fix this now, before anything else: / "C:/Program Files/nodejs/node.exe" "C:/Claude_Code_Projects/lero-al/node_mo
+PASS the rename undone clears the session: exit 0; 59 ms
+PASS ERROR a check that does not finish is a failure: exit 2; 3209 ms; CODE CHECK FAILED: how hung/a.ts affects the rest of the project. Fix this before finishing: / "C:/Program Files/nodejs/node.exe" tests/hang.mjs: could not finish (timeou
+PASS ERROR the hung check left no process behind: 0 running
+PASS a deleted file leaves nothing to check: exit 0; 61 ms
+PASS ERROR an unreadable registry refuses with a message: exit 2; 40 ms; CODE CHECK COULD NOT RUN: Expected property name or '}' in JSON at position 2 (line 1 column 3). A check that did not run is a failure.
+
+FAILURES 0

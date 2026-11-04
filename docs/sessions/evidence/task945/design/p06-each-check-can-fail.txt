@@ -1,0 +1,13 @@
+eslint is applied to src, a syntax error: exit 1; C:\Claude_Code_Projects\lero-al\src\lib\probe-945.ts
+eslint is applied to src tsx, a syntax error: exit 1; C:\Claude_Code_Projects\lero-al\src\lib\probe-945.tsx
+eslint is applied to a gate script, a syntax error: exit 0; 
+eslint is applied to a check script, a syntax error: exit 0; 
+a gate script has a resolved eslint config: exit 0; no config
+file integrity, a NUL byte: exit 1; JSON parse error       : validate and fix the JSON
+PowerShell parse, a broken script: exit 1; Missing closing '}' in statement block or type definition.
+locale JSON, a broken file: exit 1; at evalTypeScript (node:internal/process/execution:291:3)
+design tokens at HEAD: exit 1; names src/components/shared/Map.module.css: true; names src/lib/utils.ts: false
+file integrity, a syntax error in a script: exit 1; JSON parse error       : validate and fix the JSON
+file integrity, a broken JSON file: exit 1; JSON parse error       : validate and fix the JSON
+vitest related, dot reporter, a file no test reaches: exit 0; says No test files found: true
+UI contract gate, its own verify: exit 0; check:ui-contract self-test PASSED

@@ -1,0 +1,114 @@
+
+## 1. the 26 forms of the completion report, as it spells them
+OPEN   | c87 false | prototype false | python -c "open('scripts/workflow-gates/fixture-scope.mjs', mode=m)"
+OPEN   | c87 false | prototype false | node -e "fs.openSync('scripts/workflow-gates/fixture-scope.mjs', w)"
+OPEN   | c87 false | prototype false | python -c "open('scripts/workflow-gates/fixture-scope.mjs', **opts)"
+closed | c87 false | prototype true | python -c "open('scripts/workflow-gates/fixture-scope.mjs', **dict(mode='w'))"
+closed | c87 false | prototype true | python -c "open('scripts/workflow-gates/fixture-scope.mjs', *['w'])"
+closed | c87 false | prototype true | python -c "import os; os.open(path='scripts/workflow-gates/fixture-scope.mjs', flags=os.O_WRONLY)"
+closed | c87 false | prototype true | python -c "import os; os.open('scripts/workflow-gates/fixture-scope.mjs', 1 | 64)"
+closed | c87 false | prototype true | node -e "fs.openSync(`scripts/workflow-gates/fixture-scope.mjs`, 'w')"
+closed | c87 false | prototype true | bash -c "python -c \"open(\\\"scripts/workflow-gates/fixture-scope.mjs\\\", 'w')\""
+closed | c87 false | prototype true | env -S 'rm scripts/workflow-gates/fixture-scope.mjs'
+closed | c87 false | prototype true | env --split-string='rm scripts/workflow-gates/fixture-scope.mjs'
+closed | c87 false | prototype true | "env" -C scripts/workflow-gates python -c "open('fixture-scope.mjs','w')"
+closed | c87 false | prototype true | npm exec -w app -- rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npm exec --workspace app rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | pnpm exec --filter app rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | pnpm --package foo dlx rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | yarn workspace app rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | yarn workspace app exec rimraf scripts/workflow-gates/fixture-scope.mjs
+OPEN   | c87 false | prototype false | npm --prefix=. run rm scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npm.cmd exec rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npx.cmd rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | pnpm.cmd exec rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npm.ps1 exec rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | pnpm run --silent rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npm run -- rimraf scripts/workflow-gates/fixture-scope.mjs
+closed | c87 false | prototype true | npx -c 'cat a' -c 'rm scripts/workflow-gates/fixture-scope.mjs'
+forms 26; closed by the prototype 22; open 4
+
+## 2. targets of C60 and C87 that the prototype loses
+LOST | c60 true | c87 false | prototype false | npx --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npx --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | pnpx --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpx --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | bunx --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bunx --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | npm exec --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | npm exec --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | pnpm dlx --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | pnpm dlx --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | yarn dlx --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | yarn dlx --cwd rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 false | prototype false | bun x --package rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x -w rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x --workspace rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x --filter rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x -F rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x --prefix rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x -C rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x --dir rm scripts/workflow-gates/fixture-scope.mjs
+LOST | c60 true | c87 true | prototype false | bun x --cwd rm scripts/workflow-gates/fixture-scope.mjs
+false / true / false (c60 / c87 / prototype) | npx --call='rm scripts/workflow-gates/fixture-scope.mjs' -c 'cat a'
+false / true / false (c60 / c87 / prototype) | npx -c 'rm scripts/workflow-gates/fixture-scope.mjs' -c 'cat a'
+false / true / false (c60 / c87 / prototype) | npx -c 'rm scripts/workflow-gates/fixture-scope.mjs' --call='cat a'
+false / false / false (c60 / c87 / prototype) | npm --loglevel rm scripts/workflow-gates/fixture-scope.mjs
+false / false / false (c60 / c87 / prototype) | yarn workspace rimraf scripts/workflow-gates/fixture-scope.mjs
+false / false / false (c60 / c87 / prototype) | yarn workspace rm rm scripts/workflow-gates/fixture-scope.mjs
+false / true / true (c60 / c87 / prototype) | pnpm --silent rimraf scripts/workflow-gates/fixture-scope.mjs
+false / false / true (c60 / c87 / prototype) | pnpm --silent x rimraf scripts/workflow-gates/fixture-scope.mjs
+
+## 3. fuzz, prototype against C60 and C87
+60000 commands: exceptions 0; slowest 5 ms; lost a target: against C60 2, against C87 2
+  c60 ["rm a.b"] for "npx --loglevel --prefix rimraf 'rm a.b'"
+  c60 [".open"] for "bunx --dir rm Path('a.b').open('w') *['w']"
+  c87 ["rm a.b"] for "npx --loglevel --prefix rimraf 'rm a.b'"
+  c87 [".open"] for "bunx --dir rm Path('a.b').open('w') *['w']"
+
+## 4. F2 on evaluateHook and governanceIndependenceErrors
+c60: evaluateHook PreToolUse 89 ms; governanceIndependenceErrors 85 ms
+c87: evaluateHook PreToolUse 16557 ms; governanceIndependenceErrors 16567 ms
+prototype: evaluateHook PreToolUse 283 ms; governanceIndependenceErrors 270 ms

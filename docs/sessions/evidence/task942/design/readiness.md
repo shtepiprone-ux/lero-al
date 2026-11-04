@@ -34,3 +34,21 @@ implements nor approves 942.
 | 5 saved contract | `check-kickoff-evidence.mjs --files <kickoff>`; `check-mobile-adaptation-contract.mjs --files <kickoff>`; `p09-readiness.mjs` in memory; `cli.mjs plan --contract <sidecar>` on the saved ready sidecar | PASS; PASS; `[]`; exit 0; kickoff digest `397df2e3ae6970de8947101124d231764304116b52b1375a0699292a12633a5a` | PASS (EXECUTED) |
 | Revision 3 proof (2026-11-04) | `p07-shell-forms-run.mjs` rerun, then `node docs/sessions/evidence/task942/design/p10-more-forms-run.mjs` → `p10-more-forms-run.txt` | 16 forms reported and refused for the executor, 12 controls quiet, nine self-tests pass, corpus dropped 0, added 0, refused 0, scope 0; 5000-folder commands under 15 s; a search text of the `\"` spelling reads as the `'` spelling already does; `FAILURES 0` | PASS (EXECUTED) |
 | Revision 3 saved contract | `check-kickoff-evidence.mjs --files <kickoff>`; `check-mobile-adaptation-contract.mjs --files <kickoff>`; `cli.mjs plan --contract <sidecar>` on the saved ready sidecar | PASS; PASS; exit 0; kickoff digest `a811c0f96054d40c239b08017bb9350c53a0111d213a6982d75fb370717b3e47` | PASS (EXECUTED) |
+
+## Revision 4 (Opus, the Task 942 implementation session, in its self-audit, 2026-11-04, owner D24)
+
+Platform: native Windows 11, Node v22.22.3, cwd `C:/Claude_Code_Projects/lero-al`, HEAD `c00337ef5`. This session implemented R1-R5, so
+it implements nothing of R6-R10 and approves nothing (D1, D2). It writes the revision under D14 and
+`.claude/rules/create/03-publication.md`, which give a self-audit session that work.
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| C1 assignment | owner D24; `impl/completion-report.md:115` | 23 forms outside R4; the owner decides they are done by the best programming practices | PASS |
+| C2 reproduction | the probes of the completion report, `test-results/task942-impl/residual-probe.mjs` and `self-audit-2.mjs` | no reading of the hook of C60 reports these forms | PASS (EXECUTED) |
+| C3 options | counting every non-read-only command that names a file breaks GOV-943-HOOK-SOURCE-ALLOW and D10 (C63); 23 more expressions repeat the approach each review refilled; one reader per kind of input is chosen | one route | PASS (ANALYTICAL) |
+| C4 proof | one critical case, a saved break, one in-memory break per branch, corpus, timing, hostile lengths | every R has a proof target | PASS |
+| C6 prototype | `node docs/sessions/evidence/task942/design/p11-class-forms-run.mjs` → `p11-class-forms-run.txt` | 47 forms, 30 controls, 13 hostile commands, `FAILURES 0`; the corpus changes nothing | PASS (EXECUTED) |
+| C6 the proof itself | `test-results/task942-impl/sentinel.mjs`, the suite's load-hook mechanism on `pnpm rimraf X` | `[]` without the swap, the target with it, so the 206 tests ran against the prototype | PASS (EXECUTED) |
+| C6 sensitivity | the break `find` of GOV-942-HOOK-SHELL-FORMS-DENY against the prototype | R6-R9 leave that text in place, so it still applies once; the implementer reruns it because its target changes | PASS (ANALYTICAL) |
+| C6 authority | `isPolicyPath`, route step 3 | the hook and the new self-test are policy paths; a fresh Opus implementer | PASS (ANALYTICAL) |
+| C7 saved contract | `check-kickoff-evidence.mjs --files <kickoff>`; `check-mobile-adaptation-contract.mjs --files <kickoff>`; `check-backlog-active.mjs`; `publication.mjs --base HEAD`; `cli.mjs plan --contract <sidecar>` on the saved ready sidecar | PASS; PASS; PASS; 0 dependency errors; exit 0; kickoff digest `9abdde2226e5549f6cb03643025457748f2926dd7ddb01eaa64dc77b8457cfdb` | PASS (EXECUTED) |

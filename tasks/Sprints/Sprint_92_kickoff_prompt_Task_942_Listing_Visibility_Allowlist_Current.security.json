@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "planned",
   "implementation": {
     "role": "Opus"
   },
@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "a811c0f96054d40c239b08017bb9350c53a0111d213a6982d75fb370717b3e47",
+  "taskSha256": "9abdde2226e5549f6cb03643025457748f2926dd7ddb01eaa64dc77b8457cfdb",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -22,7 +22,11 @@
     "scripts/workflow-gates/security-hook.mjs",
     "scripts/workflow-gates/shell-forms-residual.selftest.mjs",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.break.json",
-    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.txt"
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.txt",
+    "scripts/workflow-gates/shell-forms-classes.selftest.mjs",
+    "docs/sessions/evidence/task942/impl/base-runs-r6.txt",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -122,6 +126,25 @@
       ],
       "testFile": "scripts/workflow-gates/shell-forms-residual.selftest.mjs",
       "testName": "[GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written"
+    },
+    {
+      "id": "GOV-942-HOOK-SHELL-CLASSES-DENY",
+      "invariant": "A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "owner D24: the forms list of p11-class-forms-run.mjs with X a fixture governance scope file and D its folder, each also as an executor event on scripts/check-example.mjs; the read controls of the CONTROLS list of that file",
+      "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through one of these forms",
+        "Sonnet changing a policy or product file through such a form without a refusal",
+        "a read of a scope file reported as a write"
+      ],
+      "testFile": "scripts/workflow-gates/shell-forms-classes.selftest.mjs",
+      "testName": "[GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written"
     }
   ]
 }

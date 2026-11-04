@@ -1,0 +1,11 @@
+PASS GOV-944-SENS-RUN-ALLOW (passed)
+PASS GOV-944-SENS-RUN-DENY (passed)
+PASS GOV-944-SENS-LIVE-ERROR (passed)
+PASS GOV-944-VAL-RECORD-ALLOW (passed)
+PASS GOV-944-VAL-RECORD-DENY (passed)
+PASS GOV-944-HOOK-SYNTAX-DENY (passed)
+PASS GOV-944-HOOK-SYNTAX-ALLOW (passed)
+PASS GOV-944-HOOK-CLOSURE-ERROR (passed)
+PASS GOV-944-HOOK-SHELL-FORMS-DENY (passed)
+Governance report: passed, 9 case(s), written to docs/sessions/evidence/task944/impl/governance-report.json.
+governance-report exit 0

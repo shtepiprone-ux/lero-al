@@ -1,0 +1,36 @@
+#1 KILLED R1 (d) live-file check dropped -> GOV-944-SENS-LIVE-ERROR (exit 1): |-
+#2 KILLED R1 (b) exactly-once check dropped -> GOV-944-SENS-RUN-DENY (exit 1): 'absent'
+#3 KILLED R1 (b) replace-equals-find dropped -> GOV-944-SENS-RUN-DENY (exit 1): 'same'
+#4 KILLED R1 (b) test file as target dropped -> GOV-944-SENS-RUN-DENY (exit 1): 'testFile'
+#5 KILLED R1 (b) scope/inputs check dropped -> GOV-944-SENS-RUN-DENY (exit 1): 'outside'
+#6 KILLED R1 (b) evidence-tree check dropped -> GOV-944-SENS-RUN-DENY (exit 1): 'notEvidence'
+#7 KILLED R1 (b) governance-only check dropped -> GOV-944-SENS-RUN-DENY (exit 1): |-
+#8 KILLED R1 (f) record appended, not replaced -> GOV-944-SENS-RUN-ALLOW (exit 1): |-
+#9 KILLED R2 method check dropped -> GOV-944-VAL-RECORD-DENY (exit 1): 'no method'
+#10 KILLED R2 evidence-path check dropped -> GOV-944-VAL-RECORD-DENY (exit 1): 'break outside the evidence tree'
+#11 KILLED R2 stale break digest dropped -> GOV-944-VAL-RECORD-DENY (exit 1): 'stale breakSha256'
+#12 KILLED R2 case match dropped -> GOV-944-VAL-RECORD-DENY (exit 1): 'spec of another case'
+#13 KILLED R2 legacy list emptied -> GOV-944-VAL-RECORD-ALLOW (exit 1): |-
+#14 KILLED R3 (b) CRLF normalization dropped -> GOV-944-HOOK-SYNTAX-DENY (exit 1): 'orchestrator CRLF module'
+#15 KILLED R3 (b) CommonJS branch dropped -> GOV-944-HOOK-SYNTAX-DENY (exit 1): |-
+#16 KILLED R3 (b) load result ignored -> GOV-944-HOOK-SYNTAX-DENY (exit 1): |-
+#17 KILLED R3 (a) ps1 names dropped -> GOV-944-HOOK-SYNTAX-DENY (exit 1): |-
+#18 KILLED R3 (a) imports not followed -> GOV-944-HOOK-SYNTAX-DENY (exit 1): |-
+#19 KILLED R3 role order: guard only for orchestrator -> GOV-944-HOOK-SYNTAX-DENY (exit 1): 'executor line comment'
+#20 KILLED R3 (b) absent old_string falls through -> GOV-944-HOOK-CLOSURE-ERROR (exit 1): |-
+#21 FAILED-NO-ASSERTION R3 (c) guard error rethrown -> GOV-944-HOOK-CLOSURE-ERROR (exit 1): 'injected reader failure'
+#22 KILLED R8 (a) folder change after keyword dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): 'X reported for: if true; then cd scripts/workflow-gates; rm fixture-scope.mjs; fi'
+#23 KILLED R8 (a) env -C dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): 'X reported for: env -C scripts/workflow-gates rm fixture-scope.mjs'
+#24 KILLED R8 (b) clustered flag dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): "X reported for: bash -lc 'rm scripts/workflow-gates/fixture-scope.mjs'"
+#25 KILLED R8 (b) -- after the flag kept -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): "X reported for: bash -c -- 'rm scripts/workflow-gates/fixture-scope.mjs'"
+#26 KILLED R8 (c) read mode counted as write -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): `control reports no X: python -c "open('scripts/workflow-gates/fixture-scope.mjs', 'r')"`
+#27 KILLED R8 (c) .NET create dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): `X reported for: powershell -Command "[IO.File]::Create('scripts/workflow-gates/fixture-scope.mjs')"`
+#28 KILLED R8 (c) pathlib change dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): `X reported for: python -c "from pathlib import Path; Path('scripts/workflow-gates/fixture-scope.mjs').unlink()"`
+#29 KILLED R8 (c) directory walk dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): `X reported for: python -c "import shutil; shutil.rmtree('scripts/workflow-gates')"`
+#30 KILLED R8 (d) xcopy/robocopy dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): 'X reported for: xcopy docs\\fixture-scope.mjs scripts\\workflow-gates\\ /Y'
+#31 SURVIVED R8 (d) perl script handling dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 0): 
+#32 KILLED R8 (e) literal rule back to any quoted occurrence -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): "X reported for: echo 'scripts/workflow-gates/*.mjs'; rm scripts/workflow-gates/*.mjs; echo '"
+#33 KILLED R8 (f) .promises qualifier dropped -> GOV-944-HOOK-SHELL-FORMS-DENY (exit 1): `X reported for: node -e "require('fs').promises.rm('scripts/workflow-gates/fixture-scope.mjs')"`
+#34 SURVIVED R1 (e) load hook replaces nothing -> GOV-944-SENS-RUN-ALLOW (exit 0): 
+live digests unchanged: true
+34 mutants; not killed by an assertion: 3

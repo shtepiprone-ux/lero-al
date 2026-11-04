@@ -1,0 +1,35 @@
+HEAD 22c6871a31eaf693b16ad68c2e0f5ec290aeedea
+branch task/935-governance-approval-route
+node v22.22.3; platform win32; cwd C:\Claude_Code_Projects\lero-al
+stage implemented; executionStatus ready
+taskSha256 recorded bcaf51ca1faa4a2cb34ecd72c09a4e9d435fe12a25c15648a3f871006a858f5d
+taskSha256 current  bcaf51ca1faa4a2cb34ecd72c09a4e9d435fe12a25c15648a3f871006a858f5d
+planDigest 4d571cda801341c9cc1b7b400c8edfdf7c40e2e6fb49428d2b23bc9e4f8d9e48
+scopeDigest d014ba01545eea3886a45ec610505a144af6b688befbb6a4b270fda978c3e951
+  8f64fb403a3496f6c41a0318641e94f0591690c2968688067c2f13c7b472b7fa scripts/workflow-gates/cli.mjs
+  d6d3762351e4b74ecffa32aa195fd5aad7cdbe3f73d286185d59b7836c5718fe scripts/workflow-gates/contract.mjs
+  896f47fcc4307b2ef39227e731bb6502d3e749cfaa7b84ff5a2bf1bb41d1b009 scripts/workflow-gates/security-hook.mjs
+  8f70a4f52de25905395bf33966aee58a33f5a3d6eec15c7c8651d5c7599a849f scripts/workflow-gates/sensitivity-register.mjs
+  210b5602d91c6d4fc2f81982811a8cfc10213192d0b5b524cebdd25dde601c50 scripts/workflow-gates/sensitivity-hooks.mjs
+  47fba01e285647aeb3d13070898e78c958f887226e42b21f9918e4eb348b873c scripts/workflow-gates/sensitivity.selftest.mjs
+  75d862ffdef5595e2356e97146d281a6af55f15cee5e746b70b1c044bb8dce91 scripts/workflow-gates/hook-syntax.selftest.mjs
+  2cba6b0205e406c375e3c73046dd6d414c62421284494da562725452ff494444 scripts/workflow-gates/hook-load-check.mjs
+  dac1381095c70bf92b5bf83021ba43ab32609651f543f1639bb490f1716226da scripts/workflow-gates/publication.json
+  674b9d3a9fce5e483ad35867a5ca0cb8f3557a583dc4121d44f5c3ccd4e3583e .claude/rules/shared/task-readiness.md
+  cd6bcca793da55d707b0585100c3277ff0fc7d333d529d4ea4360b712eda179d .claude/rules/review/02-adversarial-ui.md
+  6daa0f78aa238e6d3976a70c313dc2e426cd4d3b72828bfbbc8d62b19d29dff5 docs/sessions/evidence/task944/impl/completion-report.md
+  bddcd946cb0019ea2f5f1d7cb81c09ecd9b7295092d06f5340c4f2d0f5e099e7 docs/sessions/evidence/task944/impl/governance-report.json
+  3251f347d621344e3cd8e5bdb646d539c1a0601071b6be0810955c7394e0bc94 docs/sessions/evidence/task944/impl/base-runs.txt
+  36fa29cd3fa00408f0c580d0fe68e7ec404edc4c6e85eed1aae0e901d5a577a2 docs/sessions/evidence/task944/impl/real-repo-guard.txt
+  258f55bab6a6055faf1bf112d6a207e67174bcebaf60f525c3660909919d6dd5 docs/sessions/evidence/task944/sensitivity/sensitivity.json
+  479075985b341815183bc7b29cb591527c3acc1073d40073f9e05477aede3c17 docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json
+  22cc21984e5afdd01f34417678404349888112e675a67da0040b2851eb79faa8 docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.txt
+  d5517bc63fafd712109b8252930c18316170c525151c03bb62ef4a2b2802b585 docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json
+  44c9282aa2c214581375bed391af9d70c46e7ab594f40cb709d9785d13e40ec7 docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.txt
+  3f6040bb804824dd0c247fc1712b2ea558290a0746655cae04cba4514479bb10 docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json
+  f0acd22803171971d31b3ed8127f598d08bc11024a0626cb29710747df9a80d7 docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.txt
+  c5bfaaa92733c3a888328b586613f646e9db62bf5b6be3623e3fe0d776ca9cc9 scripts/workflow-gates/shell-forms.selftest.mjs
+  3bf37ba9022878af4c0f5104d05a9586c3720532cbed8b9f631f9a9c0cd7346e docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json
+  d151b82444c98d176c2799414048729c9be892b307b551e80df4d430e64763e0 docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.txt
+  c7508d7bb60c0f36776458edfaaec15bf381c2f6ce80fd28d910aa10e972e0da scripts/workflow-gates/governance-contract.selftest.mjs
+git status of scripts and .claude: []

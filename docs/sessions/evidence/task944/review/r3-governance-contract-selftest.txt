@@ -1,0 +1,113 @@
+TAP version 13
+# warning: in the working copy of '.claude/rules/shared/workflow-ci.md', LF will be replaced by CRLF the next time Git touches it
+# Subtest: [GOV-935-VAL-ALLOW] A governance contract over policy paths with full case coverage validates
+ok 1 - [GOV-935-VAL-ALLOW] A governance contract over policy paths with full case coverage validates
+  ---
+  duration_ms: 22.2954
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-DENY-PRODUCT-PATH] A governance contract containing a product path is refused
+ok 2 - [GOV-935-VAL-DENY-PRODUCT-PATH] A governance contract containing a product path is refused
+  ---
+  duration_ms: 20.8245
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-DENY-COVERAGE] A governance contract without allow, deny, error, hook and ci coverage is refused
+ok 3 - [GOV-935-VAL-DENY-COVERAGE] A governance contract without allow, deny, error, hook and ci coverage is refused
+  ---
+  duration_ms: 22.1984
+  type: 'test'
+  ...
+# Subtest: governance contracts refuse Q0, product case shapes, foreign test files and missing governance rules
+ok 4 - governance contracts refuse Q0, product case shapes, foreign test files and missing governance rules
+  ---
+  duration_ms: 32.3903
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-RELEASE-DENY] A governance contract is not releasable without an independent reviewed Opus approval and current hashes
+ok 5 - [GOV-935-VAL-RELEASE-DENY] A governance contract is not releasable without an independent reviewed Opus approval and current hashes
+  ---
+  duration_ms: 106.4971
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-RELEASE-ALLOW] A reviewed governance contract with current hashes is releasable
+ok 6 - [GOV-935-VAL-RELEASE-ALLOW] A reviewed governance contract with current hashes is releasable
+  ---
+  duration_ms: 42.0932
+  type: 'test'
+  ...
+# Subtest: [GOV-935-REPORT-ERROR] The governance report fails on a failing, missing or unproven case
+ok 7 - [GOV-935-REPORT-ERROR] The governance report fails on a failing, missing or unproven case
+  ---
+  duration_ms: 132.67
+  type: 'test'
+  ...
+# Subtest: the governance report passes only on every mapped case and records current hashes and sensitivity
+ok 8 - the governance report passes only on every mapped case and records current hashes and sensitivity
+  ---
+  duration_ms: 131.7027
+  type: 'test'
+  ...
+# Subtest: [GOV-935-HOOK-SELF-APPROVE-DENY] The session that wrote a governance scope file cannot approve it
+ok 9 - [GOV-935-HOOK-SELF-APPROVE-DENY] The session that wrote a governance scope file cannot approve it
+  ---
+  duration_ms: 128.2776
+  type: 'test'
+  ...
+# Subtest: [GOV-935-HOOK-INDEPENDENT-ALLOW] An independent session with a reviewed contract and passing report may approve
+ok 10 - [GOV-935-HOOK-INDEPENDENT-ALLOW] An independent session with a reviewed contract and passing report may approve
+  ---
+  duration_ms: 72.4359
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-REBASE-ALLOW] A reviewed contract stale only through rule files inside a reviewed governance contract is accepted with a valid rulesRebase
+ok 11 - [GOV-935-VAL-REBASE-ALLOW] A reviewed contract stale only through rule files inside a reviewed governance contract is accepted with a valid rulesRebase
+  ---
+  duration_ms: 83.7864
+  type: 'test'
+  ...
+# Subtest: [GOV-935-VAL-REBASE-DENY] A rulesRebase never hides a non-rule change or an unapproved rule change
+ok 12 - [GOV-935-VAL-REBASE-DENY] A rulesRebase never hides a non-rule change or an unapproved rule change
+  ---
+  duration_ms: 680.0619
+  type: 'test'
+  ...
+# Subtest: [GOV-935-CI-REBASE-DENY] A rulesRebase whose by-contract is not in the same diff is refused
+ok 13 - [GOV-935-CI-REBASE-DENY] A rulesRebase whose by-contract is not in the same diff is refused
+  ---
+  duration_ms: 99.6122
+  type: 'test'
+  ...
+# Subtest: a retained rebase survives later diffs; a later rule change re-signed without a governance contract does not
+ok 14 - a retained rebase survives later diffs; a later rule change re-signed without a governance contract does not
+  ---
+  duration_ms: 73.6262
+  type: 'test'
+  ...
+# Subtest: [GOV-935-CI-DIFF-DENY] A changed executable policy file outside every governance contract scope fails the diff check
+ok 15 - [GOV-935-CI-DIFF-DENY] A changed executable policy file outside every governance contract scope fails the diff check
+  ---
+  duration_ms: 38.0748
+  type: 'test'
+  ...
+# Subtest: [GOV-935-CI-DIFF-ALLOW] A changed executable policy file inside a reviewed governance contract passes the release diff check
+ok 16 - [GOV-935-CI-DIFF-ALLOW] A changed executable policy file inside a reviewed governance contract passes the release diff check
+  ---
+  duration_ms: 27.4164
+  type: 'test'
+  ...
+# Subtest: the diff base reader returns base bytes and null for a file absent at the base
+ok 17 - the diff base reader returns base bytes and null for a file absent at the base
+  ---
+  duration_ms: 151.7268
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1933.7482

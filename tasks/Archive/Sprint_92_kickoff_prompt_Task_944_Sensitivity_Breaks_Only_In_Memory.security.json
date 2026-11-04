@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "reviewed",
   "implementation": {
     "role": "Opus"
   },
   "executionStatus": "ready",
   "kind": "governance",
   "qaProfile": "Q1",
-  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
-  "taskSha256": "bcaf51ca1faa4a2cb34ecd72c09a4e9d435fe12a25c15648a3f871006a858f5d",
+  "task": "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
+  "taskSha256": "73dd0fd47f6d71ff3cad8b53a843fab0fa8691edf83c0e0a50265c1b2aaa936f",
   "scope": [
     "scripts/workflow-gates/cli.mjs",
     "scripts/workflow-gates/contract.mjs",
@@ -46,6 +46,14 @@
   ],
   "report": "docs/sessions/evidence/task944/impl/governance-report.json",
   "sensitivity": "docs/sessions/evidence/task944/sensitivity/sensitivity.json",
+  "review": {
+    "role": "Opus",
+    "decision": "APPROVED WITH NOTES",
+    "evidence": "docs/sessions/evidence/task944/review/review-4.md",
+    "evidenceSha256": "b27ae3ef67754fd57046edd13e621f4ba9e9ca5839187de4ea1d96fc8ccfa95b",
+    "scopeSha256": "d014ba01545eea3886a45ec610505a144af6b688befbb6a4b270fda978c3e951",
+    "reportSha256": "d0756c61f50fb01c877a06dccde813a471a598979c362ba2b004c609e26a5c69"
+  },
   "cases": [
     {
       "id": "GOV-944-SENS-RUN-ALLOW",

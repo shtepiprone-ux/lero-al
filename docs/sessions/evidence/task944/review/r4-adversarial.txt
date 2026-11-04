@@ -1,0 +1,124 @@
+# Task 944 review 4: adversarial
+platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-04T09:40:31.906Z; ended 2026-11-04T09:40:32.057Z
+command: node docs/sessions/evidence/task944/review/r3-adversarial.mjs
+exit code: 0
+--- stdout
+## perl in place
+MISSED   (base missed) perl -0pi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -0777 -pi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+MISSED   (base missed) perl -0777pi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -pi.bak -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -lpi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -w -pi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -pe 's/a/b/' -i scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) perl -i -pe 's/a/b/' scripts/workflow-gates/fixture-scope.mjs
+MISSED   (base missed) perl -0pi -e 's/a/b/' scripts/workflow-gates/fixture-scope.mjs '
+## compound commands
+REPORTED (base reported) { rm scripts/workflow-gates/fixture-scope.mjs; }
+REPORTED (base reported) ( rm scripts/workflow-gates/fixture-scope.mjs )
+REPORTED (base reported) case a in a) rm scripts/workflow-gates/fixture-scope.mjs;; esac
+REPORTED (base reported) f() { rm scripts/workflow-gates/fixture-scope.mjs; }; f
+REPORTED (base reported) function f { rm scripts/workflow-gates/fixture-scope.mjs; }; f
+REPORTED (base reported) if ! rm scripts/workflow-gates/fixture-scope.mjs; then :; fi
+REPORTED (base missed) while rm scripts/workflow-gates/fixture-scope.mjs; do :; done
+REPORTED (base reported) true && rm scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base reported) false || rm scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base reported) rm scripts/workflow-gates/fixture-scope.mjs &
+REPORTED (base reported) echo $(rm scripts/workflow-gates/fixture-scope.mjs)
+MISSED   (base missed) echo `rm scripts/workflow-gates/fixture-scope.mjs`
+REPORTED (base missed) for f in a; do if true; then rm scripts/workflow-gates/fixture-scope.mjs; fi; done
+REPORTED (base missed) if true; then bash -lc 'rm scripts/workflow-gates/fixture-scope.mjs'; fi
+REPORTED (base reported) if true; then { rm scripts/workflow-gates/fixture-scope.mjs; }; fi
+REPORTED (base reported) if true; then rm scripts/workflow-gates/fixture-scope.mjs; fi; echo '
+REPORTED (base missed) if true; then cd scripts/workflow-gates; rm fixture-scope.mjs; fi; echo '
+REPORTED (base reported) for f in a; do (rm scripts/workflow-gates/fixture-scope.mjs); done
+## nested shells
+REPORTED (base missed) bash -lec 'rm scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base reported) bash --login -c 'rm scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base reported) bash -l -c 'rm scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base reported) sh -c "cd scripts/workflow-gates; rm fixture-scope.mjs"
+REPORTED (base missed) bash -lc 'cd scripts/workflow-gates; rm fixture-scope.mjs'
+REPORTED (base reported) zsh -c 'rm scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base reported) dash -c 'rm scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base missed) bash -lc "python -c \"open('scripts/workflow-gates/fixture-scope.mjs','w')\""
+REPORTED (base missed) bash -lc 'echo a > scripts/workflow-gates/fixture-scope.mjs'
+REPORTED (base missed) bash -lc 'cd scripts/workflow-gates && echo a > fixture-scope.mjs'
+## env and wrappers
+REPORTED (base reported) env FOO=1 rm scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base reported) env -i rm scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) env -C scripts/workflow-gates -- rm fixture-scope.mjs
+MISSED   (base missed) env -C scripts/workflow-gates bash -c 'rm fixture-scope.mjs'
+MISSED   (base missed) env --chdir=scripts/workflow-gates bash -lc 'rm fixture-scope.mjs'
+MISSED   (base missed) env -C scripts/workflow-gates python -c "open('fixture-scope.mjs','w')"
+MISSED   (base missed) env -C scripts/workflow-gates node -e "require('fs').rmSync('fixture-scope.mjs')"
+REPORTED (base missed) env -Cscripts/workflow-gates rm fixture-scope.mjs
+REPORTED (base missed) npx --yes rimraf scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) npx shx mv docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) npx shx sed -i s/a/b/ scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) shx rm scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) node_modules/.bin/rimraf scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) env -C scripts/workflow-gates tee fixture-scope.mjs
+MISSED   (base missed) env -C scripts/workflow-gates cat a > fixture-scope.mjs
+## python and node APIs
+REPORTED (base missed) python -c "open('scripts/workflow-gates/fixture-scope.mjs','wb')"
+REPORTED (base missed) python -c "open('scripts/workflow-gates/fixture-scope.mjs', 'w+')"
+MISSED   (base missed) python -c "open(file='scripts/workflow-gates/fixture-scope.mjs', mode='w')"
+REPORTED (base missed) python -c 'open("scripts/workflow-gates/fixture-scope.mjs","w")'
+REPORTED (base missed) node -e "fs.openSync('scripts/workflow-gates/fixture-scope.mjs','a')"
+REPORTED (base missed) node -e "fs.open('scripts/workflow-gates/fixture-scope.mjs','w',()=>0)"
+REPORTED (base reported) python -c "from pathlib import Path; Path('scripts/workflow-gates/fixture-scope.mjs').write_text('a')"
+REPORTED (base missed) python -c "from pathlib import Path; Path('scripts/workflow-gates/fixture-scope.mjs').open('w')"
+REPORTED (base missed) python -c "from pathlib import Path; Path('scripts/workflow-gates/fixture-scope.mjs').unlink(missing_ok=True)"
+REPORTED (base missed) python -c "from pathlib import Path; Path('scripts/workflow-gates/fixture-scope.mjs').replace('docs/fixture-scope.mjs')"
+REPORTED (base reported) python -c "import os; os.truncate('scripts/workflow-gates/fixture-scope.mjs', 0)"
+REPORTED (base missed) python -c "import os; os.rmdir('scripts/workflow-gates')"
+MISSED   (base missed) python -c "import os; os.removedirs('scripts/workflow-gates')"
+## promises
+REPORTED (base reported) node -e "require('fs').promises.writeFile('scripts/workflow-gates/fixture-scope.mjs','a')"
+REPORTED (base reported) node -e "require('fs').promises.appendFile('scripts/workflow-gates/fixture-scope.mjs','a')"
+REPORTED (base reported) node -e "require('fs').promises.copyFile('docs/fixture-scope.mjs','scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base missed) node -e "require('fs').promises.open('scripts/workflow-gates/fixture-scope.mjs','w')"
+REPORTED (base missed) node -e "require('fs').promises.rmdir('scripts/workflow-gates')"
+REPORTED (base reported) node -e "(await import('node:fs/promises')).rm('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base reported) node -e "require('fs/promises').rm('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base reported) node -e "require('fs/promises').unlink('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base reported) node -e "require('node:fs/promises').rename('docs/fixture-scope.mjs','scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base reported) node -e "const fsp=require('fs/promises'); fsp.rm('scripts/workflow-gates/fixture-scope.mjs')"
+## .NET
+MISSED   (base missed) powershell -Command "[IO.File]::Open('scripts/workflow-gates/fixture-scope.mjs','Create')"
+REPORTED (base missed) powershell -Command "[IO.File]::CreateText('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base missed) powershell -Command "[IO.File]::AppendText('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base reported) powershell -Command "[IO.File]::WriteAllText('scripts/workflow-gates/fixture-scope.mjs','a')"
+REPORTED (base reported) powershell -Command "[IO.File]::Delete('scripts/workflow-gates/fixture-scope.mjs')"
+REPORTED (base missed) powershell -Command "[System.IO.Directory]::Delete('scripts/workflow-gates', $true)"
+## Windows and npm tools
+REPORTED (base missed) xcopy /Y docs/fixture-scope.mjs scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) xcopy docs\src scripts/workflow-gates /E
+REPORTED (base missed) xcopy docs/src scripts/workflow-gates/ /S /Y
+REPORTED (base missed) robocopy docs/src scripts/workflow-gates fixture-scope.mjs /MOV
+REPORTED (base missed) robocopy scripts/workflow-gates docs/out /MOVE
+REPORTED (base missed) robocopy scripts/workflow-gates docs/out /MOV
+REPORTED (base missed) robocopy docs/src scripts/workflow-gates *.mjs
+REPORTED (base missed) robocopy docs/src scripts/workflow-gates /PURGE
+MISSED   (base missed) npm exec rimraf scripts/workflow-gates/fixture-scope.mjs
+MISSED   (base missed) pnpm exec rimraf scripts/workflow-gates/fixture-scope.mjs
+MISSED   (base missed) yarn rimraf scripts/workflow-gates/fixture-scope.mjs
+MISSED   (base missed) pnpm dlx rimraf scripts/workflow-gates/fixture-scope.mjs
+REPORTED (base missed) bunx rimraf scripts/workflow-gates/fixture-scope.mjs
+## read controls (X must not be reported)
+quiet (base quiet) if [ -f scripts/workflow-gates/fixture-scope.mjs ]; then cat scripts/workflow-gates/fixture-scope.mjs; fi
+quiet (base quiet) perl -0ne 'print' scripts/workflow-gates/fixture-scope.mjs
+quiet (base quiet) perl -0777 -ne 'print' scripts/workflow-gates/fixture-scope.mjs
+quiet (base quiet) perl -lne 'print' scripts/workflow-gates/fixture-scope.mjs
+quiet (base quiet) bash -lc 'grep -n a scripts/workflow-gates/fixture-scope.mjs'
+quiet (base quiet) env -C scripts/workflow-gates cat fixture-scope.mjs
+quiet (base quiet) env -C scripts/workflow-gates bash -c 'cat fixture-scope.mjs'
+quiet (base quiet) node -e "require('fs').promises.access('scripts/workflow-gates/fixture-scope.mjs')"
+quiet (base quiet) python -c "open('scripts/workflow-gates/fixture-scope.mjs', 'rb')"
+quiet (base quiet) git diff --stat -- scripts/workflow-gates/fixture-scope.mjs
+quiet (base quiet) node --test scripts/workflow-gates/x.selftest.mjs
+quiet (base quiet) robocopy scripts/workflow-gates docs/out fixture-scope.mjs /L
+94 forms; 46 added by 944; 16 missed by the final hook
+
+--- stderr
+

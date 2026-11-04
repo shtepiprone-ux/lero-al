@@ -4,6 +4,10 @@ Sprint 92. P1. QA profile **Q1** (four UI files change in source with no rendere
 files change; `docs/qa-profiles.md`). Kickoff by Opus, 2026-11-01. Published on PR #12 (D7) as the product task for the red
 Governance Check job (D8). The fifth failed gate of that job, the listing-visibility allowlist, is a policy file and belongs to the
 governance Task 942.
+**Revision 3, 2026-11-04**, by the Task 944 review 4 session (f2fea951), under D14: commit 94d20430b tracked a third file that
+`check:mojibake` lists, a transcript of that gate kept as Task 944 review evidence (C38, C39), which CI scans and this route could
+not clear, so AC1 was unreachable (C41). R2 now allowlists both transcripts (C40); R3 and every other route step are unchanged.
+Sections 2 and 4, R2, AC1 and C38–C41 are amended; D14 is added.
 
 ## 1. Mode, task type and rule bundle
 
@@ -21,7 +25,8 @@ On PR #12 the Governance Check job passes 46 of 51 static gates (C32). Four of t
 - file integrity: a tracked pathspec file with NUL separators (C1, C2), written by a Task 923 manifest script for `git add` (C3);
 - mojibake: 395 findings in two evidence files (C4, C5, C6) — a verbatim transcript of an earlier mojibake run (C8), which the gate's
   own remediation sends to the allowlist (C7), and a Task 927 test listing whose only non-ASCII text is CP1252 mojibake of two
-  characters, repairable exactly (C9, C10);
+  characters, repairable exactly (C9, C10); a third tracked file, a transcript of the same gate committed after this design
+  (C38, C39), takes the allowlist route of the first (C7, C40);
 - enrolled Tailwind: the gallery's mobile frame gained the utility `overflow-clip` in Task 923 R33 (C11, C13, C14) and the
   `overflow-hidden` count it replaced is now stale (C12); the baseline is remove-only (C15);
 - design tokens: two inline markers use " - " instead of the em dash the parser splits on (C16, C17, C18, C19), and one icon size is
@@ -84,16 +89,21 @@ stale (C37). The UI receipts of §6 were run through the real write hook (C29).
 | C35 | FACT | Apart from the 923 D8/D9 scope, the change set is bound only through the planted-break file (executed probe). | source: `docs/sessions/evidence/task937/design/p10-change-set-bindings.txt:8-19`; observed: `binds scope src/modules/cabinet/actions/index.ts` |
 | C36 | FACT | Task 931 revision 3 adds a guard test against hand-written query doubles in every unit test file. | source: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md:163-163`; observed: `queryDoubles.guard.test.ts` |
 | C37 | FACT | Task 943 R11 adds a release check for reviewed contracts outside the diff. | source: `tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md:405-405`; observed: `reviewedFreshnessErrors(root, selected, { files, readBase })` |
+| C38 | FACT | A third tracked file is listed by the mojibake gate: the Task 944 review 3 integrity transcript (executed probe, revision 3). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:5-5`; observed: `tracked: docs/sessions/evidence/task944/review/r3-q1-integrity.txt` |
+| C39 | FACT | That file is the transcript of a run of the mojibake gate. | source: `docs/sessions/evidence/task944/review/r3-q1-integrity.txt:3-3`; observed: `node scripts/check-mojibake.mjs` |
+| C40 | FACT | With both transcripts allowlisted and the R3 file cleared, in the memory of the gate process, it lists no tracked file (executed probe). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:9-9`; observed: `tracked at HEAD 0` |
+| C41 | FACT | With only the first transcript allowlisted the gate still lists one tracked file (executed probe). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:13-13`; observed: `tracked at HEAD 1` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D8 | OWNER DECISION | Each red CI check gets its own task. | owner: 2026-11-01; decision: `A separate task for each check (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract for its non-test scope files (Task 940). | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
+| D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it.` |
 
 ## Mobile adaptation record
 - Scope: none
 
 ## 4. Scope and out of scope
 
-The final diff changes exactly: deletes `docs/sessions/evidence/task923/review-67/rv67-46-squash-paths.nul`; adds one path to
+The final diff changes exactly: deletes `docs/sessions/evidence/task923/review-67/rv67-46-squash-paths.nul`; adds two paths to
 `scripts/mojibake-allowlist.json`; repairs `docs/sessions/evidence/task927/base/unit-base-failures.txt`; edits
 `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx`, `scripts/enrolled-tailwind-baseline.json` (through the
 update command only), `src/components/shared/Map.module.css`, `src/design-system/mantine/input-chrome.css`,
@@ -115,7 +125,7 @@ other red jobs (Tasks 931, 938, 939).
 ## 5. Current and required behaviour
 
 Preserved: every rendered value (the frame clips, the icon is 20px, the map control line height and the link-editor section offset
-are unchanged); the text of both evidence files apart from the two repaired sequences; the history the `.txt` twin of the deleted
+are unchanged); the text of the evidence files of C5, C6 and C38 apart from the two repaired sequences; the history the `.txt` twin of the deleted
 pathspec keeps. Required: `check:file-integrity:all`, `check:mojibake`, `check:enrolled-tailwind` and `check:design-tokens:strict`
 report nothing for tracked files.
 
@@ -124,7 +134,7 @@ report nothing for tracked files.
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
 | R1 [C1; C2; C3] | **NUL pathspec.** Delete the tracked `rv67-46-squash-paths.nul`; its `.txt` twin stays as the record of the same list. | P1 | AC1 |
-| R2 [C4; C5; C7; C8] | **Mojibake transcript.** Add `docs/sessions/evidence/task923/r33-13a-mojibake.txt` to `scripts/mojibake-allowlist.json` (one exact path, no glob). | P1 | AC1 |
+| R2 [C4; C5; C7; C8; C38; C39; C40; C41; D14] | **Mojibake transcripts.** Add `docs/sessions/evidence/task923/r33-13a-mojibake.txt` and `docs/sessions/evidence/task944/review/r3-q1-integrity.txt` to `scripts/mojibake-allowlist.json` (two exact paths, no glob). | P1 | AC1 |
 | R3 [C6; C9; C10] | **Task 927 listing.** Replace every `U+00E2 U+20AC U+201D` with `—` and every `U+00E2 U+2020 U+2019` with `→`, nothing else (BOM and ASCII unchanged); the before/after hashes and census equal those of `p03-mojibake-repair-probe.txt`. | P1 | AC1 |
 | R4 [C11; C12; C13; C14; C15; C26] | **Gallery frame.** Line 98 becomes `className="h-full w-full" style={{ overflow: 'clip' }}` and the R33 comment above it names the style object instead of the utility; then `npm run check:enrolled-tailwind:update-baseline` lowers `overflow-hidden` to 1 and records nothing else. | P1 | AC1, AC5 |
 | R5 [C16; C17; C19; C23] | **Map marker.** The marker separator of `Map.module.css:37` becomes the em dash. | P1 | AC1 |
@@ -138,7 +148,7 @@ report nothing for tracked files.
 
 ## Acceptance criteria
 
-- **AC1 [R1–R7].** `npm run check:file-integrity:all` lists no tracked file; `npm run check:mojibake` lists neither file of C5/C6 and no other tracked file; `npm run check:enrolled-tailwind` and `npm run check:enrolled-tailwind:verify` exit 0; `npm run check:design-tokens:strict` exits 0. Each output is saved under `docs/sessions/evidence/task937/impl/`, with untracked offenders of other sessions named as such.
+- **AC1 [R1–R7].** `npm run check:file-integrity:all` lists no tracked file; `npm run check:mojibake` lists none of the files of C5, C6 and C38 and no other tracked file; `npm run check:enrolled-tailwind` and `npm run check:enrolled-tailwind:verify` exit 0; `npm run check:design-tokens:strict` exits 0. Each output is saved under `docs/sessions/evidence/task937/impl/`, with untracked offenders of other sessions named as such.
 - **AC2 [R8; R9].** SEC-937-FE-PENDING-ALLOW, SEC-937-FE-RESEND-DENY, SEC-937-FE-ERROR, SEC-937-SRV-RESEND-ALLOW, SEC-937-SRV-RESEND-DENY and SEC-937-SRV-RESEND-ERROR pass; `npx vitest run` on the two new files reports 0 failed and 0 skipped.
 - **AC3 [R10].** Three planted-break transcripts under `docs/sessions/evidence/task937/impl/sensitivity/`, each failing with an assertion and passing after restore.
 - **AC4 [R11].** The R11 probe transcript shows `clip`/`clip`, no `overflow-clip` class, and a 20×20 icon at the named widths.
@@ -197,4 +207,4 @@ gate outputs before and after; the R3 hashes; the R11 transcript; one of `IMPLEM
 | `role-boundaries.md` | Sonnet implements product and data files; the policy gate change is Task 942 (Opus); Opus reviews and writes the 923 rebase. |
 | `git-publication.md` | Commit on PR #12's branch (D7); push only after approval; merge only after green checks. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37; owner decisions: D7, D8, D9; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41; owner decisions: D7, D8, D9, D14; blocked claims: NONE.

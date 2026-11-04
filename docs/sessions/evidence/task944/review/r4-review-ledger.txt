@@ -1,0 +1,14 @@
+# Task 944 review 4: review-ledger
+platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-04T10:55:14.379Z; ended 2026-11-04T10:55:14.735Z
+command: npm run check:review-ledger -- --file docs/reviews/2026-11-04-task944-sensitivity-breaks-only-in-memory.review-ledger.json
+exit code: 0
+--- stdout
+
+> lero-al@0.1.0 check:review-ledger
+> node scripts/check-review-ledger.mjs --file docs/reviews/2026-11-04-task944-sensitivity-breaks-only-in-memory.review-ledger.json
+
+✅ docs/reviews/2026-11-04-task944-sensitivity-breaks-only-in-memory.review-ledger.json — valid fail-closed review ledger
+✅ check:review-ledger PASSED — 1 ledger file(s) validated
+
+--- stderr
+

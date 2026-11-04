@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "397df2e3ae6970de8947101124d231764304116b52b1375a0699292a12633a5a",
+  "taskSha256": "a811c0f96054d40c239b08017bb9350c53a0111d213a6982d75fb370717b3e47",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -107,7 +107,7 @@
       "invariant": "A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written",
       "actor": "Implementing session or Sonnet executor",
       "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
-      "input": "owner D20: the forms list of p07-shell-forms-run.mjs with X a fixture governance scope file and D its folder, each also as an executor event on scripts/check-example.mjs; the read controls of the CONTROLS list of that file",
+      "input": "owner D20: the forms lists of p07-shell-forms-run.mjs and p10-more-forms-run.mjs with X a fixture governance scope file and D its folder, each also as an executor event on scripts/check-example.mjs; the read controls of the CONTROLS list of each file",
       "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls",
       "layer": "hook",
       "outcome": "deny",

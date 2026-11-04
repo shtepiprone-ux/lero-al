@@ -1,9 +1,9 @@
 # Sensitivity run of GOV-942-HOOK-SHELL-FORMS-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
-node v22.22.3; platform win32; UTC 2026-11-04T13:02:07.032Z
+node v22.22.3; platform win32; UTC 2026-11-04T15:07:13.111Z
 contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json
 break spec: docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.break.json sha256 024925958ff625bbf618305f2723f56343883a2d642e8013a1bda8d04d86c848
 testName: [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
-target: scripts/workflow-gates/security-hook.mjs digest before 0cb7840f2c9c097041e7e34286d4eb7be24929ddf31dac2f72183f93afddd7ba after 0cb7840f2c9c097041e7e34286d4eb7be24929ddf31dac2f72183f93afddd7ba
+target: scripts/workflow-gates/security-hook.mjs digest before 22354acf30fd72082f7c2899b34b8c12256b55275f37a397e6175eeaca73044b after 22354acf30fd72082f7c2899b34b8c12256b55275f37a397e6175eeaca73044b
 test file: scripts/workflow-gates/shell-forms-residual.selftest.mjs digest before 3e8b26b8f40e0d52851450bba9e939a7ff9686d09d624686a98b9d3bdd8457ba after 3e8b26b8f40e0d52851450bba9e939a7ff9686d09d624686a98b9d3bdd8457ba
 
 ## baseline
@@ -14,7 +14,7 @@ TAP version 13
 # Subtest: [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
 ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
   ---
-  duration_ms: 112.5959
+  duration_ms: 136.0152
   type: 'test'
   ...
 1..1
@@ -25,7 +25,7 @@ ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks,
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 183.4116
+# duration_ms 221.303
 --- end TAP
 
 ## mutant
@@ -36,7 +36,7 @@ TAP version 13
 # Subtest: [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
 not ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
   ---
-  duration_ms: 20.664
+  duration_ms: 25.0265
   type: 'test'
   location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-forms-residual.selftest.mjs:92:1'
   failureType: 'testCodeFailure'
@@ -63,7 +63,7 @@ not ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backti
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 118.7966
+# duration_ms 143.5152
 --- end TAP
 
 ## restored
@@ -74,7 +74,7 @@ TAP version 13
 # Subtest: [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
 ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written
   ---
-  duration_ms: 110.6121
+  duration_ms: 139.2311
   type: 'test'
   ...
 1..1
@@ -85,5 +85,5 @@ ok 1 - [GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks,
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 178.4098
+# duration_ms 217.7487
 --- end TAP

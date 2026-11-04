@@ -2,8 +2,8 @@
   "version": 1,
   "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "contractSha256": "d188ca47098f2ad9b6717212ee3dca82c31ded3376f7558107e7401bd4165b29",
-  "scopeSha256": "0bc053a4a7d3db12dfaa8bbfb3e37999d6360f9a737105ce437b2de6622c9fc6",
+  "contractSha256": "2cbeef8e7f397bc820495535a0af016ee961978ab0f3186973fbddfe4451647e",
+  "scopeSha256": "2e2bc067ceaf44fc1343cd724651b074446eff869d1903fdb59a35e3a530099c",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [
@@ -60,7 +60,26 @@
         "break": "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.break.json",
         "breakSha256": "024925958ff625bbf618305f2723f56343883a2d642e8013a1bda8d04d86c848",
         "artifact": "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.txt",
-        "artifactSha256": "374b4dbd2a78e097f8d3f61bd62ab952cfd494a0eaa8169021950bd60c32bf96"
+        "artifactSha256": "a09bb609dba516941febbb45ed48df5702d1a71d28931a9f541a93b087793469"
+      }
+    },
+    {
+      "id": "GOV-942-HOOK-SHELL-CLASSES-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/shell-forms-classes.selftest.mjs",
+      "testName": "[GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written",
+      "sensitivity": {
+        "id": "GOV-942-HOOK-SHELL-CLASSES-DENY",
+        "testName": "[GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.break.json",
+        "breakSha256": "b0a7c9a17618c36f298bff3f56cfd6d4ee2a0c768dedc06fd4d5c38ce4842449",
+        "artifact": "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.txt",
+        "artifactSha256": "da3cc05fa8b47f13d4c6b634af6678e8180c521f39d70e492742d780287ec8c2"
       }
     }
   ],

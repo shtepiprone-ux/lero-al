@@ -1,0 +1,12 @@
+# check-workflow exit 0
+Workflow structure and hook registration passed. Remote branch/environment protections require separate verification.
+# eslint exit 0
+# publication.mjs --base HEAD exit 0
+Publication candidate: 92 explicit files, 0 dependency errors.
+# cli.mjs verify --contract 944 exit 0
+# npm run check:kickoff-evidence exit 0
+
+> lero-al@0.1.0 check:kickoff-evidence
+> node scripts/check-kickoff-evidence.mjs
+
+check:kickoff-evidence PASS — 0 changed active kickoff(s) verified.

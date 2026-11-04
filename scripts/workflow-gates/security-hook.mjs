@@ -460,22 +460,41 @@ function otherWriterTargets(program, args, { folder, paths, withFiles, joined, l
 // (R15) `npx`, `pnpx` and `bunx`.
 // Task 944 R8 (a) (owner D18): the shell reserved words below (case-sensitive, no options) are skipped like `sudo`, `shx` is
 // skipped like `npx`, and the `env` long options `--chdir`, `--unset` and `--split-string` take a value like `-C`, `-u`, `-S`.
-const WRAPPER_VALUES = { sudo: /^-[ugCDhpRrTt]$/, env: /^(?:-[uCS]|--chdir|--unset|--split-string)$/, nice: /^-n$/, ionice: /^-[cnp]$/, timeout: /^-[sk]$/,
-  stdbuf: /^-[ioe]$/, doas: /^-[uC]$/, npx: /^-p$/, pnpx: /^-p$/, bunx: /^-p$/ };
+// Task 942 R7: a cluster of `i`, `0` and `v` may end in a value option of `env`. R8: `--package` takes a value like `-p`.
+const WRAPPER_VALUES = { sudo: /^-[ugCDhpRrTt]$/, env: /^(?:-[i0v]*[uCS]|--chdir|--unset|--split-string)$/, nice: /^-n$/, ionice: /^-[cnp]$/, timeout: /^-[sk]$/,
+  stdbuf: /^-[ioe]$/, doas: /^-[uC]$/, npx: /^(?:-p|--package)$/, pnpx: /^(?:-p|--package)$/, bunx: /^(?:-p|--package)$/ };
 const SHELL_KEYWORD = /^(?:if|then|else|elif|do|while|until|!)$/;
 // Task 942 R4 (d): the package-manager runners, skipped like `npx` with their options.
 const PACKAGE_RUNNERS = new Map([['npm', /^(?:exec|x)$/i], ['pnpm', /^(?:exec|dlx)$/i], ['yarn', /^(?:exec|dlx)$/i], ['bun', /^x$/i]]);
+const WRAPPERS = new Set(['sudo', 'env', 'command', 'nohup', 'time', 'exec', 'nice', 'ionice', 'timeout', 'stdbuf', 'builtin', 'doas', 'npx', 'pnpx', 'bunx', 'shx']);
+// Task 942 R7: a program, a wrapper or `env` is named without its folder and `.exe`.
+const commandName = word => basename(word.replaceAll('\\', '/')).toLowerCase().replace(/\.exe$/, '');
+// Task 942 R8: one reading of a package manager's command line. Its own options before the subcommand are skipped, then a runner
+// of R4 (d) applies; `<manager> run` before `rimraf` or `shx` runs that program, and `pnpm`, `yarn` and `bun` directly before them
+// do too, never before another word and never for `npm`. Returns the index the program search goes on from, or null.
+const MANAGER_VALUE = /^(?:--prefix|-C|--dir|--cwd|-w|--workspace|--filter|-F)$/;
+const DIRECT_TOOL = /^(?:rimraf|shx)$/i;
+function managerStep(texts, index) {
+  const manager = commandName(texts[index]);
+  const runners = PACKAGE_RUNNERS.get(manager);
+  if (!runners) return null;
+  let at = index + 1;
+  while (texts[at]?.startsWith('-')) at += MANAGER_VALUE.test(texts[at]) ? 2 : 1;
+  const subcommand = texts[at] || '';
+  if (runners.test(subcommand)) return { next: at + 1, runner: true };
+  if (/^run$/i.test(subcommand) && DIRECT_TOOL.test(texts[at + 1] || '')) return { next: at + 1 };
+  return manager !== 'npm' && DIRECT_TOOL.test(subcommand) ? { next: at } : null;
+}
 function programIndex(texts) {
   let index = 0, wrapper = null;
   while (index < texts.length) {
     const word = texts[index];
     if (SHELL_KEYWORD.test(word)) { index++; continue; }
-    const next = texts[index + 1] || '';
-    if (PACKAGE_RUNNERS.get(word.toLowerCase())?.test(next)) { wrapper = 'npx'; index += 2; continue; }
-    // `yarn rimraf` and `yarn shx` run the program of that name; every other word after `yarn` is its own subcommand.
-    if (/^yarn$/i.test(word) && /^(?:rimraf|shx)$/i.test(next)) { index++; continue; }
-    if (/^(?:sudo|env|command|nohup|time|exec|nice|ionice|timeout|stdbuf|builtin|doas|npx|pnpx|bunx|shx)$/i.test(word)) {
-      wrapper = word.toLowerCase(); index++;
+    const step = managerStep(texts, index);
+    if (step) { if (step.runner) wrapper = 'npx'; index = step.next; continue; }
+    const name = commandName(word);
+    if (WRAPPERS.has(name)) {
+      wrapper = name; index++;
       // R13 (a): `timeout` takes its options and then a duration before the program.
       if (wrapper === 'timeout') { while (texts[index]?.startsWith('-')) index += WRAPPER_VALUES.timeout.test(texts[index]) ? 2 : 1; index++; }
       continue;
@@ -490,10 +509,13 @@ function programIndex(texts) {
 function envFolder(texts, start) {
   const index = programIndex(texts);
   let folder = start;
-  const envAt = texts.slice(0, index).findIndex(word => /^env$/i.test(word));
-  if (envAt !== -1) for (let i = envAt + 1; i < index; i++) {
+  const envAt = texts.slice(0, index).findIndex(word => commandName(word) === 'env');
+  // `programIndex` runs past the last word when an option wants a value that is not there (`env -C`).
+  if (envAt !== -1) for (let i = envAt + 1; i < Math.min(index, texts.length); i++) {
     const word = texts[i];
-    const value = word === '-C' || word === '--chdir' ? texts[i + 1] : word.startsWith('--chdir=') ? word.slice(8) : /^-C./.test(word) ? word.slice(2) : undefined;
+    // Task 942 R7: `-C` also ends a cluster of `i`, `0` and `v`, attached (`-iCd`) or with the next word (`-iC d`).
+    const cluster = /^-[i0v]*C(.*)$/s.exec(word);
+    const value = cluster ? cluster[1] || texts[i + 1] : word === '--chdir' ? texts[i + 1] : word.startsWith('--chdir=') ? word.slice(8) : undefined;
     if (movedFolder(value)) folder = resolve(folder, spelling(value));
   }
   return folder;
@@ -504,7 +526,7 @@ function programTargets(root, folder, texts, all) {
   const index = programIndex(texts);
   if (index >= texts.length) return [];
   folder = envFolder(texts, folder);
-  const program = basename(texts[index].replaceAll('\\', '/')).toLowerCase().replace(/\.exe$/, '');
+  const program = commandName(texts[index]);
   const args = texts.slice(index + 1);
   if (!WRITE_PROGRAMS.has(program) && !OTHER_WRITERS.has(program)) return [];
   // R12 (b): a target with `*`, `?` or `[` also adds every path the glob matches in its folder.
@@ -643,7 +665,7 @@ function programTargets(root, folder, texts, all) {
       ...names.flatMap(name => paths(joined(dirname(source.replaceAll('\\', '/')), name)))]);
   }
   // `xargs` followed by a program above, or `find` with an action that deletes or runs a program.
-  const run = program === 'xargs' ? args.some(arg => WRITE_PROGRAMS.has(basename(arg.replaceAll('\\', '/')).toLowerCase().replace(/\.exe$/, '')))
+  const run = program === 'xargs' ? args.some(arg => WRITE_PROGRAMS.has(commandName(arg)))
     : args.some(arg => /^-(?:delete|exec|execdir|ok|okdir)$/i.test(arg));
   if (!run) return [];
   const named = program === 'xargs' ? all.flat() : texts.slice(index + 1);
@@ -657,30 +679,89 @@ const API_QUALIFIER = String.raw`(?:\bfs\.(?:promises\.)?|\bfsp\.|\bos\.|\bshuti
 const API_ONE = new RegExp(String.raw`(?:\b(?:writeFileSync|writeFile|appendFileSync|appendFile|createWriteStream|truncateSync|rmSync|unlinkSync|WriteAllText|WriteAllLines|WriteAllBytes|AppendAllText|AppendAllLines)|${API_QUALIFIER}(?:truncate|rm|unlink|Delete|remove))\s*\(\s*r?['"]([^'"]+)['"]`, 'gi');
 const API_TWO = new RegExp(String.raw`(?:\b(?:copyFileSync|copyFile|cpSync|renameSync)|${API_QUALIFIER}(?:cp|rename|Copy|Move|Replace|copyfile|copy|move|replace))\s*\(\s*r?['"]([^'"]+)['"]\s*,\s*r?['"]([^'"]+)['"]`, 'gi');
 const API_PATHLIB = /Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*write_(?:text|bytes)/g;
-// Task 944 R8 (c) (owner D18): `open(`/`openSync(` with a quoted write mode or flags (`w`, `a`, `x` or `+`, also as `mode=` or
-// `flags=`; never a read mode or no mode), the .NET create calls, the pathlib calls that delete, create, open for writing or
-// rename (both paths of a rename or replace), and the directory deletes, whose literal path also adds every file under it.
-// Task 942 R4 (e) and (f): `open(`/`openSync(` also take `file=`, and a `mode=` or `flags=` after other keyword arguments, like
-// `Path(…).open(`; a directory delete also takes `path=`, and `os.removedirs` is one; `]::Open(` writes with a quoted or
-// `FileMode` mode that creates, appends or truncates, never with `Open` or `OpenRead`.
-const API_OPEN = /\bopen(?:Sync)?\s*\(\s*(?:file\s*=\s*)?r?(['"])([^'"]+)\1\s*,\s*(?:(?:mode|flags)\s*=\s*)?r?['"]([^'"]*)['"]/g;
-const API_OPEN_KEYWORD = /\bopen(?:Sync)?\s*\(\s*(?:file\s*=\s*)?r?(['"])([^'"]+)\1(?:\s*,\s*\w+\s*=\s*(?:r?['"][^'"]*['"]|[-\w.]+))+\s*,\s*(?:mode|flags)\s*=\s*r?['"]([^'"]*)['"]/g;
+// Task 944 R8 (c) (owner D18): the .NET create calls, the pathlib calls that delete, create or rename (both paths of a rename or
+// replace), and the directory deletes, whose literal path also adds every file under it. Task 942 R4 (e) and (f), R6 (d): a
+// directory delete also takes `path=` or `name=`, and `os.removedirs` is one.
 const API_CREATE = /\]::(?:Create|OpenWrite|CreateText|AppendText)\s*\(\s*['"]([^'"]+)['"]/gi;
-const API_NET_OPEN = /\]::Open\s*\(\s*['"]([^'"]+)['"]\s*,\s*(?:['"]|\[[\w.]*FileMode\]::)(?:CreateNew|Create|Append|Truncate|OpenOrCreate)\b/gi;
-const API_PATHLIB_CHANGE = /Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*(?:unlink\s*\(|touch\s*\(|open\s*\(\s*(?:\w+\s*=\s*(?:r?['"][^'"]*['"]|[-\w.]+)\s*,\s*)*(?:mode\s*=\s*)?r?['"][^'"]*[wax+][^'"]*['"]|(rename|replace)\s*\(\s*r?['"]([^'"]+)['"])/g;
-const API_DIRECTORY = new RegExp(String.raw`(?:\b(?:rmSync|rmdirSync)|${API_QUALIFIER}(?:rm|rmdir|rmtree|removedirs|Delete))\s*\(\s*(?:path\s*=\s*)?r?['"]([^'"]+)['"]`, 'gi');
+const API_PATHLIB_CHANGE = /Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*(?:unlink\s*\(|touch\s*\(|(rename|replace)\s*\(\s*r?['"]([^'"]+)['"])/g;
+const API_DIRECTORY = new RegExp(String.raw`(?:\b(?:rmSync|rmdirSync)|${API_QUALIFIER}(?:rm|rmdir|rmtree|removedirs|Delete))\s*\(\s*(?:(?:path|name)\s*=\s*)?r?['"]([^'"]+)['"]`, 'gi');
+// Task 942 R6: one reader of a call's arguments, split at its top-level commas with quotes and brackets respected. A literal
+// `**{'mode': …}` reads as keywords. The scan is bounded because a hook has 15 s; a call the bound cuts is `cut`, and a cut open
+// call counts as a write, because the expressions it replaced had no bound and every target they reported stays reported.
+const CALL_SCAN = 4096;
+function callArguments(text, start) {
+  const positional = [], keywords = [];
+  const put = raw => {
+    const argument = raw.trim();
+    if (argument.startsWith('**')) {
+      for (const item of argument.matchAll(/['"](\w+)['"]\s*:\s*([^,}]+)/g)) keywords.push([item[1], item[2].trim()]);
+      return;
+    }
+    const keyword = /^(\w+)\s*=\s*(.*)$/s.exec(argument);
+    if (keyword) keywords.push([keyword[1], keyword[2]]);
+    else if (argument) positional.push(argument);
+  };
+  const end = Math.min(text.length, start + CALL_SCAN);
+  let depth = 0, quote = '', from = start, i = start;
+  for (; i < end; i++) {
+    const ch = text[i];
+    if (quote) { if (ch === quote) quote = ''; continue; }
+    if (ch === '"' || ch === "'") quote = ch;
+    else if ('([{'.includes(ch)) depth++;
+    else if (')]}'.includes(ch)) { if (depth === 0) break; depth--; }
+    else if (ch === ',' && depth === 0) { put(text.slice(from, i)); from = i + 1; }
+  }
+  put(text.slice(from, i));
+  return { positional, keywords, cut: i === end && end < text.length };
+}
+const keywordValues = (call, name) => call.keywords.filter(([key]) => key === name).map(([, value]) => value);
+const stringValue = argument => /^[a-z]*(['"])([^'"]+)\1$/i.exec(argument || '')?.[2];
+// R6 (a): a quoted mode with `w`, `a`, `x` or `+` or a writing `O_` constant writes. Only a flags position also takes a nonzero
+// number: the `mode` of `os.open` is the permission of a new file, so `mode=511` opens nothing for writing. A constant is read
+// before a quoted text, so the module of `require('…').constants.O_RDONLY` is no mode.
+const WRITE_FLAG = /\bO_(?:WRONLY|RDWR|CREAT|TRUNC|APPEND)\b/;
+const writesMode = argument => WRITE_FLAG.test(argument) || /[wax+]/.test(/^[a-z]*['"]([^'"]*)['"]/i.exec(argument)?.[1] ?? '');
+const writesFlags = argument => writesMode(argument) || Number(argument) > 0;
+const opensToWrite = (call, mode) => call.cut || keywordValues(call, 'mode').some(writesMode)
+  || [...(mode === undefined ? [] : [mode]), ...keywordValues(call, 'flags')].some(writesFlags);
+// R6 (c): `FileMode` is CreateNew 1, Create 2, Open 3, OpenOrCreate 4, Truncate 5, Append 6; `FileAccess` is Read 1, Write 2,
+// ReadWrite 3. The number may be quoted or cast.
+const NET_WRITE_MODE = /\b(?:CreateNew|Create|Append|Truncate|OpenOrCreate)\b/i;
+const NET_WRITE_ACCESS = /\b(?:ReadWrite|Write)\b/i;
+const enumNumber = argument => /^(?:\[[\w.]+\]\s*)?['"]?(\d+)['"]?$/.exec(argument)?.[1];
+const netOpenWrites = (mode = '', access = '') => NET_WRITE_MODE.test(mode) || NET_WRITE_ACCESS.test(access)
+  || ['1', '2', '4', '5', '6'].includes(enumNumber(mode)) || ['2', '3'].includes(enumNumber(access));
+// The paths of the open calls that write: `open(`/`openSync(` (R6 (a), the path is the first positional string or `file=`),
+// `Path('…').open(` (R6 (b)) and `]::Open(` (R6 (c)).
+function openTargets(text) {
+  const calls = pattern => [...text.matchAll(pattern)].map(match => ({ match, call: callArguments(text, match.index + match[0].length) }));
+  const found = [];
+  for (const { call } of calls(/\bopen(?:Sync)?\s*\(/g)) {
+    const [file] = keywordValues(call, 'file');
+    const path = stringValue(file ?? call.positional[0]);
+    if (path && opensToWrite(call, call.positional[file === undefined ? 1 : 0])) found.push(path);
+  }
+  for (const { match, call } of calls(/Path\(\s*r?['"]([^'"]+)['"]\s*\)\s*\.\s*open\s*\(/g)) {
+    if (opensToWrite(call, call.positional[0])) found.push(match[1]);
+  }
+  for (const { call } of calls(/\]::Open\s*\(/gi)) {
+    const [file, mode, access] = call.positional;
+    const path = stringValue(file);
+    if (path && (call.cut || netOpenWrites(mode, access))) found.push(path);
+  }
+  return found;
+}
 function apiArguments(text) {
   return [...[...text.matchAll(API_ONE)].map(m => m[1]), ...[...text.matchAll(API_TWO)].flatMap(m => [m[1], m[2]]),
-    ...[...text.matchAll(API_PATHLIB)].map(m => m[1]),
-    ...[...text.matchAll(API_OPEN)].filter(m => /[wax+]/.test(m[3])).map(m => m[2]),
-    ...[...text.matchAll(API_OPEN_KEYWORD)].filter(m => /[wax+]/.test(m[3])).map(m => m[2]),
-    ...[...text.matchAll(API_CREATE)].map(m => m[1]), ...[...text.matchAll(API_NET_OPEN)].map(m => m[1]),
+    ...[...text.matchAll(API_PATHLIB)].map(m => m[1]), ...openTargets(text), ...[...text.matchAll(API_CREATE)].map(m => m[1]),
     ...[...text.matchAll(API_PATHLIB_CHANGE)].flatMap(m => (m[2] ? [m[1], m[3]] : [m[1]])), ...apiDirectories(text)];
 }
 const apiDirectories = text => [...text.matchAll(API_DIRECTORY)].map(m => m[1]);
 // R12 (c): folder changes. Task 942 R4 (c): the last alternative is the folder of `env -C` or `--chdir`, after other `env` options.
+// R7: `env` by path, a cluster of `i`, `0` and `v` before `-C`, `-u` or `-S`, and `--unset` and `--split-string` with a value. An
+// option word cannot start an `env` word (`(?!-)`), so a run of `-/env` words is read once, not once per word.
 const FOLDER_PROGRAM = /^(?:cd|chdir|pushd|set-location|sl|push-location)$/i;
-const RAW_FOLDER_WORD = /(?:^|[\s;&|('"])(?:cd|chdir|pushd|set-location|sl|push-location)\s+(?:\/[dD]\s+)?(?:-(?:Path|LiteralPath)\s+)?['"]?([A-Za-z0-9_.~/\\:-]+)|\b(?:process|os)\.chdir\(\s*['"]([^'"]+)['"]|(?:^|[\s;&|('"])env(?:\s+-[uS]\s+\S+|\s+(?!-C|--chdir|-[uS]\s)-\S+)*\s+(?:-C\s*|--chdir[=\s]\s*)['"]?([A-Za-z0-9_.~/\\:-]+)/gi;
+const RAW_FOLDER_WORD = /(?:^|[\s;&|('"])(?:cd|chdir|pushd|set-location|sl|push-location)\s+(?:\/[dD]\s+)?(?:-(?:Path|LiteralPath)\s+)?['"]?([A-Za-z0-9_.~/\\:-]+)|\b(?:process|os)\.chdir\(\s*['"]([^'"]+)['"]|(?:^|[\s;&|('"])(?:(?!-)[^\s;&|('"]*[\\/])?env(?:\.exe)?(?:\s+(?:-[i0v]*[uS]|--unset|--split-string)\s+\S+|\s+(?!-[i0v]*C|--chdir|-[i0v]*[uS]\s|--unset\s|--split-string\s)-\S+)*\s+(?:-[i0v]*C\s*|--chdir[=\s]\s*)['"]?([A-Za-z0-9_.~/\\:-]+)/gi;
 const NESTED_SHELL = /(?:^|[\s;&|('"])(?:bash|sh|cmd(?:\.exe)?|powershell(?:\.exe)?|pwsh)\s+(?:\/d\s+)?(?:-c|\/c|-Command)\b|(?:^|[\s;&|('"])(?:node|python3?)\s+(?:-e|-c|--eval)\b/i;
 // R13 (e): words of the lenient reading that held a quoted character; their glob characters are literal.
 const LITERAL_WORDS = new Set();
@@ -691,8 +772,20 @@ const START_PROCESS = /^(?:start-process|saps)$/i;
 const SHELL_TEXT_FLAG = /^(?:-c|\/c|\/k|-com(?:m(?:a(?:n(?:d)?)?)?)?)$/i;
 // The command text an evaluator, nested shell or Start-Process runs, or null. Its program is the section 5 program word,
 // after the wrappers and runners of `programIndex` (`sudo bash -c …`, `timeout 5 sh -c …`).
+// Task 942 R8: the text after `-c`, `--call` or `--call=` of a runner is a command text; of a repeated `--call=` the last one runs.
+const RUNNER_NAMES = new Set(['npx', 'pnpx', 'bunx', ...PACKAGE_RUNNERS.keys()]);
+function runnerText(words, at) {
+  const before = words.slice(0, at);
+  if (!before.some(word => RUNNER_NAMES.has(commandName(word)))) return null;
+  const attached = before.findLast(word => word.startsWith('--call='))?.slice(7);
+  if (attached) return attached;
+  return /^(?:-c|--call)$/.test(before.at(-1) || '') && words[at] ? words[at] : null;
+}
 function evaluatedText(words) {
-  const texts = words.slice(programIndex(words));
+  const at = programIndex(words);
+  const runner = runnerText(words, at);
+  if (runner !== null) return runner;
+  const texts = words.slice(at);
   const program = basename((texts[0] || '').replaceAll('\\', '/'));
   if (EVALUATOR.test(program)) return texts.slice(1).filter(word => !/^-command$/i.test(word)).join(' ');
   if (START_PROCESS.test(program)) {
@@ -833,9 +926,12 @@ function uncachedShellWriteTargets(root, command, start, depth = 0) {
   const folders = [...starts];
   // R14 (d), sub-review F8: each raw folder is kept once.
   const seenFolders = new Set(starts);
-  for (const first of starts) {
+  // Task 942 R9: one list of raw readings for the folder words, the API forms and the child-process calls: the command text and
+  // that text with `\"` and the PowerShell `" read as a quote, so they match inside a double-quoted command text.
+  const readings = [...new Set([command, command.replace(/\\"|`"/g, '"')])];
+  for (const first of starts) for (const text of readings) {
     let current = first;
-    for (const match of command.matchAll(RAW_FOLDER_WORD)) {
+    for (const match of text.matchAll(RAW_FOLDER_WORD)) {
       const value = match[1] || match[2] || match[3];
       if (!movedFolder(value)) continue;
       const moved = resolve(current, spelling(value));
@@ -852,13 +948,12 @@ function uncachedShellWriteTargets(root, command, start, depth = 0) {
       if (match[3]) resolveIn(raw.replace(/^['"]+|['"]+$/g, ''), folders, false);
     }
   }
-  // Task 942 R4 (f) (iv): the API forms also read `\"` as a quote, so they match inside a double-quoted command text.
-  for (const text of new Set([command, command.replace(/\\"/g, '"')])) {
+  for (const text of readings) {
     for (const raw of apiArguments(text)) resolveIn(raw, folders, false);
     for (const raw of apiDirectories(text)) underIn(raw, folders);
   }
   // R13 (f): the joined string literals of a child-process call are a command, read in every raw folder.
-  if (depth < 3) for (const match of command.matchAll(CHILD_CALL)) {
+  if (depth < 3) for (const text of readings) for (const match of text.matchAll(CHILD_CALL)) {
     const inner = [...match[1].matchAll(/'([^']*)'|"([^"]*)"/g)].map(m => m[1] ?? m[2]).join(' ');
     if (inner.trim()) for (const folder of new Set(folders)) for (const path of uncachedShellWriteTargets(root, inner, folder, depth + 1)) add(path);
   }
@@ -888,11 +983,33 @@ function lenientTargets(root, command, starts) {
   LITERAL_WORDS.clear();
   // Task 944 R8 (e): a word is literal only when no occurrence of the same text in the command is unquoted.
   const unquotedWords = new Set();
+  const note = (word, quoted) => {
+    if (!quoted) { unquotedWords.add(word); LITERAL_WORDS.delete(word); } else if (!unquotedWords.has(word)) LITERAL_WORDS.add(word);
+    return word;
+  };
+  // Task 942 R9: the words of a nested command text. Blanks split them and a closed quote keeps its blanks and goes. Brackets stay
+  // in the word (`src/app/(group)/x.ts`), and a quote that never closes is an ordinary character (`it's`).
+  const nestedWords = nested => {
+    const words = [];
+    let word = '', quoted = false;
+    const end = () => { if (word) words.push(note(word, quoted)); word = ''; quoted = false; };
+    for (let i = 0; i < nested.length; i++) {
+      const ch = nested[i];
+      if (/\s/.test(ch)) { end(); continue; }
+      const close = ch === "'" || ch === '"' ? nested.indexOf(ch, i + 1) : -1;
+      if (close === -1) { word += ch; continue; }
+      word += nested.slice(i + 1, close);
+      quoted = true;
+      i = close;
+    }
+    end();
+    return words;
+  };
   try {
     const parts = text.split(/[;|&\r\n]+/).map(part => {
       const words = [];
       let word = '', quote = '', quoted = false;
-      const end = () => { if (word) { words.push(word); if (quoted) LITERAL_WORDS.add(word); else unquotedWords.add(word); } word = ''; quoted = false; };
+      const end = () => { if (word) words.push(note(word, quoted)); word = ''; quoted = false; };
       for (const ch of part) {
         if (quote) { if (ch === quote) quote = ''; else word += ch; continue; }
         if (ch === "'" || ch === '"') { quote = ch; quoted = true; continue; }
@@ -902,16 +1019,22 @@ function lenientTargets(root, command, starts) {
       end();
       return words;
     }).filter(words => words.length);
-    for (const word of unquotedWords) LITERAL_WORDS.delete(word);
     const fileLike = word => /[\\/.]/.test(word) && !/^\.\.?$/.test(word);
     let current = [...starts];
     for (let words of parts) {
       // Task 942 R4 (c): the folder of `env -C` also holds the command text of the nested shell or evaluator it runs.
       let here = current;
+      const collect = list => {
+        for (const folder of new Set([resolve(root), ...current, ...here])) {
+          for (const path of programTargets(root, folder, list, [list])) if (fileLike(path)) found.push(path);
+        }
+      };
       for (let inner = evaluatedText(words); inner !== null && words.length > 1; inner = evaluatedText(words)) {
         const outer = words;
+        // Task 942 R8: a runner's own words stay a reading, because a program can follow `--call=`.
+        collect(outer);
         here = here.map(folder => envFolder(outer, folder));
-        words = inner.split(/\s+/).filter(Boolean);
+        words = nestedWords(inner);
       }
       while (words.length > 1 && SCRIPT_BLOCK_CALLER.test(words[0])) {
         words = words.slice(1);
@@ -925,9 +1048,7 @@ function lenientTargets(root, command, starts) {
         if (movedFolder(value)) current = current.map(folder => resolve(folder, spelling(value)));
         continue;
       }
-      for (const folder of new Set([resolve(root), ...current, ...here])) {
-        for (const path of programTargets(root, folder, words, [words])) if (fileLike(path)) found.push(path);
-      }
+      collect(words);
     }
   } finally { LITERAL_WORDS.clear(); }
   return found;

@@ -1,0 +1,89 @@
+# Sensitivity run of GOV-942-HOOK-SHELL-CLASSES-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
+node v22.22.3; platform win32; UTC 2026-11-04T15:07:12.320Z
+contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json
+break spec: docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.break.json sha256 b0a7c9a17618c36f298bff3f56cfd6d4ee2a0c768dedc06fd4d5c38ce4842449
+testName: [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+target: scripts/workflow-gates/security-hook.mjs digest before 22354acf30fd72082f7c2899b34b8c12256b55275f37a397e6175eeaca73044b after 22354acf30fd72082f7c2899b34b8c12256b55275f37a397e6175eeaca73044b
+test file: scripts/workflow-gates/shell-forms-classes.selftest.mjs digest before 7c0b5849bebc3b4cd0e308c0669be130f6aaf5d1ad07d570fb3fd64760f02d9c after 7c0b5849bebc3b4cd0e308c0669be130f6aaf5d1ad07d570fb3fd64760f02d9c
+
+## baseline
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-HOOK-SHELL-CLASSES-DENY\] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written$ scripts/workflow-gates/shell-forms-classes.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+ok 1 - [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+  ---
+  duration_ms: 1426.2561
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1508.7642
+--- end TAP
+
+## mutant
+command: NODE_OPTIONS=--import=file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/sensitivity-register.mjs SENSITIVITY_BREAK=C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task942\sensitivity\GOV-942-HOOK-SHELL-CLASSES-DENY.break.json node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-HOOK-SHELL-CLASSES-DENY\] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written$ scripts/workflow-gates/shell-forms-classes.selftest.mjs
+exit code: 1
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+not ok 1 - [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+  ---
+  duration_ms: 31.6587
+  type: 'test'
+  location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\shell-forms-classes.selftest.mjs:122:1'
+  failureType: 'testCodeFailure'
+  error: 'X reported for: npm --prefix . exec rimraf scripts/workflow-gates/fixture-scope.mjs'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-forms-classes.selftest.mjs:126:12
+    withRoot (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-forms-classes.selftest.mjs:24:16)
+    TestContext.<anonymous> (file:///C:/Claude_Code_Projects/lero-al/scripts/workflow-gates/shell-forms-classes.selftest.mjs:122:226)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 145.7861
+--- end TAP
+
+## restored
+command: node --test --test-reporter=tap --test-name-pattern=^\[GOV-942-HOOK-SHELL-CLASSES-DENY\] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written$ scripts/workflow-gates/shell-forms-classes.selftest.mjs
+exit code: 0
+--- TAP
+TAP version 13
+# Subtest: [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+ok 1 - [GOV-942-HOOK-SHELL-CLASSES-DENY] A file changed through a call read by its arguments, an env option cluster, a package manager's own options, a runner's command text or an escaped quote is counted as written
+  ---
+  duration_ms: 1430.4714
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1510.6967
+--- end TAP

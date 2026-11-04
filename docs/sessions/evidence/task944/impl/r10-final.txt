@@ -1,0 +1,19 @@
+# R10 final run after the completion report, 2026-11-04T08:01:22Z, node v22.22.3, HEAD 89d880a718850ba0803a9d26b3cd10acbcab1a43
+## node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json
+PASS GOV-944-SENS-RUN-ALLOW (passed)
+PASS GOV-944-SENS-RUN-DENY (passed)
+PASS GOV-944-SENS-LIVE-ERROR (passed)
+PASS GOV-944-VAL-RECORD-ALLOW (passed)
+PASS GOV-944-VAL-RECORD-DENY (passed)
+PASS GOV-944-HOOK-SYNTAX-DENY (passed)
+PASS GOV-944-HOOK-SYNTAX-ALLOW (passed)
+PASS GOV-944-HOOK-CLOSURE-ERROR (passed)
+PASS GOV-944-HOOK-SHELL-FORMS-DENY (passed)
+Governance report: passed, 9 case(s), written to docs/sessions/evidence/task944/impl/governance-report.json.
+exit 0
+## node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json
+exit 0
+## sha256
+e80ee80b16d590f9317f41603ee2d278e7cbdad50965787154ecd3867d4a9737 *scripts/workflow-gates/governance-contract.selftest.mjs
+d82bca7894ac00c12ba8bde25992b09c0107fa3aa4f9d91a0efb8da7c50797d7 *docs/sessions/evidence/task944/impl/completion-report.md
+7d4284925992ae8086cc8ae4514c029d5f1788162be9f6f3bd8d8a25645c1ace *docs/sessions/evidence/task944/impl/governance-report.json

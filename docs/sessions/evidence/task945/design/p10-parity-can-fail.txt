@@ -1,0 +1,2 @@
+copy of the messages unchanged: exit 0; ✅ Parity PASSED — all 4 locale files have identical key sets (2651 keys).
+one top-level group removed from en.json: exit 1; Add or remove the listed keys in all four locale files.

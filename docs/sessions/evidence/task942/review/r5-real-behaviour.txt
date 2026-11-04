@@ -1,0 +1,44 @@
+
+## 1. which word npx runs after an option (npm 11, native Windows)
+npm 11.16.0
+tsc RAN     | npx --filter tsc | npm warn "tsc" is being parsed as a normal command line argument.
+tsc RAN     | npx -F tsc | npm warn "tsc" is being parsed as a normal command line argument.
+tsc RAN     | npx --dir tsc | npm warn "tsc" is being parsed as a normal command line argument.
+tsc RAN     | npx --foo tsc | npm warn "tsc" is being parsed as a normal command line argument.
+tsc did not | npx --cwd tsc | npm error No workspaces found:
+tsc did not | npx -w tsc | npm error No workspaces found:
+tsc did not | npx --workspace tsc | npm error No workspaces found:
+tsc did not | npx --prefix tsc | npm error code ENOENT
+tsc did not | npx -C tsc | npm error code ENOENT
+tsc did not | npx --package tsc | 'nonexistent-942.ts' is not recognized as an internal or external command,
+tsc RAN     | npx --silent tsc | 
+tsc RAN     | npx --yes tsc | 
+tsc RAN     | npx --loglevel silent tsc | 
+tsc did not | npx --loglevel tsc | npm warn invalid config loglevel="tsc" set in command line options
+tsc RAN     | npx --silent --loglevel warn tsc | 
+tsc RAN     | npx --loglevel silent --filter tsc | 
+tsc RAN     | npx --silent --filter tsc | 
+tsc RAN     | npx --prefix . tsc | 
+tsc did not | npx -w . tsc | npm error No workspaces found:
+
+## 2. a repeated text flag of npx: which text runs
+npx -c "where node" -c "where npm" =>  npm
+npx -c "where npm" --call="where node" => node
+npx --call="where npm" -c "where node" => node
+
+## 3. the runners this machine can run
+pnpm: absent
+yarn: absent
+bun: absent
+
+## 4. the F2 command through the real hook process on the hook of C87
+executor PreToolUse: 11712 characters, exit 0, 16709 ms against the 15000 ms limit of settings.json; stderr ""
+main session PreToolUse: 11712 characters, exit 0, 16659 ms against the 15000 ms limit of settings.json; stderr ""
+
+## 5. the p07 and p10 CONTROLS against the residual self-test, as source text
+p07-shell-forms-run: 20 controls, 0 not in the self-test as text
+p10-more-forms-run: 12 controls, 0 not in the self-test as text
+
+## 6. a path longer than the bound on the hook of C60 and on the hook of C87 (retained here; r1-probes.txt has the blanks forms)
+c60 true | c87 false | python -c "open('<2500 ./>scripts/workflow-gates/fixture-scope.mjs', 'w')"
+c60 true | c87 false | powershell -Command "[IO.File]::Open('<2500 ./>scripts/workflow-gates/fixture-scope.mjs', 'Create')"

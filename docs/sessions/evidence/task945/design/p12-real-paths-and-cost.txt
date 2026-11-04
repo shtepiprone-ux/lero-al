@@ -1,0 +1,8 @@
+a real path with brackets: src/app/[locale]/[slug]/page.tsx
+eslint, that path and another, quoted: exit 0; files linted 2; bracket path among them: true; error 
+file integrity, two files, quoted: exit 0; 🔍  check:file-integrity — 2 explicit file(s) (--files) / Checking 2 file(s) — NUL bytes · BOM · JSON parse · node --check · trunc
+vitest related, a bracket test src/app/[locale]/[slug]/__tests__/page.errors.test.ts: exit 0; Test Files  1 passed (1)
+vitest related, the bracket source: exit 0; Test Files  1 passed (1)
+node start and git status of the roots, this tree, 5 runs: 66 61 62 63 63 ms
+leftover copies 5; importing a src file 0
+publication candidateReader: 10

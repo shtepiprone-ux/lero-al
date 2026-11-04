@@ -1,0 +1,21 @@
+1 validateSettings, real settings, tool file absent: []
+2 validateSettings, patched settings, tool file absent: ["SessionStart: hook target missing: scripts/workflow-gates/code-check.mjs","Stop: hook target missing: scripts/workflow-gates/code-check.mjs","PostToolUse: hook target missing: scripts/workflow-gates/code-check.mjs","SubagentStop: hook target missing: scripts/workflow-gates/code-check.mjs"]
+3 validateSettings, patched settings, tool file present: []
+4 validateSettings, a narrowed matcher: ["PostToolUse: mandatory hook matcher is narrowed or changed"]
+5 validateSettings of today, the registration removed: []
+6 guard closure holds the tool, real settings: false
+7 guard closure holds the tool, patched settings: true
+8 isPolicyPath scripts/workflow-gates/code-check.mjs: true
+8 isPolicyPath scripts/workflow-gates/code-check.json: true
+8 isPolicyPath scripts/workflow-gates/hook-differential.mjs: true
+8 isPolicyPath scripts/workflow-gates/hook-corrections.json: true
+8 isPolicyPath scripts/workflow-gates/code-check.selftest.mjs: true
+8 isPolicyPath .claude/settings.json: true
+8 isPolicyPath .claude/rules/shared/workflow-gates.md: true
+9 publication.json ownedFiles holds the tool today: false
+10 selftests.mjs finds tests by name: true; const files = readdirSync(new URL('.', import.meta.url)).filter(file => /^[a-z0-9_-]+\.selftest\.mjs$/.test(file))
+11 files of the gates that name PostToolUse or SubagentStop: []
+12 readers of the settings hooks:
+   scripts/workflow-gates/check-workflow.mjs:71:  for (const [event, groups] of Object.entries(settings.hooks || {})) for (const group of group
+   scripts/workflow-gates/publication.mjs:65:  for (const groups of Object.values(settings.hooks || {})) for (const group of groups) for (const
+   scripts/workflow-gates/security-hook.mjs:1158:  const events = settings && typeof settings === 'object' && settings.hooks && typeof settings

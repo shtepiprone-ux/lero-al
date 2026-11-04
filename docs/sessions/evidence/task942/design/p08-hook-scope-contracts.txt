@@ -1,0 +1,6 @@
+# Task 942 revision 2: contracts that scope scripts/workflow-gates/security-hook.mjs (grep -l over tasks/Sprints and tasks/Archive, 2026-11-04, HEAD 22c6871a31eaf693b16ad68c2e0f5ec290aeedea)
+tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json
+tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json
+tasks/Archive/Sprint_92_kickoff_prompt_Task_940_Reviewed_Contracts_Rebase_After_Scope_Changes.security.json
+tasks/Archive/Sprint_92_kickoff_prompt_Task_941_Read_Only_Commands_Are_Not_Writes.security.json
+tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.security.json

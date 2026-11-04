@@ -19,3 +19,16 @@ files. This designer session may neither implement nor approve 942 (D1, D2).
 | C7 evidence | `node scripts/check-kickoff-evidence.mjs --files <kickoff>` | PASS (after re-creating two `sources/` snapshots that had disappeared from disk between 17:36 and 17:39; re-created from HEAD by `p04-snapshot-sources.mjs`, byte sizes as first written) | PASS (EXECUTED) |
 | C7 plan | `node scripts/workflow-gates/cli.mjs plan --contract <sidecar>` | exit 0; kickoff digest 1dc481d48969afa1a10a5744c206ecaf68154868ddc1f9d01639c9fb98fe93c0 | PASS (EXECUTED) |
 | C7 publication | `node scripts/workflow-gates/publication.mjs --base HEAD` | `0 dependency errors` | PASS (EXECUTED) |
+
+## Revision 2 (Opus, Task 944 review 3 session 343df3cf, 2026-11-04, owner D20)
+
+Platform: native Windows 11, Git Bash, Node v22.22.3, cwd `C:/Claude_Code_Projects/lero-al`, HEAD `22c6871a3`. This session neither
+implements nor approves 942.
+
+| Step | Source / command / artifact | Observation | Result |
+|---|---|---|---|
+| 1 manifest | `p08-hook-scope-contracts.txt`; the hook-importing self-tests found by `p07-shell-forms-run.mjs` | five contracts scope the hook and get an R5 rebase; nine self-tests import it and stay unchanged; `publication.json` unchanged | PASS (EXECUTED) |
+| 2 write authority | `isPolicyPath` (C25), route step 3 | the hook and the new self-test are policy paths; Opus implementer only (D1); the Task 944 guard checks each hook Edit | PASS (ANALYTICAL) |
+| 3 commands | `cli.mjs sensitivity` read in the 944 review; AC6 corpus input `test-results/task943-prototype/corpus.json` present and gitignored | the corpus exists on this machine only, so AC6 runs on native Windows here; a missing corpus is `BLOCKED`, not skipped | PASS (EXECUTED) |
+| 4 proof | `node docs/sessions/evidence/task942/design/p07-shell-forms-run.mjs` → `p07-shell-forms-run.txt` | 29 forms reported and refused for the executor, 20 controls quiet, nine self-tests pass, corpus dropped 0, guarded 0, refused 0, scope 0; 1922 ms and 7416 ms; `FAILURES 0` | PASS (EXECUTED) |
+| 5 saved contract | `check-kickoff-evidence.mjs --files <kickoff>`; `check-mobile-adaptation-contract.mjs --files <kickoff>`; `p09-readiness.mjs` in memory; `cli.mjs plan --contract <sidecar>` on the saved ready sidecar | PASS; PASS; `[]`; exit 0; kickoff digest `397df2e3ae6970de8947101124d231764304116b52b1375a0699292a12633a5a` | PASS (EXECUTED) |

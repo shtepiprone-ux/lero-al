@@ -5,7 +5,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "881a18930e02a27b9628870429634df2948d87508a176a99091ffd30167ee366",
+  "taskSha256": "397df2e3ae6970de8947101124d231764304116b52b1375a0699292a12633a5a",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -15,7 +15,11 @@
     "docs/sessions/evidence/task942/impl/gate-after.txt",
     "docs/sessions/evidence/task942/sensitivity/sensitivity.json",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.break.json",
-    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt"
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-PATH-DENY.txt",
+    "scripts/workflow-gates/security-hook.mjs",
+    "scripts/workflow-gates/shell-forms-residual.selftest.mjs",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-FORMS-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -97,6 +101,24 @@
       ],
       "testFile": "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
       "testName": "[GOV-942-HOOK-EXECUTOR-DENY] Only Opus may change the listing-visibility gate and its allowlist"
+    },
+    {
+      "id": "GOV-942-HOOK-SHELL-FORMS-DENY",
+      "invariant": "A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written",
+      "actor": "Implementing session or Sonnet executor",
+      "resource": "shellWriteTargets, governanceIndependenceErrors and evaluateHook PreToolUse",
+      "input": "owner D20: the forms list of p07-shell-forms-run.mjs with X a fixture governance scope file and D its folder, each also as an executor event on scripts/check-example.mjs; the read controls of the CONTROLS list of that file",
+      "response": "X among the targets and GOVERNANCE INDEPENDENCE for it; POLICY-EDIT AUTHORITY REQUIRED or SECURITY TEST CONTRACT MISSING for the executor forms; no X for the controls",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an implementing session approving a governance change it wrote through one of these forms",
+        "Sonnet changing a policy or product file through such a form without a refusal"
+      ],
+      "testFile": "scripts/workflow-gates/shell-forms-residual.selftest.mjs",
+      "testName": "[GOV-942-HOOK-SHELL-FORMS-DENY] A file changed by a command in backticks, perl -0 with -i in a cluster, a program run under env -C, a package-manager runner, open with file=, os.removedirs or a creating IO.File Open is counted as written"
     }
   ]
 }

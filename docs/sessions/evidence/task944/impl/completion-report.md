@@ -5,12 +5,15 @@ branch `task/935-governance-approval-route`, HEAD `d17d9d5a86fcc1186c86e0d8f052f
 --short scripts` printed nothing before the first write). Base runs: `docs/sessions/evidence/task944/impl/base-runs.txt`
 (192 self-tests, 192 pass, 0 fail, 0 skipped; `npm run build` exit 0), saved before the first write.
 
-**Status: PARTIALLY IMPLEMENTED.** R1-R6, R8 and R9 are implemented as written and every AC command except AC10's first
-command passes. AC10 fails on one finding of the kickoff itself (K1 below): R2 as written makes one existing self-test fail,
-while section 4 and AC10 require every existing self-test file to pass unchanged. The implementer cannot resolve that
-conflict (it is task design); the kickoff needs a revision before the task can be approved. AC11 (R7) belongs to the approver.
+**Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (revision 3).** R1-R6, R8 and R9 are implemented as written (commit
+1778c14b3, kept by review 1). K1 was closed by kickoff revision 3 (commit 89d880a71), and R10 is implemented (section "R10"
+below); every AC10 and AC13 command now passes. AC11 (R7) belongs to the approver.
 
-## K1. Kickoff conflict: R2 versus the unchanged existing self-tests (BLOCKED for a kickoff revision)
+## K1. Kickoff conflict: R2 versus the unchanged existing self-tests (CLOSED by revision 3, R10)
+
+Historical record of the first implementation session; resolved by review 1 (`docs/sessions/evidence/task944/review-1/review-1.md`)
+through kickoff revision 3 and implemented in section "R10" below.
+
 
 - Failing test: `scripts/workflow-gates/governance-contract.selftest.mjs`, the unnamed test `the governance report passes only on
   every mapped case and records current hashes and sensitivity` (line 162, not a GOV case name). Its fixture contract has task
@@ -34,7 +37,7 @@ conflict (it is task design); the kickoff needs a revision before the task can b
 | Req | Status | Changed files | Evidence |
 |---|---|---|---|
 | R1 | implemented | `cli.mjs` (`runSensitivity`, `tapResultBlock`, command `sensitivity`), new `sensitivity-register.mjs`, new `sensitivity-hooks.mjs` | GOV-944-SENS-RUN-ALLOW, -DENY, -LIVE-ERROR; four artifacts |
-| R2 | implemented as written; conflicts with K1 | `contract.mjs` (`SENSITIVITY_LEGACY_TASKS`, `inMemoryRecordErrors`, the check in `validateGovernanceReport`) | GOV-944-VAL-RECORD-ALLOW, -DENY; this task's own report passes R2 |
+| R2 | implemented as written; K1 closed by R10 | `contract.mjs` (`SENSITIVITY_LEGACY_TASKS`, `inMemoryRecordErrors`, the check in `validateGovernanceReport`) | GOV-944-VAL-RECORD-ALLOW, -DENY; this task's own report passes R2 |
 | R3 | implemented | `security-hook.mjs` (`hookModuleClosure`, `hookModuleSyntaxErrors`, the call in `evaluateHook`), new `hook-load-check.mjs` | GOV-944-HOOK-SYNTAX-DENY, -ALLOW, -CLOSURE-ERROR; `real-repo-guard.txt` |
 | R4 | implemented | `.claude/rules/shared/task-readiness.md` section 4, `.claude/rules/review/02-adversarial-ui.md` R4 (6117 bytes, under 8 KiB) | the two sentences verbatim |
 | R5 | implemented | new `sensitivity.selftest.mjs`, `hook-syntax.selftest.mjs`; `publication.json` lists the five R5 files | `publication.mjs --base HEAD`: 92 files, 0 dependency errors |
@@ -42,6 +45,7 @@ conflict (it is task design); the kickoff needs a revision before the task can b
 | R7 | approver only | none | AC11 not run (approver) |
 | R8 | implemented | `security-hook.mjs` (a)-(f) through the Edit tool, each Edit checked by the live R3 guard | GOV-944-HOOK-SHELL-FORMS-DENY; corpus and timings below |
 | R9 | implemented | new `shell-forms.selftest.mjs` and its `publication.json` entry | 19 GOV-941/GOV-943 results all `ok` in the final run |
+| R10 | implemented (revision 3) | `governance-contract.selftest.mjs`: the fixture record of one unnamed test only | section "R10"; `r10-ac13.txt`, `r10-ac10.txt` |
 
 Implementation order: base runs; R1 modules; R2; `hook-load-check.mjs`; R3 added to the hook first without its call in
 `evaluateHook` and probed on the real repository (closure, incident, block comment, C52, C53, a throwing reader, a valid hook
@@ -79,8 +83,10 @@ Each artifact holds baseline (exit 0, ok), mutant (exit 1, not ok with `code: 'E
 
 ## Self-test totals and unchanged files
 
-Base 192 / 192 pass. Final 201 tests: 200 pass, 1 fail (K1), 0 skipped; 9 new passing GOV-944 tests. `git diff --exit-code`
-over all fifteen self-test files of the base exits 0. `check-workflow.mjs` exit 0; eslint exit 0; `publication.mjs --base HEAD`
+Base 192 / 192 pass. First implementation session: 201 tests, 200 pass, 1 fail (K1), 0 skipped. After R10 (revision 3):
+201 tests, 201 pass, 0 fail, 0 skipped; 9 more passing tests than the base (`r10-ac10.txt`). `git diff --exit-code d17d9d5a8`
+over the fifteen self-test files of the base: before R10 all fifteen exit 0; after R10 the fourteen other than
+`governance-contract.selftest.mjs` exit 0, and that file's change is the one hunk of section "R10" (AC13). `check-workflow.mjs` exit 0; eslint exit 0; `publication.mjs --base HEAD`
 0 dependency errors; `cli.mjs verify` exit 0 at stage implemented; `npm run check:kickoff-evidence` PASS.
 
 ## AC8 probe (`docs/sessions/evidence/task944/impl/real-repo-guard.txt`)
@@ -136,4 +142,80 @@ Residual limits, stated for the reviewer (not required by the kickoff, unchanged
   another closure module is refused until that module is repaired; the repairing Edit itself is allowed (AC6).
 - A CommonJS dependency of an ESM closure module is linked as its `default` export only; the live closure has none.
 
-IMPLEMENTATION RESULT: PARTIALLY IMPLEMENTED - K1 needs a kickoff revision before review.
+## R10 (revision 3): the existing fixture record
+
+Session: a fresh Opus implementation session 8ae82d47 (D1; not 3d40df28, 6f2564f3, e50584bc or c819b1d2), 2026-11-04, native Windows 11,
+Git Bash, Node v22.22.3, branch `task/935-governance-approval-route`, HEAD `89d880a71` (revision 3 kickoff committed). Before
+the first write: `node scripts/workflow-gates/cli.mjs plan --contract <this sidecar>` exit 0, and `git status --short scripts`
+printed nothing.
+
+Change: one Edit (Edit tool) of `scripts/workflow-gates/governance-contract.selftest.mjs`, in the unnamed test `the governance
+report passes only on every mapped case and records current hashes and sensitivity`, with exactly the find/replace text of
+`docs/sessions/evidence/task944/review-1/r1-k1-probe.txt` lines 4-10. No other file of `scripts/` changed; R1-R9 were not
+redone. Diff against the base (`git diff d17d9d5a8 -- scripts/workflow-gates/governance-contract.selftest.mjs`, numstat 3 added,
+1 removed):
+
+```diff
+@@ -163,7 +163,9 @@ test('the governance report passes only on every mapped case and records current
+   f.contract.stage = 'implemented'; f.contract.implementation = { role: 'Opus' };
+   f.contract.cases[1].critical = true;
+   put(f.root, 'docs/sessions/evidence/gov/break.txt', 'Synthetic sensitivity artifact.\n');
+-  saveJson(f.root, f.contract.sensitivity, { version: 1, cases: [{ id: 'GOV-T-HOOK-DENY', testName: f.contract.cases[1].testName, baseline: 'passed', mutant: 'failed',
++  saveJson(f.root, 'docs/sessions/evidence/gov/break.json', { version: 1, case: 'GOV-T-HOOK-DENY', target: 'scripts/workflow-gates/example.mjs', find: 'true', replace: 'false' });
++  saveJson(f.root, f.contract.sensitivity, { version: 1, cases: [{ id: 'GOV-T-HOOK-DENY', method: 'in-memory', break: 'docs/sessions/evidence/gov/break.json',
++    breakSha256: digest(f.root, ['docs/sessions/evidence/gov/break.json']), testName: f.contract.cases[1].testName, baseline: 'passed', mutant: 'failed',
+     failureKind: 'assertion', restored: 'passed', artifact: 'docs/sessions/evidence/gov/break.txt', artifactSha256: digest(f.root, ['docs/sessions/evidence/gov/break.txt']) }] });
+   const report = governanceReport(f.root, f.contract);
+   assert.deepEqual(report.errors, []); assert.equal(report.status, 'passed');
+```
+
+The added lines are the break spec save and the three record fields; the one removed line is the `saveJson` line of the
+sensitivity record that the change extends. The test name, every assertion, every other test and every `[<id>]` are unchanged.
+
+AC13 (`docs/sessions/evidence/task944/impl/r10-ac13.txt`):
+
+| Command | Result |
+|---|---|
+| `node --test scripts/workflow-gates/governance-contract.selftest.mjs` | exit 0; tests 17, pass 17, fail 0, skipped 0 |
+| `git diff d17d9d5a8 -- scripts/workflow-gates/governance-contract.selftest.mjs` | only the hunk above |
+| `git diff --exit-code 1778c14b3 -- scripts/workflow-gates/contract.mjs` | empty, exit 0 (R2 unchanged) |
+| `node scripts/workflow-gates/cli.mjs governance-report --contract <this sidecar>` | exit 0; passed, 9 cases, `PASS` for each; rewrote `governance-report.json` (status passed, errors `[]`) |
+
+AC10 (`docs/sessions/evidence/task944/impl/r10-ac10.txt`):
+
+| Command | Result |
+|---|---|
+| `node scripts/workflow-gates/selftests.mjs` | exit 0; tests 201, pass 201, fail 0, skipped 0 (base 192: 9 more) |
+| `git diff --quiet --exit-code d17d9d5a8 -- <file>` for each of the 14 other self-test files of the base | each exit 0 |
+| `node scripts/workflow-gates/check-workflow.mjs` | exit 0 |
+| `node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` | exit 0 |
+| `node scripts/workflow-gates/publication.mjs --base HEAD` | 92 explicit files, 0 dependency errors, exit 0 |
+| `node scripts/workflow-gates/cli.mjs verify --contract <this sidecar>` | exit 0 at stage implemented |
+| `npm run check:kickoff-evidence` | PASS, exit 0 |
+| `git grep -n "SENSITIVITY BREAK" -- scripts` (AC9) | no output, exit 1 |
+
+Final order: the scope digest that the governance report records includes this completion report (only the report file
+itself is excluded), so the `verify` above ran before this section was written. After this section was saved,
+`cli.mjs governance-report` and `cli.mjs verify` were run once more on the final files, as the last commands of the session;
+their raw output is `docs/sessions/evidence/task944/impl/r10-final.txt` (outside the scope digest).
+
+Sensitivity records: not rerun. Neither `cli.mjs verify` nor the governance report names a record stale; the four records keep
+`method: 'in-memory'` with their unchanged break specs and targets.
+
+R10 implementer self-audit (owner request, same session; not an independent review, D2;
+`docs/sessions/evidence/task944/impl/r10-self-audit.txt`):
+- The working file equals the review-1 probe spec applied to the base text of both `d17d9d5a8` and `1778c14b3` (`find` occurs
+  once in each; byte-identical result); the file has no CR bytes.
+- Each new fixture field is load-bearing: in-memory mutants of the test file (through `sensitivity-register.mjs`, the live file
+  never written, digest unchanged) that remove `method`, make `breakSha256` stale, give the spec another case, or move `break`
+  outside the evidence tree each fail exactly this test with the matching R2 message (16 pass, 1 fail); the identity mutant
+  passes 17 of 17.
+- Defect found and fixed: the "Self-test totals" paragraph still stated that all fifteen base self-test files are unchanged,
+  which R10 makes false for one of them; it now states the fourteen-plus-one result.
+- For the approver: `cli.mjs verify` of the Task 935 contract prints `Governance report scope hash is stale` and
+  `rebases: entry 4: rebasedScopeSha256 is not the current scope digest` (exit 1), the expected state before the R7 `scope` and
+  `tests` rebases (review 1 recorded the same scope-hash staleness for the legacy contracts).
+
+Not done here (approver, step 5): the `review` block, stage `reviewed`, the R7 `scope` rebases and the 935 `tests` rebase, AC11.
+
+IMPLEMENTATION RESULT: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW

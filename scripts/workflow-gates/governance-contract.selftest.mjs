@@ -163,7 +163,9 @@ test('the governance report passes only on every mapped case and records current
   f.contract.stage = 'implemented'; f.contract.implementation = { role: 'Opus' };
   f.contract.cases[1].critical = true;
   put(f.root, 'docs/sessions/evidence/gov/break.txt', 'Synthetic sensitivity artifact.\n');
-  saveJson(f.root, f.contract.sensitivity, { version: 1, cases: [{ id: 'GOV-T-HOOK-DENY', testName: f.contract.cases[1].testName, baseline: 'passed', mutant: 'failed',
+  saveJson(f.root, 'docs/sessions/evidence/gov/break.json', { version: 1, case: 'GOV-T-HOOK-DENY', target: 'scripts/workflow-gates/example.mjs', find: 'true', replace: 'false' });
+  saveJson(f.root, f.contract.sensitivity, { version: 1, cases: [{ id: 'GOV-T-HOOK-DENY', method: 'in-memory', break: 'docs/sessions/evidence/gov/break.json',
+    breakSha256: digest(f.root, ['docs/sessions/evidence/gov/break.json']), testName: f.contract.cases[1].testName, baseline: 'passed', mutant: 'failed',
     failureKind: 'assertion', restored: 'passed', artifact: 'docs/sessions/evidence/gov/break.txt', artifactSha256: digest(f.root, ['docs/sessions/evidence/gov/break.txt']) }] });
   const report = governanceReport(f.root, f.contract);
   assert.deepEqual(report.errors, []); assert.equal(report.status, 'passed');

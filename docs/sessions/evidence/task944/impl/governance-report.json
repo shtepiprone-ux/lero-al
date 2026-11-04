@@ -2,8 +2,8 @@
   "version": 1,
   "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
-  "contractSha256": "5fdc0621948947201706b0c3ba136ed13b13a15f3674e09869cd8e458b07aa68",
-  "scopeSha256": "ad5bf169fb756194b56c1f18f4a5f5db82ee11bbc60978aae4ae9517312f9af1",
+  "contractSha256": "4d571cda801341c9cc1b7b400c8edfdf7c40e2e6fb49428d2b23bc9e4f8d9e48",
+  "scopeSha256": "d014ba01545eea3886a45ec610505a144af6b688befbb6a4b270fda978c3e951",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [

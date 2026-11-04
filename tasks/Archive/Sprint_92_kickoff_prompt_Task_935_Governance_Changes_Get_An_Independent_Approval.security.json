@@ -474,6 +474,22 @@
         "evidenceSha256": "c920ecde549705c8c938654bdcdd2465c306bbab0d91bcc1cdb17ea0d717d96b",
         "originalScopeSha256": "cfb7e1f248c4f5c78bb0b2ae22065e63409dc0b582f52d12feb4712c14ef7f44",
         "rebasedScopeSha256": "57f2f78a67c86177d170475b8afc761652da6762c689bb1929c3c5b02442bf65"
+      },
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json",
+        "evidence": "docs/sessions/evidence/task944/review/scope-rebase-935.md",
+        "evidenceSha256": "8b90c71553df23ad52aa259e98ff5fa4a82a8456f94f15a099e24e2ddfa646b2",
+        "originalScopeSha256": "57f2f78a67c86177d170475b8afc761652da6762c689bb1929c3c5b02442bf65",
+        "rebasedScopeSha256": "8f70b3a1a6728a01b6a9dcf8778b122e5988b84826d138c6c93cb2ecf9996b4c"
+      },
+      {
+        "kind": "tests",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json",
+        "evidence": "docs/sessions/evidence/task944/review/tests-rebase-935.md",
+        "evidenceSha256": "39fdf29c2d80a0815c202d5ccf317f719b8d535aa1e58af79b3372a5f9e6f59d",
+        "originalScopeSha256": "8f70b3a1a6728a01b6a9dcf8778b122e5988b84826d138c6c93cb2ecf9996b4c",
+        "rebasedScopeSha256": "9893459ac170b4a27e4c7468ed1c110c00970ebaed662f21b4177ee3999449f8"
       }
     ]
   }

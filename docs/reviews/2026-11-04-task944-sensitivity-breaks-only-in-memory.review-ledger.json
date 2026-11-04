@@ -1,0 +1,636 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-944 - sensitivity breaks exist only in the test process, and no write leaves a hook module unparseable",
+  "review": {
+    "decision": "APPROVED WITH NOTES",
+    "baseRevision": "d8a07a3c7841022207fd5331f53e5a80b4d7c7e2",
+    "reviewedRevision": "22c6871a31eaf693b16ad68c2e0f5ec290aeedea (revision 3 implementation) on base d17d9d5a8; review 4 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, whose scripts and .claude equal that commit, with the review 3 closure in the working tree",
+    "reviewedPaths": [
+      "scripts/workflow-gates/cli.mjs",
+      "scripts/workflow-gates/contract.mjs",
+      "scripts/workflow-gates/security-hook.mjs",
+      "scripts/workflow-gates/hook-load-check.mjs",
+      "scripts/workflow-gates/sensitivity-register.mjs",
+      "scripts/workflow-gates/sensitivity-hooks.mjs",
+      "scripts/workflow-gates/sensitivity.selftest.mjs",
+      "scripts/workflow-gates/hook-syntax.selftest.mjs",
+      "scripts/workflow-gates/shell-forms.selftest.mjs",
+      "scripts/workflow-gates/governance-contract.selftest.mjs",
+      "scripts/workflow-gates/publication.json",
+      ".claude/rules/shared/task-readiness.md",
+      ".claude/rules/review/02-adversarial-ui.md",
+      "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json",
+      "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md",
+      "docs/sessions/evidence/task944"
+    ],
+    "supersedes": [],
+    "coverage": {
+      "total": 8,
+      "verified": 8,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-11-04-task944-sensitivity-breaks-only-in-memory.review-ledger.json",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC11 / R7",
+    "reviewer": "Opus"
+  },
+  "requirements": [
+    {
+      "id": "AC1, AC2, AC3 / R1",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/cli.mjs",
+        "symbol": "runSensitivity, tapResultBlock, sensitivity command",
+        "diffHunks": [
+          "scripts/workflow-gates/cli.mjs:229-333",
+          "scripts/workflow-gates/cli.mjs:415-419"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-944-SENS-RUN-ALLOW, GOV-944-SENS-RUN-DENY, GOV-944-SENS-LIVE-ERROR"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-selftests.txt",
+          "command": "node scripts/workflow-gates/selftests.mjs",
+          "observable": "201 tests, 201 pass, 0 fail, 0 skipped, 0 not ok; 9 GOV-944 and 19 GOV-941/943 results ok",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-SENS-RUN-ALLOW, GOV-944-SENS-RUN-DENY, GOV-944-SENS-LIVE-ERROR"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A refusal branch of R1 (b), the live-file check or the record replacement could be unproven.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: mutants 1-8 each fail the named case with ERR_ASSERTION."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC4 / R2",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/contract.mjs",
+        "symbol": "SENSITIVITY_LEGACY_TASKS, inMemoryRecordErrors",
+        "diffHunks": [
+          "scripts/workflow-gates/contract.mjs:408-430",
+          "scripts/workflow-gates/contract.mjs:457-457"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-944-VAL-RECORD-ALLOW, GOV-944-VAL-RECORD-DENY"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-selftests.txt",
+          "command": "node scripts/workflow-gates/selftests.mjs",
+          "observable": "201 tests, 201 pass, 0 fail, 0 skipped, 0 not ok; 9 GOV-944 and 19 GOV-941/943 results ok",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-VAL-RECORD-ALLOW, GOV-944-VAL-RECORD-DENY"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "One branch of the record check could be unproven, or a legacy path could be absent from the list.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: mutants 9-13 each fail the named case with ERR_ASSERTION, one per branch and one for the 941 legacy path."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC5, AC6, AC7, AC8 / R3",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "hookModuleClosure, hookModuleSyntaxErrors, hookModuleLoadFailure",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:978-1073",
+          "scripts/workflow-gates/security-hook.mjs:1133-1135"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SYNTAX-ALLOW, GOV-944-HOOK-CLOSURE-ERROR, AC8 on the real repository"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-selftests.txt",
+          "command": "node scripts/workflow-gates/selftests.mjs",
+          "observable": "201 tests, 201 pass, 0 fail, 0 skipped, 0 not ok; 9 GOV-944 and 19 GOV-941/943 results ok",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SYNTAX-ALLOW, GOV-944-HOOK-CLOSURE-ERROR, AC8 on the real repository"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-probes.txt",
+          "command": "node docs/sessions/evidence/task944/review/r3-probes.mjs",
+          "observable": "closure 11; broken, unwritten-import and removed-export edits refused for both roles and spellings; valid edits allowed; live digest unchanged",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SYNTAX-ALLOW, GOV-944-HOOK-CLOSURE-ERROR, AC8 on the real repository"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The guard could skip the CRLF, CommonJS, ps1, import-walk or role paths, or let an exception out.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: mutants 14-20 fail with ERR_ASSERTION and mutant 21 fails by the rethrown error, the intended failure of that mutant."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC10 / R4, R5, R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": ".claude/rules/review/02-adversarial-ui.md",
+        "symbol": "R4 rule sentences, publication entries, gate commands",
+        "diffHunks": [
+          ".claude/rules/review/02-adversarial-ui.md:25-26",
+          ".claude/rules/shared/task-readiness.md:66-67",
+          "scripts/workflow-gates/publication.json:61-87"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "selftests.mjs, the 14 unchanged self-test files, check-workflow.mjs, eslint, publication.mjs, cli.mjs verify, check:kickoff-evidence"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-selftests.txt",
+          "command": "node scripts/workflow-gates/selftests.mjs",
+          "observable": "201 tests, 201 pass, 0 fail, 0 skipped, 0 not ok; 9 GOV-944 and 19 GOV-941/943 results ok",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "selftests.mjs, the 14 unchanged self-test files, check-workflow.mjs, eslint, publication.mjs, cli.mjs verify, check:kickoff-evidence"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-check-workflow.txt",
+          "command": "node scripts/workflow-gates/check-workflow.mjs, with r4-eslint.txt, r4-publication.txt, r4-verify-944.txt and r4-kickoff-evidence.txt beside it",
+          "observable": "all exit 0; 92 explicit files, 0 dependency errors",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "selftests.mjs, the 14 unchanged self-test files, check-workflow.mjs, eslint, publication.mjs, cli.mjs verify, check:kickoff-evidence"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An existing self-test file could have changed.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: git diff --exit-code d17d9d5a8 exits 0 for each of the 14 other base self-test files."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC9 / R6",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/evidence/task944/sensitivity/sensitivity.json",
+        "symbol": "the four in-memory records",
+        "diffHunks": [
+          "docs/sessions/evidence/task944/sensitivity/sensitivity.json:1-58"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY, GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SHELL-FORMS-DENY records"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-report.txt",
+          "command": "node docs/sessions/evidence/task944/review/r3-report.mjs",
+          "observable": "in-memory report passed, 9 cases; four records in-memory with current digests; baseline exit 0, mutant exit 1 with ERR_ASSERTION, restored exit 0",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY, GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SHELL-FORMS-DENY records"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r3-governance-report.txt",
+          "command": "node scripts/workflow-gates/cli.mjs governance-report --contract <archived sidecar>",
+          "observable": "exit 0, 9 PASS after the archive move",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-SENS-RUN-DENY, GOV-944-VAL-RECORD-DENY, GOV-944-HOOK-SYNTAX-DENY, GOV-944-HOOK-SHELL-FORMS-DENY records"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A record could come from a live-file break.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: each artifact records unchanged target and test digests, and git grep \"SENSITIVITY BREAK\" prints nothing."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC11 / R7",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json",
+        "symbol": "review.rebases of 935, 940, 941 and 943",
+        "diffHunks": [
+          "tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json:476-494"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "scope entries on 935, 940, 941 and 943; tests entry on 935"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-rebase-digests.txt",
+          "command": "node docs/sessions/evidence/task944/review/r3-rebase-digests.mjs",
+          "observable": "with the base bytes of every 944-changed file each contract digest equals the original digest of its first 944 entry",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "scope entries on 935, 940, 941 and 943; tests entry on 935"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-ac11.txt",
+          "command": "node docs/sessions/evidence/task944/review/r3-ac11-harness.mjs",
+          "observable": "935, 940, 941, 943 and 944 no validateDiff error, release [], report [], chain []; reviewedFreshnessErrors []",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "scope entries on 935, 940, 941 and 943; tests entry on 935"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-verify-935.txt",
+          "command": "node scripts/workflow-gates/cli.mjs verify --contract <935 contract>",
+          "observable": "exit 0",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "scope entries on 935, 940, 941 and 943; tests entry on 935"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "A contract could be stale through something other than Task 944.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: r4-rebase-digests.txt shows each digest at base equal to the original digest of the first 944 entry, and r4-ac11.txt shows each current digest at the end of its chain."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC12 / R8",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/security-hook.mjs",
+        "symbol": "programIndex, programTargets, evaluatedText, apiArguments, lenientTargets",
+        "diffHunks": [
+          "scripts/workflow-gates/security-hook.mjs:289-316",
+          "scripts/workflow-gates/security-hook.mjs:459-492",
+          "scripts/workflow-gates/security-hook.mjs:640-657",
+          "scripts/workflow-gates/security-hook.mjs:859-875"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "GOV-944-HOOK-SHELL-FORMS-DENY, the frozen 2318-command corpus, the F8 timings"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-selftests.txt",
+          "command": "node scripts/workflow-gates/selftests.mjs",
+          "observable": "201 tests, 201 pass, 0 fail, 0 skipped, 0 not ok; 9 GOV-944 and 19 GOV-941/943 results ok",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SHELL-FORMS-DENY, the frozen 2318-command corpus, the F8 timings"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-probes.txt",
+          "command": "node docs/sessions/evidence/task944/review/r3-probes.mjs",
+          "observable": "corpus 2318 commands: dropped 0, guarded 0, executor newly refused 0, scope file 0",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SHELL-FORMS-DENY, the frozen 2318-command corpus, the F8 timings"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-timing.txt",
+          "command": "node docs/sessions/evidence/task943/review/r2-timing.mjs <root>",
+          "observable": "F8 2071 ms parsed, 7943 ms parser-rejected, both under 15 s",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SHELL-FORMS-DENY, the frozen 2318-command corpus, the F8 timings"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-ac12.txt",
+          "command": "node docs/sessions/evidence/task944/review/r4-ac12.mjs",
+          "observable": "AC12 taken from the archived kickoff text: 47 forms each report X, yield GOVERNANCE INDEPENDENCE and refuse the executor; 21 controls report no X; failures 0",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "GOV-944-HOOK-SHELL-FORMS-DENY, the frozen 2318-command corpus, the F8 timings"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "An R8 branch could be unproven.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED except note N2: mutants 22-30, 32 and 33 fail the case; mutant 31 survives AC12 and its branch is correct by r4-probes.txt and pinned by Task 942 AC6."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    },
+    {
+      "id": "AC13 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "scripts/workflow-gates/governance-contract.selftest.mjs",
+        "symbol": "the GOV-T-HOOK-DENY fixture record",
+        "diffHunks": [
+          "scripts/workflow-gates/governance-contract.selftest.mjs:166-168"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "governance-contract.selftest.mjs, its one hunk, contract.mjs unchanged since 1778c14b3"
+        ],
+        "phases": [
+          "reviewed"
+        ],
+        "notApplicable": {
+          "stories": "Gate script only; no UI artifact or Story changed.",
+          "locales": "No user-facing string changed.",
+          "viewports": "Nothing rendered by this change.",
+          "states": "Gate inputs are enumerated under subjects."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/evidence/task944/review/r4-governance-contract-selftest.txt",
+          "command": "node --test --test-reporter=tap scripts/workflow-gates/governance-contract.selftest.mjs",
+          "observable": "17 tests, 17 pass, 0 fail",
+          "freshness": "approver native run 2026-11-04 win32 v22.22.3 on HEAD 94d20430b33d013d1044fc5b32185b04a0ee99ef, scripts and .claude equal to 22c6871a3",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "governance-contract.selftest.mjs, its one hunk, contract.mjs unchanged since 1778c14b3"
+            ],
+            "phases": [
+              "reviewed"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "R10 could change an assertion or weaken R2.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/evidence/task944/review/r4-mutants.txt",
+          "result": "REFUTED: numstat 3 added, 1 removed; the hunk is the break spec save and the three record fields; git diff 1778c14b3 of contract.mjs exits 0."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Node gate script; no generated CSS, selector or cascade-sensitive syntax."
+      }
+    }
+  ]
+}

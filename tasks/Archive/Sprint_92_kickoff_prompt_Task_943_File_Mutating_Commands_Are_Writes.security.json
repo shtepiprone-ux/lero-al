@@ -47,7 +47,17 @@
     "evidence": "docs/sessions/evidence/task943/review/review-943-r3.md",
     "evidenceSha256": "895b5879794fa0a14f87939960d1255c253174ad9693694222cf4bccc6b2a15a",
     "scopeSha256": "b82dbac3822a5cf3bd165ac5de5e02c2fb4055dbae6e57b6f55dc89739eb755e",
-    "reportSha256": "a385b3d81d517c703cfdd573ea6bfc7c2dcfa2391875d233b0bf19d82386d604"
+    "reportSha256": "a385b3d81d517c703cfdd573ea6bfc7c2dcfa2391875d233b0bf19d82386d604",
+    "rebases": [
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json",
+        "evidence": "docs/sessions/evidence/task944/review/scope-rebase-943.md",
+        "evidenceSha256": "9a754e00779df025a68ab9e823282fd48fd129032aabbcb467472284fcb282f8",
+        "originalScopeSha256": "b82dbac3822a5cf3bd165ac5de5e02c2fb4055dbae6e57b6f55dc89739eb755e",
+        "rebasedScopeSha256": "b50491fae6c575f79bc8664cba0a2303ab38337eb888268e881b2de45f7731fb"
+      }
+    ]
   },
   "cases": [
     {

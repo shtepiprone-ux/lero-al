@@ -1,0 +1,12 @@
+# Task 944 review 4: timing
+platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-04T09:46:42.882Z; ended 2026-11-04T09:46:54.376Z
+command: node docs/sessions/evidence/task943/review/r2-timing.mjs C:/Claude_Code_Projects/lero-al
+exit code: 0
+--- stdout
+F5 evaluateHook without a role: rm -rf docs: 162 ms | 1 results
+F5 evaluateHook without a role: cp -r docs backup/: 1149 ms | 0 results
+F8 shellWriteTargets parsed (48900 chars): 2071 ms | 2 results
+F8 shellWriteTargets parser-rejected (48901 chars): 7943 ms | 5001 results
+
+--- stderr
+

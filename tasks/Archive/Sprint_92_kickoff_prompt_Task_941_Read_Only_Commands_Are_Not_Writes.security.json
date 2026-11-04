@@ -142,6 +142,14 @@
         "evidenceSha256": "13f1d46c3a9678b59795c3b33a5ff835382ec85bd987571c728c33c70c1e35a1",
         "originalScopeSha256": "28fede2a27134a1d64219fcbac25b3ad23a57945f801c2542bf1bc3023036aa3",
         "rebasedScopeSha256": "17e727cdccdca7519b6ec4751b6c3029f1639e52f38d9a4cdb1e07e95b4b2de4"
+      },
+      {
+        "kind": "scope",
+        "by": "tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json",
+        "evidence": "docs/sessions/evidence/task944/review/scope-rebase-941.md",
+        "evidenceSha256": "b27c619aaa4854ca3cdf15efc06cf757ea9fa3e234fc4e4eb8d15d574eb6db35",
+        "originalScopeSha256": "17e727cdccdca7519b6ec4751b6c3029f1639e52f38d9a4cdb1e07e95b4b2de4",
+        "rebasedScopeSha256": "11686da52a568e9b3daccd99c5daa745bd901b263083e68a2c01d0821c49b86a"
       }
     ]
   }

@@ -1,0 +1,61 @@
+# Task 944 review 4: report
+platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-04T09:40:13.888Z; ended 2026-11-04T09:40:19.063Z
+command: node docs/sessions/evidence/task944/review/r3-report.mjs
+exit code: 0
+--- stdout
+in-memory report: status passed; errors []; 9 cases
+  passed GOV-944-SENS-RUN-ALLOW
+  passed GOV-944-SENS-RUN-DENY (sensitivity)
+  passed GOV-944-SENS-LIVE-ERROR
+  passed GOV-944-VAL-RECORD-ALLOW
+  passed GOV-944-VAL-RECORD-DENY (sensitivity)
+  passed GOV-944-HOOK-SYNTAX-DENY (sensitivity)
+  passed GOV-944-HOOK-SYNTAX-ALLOW
+  passed GOV-944-HOOK-CLOSURE-ERROR
+  passed GOV-944-HOOK-SHELL-FORMS-DENY (sensitivity)
+validate in-memory: []
+retained report: status passed; cases 9; node v22.22.3; platform win32
+validate retained: []
+retained contractSha256 b32af3c916963a665592d2df9cb99fd20038be78fa8ff65a1473abb5437caccc current b32af3c916963a665592d2df9cb99fd20038be78fa8ff65a1473abb5437caccc
+retained scopeSha256 d014ba01545eea3886a45ec610505a144af6b688befbb6a4b270fda978c3e951 current d014ba01545eea3886a45ec610505a144af6b688befbb6a4b270fda978c3e951; unchanged by the run: true
+validateContract verify: []
+sensitivity file: task tasks/Sprints/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.md; 4 records
+GOV-944-SENS-RUN-DENY: method in-memory; baseline passed; mutant failed; failureKind assertion; restored passed
+  break docs/sessions/evidence/task944/sensitivity/GOV-944-SENS-RUN-DENY.break.json current true; artifact current true; spec case true; testName mapped true
+  target scripts/workflow-gates/cli.mjs: find once in live true
+  find: "&& /code: 'ERR_ASSERTION'/.test(tapResultBlock(mutant.child.stdout, row.testName));"
+  replace: "&& (true || /code: 'ERR_ASSERTION'/.test(tapResultBlock(mutant.child.stdout, row.testName)));"
+  artifact: baseline exit 0, mutant exit 1 ERR_ASSERTION true, restored exit 0
+  mutant error: 'typeError'
+  target: scripts/workflow-gates/cli.mjs unchanged true
+  test file: scripts/workflow-gates/sensitivity.selftest.mjs unchanged true
+GOV-944-VAL-RECORD-DENY: method in-memory; baseline passed; mutant failed; failureKind assertion; restored passed
+  break docs/sessions/evidence/task944/sensitivity/GOV-944-VAL-RECORD-DENY.break.json current true; artifact current true; spec case true; testName mapped true
+  target scripts/workflow-gates/contract.mjs: find once in live true
+  find: "if (!SENSITIVITY_LEGACY_TASKS.includes(contract.task)) errors.push"
+  replace: "if (!SENSITIVITY_LEGACY_TASKS.includes(contract.task) && false) errors.push"
+  artifact: baseline exit 0, mutant exit 1 ERR_ASSERTION true, restored exit 0
+  mutant error: 'no method'
+  target: scripts/workflow-gates/contract.mjs unchanged true
+  test file: scripts/workflow-gates/sensitivity.selftest.mjs unchanged true
+GOV-944-HOOK-SYNTAX-DENY: method in-memory; baseline passed; mutant failed; failureKind assertion; restored passed
+  break docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SYNTAX-DENY.break.json current true; artifact current true; spec case true; testName mapped true
+  target scripts/workflow-gates/security-hook.mjs: find once in live true
+  find: "  return [...closure.values()].sort();"
+  replace: "  return [];"
+  artifact: baseline exit 0, mutant exit 1 ERR_ASSERTION true, restored exit 0
+  mutant error: |-
+  target: scripts/workflow-gates/security-hook.mjs unchanged true
+  test file: scripts/workflow-gates/hook-syntax.selftest.mjs unchanged true
+GOV-944-HOOK-SHELL-FORMS-DENY: method in-memory; baseline passed; mutant failed; failureKind assertion; restored passed
+  break docs/sessions/evidence/task944/sensitivity/GOV-944-HOOK-SHELL-FORMS-DENY.break.json current true; artifact current true; spec case true; testName mapped true
+  target scripts/workflow-gates/security-hook.mjs: find once in live true
+  find: "    if (SHELL_KEYWORD.test(word)) { index++; continue; }"
+  replace: "    if (false && SHELL_KEYWORD.test(word)) { index++; continue; }"
+  artifact: baseline exit 0, mutant exit 1 ERR_ASSERTION true, restored exit 0
+  mutant error: 'X reported for: if true; then rm scripts/workflow-gates/fixture-scope.mjs; fi'
+  target: scripts/workflow-gates/security-hook.mjs unchanged true
+  test file: scripts/workflow-gates/shell-forms.selftest.mjs unchanged true
+
+--- stderr
+

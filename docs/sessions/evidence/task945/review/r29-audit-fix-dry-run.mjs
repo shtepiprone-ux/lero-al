@@ -1,0 +1,25 @@
+// Owner question after Task 945 review 1: the update with next 15.5.28, then npm audit fix, on a temporary folder holding only the manifests; nothing is installed.
+import { spawnSync } from 'node:child_process';
+import { copyFileSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const sh = (c, cwd) => { const r = spawnSync(c, { cwd, shell: true, encoding: 'utf8', maxBuffer: 1 << 28, timeout: 280000 }); return { status: r.status, out: r.stdout ?? '', err: r.stderr ?? '' }; };
+const dir = mkdtempSync(join(tmpdir(), 'upgrade-fix-'));
+for (const file of ['package.json', 'package-lock.json', '.npmrc']) copyFileSync(file, join(dir, file));
+const show = title => { const j = JSON.parse(sh('npm audit --omit=dev --json', dir).out); console.log(`${title}: ${JSON.stringify(j.metadata.vulnerabilities)}`); return j; };
+show('before');
+for (const c of ['npm install --package-lock-only --ignore-scripts --no-audit --no-fund --save-exact next@15.5.28 eslint-config-next@15.5.28', 'npm install --package-lock-only --ignore-scripts --no-audit --no-fund @sentry/nextjs@10.78.0']) console.log(`${c}: exit ${sh(c, dir).status}`);
+const lockOf = () => JSON.parse(readFileSync(join(dir, 'package-lock.json'), 'utf8')).packages;
+console.log('sharp after the two', lockOf()['node_modules/sharp']?.version);
+show('after the two');
+const before = lockOf();
+const fix = sh('npm audit fix --package-lock-only --ignore-scripts --no-fund', dir);
+console.log(`npm audit fix: exit ${fix.status}; ${fix.out.trim().split('\n').slice(-3).join(' | ').slice(0, 300)}`);
+const after = lockOf();
+const changed = Object.keys({ ...before, ...after }).filter(k => k && before[k]?.version !== after[k]?.version);
+console.log(`lock entries changed by the fix: ${changed.length}\n${changed.slice(0, 40).map(k => `${k.replace('node_modules/', '')}: ${before[k]?.version ?? '-'} -> ${after[k]?.version ?? '-'}`).join('\n')}`);
+const pkg = JSON.parse(readFileSync(join(dir, 'package.json'), 'utf8'));
+console.log('declared after', pkg.dependencies.next, pkg.dependencies['@sentry/nextjs'], pkg.devDependencies['eslint-config-next'], 'sharp', after['node_modules/sharp']?.version);
+const j = show('after the fix');
+for (const [name, e] of Object.entries(j.vulnerabilities)) if (['critical', 'high'].includes(e.severity)) console.log(` ${e.severity} ${name} direct ${e.isDirect} fix ${e.fixAvailable === true ? 'audit fix' : e.fixAvailable ? `${e.fixAvailable.name}@${e.fixAvailable.version}${e.fixAvailable.isSemVerMajor ? ' MAJOR' : ''}` : 'none'}`);
+rmSync(dir, { recursive: true, force: true, maxRetries: 3 });

@@ -1,0 +1,183 @@
+// Task 931 revision 4 prototype: the test holes of the Task 945 review closed by tests alone, against the real source files. A throwaway: the executor writes the real tests.
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { createFakeDb } from './fake.generated'
+
+const h = vi.hoisted(() => ({
+  viewer: { ok: true, userId: 'admin-1', role: 'admin' } as Record<string, unknown>,
+  client: null as unknown,
+  throwOnClient: false,
+  revalidatePath: vi.fn(),
+  revalidateTag: vi.fn(),
+  createNotification: vi.fn(async () => undefined),
+  tableProps: null as Record<string, unknown> | null,
+  getAdminLocale: vi.fn(async () => 'en'),
+  t: vi.fn((key: string) => key),
+  headers: null as string | null,
+}))
+vi.mock('@/lib/auth/requireViewer', () => ({ requireViewer: async () => h.viewer }))
+vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => { if (h.throwOnClient) throw new Error('admin client down'); return h.client } }))
+vi.mock('next/cache', () => ({ revalidatePath: h.revalidatePath, revalidateTag: h.revalidateTag }))
+vi.mock('next/headers', () => ({ headers: () => ({ get: () => h.headers }) }))
+vi.mock('next/server', () => ({ after: (work: () => void) => work() }))
+vi.mock('next/navigation', () => ({ notFound: () => { throw new Error('NEXT_NOT_FOUND') }, redirect: (u: string) => { throw new Error(`NEXT_REDIRECT ${u}`) } }))
+vi.mock('next-intl/server', () => ({ getTranslations: async () => h.t }))
+vi.mock('@/lib/admin/getAdminLocale', () => ({ getAdminLocale: h.getAdminLocale }))
+vi.mock('@/lib/auth/accountAccess', async importActual => ({ ...(await importActual<object>()), isLiveAccount: async () => true }))
+vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: h.createNotification }))
+vi.mock('@/modules/notifications/lib/emails/listingInquiry', () => ({ sendListingInquiryNotification: async () => ({ ok: true, id: 'e' }) }))
+vi.mock('@/components/admin/AdminListingsTable', () => ({ AdminListingsTable: (props: Record<string, unknown>) => { h.tableProps = props; return null } }))
+vi.mock('@/components/admin/AdminPageHeader', () => ({ AdminPageHeader: () => null }))
+vi.mock('@/components/admin/AdminPageFrame', () => ({ AdminPageFrame: ({ children }: { children: unknown }) => children }))
+
+const LISTING = '6f1d2c3b-4a5e-4f60-8a7b-9c0d1e2f3a4b'
+let errorSpy: ReturnType<typeof vi.spyOn>
+let warnSpy: ReturnType<typeof vi.spyOn>
+beforeEach(() => {
+  vi.clearAllMocks()
+  h.viewer = { ok: true, userId: 'admin-1', role: 'admin' }
+  h.throwOnClient = false
+  h.headers = null
+  h.tableProps = null
+  errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+  warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+})
+afterEach(() => { errorSpy.mockRestore(); warnSpy.mockRestore() })
+
+describe('contactEvents', () => {
+  const args = { listingId: LISTING, channel: 'whatsapp', source: 'listing_detail_contact_card' } as const
+  it('a failed listing lookup answers insert_failed and writes nothing', async () => {
+    const db = createFakeDb({ listings: [{ id: LISTING, user_id: 'o', status: 'active' }] })
+    db.fail({ table: 'listings', op: 'select', error: { message: 'down', code: 'X' } })
+    h.client = db.client
+    const { trackListingContactEvent } = await import('@/modules/listings/actions/contactEvents')
+    expect(await trackListingContactEvent(args)).toEqual({ ok: false, reason: 'insert_failed' })
+    expect(db.tables.listing_contact_events ?? []).toHaveLength(0)
+  })
+  it('an unexpected failure answers insert_failed', async () => {
+    h.throwOnClient = true
+    const { trackListingContactEvent } = await import('@/modules/listings/actions/contactEvents')
+    expect(await trackListingContactEvent(args)).toEqual({ ok: false, reason: 'insert_failed' })
+  })
+})
+
+describe('submitListingInquiry rate limit', () => {
+  const input = { listingId: LISTING, name: 'Jane', email: 'j@example.com', message: 'I am very interested in this listing, please contact me.', captchaToken: 'dev-noop-token' }
+  const client = (db: ReturnType<typeof createFakeDb>) => ({ ...db.client, auth: { admin: { getUserById: async () => ({ data: { user: { email: 'v@example.com' } }, error: null }) } } })
+  for (const count of [null, undefined]) it(`a count of ${count} with no error refuses and saves nothing`, async () => {
+    h.viewer = { ok: true, userId: 'viewer-1' }
+    const db = createFakeDb({ listings: [{ id: LISTING, user_id: 'o', status: 'active', title: 'T' }], users: [{ id: 'o', status: 'active' }], listing_inquiries: [] })
+    db.fail({ table: 'listing_inquiries', op: 'select', error: null, count })
+    h.client = client(db)
+    const { submitListingInquiry } = await import('@/modules/listings/actions/submitListingInquiry')
+    expect(await submitListingInquiry(input)).toEqual({ error: 'rate_limited' })
+    expect(db.tables.listing_inquiries).toHaveLength(0)
+  })
+})
+
+describe('setModeratorPermission and the history', () => {
+  const seed = () => createFakeDb({ role_permissions: [{ role: 'moderator', permission_key: 'x', allowed: false }], role_permission_events: [], users: [] })
+  it('an unexpected failure answers save_failed, never a success', async () => {
+    h.throwOnClient = true
+    const { setModeratorPermission } = await import('@/modules/admin/actions/permissions')
+    const { PERMISSION_KEYS } = await import('@/lib/auth/permissionKeys')
+    expect(await setModeratorPermission(PERMISSION_KEYS[0], true)).toEqual({ error: 'save_failed' })
+  })
+  it('a failed audit insert is logged and the saved change still answers success; a good one logs nothing', async () => {
+    const { setModeratorPermission } = await import('@/modules/admin/actions/permissions')
+    const { PERMISSION_KEYS } = await import('@/lib/auth/permissionKeys')
+    const db = seed()
+    h.client = db.client
+    expect(await setModeratorPermission(PERMISSION_KEYS[0], true)).toEqual({})
+    expect(errorSpy).not.toHaveBeenCalled()
+    const failing = seed()
+    failing.fail({ table: 'role_permission_events', op: 'insert', error: { message: 'down' } })
+    h.client = failing.client
+    expect(await setModeratorPermission(PERMISSION_KEYS[0], true)).toEqual({})
+    expect(errorSpy).toHaveBeenCalledWith('setModeratorPermission event insert failed', expect.objectContaining({ key: PERMISSION_KEYS[0] }))
+  })
+})
+
+describe('applyListingTransition effects', () => {
+  const actor = { userId: 'admin-1', role: 'admin' } as never
+  const seed = (extra: Record<string, unknown> = {}) => createFakeDb({ listings: [{ id: 'l1', status: 'active', slug: 's1', title: 'Flat', user_id: 'owner-1', ...extra }] })
+  it('refreshes the index and the detail page in every locale, and notifies the owner with the title and link', async () => {
+    const { applyListingTransitionByStatus } = await import('@/modules/listings/actions/applyListingTransition')
+    const { routing } = await import('@/i18n/routing')
+    const db = seed()
+    expect(await applyListingTransitionByStatus('l1', 'sold', actor, db.client as never)).toEqual({ ok: true, nextStatus: 'sold', listingId: 'l1' })
+    for (const locale of routing.locales) {
+      expect(h.revalidatePath).toHaveBeenCalledWith(`/${locale}/listings`, 'page')
+      expect(h.revalidatePath).toHaveBeenCalledWith(`/${locale}/listings/s1`, 'page')
+    }
+    expect(h.createNotification).toHaveBeenCalledWith(expect.objectContaining({ userId: 'owner-1', title: 'Flat', link: '/listings/s1' }))
+  })
+  it('no slug: only the index is refreshed; no title: the notice carries the id; no link', async () => {
+    const { applyListingTransitionByStatus } = await import('@/modules/listings/actions/applyListingTransition')
+    const { routing } = await import('@/i18n/routing')
+    await applyListingTransitionByStatus('l1', 'sold', actor, seed({ slug: null, title: null }).client as never)
+    expect(h.revalidatePath).toHaveBeenCalledTimes(routing.locales.length)
+    expect(h.createNotification).toHaveBeenCalledWith(expect.objectContaining({ title: 'l1', link: undefined }))
+  })
+  it('the actor who owns the listing is not notified', async () => {
+    const { applyListingTransitionByStatus } = await import('@/modules/listings/actions/applyListingTransition')
+    await applyListingTransitionByStatus('l1', 'sold', actor, seed({ user_id: 'admin-1' }).client as never)
+    expect(h.createNotification).not.toHaveBeenCalled()
+  })
+  it('a lost race: conflict, nothing refreshed or notified, and the log names the actor', async () => {
+    const { applyListingTransitionByStatus } = await import('@/modules/listings/actions/applyListingTransition')
+    const db = seed()
+    db.fail({ table: 'listings', op: 'update', error: null })
+    expect((await applyListingTransitionByStatus('l1', 'sold', actor, db.client as never)).ok).toBe(false)
+    expect(h.revalidatePath).not.toHaveBeenCalled()
+    expect(warnSpy).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({ actor: 'admin-1', rows: 0 }))
+  })
+})
+
+describe('AdminListingsPage past its guard', () => {
+  const rows = [
+    { id: 'a', title: 'Sea villa', status: 'active', is_premium: true, created_at: '2026-01-03', expires_at: '2999-01-01', user_id: 'u1' },
+    { id: 'b', title: 'City flat', status: 'pending', is_premium: false, created_at: '2026-01-02', expires_at: null, user_id: 'u2' },
+    { id: 'c', title: 'Old villa', status: 'active', is_premium: false, created_at: '2026-01-01', expires_at: '2000-01-01', user_id: 'u3' },
+  ]
+  async function open(sp: Record<string, string> = {}, rpc: unknown = { data: [] }) {
+    const db = createFakeDb({ listings: rows, users: [] })
+    h.client = { ...db.client, rpc: vi.fn(async () => rpc) }
+    const { default: Page } = await import('@/app/admin/listings/page')
+    const { render } = await import('@testing-library/react')
+    render(await Page({ searchParams: Promise.resolve(sp) }) as never)
+    return { db, props: h.tableProps as Record<string, unknown>, main: db.log.find(e => e.columns?.includes('owner:users')) }
+  }
+  it('default: every row newest first, 25 a page from zero, the locale resolved, audit counts head only', async () => {
+    const { db, props, main } = await open()
+    expect(h.getAdminLocale).toHaveBeenCalledTimes(1)
+    expect((props.listings as { id: string }[]).map(r => r.id)).toEqual(['a', 'b', 'c'])
+    expect(main?.orders).toEqual([{ column: 'created_at', ascending: false }])
+    expect(main?.range).toEqual([0, 24])
+    expect(props).toMatchObject({ total: 3, page: 1, perPage: 25, activeStatus: '', searchQuery: '', activeTab: 'all', activeVisibility: '', activeReason: '' })
+    const audits = db.log.filter(e => e.head === true)
+    expect(audits).toHaveLength(3)
+    // 2, not 1: this prototype's fake does not evaluate or() and counts the active row that has not expired. The fake of R6 does, and the real test expects 1.
+    expect(props.auditCounts).toEqual({ total: 2, expired: 1, noExpiry: 0 })
+  })
+  it('the premium tab and the status filter narrow the rows; another tab does not', async () => {
+    expect(((await open({ tab: 'premium' })).props.listings as { id: string }[]).map(r => r.id)).toEqual(['a'])
+    expect(((await open({ tab: 'other' })).props.listings as unknown[])).toHaveLength(3)
+    expect(((await open({ status: 'pending' })).props.listings as { id: string }[]).map(r => r.id)).toEqual(['b'])
+  })
+  it('the page parameter moves the range, and a bad page falls back to the first', async () => {
+    expect((await open({ page: '3' })).main?.range).toEqual([50, 74])
+    expect((await open({ page: '-4' })).main?.range).toEqual([0, 24])
+  })
+  it('the visibility filter reaches the query', async () => {
+    expect(((await open({ visibility: 'visible' })).props.listings as { id: string }[]).map(r => r.id)).toEqual(['a'])
+  })
+  it('the search filter: words in the title, owner matches by name and e-mail, an exact id', async () => {
+    const { main } = await open({ q: 'sea villa' }, { data: [{ id: 'mail-owner' }] })
+    const or = main?.filters.find(f => f[1] === 'or')?.[2] as string
+    expect(or).toContain('and(title.ilike')
+    expect(or).toContain('user_id.in.(mail-owner)')
+    const uuid = (await open({ q: LISTING })).main?.filters.find(f => f[1] === 'or')?.[2] as string
+    expect(uuid).toContain(`id.eq.${LISTING}`)
+    expect((await open({ q: 'word' })).main?.filters.find(f => f[1] === 'or')?.[2]).not.toContain('user_id.in')
+  })
+})

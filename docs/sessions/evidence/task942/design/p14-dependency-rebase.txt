@@ -1,0 +1,20 @@
+﻿OK: no entry: an updated lock file stays stale; Independent review scope is stale
+OK: entry, cases rerun on the update: valid; no error
+OK: entry, cases not rerun: refused; Security report scope hash is stale
+OK: lock file only, cases rerun: valid; no error
+OK: tsconfig.json listed: refused; Independent review scope is stale
+OK: .nvmrc listed: refused; Independent review scope is stale
+OK: a script of package.json changed: refused; rebases: a dependency entry covers dependency versions only; another field of package.json changed
+OK: npm overrides added: refused; rebases: a dependency entry covers dependency versions only; another field of package.json changed
+OK: another file changed under the entry: refused; Independent review scope is stale
+OK: an approver that is not reviewed: refused; Independent review scope is stale
+OK: an approver without the files in scope: refused; Independent review scope is stale
+OK: the contract approving itself: refused; Independent review scope is stale
+OK: a scope entry cannot carry a dependency file, as today; Independent review scope is stale
+OK: a later scope entry keeps a report of the dependency digest; no error
+scenarios 14; as expected 14
+real contracts 21: same result old and new 21, different 0
+patched case-test-rebase.selftest.mjs: exit 0; pass 5, fail 0
+patched governance-contract.selftest.mjs: exit 0; pass 17, fail 0
+patched scope-rebase.selftest.mjs: exit 0; pass 9, fail 0
+patched security-contract.selftest.mjs: exit 0; pass 22, fail 0

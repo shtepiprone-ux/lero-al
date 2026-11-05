@@ -5,7 +5,7 @@
   "kind": "product",
   "qaProfile": "Q4",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md",
-  "taskSha256": "909bce158accf7ff80583348c882fc5cc67b5046a31f47d8fdade9f5637c894e",
+  "taskSha256": "b415a1275e94902ec52dca4746af57af3bbfc33dbcb67562ae13f7d838b0f67d",
   "scope": [
     "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
     "src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts",
@@ -110,7 +110,13 @@
     "src/lib/getExchangeRateServer.ts",
     "src/app/admin/listings/__tests__/page.test.tsx",
     "src/modules/admin/actions/__tests__/permissions.failures.test.ts",
-    "src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts"
+    "src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "bun.lockb",
+    "src/tests/__tests__/dependencyVersions.test.ts"
   ],
   "inputs": [
     "src/app/admin/listings/page.tsx",
@@ -735,6 +741,24 @@
       ],
       "testFile": "src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx",
       "testName": "AdminListingsTable — refreshes [SEC-931-FE-TABLE-REFRESH] a premium save, a delete and a status change refresh the router, and new props replace the rows"
+    },
+    {
+      "id": "SEC-931-SRV-DEP-FLOOR-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A dependency cannot go back below the version that closes the critical advisories with no test noticing",
+      "actor": "A change of the lock file",
+      "resource": "next, eslint-config-next and @sentry/nextjs in package-lock.json",
+      "input": "the real lock file; inline 15.5.27, 10.77.0, 15.10.0 and a missing entry",
+      "response": "the real versions at their floors or above; the lower versions and the missing entry refused; 15.10.0 accepted",
+      "forbiddenEffects": [
+        "a version below the floor passing",
+        "a text compare accepting 15.5.9 or refusing 15.10.0"
+      ],
+      "testFile": "src/tests/__tests__/dependencyVersions.test.ts",
+      "testName": "dependency floors [SEC-931-SRV-DEP-FLOOR-DENY] the lock file holds each updated package at its floor or above"
     }
   ]
 }

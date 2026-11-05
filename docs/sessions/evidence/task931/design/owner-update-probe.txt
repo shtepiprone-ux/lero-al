@@ -1,0 +1,4 @@
+﻿targets ["test-results/task941-review2/r12-scan,","test-results/task931-r4-proto","test-results/task931-r4-proto/fake.generated.ts","test-results/task931-r4-proto/holes.test.tsx"]
+executor hook []
+npm test script: vitest run
+d18 runs: import { spawnSync } from 'node:child_process'; // const r = spawnSync('npx', ['vitest', 'run', '--retry=0', '--reporter=json', `--outputFile=${out}`], {

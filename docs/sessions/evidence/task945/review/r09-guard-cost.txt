@@ -1,0 +1,3 @@
+git status of the whole tree: 103 ms, 7583 entries
+git status of the roots: 29 ms, 0 entries
+the CI lint config on two gate files: 377 ms, exit 0

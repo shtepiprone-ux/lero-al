@@ -5,7 +5,7 @@
   "kind": "product",
   "qaProfile": "Q4",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md",
-  "taskSha256": "1b9cf4c92a545385c2064719db9ee6636c34333a090e4b1e300aeb2821bd4f54",
+  "taskSha256": "aeed212447173073a1a6456855561af2fd4eaf014eeb98eda656b02b7aef8650",
   "scope": [
     "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
     "src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts",

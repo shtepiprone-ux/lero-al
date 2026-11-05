@@ -1,0 +1,10 @@
+AGENTS.md: tracked true, changed on branch true, held by []
+CLAUDE.md: tracked true, changed on branch true, held by [945:governance:planned 935:governance:reviewed]
+.codex/RULES.md: tracked false, changed on branch false, held by []
+docs/orchestrator-procedures.md: tracked true, changed on branch true, held by [935:governance:reviewed]
+docs/governance-enforcement.md: tracked true, changed on branch false, held by []
+.npmrc: tracked true, changed on branch false, held by []
+.github/CODEOWNERS: tracked false, changed on branch false, held by []
+
+=== the whole suite with all of them policy paths, in memory
+SURVIVED the whole suite (own 169s applied true; whole 108s applied true): proposed correction, self-audit: every steering path is a policy path :: 

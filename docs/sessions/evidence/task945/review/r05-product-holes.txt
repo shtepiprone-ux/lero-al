@@ -1,0 +1,9 @@
+SURVIVED every related test, applied true: contactEvents lookup failure returns undefined
+SURVIVED every related test, applied true: contactEvents unexpected error returns undefined
+SURVIVED every related test, applied true: rate limit: only error AND null refuses
+AGENTS.md => ALLOWED
+CLAUDE.md => REFUSED: SECURITY TEST CONTRACT MISSING: load a valid saved task contract for these exact paths, then emit SECURITY TAS
+.claude/rules/shared/secure-code-review.md => REFUSED: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement
+scripts/workflow-gates/code-check.json => REFUSED: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement
+scripts/workflow-gates/mutation-loader.mjs => REFUSED: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement
+scripts/workflow-gates/audit-baseline.json => REFUSED: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement

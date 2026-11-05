@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "d36d4661411ef6cd215f7080300e739cef7f83856775fd896951c532f65c7f61",
+  "taskSha256": "5f4875e7e89a2e07877bdabd2e1ef0434249989863e686f4710336b7a65ac337",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -30,7 +30,11 @@
     "scripts/workflow-gates/shell-forms-reader.selftest.mjs",
     "docs/sessions/evidence/task942/impl/base-runs-r11.txt",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-READER-DENY.break.json",
-    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-READER-DENY.txt"
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-READER-DENY.txt",
+    "scripts/check-surface-census-changed.mjs",
+    "scripts/workflow-gates/census-limit.selftest.mjs",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-CENSUS-LIMIT-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-CENSUS-LIMIT-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -171,6 +175,25 @@
       ],
       "testFile": "scripts/workflow-gates/shell-forms-reader.selftest.mjs",
       "testName": "[GOV-942-HOOK-SHELL-READER-DENY] A file changed through a call with its path past the reader's bound, a Windows launcher, a manager option, a repeated text flag, the text of env -S, corepack, a deeper escaped quote or a literal spread is counted as written, and a nested text in many folders costs one reading"
+    },
+    {
+      "id": "GOV-942-CI-CENSUS-LIMIT-DENY",
+      "invariant": "The census limit counts the files the gate can census, and more than the limit of them still fail closed",
+      "actor": "CI on a pull request",
+      "resource": "runPipeline of check-surface-census-changed.mjs",
+      "input": "an injected mapping with 0, 300, 301 and 2000 candidates, and one with 5000 changed paths and no candidate; the limit as committed",
+      "response": "no fail-closed result for 0, 300 and the mapping with no candidate; changed-file-limit-exceeded with the count of candidates for 301 and 2000; the mapper asked with a limit of Infinity",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "more files to census than the limit passing the gate",
+        "a branch that changes only paths the mapper excludes staying red",
+        "the limit raised to make the branch pass"
+      ],
+      "testFile": "scripts/workflow-gates/census-limit.selftest.mjs",
+      "testName": "[GOV-942-CI-CENSUS-LIMIT-DENY] The census limit counts the files the gate can census, and more than the limit of them still fail closed"
     }
   ]
 }

@@ -1,0 +1,40 @@
+﻿.claude/hooks/block-mutating-git.ps1: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/hooks/orchestrator-response-gate.ps1: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/rules/create/03-publication.md: 2 commits; last 8899d9c42 governance(Task943): partial implementation - file-mutating commands, API words and target spellings
+   all 8899d9c42 23206fb7f
+.claude/rules/review/03-decision-closure.md: 4 commits; last 8899d9c42 governance(Task943): partial implementation - file-mutating commands, API words and target spellings
+   all 8899d9c42 ad6e1b08e 94288edbb 23206fb7f
+.claude/rules/review/04-contract-rebases.md: 1 commits; last 8899d9c42 governance(Task943): partial implementation - file-mutating commands, API words and target spellings
+   all 8899d9c42
+.claude/rules/shared/git-publication.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/rules/shared/role-boundaries.md: 2 commits; last 94288edbb governance(Task935): governance contracts, independent approval hook, CI policy diff and rule-only r
+   all 94288edbb 23206fb7f
+.claude/rules/shared/security-testing.md: 1 commits; last 94288edbb governance(Task935): governance contracts, independent approval hook, CI policy diff and rule-only r
+   all 94288edbb
+.claude/rules/shared/workflow-ci.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/rules/shared/workflow-contract.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/rules/shared/workflow-evidence.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/rules/shared/workflow-gates.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+.claude/skills/review-task/SKILL.md: 1 commits; last 23206fb7f governance: PR-only main, push-handoff guard and CI status tooling
+   all 23206fb7f
+reviewed governance contracts holding each path:
+hooks/block-mutating-git.ps1 935:reviewed
+hooks/orchestrator-response-gate.ps1 935:reviewed
+create/03-publication.md 935:reviewed 943:reviewed
+review/03-decision-closure.md 935:reviewed 940:reviewed 943:reviewed
+review/04-contract-rebases.md 943:reviewed
+shared/git-publication.md 935:reviewed
+shared/role-boundaries.md 935:reviewed
+shared/security-testing.md 935:reviewed
+shared/workflow-ci.md 935:reviewed
+shared/workflow-contract.md 935:reviewed
+shared/workflow-evidence.md 935:reviewed
+shared/workflow-gates.md 935:reviewed
+review-task/SKILL.md 935:reviewed

@@ -1,0 +1,93 @@
+src/lib/i18n/listingStatusLabel.ts: 3 defects, 3 caught, 0 not caught, 0 not tried, 0 undecided
+exit 0 signal null 40 s
+
+scripts/check-listing-visibility.mjs: 0 defects, 0 caught, 0 not caught, 0 not tried, 0 undecided
+exit 0 signal null 0 s
+
+src/components/admin/AdminListingsTable.tsx: 31 defects, 18 caught, 13 not caught, 0 not tried, 0 undecided
+src/components/admin/AdminListingsTable.tsx:58: `/` became `*`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:66: `useEffect(() => { setItems(init) }, [init])` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:66: `setItems(init)` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:77: `reason ?? null` became `((reason) && (null))`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:89: `setPremiumDialog(null)` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:90: `router.refresh()` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:100: `propertyTypes.find(pt => pt.value === previewListing.property_type)?.l` became `((propertyTypes.find(pt => pt.value === previewListing.property_type)?`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:100: `===` became `!==`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:105: `router.refresh()` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:109: `setPreviewListing(null)` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:114: `router.refresh()` became `;`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:130: `===` became `!==`, and every test still passed
+src/components/admin/AdminListingsTable.tsx:131: `||` became `&&`, and every test still passed
+exit 1 signal null 129 s
+
+src/app/admin/listings/page.tsx: 55 defects, 2 caught, 53 not caught, 0 not tried, 0 undecided
+src/app/admin/listings/page.tsx:21: `await getAdminLocale()` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:24: `sp.tab ?? 'all'` became `((sp.tab) && ('all'))`, and every test still passed
+src/app/admin/listings/page.tsx:25: `sp.status ?? ''` became `((sp.status) && (''))`, and every test still passed
+src/app/admin/listings/page.tsx:30: `sp.visibility ?? ''` became `((sp.visibility) && (''))`, and every test still passed
+src/app/admin/listings/page.tsx:31: `sp.reason ?? ''` became `((sp.reason) && (''))`, and every test still passed
+src/app/admin/listings/page.tsx:32: `max` became `min`, and every test still passed
+src/app/admin/listings/page.tsx:32: `sp.page ?? 1` became `((sp.page) && (1))`, and every test still passed
+src/app/admin/listings/page.tsx:32: `1` became `2`, and every test still passed
+src/app/admin/listings/page.tsx:32: `1` became `2`, and every test still passed
+src/app/admin/listings/page.tsx:33: `25` became `26`, and every test still passed
+src/app/admin/listings/page.tsx:34: `-` became `+`, and every test still passed
+src/app/admin/listings/page.tsx:34: `1` became `2`, and every test still passed
+src/app/admin/listings/page.tsx:34: `*` became `/`, and every test still passed
+src/app/admin/listings/page.tsx:35: `+` became `-`, and every test still passed
+src/app/admin/listings/page.tsx:35: `-` became `+`, and every test still passed
+src/app/admin/listings/page.tsx:35: `1` became `2`, and every test still passed
+src/app/admin/listings/page.tsx:41: `qTrimmed` became `!(qTrimmed)`, and every test still passed
+src/app/admin/listings/page.tsx:46: `100` became `101`, and every test still passed
+src/app/admin/listings/page.tsx:47: `ownerIds = (nameMatches ?? []).map(u => u.id)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:47: `nameMatches ?? []` became `((nameMatches) && ([]))`, and every test still passed
+src/app/admin/listings/page.tsx:53: `emailMatches` became `!(emailMatches)`, and every test still passed
+src/app/admin/listings/page.tsx:55: `ownerIds = [...new Set([...ownerIds, ...emailIds])]` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:69: `false` became `true`, and every test still passed
+src/app/admin/listings/page.tsx:73: `===` became `!==`, and every test still passed
+src/app/admin/listings/page.tsx:73: `query = query.eq('is_premium', true)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:73: `true` became `false`, and every test still passed
+src/app/admin/listings/page.tsx:75: `status` became `!(status)`, and every test still passed
+src/app/admin/listings/page.tsx:75: `query = query.eq('status', status)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:76: `qTrimmed` became `!(qTrimmed)`, and every test still passed
+src/app/admin/listings/page.tsx:82: `>` became `<=`, and every test still passed
+src/app/admin/listings/page.tsx:82: `1` became `2`, and every test still passed
+src/app/admin/listings/page.tsx:85: `>` became `<=`, and every test still passed
+src/app/admin/listings/page.tsx:85: `orParts.push(`user_id.in.(${ownerIds.join(',')})`)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:85: `0` became `1`, and every test still passed
+src/app/admin/listings/page.tsx:89: `FULL_UUID.test(qTrimmed)` became `!(FULL_UUID.test(qTrimmed))`, and every test still passed
+src/app/admin/listings/page.tsx:89: `orParts.push(`id.eq.${qTrimmed}`)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:91: `query = query.or(orParts.join(','))` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:94: `query = applyAdminListingsVisibility(query, visibility, reason)` became `;`, and every test still passed
+src/app/admin/listings/page.tsx:99: `true` became `false`, and every test still passed
+src/app/admin/listings/page.tsx:102: `true` became `false`, and every test still passed
+src/app/admin/listings/page.tsx:106: `true` became `false`, and every test still passed
+src/app/admin/listings/page.tsx:112: `auditTotalResult.count ?? 0` became `((auditTotalResult.count) && (0))`, and every test still passed
+src/app/admin/listings/page.tsx:112: `0` became `1`, and every test still passed
+src/app/admin/listings/page.tsx:113: `auditExpiredResult.count ?? 0` became `((auditExpiredResult.count) && (0))`, and every test still passed
+src/app/admin/listings/page.tsx:113: `0` became `1`, and every test still passed
+src/app/admin/listings/page.tsx:114: `auditNoExpiryResult.count ?? 0` became `((auditNoExpiryResult.count) && (0))`, and every test still passed
+src/app/admin/listings/page.tsx:114: `0` became `1`, and every test still passed
+src/app/admin/listings/page.tsx:119: `( <AdminPageFrame width="shell"> <AdminPageHeader title={t('listings_t` became `undefined`, and every test still passed
+src/app/admin/listings/page.tsx:121: `count ?? 0` became `((count) && (0))`, and every test still passed
+src/app/admin/listings/page.tsx:121: `0` became `1`, and every test still passed
+src/app/admin/listings/page.tsx:123: `listings ?? []` became `((listings) && ([]))`, and every test still passed
+src/app/admin/listings/page.tsx:124: `count ?? 0` became `((count) && (0))`, and every test still passed
+src/app/admin/listings/page.tsx:124: `0` became `1`, and every test still passed
+exit 1 signal null 249 s
+
+scripts/workflow-gates/check-workflow.mjs: 0 defects, 0 caught, 0 not caught, 0 not tried, 0 undecided
+exit 0 signal null 0 s
+
+scripts/workflow-gates/hook-differential.mjs: 0 defects, 0 caught, 0 not caught, 0 not tried, 0 undecided
+exit 0 signal null 0 s
+
+=== the three files above that reported 0 defects, now with --all: without it the command compares with HEAD, and these lines are committed
+
+
+exit null signal SIGTERM 540 s
+
+scripts/workflow-gates/check-workflow.mjs: not run, the budget of this run ended
+
+scripts/workflow-gates/hook-differential.mjs: not run, the budget of this run ended
+

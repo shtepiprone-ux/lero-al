@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-945-HOOK-SHELL-WRITE-DENY",
+  "target": "scripts/workflow-gates/code-check.mjs",
+  "find": "const changed = Object.keys(versions).filter(file => versions[file] !== state.baseline[file]);",
+  "replace": "const changed = Object.keys(state.named).filter(file => versions[file] !== state.baseline[file]);"
+}

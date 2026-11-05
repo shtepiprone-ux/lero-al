@@ -87,6 +87,10 @@
       ],
       [
         "node",
+        "scripts/workflow-gates/change-review.mjs"
+      ],
+      [
+        "node",
         "scripts/workflow-gates/publication.mjs"
       ],
       [

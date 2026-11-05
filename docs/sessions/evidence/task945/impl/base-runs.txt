@@ -1,0 +1,13 @@
+# Task 945 base run before the first write (HEAD 929558a66ce5446297ebe127f5a734e17bfc1953)
+platform win32; node v22.22.3; cwd C:/Claude_Code_Projects/lero-al; UTC 2026-11-04T19:22:04Z
+
+## command: node scripts/workflow-gates/selftests.mjs
+exit code: 0
+# tests 207
+# suites 0
+# pass 207
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14964.2447

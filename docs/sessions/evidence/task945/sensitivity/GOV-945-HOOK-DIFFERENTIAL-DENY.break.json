@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-945-HOOK-DIFFERENTIAL-DENY",
+  "target": "scripts/workflow-gates/hook-differential.mjs",
+  "find": "lost++;",
+  "replace": "/* a lost target is not counted */"
+}

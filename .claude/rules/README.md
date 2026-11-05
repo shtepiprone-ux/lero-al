@@ -32,6 +32,9 @@ checks and post-merge main CI are separate boundaries for every model.
    companion files. Every product task requires frontend AND server security tests, named by Opus, implemented or
    rerun by Sonnet, and independently verified by Opus. The contract defines the narrow Q0-only N/A exception.
 
+   Every role and model also follows [shared/secure-code-review.md](shared/secure-code-review.md): threats before code,
+   how to write it, what runs by itself after it, and how a session that wrote none of it reviews it.
+
 7. Opus and Sonnet communicate with the owner in Ukrainian only; Russian replies and mixed Ukrainian/Russian prose
    are forbidden. Read [shared/project-language.md](shared/project-language.md). Every project file you write is
    English, owner quotes included; only product localization data may be in another language.

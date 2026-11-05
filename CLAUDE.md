@@ -83,6 +83,12 @@ The project router injects the compact `create-task` or `review-task` parent for
 the compact `execute-task` parent for ordinary Sonnet sessions. The dedicated executor agent preloads the same skill.
 These injections never replace the current-session reads required by a phase file.
 
+`scripts/workflow-gates/code-check.mjs` runs by itself after every write and before an agent or subagent finishes: the
+quality of the written files, then their effect on other code, then whether the tests notice the written lines broken on
+purpose, in memory only. A failure is fixed at once, never reported as done. A green tool is no proof of behaviour no
+check reaches. `.claude/rules/shared/secure-code-review.md` is the flow of every task and model, and
+`scripts/workflow-gates/change-review.mjs` reviews a whole change in CI, whichever tool wrote it.
+
 ## Detailed sources
 
 - `docs/golden-rules.md` — compact index for GR-0…GR-12 receipt fragments.

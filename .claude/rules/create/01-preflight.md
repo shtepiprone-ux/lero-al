@@ -11,7 +11,8 @@ Load startup rules first; read the complete assignment before investigating impl
 4. Read the complete existing task, ledger and amendments when revising, plus the owner's assignment/decisions.
    Identify and report its current required first action. For a new task, establish the requested outcome and
    preservation boundaries from the assignment; do not invent an existing task or defect.
-5. Select the minimal task bundle and applicable Agent Contract fragments. Visible scope includes
+5. Read `shared/secure-code-review.md` section 1: the kickoff's `Assets and boundaries` row answers its four questions.
+6. Select the minimal task bundle and applicable Agent Contract fragments. Visible scope includes
    `docs/rules/agent-contract/p0-16-16c-ui-canonical.md` and `docs/rules/agent-contract/p0-16d-surface-census.md`.
    Read `shared/claim-evidence-contract.md`, `shared/security-testing.md` and selected companions. Read historical
    orchestrator documents only at the sections needed later. Do not say "read all docs".

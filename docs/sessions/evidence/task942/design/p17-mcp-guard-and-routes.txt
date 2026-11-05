@@ -1,0 +1,38 @@
+﻿=== the hook on the real evaluateHook
+tools 246; refused 98; allowed 148
+refused by the hook and in the deny list agree on every tool: true
+a tool that does not exist yet: refused
+the same tool through another server name: refused
+a read through another server name: allowed
+another server: allowed
+another server, a word that writes: allowed
+an Edit event still reaches the write branch: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow 
+spawned hook: exit 0; decision deny
+=== validateSettings on the real settings with the addition, in memory
+as planned: no error
+the write group removed, the MCP group left: PreToolUse: the security hook is not registered for writes
+the MCP group removed: PreToolUse: the security hook is not registered for the Vercel MCP tools
+the MCP matcher narrowed: PreToolUse: mandatory hook matcher is narrowed or changed
+another hook on the MCP matcher: PreToolUse: mandatory hook matcher is narrowed or changed
+one deny rule dropped: permissions.deny: missing mcp__plugin_vercel_vercel__create_*
+a mandatory hook left to fail open: PreToolUse: hook runtime failures must block
+the settings as committed today, under the new check: 46 errors, so the settings and the check change together
+=== the hook self-tests on the patched copy, the settings as committed
+patched diff-hook.selftest.mjs: exit 0; pass 40, fail 0
+patched governance-contract.selftest.mjs: exit 0; pass 17, fail 0
+patched hook-syntax.selftest.mjs: exit 0; pass 3, fail 0
+patched security-contract.selftest.mjs: exit 0; pass 22, fail 0
+patched session-role.selftest.mjs: exit 0; pass 12, fail 0
+patched shell-forms-classes.selftest.mjs: exit 0; pass 1, fail 0
+patched shell-forms-residual.selftest.mjs: exit 0; pass 1, fail 0
+patched shell-forms.selftest.mjs: exit 0; pass 1, fail 0
+=== D30: a dependency file in a product contract, the hook and the rerun route
+Task 931 with all five files in scope, plan errors:[]
+npm install --save-exact next@15.5.28 eslint-config-next@15.5.28: targets ["package.json","package-lock.json","pnpm-lock.yaml","yarn.lock","bun.lockb"]
+npm install @sentry/nextjs@10.78.0: targets ["package.json","package-lock.json","pnpm-lock.yaml","yarn.lock","bun.lockb"]
+governance-report in memory on the reviewed Task 941 contract, nothing written: status passed; cases 5; passed 5; errors []; scope is current true
+docs/sessions/evidence/task923/security/d8-d9-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true
+docs/sessions/evidence/task923/security/owner-fixes-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true
+docs/sessions/evidence/task927/security/make-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true
+=== the check of Task 945 on the updated manifests, in a temporary folder
+checkDependencies: {"failures":[],"notes":["68 known high or critical advisories remain open in scripts/workflow-gates/audit-baseline.json"]}

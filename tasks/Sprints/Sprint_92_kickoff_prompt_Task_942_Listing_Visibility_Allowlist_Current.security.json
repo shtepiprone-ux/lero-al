@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.md",
-  "taskSha256": "5f4875e7e89a2e07877bdabd2e1ef0434249989863e686f4710336b7a65ac337",
+  "taskSha256": "2bd217fc8517b7d165d04cc4cff98b23413c380855c2a37f8e3129fddefcc743",
   "scope": [
     "scripts/check-listing-visibility.mjs",
     "scripts/workflow-gates/listing-visibility-allowlist.selftest.mjs",
@@ -34,7 +34,19 @@
     "scripts/check-surface-census-changed.mjs",
     "scripts/workflow-gates/census-limit.selftest.mjs",
     "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-CENSUS-LIMIT-DENY.break.json",
-    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-CENSUS-LIMIT-DENY.txt"
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-CI-CENSUS-LIMIT-DENY.txt",
+    "scripts/workflow-gates/contract.mjs",
+    "scripts/workflow-gates/cli.mjs",
+    "scripts/workflow-gates/check-workflow.mjs",
+    ".claude/settings.json",
+    ".claude/rules/review/04-contract-rebases.md",
+    "scripts/workflow-gates/dependency-rebase.selftest.mjs",
+    "scripts/workflow-gates/vercel-mcp.selftest.mjs",
+    "docs/sessions/evidence/task942/design/vercel-mcp-tools.txt",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-REBASE-DEPENDENCY-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-REBASE-DEPENDENCY-DENY.txt",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-MCP-VERCEL-WRITE-DENY.break.json",
+    "docs/sessions/evidence/task942/sensitivity/GOV-942-MCP-VERCEL-WRITE-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -194,6 +206,99 @@
       ],
       "testFile": "scripts/workflow-gates/census-limit.selftest.mjs",
       "testName": "[GOV-942-CI-CENSUS-LIMIT-DENY] The census limit counts the files the gate can census, and more than the limit of them still fail closed"
+    },
+    {
+      "id": "GOV-942-REBASE-DEPENDENCY-ALLOW",
+      "invariant": "A dependency update keeps a reviewed contract valid when an entry by a reviewed product contract holds and all its cases ran on the update",
+      "actor": "the approver of a product task",
+      "resource": "review.rebases and the report of a reviewed contract on a Git fixture",
+      "input": "both dependency files changed, and the lock file alone, with a dependency entry and a rerun report; a later scope entry",
+      "response": "no error from validateContract at release, validateReport and validateDiff",
+      "layer": "ci",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "a valid update refused",
+        "a report of the update going stale through a later entry"
+      ],
+      "testFile": "scripts/workflow-gates/dependency-rebase.selftest.mjs",
+      "testName": "[GOV-942-REBASE-DEPENDENCY-ALLOW] A dependency update keeps a reviewed contract valid when an entry by a reviewed product contract holds and all its cases ran on the update"
+    },
+    {
+      "id": "GOV-942-REBASE-DEPENDENCY-DENY",
+      "invariant": "A dependency update without a rerun, beyond versions or without a reviewed approver leaves the contract stale",
+      "actor": "an agent or a change that skips the rerun",
+      "resource": "review.rebases and the report of a reviewed contract on a Git fixture",
+      "input": "no entry; no rerun; tsconfig or .nvmrc listed; a changed script; overrides added; another file changed; an approver not reviewed or not scoping the file; self-approval; a scope entry listing a dependency file",
+      "response": "a named error for each",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an approval surviving an update its cases did not run on",
+        "a script or override entering through a version entry",
+        "a contract approving itself"
+      ],
+      "testFile": "scripts/workflow-gates/dependency-rebase.selftest.mjs",
+      "testName": "[GOV-942-REBASE-DEPENDENCY-DENY] A dependency update without a rerun, beyond versions or without a reviewed approver leaves the contract stale"
+    },
+    {
+      "id": "GOV-942-MCP-VERCEL-WRITE-DENY",
+      "invariant": "A Vercel MCP tool that is not a known read is refused for every role",
+      "actor": "any agent session",
+      "resource": "evaluateHook and the spawned security hook",
+      "input": "the 98 write tools of the inventory, a tool name no list has seen and the same tool under another server name",
+      "response": "VERCEL MCP WRITE REFUSED, and permissionDecision deny from the spawned hook",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": true,
+      "forbiddenEffects": [
+        "an agent deploying, promoting or rolling back",
+        "an agent changing an environment variable, a firewall rule or a DNS record",
+        "an agent buying a domain",
+        "a new write tool open until someone looks at it"
+      ],
+      "testFile": "scripts/workflow-gates/vercel-mcp.selftest.mjs",
+      "testName": "[GOV-942-MCP-VERCEL-WRITE-DENY] A Vercel MCP tool that is not a known read is refused for every role"
+    },
+    {
+      "id": "GOV-942-MCP-VERCEL-READ-ALLOW",
+      "invariant": "A Vercel MCP read and every tool of another server run as before",
+      "actor": "any agent session",
+      "resource": "evaluateHook",
+      "input": "the 148 read tools of the inventory, a read under another server name, a tool of another server and a Sonnet Edit",
+      "response": "no error for the tools; the Edit still reaches the write branch",
+      "layer": "hook",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "reading logs refused",
+        "the write branch skipped for an Edit"
+      ],
+      "testFile": "scripts/workflow-gates/vercel-mcp.selftest.mjs",
+      "testName": "[GOV-942-MCP-VERCEL-READ-ALLOW] A Vercel MCP read and every tool of another server run as before"
+    },
+    {
+      "id": "GOV-942-MCP-VERCEL-SETTINGS-DENY",
+      "invariant": "The settings cannot lose the refusal of the Vercel MCP write tools",
+      "actor": "a change of the settings",
+      "resource": "validateSettings on the real settings",
+      "input": "the real settings, and in memory: the hook moved off the write tools, the group removed, the matcher narrowed, another hook on it, a deny rule dropped, a hook left to fail open",
+      "response": "an empty list for the real settings and a named error for each break",
+      "layer": "ci",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "forbiddenEffects": [
+        "the refusal removed with CI green",
+        "the write guard narrowed through the new exception"
+      ],
+      "testFile": "scripts/workflow-gates/vercel-mcp.selftest.mjs",
+      "testName": "[GOV-942-MCP-VERCEL-SETTINGS-DENY] The settings cannot lose the refusal of the Vercel MCP write tools"
     }
   ]
 }

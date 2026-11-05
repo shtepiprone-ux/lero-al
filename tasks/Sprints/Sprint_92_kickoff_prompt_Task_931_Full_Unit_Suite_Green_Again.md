@@ -1,4 +1,4 @@
-# Task 931 (revision 4) — The full unit suite green again: no wait counted in event-loop turns, no query double blind to its filters, no test hole the Task 945 review measured
+# Task 931 (revision 5) — The full unit suite green again: no wait counted in event-loop turns, no query double blind to its filters, no test hole the Task 945 review measured
 
 Sprint 92. P1. QA profile **Q4** (the changed tests guard auth, ownership, status and permission invariants of three reviewed
 contracts, `docs/qa-profiles.md`). Revision 3 by Opus, 2026-11-02, on PR #12 (D7). Revisions 1-2 (approved 2026-11-01) stay at
@@ -7,9 +7,11 @@ reviewed rebase entries name that sidecar as their approving contract (C23, C24)
 
 Revision 4 by the Task 945 review 1 session, 2026-11-05, on the owner's decision D29: class D below, R15 to R22, AC10 to AC12; revision 3 is otherwise unchanged and has not been implemented.
 
+Revision 5 by the same session, 2026-11-05, on the owner's decision D30: class E below, R23 to R25, AC13 and AC14. Revisions 3 and 4 are otherwise unchanged and have not been implemented. The owner then ran the update on the design tree: its result is known (C101-C103), and the tree went back to `HEAD`, because that run is evidence and not the change (C105).
+
 ## 1. Mode, task type and rule bundle
 
-Product task, test-only in its final diff. **Implementer: Sonnet, fresh session (`execute-task`). Reviewer: Opus, another
+Product task, test-only in its final diff apart from the two dependency manifests of R23. **Implementer: Sonnet, fresh session (`execute-task`). Reviewer: Opus, another
 session.** Types (`docs/rule-index.md`): unit/component tests, test doubles, auth and permission guards, ownership filters, cron
 route. Bundle: `.claude/rules/shared/security-testing.md`, `security-test-quality.md`, `security-test-environment.md`,
 `workflow-gates.md` with its companions, `claim-evidence-contract.md`, `task-readiness.md`. No visible UI change: `Scope: none`.
@@ -34,6 +36,7 @@ Revision 3 removes both causes of tests that pass or fail by accident, not only 
   permission and a failed audit insert can each turn into another answer with no test noticing (C59-C68). The public pages can stop being refreshed after a status change
   with no test noticing (C69-C71). No test renders the admin listings page past its guard, 2 of its 55 defects are noticed (C72-C74), and 18 of the 31 of its table (C75).
   A prototype closed these with tests alone: 15 tests on the real source, 28 of 28 named defects noticed in memory (C79, C80). No production behaviour changes.
+- **Class E, the dependency update (D30).** The production audit shows 2 critical and 9 high today; the update of `next`, `eslint-config-next` and `@sentry/nextjs` takes it to 0 critical and 9 high on the manifests (C92). What stays high needs a major version, which is out. Task 942 R16 gives the reviewed contracts a way through: each keeps its approval only with all its cases rerun on the update (C86).
 
 Every changed test keeps its case IDs and exact titles, so the reviewed contracts that map them are rebased, not reopened (D12).
 
@@ -50,6 +53,8 @@ The existing entries by this task name the archived sidecar (C23, C24) and an ap
 sidecar must stay reviewed (C25). This revision therefore lives at the active path, its approver points those entries here, and the
 archived pair is then deleted, which the Task 943 R11 check accepts because a reviewed contract of the same file name exists (C29).
 The 18 integration test files mock no Supabase factory (C13) and stay unchanged. Class D adds three test files that no reviewed contract holds (C81) and otherwise changes only files of the 70 and the shared fake, so the rebase lists of R13 stay as they are.
+
+Revision 5: the two dependency manifests of R23 are the one exception to the first sentence above, through the `dependency` entry (C86), and they can sit in a product contract's scope (C87). `npm install` counts as a write of five files for the hook (C88), so all five are in scope, and three of them stay absent, which the digest records (C89). The update adds no advisory the Task 945 check refuses and no entry from another registry (C90, C91, C100). The rerun of the reviewed contracts exists: `verify` reads a product report and writes none (C94), so each of the three has its own report script (C95, C96, C97), and `governance-report` reruns a governance contract (C98). The code imports `@sentry/nextjs` in two files (C99). The owner ran the update on the design tree, native Windows: the production audit is what the dry run said (C101, C107), the build passes (C102), and the 3 failed tests and 5 failed suites of 5952 tests are all ignored leftovers under `test-results/`, none a test of the project (C103, C104). `npm test` and the census of R5 (d) collect that folder, so R23 clears those files first, or they would stop the task with nothing wrong. With the manifests changed in the working tree every reviewed contract is stale (C105), so R23 makes the change again on the branch, with the rerun of R25. The two critical advisories left in the full tree are outside the production audit and outside this task (C109). `next.config.ts` keeps its import, which works in 10.x (C106). Not run: the case reruns of R25 on the update.
 
 ## Claim ledger
 
@@ -140,12 +145,37 @@ The 18 integration test files mock no Supabase factory (C13) and stay unchanged.
 | C83 | FACT | The permission history fields are a real gap, display only. | source: `docs/sessions/evidence/task945/review/review-1-lines.md:152-152`; observed: `e.old_allowed ?? null` |
 | C84 | FACT | The notification fields passed by the gateway are a real gap, no access decision. | source: `docs/sessions/evidence/task945/review/review-1-lines.md:156-156`; observed: `current.slug ?? null` |
 | C85 | FACT | The refreshes of the table are a real gap, no access decision. | source: `docs/sessions/evidence/task945/review/review-1-lines.md:181-181`; observed: `router.refresh()` |
+| C86 | FACT | The dependency entry of Task 942 holds only with the cases rerun on the update (executed on a copy of the gate). | source: `docs/sessions/evidence/task942/design/p14-dependency-rebase.txt:15-15`; observed: `scenarios 14; as expected 14` |
+| C87 | FACT | This contract can scope the package manager's files (executed). | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:30-30`; observed: `Task 931 with all five files in scope, plan errors:[]` |
+| C88 | FACT | The hook counts npm install as a write of five files. | source: `scripts/workflow-gates/security-hook.mjs:384-384`; observed: `const PACKAGE_FILES = ['package.json', 'package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'bun.lockb'];` |
+| C89 | FACT | The digest records a scope file that does not exist. | source: `scripts/workflow-gates/contract.mjs:40-40`; observed: `if (!existsSync(target)) return [file, { absent: true }];` |
+| C90 | FACT | The update adds no advisory the Task 945 baseline does not hold (executed on the manifests). | source: `docs/sessions/evidence/task942/design/p16-update-effects.txt:22-22`; observed: `baseline 76; after the update 68; new, which the check refuses: 0; closed: 8` |
+| C91 | FACT | The dependency check of Task 945 passes on the updated manifests (executed). | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:38-38`; observed: `checkDependencies: {"failures":[]` |
+| C92 | FACT | The update takes the production audit to 0 critical (executed on the manifests). | source: `docs/sessions/evidence/task945/review/owner-answers-1.md:11-11`; observed: `production audit from 2 critical, 9 high, 34 total to 0 critical, 9 high, 22 total` |
+| C93 | FACT | The check of Task 945 requires a version at least 7 days old. | source: `scripts/workflow-gates/code-check.json:39-39`; observed: `"minVersionAgeDays": 7` |
+| C94 | FACT | The verify command of a product contract reads its report and writes none. | source: `scripts/workflow-gates/cli.mjs:398-398`; observed: `errors.push(...validateReport(ROOT, contract, readJson(ROOT, contract.report)));` |
+| C95 | FACT | The 923 D8/D9 report script reruns the cases and refuses a failing run. | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:34-34`; observed: `docs/sessions/evidence/task923/security/d8-d9-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true` |
+| C96 | FACT | The 923 owner-fixes report script does the same. | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:35-35`; observed: `docs/sessions/evidence/task923/security/owner-fixes-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true` |
+| C97 | FACT | The 927 report script does the same. | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:36-36`; observed: `docs/sessions/evidence/task927/security/make-report.mjs: reruns through runMappedTests true; writes scopeDigest true; refuses a failing run true` |
+| C98 | FACT | A reviewed governance contract can rerun all its cases (executed in memory on Task 941). | source: `docs/sessions/evidence/task942/design/p17-mcp-guard-and-routes.txt:33-33`; observed: `status passed; cases 5; passed 5` |
+| C99 | FACT | Two files import the updated Sentry package. | source: `docs/sessions/evidence/task942/design/p16-update-effects.txt:30-30`; observed: `files importing @sentry/nextjs: 2` |
+| C100 | FACT | Every lock entry the update adds comes from the registry with an integrity value (executed on the manifests). | source: `docs/sessions/evidence/task942/design/p16-update-effects.txt:23-23`; observed: `lock entries added 14; from another registry 0; with no integrity 0` |
+| C101 | FACT | On the owner's real update the production audit is what the dry run said: no critical (executed by the owner). | source: `docs/sessions/evidence/task931/design/owner-update-run.txt:14-14`; observed: `22 vulnerabilities (5 low, 8 moderate, 9 high)` |
+| C102 | FACT | The production build passes on the update (executed by the owner). | source: `docs/sessions/evidence/task931/design/owner-update-run.txt:21-21`; observed: `Generating static pages (44/44)` |
+| C103 | FACT | The full unit run on the update: 3 tests failed of 5952 (executed by the owner). | source: `docs/sessions/evidence/task931/design/owner-update-run.txt:34-34`; observed: `5949 passed (5952)` |
+| C104 | FACT | No test file under test-results is tracked, and all 8 failed files of that run are there, so none is a test of the project; `npm test` collects the folder because the Vitest exclude does not name it. | source: `docs/sessions/evidence/task931/design/owner-update-state.txt:47-47`; observed: `tracked under test-results: 0` |
+| C105 | FACT | With the manifests changed in the working tree every reviewed contract is stale (executed). | source: `docs/sessions/evidence/task931/design/owner-update-state.txt:21-21`; observed: `reviewedFreshnessErrors now: 32` |
+| C106 | FACT | The updated Sentry package warns that the import in next.config.ts stops working in v11; it works in 10.x. | source: `docs/sessions/evidence/task931/design/owner-update-run.txt:17-17`; observed: `is deprecated and will stop working in v11` |
+| C107 | FACT | The audit of the installed tree agrees with the owner's run (executed). | source: `docs/sessions/evidence/task931/design/owner-update-state.txt:51-51`; observed: `production audit {"info":0,"low":5,"moderate":8,"high":9,"critical":0,"total":22}` |
+| C108 | FACT | The executor's hook allows removing a file under test-results (executed). | source: `docs/sessions/evidence/task931/design/owner-update-probe.txt:2-2`; observed: `executor hook []` |
+| C109 | FACT | The two critical advisories left are outside the production audit (executed). | source: `docs/sessions/evidence/task931/design/owner-update-state.txt:50-50`; observed: `critical in the full tree: proxy-addr` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12, merged once all checks are green. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract when the changed files are in its scope but are not tests of its cases, with its cases rerun green. | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
 | D12 | OWNER DECISION | D9 is extended: a later independently reviewed contract may rebase a changed case test of a reviewed contract when every case ID and test name are kept, the cases pass in CI, and the approver states each changed assertion; implemented in Task 943 before Task 931. | owner: 2026-11-02; decision: `Extend D9 (Recommended)` |
 | D13 | OWNER DECISION | No new task: every found and potential hole is closed inside the current tasks. | owner: 2026-11-02; decision: `no new task, everything within the current task; close every hole already found and every potential one` |
 | D14 | OWNER DECISION | Dependent kickoff work found in a session is done in that session, never left for a later one, as a mandatory rule. | owner: 2026-11-02; decision: `This must be done immediately, because in the next session nobody will remember it. Write it into your mandatory rules so you never forget such points and never skip them!` |
 | D29 | OWNER DECISION | The test holes the Task 945 review measured are closed in Task 931 as a revision, with no new number. | owner: 2026-11-05; decision: `I support the recommendation.` |
+| D30 | OWNER DECISION | A dependency update reaches main through a new rebase in Task 942, with no new number, with all cases of each contract rerun; Task 931 makes the change of `package.json` and the lock file. | owner: 2026-11-05; decision: `Variant A: a new rebase for the dependency update in Task 942 (no new number), with a rerun of all cases of each contract; the change of package.json and the lock file itself is led by Task 931` |
 
 ## Mobile adaptation record
 - Scope: none
@@ -165,22 +195,23 @@ The final diff changes exactly:
 - class D: new `src/app/admin/listings/__tests__/page.test.tsx`, new `src/modules/admin/actions/__tests__/permissions.failures.test.ts`, new
   `src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts`, and added tests in three of the 70: `contactEvents.test.ts`, `submitListingInquiry.test.ts`
   and `AdminListingsTable.smoke.test.tsx`. The mutation check of R22 changes nothing on disk;
+- class E: `package.json`, `package-lock.json` and new `src/tests/__tests__/dependencyVersions.test.ts`; `pnpm-lock.yaml`, `yarn.lock` and `bun.lockb` are in the sidecar only because the hook counts them as `npm install` targets (C88), and stay absent;
 - the stage/report fields of this sidecar; evidence under `docs/sessions/evidence/task931/impl-r3/` and
   `docs/sessions/evidence/task931/security/` (`report-r3.mjs`, `report-r3.json`).
 
 Edited only temporarily for the planted breaks of R10 and restored byte-for-byte: the 13 production files of C36-C45, C48, C50,
 C51. Written by the reviewer only (R13): `review.rebases` entries of the 923 D8/D9, 923 owner-fixes, 927 and 935 contracts with their
-evidence under `docs/sessions/evidence/task931/review-r3/`, the retargeted `by` of the two entries of C23 and C24, and the deletion of
+evidence under `docs/sessions/evidence/task931/review-r3/`, the `dependency` entries of R25 with the reports they rerun, the retargeted `by` of the two entries of C23 and C24, and the deletion of
 the archived 931 kickoff and sidecar. This sidecar keeps every scope file of revisions 1-2, among them the 923 D8/D9 contract file,
 because the retargeted entries list them and an approving contract must scope every listed file.
 
 Out of scope: any production behaviour change (a migrated test that exposes a real defect stops the task: `BLOCKED` with the defect);
-every runtime file of C20 and `vitest*.config.*`; the 18 `*.integration.test.ts` files; any case ID, describe title or `it` title
+every other runtime file of C20 and `vitest*.config.*`; `npm audit fix`, a major version and any package other than the three of R23; the 18 `*.integration.test.ts` files; any case ID, describe title or `it` title
 mapped by another contract; Tasks 937-939 (other red jobs); the gate code (Task 943).
 
 ## 5. Current and required behaviour
 
-Preserved: every production file byte-for-byte in the final diff; revision 1-2 requirements R1-R9 and their 17 cases (one title
+Preserved: every production file byte-for-byte in the final diff; every field of `package.json` other than the three versions of R23; revision 1-2 requirements R1-R9 and their 17 cases (one title
 renamed by R9 here); every mapped case of the 923 D8/D9, 923 owner-fixes and 927 contracts with its exact full name; the number of
 tests of each changed file, unless a test is merged into a stronger one, named in the completion report. Required: every defect R22 names is noticed by a test; no test waits by
 counting event-loop turns or sleeps a fixed time to wait for work to finish; no unit test replaces the Supabase query builder with a
@@ -190,7 +221,7 @@ double that ignores filter columns or values; the suite passes idle and with the
 
 | ID | Observable requirement | P | AC |
 |---|---|---|---|
-| R1 [C28; C29; C82; D12] | **Prerequisite.** Tasks 941, 943 and 945 are reviewed and committed before the first write; `node scripts/workflow-gates/cli.mjs plan` of this sidecar exits 0. | P1 | AC1 |
+| R1 [C28; C29; C82; C86; D12] | **Prerequisite.** Tasks 941, 943, 945 and 942 are reviewed and committed before the first write; `node scripts/workflow-gates/cli.mjs plan` of this sidecar exits 0. | P1 | AC1 |
 | R2 [C2; C3; C4; C7; C10; C33] | **Positive waits.** In every class A file, each wait for a window, a call or a state is a condition wait bounded by time, `vi.waitFor` or Testing Library `waitFor`, timeout at least 5000 ms; each wait for the nonce preparation awaits a completion signal of the real hash: the promises returned by `crypto.subtle.digest` through a pass-through spy that calls the real implementation, or a public ready signal of the component, then flushes inside `act`. No `setImmediate` turn loop and no turn budget remains in these files. | P1 | AC2 |
 | R3 [C5; C6] | **Absence checks.** Each fixed settle (`Header.google.security.test.tsx` lines 175-285, `settleBriefly` at its three uses) is classified in the completion report: a positive check after a settle (line 216, `toHaveBeenCalledTimes(2)`) becomes a condition wait; an absence check first awaits the completion signal of the work that could produce the effect (R2's digest promises, the action's promise, or a positive sibling condition), then asserts the absence. A fixed settle may stay only where no such signal exists, named `settleForAbsence` with a comment naming the effect, each site listed in the completion report. | P1 | AC2 |
 | R4 [C1; C7] | **No leak between tests.** Each class A file's `afterEach` awaits every captured digest promise and lets every pending attempt settle (or ends it through the module's public API), so a test that fails or gives up opens no window and posts no message during the next test; each `window.open` count assertion stays exact. | P1 | AC2 |
@@ -212,10 +243,13 @@ double that ignores filter columns or values; the suite passes idle and with the
 | R20 [C72; C73; C74] | **The admin listings page past its guard.** New `page.test.tsx`, the real page and the real `requireStaffPage` on a viewer double, `createFakeDb` with an `rpc` double, `AdminListingsTable` a double that records its props. Allowed: newest first, range 0-24, 25 a page, `getAdminLocale` called, the title of `listings_total` with the count, three audit reads with `head`, the audit counts and every prop the table receives; a search holds the title words, the owner ids from name and e-mail, and an exact id, and a failing e-mail search still renders the page (SEC-931-FE-PAGE-QUERY-ALLOW). Refused, with decoy rows: the premium tab, a status and each visibility value exclude what they must, another tab excludes nothing, and a bad page falls back to the first (SEC-931-FE-PAGE-QUERY-DENY). The cases SEC-931-FE-PAGE-ALLOW and SEC-931-FE-PAGE-DENY stay where they are. | P1 | AC11 |
 | R21 [C75; C76; C85] | **The table's refreshes.** In `AdminListingsTable.smoke.test.tsx`, with one named refresh double: after a premium save, a delete and a status change the router refreshes and the dialog closes as it does today; new props replace the rows; the page count is the total divided by the page size, rounded up; the tab, status and audit filters navigate with the parameters they send today; the type label of the preview uses the property type's label, or its code when it has none (SEC-931-FE-TABLE-REFRESH). | P1 | AC11 |
 | R22 [C59; C60; C61; C72; C75; C79; C80; C82] | **Proof by the mutation check.** After R15 to R21: `node scripts/workflow-gates/mutation-check.mjs --all --minutes=60 <file>` for `contactEvents.ts`, `submitListingInquiry.ts`, `src/modules/admin/actions/permissions.ts`, `applyListingTransition.ts`, `src/app/admin/listings/page.tsx` and `src/components/admin/AdminListingsTable.tsx`, one file a run, saved under `docs/sessions/evidence/task931/impl-r3/mutation/`. Each report has 0 not tried and 0 undecided, and every line R16 to R21 names is caught. A defect still not caught is named in the completion report with why no behaviour can show it, or gets a test. One that only a product change could show stops the task `BLOCKED` with that line: no product file changes in this task. | P1 | AC12 |
+| R23 [C87; C88; C89; C90; C91; C92; C93; C99; C100; C101; C102; C103; C104; C105; C106; C107; C108; C109; D30] | **Dependency update, before every other write of this task.** First: `git status --short -- package.json package-lock.json` prints nothing, otherwise the task stops `BLOCKED`; every `*.test.*` and `*.spec.*` file under the ignored `test-results/` is removed, one `Remove-Item` per folder, and named in `impl-r3/dep-versions.txt` (C104, C108). Then save the base: the AC8 test command with `--outputFile=test-results/dep-before.json`, copied to `docs/sessions/evidence/task931/impl-r3/dep-before.json`, and `npm audit --omit=dev --json` as `impl-r3/dep-audit-before.json`. Then `npm install --save-exact next@<X> eslint-config-next@<X>`, X the newest `15.5.x` published at least 7 days before the run and not below 15.5.28, and `npm install @sentry/nextjs@<Y>`, Y the newest `10.x` published at least 7 days before the run and not below 10.78.0, each read from `npm view <package> time --json` and saved as `impl-r3/dep-versions.txt`. After it: `npm audit --omit=dev --json` reports 0 critical; `git diff -- package.json` shows only those three versions; `pnpm-lock.yaml`, `yarn.lock` and `bun.lockb` do not exist; `npm run typecheck` and `npm run build` exit 0; the same test run is saved as `impl-r3/dep-after.json`. A test that fails after and passed before is rerun alone three times; one that still fails stops the task `BLOCKED` with that test, and so does a failed build, typecheck or dependency check of Task 945: no production file changes in this task, `next.config.ts` included (C106). | P1 | AC13 |
+| R24 [C92; D30] | **A floor test.** New `src/tests/__tests__/dependencyVersions.test.ts` holds SEC-931-SRV-DEP-FLOOR-DENY: the real `package-lock.json` holds `next` and `eslint-config-next` at 15.5.28 or above and `@sentry/nextjs` at 10.78.0 or above, so going back reopens the advisories with a red test. The compare is numeric, proven inline: 15.5.27 and 10.77.0 are refused, 15.10.0 is accepted, and a missing entry fails. | P1 | AC13 |
+| R25 [C86; C94; C95; C96; C97; C98; D9; D30] | **`dependency` entries (reviewer, inside R13).** On every other reviewed contract: 923 D8/D9, 923 owner fixes and 927, then 940, 941, 943, 944, 945 and 942, then 935 last, because its scope holds the 923 D8/D9 contract file, so R13 (f) also runs after these. Each: a `dependency` entry by this sidecar with `## Changed dependency files` listing `package.json` and `package-lock.json`, evidence `docs/sessions/evidence/task931/review-r3/dependency-<task>.md`, continuing the last entry present. Then all its cases are rerun. A product contract: `npm run build` once, its report script (`d8-d9-report.mjs`, `owner-fixes-report.mjs`, `make-report.mjs`) with the development project identity, then `cli.mjs verify`. A governance contract: `cli.mjs governance-report`, then `cli.mjs verify`. Each exits 0, then the reviewer recomputes that contract's `review.reportSha256`. A failing contract has its new entries removed and the decision is `BLOCKED`; no case is weakened, and the update does not merge without all of them. | P1 | AC14 |
 
 ## Acceptance criteria
 
-- **AC1 [R1].** The receipt command of route step 2 prints `SECURITY TASK PREFLIGHT COMPLETE`; 941, 943 and 945 are `reviewed` in their
+- **AC1 [R1].** The receipt command of route step 2 prints `SECURITY TASK PREFLIGHT COMPLETE`; 941, 943, 945 and 942 are `reviewed` in their
   sidecars at the start of the session.
 - **AC2 [R2-R5].** `rg -n "setImmediate|turn < " <class A files>` finds no wait loop; `node docs/sessions/evidence/task931/design/d17-busy-pool-run.mjs 2`
   prints 0 failed in all four runs with at least 122 tests, twice by the executor and twice by the reviewer (failures vary with timing,
@@ -232,12 +266,14 @@ double that ignores filter columns or values; the suite passes idle and with the
   then `node scripts/workflow-gates/cli.mjs unit-report` exit 0, run twice; `npm run typecheck`, `npx eslint <changed files>`,
   `npm run check:file-integrity -- --files <changed files>`, `npm run build` exit 0; `report-r3.mjs` writes `report-r3.json` and
   `cli.mjs verify --contract <this sidecar>` exits 0 at stage implemented. Reviewer, after R13: the scoped `validateDiff` harness
-  of Task 940 AC7 (phase `release`, base `origin/main`, working tree) reports no error for the 923 D8/D9, owner-fixes, 927, 931 and
-  935 contracts, and `reviewedFreshnessErrors` (Task 943 R11) returns `[]`.
+  of Task 940 AC7 (phase `release`, base `origin/main`, working tree) reports no error for the 923 D8/D9, owner-fixes, 927, 931,
+  935, 940, 941, 942, 943, 944 and 945 contracts, and `reviewedFreshnessErrors` (Task 943 R11) returns `[]`.
 - **AC9 [R14].** The `ci-status.mjs` transcript of the exact SHA is saved under `docs/sessions/evidence/task931/review-r3/`, and the Unit job's log of that run holds no `Errors` line and no `window is not defined`.
 - **AC10 [R15-R17].** SEC-931-SRV-FAKE-LOG, SEC-931-SRV-CONTACT-LOOKUP-ERROR, SEC-931-SRV-CONTACT-THROW and SEC-931-SRV-INQUIRY-COUNT-DENY pass, and every earlier test of those files stays green.
 - **AC11 [R18-R21].** The eight cases SEC-931-SRV-MODPERM-THROW, SEC-931-SRV-MODPERM-AUDIT-ERROR, SEC-931-SRV-MODPERM-HISTORY, SEC-931-SRV-TRANSITION-EFFECTS-ALLOW, SEC-931-SRV-TRANSITION-EFFECTS-DENY, SEC-931-FE-PAGE-QUERY-ALLOW, SEC-931-FE-PAGE-QUERY-DENY and SEC-931-FE-TABLE-REFRESH pass; the guard of R10 has no hit in the new files.
 - **AC12 [R22].** Six mutation reports exist, each with 0 not tried and 0 undecided, every named line caught; the reviewer reruns at least `page.tsx` and `applyListingTransition.ts`; `git status --short -- src` shows only test files and the shared fake.
+- **AC13 [R23; R24].** The saved files of R23 exist and show what it names; SEC-931-SRV-DEP-FLOOR-DENY passes; the completion report lists every test that failed before or after the update, with the three reruns of any that failed only after; the dependency check of Task 945 reported no failure in the executor's session.
+- **AC14 [R25].** For each of the ten contracts of R25, the reviewer saves the transcript of the rerun under `docs/sessions/evidence/task931/review-r3/`, with every case passing, and `reviewedFreshnessErrors` returns `[]` after the last entry. The reviewer also reads the `next`, `eslint-config-next` and `@sentry/nextjs` versions of the lock file on the pushed SHA, and Vercel's preview build of that SHA reaches `READY` through a read tool.
 
 ## Security test contract
 
@@ -245,9 +281,9 @@ double that ignores filter columns or values; the suite passes idle and with the
 |---|---|
 | Assets and boundaries | The revision 1-2 boundaries (`requireViewer`, `requireStaffPage`, `hasPermission`, `getModeratorPermissions`, `signUpWithCaptcha`, `getAgentStatisticsAccess`, `applyListingTransitionByStatus`, the listings-expiry cron); the Google sign-in attempt (`googlePopup`) and its consumers; the Supabase query boundary of the 70 files, through `src/tests/fakeSupabase.ts`. |
 | Frontend security | Revision 1-2 cases SEC-931-FE-PAGE-ALLOW, SEC-931-FE-PAGE-DENY, SEC-931-FE-STATUS-ERROR on the real consumers; class D SEC-931-FE-PAGE-QUERY-ALLOW, SEC-931-FE-PAGE-QUERY-DENY and SEC-931-FE-TABLE-REFRESH on the real page and table; the Task 927 frontend cases in the class A files keep their names and pass idle and under load (R2-R5). |
-| Server security | Revision 1-2 SEC-931-SRV cases; new SEC-931-SRV-FAKE-FILTER-ALLOW, SEC-931-SRV-FAKE-FILTER-DENY, SEC-931-SRV-FAKE-OR-DENY, SEC-931-SRV-FAKE-ERROR on the real `createFakeDb`; SEC-931-SRV-QUERY-GUARD-ALLOW and SEC-931-SRV-QUERY-GUARD-DENY on the real test tree; class D SEC-931-SRV-FAKE-LOG, SEC-931-SRV-CONTACT-LOOKUP-ERROR, SEC-931-SRV-CONTACT-THROW, SEC-931-SRV-INQUIRY-COUNT-DENY, SEC-931-SRV-MODPERM-THROW, SEC-931-SRV-MODPERM-AUDIT-ERROR, SEC-931-SRV-MODPERM-HISTORY, SEC-931-SRV-TRANSITION-EFFECTS-ALLOW and SEC-931-SRV-TRANSITION-EFFECTS-DENY on the real actions and gateway; the migrated tests of the 923 and 927 contracts keep their cases. |
-| Database/integrations | No runtime, SQL or provider change. The integration cases of the 923 D8/D9, owner-fixes and 927 contracts are rerun by the reviewer through `cli.mjs verify` with the development project (R13 (h)). No new critical case. |
-| Cases | The 35 SEC-931 cases of the sidecar; full names are `<describe> <it>` with the `[ID]` at the start of the `it` title. |
+| Server security | Revision 1-2 SEC-931-SRV cases; new SEC-931-SRV-FAKE-FILTER-ALLOW, SEC-931-SRV-FAKE-FILTER-DENY, SEC-931-SRV-FAKE-OR-DENY, SEC-931-SRV-FAKE-ERROR on the real `createFakeDb`; SEC-931-SRV-QUERY-GUARD-ALLOW and SEC-931-SRV-QUERY-GUARD-DENY on the real test tree; class D SEC-931-SRV-FAKE-LOG, SEC-931-SRV-CONTACT-LOOKUP-ERROR, SEC-931-SRV-CONTACT-THROW, SEC-931-SRV-INQUIRY-COUNT-DENY, SEC-931-SRV-MODPERM-THROW, SEC-931-SRV-MODPERM-AUDIT-ERROR, SEC-931-SRV-MODPERM-HISTORY, SEC-931-SRV-TRANSITION-EFFECTS-ALLOW and SEC-931-SRV-TRANSITION-EFFECTS-DENY on the real actions and gateway; class E SEC-931-SRV-DEP-FLOOR-DENY on the real lock file; the migrated tests of the 923 and 927 contracts keep their cases. |
+| Database/integrations | No SQL or provider change; the runtime changes only in the versions of R23. The integration cases of the 923 D8/D9, owner-fixes and 927 contracts are rerun by the reviewer with the development project (R13 (h), R25). No new critical case. |
+| Cases | The 36 SEC-931 cases of the sidecar; full names are `<describe> <it>` with the `[ID]` at the start of the `it` title. |
 | Fixtures and environment | In-memory rows with synthetic ids, no network or credentials for the executor, unit project only; the busy-pool preload of d17 for load runs. |
 | Sensitivity proof | The sixteen planted breaks of R11 (AC6); the mutation reports of R22 (AC12), in memory. |
 | Execution | `docs/sessions/evidence/task931/security/report-r3.mjs`, a copy of `report.mjs` that writes `report-r3.json`, then `node scripts/workflow-gates/cli.mjs verify --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json`; native Windows, Node 22.22.3; QA Q4. |
@@ -255,14 +291,14 @@ double that ignores filter columns or values; the suite passes idle and with the
 ## 6. Ordered route
 
 1. **Owner** (separate PowerShell window, `C:\Claude_Code_Projects\lero-al`): commit this kickoff set with the command Opus gives.
-2. **Sonnet, fresh session**, after Tasks 941, 943 and 945 are reviewed and committed: `node scripts/workflow-gates/cli.mjs receipt --contract <this sidecar>`;
+2. **Sonnet, fresh session**, after Tasks 941, 943, 945 and 942 are reviewed and committed: `node scripts/workflow-gates/cli.mjs receipt --contract <this sidecar>`; R23, which stops the task on a failure of its own;
    save the base JSON run of the 70 files and the class A files to `docs/sessions/evidence/task931/impl-r3/before.json`; run P16 on the
    base files and save its transcript; run the R5 base census.
-3. R6, R7 and R15, then R8 file by file (rerun each file after its change), R9, R10; then R2-R5, rerunning d17 after each file; then R16 to R21.
+3. R6, R7 and R15, then R8 file by file (rerun each file after its change), R9, R10; then R2-R5, rerunning d17 after each file; then R16 to R21 and R24.
 4. R11: the planted breaks with transcripts and restoration proof; R12: the case-assertion record; R22: the mutation reports.
 5. `report-r3.mjs` and `cli.mjs verify`; every AC8 command; set stage `implemented`; write
    `docs/sessions/evidence/task931/impl-r3/completion-report.md`; end with `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. No Git command.
-6. **Opus reviewer, another session:** review; on approval R13 (a)-(j) in that order; the explicit-path commit command (the deleted
+6. **Opus reviewer, another session:** review; on approval R13 (a)-(j) in that order, with R25 at (h) and R13 (f) after it; the explicit-path commit command (the deleted
    archive pair by explicit path); the branch push; then R14. PR #12 merges only after all required checks are green.
 
 ## 7. Completion report
@@ -270,7 +306,7 @@ double that ignores filter columns or values; the suite passes idle and with the
 Per requirement: changed files, evidence, status; the R3 classification of every settle; per migrated file the doubles replaced, the
 decoys added and the filters pinned; the R12 case-assertion record; each SEC-931 case with its result; the sixteen planted-break
 transcripts; before/after totals of the changed files and of the full suite, idle and busy; one of
-`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. For class D: each mutation report, and every defect still not caught with its reason.
+`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`. For class D: each mutation report, and every defect still not caught with its reason. For class E: the versions chosen and why, the audit before and after, and the tests of AC13.
 
 ## 8. Rule compliance
 
@@ -278,8 +314,8 @@ transcripts; before/after totals of the changed files and of the full suite, idl
 |---|---|
 | `claim-evidence-contract.md` | Every R cites ledger rows from executed probes under `docs/sessions/evidence/task931/design/` and current source lines. |
 | `security-testing.md` | Frontend and server rows on real consumers, actions and the shared fake; planted breaks for every pinned filter and for the guard. |
-| `role-boundaries.md` | Sonnet changes tests only; Opus reviews and writes every rebase entry; no policy path in scope. |
+| `role-boundaries.md` | Sonnet changes tests and the two dependency manifests of R23 only; Opus reviews and writes every rebase entry; no policy path in scope. |
 | `git-publication.md` | Commit on PR #12's branch (D7); push only after approval; merge only after green checks (R14). |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85; owner decisions: D7, D9, D12, D13, D14, D29; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109; owner decisions: D7, D9, D12, D13, D14, D29, D30; blocked claims: NONE.

@@ -18,9 +18,9 @@ The owner asked for commands, if the owner can run them. Measured on a temporary
 
 Do the critical advisories apply here? Windows-hosted RCE: no, production is on Vercel. Image Optimization RCE (AVIF, SVG): the project imports `next/image` nowhere and sets no `images` config (`r28-update-gate.txt`, `next.config.ts:10`); whether the `/_next/image` endpoint can still be reached was not tested. Sentry: no `tunnelRoute`, the advisory's first condition. What does apply: the high denial of service in Server Actions, ranges up to 15.5.27, because this is an App Router application using them.
 
-Not run: a real `npm install`, `npm run build` or the tests on the updated tree, which would rewrite `node_modules` under any session working in this folder.
+The owner ran the update on 2026-11-05 (`docs/sessions/evidence/task931/design/owner-update-run.txt`): production audit 0 critical, 9 high, 22 total, as measured; build passes; the 8 failed test files are ignored leftovers under `test-results/`, none a test of the project. That run is evidence, not the change: the manifests go back to `HEAD`, and Task 931 R23 makes the change (`owner-update-state.txt`).
 
-Open: how the update reaches main, given the digests. Owner decision; the Sprint's Order text says so.
+Decided (D30): a `dependency` rebase in Task 942 revision 7 with every case rerun; Task 931 revision 5 makes the change. Prototype: `docs/sessions/evidence/task942/design/p14-dependency-rebase.txt`.
 
 ## 2. `ignore-scripts=true` in `.npmrc`
 
@@ -37,7 +37,7 @@ It came from the OWASP page the implementer read: "Set up CODEOWNERS rules that 
 
 ## 4. Agents' access to `.env.local`
 
-Not answered by the owner. It stays open.
+Answered (D32): all the data in it is test data for now, and the owner replaces all the keys at launch. Agents keep their access today. At launch, agents' access to this file and to the Vercel tools that read environment values is decided again.
 
 ## 5. MCP allowlist and Vercel write tools
 
@@ -46,7 +46,7 @@ Not answered by the owner. It stays open.
 - Nothing denies them: `permissions.deny` in the project and user settings lists Git and `gh` commands only, `.claude/settings.json` has no `mcp__` entry, and `PreToolUse` matches `Edit|Write|Bash|PowerShell` (`security-hook.mjs` names no MCP tool).
 - The rule "deploy and env writes are the owner's" is a saved memory, which nothing enforces. A page or file an agent reads could ask for such a call, and all that stands in its way is the session's permission mode.
 
-The possible fix, a deny list of the write tools in `.claude/settings.json`, is a policy path and goes through governance. Owner decision.
+The possible fix, a deny list of the write tools in `.claude/settings.json`, is a policy path and goes through governance. Decided (D31): Task 942 revision 7 R19 and R20, a deny list and a hook that refuses what it does not know. Tools that read values stay open, because the decision names write tools.
 
 ## 6. The test holes
 

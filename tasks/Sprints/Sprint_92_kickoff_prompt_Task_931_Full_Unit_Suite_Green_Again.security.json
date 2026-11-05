@@ -5,7 +5,7 @@
   "kind": "product",
   "qaProfile": "Q4",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md",
-  "taskSha256": "aeed212447173073a1a6456855561af2fd4eaf014eeb98eda656b02b7aef8650",
+  "taskSha256": "909bce158accf7ff80583348c882fc5cc67b5046a31f47d8fdade9f5637c894e",
   "scope": [
     "src/app/api/cron/listings-expiry/__tests__/route.test.ts",
     "src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts",
@@ -107,14 +107,18 @@
     "src/app/auth/confirm/route.ts",
     "src/modules/auth/actions/recovery.ts",
     "src/modules/notifications/lib/mutations.ts",
-    "src/lib/getExchangeRateServer.ts"
+    "src/lib/getExchangeRateServer.ts",
+    "src/app/admin/listings/__tests__/page.test.tsx",
+    "src/modules/admin/actions/__tests__/permissions.failures.test.ts",
+    "src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts"
   ],
   "inputs": [
     "src/app/admin/listings/page.tsx",
     "src/components/admin/AdminListingsTable.tsx",
     "src/modules/listings/actions/applyListingTransition.test.ts",
     "src/lib/cron/verifyCronRequest.ts",
-    "docs/sessions/evidence/task923/security/owner-fixes-report.mjs"
+    "docs/sessions/evidence/task923/security/owner-fixes-report.mjs",
+    "src/modules/listings/actions/submitListingInquiry.ts"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -520,6 +524,217 @@
       ],
       "testFile": "src/tests/__tests__/queryDoubles.guard.test.ts",
       "testName": "Supabase query doubles [SEC-931-SRV-QUERY-GUARD-DENY] the criterion flags every hand-written shape and accepts a test built on createFakeDb"
+    },
+    {
+      "id": "SEC-931-SRV-FAKE-LOG",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "What a query asked for can be asserted, and a count that cannot be read can be injected",
+      "actor": "Test using createFakeDb",
+      "resource": "createFakeDb db.log and db.fail",
+      "input": "a select with count, head, order and range; db.fail({ table, op, error: null, count: null })",
+      "response": "the log entry holds what was asked; the query resolves { data: null, count: null, error: null }; no row changes",
+      "forbiddenEffects": [
+        "a fake that answers a count when one was injected away"
+      ],
+      "testFile": "src/tests/__tests__/fakeSupabase.test.ts",
+      "testName": "createFakeDb — filters a production query depends on [SEC-931-SRV-FAKE-LOG] the log holds columns, head, orders and range, and a failure can carry a count with no error"
+    },
+    {
+      "id": "SEC-931-SRV-CONTACT-LOOKUP-ERROR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A failed listing lookup is answered as a failure and records no event",
+      "actor": "Signed-in viewer",
+      "resource": "trackListingContactEvent",
+      "input": "the listings read fails",
+      "response": "{ ok: false, reason: 'insert_failed' }; no event row",
+      "forbiddenEffects": [
+        "an event recorded for a listing that could not be read",
+        "an answer of undefined"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/contactEvents.test.ts",
+      "testName": "trackListingContactEvent — failures [SEC-931-SRV-CONTACT-LOOKUP-ERROR] a failed listing lookup answers insert_failed and writes nothing"
+    },
+    {
+      "id": "SEC-931-SRV-CONTACT-THROW",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An unexpected failure is answered as a failure, never as nothing",
+      "actor": "Signed-in viewer",
+      "resource": "trackListingContactEvent",
+      "input": "the admin client throws",
+      "response": "{ ok: false, reason: 'insert_failed' }",
+      "forbiddenEffects": [
+        "an answer of undefined",
+        "an unhandled rejection"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/contactEvents.test.ts",
+      "testName": "trackListingContactEvent — failures [SEC-931-SRV-CONTACT-THROW] an unexpected failure answers insert_failed"
+    },
+    {
+      "id": "SEC-931-SRV-INQUIRY-COUNT-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A count that cannot be read refuses: the limit never fails open",
+      "actor": "Signed-in viewer",
+      "resource": "submitListingInquiry rate limit",
+      "input": "the count read gives null or undefined with no error, on the first read and on both",
+      "response": "{ error: 'rate_limited' }; no inquiry row",
+      "forbiddenEffects": [
+        "an inquiry saved past a limit that could not be read",
+        "the owner notified"
+      ],
+      "testFile": "src/modules/listings/actions/submitListingInquiry.test.ts",
+      "testName": "submitListingInquiry — a rate limit that cannot be read [SEC-931-SRV-INQUIRY-COUNT-DENY] a count of null or undefined with no error refuses and saves nothing"
+    },
+    {
+      "id": "SEC-931-SRV-MODPERM-THROW",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "An unexpected failure of saving a permission never reads as success",
+      "actor": "Administrator",
+      "resource": "setModeratorPermission",
+      "input": "the admin client throws",
+      "response": "{ error: 'save_failed' }",
+      "forbiddenEffects": [
+        "an answer the admin UI reads as saved"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/permissions.failures.test.ts",
+      "testName": "setModeratorPermission and the history [SEC-931-SRV-MODPERM-THROW] an unexpected failure answers save_failed, never a success"
+    },
+    {
+      "id": "SEC-931-SRV-MODPERM-AUDIT-ERROR",
+      "layer": "server",
+      "outcome": "error",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A failed audit insert of a permission change is logged",
+      "actor": "Administrator",
+      "resource": "setModeratorPermission and role_permission_events",
+      "input": "the audit insert fails, then one that succeeds",
+      "response": "the change saved; {}; the error logged with the key, and nothing logged when the insert succeeds",
+      "forbiddenEffects": [
+        "a lost audit event with no log line"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/permissions.failures.test.ts",
+      "testName": "setModeratorPermission and the history [SEC-931-SRV-MODPERM-AUDIT-ERROR] a failed audit insert is logged and the saved change still answers success; a good one logs nothing"
+    },
+    {
+      "id": "SEC-931-SRV-MODPERM-HISTORY",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "The permission history shows what was recorded",
+      "actor": "Staff viewer",
+      "resource": "getPermissionEvents",
+      "input": "events with no old value and no actor, and one with an old value of false",
+      "response": "old_allowed, actor_user_id and actor_name null; false stays false",
+      "forbiddenEffects": [
+        "a wrong old value or actor in the history"
+      ],
+      "testFile": "src/modules/admin/actions/__tests__/permissions.failures.test.ts",
+      "testName": "setModeratorPermission and the history [SEC-931-SRV-MODPERM-HISTORY] an event with no old value and no actor gives null, and an old value of false stays false"
+    },
+    {
+      "id": "SEC-931-SRV-TRANSITION-EFFECTS-ALLOW",
+      "layer": "server",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A status change refreshes the public pages and notifies the owner, through both public functions",
+      "actor": "Administrator and moderator",
+      "resource": "applyListingTransition and applyListingTransitionByStatus",
+      "input": "a change with a slug and title, and one with neither",
+      "response": "index and detail refreshed in every locale, only the index with no slug; the owner notified with the title or the id, the link only with a slug",
+      "forbiddenEffects": [
+        "a hidden listing left in a cached public page",
+        "a notice to anyone but the owner"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts",
+      "testName": "applyListingTransition effects [SEC-931-SRV-TRANSITION-EFFECTS-ALLOW] refreshes every locale and notifies the owner with the title and link"
+    },
+    {
+      "id": "SEC-931-SRV-TRANSITION-EFFECTS-DENY",
+      "layer": "server",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A change that did not happen has no effects",
+      "actor": "Administrator and listing owner",
+      "resource": "writeListingStatus",
+      "input": "the update matches no row; the update fails; the actor owns the listing",
+      "response": "conflict or db_error, nothing refreshed, nobody notified, the log holds the actor and the row count; no notice to an owner who acts",
+      "forbiddenEffects": [
+        "a notice of a change that did not happen",
+        "a refresh after a failed write"
+      ],
+      "testFile": "src/modules/listings/actions/__tests__/applyListingTransition.effects.test.ts",
+      "testName": "applyListingTransition effects [SEC-931-SRV-TRANSITION-EFFECTS-DENY] a lost race and a database error refresh nothing and notify nobody, and an owner who acts is not notified"
+    },
+    {
+      "id": "SEC-931-FE-PAGE-QUERY-ALLOW",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A staff viewer gets the query the filters ask for",
+      "actor": "Administrator viewer (requireViewer double)",
+      "resource": "AdminListingsPage",
+      "input": "searchParams empty, a page, and a search by words, by name, by e-mail and by id",
+      "response": "newest first, range and counts as asked, the search text holding each part, each prop of the table",
+      "forbiddenEffects": [
+        "a filter dropped from the query",
+        "an audit count that reads rows"
+      ],
+      "testFile": "src/app/admin/listings/__tests__/page.test.tsx",
+      "testName": "AdminListingsPage past its guard [SEC-931-FE-PAGE-QUERY-ALLOW] the rows, the range, the search, the counts and every prop of the table"
+    },
+    {
+      "id": "SEC-931-FE-PAGE-QUERY-DENY",
+      "layer": "frontend",
+      "outcome": "deny",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "A filter excludes what it must",
+      "actor": "Administrator viewer (requireViewer double)",
+      "resource": "AdminListingsPage",
+      "input": "seeded decoy rows with the premium tab, a status, each visibility value, another tab and a page of -4",
+      "response": "each decoy absent; another tab excludes nothing; the range of the first page",
+      "forbiddenEffects": [
+        "a hidden row in a filtered view",
+        "a negative range"
+      ],
+      "testFile": "src/app/admin/listings/__tests__/page.test.tsx",
+      "testName": "AdminListingsPage past its guard [SEC-931-FE-PAGE-QUERY-DENY] the tab, status and visibility filters exclude their decoys and a bad page falls back to the first"
+    },
+    {
+      "id": "SEC-931-FE-TABLE-REFRESH",
+      "layer": "frontend",
+      "outcome": "allow",
+      "boundary": "unit",
+      "critical": false,
+      "invariant": "What the staff table shows follows the server after an action",
+      "actor": "Staff user",
+      "resource": "AdminListingsTable",
+      "input": "a premium save, a delete, a status change, new props, each filter",
+      "response": "the router refreshed, the dialog closed, the rows replaced, the page count and the navigation as today",
+      "forbiddenEffects": [
+        "a table left showing what the server no longer holds"
+      ],
+      "testFile": "src/components/admin/__tests__/AdminListingsTable.smoke.test.tsx",
+      "testName": "AdminListingsTable — refreshes [SEC-931-FE-TABLE-REFRESH] a premium save, a delete and a status change refresh the router, and new props replace the rows"
     }
   ]
 }

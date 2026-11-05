@@ -1,0 +1,36 @@
+src/modules/listings/lib/visibility.ts: 57 defects, 55 caught, 2 not caught, 0 not tried, 0 undecided
+src/modules/listings/lib/visibility.ts:123: `q = q.in('status', eligibleStatuses)` became `;`, and every test still passed
+src/modules/listings/lib/visibility.ts:151: `q = q.in('status', eligibleStatuses)` became `;`, and every test still passed
+exit 1 signal null 454 s
+
+src/app/admin/listings/visibilityFilter.ts: 6 defects, 6 caught, 0 not caught, 0 not tried, 0 undecided
+exit 0 signal null 36 s
+
+src/app/api/cron/listings-expiry/route.ts: 17 defects, 16 caught, 1 not caught, 0 not tried, 0 undecided
+src/app/api/cron/listings-expiry/route.ts:59: `0` became `1`, and every test still passed
+exit 1 signal null 40 s
+
+scripts/workflow-gates/dependency-check.mjs: 89 defects, 77 caught, 12 not caught, 0 not tried, 0 undecided
+scripts/workflow-gates/dependency-check.mjs:17: `true` became `false`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:17: `1` became `2`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:17: `28` became `29`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:17: `60000` became `60001`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:20: `true` became `false`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:20: `1` became `2`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:20: `26` became `27`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:84: `real = realpathSync.native(real);` became `;`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:85: `===` became `!==`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:85: `process.platform === 'win32' ? real.toLowerCase() : real` became `undefined`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:87: `&&` became `||`, and every test still passed
+scripts/workflow-gates/dependency-check.mjs:87: `===` became `!==`, and every test still passed
+exit 1 signal null 613 s
+
+scripts/workflow-gates/mutation-loader.mjs: 27 defects, 0 caught, 0 not caught, 0 not tried, 0 undecided
+scripts/workflow-gates/mutation-loader.mjs: the tests that should reach it never loaded it, so they check nothing in it
+exit 1 signal null 103 s
+
+
+exit null signal SIGTERM 900 s
+
+=== code roots after the runs
+""

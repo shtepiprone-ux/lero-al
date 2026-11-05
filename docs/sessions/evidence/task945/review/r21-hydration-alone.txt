@@ -1,0 +1,4 @@
+run 1: exit 0, 6 s, no window error
+run 2: exit 0, 6 s, no window error
+run 3: exit 0, 6 s, no window error
+in the scope of the Task 931 contract: src/components/layout/__tests__/header-hydration-id-parity.test.tsx

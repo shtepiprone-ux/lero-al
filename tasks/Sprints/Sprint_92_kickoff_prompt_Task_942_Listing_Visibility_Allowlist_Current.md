@@ -26,6 +26,7 @@ the security contract are amended. R1–R10 and the other six cases keep their m
 request and before its first commit, found that its first prototype lost targets of C60 and C87 and that real npm runs the word after `--filter`
 (C92–C96): a list of value options had replaced a reading of what the word may be. So R13 (b), (c) and (d) read both ways, and AC11 holds a
 differential against both older hooks (C97).
+**Revision 6 (2026-11-05, by the Task 945 review 1 session, D8, D13, D14):** that review reproduced a second gate of the policy half of the Governance Check job that fails whatever the other tasks fix: `check:surface-census:changed` counts every changed path against its limit, and all paths of this branch are ones it excludes (C104–C106). It first filed a new task for this and withdrew it in its self-audit, because this task is the policy half (D8) and the owner decided against new tasks (D13). R15, AC12, the case GOV-942-CI-CENSUS-LIMIT-DENY and C104–C112 are added; sections 1, 4, 6, 7, 8, AC5 and the security contract are amended. R1–R14 and the other seven cases keep their meaning.
 
 ## 1. Mode, task type and rule bundle
 
@@ -34,7 +35,7 @@ because the gate script and the hook are policy paths (C25) and a product contra
 another fresh session that wrote none of the scope files (D2).** Neither may be the session that designed this kickoff or the
 session that wrote revision 2 (the Task 944 review 3 session), revision 3 (the Task 944 review 4 session), revision 4 (the session
 that implemented R1–R5, which therefore implements nothing of R6–R10) or revision 5 (the review session of C87, which therefore neither
-implements nor approves R11–R14). Types
+implements nor approves R11–R14) or revision 6 (the Task 945 review 1 session, which neither implements nor approves R15). Types
 (`docs/rule-index.md`): workflow gates / governance tooling. Bundle: `.claude/rules/shared/workflow-gates.md` with
 `workflow-contract.md`, `workflow-evidence.md`, `workflow-ci.md`, `git-publication.md`; `security-testing.md`;
 `role-boundaries.md`; `claim-evidence-contract.md`; `task-readiness.md`; `orchestration-state.md`;
@@ -195,6 +196,15 @@ Task 940 approval and changes none of the cited files).
 | C101 | FACT | On the hook of C87 the independent run of the R8 break fails with an assertion (executed). | source: `docs/sessions/evidence/task942/review/r3-sensitivity.txt:11-11`; observed: `X reported for: npm --prefix . exec rimraf` |
 | C102 | FACT | The hook of C60 reports a path longer than the bound and the hook of C87 does not (executed). | source: `docs/sessions/evidence/task942/review/r5-real-behaviour.txt:43-43`; observed: `c60 true` |
 | C103 | FACT | No older hook reports a Python triple-quoted mode (executed). | source: `docs/sessions/evidence/task942/review/r1-probes.txt:20-20`; observed: `'''w'''` |
+| C104 | FACT | The census gate refused CI run 41823787040 on its limit. | source: `docs/sessions/evidence/task945/review/r17-ci-excerpts.txt:13-13`; observed: `changed-file-limit-exceeded: 712 changed file(s) exceeds the limit of 300` |
+| C105 | FACT | The mapper counts every changed path against the limit, before it classifies any. | source: `scripts/map-changed-surfaces.mjs:362-362`; observed: `if (entries.length > maxChangedFiles) {` |
+| C106 | FACT | Every path this branch changes is one the mapper excludes (executed). | source: `docs/sessions/evidence/task945/review/p04-census-limit-prototype.txt:8-8`; observed: `Excluded (812):` |
+| C107 | FACT | With the correction in memory the gate passes on the real branch with the limit as committed (executed). | source: `docs/sessions/evidence/task945/review/p04-census-limit-prototype.txt:10-10`; observed: `every surface the diff affects is enrolled, baselined, or clean` |
+| C108 | FACT | With the correction in memory, 301 files to census still fail closed (executed). | source: `docs/sessions/evidence/task945/review/p04-census-limit-prototype.txt:23-23`; observed: `301 candidates: failClosed true, changed-file-limit-exceeded` |
+| C109 | FACT | The mapper is a product path and the runner a policy path (executed). | source: `docs/sessions/evidence/task945/review/r19-measure.txt:12-12`; observed: `scripts/map-changed-surfaces.mjs: policy false, product true` |
+| C110 | FACT | Arm 3 of the gate's self-test calls the mapper directly. | source: `scripts/check-surface-census-changed.mjs:429-429`; observed: `const mapping = runMapping({ base: 'HEAD~1', head: 'HEAD', maxChangedFiles: 0` |
+| C111 | FACT | No contract's scope holds the runner or the mapper, so R15 needs no further rebase (executed). | source: `docs/sessions/evidence/task945/review/r19-measure.txt:14-14`; observed: `contracts holding them: 0` |
+| C112 | FACT | With the correction in memory, many changed paths with no file to census pass (executed). | source: `docs/sessions/evidence/task945/review/p04-census-limit-prototype.txt:25-25`; observed: `5000 changed paths, none a candidate: failClosed false` |
 | D1 | OWNER DECISION | Governance tasks are implemented by Opus in a separate session. | owner: 2026-11-01; decision: `Opus, a separate session (Recommended)` |
 | D2 | OWNER DECISION | Approval independence is enforced by the hook. | owner: 2026-11-01; decision: `Yes, the hook blocks (Recommended)` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
@@ -227,6 +237,7 @@ Revision 5 (R11–R14): `scripts/workflow-gates/security-hook.mjs`, new `scripts
 `docs/sessions/evidence/task942/impl/base-runs-r11.txt`, a `## Revision 5` section appended at the end of the completion report, the saved
 text of `docs/sessions/evidence/task942/sensitivity/GOV-942-HOOK-SHELL-CLASSES-DENY.break.json` (AC8), and for the critical case
 GOV-942-HOOK-SHELL-READER-DENY its break spec and artifact under the same names in the same folder.
+Revision 6 (R15): `scripts/check-surface-census-changed.mjs`, new `scripts/workflow-gates/census-limit.selftest.mjs`, a `## Revision 6` section appended at the end of the completion report, and for the critical case GOV-942-CI-CENSUS-LIMIT-DENY its break spec and artifact under the same names in the same folder.
 Written by the approver only (R5): `scope` entries in the `review.rebases` of the 935, 940, 941, 943 and 944 contracts with evidence
 `docs/sessions/evidence/task942/review/scope-rebase-935.md`, `…-940.md`, `…-941.md`, `…-943.md` and `…-944.md`.
 
@@ -241,7 +252,7 @@ current folder, not in the `env` folder. Revision 4: a new kind of input, such a
 interpreter outside section 5, is no part of R6–R9; a form found later goes to the completion report and to a revision (C48). Revision 5:
 a mode or flags value held in a variable (`open('X', m)`, `mode=m`, `fs.openSync('X', w)`, `**opts`) stays outside, because the read controls of
 the R6 case pin it silent; `npm --prefix=. run rm X` stays outside, because `<manager> run` runs a package script; a launcher other than
-`corepack`, and a manager option with more than one value, stay outside.
+`corepack`, and a manager option with more than one value, stay outside. Revision 6: `scripts/map-changed-surfaces.mjs` (a product path, C109, which a governance contract cannot hold), the value 300 of the limit, the surface limit and `scripts/surface-census-baseline.json` stay as they are.
 
 ## 5. Current and required behaviour
 
@@ -279,6 +290,7 @@ the classes of R6–R9. Revision 5: the same for the classes of R13; the reader'
 | R12 [C72; C73; C82; C83; C86; D13; D14; D24] | **One reading per text (revision 5).** The result of the open calls of one text is computed once per top-level call of `shellWriteTargets` or `governanceIndependenceErrors`, through the existing `withPathCache` memo, so the folders of a raw reading multiply no reader. | P1 | AC10, AC11 |
 | R13 [C74; C75; C76; C77; C78; C79; C80; C81; C88; C89; C92; C93; C94; C95; C96; C97; C98; C99; C103; D13; D14; D24] | **The new forms go into the same readers (revision 5).** (a) `commandName` also drops `.cmd`, `.bat`, `.ps1` and `.com`. (b) After the runners of R4 (d), `npx`, `pnpx` and `bunx`, the word after an option without `=`, other than `-p` and `--package`, is read both ways, as the program and as that option's value, in any mix: npm 11 reads `--filter` with no value and `--loglevel` with one (C92, C93, C94), and the other runners could not be run here (C99). No list of value options replaces this, because a list loses what it reads wrongly (C95). Each write program so read is read once, so the cost stays linear. (c) The manager's option walk of R8 keeps no list: any option without `=` may take one value, so the word after it is read as a subcommand first and as that value otherwise; `yarn workspace <name>` is skipped; option words between `run` and `rimraf` or `shx` are skipped. (d) Every text of a repeated `-c`, `--call` or `--call=` of a runner is read, in any mix: npm runs the last (C98), the other runners could not be run here (C99); every text of `env -S`, `-iS`, `--split-string <text>` or `--split-string=<text>` is a command text, read in the folder of `env -C`, in addition to the program `env` runs. (e) `corepack` is a wrapper. (f) The raw `env` word of R7 may hold a closing quote. (g) The normalised reading of R9 reads any run of backslashes before `"` as a quote. (h) The reader of R6 also reads `**dict(…)` as keywords, a literal `*[…]` or `*(…)` as positional values, a JavaScript template literal as a quoted text, a flag expression of numbers (`1 \| 64`), `path=` as the file of `open(` when no positional string names it, and a Python triple-quoted text as a quoted text (C103). (i) The word a folder option of `env` takes is no option of its own. | P1 | AC10, AC11 |
 | R14 [C24; C48; C62; C80; C81; C84; C90; C91; C97; C101; D13; D24] | **Proof and limit (revision 5).** GOV-942-HOOK-SHELL-READER-DENY lives in the new `scripts/workflow-gates/shell-forms-reader.selftest.mjs`, not listed in `publication.json` (C32). Every branch of R11–R13 has its own isolated in-memory break reported in the completion report, and a mechanical mutator over every added code line reports its total and names each survivor with its reason. The completion report lists the write forms that stay undetected, and each newly found one goes to a revision (C48); CI stays the barrier (C24, C62). | P1 | AC10, AC11 |
+| R15 [C104; C105; C106; C107; C108; C109; C110; C111; C112; D7; D8; D13] | **The census gate's limit counts what it can census (revision 6).** `runPipeline` of `scripts/check-surface-census-changed.mjs` asks the mapper with no limit on changed paths, then refuses with `changed-file-limit-exceeded` when `mapping.candidates` holds more files than `maxChangedFiles`, and with no other change of its result. The limit stays 300 and the mapper is unchanged: a path the mapper excludes costs the census nothing, so it no longer counts, and more than 300 files it must census still fail closed. The gate's `--verify-gate` gains one arm through the injected mapping; its Arm 3 calls the mapper directly and so cannot see this change (C110). GOV-942-CI-CENSUS-LIMIT-DENY lives in the new `scripts/workflow-gates/census-limit.selftest.mjs`, not listed in `publication.json` (C32). | P1 | AC12 |
 
 ## Acceptance criteria
 
@@ -303,7 +315,7 @@ the classes of R6–R9. Revision 5: the same for the classes of R13; the reader'
   every case); `node --check scripts/check-listing-visibility.mjs` exits 0.
 - **AC5 [R3].** GOV-942-HOOK-EXECUTOR-DENY passes: `evaluateHook` for a PreToolUse `Edit` and a `Write` of
   `scripts/check-listing-visibility.mjs` with model `sonnet` returns `POLICY-EDIT AUTHORITY REQUIRED`, and with model `opus`
-  returns `[]` (C22, C23). `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 7 more passing tests than the
+  returns `[]` (C22, C23). `node scripts/workflow-gates/selftests.mjs` exits 0 with 0 skipped and 8 more passing tests than the
   base run of `impl/base-runs.txt`; `git diff --exit-code 5cd44cb97` on every `scripts/workflow-gates/*.selftest.mjs` file committed at
   C87 and on `scripts/workflow-gates/publication.json`; `node scripts/workflow-gates/check-workflow.mjs` exits 0;
   `node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs scripts/workflow-gates` exits 0;
@@ -353,18 +365,19 @@ the classes of R6–R9. Revision 5: the same for the classes of R13; the reader'
   Windows; both results are in the completion report. `node docs/sessions/evidence/task942/review/r6-superset.mjs` (the hooks of C60 and C87 from Git against the
   live hook, over a generated matrix and a seeded fuzz) exits 0 and prints `LOST 0`; a `LOST` line is a defect to fix, or a correction to name in section 5
   through a revision, never a line to explain away in the report (C96, C97).
+- **AC12 [R15].** GOV-942-CI-CENSUS-LIMIT-DENY passes as one test, through the exported `runPipeline` with an injected mapping and baseline: 0 and 300 candidates do not fail closed; 301 and 2000 fail closed with `changed-file-limit-exceeded`, the count of candidates in the detail; 5000 changed paths with no candidate do not fail closed; the mapper is asked with a limit of `Infinity`. `node scripts/check-surface-census-changed.mjs --verify-gate` passes 13 arms, Arm 3 unchanged. The real gate with `--base` the merge base of `origin/main` and `--head HEAD` exits 0 on this branch at the time of the implementer's run, or fails only on a surface the diff really affects, which is a finding and not a reason to change the limit. Sensitivity: a break spec with `find` `(mapped.candidates?.length ?? 0) > maxChangedFiles` and `replace` `false` fails the case with an assertion, run with `cli.mjs sensitivity`; restored passes; the live gate is never edited for the break. `docs/sessions/evidence/task945/review/p04-census-limit-prototype.mjs` is a prototype to read, not code to paste. Approver: the first CI run of the approved commit shows this gate green or a finding of the kind above.
 
 ## Security test contract
 
 | Field | Content |
 |---|---|
-| Assets and boundaries | The listing public-visibility invariant gate (`scripts/check-listing-visibility.mjs`): its allowlist (C12–C15), its stale check (C13, C18) and its detector (C16); the pre-write guard that keeps the gate an Opus-only file (C22, C23, C38) and its shell write detection (`shellWriteTargets`, `governanceIndependenceErrors`, R4); CI's policy-diff check (C24) as the outer layer. Owner: Opus (D1). |
+| Assets and boundaries | The fail-closed limit of the changed-surface census (`scripts/check-surface-census-changed.mjs`, R15). The listing public-visibility invariant gate (`scripts/check-listing-visibility.mjs`): its allowlist (C12–C15), its stale check (C13, C18) and its detector (C16); the pre-write guard that keeps the gate an Opus-only file (C22, C23, C38) and its shell write detection (`shellWriteTargets`, `governanceIndependenceErrors`, R4); CI's policy-diff check (C24) as the outer layer. Owner: Opus (D1). |
 | Frontend security | Governance has no browser consumer; the hook layer replaces this row: GOV-942-HOOK-EXECUTOR-DENY, GOV-942-HOOK-SHELL-FORMS-DENY, GOV-942-HOOK-SHELL-CLASSES-DENY and GOV-942-HOOK-SHELL-READER-DENY on the real `evaluateHook`, `shellWriteTargets` and `governanceIndependenceErrors`. |
-| Server security | The CI layer replaces this row: GOV-942-CI-GATE-ALLOW (process: the real gate on the real tree), GOV-942-CI-PATH-DENY and GOV-942-CI-STALE-ERROR (unit: the real exported detector, allowlist and stale check). |
+| Server security | The CI layer replaces this row: GOV-942-CI-GATE-ALLOW (process: the real gate on the real tree), GOV-942-CI-PATH-DENY and GOV-942-CI-STALE-ERROR (unit: the real exported detector, allowlist and stale check), GOV-942-CI-CENSUS-LIMIT-DENY (unit: the real exported `runPipeline`). |
 | Database/integrations | Not applicable: the gate reads source files only; no database, Storage, Realtime or provider path. |
-| Cases | The seven GOV-942 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
+| Cases | The eight GOV-942 cases of the sidecar with actor, resource, input, response and forbidden effects; allow, deny and error outcomes; hook and CI layers. |
 | Fixtures and environment | The repository source tree read-only and in-memory source strings; for GOV-942-HOOK-SHELL-FORMS-DENY, GOV-942-HOOK-SHELL-CLASSES-DENY and GOV-942-HOOK-SHELL-READER-DENY a temporary folder from `mkdtempSync` with synthetic files and transcripts, removed after the test; no other temporary writes, no credentials, no network. |
-| Sensitivity proof | Critical cases GOV-942-CI-PATH-DENY, GOV-942-HOOK-SHELL-FORMS-DENY, GOV-942-HOOK-SHELL-CLASSES-DENY and GOV-942-HOOK-SHELL-READER-DENY: the breaks named in AC2, AC6, AC8 and AC10, each as a saved break spec run by `cli.mjs sensitivity` (in memory, D17); baseline pass, isolated break failing with an assertion, restored pass; artifacts `docs/sessions/evidence/task942/sensitivity/<case ID>.txt`. |
+| Sensitivity proof | Critical cases GOV-942-CI-PATH-DENY, GOV-942-HOOK-SHELL-FORMS-DENY, GOV-942-HOOK-SHELL-CLASSES-DENY, GOV-942-HOOK-SHELL-READER-DENY and GOV-942-CI-CENSUS-LIMIT-DENY: the breaks named in AC2, AC6, AC8, AC10 and AC12, each as a saved break spec run by `cli.mjs sensitivity` (in memory, D17); baseline pass, isolated break failing with an assertion, restored pass; artifacts `docs/sessions/evidence/task942/sensitivity/<case ID>.txt`. |
 | Execution | `node scripts/workflow-gates/cli.mjs governance-report --contract tasks/Sprints/Sprint_92_kickoff_prompt_Task_942_Listing_Visibility_Allowlist_Current.security.json`, then `cli.mjs verify` on the same path; native Windows PowerShell 5.1, Node 22.22.3; QA Q1. |
 
 ## 6. Ordered route
@@ -374,17 +387,17 @@ the classes of R6–R9. Revision 5: the same for the classes of R13; the reader'
    commit this revision with the command Opus gives. **Prerequisite, before the first write of step 3:** Task 945 is reviewed and committed, and `git status --short scripts`
    prints nothing (no other governance task's implementation is uncommitted in the tree). Otherwise wait until that task's commit; do
    not mix two governance implementations in one working tree.
-3. **Opus implementer, fresh session** (D1; not the session of revision 5): read this kickoff and its bundle; read
+3. **Opus implementer, fresh session** (D1; not the session of revision 5 or 6): read this kickoff and its bundle; read
    `docs/sessions/evidence/task942/review/review-1.md` and `docs/sessions/evidence/task942/design/p13-reader-forms-run.mjs`, a design prototype to
    read, not code to paste. Save the base run of `node scripts/workflow-gates/selftests.mjs` to
    `docs/sessions/evidence/task942/impl/base-runs-r11.txt` before the first write. This session runs under the tool of Task 945: a failure it reports is fixed at once, its differential runs on each change of the hook, and the corrections of section 5 are already in `scripts/workflow-gates/hook-corrections.json`, for the hook of C87 only. Say in the completion report what the tool reported and what the `seen` of `test-results/code-check/<session>.json` holds. Implement R11, R12 and R13 through the Edit tool on the hook,
-   then R14 with the seventh case; the Task 944 guard checks each hook Edit. Set stage `implemented` in the sidecar, save the two break specs
-   of AC8 and AC10 and run the three hook cases with `cli.mjs sensitivity` (never edit a gate or the hook to plant a break); keep the artifacts
+   then R14 with the seventh case, then R15 with the eighth case; the Task 944 guard checks each hook Edit. Set stage `implemented` in the sidecar, save the three break specs
+   of AC8, AC10 and AC12 and run the three hook cases and GOV-942-CI-CENSUS-LIMIT-DENY with `cli.mjs sensitivity` (never edit a gate or the hook to plant a break); keep the artifacts
    and records it writes.
-4. Run `cli.mjs governance-report` and every AC command, append the `## Revision 5` section to the completion report and run
+4. Run `cli.mjs governance-report` and every AC command, append the `## Revision 5` and `## Revision 6` sections to the completion report and run
    `cli.mjs governance-report` again, because that report is part of the scope digest; end with
    `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` and the explicit-path commit command for the owner. No push.
-5. **Opus approver, another fresh session** (D2; not the session of revision 5): review R11–R14 and recheck the R1–R10 results of `review-1.md`
+5. **Opus approver, another fresh session** (D2; not the session of revision 5 or 6): review R11–R15 and recheck the R1–R10 results of `review-1.md`
    on the new hook; on approval write the `review` block and stage `reviewed`, write the five R5 `scope` entries with their evidence, run AC7, and
    hand off the explicit-path commit under `shared/git-publication.md`. PR #12 merges only after green PR checks (D7).
 
@@ -394,16 +407,16 @@ Per requirement: changed files, evidence path, status; each GOV-942 case with it
 assertion; base and final gate and self-test totals; proof that no existing self-test file and no manifest entry changed; for R4
 each AC6 form with its result, the corpus and timing results and the write forms that stay undetected; for R6–R10 the same for each
 AC8 form and each break of R10; for R11–R14 the same for each AC10 form and each break of R14, with the mechanical mutator's total and survivors,
-and the AC11 results; one of `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
+and the AC11 results; for R15 each AC12 fixture, the 13 arms and the real gate's result; one of `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` or `BLOCKED`.
 
 ## 8. Rule compliance
 
 | Rule | How this kickoff complies |
 |---|---|
 | `claim-evidence-contract.md` | Every R cites ledger rows; sources are retained snapshots and executed probes under `docs/sessions/evidence/task942/design/`, the Task 937 design snapshot of the gate and the Task 944 review 3 evidence. |
-| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for the four critical cases, Q1. |
+| `security-testing.md` | Governance contract: hook and CI layers, allow/deny/error, sensitivity for the five critical cases, Q1. |
 | `role-boundaries.md` | Opus implements policy (D1); Sonnet is not routed (C25, C26); approval by an independent session (D2). |
 | `git-publication.md` | Task-branch commit on PR #12's branch (D7); merge only after green checks. |
 | `mobile-adaptation-contract.md` | No visible scope: `Scope: none`. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103; owner decisions: D1, D2, D7, D8, D9, D13, D14, D17, D20, D24; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42, C43, C44, C45, C46, C47, C48, C49, C50, C51, C52, C53, C54, C55, C56, C57, C58, C59, C60, C61, C62, C63, C64, C65, C66, C67, C68, C69, C70, C71, C72, C73, C74, C75, C76, C77, C78, C79, C80, C81, C82, C83, C84, C85, C86, C87, C88, C89, C90, C91, C92, C93, C94, C95, C96, C97, C98, C99, C100, C101, C102, C103, C104, C105, C106, C107, C108, C109, C110, C111, C112; owner decisions: D1, D2, D7, D8, D9, D13, D14, D17, D20, D24; blocked claims: NONE.

@@ -1,0 +1,19 @@
+repository shtepiprone-ux/lero-al visibility PUBLIC
+run 41823787040 head 4f1850fb0bc1f6454a38d88272fc493dc55ca65f event pull_request conclusion failure created 2026-11-04T11:47:29Z
+failed job: Task Security Contracts
+failed job: Unit and Component Tests
+failed job: Click-Shield Gate (blocking)
+failed job: Governance Check
+failed job: Locale Leak Detection (3/6)
+failed job: Locale Leak Detection (1/6)
+failed job: Locale Leak Detection (4/6)
+failed job: Locale Leak Detection (2/6)
+failed job: Governance Required
+group static, complete true, 51 commands, 7 failed, 119 s in all
+failed: exit 1 35 s: npm run check:file-integrity:all
+failed: exit 1 9 s: npm run check:mojibake
+failed: exit 1 1 s: npm run check:enrolled-tailwind
+failed: exit 1 0 s: npm run check:surface-census:changed
+failed: exit 1 1 s: npm run check:design-tokens:strict
+failed: exit 1 0 s: npm run check:kickoff-evidence
+failed: exit 1 0 s: npm run check:listing-visibility

@@ -1,0 +1,33 @@
+src/lib/auth/permissions.ts: 17 defects, 16 caught, 1 not caught, 0 not tried, 0 undecided
+src/lib/auth/permissions.ts:37: `||` became `&&`, and every test still passed
+
+exit 1 signal null 251 s
+
+src/modules/admin/actions/permissions.ts: 68 defects, 64 caught, 4 not caught, 0 not tried, 0 undecided
+src/modules/admin/actions/permissions.ts:133: `e.old_allowed ?? null` became `((e.old_allowed) && (null))`, and every test still passed
+src/modules/admin/actions/permissions.ts:135: `e.actor_user_id ?? null` became `((e.actor_user_id) && (null))`, and every test still passed
+src/modules/admin/actions/permissions.ts:198: `eventError` became `!(eventError)`, and every test still passed
+src/modules/admin/actions/permissions.ts:206: `{ error: 'save_failed' }` became `undefined`, and every test still passed
+
+exit 1 signal null 199 s
+
+src/modules/listings/actions/applyListingTransition.ts: 61 defects, 46 caught, 15 not caught, 0 not tried, 0 undecided
+src/modules/listings/actions/applyListingTransition.ts:122: `actor.source ?? actor.userId` became `((actor.source) && (actor.userId))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:131: `actor.source ?? actor.userId` became `((actor.source) && (actor.userId))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:132: `written?.length ?? 0` became `((written?.length) && (0))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:132: `0` became `1`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:140: `&&` became `||`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:144: `listingTitle ?? listingId` became `((listingTitle) && (listingId))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:148: `slug` became `!(slug)`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:161: `revalidatePath(`/${locale}/listings`, 'page')` became `;`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:162: `slug` became `!(slug)`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:163: `revalidatePath(`/${locale}/listings/${slug}`, 'page')` became `;`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:222: `current.slug ?? null` became `((current.slug) && (null))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:222: `current.title ?? null` became `((current.title) && (null))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:222: `current.user_id ?? null` became `((current.user_id) && (null))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:277: `current.slug ?? null` became `((current.slug) && (null))`, and every test still passed
+src/modules/listings/actions/applyListingTransition.ts:277: `current.title ?? null` became `((current.title) && (null))`, and every test still passed
+
+exit 1 signal null 524 s
+
+tracked or new under the code roots after the runs: ""

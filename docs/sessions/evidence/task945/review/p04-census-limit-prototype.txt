@@ -1,0 +1,28 @@
+﻿=== the gate as committed, on the real branch
+exit 1
+  FAIL  check:surface-census:changed — changed-file-limit-exceeded: 812 changed file(s) exceeds the limit of 300
+=== with the correction in memory, on the real branch, limit as committed
+exit 0
+  check:surface-census:changed — diff-mapped per-surface GR-1 census (Task 819)
+      Changed paths seen: 812
+      Excluded (812):
+      Included surfaces (0):
+  PASS  check:surface-census:changed — every surface the diff affects is enrolled, baselined, or clean.
+=== with the correction in memory, the gate self-test
+exit 0
+  check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running 12 arms
+    PASS  Arm 1 — changed file resolves upward to a known (manifest) surface -> included
+    PASS  Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero
+    PASS  Arm 3 — changed-file limit set below the real diff size -> fail-closed, drives exit non-zero
+    PASS  Arm 4 — new (un-baselined) block on a censused surface -> drives exit non-zero
+    PASS  Arm 5 — baselined block is recorded debt -> does not fail
+=== with the correction in memory, the limit still refuses what can be censused
+exit 0
+  0 candidates: failClosed false
+  300 candidates: failClosed false
+  301 candidates: failClosed true, changed-file-limit-exceeded: 301 changed candidate file(s) exceeds the limit of 300
+  2000 candidates: failClosed true, changed-file-limit-exceeded: 2000 changed candidate file(s) exceeds the limit of 300
+  5000 changed paths, none a candidate: failClosed false
+  the mapper is asked with limit Infinity
+=== the tree after these runs
+""

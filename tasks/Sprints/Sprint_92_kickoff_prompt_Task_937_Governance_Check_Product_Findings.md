@@ -3,7 +3,7 @@
 Sprint 92. P1. QA profile **Q1** (four UI files change in source with no rendered change, three evidence files and two gate data
 files change; `docs/qa-profiles.md`). Kickoff by Opus, 2026-11-01. Published on PR #12 (D7) as the product task for the red
 Governance Check job (D8). The fifth failed gate of that job, the listing-visibility allowlist, is a policy file and belongs to the
-governance Task 942.
+governance Task 942. On run 41823787040 the job failed seven commands (C42): the same five, `check:surface-census:changed`, which is Task 942 R15, and `check:kickoff-evidence`, a stale line in the Task 931 ledger corrected by the Task 945 review 1 session. Neither of the two is this task's, and its route does not change.
 **Revision 3, 2026-11-04**, by the Task 944 review 4 session (f2fea951), under D14: commit 94d20430b tracked a third file that
 `check:mojibake` lists, a transcript of that gate kept as Task 944 review evidence (C38, C39), which CI scans and this route could
 not clear, so AC1 was unreachable (C41). R2 now allowlists both transcripts (C40); R3 and every other route step are unchanged.
@@ -87,12 +87,13 @@ stale (C37). The UI receipts of §6 were run through the real write hook (C29).
 | C33 | FACT | The e-mail section view is presentational. | source: `docs/sessions/evidence/task937/design/sources/src__modules__cabinet__components__CabinetEmailChangeSectionView.tsx.txt:35-35`; observed: `No hooks besides` |
 | C34 | FACT | The reviewed Task 931 revision 3 and Task 935 contracts scope the 923 D8/D9 contract file that R12 writes (executed probe). | source: `docs/sessions/evidence/task937/design/p10-change-set-bindings.txt:6-21`; observed: `scopes written contract tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json` |
 | C35 | FACT | Apart from the 923 D8/D9 scope, the change set is bound only through the planted-break file (executed probe). | source: `docs/sessions/evidence/task937/design/p10-change-set-bindings.txt:8-19`; observed: `binds scope src/modules/cabinet/actions/index.ts` |
-| C36 | FACT | Task 931 revision 3 adds a guard test against hand-written query doubles in every unit test file. | source: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md:163-163`; observed: `queryDoubles.guard.test.ts` |
+| C36 | FACT | Task 931 revision 3 adds a guard test against hand-written query doubles in every unit test file. | source: `tasks/Sprints/Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.md:165-165`; observed: `queryDoubles.guard.test.ts` |
 | C37 | FACT | Task 943 R11 adds a release check for reviewed contracts outside the diff. | source: `tasks/Archive/Sprint_92_kickoff_prompt_Task_943_File_Mutating_Commands_Are_Writes.md:405-405`; observed: `reviewedFreshnessErrors(root, selected, { files, readBase })` |
 | C38 | FACT | A third tracked file is listed by the mojibake gate: the Task 944 review 3 integrity transcript (executed probe, revision 3). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:5-5`; observed: `tracked: docs/sessions/evidence/task944/review/r3-q1-integrity.txt` |
 | C39 | FACT | That file is the transcript of a run of the mojibake gate. | source: `docs/sessions/evidence/task944/review/r3-q1-integrity.txt:3-3`; observed: `node scripts/check-mojibake.mjs` |
 | C40 | FACT | With both transcripts allowlisted and the R3 file cleared, in the memory of the gate process, it lists no tracked file (executed probe). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:9-9`; observed: `tracked at HEAD 0` |
 | C41 | FACT | With only the first transcript allowlisted the gate still lists one tracked file (executed probe). | source: `docs/sessions/evidence/task937/design/p11-third-mojibake-run.txt:13-13`; observed: `tracked at HEAD 1` |
+| C42 | FACT | Run 41823787040 failed the census gate among seven commands of this job. | source: `docs/sessions/evidence/task945/review/r14-ci-run.txt:16-16`; observed: `npm run check:surface-census:changed` |
 | D7 | OWNER DECISION | Every CI fix is committed on task/935-governance-approval-route and published in PR #12. | owner: 2026-11-01; decision: `Everything in PR #12 (Recommended)` |
 | D8 | OWNER DECISION | Each red CI check gets its own task. | owner: 2026-11-01; decision: `A separate task for each check (Recommended)` |
 | D9 | OWNER DECISION | A later independently reviewed contract may rebase a pinned reviewed contract for its non-test scope files (Task 940). | owner: 2026-11-01; decision: `Governance task: audited rebase (Recommended)` |
@@ -207,4 +208,4 @@ gate outputs before and after; the R3 hashes; the R11 transcript; one of `IMPLEM
 | `role-boundaries.md` | Sonnet implements product and data files; the policy gate change is Task 942 (Opus); Opus reviews and writes the 923 rebase. |
 | `git-publication.md` | Commit on PR #12's branch (D7); push only after approval; merge only after green checks. |
 
-KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41; owner decisions: D7, D8, D9, D14; blocked claims: NONE.
+KICKOFF EVIDENCE PREFLIGHT COMPLETE — claims: C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28, C29, C30, C31, C32, C33, C34, C35, C36, C37, C38, C39, C40, C41, C42; owner decisions: D7, D8, D9, D14; blocked claims: NONE.

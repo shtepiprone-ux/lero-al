@@ -2,6 +2,8 @@
 
 ## R3. Trace implementation semantics and dependent behavior
 
+Follow `shared/secure-code-review.md` section 4 for every task: read the change-review report of the candidate and
+answer each of its lines, read every changed file individually, and report findings in that section's form.
 Rebuild the requirement/AC ledger and trace every row to shipped code and concrete evidence. Try relevant failure
 paths: absent/invalid input, stale data, repeated action, partial failure, authorization, locale expansion, small
 viewport, changed consumers, and regression. A non-applicable branch needs a concrete reason.

@@ -2,6 +2,12 @@
 
 Before opening task files or making changes, read `.codex/RULES.md` and follow it.
 
+# Every AI tool
+
+The flow of writing and checking code is `.claude/rules/shared/secure-code-review.md`. The automatic checks run by hook only
+inside Claude Code: any other tool that writes code runs `node scripts/workflow-gates/change-review.mjs --base=HEAD` before
+it calls the change finished, fixes what it refuses, and answers every line of its report. CI runs the same review.
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 

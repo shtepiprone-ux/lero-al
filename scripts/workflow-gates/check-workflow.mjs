@@ -87,6 +87,10 @@ export function validateSettings(root, settings) {
   for (const event of ['SessionStart', 'PostModelSwitch']) {
     if (!settings.hooks?.[event]?.some(g => g.hooks?.some(h => h.args?.includes('${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/session-role.mjs')))) errors.push(`${event}: supported role metadata is not captured`);
   }
+  // Task 945 R7: written code is always checked, in every session and subagent; the existing matcher check keeps each registration unnarrowed.
+  for (const event of ['SessionStart', 'PostToolUse', 'Stop', 'SubagentStop']) {
+    if (!settings.hooks?.[event]?.some(g => g.hooks?.some(h => h.args?.includes('${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/code-check.mjs')))) errors.push(`${event}: the code check tool is not registered`);
+  }
   const required = { PreToolUse: ['phase-write-gate', 'block-mutating-git'], Stop: ['orchestrator-response-gate'],
     SessionStart: ['sonnet-executor-bootstrap'], UserPromptSubmit: ['orchestrator-router'] };
   for (const [event, scripts] of Object.entries(required)) for (const script of scripts) {

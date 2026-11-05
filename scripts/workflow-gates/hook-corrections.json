@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "rows": [
+    {
+      "baseSha256": "5efddf6e47e4dbbf6a45628aee31ab5aa12dd73bb856f46b6192751569c17935",
+      "commandPattern": "(?:^|\\s)(?:-p|--package)(?:\\s|$)",
+      "targetPattern": "",
+      "reason": "Task 942 revision 5: the value of --package is no program"
+    },
+    {
+      "baseSha256": "5efddf6e47e4dbbf6a45628aee31ab5aa12dd73bb856f46b6192751569c17935",
+      "commandPattern": "",
+      "targetPattern": "['\"]",
+      "reason": "Task 942 revision 5: a word of a nested text keeps no quote character"
+    },
+    {
+      "baseSha256": "5efddf6e47e4dbbf6a45628aee31ab5aa12dd73bb856f46b6192751569c17935",
+      "commandPattern": "--unset|--split-string|-[i0v]*[uS]\\b",
+      "targetPattern": "",
+      "reason": "Task 942 revision 5: the value of --unset or --split-string moves no folder"
+    },
+    {
+      "baseSha256": "5efddf6e47e4dbbf6a45628aee31ab5aa12dd73bb856f46b6192751569c17935",
+      "commandPattern": "(?:--chdir|-[i0v]*C)\\s+-[i0v]*C",
+      "targetPattern": "",
+      "reason": "Task 942 revision 5: the word a folder option of env takes is no second folder option"
+    }
+  ]
+}

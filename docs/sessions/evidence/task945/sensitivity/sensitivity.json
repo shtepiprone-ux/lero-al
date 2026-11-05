@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.md",
+  "cases": [
+    {
+      "id": "GOV-945-HOOK-WRITE-DENY",
+      "testName": "[GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.break.json",
+      "breakSha256": "726fc7a9516d3af0a59f3948d0e5eba2ea279fadac9b1939450ee118127ecee7",
+      "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.txt",
+      "artifactSha256": "9f705d5d5857f35f3e7c231efa09ab3341ac060d7bfa2aa2c64631978e929686"
+    },
+    {
+      "id": "GOV-945-HOOK-IMPACT-DENY",
+      "testName": "[GOV-945-HOOK-IMPACT-DENY] An agent cannot finish while its change breaks other code",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.break.json",
+      "breakSha256": "02d1137a73ede16d8bdc207e72414d0de4e770d222d7f319d41594ae2559d352",
+      "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.txt",
+      "artifactSha256": "6c6db920c539e466c5b89a3041294f544489c8e4356ca28c113d80e3e5fcae10"
+    },
+    {
+      "id": "GOV-945-HOOK-SHELL-WRITE-DENY",
+      "testName": "[GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.break.json",
+      "breakSha256": "051afd52b655437e5d9e072fe7c12de4ff846f56442d09866e2334e6db24f40c",
+      "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.txt",
+      "artifactSha256": "3f6a853ddf8a2f59691e370258c043d3be6ea61b2cc54724405deca49ed29990"
+    },
+    {
+      "id": "GOV-945-HOOK-DIFFERENTIAL-DENY",
+      "testName": "[GOV-945-HOOK-DIFFERENTIAL-DENY] A change of the shared hook that loses a target is reported",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.break.json",
+      "breakSha256": "2e08af2408c8588a431a6e03c410b8c6c07d870eba1f4d92e2b3c608cd7a9e96",
+      "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.txt",
+      "artifactSha256": "d6c7a3e854d362cbe1295f7bca1fa72d0fa73a72f330f566379540795f426ead"
+    },
+    {
+      "id": "GOV-945-CI-SETTINGS-DENY",
+      "testName": "[GOV-945-CI-SETTINGS-DENY] The tool cannot be left out of the settings",
+      "baseline": "passed",
+      "mutant": "failed",
+      "failureKind": "assertion",
+      "restored": "passed",
+      "method": "in-memory",
+      "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.break.json",
+      "breakSha256": "d9036939977222bd1a393ea3f7d48753d32652bc94546e6e706944d260c918d2",
+      "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.txt",
+      "artifactSha256": "55cb2bfe44226cadf90c3cc525011dae486d1781de5c6dd49aa766c57e13b397"
+    }
+  ]
+}

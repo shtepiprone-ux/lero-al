@@ -123,6 +123,21 @@
             "onFailure": "block"
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/code-check.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block",
+            "statusMessage": "Checking written code"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [
@@ -195,6 +210,55 @@
             "timeout": 10,
             "statusMessage": "Golden Rules gate (GR-5 / GR-6)",
             "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/code-check.mjs"
+            ],
+            "timeout": 300,
+            "onFailure": "block",
+            "statusMessage": "Checking written code"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/code-check.mjs"
+            ],
+            "timeout": 60,
+            "onFailure": "block",
+            "statusMessage": "Checking written code"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/code-check.mjs"
+            ],
+            "timeout": 300,
+            "onFailure": "block",
+            "statusMessage": "Checking written code"
           }
         ]
       }

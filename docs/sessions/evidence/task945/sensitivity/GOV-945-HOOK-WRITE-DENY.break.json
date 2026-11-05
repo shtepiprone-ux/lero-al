@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-945-HOOK-WRITE-DENY",
+  "target": "scripts/workflow-gates/code-check.mjs",
+  "find": "return { status: 2, message: [`CODE CHECK FAILED after a write to",
+  "replace": "return { status: 0, message: [`CODE CHECK FAILED after a write to"
+}

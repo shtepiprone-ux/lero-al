@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-945-CI-SETTINGS-DENY",
+  "target": "scripts/workflow-gates/check-workflow.mjs",
+  "find": "errors.push(`${event}: the code check tool is not registered`)",
+  "replace": "void event"
+}

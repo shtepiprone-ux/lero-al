@@ -1,5 +1,8 @@
 # Sonnet implementation: controlled execution
 
+Before the first write read `shared/secure-code-review.md` section 2; it holds for every line. The tool of its section 3
+runs by itself. A line it names is fixed at once or answered in your report; never weaken a check to get past it.
+
 ## Before each visible UI change
 
 1. Read `shared/enforcement-model.md` and register its GR-0, UI-contract and mobile-adaptation receipts through the

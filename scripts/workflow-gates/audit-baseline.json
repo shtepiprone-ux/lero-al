@@ -1,0 +1,385 @@
+{
+ "note": "High and critical advisories open when this check started (npm audit, 2026-11-05). They are unresolved findings, not accepted risks. Remove an entry when it is fixed; an addition stops the agent and goes to the reviewer.",
+ "advisories": [
+  {
+   "id": "1121187",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1121247",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1123259",
+   "name": "ws",
+   "severity": "high"
+  },
+  {
+   "id": "1123260",
+   "name": "ws",
+   "severity": "high"
+  },
+  {
+   "id": "1123896",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1123897",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1123898",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1123911",
+   "name": "js-yaml",
+   "severity": "high"
+  },
+  {
+   "id": "1123999",
+   "name": "hono",
+   "severity": "high"
+  },
+  {
+   "id": "1124064",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1124066",
+   "name": "sharp",
+   "severity": "high"
+  },
+  {
+   "id": "1124172",
+   "name": "next",
+   "severity": "high"
+  },
+  {
+   "id": "1124185",
+   "name": "next",
+   "severity": "high"
+  },
+  {
+   "id": "1124193",
+   "name": "next",
+   "severity": "high"
+  },
+  {
+   "id": "1124252",
+   "name": "postcss",
+   "severity": "high"
+  },
+  {
+   "id": "1130588",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1130589",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1130591",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1130713",
+   "name": "socket.io-parser",
+   "severity": "high"
+  },
+  {
+   "id": "1130718",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1130720",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1130722",
+   "name": "ip-address",
+   "severity": "high"
+  },
+  {
+   "id": "1130734",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1130736",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1130737",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1138115",
+   "name": "js-yaml",
+   "severity": "high"
+  },
+  {
+   "id": "1138811",
+   "name": "nanoid",
+   "severity": "high"
+  },
+  {
+   "id": "1139346",
+   "name": "extract-zip",
+   "severity": "high"
+  },
+  {
+   "id": "1139427",
+   "name": "nanoid",
+   "severity": "high"
+  },
+  {
+   "id": "1139510",
+   "name": "postcss",
+   "severity": "high"
+  },
+  {
+   "id": "1153171",
+   "name": "browserslist",
+   "severity": "high"
+  },
+  {
+   "id": "1153172",
+   "name": "browserslist",
+   "severity": "high"
+  },
+  {
+   "id": "1158524",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1158527",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1158530",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1193677",
+   "name": "next",
+   "severity": "critical"
+  },
+  {
+   "id": "1193685",
+   "name": "extract-zip",
+   "severity": "high"
+  },
+  {
+   "id": "1193725",
+   "name": "sharp",
+   "severity": "high"
+  },
+  {
+   "id": "1193727",
+   "name": "js-yaml",
+   "severity": "high"
+  },
+  {
+   "id": "1193733",
+   "name": "next",
+   "severity": "critical"
+  },
+  {
+   "id": "1204921",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1239765",
+   "name": "image-size",
+   "severity": "high"
+  },
+  {
+   "id": "1239766",
+   "name": "image-size",
+   "severity": "high"
+  },
+  {
+   "id": "1239943",
+   "name": "fast-uri",
+   "severity": "high"
+  },
+  {
+   "id": "1240041",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1240050",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1240104",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240105",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240107",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240108",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240109",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240111",
+   "name": "brace-expansion",
+   "severity": "high"
+  },
+  {
+   "id": "1240112",
+   "name": "engine.io",
+   "severity": "high"
+  },
+  {
+   "id": "1240853",
+   "name": "basic-ftp",
+   "severity": "high"
+  },
+  {
+   "id": "1241209",
+   "name": "source-map-js",
+   "severity": "high"
+  },
+  {
+   "id": "1241210",
+   "name": "proxy-addr",
+   "severity": "critical"
+  },
+  {
+   "id": "1241331",
+   "name": "sharp",
+   "severity": "high"
+  },
+  {
+   "id": "1241339",
+   "name": "@modelcontextprotocol/sdk",
+   "severity": "high"
+  },
+  {
+   "id": "1242628",
+   "name": "@modelcontextprotocol/sdk",
+   "severity": "high"
+  },
+  {
+   "id": "1242649",
+   "name": "@modelcontextprotocol/sdk",
+   "severity": "high"
+  },
+  {
+   "id": "1242658",
+   "name": "vite",
+   "severity": "high"
+  },
+  {
+   "id": "1242753",
+   "name": "storybook",
+   "severity": "critical"
+  },
+  {
+   "id": "1242814",
+   "name": "@sentry/nextjs",
+   "severity": "critical"
+  },
+  {
+   "id": "1242817",
+   "name": "next",
+   "severity": "critical"
+  },
+  {
+   "id": "1242819",
+   "name": "next",
+   "severity": "high"
+  },
+  {
+   "id": "1242874",
+   "name": "storybook",
+   "severity": "high"
+  },
+  {
+   "id": "1243066",
+   "name": "zod",
+   "severity": "high"
+  },
+  {
+   "id": "1243074",
+   "name": "body-parser",
+   "severity": "high"
+  },
+  {
+   "id": "1243084",
+   "name": "happy-dom",
+   "severity": "high"
+  },
+  {
+   "id": "1243113",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1243473",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1243475",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1243478",
+   "name": "undici",
+   "severity": "high"
+  },
+  {
+   "id": "1243488",
+   "name": "@modelcontextprotocol/sdk",
+   "severity": "high"
+  },
+  {
+   "id": "1243623",
+   "name": "happy-dom",
+   "severity": "high"
+  },
+  {
+   "id": "1244533",
+   "name": "undici",
+   "severity": "high"
+  }
+ ]
+}

@@ -27,6 +27,8 @@ Reconcile the manifest with scope and every affected security contract, includin
 Changing/removing an implementation does not automatically retire its security invariant. Replace or remove a case
 only after proving the boundary it protected is preserved or deliberately removed by an explicit owner decision.
 An unexamined caller, stale case or required out-of-scope edit is a design defect, not work for Sonnet to discover.
+A manifest row names places; shared logic also needs an executed old-versus-new run on generated inputs, prototypes too.
+`scopeDigest`, not `scope`, measures stale contracts.
 
 ## 2. Check actual write authority
 

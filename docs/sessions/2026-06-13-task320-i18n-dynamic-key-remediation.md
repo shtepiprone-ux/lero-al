@@ -1,7 +1,7 @@
 # Task 320 — i18n dynamic-key remediation (Epic II Phase 2)
 
 **Date:** 2026-06-13
-**Source:** `tasks/Epics/Epic_II_kickoff_prompt_Task_320.md`
+**Source:** `tasks/Archive/Epic_II_kickoff_prompt_Task_320.md`
 **Executor:** Sonnet 4.6
 
 ## Summary
@@ -258,7 +258,7 @@ All touched files: 0 NUL bytes, no BOM (first bytes are ASCII `{`/`i`/`e`), vali
 No git commands run by executor — orchestrator emits explicit-path `git add`/`git commit` at
 review.
 
-## Addendum — QA hardening (`tasks/Epics/Epic_II_kickoff_prompt_Task_320_ADDENDUM_qa_hardening.md`)
+## Addendum — QA hardening (`tasks/Archive/Epic_II_kickoff_prompt_Task_320_ADDENDUM_qa_hardening.md`)
 
 The Task 320 product fix (UserCard `tu('admin.users')` namespace swap + `NumInputField`
 `floors_total` label) was reviewed and **APPROVED, unchanged**. The reviewer flagged that

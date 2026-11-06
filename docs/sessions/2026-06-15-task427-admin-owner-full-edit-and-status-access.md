@@ -1,10 +1,10 @@
 # Session: Task 427 — Admin/Owner full edit + any-status access (2026-06-15)
 
-Kickoff: `tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` (read in full, corrected/owner-resolved version).
+Kickoff: `tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` (read in full, corrected/owner-resolved version).
 
 ## Rework Addendum (2026-06-15) — closes 4 review gaps
 
-Rework kickoff: `tasks/Epics/Epic_I_kickoff_prompt_Task_427_REWORK.md`. The orchestrator routed Task 427 back with 1
+Rework kickoff: `tasks/Archive/Epic_I_kickoff_prompt_Task_427_REWORK.md`. The orchestrator routed Task 427 back with 1
 blocker (literal-AC deviation) and 3 evidence gaps. All 4 deltas are addressed below (R1–R4); see the updated
 "Files Changed" table, "Delete (AC5) — proof trace", "Validation" (build transcript), and "Rendered Mobile Matrix
 (AC R4)" sections.
@@ -55,7 +55,7 @@ status-action set from the engine (no divergent hardcode, Note 14), and switched
 | `src/modules/listings/components/ListingFormShellView.stories.tsx` | Added `StaffStatusControlOpen` story export (after `Staff`) — same `statusControl` args as `Staff` (`currentStatus:'pending'`), with a `play` function that clicks the `StatusChangeControl` Combobox trigger to render the open bottom sheet with the full 6-option privileged set. No production component/styling/i18n/engine/gateway/option-derivation change. | rendered-evidence harness for AC R4 |
 | `scripts/responsive-screenshots.mjs` | Added 2 entries to `STORY_TARGETS`: `admin-adminlistingstable--preview-dialog-sold-status-actions` and `listings-listingformshellview--staff-status-control-open`, both `locales:['uk']`, `viewports:['mobile-320','mobile-375','mobile-390']`. | rendered-evidence harness for AC R4 |
 
-No other files touched. `tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` shows as modified in `git status` but was NOT edited in this session (already corrected by the orchestrator prior to handoff).
+No other files touched. `tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` shows as modified in `git status` but was NOT edited in this session (already corrected by the orchestrator prior to handoff).
 
 ## Delete (AC5) — proof trace
 

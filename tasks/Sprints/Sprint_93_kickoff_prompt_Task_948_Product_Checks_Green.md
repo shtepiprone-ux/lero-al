@@ -50,6 +50,9 @@ Unchanged (styling and comments only).
 No visible change. `MantineListingGalleryPattern` mobile frame keeps `overflow: clip`; the cabinet alert icon stays
 20px. Canonical owners unchanged.
 
+## Mobile adaptation record
+- Scope: none
+
 ## Acceptance criteria
 
 - AC1 `npm run check:design-tokens:strict` exits 0 with `Total: 0 raw … | 0 stale-marker(s)`.

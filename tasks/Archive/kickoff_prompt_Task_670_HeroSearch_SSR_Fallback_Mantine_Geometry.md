@@ -563,7 +563,7 @@ commit handoff is emitted with this kickoff.** Owner action required first — s
 file.
 
 **Backlog inconsistency found during design (not fixed here).** `docs/backlog.md` states "Next free: **674**", but
-`tasks/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md` and `tasks/task674-preflight-ledger-and-contract.md`
+`tasks/Archive/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md` and `tasks/task674-preflight-ledger-and-contract.md`
 are both tracked and committed (`ebfbb07c4 fix(Task674): scan scripts/ in check:mojibake; allowlist the detector`).
 **674 is used; next free is 675.** Task 670 itself remains correctly reserved and unused. Flagged for orchestrator
 reconciliation; deliberately not corrected inside this kickoff, since editing the backlog is the executor's

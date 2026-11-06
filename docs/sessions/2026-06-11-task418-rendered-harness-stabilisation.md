@@ -2,7 +2,7 @@
 
 **Type:** Storybook / visual-snapshot harness (TOOLING — not product code), Slice 6a
 **Executor:** Sonnet 4.6
-**Kickoff:** `tasks/Sprints/Sprint_35_kickoff_prompt_Task_418_RenderedHarnessStabilisation.md`
+**Kickoff:** `tasks/Archive/Sprint_35_kickoff_prompt_Task_418_RenderedHarnessStabilisation.md`
 
 ## 1. Before/after harness behavior
 

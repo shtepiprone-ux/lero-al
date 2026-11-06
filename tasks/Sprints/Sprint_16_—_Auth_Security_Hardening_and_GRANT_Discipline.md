@@ -93,11 +93,11 @@ Each kickoff includes the standard P0 contract (`docs/agent-contract.md`):
 ## File index
 
 - Kickoffs (one file per task, per orchestrator hand-off rule):
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_273.md`
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_274.md`
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_275.md`
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_276.md`
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_273.md`
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_274.md`
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_275.md`
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_276.md`
 - Already shipped:
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_271.md` ✅
-  - `tasks/Sprints/Sprint_16_kickoff_prompt_Task_272.md` ✅
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_271.md` ✅
+  - `tasks/Archive/Sprint_16_kickoff_prompt_Task_272.md` ✅
   - `tasks/Sprints/Sprint_16_task_271_password_design_reference.md` ✅

@@ -32,7 +32,7 @@ src/stories/mantine/primitives/Modal.stories.tsx:453: googleConfirm={{
 src/stories/mantine/primitives/Modal.stories.tsx:469: 
 src/stories/mantine/primitives/Modal.stories.tsx:480: googleConfirm={{
 src/design-system/mantine/patterns/MantineDialogSections.tsx:57: <Box py="lg">{section}</Box>
-tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:795: | D54 | OWNER DECISION | Q3: yes. In the cabinet the account deletion asks for the password instead of the word DELETE. | owner: 2026-10-20; decision: `then instead of "DELETE", when an account is deleted in the profile, we should simply ask for the password. Otherwise I fully agree.` |
+tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md:795: | D54 | OWNER DECISION | Q3: yes. In the cabinet the account deletion asks for the password instead of the word DELETE. | owner: 2026-10-20; decision: `then instead of "DELETE", when an account is deleted in the profile, we should simply ask for the password. Otherwise I fully agree.` |
 census row: mantine-primitives-modal--delete-confirm-password~delete-google
 census row: mantine-primitives-modal--delete-confirm-password~delete-google-ready
 write set: src/modules/cabinet/components/ProfileTab.tsx: scope YES; policy no

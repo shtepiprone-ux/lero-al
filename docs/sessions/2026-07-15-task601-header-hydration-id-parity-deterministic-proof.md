@@ -1,7 +1,7 @@
 # Task 601 — Deterministic, noise-immune proof that the authenticated-header `useId` hydration mismatch is caught
 
 Sprint 44 (Epic MM Phase-2 / Epic RS — Regression Shield). Kickoff:
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_601_HydrationIdParityDeterministicProof.md`
+`tasks/Archive/Sprint_44_kickoff_prompt_Task_601_HydrationIdParityDeterministicProof.md`
 (includes the "🟢 Orchestrator directive (2026-07-15)" section added mid-session after the
 STOP-AND-ASK below — not authored by me, already present in the working tree when read back).
 

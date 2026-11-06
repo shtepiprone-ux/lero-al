@@ -1,6 +1,6 @@
 # Task 751 (F1) — DOM -> owning-component mapping feasibility finding
 
-**Task:** `tasks/Sprints/Sprint_59_kickoff_prompt_Task_751_F1_DOM_Component_Mapping_Feasibility.md`
+**Task:** `tasks/Archive/Sprint_59_kickoff_prompt_Task_751_F1_DOM_Component_Mapping_Feasibility.md`
 **Owner decisions in force:** D-C (route-level real dev-server DOM is the proof), D-H (compact
 text/JSON/HTML artifacts only), D-J (F1 is its own task; Task 667 stays `BLOCKED/reserved`).
 

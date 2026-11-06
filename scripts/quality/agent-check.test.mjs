@@ -12,7 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const DIR = path.join(ROOT, 'src', '__agent_check_test__');
 const REL = 'src/__agent_check_test__';
 const HOOK = path.join(ROOT, 'scripts', 'quality', 'agent-check.mjs');
-const STATE = path.join(os.tmpdir(), 'lero-al-agent-check');
+const STATE = path.join(spawnSync('git', ['rev-parse', '--absolute-git-dir'], { cwd: ROOT, encoding: 'utf8' }).stdout.trim(), 'lero-al-agent-check');
 
 rmSync(DIR, { recursive: true, force: true });
 after(() => rmSync(DIR, { recursive: true, force: true }));

@@ -1,6 +1,6 @@
 # Task 575 — `HeaderActions` presentational primitive (Favorites + auth buttons → Mantine)
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_575_HeaderActionsPrimitive.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_575_HeaderActionsPrimitive.md`.
 Plan: `tasks/Sprints/Sprint_44_Header_Mantine_Primitives.md`. Depends on Task 574 (landed on HEAD).
 
 ## Why

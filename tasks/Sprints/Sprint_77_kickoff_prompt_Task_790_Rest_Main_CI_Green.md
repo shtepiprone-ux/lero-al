@@ -276,3 +276,6 @@ Kamr 62, Omah 339, TailAdmin 88 inspected; 0 blocked) — no row concerns CI, te
 follows the repository's own gate conventions (two-armed plants, remove-only baselines, fail-closed gates).
 **lero.al data map:** not applicable (no entity, action, route or UI changes). The executor repeats this live check
 into `docs/sessions/evidence/task790/research-exec/` before the first write (GR-7 execution moment).
+
+## Mobile adaptation record
+- Scope: none

@@ -140,7 +140,7 @@ and its consumers is done before deletion.
    PR could never merge under the old ruleset (`node scripts/quality/check-ruleset.mjs`, 2026-11-06: 4 differences).
 3. The first CI run of the reset PR. Known red until the tasks land: product checks `design-tokens:strict` and
    `enrolled-tailwind` (948), dependency audit (947), locale leak (939), possibly click-shield (938).
-4. **947 → 948 → 939 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
+4. **947 → 948 → 939 → 951 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
    by Opus, before the reset PR merges. Reason: `main` changes only through a PR whose `CI Required` is green, and CI
    runs on pull requests into `main` only, so a stacked PR into the reset branch would get no CI at all. The reset PR
    merges when `CI Required` is green.
@@ -226,5 +226,29 @@ The reference was re-read against the project. What changed:
   the compensating controls are written in `quality-gates.md` §5.
 - **Publication guard**: `scripts/quality/push-safety.mjs` (5 tests) — a push only of the current task branch to
   `origin`, never `main`, never force/delete/mirror; a merge only as `--squash`, never `--admin`, and only while
-  `CI Required` is green on an open PR to `main`. The user-level Stop hook still looks for the removed path; the owner
-  repoints it (an agent may not edit its own hooks).
+  `CI Required` is green on an open PR to `main`. The owner repointed the user-level Stop hook to it on 2026-11-06 (an
+  agent may not edit its own hooks).
+
+## 10. First CI run of the reset PR (#19, run 42263240996, 2026-11-06)
+
+Red as expected: dependency audit (947), design tokens and enrolled Tailwind (948), locale leak shards 1–4 (939).
+Red and not expected — each fixed with a test, or filed:
+- **The hydration gate's self-test had no browser** in the quality job. The job now installs Chromium;
+  `scripts/quality/ci-workflow.test.mjs` fails when a job starts a browser gate without installing Playwright first.
+- **The authorization suite read a Server Action manifest its job never built.** The `authz` job now builds first; the
+  same test file fails when `test:security-integration` runs before `npm run build`. It also fails when `CI Required`
+  does not wait for every job.
+- **The mobile-adaptation gate read only changed kickoffs, from the commit, not the disk.** A local run therefore passed
+  while CI failed. 377 of 380 kickoffs outside `tasks/Archive/` had no record, because closed tasks' kickoffs were never
+  archived. Changes:
+  - 361 closed tasks' kickoffs moved to `tasks/Archive/`, with 2 172 references rewritten;
+  - the 19 open tasks' kickoffs now carry a record (10 visible, 9 `Scope: none`);
+  - the gate reads every active kickoff from disk; its self-test (now 10 arms) runs in CI;
+  - the kickoff template and the check-files kickoff rule include the section.
+- **CodeQL, first full scan: 325 alerts.** Five were in this PR's own scripts and are fixed with tests:
+  - ReDoS in the push guard's parser (a linear tokeniser now, plus a timing test on the input CodeQL named);
+  - a check-then-read race in two files (one file descriptor);
+  - agent-check state in the shared temp directory (it moved into the Git directory);
+  - agent-check tools started through `cmd.exe` (Node now starts them with an argv array).
+
+  The other 320 are Task 951, which lands on this branch before the merge.

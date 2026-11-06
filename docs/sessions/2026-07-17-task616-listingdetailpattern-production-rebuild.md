@@ -1,6 +1,6 @@
 # Task 616 (re-scoped) — ALL-Mantine `ListingDetailPattern` production rebuild: new gallery pattern (→ Mantine lightbox), new contact-card pattern, rebuilt detail pattern, zero legacy primitives
 
-Sprint 44 (Epic MM Phase-2). Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_616_ListingDetailPatternProductionRebuild.md`.
+Sprint 44 (Epic MM Phase-2). Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_616_ListingDetailPatternProductionRebuild.md`.
 This is the v2 re-scope after the owner rejected the first 616 attempt for reproducing legacy `@/components/ui/*`
 chrome (legacy `Badge`/`Button`/`Avatar`) inside a `Patterns/Mantine/*` story — see `docs/backlog.md` Last Session
 history for the full v1 postmortem. v1's off-track WIP was reverted by the owner before this session started.

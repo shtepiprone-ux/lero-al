@@ -1,6 +1,6 @@
 # Session Log — 2026-06-14 — Task 424 (Epic II, Task 319 mobile-gate follow-up)
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_424.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_424.md`
 **Scope:** Convert the hand-rolled `NotificationBell`/`NotificationCenter` anchored popup
 (`<div role="dialog" className="absolute right-0 top-full mt-2 z-50">` wrapping a fixed `w-80`
 panel) into a §26.2-compliant full-width bottom sheet at `<640px`, while leaving the `≥640px`

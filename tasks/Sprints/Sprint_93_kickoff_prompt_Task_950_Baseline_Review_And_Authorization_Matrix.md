@@ -46,6 +46,9 @@ review gets its own threat model in its own task.
 
 No visible change.
 
+## Mobile adaptation record
+- Scope: none
+
 ## Acceptance criteria
 
 - AC1 `src/__tests__/security/authzMatrix.test.ts` fails while any entry point of the baseline review lacks a matrix

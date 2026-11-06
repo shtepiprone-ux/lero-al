@@ -60,7 +60,7 @@ callers go through it; planted-violation (inline predicate) must FAIL the LV.4 g
 ## Task 455 — LV.2: Lifecycle reconciliation (close the silent state)
 
 **Type:** Schema / migration + server-action + cron. **Kickoff:**
-`tasks/Sprints/Sprint_36_kickoff_prompt_Task_455_LifecycleReconciliation.md`.
+`tasks/Archive/Sprint_36_kickoff_prompt_Task_455_LifecycleReconciliation.md`.
 
 **✅ OWNER DECISIONS (FINAL 2026-06-18):**
 1. **Add a new `'expired'` `ListingStatus`** — do NOT reuse `inactive` (`inactive` = manual deactivation;

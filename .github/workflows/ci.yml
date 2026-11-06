@@ -48,6 +48,8 @@ jobs:
         run: node --test "scripts/quality/*.test.mjs"
       - name: Every file in the repository (encoding, invisible characters, secrets, syntax of every file type, links, kickoffs)
         run: node scripts/quality/check-files.mjs --all
+      - name: Browser for the hydration gate's planted-violation self-test
+        run: npx playwright install chromium --with-deps
       - name: Product checks (i18n, design system, UI contract, grants)
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
@@ -115,6 +117,8 @@ jobs:
       - run: npm ci
       - name: Refuse anything but the approved development project
         run: node scripts/quality/ci-target.mjs
+      - name: Build (the Server Action manifest that serverActionManifest.integration.test.ts reads)
+        run: npm run build
       - name: Anonymous, other-user, wrong-role and cross-owner cases against real RLS
         run: npm run test:security-integration
 

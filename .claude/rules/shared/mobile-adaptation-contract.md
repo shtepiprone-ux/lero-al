@@ -135,8 +135,9 @@ decision 2026-10-10). A census that reads only `#storybook-root` proves nothing 
 
 - The reviewer rejects visible work whose kickoff has no complete `## Mobile adaptation record`, or whose code
   differs from it.
-- `scripts/check-mobile-adaptation-contract.mjs` is a fail-closed CI diff gate. It rejects added clipping/truncation
-  primitives in changed UI source and malformed changed kickoff records; its planted self-test runs in CI.
+- `scripts/check-mobile-adaptation-contract.mjs` is a fail-closed CI gate. It rejects added clipping/truncation
+  primitives in changed UI source, and a missing or malformed record in every kickoff outside `tasks/Archive/`; its
+  planted self-test runs in CI (`scripts/quality/product-gates.mjs`).
 - The task designer, executor, and reviewer must research a primary source when the selected profile does not cover
   a material interaction. Existing Stories may expose a defect but cannot justify retaining it. Only Opus may extend
   the profile catalogue/component map before an executable task is published. That extension also declares the

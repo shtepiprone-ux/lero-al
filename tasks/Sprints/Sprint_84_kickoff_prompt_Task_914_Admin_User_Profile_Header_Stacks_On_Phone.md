@@ -317,3 +317,16 @@ Update the 914 cell of `docs/backlog.md` and write the session log. No Git.
 | 2 | P1 fails, restored | a passing plant → measurement defect |
 | 3 | Gates | non-zero → `PARTIALLY IMPLEMENTED` |
 | 4 | O84-9 | returned → revision |
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/components/admin/AdminUserProfileView.tsx — the profile header card (avatar block, title block) on /admin/users/new and /admin/users/[id]
+- Component families: structural-layout-and-feedback
+- Pattern IDs: linear-flow
+- Standards: w3c-reflow, w3c-meaningful-sequence, apple-hig-layout, android-adapt-layouts, android-layout-basics
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): avatar block in one row, title block in the next, both full width; 640px transition back to side by side
+- Mobile order: avatar block → name and title → badges → email → #id
+- Required-content treatment: required semantic content wraps at full width; no clipping
+- Story and verification: Patterns/Mantine/AdminUserProfileView at 320px and on both sides of the 640px transition × sq, en, uk, it

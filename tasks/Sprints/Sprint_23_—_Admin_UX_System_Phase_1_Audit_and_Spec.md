@@ -15,7 +15,7 @@ Produce the canonical **Admin UX System** specification document (`docs/admin-ux
 
 ### Task 303 — Admin responsive audit + canonical narrow-bp per-route policy CONFIRMATION
 
-- Kickoff: [`Sprint_23_kickoff_prompt_Task_303.md`](Sprint_23_kickoff_prompt_Task_303.md)
+- Kickoff: [`Sprint_23_kickoff_prompt_Task_303.md`](../Archive/Sprint_23_kickoff_prompt_Task_303.md)
 - Type: audit + canonical spec (docs only)
 - Output: `docs/admin-ux-rules.md` (NEW) "Narrow-breakpoint model" section + per-route policy table + sticky-column + scroll-affordance rules; `docs/governance-reports/2026-05-30-admin-responsive-audit.md` (NEW); session log; backlog entry.
 - Encodes: Decision 1 (Hybrid: workflow=card-row, data-dense=controlled scroll).
@@ -24,7 +24,7 @@ Produce the canonical **Admin UX System** specification document (`docs/admin-ux
 
 ### Task 304 — Admin filter / sort / row-action canonical spec
 
-- Kickoff: [`Sprint_23_kickoff_prompt_Task_304.md`](Sprint_23_kickoff_prompt_Task_304.md)
+- Kickoff: [`Sprint_23_kickoff_prompt_Task_304.md`](../Archive/Sprint_23_kickoff_prompt_Task_304.md)
 - Type: audit + canonical spec (docs only)
 - Output: `docs/admin-ux-rules.md` (EXTEND) "Filter taxonomy" + "Sort canonical rules" + "Row-action / inline-control canonical rules" sections; `docs/governance-reports/2026-05-30-admin-filter-sort-rowaction-audit.md` (NEW); session log; backlog entry.
 - Encodes: Decision 2 (filter taxonomy ≥4=Combobox / ≤3=segmented / per-value count / single global reset) + Decision 3 (sort always in URL, canonical `?sort=col&dir=asc|desc`).
@@ -33,7 +33,7 @@ Produce the canonical **Admin UX System** specification document (`docs/admin-ux
 
 ### Task 305 — Admin modal / dialog / popover / sheet canonical spec
 
-- Kickoff: [`Sprint_23_kickoff_prompt_Task_305.md`](Sprint_23_kickoff_prompt_Task_305.md)
+- Kickoff: [`Sprint_23_kickoff_prompt_Task_305.md`](../Archive/Sprint_23_kickoff_prompt_Task_305.md)
 - Type: audit + canonical spec (docs only)
 - Output: `docs/admin-ux-rules.md` (EXTEND) "Modal / Dialog / Sheet / Popover canonical rules" section; `docs/governance-reports/2026-05-30-admin-modal-audit.md` (NEW); session log; backlog entry.
 - Encodes: Decision 4 (width tiers sm/md/lg/xl = 400/560/720/960) + Decision 5 (action-heavy → Sheet at <md, read-only Dialog if usable).

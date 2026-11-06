@@ -387,3 +387,16 @@ and emits no git command.
 | 3 | Plants | `07`–`10` | a plant passes → test defect |
 | 4 | Gates | §13.2 | non-zero → `PARTIALLY IMPLEMENTED` |
 | 5 | Owner | O84-1 | a 12-hour time or month-first `en` date after deploy → finding |
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: the date and time text of the §3.4 surfaces (admin user pages, inquiries, listings)
+- Component families: record-list-and-data
+- Pattern IDs: key-value-stack
+- Standards: w3c-reflow, w3c-meaningful-sequence, apple-hig-layout, android-content-structure
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineDetailList.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): no layout switch, only the text changes; 640px transition unchanged
+- Mobile order: unchanged on every surface
+- Required-content treatment: date and time text wraps; no clipping
+- Story and verification: the census of every §3.4 surface at 320px and on both sides of the 640px transition × sq, en, uk, it

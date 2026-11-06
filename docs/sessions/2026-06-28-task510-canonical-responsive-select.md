@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-28  
 **Executor:** Sonnet 4.6  
-**Kickoff:** `tasks/kickoff_prompt_Task_510_CanonicalResponsiveSelect_RemoveDuplicateWrapper.md`  
+**Kickoff:** `tasks/Archive/kickoff_prompt_Task_510_CanonicalResponsiveSelect_RemoveDuplicateWrapper.md`  
 **Origin:** Owner review of Task 509 — two behaviors for Select in the same story (P0 violation)
 
 ---

@@ -1,5 +1,5 @@
 stage planned; executionStatus (absent); report docs/sessions/evidence/task927/security/report.json; scope 30; cases 24
-product | exists | [  ] | - | tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+product | exists | [  ] | - | tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
 product | exists | [ M] | - | src/lib/auth/browser.ts
 product | exists | [??] | - | src/lib/auth/googleIdentity.ts
 product | exists | [??] | - | src/components/auth/GoogleSignInButton.tsx

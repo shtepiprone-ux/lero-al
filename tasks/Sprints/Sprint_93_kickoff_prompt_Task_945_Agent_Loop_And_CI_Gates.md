@@ -61,6 +61,9 @@ Changed: CI permissions and secrets, agent permissions, the supply chain of acti
 
 No visible change.
 
+## Mobile adaptation record
+- Scope: none
+
 ## Acceptance criteria
 
 - AC1 `node --test "scripts/quality/*.test.mjs"` — 44 pass: agent loop 9 (a src change without a test blocks the

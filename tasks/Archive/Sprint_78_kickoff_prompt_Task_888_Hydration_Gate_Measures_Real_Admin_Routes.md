@@ -53,8 +53,8 @@ owner one native run that proves the admin branch passes clean and fails on a pl
 
 Grep over the repo excluding `docs/sessions/**`, `tasks/Archive/**`, `node_modules`: the script, `docs/critical-flow-registry.md`,
 `docs/backlog.md`, `docs/backlog-reserved.md`, the Sprint 78 plan, and two historical kickoffs
-(`tasks/Epics/Epic_RS_kickoff_prompt_Task_451_REWORK_no_session_admin_skip.md`,
-`tasks/kickoff_prompt_Task_448_RegressionGuardsSlice1Rework.md`). The two historical kickoffs record what was run and
+(`tasks/Archive/Epic_RS_kickoff_prompt_Task_451_REWORK_no_session_admin_skip.md`,
+`tasks/Archive/kickoff_prompt_Task_448_RegressionGuardsSlice1Rework.md`). The two historical kickoffs record what was run and
 are **not** rewritten. FACT.
 
 ### 3.4 Worktree at design time

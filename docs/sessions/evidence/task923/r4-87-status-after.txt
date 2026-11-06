@@ -161,7 +161,7 @@ A  docs/sessions/evidence/task923/review-3/rv3-verify.txt
  M src/stories/patterns/mantine/DetailList.stories.tsx
  M src/stories/patterns/mantine/ListingCardPattern.stories.tsx
  M src/stories/patterns/mantine/ListingPreviewDialogView.stories.tsx
-M  tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+M  tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
  M vitest.config.ts
 ?? .playwright-mcp/
 ?? docs/sessions/2026-10-07-task790-rest-main-ci-green.md

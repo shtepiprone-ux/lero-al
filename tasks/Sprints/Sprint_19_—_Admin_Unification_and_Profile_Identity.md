@@ -12,8 +12,8 @@
 
 | Task | Title | Priority | Kickoff |
 |------|-------|----------|---------|
-| **284** | Admin surfaces unification + Support/Inquiries ambiguity resolution | HIGH | [`Sprint_19_kickoff_prompt_Task_284.md`](Sprint_19_kickoff_prompt_Task_284.md) |
-| **287** | Promote user email into the profile identity card | MEDIUM | [`Sprint_19_kickoff_prompt_Task_287.md`](Sprint_19_kickoff_prompt_Task_287.md) |
+| **284** | Admin surfaces unification + Support/Inquiries ambiguity resolution | HIGH | [`Sprint_19_kickoff_prompt_Task_284.md`](../Archive/Sprint_19_kickoff_prompt_Task_284.md) |
+| **287** | Promote user email into the profile identity card | MEDIUM | [`Sprint_19_kickoff_prompt_Task_287.md`](../Archive/Sprint_19_kickoff_prompt_Task_287.md) |
 
 ## Measured surfaces (2026-05-29)
 - Admin route groups: `companies, currency, email-templates, footer, inquiries, legal, listings,

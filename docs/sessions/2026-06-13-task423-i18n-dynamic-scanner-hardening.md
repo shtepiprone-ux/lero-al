@@ -1,6 +1,6 @@
 # Session Log — 2026-06-13 — Task 423
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_423.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_423.md`
 **Scope:** Harden `scripts/check-i18n-dynamic.mjs` manifest/baseline structural validation
 (script + docs only). Non-blocking follow-up to Task 317.
 

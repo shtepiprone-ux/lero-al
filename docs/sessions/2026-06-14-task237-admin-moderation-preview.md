@@ -1,6 +1,6 @@
 # Task 237 — Admin moderation preview: temporary listing page
 
-**Epic Y.2** · Kickoff: `tasks/Epics/Epic_Y_kickoff_prompt_Task_237.md`
+**Epic Y.2** · Kickoff: `tasks/Archive/Epic_Y_kickoff_prompt_Task_237.md`
 **Date:** 2026-06-14
 
 ## Summary

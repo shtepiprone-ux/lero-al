@@ -1,6 +1,6 @@
 # Session Log — 2026-06-13 — Task 317
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_317.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_317.md`
 **Scope:** Dynamic-key missing-key scanner + `check:i18n-dynamic` wiring (script + docs only).
 **Depends on:** Task 316 audit, `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md`
 (COMMITTED `65a97a8cc`).

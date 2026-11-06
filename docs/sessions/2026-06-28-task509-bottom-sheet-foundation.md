@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-28  
 **Executor:** Sonnet 4.6  
-**Kickoff:** `tasks/Sprints/Sprint_39_kickoff_prompt_Task_509_MobileBottomSheetOverlayFoundation.md`
+**Kickoff:** `tasks/Archive/Sprint_39_kickoff_prompt_Task_509_MobileBottomSheetOverlayFoundation.md`
 
 ---
 

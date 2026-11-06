@@ -1,6 +1,6 @@
 # Session: Task 425 — StatusChangeControl mobile <640 full-width submit buttons (2026-06-14)
 
-Kickoff: `tasks/Epics/Epic_Y_kickoff_prompt_Task_425_statuschangecontrol_mobile_note_submit.md` (read in full).
+Kickoff: `tasks/Archive/Epic_Y_kickoff_prompt_Task_425_statuschangecontrol_mobile_note_submit.md` (read in full).
 
 ## Finding — premise already satisfied, ZERO diff to `StatusChangeControl.tsx`
 

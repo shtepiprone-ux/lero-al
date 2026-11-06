@@ -1,6 +1,6 @@
 # Task 579 — `MobileNavDrawer` presentational primitive (hamburger drawer body)
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_579_MobileNavDrawerPrimitive.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_579_MobileNavDrawerPrimitive.md`.
 Depends on Task 578 (landed as 578+585 combined commit).
 
 ## Why

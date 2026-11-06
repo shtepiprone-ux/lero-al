@@ -18,7 +18,7 @@ These are pre-requisites for **Epic HH — Admin UX System** (Phase 1+). Task 30
 
 ### Task 300 — Admin Support i18n missing keys hotfix [CRITICAL]
 
-- Kickoff: [`Sprint_21_kickoff_prompt_Task_300.md`](Sprint_21_kickoff_prompt_Task_300.md)
+- Kickoff: [`Sprint_21_kickoff_prompt_Task_300.md`](../Archive/Sprint_21_kickoff_prompt_Task_300.md)
 - Type: i18n hotfix (data — locale JSON additions only)
 - Files: `messages/{sq,en,uk,it}.json` (8 keys × 4 locales = 32 string additions under `admin.support`) + session log + backlog.
 - Source code: ZERO changes (`AdminSupportManager.tsx` uses `t(\`role_${role}\`)` and `t(\`support_status_${status}\`)` correctly; missing keys are the bug).
@@ -28,7 +28,7 @@ These are pre-requisites for **Epic HH — Admin UX System** (Phase 1+). Task 30
 
 ### Task 301 — Admin segmented-tab narrow-breakpoint fix [MEDIUM]
 
-- Kickoff: [`Sprint_21_kickoff_prompt_Task_301.md`](Sprint_21_kickoff_prompt_Task_301.md)
+- Kickoff: [`Sprint_21_kickoff_prompt_Task_301.md`](../Archive/Sprint_21_kickoff_prompt_Task_301.md)
 - Type: responsive bugfix (admin, narrow breakpoints)
 - Files: `src/components/admin/AdminListingsTable.tsx` + `src/components/admin/AdminUsersTable.tsx` (tab-bar parent container className only) + `docs/tailwind-canonical-fragments.md` §14 update + session log + backlog.
 - Source code: 2 files (container className change). `Button` `size="tab"` (Task 296) unchanged. `AdminSettings` unchanged.
@@ -39,7 +39,7 @@ These are pre-requisites for **Epic HH — Admin UX System** (Phase 1+). Task 30
 
 ### Task 302 — Footer admin source-of-truth backfill [HIGH]
 
-- Kickoff: [`Sprint_21_kickoff_prompt_Task_302.md`](Sprint_21_kickoff_prompt_Task_302.md)
+- Kickoff: [`Sprint_21_kickoff_prompt_Task_302.md`](../Archive/Sprint_21_kickoff_prompt_Task_302.md)
 - Type: data backfill (SQL — owner runs in Supabase editor)
 - Files: `scripts/task-302-site-footer-backfill.sql` (NEW) + session log + backlog.
 - Source code: ZERO changes (`Footer.tsx` fallback chain deliberately preserved as defensive safety; `AdminFooterManager.tsx` works once rows populated; server actions correct as-is).

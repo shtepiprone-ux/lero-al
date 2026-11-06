@@ -4,7 +4,7 @@
 **Session type:** Orchestration / governance (Opus 4.7 — orchestrator/architect/reviewer)
 **Author:** Opus orchestrator. No production code touched. Filesystem-only writes (no git).
 **Outputs:**
-- `tasks/Sprints/Sprint_31_kickoff_prompt_Task_354-Fix_RenderedStorybookMobileControlLocalizationDSContract.md` (NEW — Sonnet corrective kickoff).
+- `tasks/Archive/Sprint_31_kickoff_prompt_Task_354-Fix_RenderedStorybookMobileControlLocalizationDSContract.md` (NEW — Sonnet corrective kickoff).
 - This orchestrator decision log.
 
 ---

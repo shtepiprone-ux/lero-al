@@ -1,6 +1,6 @@
 # Task 519 — Canonical responsive Modal: `MantineModal` (Batch C P1.16)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_519_ModalBottomSheet.md`.
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_519_ModalBottomSheet.md`.
 
 ## Summary
 

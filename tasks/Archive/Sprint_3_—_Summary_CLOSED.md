@@ -57,4 +57,4 @@ Clear all governance gate failures before Epic B continues:
 ## Next
 
 Resume Epic B at **Task 112** — B.2 Agent city selection (canonical Combobox).
-Kickoff: [`tasks/Epics/Epic_B_kickoff_prompt_Task_112.md`](../Epics/Epic_B_kickoff_prompt_Task_112.md)
+Kickoff: [`tasks/Archive/Epic_B_kickoff_prompt_Task_112.md`](Epic_B_kickoff_prompt_Task_112.md)

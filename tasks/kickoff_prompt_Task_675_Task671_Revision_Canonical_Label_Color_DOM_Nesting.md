@@ -476,3 +476,16 @@ Sonnet does not self-approve and does not run, emit, suggest, or delegate any mu
 **Known-risk note for the reviewer.** The likeliest defect here is I4: renaming `isFirstVisible` to
 `withTopDivider` while accidentally inverting the predicate. AC5(a)/(b) from Task 671 already assert both
 divider states, so an inversion cannot pass — but check the diff, not the report.
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/design-system/mantine/patterns/MantineFilterSection.tsx micro-headings and the responsiveBottomSheet title slot of the listings filters
+- Component families: form-picker-and-choice, overlay-and-disclosure
+- Pattern IDs: form-stack, overlay-adaptive
+- Standards: w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, w3c-focus-order, w3c-hover-focus, apple-hig-sheets, android-common-layouts, android-adapt-layouts
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineFilterSection.tsx, src/design-system/mantine/patterns/responsiveBottomSheet.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): filters in the bottom sheet; 640px transition to the desktop Drawer
+- Mobile order: sheet title → section micro-heading → section controls
+- Required-content treatment: headings and options wrap; no clipping
+- Story and verification: Patterns/Mantine/FilterSection and FiltersPanelShell at 480, 560, 680 and 768px × sq, en, uk, it

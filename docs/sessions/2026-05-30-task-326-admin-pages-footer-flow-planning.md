@@ -229,9 +229,9 @@ No new columns; no new tables; no RLS change. The `title` column stays as a lega
 | Path | Change | Rationale |
 |---|---|---|
 | `docs/sessions/2026-05-30-task-326-admin-pages-footer-flow-planning.md` | NEW (this file) | Opus planning session log |
-| `tasks/Sprints/Sprint_27_kickoff_prompt_Task_326A.md` | NEW | Sonnet kickoff: CMS source-of-truth + public renderer |
-| `tasks/Sprints/Sprint_27_kickoff_prompt_Task_326B.md` | NEW | Sonnet kickoff: Footer integration |
-| `tasks/Sprints/Sprint_27_kickoff_prompt_Task_326C.md` | NEW | Sonnet kickoff: Polish + QA + cleanup |
+| `tasks/Archive/Sprint_27_kickoff_prompt_Task_326A.md` | NEW | Sonnet kickoff: CMS source-of-truth + public renderer |
+| `tasks/Archive/Sprint_27_kickoff_prompt_Task_326B.md` | NEW | Sonnet kickoff: Footer integration |
+| `tasks/Archive/Sprint_27_kickoff_prompt_Task_326C.md` | NEW | Sonnet kickoff: Polish + QA + cleanup |
 | `tasks/Sprints/Sprint_27_—_Admin_CMS_Pages_and_Footer_Page_Flow.md` | NEW | Sprint plan |
 | `docs/backlog.md` | UPDATE | Counter bump, Sprint 27 entry, next-immediate-tasks refresh |
 

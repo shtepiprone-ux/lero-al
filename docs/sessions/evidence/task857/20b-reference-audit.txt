@@ -113,9 +113,9 @@ tasks/Epics/Epic_HH_Admin_UX_System.md:82:**Task 306 — AdminPageShell / AdminH
 tasks/Epics/Epic_HH_Admin_UX_System.md:84:- Implement (or formalise existing) `AdminPageShell`, `AdminHeader`, `AdminFilterBar` shared components based on Phase 1 specs.
 tasks/Epics/Epic_HH_Admin_UX_System.md:101:- Migrate Users + Listings tables to AdminPageShell + AdminTable per canonical spec.
 tasks/Epics/Epic_HH_Admin_UX_System.md:113:- Migrate to canonical AdminPageShell + AdminTable / AdminCardList.
-tasks/Epics/Epic_HH_kickoff_prompt_Task_310.md:16:                     /admin/pages, /admin/legal, /admin (dashboard card grid → AdminPageShell)
-tasks/Epics/Epic_HH_kickoff_prompt_Task_310.md:21:dashboard ad-hoc card grid + custom currency tabs. The canonical primitives (`AdminPageShell`, `AdminTable` `tableAtLg`,
-tasks/Epics/Epic_HH_kickoff_prompt_Task_310.md:32:   primitives `AdminPageShell/AdminTable/AdminCardList`. Read EACH manager you migrate before editing.
-tasks/Epics/Epic_HH_kickoff_prompt_Task_310.md:62:- Each route in the batch renders via `AdminPageShell` + (`AdminTable` `tableAtLg` | `AdminCardList` | form layout per
-tasks/Epics/Epic_HH_kickoff_prompt_Task_310.md:63:  §16.C); custom currency tabs → Tabs primitive; dashboard → AdminPageShell card grid.
+tasks/Archive/Epic_HH_kickoff_prompt_Task_310.md:16:                     /admin/pages, /admin/legal, /admin (dashboard card grid → AdminPageShell)
+tasks/Archive/Epic_HH_kickoff_prompt_Task_310.md:21:dashboard ad-hoc card grid + custom currency tabs. The canonical primitives (`AdminPageShell`, `AdminTable` `tableAtLg`,
+tasks/Archive/Epic_HH_kickoff_prompt_Task_310.md:32:   primitives `AdminPageShell/AdminTable/AdminCardList`. Read EACH manager you migrate before editing.
+tasks/Archive/Epic_HH_kickoff_prompt_Task_310.md:62:- Each route in the batch renders via `AdminPageShell` + (`AdminTable` `tableAtLg` | `AdminCardList` | form layout per
+tasks/Archive/Epic_HH_kickoff_prompt_Task_310.md:63:  §16.C); custom currency tabs → Tabs primitive; dashboard → AdminPageShell card grid.
 tasks/Epics/Epic_MM_Mantine_UI_Migration.md:56:| MM.5 | Admin shell + page headers (`AdminLayout`, `AdminPageShell`, `AdminSidebar`, `AdminMobileHeader`) | `MantineAppShellFoundation` / `MantinePageHeaderWithActions` | ⏳ planned (Phase 3) |

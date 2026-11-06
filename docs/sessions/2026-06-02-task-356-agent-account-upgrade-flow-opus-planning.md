@@ -44,7 +44,7 @@ split (max two: 366A routing/modal/spinner + branching; 366B upgrade page + life
 proves independence is required — STOP & ASK first.
 
 ## Produced artifacts
-- `tasks/Sprints/Sprint_32_kickoff_prompt_Task_366_PrivateToAgentAccountUpgradeFlow.md` — copy-paste-ready
+- `tasks/Archive/Sprint_32_kickoff_prompt_Task_366_PrivateToAgentAccountUpgradeFlow.md` — copy-paste-ready
   Sonnet implementation task with Positive + Negative flow sections (Task 255 rule) and AC-by-AC mapping.
 
 ## Confirmation

@@ -31,7 +31,7 @@ Current status after Task 344: `docs/design-system.md` is retained as the canoni
 | `docs/admin-ux-rules.md` | UPDATE — §14 inheritance banner; §14.6 verification gate → 14-width canon | Admin rules now a specialisation of the global contract |
 | `docs/rule-index.md` | UPDATE — `design-system.md` added (Required) to "UI/layout/component" + "Admin table" bundles | Future tasks find the contract first |
 | `docs/component-catalog.md` | UPDATE — header pointer to §7 Tier-1..4 ownership taxonomy | Catalog categories map to the four tiers |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md` | **NEW** — historical Phase 1 Sonnet foundation sub-task | **FROZEN by Task 344 / not executable**; retained for provenance only |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md` | **NEW** — historical Phase 1 Sonnet foundation sub-task | **FROZEN by Task 344 / not executable**; retained for provenance only |
 | `docs/sessions/2026-05-31-task-340-global-responsive-design-system-contract.md` | **NEW** — this log | Per Note 10 |
 | `docs/backlog.md` | UPDATE — Last Session block | Per Note 10 |
 
@@ -75,7 +75,7 @@ Auth pages (login/register/reset/confirm/verified) have **no explicit container*
 
 > Current status: Task 343 is retained for provenance only and MUST NOT be executed. Task 344 supersedes this implementation path with the graduated DS-1..DS-8 queue; Task 345 is the first executable DS-1 slice.
 
-**`tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md`** — creates 5 global Tier-2 layout primitives (`PageShell`, `PageHeader`, `Section`, `FilterBar`, `ActionBar`) in `src/components/layout/` (public/cabinet siblings of the existing admin primitives), each with a Storybook story proving the 14×4 matrix. **Zero route migration; zero route adoption** (proof via Storybook only). Concrete, route-scoped, pass/fail based; Positive + Negative flows; forbids local layout invention and code-level-only PASS; requires browser/Storybook QA OR an explicit `OWNER QA REQUIRED` gate. Includes all canonical sections + AC mapping to flows + STOP & ASK triggers + Files-Changed/no-git contract.
+**`tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md`** — creates 5 global Tier-2 layout primitives (`PageShell`, `PageHeader`, `Section`, `FilterBar`, `ActionBar`) in `src/components/layout/` (public/cabinet siblings of the existing admin primitives), each with a Storybook story proving the 14×4 matrix. **Zero route migration; zero route adoption** (proof via Storybook only). Concrete, route-scoped, pass/fail based; Positive + Negative flows; forbids local layout invention and code-level-only PASS; requires browser/Storybook QA OR an explicit `OWNER QA REQUIRED` gate. Includes all canonical sections + AC mapping to flows + STOP & ASK triggers + Files-Changed/no-git contract.
 
 Verified accurate against repo: admin primitives (AdminPageShell/AdminPageHeader/AdminTable/AdminCardList) already exist and are untouched; public side has NO global PageShell/PageHeader/Section/FilterBar/ActionBar (only listings-domain `ListingsFilterBar`/`ListingsShell`), so Phase 1 = create, not duplicate.
 
@@ -98,7 +98,7 @@ If `git status` shows phantom-corruption mods first run:
 `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add docs/design-system.md docs/responsive-governance.md docs/ui-rules.md docs/admin-ux-rules.md docs/rule-index.md docs/component-catalog.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md docs/sessions/2026-05-31-task-340-global-responsive-design-system-contract.md docs/backlog.md
+git add docs/design-system.md docs/responsive-governance.md docs/ui-rules.md docs/admin-ux-rules.md docs/rule-index.md docs/component-catalog.md tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md docs/sessions/2026-05-31-task-340-global-responsive-design-system-contract.md docs/backlog.md
 git commit -m "docs(Task340): Global Responsive Design System Contract v1 + pointer-doc inheritance + Phase 1 Sonnet sub-task (Task 343)"
 ```
 

@@ -148,14 +148,14 @@ Same standing contract as Sprint 16 — restated for emphasis:
 ## File index
 
 - Kickoffs (one file per task):
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_277.md` — WhatsApp CTA
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_278.md` — Premium CTA
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_279.md` — Favorite heart sync
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_280.md` — Phone combobox
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_281.md` — Auth session persistence
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_288.md` — i18n hardcode audit + remediation (non-critical; added 2026-05-29)
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` — CORRECTIVE: WhatsApp CTA authenticated-only (added 2026-05-29)
-  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_290.md` — project-wide no-ellipsis UX audit (added 2026-05-29)
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_277.md` — WhatsApp CTA
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_278.md` — Premium CTA
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_279.md` — Favorite heart sync
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_280.md` — Phone combobox
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_281.md` — Auth session persistence
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_288.md` — i18n hardcode audit + remediation (non-critical; added 2026-05-29)
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_289.md` — CORRECTIVE: WhatsApp CTA authenticated-only (added 2026-05-29)
+  - `tasks/Archive/Sprint_17_kickoff_prompt_Task_290.md` — project-wide no-ellipsis UX audit (added 2026-05-29)
 - Corrective SQL: `scripts/task-289-listing-contact-events-anon-revoke.sql` (drops `events_insert_anon` + revokes anon SELECT; owner confirmed Task 277 SQL already live).
 - Opus orchestration session logs: `docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md`, `docs/sessions/2026-05-29-task-290-opus-orchestration-no-ellipsis-audit.md`.
 - Source issues file: `uploads/issues.txt` (owner-uploaded 2026-05-28, 4600 lines, 11 tasks; 5 sprint-bound + 6 queued).

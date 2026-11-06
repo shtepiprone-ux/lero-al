@@ -38,7 +38,7 @@ Plus seed `docs/i18n-rules.md` (NEW; Task 316 creates, Tasks 317 + 318 extend).
 
 ### Task 318 — Notification locale-binding audit
 
-- Kickoff: [`Sprint_24_kickoff_prompt_Task_318.md`](Sprint_24_kickoff_prompt_Task_318.md)
+- Kickoff: [`Sprint_24_kickoff_prompt_Task_318.md`](../Archive/Sprint_24_kickoff_prompt_Task_318.md)
 - Type: audit/spec (docs only)
 - Output: `docs/governance-reports/2026-05-31-notification-locale-audit.md` (NEW) + `docs/i18n-rules.md` (EXTEND with "Notification locale-binding canonical rule" placeholder); session log; backlog.
 - Scope: every notification creation path; per-path locale-resolution map; root-cause hypothesis for "Скарга на ваш аккаунт" bug; Phase 2 remediation roadmap for Task 319.
@@ -82,6 +82,6 @@ Per `tasks/Epics/Epic_II_Global_i18n_Hardening.md` → "Dependencies / sequencin
 ## References
 
 - Epic II — Global i18n Hardening: [`../Epics/Epic_II_Global_i18n_Hardening.md`](../Epics/Epic_II_Global_i18n_Hardening.md)
-- Task 300 (Phase 0 — Admin Support i18n hotfix, Sprint 21): [`Sprint_21_kickoff_prompt_Task_300.md`](Sprint_21_kickoff_prompt_Task_300.md)
+- Task 300 (Phase 0 — Admin Support i18n hotfix, Sprint 21): [`Sprint_21_kickoff_prompt_Task_300.md`](../Archive/Sprint_21_kickoff_prompt_Task_300.md)
 - Task 288 (static i18n hardcode audit — 2026-05-29, COMMITTED): in Session Archive.
 - `docs/integrations.md` → "Outbound email language policy (Albanian-only, 2026-05-25)" — Epic GG; out of Epic II scope but referenced.

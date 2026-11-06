@@ -40,6 +40,9 @@ Check: `grep -r "stubs/supabase-client" src` returns nothing.
 
 No visible change of production UI. The Stories render their intended states instead of the error screen.
 
+## Mobile adaptation record
+- Scope: none
+
 ## Acceptance criteria
 
 - AC1 `npm run build-storybook` exits 0; `.storybook/__tests__/supabase-client-stub.test.ts` (new) proves the stub

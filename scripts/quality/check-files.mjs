@@ -15,7 +15,7 @@
 //   node scripts/quality/check-files.mjs --stdin-list       the same, one path per line on standard input
 // Exit 0 = no finding; exit 1 = findings (printed); exit 2 = the checker could not run.
 
-import { readFileSync, existsSync, statSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { readFileSync, existsSync, openSync, fstatSync, closeSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -65,7 +65,7 @@ export const SECRET_PATTERNS = [
 ];
 const CODE_EXT = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
 const KICKOFF = /^tasks\/Sprints\/Sprint_(\d+)_kickoff_prompt_Task_\d+_.+\.md$/;
-export const KICKOFF_SECTIONS = ['## Goal', '## Scope', '## Attack surface', '## UI', '## Acceptance criteria', '## Route', '## Review'];
+export const KICKOFF_SECTIONS = ['## Goal', '## Scope', '## Attack surface', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
 const KICKOFF_FIRST_SPRINT = 93;
 const KICKOFF_MAX_LINES = 200;
 
@@ -397,6 +397,20 @@ function selectFiles(argv) {
   return named.filter((rel) => !ignored.has(rel)).map((rel) => ({ rel }));
 }
 
+/** The bytes of a regular file, or null. One file descriptor serves the type check and the read, so the file cannot be
+ *  swapped between them (CodeQL js/file-system-race). */
+export function readRegularFile(abs) {
+  let fd;
+  try {
+    fd = openSync(abs, 'r');
+    return fstatSync(fd).isFile() ? readFileSync(fd) : null;
+  } catch {
+    return null;
+  } finally {
+    if (fd !== undefined) closeSync(fd);
+  }
+}
+
 export function run(argv) {
   const files = selectFiles(argv);
   const findings = new Map();
@@ -407,8 +421,8 @@ export function run(argv) {
     const abs = path.join(ROOT, f.rel);
     let buf;
     if (f.staged) buf = git(['show', `:${f.rel}`]);
-    else if (existsSync(abs) && statSync(abs).isFile()) buf = readFileSync(abs);
-    else { findings.set(f.rel, [finding('missing', 'file does not exist')]); continue; }
+    else buf = readRegularFile(abs);
+    if (!buf) { findings.set(f.rel, [finding('missing', 'file does not exist')]); continue; }
     const list = checkFile(f.rel, buf);
     // The staged version is what will be committed, so for --staged the parsers read a copy of it.
     const parseable = (ext) => {

@@ -1,6 +1,6 @@
 # Session: Task 238 — Listing form side-panel + status control + dirty-state Save (2026-06-14)
 
-Kickoff: `tasks/Epics/Epic_Y_kickoff_prompt_Task_238.md` (executed in full, no scope changes).
+Kickoff: `tasks/Archive/Epic_Y_kickoff_prompt_Task_238.md` (executed in full, no scope changes).
 
 ## Files Changed
 
@@ -93,4 +93,4 @@ Reviewed the **actual changed files** (Read tool) against the kickoff, plus the 
 - **Doc correction (applied above):** the Save "Before" condition was mis-stated as `disabled={submitting \|\| !isDirty}`; per kickoff §2 the before-state was `disabled={submitting}` and `!isDirty` is **new** (AC 2). Code is correct; the inventory row was wrong and is now fixed.
 - **One known gap → deferred to Task 425 (owner decision, Option 1):** kickoff §4 required the `StatusChangeControl` `variant="select"` note **submit button** to be `max-sm:w-full max-sm:min-h-11`; the reused canonical component ships it as `size="sm"` (not full-width at <640). Sonnet correctly honored the §10/§1.3 "reuse, do NOT redesign StatusChangeControl" fence — this is an orchestrator-owned canonical-component fix, not a 238 defect. **Task 238 is APPROVED; Task 425 opened** to bring that button (both variants) into the mobile full-width gate without behavior change.
 
-Commit emitted by the orchestrator at review (explicit paths, single-writer; owner runs in PowerShell). `tasks/Epics/Epic_II_kickoff_prompt_Task_323.md` is **excluded** (unrelated Epic II file).
+Commit emitted by the orchestrator at review (explicit paths, single-writer; owner runs in PowerShell). `tasks/Archive/Epic_II_kickoff_prompt_Task_323.md` is **excluded** (unrelated Epic II file).

@@ -1,6 +1,6 @@
 # Task 709-R — Restore site 8's cascade-layer standing: `@layer utilities` for `HeroSearchView.module.css`
 
-**Task:** `tasks/Sprints/Sprint_49_kickoff_prompt_Task_709R_HeroSearchView_LayerFix.md`
+**Task:** `tasks/Archive/Sprint_49_kickoff_prompt_Task_709R_HeroSearchView_LayerFix.md`
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
 ---
@@ -13,7 +13,7 @@ Reconciled against the pre-write `git status --porcelain` snapshot (`.screenshot
 |---|---|---|
 | `src/components/shared/HeroSearchView.module.css` | edit (was `??` from Task 709) | Wrapped every rule in one `@layer utilities { … }` block; corrected the provenance header (R9) |
 | `docs/sessions/2026-08-05-task709-herosearchview-de-tailwind.md` | edit (was `??` from Task 709) | R13 correction note in §6: retracted the wrong `(0,1,0)`/`(0,0,0)` specificity claim, stated the corrected source-order mechanism |
-| `tasks/Sprints/Sprint_49_kickoff_prompt_Task_709_HeroSearchView_DeTailwind.md` | edit | R13 correction note after §3.3: `sm:basis-full` **does** compile; the drop rests on measured equivalence, not absence |
+| `tasks/Archive/Sprint_49_kickoff_prompt_Task_709_HeroSearchView_DeTailwind.md` | edit | R13 correction note after §3.3: `sm:basis-full` **does** compile; the drop rests on measured equivalence, not absence |
 | `docs/backlog.md` | edit (was already `M` from Task 709) | Concise state update, this session |
 | `docs/sessions/2026-08-05-task709R-herosearchview-layer-fix.md` | new | This session log |
 

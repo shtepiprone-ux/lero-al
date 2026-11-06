@@ -1,6 +1,6 @@
 # Task 712 — Homepage route shell de-Tailwind + `HeroSearch` Story parity repair
 
-**Task:** `tasks/Sprints/Sprint_51_kickoff_prompt_Task_712_HomepageRouteShell_DeTailwind.md`
+**Task:** `tasks/Archive/Sprint_51_kickoff_prompt_Task_712_HomepageRouteShell_DeTailwind.md`
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
 ---

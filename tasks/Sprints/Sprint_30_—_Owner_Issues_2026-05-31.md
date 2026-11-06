@@ -18,19 +18,19 @@ Convert 13 owner-reported defects + architecture gaps from `issues.md` into Sonn
 
 | # | Type | Title | Kickoff file |
 |---|---|---|---|
-| 330 | Sonnet | Homepage agent CTA copy — early-launch positioning | [`Sprint_30_kickoff_prompt_Task_330.md`](./Sprint_30_kickoff_prompt_Task_330.md) |
-| 331 | Opus | Admin Permissions Role Model Contract v1 + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_331.md`](./Sprint_30_kickoff_prompt_Task_331.md) |
-| 332 | Opus | Admin Dashboard UX/Layout Contract v1 + Sonnet redesign task | [`Sprint_30_kickoff_prompt_Task_332.md`](./Sprint_30_kickoff_prompt_Task_332.md) |
-| 333 | Opus | Password recovery link lifetime + resend audit + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_333.md`](./Sprint_30_kickoff_prompt_Task_333.md) |
-| 334 | Sonnet | Owner post-edit redirect for "На модерації" listings | [`Sprint_30_kickoff_prompt_Task_334.md`](./Sprint_30_kickoff_prompt_Task_334.md) |
-| 335 | Sonnet | Password change flow root-cause + forced re-auth verification | [`Sprint_30_kickoff_prompt_Task_335.md`](./Sprint_30_kickoff_prompt_Task_335.md) |
-| 336 | Opus | Deleted-account cleanup + mailing DB architecture + MVP Sonnet sub-task | [`Sprint_30_kickoff_prompt_Task_336.md`](./Sprint_30_kickoff_prompt_Task_336.md) |
-| 337 | Sonnet | Delete-account copy clarity — **GATED on Task 336 MVP** | [`Sprint_30_kickoff_prompt_Task_337.md`](./Sprint_30_kickoff_prompt_Task_337.md) |
-| 338 | Opus | Admin notification architecture (Phase 1 = listing→pending event + protected default settings + realtime admin Listings) | [`Sprint_30_kickoff_prompt_Task_338.md`](./Sprint_30_kickoff_prompt_Task_338.md) |
-| 339 | Opus | Global clickable-area / hover-target consistency audit + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_339.md`](./Sprint_30_kickoff_prompt_Task_339.md) |
-| 340 | Opus | Global Responsive Design System Contract v1 (supersedes 7/9-width canons → 14×4) + phased migration | [`Sprint_30_kickoff_prompt_Task_340.md`](./Sprint_30_kickoff_prompt_Task_340.md) |
-| 341 | Opus | Admin listing preview (no public exposure) + "Початкова ціна" → "Оригінальна ціна" | [`Sprint_30_kickoff_prompt_Task_341.md`](./Sprint_30_kickoff_prompt_Task_341.md) |
-| 342 | Opus | In-service listing chat architecture — **extends Epic BB** (not new Epic; `tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md`) | [`Sprint_30_kickoff_prompt_Task_342.md`](./Sprint_30_kickoff_prompt_Task_342.md) |
+| 330 | Sonnet | Homepage agent CTA copy — early-launch positioning | [`Sprint_30_kickoff_prompt_Task_330.md`](../Archive/Sprint_30_kickoff_prompt_Task_330.md) |
+| 331 | Opus | Admin Permissions Role Model Contract v1 + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_331.md`](../Archive/Sprint_30_kickoff_prompt_Task_331.md) |
+| 332 | Opus | Admin Dashboard UX/Layout Contract v1 + Sonnet redesign task | [`Sprint_30_kickoff_prompt_Task_332.md`](../Archive/Sprint_30_kickoff_prompt_Task_332.md) |
+| 333 | Opus | Password recovery link lifetime + resend audit + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_333.md`](../Archive/Sprint_30_kickoff_prompt_Task_333.md) |
+| 334 | Sonnet | Owner post-edit redirect for "На модерації" listings | [`Sprint_30_kickoff_prompt_Task_334.md`](../Archive/Sprint_30_kickoff_prompt_Task_334.md) |
+| 335 | Sonnet | Password change flow root-cause + forced re-auth verification | [`Sprint_30_kickoff_prompt_Task_335.md`](../Archive/Sprint_30_kickoff_prompt_Task_335.md) |
+| 336 | Opus | Deleted-account cleanup + mailing DB architecture + MVP Sonnet sub-task | [`Sprint_30_kickoff_prompt_Task_336.md`](../Archive/Sprint_30_kickoff_prompt_Task_336.md) |
+| 337 | Sonnet | Delete-account copy clarity — **GATED on Task 336 MVP** | [`Sprint_30_kickoff_prompt_Task_337.md`](../Archive/Sprint_30_kickoff_prompt_Task_337.md) |
+| 338 | Opus | Admin notification architecture (Phase 1 = listing→pending event + protected default settings + realtime admin Listings) | [`Sprint_30_kickoff_prompt_Task_338.md`](../Archive/Sprint_30_kickoff_prompt_Task_338.md) |
+| 339 | Opus | Global clickable-area / hover-target consistency audit + Sonnet fix task | [`Sprint_30_kickoff_prompt_Task_339.md`](../Archive/Sprint_30_kickoff_prompt_Task_339.md) |
+| 340 | Opus | Global Responsive Design System Contract v1 (supersedes 7/9-width canons → 14×4) + phased migration | [`Sprint_30_kickoff_prompt_Task_340.md`](../Archive/Sprint_30_kickoff_prompt_Task_340.md) |
+| 341 | Opus | Admin listing preview (no public exposure) + "Початкова ціна" → "Оригінальна ціна" | [`Sprint_30_kickoff_prompt_Task_341.md`](../Archive/Sprint_30_kickoff_prompt_Task_341.md) |
+| 342 | Opus | In-service listing chat architecture — **extends Epic BB** (not new Epic; `tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md`) | [`Sprint_30_kickoff_prompt_Task_342.md`](../Archive/Sprint_30_kickoff_prompt_Task_342.md) |
 
 ## Run order
 

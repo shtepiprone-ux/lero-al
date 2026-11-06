@@ -45,6 +45,7 @@ const GATES = [
   ['npm', 'run', 'check:rendered-scope'],
   ['npm', 'run', 'check:ui-contract'],
   ['node', 'scripts/check-mobile-adaptation-contract.mjs'],
+  ['node', 'scripts/check-mobile-adaptation-contract.mjs', '--verify-gate'],
   ['node', 'scripts/check-badge-canonical.mjs'],
   ['node', 'scripts/check-dialog-canonical.mjs'],
   ['npm', 'run', 'check:surface-census:changed'],

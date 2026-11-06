@@ -54,6 +54,9 @@ Dependency change → threat model (`.claude/rules/threat-model.md`):
 
 No visible change. If the build or Storybook shows a visual difference, stop and report it.
 
+## Mobile adaptation record
+- Scope: none
+
 ## Acceptance criteria
 
 - AC1 `npm audit --omit=dev --audit-level=high` exits 0 (the CI "Dependency audit" job runs the same command).

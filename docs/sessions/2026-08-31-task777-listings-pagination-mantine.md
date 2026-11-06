@@ -1,6 +1,6 @@
 # Task 777 — `/listings` pagination → `MantinePagination` — session log
 
-**Task:** `tasks/Sprints/Sprint_68_kickoff_prompt_Task_777_ListingsPagination_Mantine.md`
+**Task:** `tasks/Archive/Sprint_68_kickoff_prompt_Task_777_ListingsPagination_Mantine.md`
 **Status: `COMPLETE`** — closed by owner decision on 2026-09-01 under **D68-2** (differential Storybook baseline).
 The `BLOCKED` state recorded below is retained as history, not as current state; §14 is the closure record.
 

@@ -3,7 +3,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { commands, pushProblems, mergeProblems, evaluate } from './push-safety.mjs';
+import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { performance } from 'node:perf_hooks';
+import { commands, gitPushes, pushProblems, mergeProblems, evaluate } from './push-safety.mjs';
 
 const BRANCH = 'task/945-agent-loop';
 const green = { state: 'OPEN', baseRefName: 'main', statusCheckRollup: [{ name: 'CI Required', status: 'COMPLETED', conclusion: 'SUCCESS' }] };
@@ -61,6 +65,35 @@ test('parsing finds commands in prose, inline code and fences', () => {
   assert.deepEqual(pushProblems({ prefix: '', args: 'origin HEAD' }, BRANCH), []);
   assert.ok(pushProblems({ prefix: '', args: 'origin HEAD' }, 'main').length > 0);
   assert.ok(mergeProblems({ args: '7 --rebase' }, green).some((x) => /squash/.test(x)));
+});
+
+test('git options before push are found word by word, in linear time on a crafted line (CodeQL js/redos)', () => {
+  assert.deepEqual(gitPushes(`${G} -c a=b -C dir push origin x`), [{ prefix: '-c a=b -C dir', args: 'origin x' }]);
+  assert.deepEqual(gitPushes(`${G} -c push.default=simple push origin x`), [{ prefix: '-c push.default=simple', args: 'origin x' }]);
+  assert.deepEqual(gitPushes(`${G} status; ${G} push origin x`), [{ prefix: '', args: 'origin x' }]);
+  assert.deepEqual(gitPushes(`${G} commit -m push`), []);
+  // The input CodeQL named: many repetitions of "-c\t!\t". The old pattern backtracked exponentially on it.
+  const crafted = `${G} ${'-c\t!\t'.repeat(50000)}x`;
+  const started = performance.now();
+  assert.deepEqual(gitPushes(crafted), []);
+  assert.ok(performance.now() - started < 2000, 'parsing a 250 KB crafted line must stay linear');
+});
+
+test('the transcript is read through one file descriptor; a missing transcript blocks', () => {
+  const script = fileURLToPath(new URL('./push-safety.mjs', import.meta.url));
+  const dir = mkdtempSync(path.join(tmpdir(), 'push-safety-'));
+  try {
+    const transcript = path.join(dir, 't.jsonl');
+    writeFileSync(transcript, `${JSON.stringify({ type: 'assistant', message: { content: [{ type: 'text', text: `${G} push origin main` }] } })}\n`);
+    const fromFile = spawnSync(process.execPath, [script], { input: JSON.stringify({ transcript_path: transcript }), encoding: 'utf8' });
+    assert.equal(fromFile.status, 2);
+    assert.match(fromFile.stderr, /main is changed only through a PR/);
+    const missing = spawnSync(process.execPath, [script], { input: JSON.stringify({ transcript_path: path.join(dir, 'none.jsonl') }), encoding: 'utf8' });
+    assert.equal(missing.status, 2);
+    assert.match(missing.stderr, /reply is unavailable/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('the command line blocks with exit 2 and a reason, and passes a reply without commands', () => {

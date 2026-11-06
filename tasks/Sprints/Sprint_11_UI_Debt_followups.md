@@ -23,12 +23,12 @@ The orchestrator review confirmed all three are still open.
 
 ## Task 225 — T221b: Canonical `buttonVariants()` for raw interactive elements
 
-See kickoff: `tasks/Sprints/Sprint_11_kickoff_prompts.md` → Task 225 section.
+See kickoff: `tasks/Archive/Sprint_11_kickoff_prompts.md` → Task 225 section.
 
 ## Task 226 — T221c: Admin form Input height standardization
 
-See kickoff: `tasks/Sprints/Sprint_11_kickoff_prompts.md` → Task 226 section.
+See kickoff: `tasks/Archive/Sprint_11_kickoff_prompts.md` → Task 226 section.
 
 ## Task 227 — z-index allowlist: add ListingGallery z-[100]
 
-See kickoff: `tasks/Sprints/Sprint_11_kickoff_prompts.md` → Task 227 section.
+See kickoff: `tasks/Archive/Sprint_11_kickoff_prompts.md` → Task 227 section.

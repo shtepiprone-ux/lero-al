@@ -41,7 +41,7 @@ git status --short
  M docs/backlog.md
  M docs/component-catalog.md
  M src/components/layout/index.ts
- M tasks/Sprints/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md  ← PRE-EXISTING (orchestrator released this task before this session; NOT touched by executor)
+ M tasks/Archive/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md  ← PRE-EXISTING (orchestrator released this task before this session; NOT touched by executor)
 ?? docs/sessions/2026-06-01-task-348-ds3-actionbar.md
 ?? src/components/layout/ActionBar.stories.tsx
 ?? src/components/layout/ActionBar.tsx
@@ -159,4 +159,4 @@ The kickoff defines an ORCHESTRATOR DECISION (2026-06-01):
 ---
 
 *No `git add` / `git commit` emitted — single-writer rule (orchestrator emits commit commands on review).*  
-*Note: `tasks/Sprints/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` shows as modified in `git status` — this is a **pre-existing change** made by the orchestrator when releasing this task (status QUEUED → READY). The executor did NOT touch this file.*
+*Note: `tasks/Archive/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` shows as modified in `git status` — this is a **pre-existing change** made by the orchestrator when releasing this task (status QUEUED → READY). The executor did NOT touch this file.*

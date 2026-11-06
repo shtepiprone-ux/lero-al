@@ -1,1 +1,0 @@
-﻿SURVIVED the whole suite (own 174s applied true; whole 180s applied true): proposed correction, self-audit: AGENTS.md and CLAUDE.md are policy paths :: 

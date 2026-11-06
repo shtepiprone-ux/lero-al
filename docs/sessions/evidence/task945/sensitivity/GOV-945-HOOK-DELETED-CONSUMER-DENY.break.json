@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "case": "GOV-945-HOOK-DELETED-CONSUMER-DENY",
-  "target": "scripts/workflow-gates/code-check.mjs",
-  "find": "const names = run.stdout.split('\\0').filter(name => name && name !== file);",
-  "replace": "const names = [];"
-}

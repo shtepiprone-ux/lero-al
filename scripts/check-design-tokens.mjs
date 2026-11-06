@@ -108,8 +108,7 @@ const args = process.argv.slice(2);
 const STRICT_MODE = args.includes('--strict');
 const UPDATE_ALLOWLIST = args.includes('--update-allowlist');
 const SCOPE_MANTINE = args.includes('--scope=mantine');
-// --report is the default; --strict overrides the exit code
-const REPORT_ONLY = !STRICT_MODE || args.includes('--report');
+// --report is the default (exit 0 with findings); --strict makes findings fail the run.
 
 // ── File exclusions ───────────────────────────────────────────────────────────
 const SKIP_DIRS = new Set([

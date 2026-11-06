@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 R52 / AC36 (R33): after the registry fix and the three gate fixes each Story with a NOT ALLOWED difference is run as a pair (-a, -b), the pair compared by r8-61-narrowed-compare.mjs, and the rows still failing counted
 patterns-mantine-admincurrencytabs--default: pair compare: rows 421; rows with a difference 0 | differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 0 | run a: rows 421 failing 0 []
 patterns-mantine-listingdetailview--public-listing: pair compare: rows 377; rows with a difference 0 | differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 0 | run a: rows 377 failing 16 [text-overlap]

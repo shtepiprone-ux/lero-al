@@ -7,7 +7,7 @@ wrapper pattern) · owner action **O78-7** · **Status: `NEEDS REVISION` 2026-10
 is implemented, but Tiptap ships on every public page that imports the patterns barrel (homepage +158 kB), and the
 `CmsPageView` Story doubles its gutter. Revision 2 = §18. Executor: start at §18.4.**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md).
 Origin: reserved 2026-09-21 by Task 867's design. It is in Sprint 79 by origin and routed to Sprint 78 (admin Mantine)
 by goal fit. The reserved row's full text moves into §3 of this file.
 Precedents to follow: 874 and 877 (`tasks/Archive/Sprint_78_kickoff_prompt_Task_874_…md`,

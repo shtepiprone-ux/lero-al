@@ -134,7 +134,6 @@ async function main() {
 
             if (site.storyId.includes('lightboxview')) {
               // No auto-play — open the multi-image lightbox via its trigger button (first Button on the page).
-              const trigger = page.locator('button', { hasText: '' }).first();
               await page.locator('.mantine-Button-root').first().click();
               await page.waitForTimeout(350); // Modal open transition
             } else {

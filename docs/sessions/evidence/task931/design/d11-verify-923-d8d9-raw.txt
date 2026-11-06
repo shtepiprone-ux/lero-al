@@ -1,8 +1,0 @@
-﻿JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/8c4008c4d581fa71/unit.json
-node : BLOCKED: Approved development project identity is required for boundary tests
-At line:1 char:317
-+ ... = Get-Date; node scripts/workflow-gates/cli.mjs verify --contract tas ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (BLOCKED: Approv... boundary tests:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 

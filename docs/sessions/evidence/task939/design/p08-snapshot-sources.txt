@@ -1,3 +1,0 @@
-ad6e1b08e src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx -> docs/sessions/evidence/task939/design/sources/src__stories__patterns__mantine__DashboardPeriodControl.stories.tsx.txt (114 lines)
-ad6e1b08e src/stories/mantine/primitives/FavoritesShell.stories.tsx -> docs/sessions/evidence/task939/design/sources/src__stories__mantine__primitives__FavoritesShell.stories.tsx.txt (161 lines)
-ad6e1b08e .storybook/main.ts -> docs/sessions/evidence/task939/design/sources/.storybook__main.ts.txt (57 lines)

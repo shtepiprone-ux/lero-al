@@ -1,9 +1,0 @@
-PASS all four receipts | src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx | allowed
-PASS all four receipts | src/stories/mantine/primitives/FavoritesShell.stories.tsx | allowed
-PASS no receipts | src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx | denied: UI/Story write blocked; missing valid receipt: CanonicalReuse (GR-0), UiContract, MobileAdaptation (absent, ma
-PASS no receipts | src/stories/mantine/primitives/FavoritesShell.stories.tsx | denied: UI/Story write blocked; missing valid receipt: CanonicalReuse (GR-0), UiContract, MobileAdaptation (absent, ma
-PASS without StorybookProof | src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx | denied: Canonical Story write blocked: register a Story-specific proof before editing. Run the PowerShell tool command
-PASS without StorybookProof | src/stories/mantine/primitives/FavoritesShell.stories.tsx | denied: Canonical Story write blocked: register a Story-specific proof before editing. Run the PowerShell tool command
-PASS without MobileAdaptation | src/stories/patterns/mantine/DashboardPeriodControl.stories.tsx | denied: UI/Story write blocked; missing valid receipt: MobileAdaptation (absent, malformed or incompatible with script
-PASS without MobileAdaptation | src/stories/mantine/primitives/FavoritesShell.stories.tsx | denied: UI/Story write blocked; missing valid receipt: MobileAdaptation (absent, malformed or incompatible with script
-RECEIPT BLACK-BOX PASSED

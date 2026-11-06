@@ -1,2 +1,0 @@
-5cd44cb971c74157f581efb3677310523c9c5a26
-governance(Task942): revision 4 R6-R10 - write forms closed by class through one reader of call arguments, env options, 

@@ -2,7 +2,7 @@
 /**
  * check-story-coverage.mjs — Mantine migration-scope coverage gate (Task Q0R rewrite).
  *
- * Runs PRE-BUILD in the `governance` job of `.github/workflows/governance-pr.yml`, before
+ * Runs PRE-BUILD in `scripts/quality/product-gates.mjs` (the `quality` job of `.github/workflows/ci.yml`), before
  * `build-storybook` — there is NO `storybook-static/index.json` at this point. Everything below
  * is derived from SOURCE, never a built index:
  *

@@ -1,4 +1,4 @@
-﻿detailpattern 0 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
+detailpattern 0 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR
 detailpattern 1 badges: New / Premium / Sale · Apartment | price: 80,000 EUR rgb(17, 17, 17) | struck: 
 detailpattern 2 badges: New / Premium / Sale · Apartment | price: 8,000,000 ALL rgb(17, 17, 17) | struck: 
 detailpattern 3 badges: New / Premium / Price reduced / Sale · Apartment | price: 80,000 EUR rgb(236, 84, 71) | struck: 92,000 EUR

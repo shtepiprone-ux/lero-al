@@ -3,8 +3,9 @@
  * the bridge must never send a person to an address that is not a path of this site (open redirect), the captcha "not configured" shortcut is a visible note and
  * not a silent pass in a configured site, and the context never claims a person is signed in when the server did not say so.
  */
+import type { TurnstileProps } from '@marsidev/react-turnstile'
 import React, { createRef } from 'react'
-import { act, cleanup, fireEvent, render, renderHook, screen } from '@testing-library/react'
+import { act, cleanup, render, renderHook, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
@@ -13,11 +14,11 @@ import messages from '../../../../../messages/en.json'
 import { setViewport } from '@/design-system/mantine/patterns/__tests__/viewportKit'
 
 // ── mocks ───────────────────────────────────────────────────────────────────────────────────────────────────────────────
-const turnstile = vi.hoisted(() => ({ props: null as null | Record<string, any>, reset: vi.fn() }))
+const turnstile = vi.hoisted(() => ({ props: null as null | TurnstileProps, reset: vi.fn() }))
 vi.mock('@marsidev/react-turnstile', async () => {
   const React = await import('react')
   return {
-    Turnstile: React.forwardRef(function TurnstileDouble(props: Record<string, any>, ref: React.Ref<unknown>) {
+    Turnstile: React.forwardRef(function TurnstileDouble(props: TurnstileProps, ref: React.Ref<unknown>) {
       turnstile.props = props
       React.useImperativeHandle(ref, () => ({ reset: turnstile.reset }))
       return <div data-testid="turnstile" />
@@ -68,15 +69,15 @@ describe('CaptchaWidget', () => {
     process.env[KEY] = 'k'
     currentLocale = locale
     wrap(<CaptchaWidget onSuccess={vi.fn()} />)
-    expect(turnstile.props!.options.language).toBe(language)
+    expect(turnstile.props!.options!.language).toBe(language)
   })
 
   it('a chosen theme is passed on, and success, error and expiry callbacks reach the widget', () => {
     process.env[KEY] = 'k'
     const cb = { onSuccess: vi.fn(), onError: vi.fn(), onExpire: vi.fn() }
     wrap(<CaptchaWidget {...cb} theme="dark" />)
-    expect(turnstile.props!.options.theme).toBe('dark')
-    turnstile.props!.onSuccess('tok'); turnstile.props!.onError(); turnstile.props!.onExpire()
+    expect(turnstile.props!.options!.theme).toBe('dark')
+    turnstile.props!.onSuccess!('tok'); turnstile.props!.onError!('110100'); turnstile.props!.onExpire!('tok')
     expect(cb.onSuccess).toHaveBeenCalledWith('tok')
     expect(cb.onError).toHaveBeenCalledTimes(1)
     expect(cb.onExpire).toHaveBeenCalledTimes(1)

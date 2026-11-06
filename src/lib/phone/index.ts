@@ -111,7 +111,7 @@ export function parsePhoneValue(e164: string): ParsedPhone {
 
 /** Strip visual separators (spaces, dashes, parentheses, dots, NBSP) from a national number. */
 export function normalizeNational(raw: string): string {
-  return raw.replace(/[\s\-(). ​]/g, '')
+  return raw.replace(/[\s\-().\u00A0\u200B]/g, '')
 }
 
 // ── Country-specific placeholder examples ─────────────────────────────────────
@@ -340,7 +340,7 @@ export function normalizePastedNational(
   selectedDialCode: string,
 ): PasteResult {
   // Strip visual separators and non-breaking spaces
-  const stripped = pasted.replace(/[\s\-(). ​]/g, '').trim()
+  const stripped = pasted.replace(/[\s\-().\u00A0\u200B]/g, '').trim()
 
   // Check for international format: starts with "+" or "00"
   let international: string | null = null

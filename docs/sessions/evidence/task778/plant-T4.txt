@@ -1,4 +1,4 @@
-﻿
+
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
 
  ❯ src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx (14 tests | 2 failed | 10 skipped) 116ms

@@ -204,7 +204,7 @@ async function closeOverlays() {
 async function operate(loc, label, pageUrl) {
   const before = page.url();
   await page.evaluate(tagPositioned).catch(() => null);
-  try { await loc.scrollIntoViewIfNeeded({ timeout: 1500 }); await loc.click({ timeout: 2500 }); } catch (e) { return { label, result: 'not-clickable' }; }
+  try { await loc.scrollIntoViewIfNeeded({ timeout: 1500 }); await loc.click({ timeout: 2500 }); } catch { return { label, result: 'not-clickable' }; }
   await page.waitForTimeout(600);
   const out = { label };
   if (page.url().split('#')[0] !== before.split('#')[0]) {

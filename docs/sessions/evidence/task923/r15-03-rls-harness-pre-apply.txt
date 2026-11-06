@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-19T21:05:51.8799243Z
+platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; start 2026-10-19T21:05:51.8799243Z
 cmd node docs/sessions/evidence/task923/db-catalog/rls-harness.cjs --i-confirm-dev-database   (the database WITHOUT hardening v6 and WITHOUT deletion v2: exit 1 expected)
 run zz_synth_mvfqukxh: users A, B, C(admin) and 3 synthetic listings prepared (ids not printed)
  ok  R01 A reads B's users row (phone/whatsapp/role) | expected: refused (error or 0 rows) | observed: rows=0

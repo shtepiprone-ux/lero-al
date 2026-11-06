@@ -190,10 +190,10 @@ for the other three. `check:i18n-dynamic` is the only one that understands
 
 ## §7 — CI WIRING STATUS
 
-**Wired as a blocking step in the `governance` job, Task 323** — `npm run check:i18n-dynamic`
-runs as the **"Dynamic i18n key gate (resolved-key coverage, fail-on-new)"** step in
-`.github/workflows/governance-pr.yml`, placed immediately after the
-`check:i18n-hardcode` step and before the file-integrity gate. No `continue-on-error`:
+**Wired as a blocking step in the `quality` job, Task 323** — `npm run check:i18n-dynamic`
+runs through `scripts/quality/product-gates.mjs` in the `quality` job of
+`.github/workflows/ci.yml`, immediately after the
+`check:i18n-hardcode` step. No `continue-on-error`:
 a non-zero exit (any non-baselined missing `namespace.key`) fails the PR check.
 
 ---

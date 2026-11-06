@@ -45,7 +45,7 @@ describe('formatDate — literal byte assertions per locale', () => {
 describe('formatDateTime — literal byte assertions per locale', () => {
   const expected: Record<string, string> = {
     sq: '01.01.2026, 12:30 p.d.',
-    en: '01/01/2026, 12:30 AM',
+    en: '01/01/2026, 12:30\u202FAM',
     uk: '01.01.2026, 00:30',
     it: '01/01/2026, 00:30',
   }
@@ -55,8 +55,8 @@ describe('formatDateTime — literal byte assertions per locale', () => {
       const result = formatDateTime(TZ_TEST_ISO, locale)
       // Normalize Unicode narrow no-break space (U+202F) to regular space for
       // cross-platform stability — Node/ICU may emit either.
-      const normalized = result.replace(/ /g, ' ')
-      const expectedNormalized = expected[locale].replace(/ /g, ' ')
+      const normalized = result.replace(/\u202F/g, ' ')
+      const expectedNormalized = expected[locale].replace(/\u202F/g, ' ')
       expect(normalized).toBe(expectedNormalized)
     })
   }

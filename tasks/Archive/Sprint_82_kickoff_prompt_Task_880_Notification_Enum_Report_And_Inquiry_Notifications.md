@@ -5,7 +5,7 @@ localization) · depends on **878 archived** · owner decisions **D82-1…D82-5*
 **Status: ✅ APPROVED WITH NOTES (review 3, 2026-09-24; archived, landed together with 878 per D82-6; O82-3 remains an owner action after deploy)**
 The 878-first sequencing gate is overridden by owner decision **D82-6**.
 
-Sprint plan: [`Sprint_82_Notifications_That_Were_Never_Delivered.md`](../Sprints/Sprint_82_Notifications_That_Were_Never_Delivered.md).
+Sprint plan: [`Sprint_82_Notifications_That_Were_Never_Delivered.md`](Sprint_82_Notifications_That_Were_Never_Delivered.md).
 
 ## 1. Mode and task type
 

@@ -1,4 +1,4 @@
-﻿win32
+win32
 
 01 September 2026 16:33:26
 
@@ -7953,7 +7953,7 @@
 │  (!) Some chunks are larger than 500 kB after minification. Consider:
 │  - Using dynamic import() to code-split the application
 │  - Use build.rollupOptions.output.manualChunks to improve chunking:
-│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  https://rollupjs.org/configuration-options/#output-manualchunks
 │  - Adjust chunk size limit for this warning via
 │  build.chunkSizeWarningLimit.
 │  Vite ✓ built in 51.21s

@@ -1,4 +1,4 @@
-﻿platform win32 node v22.22.3
+platform win32 node v22.22.3
 primary https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/ status 200 
    [/Tab\s*:?\s*Moves focus to the next tabbable element inside the dialog/i] n element inside the dialog. See notes below regarding initial focus placement. Tab : Moves focus to the next tabbable element inside the dialog. If focus is on the last tabbable element inside the di 
    [/Shift \+ Tab/i] e non-modal dialogs, modal dialogs contain their tab sequence. That is, Tab and Shift + Tab do not move focus outside the dialog. However, unlike most non-modal dialogs, modal dialogs do not provide m

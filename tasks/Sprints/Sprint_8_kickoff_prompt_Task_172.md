@@ -22,7 +22,7 @@ Hard contract:
 Pre-read:
 - src/types/database.ts (the table interfaces + enum/union types + composite types)
 - docs/dependencies.md (confirm: no new deps), docs/env.md, docs/qa-rules.md
-- scripts/ (match the existing .mjs script style, e.g. import-locations.js / analyze-eslint-debt.mjs)
+- scripts/ (match the existing .mjs script style, e.g. import-locations.mjs / analyze-eslint-debt.mjs)
 - the codebase's `.from('<table>')` / `db.from('<table>')` usages (to derive the interface→table map)
 
 Scope — build a guard with two pieces:

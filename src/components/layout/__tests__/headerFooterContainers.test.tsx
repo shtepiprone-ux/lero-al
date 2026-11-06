@@ -3,6 +3,7 @@
  * trusting a path that only looks like a language, opens the admin app in a new tab without handing it the opener, and signs out to the right page. Footer: the
  * database content wins field by field, an empty list or a failing footer service falls back to the built-in links, and the site name is split into brand and domain.
  */
+import type { FooterViewProps } from '../FooterView'
 import React from 'react'
 import { act, cleanup, render } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -180,7 +181,7 @@ describe('Footer', () => {
     }))
     vi.doMock('../FooterView', () => ({ FooterView: () => null }))
     const { Footer } = await import('../Footer')
-    return (await Footer()).props as Record<string, any>
+    return (await Footer()).props as FooterViewProps
   }
   const link = (id: string, enabled = true) => ({ id, label: id, url: `/${id}`, enabled, order: 0 })
 
@@ -193,9 +194,9 @@ describe('Footer', () => {
   it('without database content every field comes from the translations and the built-in links', async () => {
     const p = await footer('Lero.al', null)
     expect(p).toMatchObject({ tagline: 't:tagline', navTitle: 't:navigation', infoTitle: 't:information', socialTitle: 't:follow_us', locale: 'sq' })
-    expect(p.navLinks.map((l: any) => l.url)).toEqual(['/', '/listings', '/listings/create'])
-    expect(p.infoLinks.map((l: any) => l.url)).toEqual(['/about', '/contact', '/privacy-policy', '/terms-of-service'])
-    expect(p.socialLinks.map((l: any) => l.url)).toEqual(['https://facebook.com', 'https://instagram.com'])
+    expect(p.navLinks.map((l) => l.url)).toEqual(['/', '/listings', '/listings/create'])
+    expect(p.infoLinks.map((l) => l.url)).toEqual(['/about', '/contact', '/privacy-policy', '/terms-of-service'])
+    expect(p.socialLinks.map((l) => l.url)).toEqual(['https://facebook.com', 'https://instagram.com'])
     expect(p.copyright).toBe(`© ${new Date().getFullYear()} Lero.al — t:all_rights`)
   })
 
@@ -221,9 +222,9 @@ describe('Footer', () => {
 
   it('only enabled links are shown; a list with none enabled falls back to the built-in ones', async () => {
     const p = await footer('Lero.al', { nav_links: [link('a'), link('b', false)], info_links: [link('c', false)], social_links: [link('d', false), link('e', false)] })
-    expect(p.navLinks.map((l: any) => l.id)).toEqual(['a'])
+    expect(p.navLinks.map((l) => l.id)).toEqual(['a'])
     expect(p.infoLinks).toHaveLength(4)
-    expect(p.socialLinks.map((l: any) => l.id)).toEqual(['social-facebook', 'social-instagram'])
+    expect(p.socialLinks.map((l) => l.id)).toEqual(['social-facebook', 'social-instagram'])
   })
 
   it('a database record with no lists at all still renders', async () => {

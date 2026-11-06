@@ -1,4 +1,4 @@
-﻿ideal 8px radius: diag 60 75 60; row0 0 0 0 0 19 59 86 98 100
+ideal 8px radius: diag 60 75 60; row0 0 0 0 0 19 59 86 98 100
 A diag 37 50 38 | row0 0 0 0 0 5 55 79 95 100
 B diag 53 85 53 | row0 0 0 0 0 22 61 77 94 100
 C diag 53 85 53 | row0 0 0 0 0 22 61 77 94 100

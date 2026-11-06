@@ -1,4 +1,4 @@
-﻿# r56-03: R172 - the new case in cabinetActions.security.test.ts and the sensitivity proof of SEC-X-SRV-PROFILE-PROTECTED-DENY
+# r56-03: R172 - the new case in cabinetActions.security.test.ts and the sensitivity proof of SEC-X-SRV-PROFILE-PROTECTED-DENY
 platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 commands: (1) npx vitest run cabinetActions.security --reporter=verbose  (2) node docs/sessions/evidence/task923/security/sensitivity.mjs --fresh --source SEC-X-SRV-PROFILE-PROTECTED-DENY
 started: 2026-10-29T13:10:45.4793443Z

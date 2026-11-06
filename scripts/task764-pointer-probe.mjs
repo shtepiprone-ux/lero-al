@@ -98,7 +98,7 @@ const FAVORITES_STORY_ID = 'mantine-primitives-listingcard--favorites-compositio
 const VIEWPORT = { width: 1024, height: 900 };
 const SETTLE_MS = 620; // past the 300ms transition, matching Task 763's precedent margin
 
-/* eslint-disable no-undef */
+ 
 function evalMatchMedia() {
   return {
     hoverHover: window.matchMedia('(hover: hover)').matches,
@@ -166,7 +166,7 @@ async function gotoFavoritesStory(page) {
   await page.waitForTimeout(300);
 }
 
-async function runMatrixForContext(browser, contextOpts, label, findCards) {
+async function runMatrixForContext(browser, contextOpts, label) {
   const context = await browser.newContext({ viewport: VIEWPORT, ...contextOpts });
   const page = await context.newPage();
   await gotoStory(page);

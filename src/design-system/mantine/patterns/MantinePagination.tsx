@@ -282,7 +282,7 @@ export function MantinePagination({
     ro.observe(parent)
     measureAndSet()
     return () => ro.disconnect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [mounted, total, activePage])
 
   if (total <= 0) return null

@@ -70,122 +70,122 @@ plantC hash 8f7bef78325da50e650d599d3f6595748bc80461
 TestingLibraryElementError: Unable to find an element with the text: 92,000 EUR. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"m_1b7284a3 mantine-Paper-root __m__-_r_0_"[39m
-      [33mdata-testid[39m=[32m"listing-contact-card"[39m
-      [33mdata-with-border[39m=[32m"true"[39m
-      [33mstyle[39m=[32m"--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl); padding: var(--mantine-spacing-lg);"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
-        [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
-          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"m_f85678b6 mantine-Avatar-root"[39m
-            [33mdata-size[39m=[32m"lg"[39m
-            [33mstyle[39m=[32m"--avatar-size: var(--avatar-size-lg); --avatar-radius: var(--mantine-radius-xl); --avatar-bg: var(--mantine-color-brand-light); --avatar-color: var(--mantine-color-brand-light-color); --avatar-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
-          [36m>[39m
-            [36m<span[39m
-              [33mclass[39m=[32m"m_104cd71f mantine-Avatar-placeholder"[39m
-            [36m>[39m
-              [0mEH[0m
-            [36m</span>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
-            [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start; min-width: 0rem; flex: 1 1 0%;"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
-              [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-compact); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"[39m
-            [36m>[39m
-              [36m<p[39m
-                [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
-                [33mdata-size[39m=[32m"sm"[39m
-                [33mdata-truncate[39m=[32m"end"[39m
-                [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 600;"[39m
-              [36m>[39m
-                [0mElira Hoxha[0m
-              [36m</p>[39m
-            [36m</div>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
-          [33mdata-orientation[39m=[32m"horizontal"[39m
-          [33mrole[39m=[32m"separator"[39m
-          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
-        [36m/>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_6d731127 mantine-Stack-root"[39m
-          [33mstyle[39m=[32m"--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start;"[39m
-        [36m>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
-            [33mdata-size[39m=[32m"xl"[39m
-            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-brand-text); font-weight: 700;"[39m
-          [36m>[39m
-            [0m80,000 EUR[0m
-          [36m</p>[39m
-          [36m<p[39m
-            [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
-            [33mdata-size[39m=[32m"xs"[39m
-            [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"[39m
-          [36m>[39m
-            [0mOriginal price[0m
-            [0m: [0m
-            [0m80,000 EUR[0m
-          [36m</p>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_3eebeb36 mantine-Divider-root"[39m
-          [33mdata-orientation[39m=[32m"horizontal"[39m
-          [33mrole[39m=[32m"separator"[39m
-          [33mstyle[39m=[32m"--divider-color: var(--mantine-color-gray-2);"[39m
-        [36m/>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_925c2d2c mantine-SimpleGrid-container"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"m_2415a157 mantine-SimpleGrid-root __m__-_r_c_"[39m
-          [36m>[39m
-            [36m<button[39m
-              [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"[39m
-              [33mdata-block[39m=[32m"true"[39m
-              [33mdata-size[39m=[32m"sm"[39m
-              [33mdata-with-left-section[39m=[32m"true"[39m
-              [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: var(--mantine-color-brand-filled); --button-hover: var(--mantine-color-brand-filled-hover); --button-color: var(--mantine-color-white); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"[39m
-              [33mtype[39m=[32m"button"[39m
-            [36m>[39m
-              [36m<span[39m
-                [33mclass[39m=[32m"m_80f1301b mantine-Button-inner"[39m
-                [33mstyle[39m=[32m"width: 100%; height: auto;"[39m
-              [36m>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"m_a74036a mantine-Button-section"[39m
-                  [33mdata-position[39m=[32m"left"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33maria-hidden[39m=[32m"true"[39m
-                    [33mclass[39m=[32m"lucide lucide-phone"[39m
-                    [33mfill[39m=[32m"none"[39m
-                    [33mheight[39m=[32m"18"[39m
-                    [33mstroke[39m=[32m"currentColor"[39m
-                    [33mstroke-linecap[39m=[32m"round"[39m
-                    [33mstroke-linejoin[39m=[32m"round"[39m
-                    [33mstroke-width[39m=[32m"2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                    [33mwidth[39m=[32m"18"[39m
-                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v...
+<body>
+  <div>
+    <div
+      class="m_1b7284a3 mantine-Paper-root __m__-_r_0_"
+      data-testid="listing-contact-card"
+      data-with-border="true"
+      style="--mantine-color-default-border: var(--mantine-color-gray-1); --paper-radius: var(--mantine-radius-2xl); padding: var(--mantine-spacing-lg);"
+    >
+      <div
+        class="m_6d731127 mantine-Stack-root"
+        style="--stack-gap: var(--mantine-spacing-md); --stack-align: stretch; --stack-justify: flex-start;"
+      >
+        <div
+          class="m_4081bf90 mantine-Group-root"
+          style="--group-gap: var(--mantine-spacing-sm); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"
+        >
+          <div
+            class="m_f85678b6 mantine-Avatar-root"
+            data-size="lg"
+            style="--avatar-size: var(--avatar-size-lg); --avatar-radius: var(--mantine-radius-xl); --avatar-bg: var(--mantine-color-brand-light); --avatar-color: var(--mantine-color-brand-light-color); --avatar-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+          >
+            <span
+              class="m_104cd71f mantine-Avatar-placeholder"
+            >
+              EH
+            </span>
+          </div>
+          <div
+            class="m_6d731127 mantine-Stack-root"
+            style="--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start; min-width: 0rem; flex: 1 1 0%;"
+          >
+            <div
+              class="m_4081bf90 mantine-Group-root"
+              style="--group-gap: var(--mantine-spacing-compact); --group-align: center; --group-justify: flex-start; --group-wrap: nowrap;"
+            >
+              <p
+                class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+                data-size="sm"
+                data-truncate="end"
+                style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); font-weight: 600;"
+              >
+                Elira Hoxha
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="m_3eebeb36 mantine-Divider-root"
+          data-orientation="horizontal"
+          role="separator"
+          style="--divider-color: var(--mantine-color-gray-2);"
+        />
+        <div
+          class="m_6d731127 mantine-Stack-root"
+          style="--stack-gap: var(--mantine-spacing-micro); --stack-align: stretch; --stack-justify: flex-start;"
+        >
+          <p
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-size="xl"
+            style="--text-fz: var(--mantine-font-size-xl); --text-lh: var(--mantine-line-height-xl); color: var(--mantine-color-brand-text); font-weight: 700;"
+          >
+            80,000 EUR
+          </p>
+          <p
+            class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+            data-size="xs"
+            style="--text-fz: var(--mantine-font-size-xs); --text-lh: var(--mantine-line-height-xs); color: var(--mantine-color-dimmed);"
+          >
+            Original price
+            : 
+            80,000 EUR
+          </p>
+        </div>
+        <div
+          class="m_3eebeb36 mantine-Divider-root"
+          data-orientation="horizontal"
+          role="separator"
+          style="--divider-color: var(--mantine-color-gray-2);"
+        />
+        <div
+          class="m_925c2d2c mantine-SimpleGrid-container"
+        >
+          <div
+            class="m_2415a157 mantine-SimpleGrid-root __m__-_r_c_"
+          >
+            <button
+              class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 mantine-UnstyledButton-root"
+              data-block="true"
+              data-size="sm"
+              data-with-left-section="true"
+              style="min-height: 2.75rem; font-weight: 500; height: auto; display: flex; align-items: center; justify-content: center; --button-height: var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: var(--mantine-radius-lg); --button-bg: var(--mantine-color-brand-filled); --button-hover: var(--mantine-color-brand-filled-hover); --button-color: var(--mantine-color-white); --button-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent;"
+              type="button"
+            >
+              <span
+                class="m_80f1301b mantine-Button-inner"
+                style="width: 100%; height: auto;"
+              >
+                <span
+                  class="m_a74036a mantine-Button-section"
+                  data-position="left"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-phone"
+                    fill="none"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v...
  ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17

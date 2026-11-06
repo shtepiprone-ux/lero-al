@@ -67,7 +67,6 @@ const BINARY_EXTS = new Set([
 // ── Extension sets for check routing ─────────────────────────────────────────
 const JSON_EXTS    = new Set(['.json']);
 const JSLIKE_EXTS  = new Set(['.mjs', '.js', '.cjs']);
-const TSLIKE_EXTS  = new Set(['.ts', '.tsx']);
 // Source files that should never carry a BOM
 const SOURCE_EXTS  = new Set([
   '.ts', '.tsx', '.mjs', '.js', '.cjs', '.jsx',
@@ -76,11 +75,16 @@ const SOURCE_EXTS  = new Set([
 ]);
 
 // ── File collectors ───────────────────────────────────────────────────────────
+// Recorded session evidence (transcripts, screenshots, copied OS files) is not authored code or content.
+const SKIP_PATH_PREFIXES = ['docs/sessions/'];
+const isSkippedPath = full => SKIP_PATH_PREFIXES.some(p => relative(ROOT, full).split('\\').join('/').startsWith(p));
+
 function walkDir(dir, out = []) {
   if (!existsSync(dir)) return out;
   for (const entry of readdirSync(dir)) {
     if (SKIP_DIRS.has(entry)) continue;
     const full = join(dir, entry);
+    if (isSkippedPath(full)) continue;
     let stat;
     try { stat = statSync(full); } catch { continue; }
     if (stat.isDirectory()) walkDir(full, out);
@@ -118,7 +122,7 @@ function collectTargetFiles() {
     .map(p => resolve(ROOT, p))
     .filter(p => {
       const rel = relative(ROOT, p);
-      return !SKIP_DIRS.has(rel.split(/[/\\]/)[0]);
+      return !SKIP_DIRS.has(rel.split(/[/\\]/)[0]) && !isSkippedPath(p);
     });
 }
 

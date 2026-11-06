@@ -8,7 +8,7 @@ and **847** approved (`src/lib/dashboard/blockResult.ts`) · **Status: ✅ APPRO
 > ran them with `--untracked` (reproduced byte-identical at review) and the AC3–AC5 properties are verified; the
 > defect is in this text, not the implementation. The canonical form for the rest of Sprint 78 is **864**.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-3** (owner,
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-3** (owner,
 2026-09-18): *"role=agent. Нова стоірнка, кнопка "Statistics" на цю сторінку знаходиться у меню користувача, біля
 кнопки "Профіль""*. D78-1 keeps the chat blocks (AGT-06–09) and AGT-12 out. AGT-03, AGT-04 and AGT-11, plus the
 activity columns of AGT-10, belong to 855/856.

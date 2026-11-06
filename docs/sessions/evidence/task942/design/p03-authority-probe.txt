@@ -1,5 +1,0 @@
-platform win32; node v22.22.3
-evaluateHook sonnet Edit scripts/check-listing-visibility.mjs: POLICY-EDIT AUTHORITY REQUIRED: Sonnet cannot edit workflow policy or enforcement
-evaluateHook opus Edit scripts/check-listing-visibility.mjs: []
-validateDiff errors: ["scripts/check-listing-visibility.mjs: outside every changed governance contract scope"]
-AUTHORITY PROBE PASSED

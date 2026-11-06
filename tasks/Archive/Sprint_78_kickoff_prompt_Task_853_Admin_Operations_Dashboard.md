@@ -9,7 +9,7 @@ Sprint 78 · P1 · QA profile **Q3** · Wave C · depends on **843, 844, 845, 84
 > **creates** passes whatever they contain (measured on 848: 0 hits without the flag, 3 with it). `--untracked` also
 > searches tracked files, so no check lost coverage.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1, D78-5). ADM-10 is
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1, D78-5). ADM-10 is
 added by **855**; ADM-03/04/05/07 are out (D78-1 / no source).
 
 ## 1. Mode and task type

@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd node docs/sessions/evidence/task923/r12-110-owner-table-source.mjs docs/sessions/evidence/task923/r12-full
 rows 34417 | failing rows 181
 1 rows | patterns-mantine-dashboardperiodcontrol--custom-range-too-long :: error-screen | roots app | states closed | widths 390 | 1 locales

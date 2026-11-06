@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: npm run check:rendered-state-census:verify   (Revision 12: R53 inert unlock + above-only, R54 pinned-or-floating cover; five new cases, two fixtures rebuilt)
 
 > lero-al@0.1.0 check:rendered-state-census:verify

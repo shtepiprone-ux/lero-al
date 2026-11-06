@@ -1,4 +1,4 @@
-﻿platform: win32; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
+platform: win32; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 command: Get-FileHash -Algorithm SHA256 docs/sessions/2026-10-10-task923-rendered-state-census.md
 923cd7fdb4957640d5a9bc59965aa6242b3c5e8ef1f8d7fb8464d62fdfae0ff5  docs/sessions/2026-10-10-task923-rendered-state-census.md
 exit code: 0

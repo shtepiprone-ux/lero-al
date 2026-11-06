@@ -1,4 +1,4 @@
-﻿PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
+PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
 COMMAND=node docs/sessions/evidence/task923/review-12/rv12-01-inert-cover-probe.mjs
 html-text-under-inert-dialog root=app pass=true text-overlap=[]
 html-text-under-inert-dialog root=portal:0 pass=true text-overlap=[]

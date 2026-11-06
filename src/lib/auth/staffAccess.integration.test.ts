@@ -44,7 +44,7 @@ async function blockThroughAdminAction(who: SyntheticUser) {
 
 /** the inactivity mark exactly as cron/inactivity writes it: deleted_at and status inactive through the service role, no Auth ban */
 async function markInactive(who: SyntheticUser) {
-  // eslint-disable-next-line no-restricted-syntax -- user status (fixture preparation by service_role), not listing status
+   
   const written = await run.admin.from('users').update({ deleted_at: new Date().toISOString(), status: 'inactive' }).eq('id', who.id)
   expect(written.error, `${who.id}: the inactivity mark is written`).toBeNull()
   const stillValid = await who.client.auth.getUser()

@@ -1,4 +1,0 @@
-﻿PowerShell 5.1.26100.9818; node v22.22.3
-a,--pre=x -> ["a,--pre=x"]
-'a" --pre=x "b' -> ["a --pre=x b"]
-'a b\' ' --pre=x' -> ["a b\" ","--pre=x"]

@@ -89,85 +89,88 @@ vi.mock('@mantine/hooks', () => ({
 const tabContextRef: { onChange: ((val: string) => void) | null } = { onChange: null }
 
 vi.mock('@mantine/core', () => {
+  // Mock props are whatever the component passes; the string overload of createElement accepts them as they are.
+  type P = { children?: React.ReactNode; [prop: string]: unknown }
+  const h = (tag: string, props: object | null, ...children: React.ReactNode[]) => React.createElement(tag, props, ...children)
   // Stack / Group / Text
-  const Stack = ({ children, ...p }: any) => React.createElement('div', { 'data-mantine': 'stack', ...p }, children)
-  const Group = ({ children, ...p }: any) => React.createElement('div', { 'data-mantine': 'group', ...p }, children)
-  const Text = ({ children, ...p }: any) => React.createElement('span', { 'data-mantine': 'text', ...p }, children)
+  const Stack = ({ children, ...p }: P) => h('div', { 'data-mantine': 'stack', ...p }, children)
+  const Group = ({ children, ...p }: P) => h('div', { 'data-mantine': 'group', ...p }, children)
+  const Text = ({ children, ...p }: P) => h('span', { 'data-mantine': 'text', ...p }, children)
 
   // Badge
-  const Badge = ({ children, color, ...p }: any) =>
-    React.createElement('span', { 'data-testid': 'badge', 'data-color': color, ...p }, children)
+  const Badge = ({ children, color, ...p }: P) =>
+    h('span', { 'data-testid': 'badge', 'data-color': color, ...p }, children)
 
   // Avatar
-  const Avatar = ({ children, src, ...p }: any) =>
-    React.createElement('div', { 'data-testid': 'avatar', 'data-src': src, ...p }, children)
+  const Avatar = ({ children, src, ...p }: P) =>
+    h('div', { 'data-testid': 'avatar', 'data-src': src, ...p }, children)
 
   // Loader
-  const Loader = ({ size }: any) =>
-    React.createElement('span', { 'data-testid': 'loader', 'data-size': size })
+  const Loader = ({ size }: P) =>
+    h('span', { 'data-testid': 'loader', 'data-size': size })
 
   // Button — convert Mantine fullWidth prop to style so tests can assert it
-  const Button = ({ children, onClick, disabled, fullWidth, ...p }: any) =>
-    React.createElement('button', { onClick, disabled, type: 'button', style: fullWidth ? { width: '100%' } : undefined, ...p }, children)
+  const Button = ({ children, onClick, disabled, fullWidth, ...p }: P) =>
+    h('button', { onClick, disabled, type: 'button', style: fullWidth ? { width: '100%' } : undefined, ...p }, children)
 
   // ActionIcon
-  const ActionIcon = ({ children, onClick, title, ...p }: any) =>
-    React.createElement('button', { onClick, title, type: 'button', ...p }, children)
+  const ActionIcon = ({ children, onClick, title, ...p }: P) =>
+    h('button', { onClick, title, type: 'button', ...p }, children)
 
   // TextInput
-  const TextInput = ({ value, onChange, placeholder, ...p }: any) =>
-    React.createElement('input', { value, onChange, placeholder, type: 'text', ...p })
+  const TextInput = ({ value, onChange, placeholder, ...p }: P) =>
+    h('input', { value, onChange, placeholder, type: 'text', ...p })
 
   // Tabs compound component with onChange bridging
-  function Tabs({ children, value, onChange }: any) {
-    tabContextRef.onChange = onChange
-    return React.createElement('div', { 'data-testid': 'tabs', 'data-value': value }, children)
+  function Tabs({ children, value, onChange }: P) {
+    tabContextRef.onChange = (onChange as ((val: string) => void) | undefined) ?? null
+    return h('div', { 'data-testid': 'tabs', 'data-value': value }, children)
   }
-  const TabsList = ({ children }: any) => React.createElement('div', { 'data-testid': 'tabs-list' }, children)
-  const TabsTab = ({ children, value: tabVal }: any) =>
-    React.createElement('button', {
+  const TabsList = ({ children }: P) => h('div', { 'data-testid': 'tabs-list' }, children)
+  const TabsTab = ({ children, value: tabVal }: P) =>
+    h('button', {
       type: 'button',
       'data-testid': `tab-${tabVal}`,
-      onClick: () => tabContextRef.onChange?.(tabVal),
+      onClick: () => tabContextRef.onChange?.(String(tabVal)),
     }, children)
-  const TabsPanel = ({ children }: any) => React.createElement('div', null, children)
+  const TabsPanel = ({ children }: P) => h('div', null, children)
   Tabs.List = TabsList
   Tabs.Tab = TabsTab
   Tabs.Panel = TabsPanel
 
   // SegmentedControl — renders as <select> so fireEvent.change can drive onChange
-  const SegmentedControl = ({ data, value, onChange, ...props }: any) =>
-    React.createElement('select', {
+  const SegmentedControl = ({ data, value, onChange, ...props }: P) =>
+    h('select', {
       value,
-      onChange: (e: any) => onChange?.(e.target.value),
+      onChange: (e: React.ChangeEvent<HTMLSelectElement>) => (onChange as ((v: string) => void) | undefined)?.(e.target.value),
       ...props,
     },
       (data as Array<{ value: string; label: string }>).map((d) =>
-        React.createElement('option', { key: d.value, value: d.value }, d.label),
+        h('option', { key: d.value, value: d.value }, d.label),
       ),
     )
 
   // ScrollArea — transparent wrapper. Task 749 rev.3: `type`/`scrollbars`/`scrollbarSize` are
   // Mantine-only props; the real ScrollArea consumes them, so this mock must NOT spread them
   // onto a DOM node — React warns "does not recognize the scrollbarSize prop on a DOM element".
-  const ScrollArea = ({ children, ...props }: any) => {
+  const ScrollArea = ({ children, ...props }: P) => {
     delete props.type
     delete props.scrollbars
     delete props.scrollbarSize
-    return React.createElement('div', { 'data-mantine': 'scroll-area', ...props }, children)
+    return h('div', { 'data-mantine': 'scroll-area', ...props }, children)
   }
 
   // Box
-  const Box = ({ children, ...props }: any) =>
-    React.createElement('div', props, children)
+  const Box = ({ children, ...props }: P) =>
+    h('div', props, children)
 
   // Divider
-  const Divider = (props: any) => React.createElement('hr', { 'data-mantine': 'divider', ...props })
+  const Divider = (props: P) => h('hr', { 'data-mantine': 'divider', ...props })
 
   // Anchor (Task 859 R52: the name link moved from a raw `<Link style>` to Mantine's `Anchor component={Link}`; it
   // still renders an `<a href>`). Mantine-only props are dropped so React does not warn about DOM attributes.
-  const Anchor = ({ children, href, component: _component, underline: _underline, c: _c, ...p }: any) =>
-    React.createElement('a', { href, ...p }, children)
+  const Anchor = ({ children, href, component: _component, underline: _underline, c: _c, ...p }: P) =>
+    h('a', { href, ...p }, children)
 
   // useMantineTheme (Task 782) — AdminUsersTable now reads theme.other.iconSize.* for its icon
   // dimension tokens instead of a raw number. Values below are copied from
@@ -192,19 +195,20 @@ vi.mock('@mantine/core', () => {
 // Renders column content AND card.actions so both table and card-actions paths are queryable.
 // card.actions are rendered before columns inside each row (card-actions-{id} container).
 
+type MockRow = { id: string; [field: string]: unknown }
 vi.mock('@/design-system/mantine/patterns', () => ({
   MantineDataTableToCards: ({ columns, rows, emptyLabel, rowClassName, card }: {
-    columns: Array<{ key: string; label: string; render?: (row: any) => React.ReactNode }>
-    rows: any[]
+    columns: Array<{ key: string; label: string; render?: (row: MockRow) => React.ReactNode }>
+    rows: MockRow[]
     emptyLabel?: string
-    rowClassName?: (row: any) => string
-    card?: { actions?: (row: any) => React.ReactNode; [k: string]: unknown }
+    rowClassName?: (row: MockRow) => string
+    card?: { actions?: (row: MockRow) => React.ReactNode; [k: string]: unknown }
   }) => {
     if (rows.length === 0) {
       return React.createElement('div', { 'data-testid': 'empty-state' }, emptyLabel)
     }
     return React.createElement('div', { 'data-testid': 'data-table' },
-      rows.map((row: any) =>
+      rows.map((row) =>
         React.createElement('div', {
           key: row.id,
           'data-testid': `row-${row.id}`,

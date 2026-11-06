@@ -70,7 +70,7 @@ async function run({ id, w, loc }) {
         if (clips && e.scrollWidth > e.clientWidth + 0.5 && e.clientWidth > 0) why.push(`scrollW ${e.scrollWidth}>${e.clientWidth}`);
         if (clips && e.scrollHeight > e.clientHeight + 1 && e.clientHeight > 0) why.push(`scrollH ${e.scrollHeight}>${e.clientHeight}`);
         const ellipsisStyle = cs.textOverflow === 'ellipsis' && /hidden|clip/.test(cs.overflowX);
-        if (ellipsisStyle && (/nowrap|pre/.test(cs.whiteSpace) || e.scrollWidth > e.clientWidth + 0.5)) why.push('ellipsis');
+        if (ellipsisStyle && (/nowrap|pre\u0008/.test(cs.whiteSpace) || e.scrollWidth > e.clientWidth + 0.5)) why.push('ellipsis');
         else if (ellipsisStyle) out.latentEllipsis.push(`${e.tagName.toLowerCase()} "${txt(e).slice(0, 30)}"`);
         const clamp = cs.getPropertyValue('-webkit-line-clamp');
         if (clamp && clamp !== 'none') why.push(`clamp ${clamp}`);

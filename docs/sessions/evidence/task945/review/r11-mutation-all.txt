@@ -1,4 +1,0 @@
-src/modules/auth/actions/captcha.ts: 26 defects, 26 caught, 0 not caught, 0 not tried, 0 undecided
-src/modules/listings/domain/listingTransitionEngine.ts: 38 defects, 37 caught, 1 not caught, 0 not tried, 0 undecided
-src/modules/listings/domain/listingTransitionEngine.ts:250: `this.name = 'ListingTransitionError'` became `;`, and every test still passed
-exit 1

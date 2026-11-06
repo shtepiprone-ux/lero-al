@@ -1,8 +1,0 @@
-# Task 944 review 4: verify-944-final
-platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-04T11:33:30.482Z; ended 2026-11-04T11:33:30.558Z
-command: node scripts/workflow-gates/cli.mjs verify --contract tasks/Archive/Sprint_92_kickoff_prompt_Task_944_Sensitivity_Breaks_Only_In_Memory.security.json
-exit code: 0
---- stdout
-
---- stderr
-

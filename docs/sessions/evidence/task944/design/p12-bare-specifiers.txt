@@ -1,4 +1,0 @@
-# Task 944 self-audit 2 probe p12 (session 3d40df28, 2026-11-03T10:22:12Z): import specifiers of the 11 hook-loaded modules that are neither relative nor node: builtins
-Command: node -e <scan of static import/export-from specifiers>
-other specifiers: 0
-exit=0

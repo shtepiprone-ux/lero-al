@@ -83,7 +83,7 @@
  * violation-report format; `scripts/__tests__/` as the unit-test location the `governance` CI job
  * already runs.
  *
- * Wired into CI: `.github/workflows/governance-pr.yml`, `click-shield` job, after `npm run build`
+ * Wired into CI: `.github/workflows/ci.yml`, `click-shield` job, after `npm run build`
  * (the only job in this file that runs a real Next.js build — kickoff §3.6).
  */
 

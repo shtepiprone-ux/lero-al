@@ -989,7 +989,7 @@ A JSON map of `"path-prefix": "one-line justification"` for whole files or direc
 | `src/modules/notifications/lib/sendTemplatedEmail.ts` | HTML email layout with inline hex literals |
 | `src/app/api/auth-email-hook/route.ts` | Supabase auth email hook — inline HTML email for email_change events |
 | `src/modules/auth/components/AuthSheet.tsx` | Official Google brand SVG colors (policy-fixed) |
-| `src/components/ui/appImageConfig.ts` | Next/Image sizes media-descriptor strings + inline SVG blur placeholder color — neither can reference CSS custom properties |
+| `src/design-system/media/appImageConfig.ts` | Next/Image sizes media-descriptor strings + inline SVG blur placeholder color — neither can reference CSS custom properties |
 
 To add an entry: edit the file directly with a real justification (no stubs). Stale entries
 (pointing to non-existent paths) are printed as warnings but do NOT fail the check.
@@ -1037,7 +1037,7 @@ identical to the className mechanism above.
 | `src/components/ui/tabs.tsx` | `p-[3px]` | Tablist inset; off-scale (space-0.5=2px, space-1=4px) |
 | `src/components/ui/button.tsx` | `text-[0.8rem]` | 12.8px on size=sm button; off-scale (xs=12px, sm=14px) |
 | `src/components/ui/switch.tsx` | `h-[18.4px]` | Switch default track height; no scale token |
-| `src/modules/listings/components/ListingMobileCTA.tsx` | `shadow-[0_-2px_12px_rgba(0,0,0,0.10)]` | Bespoke upward sticky-CTA shadow; negative-Y offset; no `--shadow-*` token matches upward direction |
+| `src/modules/listings/components/ListingMobileCTA.tsx` (removed) | `shadow-[0_-2px_12px_rgba(0,0,0,0.10)]` | Bespoke upward sticky-CTA shadow; negative-Y offset; no `--shadow-*` token matches upward direction |
 | `src/app/[locale]/layout.tsx` | `min-h-[calc(100vh-4rem)]` | Viewport-minus-header height; no scale token (Task 408 rework, §23.1.b row 2) |
 | `src/components/shared/Combobox.tsx` | `max-h-[calc(90dvh-2.5rem)]` | Mobile sheet height minus header; no scale token (Task 408 rework, §23.1.b row 2) |
 | `src/components/ui/switch.tsx` | `translate-x-[calc(100%-2px)]` (×2, same line — one marker) | Switch thumb travel minus border; no scale token (Task 408 rework, §23.1.b row 2) |
@@ -1411,7 +1411,7 @@ nothing in the repository ever reads or sets (verified by a repo-wide grep, not 
 deleted outright.
 
 **The gate.** `scripts/check-tailwind-runtime-tokens.mjs` (`npm run check:tailwind-runtime-tokens`,
-CI-wired in `.github/workflows/governance-pr.yml`) scans every `var(--…)` read, `--name: …`
+run by `scripts/quality/product-gates.mjs` in the `quality` job of `.github/workflows/ci.yml`) scans every `var(--…)` read, `--name: …`
 declaration, and bare name inside a `transition-property`/`will-change` value list in
 `src/**/*.module.css` (Task 762 Revision 1, R6 — the original gate matched `var()` reads only, so a
 `--tw-shadow: …` declaration or a bare `--tw-gradient-from` in a property list was invisible to both
@@ -1509,7 +1509,7 @@ mode, naming every missing path:
   `src/design-system/mantine/patterns/{MantineCopyIdButton.module.css,MantineHomeSection.tsx,MantineListingCardPattern.module.css}`,
   `src/modules/listings/components/{FeaturedListingsView,LatestListingsView}.module.css`,
   `src/modules/listings/components/ListingCard.module.css`.
-- One expected-zero input (D65-E, below): `src/components/ui/AppImage.module.css`.
+- One expected-zero input (D65-E, below): `src/design-system/media/AppImage.module.css`.
 - `src/components/layout/MobileBottomNavView.module.css` was a twelfth migration input until Task
   787 (2026-09-04) deleted the file (mobile bottom bar removal); the manifest and its approved
   target signature were updated in the same task — see the script's own header comment for the
@@ -1619,7 +1619,7 @@ no BOM, LF, 2-space indent, trailing newline, names sorted with `localeCompare` 
 **stale** second signal: it records what "owned" was the last time a human ran `--update-snapshot`, so
 a live-set **shrink** becomes observable by comparison instead of vanishing along with the name it
 described. A git-base diff was rejected because CI here only triggers on `pull_request`
-(`.github/workflows/governance-pr.yml:3-5`), giving no measured guarantee it runs on every landing
+(the former `.github/workflows/governance-pr.yml:3-5`, removed 2026-11-06), giving no measured guarantee it runs on every landing
 path; a third-party prefix allowlist was rejected because it re-derives the same 112-name
 false-positive problem an unscoped check already has. The snapshot fires on every run, wherever it
 runs, and is never edited or hand-derived — only `--update-snapshot` may write it.

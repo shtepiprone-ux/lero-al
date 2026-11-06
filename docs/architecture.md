@@ -38,7 +38,7 @@ messages/                — sq.json, en.json, uk.json, it.json.
 - Business logic in hooks, not in components.
 - API calls only in module `lib/queries.ts` and `lib/mutations.ts`.
 - Never call Supabase directly from UI components — use hooks.
-- Reusable utilities in `src/lib/utils/`.
+- Reusable utilities in `src/lib/utils.ts`.
 - Page-specific components stay in the module folder.
 - Shared components go to `src/components/shared/`.
 
@@ -228,8 +228,7 @@ File is named `src/proxy.ts` (not `middleware.ts`) because Next.js 16 renamed th
 - `src/lib/supabase/client.ts` — browser Supabase client.
 - `src/lib/supabase/server.ts` — server Supabase client (uses cookies).
 - `src/modules/auth/hooks/useUser.ts` — auth hook, returns current user from users table.
-- `src/modules/auth/components/LoginForm.tsx` — login form component.
-- `src/modules/auth/components/RegisterForm.tsx` — register form component.
+- `src/modules/auth/components/AuthSheet.tsx` — the single sign-in and registration UI (Task 159 removed the separate `LoginForm.tsx` and `RegisterForm.tsx`).
 - `src/types/database.ts` — TypeScript interfaces for all 25 tables.
 - `src/i18n/routing.ts` — locale config (locales: sq, en, uk, it; default: sq).
 - `src/i18n/request.ts` — next-intl server config.

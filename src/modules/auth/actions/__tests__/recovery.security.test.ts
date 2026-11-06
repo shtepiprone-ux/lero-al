@@ -173,6 +173,7 @@ describe('the request metadata that is logged', () => {
   it('a line break or other control character in a header cannot forge a log line', async () => {
     requestHeaders = { 'x-forwarded-for': '1.2.3.4\r\n[security:recovery-complete] {"userId":"admin"}', 'user-agent': 'Mozilla\n\tfake line\u0000end' }
     await logPasswordRecoveryRequest('a@example.com')
+    // eslint-disable-next-line no-control-regex -- the test proves no control character reaches the log line
     expect(JSON.stringify(lastLog())).not.toMatch(/[\u0000-\u001f]/)
     expect(String(lastLog().ip)).toBe('1.2.3.4 [security:recovery-complete] {"userId":"admin"}')
     expect(lastLog().ua).toBe('Mozilla fake line end')

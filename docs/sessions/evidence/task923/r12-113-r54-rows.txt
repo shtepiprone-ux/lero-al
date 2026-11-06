@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd node docs/sessions/evidence/task923/r12-113-r54-rows.mjs
 dashboardperiodcontrol--custom-range-too-long @390: failing rows 1; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0
 listingdetailpattern--default @768: failing rows 4; differ from r10-108-full-merged 0; whole change is a new text-overlap finding 0

@@ -1,4 +1,4 @@
-﻿390@1 edge 44.00x44.00 at 17.00,136.00 r 8px var 0.5rem | 1px solid rgb(208, 213, 221) | rgb(255, 255, 255) | shadow none | clip none | tf none
+390@1 edge 44.00x44.00 at 17.00,136.00 r 8px var 0.5rem | 1px solid rgb(208, 213, 221) | rgb(255, 255, 255) | shadow none | clip none | tf none
 390@1 active 44.00x44.00 at 69.00,136.00 r 8px var 0.5rem | 1px solid rgb(236, 84, 71) | rgb(236, 84, 71) | shadow none | clip none | tf none
 390@1 inactive 44.00x44.00 at 121.00,136.00 r 8px var 0.5rem | 0px none rgb(52, 64, 84) | rgba(0, 0, 0, 0) | shadow none | clip none | tf none
 390@1.25 edge 44.00x44.00 at 17.00,136.00 r 8px var 0.5rem | 1px solid rgb(208, 213, 221) | rgb(255, 255, 255) | shadow none | clip none | tf none

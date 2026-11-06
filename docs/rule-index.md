@@ -22,9 +22,9 @@ not use.
 
 ## Always Required
 
-- `.claude/rules/shared/workflow-gates.md` - task contract, local write/handoff checks, required CI verdict and release stop.
-
-- `.claude/rules/shared/role-boundaries.md`
+- `.claude/rules/README.md` - the flow (`flow.md`), the gates (`quality-gates.md`), secure code review, threat model,
+  security testing and the kickoff template (governance reset 2026-11-06, OWASP-based). Where an older document in
+  `docs/` conflicts with these files, these files win.
 - `docs/golden-rules.md` - open the exact GR section required by the role phase or selected task bundle; do not read
   the entire historical document by default. A required receipt remains mandatory.
 - `docs/agent-contract.md` - use its linked fragment for the clause named by the phase/task bundle. Visible UI always
@@ -41,11 +41,9 @@ not use.
 
 For Opus orchestration or review:
 
-- Follow the selected `.claude/skills/create-task/SKILL.md` C1-C7 or `review-task/SKILL.md` R1-R7 in order.
-- Read `.claude/rules/shared/task-readiness.md` before new-task publication or a review correction handoff.
-- Read `.claude/rules/shared/orchestration-state.md` at draft promotion and review candidate/final checks.
-- Open only the sections of `docs/orchestrator-role.md` and `docs/orchestrator-procedures.md` required by the
-  current phase/bundle; they are detailed references, not a second default reading workflow.
+- Follow the `create-task` or `review-task` skill.
+- `.claude/rules/flow.md` is the procedure. `docs/orchestrator-role.md` and `docs/orchestrator-procedures.md` are
+  historical detail superseded in part by the 2026-11-06 reset; open a section only for product context.
 
 ## UI / Layout / Component
 

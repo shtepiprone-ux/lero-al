@@ -71,7 +71,7 @@ Area:        scripts/check-locale-leak.mjs, all 29 src/**/*.stories.tsx + .story
 
 2. **🟠 BLOCKER — undisclosed diffs (violate the Task 264 Files-Changed-table contract).**
    - **BOM (U+FEFF) was injected into all 29 `*.stories.tsx` files** (visible in the diff as `'use client'`
-     gaining a `﻿` prefix). The Files Changed table described only "import migration", not a byte-level
+     gaining a `U+FEFF` prefix). The Files Changed table described only "import migration", not a byte-level
      encoding change. A BOM before the `'use client'` directive is unwanted (the directive must be the
      first bytes of the module).
    - **`messages/en.json` is modified** (trailing newline stripped) and is **not in the Files Changed

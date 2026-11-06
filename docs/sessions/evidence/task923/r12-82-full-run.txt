@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd node scripts/check-rendered-state-census.mjs --jobs 10 --out docs/sessions/evidence/task923/r12-full
 start 2026-10-19T15:39:12.3304266Z
 rendered state census: 584 registered state(s), 15192 state job(s) + 3572 out-of-range widths job(s) (no cell is skipped; 76 cell(s) are the added in-range bound / first out-of-range widths) + 461 closed job(s); 10 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r12-full

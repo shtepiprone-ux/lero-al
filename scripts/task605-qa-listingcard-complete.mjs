@@ -46,7 +46,7 @@ const ROUTES = [
   { path: (l) => `/${l}/listings`, label: 'Listings Grid' },
 ];
 
-/* eslint-disable no-undef */
+ 
 function evalCardCompleteness() {
   const links = [...document.querySelectorAll('a.listing-card--vertical')];
   const pageOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 2;
@@ -111,7 +111,7 @@ async function evalHover(page) {
 
   return { found: true, before, after, beforeImg, afterImg, hoverFired: before.boxShadow !== after.boxShadow || before.transform !== after.transform };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const { chromium } = await import('playwright');

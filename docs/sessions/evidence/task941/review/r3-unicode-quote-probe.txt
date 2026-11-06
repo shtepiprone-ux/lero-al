@@ -1,11 +1,0 @@
-﻿node v22.22.3
-NEL | bash | "grep -c 'a' Y; true '; echo x > T; '" | classifier readOnly=false | real: T written=false
-NEL | bash | "grep -c 'a; echo x > T; #' Y" | classifier readOnly=true | real: T written=false
-NEL | powershell | "Select-String -Pattern 'a; Set-Content T x; ' -Path Y" | classifier readOnly=true | real: T written=false
-NEL | powershell | "Get-Content Y | Select-String -Pattern 'a'; Get-Content Y | Select-String -Pattern '; Set-Content T x; '" | classifier readOnly=true | real: T written=false
-LS | bash | "grep -c 'a ' Y; true ' ; echo x > T;  '" | classifier readOnly=false | real: T written=false
-LS | bash | "grep -c 'a ; echo x > T; #' Y" | classifier readOnly=true | real: T written=false
-LS | powershell | "Select-String -Pattern 'a ; Set-Content T x;  ' -Path Y" | classifier readOnly=true | real: T written=false
-LS | powershell | "Get-Content Y | Select-String -Pattern 'a '; Get-Content Y | Select-String -Pattern ' ; Set-Content T x;  '" | classifier readOnly=true | real: T written=false
-CONTROL | bash | "grep -c 'a' Y; echo x > T" | classifier readOnly=false | real: T written=true
-CONTROL | powershell | "Select-String -Pattern 'a' -Path Y; Set-Content T x" | classifier readOnly=false | real: T written=true

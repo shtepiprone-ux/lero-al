@@ -1,6 +1,0 @@
-# Task 944 design probe p06 (session 3d40df28, 2026-11-03T09:27:20Z): the Task 942 break text for cli.mjs sensitivity
-Command: grep -c -F 'norm === e.path && ' scripts/check-listing-visibility.mjs
-count: 1
-Command: grep -n -F 'norm === e.path && ' scripts/check-listing-visibility.mjs
-68:  return ALLOWLIST.some(e => norm === e.path && matchedText.includes(e.fingerprint));
-sha256 6b3dedf0245d2f05c10deaa9b555dd132a11d20d566120008d87d25eca8e9381

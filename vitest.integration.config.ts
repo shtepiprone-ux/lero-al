@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config'
 import path from 'path'
 
 /**
- * The real-boundary security project (workflow-gates, security-testing.md): suites that use REAL Supabase Auth and the REAL database of the owner-approved
+ * The real-boundary security project (.claude/rules/security-testing.md): suites that use REAL Supabase Auth and the REAL database of the owner-approved
  * development project with synthetic rows. It is a separate collection on purpose — the default jsdom run (vitest.config.ts) excludes `*.integration.test.ts`
  * and never needs a network or a credential. Run:  SECURITY_TEST_PROJECT_REF=<approved project ref> npm run test:security-integration
  */

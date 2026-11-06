@@ -1,6 +1,0 @@
-.claude/rules/shared/security-test-quality.md -> Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_, Sprint_78_Task_923_security_record_D8_D9.security., Sprint_78_Task_923_security_record_owner_fixes.sec, Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_S
-.claude/rules/review/02-adversarial-ui.md -> in no reviewed contract digest
-.claude/rules/create/02-kickoff-contract.md -> in no reviewed contract digest
-.claude/rules/shared/task-readiness.md -> in no reviewed contract digest
-Sprint_92_kickoff_prompt_Task_943_File_Mutati planned task-readiness.md=false 02-adversarial-ui.md=false security-hook.mjs=true contract.mjs=true cli.mjs=true publication.json=true
-Sprint_92_kickoff_prompt_Task_942_Listing_Vis planned task-readiness.md=false 02-adversarial-ui.md=false security-hook.mjs=false contract.mjs=false cli.mjs=false publication.json=false

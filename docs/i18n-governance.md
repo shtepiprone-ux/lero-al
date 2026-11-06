@@ -130,10 +130,10 @@ to hide a real new hardcode — that defeats the gate.
 
 ## §4 — CI WIRING
 
-**Job:** `governance` in `.github/workflows/governance-pr.yml`
+**Job:** `quality` in `.github/workflows/ci.yml`, through `scripts/quality/product-gates.mjs`
 **Step:** `Static i18n hardcode gate (fail-on-new, baseline-diff)`
 **Command:** `npm run check:i18n-hardcode`
-**Trigger:** every PR touching `src/**`, `scripts/**`, `package.json`, or `messages/**`
+**Trigger:** every pull request, every push to `main`, and the daily run
 
 The gate runs BEFORE the `Full governance report` step so CI surfaces the
 violation immediately.

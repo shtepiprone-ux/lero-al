@@ -1,4 +1,4 @@
-﻿# rv8-02: source lines for Task 927 Amendment 8
+# rv8-02: source lines for Task 927 Amendment 8
 platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T18:42:31.497Z
 src/components/auth/GoogleSignInButton.tsx:53: theme: 'outline',
 src/components/auth/GoogleSignInButton.tsx:54: size: 'medium',

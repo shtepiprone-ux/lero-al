@@ -1,3 +1,0 @@
-﻿JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/652b8512a9e5665e/unit.json
-report written: docs/sessions/evidence/task931/security/report.json (17 cases)
-exit 0

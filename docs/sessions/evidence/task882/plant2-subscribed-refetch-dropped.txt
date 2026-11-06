@@ -10,12 +10,12 @@
 AssertionError: expected "vi.fn()" to be called 2 times, but got 1 times
 
 Ignored nodes: comments, script, style
-[36m<html>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div />[39m
-  [36m</body>[39m
-[36m</html>[39m
+<html>
+  <head />
+  <body>
+    <div />
+  </body>
+</html>
  ❯ src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts:179:41
     177|     capturedStatusCallback?.('SUBSCRIBED')
     178|

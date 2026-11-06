@@ -70,11 +70,11 @@
 All text in this repo is **UTF-8, no BOM**. `npm run check:mojibake`
 (`scripts/check-mojibake.mjs`) scans `docs/`, `src/`, `app/`, `components/`, `modules/`,
 `messages/`, `tasks/`, `scripts/`, and root `*.md` for double-encoding / corruption artifacts and is a
-**blocking CI step** (see `.github/workflows/governance-pr.yml`). It collects **tracked *and*
+**blocking CI step** (run by `scripts/quality/product-gates.mjs` in the `quality` job of `.github/workflows/ci.yml`). It collects **tracked *and*
 untracked-but-not-ignored** files (`git ls-files --cached --others --exclude-standard`), so a file
-added in the same change as the code it checks is scanned too. There is no native pre-commit
-hook in this repo (`.git/hooks/` has only `.sample` files) — run `npm run check:mojibake` manually
-before committing if you touched non-ASCII text.
+added in the same change as the code it checks is scanned too. The pre-commit hook
+`.githooks/pre-commit` (active after `git config core.hooksPath .githooks`) runs
+`scripts/quality/check-files.mjs --staged`, which includes the mojibake check, on every staged file.
 
 `scripts/` was added to the scanned set by Task 674 (2026-07-27): every governance and QA harness
 lives there and is dense with non-ASCII, but none of it was covered before. The detector's own

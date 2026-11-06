@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Stub for `next/cache` in the Vitest environment.
 // next/cache functions require a Next.js request scope (static generation store)
 // that is not present in jsdom. In tests, cache invalidation is a no-op and

@@ -8,11 +8,11 @@
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
 
  FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — vertical branch (Mantine pattern, default) > archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)
-Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+Error: expect(received).toBeInTheDocument()
 
-[31mreceived[39m value must be an HTMLElement or an SVGElement.
+received value must be an HTMLElement or an SVGElement.
 Received has type:  Null
-Received has value: [31mnull[39m
+Received has value: null
  ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:190:57
     188|     expect(screen.getByText('Archived')).toBeInTheDocument()
     189|     const link = screen.getByRole('link')
@@ -24,11 +24,11 @@ Received has value: [31mnull[39m
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
 
  FAIL  src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx > ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608) > archived listing renders the archived badge + dimmed card
-Error: [2mexpect([22m[31mreceived[39m[2m).toBeInTheDocument()[22m
+Error: expect(received).toBeInTheDocument()
 
-[31mreceived[39m value must be an HTMLElement or an SVGElement.
+received value must be an HTMLElement or an SVGElement.
 Received has type:  Null
-Received has value: [31mnull[39m
+Received has value: null
  ❯ src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx:274:57
     272|     expect(screen.getByText('Archived')).toBeInTheDocument()
     273|     const link = screen.getByRole('link')

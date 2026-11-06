@@ -8844,7 +8844,7 @@ started: 2026-10-25T09:32:36.701Z
 │  (!) Some chunks are larger than 500 kB after minification. Consider:
 │  - Using dynamic import() to code-split the application
 │  - Use build.rollupOptions.output.manualChunks to improve chunking:
-│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  https://rollupjs.org/configuration-options/#output-manualchunks
 │  - Adjust chunk size limit for this warning via
 │  build.chunkSizeWarningLimit.
 │  Vite ✓ built in 42.26s

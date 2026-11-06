@@ -1,4 +1,4 @@
-﻿// Renders the real PremiumDialogView radios at DPR 1 under size/border variants, then shows each crop 10x pixelated.
+// Renders the real PremiumDialogView radios at DPR 1 under size/border variants, then shows each crop 10x pixelated.
 import { createRequire } from 'node:module'
 import http from 'node:http'
 import fs from 'node:fs'

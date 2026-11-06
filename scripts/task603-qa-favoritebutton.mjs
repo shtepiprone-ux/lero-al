@@ -47,7 +47,7 @@ const ROUTES = [
   { path: (l) => `/${l}/listings`, label: 'Listings Grid' },
 ];
 
-/* eslint-disable no-undef */
+ 
 function evalFavoriteButtons() {
   const buttons = [...document.querySelectorAll('button[aria-pressed]')];
   const pageOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 2;
@@ -81,7 +81,7 @@ function evalFavoriteButtons() {
 
   return { count: buttons.length, results, pageOverflow };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const { chromium } = await import('playwright');

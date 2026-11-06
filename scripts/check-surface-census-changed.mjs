@@ -53,6 +53,7 @@ import {
   loadManifestSet,
   DEFAULT_MAX_CHANGED_FILES,
   DEFAULT_MAX_SURFACES,
+  changedFileLimit,
 } from './map-changed-surfaces.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -422,11 +423,11 @@ function runSelfTest() {
     record(res.unresolved === true && exitCode === 1, 'Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero');
   }
 
-  // Arm 3 — an over-limit diff drives the exit decision to non-zero (fail-closed, R5). Uses `HEAD~1`
-  // as base so the diff is real and non-empty (base===head would always be 0 changed files, which can
-  // never exceed a limit of 0 — this arm needs an actual changed-file count to cap).
+  // Arm 3 — an over-limit set of changed production files drives the exit decision to non-zero (fail-closed, R5).
+  // The limit counts census candidates only (changedFileLimit), so the arm feeds it one candidate and a limit of 0
+  // instead of depending on what the last commit happened to change.
   {
-    const mapping = runMapping({ base: 'HEAD~1', head: 'HEAD', maxChangedFiles: 0, maxSurfaces: DEFAULT_MAX_SURFACES });
+    const mapping = changedFileLimit(['src/fake/verify/Surface.tsx'], 0, 3);
     const exitCode = evaluateGateExitCode({ newBlocksCount: 0, staleKeysCount: 0, failClosedCount: mapping.failClosed ? 1 : 0 });
     record(
       mapping.failClosed === true && mapping.reason === 'changed-file-limit-exceeded' && exitCode === 1,

@@ -13,6 +13,6 @@ export function isCmsBodyEmpty(html: string | null | undefined): boolean {
   const text = clean
     .replace(/<[^>]*>/g, ' ')
     .replace(/&nbsp;|&#(?:160|xa0);/gi, ' ')
-    .replace(/[ ​‌‍﻿]/g, ' ')
+    .replace(/[\u00A0\u200B\u200C\uFEFF]|\u200D/g, ' ')
   return text.trim().length === 0
 }

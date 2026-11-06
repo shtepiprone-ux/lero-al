@@ -1,9 +1,0 @@
-﻿candidate HEAD b7c3fc9f64cb14f5ab261303e1ad39c3a83730bc; node v22.22.3
-baseline | exit=0 | pass=5 | failed=[] | ERR_ASSERTION=0 | other error codes=[]
-S1-first-simple-command-only | exit=1 | pass=3 | failed=["GOV-941-HOOK-WRITE-DENY","GOV-941-HOOK-PRETOOL-DENY"] | ERR_ASSERTION=2 | other error codes=[]
-S2-hash-allowed | exit=1 | pass=2 | failed=["GOV-941-HOOK-WRITE-DENY","GOV-941-HOOK-MALFORMED-ERROR","GOV-941-HOOK-PRETOOL-DENY"] | ERR_ASSERTION=3 | other error codes=[]
-M1-lone-cr-allowed | exit=1 | pass=3 | failed=["GOV-941-HOOK-MALFORMED-ERROR","GOV-941-HOOK-PRETOOL-DENY"] | ERR_ASSERTION=2 | other error codes=[]
-M2-no-cd-rule | exit=1 | pass=4 | failed=["GOV-941-HOOK-MALFORMED-ERROR"] | ERR_ASSERTION=1 | other error codes=[]
-M4-cd-case-sensitive | exit=1 | pass=4 | failed=["GOV-941-HOOK-MALFORMED-ERROR"] | ERR_ASSERTION=1 | other error codes=[]
-M7-cd-own-command-only | exit=1 | pass=4 | failed=["GOV-941-HOOK-MALFORMED-ERROR"] | ERR_ASSERTION=1 | other error codes=[]
-M8-cd-only-not-set-location | exit=1 | pass=4 | failed=["GOV-941-HOOK-MALFORMED-ERROR"] | ERR_ASSERTION=1 | other error codes=[]

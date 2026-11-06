@@ -1,0 +1,188 @@
+#!/usr/bin/env node
+// Change report for a pull request (governance reset 2026-11-06). OWASP basis: Secure Coding with AI §"reviewing
+// AI-generated pull requests" (flag lockfile, CI, configuration, test and out-of-scope changes; flag deleted tests and
+// weakened assertions; rules files are security-critical configuration), NPM Security and Vulnerable Dependency
+// Management (verify a suggested package exists and is not brand new; the lockfile resolves only from the registry).
+//
+//   node scripts/quality/change-report.mjs <base> <head>
+//
+// Prints a Markdown report (also to $GITHUB_STEP_SUMMARY). Exit 1 when a hard rule fails:
+//   - product code under src/ is added or changed and no test file is added or changed;
+//   - a dependency added to package.json does not exist on npm, or its first release is younger than 30 days;
+//   - a lockfile entry resolves outside https://registry.npmjs.org/ or has no integrity hash.
+// Everything else is a flag for the human reviewer, who answers it in the review (secure-code-review.md).
+
+import { spawnSync } from 'node:child_process';
+import { appendFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
+const DAY = 24 * 60 * 60 * 1000;
+export const MIN_PACKAGE_AGE_DAYS = 30;
+export const MIN_VERSION_AGE_DAYS = 14;
+
+/** Paths whose change needs the owner's explicit attention: policy, agents, CI, supply chain, security config. */
+export const SENSITIVE = [
+  ['Agent rules, skills, hooks and settings', /^(\.claude\/|CLAUDE\.md$|AGENTS\.md$|docs\/agent-contract\.md$)/],
+  ['CI, repository settings and quality scripts', /^(\.github\/|\.githooks\/|scripts\/quality\/)/],
+  ['Dependencies and package manager', /^(package\.json|package-lock\.json|\.npmrc|\.nvmrc)$/],
+  ['Lint, type and test configuration', /^(eslint\.config\.mjs|tsconfig\.json|vitest(\.[a-z]+)?\.config\.ts|\.gitignore|scripts\/mojibake-allowlist\.json)$/],
+  ['Security-relevant runtime configuration', /^(next\.config\.ts|middleware\.ts|src\/middleware\.ts|sentry\.[a-z]+\.config\.ts|vercel\.json)$/],
+  ['Database schema and policies', /^supabase\/(migrations|policies)\//],
+];
+const TEST_FILE = /(\.test|\.spec)\.(ts|tsx|js|jsx|mjs|cjs)$|(^|\/)__tests__\//;
+
+export function classify(paths) {
+  const out = new Map();
+  for (const p of paths) {
+    const hit = SENSITIVE.find(([, re]) => re.test(p));
+    if (hit) out.set(hit[0], [...(out.get(hit[0]) ?? []), p]);
+  }
+  return out;
+}
+
+const count = (text, re) => (text.match(re) ?? []).length;
+
+const SOURCE_CODE = /^src\/.+\.(ts|tsx)$/;
+const NOT_SOURCE_CODE = /(\.test|\.spec|\.stories)\.(ts|tsx)$|\.d\.ts$|(^|\/)(__tests__|__mocks__)\//;
+const ANY_TEST = /(\.test|\.spec)\.(ts|tsx|mts|mjs|js)$|\.stories\.tsx$|(^|\/)__tests__\//;
+
+/** Product source files changed (added or modified) while no test file was added or modified — owner, 2026-11-06:
+ *  "a task done → a test for it; a task changed → its test updated". */
+export function untestedSourceChange(changes) {
+  const source = changes.filter((c) => c.code !== 'D' && SOURCE_CODE.test(c.path) && !NOT_SOURCE_CODE.test(c.path)).map((c) => c.path);
+  const tests = changes.filter((c) => c.code !== 'D' && ANY_TEST.test(c.path));
+  return source.length && !tests.length ? source : [];
+}
+
+/** Signals that a test file asserts less than before. */
+export function testWeakening(before, after) {
+  const flags = [];
+  const cases = /\b(?:it|test)(?:\.(?:each\([^)]*\)|skip|only|todo|concurrent))?\s*\(/g;
+  const expects = /\bexpect(?:\.soft)?\s*\(/g;
+  const disabled = /\b(?:it|test|describe)\.(?:skip|todo|only)\b|\bx(?:it|describe)\s*\(/g;
+  const [c0, c1] = [count(before, cases), count(after, cases)];
+  const [e0, e1] = [count(before, expects), count(after, expects)];
+  const [d0, d1] = [count(before, disabled), count(after, disabled)];
+  if (c1 < c0) flags.push(`test cases ${c0} → ${c1}`);
+  if (e1 < e0) flags.push(`assertions ${e0} → ${e1}`);
+  if (d1 > d0) flags.push(`skip/todo/only ${d0} → ${d1}`);
+  return flags;
+}
+
+/** Lockfile entries that resolve outside the npm registry or carry no integrity hash. */
+export function lockfileProblems(lock) {
+  const out = [];
+  for (const [key, entry] of Object.entries(lock?.packages ?? {})) {
+    if (!key || entry.link || !entry.resolved) continue;
+    if (!entry.resolved.startsWith('https://registry.npmjs.org/')) out.push(`${key}: resolved from ${entry.resolved}`);
+    else if (!entry.integrity) out.push(`${key}: no integrity hash`);
+  }
+  return out;
+}
+
+const DEP_FIELDS = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
+const deps = (pkg) => Object.assign({}, ...DEP_FIELDS.map((f) => pkg?.[f] ?? {}));
+
+/** Names added to package.json, and names whose requested range changed. */
+export function dependencyChanges(basePkg, headPkg) {
+  const [b, h] = [deps(basePkg), deps(headPkg)];
+  return {
+    added: Object.keys(h).filter((n) => !(n in b)).sort(),
+    changed: Object.keys(h).filter((n) => n in b && b[n] !== h[n]).sort(),
+  };
+}
+
+function git(args) {
+  const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28, windowsHide: true });
+  if (r.status !== 0) throw new Error(`git ${args[0]} failed: ${(r.stderr || '').trim()}`);
+  return r.stdout;
+}
+const show = (rev, p) => {
+  const r = spawnSync('git', ['show', `${rev}:${p}`], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28, windowsHide: true });
+  return r.status === 0 ? r.stdout : null;
+};
+const json = (text) => { try { return text ? JSON.parse(text) : null; } catch { return null; } };
+
+function npmTimes(name) {
+  const isWin = process.platform === 'win32';
+  const r = spawnSync(isWin ? 'npm.cmd' : 'npm', ['view', name, 'time', '--json'], { encoding: 'utf8', shell: isWin, windowsHide: true });
+  return r.status === 0 ? json(r.stdout) : null;
+}
+
+export function run(base, head, now = Date.now()) {
+  const lines = ['## Change report', '', `Base \`${base}\`, head \`${head}\`.`, ''];
+  const failures = [];
+  const status = git(['diff', '--name-status', '-z', `${base}...${head}`]).split('\0').filter(Boolean);
+  const changes = [];
+  for (let i = 0; i < status.length;) {
+    const code = status[i++];
+    if (code.startsWith('R') || code.startsWith('C')) { const from = status[i++]; changes.push({ code: code[0], path: status[i++], from }); }
+    else changes.push({ code, path: status[i++] });
+  }
+  lines.push(`${changes.length} changed path(s): ${['A', 'M', 'D', 'R'].map((c) => `${c} ${changes.filter((x) => x.code === c).length}`).join(', ')}.`, '');
+
+  const sensitive = classify(changes.map((c) => c.path));
+  lines.push('### Sensitive paths (the owner reads every line of these)', '');
+  if (!sensitive.size) lines.push('None.');
+  for (const [group, list] of sensitive) lines.push(`- **${group}** (${list.length}): ${list.slice(0, 40).map((p) => `\`${p}\``).join(', ')}${list.length > 40 ? ' …' : ''}`);
+  lines.push('');
+
+  lines.push('### Tests deleted or weakened', '');
+  const testFlags = [];
+  for (const c of changes.filter((x) => TEST_FILE.test(x.from ?? x.path))) {
+    if (c.code === 'D') { testFlags.push(`- \`${c.path}\` deleted`); continue; }
+    if (c.code !== 'M' && c.code !== 'R') continue;
+    const flags = testWeakening(show(base, c.from ?? c.path) ?? '', show(head, c.path) ?? '');
+    if (flags.length) testFlags.push(`- \`${c.path}\`: ${flags.join('; ')}`);
+  }
+  lines.push(...(testFlags.length ? testFlags : ['None.']), '');
+  const untested = untestedSourceChange(changes);
+  if (untested.length) failures.push(`product code changed with no test added or updated: ${untested.slice(0, 20).join(', ')}${untested.length > 20 ? ' …' : ''}`);
+
+  lines.push('### Dependencies', '');
+  const { added, changed } = dependencyChanges(json(show(base, 'package.json')), json(show(head, 'package.json')));
+  const headLock = json(show(head, 'package-lock.json'));
+  if (!added.length && !changed.length) lines.push('No dependency added or changed in package.json.');
+  for (const name of added) {
+    const times = npmTimes(name);
+    if (!times) { failures.push(`${name} does not exist on npm (possible hallucinated or typo-squatted package)`); continue; }
+    const age = Math.floor((now - Date.parse(times.created)) / DAY);
+    if (age < MIN_PACKAGE_AGE_DAYS) failures.push(`${name} was first published ${age} day(s) ago (< ${MIN_PACKAGE_AGE_DAYS})`);
+    else lines.push(`- added \`${name}\`: first published ${age} days ago`);
+  }
+  for (const name of [...added, ...changed]) {
+    const version = headLock?.packages?.[`node_modules/${name}`]?.version;
+    const times = version ? npmTimes(name) : null;
+    if (!version || !times?.[version]) continue;
+    const age = Math.floor((now - Date.parse(times[version])) / DAY);
+    lines.push(`- \`${name}@${version}\`: released ${age} days ago${age < MIN_VERSION_AGE_DAYS ? ` — **younger than ${MIN_VERSION_AGE_DAYS} days; accept only for a security fix**` : ''}`);
+  }
+  const lockChanged = changes.some((c) => c.path === 'package-lock.json');
+  const pkgChanged = changes.some((c) => c.path === 'package.json');
+  if (lockChanged && !pkgChanged) lines.push('- **package-lock.json changed without package.json** — check every resolved version.');
+  if (headLock) for (const p of lockfileProblems(headLock)) failures.push(`lockfile: ${p}`);
+  lines.push('');
+
+  lines.push('### Hard failures', '', ...(failures.length ? failures.map((f) => `- ${f}`) : ['None.']), '');
+  return { text: lines.join('\n'), failures };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const [base, head = 'HEAD'] = process.argv.slice(2);
+  if (!base) {
+    console.error('usage: change-report.mjs <base> [head]');
+    process.exit(2);
+  }
+  let result;
+  try {
+    result = run(base, head);
+  } catch (e) {
+    console.error(`change-report could not run: ${e.message}`);
+    process.exit(2);
+  }
+  console.log(result.text);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${result.text}\n`);
+  process.exit(result.failures.length ? 1 : 0);
+}

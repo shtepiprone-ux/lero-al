@@ -1,4 +1,4 @@
-﻿C42: scripts/rendered-interaction-states.json:6385-6385 -> scripts/rendered-interaction-states.json:6085 -> docs/sessions/evidence/task927/readiness-a3/ra3-02-lines.txt:3
+C42: scripts/rendered-interaction-states.json:6385-6385 -> scripts/rendered-interaction-states.json:6085 -> docs/sessions/evidence/task927/readiness-a3/ra3-02-lines.txt:3
 C43: .claude/rules/shared/rendered-state-census.md:59-59 -> .claude/rules/shared/rendered-state-census.md:64 -> docs/sessions/evidence/task927/readiness-a3/ra3-02-lines.txt:5 (literal reworded by the owner)
 C52: messages/en.json:335-335 -> messages/en.json:345 -> docs/sessions/evidence/task927/readiness-a3/ra3-02-lines.txt:7
 C68: messages/en.json:601-601 -> messages/en.json:612 -> docs/sessions/evidence/task927/readiness-a3/ra3-02-lines.txt:9

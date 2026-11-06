@@ -305,7 +305,7 @@ const LOADER_ALLOWLIST = new Set([
 
 // Task 607 — tracked known-failure registry for `Patterns/Mantine/*` stories with an
 // ALREADY-FILED, REAL defect this task's coverage extension surfaced (not a gate false
-// positive). `--mantine-only` is a hard-blocking CI gate (.github/workflows/governance-pr.yml)
+// positive). `--mantine-only` is a hard-blocking CI gate (.github/workflows/ci.yml)
 // — allowlisting a TRUE positive here would be exactly the "ship invisibly" failure mode this
 // task exists to close (the `LOADER_ALLOWLIST` precedent is for FALSE positives only and does
 // NOT apply to real defects; owner decision, Task 607 review, 2026-07-15).
@@ -744,10 +744,9 @@ async function assertScreenshotHasMeaningfulPixels(screenshotPath, { domRenderPa
       const key = `${data[i]},${data[i + 1]},${data[i + 2]}`;
       colourCounts.set(key, (colourCounts.get(key) ?? 0) + 1);
     }
-    let dominantKey = '';
     let dominantCount = 0;
-    for (const [k, v] of colourCounts) {
-      if (v > dominantCount) { dominantKey = k; dominantCount = v; }
+    for (const v of colourCounts.values()) {
+      if (v > dominantCount) dominantCount = v;
     }
 
     const backgroundRatio = dominantCount / pixelCount;

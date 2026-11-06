@@ -1,4 +1,4 @@
-﻿mantine-primitives-table--default @320: sw 320/cw 320 overflow=false escaping=0 dialogW=null big=[]
+mantine-primitives-table--default @320: sw 320/cw 320 overflow=false escaping=0 dialogW=null big=[]
 mantine-primitives-table--default @390: sw 390/cw 390 overflow=false escaping=0 dialogW=null big=[]
 mantine-primitives-table--default @1440: sw 1440/cw 1440 overflow=false escaping=0 dialogW=null big=[]
 mantine-primitives-table--cards-below-md @320: sw 320/cw 320 overflow=false escaping=0 dialogW=null big=[]

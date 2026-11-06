@@ -1,3 +1,0 @@
-# Task 944 review 1: contracts whose cases map to scripts/workflow-gates/governance-contract.selftest.mjs
-tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json cases 13: GOV-935-VAL-ALLOW GOV-935-VAL-DENY-PRODUCT-PATH GOV-935-VAL-DENY-COVERAGE GOV-935-VAL-RELEASE-DENY GOV-935-VAL-RELEASE-ALLOW GOV-935-REPORT-ERROR GOV-935-VAL-REBASE-ALLOW GOV-935-VAL-REBASE-DENY GOV-935-HOOK-SELF-APPROVE-DENY GOV-935-HOOK-INDEPENDENT-ALLOW GOV-935-CI-DIFF-DENY GOV-935-CI-DIFF-ALLOW GOV-935-CI-REBASE-DENY
-end of list

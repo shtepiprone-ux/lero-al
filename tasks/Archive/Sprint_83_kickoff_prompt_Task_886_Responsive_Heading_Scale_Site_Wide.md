@@ -5,7 +5,7 @@ approved** · **after 853 is approved** (added 2026-09-26 by 853 review 1, §3.1
 **O83-3**, **O83-4** · **Status: `NEEDS REVISION` — review 4, 2026-09-30. The owner returned O83-1 rows 1 and 4.
 Start at §18 (Revision 3); it overrides every earlier section it names. §16–§17 are implemented and kept.**
 
-Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
+Sprint plan: [`Sprint_83_Text_That_Scales_Down_On_A_Phone.md`](../Sprints/Sprint_83_Text_That_Scales_Down_On_A_Phone.md).
 
 Filed by owner instruction, 2026-09-26, verbatim: *"так, заводь задачу на аудит адаптивних шрифтів по всьому сайту"*.
 It binds rule **GR-3c** (`docs/golden-rules.md`, owner rule 2026-09-26).

@@ -472,7 +472,7 @@ export async function updateUserProfileFull(
   if (userId === me.id && data.status !== 'active') return { error: 'Forbidden' }
   // Task 923 R71 (j): a dated block is saved only with an end that parses and lies in the future. An end in the past used to be saved as "blocked" while the Auth ban
   // was lifted at once (accountAccess.ts), so the screen said blocked and the person could sign in. Checked before anything is read or written.
-  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+   
   if (data.status === 'blocked' && data.suspendedUntil != null) {
     const end = typeof data.suspendedUntil === 'string' ? Date.parse(data.suspendedUntil) : Number.NaN
     if (!Number.isFinite(end) || end <= Date.now()) return { error: 'invalid_suspension' }

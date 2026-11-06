@@ -1,7 +1,0 @@
-Task 943 revision 2 design source (fetched 2026-11-02 by the Task 941 review 2 session): Claude Code hooks reference,
-https://code.claude.com/docs/en/hooks (https://docs.claude.com/en/docs/claude-code/hooks redirects there with HTTP 301).
-Common input fields table, row cwd (verbatim):
-cwd | Current working directory when the hook is invoked
-Worktree note (verbatim):
-cwd follows Claude: the cwd field in the hook's input JSON is the worktree root after Claude enters a worktree, and the new directory after Claude runs cd. Read it when a hook needs to know which directory Claude is working in.
-PreToolUse input example (verbatim fields): "transcript_path", "cwd": "/home/user/my-project", "hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": { "command": "npm test", ... }

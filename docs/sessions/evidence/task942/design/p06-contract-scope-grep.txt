@@ -1,5 +1,0 @@
-Task 942 design (Opus, 2026-11-01, HEAD 01b8259fa): which task contracts and which publication manifest entries name the listing-visibility gate?
-command: git grep -l check-listing-visibility HEAD -- 'tasks/**/*.security.json' scripts/workflow-gates/publication.json
-matches: NONE
-command (working tree, includes uncommitted contracts): grep -rl check-listing-visibility tasks --include=*.security.json scripts/workflow-gates/publication.json
-matches: NONE

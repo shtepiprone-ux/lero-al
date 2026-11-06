@@ -142,11 +142,11 @@ Failed to compile.
 ./src/components/admin/ListingPreviewDialogView.tsx:82:25
 Type error: Property 'images' does not exist on type 'AdminListing'.
 
-[0m [90m 80 |[39m
- [90m 81 |[39m   [90m// The listing summary: the same data mapping `ListingCard`'s list row uses (cover, location, card features).[39m
-[31m[1m>[22m[39m[90m 82 |[39m   [36mconst[39m cover [33m=[39m listing[33m.[39mimages[33m?[39m[33m.[39mfind(image [33m=>[39m image[33m.[39mis_cover) [33m?[39m[33m?[39m listing[33m.[39mimages[33m?[39m[33m.[39m[[35m0[39m]
- [90m    |[39m                         [31m[1m^[22m[39m
- [90m 83 |[39m   [36mconst[39m statusLabel [33m=[39m statusOptions[33m.[39mfind(option [33m=>[39m option[33m.[39mcode [33m===[39m listing[33m.[39mstatus)[33m?[39m[33m.[39mlabel [33m?[39m[33m?[39m listing[33m.[39mstatus
- [90m 84 |[39m   [36mconst[39m cardBadges [33m=[39m [
- [90m 85 |[39m     { label[33m:[39m statusLabel[33m,[39m color[33m:[39m [33mSTATUS_BADGE_COLOR[39m[listing[33m.[39mstatus] [33m?[39m[33m?[39m [32m'gray'[39m }[33m,[39m[0m
+  80 |
+  81 |   // The listing summary: the same data mapping `ListingCard`'s list row uses (cover, location, card features).
+> 82 |   const cover = listing.images?.find(image => image.is_cover) ?? listing.images?.[0]
+     |                         ^
+  83 |   const statusLabel = statusOptions.find(option => option.code === listing.status)?.label ?? listing.status
+  84 |   const cardBadges = [
+  85 |     { label: statusLabel, color: STATUS_BADGE_COLOR[listing.status] ?? 'gray' },
 Next.js build worker exited with code: 1 and signal: null

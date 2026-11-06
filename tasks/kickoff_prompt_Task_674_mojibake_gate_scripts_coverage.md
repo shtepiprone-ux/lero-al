@@ -404,7 +404,7 @@ and `docs/backlog.md` is unchanged from its starting state.**
 5. **`docs/backlog-archive.md`** — **exactly one** added line: a new ledger row inserted **immediately after
    the table separator row**, i.e. at the TOP of the newest-first table, per `ai-behavior.md` L696 and the
    prohibition at L702. Shape: `| 2026-07-27 | <concise description> | Task 674 |
-   [sessions/2026-07-27-task674-mojibake-gate-scripts-coverage.md](sessions/2026-07-27-task674-mojibake-gate-scripts-coverage.md) |`.
+   [sessions/2026-07-27-task674-mojibake-gate-scripts-coverage.md](../docs/sessions/2026-07-27-task674-mojibake-gate-scripts-coverage.md) |`.
    Do not paste session content into the ledger (L697, L700).
 6. **Session log** — `docs/sessions/2026-07-27-task674-mojibake-gate-scripts-coverage.md`, first line exactly
    `# Session Archive: <Description> — 2026-07-27` (em dash U+2014, `ai-behavior.md` L691), containing a

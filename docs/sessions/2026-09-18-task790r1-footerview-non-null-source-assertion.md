@@ -1,6 +1,6 @@
 # Task 790 · Revision 1 — `theme.d69-18` contract check tolerates TypeScript non-null assertions
 
-**Executor:** Sonnet · **Date:** 2026-09-18 · **Kickoff:** [`Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md`](../../tasks/Sprints/Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md)
+**Executor:** Sonnet · **Date:** 2026-09-18 · **Kickoff:** [`Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md`](../../tasks/Archive/Sprint_77_kickoff_prompt_Task_790_R1_FooterView_Non_Null_Source_Assertion.md)
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Revision 1)**
 

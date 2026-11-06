@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd npx vitest run scripts/__tests__/rendered-state-census.test.ts
 
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al

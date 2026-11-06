@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_644_HowItWorksSteps_Mantine_Component_And_Story.md`
+`tasks/Archive/kickoff_prompt_Task_644_HowItWorksSteps_Mantine_Component_And_Story.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

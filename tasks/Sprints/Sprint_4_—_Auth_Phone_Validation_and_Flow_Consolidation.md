@@ -11,8 +11,8 @@
 > safe in either order — see the "Dependency / sequencing" note inside each task.
 >
 > Runnable kickoff prompts (hand these to Sonnet 4.6):
-> - `tasks/Sprints/Sprint_4_kickoff_prompt_Task_158.md`
-> - `tasks/Sprints/Sprint_4_kickoff_prompt_Task_159.md`
+> - `tasks/Archive/Sprint_4_kickoff_prompt_Task_158.md`
+> - `tasks/Archive/Sprint_4_kickoff_prompt_Task_159.md`
 
 ---
 

@@ -65,6 +65,19 @@ Sign-up (agent): the picker loses "+ add new" and its panel; the D2 note appears
 description style (one look, canonical `MantineCombobox`). Mobile: no new geometry; the note wraps under the input at
 320 px. No new component or token.
 
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/modules/auth/components/AuthSheet.tsx — the agent sign-up company picker and its note
+- Component families: form-picker-and-choice
+- Pattern IDs: form-stack
+- Standards: w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineCombobox.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): no new geometry, the note sits under the input; 640px transition unchanged
+- Mobile order: label → input → note → error
+- Required-content treatment: the note wraps under the input; no clipping
+- Story and verification: the RegisterAgent Story at 320px and on both sides of the 640px transition × sq, en, uk, it
+
 ## Acceptance criteria
 
 - AC1 SEC-926-CREATE-DENY/ALLOW in `src/modules/companies/__tests__/companyActions.security.test.ts` and

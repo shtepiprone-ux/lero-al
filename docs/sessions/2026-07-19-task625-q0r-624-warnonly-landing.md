@@ -148,7 +148,7 @@ files (zero overlap). Not a regression introduced by this task; recommend a foll
 ?? docs/sessions/2026-07-19-taskQ0R-mantine-only-ci-scope.md
 ?? scripts/lib/
 ?? scripts/mantine-migration-scope.json
-?? tasks/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md
+?? tasks/Archive/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md
 ```
 Plus this session's own new file, `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`. This is exactly
 the Q0R + 624 + R1/R2 file set the kickoff's "Files expected to change" section names — no stray file, no file

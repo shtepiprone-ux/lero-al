@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_645_Homepage_Swap_HowItWorksSteps.md`
+`tasks/Archive/kickoff_prompt_Task_645_Homepage_Swap_HowItWorksSteps.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

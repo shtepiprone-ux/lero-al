@@ -1,6 +1,6 @@
 # Task 246 — Admin can clear user-profile change history (gated + audited, per-row AND per-entity)
 
-Executor: Sonnet 4.6. Kickoff: `tasks/Epics/Epic_DD_kickoff_prompt_Task_246.md`.
+Executor: Sonnet 4.6. Kickoff: `tasks/Archive/Epic_DD_kickoff_prompt_Task_246.md`.
 
 ## Summary
 
@@ -267,7 +267,7 @@ acceptable, or does this need real RLS policies + an auth-scoped client?
 RLS on these two tables, and this was decided BEFORE this task started, not invented by the
 executor.** Evidence (no new owner approval needed — citing existing decisions):
 
-1. **The kickoff itself (`tasks/Epics/Epic_DD_kickoff_prompt_Task_246.md`, "RLS / enforcement
+1. **The kickoff itself (`tasks/Archive/Epic_DD_kickoff_prompt_Task_246.md`, "RLS / enforcement
    reality" section, lines 77–82) pre-specifies exactly this:**
    > "the clear mutation MUST run through the server action using `createAdminClient()`
    > (service role) exactly like `hardDeleteUser`. The service-role client bypasses RLS, so the
@@ -482,7 +482,7 @@ src/components/admin/AdminUserProfile.stories.tsx    NUL=0  BOM=absent (696d70 =
 | `src/stories/fixtures/admin.fixtures.ts` | Added `FIXTURE_CHANGE_LOG` and `FIXTURE_STATUS_HISTORY` (non-empty, so the new controls render in Storybook). |
 | `src/components/admin/AdminUserProfile.stories.tsx` | `sharedArgs` now uses the new fixtures + `canClearHistory: true`; `CreateMode` story also gets `canClearHistory={true}`. |
 
-**Not part of this diff:** `tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md`
+**Not part of this diff:** `tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md`
 shows as modified in `git status` but was not touched by this task — pre-existing uncommitted
 change from a prior session, left as-is.
 

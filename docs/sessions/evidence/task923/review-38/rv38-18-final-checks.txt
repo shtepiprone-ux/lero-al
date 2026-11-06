@@ -4,7 +4,7 @@ check:backlog-active — scope: docs/backlog.md, the sprint plans it names, and 
 notice (non-blocking): 19 closed sprint plan(s) still sit in tasks/Sprints/ without being named by the backlog — physical archive owed.
 ✅ check:backlog-active PASSED — docs/backlog.md holds active state only.
 exit 0
-== node scripts/check-mobile-adaptation-contract.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+== node scripts/check-mobile-adaptation-contract.mjs --files tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
 PASS  check:mobile-adaptation-contract — changed kickoff records are valid
 exit 0
 == npm run -s check:kickoff-evidence

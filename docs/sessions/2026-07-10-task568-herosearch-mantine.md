@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 568, `tasks/Sprints/Sprint_43_kickoff_prompt_Task_568_HeroSearchMantine.md`. Sprint 43
+Task 568, `tasks/Archive/Sprint_43_kickoff_prompt_Task_568_HeroSearchMantine.md`. Sprint 43
 (FiltersPanel/HeroSearch → Mantine, Epic MM Phase-2 composite). Depends on Task 567 (`FiltersPanel`
 shell → Mantine, approved). Last legacy-primitive holdout in the search stack: `HeroSearch.tsx` still
 imported `@/components/ui/button` for its 4 Buttons (sale/rent tabs, filters trigger + corner badge,

@@ -1,6 +1,6 @@
 # Task 737 — Footer social links under the bottom-nav FAB
 
-**Kickoff:** `tasks/Sprints/Sprint_54_kickoff_prompt_Task_737_FooterSocialLinks_Under_FAB.md`, with
+**Kickoff:** `tasks/Archive/Sprint_54_kickoff_prompt_Task_737_FooterSocialLinks_Under_FAB.md`, with
 `Sprint_54_Task_737_execution_contract.md` and `Sprint_54_Task_737_rule_compliance_ledger.md`.
 **Status:** `BLOCKED` — R1's live measurement contradicts the kickoff's arithmetic; no existing-token
 clearance change can close the gate without either a visible regression or reliance on

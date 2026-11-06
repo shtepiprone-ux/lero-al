@@ -395,3 +395,16 @@ Update the 919 row in `docs/backlog.md` and write the session log
 - One route: owner decisions D78-13 … D78-16 are recorded, and none is open.
 - Sequencing: starts after 857 is approved (shared files). 916 adopts this pattern afterwards. 915 no longer covers
   the six confirmations moved here.
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: the admin tables through MantineDataTableToCards (listings, users, currencies, providers, pages, reports), their bulk-delete button and the delete confirmation
+- Component families: record-list-and-data, overlay-and-disclosure
+- Pattern IDs: data-table-to-cards, record-card, overlay-adaptive, toolbar-priority
+- Standards: w3c-reflow, apple-hig-lists-tables, android-common-layouts, w3c-meaningful-sequence, w3c-focus-order, w3c-hover-focus, apple-hig-sheets, android-adapt-layouts, apple-hig-toolbars, android-layout-navigation
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineDataTableToCards.tsx, src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): rows become cards, the bulk-delete button sits right-aligned in its own row; 640px transition to the table with the button at the end of the filter row
+- Mobile order: selection checkbox → record content → edit → delete
+- Required-content treatment: record content wraps; no clipping
+- Story and verification: Mantine/Primitives/Table SelectionAndActions and the delete-confirmation Story at 320px and on both sides of the 640px transition × sq, en, uk, it

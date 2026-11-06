@@ -234,3 +234,16 @@ Update the 904 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHE
   pinned in §13.1.
 - One route only: REUSE of two inspected canonical sources. No new component or CSS.
 - GR-3b/3c/3d lines are written for both Story exports, and the owner matrix is named (O83-7).
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/app/[locale]/favorites/page.tsx — breadcrumb and page title of /favorites through ListingsPageFrame
+- Component families: structural-layout-and-feedback
+- Pattern IDs: linear-flow
+- Standards: w3c-reflow, w3c-meaningful-sequence, apple-hig-layout, android-adapt-layouts, android-layout-basics
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): title 20px, gutter 16px; 640px transition to 24px title and 24px gutter
+- Mobile order: breadcrumb → page title → favourite listings
+- Required-content treatment: breadcrumb and title wrap; no clipping
+- Story and verification: Patterns/Mantine/ListingsPageFrame (favorites composition) at 320px and on both sides of the 640px transition × sq, en, uk, it

@@ -176,12 +176,12 @@ Self-validation: `scope=docs+tasks only · diff=no src/messages/scripts/supabase
 | File | Rationale |
 |------|-----------|
 | `tasks/Sprints/Sprint_28_—_Admin_Mobile_Responsive_and_Status_Workflow_Foundation.md` | NEW — Sprint 28 plan: scope, run order, owner gates, exit criteria, out-of-scope |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_327.md` | NEW — Sonnet kickoff: owner evidence-driven mobile QA matrix + Task 303 severity supersession (audit-only) |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_328.md` | NEW — Sonnet kickoff: canonical `StatusChangeControl` spec + per-surface assignment (spec-only) |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_306.md` | NEW — Sonnet kickoff: `AdminPageShell` + `AdminTable` + `AdminCardList` primitives + listings pilot |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_307.md` | NEW — Sonnet kickoff: `StatusChangeControl` + `StatusChangeHistory` primitive + inquiries pilot |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_308.md` | NEW — Sonnet kickoff: migrate `/admin/listings` + `/admin/users` |
-| `tasks/Sprints/Sprint_28_kickoff_prompt_Task_309.md` | NEW — Sonnet kickoff: migrate `/admin/support` + `/admin/inquiries/{support,sales}` |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_327.md` | NEW — Sonnet kickoff: owner evidence-driven mobile QA matrix + Task 303 severity supersession (audit-only) |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_328.md` | NEW — Sonnet kickoff: canonical `StatusChangeControl` spec + per-surface assignment (spec-only) |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_306.md` | NEW — Sonnet kickoff: `AdminPageShell` + `AdminTable` + `AdminCardList` primitives + listings pilot |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_307.md` | NEW — Sonnet kickoff: `StatusChangeControl` + `StatusChangeHistory` primitive + inquiries pilot |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_308.md` | NEW — Sonnet kickoff: migrate `/admin/listings` + `/admin/users` |
+| `tasks/Archive/Sprint_28_kickoff_prompt_Task_309.md` | NEW — Sonnet kickoff: migrate `/admin/support` + `/admin/inquiries/{support,sales}` |
 | `tasks/Epics/Epic_HH_Admin_UX_System.md` | EDIT — Phase status table updated (Phase 2-3 ACTIVATED under Sprint 28; Phase 4-5 DEFERRED); Sprint 28 emergency activation section + owner Decisions 1-3 added |
 | `docs/backlog.md` | EDIT — Last-session block updated (Sprint 28 FORMED + 326A QA narrowed + 326B BLOCKED); Next-Immediate-Tasks "Last task number" updated to 328; Sprint 28 row added to Active product backlog table; pre-written kickoffs list updated |
 | `docs/sessions/2026-05-30-sprint-28-formation-orchestration.md` | NEW — this orchestrator session log |
@@ -192,12 +192,12 @@ NO commits emitted in this session. Per Task 264 + orchestrator rule, commits ar
 
 ```
 git add tasks/Sprints/Sprint_28_—_Admin_Mobile_Responsive_and_Status_Workflow_Foundation.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_327.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_328.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_306.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_307.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_308.md ^
-        tasks/Sprints/Sprint_28_kickoff_prompt_Task_309.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_327.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_328.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_306.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_307.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_308.md ^
+        tasks/Archive/Sprint_28_kickoff_prompt_Task_309.md ^
         tasks/Epics/Epic_HH_Admin_UX_System.md ^
         docs/backlog.md ^
         docs/sessions/2026-05-30-sprint-28-formation-orchestration.md
@@ -209,7 +209,7 @@ git commit -m "docs(Sprint28): form Admin Mobile Responsive + StatusChangeContro
 Single-line PowerShell:
 
 ```
-git add tasks/Sprints/Sprint_28_—_Admin_Mobile_Responsive_and_Status_Workflow_Foundation.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_327.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_328.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_306.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_307.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_308.md tasks/Sprints/Sprint_28_kickoff_prompt_Task_309.md tasks/Epics/Epic_HH_Admin_UX_System.md docs/backlog.md docs/sessions/2026-05-30-sprint-28-formation-orchestration.md
+git add tasks/Sprints/Sprint_28_—_Admin_Mobile_Responsive_and_Status_Workflow_Foundation.md tasks/Archive/Sprint_28_kickoff_prompt_Task_327.md tasks/Archive/Sprint_28_kickoff_prompt_Task_328.md tasks/Archive/Sprint_28_kickoff_prompt_Task_306.md tasks/Archive/Sprint_28_kickoff_prompt_Task_307.md tasks/Archive/Sprint_28_kickoff_prompt_Task_308.md tasks/Archive/Sprint_28_kickoff_prompt_Task_309.md tasks/Epics/Epic_HH_Admin_UX_System.md docs/backlog.md docs/sessions/2026-05-30-sprint-28-formation-orchestration.md
 git commit -m "docs(Sprint28): form Admin Mobile Responsive + StatusChangeControl Foundation (6 kickoffs); supersede Task 303 severity; block 326B"
 ```
 
@@ -217,8 +217,8 @@ Owner runs in PowerShell at C:\Claude_Code_Projects\lero-al when ready.
 
 ## 11. Next actions (Sonnet — when owner releases)
 
-1. Sonnet picks up `tasks/Sprints/Sprint_28_kickoff_prompt_Task_327.md` (parallel-safe with 328).
-2. Sonnet picks up `tasks/Sprints/Sprint_28_kickoff_prompt_Task_328.md` (parallel-safe with 327).
+1. Sonnet picks up `tasks/Archive/Sprint_28_kickoff_prompt_Task_327.md` (parallel-safe with 328).
+2. Sonnet picks up `tasks/Archive/Sprint_28_kickoff_prompt_Task_328.md` (parallel-safe with 327).
 3. Owner gate G1 + G2 after both ship (single review batch).
 4. Sonnet picks up 306 ‖ 307 after owner sign-off.
 5. Owner gate G3 + G4.

@@ -5,7 +5,7 @@
 import fs from 'node:fs'
 
 const EV = 'docs/sessions/evidence/task923/revision-44'
-const K = 'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
+const K = 'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
 const edit = (f, fn) => {
   const raw = fs.readFileSync(f, 'utf8')
   const eol = raw.includes('\r\n') ? '\r\n' : '\n'

@@ -3,7 +3,7 @@
 **Date:** 2026-06-26  
 **Executor:** Sonnet 4.6  
 **Status:** ✅ IMPLEMENTED (rev 2 — owner rejection fix applied) — awaiting orchestrator diff-review  
-**Kickoff:** `tasks/Sprints/Sprint_37_kickoff_prompt_Task_488_Table.md`
+**Kickoff:** `tasks/Archive/Sprint_37_kickoff_prompt_Task_488_Table.md`
 
 ---
 

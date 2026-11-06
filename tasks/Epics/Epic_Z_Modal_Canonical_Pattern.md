@@ -98,7 +98,7 @@ chat): "модальні вікна на всю ширину екрану, ви�
 captured in kickoff: apply universally (site + admin, including bespoke `div.fixed.inset-0`); active
 at `<lg` (<1024px); centered at `lg+`.
 
-**Kickoff:** `tasks/Epics/Epic_Z_kickoff_prompt_Task_329.md` (the literal, scoped Sonnet prompt —
+**Kickoff:** `tasks/Archive/Epic_Z_kickoff_prompt_Task_329.md` (the literal, scoped Sonnet prompt —
 read it as the single source of truth for this task).
 
 **Sprint:** 29 — `tasks/Sprints/Sprint_29_—_Modal_Pattern_and_Sprint_27_Closure.md`. Runs after

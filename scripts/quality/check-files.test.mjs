@@ -4,7 +4,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { checkFile, brokenLinks, stalePaths, brokenScripts, setScripts, inRepository, kickoffFindings, acceptanceCriteria, AUTOMATED_TEST, sqlStructure, checkPowerShell, checkShell, isShellScript, KICKOFF_SECTIONS } from './check-files.mjs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { readRegularFile, checkFile,brokenLinks, stalePaths, brokenScripts, setScripts, inRepository, kickoffFindings, acceptanceCriteria, AUTOMATED_TEST, sqlStructure, checkPowerShell, checkShell, isShellScript, KICKOFF_SECTIONS } from './check-files.mjs';
 
 const ch = (cp) => String.fromCodePoint(cp);
 const rules = (rel, text, opts) => checkFile(rel, Buffer.isBuffer(text) ? text : Buffer.from(text, 'utf8'), opts).map((f) => f.rule);
@@ -184,6 +186,19 @@ test('existence means the repository, not the disk: an ignored local file does n
   assert.equal(inRepository('.env.local'), false);
   assert.equal(inRepository('node_modules/typescript/package.json'), false);
   assert.equal(inRepository('scripts/quality/no-such-file.mjs'), false);
+});
+
+test('a file is read through one descriptor: a regular file gives its bytes, a folder or a missing path gives null', () => {
+  const here = fileURLToPath(new URL('./check-files.mjs', import.meta.url));
+  assert.deepEqual(readRegularFile(here), readFileSync(here));
+  assert.equal(readRegularFile(path.dirname(here)), null);
+  assert.equal(readRegularFile(path.join(path.dirname(here), 'no-such-file.mjs')), null);
+});
+
+test('the kickoff template includes the mobile adaptation record (GR-3j)', () => {
+  const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  assert.ok(KICKOFF_SECTIONS.indexOf('## Mobile adaptation record') === KICKOFF_SECTIONS.indexOf('## UI') + 1);
+  assert.ok(kickoffFindings(good.replace('## Mobile adaptation record\n', '')).some((f) => f.message.includes('Mobile adaptation record')));
 });
 
 test('shell scripts (by extension or shebang) are parsed with bash -n', async () => {

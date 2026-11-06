@@ -3,7 +3,7 @@
 - **Task number:** 625
 - **Epic:** MM — Mantine/TailAdmin Restyle (`tasks/Epics/Epic_MM_Mantine_UI_Migration.md`)
 - **Sprint:** 45 (Mantine-migration governance tail)
-- **Parents / consolidates:** Task Q0R (`tasks/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md`, reviewed APPROVED WITH NOTES) and Task 624 (`tasks/kickoff_prompt_Task_624_LocaleLeak_MantineAllowlist.md`, reviewed NEEDS REVISION — only because it could not be committed in isolation from Q0R).
+- **Parents / consolidates:** Task Q0R (`tasks/Archive/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md`, reviewed APPROVED WITH NOTES) and Task 624 (`tasks/Archive/kickoff_prompt_Task_624_LocaleLeak_MantineAllowlist.md`, reviewed NEEDS REVISION — only because it could not be committed in isolation from Q0R).
 
 ## Mode and task type
 

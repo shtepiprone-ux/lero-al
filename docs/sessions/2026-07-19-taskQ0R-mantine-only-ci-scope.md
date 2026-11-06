@@ -2,7 +2,7 @@
 
 **Status: PARTIALLY IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW**
 
-Everything in the kickoff (`tasks/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md`) is implemented and proven
+Everything in the kickoff (`tasks/Archive/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md`) is implemented and proven
 (Q1–Q5, Q7–Q9). Two items surfaced during implementation that the kickoff did not anticipate and that require an
 owner/orchestrator decision before this is mergeable as-is: (1) wiring `check:locale-leak --mantine-only` as
 CI-blocking (Q6) currently fails the job — 97 pre-existing, un-allowlisted locale leaks exist across 18 canonical

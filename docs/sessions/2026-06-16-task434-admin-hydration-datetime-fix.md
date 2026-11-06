@@ -179,7 +179,7 @@ the hydration-affected route.
 | AC2 — Zero hydration warnings on `/admin/users/[id]` all four locales | **PASS** — server-preformat guarantees byte-identical SSR=CSR by construction; Playwright parity test: all 4 locales MATCH |
 | AC3 — Mechanism stated | **PASS** — server-preformat: `page.tsx` calls `formatDateTime`/`formatDate` in Node.js; client renders `changeLogDates?.[entry.id]` verbatim, no `Intl` call on client |
 | AC4 — sq/en/uk/it locale-correct | **PASS** — Node.js v22 full-ICU confirmed; all 4 locales produce locale-correct format per transcript above |
-| AC5 — `/admin/users/[id]` in Task 436 hydration-gate coverage | **PASS** — already present in `tasks/kickoff_prompt_Task_436_RegressionProtectionGuards.md` line 72 |
+| AC5 — `/admin/users/[id]` in Task 436 hydration-gate coverage | **PASS** — already present in `tasks/Archive/kickoff_prompt_Task_436_RegressionProtectionGuards.md` line 72 |
 | AC6 — `tsc=0`; integrity green; Files Changed table; no mutating git; OTel untouched | **PASS** — tsc=0 confirmed; NUL=0 all three files; not truncated; no git commands run; OTel untouched |
 
 ---

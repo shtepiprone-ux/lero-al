@@ -1,6 +1,6 @@
 # Task 706 — `HeaderView` de-hybrid: Mantine + colocated CSS module, zero rendered delta, 28 → 23 tokens
 
-**Task path:** `tasks/Sprints/Sprint_47_kickoff_prompt_Task_706_HeaderView_DeHybrid.md`
+**Task path:** `tasks/Archive/Sprint_47_kickoff_prompt_Task_706_HeaderView_DeHybrid.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 **Branch:** `task/q0-ci-rendered-locale-split`
 

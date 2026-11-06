@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 566, `tasks/Sprints/Sprint_43_kickoff_prompt_Task_566_FilterLeafComponentsMantine.md`. Sprint 43
+Task 566, `tasks/Archive/Sprint_43_kickoff_prompt_Task_566_FilterLeafComponentsMantine.md`. Sprint 43
 (FiltersPanel/HeroSearch → Mantine, Epic MM Phase-2 composite migration). The three leaf filter
 sub-components are the last `@/components/ui/*` primitives inside the filter tree — Task 567
 (FiltersPanel shell) consumes them, so they migrate first. Presentational swap only, mirroring the

@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_636_AuthSheet_Slice2c_PasswordInput_MantineMigration.md`
+`tasks/Archive/kickoff_prompt_Task_636_AuthSheet_Slice2c_PasswordInput_MantineMigration.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

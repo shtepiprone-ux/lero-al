@@ -1,6 +1,6 @@
 # Task 520 — GLOBAL corrective: Mantine overlay content-gutter + canonical button font (Task 519 rework)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_520_ModalContentGutterFix.md`. Origin: owner rendered `Mantine/Primitives/Modal → Default` at 275px and found Task 519's code review missed two P0 style defects. This task fixes both GLOBALLY (Note-14 global-change rule), not by patching one story.
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_520_ModalContentGutterFix.md`. Origin: owner rendered `Mantine/Primitives/Modal → Default` at 275px and found Task 519's code review missed two P0 style defects. This task fixes both GLOBALLY (Note-14 global-change rule), not by patching one story.
 
 ## Summary of the two defects + fixes
 

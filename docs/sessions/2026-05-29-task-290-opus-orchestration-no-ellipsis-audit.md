@@ -74,7 +74,7 @@ the PowerShell and Git-Bash commands to scan `src` only, preserving the owner's 
 
 | File | Change | Rationale |
 |---|---|---|
-| `tasks/Sprints/Sprint_17_kickoff_prompt_Task_290.md` | NEW | Full project-wide no-ellipsis audit kickoff (audit commands, classification, fix rules, audit matrix, AC, fail conditions, validation). |
+| `tasks/Archive/Sprint_17_kickoff_prompt_Task_290.md` | NEW | Full project-wide no-ellipsis audit kickoff (audit commands, classification, fix rules, audit matrix, AC, fail conditions, validation). |
 | `docs/backlog.md` | Added Task 290 archive row | Task tracking + traceability. |
 | `docs/sessions/2026-05-29-task-290-opus-orchestration-no-ellipsis-audit.md` | NEW | This session log. |
 
@@ -88,6 +88,6 @@ No production code modified by Opus (orchestrator role).
 > `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add tasks/Sprints/Sprint_17_kickoff_prompt_Task_290.md docs/backlog.md "docs/sessions/2026-05-29-task-290-opus-orchestration-no-ellipsis-audit.md"
+git add tasks/Archive/Sprint_17_kickoff_prompt_Task_290.md docs/backlog.md "docs/sessions/2026-05-29-task-290-opus-orchestration-no-ellipsis-audit.md"
 git commit -m "docs(Task290): project-wide no-ellipsis UX audit kickoff (wrap localized UI text instead of truncating)"
 ```

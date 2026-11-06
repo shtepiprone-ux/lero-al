@@ -125,7 +125,7 @@ expected — only grants/policies changed).
 
 | File | Change | Rationale |
 |---|---|---|
-| `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` | NEW | Full corrective Sonnet 4.6 kickoff (contract, AC, privacy invariants, validation + grep checks, SQL decision, control-preservation; page.tsx integrity downgraded to standard build check after truncation flag retracted). |
+| `tasks/Archive/Sprint_17_kickoff_prompt_Task_289.md` | NEW | Full corrective Sonnet 4.6 kickoff (contract, AC, privacy invariants, validation + grep checks, SQL decision, control-preservation; page.tsx integrity downgraded to standard build check after truncation flag retracted). |
 | `docs/backlog.md` | Added Task 289 archive row; annotated Task 277 row as over-scoped/corrected | Task closure tracking + traceability. |
 | `docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md` | NEW | This session log. |
 | `scripts/task-289-listing-contact-events-anon-revoke.sql` | NEW | Corrective migration — drops `events_insert_anon` + revokes anon SELECT (owner confirmed Task 277 SQL already live). Created at owner's explicit request. |
@@ -153,7 +153,7 @@ migration explicitly requested by the owner.
 > `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md docs/backlog.md "docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md" scripts/task-289-listing-contact-events-anon-revoke.sql
+git add tasks/Archive/Sprint_17_kickoff_prompt_Task_289.md docs/backlog.md "docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md" scripts/task-289-listing-contact-events-anon-revoke.sql
 git commit -m "docs(Task289): corrective kickoff (WhatsApp CTA authenticated-only) + anon-revoke migration for listing_contact_events"
 ```
 

@@ -1,7 +1,7 @@
 # Task 923 - the rendered state census gate (session log)
 
 Executor: Sonnet, 2026-10-10, win32, Node v22.22.3, Playwright ^1.60 (repo dependency). Kickoff:
-`tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`. Evidence: `docs/sessions/evidence/task923/`.
+`tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`. Evidence: `docs/sessions/evidence/task923/`.
 Status: **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** (the gate itself exits 1 on the first full run, as the kickoff expects:
 R9 "the report is the deliverable").
 
@@ -4029,7 +4029,7 @@ Then §67's order continues.
 
 ## Task 927 Amendment 4 executor report
 
-Executor: Sonnet, 2026-10-23. Kickoff `tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md` §15 (task hash `8b31fb5da7defe9eb4403bd4106d83de7e0bbb5fc73720df4c64072a1c881dc0`, not edited). Contract: its adjacent `.security.json`, `ready`, stage `planned` → `implemented`. Root `C:\Claude_Code_Projects\lero-al`. Evidence: `docs/sessions/evidence/task927/a4/` (every transcript records platform win32 10.0.26300, Node v22.22.3, cwd, command, output, exit code). No commit, no hand-written SQL.
+Executor: Sonnet, 2026-10-23. Kickoff `tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md` §15 (task hash `8b31fb5da7defe9eb4403bd4106d83de7e0bbb5fc73720df4c64072a1c881dc0`, not edited). Contract: its adjacent `.security.json`, `ready`, stage `planned` → `implemented`. Root `C:\Claude_Code_Projects\lero-al`. Evidence: `docs/sessions/evidence/task927/a4/` (every transcript records platform win32 10.0.26300, Node v22.22.3, cwd, command, output, exit code). No commit, no hand-written SQL.
 
 **Before the first write.** Reads of §1, §7, §13, §15, C100–C107, D2, D11, the slot, its container, `Modal.stories.tsx`, the `~delete-google` registry row and `a4-02-centre-probe.mjs`; the GR-0, UI-contract, mobile-adaptation and Storybook-proof receipts through `emit-phase-receipt.ps1`; `cli.mjs receipt` (exit 0); `a4-00-before-hashes.txt`.
 
@@ -4252,7 +4252,7 @@ Kickoff §68; rows C1228–C1256, D85 and D86. Record: `docs/sessions/evidence/t
 
 ## R139 executor report (2026-10-24): kickoff §68 (Revision 42)
 
-Executor: Sonnet, 2026-10-24. Kickoff `tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md` §68, not edited. Contract: `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`, `ready`, 333 paths, stage left `planned` (sha256 `3f1b2e51b58b4464498e37b0ef1738b774d630219c7123c66ffc548e85e03dc4`, unchanged). Root `C:\Claude_Code_Projects\lero-al`. Evidence: `docs/sessions/evidence/task923/r42-*` (every transcript has platform, Node v22.22.3, cwd, command, output and exit code; written by the helper `r42-run.mjs`).
+Executor: Sonnet, 2026-10-24. Kickoff `tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md` §68, not edited. Contract: `tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json`, `ready`, 333 paths, stage left `planned` (sha256 `3f1b2e51b58b4464498e37b0ef1738b774d630219c7123c66ffc548e85e03dc4`, unchanged). Root `C:\Claude_Code_Projects\lero-al`. Evidence: `docs/sessions/evidence/task923/r42-*` (every transcript has platform, Node v22.22.3, cwd, command, output and exit code; written by the helper `r42-run.mjs`).
 
 **Before the first write.** Reads of `role-boundaries`, `execute/01-03`, `workflow-gates`, the D8_D9 record, `security-testing` and its three companions, the five UI shared rules, §68, rows C1228–C1256, D85 and D86, the two pages, `AdminPageHeader.tsx` and its Story, `MantineDashboardHeader.tsx`, `staffPage.security.test.ts`, `AdminListingsTable.smoke.test.tsx` and the probe `rev42-04`; `cli.mjs receipt` (exit 0); the CanonicalReuse (EXTEND), UiContract, MobileAdaptation and StorybookProof receipts through `emit-phase-receipt.ps1`; `r42-00-sha256-before.txt` written before the first edit.
 
@@ -5484,7 +5484,7 @@ Sonnet's report is the section "R149 executor report" above.
 
 ## Task 927 Amendment 5 executor report
 
-Executor: Sonnet, 2026-10-25. Kickoff `tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md` §16 (task hash `390ca54c94caaac01a9e1b5386767b237822bb235337e1c2296acdafd6b237f6`, not edited; Opus had corrected the MobileAdaptation receipt text of §16.4 before this run). Contract: its adjacent `.security.json` (`ready`, 43 scope paths, 36 cases), now at stage `implemented`. Evidence: `docs/sessions/evidence/task927/a5/`.
+Executor: Sonnet, 2026-10-25. Kickoff `tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md` §16 (task hash `390ca54c94caaac01a9e1b5386767b237822bb235337e1c2296acdafd6b237f6`, not edited; Opus had corrected the MobileAdaptation receipt text of §16.4 before this run). Contract: its adjacent `.security.json` (`ready`, 43 scope paths, 36 cases), now at stage `implemented`. Evidence: `docs/sessions/evidence/task927/a5/`.
 
 **Before the first write.** Reads of §1, §4, §7, §13, §15, §16 (all 733 lines of the corrected kickoff), rows C108–C166 and D12–D16, `GoogleSignInButton.tsx`, `GoogleSignInSlot.tsx`, `googleIdentity.ts`, `AuthSheet.tsx`, `Header.tsx`, `ProfileTab.tsx`, `AuthSheet.stories.tsx`, `Modal.stories.tsx`, `AuthSheet.google.security.test.tsx`, `Header.signOut.test.tsx`, `ProfileTab.deletePassword.security.test.tsx`; `cli.mjs receipt` for the contract; the CanonicalReuse, UiContract and MobileAdaptation receipts with the text of §16.4; the StorybookProof receipt before each of the two Story files; `a5-00-before-hashes.txt` (43 scope paths, six absent) and the base run `a5-01-base-*` before any write.
 

@@ -1,6 +1,6 @@
 # Task 673 — `FooterView` de-hybrid: Mantine primitives + colocated CSS module
 
-**Task path:** `tasks/Sprints/Sprint_47_kickoff_prompt_Task_673_FooterView_DeHybrid.md`
+**Task path:** `tasks/Archive/Sprint_47_kickoff_prompt_Task_673_FooterView_DeHybrid.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 **Branch:** `task/q0-ci-rendered-locale-split`
 

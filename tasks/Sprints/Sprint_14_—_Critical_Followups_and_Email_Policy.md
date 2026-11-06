@@ -14,11 +14,11 @@ Tasks: **250, 251, 252, 262, 263, 244, 242, 248** (8 tasks)
 
 | # | Task | Epic | Owner-action dependency | Source kickoff |
 |---|---|---|---|---|
-| 250 | R.3a — `role_permissions` hardening + `role_permission_events` audit log | R (Admin Panel) | **OWNER SQL required** (supersedes Task 197 SQL) | [`Epic_R_kickoff_prompt_Task_250.md`](../Epics/Epic_R_kickoff_prompt_Task_250.md) + Sprint 14 delta |
-| 262 | X.3 — `market_type` DB column audit + `Listing` type alignment | X (Domain Type Integrity) | **OWNER SQL** may be required (depends on audit) | [`Epic_X_kickoff_prompt_Task_262.md`](../Epics/Epic_X_kickoff_prompt_Task_262.md) — already compliant |
-| 263 | T.7 — Listing-detail contact card RLS cleanup (revert Task 258 admin-client bypass) | T (Global UX Polish) | **OWNER SQL required** (RLS policy) | [`Epic_T_kickoff_prompt_Task_263.md`](../Epics/Epic_T_kickoff_prompt_Task_263.md) — already compliant |
-| 251 | GG.1 — Albanian-only outbound email policy | GG (Email Policy) | Owner confirms FROM/templates locale | [`Epic_GG_kickoff_prompt_Task_251.md`](../Epics/Epic_GG_kickoff_prompt_Task_251.md) + Sprint 14 delta |
-| 252 | V.3 — Sales inbox split (admin reply routing) | V (Contacts & Inquiries) | Depends on 251 + Task 256 (done) | [`Epic_V_kickoff_prompt_Task_252.md`](../Epics/Epic_V_kickoff_prompt_Task_252.md) + Sprint 14 delta |
+| 250 | R.3a — `role_permissions` hardening + `role_permission_events` audit log | R (Admin Panel) | **OWNER SQL required** (supersedes Task 197 SQL) | [`Epic_R_kickoff_prompt_Task_250.md`](../Archive/Epic_R_kickoff_prompt_Task_250.md) + Sprint 14 delta |
+| 262 | X.3 — `market_type` DB column audit + `Listing` type alignment | X (Domain Type Integrity) | **OWNER SQL** may be required (depends on audit) | [`Epic_X_kickoff_prompt_Task_262.md`](../Archive/Epic_X_kickoff_prompt_Task_262.md) — already compliant |
+| 263 | T.7 — Listing-detail contact card RLS cleanup (revert Task 258 admin-client bypass) | T (Global UX Polish) | **OWNER SQL required** (RLS policy) | [`Epic_T_kickoff_prompt_Task_263.md`](../Archive/Epic_T_kickoff_prompt_Task_263.md) — already compliant |
+| 251 | GG.1 — Albanian-only outbound email policy | GG (Email Policy) | Owner confirms FROM/templates locale | [`Epic_GG_kickoff_prompt_Task_251.md`](../Archive/Epic_GG_kickoff_prompt_Task_251.md) + Sprint 14 delta |
+| 252 | V.3 — Sales inbox split (admin reply routing) | V (Contacts & Inquiries) | Depends on 251 + Task 256 (done) | [`Epic_V_kickoff_prompt_Task_252.md`](../Archive/Epic_V_kickoff_prompt_Task_252.md) + Sprint 14 delta |
 | 244 | CC.1 — Phone Combobox placeholder 9 digits across project | CC (Combobox v2) | None | Sprint 14 delta — replaces Sprint 12 kickoff |
 | 242 | BB.1 — Listing report button broken on detail page | BB (Listing Inquiries) | None | Sprint 14 delta — replaces Sprint 12 kickoff |
 | 248 | FF.1 — Header reactivity on profile name change | FF (UX Reactivity) | None | Sprint 14 delta — replaces Sprint 12 kickoff |

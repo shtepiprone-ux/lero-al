@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_633_AuthSheet_ShellMigration_Sheet_to_MantineDrawer.md`
+`tasks/Archive/kickoff_prompt_Task_633_AuthSheet_ShellMigration_Sheet_to_MantineDrawer.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

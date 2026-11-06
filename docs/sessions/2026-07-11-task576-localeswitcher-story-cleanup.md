@@ -1,6 +1,6 @@
 # Task 576 — `LocaleSwitcher` Mantine story + inert-prop cleanup + restore Admin QA evidence
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_576_LocaleSwitcherStoryAndCleanup.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_576_LocaleSwitcherStoryAndCleanup.md`.
 Plan: `tasks/Sprints/Sprint_44_Header_Mantine_Primitives.md`. Depends on Task 575 (landed).
 
 ## Why

@@ -1,7 +1,8 @@
 # Kickoff template (at most 200 lines)
 
 `scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>` and the
-200-line limit for every kickoff from Sprint 93 on.
+200-line limit for every kickoff from Sprint 93 on. A closed task's kickoff moves to `tasks/Archive/`; every kickoff
+outside it is an open task's and carries a complete mobile adaptation record.
 
 ```markdown
 # Task <n> — <outcome in plain words>
@@ -23,6 +24,12 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 ## UI
 "No visible change" — or the canonical owner, token owner, direct Story and mobile treatment
 (`.claude/rules/shared/*.md`).
+
+## Mobile adaptation record
+- Scope: none
+(For visible work: `Scope: visible` and every field of `.claude/rules/shared/mobile-adaptation-contract.md`; the IDs come
+from `scripts/mobile-adaptation-patterns.json`. `scripts/check-mobile-adaptation-contract.mjs` checks every kickoff
+outside `tasks/Archive/`.)
 
 ## Acceptance criteria
 - AC1 <observable result> — test: <test file, Story with a play function, or `command` that exits non-zero on failure>

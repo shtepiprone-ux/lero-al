@@ -6,7 +6,7 @@ command: node docs/sessions/evidence/task927/a5/a5-00-hashes.mjs docs/sessions/e
 date: 2026-10-25T09:16:07.267Z
 scope paths in the contract: 43
 
-390ca54c94caaac01a9e1b5386767b237822bb235337e1c2296acdafd6b237f6  tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+390ca54c94caaac01a9e1b5386767b237822bb235337e1c2296acdafd6b237f6  tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
 f1d96dcec45d59191ff488a0d82bb037e3ffbc2aaf337832107c4c57a6765a9c  src/lib/auth/browser.ts
 4e4a7616a0efcfac09fa3ba707089b318953bfa5650ece39d612592bda2f5069  src/lib/auth/googleIdentity.ts
 9e4b716f47b5fa83956ff894b1190120291b783a78e6f8b4fc4d985bd315d0ab  src/components/auth/GoogleSignInButton.tsx

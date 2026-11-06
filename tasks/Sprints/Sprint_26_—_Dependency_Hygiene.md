@@ -17,7 +17,7 @@ caused by version mismatch (3.0.1 vs 2.0.6) pulled in by different transitive de
 
 ### Task 325 — Turbopack `import-in-the-middle` version-mismatch warning [LOW]
 
-- Kickoff: [`Sprint_26_kickoff_prompt_Task_325.md`](Sprint_26_kickoff_prompt_Task_325.md)
+- Kickoff: [`Sprint_26_kickoff_prompt_Task_325.md`](../Archive/Sprint_26_kickoff_prompt_Task_325.md)
 - Type: chore (dependency hygiene / dev-experience polish)
 - Files (option-dependent): `docs/dependencies.md` (extend) + optional `package.json` (overrides entry if option B) + `package-lock.json` (regen if B/C) + session log + backlog.
 - Investigation outcomes:

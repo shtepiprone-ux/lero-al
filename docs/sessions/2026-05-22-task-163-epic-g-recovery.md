@@ -53,9 +53,9 @@ governance:components    ✅ PASS
 | `CLAUDE.md` | Orchestrator — AI operating model update |
 | `docs/orchestrator-role.md` | Orchestrator — new doc |
 | `tasks/Epics/Epic_G_Recently_Viewed_Listings.md` | Orchestrator — REOPENED status |
-| `tasks/Epics/Epic_G_kickoff_prompt_Task_163.md` | Orchestrator — P0 kickoff |
-| `tasks/Epics/Epic_G_kickoff_prompt_Task_164.md` | Orchestrator — P1 kickoff |
-| `tasks/Epics/Epic_G_kickoff_prompts.md` | Original kickoff prompts |
+| `tasks/Archive/Epic_G_kickoff_prompt_Task_163.md` | Orchestrator — P0 kickoff |
+| `tasks/Archive/Epic_G_kickoff_prompt_Task_164.md` | Orchestrator — P1 kickoff |
+| `tasks/Archive/Epic_G_kickoff_prompts.md` | Original kickoff prompts |
 | `tasks/Epics/Epic_H/I/J/L_kickoff_prompts.md` | Pre-existing untracked kickoff files |
 | `docs/sessions/2026-05-22-task-139-g2-recently-viewed-ui.md` | Session log for G.2 (was untracked) |
 | `src/modules/listings/lib/recentlyViewedConstants.ts` | **New** — constants extracted from `'use server'` file (build fix) |

@@ -6,7 +6,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 const root = path.resolve(process.argv[2] ?? '.')
-const KICKOFF = 'tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md'
+const KICKOFF = 'tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md'
 const out = [`# Task 927 Amendment 5 MobileAdaptation receipt check (Opus), ${new Date().toISOString()}, ${process.platform}, node ${process.version}, cwd ${root}`]
 const kickoff = fs.readFileSync(path.join(root, KICKOFF), 'utf8').replace(/\r\n/g, '\n')
 const section = kickoff.slice(kickoff.indexOf('### 16.4 Execution preconditions'))

@@ -1,6 +1,6 @@
 # Task 524 — Canonical responsive Tooltip: `MantineTooltip` (Batch C P1.22 — LAST Batch C overlay)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_524_TooltipBottomSheet.md`. Final Batch C overlay after Popover (513) · DropdownMenu (515) · NavigationMenu (518) · Modal (519) · Drawer (523).
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_524_TooltipBottomSheet.md`. Final Batch C overlay after Popover (513) · DropdownMenu (515) · NavigationMenu (518) · Modal (519) · Drawer (523).
 
 ## §6k chrome extraction (blocker resolved)
 

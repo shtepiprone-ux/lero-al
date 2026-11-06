@@ -10,7 +10,7 @@
 // branch the same reply creates first (`git switch -c` / `git checkout -b`), and never main/master. A merge is allowed only as `gh pr merge <number> --squash`, never with --admin, and only when the PR
 // targets main, is open, and its `CI Required` check concluded SUCCESS at the moment of the reply.
 
-import { readFileSync, existsSync, statSync } from 'node:fs';
+import { readFileSync, openSync, fstatSync, closeSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,13 +23,30 @@ export function commands(text) {
   const found = { push: [], merge: [], wrapped: [], created: [] };
   for (const line of String(text).split(/\r?\n/)) {
     for (const m of line.matchAll(/\bgit(?:\.exe)?\s+(?:switch\s+(?:-c|--create)|checkout\s+-b)\s+([^\s`'";|&]+)/gi)) found.created.push(m[1]);
-    for (const m of line.matchAll(/\bgit(?:\.exe)?\s+((?:-c\s+\S+\s+|-C\s+\S+\s+)*)push\b([^`|;&\r\n]*)/gi)) {
-      found.push.push({ prefix: m[1].trim(), args: m[2].trim() });
-    }
+    for (const p of gitPushes(line)) found.push.push(p);
     for (const m of line.matchAll(/\bgh(?:\.exe)?\s+pr\s+merge\b([^`|;&\r\n]*)/gi)) found.merge.push({ args: m[1].trim() });
     if (/\b(?:node|python\d*|powershell|pwsh|cmd|bash|sh)(?:\.exe)?\s[^\r\n`]*\bgit\b[^\r\n`]*\bpush\b/i.test(line)) found.wrapped.push(line.trim());
   }
   return found;
+}
+
+/**
+ * `git [-c k=v | -C dir]... push <args>` in one line, read word by word. A nested-quantifier regex over the options
+ * backtracks exponentially on a crafted line (CodeQL js/redos, 2026-11-06); this walk is linear.
+ */
+export function gitPushes(line) {
+  const out = [];
+  for (const m of line.matchAll(/\bgit(?:\.exe)?(?=\s)/gi)) {
+    const rest = line.slice(m.index + m[0].length);
+    const segment = rest.split(/[`|;&\r\n]/, 1)[0];
+    const tokens = segment.trim().split(/\s+/).filter(Boolean);
+    const prefix = [];
+    let i = 0;
+    while (i + 1 < tokens.length && (tokens[i] === '-c' || tokens[i] === '-C')) { prefix.push(tokens[i], tokens[i + 1]); i += 2; }
+    if (tokens[i]?.toLowerCase() !== 'push') continue;
+    out.push({ prefix: prefix.join(' '), args: tokens.slice(i + 1).join(' ') });
+  }
+  return out;
 }
 
 const words = (s) => (String(s).match(/"[^"]*"|'[^']*'|\S+/g) ?? []).map((w) => w.replace(/^["']|["']$/g, '').replace(/[.,]+$/, ''));
@@ -92,9 +109,22 @@ export function evaluate(reply, env) {
 function latestReply(event) {
   if (typeof event.last_assistant_message === 'string') return event.last_assistant_message;
   const t = event.transcript_path;
-  if (typeof t !== 'string' || !existsSync(t) || statSync(t).size > 64 * 1024 * 1024) throw new Error('the reply is unavailable to the guard');
+  if (typeof t !== 'string') throw new Error('the reply is unavailable to the guard');
+  // One open file descriptor for the size check and the read, so the file cannot change between them
+  // (CodeQL js/file-system-race).
+  let text;
+  let fd;
+  try {
+    fd = openSync(t, 'r');
+    if (fstatSync(fd).size > 64 * 1024 * 1024) throw new Error('too large');
+    text = readFileSync(fd, 'utf8');
+  } catch {
+    throw new Error('the reply is unavailable to the guard');
+  } finally {
+    if (fd !== undefined) closeSync(fd);
+  }
   let latest = '';
-  for (const line of readFileSync(t, 'utf8').split('\n')) {
+  for (const line of text.split('\n')) {
     let entry;
     try { entry = JSON.parse(line); } catch { continue; }
     if (entry.type === 'assistant' && Array.isArray(entry.message?.content)) {

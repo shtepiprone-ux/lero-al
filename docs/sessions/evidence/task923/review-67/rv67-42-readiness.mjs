@@ -24,7 +24,7 @@ const run = (label, cmd, args) => {
   return r.status
 }
 let failed = 0
-failed += run('node scripts/check-kickoff-evidence.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md', node, ['scripts/check-kickoff-evidence.mjs', '--files', 'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md']) ? 1 : 0
+failed += run('node scripts/check-kickoff-evidence.mjs --files tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md', node, ['scripts/check-kickoff-evidence.mjs', '--files', 'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md']) ? 1 : 0
 failed += run('npm run check:kickoff-evidence', 'npm.cmd', ['run', 'check:kickoff-evidence']) ? 1 : 0
 for (const c of SIDECARS) failed += run(`node scripts/workflow-gates/cli.mjs plan --contract ${c}`, node, ['scripts/workflow-gates/cli.mjs', 'plan', '--contract', c]) ? 1 : 0
 failed += run('node scripts/workflow-gates/cli.mjs diff --phase plan --base 7dd707aa154801ff2e44402e3976841cb377dddb --working-tree', node, ['scripts/workflow-gates/cli.mjs', 'diff', '--phase', 'plan', '--base', '7dd707aa154801ff2e44402e3976841cb377dddb', '--working-tree']) ? 1 : 0

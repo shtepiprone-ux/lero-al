@@ -1,6 +1,6 @@
 # Task 593 — `NotificationCenter` mark-all button: left-align label + own-row <390px
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_593_NotificationCenterMarkAllButtonAlignment.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_593_NotificationCenterMarkAllButtonAlignment.md`.
 Owner-flagged from the Task 592 render (2026-07-14).
 
 ## Why

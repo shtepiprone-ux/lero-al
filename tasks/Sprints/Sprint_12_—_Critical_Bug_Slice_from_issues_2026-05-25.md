@@ -52,5 +52,5 @@ Each task ships independently; pause to commit before starting the next.
 
 ## Kickoff prompts
 
-See `tasks/Sprints/Sprint_12_kickoff_prompts.md` for the per-task kickoff text the executor reads.
+See `tasks/Archive/Sprint_12_kickoff_prompts.md` for the per-task kickoff text the executor reads.
 Task 250's kickoff is in its own file (referenced above).

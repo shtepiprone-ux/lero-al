@@ -98,7 +98,7 @@ This session log contains an internal inconsistency that the owner flagged after
 - **1 row is deferred to Epic HH Phase 3:** `/admin/reports` (AdminReportsManager).
 - §13.4 is the SINGLE SOURCE OF TRUTH. Any future task that needs the surface list reads §13.4 row-by-row; do NOT infer counts from prose in this session log or any kickoff.
 
-Task 307 kickoff (`tasks/Sprints/Sprint_28_kickoff_prompt_Task_307.md`) has been updated 2026-05-31 with an explicit "Source-of-truth clarification" callout pointing Sonnet at §13.4 instead of prose wording. No content change to §13 itself — the spec is already correct; only this log's prose was ambiguous.
+Task 307 kickoff (`tasks/Archive/Sprint_28_kickoff_prompt_Task_307.md`) has been updated 2026-05-31 with an explicit "Source-of-truth clarification" callout pointing Sonnet at §13.4 instead of prose wording. No content change to §13 itself — the spec is already correct; only this log's prose was ambiguous.
 
 ## AC Self-Audit
 

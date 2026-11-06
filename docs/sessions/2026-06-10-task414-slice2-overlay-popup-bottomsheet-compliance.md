@@ -332,7 +332,7 @@ story touched by this slice). First native attempt aborted on a `EADDRINUSE :600
 
 **Date:** 2026-06-10
 **Executor:** Sonnet 4.6
-**Task file:** `tasks/Sprints/Sprint_35_kickoff_prompt_Task_415_PopupTouchTargets44px_and_InteractionProof.md`
+**Task file:** `tasks/Archive/Sprint_35_kickoff_prompt_Task_415_PopupTouchTargets44px_and_InteractionProof.md`
 
 ## Part A — Per-primitive before/after row-height table (`<640`)
 

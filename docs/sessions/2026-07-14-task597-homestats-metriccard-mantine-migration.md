@@ -1,6 +1,6 @@
 # Task 597 — Homepage stats block → TailAdmin white metric cards (Mantine), 3 responsive tiles + real agent count
 
-Sprint 44 (Epic MM Phase-2). Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_597_HomeStatsMetricCardMantineMigration.md`.
+Sprint 44 (Epic MM Phase-2). Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_597_HomeStatsMetricCardMantineMigration.md`.
 Owner-reported 2026-07-14: the homepage stats tiles are not adaptive (Agents `hidden md:flex`, hardcoded `100+`).
 Owner decisions: show all 3 tiles at every breakpoint, rebuild on Mantine/TailAdmin white metric cards (§6u),
 fetch a REAL agent count.

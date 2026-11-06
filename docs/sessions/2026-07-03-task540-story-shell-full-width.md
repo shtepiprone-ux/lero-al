@@ -1,7 +1,7 @@
 # Task 540 — `MantineStoryShell` full-width above 640 (+ edge gutter), all primitives except Table & Tabs
 
 **Executor:** Sonnet. **Type:** Storybook / story-shell layout (NOT product code). **Status:** IMPLEMENTED,
-pending orchestrator review. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_540_StoryShellFullWidthAbove640.md`.
+pending orchestrator review. Kickoff: `tasks/Archive/Sprint_40_kickoff_prompt_Task_540_StoryShellFullWidthAbove640.md`.
 
 ## Pre-read confirmation
 

@@ -45,7 +45,7 @@
 A rigorous rendered audit of ALL 20 Storybook → Mantine → Primitives against the zip, producing a per-primitive
 PASS / DELTA table (each delta = a concrete token/class mismatch with the fix). This is the "повне рев'ю" the owner asked
 for; its output drives which correction slices below actually run. Kickoff:
-`tasks/Sprints/Sprint_40_kickoff_prompt_Task_525_TailAdminConformanceAudit.md`.
+`tasks/Archive/Sprint_40_kickoff_prompt_Task_525_TailAdminConformanceAudit.md`.
 
 ## Primitives in scope (20) — correction slices opened per AUDIT findings (Task 525)
 Form controls: **Button · TextInput · Textarea · Select · PasswordInput · Checkbox · Radio · Switch · Label**.

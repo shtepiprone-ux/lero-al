@@ -1,7 +1,7 @@
 # Task 437 — "Preloaded but not used" warnings: perf hygiene
 
 **Date:** 2026-06-18  
-**Kickoff:** `tasks/kickoff_prompt_Task_437_PreloadNotUsedPerfHygiene.md`
+**Kickoff:** `tasks/Archive/kickoff_prompt_Task_437_PreloadNotUsedPerfHygiene.md`
 
 ## Production-build reproduction matrix (AC1)
 

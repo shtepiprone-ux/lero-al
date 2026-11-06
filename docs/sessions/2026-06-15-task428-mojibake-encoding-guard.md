@@ -24,7 +24,7 @@ guard so such artifacts can never be committed unnoticed.
      non-allowlisted hit or invalid-UTF-8 file.
 
 2. **`scripts/mojibake-allowlist.json`** — new JSON array of path globs, seeded with:
-   - `tasks/kickoff_prompt_Task_428_mojibake_encoding_guard.md` (the kickoff itself quotes the
+   - `tasks/Archive/kickoff_prompt_Task_428_mojibake_encoding_guard.md` (the kickoff itself quotes the
      artifacts as examples — confirmed present in that file).
    - `docs/sessions/2026-06-15-task426-canonical-first-ac-clause.md` (per kickoff instruction; a
      new "Appendix: encoding-artifact reference (Task 428)" section was added to that file with

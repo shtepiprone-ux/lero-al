@@ -22,7 +22,6 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
-import os from 'node:os';
 import { untestedSourceChange } from './change-report.mjs';
 
 const ROOT = process.env.CLAUDE_PROJECT_DIR || process.cwd();
@@ -30,13 +29,28 @@ const CODE = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
 const TYPED = /\.(ts|tsx|mts|cts)$/i;
 const MAX_STOP_BLOCKS = 3;
 const MAX_OUTPUT = 6000;
-const CHECK_FILES = path.join(ROOT, 'scripts', 'quality', 'check-files.mjs');
+// The project's own tools, started by Node with an argv array: no shell and no `npx` shim, so no file name or
+// environment value is ever parsed as a command line (CodeQL js/indirect-command-line-injection).
+const TOOLS = {
+  eslint: ['node_modules', 'eslint', 'bin', 'eslint.js'],
+  tsc: ['node_modules', 'typescript', 'bin', 'tsc'],
+  vitest: ['node_modules', 'vitest', 'vitest.mjs'],
+  'check-files': ['scripts', 'quality', 'check-files.mjs'],
+};
 
 const mode = process.argv[2];
 const payload = readPayload();
 const sessionId = String(payload.session_id || 'no-session').replace(/[^A-Za-z0-9_-]/g, '');
-const stateDir = path.join(os.tmpdir(), 'lero-al-agent-check');
+// The session state lives in the repository's own Git directory, not in the shared system temp directory, where
+// another local user could plant or read it (CodeQL js/insecure-temporary-file).
+const stateDir = path.join(gitDirectory(), 'lero-al-agent-check');
 const stateFile = path.join(stateDir, `${sessionId}.json`);
+
+function gitDirectory() {
+  const r = spawnSync('git', ['rev-parse', '--absolute-git-dir'], { cwd: ROOT, encoding: 'utf8', windowsHide: true });
+  if (r.status !== 0 || !r.stdout.trim()) throw new Error(`agent-check: ${ROOT} is not a Git working tree`);
+  return r.stdout.trim();
+}
 
 // Fail closed: a crash of the check itself is reported to the agent as a blocking finding, never as a pass
 // (Claude Code treats exit 1 of a PostToolUse hook as non-blocking).
@@ -95,21 +109,12 @@ function projectRelative(file) {
   return rel.split(path.sep).join('/');
 }
 
-function run(command, args, input) {
-  // Arguments are project-relative paths, passed as an argv array. On Windows `npx` is a .cmd shim, so it is
-  // started through cmd with every argument quoted.
-  const isWin = process.platform === 'win32' && command === 'npx';
-  const options = { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, input, windowsHide: true };
-  const result = isWin
-    ? spawnSync('cmd.exe', ['/d', '/s', '/c', [command, ...args].map(quoteWin).join(' ')], { ...options, windowsVerbatimArguments: true })
-    : spawnSync(command, args, options);
+function run(tool, args, input) {
+  const bin = path.join(ROOT, ...TOOLS[tool]);
+  if (!existsSync(bin)) return { ok: false, status: null, output: `${tool} is not installed (${bin}); run npm ci` };
+  const result = spawnSync(process.execPath, [bin, ...args], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, input, windowsHide: true });
   const output = `${result.stdout || ''}${result.stderr || ''}`.trim();
   return { ok: result.status === 0, status: result.status, output: output || String(result.error || '') };
-}
-
-function quoteWin(arg) {
-  if (/^[A-Za-z0-9_./:=@-]+$/.test(arg)) return arg;
-  return `"${String(arg).replace(/(["^&|<>%!])/g, '^$1')}"`;
 }
 
 function clip(text) {
@@ -143,12 +148,12 @@ function snapshot() {
 function checkWritten(files) {
   const failures = [];
   if (!files.length) return failures;
-  const cf = run(process.execPath, [CHECK_FILES, '--stdin-list'], files.join('\n'));
+  const cf = run('check-files', ['--stdin-list'], files.join('\n'));
   if (cf.status === 1) failures.push(`File checks (scripts/quality/check-files.mjs):\n${clip(cf.output)}`);
   else if (cf.status !== 0) failures.push(`File checks could not run (exit ${cf.status}):\n${clip(cf.output)}`);
   const code = files.filter((f) => CODE.test(f));
   if (code.length) {
-    const lint = run('npx', ['eslint', '--no-warn-ignored', '--max-warnings', '0', ...code]);
+    const lint = run('eslint', ['--no-warn-ignored', '--max-warnings', '0', ...code]);
     if (!lint.ok) failures.push(`ESLint:\n${clip(lint.output)}`);
   }
   return failures;
@@ -190,12 +195,12 @@ function stop() {
     failures.push(`Product code changed in this session with no test added or updated (every change is covered by a test — quality-gates.md §8):\n${untested.join('\n')}`);
   }
   if (changed.some((f) => TYPED.test(f))) {
-    const types = run('npx', ['tsc', '--noEmit', '-p', 'tsconfig.json']);
+    const types = run('tsc', ['--noEmit', '-p', 'tsconfig.json']);
     if (!types.ok) failures.push(`Typecheck of the whole project (effect on other code):\n${clip(types.output)}`);
   }
   const testable = changed.filter((f) => f.startsWith('src/') && CODE.test(f));
   if (testable.length) {
-    const tests = run('npx', ['vitest', 'related', '--run', '--passWithNoTests', ...testable]);
+    const tests = run('vitest', ['related', '--run','--passWithNoTests', ...testable]);
     if (!tests.ok) failures.push(`Tests related to the changed files:\n${clip(tests.output)}`);
   }
 

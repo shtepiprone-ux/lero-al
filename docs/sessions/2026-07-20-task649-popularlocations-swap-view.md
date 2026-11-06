@@ -1,6 +1,6 @@
 # Session — Task 649: swap `PopularLocations` to render `PopularLocationsView` (block B slice 2/2)
 
-**Task path:** `tasks/kickoff_prompt_Task_649_PopularLocations_Swap_View.md`
+**Task path:** `tasks/Archive/kickoff_prompt_Task_649_PopularLocations_Swap_View.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 
 ## Requirement ledger (restated pre-implementation)

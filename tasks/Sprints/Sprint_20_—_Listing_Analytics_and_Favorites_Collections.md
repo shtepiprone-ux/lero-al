@@ -13,8 +13,8 @@
 
 | Task | Title | Priority | Kickoff |
 |------|-------|----------|---------|
-| **285** | Listing analytics page + admin metric controls (MVP slice) | MEDIUM | [`Sprint_20_kickoff_prompt_Task_285.md`](Sprint_20_kickoff_prompt_Task_285.md) |
-| **286** | Favorites collections UX revamp (MVP + plan-aware roadmap) | MEDIUM | [`Sprint_20_kickoff_prompt_Task_286.md`](Sprint_20_kickoff_prompt_Task_286.md) |
+| **285** | Listing analytics page + admin metric controls (MVP slice) | MEDIUM | [`Sprint_20_kickoff_prompt_Task_285.md`](../Archive/Sprint_20_kickoff_prompt_Task_285.md) |
+| **286** | Favorites collections UX revamp (MVP + plan-aware roadmap) | MEDIUM | [`Sprint_20_kickoff_prompt_Task_286.md`](../Archive/Sprint_20_kickoff_prompt_Task_286.md) |
 
 ## Measured foundations (2026-05-29)
 - Analytics already exists: `listing_contact_events` table + `trackListingContactEvent`

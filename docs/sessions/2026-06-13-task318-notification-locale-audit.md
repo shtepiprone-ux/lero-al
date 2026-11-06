@@ -1,6 +1,6 @@
 # Session Log — 2026-06-13 — Task 318
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_318.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_318.md`
 **Scope:** Notification locale-binding audit (audit/spec only — NO code). Diagnoses the live
 "Скарга на ваш акаунт…" wrong-locale notification bug; the fix is Task 319.
 

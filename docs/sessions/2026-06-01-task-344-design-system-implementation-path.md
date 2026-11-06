@@ -19,7 +19,7 @@ Opus produced: (a) a rejection/freeze of Task 340-as-implementation and Task 343
 
 ## 3. Status of Task 343
 
-**Task 343 is FROZEN / not executable as-is.** A FROZEN banner was added to the top of `tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md`. It is retained for provenance only; it must not be run. It is superseded by the DS-1..DS-4 graduated queue.
+**Task 343 is FROZEN / not executable as-is.** A FROZEN banner was added to the top of `tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md`. It is retained for provenance only; it must not be run. It is superseded by the DS-1..DS-4 graduated queue.
 
 ## 4. Diagnosis — why Task 340 / Task 343 fail as an implementation path
 
@@ -69,7 +69,7 @@ Currently ONLY `Header.tsx`, `Footer.tsx`, `MobileBottomNav.tsx`. **Missing: Pag
 
 ## 7. First Sonnet task produced
 
-**Path:** `tasks/Sprints/Sprint_30_kickoff_prompt_Task_345.md` — **DS-1: PageShell + Section foundation.**
+**Path:** `tasks/Archive/Sprint_30_kickoff_prompt_Task_345.md` — **DS-1: PageShell + Section foundation.**
 
 ## 8. First Sonnet task scope (summary)
 
@@ -87,8 +87,8 @@ Opus wrote/edited only `docs/**` and `tasks/**`. No `src/`, no `messages/`, no D
 
 | File | Change | Rationale |
 |---|---|---|
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_345.md` | **NEW** | DS-1 first Sonnet task — PageShell + Section foundation (smallest safe slice) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md` | UPDATE — FROZEN banner at top | Mark Task 343 not-executable; point to DS-1..DS-4 queue |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_345.md` | **NEW** | DS-1 first Sonnet task — PageShell + Section foundation (smallest safe slice) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md` | UPDATE — FROZEN banner at top | Mark Task 343 not-executable; point to DS-1..DS-4 queue |
 | `docs/design-system.md` | UPDATE — §18 Phase 1 "Execution note" | Record Task 343 freeze + DS-1..DS-4 graduated queue; route migration still gated |
 | `docs/sessions/2026-06-01-task-344-design-system-implementation-path.md` | **NEW** — this log | Diagnosis, inventory, queue, first-task summary, owner git commands |
 | `docs/backlog.md` | UPDATE — Last Session block (2–4 lines) | Per agent-contract clause 10 |
@@ -109,7 +109,7 @@ If `git status` shows phantom-corruption mods first run:
 `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add tasks/Sprints/Sprint_30_kickoff_prompt_Task_345.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_343.md docs/design-system.md docs/sessions/2026-06-01-task-344-design-system-implementation-path.md docs/backlog.md
+git add tasks/Archive/Sprint_30_kickoff_prompt_Task_345.md tasks/Archive/Sprint_30_kickoff_prompt_Task_343.md docs/design-system.md docs/sessions/2026-06-01-task-344-design-system-implementation-path.md docs/backlog.md
 git commit -m "docs(Task344): reject Task340-as-impl + freeze Task343; graduated DS-1..DS-8 queue + DS-1 Sonnet task (Task345)"
 ```
 

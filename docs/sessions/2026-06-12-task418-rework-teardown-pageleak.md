@@ -1,6 +1,6 @@
 # Task 418 REWORK — Clean teardown on FAIL + per-page leak fix (rendered harness)
 
-**Kickoff:** `tasks/Sprints/Sprint_35_kickoff_prompt_Task_418_REWORK_TeardownAndPageLeak.md`
+**Kickoff:** `tasks/Archive/Sprint_35_kickoff_prompt_Task_418_REWORK_TeardownAndPageLeak.md`
 **Scope:** `scripts/check-stories-rendered.mjs` only (TOOLING, not product code). Fixes 2 P1
 resource-lifecycle defects found in the orchestrator's diff review of Task 418 (Slice 6a).
 

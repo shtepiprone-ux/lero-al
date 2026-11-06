@@ -1,6 +1,6 @@
 # Task 574 — Header base-UI overlays → Mantine (fix SSR-id hydration mismatch)
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_574_HeaderMantineOverlays.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_574_HeaderMantineOverlays.md`.
 
 ## Why
 

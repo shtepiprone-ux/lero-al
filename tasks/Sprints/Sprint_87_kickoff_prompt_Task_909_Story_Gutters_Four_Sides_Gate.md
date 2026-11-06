@@ -239,3 +239,6 @@ constant; the Storybook shell's own `bd` appears from 768.
   - `check:card-track-monotonicity` and `:verify` exit 0.
   - **Owner matrix:** `Mantine/Primitives/Table` `Default`, sq, at 768 and 1440.
 - **Write set:** add `src/stories/mantine/_MantineStoryShell.tsx` (R9 only).
+
+## Mobile adaptation record
+- Scope: none

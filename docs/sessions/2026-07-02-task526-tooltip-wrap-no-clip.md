@@ -1,6 +1,6 @@
 # Task 526 — `MantineTooltip` desktop MUST WRAP long content, never clip/overflow (Task 524 follow-up, owner rejection)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_526_TooltipWrapNoClip.md`. Correction to the uncommitted Task 524 work — full Task 524 context (§6k extraction blocker, the focus-events defect, the initial rendered matrix) lives in `docs/sessions/2026-07-02-task524-tooltip-bottom-sheet.md`. This log covers only the 526 delta.
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_526_TooltipWrapNoClip.md`. Correction to the uncommitted Task 524 work — full Task 524 context (§6k extraction blocker, the focus-events defect, the initial rendered matrix) lives in `docs/sessions/2026-07-02-task524-tooltip-bottom-sheet.md`. This log covers only the 526 delta.
 
 ## The defect (owner-verified, rendered)
 

@@ -3,7 +3,7 @@
 **Session role:** Opus orchestrator. Planning + code investigation only — NO product code changed.
 **Origin:** owner production incident report (2026-06-16). Owner number "435" corrected to **439**
 (435 = report-listing diagnosis; 438 = AdminTable `<thead>` whitespace — both taken).
-**Kickoff produced:** `tasks/kickoff_prompt_Task_439_AuthRecoveryExpiryRedirectAndSelfDeleteCleanup.md`.
+**Kickoff produced:** `tasks/Archive/kickoff_prompt_Task_439_AuthRecoveryExpiryRedirectAndSelfDeleteCleanup.md`.
 
 ## 1. Incident
 
@@ -65,7 +65,7 @@ flag for a follow-up. `hardDeleteUser` (admin) must remain untouched. Auth email
 
 | File | Rationale |
 |---|---|
-| `tasks/kickoff_prompt_Task_439_AuthRecoveryExpiryRedirectAndSelfDeleteCleanup.md` | new Sonnet kickoff (P0 incident) |
+| `tasks/Archive/kickoff_prompt_Task_439_AuthRecoveryExpiryRedirectAndSelfDeleteCleanup.md` | new Sonnet kickoff (P0 incident) |
 | `docs/sessions/2026-06-16-task439-auth-recovery-deletion-p0.md` | this investigation log |
 | `docs/backlog.md` | Task 439 added as P0; last-used number corrected (438 consumed) |
 

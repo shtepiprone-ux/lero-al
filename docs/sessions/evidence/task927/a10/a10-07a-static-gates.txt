@@ -69,7 +69,7 @@ GREEN checked-in UI contract registry is structurally valid and each declared St
 check:ui-contract self-test PASSED
 --- exit code: 0 ---
 
-command: node scripts/check-mobile-adaptation-contract.mjs --files src/components/auth/GoogleSignInSlot.tsx src/components/auth/GoogleSignInButton.tsx src/components/auth/GoogleWelcomeBack.tsx src/app/auth/google/callback/page.tsx src/app/auth/google/callback/GoogleCallbackRelay.tsx src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx src/modules/auth/components/AuthSheet.tsx src/modules/cabinet/components/ProfileTab.tsx src/lib/auth/googleIdentity.ts src/lib/auth/googlePopup.ts src/design-system/mantine/theme.ts tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
+command: node scripts/check-mobile-adaptation-contract.mjs --files src/components/auth/GoogleSignInSlot.tsx src/components/auth/GoogleSignInButton.tsx src/components/auth/GoogleWelcomeBack.tsx src/app/auth/google/callback/page.tsx src/app/auth/google/callback/GoogleCallbackRelay.tsx src/stories/patterns/mantine/GoogleSignInSlot.stories.tsx src/modules/auth/components/AuthSheet.tsx src/modules/cabinet/components/ProfileTab.tsx src/lib/auth/googleIdentity.ts src/lib/auth/googlePopup.ts src/design-system/mantine/theme.ts tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md
 --- output ---
 PASS  check:mobile-adaptation-contract — changed kickoff records are valid
 --- exit code: 0 ---

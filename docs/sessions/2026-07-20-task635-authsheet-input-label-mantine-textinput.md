@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_635_AuthSheet_Slice2b_InputLabel_MantineTextInput.md`
+`tasks/Archive/kickoff_prompt_Task_635_AuthSheet_Slice2b_InputLabel_MantineTextInput.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

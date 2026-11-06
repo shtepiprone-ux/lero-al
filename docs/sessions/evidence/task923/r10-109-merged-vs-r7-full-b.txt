@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: node docs/sessions/evidence/task923/r10-61-compare-full.mjs docs/sessions/evidence/task923/r10-108-full-merged docs/sessions/evidence/task923/r7-full-b   (merged = r8-full with the rows of the nine fixed Stories replaced by their run a of r10-107)
 platform win32 node v22.22.3
 new docs/sessions/evidence/task923/r10-108-full-merged: 34417 rows; base docs/sessions/evidence/task923/r7-full-b: 22740 rows; the base run started about 2026-10-15T20:35:26.231Z (rows.jsonl write time minus 8028s); 180 paths committed since

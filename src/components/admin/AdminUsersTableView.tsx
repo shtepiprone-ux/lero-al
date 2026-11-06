@@ -136,7 +136,7 @@ export function AdminUsersTableView({
             size="sm"
             mih={theme.other.touchTarget}
             miw={theme.other.touchTarget}
-            component={Link as any}
+            component={Link}
             href={`/admin/users/${u.id}`}
             data-testid="user-detail-link"
           >
@@ -284,7 +284,7 @@ export function AdminUsersTableView({
             <ActionIcon
               variant="subtle"
               size="sm"
-              component={Link as any}
+              component={Link}
               href={`/admin/users/${u.id}`}
               data-testid="user-detail-link"
             >

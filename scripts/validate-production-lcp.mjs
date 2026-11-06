@@ -591,9 +591,7 @@ async function main() {
   } else {
     console.log('No perf results available — HTML probe only (--preload-only or Lighthouse not available).')
     console.log('Run with PAGESPEED_API_KEY set for full production validation:')
-    for (const locale of LOCALES) {
-      console.log(`  PAGESPEED_API_KEY=<key> node scripts/validate-production-lcp.mjs ${BASE_URL} ${SLUG}`)
-    }
+    console.log(`  PAGESPEED_API_KEY=<key> node scripts/validate-production-lcp.mjs ${BASE_URL} ${SLUG}`)
     console.log()
     console.log('Lighthouse CLI viewport commands:')
     for (const vp of VIEWPORTS) {

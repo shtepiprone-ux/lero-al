@@ -3,7 +3,7 @@
 **Executor:** Opus orchestrator (owner explicitly authorized the direct one-line change, 2026-07-04:
 *"зроби сам задачу 543, якщо це однорядкова зміна"*). **Type:** UI / story-harness layout, ONE file.
 **Status:** IMPLEMENTED, HELD pending owner native gate + orchestrator commit emission.
-Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_543_StoryShellConstrainedEdgeGutter.md`.
+Kickoff: `tasks/Archive/Sprint_40_kickoff_prompt_Task_543_StoryShellConstrainedEdgeGutter.md`.
 
 ## Problem
 

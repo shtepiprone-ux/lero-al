@@ -3,7 +3,7 @@
 Sprint 84 · **P3** · QA profile **Q3** · no task dependency (877's `AdminPageHeader` adapter has landed) · blocks
 **885** · owner action **O84-4** · **Status: ✅ `APPROVED WITH NOTES` 2026-10-01, review 2 (§17); archived**
 
-Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
+Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](../Sprints/Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under **D84-1**; the reserved row moves into Appendix D. Precedent, read-only: **877**
 (page wrapper + width token, `AdminPageHeader` adapter).
 

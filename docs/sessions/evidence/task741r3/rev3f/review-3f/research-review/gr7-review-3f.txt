@@ -1,4 +1,4 @@
-﻿tailadmin https://demo.tailadmin.com/pagination 076
+tailadmin https://demo.tailadmin.com/pagination 076
    1440 no-overflow 
    390 no-overflow 
 tailadmin https://demo.tailadmin.com/products-list 016

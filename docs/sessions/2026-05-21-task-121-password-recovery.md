@@ -120,7 +120,7 @@ icons. Findings, severities, and gate behavior are identical.
 neutral-by-design to avoid email enumeration, but no IP/user-agent, so weak as an
 audit trail. Adding source IP / user-agent / correlation id via `headers()`
 (without reintroducing enumeration) is queued as **Task 157**.
-Kickoff: `tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`.
+Kickoff: `tasks/Archive/Epic_D_kickoff_prompt_Task_157.md`.
 
 ### Validation (post-hardening)
 - `node --check scripts/governance/scan-tailwind.mjs` — OK.

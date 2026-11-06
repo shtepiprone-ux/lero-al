@@ -38,7 +38,9 @@ product and governance slices mixed in.
 | 629 | ✅ APPROVED | 2026-07-19 |
 | 630 | ✅ APPROVED | 2026-07-19 |
 | 631 | ✅ APPROVED | 2026-07-20 |
-| 632 | ✅ APPROVED | 2026-07-20 |### AuthSheet → Mantine (shell + 5 control slices)
+| 632 | ✅ APPROVED | 2026-07-20 |
+
+### AuthSheet → Mantine (shell + 5 control slices)
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -47,7 +49,9 @@ product and governance slices mixed in.
 | 635 | ✅ APPROVED WITH NOTES | 2026-07-20 |
 | 636 | ✅ APPROVED WITH NOTES | 2026-07-20 |
 | 637 | ✅ APPROVED WITH NOTES | 2026-07-20 |
-| 638 | ✅ APPROVED WITH NOTES | 2026-07-20 |### Companies — duplicate detection + dedup
+| 638 | ✅ APPROVED WITH NOTES | 2026-07-20 |
+
+### Companies — duplicate detection + dedup
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -55,7 +59,9 @@ product and governance slices mixed in.
 | 640 | ✅ APPROVED WITH NOTES | 2026-07-20 |
 | 641 | ✅ APPROVED WITH NOTES | 2026-07-20 |
 | 642 | ✅ APPROVED WITH NOTES | 2026-07-20 |
-| 643 | ✅ APPROVED WITH NOTES | 2026-07-20 |### Homepage → Mantine (band/hero chrome, blocks A–D)
+| 643 | ✅ APPROVED WITH NOTES | 2026-07-20 |
+
+### Homepage → Mantine (band/hero chrome, blocks A–D)
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -74,13 +80,17 @@ product and governance slices mixed in.
 | 656 | ✅ APPROVED WITH NOTES | 2026-07-21 |
 | 657 | ✅ APPROVED | 2026-07-22 |
 | 658 | ✅ APPROVED | 2026-07-22 |
-| 659 | ✅ APPROVED WITH NOTES | 2026-07-22 |### Brand-colour single source + tokenised band
+| 659 | ✅ APPROVED WITH NOTES | 2026-07-22 |
+
+### Brand-colour single source + tokenised band
 
 | # | Verdict | Closed |
 |---|---|---|
 | 660 | ✅ APPROVED | 2026-07-22 |
 | 661 | — | — |
-| 662 | ✅ APPROVED WITH NOTES | 2026-07-23 |### Rendered-proof harness hardening
+| 662 | ✅ APPROVED WITH NOTES | 2026-07-23 |
+
+### Rendered-proof harness hardening
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -88,7 +98,9 @@ product and governance slices mixed in.
 | 664 | ✅ APPROVED | 2026-07-23 |
 | 665 | — | — |
 | 666 | ✅ APPROVED WITH NOTES | 2026-07-26 |
-| 674 | closed | 2026-07-27 |### Homepage grids, FiltersPanel, MobileBottomNav
+| 674 | closed | 2026-07-27 |
+
+### Homepage grids, FiltersPanel, MobileBottomNav
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -97,7 +109,9 @@ product and governance slices mixed in.
 | 670 | ✅ APPROVED WITH NOTES | 2026-07-28 |
 | 671 | ✅ APPROVED WITH NOTES | 2026-07-31 |
 | 672 | ✅ APPROVED WITH NOTES | 2026-07-29 |
-| 675 | ✅ APPROVED WITH NOTES | 2026-07-31 |### Sonner retirement + the registered-colour gate
+| 675 | ✅ APPROVED WITH NOTES | 2026-07-31 |
+
+### Sonner retirement + the registered-colour gate
 
 | # | Verdict | Closed |
 |---|---|---|
@@ -105,14 +119,18 @@ product and governance slices mixed in.
 | 684 | ✅ APPROVED WITH NOTES | 2026-07-29 |
 | 685 | ✅ APPROVED WITH NOTES | 2026-07-29 |
 | 686 | ✅ APPROVED WITH NOTES | 2026-07-29 |
-| 688 | ✅ APPROVED WITH NOTES | 2026-07-30 |### Overlay token ownership
+| 688 | ✅ APPROVED WITH NOTES | 2026-07-30 |
+
+### Overlay token ownership
 
 | # | Verdict | Closed |
 |---|---|---|
 | 690 | ✅ APPROVED WITH NOTES | 2026-07-31 |
 | 692 | ✅ APPROVED WITH NOTES | 2026-07-31 |
 | 693 | ✅ APPROVED WITH NOTES | 2026-07-31 |
-| 696 | ✅ APPROVED WITH NOTES | 2026-07-31 |### Capture determinism
+| 696 | ✅ APPROVED WITH NOTES | 2026-07-31 |
+
+### Capture determinism
 
 | # | Verdict | Closed |
 |---|---|---|

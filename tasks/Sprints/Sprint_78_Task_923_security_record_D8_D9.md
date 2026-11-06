@@ -2,7 +2,7 @@
 
 > **Status: ADOPTED by Opus with corrections, review 8 of Task 923 (2026-10-17); stage `planned`.** First drafted by the Sonnet executor on the owner's instruction of
 > 2026-10-17 ("make the security contract at once"). It is the security record of Task 923 Revision 8 (kickoff §17,
-> `tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`) and is NOT a kickoff: no number is reserved. The invariants, scope and applicability
+> `tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`) and is NOT a kickoff: no number is reserved. The invariants, scope and applicability
 > below are Opus's; Sonnet changes only the stage and report metadata from here on.
 >
 > **Opus corrections (review 8).** (1) The contact-action session check (`requireViewer`, cases SEC-CS-*) is in scope here, as implemented; the earlier sentence that this
@@ -133,7 +133,7 @@ The stage stays `planned`: the cases are not all implemented. This section is a 
 
 ## Revision 54 amendments (Opus, 2026-10-28, Task 923 final review)
 
-The executable route is kickoff §80 (`tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`, R159–R165). It supersedes the
+The executable route is kickoff §80 (`tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`, R159–R165). It supersedes the
 implementation status above, which is kept as history.
 
 - **Owner decision D91** (2026-10-28, translated): "That is not a problem: right now the site is closed to the world, nobody knows anything about it.

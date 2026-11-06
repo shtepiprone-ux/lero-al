@@ -42,9 +42,9 @@ not per selected value — so the active-filter badge is wrong.
 
 | Task | Title | Priority | Kickoff |
 |------|-------|----------|---------|
-| **282** | Design System Lockdown — primitive substitution + enforcement | CRITICAL | [`Sprint_18_kickoff_prompt_Task_282.md`](Sprint_18_kickoff_prompt_Task_282.md) |
-| **283** | Governance debt burn-down — Tailwind entropy (button-like clones, `py-10`, arbitrary font-sizes) | HIGH | [`Sprint_18_kickoff_prompt_Task_283.md`](Sprint_18_kickoff_prompt_Task_283.md) |
-| **294** | Global multi-select filters + correct active-filter counter | HIGH | [`Sprint_18_kickoff_prompt_Task_294.md`](Sprint_18_kickoff_prompt_Task_294.md) |
+| **282** | Design System Lockdown — primitive substitution + enforcement | CRITICAL | [`Sprint_18_kickoff_prompt_Task_282.md`](../Archive/Sprint_18_kickoff_prompt_Task_282.md) |
+| **283** | Governance debt burn-down — Tailwind entropy (button-like clones, `py-10`, arbitrary font-sizes) | HIGH | [`Sprint_18_kickoff_prompt_Task_283.md`](../Archive/Sprint_18_kickoff_prompt_Task_283.md) |
+| **294** | Global multi-select filters + correct active-filter counter | HIGH | [`Sprint_18_kickoff_prompt_Task_294.md`](../Archive/Sprint_18_kickoff_prompt_Task_294.md) |
 
 ## Sequencing + boundary (avoid the two design tasks colliding on the same files)
 

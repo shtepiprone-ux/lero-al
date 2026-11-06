@@ -3,7 +3,7 @@
 Sprint 78 · P1 · QA profile **Q4** (write path + RLS) · Wave B · independent of other tasks · owner action **O78-4**
 (apply SQL) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). The spec (v3.3 §5) marks
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). The spec (v3.3 §5) marks
 this as **required before AGT-04**: *"server-side запис, що сам знаходить owner/listing, і окремий безпечний шлях для
 гостя. Не довіряти owner id із клієнта."*
 

@@ -4,7 +4,7 @@ Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved (c
 map) · **Status: ✅ `APPROVED WITH NOTES` 2026-09-20 (review 3). Closed and archived — see §18 for the closing
 decisions (OD-1 = B, OD-2 = B, D845-4 native tooltip, D1 exception). No further execution is owed on this task.**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-2** (owner,
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-2** (owner,
 2026-09-18): *"@mantine/charts (Рекомендовано)"*.
 
 ## 1. Mode and task type

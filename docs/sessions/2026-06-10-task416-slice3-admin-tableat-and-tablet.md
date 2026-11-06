@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-10
 **Executor:** Sonnet 4.6
-**Task file:** `tasks/Sprints/Sprint_35_kickoff_prompt_Task_416_Slice3_AdminDataSurfaces_tableAt_and_Tablet.md`
+**Task file:** `tasks/Archive/Sprint_35_kickoff_prompt_Task_416_Slice3_AdminDataSurfaces_tableAt_and_Tablet.md`
 
 ---
 

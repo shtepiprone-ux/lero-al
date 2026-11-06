@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_631_FeaturedListingsStory_ViewAll_ProofPath_Fix.md`
+`tasks/Archive/kickoff_prompt_Task_631_FeaturedListingsStory_ViewAll_ProofPath_Fix.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

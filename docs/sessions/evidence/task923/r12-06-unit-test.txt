@@ -1,4 +1,4 @@
-﻿PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
+PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
 COMMAND=npx vitest run scripts/__tests__/rendered-state-census.test.ts
 
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al

@@ -1,4 +1,4 @@
-﻿# rv8-02: source lines for Task 927 Amendment 8
+# rv8-02: source lines for Task 927 Amendment 8
 platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T18:42:31.497Z
 src/components/auth/GoogleSignInButton.tsx:53: theme: 'outline',
 src/components/auth/GoogleSignInButton.tsx:54: size: 'medium',
@@ -22,8 +22,8 @@ src/design-system/mantine/theme.ts:790: galleryThumb: '2.75rem',   //  44px — 
 src/modules/cabinet/components/ProfileTab.tsx:240: // Task 923 R80, D54: the account is deleted after the current password (or, for an account with none, a recent Google sign-in) — not after a typed word
 src/modules/cabinet/components/ProfileTab.tsx:464: loginHint={email ?? undefined}
 src/modules/auth/components/AuthSheet.tsx:217: googleControl={<GoogleSignInButton clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} loginHint={account.sub} onCredential={handleGoogle} />}
-tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:246: | D12 | OWNER DECISION | Google's personalized button is not used; Google's account chooser appears instead. | owner: 2026-10-25; decision: `Nobody uses that kind of sign-in. Instead, an adaptive popup with a choice of Google accounts must appear.` |
-tasks/Sprints/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:248: | D14 | OWNER DECISION | Google's medium button with the text Sign in with Google, never personalized, accepted although it is lower than the fields. | owner: 2026-10-25; decision: `Medium, without the name (Recommended)` |
+tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:246: | D12 | OWNER DECISION | Google's personalized button is not used; Google's account chooser appears instead. | owner: 2026-10-25; decision: `Nobody uses that kind of sign-in. Instead, an adaptive popup with a choice of Google accounts must appear.` |
+tasks/Archive/Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.md:248: | D14 | OWNER DECISION | Google's medium button with the text Sign in with Google, never personalized, accepted although it is lower than the fields. | owner: 2026-10-25; decision: `Medium, without the name (Recommended)` |
 census row citing D14: mantine-primitives-modal--delete-confirm-password~delete-google-ready
 census row citing D14: patterns-mantine-authsheet--login
 census row citing D14: patterns-mantine-authsheet--login-validation-error

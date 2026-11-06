@@ -34,9 +34,9 @@
 ?? docs/sessions/2026-05-29-task-292-next-cache-test-stub.md
 ?? src/modules/auth/lib/
 ?? src/tests/next-cache-stub.ts
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_291.md
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_292.md
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_293.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_291.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_292.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_293.md
 ```
 
 ### File line counts (working tree vs HEAD)
@@ -343,9 +343,9 @@ Breakdown:
 ?? docs/sessions/2026-05-29-task-293-auth-closure-correction.md
 ?? src/modules/auth/lib/
 ?? src/tests/next-cache-stub.ts
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_291.md
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_292.md
-?? tasks/Sprints/Sprint_17_kickoff_prompt_Task_293.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_291.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_292.md
+?? tasks/Archive/Sprint_17_kickoff_prompt_Task_293.md
 ```
 
 ### `git diff --name-only`

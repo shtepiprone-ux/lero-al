@@ -1,4 +1,4 @@
-﻿win32
+win32
 
 02 September 2026 01:30:43
 

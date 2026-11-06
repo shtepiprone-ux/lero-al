@@ -3,19 +3,19 @@ Task 612 — ListingGallery lightbox portal/stacking rendered evidence (MODE=aft
 
   E sq (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
 Call log:
-[2m  - waiting for locator('.listing-gallery') to be visible[22m
+  - waiting for locator('.listing-gallery') to be visible
 
   E en (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
 Call log:
-[2m  - waiting for locator('.listing-gallery') to be visible[22m
+  - waiting for locator('.listing-gallery') to be visible
 
   E uk (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
 Call log:
-[2m  - waiting for locator('.listing-gallery') to be visible[22m
+  - waiting for locator('.listing-gallery') to be visible
 
   E it (page load) - TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
 Call log:
-[2m  - waiting for locator('.listing-gallery') to be visible[22m
+  - waiting for locator('.listing-gallery') to be visible
 
 
 Matrix results: 0/28 PASS, 28 FAIL

@@ -8,8 +8,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 const nextConfig = {
   allowedDevOrigins: ['192.168.20.252'],
   // No images config needed — AppImage delivers via direct Cloudinary URLs (no next/image proxy).
-  // Task 923 R72 (g): lint runs during the build. `eslint.ignoreDuringBuilds: true` was removed because lint is NOT a step of any workflow in `.github/workflows`
-  // (`governance-pr.yml`, `governance-scheduled.yml`), so the build was the only place a lint error could stop a release; `eslint .` now ends with 0 errors.
+  // Task 923 R72 (g): lint also runs during the build (`eslint.ignoreDuringBuilds` stays unset), so a Vercel build stops on a lint error even
+  // outside CI; `.github/workflows/ci.yml` runs `npm run lint` as its own gate.
   // Security response headers on every route (Task 923 Revision 7, S7): no framing, no sniffing, no referrer leak, HTTPS only.
   async headers() {
     return [{ source: '/:path*', headers: SECURITY_HEADERS }]

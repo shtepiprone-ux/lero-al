@@ -268,9 +268,9 @@ Orchestrator review confirmed Round 3 code is correct. Round 4 is docs accuracy 
 **G4 — Unrelated dirty files (NOT Task 467, exclude from commit):**
 - `.gitignore` (modified)
 - `AGENTS.md` (modified)
-- `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md` (modified)
-- `tasks/kickoff_prompt_Task_467_StorybookGeometryVisualAssertions.md` (modified — orchestrator file)
-- `tasks/Epics/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md` (new)
+- `tasks/Archive/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md` (modified)
+- `tasks/Archive/kickoff_prompt_Task_467_StorybookGeometryVisualAssertions.md` (modified — orchestrator file)
+- `tasks/Archive/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md` (new)
 
 **Advisory — style failure propagated to renderCheck.** When `styleIntegrity.pass === false`, `renderCheck.failReason` is now set to `unstyled-render` (if not already set), so `HARD_FAIL_REASONS` catches it directly in `isTransientFailure` — cleaner than relying solely on `hardAfterRetries` side-effect.
 

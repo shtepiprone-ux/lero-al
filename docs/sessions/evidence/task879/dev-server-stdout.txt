@@ -15,4 +15,4 @@
  ✓ Compiled instrumentation Edge in 233ms
  ✓ Compiled middleware in 220ms
  ✓ Ready in 3.3s
-[?25h
+

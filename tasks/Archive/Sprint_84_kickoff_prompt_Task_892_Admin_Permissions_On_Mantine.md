@@ -4,7 +4,7 @@ Sprint 84 · **P3** · QA profile **Q3** (legacy admin surface → Mantine) · *
 extracted by 893 R1) · blocks **885** · owner action **O84-3** · **Status: ✅ `APPROVED WITH NOTES` 2026-10-01, review 2 — owner accepted every
 O84-3 tuple; archived (§17)**
 
-Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
+Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](../Sprints/Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row moves into Appendix D.
 Precedents, read-only: **877** (container/View split, page wrapper and width token) and **893** (`MantineFormSection`).
 

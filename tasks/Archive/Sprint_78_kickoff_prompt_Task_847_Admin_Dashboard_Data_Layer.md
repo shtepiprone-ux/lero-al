@@ -8,7 +8,7 @@ the §13.2 `git grep` commands are vacuous while the files are untracked (re-run
 href encodes the comma (`status=open%2Cin_progress`, decodes identically) — **confirmed, no change**; the ADM-11 consistency
 check may race the clock, which §3.1 asks for; `createAdminClient()` still throws on missing env, as today's page does.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). D78-1 keeps
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). D78-1 keeps
 ADM-03/04/05 (reviews, chat) and ADM-07 (verification) **out**; ADM-10 is 855's.
 
 ## 1. Mode and task type

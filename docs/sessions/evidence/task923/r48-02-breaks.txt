@@ -45,14 +45,14 @@ broken run: exit 1
 AssertionError: expected <button …(10)>…(1)</button> to be null
 
 Ignored nodes: comments, script, style
-[36m<html[39m
-  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
-[36m>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div>[39m
-      [36m<header[39m
-        [33mclass[39m=[32m"site-header"[39m
+<html
+  data-mantine-color-scheme="light"
+>
+  <head />
+  <body>
+    <div>
+      <header
+        class="site-header"
 restored sha256: cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
 restored run: exit 0
 OK   B11: baseline passes
@@ -71,14 +71,14 @@ broken run: exit 1
 AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
 
 Ignored nodes: comments, script, style
-[36m<html[39m
-  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
-[36m>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div>[39m
-      [36m<output[39m
-        [33mdata-testid[39m=[32m"status"[39m
+<html
+  data-mantine-color-scheme="light"
+>
+  <head />
+  <body>
+    <div>
+      <output
+        data-testid="status"
 restored sha256: cf01bf09dc99907b25acb90c5553d63802669e1f689f2c130832598942b702fe
 restored run: exit 0
 OK   B12: baseline passes

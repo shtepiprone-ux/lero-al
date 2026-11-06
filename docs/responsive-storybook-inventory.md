@@ -49,9 +49,9 @@ are struck below.)
 | File | In ASSERT_STORIES? | Type |
 |---|---|---|
 | `(retired, Task 877) legacy card-list.stories.tsx` | ✅ `RETIRED-877-admincardlist--default` | Product-rendering story |
-| `src/components/admin/AdminPageShell.stories.tsx` | ✅ `admin-adminpageshell--default` | Product-rendering story |
+| `src/components/admin/AdminPageShell.stories.tsx` (removed) | ✅ `admin-adminpageshell--default` | Product-rendering story |
 | `(retired, Task 877) legacy AdminTable.stories.tsx` | ✅ `RETIRED-877-admintable--default` | Product-rendering story |
-| `src/components/admin/StatusChangeControl.stories.tsx` | ✅ `admin-statuschangecontrol--select` | Product-rendering story |
+| `src/components/admin/StatusChangeControl.stories.tsx` (removed) | ✅ `admin-statuschangecontrol--select` | Product-rendering story |
 | `src/components/admin/StatusChangeHistory.stories.tsx` | ✅ `admin-statuschangehistory--empty` | Product-rendering story |
 
 #### Admin — Task 410 new 14 stories (11 current — 3 files retired, Task 852, 2026-09-25; see the note above §1)
@@ -60,14 +60,14 @@ are struck below.)
 | `src/components/admin/AdminUserAvatar.stories.tsx` | ✅ `admin-adminuseravatar--view-placeholder` + `--edit-mode` | Product-rendering story (2 surfaces) |
 | `src/components/admin/AdminSettings.stories.tsx` | ✅ `admin-adminsettings--default` | Product-rendering story |
 | `(retired, Task 877) legacy AdminCurrenciesManager.stories.tsx` | ✅ `RETIRED-877-admincurrenciesmanager--default` | Product-rendering story |
-| `src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` | ✅ `patterns-mantine-adminexchangeprovidersview--default` | Product-rendering story (Task 874) |
+| `src/stories/patterns/mantine/AdminExchangeProvidersView.stories.tsx` (removed) | ✅ `patterns-mantine-adminexchangeprovidersview--default` | Product-rendering story (Task 874) |
 | `src/stories/patterns/mantine/ProviderFormDialogView.stories.tsx` | ✅ `patterns-mantine-providerformdialogview--new` | Product-rendering story (Task 874) |
 | `src/components/admin/AdminPropertyTypesManager.stories.tsx` | ✅ `admin-adminpropertytypesmanager--default` | Product-rendering story |
 | `src/components/admin/AdminCompaniesManager.stories.tsx` | ✅ `admin-admincompaniesmanager--default` | Product-rendering story |
 | `(retired, Task 859) legacy AdminSupportManager story` | ✅ `RETIRED-859-adminsupportmanager--default` | Product-rendering story (successor `patterns-mantine-adminsupportview--default`) |
 | `src/components/admin/AdminEmailTemplatesManager.stories.tsx` | ✅ `admin-adminemailtemplatesmanager--default` | Product-rendering story |
-| `src/components/admin/AdminListingsTable.stories.tsx` | ✅ `admin-adminlistingstable--default` | Product-rendering story |
-| `src/components/admin/AdminUsersTable.stories.tsx` | ✅ `admin-adminuserstable--default` | Product-rendering story |
+| `src/components/admin/AdminListingsTable.stories.tsx` (removed) | ✅ `admin-adminlistingstable--default` | Product-rendering story |
+| `src/components/admin/AdminUsersTable.stories.tsx` (moved to `src/stories/patterns/mantine/AdminUsersTable.stories.tsx`) | ✅ `admin-adminuserstable--default` | Product-rendering story |
 | ~~the legacy `AdminUserProfile` Story file~~ | **RETIRED-893** — deleted by Task 893; the canonical Stories are `Patterns/Mantine/AdminUserProfileView`, `…/AdminUserProfileDialogsView` and `…/AdminUserAvatarFieldView` | — |
 
 #### Layout (0 story files — was 4; all deleted, Task 788, 2026-09-05, zero production consumers)
@@ -84,7 +84,7 @@ are struck below.)
 | `src/stories/_storyI18n.ts` | i18n helper — not a story |
 | `src/stories/fixtures/listing.fixture.ts` | Listing fixture data — not a story |
 | `src/stories/fixtures/admin.fixtures.ts` | Admin fixture data — not a story |
-| `src/stories/StoryListingCard.tsx` | Story render helper component — not a story |
+| `src/stories/StoryListingCard.tsx` (removed) | Story render helper component — not a story |
 
 ### ASSERT_STORIES count: 45 story IDs at 2026-06-08 (some files contribute 2 IDs); **36 current**
 (4 Layout IDs removed, Task 788, 2026-09-05; 5 more retired, Task 852, 2026-09-25 — see the note

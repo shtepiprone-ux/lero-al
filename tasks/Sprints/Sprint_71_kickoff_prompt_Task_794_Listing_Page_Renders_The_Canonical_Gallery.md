@@ -686,3 +686,16 @@ Update only 794's lines in `docs/backlog.md` and its row state in the Sprint 71 
   The start precondition blocks execution until those paths are clean. The I0 rule re-verifies cited facts in any
   file a later commit changed.
 - **One route.** The kickoff carries one LCP route (§5) and no owner question.
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/modules/listings/components/ListingDetailView.tsx — the gallery slot of /[locale]/listings/[slug] and /admin/listings/[id]/preview
+- Component families: media-gallery-and-listing-contact
+- Pattern IDs: grid-media-reflow
+- Standards: w3c-reflow, apple-hig-layout, android-common-layouts, android-adapt-layouts
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): swipe track with counter; 640px transition to the desktop frame with navigation buttons and thumbnails
+- Mobile order: cover photo → counter → remaining photos → lightbox trigger
+- Required-content treatment: no semantic loss: every photo stays reachable in the track or the lightbox; the counter wraps
+- Story and verification: Patterns/Mantine/ListingGalleryPattern at 320px and on both sides of the 640px transition × sq, en, uk, it

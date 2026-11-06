@@ -7,11 +7,11 @@ describe('parsePriceDigits', () => {
   })
 
   it('keeps the digits of a price written with a no-break space (U+00A0)', () => {
-    expect(parsePriceDigits('20 000 000 000')).toBe(20_000_000_000)
+    expect(parsePriceDigits('20\u00A0000\u00A0000\u00A0000')).toBe(20_000_000_000)
   })
 
   it('keeps the digits of a price written with a narrow no-break space (U+202F)', () => {
-    expect(parsePriceDigits('20 000 000 000')).toBe(20_000_000_000)
+    expect(parsePriceDigits('20\u202F000\u202F000\u202F000')).toBe(20_000_000_000)
   })
 
   it('keeps the digits of a price written with dots', () => {

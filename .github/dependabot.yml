@@ -1,0 +1,36 @@
+# Dependency and action updates (governance reset 2026-11-06). OWASP basis: Vulnerable Dependency Management (automate
+# detection and update), NPM Security and CI/CD Security (a cooldown keeps brand-new releases, the usual carrier of a
+# compromised package, out until the ecosystem has looked at them). Security updates are not delayed by the cooldown.
+# Every update arrives as a pull request and passes "CI Required" before the owner merges it.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Tirane
+    cooldown:
+      default-days: 14
+      semver-major-days: 30
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+    labels: [dependencies]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Tirane
+    cooldown:
+      default-days: 14
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns: ["*"]
+    labels: [dependencies]

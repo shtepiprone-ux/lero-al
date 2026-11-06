@@ -16,7 +16,7 @@ regressing (it has happened repeatedly), NOT another point patch. Approach decid
 | `docs/orchestrator-role.md` | NEW standing rule + review-checklist item: regression-coverage gate; approval forbidden without automated proof old behavior survives. |
 | `docs/rule-index.md` | registry added to "Always required"; NEW task type "Regression / critical-flow coverage task". |
 | `docs/ai-behavior.md` | Canonical Task Template gains a "Regression coverage" AC + a Rules bullet. |
-| `tasks/kickoff_prompt_Task_436_RegressionProtectionGuards.md` | REFRAMED header → Epic RS Slice 1 (foundational guards), no longer "Task-432-only". |
+| `tasks/Archive/kickoff_prompt_Task_436_RegressionProtectionGuards.md` | REFRAMED header → Epic RS Slice 1 (foundational guards), no longer "Task-432-only". |
 | `tasks/kickoff_prompt_Task_441_RegressionShield_Slice2_AuthLifecycleSmoke.md` | NEW — Slice 2 kickoff (auth-lifecycle smoke + gates for Sonnet). |
 
 ## The rule (now binding on Task 439 and every future task)

@@ -1,6 +1,6 @@
 # Task 713 — `MobileBottomNavView` de-Tailwind: marker carry-across — session log
 
-**Task:** `tasks/Sprints/Sprint_50_kickoff_prompt_Task_713_MobileBottomNav_And_AppShell_DeTailwind.md`
+**Task:** `tasks/Archive/Sprint_50_kickoff_prompt_Task_713_MobileBottomNav_And_AppShell_DeTailwind.md`
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
 ---

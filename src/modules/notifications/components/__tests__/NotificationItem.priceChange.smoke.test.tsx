@@ -75,7 +75,7 @@ function renderPriceChangeNotification(locale: string) {
 }
 
 describe('NotificationItem — price_change body renders correct locale grouping', () => {
-  it('sq: body shows NBSP space-grouped prices ("45 000 ALL"), not comma-grouped', () => {
+  it('sq: body shows NBSP space-grouped prices ("45\u00A0000 ALL"), not comma-grouped', () => {
     renderPriceChangeNotification('sq')
     expect(
       screen.getByText(`50${NBSP}000 ALL → 45${NBSP}000 ALL`, { normalizer: s => s }),

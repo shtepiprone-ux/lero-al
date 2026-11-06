@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_632_ViewAllLink_WrappedLabel_RightAlign_Fix.md`
+`tasks/Archive/kickoff_prompt_Task_632_ViewAllLink_WrappedLabel_RightAlign_Fix.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

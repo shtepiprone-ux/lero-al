@@ -84,8 +84,8 @@ describe('ListingFormShellView', () => {
     // pasting: one change carrying the whole text, with ordinary, no-break and narrow no-break spaces
     const pasted: [string, string][] = [
       ['ordinary spaces', '20 000 000 000'],
-      ['U+00A0 spaces', '20 000 000 000'],
-      ['U+202F spaces', '20 000 000 000'],
+      ['U+00A0 spaces', '20\u00A0000\u00A0000\u00A0000'],
+      ['U+202F spaces', '20\u202F000\u202F000\u202F000'],
     ]
     for (const [name, text] of pasted) {
       const field = mount()

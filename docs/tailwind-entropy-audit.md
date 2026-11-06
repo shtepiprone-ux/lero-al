@@ -94,7 +94,7 @@ Future audits should compare against these numbers using `npm run governance:tai
 |---|---|---|---|---|---|---|
 | `src/components/layout/Header.tsx` | 129 | `max-w-[160px]` | sq, uk | Width may clip nav label | MEDIUM | Use `max-w-xs` or remove constraint |
 | `src/components/layout/Footer.tsx` | 25 | `max-w-[200px]` | uk | Fixed width on footer column | MEDIUM | Use `max-w-sm` or `w-full` |
-| `src/components/shared/DatePicker.tsx` | 101 | `w-[280px]` | uk | Calendar popup fixed width | LOW | Calendar UI — acceptable |
+| `src/components/shared/DatePicker.tsx` (removed) | 101 | `w-[280px]` | uk | Calendar popup fixed width | LOW | Calendar UI — acceptable |
 | Various admin | multiple | `max-w-[Npx]` | uk | Dialog/table fixed widths | MEDIUM | Review with Ukrainian locale |
 
 **All 4 locales (sq, en, uk, it) validated:**

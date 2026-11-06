@@ -436,7 +436,7 @@ superseded sign-in-failure predecessors were written by the owner's native Windo
 (`docs/orchestrator-procedures.md`), just on the write side instead of the read side this time.
 `check:file-integrity` correctly flagged all four as "NUL bytes present" (`r3-15e`'s first run).
 Per the kickoff's own closing instruction, normalised all four to UTF-8 without BOM through Node
-(`readFileSync(f, 'utf16le')` → strip a leading `﻿` → `writeFileSync(f, text, 'utf8')`),
+(`readFileSync(f, 'utf16le')` → strip a leading `U+FEFF` → `writeFileSync(f, text, 'utf8')`),
 verified line-for-line identical content before and after (printed `lineForLineIdentical=true` for
 all four), then re-ran the gate: `r3-15e-check-file-integrity.txt` — `✅ all 101 file(s) clean`.
 The two "final" transcripts' content, decoded, is the actual O80-5 result: **both phases exit 0,

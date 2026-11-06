@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 564, `tasks/Sprints/Sprint_42_kickoff_prompt_Task_564_RuntimeICUFormatterSweep.md`. Opened from
+Task 564, `tasks/Archive/Sprint_42_kickoff_prompt_Task_564_RuntimeICUFormatterSweep.md`. Opened from
 the Task 563 orchestrator review (2026-07-09): the same root cause fixed for `formatPrice`/
 `formatCount` — Chromium's bundled ICU has no `sq` locale data at all
 (`Intl.*.supportedLocalesOf(['sq'])` → `[]`, silently falling back to `en-GB`) — was still live in

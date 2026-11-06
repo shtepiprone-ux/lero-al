@@ -17,8 +17,7 @@ import { mkdirSync, writeFileSync, rmSync, mkdtempSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { tmpdir } from 'node:os'
 
-// @ts-ignore — .mjs module; types inferred below
-import { runGate, isEnglishish, JSX_PROP_ALLOWLIST } from '../check-stories.mjs'
+import { runGate, isEnglishish } from '../check-stories.mjs'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

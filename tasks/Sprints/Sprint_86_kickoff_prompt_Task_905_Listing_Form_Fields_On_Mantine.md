@@ -301,3 +301,16 @@ Update the 905 state in `docs/backlog.md`. Status: `IMPLEMENTED - AWAITING ORCHE
 - The critical flow has a planted, two-armed regression (R9), and the existing create smoke stays green.
 - The shell and upload are explicitly 906 and 907, sequenced in the sprint plan, not silently excluded (16d: they are
   filed tasks in the same response).
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/modules/listings/components/form — the listing-form fields (rooms, conditions, heating, walls, year built, numbers, checkboxes)
+- Component families: form-picker-and-choice
+- Pattern IDs: form-stack
+- Standards: w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure
+- Mantine mechanism: responsive-props
+- Mantine owner: src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): one field per row; 640px transition to the SimpleGrid columns
+- Mobile order: label → control → error, fields in form order
+- Required-content treatment: choice buttons, labels and errors wrap; no clipping
+- Story and verification: Patterns/Mantine/ListingFormFields at 320px and on both sides of the 640px transition × sq, en, uk, it

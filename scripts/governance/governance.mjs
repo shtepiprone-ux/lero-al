@@ -122,7 +122,7 @@ console.log('╚═════════════════════�
 console.log(`Scan scope: ${scanArg}`);
 
 if (scanArg === 'all') {
-  for (const [key, [name, path, scanKey]] of Object.entries(scans)) {
+  for (const [name, path, scanKey] of Object.values(scans)) {
     await runScan(name, path, scanKey);
   }
 } else if (scans[scanArg]) {

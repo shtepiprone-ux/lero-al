@@ -151,22 +151,6 @@ const PART_A_SITES = [
   { key: 'counter', storyId: 'mantine-primitives-lightboxview--default', props: ['color'] },
 ];
 
-async function resolvePartAElementBefore(page, siteKey) {
-  return page.evaluate((siteKey) => {
-    if (siteKey === 'photoCountBadge') {
-      const candidates = [...document.querySelectorAll('.bg-overlay\\/60')];
-      return candidates.find(el => el.classList.contains('text-overlay-foreground')) ? 'found' : 'not-found';
-    }
-    if (siteKey === 'extraCountOverlay') {
-      const candidates = [...document.querySelectorAll('.bg-overlay\\/60')];
-      return candidates.find(el => !el.classList.contains('text-overlay-foreground')) ? 'found' : 'not-found';
-    }
-    if (siteKey === 'counter') {
-      return document.querySelector('.text-overlay-foreground\\/80') ? 'found' : 'not-found';
-    }
-    return 'not-found';
-  }, siteKey);
-}
 
 async function capturePartACell(beforePage, afterPage, site, locale, viewport) {
   await beforePage.setViewportSize({ width: viewport, height: 1200 });

@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH (not installed in the repository); search_path = public, pg_temp during the capture
+platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH (not installed in the repository); search_path = public, pg_temp during the capture
 cmd node docs/sessions/evidence/task923/db-catalog/r14-capture.cjs --i-confirm-dev-database
 captured 2026-10-19T20:26:48.531Z
 view public.public_user_profiles: owner postgres, options ["security_invoker=false"], acl {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres}, md5 2c5211f930d54d58322702d27a6d6e87, 9 columns

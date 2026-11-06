@@ -20,7 +20,17 @@ export default defineConfig({
     // evidence records, not regression tests. They stay on disk as evidence but are not collected.
     // Real-boundary security suites (real Supabase Auth and database of the approved development project) are a separate project, vitest.integration.config.ts:
     // this run needs no network and no credential and must never collect them.
-    exclude: [...configDefaults.exclude, 'docs/**', '**/*.integration.test.ts'],
+    // scripts/quality tests use node:test and run with node --test (CI quality job), not under Vitest.
+    exclude: [...configDefaults.exclude, 'docs/**', '**/*.integration.test.ts', 'scripts/quality/**'],
+    // Coverage is collected only with --coverage (CI unit job); scripts/quality/changed-lines-coverage.mjs reads the JSON
+    // report and requires every changed executable line under src/ to run in a test (owner, 2026-11-06).
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.{test,spec,stories}.{ts,tsx}', 'src/**/*.d.ts', 'src/**/__tests__/**', 'src/**/__mocks__/**', 'src/tests/**', 'src/stories/**'],
+      reporter: ['json'],
+      reportsDirectory: 'coverage',
+    },
   },
   resolve: {
     alias: {

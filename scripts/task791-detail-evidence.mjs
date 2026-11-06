@@ -63,7 +63,6 @@ const EXPECTED_PB_PX = Math.round(parseFloat(spacing2xlMatch[1]) * 16);
 
 const smBreakpointMatch = themeSrc.match(/sm:\s*'([\d.]+)em',\s*\/\/\s*(\d+)px/);
 if (!smBreakpointMatch) throw new Error('task791-detail-evidence: could not find breakpoints.sm in theme.ts');
-const SM_GATE_PX = Number(smBreakpointMatch[2]);
 
 const MIME = {
   '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css', '.json': 'application/json',

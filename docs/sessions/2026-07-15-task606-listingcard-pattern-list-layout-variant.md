@@ -1,6 +1,6 @@
 # Session Archive: Task 606 — `MantineListingCardPattern` gains `layout: 'grid' | 'list'` (Storybook only, no site wiring) — 2026-07-15
 
-Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_606_ListingCardPatternListLayoutVariant.md`
+Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_606_ListingCardPatternListLayoutVariant.md`
 
 ## Why (owner-directed)
 

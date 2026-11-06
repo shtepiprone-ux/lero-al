@@ -1,6 +1,6 @@
 # Session Archive: Task 602 — Extend `MantineListingCardPattern` (price + reduced-price + hover) and make it the live VERTICAL listing card — 2026-07-15
 
-Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_602_ListingCardMantineMigration.md` (updated mid-task by the
+Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_602_ListingCardMantineMigration.md` (updated mid-task by the
 owner after a STOP-AND-ASK — see "Ambiguity resolved" below).
 
 ## Ambiguity resolved (STOP-AND-ASK, before any code change)

@@ -1,4 +1,4 @@
-﻿rendered state census: 72 registered state(s), 1408 state job(s) + 896 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 34 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r9-127-census-r47
+rendered state census: 72 registered state(s), 1408 state job(s) + 896 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 34 closed job(s); 6 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r9-127-census-r47
   100/2338 jobs, 149 rows, 16 failing
   200/2338 jobs, 286 rows, 36 failing
   300/2338 jobs, 439 rows, 58 failing

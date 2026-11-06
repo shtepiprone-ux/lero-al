@@ -18,36 +18,36 @@ Here are the accessible roles:
   paragraph:
 
   Name "":
-  [36m<p[39m
-    [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
-    [33mdata-size[39m=[32m"sm"[39m
-    [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"[39m
-  [36m/>[39m
+  <p
+    class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+    data-size="sm"
+    style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"
+  />
 
   --------------------------------------------------
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<div[39m
-      [33mclass[39m=[32m"m_4081bf90 mantine-Group-root"[39m
-      [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);"[39m
-    [36m>[39m
-      [36m<span[39m
-        [33mdata-testid[39m=[32m"empty-icon"[39m
-      [36m>[39m
-        [0micon[0m
-      [36m</span>[39m
-      [36m<p[39m
-        [33mclass[39m=[32m"mantine-focus-auto m_b6d8b162 mantine-Text-root"[39m
-        [33mdata-size[39m=[32m"sm"[39m
-        [33mstyle[39m=[32m"--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"[39m
-      [36m>[39m
-        [0mNothing needs your attention[0m
-      [36m</p>[39m
-    [36m</div>[39m
-  [36m</div>[39m
-[36m</body>[39m...
+<body>
+  <div>
+    <div
+      class="m_4081bf90 mantine-Group-root"
+      style="--group-gap: var(--mantine-spacing-xs); --group-align: center; --group-justify: flex-start; --group-wrap: wrap; padding-block: var(--mantine-spacing-sm);"
+    >
+      <span
+        data-testid="empty-icon"
+      >
+        icon
+      </span>
+      <p
+        class="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+        data-size="sm"
+        style="--text-fz: var(--mantine-font-size-sm); --text-lh: var(--mantine-line-height-sm); color: var(--mantine-color-gray-5);"
+      >
+        Nothing needs your attention
+      </p>
+    </div>
+  </div>
+</body>...
  ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:109:15

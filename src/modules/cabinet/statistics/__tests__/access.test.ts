@@ -1,101 +1,85 @@
 /**
- * Agent statistics access gate — Task 848 (R1, AC1).
+ * Agent statistics access gate — Task 848 (R1, AC1), brought onto the viewer contract by Task 931 (R7).
  *
- * The session and the role lookup are mocked; the gate itself is real. `admin` and `moderator` are
- * `not_agent` (D78-3: the gate reads `role`, and only `agent` passes).
+ * The viewer boundary (`requireViewer`) is a double; the gate itself is real. The role comes from `requireViewer()`
+ * (Task 923 R44): `admin` and `moderator` are `not_agent` (D78-3: only `agent` passes), a lookup that failed is denied
+ * (`not_agent`), and a missing, blocked or deleted profile is `unauthenticated`. The module reads no role of its own.
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const mockGetUser = vi.hoisted(() => vi.fn())
-vi.mock('@/lib/auth/server', () => ({
-  getUser: (...args: unknown[]) => mockGetUser(...args),
+const mockRequireViewer = vi.hoisted(() => vi.fn())
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: (...args: unknown[]) => mockRequireViewer(...args),
 }))
 
-const roleLookup = vi.hoisted(() => ({
-  respond: (() => ({ data: null, error: null })) as () => { data: unknown; error: { code?: string } | null },
-  seen: [] as Array<{ table: string; columns: string; eq: unknown[] }>,
-}))
-
+// Any database read the gate made on its own would be seen here: the gate must make none (the viewer carries the role).
+const ownReads = vi.hoisted(() => [] as string[])
 vi.mock('@/lib/supabase/server', () => ({
   createClient: async () => ({
-    from: (table: string) => ({
-      select: (columns: string) => {
-        const seen = { table, columns, eq: [] as unknown[] }
-        roleLookup.seen.push(seen)
-        const builder = {
-          eq: (...args: unknown[]) => {
-            seen.eq = args
-            return builder
-          },
-          single: async () => roleLookup.respond(),
-        }
-        return builder
-      },
-    }),
+    from: (table: string) => {
+      ownReads.push(`server:${table}`)
+      throw new Error('the access gate must not read the database itself')
+    },
+  }),
+}))
+vi.mock('@/lib/supabase/admin', () => ({
+  createAdminClient: () => ({
+    from: (table: string) => {
+      ownReads.push(`admin:${table}`)
+      throw new Error('the access gate must not read the database itself')
+    },
   }),
 }))
 
 const { getAgentStatisticsAccess } = await import('../access')
 
-let errorSpy: ReturnType<typeof vi.spyOn>
-
 beforeEach(() => {
-  mockGetUser.mockReset()
-  roleLookup.seen = []
-  roleLookup.respond = () => ({ data: null, error: null })
-  errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  mockRequireViewer.mockReset()
+  ownReads.length = 0
 })
 
-afterEach(() => {
-  errorSpy.mockRestore()
-})
-
-function signInAs(role: string) {
-  mockGetUser.mockResolvedValue({ id: 'session-user-1' })
-  roleLookup.respond = () => ({ data: { role }, error: null })
+function signInAs(role: string | null) {
+  mockRequireViewer.mockResolvedValue({ ok: true, userId: 'session-user-1', role })
 }
 
 describe('getAgentStatisticsAccess', () => {
   it('guest -> unauthenticated, and no role lookup is made', async () => {
-    mockGetUser.mockResolvedValue(null)
+    mockRequireViewer.mockResolvedValue({ ok: false, reason: 'unauthenticated' })
     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'unauthenticated' })
-    expect(roleLookup.seen).toEqual([])
+    expect(ownReads).toEqual([])
   })
 
-  it.each(['user', 'admin', 'moderator'])('role %s -> not_agent', async (role) => {
+  it.each(['user', 'admin', 'moderator', null])('role %s -> not_agent', async (role) => {
     signInAs(role)
     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'not_agent' })
   })
 
-  it('role agent -> ok with the session user id', async () => {
+  it('[SEC-931-SRV-STATS-ALLOW] role agent -> ok with the session user id', async () => {
     signInAs('agent')
     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'ok', ownerId: 'session-user-1' })
   })
 
-  it('reads the role of the session user only', async () => {
+  it('takes the role from requireViewer and makes no role read of its own', async () => {
     signInAs('agent')
     await getAgentStatisticsAccess()
-    expect(roleLookup.seen).toEqual([{ table: 'users', columns: 'role', eq: ['id', 'session-user-1'] }])
+    expect(mockRequireViewer).toHaveBeenCalledTimes(1)
+    expect(ownReads).toEqual([])
   })
 
-  it('a role lookup error is denied (not_agent), never granted', async () => {
-    mockGetUser.mockResolvedValue({ id: 'session-user-1' })
-    roleLookup.respond = () => ({ data: null, error: { code: 'PGRST116' } })
+  it('[SEC-931-SRV-STATS-DENY] a role lookup error is denied (not_agent), never granted', async () => {
+    mockRequireViewer.mockResolvedValue({ ok: false, reason: 'lookup_failed' })
     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'not_agent' })
-    expect(errorSpy).toHaveBeenCalledWith('[AgentStatistics] access failed', { code: 'PGRST116' })
   })
 
-  it('a missing profile row is not_agent', async () => {
-    mockGetUser.mockResolvedValue({ id: 'session-user-1' })
-    roleLookup.respond = () => ({ data: null, error: null })
-    expect(await getAgentStatisticsAccess()).toEqual({ kind: 'not_agent' })
+  it('a missing or deleted profile is unauthenticated', async () => {
+    // requireViewer answers `unauthenticated` for a missing, deleted or blocked profile (Task 923 R44)
+    mockRequireViewer.mockResolvedValue({ ok: false, reason: 'unauthenticated' })
+    expect(await getAgentStatisticsAccess()).toEqual({ kind: 'unauthenticated' })
   })
 
   it('a thrown lookup is denied (not_agent)', async () => {
-    mockGetUser.mockResolvedValue({ id: 'session-user-1' })
-    roleLookup.respond = () => {
-      throw new Error('network')
-    }
+    // requireViewer turns a thrown session or profile lookup into `lookup_failed`; the gate maps that to a denial
+    mockRequireViewer.mockResolvedValue({ ok: false, reason: 'lookup_failed' })
     expect(await getAgentStatisticsAccess()).toEqual({ kind: 'not_agent' })
   })
 })

@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** · Wave A, first task · **Status: ✅ APPROVED WITH NOTES 2026-09-18 (review 4, joint closure with 844) — archived**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) — read
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) — read
 its "Owner decisions" table first; **D78-5** (TailAdmin type scale wins over the spec's §17.1 numbers) binds this task.
 
 ## 1. Mode and task type

@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 569, `tasks/Sprints/Sprint_43_kickoff_prompt_Task_569_GeometryCheck4ClipAwareness.md`. Opened by
+Task 569, `tasks/Archive/Sprint_43_kickoff_prompt_Task_569_GeometryCheck4ClipAwareness.md`. Opened by
 the orchestrator at the Task 567 round-2 review: the pinned-footer pattern (Fix 4) surfaced a real
 limitation in the shared `scripts/geometry-integrity.mjs` Check 4 (`element-overlap`), which Task 567
 worked around with a scoped, precedented `GEOMETRY_ALLOWLIST` entry rather than a self-authored

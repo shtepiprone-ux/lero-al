@@ -1,7 +1,7 @@
 platform win32 node v22.22.3
 
 > lero-al@0.1.0 check:kickoff-evidence
-> node scripts/check-kickoff-evidence.mjs tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+> node scripts/check-kickoff-evidence.mjs tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
 
 check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
 EXIT_CODE=0

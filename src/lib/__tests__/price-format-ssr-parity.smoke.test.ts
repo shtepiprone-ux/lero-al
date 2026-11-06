@@ -27,8 +27,8 @@ const LOCALES = ['en', 'uk', 'sq', 'it'] as const
 describe('formatPrice — literal byte assertions per locale (5-digit price, grouped)', () => {
   const expected: Record<string, string> = {
     en: '45,000 ALL',
-    uk: '45 000 ALL',
-    sq: '45 000 ALL',
+    uk: '45\u00A0000 ALL',
+    sq: '45\u00A0000 ALL',
     it: '45.000 ALL',
   }
 
@@ -46,7 +46,7 @@ describe('formatPrice — sq/it 4-digit prices are NOT grouped (real CLDR behavi
   // ICU does for these two locales (verified directly against Node's Intl output).
   const expected: Record<string, string> = {
     en: '4,500 EUR',
-    uk: '4 500 EUR',
+    uk: '4\u00A0500 EUR',
     sq: '4500 EUR',
     it: '4500 EUR',
   }
@@ -61,8 +61,8 @@ describe('formatPrice — sq/it 4-digit prices are NOT grouped (real CLDR behavi
 describe('formatPrice — multi-group price (7 digits)', () => {
   const expected: Record<string, string> = {
     en: '1,234,567 USD',
-    uk: '1 234 567 USD',
-    sq: '1 234 567 USD',
+    uk: '1\u00A0234\u00A0567 USD',
+    sq: '1\u00A0234\u00A0567 USD',
     it: '1.234.567 USD',
   }
 
@@ -76,8 +76,8 @@ describe('formatPrice — multi-group price (7 digits)', () => {
 describe('formatCount — literal byte assertions per locale', () => {
   const expected: Record<string, string> = {
     en: '45,000',
-    uk: '45 000',
-    sq: '45 000',
+    uk: '45\u00A0000',
+    sq: '45\u00A0000',
     it: '45.000',
   }
 
@@ -109,10 +109,10 @@ describe('formatPrice/formatCount — hydration-stable even when Intl.NumberForm
       throw new Error('simulated broken/incomplete ICU locale data')
     }
 
-    expect(formatPrice(45000, 'ALL', 'sq')).toBe('45 000 ALL')
+    expect(formatPrice(45000, 'ALL', 'sq')).toBe('45\u00A0000 ALL')
     expect(formatPrice(45000, 'ALL', 'it')).toBe('45.000 ALL')
     expect(formatPrice(45000, 'ALL', 'en')).toBe('45,000 ALL')
-    expect(formatPrice(45000, 'ALL', 'uk')).toBe('45 000 ALL')
+    expect(formatPrice(45000, 'ALL', 'uk')).toBe('45\u00A0000 ALL')
   })
 
   it('formatCount is unaffected by a broken Intl.NumberFormat', () => {
@@ -138,7 +138,7 @@ describe('formatPrice — edge cases', () => {
   })
 
   it('negative values are grouped correctly (per-sqm / adjustments)', () => {
-    expect(formatPrice(-45000, 'ALL', 'sq')).toBe('-45 000 ALL')
+    expect(formatPrice(-45000, 'ALL', 'sq')).toBe('-45\u00A0000 ALL')
     expect(formatPrice(-45000, 'ALL', 'it')).toBe('-45.000 ALL')
   })
 

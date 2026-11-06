@@ -24,7 +24,7 @@ TypeScript code written after confirmation.
 - `docs/qa-rules.md` ✅ (via rule-index)
 - `docs/ui-rules.md`, `docs/component-rules.md` ✅ (via rule-index)
 - `docs/ai-behavior.md` — Notes 18/19/20/22/23 ✅
-- `tasks/Epics/Epic_R_kickoff_prompt_Task_250.md` ✅
+- `tasks/Archive/Epic_R_kickoff_prompt_Task_250.md` ✅
 - `docs/sessions/2026-05-24-task-197-rbac.md` ✅ (current schema + UI)
 - `src/lib/auth/permissions.ts` ✅
 - `src/lib/auth/permissionKeys.ts` ✅

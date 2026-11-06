@@ -37,7 +37,19 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
-import { selectShard } from './workflow-gates/contract.mjs';
+
+// One CI shard of the Story list: stable code-unit order, every n-th Story from the shard's index.
+function selectShard(stories, shard) {
+  const match = /^(\d+)\/(\d+)$/.exec(shard);
+  const index = Number(match?.[1]);
+  const total = Number(match?.[2]);
+  if (!match || !Number.isInteger(index) || index < 1 || total < index || total > stories.length) {
+    throw new Error('Invalid or empty locale shard');
+  }
+  const sorted = [...stories].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  if (new Set(sorted.map((s) => s.id)).size !== sorted.length) throw new Error('Duplicate Story IDs');
+  return sorted.filter((_, i) => i % total === index - 1);
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -392,14 +404,14 @@ async function collectStoryTokens(browser, baseUrl, story, viewport, locale) {
     const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
     if (!response?.ok()) throw new Error('Story HTTP response failed');
     // Network-idle waits on unrelated assets and cannot establish that Storybook actually rendered.
-    /* eslint-disable no-undef */
+     
     await page.waitForFunction(id => {
       const render = window.__STORYBOOK_PREVIEW__?.currentRender;
       return render?.id === id && ['finished', 'errored'].includes(render.phase);
     }, story.id, { timeout: 15000 });
     const failed = await page.evaluate(() => document.body.classList.contains('sb-show-errordisplay')
       || window.__STORYBOOK_PREVIEW__?.currentRender?.phase === 'errored');
-    /* eslint-enable no-undef */
+     
     if (failed || runtimeFailure) throw new Error('Story render/play failed');
     return await page.evaluate(COLLECT_TOKENS_FN);
   } finally {

@@ -27,6 +27,7 @@ export function sanitizeReturnTo(raw: string | null | undefined): string | null 
   // Reject backslashes — browsers may normalise \ to / in some contexts.
   if (raw.includes('\\')) return null
   // Reject ASCII control characters (U+0000–U+001F).
+  // eslint-disable-next-line no-control-regex -- control characters are exactly what must be refused
   if (/[\x00-\x1f]/.test(raw)) return null
   // Reject path-traversal segments. Normalise %2e → . so that all encoded
   // forms (%2e%2e, .%2e, %2e.) collapse to "..", then test for ".." as a

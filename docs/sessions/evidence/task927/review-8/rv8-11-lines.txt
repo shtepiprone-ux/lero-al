@@ -1,4 +1,4 @@
-﻿# rv8-11: source lines for Task 927 Amendment 9
+# rv8-11: source lines for Task 927 Amendment 9
 platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T19:40:06.665Z
 src/lib/auth/googleIdentity.ts:29: * Google's large size is the 40 px height of Google's branding guidelines (Task 927 D19); `filled_black` is Google's Dark theme (D20).
 src/lib/auth/googleIdentity.ts:34: theme: 'filled_black'

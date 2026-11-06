@@ -9,7 +9,7 @@ import { createHash } from 'node:crypto'
 
 const E = 'docs/sessions/evidence/task923/review-67'
 const R = `${E}/rv67-41-retained`
-const K = 'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
+const K = 'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
 const AUDIT = 'docs/chat-gpt-reports/2026-10-19-deep-audit.md'
 const WHOLE = ['docs/chat-gpt-reports/2026-10-19-full-avatar-rank-probe.json', 'docs/chat-gpt-reports/2026-10-20-full-admin-layout-probe.json']
 const ROWS = ['C506', 'C543', 'C557', 'C619', 'C620']

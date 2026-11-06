@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 in-page.mjs sha256 79c9935c750bba1e68fa55a129bd1420e8b84938fd766b519e7e392aea0e063a (review-13/rv13-05-in-page-sha256.txt: 79c9935c750bba1e68fa55a129bd1420e8b84938fd766b519e7e392aea0e063a)
 cmd npm run check:rendered-state-census:verify
 

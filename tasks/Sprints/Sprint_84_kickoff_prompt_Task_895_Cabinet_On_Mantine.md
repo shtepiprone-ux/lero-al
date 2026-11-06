@@ -442,3 +442,16 @@ cell of `docs/backlog.md`; session log. No Git.
 | # | State | What |
 |---|---|---|
 | **895** | reserved 2026-09-27 — **Sprint 84**, P2, filed by 885's design (D84-1), after **893** | **`/{locale}/cabinet` on canonical Mantine.** Census 2026-09-27 on `src/app/[locale]/cabinet/page.tsx`, unmigrated tier-1 nodes: `CabinetShell` (17 `className`), `ListingsTab` (51), `ProfileTab` (66), `SavedSearchesTab` (29), `RecentlyViewedSection` (0, unstoried), `RecentlyViewedGrid` (0, unstoried), `ClearRecentlyViewedButton` (6, has a Story, not enrolled), plus `AdminUserAvatar` (switch `ProfileTab` to 893's `AdminUserAvatarField`, then delete the legacy file and its `Admin/AdminUserAvatar` Story) and `Combobox` (import removed via `MantineSelect`). Tier-2 to drop: `ui/avatar`, `badge`, `tabs`, `button`, `dialog`, `input`, `label`. `ProfileTab` holds the self-delete and email-change entry points (critical flows "Self-delete + email reuse", "Email change") → **Q4**. Likely more than one kickoff: split per tab if the census says so. Blocks **885** (`Member since` / `Last seen` dates). |
+
+## Mobile adaptation record
+- Scope: visible
+- Surfaces: src/modules/cabinet — the /{locale}/cabinet shell header, its tabs and the profile form
+- Component families: structural-layout-and-feedback, form-picker-and-choice
+- Pattern IDs: linear-flow, toolbar-priority, form-stack
+- Standards: w3c-reflow, w3c-meaningful-sequence, apple-hig-layout, android-adapt-layouts, android-layout-basics, w3c-focus-order, apple-hig-toolbars, android-layout-navigation, w3c-labels-instructions, android-content-structure
+- Mantine mechanism: responsive-props, visibility-props
+- Mantine owner: src/design-system/mantine/patterns/MantinePageHeaderWithActions.tsx, src/design-system/mantine/patterns/MantineFormSectionStack.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): tab labels hidden, icons always shown with the label as accessible name; form sections in one column; 640px transition to labelled tabs
+- Mobile order: avatar → name → badges → member since / last seen → tabs → active tab content
+- Required-content treatment: no semantic loss: tab labels stay the accessible names; header and form text wraps
+- Story and verification: the cabinet View Stories at 320px and on both sides of the 640px transition × sq, en, uk, it

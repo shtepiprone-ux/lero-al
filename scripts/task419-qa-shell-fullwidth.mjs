@@ -90,7 +90,7 @@ function startStaticServer(staticDir, port) {
 
 // In-page evaluation: returns target-specific full-width measurements, or
 // { found: false } if the target container isn't present on this story.
-/* eslint-disable no-undef */
+ 
 function evalTarget(target) {
   function tokens(el) { return (el.className || '').toString().split(/\s+/); }
 
@@ -168,7 +168,7 @@ function evalTarget(target) {
 
   return { found: false };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const storybookStaticDir = join(ROOT, 'storybook-static');

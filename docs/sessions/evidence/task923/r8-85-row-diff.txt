@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: node docs/sessions/evidence/task923/r8-85-row-diff.mjs   (attempt 1 crashed on a rule key absent from the base rows, TypeError at the status line; fixed with one ?. and re-run)
 platform win32 node v22.22.3
 new docs/sessions/evidence/task923/r8-full/rows.jsonl: 34369 rows; base docs/sessions/evidence/task923/r7-full-b/rows.jsonl: 22740 rows; older docs/sessions/evidence/task923/r7-full-a/rows.jsonl: 22739 rows

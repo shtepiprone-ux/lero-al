@@ -3,7 +3,7 @@
 // it on, so that a rerun of the refresh rebuilds the snapshot. Claims and observed literals are unchanged. Keeps line endings. Usage (repository root): node rev44-16-restore-snapshot-rows.mjs
 import fs from 'node:fs'
 
-const K = 'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
+const K = 'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
 const SNAP = 'docs/sessions/evidence/task923/revision-44/rev44-08-head-lines.txt'
 const first = fs.readFileSync('docs/sessions/evidence/task923/revision-44/rev44-08-refresh-locators.txt', 'utf8').split(/\r?\n/)
 const raw = fs.readFileSync(K, 'utf8')

@@ -1,6 +1,6 @@
 platform win32 x64; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; command: node docs/sessions/evidence/task923/review-67/rv67-13-readiness.mjs
 tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.security.json: taskSha256 289a261abde082b094d7767586c0af3fc815eff53b50479990d88049e5bbb019 -> 519187d37bd1475ee3cf3ff1894f8bafe315f35fd58e0f35142581412d10fe0c
-command: node scripts/check-kickoff-evidence.mjs --files tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
+command: node scripts/check-kickoff-evidence.mjs --files tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md
 check:kickoff-evidence PASS — 1 changed active kickoff(s) verified.
 exit 0
 command: npm run check:kickoff-evidence

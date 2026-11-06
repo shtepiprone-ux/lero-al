@@ -33,18 +33,18 @@ The five **direct Sonnet kickoffs** (329, 333, 334, 336) and the four **direct S
 |------|-----------|
 | `tasks/Sprints/Sprint_30_—_Owner_Issues_2026-05-31.md` | Sprint 30 master plan — task inventory + run order + dependency graph + owner gates |
 | `tasks/Sprints/Sprint_30_kickoff_prompt_Task_329.md` | Direct Sonnet kickoff — homepage agent CTA copy |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_330.md` | Opus kickoff — Admin Permissions Role Model Contract v1 + Sonnet fix sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_331.md` | Opus kickoff — Admin Dashboard UX/Layout Contract v1 + Sonnet redesign sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_332.md` | Opus kickoff — Password recovery link lifetime + resend audit + Sonnet fix sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_333.md` | Direct Sonnet kickoff — owner post-edit redirect for "На модерації" listings (status-aware redirect matrix) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_334.md` | Direct Sonnet kickoff — password change root-cause investigation + forced re-auth verification |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_335.md` | Opus kickoff — Deleted-account cleanup + consent-based mailing DB architecture + MVP Sonnet sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_336.md` | Direct Sonnet kickoff — delete-account copy clarity (GATED on Task 335 backend-vs-copy alignment) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_337.md` | Opus kickoff — Admin notification architecture + MVP Sonnet sub-task (listing→pending event + realtime admin Listings) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_338.md` | Opus kickoff — Global clickable-area / hover-target consistency audit + Sonnet fix sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_339.md` | Opus kickoff — Global Responsive Design System Contract v1 (supersedes 7/9-width canons) + phased migration plan |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_340.md` | Opus kickoff — Admin listing preview + "Початкова ціна" → "Оригінальна ціна" rename + Sonnet combined sub-task |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_341.md` | Opus kickoff — In-service listing chat architecture + phased Sonnet plan (largest scope; ≥ 5 phases; Phase 1 = backend/DB only) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_330.md` | Opus kickoff — Admin Permissions Role Model Contract v1 + Sonnet fix sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_331.md` | Opus kickoff — Admin Dashboard UX/Layout Contract v1 + Sonnet redesign sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_332.md` | Opus kickoff — Password recovery link lifetime + resend audit + Sonnet fix sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_333.md` | Direct Sonnet kickoff — owner post-edit redirect for "На модерації" listings (status-aware redirect matrix) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_334.md` | Direct Sonnet kickoff — password change root-cause investigation + forced re-auth verification |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_335.md` | Opus kickoff — Deleted-account cleanup + consent-based mailing DB architecture + MVP Sonnet sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_336.md` | Direct Sonnet kickoff — delete-account copy clarity (GATED on Task 335 backend-vs-copy alignment) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_337.md` | Opus kickoff — Admin notification architecture + MVP Sonnet sub-task (listing→pending event + realtime admin Listings) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_338.md` | Opus kickoff — Global clickable-area / hover-target consistency audit + Sonnet fix sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_339.md` | Opus kickoff — Global Responsive Design System Contract v1 (supersedes 7/9-width canons) + phased migration plan |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_340.md` | Opus kickoff — Admin listing preview + "Початкова ціна" → "Оригінальна ціна" rename + Sonnet combined sub-task |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_341.md` | Opus kickoff — In-service listing chat architecture + phased Sonnet plan (largest scope; ≥ 5 phases; Phase 1 = backend/DB only) |
 | `docs/backlog.md` | Last Session block updated (Sprint 30 entry); Last task number advanced 328 → 341; Sprint 30 Wave 1 + Wave 2 run order block added; sub-task pool note (next free 342) |
 | `docs/sessions/2026-05-31-sprint-30-formation-orchestration.md` | This session log |
 
@@ -92,7 +92,7 @@ Per `docs/orchestrator-role.md` → "Orchestrator-owned commit emission (Task 26
 Remove-Item .git\index -ErrorAction SilentlyContinue; git reset
 
 # Commit the Sprint 30 batch — Opus planning only; no src/messages/migrations
-git add tasks/Sprints/Sprint_30_—_Owner_Issues_2026-05-31.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_329.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_330.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_331.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_332.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_333.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_334.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_335.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_336.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_337.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_338.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_339.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_340.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_341.md docs/backlog.md docs/sessions/2026-05-31-sprint-30-formation-orchestration.md
+git add tasks/Sprints/Sprint_30_—_Owner_Issues_2026-05-31.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_329.md tasks/Archive/Sprint_30_kickoff_prompt_Task_330.md tasks/Archive/Sprint_30_kickoff_prompt_Task_331.md tasks/Archive/Sprint_30_kickoff_prompt_Task_332.md tasks/Archive/Sprint_30_kickoff_prompt_Task_333.md tasks/Archive/Sprint_30_kickoff_prompt_Task_334.md tasks/Archive/Sprint_30_kickoff_prompt_Task_335.md tasks/Archive/Sprint_30_kickoff_prompt_Task_336.md tasks/Archive/Sprint_30_kickoff_prompt_Task_337.md tasks/Archive/Sprint_30_kickoff_prompt_Task_338.md tasks/Archive/Sprint_30_kickoff_prompt_Task_339.md tasks/Archive/Sprint_30_kickoff_prompt_Task_340.md tasks/Archive/Sprint_30_kickoff_prompt_Task_341.md docs/backlog.md docs/sessions/2026-05-31-sprint-30-formation-orchestration.md
 git commit -m "docs(Sprint30): form Sprint 30 — 13 kickoffs from owner-uploaded issues.md (329-341, planning only)"
 ```
 

@@ -21,7 +21,6 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
   const [pageState, setPageState] = useState<PageState>('loading')
   const [verifyMode, setVerifyMode] = useState<VerifyMode>('session')
   const [userId, setUserId] = useState<string | null>(null)
-  const [userEmail, setUserEmail] = useState<string | null>(null)
   const [password, setPassword] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -42,7 +41,6 @@ export function ResetPasswordClient({ locale, tokenHash, otpType }: ResetPasswor
       const { data } = await getSession()
       if (data.session?.user) {
         setUserId(data.session.user.id)
-        setUserEmail(data.session.user.email ?? null)
         setVerifyMode('session')
         setPageState('form')
       } else {

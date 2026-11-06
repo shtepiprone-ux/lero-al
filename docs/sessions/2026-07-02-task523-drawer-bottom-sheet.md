@@ -1,6 +1,6 @@
 # Task 523 — Canonical responsive Drawer: `MantineDrawer` (Batch C P1.17)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_523_DrawerBottomSheet.md`. Ports the legacy `src/components/ui/sheet.tsx` (shadcn/Base-UI Sheet) behavior onto the Task 514 single-source foundation, mirroring `MantineModal` (519) — the only difference is the ≥640 desktop form: a **side** Mantine `Drawer` instead of a centered `Modal`.
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_523_DrawerBottomSheet.md`. Ports the legacy `src/components/ui/sheet.tsx` (shadcn/Base-UI Sheet) behavior onto the Task 514 single-source foundation, mirroring `MantineModal` (519) — the only difference is the ≥640 desktop form: a **side** Mantine `Drawer` instead of a centered `Modal`.
 
 ## Implementation
 

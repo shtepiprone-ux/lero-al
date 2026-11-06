@@ -1,6 +1,6 @@
 # Session log — Task 751 (F1, Sprint 59)
 
-**Task:** `tasks/Sprints/Sprint_59_kickoff_prompt_Task_751_F1_DOM_Component_Mapping_Feasibility.md`
+**Task:** `tasks/Archive/Sprint_59_kickoff_prompt_Task_751_F1_DOM_Component_Mapping_Feasibility.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 **QA profile:** `Q0 Docs/Governance` (write set is docs/artifacts only, zero `src/` paths — `npm run build` not required)
 

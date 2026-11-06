@@ -7,9 +7,13 @@
       "Bash(git reset *)",
       "Bash(git restore *)",
       "Bash(git checkout *)",
+      "Bash(git switch *)",
       "Bash(git stash *)",
       "Bash(git merge *)",
       "Bash(git rebase *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git revert *)",
+      "Bash(git tag *)",
       "Bash(git rm *)",
       "Bash(git apply *)",
       "Bash(git clean *)",
@@ -20,72 +24,144 @@
       "PowerShell(git reset *)",
       "PowerShell(git restore *)",
       "PowerShell(git checkout *)",
+      "PowerShell(git switch *)",
       "PowerShell(git stash *)",
       "PowerShell(git merge *)",
       "PowerShell(git rebase *)",
+      "PowerShell(git cherry-pick *)",
+      "PowerShell(git revert *)",
+      "PowerShell(git tag *)",
       "PowerShell(git rm *)",
       "PowerShell(git apply *)",
       "PowerShell(git clean *)",
-      "PowerShell(git config *)"
+      "PowerShell(git config *)",
+      "mcp__plugin_vercel_vercel__accept_project_transfer_request",
+      "mcp__plugin_vercel_vercel__activate_kms_signing_key",
+      "mcp__plugin_vercel_vercel__add_project_domain",
+      "mcp__plugin_vercel_vercel__add_route",
+      "mcp__plugin_vercel_vercel__add_toolbar_reaction",
+      "mcp__plugin_vercel_vercel__approve_rolling_release_stage",
+      "mcp__plugin_vercel_vercel__assign_alias",
+      "mcp__plugin_vercel_vercel__authorize_team_access",
+      "mcp__plugin_vercel_vercel__authorize_team_sso",
+      "mcp__plugin_vercel_vercel__buy_domain",
+      "mcp__plugin_vercel_vercel__cancel_deployment",
+      "mcp__plugin_vercel_vercel__change_toolbar_thread_resolve_status",
+      "mcp__plugin_vercel_vercel__complete_rolling_release",
+      "mcp__plugin_vercel_vercel__create_deployment",
+      "mcp__plugin_vercel_vercel__create_drain",
+      "mcp__plugin_vercel_vercel__create_edge_config",
+      "mcp__plugin_vercel_vercel__create_edge_config_token",
+      "mcp__plugin_vercel_vercel__create_flag",
+      "mcp__plugin_vercel_vercel__create_flags_project_connection",
+      "mcp__plugin_vercel_vercel__create_git_project",
+      "mcp__plugin_vercel_vercel__create_kms_issuer",
+      "mcp__plugin_vercel_vercel__create_kms_issuer_policy",
+      "mcp__plugin_vercel_vercel__create_kms_signing_key",
+      "mcp__plugin_vercel_vercel__create_observability_query",
+      "mcp__plugin_vercel_vercel__create_or_transfer_domain",
+      "mcp__plugin_vercel_vercel__create_project",
+      "mcp__plugin_vercel_vercel__create_project_env",
+      "mcp__plugin_vercel_vercel__create_record",
+      "mcp__plugin_vercel_vercel__create_sandboxes_sessions_by_session_id_snapshot_v2",
+      "mcp__plugin_vercel_vercel__create_sandboxes_sessions_by_session_id_snapshot_v3",
+      "mcp__plugin_vercel_vercel__create_sandboxes_v2",
+      "mcp__plugin_vercel_vercel__create_sandboxes_v3",
+      "mcp__plugin_vercel_vercel__create_sandboxes_v4",
+      "mcp__plugin_vercel_vercel__create_sdk_key",
+      "mcp__plugin_vercel_vercel__create_session_directory",
+      "mcp__plugin_vercel_vercel__create_storage_stores_blob",
+      "mcp__plugin_vercel_vercel__create_trace_session",
+      "mcp__plugin_vercel_vercel__delete_drive",
+      "mcp__plugin_vercel_vercel__delete_sandbox",
+      "mcp__plugin_vercel_vercel__delete_session_snapshot",
+      "mcp__plugin_vercel_vercel__edit_project_env",
+      "mcp__plugin_vercel_vercel__edit_route",
+      "mcp__plugin_vercel_vercel__edit_toolbar_message",
+      "mcp__plugin_vercel_vercel__extend_session_timeout",
+      "mcp__plugin_vercel_vercel__generate_route",
+      "mcp__plugin_vercel_vercel__get_access_to_vercel_url",
+      "mcp__plugin_vercel_vercel__get_flags_project_disconnection_link",
+      "mcp__plugin_vercel_vercel__get_or_create_drive",
+      "mcp__plugin_vercel_vercel__get_project_deletion_link",
+      "mcp__plugin_vercel_vercel__invalidate_by_src_images",
+      "mcp__plugin_vercel_vercel__invalidate_by_tags",
+      "mcp__plugin_vercel_vercel__issue_cert",
+      "mcp__plugin_vercel_vercel__kill_session_command",
+      "mcp__plugin_vercel_vercel__patch_edge_config_items",
+      "mcp__plugin_vercel_vercel__patch_url_protection_bypass",
+      "mcp__plugin_vercel_vercel__pause_project",
+      "mcp__plugin_vercel_vercel__put_firewall_config",
+      "mcp__plugin_vercel_vercel__record_events",
+      "mcp__plugin_vercel_vercel__replace_domain_dns_records",
+      "mcp__plugin_vercel_vercel__reply_to_toolbar_thread",
+      "mcp__plugin_vercel_vercel__request_promote",
+      "mcp__plugin_vercel_vercel__request_rollback",
+      "mcp__plugin_vercel_vercel__rerequest_check",
+      "mcp__plugin_vercel_vercel__restore_edge_config_backup",
+      "mcp__plugin_vercel_vercel__restore_redirects",
+      "mcp__plugin_vercel_vercel__retry_vercel_ci_invocation",
+      "mcp__plugin_vercel_vercel__revoke_kms_signing_key",
+      "mcp__plugin_vercel_vercel__run_session_command",
+      "mcp__plugin_vercel_vercel__stage_redirects",
+      "mcp__plugin_vercel_vercel__stage_routes",
+      "mcp__plugin_vercel_vercel__start_rolling_release",
+      "mcp__plugin_vercel_vercel__stop_session",
+      "mcp__plugin_vercel_vercel__submit_feedback",
+      "mcp__plugin_vercel_vercel__test_drain",
+      "mcp__plugin_vercel_vercel__unpause_project",
+      "mcp__plugin_vercel_vercel__update_attack_challenge_mode",
+      "mcp__plugin_vercel_vercel__update_bulk_redirect_version",
+      "mcp__plugin_vercel_vercel__update_connector",
+      "mcp__plugin_vercel_vercel__update_drain",
+      "mcp__plugin_vercel_vercel__update_edge_config",
+      "mcp__plugin_vercel_vercel__update_firewall_config",
+      "mcp__plugin_vercel_vercel__update_flag",
+      "mcp__plugin_vercel_vercel__update_flag_segment",
+      "mcp__plugin_vercel_vercel__update_flag_settings",
+      "mcp__plugin_vercel_vercel__update_kms_issuer",
+      "mcp__plugin_vercel_vercel__update_kms_issuer_policy",
+      "mcp__plugin_vercel_vercel__update_project",
+      "mcp__plugin_vercel_vercel__update_project_protection_bypass",
+      "mcp__plugin_vercel_vercel__update_record",
+      "mcp__plugin_vercel_vercel__update_rolling_release_config",
+      "mcp__plugin_vercel_vercel__update_route_versions",
+      "mcp__plugin_vercel_vercel__update_sandbox",
+      "mcp__plugin_vercel_vercel__update_session_network_policy",
+      "mcp__plugin_vercel_vercel__upload_artifact",
+      "mcp__plugin_vercel_vercel__upload_file",
+      "mcp__plugin_vercel_vercel__upsert_connector_project_connection",
+      "mcp__plugin_vercel_vercel__verify_project_domain",
+      "mcp__plugin_vercel_vercel__write_session_files"
+    ],
+    "ask": [
+      "Edit(./.claude/**)",
+      "Edit(./CLAUDE.md)",
+      "Edit(./AGENTS.md)",
+      "Edit(./.github/**)",
+      "Edit(./.githooks/**)",
+      "Edit(./scripts/quality/**)",
+      "Edit(./eslint.config.mjs)",
+      "Edit(./package.json)",
+      "Edit(./package-lock.json)",
+      "Edit(./.npmrc)",
+      "Bash(npm install)",
+      "Bash(npm install *)",
+      "Bash(npm i)",
+      "Bash(npm i *)",
+      "Bash(npm add *)",
+      "Bash(npm update *)",
+      "Bash(npx --yes *)",
+      "PowerShell(npm install)",
+      "PowerShell(npm install *)",
+      "PowerShell(npm i)",
+      "PowerShell(npm i *)",
+      "PowerShell(npm add *)",
+      "PowerShell(npm update *)",
+      "PowerShell(npx --yes *)"
     ]
   },
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Edit|Write|Bash|PowerShell",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/security-hook.mjs"
-            ],
-            "timeout": 15,
-            "onFailure": "block",
-            "statusMessage": "Validating saved task security contract"
-          }
-        ]
-      },
-      {
-        "matcher": "Edit|Write|Bash|PowerShell",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NonInteractive",
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/phase-write-gate.ps1"
-            ],
-            "timeout": 5,
-            "statusMessage": "Verifying required phase preflight",
-            "onFailure": "block"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash|PowerShell",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NonInteractive",
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-mutating-git.ps1"
-            ],
-            "timeout": 5,
-            "onFailure": "block"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "",
@@ -94,57 +170,28 @@
             "type": "command",
             "command": "node",
             "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/session-role.mjs"
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
+              "start"
             ],
-            "timeout": 5,
-            "onFailure": "block",
-            "statusMessage": "Resolving the current workflow role"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NonInteractive",
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/sonnet-executor-bootstrap.ps1",
-              "-Part",
-              "1"
-            ],
-            "timeout": 5,
-            "statusMessage": "Loading Sonnet executor workflow",
-            "onFailure": "block"
+            "timeout": 60,
+            "statusMessage": "Record the files already changed"
           }
         ]
       }
     ],
-    "UserPromptSubmit": [
+    "PostToolUse": [
       {
-        "matcher": "",
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe",
+            "command": "node",
             "args": [
-              "-NonInteractive",
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-router.ps1",
-              "-Part",
-              "1"
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
+              "post"
             ],
-            "timeout": 5,
-            "statusMessage": "Routing Opus task/review workflow",
-            "onFailure": "block"
+            "timeout": 120,
+            "statusMessage": "File checks and ESLint on the written file"
           }
         ]
       }
@@ -157,36 +204,16 @@
             "type": "command",
             "command": "node",
             "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/security-hook.mjs"
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
+              "stop"
             ],
-            "timeout": 15,
-            "onFailure": "block",
-            "statusMessage": "Validating saved task security contract"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe",
-            "args": [
-              "-NonInteractive",
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "${CLAUDE_PROJECT_DIR}/.claude/hooks/orchestrator-response-gate.ps1"
-            ],
-            "timeout": 10,
-            "statusMessage": "Golden Rules gate (GR-5 / GR-6)",
-            "onFailure": "block"
+            "timeout": 900,
+            "statusMessage": "Checks of every file changed in this session"
           }
         ]
       }
     ],
-    "PostModelSwitch": [
+    "SubagentStop": [
       {
         "matcher": "",
         "hooks": [
@@ -194,11 +221,11 @@
             "type": "command",
             "command": "node",
             "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/workflow-gates/session-role.mjs"
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
+              "stop"
             ],
-            "timeout": 5,
-            "onFailure": "block",
-            "statusMessage": "Resolving the current workflow role"
+            "timeout": 900,
+            "statusMessage": "Checks of every file changed in this session"
           }
         ]
       }
@@ -217,10 +244,6 @@
     "browser-use@claude-plugins-official": true
   },
   "claudeMdExcludes": [
-    "**/.claude/rules/create/**",
-    "**/.claude/rules/execute/**",
-    "**/.claude/rules/review/**",
-    "**/.claude/rules/shared/**"
-  ],
-  "disableAllHooks": false
+    "**/.claude/rules/**"
+  ]
 }

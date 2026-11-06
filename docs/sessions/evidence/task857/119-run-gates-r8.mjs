@@ -28,7 +28,7 @@ for (const [name, cmd] of gates) {
   const fd = fs.openSync(file, 'w')
   const r = spawnSync(cmd, { shell: true, stdio: ['ignore', fd, fd] })
   fs.closeSync(fd)
-  let txt = fs.readFileSync(file, 'utf8').replace(/^﻿/, '')
+  let txt = fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, '')
   txt += `\nEXIT_CODE=${r.status}\n`
   fs.writeFileSync(file, txt)
   summary.push(`${name}: ${r.status}`)

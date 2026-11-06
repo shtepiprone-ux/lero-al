@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300
+platform: win32 10.0.26300
 node: v22.22.3
 cwd: C:\Claude_Code_Projects\lero-al
 command: node docs/sessions/evidence/task927/review-4/rv4-04-lines.mjs

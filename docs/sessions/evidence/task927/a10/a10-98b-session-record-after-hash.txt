@@ -1,4 +1,4 @@
-﻿# a10-98b sha256 of the session record after the Amendment 10 executor report
+# a10-98b sha256 of the session record after the Amendment 10 executor report
 command: Get-FileHash docs/sessions/2026-10-10-task923-rendered-state-census.md -Algorithm SHA256
 
 6e6fd27f11a5633c1bd2aee5c9b72fd5eb315b5b1919c61b25d36d76466bc5ee  docs/sessions/2026-10-10-task923-rendered-state-census.md

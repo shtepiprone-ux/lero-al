@@ -3,7 +3,7 @@
 **Executor:** Sonnet. **Type:** UI / primitive chrome conformance (`theme.ts` + `input-chrome.css`) — NOT product
 code. **Status:** IMPLEMENTED, pending orchestrator review — **still HELD** (Scope A/Progress was already done in
 a prior session; this session closes Scope B and completes Scope C). Kickoff:
-`tasks/Sprints/Sprint_40_kickoff_prompt_Task_539_MantinePrimitiveStoriesTailAdminConformanceAudit.md`.
+`tasks/Archive/Sprint_40_kickoff_prompt_Task_539_MantinePrimitiveStoriesTailAdminConformanceAudit.md`.
 
 ## Pre-read confirmation
 

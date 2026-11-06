@@ -1,4 +1,4 @@
-﻿# a8-04 step 1: is a Next.js dev server or Storybook running? (executor, read-only, before npm run build-storybook)
+# a8-04 step 1: is a Next.js dev server or Storybook running? (executor, read-only, before npm run build-storybook)
 platform: Windows PowerShell 5.1.26100.9711 10.0.26300.0
 node: v22.22.3
 cwd: C:\Claude_Code_Projects\lero-al

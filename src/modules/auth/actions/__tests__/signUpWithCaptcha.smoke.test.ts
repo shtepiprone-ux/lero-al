@@ -4,6 +4,10 @@
  * Covers registry P0 auth lifecycle row:
  *   - Signup: valid → { ok: true }; captcha fail → typed error; dup email → typed error.
  *
+ * Task 923 R67 (c) / Task 931 R6: Supabase Auth is the ONE verifier of the Turnstile token. The action only checks that a
+ * token is present and hands it to `signUp`; a refusal by Supabase (code `captcha_failed`) maps to `captcha_failed`.
+ * `verifyTurnstile` stays mocked so that a call to it would be seen.
+ *
  * Planted-violation proof:
  *   Remove the `if (!captchaToken) return { ok: false, reason: 'captcha_failed' }` guard
  *   → the empty-captcha test FAILS (proceeds to verifyTurnstile and gets captcha_failed
@@ -33,7 +37,7 @@ vi.mock('@/lib/supabase/server', () => ({
 
 beforeEach(() => {
   vi.clearAllMocks()
-  // Default: turnstile succeeds
+  // The action must not call it (Supabase Auth is the one verifier); it succeeds so that a stray call would not change the result
   mockVerifyTurnstile.mockResolvedValue({ success: true })
   // Default: Supabase signUp succeeds
   mockSignUp.mockResolvedValue({ error: null })
@@ -45,7 +49,7 @@ beforeEach(() => {
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
 describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
-  it('happy path: valid captcha + email/password → { ok: true }', async () => {
+  it('[SEC-931-SRV-CAPTCHA-ALLOW] happy path: valid captcha + email/password → { ok: true }; the token goes to Supabase and verifyTurnstile is not called', async () => {
     const { signUpWithCaptcha } = await import('../captcha')
     const result = await signUpWithCaptcha({
       email: 'new@example.com',
@@ -55,10 +59,13 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
     })
 
     expect(result).toEqual({ ok: true })
-    expect(mockVerifyTurnstile).toHaveBeenCalledWith('valid-turnstile-token')
+    // Task 923 R67 (c): Supabase Auth is the ONE verifier — the action only hands the token over (a Turnstile token is single-use)
+    expect(mockVerifyTurnstile).not.toHaveBeenCalled()
+    expect(mockSignUp).toHaveBeenCalledTimes(1)
     expect(mockSignUp).toHaveBeenCalledWith(expect.objectContaining({
       email: 'new@example.com',
       password: 'SecureP@ss1',
+      options: expect.objectContaining({ captchaToken: 'valid-turnstile-token' }),
     }))
   })
 
@@ -74,10 +81,13 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
     expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
     // Guard: Supabase must NOT be called when captcha is absent
     expect(mockSignUp).not.toHaveBeenCalled()
+    expect(mockVerifyTurnstile).not.toHaveBeenCalled()
   })
 
-  it('captcha fail — turnstile rejects → { ok: false, reason: "captcha_failed" } without calling Supabase', async () => {
-    mockVerifyTurnstile.mockResolvedValue({ success: false, errorCodes: ['invalid-input-response'] })
+  it('[SEC-931-SRV-CAPTCHA-DENY] captcha fail — Supabase refuses the token → { ok: false, reason: "captcha_failed" }', async () => {
+    // Task 923 R67 (c): the action no longer verifies the token itself; Supabase Auth refuses an invalid or replayed one with code `captcha_failed`.
+    const refusal = { code: 'captcha_failed', message: 'captcha protection: request disallowed (invalid-input-response)', status: 400 }
+    mockSignUp.mockResolvedValue({ error: refusal })
 
     const { signUpWithCaptcha } = await import('../captcha')
     const result = await signUpWithCaptcha({
@@ -87,8 +97,26 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
       emailRedirectTo: 'https://lero.al/sq/auth/verified',
     })
 
-    expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
-    expect(mockSignUp).not.toHaveBeenCalled()
+    expect(result).toEqual({ ok: false, reason: 'captcha_failed', supabaseErrorMessage: refusal.message })
+    expect(mockSignUp).toHaveBeenCalledTimes(1)
+    expect(mockSignUp).toHaveBeenCalledWith(expect.objectContaining({
+      options: expect.objectContaining({ captchaToken: 'bad-turnstile-token' }),
+    }))
+    expect(mockVerifyTurnstile).not.toHaveBeenCalled()
+  })
+
+  it('captcha fail — a refusal that only names the captcha in its message is also captcha_failed', async () => {
+    mockSignUp.mockResolvedValue({ error: { message: 'Captcha verification process failed', status: 400 } })
+
+    const { signUpWithCaptcha } = await import('../captcha')
+    const result = await signUpWithCaptcha({
+      email: 'new@example.com',
+      password: 'SecureP@ss1',
+      captchaToken: 'replayed-turnstile-token',
+      emailRedirectTo: 'https://lero.al/sq/auth/verified',
+    })
+
+    expect(result).toEqual({ ok: false, reason: 'captcha_failed', supabaseErrorMessage: 'Captcha verification process failed' })
   })
 
   it('signup failed (dup email / weak pw) → { ok: false, reason: "signup_failed" } with error message', async () => {

@@ -46,18 +46,17 @@ function isExcluded(relPath) {
 // Seeded with ONLY the real justified hits that exist on the current tree.
 // No whole-file entries. Stale entries FAIL the gate.
 
-const ALLOWLIST = [
+export const ALLOWLIST = [
   // Cron lifecycle: expiry sweep finds active+lapsed to transition via engine
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".eq('status', 'active')", reason: 'lifecycle expiry sweep — engine-driven status transition, not a public read' },
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".lt('expires_at', now)", reason: 'lifecycle expiry sweep — finds lapsed listings to expire' },
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".is('expires_at', null)", reason: 'lifecycle expiry sweep — finds null-expiry listings to report' },
   // Single-row detail/view reads: multi-status filter for display (not public list visibility)
   { path: 'src/app/api/listings/[slug]/view/route.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row view-count increment, multi-status display filter' },
-  { path: 'src/app/[locale]/listings/[slug]/page.tsx', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row detail page, multi-status display filter' },
   // Recently-viewed resolution: by saved IDs, multi-status filter
   { path: 'src/modules/listings/lib/recentlyViewedQueries.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'recently-viewed resolution by saved IDs, not a public list read' },
   // Contact-event lookup: one listing by id via service role (Task 850/887)
-  { path: 'src/modules/listings/actions/contactEvents.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row WhatsApp contact-event lookup by id (service role, Task 850) — link-reachable status set, not a public list read' },
+  { path: 'src/modules/listings/actions/contactEvents.ts', fingerprint: ".eq('status', 'active')", reason: 'single-row WhatsApp contact-event lookup by id (service role, Task 850): only an active listing of a live owner has a contact card (Task 923 R66 (f), owner F2), the same status-only rule as the detail page, which applies no expiry filter; not a public list read' },
   // Arrow-factory reads (Task 863): reached through listingCount()/ownListings() call sites
   { path: 'src/modules/admin/dashboard/queries.ts', fingerprint: ".eq('status', 'active')", reason: 'ADM-11 consistency check only (Task 847 R3) — raw active head:true count, never displayed, not a public read' },
   { path: 'src/modules/cabinet/statistics/data.ts', fingerprint: ".gte('expires_at', window.startUtc)", reason: 'AGT-01 expiring window on an applyPublicVisibility set (Task 848) — not a visibility predicate' },
@@ -229,6 +228,30 @@ export function detectVisibilityViolations(source, filePath) {
   return violations;
 }
 
+/**
+ * Stale allowlist check: each entry must match a real detector hit.
+ * @param {Array<{path: string, fingerprint: string}>} entries - Allowlist entries
+ * @param {(path: string) => unknown} readSource - Returns the entry's source text; anything else, or a throw, is stale
+ * @returns {Array<object>} The stale entries, in input order
+ */
+export function staleAllowlistEntries(entries, readSource) {
+  return entries.filter(entry => {
+    let source;
+    try { source = readSource(entry.path); } catch { return true; }
+    if (typeof source !== 'string') return true;
+    // Run detector WITHOUT allowlist filtering to see raw hits
+    const lines = source.split('\n');
+    const blocks = extractListingsQueryBlocks(lines);
+    for (const block of blocks) {
+      for (const { text } of block) {
+        const trimmed = text.trim();
+        if (trimmed.includes(entry.fingerprint)) return false;
+      }
+    }
+    return true;
+  });
+}
+
 // ── Self-test mode (Part B) ─────────────────────────────────────────────────
 
 function runSelfTest() {
@@ -356,12 +379,6 @@ function runSelfTest() {
   process.exit(0);
 }
 
-console.log(SCOPE_LINE);
-
-if (VERIFY_GATE) {
-  runSelfTest();
-}
-
 // ── Scan mode ───────────────────────────────────────────────────────────────
 
 function collectFiles(dir, exts) {
@@ -379,80 +396,82 @@ function collectFiles(dir, exts) {
   return results;
 }
 
-const canonicalPath = resolve(ROOT, CANONICAL_SOURCE);
-if (!existsSync(canonicalPath)) {
-  console.error(`❌ Canonical source missing: ${CANONICAL_SOURCE}`);
-  process.exit(1);
-}
-const canonicalSource = readFileSync(canonicalPath, 'utf8');
-if (!canonicalSource.includes(ANCHOR)) {
-  console.error(`❌ ${ANCHOR} missing from ${CANONICAL_SOURCE} — the canonical policy source has been tampered with.`);
-  process.exit(1);
-}
+// ── Command line — runs only when this file is the entry point, so a self-test can import the module ─
 
-const srcDir = resolve(ROOT, 'src');
-const files = collectFiles(srcDir, ['.ts', '.tsx']);
-const allViolations = [];
+function runCommandLine() {
+  console.log(SCOPE_LINE);
 
-for (const filePath of files) {
-  const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
-  if (isExcluded(relPath)) continue;
-
-  const source = readFileSync(filePath, 'utf8');
-  const hits = detectVisibilityViolations(source, relPath);
-  for (const hit of hits) {
-    allViolations.push({ path: relPath, ...hit });
+  if (VERIFY_GATE) {
+    runSelfTest();
   }
-}
 
-// Stale allowlist check: each entry must match a real detector hit
-const staleEntries = ALLOWLIST.filter(entry => {
-  const fp = resolve(ROOT, entry.path);
-  if (!existsSync(fp)) return true;
-  const source = readFileSync(fp, 'utf8');
-  // Run detector WITHOUT allowlist filtering to see raw hits
-  const lines = source.split('\n');
-  const blocks = extractListingsQueryBlocks(lines);
-  for (const block of blocks) {
-    for (const { text } of block) {
-      const trimmed = text.trim();
-      if (trimmed.includes(entry.fingerprint)) return false;
+  const canonicalPath = resolve(ROOT, CANONICAL_SOURCE);
+  if (!existsSync(canonicalPath)) {
+    console.error(`❌ Canonical source missing: ${CANONICAL_SOURCE}`);
+    process.exit(1);
+  }
+  const canonicalSource = readFileSync(canonicalPath, 'utf8');
+  if (!canonicalSource.includes(ANCHOR)) {
+    console.error(`❌ ${ANCHOR} missing from ${CANONICAL_SOURCE} — the canonical policy source has been tampered with.`);
+    process.exit(1);
+  }
+
+  const srcDir = resolve(ROOT, 'src');
+  const files = collectFiles(srcDir, ['.ts', '.tsx']);
+  const allViolations = [];
+
+  for (const filePath of files) {
+    const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
+    if (isExcluded(relPath)) continue;
+
+    const source = readFileSync(filePath, 'utf8');
+    const hits = detectVisibilityViolations(source, relPath);
+    for (const hit of hits) {
+      allViolations.push({ path: relPath, ...hit });
     }
   }
-  return true;
-});
 
-if (allViolations.length === 0 && staleEntries.length === 0) {
-  console.log('✅ Listing public-visibility invariant gate PASSED — 0 violations.');
-  console.log(`   Anchor ${ANCHOR} present in ${CANONICAL_SOURCE}.`);
-  console.log(`   Allowlist: ${ALLOWLIST.length} entries, 0 stale.`);
-  console.log(`   Scanned ${files.length} files.`);
-  process.exit(0);
-}
+  const staleEntries = staleAllowlistEntries(ALLOWLIST, path => {
+    const fp = resolve(ROOT, path);
+    return existsSync(fp) ? readFileSync(fp, 'utf8') : null;
+  });
 
-console.error(`   Allowlist: ${ALLOWLIST.length} entries, ${staleEntries.length} stale.`);
+  if (allViolations.length === 0 && staleEntries.length === 0) {
+    console.log('✅ Listing public-visibility invariant gate PASSED — 0 violations.');
+    console.log(`   Anchor ${ANCHOR} present in ${CANONICAL_SOURCE}.`);
+    console.log(`   Allowlist: ${ALLOWLIST.length} entries, 0 stale.`);
+    console.log(`   Scanned ${files.length} files.`);
+    process.exit(0);
+  }
 
-if (staleEntries.length > 0) {
-  console.error('\n❌ Stale allowlist entries (no longer match — remove them):');
-  for (const e of staleEntries) {
-    console.error(`   ${e.path} — fingerprint: "${e.fingerprint}" — reason: ${e.reason}`);
+  console.error(`   Allowlist: ${ALLOWLIST.length} entries, ${staleEntries.length} stale.`);
+
+  if (staleEntries.length > 0) {
+    console.error('\n❌ Stale allowlist entries (no longer match — remove them):');
+    for (const e of staleEntries) {
+      console.error(`   ${e.path} — fingerprint: "${e.fingerprint}" — reason: ${e.reason}`);
+    }
+  }
+
+  if (allViolations.length > 0) {
+    console.error(`\n❌ ${allViolations.length} inline visibility literal(s) on listings reads:\n`);
+    for (const v of allViolations) {
+      console.error(`   ${v.path}:${v.line}  ${v.text}`);
+    }
+    console.error('\n   Remediation: route this read through `applyPublicVisibility` or');
+    console.error('   `applyPublicEligibleButHidden` in `src/modules/listings/lib/visibility.ts`.');
+  }
+
+  const totalIssues = allViolations.length + staleEntries.length;
+  if (REPORT_ONLY) {
+    console.log(`\n⚠️  ${totalIssues} issue(s) found (report mode — exit 0).`);
+    process.exit(0);
+  } else {
+    console.error(`\n❌ ${totalIssues} issue(s) — gate FAILED.`);
+    process.exit(1);
   }
 }
 
-if (allViolations.length > 0) {
-  console.error(`\n❌ ${allViolations.length} inline visibility literal(s) on listings reads:\n`);
-  for (const v of allViolations) {
-    console.error(`   ${v.path}:${v.line}  ${v.text}`);
-  }
-  console.error('\n   Remediation: route this read through `applyPublicVisibility` or');
-  console.error('   `applyPublicEligibleButHidden` in `src/modules/listings/lib/visibility.ts`.');
-}
-
-const totalIssues = allViolations.length + staleEntries.length;
-if (REPORT_ONLY) {
-  console.log(`\n⚠️  ${totalIssues} issue(s) found (report mode — exit 0).`);
-  process.exit(0);
-} else {
-  console.error(`\n❌ ${totalIssues} issue(s) — gate FAILED.`);
-  process.exit(1);
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  runCommandLine();
 }

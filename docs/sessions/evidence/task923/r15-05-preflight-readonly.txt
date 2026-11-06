@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; every execution is BEGIN READ ONLY ... ROLLBACK
+platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; every execution is BEGIN READ ONLY ... ROLLBACK
 cmd node docs/sessions/evidence/task923/db-catalog/r14-preflight-readonly.cjs --i-confirm-dev-database   (reads the regenerated v6 file)
  ok  proposed-hardening.sql: preflight against the live schema: passes
  ok  proposed-account-deletion.sql: preflight against the live schema: passes

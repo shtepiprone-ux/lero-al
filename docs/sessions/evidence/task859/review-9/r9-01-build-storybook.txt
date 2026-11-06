@@ -8798,7 +8798,7 @@ platform=win32 node=v22.22.3 cwd=C:\Claude_Code_Projects\lero-al cmd=npm.cmd run
 │  (!) Some chunks are larger than 500 kB after minification. Consider:
 │  - Using dynamic import() to code-split the application
 │  - Use build.rollupOptions.output.manualChunks to improve chunking:
-│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  https://rollupjs.org/configuration-options/#output-manualchunks
 │  - Adjust chunk size limit for this warning via
 │  build.chunkSizeWarningLimit.
 │  Vite ✓ built in 49.50s

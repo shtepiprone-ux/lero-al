@@ -22,14 +22,14 @@ const REALISTIC = [
 ]
 // shapes that broke the rule before: a hyphen cut at the 80th character, hyphens and spaces in every order, other scripts, emoji, control and no-break spaces, combining marks alone
 const SHAPES = [
-  `${'a'.repeat(79)} - b`, `${'a'.repeat(80)}-b`, `${'a'.repeat(78)}--b`, `-${'a'.repeat(120)}`, '- - -', '_ _ _', '--a--b--', ' - a - ', '日本語のタイトル', '🏠🏠🏠', 'tab\tand\nnewline', 'no break space',
+  `${'a'.repeat(79)} - b`, `${'a'.repeat(80)}-b`, `${'a'.repeat(78)}--b`, `-${'a'.repeat(120)}`, '- - -', '_ _ _', '--a--b--', ' - a - ', '日本語のタイトル', '🏠🏠🏠', 'tab\tand\nnewline', 'no\u00A0break\u00A0space',
   '́́́', 'İstanbul', 'ǅǈǋ', 'ﬁnal', '', '1', 'a', '-', '_',
 ]
 // a plain linear congruential generator, so that the sample is the same on every run
 function sample(count: number): string[] {
   let seed = 20261021
   const next = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 2 ** 32 }
-  const alphabet = ['a', 'b', 'e', 'k', 'z', 'Z', '1', '2', '9', '+', ' ', ' ', ' ', '-', '-', '--', ' - ', ',', '.', '/', '(', ')', 'ë', 'ç', 'é', 'я', 'ї', 'и', 'ж', '_', '&', '\t', ' ', '́', '😀', '日']
+  const alphabet = ['a', 'b', 'e', 'k', 'z', 'Z', '1', '2', '9', '+', ' ', ' ', ' ', '-', '-', '--', ' - ', ',', '.', '/', '(', ')', 'ë', 'ç', 'é', 'я', 'ї', 'и', 'ж', '_', '&', '\t', '\u00A0', '́', '😀', '日']
   const titles: string[] = []
   for (let i = 0; i < count; i++) {
     const length = Math.floor(next() * 200)

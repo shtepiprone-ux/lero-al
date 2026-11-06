@@ -1,5 +1,12 @@
 # Orchestrator Procedures
 
+> **Superseded in part (governance reset 2026-11-06).** The flow, the gates, review and security testing are defined in
+> `.claude/rules/README.md` (`flow.md`, `quality-gates.md`, `secure-code-review.md`, `security-testing.md`). CI is
+> `.github/workflows/ci.yml` with the single required check **CI Required**. The hooks, receipts, phase files,
+> `workflow-gates`, `role-boundaries`, `git-publication` and the `governance-pr.yml`/`governance-scheduled.yml`
+> workflows named below no longer exist; where this file conflicts with `.claude/rules/`, `.claude/rules/` wins.
+
+
 This file contains the longer procedures that were previously mixed into `docs/agent-contract.md`.
 The short contract states the invariants; this file explains how Opus applies them.
 
@@ -79,7 +86,7 @@ Every acceptance criterion and every confirmed review finding should map back to
 
 The ordered operational workflow is C1-C7 in `.claude/skills/create-task/SKILL.md` or R1-R7 in
 `.claude/skills/review-task/SKILL.md`. Follow its phase files and evidence/exit conditions. Both use
-`.claude/rules/shared/task-readiness.md` before publishing a new or revised executor route. These detailed sections
+`.claude/rules/shared/task-readiness.md` (removed 2026-11-06) before publishing a new or revised executor route. These detailed sections
 support the selected phase; they do not replace it or require loading the other workflow parent.
 
 Before publishing an implementation kickoff, declaring a task executable, or returning an approval/revision
@@ -425,7 +432,7 @@ changed only by an explicit owner decision recorded before the verdict.
 
 ### Main-branch CI receipt (mandatory, owner decision 2026-10-07)
 
-Work reaches `main` by direct owner push, so `.github/workflows/governance-pr.yml` runs on **every push to `main`** as
+Work reaches `main` by direct owner push, so `.github/workflows/governance-pr.yml` (removed 2026-11-06) runs on **every push to `main`** as
 well as on pull requests. A gate that never executes protects nothing: from 2026-08-16 to 2026-10-07 no PR was opened,
 the full gate did not run once, and the weekly scan failed three weeks running without anyone reading it.
 
@@ -485,7 +492,7 @@ task's other reconciled artifacts. Do not repeat closure evidence in chat: one r
 ### Open-task review closure - verify the correction or next assigned stage
 
 An owner-forwarded Sonnet report authorizes the full review and its necessary verified revisions as one cycle
-(`.claude/rules/shared/role-boundaries.md`). Do not pause for permission to start or revise. Keep a checkpoint and
+(`.claude/rules/shared/role-boundaries.md` (removed 2026-11-06)). Do not pause for permission to start or revise. Keep a checkpoint and
 reuse valid evidence under `shared/orchestration-state.md` when the owner continues the same work.
 
 A passed intermediate stage also continues this cycle. After the owner supplies a pending validation result,
@@ -495,7 +502,7 @@ Name the actual ready sidecar with `NEXT EXECUTOR CONTRACT: tasks/<actual-path>.
 dependency permits plain `BLOCKED` without Git; a draft route or unfinished available design does not justify stopping.
 
 `NEEDS REVISION` starts with a completed, consolidated audit under review R6. Investigate the correction and pass
-`.claude/rules/shared/task-readiness.md` before publishing it as executable. Map each confirmed blocking finding to the changed
+`.claude/rules/shared/task-readiness.md` (removed 2026-11-06) before publishing it as executable. Map each confirmed blocking finding to the changed
 scope, requirement, acceptance criterion, verification, re-entry, or completion-report clause; remove contradictory
 text; and update all active task-state artifacts required by GR-5. A missing owner decision is written into the
 kickoff as `STOP - OWNER DECISION REQUIRED` with bounded options and their verification impact.
@@ -549,8 +556,9 @@ For every other decision, the final chat response contains only these four headi
 2. `Next actions — Sonnet` — only concrete executor remediation or outstanding evidence, with verification; otherwise
    `None.`
 3. `Next actions — owner` — only owner decisions, manual checks, and owner-native validation; otherwise `None.`
-4. `Git handoff` — explicit-path `git add`, `git commit`, and verified `git push` commands only after `APPROVED` or
-   `APPROVED WITH NOTES`; include changed `docs/backlog.md`, `docs/backlog-archive.md`, and every other reconciled
+4. `Git handoff` — follow `.claude/rules/shared/git-publication.md` (removed 2026-11-06): task-branch commit; branch push + PR only after
+   `APPROVED` or `APPROVED WITH NOTES`; merge only after green PR checks. Include changed
+   `docs/backlog.md`, `docs/backlog-archive.md`, and every other reconciled
    state artifact. Otherwise `None - no Git handoff for <DECISION>.`
 
 Do not praise the implementation; replay the executor report; list passing checks, requirements, or validation
@@ -639,9 +647,12 @@ Mutating git is owner-only and native PowerShell only, including:
 
 After verified task design that changed task/docs artifacts, a `NEEDS REVISION` kickoff amendment, or an `APPROVED` /
 `APPROVED WITH NOTES` review, the orchestrator may emit explicit-path commit commands for the owner to run, but must
-not run them. Only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus append
-`git push <verified-remote> <verified-branch>` for the owner. Inspect the current branch and remote/upstream read-only
-first and replace both placeholders with verified values; never emit a bare `git push`. A task-design handoff and
+not run them. Follow `.claude/rules/shared/git-publication.md` (removed 2026-11-06) (owner decision 2026-11-01, PR-only main): the
+owner commits on a task branch; only after the `APPROVED` / `APPROVED WITH NOTES` review may Opus emit
+`git push -u origin <task-branch>` plus `gh pr create` for the owner, and the merge only after green
+`ci-status.mjs --pr`. After the merge, exact-SHA `ci-status.mjs` success on main is required before reporting
+publication complete. Inspect the current branch read-only
+first and replace the placeholder with the verified branch; never emit a bare push or a push to main. A task-design handoff and
 each non-approved review must omit a push command. For `NEEDS REVISION`, stage only the amended kickoff and
 Opus-authored state artifacts, never implementation paths. Never emit `git add -A`, `git add -u`, or wildcard staging.
 Every allowed `git commit` handoff is an unattributed owner commit. Do not emit `Co-Authored-By` in any case or

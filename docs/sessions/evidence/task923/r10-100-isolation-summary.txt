@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 R52 / AC36 (R33 procedure): each Story with a NOT ALLOWED difference of r10-61 is run 3 times alone (--stories <id> --jobs 10) and every run is compared with r8-full (r10-61-compare-full.mjs <run> r8-full); a stable result = 0 rows with a difference
 patterns-mantine-admincurrencytabs--default run 1: census exit 1; rows in both runs 373; rows with a difference 0 | differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 0
 patterns-mantine-admincurrencytabs--default run 2: census exit 1; rows in both runs 373; rows with a difference 0 | differences NOT allowed (R33: diagnose, then outcome (i) gate defect / (ii) product race / (iii) unresolved): 0

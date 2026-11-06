@@ -8426,14 +8426,14 @@
 │  (!) Some chunks are larger than 500 kB after minification. Consider:
 │  - Using dynamic import() to code-split the application
 │  - Use build.rollupOptions.output.manualChunks to improve chunking:
-│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  https://rollupjs.org/configuration-options/#output-manualchunks
 │  - Adjust chunk size limit for this warning via
 │  build.chunkSizeWarningLimit.
 │  Vite ✓ built in 47.19s
 │
 ●  Storybook collects completely anonymous usage telemetry. We use it to
 │  shape Storybook's roadmap and prioritize features. You can learn more,
-│  including how to opt out, at ]8;;https://storybook.js.org/telemetryhttps://storybook.js.org/telemetry]8;;
+│  including how to opt out, at https://storybook.js.org/telemetry
 │
 ◇  Output directory:
 │  C:/Claude_Code_Projects/lero-al-task879-head/storybook-static

@@ -1,4 +1,4 @@
-﻿ M .claude/rules/shared/security-test-environment.md
+ M .claude/rules/shared/security-test-environment.md
  M .storybook/main.ts
  M .storybook/stubs/crypto.ts
  M docs/ai-behavior.md

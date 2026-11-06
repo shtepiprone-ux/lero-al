@@ -55,7 +55,7 @@
  *   node real-before-after-comparator.mjs --plant      Same, with one AFTER cell corrupted.
  *   LERO_I0_EXPORT_DIR=<path> node real-before-after-comparator.mjs   Override the I0 export location.
  */
-import { writeFile, readFile, readdir } from 'node:fs/promises';
+import { writeFile, readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { existsSync } from 'node:fs';
 import { extname, join, resolve, dirname } from 'node:path';

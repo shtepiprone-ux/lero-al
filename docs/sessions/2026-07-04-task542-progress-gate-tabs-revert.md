@@ -2,7 +2,7 @@
 
 **Executor:** Sonnet. **Type:** UI / rendered-gate resolution + small revert (gate-tooling + docs +
 `input-chrome.css`) — NOT product code. **Status:** IMPLEMENTED, pending orchestrator review — **HELD, do NOT
-run git**. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_542_Task539CommitUnblock_ProgressGate_TabsRevert.md`.
+run git**. Kickoff: `tasks/Archive/Sprint_40_kickoff_prompt_Task_542_Task539CommitUnblock_ProgressGate_TabsRevert.md`.
 
 ## Pre-read confirmation
 

@@ -1,7 +1,7 @@
 # Session — Task 539: Canonical `MantineProgress` (progress bar) → TailAdmin conformance
 
 **Date:** 2026-07-03
-**Kickoff:** `tasks/Sprints/Sprint_40_kickoff_prompt_Task_539_MantineProgressPrimitive.md`
+**Kickoff:** `tasks/Archive/Sprint_40_kickoff_prompt_Task_539_MantineProgressPrimitive.md`
 **Executor:** Sonnet (this session)
 
 ## Summary

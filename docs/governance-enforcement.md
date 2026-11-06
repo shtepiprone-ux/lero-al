@@ -1,4 +1,11 @@
 # Governance Enforcement Framework — Lero.al
+
+> **Superseded in part (governance reset 2026-11-06).** The flow, the gates, review and security testing are defined in
+> `.claude/rules/README.md` (`flow.md`, `quality-gates.md`, `secure-code-review.md`, `security-testing.md`). CI is
+> `.github/workflows/ci.yml` with the single required check **CI Required**. The hooks, receipts, phase files,
+> `workflow-gates`, `role-boundaries`, `git-publication` and the `governance-pr.yml`/`governance-scheduled.yml`
+> workflows named below no longer exist; where this file conflicts with `.claude/rules/`, `.claude/rules/` wins.
+
 **Phase 1 of Future Maintenance Direction Epic**
 Established: 2026-05-18
 Status: PERMANENT GOVERNANCE REFERENCE
@@ -512,8 +519,8 @@ npm run governance:update-baseline
 
 | Workflow | Trigger | Scope | Blocking |
 |---|---|---|---|
-| `.github/workflows/governance-pr.yml` | Direct owner push to main; optional PR/merge queue and manual dispatch; no path filter | Registered static gates, full tests, task security contracts, Windows hooks and rendered checks; `Governance Required` plus separate `Release Security Required` | Failed checks fail the run; production promotion requires configured Vercel Deployment Checks |
-| `.github/workflows/governance-scheduled.yml` | Weekly Monday 09:00 UTC, manual dispatch | Self-test + full scan; report as run summary and artifact (read-only, never committed) | ✅ on violations |
+| `.github/workflows/governance-pr.yml` (removed 2026-11-06) | Direct owner push to main; optional PR/merge queue and manual dispatch; no path filter | Registered static gates, full tests, task security contracts, Windows hooks and rendered checks; `Governance Required` plus separate `Release Security Required` | Failed checks fail the run; production promotion requires configured Vercel Deployment Checks |
+| `.github/workflows/governance-scheduled.yml` (removed 2026-11-06) | Weekly Monday 09:00 UTC, manual dispatch | Self-test + full scan; report as run summary and artifact (read-only, never committed) | ✅ on violations |
 
 On a push, the review-ledger step validates the ledgers changed in the pushed range and requires none
 (`check:review-ledger -- --ci --push`; validating every retained ledger cannot pass, because historical ledgers cite
@@ -522,7 +529,7 @@ paths later work moved or deleted), and the diff-mapped surface census uses the 
 the tip of `main` is what must be green. Reading that result is an orchestrator duty, not an optional check
 (`docs/orchestrator-procedures.md` → "Main-branch CI receipt").
 
-The canonical task/write/verification/release procedure is `.claude/rules/shared/workflow-gates.md`. Its machine
+The canonical task/write/verification/release procedure is `.claude/rules/shared/workflow-gates.md` (removed 2026-11-06). Its machine
 contract is cumulative with review-ledger and UI requirements. Do not infer branch protection or Vercel promotion
 gating from a workflow file: on 2026-10-17 the remote main branch was unprotected and its ruleset list was empty.
 The optional ruleset payload protects deletion/force pushes; it requires neither PRs nor pre-existing checks on
@@ -612,7 +619,7 @@ convention as `scripts/enrolled-tailwind-baseline.json`).
 |---|---|
 | Weekly governance report (auto) | `docs/governance-reports/weekly/weekly-YYYY-MM-DD.md` |
 | Monthly Tailwind entropy report | `docs/governance-reports/monthly/monthly-YYYY-MM-tailwind-entropy.md` |
-| Machine-readable JSON | `scripts/governance/reports/tailwind-entropy.latest.json` |
+| Machine-readable JSON | `scripts/governance/reports/tailwind-entropy.latest.json` (gitignored, generated locally) |
 | Entropy audit baseline doc | `docs/tailwind-entropy-audit.md` |
 
 ### Interpretation Guide

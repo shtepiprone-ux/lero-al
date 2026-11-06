@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: npm run check:rendered-state-census:verify   (after the three R33 (i) fixes of R52; the fixture stylesheet-fails-on-reopen is a mount state)
 
 > lero-al@0.1.0 check:rendered-state-census:verify

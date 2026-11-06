@@ -1,7 +1,7 @@
 # Security task record — Task 923 Revision 8: the owner-directed fixes (D14) and the 640px work (D15, D24, R39)
 
 > **Status: written by Opus, review 8 of Task 923 (2026-10-18); stage `planned`.** It is the second security record of Task 923
-> Revision 8 (kickoff §17, R38 and R39, `tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`) and is NOT a
+> Revision 8 (kickoff §17, R38 and R39, `tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md`) and is NOT a
 > kickoff: no number is reserved. The invariants, scope and applicability below are Opus's; Sonnet changes only the stage and report
 > metadata from here on. The first record (`Sprint_78_Task_923_security_record_D8_D9.md`) keeps the D6–D9 package.
 

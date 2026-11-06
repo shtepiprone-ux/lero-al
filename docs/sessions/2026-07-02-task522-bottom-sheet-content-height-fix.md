@@ -1,6 +1,6 @@
 # Task 522 — Bottom sheet stretches to 90dvh on short content (§18.8 foundation fix, Task 514 single source)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_522_BottomSheetContentHeightFix.md`. Origin: `docs/mantine-responsive-design-system.md` §18.8 — the mobile bottom sheet always rendered at exactly `90dvh` regardless of content height, leaving a large empty region below short content on all five foundation consumers (owner-authorized fix at the Task 514 single source, 2026-07-01).
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_522_BottomSheetContentHeightFix.md`. Origin: `docs/mantine-responsive-design-system.md` §18.8 — the mobile bottom sheet always rendered at exactly `90dvh` regardless of content height, leaving a large empty region below short content on all five foundation consumers (owner-authorized fix at the Task 514 single source, 2026-07-01).
 
 ## Root-cause diagnosis (rendered measurement, not guessed)
 

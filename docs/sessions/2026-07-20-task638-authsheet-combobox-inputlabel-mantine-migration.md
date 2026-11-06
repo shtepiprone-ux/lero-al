@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_638_AuthSheet_Slice2e_Combobox_InputLabel_MantineMigration.md`
+`tasks/Archive/kickoff_prompt_Task_638_AuthSheet_Slice2e_Combobox_InputLabel_MantineMigration.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

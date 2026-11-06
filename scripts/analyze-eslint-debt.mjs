@@ -21,7 +21,6 @@ function run() {
 
   const lines = output.split("\n");
   const errorLines = lines.filter((l) => l.includes(" error "));
-  const warningLines = lines.filter((l) => l.includes(" warning "));
 
   const summary = lines.find((l) => l.includes("problems (")) || "";
   const summaryMatch = summary.match(/(\d+) errors?,\s*(\d+) warnings?/);

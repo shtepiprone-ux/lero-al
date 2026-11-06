@@ -3,7 +3,7 @@
 Sprint 78 (moved from Sprint 81 by owner decision **D78-7**) · **P3** · QA profile **Q3** · depends on 873 (landed) ·
 owner action **O78-5** · **Status: ✅ APPROVED 2026-09-29 — review 3 (§18); archived**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 (D78-7 is quoted verbatim there and in §5 below). The sibling nodes of `/admin/currency` are filed as **877**.
 
 ## 1. Mode and task type

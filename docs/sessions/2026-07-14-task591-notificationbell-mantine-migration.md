@@ -1,6 +1,6 @@
 # Task 591 — Migrate header `NotificationBell` stack off legacy `@/components/ui/*` → Mantine (+ presentational split + canonical story)
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_591_NotificationBellMantineMigration.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_591_NotificationBellMantineMigration.md`.
 Depends on Tasks 513/514/558 (`MantinePopover`/`ResponsiveBottomSheet` single-source foundation), 574–590 (Header → Mantine + presentational-split pattern this mirrors).
 
 ## Why

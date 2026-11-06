@@ -18,10 +18,10 @@ Forbidden:
 
 | Task | File | Current status | Needs migration? | Reason |
 |---|---|---|---|---|
-| 250 | `tasks/Epics/Epic_R_kickoff_prompt_Task_250.md` | Pending (Sprint 12 R.3a) | **Yes** | Touches admin permissions UI (admin table + edit-flow + RLS). Original prompt is concrete but needs `agent-contract.md` Pre-read + `rule-index.md` bundle + explicit "Current behavior to preserve" / "Required after behavior" sections + Notes 22/23 reference. |
-| 251 | `tasks/Epics/Epic_GG_kickoff_prompt_Task_251.md` | Pending (Sprint 13 GG.1) | **Yes** | Touches admin email-templates editor (admin control task). Needs new Pre-read + behavior-preservation blocks + Note 22 reference. |
-| 252 | `tasks/Epics/Epic_V_kickoff_prompt_Task_252.md` | Pending (Sprint 13 V.3) | **Yes** | Admin Sales inbox split — admin table task + control relocation (the mailbox-filter dropdown moves to a route-level split). Needs Notes 21 + 22 references. |
-| 228, 234, 235, 236, 239, 242, 244, 248 | `tasks/Sprints/Sprint_12_kickoff_prompts.md` | Pending (Sprint 12 active) | **Yes** | All 8 tasks live in a single multi-prompt file. Needed: Sprint-wide header note pointing to `agent-contract.md` + `rule-index.md` and a `Current behavior to preserve` / `Required after behavior` block per task. Task 235 also gets explicit Note 22 reference (admin table). Task 248 gets Note 23 reference (profile edit-flow). |
+| 250 | `tasks/Archive/Epic_R_kickoff_prompt_Task_250.md` | Pending (Sprint 12 R.3a) | **Yes** | Touches admin permissions UI (admin table + edit-flow + RLS). Original prompt is concrete but needs `agent-contract.md` Pre-read + `rule-index.md` bundle + explicit "Current behavior to preserve" / "Required after behavior" sections + Notes 22/23 reference. |
+| 251 | `tasks/Archive/Epic_GG_kickoff_prompt_Task_251.md` | Pending (Sprint 13 GG.1) | **Yes** | Touches admin email-templates editor (admin control task). Needs new Pre-read + behavior-preservation blocks + Note 22 reference. |
+| 252 | `tasks/Archive/Epic_V_kickoff_prompt_Task_252.md` | Pending (Sprint 13 V.3) | **Yes** | Admin Sales inbox split — admin table task + control relocation (the mailbox-filter dropdown moves to a route-level split). Needs Notes 21 + 22 references. |
+| 228, 234, 235, 236, 239, 242, 244, 248 | `tasks/Archive/Sprint_12_kickoff_prompts.md` | Pending (Sprint 12 active) | **Yes** | All 8 tasks live in a single multi-prompt file. Needed: Sprint-wide header note pointing to `agent-contract.md` + `rule-index.md` and a `Current behavior to preserve` / `Required after behavior` block per task. Task 235 also gets explicit Note 22 reference (admin table). Task 248 gets Note 23 reference (profile edit-flow). |
 | 229–233 | Not yet broken out into per-task kickoff files | Sprint 13 deferred (Epic W follow-ups) | **No (no file yet)** | Listed in `Epic_W_Listings_Filter_Bar_and_Drawer_Polish.md` as line items. When the orchestrator files a per-task kickoff (in the future), it must use the new template directly. |
 | 237, 238 | Not yet broken out into per-task kickoff files | Sprint 13 deferred (Epic Y follow-ups) | **No (no file yet)** | Same — to be filed with the new template when the orchestrator schedules them. |
 | 240, 241, 243, 245, 246, 247, 249 | Not yet broken out | Sprint 13 deferred (Epics Z / AA / BB / CC / DD / EE / FF) | **No (no file yet)** | Same. |
@@ -47,10 +47,10 @@ files are not tasks.
 
 ## Migrated files (this task)
 
-1. `tasks/Epics/Epic_R_kickoff_prompt_Task_250.md` — Pre-read replaced with rule-index bundle (Admin table + DB/RLS); added Localization coverage, Responsive coverage, Current behavior to preserve, Required after behavior, Notes 22 + 23 conditional blocks.
-2. `tasks/Epics/Epic_GG_kickoff_prompt_Task_251.md` — Pre-read replaced (Email/auth lifecycle + Admin control bundles); added new sections + Note 22 conditional block.
-3. `tasks/Epics/Epic_V_kickoff_prompt_Task_252.md` — Pre-read replaced (Admin table + Control-relocation bundles); added new sections + Notes 21 + 22 conditional blocks.
-4. `tasks/Sprints/Sprint_12_kickoff_prompts.md` — Sprint-wide header now references `agent-contract.md` + `rule-index.md` + Notes 18/19/20/21/22/23. Each of the 8 sub-tasks (228, 234, 235, 236, 239, 242, 244, 248) gained `Pre-read` with explicit rule-index bundle + `Current behavior to preserve` + `Required after behavior`. Task 235 carries Note 22 (admin table). Task 248 carries Note 23 (edit-flow).
+1. `tasks/Archive/Epic_R_kickoff_prompt_Task_250.md` — Pre-read replaced with rule-index bundle (Admin table + DB/RLS); added Localization coverage, Responsive coverage, Current behavior to preserve, Required after behavior, Notes 22 + 23 conditional blocks.
+2. `tasks/Archive/Epic_GG_kickoff_prompt_Task_251.md` — Pre-read replaced (Email/auth lifecycle + Admin control bundles); added new sections + Note 22 conditional block.
+3. `tasks/Archive/Epic_V_kickoff_prompt_Task_252.md` — Pre-read replaced (Admin table + Control-relocation bundles); added new sections + Notes 21 + 22 conditional blocks.
+4. `tasks/Archive/Sprint_12_kickoff_prompts.md` — Sprint-wide header now references `agent-contract.md` + `rule-index.md` + Notes 18/19/20/21/22/23. Each of the 8 sub-tasks (228, 234, 235, 236, 239, 242, 244, 248) gained `Pre-read` with explicit rule-index bundle + `Current behavior to preserve` + `Required after behavior`. Task 235 carries Note 22 (admin table). Task 248 carries Note 23 (edit-flow).
 
 ## Preservation checks
 
@@ -97,7 +97,7 @@ Validation verdict: tsc/build N/A (no product code) · pending-kickoff migration
 ## Ready-to-run git commands for owner
 
 ```
-git add tasks/Epics/Epic_R_kickoff_prompt_Task_250.md tasks/Epics/Epic_GG_kickoff_prompt_Task_251.md tasks/Epics/Epic_V_kickoff_prompt_Task_252.md tasks/Sprints/Sprint_12_kickoff_prompts.md docs/backlog.md docs/sessions/2026-05-27-task-254-task-migration.md
+git add tasks/Archive/Epic_R_kickoff_prompt_Task_250.md tasks/Archive/Epic_GG_kickoff_prompt_Task_251.md tasks/Archive/Epic_V_kickoff_prompt_Task_252.md tasks/Archive/Sprint_12_kickoff_prompts.md docs/backlog.md docs/sessions/2026-05-27-task-254-task-migration.md
 git commit -m "chore(Task254): migrate pending kickoff files to the new concrete Sonnet template"
 ```
 
@@ -111,7 +111,7 @@ git add docs/agent-contract.md docs/rule-index.md docs/orchestrator-role.md docs
 git commit -m "chore(Task253): AI governance compression — agent-contract.md + rule-index.md + Notes 21/22/23 + refactored Canonical Task Template"
 
 # Commit 2 — Task 254
-git add tasks/Epics/Epic_R_kickoff_prompt_Task_250.md tasks/Epics/Epic_GG_kickoff_prompt_Task_251.md tasks/Epics/Epic_V_kickoff_prompt_Task_252.md tasks/Sprints/Sprint_12_kickoff_prompts.md docs/sessions/2026-05-27-task-254-task-migration.md
+git add tasks/Archive/Epic_R_kickoff_prompt_Task_250.md tasks/Archive/Epic_GG_kickoff_prompt_Task_251.md tasks/Archive/Epic_V_kickoff_prompt_Task_252.md tasks/Archive/Sprint_12_kickoff_prompts.md docs/sessions/2026-05-27-task-254-task-migration.md
 git commit -m "chore(Task254): migrate pending kickoff files to the new concrete Sonnet template"
 ```
 

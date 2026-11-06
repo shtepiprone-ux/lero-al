@@ -8,10 +8,11 @@ import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, renameS
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { setTimeout } from 'node:timers';
-import { fileURLToPath } from 'node:url';
-import { runCodeCheck } from './code-check.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { added, addedLinesOf, leftBehind, readRegistry, refusedLines, runCodeCheck } from './code-check.mjs';
 import { differential } from './hook-differential.mjs';
 import { validateSettings } from './check-workflow.mjs';
+import { isGovernanceScopePath, isPolicyPath } from './contract.mjs';
 import { evaluateHook, hookModuleClosure } from './security-hook.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('../..', import.meta.url)));
@@ -216,16 +217,18 @@ const WRITE_ROWS = {
   gates: 'node scripts/workflow-gates/selftests.mjs',
   workflow: 'node scripts/workflow-gates/check-workflow.mjs',
   related: 'node node_modules/vitest/vitest.mjs related {files} --run --passWithNoTests --allowOnly=false --reporter=dot',
+  ciLint: 'node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs {files}',
 };
-const REAL_ROOTS = ['src', 'scripts', '.claude/hooks', '.claude/settings.json', 'messages', '.storybook', 'tsconfig.json', 'package.json', 'next.config.ts', 'vitest.config.ts', 'vitest.integration.config.ts', 'eslint.config.mjs', 'postcss.config.mjs', 'sentry.edge.config.ts', 'sentry.server.config.ts', 'package-lock.json', '.npmrc', 'supabase/migrations', '.github/workflows', 'CLAUDE.md', 'AGENTS.md', '.codex', '.claude/rules', '.claude/skills', '.claude/agents'];
+const REAL_ROOTS = ['src', 'scripts', '.claude/hooks', '.claude/settings.json', 'messages', '.storybook', 'tsconfig.json', 'package.json', 'next.config.ts', 'vitest.config.ts', 'vitest.integration.config.ts', 'eslint.config.mjs', 'postcss.config.mjs', 'sentry.edge.config.ts', 'sentry.server.config.ts', 'package-lock.json', '.npmrc', 'supabase/migrations', '.github', 'CLAUDE.md', 'AGENTS.md', '.codex', '.claude/rules', '.claude/skills', '.claude/agents'];
 const REAL_ROWS = [
   { paths: ['src/**/*.ts', 'src/**/*.tsx'], write: [WRITE_ROWS.eslint, WRITE_ROWS.integrity, WRITE_ROWS.tsc], stop: [WRITE_ROWS.related] },
-  { paths: ['src/**/*.tsx', 'src/**/*.css'], write: [WRITE_ROWS.integrity], stop: [{ run: 'node scripts/check-design-tokens.mjs --strict', namesFile: true }] },
-  { paths: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.css', 'messages/*.json'], write: [], stop: [{ run: 'node scripts/check-mojibake.mjs', namesFile: true, folders: ['docs/', 'src/', 'messages/', 'tasks/', 'scripts/'] }] },
+  { paths: ['src/**/*.tsx', 'src/**/*.css'], write: [WRITE_ROWS.integrity], stop: [{ run: 'node scripts/check-design-tokens.mjs --strict', namesFile: true, finding: '^\\s+\\S+\\s+\\(\\d+\\)\\s*$' }] },
+  { paths: ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.css', 'messages/*.json'], write: [], stop: [{ run: 'node scripts/check-mojibake.mjs', namesFile: true, finding: '^\\s+\\S+:\\d+:\\d+\\s' }] },
   { paths: ['scripts/**/*.mjs', 'scripts/**/*.js', 'scripts/**/*.cjs'], write: [WRITE_ROWS.integrity], stop: [WRITE_ROWS.gates] },
   // The gate suite reaches the gates only. A scanner in scripts/ has its vitest tests in scripts/__tests__, and they run here.
   { paths: ['scripts/*.mjs', 'scripts/*.js', 'scripts/*.cjs', 'scripts/lib/**/*.mjs', 'scripts/governance/**/*.mjs', 'scripts/rendered-state-census/**/*.mjs'], write: [], stop: [WRITE_ROWS.related] },
   { paths: ['scripts/**/*.ts'], write: [WRITE_ROWS.integrity, WRITE_ROWS.tsc], stop: [WRITE_ROWS.related] },
+  { paths: ['scripts/workflow-gates/*.mjs'], write: [WRITE_ROWS.ciLint], stop: [] },
   { paths: ['scripts/**/*.json'], write: [WRITE_ROWS.integrity], stop: [WRITE_ROWS.gates, WRITE_ROWS.workflow] },
   { paths: ['scripts/workflow-gates/security-hook.mjs'], write: [], stop: ['node scripts/workflow-gates/hook-differential.mjs'] },
   { paths: ['.claude/hooks/*.ps1'], write: ["powershell -NoProfile -Command \"$e=$null;[void][System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path '{file}'),[ref]$null,[ref]$e); if($e){$e[0].Message;exit 1}\""], stop: [WRITE_ROWS.workflow] },
@@ -234,7 +237,7 @@ const REAL_ROWS = [
   // A file that configures the checks can break the whole project, so its effect is checked too.
   { paths: ['tsconfig.json', 'package.json'], write: [WRITE_ROWS.integrity, WRITE_ROWS.tsc], stop: [] },
   { paths: ['package.json', 'package-lock.json'], write: [], stop: ['node scripts/workflow-gates/dependency-check.mjs'] },
-  { paths: ['.github/workflows/*', '.npmrc', 'CLAUDE.md', 'AGENTS.md', '.codex/*', '.claude/rules/**/*', '.claude/skills/**/*', '.claude/agents/*'], write: [], stop: ['node scripts/workflow-gates/check-workflow.mjs'] },
+  { paths: ['.github/**/*', '.npmrc', 'CLAUDE.md', 'AGENTS.md', '.codex/*', '.claude/rules/**/*', '.claude/skills/**/*', '.claude/agents/*'], write: [], stop: ['node scripts/workflow-gates/check-workflow.mjs'] },
   { paths: ['supabase/migrations/*.sql'], write: ['node scripts/check-file-integrity.mjs --files {files}'], stop: [] },
   { paths: ['next.config.ts', 'sentry.*.config.ts', 'vitest.integration.config.ts', '.storybook/**/*.ts', '.storybook/**/*.tsx'], write: [WRITE_ROWS.eslint, WRITE_ROWS.integrity, WRITE_ROWS.tsc], stop: [] },
   { paths: ['vitest.config.ts'], write: [WRITE_ROWS.integrity, WRITE_ROWS.tsc], stop: ['node node_modules/vitest/vitest.mjs list --filesOnly'] },
@@ -258,7 +261,8 @@ test('[GOV-945-HOOK-CLEAN-ALLOW] Clean code passes and the registry holds only c
   const commandsOf = row => [...row.write, ...row.stop].map(entry => (typeof entry === 'string' ? entry : entry.run));
   const commands = registry.rows.flatMap(commandsOf);
   for (const row of registry.rows.filter(entry => entry.paths.some(path => path.startsWith('scripts/')))) {
-    assert.ok(!commandsOf(row).some(command => /eslint/.test(command)), `ESLint ignores scripts, so it cannot fail for ${row.paths[0]}`);
+    // Its default config ignores scripts, so only a command naming the gate config can fail for one.
+    assert.ok(commandsOf(row).filter(command => /eslint/.test(command)).every(command => command.includes('--config scripts/workflow-gates/eslint.config.mjs')), `ESLint cannot fail for ${row.paths[0]} under its default config`);
   }
   assert.ok(!commands.some(command => /check-ui-contract/.test(command)), 'it reads committed revisions, so it cannot fail for the change');
   for (const entry of registry.rows.flatMap(row => row.stop)) if (/check-mojibake/.test(entry.run ?? entry)) assert.equal(entry.namesFile, true, 'it fails at this tree, so only a finding in a changed file counts');
@@ -267,13 +271,13 @@ test('[GOV-945-HOOK-CLEAN-ALLOW] Clean code passes and the registry holds only c
     if (script) assert.ok(existsSync(join(ROOT, script)), `${script} exists`);
   }
 
-  const gate = [{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/tree-gate.mjs`, namesFile: true }] }];
+  const gate = [{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/tree-gate.mjs`, namesFile: true, finding: '^finding in ' }] }];
   const tree = fixture(t, { registry: registryOf(gate), files: { 'src/each/known-bad.ts': 'export const bad = 1;\n', 'src/each/known-bad.tsx': 'export const near = 1;\n' } });
   passed(await tree.run('SessionStart'));
   tree.put('src/each/other.ts', 'export const other = 1;\n');
   passed(await tree.run('Stop'), 'a finding outside the change does not block');
   assert.equal(tree.marks().length, 1, 'the gate ran');
-  const near = fixture(t, { registry: registryOf([{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/near.mjs`, namesFile: true }] }]),
+  const near = fixture(t, { registry: registryOf([{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/near.mjs`, namesFile: true, finding: '^finding in ' }] }]),
     files: { 'tests/near.mjs': "console.error('finding in src/each/wide.tsx and other-src/each/wide.ts'); process.exit(1);\n", 'src/each/wide.ts': 'export const wide = 1;\n', 'src/each/wide.tsx': 'export const near = 1;\n' } });
   passed(await near.run('SessionStart'));
   near.put('src/each/wide.ts', 'export const wide = 2;\n');
@@ -284,37 +288,50 @@ test('[GOV-945-HOOK-CLEAN-ALLOW] Clean code passes and the registry holds only c
   assert.match(blocked.message, /finding in src\/each\/known-bad\.ts\nfinding 0 elsewhere/, 'with the details under it, which lie above the tail');
 });
 
-test('Task 945: a whole-tree gate that names no file it checks did not report, and that is no finding elsewhere', async t => {
-  const gateRow = script => [{ paths: ['src/each/**/*.ts', 'src/each/**/*.css'], write: [], stop: [{ run: `${NODE} tests/${script}.mjs`, namesFile: true }] }];
-  const crash = fixture(t, { registry: registryOf(gateRow('crash')), files: { 'src/each/a.ts': 'export const a = 1;\n', 'tests/crash.mjs': "console.log('scanning src/each/**/*.css'); console.error('Error: Cannot find module x'); console.error('    at file:///scripts/gate.mjs:1:1'); process.exit(1);\n" } });
+test('[GOV-945-HOOK-GATE-CRASH-ERROR] A crashing gate is no finding elsewhere', async t => {
+  const FORM = '^\\s+\\S+:\\d+:\\d+\\s';
+  const gateRow = script => [{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/${script}.mjs`, namesFile: true, finding: FORM }] }];
+  const gate = (script, text_, files = {}) => {
+    const f = fixture(t, { registry: registryOf(gateRow(script)), files: { 'src/each/a.ts': 'export const a = 1;\n', 'src/each/other.ts': 'export const b = 1;\n', [`tests/${script}.mjs`]: text_, ...files } });
+    return f;
+  };
+  // It names real files, the changed one among them, in the form a stack trace has: a word of the old rule would have read this as a finding.
+  const crash = gate('crash', "console.error('Error: Cannot find module x'); console.error('    at src/each/a.ts (file:///x:1:1)'); console.error('    at src/each/other.ts:1'); process.exit(1);\n");
   passed(await crash.run('SessionStart'));
   crash.put('src/each/a.ts', 'export const a = 2;\n');
   const failed = await crash.run('Stop');
   assert.equal(failed.status, 2, 'a gate that crashed refuses');
-  assert.match(failed.message, /could not finish \(exit 1, and its output names no file it checks\)/);
+  assert.match(failed.message, /could not finish \(exit 1, and its output holds no line of a finding\)/);
   assert.match(failed.message, /Cannot find module x/, 'with its reason');
   assert.equal((await crash.run('Stop', { stop_hook_active: true })).status, 2, 'on every attempt');
-
-  const folderOnly = fixture(t, { registry: registryOf(gateRow('folder')), files: { 'src/each/a.ts': 'export const a = 1;\n', 'tests/folder.mjs': "console.error('could not read src/each'); process.exit(1);\n" } });
-  passed(await folderOnly.run('SessionStart'));
-  folderOnly.put('src/each/a.ts', 'export const a = 2;\n');
-  assert.equal((await folderOnly.run('Stop')).status, 2, 'a folder is no file');
-
-  const elsewhere = fixture(t, { registry: registryOf(gateRow('elsewhere')), files: { 'src/each/a.ts': 'export const a = 1;\n', 'src/each/known/bad.css': 'a{}\n', 'tests/elsewhere.mjs': "console.error('  src/each/known/bad.css  (2)'); process.exit(1);\n" } });
+  const elsewhere = gate('elsewhere', "console.error('  src/each/other.ts:1:2 finding'); process.exit(1);\n");
   passed(await elsewhere.run('SessionStart'));
   elsewhere.put('src/each/a.ts', 'export const a = 2;\n');
-  passed(await elsewhere.run('Stop'), 'a real finding elsewhere still does not block');
+  passed(await elsewhere.run('Stop'), 'a finding of the form outside the change does not block');
+  const inChange = gate('own', "console.log('\\u001b[31m  src/each/a.ts:1:2 finding\\u001b[0m'); console.log('    the detail'); console.log('  src/each/other.ts:1:2 finding'); process.exit(1);\n");
+  passed(await inChange.run('SessionStart'));
+  inChange.put('src/each/a.ts', 'export const a = 2;\n');
+  const own = await inChange.run('Stop');
+  assert.equal(own.status, 2, 'a finding in a changed file blocks');
+  assert.match(own.message, /tests\/own\.mjs: exit 1\n\s+src\/each\/a\.ts:1:2 finding\n\s+the detail/, 'at its line with the detail under it, read past colour codes');
+  const none = fixture(t, { registry: registryOf([{ paths: ['src/**/*.ts'], write: [], stop: [{ run: 'x', namesFile: true }] }]) });
+  const refused = await none.run('Stop');
+  assert.equal(refused.status, 2, 'an entry with no finding');
+  assert.match(refused.message, /^CODE CHECK COULD NOT RUN: .*the whole-tree gate x holds no finding/);
+  const atWrite = fixture(t, { registry: registryOf([{ paths: ['src/**/*.ts'], write: [{ run: 'x', namesFile: true, finding: '' }], stop: [] }]) });
+  assert.match((await atWrite.run('Stop')).message, /CODE CHECK COULD NOT RUN/, 'an empty finding, at either stage');
 
-  const wider = fixture(t, { registry: registryOf([{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/wider.mjs`, namesFile: true, folders: ['docs/'] }] }]), files: { 'src/each/a.ts': 'export const a = 1;\n', 'docs/old.md': 'a\n', 'tests/wider.mjs': "console.error('  docs/old.md:1 finding'); process.exit(1);\n" } });
-  passed(await wider.run('SessionStart'));
-  wider.put('src/each/a.ts', 'export const a = 2;\n');
-  passed(await wider.run('Stop'), 'a gate that scans wider than its row names the folders it reports on');
-});
-
-test('Task 945: the real design-token gate reports the shape the whole-tree rule reads', () => {
-  const run = spawnSync(process.execPath, ['scripts/check-design-tokens.mjs', '--strict'], { cwd: ROOT, encoding: 'utf8', timeout: 60000 });
-  if (run.status === 0) return;
-  assert.match(`${run.stdout}${run.stderr}`, /^\s*src\/\S+\.(?:tsx?|css)\s+\(\d+\)$/m, 'a failing run names its files on lines of their own');
+  const registry = JSON.parse(readFileSync(join(ROOT, REGISTRY), 'utf8'));
+  const entries = registry.rows.flatMap(row => row.stop).filter(entry => entry.namesFile);
+  assert.deepEqual(entries.map(entry => [entry.run, entry.finding]), [['node scripts/check-design-tokens.mjs --strict', '^\\s+\\S+\\s+\\(\\d+\\)\\s*$'], ['node scripts/check-mojibake.mjs', '^\\s+\\S+:\\d+:\\d+\\s']]);
+  for (const entry of entries) {
+    assert.deepEqual(Object.keys(entry).sort(), ['finding', 'namesFile', 'run'], 'the folders are gone');
+    const [script, ...args] = entry.run.split(' ').slice(1);
+    const run = spawnSync(process.execPath, [script, ...args], { cwd: ROOT, encoding: 'utf8', timeout: 120000, maxBuffer: 1 << 26 });
+    assert.ok([0, 1].includes(run.status), `${script} ran`);
+    const found = `${run.stdout}${run.stderr}`.split(/\r?\n/).filter(line => new RegExp(entry.finding).test(line));
+    assert.equal(found.length > 0, run.status !== 0, `${script}, exit ${run.status}: a line of a finding exactly when it fails`);
+  }
 });
 
 test('Task 945: with no state, the write that fired the event is still checked', async t => {
@@ -413,14 +430,14 @@ test('Task 945: the real quieting rules read what they are meant to', () => {
   assert.match('expect(a).toBeDefined()', rule('an assertion that accepts'));
   assert.doesNotMatch('expect(a).toBe(5)', rule('an assertion that accepts'));
   // UTF-8 text read as CP1251, and four ordinary words that start with the same two capitals. Escapes, because this file is English.
-  assert.match('РџСЂРёРІС–С‚', rule('garbled Cyrillic'));
-  for (const text of ['Руслан', 'Страна', 'Радість', 'Сьогодні']) assert.doesNotMatch(text, rule('garbled Cyrillic'), text);
+  assert.match('\u0420\u045f\u0421\u0402\u0420\u0451\u0420\u0406\u0421\u2013\u0421\u201a', rule('garbled Cyrillic'));
+  for (const text of ['\u0420\u0443\u0441\u043b\u0430\u043d', '\u0421\u0442\u0440\u0430\u043d\u0430', '\u0420\u0430\u0434\u0456\u0441\u0442\u044c', '\u0421\u044c\u043e\u0433\u043e\u0434\u043d\u0456']) assert.doesNotMatch(text, rule('garbled Cyrillic'), text);
   for (const entry of quieting) for (const path of entry.paths) assert.ok(typeof path === 'string' && entry.what, 'each rule names its files and what it finds');
 });
 
 // Every other test here uses fixture checks. This one runs the real registry through the real main, with the real ESLint config, tsc, vitest config and gates,
 // because a fixture check proves the tool reads an exit code, and says nothing about whether the registry's commands see a real defect.
-test('Task 945: the real registry stops real defects through the real main', async t => {
+function realChain(t, extra = {}) {
   const root = mkdtempSync(join(tmpdir(), 'lero-945-chain-'));
   const link = join(root, 'node_modules');
   t.after(() => {
@@ -430,7 +447,7 @@ test('Task 945: the real registry stops real defects through the real main', asy
   });
   const put = (file, text) => { mkdirSync(dirname(join(root, file)), { recursive: true }); writeFileSync(join(root, file), text); };
   for (const file of ['eslint.config.mjs', 'tsconfig.json', 'vitest.config.ts', 'src/tests/setup.ts', 'src/tests/server-only-stub.ts', 'src/tests/next-cache-stub.ts', 'scripts/check-file-integrity.mjs',
-    'scripts/check-design-tokens.mjs', 'scripts/design-tokens-allowlist.json', 'scripts/lib/mantine-story-scope.mjs', 'scripts/check-i18n-parity.mjs', 'scripts/check-mojibake.mjs', 'scripts/mojibake-allowlist.json', TOOL, REGISTRY, 'scripts/workflow-gates/selftests.mjs', 'scripts/workflow-gates/contract.mjs', 'scripts/workflow-gates/mutation-check.mjs', 'scripts/workflow-gates/mutation-loader.mjs', 'scripts/workflow-gates/mutation-vitest.config.mjs', 'scripts/workflow-gates/dependency-check.mjs']) {
+    'scripts/check-design-tokens.mjs', 'scripts/design-tokens-allowlist.json', 'scripts/lib/mantine-story-scope.mjs', 'scripts/check-i18n-parity.mjs', 'scripts/check-mojibake.mjs', 'scripts/mojibake-allowlist.json', TOOL, REGISTRY, 'scripts/workflow-gates/selftests.mjs', 'scripts/workflow-gates/contract.mjs', 'scripts/workflow-gates/mutation-check.mjs', 'scripts/workflow-gates/mutation-loader.mjs', 'scripts/workflow-gates/mutation-vitest.config.mjs', 'scripts/workflow-gates/dependency-check.mjs', 'scripts/workflow-gates/eslint.config.mjs']) {
     mkdirSync(dirname(join(root, file)), { recursive: true });
     copyFileSync(join(ROOT, file), join(root, file));
   }
@@ -447,7 +464,7 @@ test('Task 945: the real registry stops real defects through the real main', asy
     'src/components/box.module.css': '.box {\n  color: var(--mantine-color-text);\n}\n',
     'messages/en.json': '{ "a": { "title": "T" } }\n', 'messages/it.json': '{ "a": { "title": "T" } }\n', 'messages/sq.json': '{ "a": { "title": "T" } }\n', 'messages/uk.json': '{ "a": { "title": "T" } }\n',
   };
-  for (const [file, text] of Object.entries(base)) put(file, text);
+  for (const [file, text] of Object.entries({ ...base, ...extra })) put(file, text);
   const git = (...args) => spawnSync('git', args, { cwd: root, encoding: 'utf8' });
   git('init', '-q'); git('config', 'core.autocrlf', 'false'); git('add', '-A');
   git('-c', 'user.name=fixture', '-c', 'user.email=fixture@example.com', 'commit', '-qm', 'base');
@@ -455,6 +472,11 @@ test('Task 945: the real registry stops real defects through the real main', asy
   const hook = (name, file) => spawnSync(process.execPath, [TOOL], { cwd: root, encoding: 'utf8', maxBuffer: 1 << 26, timeout: 120000, env: { ...process.env, CLAUDE_PROJECT_DIR: root },
     input: JSON.stringify({ hook_event_name: name, session_id: `real-${session}`, cwd: root, ...(file ? { tool_name: 'Edit', tool_input: { file_path: join(root, file) } } : {}) }) });
   const start = () => { git('reset', '-q', '--hard'); git('clean', '-fdq'); session++; assert.equal(hook('SessionStart').status, 0); };
+  return { root, put, hook, start };
+}
+
+test('Task 945: the real registry stops real defects through the real main', async t => {
+  const { put, hook, start } = realChain(t);
   const caughtAtWrite = (label, file, text, pattern) => {
     start();
     put(file, text);
@@ -477,7 +499,7 @@ test('Task 945: the real registry stops real defects through the real main', asy
   caughtAtWrite('a broken tsconfig', 'tsconfig.json', '{ "compilerOptions": { "strict": \n', /tsconfig\.json/);
   caughtAtStop('changed behaviour a consumer test asserts', 'src/lib/price.ts', 'export const price = (value: number): number => value * 3;\n', /consumer\.test\.ts/);
   caughtAtStop('a raw CSS length', 'src/components/box.module.css', '.box {\n  line-height: 37px;\n}\n', /box\.module\.css/);
-  caughtAtStop('mojibake in a source string', 'src/lib/price.ts', "export const label = 'a â€” b';\nexport const price = (value: number): number => value * 2;\n", /check-mojibake[\s\S]*src\/lib\/price\.ts/);
+  caughtAtStop('mojibake in a source string', 'src/lib/price.ts', "export const label = 'a \u00e2\u20ac\u201d b';\nexport const price = (value: number): number => value * 2;\n", /check-mojibake[\s\S]*src\/lib\/price\.ts/);
   caughtAtStop('a locale key missing from one language', 'messages/uk.json', '{ "a": { } }\n', /uk/);
   caughtAtStop('changed behaviour of a scanner its vitest test asserts', 'scripts/tool.mjs', 'export const double = value => value * 3;\n', /tool\.test\.ts/);
   caughtAtStop('a test silenced with it.skip', 'src/lib/consumer.test.ts', "import { it, expect } from 'vitest';\nimport { shown } from './consumer';\nit.skip('shows a price', () => expect(shown(2)).toBe(5));\n", /consumer\.test\.ts:3: a test switched off/);
@@ -485,6 +507,237 @@ test('Task 945: the real registry stops real defects through the real main', asy
   put('src/lib/price.ts', 'export const price = (value: number): number => value * 2; // clean\n');
   assert.equal(hook('PostToolUse', 'src/lib/price.ts').status, 0, 'a clean write passes');
   assert.equal(hook('Stop').status, 0, 'and Stop passes, so the checks above refused the defect and not the fixture');
+});
+
+test('[GOV-945-HOOK-DELETED-CONSUMER-DENY] A deleted file\'s consumers are named', t => {
+  const chain = realChain(t, {
+    'scripts/lib/shared.mjs': 'export const limit = () => 3;\n',
+    'scripts/check-thing.mjs': "import { limit } from './lib/shared.mjs';\nexport const over = value => value > limit();\n",
+    'src/lib/data.json': '{ "a": 1 }\n',
+    'src/lib/uses-data.ts': "import data from './data.json';\nexport const value = data.a;\n",
+    'src/components/panel.module.css': '.panel {\n  color: var(--mantine-color-text);\n}\n',
+    'src/components/Panel.tsx': "import styles from './panel.module.css';\nexport const Panel = () => <div className={styles.panel} />;\n",
+    'src/lib/unnamed.json': '{}\n',
+  });
+  const consumers = [['scripts/lib/shared.mjs', 'scripts/check-thing.mjs'], ['src/lib/data.json', 'src/lib/uses-data.ts'], ['src/components/panel.module.css', 'src/components/Panel.tsx']];
+  for (const [gone, consumer] of consumers) {
+    chain.start();
+    rmSync(join(chain.root, gone));
+    const first = chain.hook('Stop');
+    assert.equal(first.status, 2, `${gone}\n${first.stderr}`);
+    assert.ok(first.stderr.startsWith(`CODE CHECK NOTE: ${gone} is gone and these still name it: `), first.stderr);
+    assert.ok(first.stderr.split('\n')[0].includes(consumer), first.stderr);
+    assert.equal(chain.hook('Stop').status, 0, `${gone}: once`);
+  }
+  chain.start();
+  rmSync(join(chain.root, 'src/lib/unnamed.json'));
+  const quiet = chain.hook('Stop');
+  assert.equal(quiet.status, 0, `a deleted file nothing names adds no note\n${quiet.stderr}`);
+
+  chain.start();
+  for (const [gone] of consumers) rmSync(join(chain.root, gone));
+  rmSync(join(chain.root, 'src/lib/unnamed.json'));
+  const review = spawnSync(process.execPath, [join(ROOT, 'scripts/workflow-gates/change-review.mjs'), '--base=HEAD', '--minutes=1'], { cwd: chain.root, encoding: 'utf8', timeout: 180000, env: { ...process.env, CLAUDE_PROJECT_DIR: chain.root, GITHUB_STEP_SUMMARY: '' } });
+  assert.equal(review.status, 0, `${review.stdout}${review.stderr}`);
+  const section = review.stdout.slice(review.stdout.indexOf('## What a deletion left behind'));
+  assert.ok(review.stdout.includes('## What a deletion left behind'), review.stdout);
+  for (const [gone, consumer] of consumers) assert.ok(section.split('\n').some(line => line.startsWith(`- ${gone} is gone and these still name it: `) && line.includes(consumer)), `${gone}\n${section}`);
+  assert.doesNotMatch(section, /unnamed\.json/);
+
+  chain.start();
+  rmSync(join(chain.root, 'src/lib/price.ts'));
+  const typed = chain.hook('PostToolUse');
+  assert.equal(typed.status, 2, 'a deleted TypeScript module is still refused by the type check');
+  assert.match(typed.stderr, /src\/lib\/consumer\.ts\(1,\d+\): error TS2307/);
+});
+
+test('Task 945: what still names a deleted file: its bounds, its limit, and what tells it once', async t => {
+  const users = Object.fromEntries(Array.from({ length: 9 }, (_, i) => [`src/use-${i}.ts`, "import a from './lib/shared.mjs';\n"]));
+  const f = fixture(t, { registry: registryOf([LINT_ROW]), files: {
+    ...users,
+    'src/lib/shared.mjs': 'export default 1;\n',
+    'src/lib/stem.ts': 'export const a = 1;\n', 'src/by-stem.ts': "import { a } from './lib/stem';\n", 'src/word.ts': 'const stem = 1; // stem.ts is a word here, and so is shared\n',
+    'src/lib/index.ts': 'export {};\n', 'src/by-folder.ts': "import './lib/index';\n", 'src/by-name.ts': "import './lib/index.ts';\n",
+    'src/note.md': 'a\n', 'src/reader.ts': "const a = 'src/note.md';\n",
+    'src/untracked-user-of.json': '{}\n',
+  } });
+  const registry = readRegistry(f.root);
+  const said = file => leftBehind(f.root, registry, [file]);
+  const [line] = said('src/lib/shared.mjs');
+  assert.match(line, /^src\/lib\/shared\.mjs is gone and these still name it: /);
+  assert.equal(line.split(': ')[1].split(', ').length, 8, 'at most 8 files');
+  assert.deepEqual(said('src/lib/stem.ts'), ['src/lib/stem.ts is gone and these still name it: src/by-stem.ts'], 'a code file by its stem too, bounded, so that a word is no hit');
+  assert.deepEqual(said('src/lib/index.ts'), ['src/lib/index.ts is gone and these still name it: src/by-name.ts'], 'an index file by its whole name only: every folder has one');
+  assert.deepEqual(said('src/note.md'), ['src/note.md is gone and these still name it: src/reader.ts'], 'a file no row holds too');
+  assert.deepEqual(said('src/untracked-user-of.json'), [], 'and a name nothing holds is no line');
+  f.put('src/fresh-user.ts', "const a = 'untracked-user-of.json';\n");
+  assert.deepEqual(said('src/untracked-user-of.json'), ['src/untracked-user-of.json is gone and these still name it: src/fresh-user.ts'], 'a file not yet committed counts');
+  rmSync(join(f.root, 'src/fresh-user.ts'));
+  assert.throws(() => leftBehind(tmpdir(), registry, ['a.ts']), /git grep failed/, 'a search that did not run is no empty result');
+
+  passed(await f.run('SessionStart'));
+  f.remove('src/note.md');
+  const heard = await f.run('SubagentStop');
+  assert.equal(heard.status, 2, 'a subagent hears it');
+  assert.ok(heard.message.startsWith('CODE CHECK NOTE: src/note.md is gone and these still name it: src/reader.ts\n'), heard.message);
+  passed(await f.run('SubagentStop'), 'once');
+  const main = await f.run('Stop');
+  assert.equal(main.status, 2, 'and the main agent too, once');
+  assert.match(main.message, /src\/note\.md is gone/);
+  passed(await f.run('Stop'));
+  f.put('src/note.md', 'a\n');
+  passed(await f.run('Stop'), 'back in the tree, nothing to say');
+  f.remove('src/note.md');
+  assert.equal((await f.run('Stop')).status, 2, 'gone again is news');
+  passed(await f.run('Stop'));
+
+  const earlier = fixture(t, { registry: registryOf([LINT_ROW]), files: { 'src/note.md': 'a\n', 'src/reader.ts': "const a = 'src/note.md';\n" } });
+  earlier.remove('src/note.md');
+  passed(await earlier.run('SessionStart'));
+  passed(await earlier.run('Stop'), 'a file gone before this session is no work of it');
+  const backAgain = fixture(t, { registry: registryOf([LINT_ROW]), files: { 'src/note.md': 'a\n', 'src/reader.ts': "const a = 'src/note.md';\n" } });
+  passed(await backAgain.run('SessionStart'));
+  backAgain.remove('src/note.md');
+  assert.equal((await backAgain.run('SubagentStop')).status, 2);
+  backAgain.put('src/note.md', 'a\n');
+  passed(await backAgain.run('Stop'), 'a note held of a file that came back is dropped');
+  const folder = fixture(t, { registry: registryOf([LINT_ROW]), files: { 'src/a.ts': 'export const a = 1;\n' } });
+  passed(await folder.run('SessionStart'));
+  mkdirSync(join(folder.root, 'src/nested'));
+  spawnSync('git', ['init', '-q'], { cwd: join(folder.root, 'src/nested') });
+  writeFileSync(join(folder.root, 'src/nested/a.txt'), 'a\n');
+  spawnSync('git', ['add', '-A'], { cwd: join(folder.root, 'src/nested') });
+  spawnSync('git', ['-c', 'user.name=f', '-c', 'user.email=f@example.com', 'commit', '-qm', 'a'], { cwd: join(folder.root, 'src/nested') });
+  passed(await folder.run('Stop'), 'a nested repository, listed as a folder, is no failure');
+});
+
+test('Task 945: a repeated attempt on the same versions shows what it stored, and a subagent is refused once', async t => {
+  const script = `${MARK}import { readFileSync } from 'node:fs';\nif (/BROKEN/.test(readFileSync('src/a.ts', 'utf8'))) { console.error('the failure'); process.exit(1); }\n`;
+  const build = () => {
+    const f = fixture(t, { registry: registryOf([{ paths: ['src/**/*.ts'], write: [], stop: [`${NODE} tests/fail.mjs`] }]), files: { 'tests/fail.mjs': script, 'src/a.ts': 'export const a = 1;\n', 'src/note.md': 'a\n' } });
+    return f;
+  };
+  const f = build();
+  passed(await f.run('SessionStart'));
+  f.put('src/a.ts', '// BROKEN\n');
+  const first = await f.run('Stop');
+  assert.equal(first.status, 2);
+  assert.match(first.message, /the failure/);
+  assert.doesNotMatch(first.message, /Shown again/);
+  assert.equal(f.marks().length, 1);
+  for (const extra of [{}, { stop_hook_active: true }]) {
+    const again = await f.run('Stop', extra);
+    assert.equal(again.status, 2, 'Stop refuses every attempt');
+    assert.match(again.message, /the failure/, 'with the stored failure');
+    assert.match(again.message, /Shown again: nothing under the roots changed since this ran, so it did not run again\. Changing a file under the roots runs it\./);
+    assert.ok(again.message.endsWith('A session that wrote none of these files reports that instead of changing them.'), again.message);
+    assert.equal(f.marks().length, 1, 'and no command ran');
+  }
+  f.put('src/note.md', 'b\n');
+  assert.equal((await f.run('Stop')).status, 2);
+  assert.equal(f.marks().length, 2, 'a file no row holds is part of the set, since a check may read it');
+  f.put('src/a.ts', '// BROKEN again\n');
+  assert.equal((await f.run('Stop')).status, 2);
+  assert.equal(f.marks().length, 3, 'a new version runs again');
+  f.put('src/a.ts', 'export const a = 2;\n');
+  passed(await f.run('Stop'), 'and a fix passes');
+  assert.equal(f.marks().length, 4);
+  assert.equal(f.state().runs, undefined, 'and nothing stays stored');
+
+  const hanging = fixture(t, { registry: registryOf([{ paths: ['src/**/*.ts'], write: [], stop: [`${NODE} tests/hangs.mjs`] }], { timeoutMs: { write: 50000, stop: 1500 } }), files: { 'tests/hangs.mjs': `${MARK}setInterval(() => {}, 1000);\n`, 'src/a.ts': 'export const a = 1;\n' } });
+  passed(await hanging.run('SessionStart'));
+  hanging.put('src/a.ts', 'export const a = 2;\n');
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    const unfinished = await hanging.run('Stop');
+    assert.match(unfinished.message, /could not finish \(timeout\)/);
+    assert.doesNotMatch(unfinished.message, /Shown again/);
+    assert.equal(hanging.marks().length, attempt, 'a check that did not finish reruns');
+  }
+
+  const sub = build();
+  passed(await sub.run('SessionStart'));
+  sub.put('src/a.ts', '// BROKEN\n');
+  const statuses = [];
+  for (let attempt = 0; attempt < 10; attempt++) statuses.push((await sub.run('SubagentStop')).status);
+  assert.deepEqual(statuses, [2, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'one refusal of ten');
+  assert.equal(sub.marks().length, 1, 'one run');
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const main = await sub.run('Stop');
+    assert.equal(main.status, 2, 'the main agent is refused on every attempt');
+    assert.match(main.message, /the failure/);
+  }
+  assert.ok(sub.marks().length <= 2, 'at most one further run');
+  sub.put('src/a.ts', '// BROKEN too\n');
+  assert.equal((await sub.run('SubagentStop')).status, 2, 'a new set of versions is news to a subagent');
+  sub.put('src/a.ts', 'export const a = 3;\n');
+  passed(await sub.run('SubagentStop'), 'a fix passes');
+  assert.equal(sub.state().subagentRefused, undefined);
+  sub.put('src/a.ts', '// BROKEN\n');
+  assert.equal((await sub.run('SubagentStop')).status, 2, 'and the old refused set is no pass when it comes back');
+
+  const keyed = fixture(t, { registry: registryOf([LINT_ROW], { secure: [{ paths: ['**/*'], refuse: true, pattern: 'FORBIDDEN', what: 'refused text' }] }), files: { 'src/a.ts': 'export const a = 1;\n' } });
+  passed(await keyed.run('SessionStart'));
+  keyed.put('src/a.ts', 'const a = "FORBIDDEN";\n');
+  assert.equal((await keyed.run('SubagentStop')).status, 2);
+  passed(await keyed.run('SubagentStop'), 'what must never enter the tree too: a subagent may have written none of it');
+  assert.equal((await keyed.run('Stop')).status, 2);
+  assert.equal((await keyed.run('Stop')).status, 2, 'and the main agent is refused on every attempt');
+});
+
+test('Task 945: a check that left a process holding its pipes past the grace period did not finish', async t => {
+  const hold = "import { spawn } from 'node:child_process';\nimport { writeFileSync } from 'node:fs';\nconst child = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { detached: true, stdio: 'inherit' });\nchild.unref();\nwriteFileSync('held.json', JSON.stringify(child.pid));\nprocess.exit(0);\n";
+  const f = fixture(t, { registry: registryOf([{ paths: ['src/**/*.ts'], write: [], stop: [`${NODE} tests/hold.mjs`] }], { timeoutMs: { write: 50000, stop: 1500 } }), files: { 'tests/hold.mjs': hold, 'src/a.ts': 'export const a = 1;\n' } });
+  passed(await f.run('SessionStart'));
+  f.put('src/a.ts', 'export const a = 2;\n');
+  const started = Date.now();
+  const result = await f.run('Stop');
+  const held = JSON.parse(readFileSync(join(f.root, 'held.json'), 'utf8'));
+  // The process left on purpose is ended whatever the assertions say, and before the folder it runs in is removed.
+  try {
+    assert.equal(alive(held), true, 'the process that holds the pipes is still there, so the check could not have closed');
+    assert.equal(result.status, 2, 'a command whose pipes stay open past the grace period refuses');
+    assert.match(result.message, /could not finish \(timeout\); a check that did not finish is a failure/);
+    assert.ok(Date.now() - started < 30000, 'the decision still reached the agent');
+  } finally {
+    try { process.kill(held); } catch { /* it ended by itself */ }
+    for (let i = 0; i < 40 && alive(held); i++) await new Promise(done => setTimeout(done, 100));
+    // Windows keeps the folder of a killed process busy for a moment after the process is gone, and the removal below does not wait for that.
+    await new Promise(done => setTimeout(done, 1000));
+  }
+});
+
+test('Task 945: the real main of the differential, as a process, exits 1 on a lost target and 0 on an unchanged hook', t => {
+  const folder = mkdtempSync(join(tmpdir(), 'lero-945-differential-main-'));
+  t.after(() => rmSync(folder, { recursive: true, force: true, maxRetries: 8, retryDelay: 150 }));
+  const hook = pathToFileURL(join(ROOT, 'scripts/workflow-gates/security-hook.mjs')).href;
+  writeFileSync(join(folder, 'drops.mjs'), `import * as real from '${hook}';\nexport const shellWriteTargets = (...args) => real.shellWriteTargets(...args).slice(1);\n`);
+  writeFileSync(join(folder, 'same.mjs'), `export { shellWriteTargets } from '${hook}';\n`);
+  const script = join(ROOT, 'scripts/workflow-gates/hook-differential.mjs');
+  // The limit comes first: the hook is the first argument that is no option, wherever it stands.
+  const run = file => spawnSync(process.execPath, [script, '--limit=400', join(folder, file)], { cwd: ROOT, encoding: 'utf8', timeout: 120000 });
+  const drops = run('drops.mjs');
+  assert.equal(drops.status, 1, `${drops.stdout}${drops.stderr}`);
+  const lost = Number(/^LOST (\d+)$/m.exec(drops.stdout)?.[1]);
+  assert.ok(lost > 0, drops.stdout);
+  assert.match(drops.stdout, /^compared 400;/m, 'the limit it was given');
+  const same = run('same.mjs');
+  assert.equal(same.status, 0, `${same.stdout}${same.stderr}`);
+  assert.match(same.stdout, /^LOST 0$/m);
+});
+
+test('Task 945: the CI lint runs on a gate script at the write, which the default config would pass', t => {
+  const registry = JSON.parse(readFileSync(join(ROOT, REGISTRY), 'utf8'));
+  const row = registry.rows.find(entry => entry.paths.includes('scripts/workflow-gates/*.mjs'));
+  assert.deepEqual(row, { paths: ['scripts/workflow-gates/*.mjs'], write: [WRITE_ROWS.ciLint], stop: [] }, 'the row of R20');
+  const chain = realChain(t);
+  chain.start();
+  chain.put('scripts/workflow-gates/fresh.mjs', 'const unused = 1;\n');
+  const script = join(chain.root, 'scripts/workflow-gates/fresh.mjs');
+  const plain = spawnSync(process.execPath, ['node_modules/eslint/bin/eslint.js', '--quiet', script], { cwd: chain.root, encoding: 'utf8', timeout: 120000 });
+  assert.equal(plain.status, 0, `the default config passes it: ${plain.stdout}`);
+  const run = chain.hook('PostToolUse', 'scripts/workflow-gates/fresh.mjs');
+  assert.equal(run.status, 2, run.stderr);
+  assert.match(run.stderr, /'unused' is assigned a value but never used/);
 });
 
 const alive = id => { try { process.kill(id, 0); return true; } catch { return false; } };
@@ -588,6 +841,16 @@ test('[GOV-945-HOOK-EXECUTOR-DENY] Sonnet cannot change the tool', () => {
     const refused = evaluateHook(ROOT, { hook_event_name: 'PreToolUse', tool_name: 'Edit', model: 'sonnet', tool_input: { file_path: file, old_string: 'a', new_string: 'b' } }, '').join('\n');
     assert.match(refused, /POLICY-EDIT AUTHORITY REQUIRED|SECURITY TEST CONTRACT MISSING/, `Edit of ${file} by Sonnet`);
   }
+  // What steers another tool or an install, also while a product contract is loaded: that contract's scope is no authority over policy.
+  const product = JSON.stringify({ type: 'assistant', message: { content: [{ type: 'text', text: 'SECURITY TASK PREFLIGHT COMPLETE - contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_939_Locale_Leak_Shards_Green.security.json' }] } });
+  for (const file of ['AGENTS.md', 'CLAUDE.md', '.codex/config.toml', '.npmrc', '.github/CODEOWNERS', 'docs/orchestrator-procedures.md', 'docs/governance-enforcement.md']) {
+    assert.equal(isPolicyPath(file), true, file);
+    assert.equal(isGovernanceScopePath(file), true, `a governance task may hold ${file}`);
+    const event = { hook_event_name: 'PreToolUse', tool_name: 'Edit', model: 'sonnet', tool_input: { file_path: file, old_string: 'a', new_string: 'b' } };
+    for (const transcript of ['', product]) assert.match(evaluateHook(ROOT, event, transcript).join('\n'), /POLICY-EDIT AUTHORITY REQUIRED/, `Edit of ${file} by Sonnet, ${transcript ? 'with' : 'without'} a product contract`);
+    assert.deepEqual(evaluateHook(ROOT, { ...event, model: 'opus' }, ''), [], `Opus may edit ${file}`);
+  }
+  for (const file of ['docs/AGENTS.md', 'AGENTS.md.bak', 'src/CLAUDE.md', '.npmrc.bak', '.github/CODEOWNERS.txt', 'my.codex/x', 'docs/orchestrator-role.md']) assert.equal(isPolicyPath(file), false, `${file} is none of them`);
 });
 
 // Found in the prototype by the implementer: three defects a real session would have met. No sidecar case maps them; the gate suite runs them.
@@ -710,4 +973,96 @@ test('Task 945: a staged rename counts the old path as gone, also when the new n
   f.inRepo('add', '-A');
   passed(await f.run('PostToolUse', SHELL));
   assert.deepEqual(f.marks(), ['mark.mjs names-no-file'], 'the command that names no file ran for the deletion');
+});
+
+// The defect runs over the lines of revision 1 found these unread by any test; each assertion below fails under one of them.
+test('Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names', async t => {
+  const rule = { patterns: [/^src\//], line: /MARKER/, find: /MARKER/g, what: 'a marker', hidden: [] };
+  const f = fixture(t, { registry: registryOf([LINT_ROW]), files: { 'src/a.ts': 'MARKER\n', 'src/b.ts': 'MARKER\n' } });
+  f.put('src/a.ts', ['MARKER', ...Array.from({ length: 7 }, (_, i) => `MARKER ${i} ${'x'.repeat(150)}`)].join('\n'));
+  const lines = added(f.root, [rule], ['src/a.ts']);
+  assert.equal(lines.length, 5, 'five lines at most');
+  assert.equal(lines[0], `src/a.ts:2: a marker: MARKER 0 ${'x'.repeat(111)}`, 'each cut at 120 characters');
+  f.put('src/b.ts', 'MARKER\nMARKER\nMARKER\n');
+  assert.deepEqual(added(f.root, [rule], ['src/b.ts']), ['src/b.ts: a marker: 2 more than at HEAD'], 'with no new line of text, the count it grew by');
+
+  const header = '+++ "b/a\\a\\b\\f\\n\\r\\t\\v\\303\\251.txt"';
+  assert.deepEqual(addedLinesOf(['diff --git x y', '--- /dev/null', header, '@@ -0,0 +1 @@', '+k', ''].join('\n')), [{ file: 'a\u0007\u0008\u000c\n\r\t\u000bé.txt', line: 1, text: 'k' }], 'each escape Git writes in a quoted path');
+
+  const keyed = fixture(t, { registry: registryOf([LINT_ROW], { secure: [{ paths: ['docs/**/*', 'notes/**/*'], refuse: true, pattern: 'FORBIDDEN', what: 'refused text' }] }) });
+  keyed.put('notes/a.txt', 'FORBIDDEN\n');
+  assert.deepEqual(refusedLines(keyed.root, null, ['notes/a.txt']), [{ file: 'notes/a.txt', line: 1, rule: 'refused text' }], 'a file under any path of the rule is read');
+  const probe = at => {
+    const bytes = Buffer.alloc(8100, 0x20);
+    bytes.write('FORBIDDEN\n', 0);
+    bytes[at] = 0;
+    keyed.put('notes/b.txt', bytes);
+    return refusedLines(keyed.root, null, ['notes/b.txt']).length;
+  };
+  assert.equal(probe(7999), 0, 'a NUL in the first 8000 bytes makes a file binary, as Git reads it');
+  assert.equal(probe(8000), 1, 'one past them does not');
+});
+
+test('Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks', async t => {
+  const once = fixture(t, { registry: registryOf([LINT_ROW], { secure: [{ paths: ['**/*'], refuse: true, pattern: 'FORBIDDEN', what: 'refused text' }] }), files: { 'src/a.ts': 'export const a = 1;\n' } });
+  passed(await once.run('SessionStart'));
+  once.put('src/a.ts', 'export const a = "FORBIDDEN";\n');
+  assert.equal((await once.run('PostToolUse', once.edit('src/a.ts'))).status, 2);
+  passed(await once.run('PostToolUse', SHELL), 'not again at the next command');
+  assert.equal((await once.run('Stop')).status, 2, 'and refused at every Stop');
+
+  const libraryRow = registryOf([{ paths: ['src/**/*.mjs'], write: [], stop: [] }]);
+  const consumer = { 'src/use.mjs': "import { a } from './lib.mjs';\nexport const b = a;\n" };
+  const old = fixture(t, { registry: libraryRow, files: { ...consumer, 'src/lib.mjs': 'export const a = 1;\n' } });
+  passed(await old.run('SessionStart'));
+  const shape = old.state();
+  for (const field of ['goneBefore', 'othersBefore', 'told', 'deletions']) delete shape[field];
+  writeFileSync(join(old.root, 'test-results/code-check/s1.json'), JSON.stringify(shape));
+  old.remove('src/lib.mjs');
+  const told = await old.run('Stop');
+  assert.equal(told.status, 2, told.message);
+  assert.match(told.message, /^CODE CHECK NOTE: src\/lib\.mjs is gone and these still name it: src\/use\.mjs$/m, 'a state with none of the fields of revision 1');
+
+  const untracked = fixture(t, { registry: libraryRow, files: consumer });
+  untracked.put('src/lib.mjs', 'export const a = 1;\n');
+  passed(await untracked.run('SessionStart'));
+  untracked.remove('src/lib.mjs');
+  assert.match((await untracked.run('Stop')).message, /src\/lib\.mjs is gone and these still name it: src\/use\.mjs/, 'a file that was untracked at the start and goes is a deletion too');
+
+  const unheld = fixture(t, { registry: libraryRow, files: { 'src/read.mjs': "export const path = './data.json';\n" } });
+  unheld.put('src/data.json', '{}\n');
+  passed(await unheld.run('SessionStart'));
+  unheld.remove('src/data.json');
+  const unheldTold = await unheld.run('Stop');
+  assert.match(unheldTold.message, /src\/data\.json is gone and these still name it: src\/read\.mjs/, 'one no row holds, untracked at the start: R13 names it too');
+  passed(await unheld.run('Stop'), 'once');
+
+  const renamed = fixture(t, { registry: libraryRow, files: { 'src/data.json': '{}\n', 'src/read.mjs': "export const path = './data.json';\n" } });
+  passed(await renamed.run('SessionStart'));
+  renamed.inRepo('mv', 'src/data.json', 'src/moved.json');
+  assert.match((await renamed.run('Stop')).message, /src\/data\.json is gone and these still name it: src\/read\.mjs/, 'the old path of a staged rename no row holds');
+
+  const pair = fixture(t, { registry: registryOf([{ paths: ['src/each/**/*.ts'], write: [], stop: [{ run: `${NODE} tests/pair.mjs`, namesFile: true, finding: '^\\s+\\S+:\\d+:\\d+\\s' }] }]),
+    files: { 'src/each/a.ts': 'export const a = 1;\n', 'src/each/other.ts': 'export const b = 1;\n', 'tests/pair.mjs': "console.error('  src/each/a.ts:1:2 finding'); process.exit(1);\n" } });
+  passed(await pair.run('SessionStart'));
+  pair.put('src/each/a.ts', 'export const a = 2;\n');
+  pair.put('src/each/other.ts', 'export const b = 2;\n');
+  assert.equal((await pair.run('Stop')).status, 2, 'a finding that names one of two changed files');
+});
+
+test('Task 945: a defect no test noticed reaches the agent at Stop', async t => {
+  const mutation = { timeoutMs: 120000, hookMs: 285000, perMutantMs: 20000, concurrency: 1, shown: 8, rows: [{ paths: ['src/**/*.mjs'], run: `${NODE} tests/weak.mjs` }] };
+  const weak = fixture(t, { registry: registryOf([{ paths: ['src/**/*.mjs'], write: [], stop: [] }], { mutation }),
+    files: { 'src/sum.mjs': 'export const sum = 1;\n', 'tests/weak.mjs': "import { sum } from '../src/sum.mjs';\nif (typeof sum !== 'number') process.exit(1);\n" } });
+  passed(await weak.run('SessionStart'));
+  weak.put('src/sum.mjs', 'export const sum = 1 + 2;\n');
+  const noted = await weak.run('Stop');
+  assert.equal(noted.status, 2, noted.message);
+  assert.match(noted.message, /^CODE CHECK NOTE: this code was broken on purpose, with the defect stored in memory only\./m);
+  assert.match(noted.message, /^src\/sum\.mjs:1: `\+` became `-`, and every test still passed$/m);
+});
+
+test('Task 945: AGENTS.md is a document of a governance scope, and a Markdown file elsewhere is not', () => {
+  assert.equal(isGovernanceScopePath('AGENTS.md'), true);
+  for (const file of ['README.md', 'notes/plan.md', 'docs/data.json']) assert.equal(isGovernanceScopePath(file), false, file);
 });

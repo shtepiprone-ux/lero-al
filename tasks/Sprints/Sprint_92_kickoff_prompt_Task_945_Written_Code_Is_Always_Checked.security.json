@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "stage": "planned",
+  "stage": "implemented",
   "implementation": {
     "role": "Opus"
   },
@@ -12,6 +12,7 @@
   "scope": [
     ".claude/settings.json",
     "CLAUDE.md",
+    "AGENTS.md",
     ".claude/rules/shared/task-readiness.md",
     "scripts/workflow-gates/code-check.mjs",
     "scripts/workflow-gates/code-check.json",

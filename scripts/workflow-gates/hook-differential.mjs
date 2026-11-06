@@ -120,9 +120,13 @@ async function main() {
   const hookPath = 'scripts/workflow-gates/security-hook.mjs';
   const started = performance.now();
   const oldHook = await headHook(root, hookPath);
-  const newHook = await import(pathToFileURL(process.argv[2] ? resolve(process.argv[2]) : join(root, hookPath)).href);
+  const args = process.argv.slice(2);
+  const given = args.find(arg => !arg.startsWith('--'));
+  const newHook = await import(pathToFileURL(given ? resolve(given) : join(root, hookPath)).href);
   const { rows } = JSON.parse(readFileSync(join(root, 'scripts/workflow-gates/hook-corrections.json'), 'utf8'));
-  const result = differential(oldHook, newHook, { corrections: rows });
+  // A self-test proves this exit code on the first commands; the gate itself always compares them all.
+  const limit = Number(args.find(arg => arg.startsWith('--limit='))?.slice(8)) || Infinity;
+  const result = differential(oldHook, newHook, { corrections: rows, limit });
   for (const line of result.lines) console.log(line);
   console.log(`compared ${result.compared}; corrections named ${result.named}; exceptions ${result.thrown}; slowest ${result.slowest} ms; old hook ${oldHook.sha256}; ${Math.round(performance.now() - started)} ms`);
   console.log(`LOST ${result.lost}`);

@@ -75,12 +75,13 @@ export function scopeDigest(root, contract, overrides) {
   return digest(root, files, undefined, overrides);
 }
 // The planner and the write hook must agree on paths Sonnet cannot implement.
-export const isPolicyPath = file => /^(?:\.claude\/|\.github\/workflows\/|scripts\/workflow-gates\/|scripts\/check-[^/]+|docs\/rules\/|docs\/(?:qa-profiles|qa-rules|golden-rules|agent-contract|rule-index)\.md$)/i.test(file);
+// The files that steer another tool or an install steer as much as a rule does, and the two documents the workflow reads are its policy too.
+export const isPolicyPath = file => /^(?:AGENTS\.md$|CLAUDE\.md$|\.codex\/|\.npmrc$|\.github\/CODEOWNERS$|\.claude\/|\.github\/workflows\/|scripts\/workflow-gates\/|scripts\/check-[^/]+|docs\/rules\/|docs\/(?:qa-profiles|qa-rules|golden-rules|agent-contract|rule-index|orchestrator-procedures|governance-enforcement)\.md$)/i.test(file);
 // Runtime files and executable helpers require the same task scope in pre-write and CI; policy keeps its own owner.
 export const isProductPath = file => /^(?:src\/|public\/|messages\/|(?:supabase|database|migrations)\/|(?:package(?:-lock)?\.json|next\.config\.[^/]+|vitest(?:\.integration)?\.config\.[^/]+|tsconfig\.json|vercel\.(?:json|ts)|\.nvmrc|sentry\.(?:server|edge|client)\.config\.[cm]?[jt]s|instrumentation(?:-client)?\.[cm]?[jt]s|(?:middleware|proxy)\.[cm]?[jt]s)$)/i.test(file)
   || (/^scripts\/.+\.(?:[cm]?[jt]sx?|ps1|py|sh)$/i.test(file) && !isPolicyPath(file));
 export const isTaskDocument = file => /^tasks\/(?!Archive\/|Templates\/|Epics\/)(?!(?:README|index)\.md$).+\.md$/i.test(file);
-const isDoc = file => /\.md$/.test(file) && /^(?:docs\/|tasks\/|\.claude\/rules\/|CLAUDE\.md$)/.test(file);
+const isDoc = file => /\.md$/.test(file) && /^(?:docs\/|tasks\/|\.claude\/rules\/|CLAUDE\.md$|AGENTS\.md$)/.test(file);
 // Task 935: rules, hooks, settings, CI workflows and gate scripts are implemented by Opus under a governance contract.
 export const REQUIRED_GOVERNANCE_RULES = ['security-testing', 'workflow-gates', 'git-publication', 'role-boundaries']
   .map(name => `.claude/rules/shared/${name}.md`);

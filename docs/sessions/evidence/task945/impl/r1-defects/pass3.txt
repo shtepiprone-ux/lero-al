@@ -1,0 +1,53 @@
+51 defects
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `7` -> `8` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:23: `8000` -> `8001` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+SURVIVED scripts/workflow-gates/code-check.mjs:175: `throw error;` -> `;`
+SURVIVED scripts/workflow-gates/code-check.mjs:194: `&&` -> `||`
+CAUGHT scripts/workflow-gates/code-check.mjs:331: `reportLines(await runMutation({ root, config, roots: registry.roots, files, deadline, runC` -> `undefined` :: Task 945: a defect no test noticed reaches the agent at Stop
+CAUGHT scripts/workflow-gates/code-check.mjs:311: `some` -> `every` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:354: `state.goneBefore ||= [...gone];` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:355: `state.told ||= {};` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:356: `state.deletions ||= {};` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:381: `file in versions` -> `!(file in versions)` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `8` -> `9` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:123: `some` -> `every` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:381: `state.failed[file] = versions[file];` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:400: `goneNow.add(file);` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:420: `parts.push('CODE CHECK NOTE: this code was broken on purpose, with the defect stored in me` -> `;` :: Task 945: a defect no test noticed reaches the agent at Stop
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `12` -> `13` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:194: `gone.add(entries[i]);` -> `;` :: Task 945: a refused write is shown once at the writes, a state saved before revision 1 still reads, and a finding in one of two files blocks
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `10` -> `11` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `13` -> `14` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:76: `-` -> `+` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+SURVIVED scripts/workflow-gates/code-check.mjs:76: `1` -> `2`
+CAUGHT scripts/workflow-gates/code-check.mjs:91: `11` -> `12` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/code-check.mjs:76: `1` -> `2` :: each rule names the line it exists for, and leaves the safe form of that line alone | what was already at the base is not charged to this change, whatever base is named | a deleted test is the strongest weakening, and a new mock and a removed assertion are named | through the tool: what an attacker 
+CAUGHT scripts/workflow-gates/code-check.mjs:76: `5` -> `6` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/mutation-check.mjs:117: `0` -> `1` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:122: `endsWith` -> `startsWith` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/code-check.mjs:76: `120` -> `121` :: Task 945: what a note quotes is bounded, a quoted path is read back whole, and a rule reads every path it names
+CAUGHT scripts/workflow-gates/mutation-check.mjs:322: `startsWith` -> `endsWith` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:119: `found.set(entries[++i], status);` -> `;` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:122: `||` -> `&&` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:144: `mkdirSync(dirname(join(root, file)), { recursive: true });` -> `;` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:150: `+` -> `-` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:244: `result.error = `no command ran, because the name ${JSON.stringify(unsafe)} holds a charact` -> `;` :: [GOV-945-HOOK-NAME-INJECTION-DENY] A name from the tree never runs as a command
+CAUGHT scripts/workflow-gates/mutation-check.mjs:276: `queue.length = 0;` -> `;` :: [GOV-945-MUTATION-DISK-ERROR] A mutant that writes is caught at it and what it changed comes back
+CAUGHT scripts/workflow-gates/mutation-check.mjs:321: `process.stderr.write('usage: mutation-check.mjs [--all] [--base=<commit>] [--minutes=N] <f` -> `;` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:328: `&&` -> `||` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:130: `||` -> `&&` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:148: `!now.has(file)` -> `now.has(file)` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:276: `0` -> `1` :: [GOV-945-MUTATION-DISK-ERROR] A mutant that writes is caught at it and what it changed comes back
+SURVIVED scripts/workflow-gates/mutation-check.mjs:322: `7` -> `8`
+CAUGHT scripts/workflow-gates/mutation-check.mjs:329: `===` -> `!==` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:122: `found.delete(path);` -> `;` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+SURVIVED scripts/workflow-gates/mutation-check.mjs:127: `throw error;` -> `;`
+CAUGHT scripts/workflow-gates/mutation-check.mjs:148: `outside.add(file);` -> `;` :: the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+CAUGHT scripts/workflow-gates/mutation-check.mjs:329: `||` -> `&&` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:332: `0` -> `1` :: by hand: a named base is read whole, a run whose every defect was caught exits 0, and no name is called unjudged
+CAUGHT scripts/workflow-gates/mutation-check.mjs:130: `||` -> `&&` :: [GOV-945-MUTATION-DISK-ERROR] A mutant that writes is caught at it and what it changed comes back | the guard restores a deleted folder and a staged rename, names a file gone outside the roots, and leaves a nested repository alone
+SURVIVED scripts/workflow-gates/mutation-check.mjs:329: `===` -> `!==`
+SURVIVED scripts/workflow-gates/mutation-check.mjs:196: `1` -> `2`
+CAUGHT scripts/workflow-gates/hook-differential.mjs:124: `startsWith` -> `endsWith` :: Task 945: the real main of the differential, as a process, exits 1 on a lost target and 0 on an unchanged hook
+SURVIVED scripts/workflow-gates/contract.mjs:84: `&&` -> `||`
+DONE caught 43, survived 8, not loaded 0

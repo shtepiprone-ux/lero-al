@@ -14,6 +14,8 @@ const BASELINE = 'scripts/workflow-gates/audit-baseline.json';
 const SECTIONS = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
 const DAY = 86400000;
 const SERIOUS = new Set(['high', 'critical']);
+// A name from package.json reaches a command line, through a shell on Windows, so it must be one a shell can only read as a name (CWE-78).
+export const PACKAGE_NAME = /^(?:@[A-Za-z0-9~-][A-Za-z0-9._~-]*\/)?[A-Za-z0-9~-][A-Za-z0-9._~-]*$/;
 const npm = (args, root) => spawnSync('npm', args, { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28, shell: process.platform === 'win32', windowsHide: true, timeout: 60000 });
 
 const manifestAt = (root, base) => {
@@ -52,10 +54,18 @@ export function advisoriesOf(report) {
 export function checkDependencies({ root, base = 'HEAD', limits, times = publishedTimes, audit = auditFindings, now = Date.now() }) {
   const failures = [], notes = [];
   const packagePath = join(root, 'package.json'), lockPath = join(root, 'package-lock.json');
-  if (!existsSync(packagePath)) return { failures, notes };
+  if (!existsSync(packagePath)) {
+    // No list of packages passes no check. A deleted one is a change, and only a repository that never held one has nothing to check.
+    const held = spawnSync('git', ['cat-file', '-e', `${base}:package.json`], { cwd: root, windowsHide: true }).status === 0;
+    if (held) failures.push(`package.json: it is gone and ${base} holds one, so nothing says what this project installs`);
+    return { failures, notes };
+  }
   const manifest = JSON.parse(readFileSync(packagePath, 'utf8'));
   const lock = existsSync(lockPath) ? JSON.parse(readFileSync(lockPath, 'utf8')) : null;
-  const before = allOf(manifestAt(root, base)), after = allOf(manifest);
+  const after = allOf(manifest);
+  const refused = Object.keys(after).filter(name => !PACKAGE_NAME.test(name));
+  if (refused.length) return { failures: refused.map(name => `package.json: ${JSON.stringify(name)} is no package name, and on a command line it could run as a command, so no process started (CWE-78)`), notes };
+  const before = allOf(manifestAt(root, base));
   const lockVersion = name => lock?.packages?.[`node_modules/${name}`]?.version;
   for (const name of Object.keys(after).filter(name => before[name] !== after[name])) {
     const isNew = !(name in before);
@@ -70,6 +80,8 @@ export function checkDependencies({ root, base = 'HEAD', limits, times = publish
   if (lock) for (const [path, entry] of Object.entries(lock.packages || {})) {
     if (entry.resolved && !entry.link && !entry.resolved.startsWith(REGISTRY)) failures.push(`package-lock.json: ${path} is fetched from ${entry.resolved}, not from ${REGISTRY}`);
     else if (entry.resolved && !entry.link && !entry.integrity) failures.push(`package-lock.json: ${path} has no integrity hash, so a changed package would go unseen`);
+    // The root entry is this project and a link is a folder of it. Anything else with neither is fetched from a place no check here can read.
+    else if (path && !entry.link && !entry.resolved && !entry.integrity) failures.push(`package-lock.json: ${path} has neither a source nor an integrity hash, so nothing says what it installs`);
   }
   const known = existsSync(join(root, BASELINE)) ? new Set(JSON.parse(readFileSync(join(root, BASELINE), 'utf8')).advisories.map(entry => entry.id)) : new Set();
   const findings = audit(root);

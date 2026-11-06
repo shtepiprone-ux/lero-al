@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "case": "GOV-945-HOOK-NAME-INJECTION-DENY",
+  "target": "scripts/workflow-gates/dependency-check.mjs",
+  "find": "const refused = Object.keys(after).filter(name => !PACKAGE_NAME.test(name));",
+  "replace": "const refused = [];"
+}

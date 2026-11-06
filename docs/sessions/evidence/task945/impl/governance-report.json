@@ -2,8 +2,8 @@
   "version": 1,
   "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.md",
-  "contractSha256": "1e94ae613a72640639d0984c254951a5349df30c12e36de32e637c3daff7c6c0",
-  "scopeSha256": "6fc22f83504829e2a0e83b449a0c125ff8f53c72b11063282c53bd232c64754a",
+  "contractSha256": "2c8fe8d578d42a5916472176f8b021e89eddbaa5973c3b923e5170551cbde7e3",
+  "scopeSha256": "8c28f8c04281e0c98fab6c82c53568dbcfe5c91c5af7ec4be7a88c90f0e80084",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [
@@ -21,9 +21,9 @@
         "restored": "passed",
         "method": "in-memory",
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.break.json",
-        "breakSha256": "726fc7a9516d3af0a59f3948d0e5eba2ea279fadac9b1939450ee118127ecee7",
+        "breakSha256": "0729e731d86ac5d21ae80651a626619c6e0cfb8bc214a1105aafc0b332ae8483",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.txt",
-        "artifactSha256": "9f705d5d5857f35f3e7c231efa09ab3341ac060d7bfa2aa2c64631978e929686"
+        "artifactSha256": "9f9428e9d6f66a2864b54deb96337aaeab536f9671fe252e63acd32b011d0560"
       }
     },
     {
@@ -40,9 +40,9 @@
         "restored": "passed",
         "method": "in-memory",
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.break.json",
-        "breakSha256": "02d1137a73ede16d8bdc207e72414d0de4e770d222d7f319d41594ae2559d352",
+        "breakSha256": "27a2ed9171cf8b5ddcf657fa83e64ff95bf95b7cf7f0df455d044667f8f4fd63",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.txt",
-        "artifactSha256": "6c6db920c539e466c5b89a3041294f544489c8e4356ca28c113d80e3e5fcae10"
+        "artifactSha256": "e9a043234bcdd109d4959a44caa11166f34099eb965ecc7a0e3c66f5779200fa"
       }
     },
     {
@@ -61,7 +61,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.break.json",
         "breakSha256": "051afd52b655437e5d9e072fe7c12de4ff846f56442d09866e2334e6db24f40c",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.txt",
-        "artifactSha256": "3f6a853ddf8a2f59691e370258c043d3be6ea61b2cc54724405deca49ed29990"
+        "artifactSha256": "6796f5fcb49885652fc1044b8fe9e285f10d4e7f8e599b93c62f3b8a7eb284a9"
       }
     },
     {
@@ -80,7 +80,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.break.json",
         "breakSha256": "2e08af2408c8588a431a6e03c410b8c6c07d870eba1f4d92e2b3c608cd7a9e96",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.txt",
-        "artifactSha256": "d6c7a3e854d362cbe1295f7bca1fa72d0fa73a72f330f566379540795f426ead"
+        "artifactSha256": "27ce87276eb09eb69b85e4a17707429befb535b740e639b5a2c0363d4ddf3c28"
       }
     },
     {
@@ -111,7 +111,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.break.json",
         "breakSha256": "d9036939977222bd1a393ea3f7d48753d32652bc94546e6e706944d260c918d2",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.txt",
-        "artifactSha256": "55cb2bfe44226cadf90c3cc525011dae486d1781de5c6dd49aa766c57e13b397"
+        "artifactSha256": "067916a9a26a91ae3995b5fe3e89dcf00b53b18e4b33821b5cbf1109ec4b9985"
       }
     },
     {
@@ -119,6 +119,81 @@
       "status": "passed",
       "testFile": "scripts/workflow-gates/code-check.selftest.mjs",
       "testName": "[GOV-945-HOOK-EXECUTOR-DENY] Sonnet cannot change the tool"
+    },
+    {
+      "id": "GOV-945-HOOK-SECRET-REACH-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/change-review.selftest.mjs",
+      "testName": "[GOV-945-HOOK-SECRET-REACH-DENY] What must never enter the tree is refused in whatever file holds it",
+      "sensitivity": {
+        "id": "GOV-945-HOOK-SECRET-REACH-DENY",
+        "testName": "[GOV-945-HOOK-SECRET-REACH-DENY] What must never enter the tree is refused in whatever file holds it",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SECRET-REACH-DENY.break.json",
+        "breakSha256": "311fc804b988e7ebc03d7fb4f90f840458c52d9fce551c52debcea87dcc689ec",
+        "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SECRET-REACH-DENY.txt",
+        "artifactSha256": "ff502b7bd77a69ea47697df17919a99a106888fefb61dabadae7b82bdb8c7efc"
+      }
+    },
+    {
+      "id": "GOV-945-HOOK-SECRET-ECHO-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/change-review.selftest.mjs",
+      "testName": "[GOV-945-HOOK-SECRET-ECHO-DENY] What is refused is never repeated"
+    },
+    {
+      "id": "GOV-945-HOOK-NAME-INJECTION-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/dependency-check.selftest.mjs",
+      "testName": "[GOV-945-HOOK-NAME-INJECTION-DENY] A name from the tree never runs as a command",
+      "sensitivity": {
+        "id": "GOV-945-HOOK-NAME-INJECTION-DENY",
+        "testName": "[GOV-945-HOOK-NAME-INJECTION-DENY] A name from the tree never runs as a command",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.break.json",
+        "breakSha256": "e3ba8fe5ab53c773417c49fcacef9002af7050417f33a72fb07fdae5f67d99bc",
+        "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.txt",
+        "artifactSha256": "7e22b998062d61404ff911bbde92a3db77c00b74582c1a1a8c58fcfe0cf8e923"
+      }
+    },
+    {
+      "id": "GOV-945-HOOK-DELETED-CONSUMER-DENY",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/code-check.selftest.mjs",
+      "testName": "[GOV-945-HOOK-DELETED-CONSUMER-DENY] A deleted file's consumers are named",
+      "sensitivity": {
+        "id": "GOV-945-HOOK-DELETED-CONSUMER-DENY",
+        "testName": "[GOV-945-HOOK-DELETED-CONSUMER-DENY] A deleted file's consumers are named",
+        "baseline": "passed",
+        "mutant": "failed",
+        "failureKind": "assertion",
+        "restored": "passed",
+        "method": "in-memory",
+        "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.break.json",
+        "breakSha256": "065e1ff0793d792588fd7308c8193e058d05a6b530e209fda0f34448301dd3b2",
+        "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.txt",
+        "artifactSha256": "1b2158ae04e63ffd4e65a675f533552d237abfc81c0ee4f43c20a39b8a342abb"
+      }
+    },
+    {
+      "id": "GOV-945-HOOK-GATE-CRASH-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/code-check.selftest.mjs",
+      "testName": "[GOV-945-HOOK-GATE-CRASH-ERROR] A crashing gate is no finding elsewhere"
+    },
+    {
+      "id": "GOV-945-MUTATION-DISK-ERROR",
+      "status": "passed",
+      "testFile": "scripts/workflow-gates/mutation-check.selftest.mjs",
+      "testName": "[GOV-945-MUTATION-DISK-ERROR] A mutant that writes is caught at it and what it changed comes back"
     }
   ],
   "errors": []

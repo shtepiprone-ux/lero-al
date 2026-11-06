@@ -140,7 +140,7 @@ and its consumers is done before deletion.
    PR could never merge under the old ruleset (`node scripts/quality/check-ruleset.mjs`, 2026-11-06: 4 differences).
 3. The first CI run of the reset PR. Known red until the tasks land: product checks `design-tokens:strict` and
    `enrolled-tailwind` (948), dependency audit (947), locale leak (939), possibly click-shield (938).
-4. **947 → 948 → 939 → 951 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
+4. **947 → 952 → 948 → 939 → 951 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
    by Opus, before the reset PR merges. Reason: `main` changes only through a PR whose `CI Required` is green, and CI
    runs on pull requests into `main` only, so a stacked PR into the reset branch would get no CI at all. The reset PR
    merges when `CI Required` is green.

@@ -185,10 +185,9 @@ jobs:
         with:
           node-version: "22.22.3"
       - run: npm ci --ignore-scripts
-      # --ignore-npm-errors: the installed tree has an invalid @swc/helpers and a missing webpack peer (npm ls,
-      # 2026-11-06); Task 947 makes the tree valid and then removes this flag.
+      # The dependency tree is valid (Task 947: `npm ls --omit dev --all` exits 0), so an npm error fails the SBOM.
       - name: Generate and validate the SBOM
-        run: npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --omit dev --ignore-npm-errors --validate --output-format JSON --output-file sbom.cdx.json
+        run: npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --omit dev --validate --output-format JSON --output-file sbom.cdx.json
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: sbom

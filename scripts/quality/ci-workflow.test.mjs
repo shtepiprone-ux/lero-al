@@ -34,6 +34,12 @@ test('the authorization suite runs after a production build in the same job', ()
   assert.ok(build >= 0 && build < stepIndex('authz', /test:security-integration/), 'authz: npm run build must come before npm run test:security-integration');
 });
 
+test('the SBOM fails on an invalid dependency tree (Task 947)', () => {
+  const sbom = runs('sbom').find((r) => r.includes('cyclonedx-npm')) ?? '';
+  assert.ok(sbom.includes('--validate'));
+  assert.ok(!sbom.includes('--ignore-npm-errors'), 'the SBOM step must not ignore npm errors');
+});
+
 test('CI Required waits for every other job, so a new gate cannot be left out of the merge decision', () => {
   const others = Object.keys(ci.jobs).filter((job) => job !== 'required').sort();
   assert.deepEqual([...ci.jobs.required.needs].sort(), others);

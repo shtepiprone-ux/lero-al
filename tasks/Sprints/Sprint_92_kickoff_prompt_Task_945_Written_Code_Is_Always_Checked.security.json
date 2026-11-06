@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "stage": "implemented",
+  "stage": "planned",
   "implementation": {
     "role": "Opus"
   },
@@ -8,7 +8,7 @@
   "kind": "governance",
   "qaProfile": "Q1",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.md",
-  "taskSha256": "30088bdb27032d31ad5c42e8a0401912d5c3c176f132cd0b74eba1a300b3b77e",
+  "taskSha256": "e3fe19ea2aa3681214aef04634e48e202740a93b73e8810ee90d63e1c57014f1",
   "scope": [
     ".claude/settings.json",
     "CLAUDE.md",
@@ -58,7 +58,11 @@
     "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.break.json",
     "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.txt",
     "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.break.json",
-    "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.txt"
+    "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.txt",
+    "scripts/workflow-gates/selftests.mjs",
+    "docs/sessions/evidence/task945/impl/base-runs-r21.txt",
+    "docs/sessions/evidence/task945/sensitivity/GOV-945-MUTATION-OTHER-WRITER-DENY.break.json",
+    "docs/sessions/evidence/task945/sensitivity/GOV-945-MUTATION-OTHER-WRITER-DENY.txt"
   ],
   "rules": [
     ".claude/rules/shared/security-testing.md",
@@ -324,6 +328,25 @@
       ],
       "testFile": "scripts/workflow-gates/mutation-check.selftest.mjs",
       "testName": "[GOV-945-MUTATION-DISK-ERROR] A mutant that writes is caught at it and what it changed comes back"
+    },
+    {
+      "id": "GOV-945-MUTATION-OTHER-WRITER-DENY",
+      "invariant": "A check that runs by itself never undoes another writer's work",
+      "actor": "Another session, or the main agent while a SubagentStop runs",
+      "resource": "runMutation, treeGuard and the record of mutation-loader.mjs",
+      "input": "a defect that writes a tracked file through node:fs, while a process with no loader edits a second tracked file and creates a new one; the same through the real main at Stop and SubagentStop",
+      "response": "the first file at its blob and named Restored; the second keeps the other writer's text; the new file exists; both named Changed and left; an error on the result; no later defect of that file run",
+      "layer": "hook",
+      "outcome": "deny",
+      "boundary": "process",
+      "critical": true,
+      "forbiddenEffects": [
+        "another writer's edit overwritten by a check",
+        "another writer's new file deleted by a check",
+        "a write of a process of the run left unrestored"
+      ],
+      "testFile": "scripts/workflow-gates/mutation-check.selftest.mjs",
+      "testName": "[GOV-945-MUTATION-OTHER-WRITER-DENY] A check that runs by itself never undoes another writer's work"
     }
   ]
 }

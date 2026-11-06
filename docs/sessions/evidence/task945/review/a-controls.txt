@@ -1,0 +1,15 @@
+control change-review / reader of the tree: exit 0; 1.2 s; ; 
+control change-review / SECRET-ECHO: exit 0; 5.6 s; ; 
+control change-review / SECRET-REACH: exit 0; 5.1 s; ; 
+control change-review / the review: a secret: exit 0; 2.7 s; ; 
+control change-review / by hand and in CI: exit 0; 2.8 s; ; 
+control change-review / through the tool: a write tool: exit 0; 0.6 s; ; 
+control dependency-check / a lock file may fetch: exit 0; 0.4 s; ; 
+control code-check / GATE-CRASH: exit 0; 20.6 s; ; 
+control code-check / what still names a deleted file: exit 0; 1.7 s; ; 
+control code-check / GOV-945-HOOK-EXECUTOR-DENY: exit 0; 0.4 s; ; 
+control mutation-check / GOV-945-MUTATION-DISK-ERROR: exit 0; 1.8 s; ; 
+break 0 again: exit 1; 0.4 s; not ok 1 - the reader of the tree: an added line that begins like a header, a diff attribute, Git settings, what is skipped, and a base that cannot be; a file Git calls binary and prints no line of is read
+break 11 again: exit 1; 0.3 s; not ok 1 - a lock file may fetch only from the one registry and only with a hash, and a workspace link is neither; package-lock.json:  has neither a source nor an integrity hash, so nothing says what it installs
+break 17 again: exit 1; 0.5 s; not ok 1 - [GOV-945-HOOK-GATE-CRASH-ERROR] A crashing gate is no finding elsewhere; a gate that crashed refuses
+break 33 again: exit 1; 0.4 s; not ok 1 - [GOV-945-HOOK-EXECUTOR-DENY] Sonnet cannot change the tool; .npmrc

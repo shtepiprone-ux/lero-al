@@ -1,0 +1,24 @@
+## 1. CODE CHECK NOTE twice for one version
+first round: SubagentStop 2, Stop 2, next Stop 0, third Stop 0
+concurrent SubagentStop and Stop: the note came again on the next Stop in 9 of 12 rounds
+control, Stop alone: the note came again in 0 of 12 rounds
+## 2. A note stored by a stage that a later attempt passes
+first Stop 2, could not finish: true; second Stop 2, note: true
+## 3. spawnSync timeout of the suite: its words, and what stays alive
+status null; signal SIGTERM; error ETIMEDOUT; the suite's own exit would be 1; stdout 15 bytes; stderr 0 bytes
+the test process 6604: alive after the limit: false
+## 4. Events on the real tree, no code change, real main
+SessionStart exit 0 87 ms
+PostToolUse exit 0 110 ms
+PostToolUse exit 0 86 ms
+PostToolUse exit 0 85 ms
+Stop exit 0 220 ms
+Stop exit 0 225 ms
+SubagentStop exit 0 222 ms
+## 5. Another writer during a mutation run started by a hook
+SubagentStop: exit 2; the edit survived: false; the new file survived: false
+  message: CODE CHECK NOTE: this code was broken on purpose, with the defect stored in memory only. A line that says `became` is one the tests it names did not notice, or with none named every test that reaches it; a line that says `not tried` or `undecided` was not judged either way: | src/sum.mjs: the mutation check could not run: a run changed the tree, so no more defects of this file ran. Restored: src/other.mjs, src/brand-
+  next Stop: exit 2: CODE CHECK NOTE: this code was broken on purpose, with the defect stored in memory only. A line that says `became` is one the tests it names did not notice, or with none named every test that reaches it; a line that says `not tried` or `undecided` was not judged either way: | src/sum.mjs: the mutation check could not run: a run changed the tree, so no more defects of this file ran. Restored: src/other.mjs, src/brand-
+Stop: exit 2; the edit survived: false; the new file survived: false
+  message: CODE CHECK NOTE: this code was broken on purpose, with the defect stored in memory only. A line that says `became` is one the tests it names did not notice, or with none named every test that reaches it; a line that says `not tried` or `undecided` was not judged either way: | src/sum.mjs: the mutation check could not run: a run changed the tree, so no more defects of this file ran. Restored: src/other.mjs, src/brand-
+# end

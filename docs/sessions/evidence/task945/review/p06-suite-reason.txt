@@ -1,0 +1,1 @@
+the real selftests.mjs under the preload: exit 1; stdout ""; stderr ""

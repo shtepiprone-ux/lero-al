@@ -1,0 +1,37 @@
+# Task 945 approval: 35 breaks; node v22.22.3; win32; HEAD 51109a901251b0afd41c057e53a467a658dc0943; 2026-11-06T07:22:10.094Z
+0 CAUGHT binary by attribute no longer read; applied true; group; change-review; 0 s; 
+1 CAUGHT the 8 MiB bound of an added line gone; applied true; group; change-review; 1 s; 
+2 CAUGHT a line that also holds a key is printed; applied true; group; change-review; 5 s; a line another rule also finds: stdout repeats the key
+3 CAUGHT no rule hides anything; applied true; group; change-review; 5 s; a line another rule also finds: stdout repeats the key
+4 CAUGHT a failed git read is no failure; applied true; group; change-review; 1 s; Missing expected exception: a base that cannot be read is no pass
+5 CAUGHT a package check over a refused package list; applied true; group; change-review; 2 s; 
+6 CAUGHT tests over a refused line; applied true; group; change-review; 1 s; 
+7 CAUGHT untracked files not read by the review; applied true; group; change-review; 1 s; 
+8 CAUGHT the review exits 0 on a refusal; applied true; group; change-review; 1 s; 
+9 CAUGHT the mutation guard of a name gone; applied true; group; dependency-check; 3 s; 
+10 CAUGHT any stem reaches a command line; applied true; group; dependency-check; 4 s; 
+11 CAUGHT the root entry of a lock file refused; applied true; group; dependency-check; 0 s; 
+12 CAUGHT a link refused; applied true; group; dependency-check; 0 s; 
+13 CAUGHT a subagent refused without end; applied true; group; code-check; 5 s; 
+14 CAUGHT a check that did not finish is stored; applied true; group; code-check; 3 s; 
+15 CAUGHT stale memory over a new version; applied true; group; code-check; 1 s; 
+16 CAUGHT a file no row holds is out of the set; applied true; group; code-check; 1 s; 
+17 CAUGHT a crash reads as a finding elsewhere; applied true; group; code-check; 0 s; 
+18 CAUGHT an entry with no finding is accepted; applied true; group; code-check; 1 s; 
+19 CAUGHT a file gone before the session is told; applied true; group; code-check; 1 s; 
+20 CAUGHT a Stop that names nothing; applied true; group; change-review; 6 s; 
+21 CAUGHT a written file no row holds is not read at the write; applied true; group; change-review; 0 s; 
+22 CAUGHT a failed git grep is no failure; applied true; group; code-check; 1 s; Missing expected exception: a search that did not run is no empty result
+23 CAUGHT UNQUOTABLE loses $; applied true; group; dependency-check; 4 s; 
+24 SURVIVED UNQUOTABLE loses %; applied true; whole file; code-check; 118 s; 
+25 SURVIVED UNQUOTABLE loses the backtick; applied true; whole file; code-check; 121 s; 
+26 SURVIVED UNQUOTABLE loses the line breaks; applied true; whole file; code-check; 118 s; 
+27 SURVIVED the package name takes an ampersand; applied true; whole file; dependency-check; 16 s; 
+28 CAUGHT a guard that reads only its own text; applied true; group; mutation-check; 1 s; 
+29 CAUGHT outside the roots is not named; applied true; group; mutation-check; 1 s; 
+30 SURVIVED a control that writes goes unseen; applied true; whole file; mutation-check; 76 s; 
+31 SURVIVED a known note of a stage is dropped; applied true; whole file; code-check; 124 s; 
+32 SURVIVED a differential that throws exits 0; applied true; whole file; code-check; 128 s; 
+33 CAUGHT a contract loses .npmrc; applied true; group; code-check; 0 s; 
+34 CAUGHT a contract loses the CODEOWNERS; applied true; group; code-check; 0 s; 
+# ended 2026-11-06T07:34:41.433Z

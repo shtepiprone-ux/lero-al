@@ -3,7 +3,7 @@
   "status": "passed",
   "task": "tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.md",
   "contractSha256": "2c8fe8d578d42a5916472176f8b021e89eddbaa5973c3b923e5170551cbde7e3",
-  "scopeSha256": "8c28f8c04281e0c98fab6c82c53568dbcfe5c91c5af7ec4be7a88c90f0e80084",
+  "scopeSha256": "e22aec7176bf4b98978caaa97faaaf7f93eb35c302c0dd5bcaa09e8e9dce7af0",
   "node": "v22.22.3",
   "platform": "win32",
   "cases": [
@@ -23,7 +23,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.break.json",
         "breakSha256": "0729e731d86ac5d21ae80651a626619c6e0cfb8bc214a1105aafc0b332ae8483",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.txt",
-        "artifactSha256": "9f9428e9d6f66a2864b54deb96337aaeab536f9671fe252e63acd32b011d0560"
+        "artifactSha256": "de0b2c392f92247796ae62896459baf5399fa2042af6d246f2071f4669ce3605"
       }
     },
     {
@@ -42,7 +42,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.break.json",
         "breakSha256": "27a2ed9171cf8b5ddcf657fa83e64ff95bf95b7cf7f0df455d044667f8f4fd63",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-IMPACT-DENY.txt",
-        "artifactSha256": "e9a043234bcdd109d4959a44caa11166f34099eb965ecc7a0e3c66f5779200fa"
+        "artifactSha256": "91b38711e52607e123eadda53a2231978ebc69930bba703e4254213eea2c40df"
       }
     },
     {
@@ -61,7 +61,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.break.json",
         "breakSha256": "051afd52b655437e5d9e072fe7c12de4ff846f56442d09866e2334e6db24f40c",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.txt",
-        "artifactSha256": "6796f5fcb49885652fc1044b8fe9e285f10d4e7f8e599b93c62f3b8a7eb284a9"
+        "artifactSha256": "702f0fe0221cdc5f799ec984d4654be080060d246baa084ab32198f6ea259b61"
       }
     },
     {
@@ -80,7 +80,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.break.json",
         "breakSha256": "2e08af2408c8588a431a6e03c410b8c6c07d870eba1f4d92e2b3c608cd7a9e96",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DIFFERENTIAL-DENY.txt",
-        "artifactSha256": "27ce87276eb09eb69b85e4a17707429befb535b740e639b5a2c0363d4ddf3c28"
+        "artifactSha256": "dc97fe13bf37b6222f3f71800ff30a4bfa18cb78e05cf80e24eb437756038de5"
       }
     },
     {
@@ -111,7 +111,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.break.json",
         "breakSha256": "d9036939977222bd1a393ea3f7d48753d32652bc94546e6e706944d260c918d2",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-CI-SETTINGS-DENY.txt",
-        "artifactSha256": "067916a9a26a91ae3995b5fe3e89dcf00b53b18e4b33821b5cbf1109ec4b9985"
+        "artifactSha256": "56d83393d76083d0f42772111e6769bca2183816269b9933dad016b15aca335b"
       }
     },
     {
@@ -136,7 +136,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SECRET-REACH-DENY.break.json",
         "breakSha256": "311fc804b988e7ebc03d7fb4f90f840458c52d9fce551c52debcea87dcc689ec",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SECRET-REACH-DENY.txt",
-        "artifactSha256": "ff502b7bd77a69ea47697df17919a99a106888fefb61dabadae7b82bdb8c7efc"
+        "artifactSha256": "92ad8575019d2d230c7282aeb39a6e0632436b5fa85fc210edad96cdd7e27609"
       }
     },
     {
@@ -161,7 +161,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.break.json",
         "breakSha256": "e3ba8fe5ab53c773417c49fcacef9002af7050417f33a72fb07fdae5f67d99bc",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-NAME-INJECTION-DENY.txt",
-        "artifactSha256": "7e22b998062d61404ff911bbde92a3db77c00b74582c1a1a8c58fcfe0cf8e923"
+        "artifactSha256": "13a5aa6b78885d93e66b0329418d60e4e7bc9b5e3bb2f96eb7361769c3f461f4"
       }
     },
     {
@@ -180,7 +180,7 @@
         "break": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.break.json",
         "breakSha256": "065e1ff0793d792588fd7308c8193e058d05a6b530e209fda0f34448301dd3b2",
         "artifact": "docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-DELETED-CONSUMER-DENY.txt",
-        "artifactSha256": "1b2158ae04e63ffd4e65a675f533552d237abfc81c0ee4f43c20a39b8a342abb"
+        "artifactSha256": "a6d7cd377778bc7445347a203bc485086505f105ba433fcd6d254062f4001de3"
       }
     },
     {

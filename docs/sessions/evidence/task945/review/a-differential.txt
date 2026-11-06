@@ -1,0 +1,10 @@
+# Task 945 approval: differential
+platform win32; node v22.22.3; cwd C:\Claude_Code_Projects\lero-al; started 2026-11-06T07:22:34.139Z; ended 2026-11-06T07:22:45.503Z; 11364 ms
+command: node scripts/workflow-gates/hook-differential.mjs
+exit code: 0
+--- stdout
+compared 86367; corrections named 0; exceptions 0; slowest 6 ms; old hook 5efddf6e47e4dbbf6a45628aee31ab5aa12dd73bb856f46b6192751569c17935; 11314 ms
+LOST 0
+
+--- stderr
+

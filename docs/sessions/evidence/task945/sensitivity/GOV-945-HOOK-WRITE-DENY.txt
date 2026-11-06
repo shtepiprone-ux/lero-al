@@ -1,5 +1,5 @@
 # Sensitivity run of GOV-945-HOOK-WRITE-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
-node v22.22.3; platform win32; UTC 2026-11-06T06:48:05.225Z
+node v22.22.3; platform win32; UTC 2026-11-06T07:13:00.187Z
 contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.security.json
 break spec: docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-WRITE-DENY.break.json sha256 0729e731d86ac5d21ae80651a626619c6e0cfb8bc214a1105aafc0b332ae8483
 testName: [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
@@ -14,7 +14,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
 ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
   ---
-  duration_ms: 420.2629
+  duration_ms: 559.6894
   type: 'test'
   ...
 1..1
@@ -25,7 +25,7 @@ ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reach
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 492.5856
+# duration_ms 644.5634
 --- end TAP
 
 ## mutant
@@ -36,7 +36,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
 not ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
   ---
-  duration_ms: 352.6134
+  duration_ms: 400.8949
   type: 'test'
   location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\code-check.selftest.mjs:64:1'
   failureType: 'testCodeFailure'
@@ -64,7 +64,7 @@ not ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file r
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 454.398
+# duration_ms 505.0691
 --- end TAP
 
 ## restored
@@ -75,7 +75,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
 ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reaches the agent at once
   ---
-  duration_ms: 453.9012
+  duration_ms: 466.3424
   type: 'test'
   ...
 1..1
@@ -86,5 +86,5 @@ ok 1 - [GOV-945-HOOK-WRITE-DENY] A failing quality check of a written file reach
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 522.963
+# duration_ms 538.6657
 --- end TAP

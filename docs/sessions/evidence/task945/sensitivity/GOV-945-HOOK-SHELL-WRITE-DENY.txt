@@ -1,5 +1,5 @@
 # Sensitivity run of GOV-945-HOOK-SHELL-WRITE-DENY by cli.mjs sensitivity (Task 944 R1): the break exists only in the mutant's test process
-node v22.22.3; platform win32; UTC 2026-11-06T06:48:17.731Z
+node v22.22.3; platform win32; UTC 2026-11-06T07:13:12.495Z
 contract: tasks/Sprints/Sprint_92_kickoff_prompt_Task_945_Written_Code_Is_Always_Checked.security.json
 break spec: docs/sessions/evidence/task945/sensitivity/GOV-945-HOOK-SHELL-WRITE-DENY.break.json sha256 051afd52b655437e5d9e072fe7c12de4ff846f56442d09866e2334e6db24f40c
 testName: [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
@@ -14,7 +14,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
 ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
   ---
-  duration_ms: 1088.1011
+  duration_ms: 1020.3793
   type: 'test'
   ...
 1..1
@@ -25,7 +25,7 @@ ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whateve
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1161.7464
+# duration_ms 1087.6752
 --- end TAP
 
 ## mutant
@@ -36,7 +36,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
 not ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
   ---
-  duration_ms: 323.7665
+  duration_ms: 293.8224
   type: 'test'
   location: 'C:\\Claude_Code_Projects\\lero-al\\scripts\\workflow-gates\\code-check.selftest.mjs:144:1'
   failureType: 'testCodeFailure'
@@ -63,7 +63,7 @@ not ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, wha
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 426.4342
+# duration_ms 395.1936
 --- end TAP
 
 ## restored
@@ -74,7 +74,7 @@ TAP version 13
 # Subtest: [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
 ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whatever wrote it
   ---
-  duration_ms: 1067.3551
+  duration_ms: 996.0827
   type: 'test'
   ...
 1..1
@@ -85,5 +85,5 @@ ok 1 - [GOV-945-HOOK-SHELL-WRITE-DENY] A change is found by its content, whateve
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1138.3826
+# duration_ms 1065.9813
 --- end TAP

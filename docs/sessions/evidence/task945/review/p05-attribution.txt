@@ -1,5 +1,0 @@
-plain run, exit 0: a.json b.json c.json d.json e.json f.json 
-spawned script: child.json
-vitest worker, exit 0: from-worker.json node_modules/.vite/vitest/da39a3ee5e6b4b0d3255bfef95601890afd80709/results.json vitest.config.mjs.timestamp-1793949702148-a48326287626e.mjs
-two writers: on the record mutant.json; other.json holds "the other writer"
-a program that is no Node process: on the record []; by-cmd.txt exists true

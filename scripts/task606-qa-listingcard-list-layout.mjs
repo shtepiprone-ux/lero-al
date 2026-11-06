@@ -68,7 +68,7 @@ function startStaticServer(staticDir, port) {
   });
 }
 
-/* eslint-disable no-undef */
+ 
 function evalCell(viewportWidth) {
   const pageOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 2;
 
@@ -107,7 +107,7 @@ function evalCell(viewportWidth) {
     rows,
   };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const storybookStaticDir = join(ROOT, 'storybook-static');

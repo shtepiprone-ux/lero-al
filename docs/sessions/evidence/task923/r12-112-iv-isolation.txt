@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd node docs/sessions/evidence/task923/r12-112-iv-isolation.mjs
 listingdetailview--public-listing: full 377 rows, 40 failing; a: 377 rows, 0 differ; b: 377 rows, 0 differ; c: 377 rows, 0 differ
 listingdetailview--public-listing-not-reduced: full 377 rows, 40 failing; a: 377 rows, 0 differ; b: 377 rows, 0 differ; c: 377 rows, 0 differ

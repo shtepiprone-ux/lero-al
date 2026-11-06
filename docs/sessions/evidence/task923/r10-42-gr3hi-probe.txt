@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: node docs/sessions/evidence/task923/r10-42-gr3hi-probe.mjs docs/sessions/evidence/task923/r10-42-gr3hi   (storybook-static built 2026-10-19 09:54)
 GR-3h VERTICAL RHYTHM — mantine-primitives-table--default: rhythm tokens card:12; widths 320/375/390/480/560/639/640/641/680/767/768/769/810/960/1024/1200/1440/1920/2560 x locales sq,en,uk,it; containers measured 160; block gaps measured 12; gaps off the rhythm: NONE; page-level horizontal overflow cells: 0; probe errors: 0.
 GR-3i NAMES WRAP — mantine-primitives-table--default: text elements 2640; cut (clipped, clamped or ellipsis): NONE.

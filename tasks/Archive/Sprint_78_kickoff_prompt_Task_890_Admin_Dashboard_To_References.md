@@ -3,7 +3,7 @@
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **889** approved · folds **855**'s admin half
 (ADM-10, stale badge, series tooltips) · **Status: ✅ APPROVED WITH NOTES — review 6, 2026-10-01 (§21). Archived.**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27). The owner, verbatim: *"Я не приймаю таку візуально жахливу Dashboard для адміна/модератора"*. Their
 chart choices were *"Area-графік платформи, Нові оголошення/реєстрації, KPI черг з міні-графіком, Розподіл по
 містах"*, and their queue trend choice was *"Нові за день (Рекомендовано)"*. Style is *"Композиція референсів"*:

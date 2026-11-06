@@ -325,7 +325,6 @@ async function diagnoseLocale(browser, locale, viewport) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
-function icon(ok) { return ok ? '✅' : '❌' }
 
 async function main() {
   let chromium

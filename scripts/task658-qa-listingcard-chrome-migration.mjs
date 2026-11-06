@@ -117,7 +117,6 @@ async function main() {
         const cards = [...document.querySelectorAll('.mantine-Card-root')];
         const listRow = cards.find(el => getComputedStyle(el).flexDirection === 'row');
         if (!listRow) return null;
-        const locationTextEls = [...listRow.querySelectorAll('span, p')].filter(el => el.textContent && el.textContent.length > 3 && el.querySelector === undefined);
         // Simpler: find the MapPin-adjacent truncated span by walking for the location group marker.
         const truncated = [...listRow.querySelectorAll('*')].find(el => getComputedStyle(el).textOverflow === 'ellipsis' && getComputedStyle(el).whiteSpace === 'nowrap');
         if (!truncated) return { found: false };

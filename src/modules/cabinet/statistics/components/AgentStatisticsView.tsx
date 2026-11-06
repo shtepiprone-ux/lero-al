@@ -29,7 +29,7 @@ import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AppImage } from '@/design-system/media/AppImage'
 import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
-import { LISTING_STATUS_COLOR, VISIBILITY_TONE_COLOR } from '@/modules/listings/lib/listingStatusTone'
+import { VISIBILITY_TONE_COLOR } from '@/modules/listings/lib/listingStatusTone'
 import { formatCount, formatDate, formatDateOnly, formatDateRange, formatDayNumber, formatShortDate } from '@/lib/formatters'
 import { tiraneAbsoluteLabel, compareToPrevious, serializePeriod, type PeriodSelection } from '@/lib/dashboard/period'
 import { agentCardHref } from '@/modules/cabinet/statistics/hrefs'

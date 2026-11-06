@@ -1,8 +1,0 @@
-CAUGHT exit 1, applied true, 119 s, scripts/workflow-gates/code-check.selftest.mjs: C94 a hung check after grace counts as passed :: Task 945: a check that left a process holding its pipes past the grace period did not finish
-CAUGHT exit 1, applied true, 118 s, scripts/workflow-gates/code-check.selftest.mjs: C95 differential main always exits 0 :: Task 945: the real main of the differential, as a process, exits 1 on a lost target and 0 on an unchanged hook
-CAUGHT exit 1, applied true, 28 s, scripts/workflow-gates/change-review.selftest.mjs: C96 change-review follows renames :: a staged rename reaches the review under both names, and a file gone from the tree is searched for
-CAUGHT exit 1, applied true, 9 s, scripts/workflow-gates/dependency-check.selftest.mjs: C125 guard === becomes !== :: scripts\\workflow-gates\\dependency-check.selftest.mjs
-CAUGHT exit 1, applied true, 4 s, scripts/workflow-gates/dependency-check.selftest.mjs: C125 guard && becomes || :: scripts\\workflow-gates\\dependency-check.selftest.mjs
-CAUGHT exit 1, applied true, 4 s, scripts/workflow-gates/dependency-check.selftest.mjs: C125 guard negated :: scripts\\workflow-gates\\dependency-check.selftest.mjs
-CAUGHT exit 1, applied true, 12 s, scripts/workflow-gates/dependency-check.selftest.mjs: C125 no real path :: by hand: started through a link to its folder it still runs, because a guard that misses its own path would exit 0 having checked nothing
-SURVIVED exit 0, applied true, 12 s, scripts/workflow-gates/dependency-check.selftest.mjs: C125 lower case on the other platform :: 

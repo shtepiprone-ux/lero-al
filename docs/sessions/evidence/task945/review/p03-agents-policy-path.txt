@@ -1,3 +1,0 @@
-as committed: isPolicyPath(AGENTS.md) false; errors naming AGENTS.md or an unrelated path: 1 :: Governance scope contains a product or unrelated path AGENTS.md; other errors: 1
-with the correction in memory: isPolicyPath(AGENTS.md) true; errors naming AGENTS.md or an unrelated path: 0; other errors: 1
-applied: true

@@ -1,9 +1,0 @@
-﻿JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/unit.json
-JSON report written to C:/Claude_Code_Projects/lero-al/test-results/workflow-gates/security-runs/a4af432cc1434b49/external.json
-node : BLOCKED: Security report scope hash is stale
-At line:1 char:911
-+ ... = Get-Date; node scripts/workflow-gates/cli.mjs verify --contract $p[ ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (BLOCKED: Securi...e hash is stale:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 

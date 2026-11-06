@@ -1,5 +1,0 @@
-# R13 self-check: the new lines of code-check.mjs broken in memory through the tool's loader (one-break.mjs), against code-check.selftest.mjs
-the read at Stop removed: CAUGHT exit 1, applied true: one no row holds, untracked at the start: R13 names it too
-nothing kept at the start: CAUGHT exit 1, applied true: one no row holds, untracked at the start: R13 names it too
-the existence test negated: CAUGHT exit 1, applied true: one no row holds, untracked at the start: R13 names it too
-an old state not filled: CAUGHT exit 1, applied true: a state with none of the fields of revision 1

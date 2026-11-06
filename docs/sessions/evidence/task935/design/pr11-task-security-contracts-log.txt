@@ -1,2 +1,0 @@
-﻿Security scope: 30 changed files, 1 task contract(s).
-BLOCKED: tasks/Sprints/Sprint_78_Task_923_security_record_D8_D9.security.json: Independent review scope is stale

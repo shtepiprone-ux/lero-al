@@ -76,7 +76,7 @@ A **before/after layout inventory per surface** listing every action-row / toolb
 **AdminUsersTable.tsx**
 - **Tabs list, line ~236** — `flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit`. Already `w-full` at mobile; **verify each tab trigger fills** and labels wrap (sq/en/uk/it). Fix only if a trigger is content-width at `<640`.
 - **Filter rows, lines ~296/~321** — `flex gap-2 flex-wrap` (role/status/location-request Selects/controls). → `[&>*]:max-sm:w-full` so each filter control is full-width at `<640`; current row at `≥640`.
-- **Pagination row, lines ~401–403** — `prev_page` / `next_page` outline `size="sm"`. → stack/​full-width container at `<640`, restore at `≥640` (keep disabled-state logic intact).
+- **Pagination row, lines ~401–403** — `prev_page` / `next_page` outline `size="sm"`. → stack/full-width container at `<640`, restore at `≥640` (keep disabled-state logic intact).
 
 **AdminEmailTemplatesManager.tsx**
 - **Toolbar, line ~370** — `flex items-center gap-3 flex-wrap` + `New` button (line ~380, `className="gap-1.5 shrink-0"`). → `flex flex-col gap-2 sm:flex-row sm:items-center`, `shrink-0`→`sm:shrink-0`.

@@ -7,7 +7,7 @@ phone month window shrinks, the header stops following the scroll; the `minDate`
 2 (§17, §19) are otherwise verified. O84-2: 64 of 72 accepted, 12 `RangeDatePicker` tuples owed after revision 3
 (§20.5) · kickoff filed 2026-09-28
 
-Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
+Sprint plan: [`Sprint_84_One_Clock_And_One_Date_Order.md`](../Sprints/Sprint_84_One_Clock_And_One_Date_Order.md). Reserved
 2026-09-27 by 885's design under owner decision **D84-1** (*"Migrate first"*); the reserved row's text moves into §3.
 Precedents to follow, read-only: **868** (`Sprint_78_kickoff_prompt_Task_868_…md`: container/View split,
 `MantineModal` dialogs, Stories, manifest, census baseline) and **877** (page wrapper and width token).

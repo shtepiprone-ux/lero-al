@@ -1,8 +1,0 @@
-# Task 944 review 2: Stop hook GOVERNANCE INDEPENDENCE diagnosis (read-only, 2026-11-04T08:29:08Z, Node v22.22.3, HEAD 22c6871a31eaf693b16ad68c2e0f5ec290aeedea)
-Final hook (candidate) and d17d9d5a8 hook (pre-944, loaded in memory) both report 944 scope files as written for transcript calls 26, 27, 32, 33, 62, 63:
-- 26, 27: commands blocked before execution or redirecting only to the scratchpad; cli.mjs, contract.mjs
-- 32, 33: node --input-type=module -e that imports cli.mjs/contract.mjs and runs governanceReport in memory; cli.mjs, contract.mjs
-- 62, 63: node -e computing scopeDigest with base overrides read from the scratchpad; contract.mjs, governance-contract.selftest.mjs
-Same targets from both hooks: the lenient evaluator reading predates 944 (Task 943), not caused by 944.
-git status --short scripts .claude after all calls:
-(empty = no scope file changed)

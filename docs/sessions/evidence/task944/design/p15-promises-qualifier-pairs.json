@@ -1,7 +1,0 @@
-[
-  {
-    "id": "R8 (c) revision 2: the fs.promises member of a require or import call qualifies a generic API name",
-    "find": "const API_QUALIFIER = String.raw`(?:\\bfs\\.(?:promises\\.)?|\\bfsp\\.|\\bos\\.|\\bshutil\\.|\\]::|\\)\\.)`;",
-    "replace": "const API_QUALIFIER = String.raw`(?:\\bfs\\.(?:promises\\.)?|\\bfsp\\.|\\bos\\.|\\bshutil\\.|\\]::|\\)\\.(?:promises\\.)?)`;"
-  }
-]

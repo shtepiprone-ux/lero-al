@@ -72,9 +72,9 @@ mutant: exit 1, passed 8, failed 1
     AssertionError: picture on a foreign host: expected false to be true // Object.is equality
     
     Ignored nodes: comments, script, style
-    [36m<html[39m
-      [33mdata-mantine-color-scheme[39m=[32m"light"[39m
-    [36m>[39m
+    <html
+      data-mantine-color-scheme="light"
+    >
 the named case failed on an assertion: yes
 restored: exit 0, passed 9, failed 0; file hashes equal to the originals: true
 RESULT M4 no host check of the picture: OK

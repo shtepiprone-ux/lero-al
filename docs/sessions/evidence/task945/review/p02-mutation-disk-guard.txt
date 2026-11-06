@@ -1,8 +1,0 @@
-before a run: ["scripts/dirty.json","scripts/new.json"]
-after a run: ["scripts/baseline.json","scripts/dirty.json","scripts/stray.json"]
-named and restored: ["scripts/baseline.json","scripts/dirty.json","scripts/new.json","scripts/stray.json"]
-after the restore: ["scripts/dirty.json","scripts/new.json"]
-tracked file back at its blob: true
-a file the session had changed keeps the session's text: true
-an untracked file deleted by the run is back: true
-a stray file is gone: true

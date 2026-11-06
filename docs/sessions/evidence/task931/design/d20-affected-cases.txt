@@ -1,8 +1,0 @@
-Task 931 revision 3 design probe (Opus, native Windows, Node v22.22.3, cwd C:\Claude_Code_Projects\lero-al, HEAD 2693c6b9a, 2026-11-02; rerun with the contact-session test of d22 in class A)
-Command: node docs/sessions/evidence/task931/design/d20-affected-cases.mjs
-Sprint_78_Task_923_security_record_D8_D9.security.json: cases 231; in changed files 59; files 26; integration among them 0
-Sprint_78_Task_923_security_record_owner_fixes.security.json: cases 60; in changed files 13; files 11; integration among them 0
-Sprint_91_kickoff_prompt_Task_927_Google_Sign_In_Shows_Lero_Al.security.json: cases 53; in changed files 37; files 7; integration among them 0
-Sprint_92_kickoff_prompt_Task_931_Full_Unit_Suite_Green_Again.security.json: cases 17; in changed files 14; files 5; integration among them 0
-class A files in the migration list: 0
-exit=0

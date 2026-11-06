@@ -1,4 +1,4 @@
-﻿# a5-21: static scan after npm run build
+# a5-21: static scan after npm run build
 platform: win32; node v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 started: 2026-10-25T09:51:18.9508608Z
 files in .next/static containing GOCSPX-: 0

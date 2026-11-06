@@ -43,7 +43,7 @@ a picker name one letter per line — none of them seen by two censuses that rea
    clipped text only inside a portal root (both while the app root is green); the same violation in the app root
    only; a portal that appears in an unregistered state; a registered state that opens nothing.
 7. **Gate** — a blocking CI step on the built Storybook (the precedent is the card-track gate in
-   `.github/workflows/governance-pr.yml`). No baseline, allowlist or inline suppression; a Story × state that must
+   `.github/workflows/ci.yml`). No baseline, allowlist or inline suppression; a Story × state that must
    differ needs a dated owner decision named in the registry row.
 
 ## Roles

@@ -1,4 +1,4 @@
-﻿# a6-98: sha256 of the session record after the Task 927 Amendment 6 executor report
+# a6-98: sha256 of the session record after the Task 927 Amendment 6 executor report
 platform: win32 10.0.26300
 node: v22.22.3
 cwd: C:\Claude_Code_Projects\lero-al

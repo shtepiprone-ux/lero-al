@@ -1,9 +1,9 @@
 /**
- * Real-boundary test environment (workflow-gates / security-test-environment.md).
+ * Real-boundary test environment (.claude/rules/security-testing.md; CI target check scripts/quality/ci-target.mjs).
  *
  * The integration suites talk to REAL Supabase Auth and the REAL database of the owner-approved DEVELOPMENT project, with synthetic rows of one run. They never
  * run by accident and never against another project:
- *  - the target is declared as in shared/workflow-gates.md: `SECURITY_TEST_TARGET=development` and `SECURITY_TEST_PROJECT_REF` = the approved project ref. The project is
+ *  - the target is declared: `SECURITY_TEST_TARGET=development` and `SECURITY_TEST_PROJECT_REF` = the approved project ref. The project is
  *    identified by the ref in the Supabase URL; the run refuses to start unless both declarations match it (the person who starts the run states which project is
  *    approved; a missing, different or production value FAILS the suite, it does not skip it);
  *  - credentials come from the owner's approved source by NAME only: the three variables below, from the process environment or the project's `.env.local`.

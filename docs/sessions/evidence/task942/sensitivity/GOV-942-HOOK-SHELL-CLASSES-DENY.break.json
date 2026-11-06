@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "case": "GOV-942-HOOK-SHELL-CLASSES-DENY",
-  "target": "scripts/workflow-gates/security-hook.mjs",
-  "find": "  while (texts[at]?.startsWith('-')) at += MANAGER_VALUE.test(texts[at]) ? 2 : 1;\n",
-  "replace": ""
-}

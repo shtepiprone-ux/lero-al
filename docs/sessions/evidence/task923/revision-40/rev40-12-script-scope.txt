@@ -1,4 +1,4 @@
-﻿OUTSIDE scripts/__fixtures__/rendered-state-census/census-pending.js
+OUTSIDE scripts/__fixtures__/rendered-state-census/census-pending.js
 OUTSIDE scripts/__tests__/mantine-story-scope.test.ts
 OUTSIDE scripts/__tests__/rendered-state-census.test.ts
 OUTSIDE scripts/governance/scan-localization.mjs

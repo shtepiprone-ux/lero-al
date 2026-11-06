@@ -1,12 +1,12 @@
-docs/reviews/artifacts/2026-08-12-task691R/transcripts/build-storybook-round3.txt:7759:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/Admin
-docs/reviews/artifacts/2026-08-13-task695/step9-after-storybook-build.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsM
-docs/reviews/artifacts/2026-08-14-task741/REVISION1-build-storybook-FINAL.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminRepo
+docs/reviews/artifacts/2026-08-12-task691R/transcripts/build-storybook-round3.txt:7759:│  Vite storybook-static/assets/Admin
+docs/reviews/artifacts/2026-08-13-task695/step9-after-storybook-build.log:7767:│  Vite storybook-static/assets/AdminReportsM
+docs/reviews/artifacts/2026-08-14-task741/REVISION1-build-storybook-FINAL.log:7767:│  Vite storybook-static/assets/AdminRepo
 docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/iframe-BWqC60Cj.js:1:const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./AdminC
 docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/iframe-BWqC60Cj.js:1011:  `,document.head.appendChild(a),(l=(s=o.querySelector(".sb-nav
 docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/index.json:1:{"v":5,"entries":{"admin-admincardlist--docs":{"id":"admin-admincardlist--docs","
-docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-A.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsManag
-docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-B.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminReportsManag
-docs/reviews/artifacts/2026-08-14-task741/build-storybook-POST-PLANT-B-clean.log:7767:[90m│[39m  [43mVite[49m [2mstorybook-static/[22m[36massets/AdminR
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-A.log:7767:│  Vite storybook-static/assets/AdminReportsManag
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-PLANT-B.log:7767:│  Vite storybook-static/assets/AdminReportsManag
+docs/reviews/artifacts/2026-08-14-task741/build-storybook-POST-PLANT-B-clean.log:7767:│  Vite storybook-static/assets/AdminR
 tasks/Epics/Epic_BB_kickoff_prompt_Task_461_AdminReportOwnerVisibility.md:323:`AdminReportsManager.stories.tsx:76,82,88` use `globals: { locale: 'uk', … }`. T
 tasks/Epics/Epic_BB_kickoff_prompt_Task_461_AdminReportOwnerVisibility.md:347:### 🟢 Nit — unused `canvas` in `openDialog` (`AdminReportsManager.stories.tsx
 tasks/Epics/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md:29:- `src/components/admin/AdminReportsManager.stories.tsx`

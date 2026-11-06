@@ -1,4 +1,4 @@
-﻿platform: win32 v22.22.3 C:\Claude_Code_Projects\lero-al start 2026-10-08T22:34:03.3962763Z
+platform: win32 v22.22.3 C:\Claude_Code_Projects\lero-al start 2026-10-08T22:34:03.3962763Z
 
 > lero-al@0.1.0 prebuild-storybook
 > node scripts/prepare-storybook-next15.mjs && node scripts/check-stories.mjs
@@ -8809,7 +8809,7 @@
 │  (!) Some chunks are larger than 500 kB after minification. Consider:
 │  - Using dynamic import() to code-split the application
 │  - Use build.rollupOptions.output.manualChunks to improve chunking:
-│  ]8;;https://rollupjs.org/configuration-options/#output-manualchunkshttps://rollupjs.org/configuration-options/#output-manualchunks]8;;
+│  https://rollupjs.org/configuration-options/#output-manualchunks
 │  - Adjust chunk size limit for this warning via
 │  build.chunkSizeWarningLimit.
 │  Vite ✓ built in 27.34s

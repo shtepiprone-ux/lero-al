@@ -342,6 +342,20 @@ export function loadManifestSet() {
  * full included/excluded scope. Never throws for an ordinary failure condition (git absent, no merge
  * base, limits exceeded, unresolved candidate) — those are all `failClosed` results, not exceptions.
  */
+/** The changed-file limit bounds the census work, so it counts only the files the census maps (production .ts/.tsx
+ *  under src/). A PR that also changes many documents, rules or tests is not refused for them (governance reset
+ *  2026-11-06: the limit counted every changed path, so a rules-only PR of 300+ files failed with no surface involved). */
+export function changedFileLimit(candidates, maxChangedFiles, totalChanged = candidates.length) {
+  if (candidates.length <= maxChangedFiles) return null;
+  return {
+    failClosed: true,
+    reason: 'changed-file-limit-exceeded',
+    detail: `${candidates.length} changed production file(s) exceeds the limit of ${maxChangedFiles} (${totalChanged} changed in total)`,
+    changedCount: candidates.length,
+    limit: maxChangedFiles,
+  };
+}
+
 export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CHANGED_FILES, maxSurfaces = DEFAULT_MAX_SURFACES }) {
   if (!base) {
     return { failClosed: true, reason: 'missing-base', detail: '--base <ref> is required' };
@@ -359,16 +373,6 @@ export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CH
     return { failClosed: true, reason: 'diff-unavailable', detail: String(err.message).split('\n')[0] };
   }
 
-  if (entries.length > maxChangedFiles) {
-    return {
-      failClosed: true,
-      reason: 'changed-file-limit-exceeded',
-      detail: `${entries.length} changed file(s) exceeds the limit of ${maxChangedFiles}`,
-      changedCount: entries.length,
-      limit: maxChangedFiles,
-    };
-  }
-
   const excluded = [];
   const candidates = [];
   for (const entry of entries) {
@@ -377,6 +381,9 @@ export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CH
     else candidates.push(entry.path);
   }
   candidates.sort();
+
+  const overLimit = changedFileLimit(candidates, maxChangedFiles, entries.length);
+  if (overLimit) return overLimit;
   excluded.sort((a, b) => a.path.localeCompare(b.path));
 
   const included = new Set();

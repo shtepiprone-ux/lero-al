@@ -1,9 +1,0 @@
-# Task 944 self-audit 2 probe p11 (session 3d40df28, 2026-11-03T10:21:54Z), node v22.22.3, native Windows 11, cwd /c/Claude_Code_Projects/lero-al
-Command: node --experimental-vm-modules docs/sessions/evidence/task944/design/p11-link-probe.mjs
-A1 node --check, hook importing a file not written yet: exit 0
-A2 node --check, contract.mjs without the isEvidencePath export: exit 0
-B0 link, live graph: linked
-B1 link, hook importing a file not written yet: Error: cannot find module scripts/workflow-gates/not-yet-written.mjs
-B2 link, contract.mjs without the isEvidencePath export: SyntaxError: The requested module './contract.mjs' does not provide an export named 'isEvidencePath'
-B3 link, the incident line comment: SyntaxError: Unexpected token 'if'
-exit=0

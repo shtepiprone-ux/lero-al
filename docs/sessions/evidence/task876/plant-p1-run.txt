@@ -1,4 +1,4 @@
-﻿
+
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
 
  ❯ src/modules/auth/__tests__/AuthContext.test.tsx (17 tests | 1 failed) 184ms

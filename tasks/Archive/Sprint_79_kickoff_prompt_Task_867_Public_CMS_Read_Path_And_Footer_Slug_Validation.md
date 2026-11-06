@@ -3,7 +3,7 @@
 Sprint 79 · P1 · QA profile **Q4** (RLS/read-path security + server-action validation) · no dependencies ·
 owner actions **O79-1 … O79-4** · **Status: ✅ APPROVED WITH NOTES 2026-09-23 (review 2, of revision 1) — archived; ledger `docs/reviews/2026-09-23-task867-cms-read-path-footer-slug-validation.review-ledger.json`**
 
-Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
+Sprint plan: [`Sprint_79_The_CMS_Pages_Nobody_Can_Read.md`](../Sprints/Sprint_79_The_CMS_Pages_Nobody_Can_Read.md).
 
 Owner report that opened it (2026-09-21, verbatim): *"Я перевірив продакшн: https://lero.al/en/privacy-policy реально
 повертає 404"*; acceptance sentence: *"Адмін створив і опублікував privacy-policy з текстом →

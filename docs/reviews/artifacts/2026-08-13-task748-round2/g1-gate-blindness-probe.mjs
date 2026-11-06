@@ -89,7 +89,6 @@ for (const c of CASES) {
   const bs = set(b), as = set(a);
   const overlayReachedBefore = [...bs].some(isOverlayUtility);
   const survivesOnlyAfter = [...as].filter(x => !bs.has(x) && !isModule(x));
-  const overlayLostAfter = [...bs].filter(isOverlayUtility).length > 0 && ![...as].some(isModule) && !c.rawClassName;
 
   const verdicts = [];
   if (!overlayReachedBefore && !c.rawClassName) verdicts.push('OVERLAY DECLARATION ADDED (twMerge had deleted the utility before)');
@@ -97,7 +96,6 @@ for (const c of CASES) {
 
   if (verdicts.length) {
     moved++;
-    const baseId = c.id.replace(/^E\d+[ab]?\s*/, '').split('(')[0].trim();
     const isKnown = [...KNOWN_FIXED].some(k => c.id.startsWith(k.split(' ')[0]) || c.id.includes('priority row') || c.id.includes('predictive row') || c.id.includes('photoCountButton'));
     if (!isKnown) unexpectedMoves++;
   }

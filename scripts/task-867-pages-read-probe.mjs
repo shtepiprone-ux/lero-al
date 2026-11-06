@@ -81,7 +81,7 @@ async function main() {
 
   // ── Query 3: service role, unfiltered ────────────────────────────────────────
   const q3 = await serviceClient.from('pages').select('id, slug, is_published, content', { count: 'exact' })
-  const r3 = describeResult('Q3 service_role select pages (no filter)', q3)
+  describeResult('Q3 service_role select pages (no filter)', q3)
   console.log('')
 
   // ── Branch decision (§3.1) ───────────────────────────────────────────────────

@@ -2,7 +2,7 @@
 
 ## RLS-Change Test Requirement (Epic RS Slice 1, Task 436, 2026-06-16)
 
-Apply `.claude/rules/shared/security-testing.md` and `workflow-gates.md` to every task. An action test with a fake
+Apply `.claude/rules/security-testing.md` to every task. An action test with a fake
 Supabase client proves application behavior only. Changes to RLS/grants/RPCs also require real database tests with
 separate ordinary-user sessions, allowed controls, denied access and unchanged protected state; service_role is
 fixture setup, not the actor proving RLS. Test protected fields as well as row ownership, including signup/INSERT

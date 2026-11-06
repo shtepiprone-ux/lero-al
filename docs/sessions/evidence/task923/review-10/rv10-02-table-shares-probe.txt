@@ -1,4 +1,4 @@
-﻿platform: Microsoft Windows NT 10.0.26300.0; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; storybook-static index: 2026-10-18T22:58:23; command: node docs/sessions/evidence/task923/review-10/rv10-02-table-shares-probe.mjs
+platform: Microsoft Windows NT 10.0.26300.0; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; storybook-static index: 2026-10-18T22:58:23; command: node docs/sessions/evidence/task923/review-10/rv10-02-table-shares-probe.mjs
 current mantine-primitives-table--default sq@767 PASS {"layout":"cards","pageScroll":false}
 current mantine-primitives-table--default en@767 PASS {"layout":"cards","pageScroll":false}
 current mantine-primitives-table--default uk@767 PASS {"layout":"cards","pageScroll":false}

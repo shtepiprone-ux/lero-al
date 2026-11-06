@@ -1,6 +1,6 @@
 # Task 790 · Revision 1 — `theme.d69-18` contract check tolerates TypeScript non-null assertions
 
-**Sprint:** 77 — [`Sprint_77_The_Full_Test_Suite_Nobody_Runs.md`](Sprint_77_The_Full_Test_Suite_Nobody_Runs.md)
+**Sprint:** 77 — [`Sprint_77_The_Full_Test_Suite_Nobody_Runs.md`](../Sprints/Sprint_77_The_Full_Test_Suite_Nobody_Runs.md)
 **Priority:** P1 · **QA profile:** Q1 Targeted · **Executor:** Sonnet (`execute-task`) · **Author:** Opus, 2026-09-18
 
 > **Owner instruction, 2026-09-18, verbatim:** *"напиши задачу для Sonnet в рамках Task 790, як revision 1, щоб

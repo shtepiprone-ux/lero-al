@@ -1,4 +1,4 @@
-﻿# r56-02: R171 (b) - the integration file accessHardening.integration.test.ts, verbose; SEC-DB-S62-ALLOW and SEC-DB-S62-DENY
+# r56-02: R171 (b) - the integration file accessHardening.integration.test.ts, verbose; SEC-DB-S62-ALLOW and SEC-DB-S62-DENY
 platform: win32 x64 (Windows PowerShell 5.1); node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 command: npx vitest run --config vitest.integration.config.ts accessHardening --reporter=verbose  (env: SECURITY_TEST_TARGET=development, SECURITY_TEST_PROJECT_REF=<ref, 20 chars>; credentials read by name from .env.local, not printed)
 started: 2026-10-29T13:09:31.9380291Z

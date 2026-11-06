@@ -1,4 +1,4 @@
-﻿tailadmin: 88 pages, 21 with prices
+tailadmin: 88 pages, 21 with prices
   https://demo.tailadmin.com/index.html
      rgb(102, 112, 133) 14px 400 none  e.g. $2399.00 | $879.00 | $1869.00 (5)
   https://demo.tailadmin.com/analytics.html

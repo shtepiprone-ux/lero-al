@@ -1,7 +1,0 @@
-9 reviewed contracts; 42 files in the commit
-935 {"kind":"governance","stale":true,"scopeHits":[".claude/rules/README.md",".claude/settings.json","CLAUDE.md","scripts/workflow-gates/check-workflow.mjs","scripts/workflow-gates/publication.json"],"ruleHits":[],"rebases":["scope","scope","scope","scope","scope","tests"],"hasLegacy":false}
-940 {"kind":"governance","stale":true,"scopeHits":["scripts/workflow-gates/publication.json"],"ruleHits":[],"rebases":["scope","scope","scope"],"hasLegacy":false}
-941 {"kind":"governance","stale":true,"scopeHits":["scripts/workflow-gates/publication.json"],"ruleHits":[],"rebases":["scope","tests","scope"],"hasLegacy":false}
-943 {"kind":"governance","stale":true,"scopeHits":["scripts/workflow-gates/publication.json"],"ruleHits":[],"rebases":["scope"],"hasLegacy":false}
-944 {"kind":"governance","stale":true,"scopeHits":[".claude/rules/review/02-adversarial-ui.md",".claude/rules/shared/task-readiness.md","scripts/workflow-gates/publication.json"],"ruleHits":[],"rebases":[],"hasLegacy":false}
-not stale and untouched: 923 927 931

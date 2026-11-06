@@ -28,6 +28,7 @@ export function CmsPageView({ title, body }: CmsPageViewProps) {
       )}
       {body && (
         <TypographyStylesProvider>
+          {/* eslint-disable-next-line react/no-danger -- sanitized by sanitizeCmsHtml (OWASP XSS Prevention) */}
           <div dangerouslySetInnerHTML={{ __html: sanitizeCmsHtml(body) }} />
         </TypographyStylesProvider>
       )}

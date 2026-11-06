@@ -4,7 +4,7 @@ Established: 2026-05-18
 Status: PERMANENT GOVERNANCE REFERENCE
 
 This document defines the rules for the component cataloging system.
-Machine-readable catalog: `scripts/governance/reports/component-catalog.latest.json`
+Machine-readable catalog: `scripts/governance/reports/component-catalog.latest.json` (gitignored, generated locally)
 Human-readable catalog: `docs/component-catalog.md`
 Coverage matrix: `docs/component-coverage-matrix.md`
 Risk register: `docs/component-risk-register.md`

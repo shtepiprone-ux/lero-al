@@ -1,4 +1,4 @@
-﻿# rv7-04: source lines for Task 927 Amendment 7
+# rv7-04: source lines for Task 927 Amendment 7
 platform: win32 10.0.26300; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al; date: 2026-10-25T17:56:45.194Z
 src/modules/cabinet/components/ProfileTab.tsx:241: const result = await deleteOwnAccount(reauthMethod === 'google' ? {} : { password: deletePassword })
 src/modules/cabinet/components/ProfileTab.tsx:247: if (result.error === 'reauth_required') { setDeleteNeedsGoogle(true); return }

@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: node docs/sessions/evidence/task923/r8-84-ac32-checks.mjs docs/sessions/evidence/task923/r8-full
 platform win32 node v22.22.3; run docs/sessions/evidence/task923/r8-full
 rows 34369; app 19201; portal 15168; unique 34369

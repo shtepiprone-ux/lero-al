@@ -251,7 +251,7 @@ to suppress paint-expensive effects.
 
 ### Adaptation by Tier
 
-#### AppImage (`src/components/ui/AppImage.tsx`)
+#### AppImage (`src/design-system/media/AppImage.tsx`)
 
 | Behavior              | low                          | medium                    | high                      |
 |-----------------------|------------------------------|---------------------------|---------------------------|
@@ -372,7 +372,7 @@ Two sets of automated rules protect the system from accidental bypasses:
 - Raw `<img>` elements → must use `<AppImage variant="...">`
 - Inline `srcSet` attribute → must use AppImage
 - Inline `fetchPriority` attribute → must use AppImage's `priority` prop
-- Exception: `src/components/ui/AppImage.tsx` (the single render site)
+- Exception: `src/design-system/media/AppImage.tsx` (the single render site)
 
 **Status mutation governance**: protects listing state transitions (separate concern).
 

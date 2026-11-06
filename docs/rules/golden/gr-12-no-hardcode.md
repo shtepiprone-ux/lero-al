@@ -30,9 +30,9 @@ and every same-meaning consumer in the same change. Do not add a Story-only, fea
 token/pattern/Story is a stop to local integration, not permission for a raw value, palette literal, `className`,
 `style`, or consumer override. The operational decision tree is `.claude/rules/shared/ui-token-contract.md`.
 
-**Machine enforcement, not a waiver.** Before an in-scope UI/Story write,
-`.claude/hooks/phase-write-gate.ps1` requires the GR-0, UI-contract, and (for a Story) Storybook-proof receipts.
-Protected CI then runs `npm run check:ui-contract`: changed canonical Stories cannot add local presentation, and a
+**Machine enforcement, not a waiver.** The write hook that demanded receipts before a UI/Story write
+(`.claude/hooks/phase-write-gate.ps1`) was removed 2026-11-06; the kickoff names an automated test for each criterion.
+Protected CI runs `npm run check:ui-contract`: changed canonical Stories cannot add local presentation, and a
 component newly enrolled in `scripts/mantine-migration-scope.json` must have a real component → token-owner → direct
 Story → parity row in `scripts/ui-contract-registry.json`. Neither gate has an inline suppression, allowlist, or
 baseline. The full enforcement boundary, including why a built-Storybook census remains required for computed parity,

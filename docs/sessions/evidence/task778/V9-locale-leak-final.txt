@@ -1,4 +1,4 @@
-﻿win32
+win32
 
 > lero-al@0.1.0 check:locale-leak:mantine-only
 > node scripts/check-locale-leak.mjs --mantine-only

@@ -83,14 +83,6 @@ function extractClassStrings(content) {
   return results;
 }
 
-// Tokenise a class string into individual Tailwind utilities
-function tokenize(classStr) {
-  return classStr
-    .replace(/__DYNAMIC__/g, '')
-    .split(/\s+/)
-    .map(s => s.trim())
-    .filter(s => s.length > 0 && !s.startsWith('//'));
-}
 
 // ── Category 1: Duplicated utility chains ─────────────────────────────────────
 const KNOWN_DUPLICATE_PATTERNS = [
@@ -183,7 +175,7 @@ function detectArbitraryValues(allFileData) {
   const findings = [];
   const arbitraryRe = /(\S+)-\[([^\]]+)\]/g;
 
-  for (const { file, content, lines } of allFileData) {
+  for (const { file, lines } of allFileData) {
     lines.forEach((line, i) => {
       const lineNum = i + 1;
       let m;
@@ -247,7 +239,6 @@ function detectArbitraryValues(allFileData) {
 // ── Category 3: Responsive utility drift ──────────────────────────────────────
 function detectResponsiveDrift(allFileData) {
   const findings = [];
-  const BREAKPOINTS = ['sm', 'md', 'lg', 'xl', '2xl'];
 
   for (const { file, lines } of allFileData) {
     // Skip shadcn ui internals

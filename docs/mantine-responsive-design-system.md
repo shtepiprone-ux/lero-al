@@ -515,8 +515,8 @@ UI governance docs.
 | `src/components/ui/dropdown-menu.tsx` | Dropdown menu | shadcn/radix DropdownMenu | P0 risk: not bottom-sheet on mobile | Story exists | MIGRATE TO MANTINE | `<Menu>` with bottom Drawer on mobile | Phase 2 | — |
 | `src/components/ui/navigation-menu.tsx` | Nav menu | shadcn/radix NavigationMenu | P0 risk: not bottom-sheet on mobile | Story exists | MIGRATE TO MANTINE | Mantine nav pattern | Phase 3 | — |
 | `src/components/ui/skeleton.tsx` | Loading skeleton | shadcn/ui Skeleton | Low risk | Story exists | MIGRATE TO MANTINE | `<Skeleton>` | Phase 3 | — |
-| `src/components/ui/sonner.tsx` | Toast notifications (legacy) | Sonner toast library | Low risk | No story | KEEP TEMPORARILY AS LEGACY | `<Notifications>` (Mantine) | Phase 4 | Must replace Toaster in locale/admin layouts |
-| `src/components/ui/appImageConfig.ts` | Next/Image config | TypeScript constants | None | n/a | NON-UI SUPPORT | n/a | n/a | — |
+| `src/components/ui/sonner.tsx` (removed in Task 681) | Toast notifications (legacy) | Sonner toast library | Low risk | No story | KEEP TEMPORARILY AS LEGACY | `<Notifications>` (Mantine) | Phase 4 | Must replace Toaster in locale/admin layouts |
+| `src/design-system/media/appImageConfig.ts` | Next/Image config | TypeScript constants | None | n/a | NON-UI SUPPORT | n/a | n/a | — |
 
 ### Layout components — `src/components/layout/`
 
@@ -534,8 +534,8 @@ UI governance docs.
 | `src/components/admin/AdminLocaleSwitcher.tsx` | Locale switcher dropdown | Mantine Menu (via `LocaleSwitcher`) | Migrated (Task 852, 2026-09-25) | Story exists | MIGRATED | Mantine Menu + mobile Drawer | Phase 2 | — |
 | `src/components/admin/AdminListingsTable.tsx` | Admin listings data table | Custom Tailwind table | P0 risk: horizontal scroll on mobile | Story exists | MIGRATE TO MANTINE | MantineDataTableToCards + MantineAdminSurfacePattern | Phase 3 | Complex — canonical AdminTable |
 | `src/components/admin/AdminCurrenciesManager.tsx` | Currency CRUD | shadcn Dialog form | P0 risk: dialog not bottom-sheet | Story exists | MIGRATE TO MANTINE | MantineDialogDrawerPattern + MantineAdminSurfacePattern | Phase 3 | — |
-| `src/components/admin/AdminExchangeProvidersManager.tsx` | Provider CRUD | containers + `AdminExchangeProvidersView` / `ProviderFormDialogView` on `MantineDataTableToCards` + `MantineModal` (Task 874) | dialog is a bottom sheet <640 | Stories: `Patterns/Mantine/AdminExchangeProvidersView`, `…/ProviderFormDialogView` | MIGRATED (Task 874) | — | — | — |
-| `src/components/admin/StatusChangeControl.tsx` | Status change select | shadcn Select | P0 risk: dropdown not bottom-sheet | Story exists | MIGRATE TO MANTINE | `<Select>` (Mantine, bottom-sheet on mobile) | Phase 2 | — |
+| `src/components/admin/AdminExchangeProvidersManager.tsx` (removed) | Provider CRUD | containers + `AdminExchangeProvidersView` / `ProviderFormDialogView` on `MantineDataTableToCards` + `MantineModal` (Task 874) | dialog is a bottom sheet <640 | Stories: `Patterns/Mantine/AdminExchangeProvidersView`, `…/ProviderFormDialogView` | MIGRATED (Task 874) | — | — | — |
+| `src/components/admin/StatusChangeControl.tsx` (removed) | Status change select | shadcn Select | P0 risk: dropdown not bottom-sheet | Story exists | MIGRATE TO MANTINE | `<Select>` (Mantine, bottom-sheet on mobile) | Phase 2 | — |
 | `src/components/admin/AdminReportsManager.tsx` | Reports CRUD admin surface | Tailwind + shadcn | P0 risk | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern | Phase 3 | Task 462/463 in progress |
 | Other `src/components/admin/*.tsx` (≈20 files) | Admin UI surfaces | Tailwind + shadcn variants | P0 risk varies | Varies | MIGRATE TO MANTINE | Mantine equivalents per surface | Phase 3 | Per-surface owner review |
 
@@ -557,7 +557,7 @@ UI governance docs.
 | `src/app/admin/layout.tsx` | Admin layout | RSC, auth guard | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth layer) | n/a | — |
 | `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | Mantine layout (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | — |
 | `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | Complex: URL state + filters |
-| `src/app/[locale]/listings/[id]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
+| `src/app/[locale]/listings/[slug]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
 | `src/app/[locale]/(auth)/**/*.tsx` | Auth pages | Tailwind centered forms | P0 risk: form width | No story | MIGRATE TO MANTINE | MantineAuthFormPattern | Phase 3 | — |
 | `src/app/[locale]/cabinet/**/*.tsx` | Cabinet/profile pages | Tailwind forms | P0 risk: form layout | No story | MIGRATE TO MANTINE | MantineFormSectionStack + MantineTwoColumnForm | Phase 4 | — |
 | `src/app/admin/**/*.tsx` (≈15 files) | Admin pages | Tailwind + shadcn | P0 risk varies | Varies | MIGRATE TO MANTINE | MantineAdminSurfacePattern variants | Phase 3–4 | Per-page owner review |
@@ -670,7 +670,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Form shell | Various form wrappers | MantineFormSectionStack + MantineTwoColumnForm | Replace | All forms | Phase 3 | Medium |
 | Action footer | Inline form submit rows | MantineResponsiveActionFooter | Replace | All forms with actions | Phase 3 | Medium |
 | Listing card | `src/modules/listings/components/**` | MantineListingCardPattern | Replace | Public listings | Phase 4 | High — main product surface |
-| Listing detail | `src/app/[locale]/listings/[id]/page.tsx` | MantineListingDetailPattern | Replace | Public listing detail | Phase 4 | High |
+| Listing detail | `src/app/[locale]/listings/[slug]/page.tsx` | MantineListingDetailPattern | Replace | Public listing detail | Phase 4 | High |
 | Listing gallery | Listing detail image section | BLOCKED — owner architecture decision | Cloudinary integration decision needed | Listing detail | Phase 4 | Blocked |
 | Notification center | `src/modules/notifications/**` | MantineNotificationPattern + Mantine Drawer | Replace | All pages | Phase 3 | Medium |
 | Auth forms | `src/app/[locale]/(auth)/**` + `src/modules/auth/**` | MantineAuthFormPattern | Replace | Auth pages | Phase 3 | High — auth flow |
@@ -678,7 +678,7 @@ per migration phase will be established in each phase's kickoff document.*
 | Empty state | Inline empty fallbacks | MantineEmptyLoadingErrorState | Replace | All list views | Phase 3 | Low |
 | Loading state | Suspense fallbacks | MantineEmptyLoadingErrorState | Replace | All async routes | Phase 3 | Low |
 | Error state | Error boundaries | MantineEmptyLoadingErrorState | Replace | All pages | Phase 3 | Low |
-| Toast/notification | `src/components/ui/sonner.tsx` + Toaster | `<Notifications>` (Mantine) | Replace Sonner with Mantine | All pages | Phase 3 | Medium |
+| Toast/notification | `src/components/ui/sonner.tsx` (removed in Task 681) + Toaster | `<Notifications>` (Mantine) | Replace Sonner with Mantine | All pages | Phase 3 | Medium |
 | Theme | Tailwind dark/light via `withTheme` | Mantine Light-only theme (Task 482) | Task 482 complete for Mantine surfaces | All pages | Phase 1 ✅ | None |
 | Storybook canvas/proof | `withCanvas` + `.container-wide` | `withMantine` + `skipCanvas: true` | Task 482 complete; legacy path remains | All stories | Phase 1 ✅ | None |
 
@@ -819,7 +819,7 @@ All future Mantine UI tasks must pass these gates:
 | `useMediaQuery` SSR hydration in `DialogDrawerPattern` | RESOLVED — SSR returns `false` (Modal renders), hydrates to Drawer on mobile; overlay is always closed on SSR so no flash | No |
 | Dark theme implementation | RESOLVED — NOT REQUIRED. Owner requires Light-only theme. No dark mode in Task 482. | No |
 | Listing gallery (Cloudinary integration) in Mantine | BLOCKED — Cloudinary image gallery in listing detail needs owner decision on Mantine implementation vs. keeping current Cloudinary widget | Yes — Phase 4 blocker |
-| `src/components/ui/sonner.tsx` vs Mantine Notifications coexistence | RESOLVED for Task 482 — Sonner kept temporarily; migrated to Mantine Notifications in Phase 3 | No |
+| `src/components/ui/sonner.tsx` (removed in Task 681) vs Mantine Notifications coexistence | RESOLVED for Task 482 — Sonner kept temporarily; migrated to Mantine Notifications in Phase 3 | No |
 | Admin table canonical pattern evolution | OPEN — `AdminListingsTable` is a complex surface (sort + hide-column + global search). Migration to MantineAdminSurfacePattern requires owner review of current feature parity | Yes — Phase 3 planning |
 | `postcss-preset-mantine` / `postcss-simple-vars` | RESOLVED — NOT needed. Mantine v9 prebuilt CSS imported directly; no Mantine PostCSS plugins required | No |
 
@@ -1284,7 +1284,7 @@ Same as §20.2/§21.2/§22.2: `isMobile=false` on first render (Mantine v8 `getI
 
 ### §23.3 — Storybook proof location
 
-`src/stories/mantine/primitives/Modal.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): standard dialog (closed/resting, local trigger) · long-content dialog (closed/resting, local trigger, no footer).** Because `MantineModal` is controlled, each section owns a local `useState` + a trigger `Button` — no `defaultOpened`. All strings via `storyT()` against `storybook.mantine.modal_*` keys (sq/en/uk/it parity, uk = real Cyrillic long body). Open behavior + the ≥640 centered/​<640 bottom-sheet split is verified by clicking a section's trigger and switching the toolbar viewport on that ONE section; the long-content section additionally proves internal scroll ≤90dvh at <640 with the title/handle pinned.
+`src/stories/mantine/primitives/Modal.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): standard dialog (closed/resting, local trigger) · long-content dialog (closed/resting, local trigger, no footer).** Because `MantineModal` is controlled, each section owns a local `useState` + a trigger `Button` — no `defaultOpened`. All strings via `storyT()` against `storybook.mantine.modal_*` keys (sq/en/uk/it parity, uk = real Cyrillic long body). Open behavior + the ≥640 centered/<640 bottom-sheet split is verified by clicking a section's trigger and switching the toolbar viewport on that ONE section; the long-content section additionally proves internal scroll ≤90dvh at <640 with the title/handle pinned.
 
 ### §23.4 — P0 gate
 

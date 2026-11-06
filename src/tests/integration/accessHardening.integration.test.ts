@@ -190,12 +190,12 @@ it('[SEC-DB-ACCESS-DENY] A blocked, deleted or signed-out account reads and writ
   const shared = await run.makeListing(person.id, 'active', 'acc-shared')   // the listing every account below has as a favourite
   const stages: [string, (account: SyntheticUser) => Promise<void>][] = [
     ['a blocked account', async (account) => {
-      // eslint-disable-next-line no-restricted-syntax -- user status (staff action prepared by service_role), not listing status
+       
       const written = await run.admin.from('users').update({ status: 'blocked', block_reason: `${run.RUN} blocked` }).eq('id', account.id)
       expect(written.error, 'the staff block was written').toBeNull()
     }],
     ['a soft-deleted account', async (account) => {
-      // eslint-disable-next-line no-restricted-syntax -- user status (the inactivity mark prepared by service_role), not listing status
+       
       const written = await run.admin.from('users').update({ status: 'inactive', deleted_at: new Date().toISOString() }).eq('id', account.id)
       expect(written.error, 'the deletion mark was written').toBeNull()
     }],
@@ -331,7 +331,7 @@ it('[SEC-DB-REALTIME-DENY] A blocked account receives no further realtime change
     expect((await notifyAccount(blocked.id, first)).error).toBeNull()
     expect(await waitUntil(() => listening.received().includes(first)), 'the event before the block arrives').toBe(true)
 
-    // eslint-disable-next-line no-restricted-syntax -- user status (staff block prepared by service_role), not listing status
+     
     expect((await run.admin.from('users').update({ status: 'blocked', block_reason: `${run.RUN} blocked` }).eq('id', blocked.id)).error).toBeNull()
     const second = `${run.RUN} after the block`
     expect((await notifyAccount(blocked.id, second)).error).toBeNull()
@@ -391,7 +391,7 @@ describe('accessHardening', () => {
     // the account carries the inactivity mark (deleted_at set, status inactive) and still holds the session it opened before it was marked
     const marked = await run.makeUser('marked-account')
     const markedAt = new Date().toISOString()
-    // eslint-disable-next-line no-restricted-syntax -- user status (fixture preparation by service_role), not listing status
+     
     const mark = await run.admin.from('users').update({ status: 'inactive', deleted_at: markedAt }).eq('id', marked.id).select('status, deleted_at')
     expect(mark.error, 'the mark was written by the service role').toBeNull()
     expect(mark.data).toHaveLength(1)

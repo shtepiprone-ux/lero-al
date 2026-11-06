@@ -125,7 +125,7 @@ function startStaticServer(staticDir, port) {
 
 // In-page evaluation — dual/triple locator (see header comment): the search-slot content is always
 // the first element child of `.container-wide` inside `#storybook-root`.
-/* eslint-disable no-undef */
+ 
 function evalHeroContent() {
   const root = document.querySelector('#storybook-root');
   if (!root) return { found: false, reason: 'no-storybook-root' };
@@ -145,7 +145,7 @@ function evalHeroContent() {
     className: contentEl.className || null,
   };
 }
-/* eslint-enable no-undef */
+ 
 
 async function captureMatrix(browser, baseUrl) {
   const matrix = [];

@@ -1,2 +1,0 @@
-# node scripts/workflow-gates/cli.mjs verify --contract tasks/Archive/Sprint_92_kickoff_prompt_Task_935_Governance_Changes_Get_An_Independent_Approval.security.json
-exit 0

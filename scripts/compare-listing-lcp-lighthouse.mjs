@@ -34,7 +34,6 @@
 
 import { createRequire } from 'module'
 import { mkdir, writeFile } from 'fs/promises'
-import { existsSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -204,11 +203,8 @@ async function runLighthouse(locale, viewport) {
   const ttfb  = audits['server-response-time']
 
   // LCP phases (from Lighthouse LCP phase audit if available)
-  const lcpEl = audits['lcp-lazy-loaded'] ?? audits['prioritize-lcp-image']
 
   // Preload / resource check
-  const usesPreload  = audits['uses-rel-preload']
-  const usesOptImages = audits['uses-optimized-images']
 
   const metrics = {
     locale,
@@ -246,11 +242,6 @@ async function runLighthouse(locale, viewport) {
 
 function icon(ok) { return ok ? '✅' : '❌' }
 function fmt(ms)  { return `${ms}ms` }
-function rating(ms, thresholds = [2500, 4000]) {
-  if (ms <= thresholds[0]) return '🟢 GOOD'
-  if (ms <= thresholds[1]) return '🟡 NEEDS IMPROVEMENT'
-  return '🔴 POOR'
-}
 
 async function main() {
   console.log('='.repeat(70))

@@ -2,7 +2,7 @@
 
 Sprint 78 · **P1** · QA profile **Q4** · cross-sprint prerequisite · **gates Task 846's approval and Sprint 78 Wave B** · **Status: ✅ APPROVED WITH NOTES (review 3, 2026-09-20) — CLOSED AND ARCHIVED.** All of R1–R9 and AC1–AC10 verified; AC9 CLOSED with all 7 owner tuples accepted 2026-09-20 (§17.5) and both §17.1 deltas ratified; F7 closed by retiring the orphaned `task319` QA script (§18). Ledger row → `docs/backlog-archive.md` (2026-09-20). **This unblocks Task 846 and Sprint 78 Wave B.** No executor work remains.
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed by Task 846's review 1; promoted by owner decision 2026-09-20 (Option B, `Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md` §16.1).
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed by Task 846's review 1; promoted by owner decision 2026-09-20 (Option B, `Sprint_78_kickoff_prompt_Task_846_Dashboard_Header_Period_Grid.md` §16.1).
 
 ## 1. Mode and task type
 

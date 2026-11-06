@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: node docs/sessions/evidence/task923/r10-40-table-fit-check.mjs docs/sessions/evidence/task923/r10-41-table-fit-after   (AFTER R49: storybook-static built 2026-10-19 09:54)
 TABLE FIT CHECK — mantine-primitives-table--default [sq] (table from 768): 320 card · 639 card · 640 card · 700 card · 767 card · 768 table · 769 table · 1024 table · 1280 table · 1440 table; scroll: NONE; clipped: NONE; first/last inset 24/24; PASS
 TABLE FIT CHECK — mantine-primitives-table--default [en] (table from 768): 320 card · 639 card · 640 card · 700 card · 767 card · 768 table · 769 table · 1024 table · 1280 table · 1440 table; scroll: NONE; clipped: NONE; first/last inset 24/24; PASS

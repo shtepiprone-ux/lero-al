@@ -229,7 +229,7 @@ Track via `grep -rl "@/components/ui/<name>" src`.
 
 ## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)
 
-Full detail + rendered evidence: `docs/sessions/2026-07-02-task525-tailadmin-conformance-audit.md`. Audit-only — zero primitive/theme/story code changed.
+Full detail + rendered evidence: `docs/sessions/2026-07-02-task525-tailadmin-conformance-audit.md` (not in git). Audit-only — zero primitive/theme/story code changed.
 
 | Primitive | Verdict | Top finding |
 |---|---|---|

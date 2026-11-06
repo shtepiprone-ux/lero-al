@@ -1,4 +1,4 @@
-﻿win32
+win32
 
 > lero-al@0.1.0 check:story-coverage
 > node scripts/check-story-coverage.mjs

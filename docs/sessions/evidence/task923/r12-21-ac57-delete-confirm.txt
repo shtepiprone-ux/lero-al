@@ -1,4 +1,4 @@
-﻿PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
+PLATFORM=Microsoft Windows NT 10.0.26300.0 node=v22.22.3
 COMMAND=node scripts/check-rendered-state-census.mjs --stories patterns-mantine-listingpreviewdialogview--delete-confirm,patterns-mantine-reportdetaildialogview--delete-confirm --widths 320,390,639 --locales sq,en,uk,it --jobs 4 --out docs/sessions/evidence/task923/r12-ac57-delete-confirm
 rendered state census: 2 registered state(s), 24 state job(s) + 0 out-of-range widths job(s) (no cell is skipped; 0 cell(s) are the added in-range bound / first out-of-range widths) + 2 closed job(s); 4 worker(s); out C:\Claude_Code_Projects\lero-al\docs\sessions\evidence\task923\r12-ac57-delete-confirm
 

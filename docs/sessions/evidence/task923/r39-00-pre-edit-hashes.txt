@@ -1,4 +1,4 @@
-﻿platform: win32 x64
+platform: win32 x64
 recorded: 2026-10-23T16:09:36.1390117Z
 purpose: sha256 of each R134-R135 path BEFORE its edit (kickoff 63.4, R135 (a))
 ABSENT (new file)  src/modules/admin/__tests__/adminOrphans.test.ts

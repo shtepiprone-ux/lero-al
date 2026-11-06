@@ -1,7 +1,7 @@
 # Binding Decisions — durable register
 
 > Owner and orchestrator decisions that bind future work. **Moved out of `docs/backlog.md` on 2026-08-27**
-> by the row-by-row audit (`docs/chat-gpt-reports/2026-08-27-backlog-row-by-row-audit.md`): a decided decision
+> by the row-by-row audit (`docs/chat-gpt-reports/2026-08-27-backlog-row-by-row-audit.md` (gitignored, local only)): a decided decision
 > is policy, not active state, and the backlog holds active state only.
 >
 > **A decision listed here is closed and binding.** Quote it by number in a kickoff; do not re-litigate it,

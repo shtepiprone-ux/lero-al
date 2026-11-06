@@ -1,4 +1,4 @@
-﻿
+
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
 
  ❯ src/components/layout/__tests__/Header.signOut.test.tsx (1 test | 1 failed) 743ms
@@ -19,150 +19,150 @@ broken up by multiple elements. In this case, you can provide a function for you
 more flexible.
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div>[39m
-    [36m<header[39m
-      [33mclass[39m=[32m"site-header _header_9cf785"[39m
-    [36m>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m"container-wide _bar_9cf785 mantine-Group-root"[39m
-        [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
-flex-start; --group-wrap: wrap;"[39m
-      [36m>[39m
-        [36m<a[39m
-          [33mclass[39m=[32m"_logo_9cf785 mantine-Text-root mantine-Anchor-root"[39m
-          [33mdata-underline[39m=[32m"hover"[39m
-          [33mhref[39m=[32m"/en"[39m
-        [36m>[39m
-          [36m<span[39m
-            [33mclass[39m=[32m"_brandPrimary_9cf785 mantine-Text-root"[39m
-          [36m>[39m
-            [0mLero[0m
-          [36m</span>[39m
-          [36m<span[39m
-            [33mclass[39m=[32m"_brandForeground_9cf785 mantine-Text-root"[39m
-          [36m>[39m
-            [0m.al[0m
-          [36m</span>[39m
-        [36m</a>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"_desktopNav_9cf785 mantine-Group-root mantine-visible-from-md"[39m
-          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
-flex-start; --group-wrap: wrap;"[39m
-        [36m>[39m
-          [36m<a[39m
-            [33mclass[39m=[32m"_navLink_9cf785 mantine-Text-root mantine-Anchor-root"[39m
-            [33mdata-underline[39m=[32m"hover"[39m
-            [33mhref[39m=[32m"/en"[39m
-          [36m>[39m
-            [0mHome[0m
-          [36m</a>[39m
-          [36m<a[39m
-            [33mclass[39m=[32m"_navLink_9cf785 mantine-Text-root mantine-Anchor-root"[39m
-            [33mdata-underline[39m=[32m"hover"[39m
-            [33mhref[39m=[32m"/en/listings"[39m
-          [36m>[39m
-            [0mListings[0m
-          [36m</a>[39m
-        [36m</div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"_rightCluster_9cf785 mantine-Group-root"[39m
-          [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
-flex-start; --group-wrap: wrap;"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m""[39m
-            [33mstyle[39m=[32m"align-self: flex-start;"[39m
-          [36m>[39m
-            [36m<button[39m
-              [33maria-expanded[39m=[32m"false"[39m
-              [33maria-haspopup[39m=[32m"menu"[39m
-              [33mclass[39m=[32m"mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 
-mantine-UnstyledButton-root"[39m
-              [33mdata-size[39m=[32m"sm"[39m
-              [33mdata-variant[39m=[32m"default"[39m
-              [33mdata-with-right-section[39m=[32m"true"[39m
-              [33mid[39m=[32m"mantine-b71fgjh2n-target"[39m
-              [33mstyle[39m=[32m"min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; 
+<body>
+  <div>
+    <header
+      class="site-header _header_9cf785"
+    >
+      <div
+        class="container-wide _bar_9cf785 mantine-Group-root"
+        style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"
+      >
+        <a
+          class="_logo_9cf785 mantine-Text-root mantine-Anchor-root"
+          data-underline="hover"
+          href="/en"
+        >
+          <span
+            class="_brandPrimary_9cf785 mantine-Text-root"
+          >
+            Lero
+          </span>
+          <span
+            class="_brandForeground_9cf785 mantine-Text-root"
+          >
+            .al
+          </span>
+        </a>
+        <div
+          class="_desktopNav_9cf785 mantine-Group-root mantine-visible-from-md"
+          style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"
+        >
+          <a
+            class="_navLink_9cf785 mantine-Text-root mantine-Anchor-root"
+            data-underline="hover"
+            href="/en"
+          >
+            Home
+          </a>
+          <a
+            class="_navLink_9cf785 mantine-Text-root mantine-Anchor-root"
+            data-underline="hover"
+            href="/en/listings"
+          >
+            Listings
+          </a>
+        </div>
+        <div
+          class="_rightCluster_9cf785 mantine-Group-root"
+          style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"
+        >
+          <div
+            class=""
+            style="align-self: flex-start;"
+          >
+            <button
+              aria-expanded="false"
+              aria-haspopup="menu"
+              class="mantine-focus-auto mantine-active m_77c9d27d mantine-Button-root m_87cf2631 
+mantine-UnstyledButton-root"
+              data-size="sm"
+              data-variant="default"
+              data-with-right-section="true"
+              id="mantine-b71fgjh2n-target"
+              style="min-height: 2.75rem; font-weight: 500; height: auto; display: inline-flex; 
 align-items: center; justify-content: center; box-shadow: var(--mantine-shadow-xs); --button-height: 
 var(--button-height-sm); --button-padding-x: 1rem; --button-fz: var(--mantine-font-size-sm); --button-radius: 
 var(--mantine-radius-lg); --button-bg: var(--mantine-color-white); --button-hover: var(--mantine-color-gray-0); 
---button-color: var(--mantine-color-gray-7); --button-bd: 1px solid var(--mantine-color-gray-2);"[39m
-              [33mtype[39m=[32m"button"[39m
-            [36m>[39m
-              [36m<span[39m
-                [33mclass[39m=[32m"m_80f1301b mantine-Button-inner"[39m
-                [33mstyle[39m=[32m"width: 100%; height: auto;"[39m
-              [36m>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"m_811560b9 mantine-Button-label"[39m
-                  [33mstyle[39m=[32m"white-space: normal; overflow: visible; word-break: normal; overflow-wrap: 
-break-word;"[39m
-                [36m>[39m
-                  [0mEN[0m
-                [36m</span>[39m
-                [36m<span[39m
-                  [33mclass[39m=[32m"m_a74036a mantine-Button-section"[39m
-                  [33mdata-position[39m=[32m"right"[39m
-                [36m>[39m
-                  [36m<svg[39m
-                    [33maria-hidden[39m=[32m"true"[39m
-                    [33mclass[39m=[32m"lucide lucide-chevron-down"[39m
-                    [33mfill[39m=[32m"none"[39m
-                    [33mheight[39m=[32m"12"[39m
-                    [33mstroke[39m=[32m"currentColor"[39m
-                    [33mstroke-linecap[39m=[32m"round"[39m
-                    [33mstroke-linejoin[39m=[32m"round"[39m
-                    [33mstroke-width[39m=[32m"2"[39m
-                    [33mviewBox[39m=[32m"0 0 24 24"[39m
-                    [33mwidth[39m=[32m"12"[39m
-                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                  [36m>[39m
-                    [36m<path[39m
-                      [33md[39m=[32m"m6 9 6 6 6-6"[39m
-                    [36m/>[39m
-                  [36m</svg>[39m
-                [36m</span>[39m
-              [36m</span>[39m
-            [36m</button>[39m
-          [36m</div>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"_trailingCluster_9cf785 mantine-Group-root"[39m
-            [33mstyle[39m=[32m"--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
-flex-start; --group-wrap: wrap;"[39m
-          [36m>[39m
-            [36m<a[39m
-              [33maria-label[39m=[32m"Favorites"[39m
-              [33mclass[39m=[32m"mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 
-mantine-UnstyledButton-root"[39m
-              [33mdata-variant[39m=[32m"subtle"[39m
-              [33mhref[39m=[32m"/en/favorites"[39m
-              [33mstyle[39m=[32m"--ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); 
+--button-color: var(--mantine-color-gray-7); --button-bd: 1px solid var(--mantine-color-gray-2);"
+              type="button"
+            >
+              <span
+                class="m_80f1301b mantine-Button-inner"
+                style="width: 100%; height: auto;"
+              >
+                <span
+                  class="m_811560b9 mantine-Button-label"
+                  style="white-space: normal; overflow: visible; word-break: normal; overflow-wrap: 
+break-word;"
+                >
+                  EN
+                </span>
+                <span
+                  class="m_a74036a mantine-Button-section"
+                  data-position="right"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="lucide lucide-chevron-down"
+                    fill="none"
+                    height="12"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    width="12"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m6 9 6 6 6-6"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div
+            class="_trailingCluster_9cf785 mantine-Group-root"
+            style="--group-gap: var(--mantine-spacing-md); --group-align: center; --group-justify: 
+flex-start; --group-wrap: wrap;"
+          >
+            <a
+              aria-label="Favorites"
+              class="mantine-focus-auto mantine-active m_8d3f4000 mantine-ActionIcon-root m_87cf2631 
+mantine-UnstyledButton-root"
+              data-variant="subtle"
+              href="/en/favorites"
+              style="--ai-bg: transparent; --ai-hover: var(--mantine-color-brand-light-hover); 
 --ai-color: var(--mantine-color-brand-light-color); --ai-bd: calc(0.0625rem * var(--mantine-scale)) solid transparent; 
-min-width: 2.75rem; min-height: 2.75rem;"[39m
-            [36m>[39m
-              [36m<span[39m
-                [33mclass[39m=[32m"m_8d3afb97 mantine-ActionIcon-icon"[39m
-              [36m>[39m
-                [36m<svg[39m
-                  [33maria-hidden[39m=[32m"true"[39m
-                  [33mclass[39m=[32m"lucide lucide-heart"[39m
-                  [33mfill[39m=[32m"none"[39m
-                  [33mheight[39m=[32m"20"[39m
-                  [33mstroke[39m=[32m"currentColor"[39m
-                  [33mstroke-linecap[39m=[32m"round"[39m
-                  [33mstroke-linejoin[39m=[32m"round"[39m
-                  [33mstroke-width[39m=[32m"2"[39m
-                  [33mviewBox[39m=[32m"0 0 24 24"[39m
-                  [33mwidth[39m=[32m"20"[39m
+min-width: 2.75rem; min-height: 2.75rem;"
+            >
+              <span
+                class="m_8d3afb97 mantine-ActionIcon-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-heart"
+                  fill="none"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="20"
 
  Test Files  1 failed (1)
       Tests  1 failed (1)
    Start at  16:52:10
    Duration  7.10s (transform 1.77s, setup 114ms, import 5.11s, tests 743ms, environment 958ms)
 
-                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-                [36m>[39m
+                  xmlns="http://www.w3.org/2000/svg"
+                >
             ...
  ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:76:38

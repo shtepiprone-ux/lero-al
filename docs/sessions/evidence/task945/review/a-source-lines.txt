@@ -1,3 +1,0 @@
-      if (held.has(file) ? same(found, held.get(file)) : !now.has(file)) continue;
-    return { ...run, ms: now() - started, applied: said.includes('applied'), mismatch: said.includes('mismatch') };
-process.exitCode = result.status === 0 && !result.error ? 0 : 1;

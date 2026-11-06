@@ -1,18 +1,0 @@
-=== D1 a deleted shared library of the scanners, with a consumer script and its test, never written
-SessionStart 0
-the test passes before: 0
-after the deletion, PostToolUse 0
-Stop 0 ""
-the same test now, run by hand: exit 1 (fails to load the deleted file)
-
-=== D2 a deleted CSS module and a deleted JSON file, each imported by a source file never written
-CSS module deleted: PostToolUse 0 | Stop 0
-JSON file deleted: PostToolUse 0 | Stop 0 (tsc by hand: src/lib/uses-data.ts(1,18): error TS2307: Cannot find module './data.json' or its corresponding type declarations. )
-
-=== F1 "no file on disk changes": a scanner with an update flag, under a test that spawns it, through the real mutation check
-scripts/check-update.mjs: 4 defects, 0 caught, 0 not caught, 0 not tried, 0 undecided
-scripts/check-update.mjs: the tests that should reach it never loaded it, so they check nothing in it
-
-the tracked baseline changed on disk: false "{\"entries\":[1,2,3]}\n"
-git status of the fixture: 
-exit 0

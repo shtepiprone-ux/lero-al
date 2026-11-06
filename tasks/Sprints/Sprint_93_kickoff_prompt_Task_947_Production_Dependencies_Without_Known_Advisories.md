@@ -81,3 +81,38 @@ No visible change. If the build or Storybook shows a visual difference, stop and
    relevant lines.
 
 ## Review
+
+**Opus, 2026-11-06 — APPROVED WITH NOTES** (candidate: working tree on `governance/reset-2026-11-06` at `1c90366e4`;
+files `.npmrc`, `package.json`, `package-lock.json`, plus the reviewer's AC4 test and CI edit).
+
+Rerun by the reviewer:
+- `npm audit --omit=dev`: 0 critical, 4 high (it was 2 critical, 9 high). Exactly the four the report names.
+- `npm ls --omit dev --all`: exit 0.
+- Lock age: 119 new name@version pairs, all at least 14 days old (registry publish times, script in the review
+  session).
+- Clean `npm ci` with `ignore-scripts=true` in an empty folder: `esbuild`, `@swc/core` (nested under `next-intl`),
+  `unrs-resolver` and `sharp` load and work with no rebuild. So `setup:native` was not needed; the reviewer removed it.
+- `node --test "scripts/quality/*.test.mjs"`, lint and typecheck: see the session log. The full suite, build and
+  Storybook run in CI on the commit.
+
+Findings:
+- F1 (AC1, P0) — the audit still exits 1. `postcss` inside every `next@15.x` and `zod` through `next-cloudinary@6`
+  are fixed only by `next@16` and `next-cloudinary@7`. Both sit outside this kickoff (a major upgrade; a version
+  younger than 14 days). The report is correct. Moved to **Task 952**: the owner decision D3 (2026-11-06) allows a
+  one-time exception for `next-cloudinary@7.0.0`.
+- F2 (AC4/AC5, P2) — the executor could not write `scripts/quality/`. The reviewer placed
+  `scripts/quality/install-scripts.test.mjs`. Every package in the lock that declares an install script is listed with
+  the reason it does not run. A new one, a stale entry, a missing `ignore-scripts=true` or `legacy-peer-deps=true` fails
+  the test. A deliberate break of `.npmrc` failed it (3 pass, 1 fail), and the file was restored. The draft's
+  nested-quantifier regex over the rebuild list (a ReDoS shape CodeQL flags) was not used.
+- F3 (P3) — the SBOM step no longer passes `--ignore-npm-errors`. `scripts/quality/ci-workflow.test.mjs` fails if it
+  returns.
+
+Accepted decisions of the report:
+- (1) `legacy-peer-deps` removed. The tree must be valid, and the webpack peer of `@sentry/bundler-plugins` is
+  now real.
+- (2) the `@swc/helpers` override to 0.5.23, within the same 0.5 line, with the build, tests and Storybook green. Task
+  952 re-checks whether Next 16 still needs it.
+- (3) the lock regenerated with `--before`, which satisfies the 14-day rule.
+
+The `withSentryConfig` deprecation is in Task 952's scope.

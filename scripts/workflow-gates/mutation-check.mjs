@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 // Task 945 (owner, 2026-11-05: "add the mutation check to this task"): a green test proves nothing if the test would stay green over wrong code.
-// So the lines a change wrote are broken on purpose, one defect per run, in memory only (mutation-loader.mjs), and the tests that reach the file
-// run against each. A defect no test notices is a line no test checks. Each run is compared with a control run of the same command and the
-// unchanged text, because a broken harness "catches" every defect, and with the loader's report, because a run that never loaded the file
-// says nothing. A surviving defect may mean the same as the original, so this stops the agent once per version and is never a lasting refusal.
+// So the lines a change wrote are broken on purpose, one defect per run, and the tests that reach the file run against each. The defect's text is stored in
+// memory only (mutation-loader.mjs), but a defect is code that runs: flipping a scanner's `if (update)` writes its baseline. So the tree is read after each run,
+// what a run changed under the roots comes back, and the file's result says so (treeGuard). A defect no test notices is a line no test checks. Each run is
+// compared with a control run of the same command and the unchanged text, because a broken harness "catches" every defect, and with the loader's report,
+// because a run that never loaded the file says nothing. A surviving defect may mean the same as the original, so this stops the agent once per version and
+// is never a lasting refusal.
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, realpathSync, rmSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { runCommand as realCommand, UNQUOTABLE } from './code-check.mjs';
 import { moduleKey } from './mutation-loader.mjs';
 
 const LOADER = pathToFileURL(fileURLToPath(new URL('./mutation-loader.mjs', import.meta.url))).href;
@@ -103,6 +106,55 @@ export function changedLines(root, file, base = 'HEAD') {
   return lines;
 }
 
+// What a run did to the tree. A file changed under the roots goes back to the bytes it held or its blob at HEAD, and a file the run created goes. A file changed
+// outside the roots is named and left. What the run left is kept in the ignored report folder first, because another session writing at that moment looks the same.
+function treeStatus(root) {
+  const run = spawnSync('git', ['--no-optional-locks', 'status', '--porcelain', '-z', '--untracked-files=all'], { cwd: root, encoding: 'utf8', maxBuffer: 1 << 28, windowsHide: true });
+  if (run.error || run.status !== 0) throw new Error(`git status failed: ${run.error?.message || String(run.stderr).trim()}`);
+  const found = new Map();
+  const entries = run.stdout.split('\0').filter(Boolean);
+  for (let i = 0; i < entries.length; i++) {
+    const status = entries[i].slice(0, 2);
+    found.set(entries[i].slice(3), status);
+    if (/[RC]/.test(status)) found.set(entries[++i], status);
+  }
+  // A nested repository is listed as a folder, and the state and reports of this tool are its own.
+  for (const path of found.keys()) if (path.endsWith('/') || path.startsWith('test-results/code-check/')) found.delete(path);
+  return found;
+}
+function bytesOf(root, file) {
+  try { return lstatSync(join(root, file)).isFile() ? readFileSync(join(root, file)) : null; }
+  catch (error) { if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return null; throw error; }
+}
+function treeGuard(root, roots, kept) {
+  const under = file => roots.some(path => path === '.' || file === path || file.startsWith(`${path}/`));
+  const before = treeStatus(root);
+  const held = new Map([...before.keys()].filter(under).map(file => [file, bytesOf(root, file)]));
+  const same = (a, b) => (a && b ? a.equals(b) : a === b);
+  const restored = new Set(), outside = new Set();
+  const look = () => {
+    const now = treeStatus(root);
+    for (const file of new Set([...now.keys(), ...held.keys()])) {
+      if (!under(file)) { if (before.get(file) !== now.get(file)) outside.add(file); continue; }
+      const found = bytesOf(root, file);
+      if (held.has(file) ? same(found, held.get(file)) : !now.has(file)) continue;
+      if (found) { mkdirSync(dirname(join(kept, file)), { recursive: true }); writeFileSync(join(kept, file), found); }
+      const blob = held.has(file) ? held.get(file) : spawnSync('git', ['show', `HEAD:${file}`], { cwd: root, maxBuffer: 1 << 28, windowsHide: true });
+      const bytes = held.has(file) ? blob : (blob.status === 0 ? blob.stdout : null);
+      if (bytes) { mkdirSync(dirname(join(root, file)), { recursive: true }); writeFileSync(join(root, file), bytes); }
+      else rmSync(join(root, file), { force: true });
+      restored.add(file);
+    }
+    for (const file of before.keys()) if (!under(file) && !now.has(file)) outside.add(file);
+  };
+  const said = () => (restored.size + outside.size === 0 ? null : [
+    'a run changed the tree, so no more defects of this file ran.',
+    ...(restored.size ? [`Restored: ${[...restored].join(', ')}; what the run left is kept under ${kept.replaceAll('\\', '/')}.`] : []),
+    ...(outside.size ? [`Changed outside the roots and not restored: ${[...outside].join(', ')}.`] : []),
+  ].join(' '));
+  return { look, said };
+}
+
 const IMPORT_FORMS = ['', '.ts', '.tsx', '.mjs', '.js', '/index.ts', '/index.tsx'];
 // What a changed test exists to check: the module of its own name when it has one, else every project module it imports directly.
 export function targetsOfTest(ts, root, test) {
@@ -128,7 +180,8 @@ export function planOf(ts, root, config, files, all = false, base = 'HEAD') {
   const skip = matcher(config.skip || []);
   const rows = config.rows.map(row => ({ ...row, matches: matcher(row.paths) }));
   const stemOf = file => file.split('/').pop().replace(/\.[^.]+$/, '');
-  const rowsFor = file => rows.filter(row => row.matches(file) && (!row.needs || existsSync(join(root, row.needs.replaceAll('{stem}', stemOf(file))))));
+  // A stem goes on the command line with no quotes, so a row that needs one takes only a plain stem; the next row names no file (CWE-78).
+  const rowsFor = file => rows.filter(row => row.matches(file) && (!row.needs || (/^[\w.-]+$/.test(stemOf(file)) && existsSync(join(root, row.needs.replaceAll('{stem}', stemOf(file)))))));
   const rowFor = file => rowsFor(file)[0];
   const commandOf = (row, file) => row.run.replaceAll('{file}', `"${file}"`).replaceAll('{stem}', stemOf(file));
   const plan = [], tests = [];
@@ -140,7 +193,7 @@ export function planOf(ts, root, config, files, all = false, base = 'HEAD') {
     const command = commandOf(row, file);
     // A scanner with no vitest test may have a self-test in the gate suite: the next row is asked when this one never loads the file.
     const others = [...new Map(rowsFor(file).slice(1).map(other => [commandOf(other, file), other])).entries()].filter(([text]) => text !== command).map(([text, other]) => ({ command: text, concurrency: other.concurrency || config.concurrency || 1 }));
-    plan.push({ file, lines: all ? null : changedLines(root, file, base), command, others, priority: row.priority || 0, concurrency: row.concurrency || config.concurrency || 1 });
+    plan.push({ file, lines: all || UNQUOTABLE.test(file) ? null : changedLines(root, file, base), command, others, priority: row.priority || 0, concurrency: row.concurrency || config.concurrency || 1 });
   }
   // A changed test with no change in what it tests: all of that file is broken, against this test alone. The check is of the test.
   for (const { file, row } of tests) {
@@ -155,10 +208,15 @@ export function planOf(ts, root, config, files, all = false, base = 'HEAD') {
 
 // Runs each mutant of each planned file against its tests. Nothing here passes because a run did not finish: every mutant ends in one of the
 // counts of the result, and the caller shows all that are not `caught`.
-export async function runMutation({ root, config, files, deadline, runCommand, all = false, base = 'HEAD', now = Date.now }) {
+export async function runMutation({ root, config, roots = ['.'], files, deadline, runCommand, all = false, base = 'HEAD', now = Date.now }) {
   const { default: ts } = await import('typescript');
   mkdirSync(join(root, REPORT_FOLDER), { recursive: true });
   const plan = planOf(ts, root, config, files, all, base);
+  // The base as a commit, so that a command naming it still finds these lines once they are committed.
+  const named = spawnSync('git', ['--no-optional-locks', 'rev-parse', '--verify', `${base}^{commit}`], { cwd: root, encoding: 'utf8', windowsHide: true });
+  const judged = named.status === 0 ? named.stdout.trim() : base;
+  const kept = join(root, REPORT_FOLDER, 'restored', String(process.pid));
+  let guard = null;
   const results = [];
   let serial = 0;
   const costs = new Map();
@@ -173,18 +231,23 @@ export async function runMutation({ root, config, files, deadline, runCommand, a
     });
     const said = existsSync(report) ? readFileSync(report, 'utf8') : '';
     rmSync(report, { force: true });
+    guard.look();
     return { ...run, ms: now() - started, applied: said.includes('applied'), mismatch: said.includes('mismatch') };
   };
   for (const [index, item] of plan.entries()) {
     const text = readFileSync(join(root, item.file), 'utf8');
     const mutants = mutantsOf(ts, item.file, text, item.lines);
-    const result = { file: item.file, byTest: item.byTest, total: mutants.length, caught: 0, survivors: [], undecided: 0, notTried: 0, notLoaded: false, error: null };
+    const result = { file: item.file, byTest: item.byTest, all, base: judged, total: mutants.length, caught: 0, survivors: [], undecided: 0, notTried: 0, notLoaded: false, error: null };
     results.push(result);
+    // Both names reach a command line. Nothing starts for a name no command line can quote, and that is no pass (CWE-78).
+    const unsafe = [item.file, item.byTest].find(name => name && UNQUOTABLE.test(name));
+    if (unsafe) { result.error = `no command ran, because the name ${JSON.stringify(unsafe)} holds a character no command line can quote (CWE-78)`; continue; }
     if (!mutants.length) continue;
     // What is left is shared among the files still to come; time a file does not use passes on.
     const share = now() + Math.max(0, deadline - now()) / (plan.length - index);
     const left = () => share - now();
     if (left() <= 0) { result.notTried = mutants.length; continue; }
+    guard = treeGuard(root, roots, kept);
     let chosen = item, control = null;
     for (const candidate of [item, ...item.others]) {
       chosen = { ...item, ...candidate };
@@ -194,6 +257,7 @@ export async function runMutation({ root, config, files, deadline, runCommand, a
       costs.set(chosen.command, control.ms);
       if (control.status !== 0 || control.applied) break;
     }
+    if (guard.said()) { result.error = guard.said(); continue; }
     if (!control) { result.notTried = mutants.length; continue; }
     if (control.status === null && control.reason === 'timeout') { result.notTried = mutants.length; continue; }
     if (control.mismatch) { result.error = 'a run loaded other text than the file holds'; continue; }
@@ -208,6 +272,8 @@ export async function runMutation({ root, config, files, deadline, runCommand, a
         if (left() < control.ms) { queue.unshift(mutant); return; }
         const budget = deadline - now();
         const run = await attempt(chosen, mutant, Math.min(perRun, budget));
+        // That attempt is not counted, and no later defect of this file runs.
+        if (guard.said()) { queue.length = 0; return; }
         // A run cut off by the time of the stage decided nothing; one cut off by its own limit hung because of the defect.
         if (run.status === null && run.reason === 'timeout') { if (budget < perRun) result.notTried++; else result.caught++; }
         else if (run.status === null || !run.applied || run.mismatch) result.undecided++;
@@ -217,6 +283,7 @@ export async function runMutation({ root, config, files, deadline, runCommand, a
     };
     await Promise.all(Array.from({ length: chosen.concurrency }, worker));
     result.notTried += queue.length;
+    if (guard.said()) result.error = guard.said();
     result.survivors.sort((a, b) => a.line - b.line);
   }
   return results;
@@ -227,11 +294,14 @@ export function reportLines(results, shown = 8) {
   const lines = {};
   for (const result of results) {
     const own = [];
+    const name = /\s/.test(result.file) ? `"${result.file}"` : result.file;
+    const tries = `node scripts/workflow-gates/mutation-check.mjs ${result.byTest || result.all ? '--all' : `--base=${result.base ?? 'HEAD'}`} ${name} tries them`;
     if (result.error) own.push(`${result.file}: the mutation check could not run: ${result.error}`);
-    if (result.notLoaded) own.push(`${result.file}: the tests that should reach it never loaded it${result.byTest ? ` (${result.byTest})` : ''}, so they check nothing in it`);
+    if (result.notLoaded) own.push(`${result.file}: no run showed it loaded${result.byTest ? ` (${result.byTest})` : ''}, so these tests may check nothing in it; a test that starts it through another program or replaces NODE_OPTIONS is not seen`);
     for (const { line, from, to } of result.survivors.slice(0, shown)) own.push(`${result.file}:${line}: \`${from}\` became \`${to}\`, and every test${result.byTest ? ` of ${result.byTest}` : ''} still passed`);
     if (result.survivors.length > shown) own.push(`${result.file}: and ${result.survivors.length - shown} more of the same`);
-    if (result.notTried || result.undecided) own.push(`${result.file}: of ${result.total} defects, ${result.notTried} not tried because time ran out${result.undecided ? ` and ${result.undecided} undecided` : ''}: node scripts/workflow-gates/mutation-check.mjs ${result.byTest ? '--all ' : ''}${result.file} tries them`);
+    if (result.notTried) own.push(`${result.file}: of ${result.total} defects, ${result.notTried} not tried because time ran out: ${tries}`);
+    if (result.undecided) own.push(`${result.file}: of ${result.total} defects, ${result.undecided} undecided, because a run ended with no verdict: ${tries}`);
     if (own.length) lines[result.file] = own;
   }
   return lines;
@@ -244,17 +314,20 @@ const pathKey = path => {
 };
 // By hand, with no time limit of the hook: the changed lines of the named files, or with --all every line, which is how an existing test is judged.
 if (process.argv[1] && pathKey(process.argv[1]) === pathKey(fileURLToPath(import.meta.url))) {
-  const { runCommand } = await import('./code-check.mjs');
   const root = process.env.CLAUDE_PROJECT_DIR || process.cwd();
   const args = process.argv.slice(2);
   const all = args.includes('--all');
   const files = args.filter(arg => !arg.startsWith('--')).map(arg => arg.replaceAll('\\', '/'));
-  if (!files.length) { process.stderr.write('usage: mutation-check.mjs [--all] [--minutes=N] <files>\n'); process.exit(2); }
+  if (!files.length) { process.stderr.write('usage: mutation-check.mjs [--all] [--base=<commit>] [--minutes=N] <files>\n'); process.exit(2); }
+  const base = args.find(arg => arg.startsWith('--base='))?.slice(7) || 'HEAD';
   const minutes = Number(args.find(arg => arg.startsWith('--minutes='))?.slice(10) || 30);
-  const { mutation: config } = JSON.parse(readFileSync(join(root, 'scripts/workflow-gates/code-check.json'), 'utf8'));
-  const results = await runMutation({ root, config, files, deadline: Date.now() + minutes * 60000, runCommand, all });
+  const { mutation: config, roots } = JSON.parse(readFileSync(join(root, 'scripts/workflow-gates/code-check.json'), 'utf8'));
+  const results = await runMutation({ root, config, roots, files, base, deadline: Date.now() + minutes * 60000, runCommand: realCommand, all });
   const lines = reportLines(results, Infinity);
+  // A clean count over code nothing judged misleads, so a run that tried nothing says why, and that is no pass.
+  const nothing = results.filter(result => !result.total && !result.error).map(result => `${result.file}: nothing was judged, because ${all ? 'it holds nothing a defect can be made from' : `no line that differs from ${base} holds anything a defect can be made from; --all judges every line, and --base=<commit> names another base`}`);
+  for (const file of files) if (!results.some(result => result.file === file || result.byTest === file)) nothing.push(`${file}: nothing was judged, because no row of the registry breaks it, the registry skips it, or it is gone`);
   for (const result of results) process.stdout.write(`${result.file}: ${result.total} defects, ${result.caught} caught, ${result.survivors.length} not caught, ${result.notTried} not tried, ${result.undecided} undecided\n`);
-  for (const own of Object.values(lines)) for (const line of own) process.stdout.write(`${line}\n`);
-  process.exit(Object.keys(lines).length ? 1 : 0);
+  for (const line of [...Object.values(lines).flat(), ...nothing]) process.stdout.write(`${line}\n`);
+  process.exit(Object.keys(lines).length || nothing.length ? 1 : 0);
 }

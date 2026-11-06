@@ -1,4 +1,5 @@
-// Task 945: puts one deliberate defect into one module as it loads, in memory only, so that no file on disk ever holds a defect. A process that
+// Task 945: puts one deliberate defect into one module as it loads, so that the defect's text is stored in memory only. It still runs and may write the disk,
+// so mutation-check.mjs reads the tree after each run and restores what changed. A process that
 // loads the module reports it, because a test run that never loaded the module says nothing about its tests. Vitest loads its modules through
 // mutation-vitest.config.mjs; every plain Node process a run starts, a spawned script included, comes through the hook below.
 import { appendFileSync } from 'node:fs';

@@ -43,16 +43,20 @@ A change to session, authentication, authorization, roles, secrets or validation
 |---|---|---|
 | Lint, types, integrity; a key, a live credential, a signed token, an invisible direction character, a secret under `NEXT_PUBLIC_` (`code-check.mjs`) | after every write | refused until fixed |
 | Tests that reach the file, whole-tree gates, new package exists and is old enough, lock file hosts, new high or critical advisory | before an agent finishes | refused until fixed |
-| The written lines broken in memory, and whether any test notices (`mutation-check.mjs`) | before an agent finishes | the line is named once per version |
+| The written lines broken on purpose, and whether any test notices (`mutation-check.mjs`) | before an agent finishes | the line is named once per version |
 | A deleted test, weakened or removed assertion, new mock, switched-off rule; new entry point, raw HTML, text-built query or command, redirect by request, privileged client, widened database access, a changed rule or CI file | before an agent finishes | the line is named once per version |
 | All of the above against the base of the whole change, for any model or tool (`change-review.mjs`) | CI and by hand | the first class fails; the rest is the reviewer's list |
+
+A deleted file's consumers are named the same way. Limits: a change of the lock file alone never asks the registry; a line
+moved inside one file is not named; a commit made during a session hides a version that failed before it.
 
 A named line is answered: fixed, or explained in the report. A green result proves only what these checks reach. The hooks
 run only inside Claude Code; any other tool runs `node scripts/workflow-gates/change-review.mjs --base=HEAD` by hand first.
 
 ## 4. Review (a session that wrote none of it)
 
-Run after the tools, never instead of them. Read `test-results/workflow-gates/change-review.md` for the candidate, then
+Run after the tools, never instead of them. Prepare with the threat model and previous security findings of what changed.
+Read `test-results/workflow-gates/change-review.md` for the candidate, then
 **every changed file individually**. Do not approve on a summary, and treat a routine-looking lock file, test or format
 change as unread until read. Each line of that report gets an answer in the review.
 
@@ -69,16 +73,20 @@ Steps for a change:
 
 Checklist, for what applies:
 
-- **Input:** server-side, allowlist, length limits, output encoding by context, upload content and size, no detail in errors.
-- **Authentication:** token entropy, invalidation on logout and timeout, cookie flags, re-authentication for sensitive acts.
+- **Input:** server-side, allowlist, length limits, output encoding by context, upload content and size, no detail in errors,
+  parameterized queries, path traversal, deserialization or XXE.
+- **Authentication:** token entropy, invalidation on logout and timeout, cookie flags, re-authentication for sensitive acts,
+  password hashing, lockout, MFA, secure reset, concurrent sessions.
 - **Authorization:** server-side, default deny, object-level (IDOR), function-level, no role manipulation, no escalation,
   verified at each workflow step, also by calling the entry point directly without the UI.
 - **Business logic:** state transitions, skipped steps, TOCTOU and concurrency, atomicity and rollback, quotas and rate
   limits, rules that hold through direct API access, cache decisions that include the audience.
-- **Cryptography and secrets:** modern algorithms, a secure random source, no secret in code or logs, rotation.
-- **Configuration and dependencies:** secure defaults, security headers, lock file, advisories; a CI, package script or rule
-  change gets the scrutiny of a pipeline change.
-- **Monitoring:** failed authentication and denied access logged, no sensitive data in logs, an audit trail for sensitive acts.
+- **Cryptography and secrets:** modern algorithms, a secure random source, no secret in code or logs, rotation, certificate
+  and hostname validation, TLS.
+- **Configuration and dependencies:** secure defaults, security headers, environment separation, lock file, advisories; a
+  CI, package script or rule change gets the scrutiny of a pipeline change.
+- **Monitoring:** failed authentication and denied access logged, no sensitive data in logs, an audit trail for sensitive
+  acts, alerts.
 
 Each finding states: title, severity, CWE, `file:line`, impact, how to reproduce, the fix, status. A review ends with its
 scope, its commit, the count per severity and an overall risk. A confirmed finding is fixed or owned; it is never only a note.

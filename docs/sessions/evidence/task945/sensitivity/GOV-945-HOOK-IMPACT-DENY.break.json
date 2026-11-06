@@ -2,6 +2,6 @@
   "version": 1,
   "case": "GOV-945-HOOK-IMPACT-DENY",
   "target": "scripts/workflow-gates/code-check.mjs",
-  "find": "return { status: 2, message: [`CODE CHECK FAILED: how",
-  "replace": "return { status: 0, message: [`CODE CHECK FAILED: how"
+  "find": "if (failures.length) return refuse([`CODE CHECK FAILED: how",
+  "replace": "if (failures.length && false) return refuse([`CODE CHECK FAILED: how"
 }

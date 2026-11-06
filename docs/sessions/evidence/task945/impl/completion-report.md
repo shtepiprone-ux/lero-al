@@ -77,7 +77,7 @@ Self-tests: base 207 passed of 207 (`impl/base-runs.txt`), final 288 passed of 2
 
 6. **What makes a check quieter (new, by the same owner words).** A registry key `quieting` names patterns counted in a changed file against its blob at HEAD: a test switched off, an assertion that accepts almost anything, assertions removed, a type check switched off, a rule switched off, garbled Cyrillic, which the mojibake gate's literal signatures do not hold. What the change adds stops the agent once per version with the file, line and text, also through a subagent's stop. It is a note and not a lasting refusal, because each has a legitimate use. Before it, all of these passed every check. It ran live on this session's own self-test, at a Stop: five lines hold `it.skip` as text of a fixture, which is right, and one was a real false positive on the file name `design-tokens-allowlist.json`, so the pattern now requires the marker's colon, with a test.
 
-7. **Mutation check (owner, 2026-11-04: "add the mutation check to this task").** Nothing in R1 to R9 holds it. `mutation-check.mjs` breaks the written lines in memory, one kind of defect at a time, and asks whether the tests notice: through `mutation-loader.mjs` for plain Node and child processes and `mutation-vitest.config.mjs` for Vitest. No file on disk changes. A run with the unchanged text comes first, which tells a broken harness and a file the tests never load from a survivor. Results are counted as caught, not caught, not tried or undecided, and only `caught` stays quiet. It stops the agent once per version, inside the 285 s the Stop hook leaves it.
+7. **Mutation check (owner, 2026-11-04: "add the mutation check to this task").** Nothing in R1 to R9 holds it. `mutation-check.mjs` breaks the written lines in memory, one kind of defect at a time, and asks whether the tests notice: through `mutation-loader.mjs` for plain Node and child processes and `mutation-vitest.config.mjs` for Vitest. The defect's text is stored in memory only, but a defect is code that runs and may write the disk: revision 1 (R15) reads the tree after each run and restores what changed. A run with the unchanged text comes first, which tells a broken harness and a file the tests never load from a survivor. Results are counted as caught, not caught, not tried or undecided, and only `caught` stays quiet. It stops the agent once per version, inside the 285 s the Stop hook leaves it.
 
 8. **The OWASP flow (owner, 2026-11-05: "this concerns all tasks and all AI models").** New `.claude/rules/shared/secure-code-review.md`, linked from `.claude/rules/README.md`, `create/01-preflight.md`, `execute/02-implement.md`, `execute/03-validate-handoff.md`, `review/02-adversarial-ui.md`, `CLAUDE.md` and `AGENTS.md`. New `dependency-check.mjs` (a package name the registry does not hold, a new package or version too young, a lock file fetching elsewhere or with no hash, a new high or critical advisory). New `change-review.mjs` in the `static` group of `pipeline.json`, so CI and `prepush.mjs` run it for a change from any tool. `code-check.json` gains 22 `secure` rules, 5 of which refuse at the write: a private key, a live credential, a signed token, an invisible direction character, a secret under `NEXT_PUBLIC_`. New `audit-baseline.json` lists the 76 high and critical advisories open today as unresolved findings, not accepted risks.
 
@@ -224,5 +224,201 @@ The differential takes 11.1 s; the gate suite 18 s.
 5. `orchestrator-response-gate.ps1` (GR-6) refused each attempt to end a turn while the audit ran in the background: a long background wait now uses up the same cap of eight as the tool.
 6. Rule files changed, so other tasks' `rules` digests read stale until the approver rebases them.
 7. Owner decisions surfaced, not acted on: upgrading `next` and `@sentry/nextjs` (critical in production); `ignore-scripts=true` in `.npmrc`, effect on the build not measured; CODEOWNERS, none exists; agents' access to `.env.local`, where a saved memory and the OWASP guidance conflict; the MCP allowlist and Vercel write tools; the real test gaps above.
+
+IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW
+
+## Revision 1
+
+Session: a fresh Opus implementation session (D1), 2026-11-05, native Windows 11, Node v22.22.3, branch `task/935-governance-approval-route`,
+HEAD `5dd561a1422480236c05db8ac68ee21c0a80a16b`. Read first: the kickoff with its rule bundle, `review/review-1.md`, and
+`review/p01-corrections-prototype.mjs`, `review/p02-mutation-disk-guard.mjs`, `review/p03-agents-policy-path.mjs` as evidence (no code copied).
+Base run before the first write: `impl/base-runs-r10.txt`, 288 of 288, exit 0, 81215 ms. `package.json` and `package-lock.json` are unchanged (D30).
+Order as the route says: R12, R10, R11, R14, R13, R15, R16, R17, R18, R20, then R19 in one save with the sidecar's `scope`. Stage `implemented`.
+
+### Status per requirement
+
+| R | Changed files | Evidence | Status |
+|---|---|---|---|
+| R10 | `code-check.mjs`: `readableText` (8 MiB, NUL in the first 8000 bytes), `unquotedPath`, `headerPath`, exported `addedLinesOf` and `refusedLines(root, base, named, { untracked })`; `added` no longer runs refuse rules. `change-review.mjs` calls it against its base with untracked files | GOV-945-HOOK-SECRET-REACH-DENY and its sensitivity record | done |
+| R11 | `code-check.mjs`: `refusedText` gives `<file>:<line>: <what>`; a line another rule finds that also holds refused text is printed as `its text is withheld` | GOV-945-HOOK-SECRET-ECHO-DENY | done |
+| R12 | `dependency-check.mjs`: `PACKAGE_NAME`, refusal with `JSON.stringify` and CWE-78 before any process; `mutation-check.mjs`: no command for an `UNQUOTABLE` name, `error` on the result; `change-review.mjs`: `changedFiles` reads both lists with `-z` | GOV-945-HOOK-NAME-INJECTION-DENY and its sensitivity record | done |
+| R13 | `code-check.mjs`: exported `leftBehind`, `snapshot` returns `{ files, gone, others }`, Stop and SubagentStop tell each deletion once (`told`, `deletions`, `goneBefore`), and a file no row holds that was in the tree at the start is kept by name (`othersBefore`), so an untracked one that goes is named too; `change-review.mjs`: `## What a deletion left behind` | GOV-945-HOOK-DELETED-CONSUMER-DENY and its sensitivity record | done |
+| R14 | `code-check.json`: `finding` on both `namesFile` entries, `folders` gone; `code-check.mjs`: `reportsFile` gone, `readRegistry` refuses an entry without `finding`, the stage reads finding lines | GOV-945-HOOK-GATE-CRASH-ERROR, which also runs both real gates and accepts their exit code | done |
+| R15 | `mutation-check.mjs`: `treeStatus`, `bytesOf`, `treeGuard` (a copy of what a run left under `test-results/code-check/mutants/restored/<pid>`); the comment of `mutation-loader.mjs`; line 80 of this report | GOV-945-MUTATION-DISK-ERROR | done |
+| R16 | `change-review.mjs` (`## Could not run`, `## Undecided`), `mutation-check.mjs` (`reportLines`, `--base=`, the by-hand words), `code-check.mjs` (a stage's memory over one set of versions, `subagentRefused`), `code-check.json` (steering row) | a test each for (a) to (f); (f) runs the command of a real `not tried` line as written | done |
+| R17 | the four self-tests; `hook-differential.mjs` takes a hook path and `--limit=N` | `impl/r17-breaks.txt` below | done |
+| R18 | `dependency-check.mjs`, `.claude/rules/shared/secure-code-review.md` (7906 bytes) | the tests named in AC18 | done |
+| R19 | `contract.mjs` (`isPolicyPath`, `isDoc`); the sidecar's `scope` gets `AGENTS.md` in the same save | GOV-945-HOOK-EXECUTOR-DENY; `cli.mjs plan` exit 0; `cli.mjs diff --phase release` | done |
+| R20 | `code-check.json` (the CI lint at `write` of `scripts/workflow-gates/*.mjs`) | the AC20 test | implementer part done; AC21 is the approver's |
+
+### Acceptance criteria 11 to 21
+
+| AC | Result |
+|---|---|
+| AC11 | GOV-945-HOOK-SECRET-REACH-DENY and GOV-945-HOOK-SECRET-ECHO-DENY pass. `refusedLines` over the merge base of `origin/main` (`d8a07a3c7841022207fd5331f53e5a80b4d7c7e2`) and `HEAD`, with untracked files, on the real tree: 0 results in 4011 ms. Over `HEAD` with untracked files, after the last change: 0 in 3397 ms. |
+| AC12 | GOV-945-HOOK-NAME-INJECTION-DENY passes, through the hook and `change-review.mjs`; on Windows the `$(touch PWNED)` form is a name with no effect, and Linux is first proven on CI. Every name of the real `package.json` and lock file passes. |
+| AC13 | GOV-945-HOOK-DELETED-CONSUMER-DENY passes through the real chain of the suite; AC3's `error TS2307` for a deleted module still holds. |
+| AC14 | GOV-945-HOOK-GATE-CRASH-ERROR passes, with the two expressions read against the real output of both gates. |
+| AC15 | GOV-945-MUTATION-DISK-ERROR passes. |
+| AC16 | A test for each of (a) to (f) passes; (f) commits a change on a fixture branch and runs the command of a real `not tried` line as written: defects above 0. |
+| AC17 | `impl/r17-breaks.txt`: C94, C95 and C96 caught by the tests R17 names, through the tool's own loader. `npm run check:mojibake` exits 1 on six evidence files of Tasks 923, 927 and 944 and names no file of `scripts/workflow-gates/`. |
+| AC18 | The two refusals by a test each; the real lock file passes; a test reads the three limits in section 3 and the added items in section 4; 7906 bytes. |
+| AC19 | `evaluateHook` refuses a Sonnet Edit of each path of R19, also with a product contract loaded. `cli.mjs plan` exit 0. `cli.mjs diff --phase release --base HEAD --working-tree` prints no error naming `AGENTS.md`; it exits 1 only on what belongs to the approver: stage not `reviewed`, no review decision, `review.evidence` absent (read as an invalid path), and the stale rebases of Tasks 935, 940, 941, 943 and 944 (C50). |
+| AC20 | The test finds the CI lint in the `write` of the row and a fixture the default config passes returns status 2. The CI lint over `scripts/workflow-gates/*.mjs` exits 0. |
+| AC21 | The approver's. |
+
+### Cases
+
+All fourteen GOV-945 cases pass in `node scripts/workflow-gates/cli.mjs governance-report`: `impl/governance-report.json`, "passed, 14 case(s)".
+`cli.mjs verify` exit 0.
+
+### Sensitivity (all eight, through `cli.mjs sensitivity`, in memory, after the last change of the tool)
+
+Each record holds a baseline exit 0, a mutant exit 1 with `ERR_ASSERTION` on the named test, and a restored exit 0. No gate file was edited to plant a break.
+
+| Case | Break (`find` once, `replace`) | Failed assertion |
+|---|---|---|
+| GOV-945-HOOK-WRITE-DENY | the failure at a write returns `status: 0` | `a lint failure refuses`, 0 !== 2 |
+| GOV-945-HOOK-IMPACT-DENY | `if (failures.length && false) return refuse(...)` at Stop | `/error TS2307/` absent: only the deletion note reached the agent |
+| GOV-945-HOOK-SHELL-WRITE-DENY | only `tool_input.file_path` counts as changed | `a file changed directly, under a Bash event that names no file, is refused`, 0 !== 2 |
+| GOV-945-HOOK-DIFFERENTIAL-DENY | a lost target is not counted | `a new hook dropping a target reports it` |
+| GOV-945-CI-SETTINGS-DENY | the registration check is removed | `removed from SessionStart` |
+| GOV-945-HOOK-SECRET-REACH-DENY | a refuse rule reads only a file a row holds | `a key replaced by another is named, though the count is the same` |
+| GOV-945-HOOK-NAME-INJECTION-DENY | `const refused = [];` | `no registry call for "left-pad&echo ran>PWNED-NPM&rem "` |
+| GOV-945-HOOK-DELETED-CONSUMER-DENY | `const names = [];` | the deletion of `scripts/lib/shared.mjs` returns 0, expected 2 |
+
+The WRITE and IMPACT break specs were rewritten because their old `find` text now occurs twice and zero times; each new `find` occurs once.
+
+### Self-test totals and times
+
+| Run | Tests | Exit | Duration |
+|---|---|---|---|
+| Base, before the first write (`impl/base-runs-r10.txt`) | 288 / 288 | 0 | 81215 ms |
+| Final, alone, after the last change (`impl/r1-final-selftests.txt`) | 310 / 310 | 0 | 130647 ms |
+
+The tool on a clean `PostToolUse` event, real main: 98, 94 and 98 ms. A TypeScript write runs the row's three commands, timed on `src/lib/utils.ts`:
+ESLint 2360 ms, `check-file-integrity` 47 ms, `tsc --noEmit` 19022 ms, about 21.4 s. The differential: exit 0, `LOST 0`, 86367 commands,
+0 exceptions, 11132 ms. `npm run build` exit 0 in 133 s (Q1), run before the last change, which is in `code-check.mjs` and its self-test only and reaches no build input. The CI lint over the gate scripts exit 0 in 1 s. The output of each AC command
+is in `impl/r1-ac-commands.txt`.
+
+**The suite grew by 49.4 s (61 %) and reaches 130.6 s against the 180000 ms limit of `selftests.mjs`.** The files run in parallel, so the
+longest one sets the time: `code-check.selftest.mjs`, whose slowest tests are the real registry through the real main (56 s, revision 0) and
+GOV-945-HOOK-GATE-CRASH-ERROR (25 s), which runs both real whole-tree gates as AC14 asks. At a Stop of this session that ran
+while three defect runs used the machine, the suite was cut at that limit: `selftests.mjs` printed no line saying so, and the tool reported
+`exit 1` with a tail of passing tests. Alone it passed 310 of 310. The duration on CI is one of the three R20 observations.
+
+### No older self-test file changed
+
+The four changed self-test files are the ones commit `0c1e09eb1` of this task added (`git log --diff-filter=A`); no other `*.selftest.mjs` is
+in `git status`. Inside them, the assertions the requirements replace: the ESLint assertion of the `scripts/` rows (R20 adds the CI lint);
+the folder test and the design-token shape test, replaced by GOV-945-HOOK-GATE-CRASH-ERROR (R14); the mojibake fixture line, now in `\u`
+escapes (R17); `failures.length` 2 of `dependency-check.selftest.mjs:72-76` (R18); the texts of `reportLines` and the by-hand runs (R16);
+the test named `... and no file on disk changes`, now `... and the file under test keeps its text` (R15). Test counts: code-check 26 to 35, change-review 16 to 22, dependency-check 14 to 17,
+mutation-check 25 to 29.
+
+### R17: the review's breaks, rerun (`impl/r17-breaks.txt`, script `impl/r1-defects/r17-breaks.mjs`)
+
+C94 (a hung check after grace counts as passed), C95 (the differential's main always exits 0) and C96 (the review follows renames) are each
+caught by the test R17 names. C125, the main guard of `dependency-check.mjs`: `===` to `!==`, `&&` to `||` and the negated guard are caught (the
+self-test file fails at import, because the guard then runs the main inside it); the missing `realpathSync.native` is caught by the new test that
+starts the tool through a junction to its folder. One form survives: lower case on Linux instead of Windows. It is equivalent:
+`realpathSync.native` already returns the case the file system holds on Windows, and Linux compares both sides the same way.
+
+### The changed lines of revision 1, broken one by one (`impl/r1-defects/`)
+
+Beyond the route, every defect `mutantsOf` makes on the lines changed since `HEAD` in the seven gate files was run against the tests through
+the tool's own loader, in memory. First a focused run (443 defects, a name pattern per group): 304 caught, 139 survived, 0 not loaded. The
+survivors against every test file reaching their source: 52 more caught. Tests were then added for what is behaviour; 51 non-equivalent defects
+rerun: 43 caught; after two more assertions `mutation-check.mjs:322`, both forms of `:329` and `contract.mjs:84` were rerun: caught. 32 forms
+are equivalent, 30 listed in `equivalent.txt` and two left by the third pass, answered here:
+
+- `windowsHide` true to false, a `maxBuffer` bound one step larger, one minute plus one millisecond: no output and no result changes.
+- `mutation-check.mjs:117`, the status read as three characters instead of two: the third is always the space before the path, so the
+  rename test reads the same.
+- `addedLinesOf` keeps `removed`, but in a `-U0` hunk every line starts with `-`, `+` or `\`, and none of them reads as a header, so its four
+  defects (`removed` start 1, `&&`/`||`, `> 1`, no count) give the same list. A quoted path both starts and ends with `"`, so `startsWith`
+  versus `endsWith` is the same. An added line's file exists, so `throwIfNoEntry` and its fallback 0 are never read.
+- `git grep` exits 0, 1 or 128, never 2. `hashOf` of a folder is compared only with itself, `'folder'` or `undefined`. A `readableText` error
+  that is not a missing file still throws, as a `TypeError`. The `known.notes` of a stage's memory are read only on an attempt that fails again.
+  The `saveState` of the repeated `SubagentStop` holds only the `seen` counter and prunings the next event makes again. A report copy appears only after the last look of its file.
+- `rmSync(..., { force })` removes a file that exists; `change-review.mjs:50` reads the base that line 44 already read, which throws first.
+- `mutation-check.mjs:196`: a fallback concurrency 2 instead of 1 is used only when the registry names none; the real registry names 3.
+- `code-check.mjs:76`, an `index` of -2 instead of -1: both are below 0.
+
+Three do not survive as equivalent, and stay limits: `hashOf` (`code-check.mjs:175`) and `bytesOf` (`mutation-check.mjs:127`) of a file
+that exists but cannot be read (EACCES) would return nothing instead of throwing, and no test can make such a file on Windows; a copy entry
+of `git status` (`code-check.mjs:194`, `&&` to `||`) is listed only with `status.renames=copies`, not the default.
+
+### Each line of a fresh `change-review.md`, answered
+
+`node scripts/workflow-gates/change-review.mjs`, base the merge base with `origin/main` `d8a07a3c7841022207fd5331f53e5a80b4d7c7e2`, run again
+after the last change: exit 0 in 494 s, 74 code files (`impl/r1-change-review.md`). It holds no `Refused`, `Could not run`, `Undecided` or `What a deletion left behind`
+heading. The base reaches back over every commit of this branch, so it lists files of Tasks 931, 935 to 944 too.
+
+- **A check said less.** `change-review.selftest.mjs:176` and `:262` (the second written by R11) and `code-check.selftest.mjs:380` to `:405`
+  and `:428` are fixture text: the `it.skip` and the switched-off rule are what the quieting rules are tested against, written into a temporary
+  repository, and no test of this project is switched off. `route.test.ts:79/157/170` and `AdminListingsTable.smoke.test.tsx:82` come from
+  `2693c6b9a` (Task 931); this task does not touch product tests.
+- **What an attacker reaches.** CWE-95, CWE-78, CWE-327 and CWE-295 in `change-review.selftest.mjs:49/50/56/57/87/88/90/153` are the rows of the
+  rule tests: strings put into a fixture file, never run. `code-check.mjs:237` is `runCommand`: it runs a command of the registry, a steering file
+  only Opus may change (R19 and GOV-945-HOOK-EXECUTOR-DENY); a file name reaches it only in quotes, and a name holding a character no command line
+  can quote is a failure before any process starts (R12, CWE-78). `mutation-check.selftest.mjs:508` runs the command of a `not tried` line as
+  written, because that is what R16 (f) asks to prove; the command is composed by the tool under test in a temporary repository.
+  `push-safety.mjs:13` is SHA-1 as Git's own blob id, not a protection; it comes from `23206fb7f`. Each steering file of this task (`code-check.mjs`,
+  `code-check.json`, `change-review.mjs`, `dependency-check.mjs`, `mutation-check.mjs`, `mutation-loader.mjs`, `hook-differential.mjs`,
+  `contract.mjs`, `secure-code-review.md`, the four self-tests) was read against section 4 of `secure-code-review.md`: input from the tree
+  (package names, file names, diff headers, lock entries) is checked against an allow-list or quoted before it reaches a process; no process
+  runs through a shell with a name from the tree; no refused text leaves `refusedLines`; every failure to read Git throws, so no read is no pass;
+  a mutant that writes is restored and named; nothing is logged that a rule refuses. The steering files of the other tasks are theirs.
+- **What a changed test misses.** `permissions.ts`, `captcha.ts`, `listingTransitionEngine.ts` and `applyListingTransition.ts` are product code
+  of Task 931's commit, judged against its changed smoke tests only. Not this task's code; the owner's route for them is Task 931.
+- **Not tried.** Time ran out for every gate file of this task over the whole branch. The lines revision 1 changed were broken one by one in
+  this session (`impl/r1-defects/`); the lines of commit `0c1e09eb1` were judged in its own report; the other files are other tasks'.
+
+### Self-check at the owner's request (2026-11-06)
+
+The owner asked this session to check its own work. Each claim of this section was read again against the code, the tests and the
+recorded runs. Found and corrected:
+
+1. **R13 was not met in full.** It names a file no row holds among the deleted files, and an untracked such file present at the start of a
+   session was not seen when it went: it had been written below as a limit instead. Fixed in `code-check.mjs` (`othersBefore`, kept by name
+   at the start, read at Stop and SubagentStop), with a test in `code-check.selftest.mjs` that fails under each of four in-memory breaks of
+   the new lines (`impl/r1-defects/r13-breaks.txt`). Then the suite, all eight sensitivity cases, the CI lint, `check-workflow.mjs`, `publication.mjs`, `change-review.mjs`,
+   `governance-report`, `verify` and `plan` were run again; the numbers in this section are those of the reruns.
+2. **This section said four limits survive the defect runs; there are three.** The equivalent forms were counted as 30 and are 32, and one
+   of them (`mutation-check.mjs:117`, three characters) had no answer. Corrected.
+3. The times of `refusedLines` over `HEAD`, the suite, the review and the line number of `runCommand` were of earlier runs. Replaced.
+
+Read again and found as written: the eight break specs and their failed assertions; AC11 (eleven places, each untracked, staged and
+committed, a non-ASCII name among them); AC13 (three consumers, once, then 0; the unnamed file; the review's heading; `error TS2307`);
+AC16 (e) (ten `SubagentStop`, one refusal, one run; two `Stop` refusals, at most one further run); AC18 (each item of sections 3 and 4 is
+read by a test, 7906 bytes); AC19 (the seven paths of R19, with and without a product contract); R16 (c) (the steering row).
+
+### Limits: confirmed or changed
+
+| Limit | Now |
+|---|---|
+| The three limits R18 adds to section 3 | Confirmed by the tests of AC18. |
+| A name that begins with `-` | Passes the kickoff's package-name expression, so it reaches `npm view` as an argument; it is no command (no shell), but an option. |
+| `inBundle` lock entries | Refused by R18, since they hold neither `resolved` nor `integrity`; the real lock file holds none today. |
+| A deleted file's consumers | One `git grep` per deleted file, with no bound on their number. A file no row holds that is created and deleted within one session is not named, because it was not in the tree at the start. |
+| The guard of a mutant run | One `git status` per attempt; a file outside the roots is compared by its status code only; a change by another session at that moment is restored too, which is why a copy is kept first. A base Git cannot name judges every line of the file, as `changedLines` does for a new file. |
+| A refused text in a file the hook reads whole | The hook reads a named file whole, so an old key in a written file is named at the hook; the review names only added lines. A UTF-16 file holds NUL bytes and is skipped. |
+| A stage's memory | A flaky failure is shown again until a file under the roots changes. |
+| Concurrent hooks of one session | **Changed: the lost update can also repeat a note.** After the last version of the self-tests this session got the same `CODE CHECK NOTE` (the steering files and `mutation-check.selftest.mjs:508`) at two Stops in a row, against "once per version". The state then held no stored note and 17 `SubagentStop` events, which background tasks of this session fire. Probable cause, not reproduced: a `SubagentStop` that stored the notes and a `Stop` that showed them ran at once, and the last write of the state won. |
+| The suite's time | See above: 130.7 s alone, cut at 180 s under load with no word of why. |
+| The Linux kill branch and the `$(touch PWNED)` marker | First proven on CI. |
+
+### Open points for the approver
+
+1. The suite's time against the 180 s of `selftests.mjs` (above). `selftests.mjs` itself was not changed: it is outside the requirements.
+2. This session's `UserPromptSubmit` router classified the owner's prompt as an implementation review; no review receipt was written, since this
+   session reviews nothing.
+3. Temporary folders of failed runs of the hold-pipes test are left in `%TEMP%`: `lero-945-check-2IjdAK`, `lero-945-check-2rz7Rg`,
+   `lero-945-check-Pvg5NE` (and `lero-945-check-6przay`, `lero-945-check-rx5FJ6`, origin not confirmed). A wildcard removal in the shared
+   temporary folder was refused by the session's permission classifier and was not retried; the owner may remove them.
+4. No process of these runs is left: `Win32_Process` lists only the Playwright MCP servers and an Adobe process.
+5. The Stop notes of this session (a switched-off test and `eval` in `change-review.selftest.mjs`, `shell: true` in
+   `mutation-check.selftest.mjs:507`, the steering files) are answered in the review answers above.
 
 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW

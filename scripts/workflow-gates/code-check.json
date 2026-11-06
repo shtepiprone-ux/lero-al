@@ -1,5 +1,5 @@
 {
-  "roots": ["src", "scripts", ".claude/hooks", ".claude/settings.json", "messages", ".storybook", "tsconfig.json", "package.json", "next.config.ts", "vitest.config.ts", "vitest.integration.config.ts", "eslint.config.mjs", "postcss.config.mjs", "sentry.edge.config.ts", "sentry.server.config.ts", "package-lock.json", ".npmrc", "supabase/migrations", ".github/workflows", "CLAUDE.md", "AGENTS.md", ".codex", ".claude/rules", ".claude/skills", ".claude/agents"],
+  "roots": ["src", "scripts", ".claude/hooks", ".claude/settings.json", "messages", ".storybook", "tsconfig.json", "package.json", "next.config.ts", "vitest.config.ts", "vitest.integration.config.ts", "eslint.config.mjs", "postcss.config.mjs", "sentry.edge.config.ts", "sentry.server.config.ts", "package-lock.json", ".npmrc", "supabase/migrations", ".github", "CLAUDE.md", "AGENTS.md", ".codex", ".claude/rules", ".claude/skills", ".claude/agents"],
   "timeoutMs": { "write": 50000, "stop": 240000 },
   "tailLines": 40,
   "quieting": [
@@ -34,7 +34,7 @@
     { "paths": ["supabase/migrations/*.sql"], "flags": "i", "pattern": "security\\s+definer", "what": "a function that runs with its owner's rights: it needs its own checks and a fixed search_path (CWE-250)" },
     { "paths": ["supabase/migrations/*.sql"], "flags": "i", "pattern": "\\bgrant\\b[^;]*\\bto\\s+(?:anon|public|authenticated)\\b|disable\\s+row\\s+level\\s+security|using\\s*\\(\\s*true\\s*\\)", "what": "access widened in the database (CWE-284)" },
     { "paths": ["package.json"], "pattern": "\"(?:pre|post)?install\"\\s*:|\"prepare\"\\s*:|\"prebuild\"\\s*:", "what": "a script that runs by itself on install or build" },
-    { "paths": [".npmrc", ".github/workflows/*", "CLAUDE.md", "AGENTS.md", ".codex/*", ".claude/rules/**/*", ".claude/skills/**/*", ".claude/agents/*", ".claude/settings.json", ".claude/hooks/*", "scripts/workflow-gates/audit-baseline.json", "scripts/workflow-gates/code-check.json"], "changed": true, "what": "this file steers every later agent or runs by itself, so its whole diff needs an independent reader" }
+    { "paths": [".npmrc", ".github/**/*", "CLAUDE.md", "AGENTS.md", ".codex/*", ".claude/rules/**/*", ".claude/skills/**/*", ".claude/agents/*", ".claude/settings.json", ".claude/hooks/*", "scripts/workflow-gates/audit-baseline.json", "scripts/workflow-gates/code-check.json", "scripts/workflow-gates/**/*", "package.json"], "changed": true, "what": "this file steers every later agent or runs by itself, so its whole diff needs an independent reader" }
   ],
   "dependencies": { "minPackageAgeDays": 30, "minVersionAgeDays": 7 },
   "mutation": {
@@ -65,12 +65,12 @@
     {
       "paths": ["src/**/*.tsx", "src/**/*.css"],
       "write": ["node scripts/check-file-integrity.mjs --files {files}"],
-      "stop": [{ "run": "node scripts/check-design-tokens.mjs --strict", "namesFile": true }]
+      "stop": [{ "run": "node scripts/check-design-tokens.mjs --strict", "namesFile": true, "finding": "^\\s+\\S+\\s+\\(\\d+\\)\\s*$" }]
     },
     {
       "paths": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.css", "messages/*.json"],
       "write": [],
-      "stop": [{ "run": "node scripts/check-mojibake.mjs", "namesFile": true, "folders": ["docs/", "src/", "messages/", "tasks/", "scripts/"] }]
+      "stop": [{ "run": "node scripts/check-mojibake.mjs", "namesFile": true, "finding": "^\\s+\\S+:\\d+:\\d+\\s" }]
     },
     {
       "paths": ["scripts/**/*.mjs", "scripts/**/*.js", "scripts/**/*.cjs"],
@@ -89,6 +89,11 @@
         "node node_modules/typescript/bin/tsc --noEmit --pretty false"
       ],
       "stop": ["node node_modules/vitest/vitest.mjs related {files} --run --passWithNoTests --allowOnly=false --reporter=dot"]
+    },
+    {
+      "paths": ["scripts/workflow-gates/*.mjs"],
+      "write": ["node node_modules/eslint/bin/eslint.js --config scripts/workflow-gates/eslint.config.mjs {files}"],
+      "stop": []
     },
     {
       "paths": ["scripts/**/*.json"],
@@ -129,7 +134,7 @@
       "stop": ["node scripts/workflow-gates/dependency-check.mjs"]
     },
     {
-      "paths": [".github/workflows/*", ".npmrc", "CLAUDE.md", "AGENTS.md", ".codex/*", ".claude/rules/**/*", ".claude/skills/**/*", ".claude/agents/*"],
+      "paths": [".github/**/*", ".npmrc", "CLAUDE.md", "AGENTS.md", ".codex/*", ".claude/rules/**/*", ".claude/skills/**/*", ".claude/agents/*"],
       "write": [],
       "stop": ["node scripts/workflow-gates/check-workflow.mjs"]
     },

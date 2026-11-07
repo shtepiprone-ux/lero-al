@@ -40,6 +40,17 @@ Mobile is a semantic presentation, not compressed desktop geometry: reflow/stack
 compact range and its `640px` transition follows `.claude/rules/shared/mobile-adaptation-contract.md`. Mantine and the
 project theme stay authoritative for the responsive mechanism, interaction, accessibility and breakpoint.
 
+## Golden rule: no gap is only reported
+
+Owner, 2026-11-07 (translated): "you are forbidden to walk past the gaps you find and only give me a report that you
+found something but did not fix it; this must be a golden, inviolable rule, always". Every gap found is closed in the
+same turn: fixed with its automated test, or handed to an open task whose kickoff carries it as scope and a tested
+acceptance criterion. Only the owner accepts a risk. Details and enforcement: `.claude/rules/flow.md` (Golden rule).
+
+Every task, existing or created later, and every change is held to the OWASP Cheat Sheet Series by
+`scripts/quality/owasp.mjs` (plan at design, review at verdict, the CI task gate on every change, the mapping check,
+the session start).
+
 ## Git
 
 - `main` changes only through a PR whose `CI Required` check is green, merged by the owner after reading the diff.

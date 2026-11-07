@@ -123,3 +123,6 @@ supabase/*
 .playwright-mcp/
 test-results/
 .screenshots/
+
+# OWASP cheat sheet texts downloaded by scripts/quality/owasp.mjs sync (upstream content, never committed)
+.cache/

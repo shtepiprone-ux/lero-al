@@ -17,6 +17,23 @@ same" in an existing, already-reviewed pattern needs no new threat analysis (Att
    from the report or the PR description: the executor's report is a supplier assertion; each claim it makes (command,
    exit code, test count, deliberate break) is rerun by the reviewer on the candidate commit, and a claim that cannot be
    reproduced is a finding.
+5. Live configuration. The diff never shows the database or an external service, and the repository holds no complete
+   schema, so the review reads them: `node scripts/quality/db-catalog-audit.mjs` (read-only; RLS on every table,
+   RESTRICTIVE block policies, definer functions pinned and allow-listed, no `anon` writes, a moderator write policy
+   checks a permission key, users server-only columns not session-writable, public listing reads bounded by expiry,
+   owner status changes guarded, bucket limits) when the change touches SQL, RLS, grants, a data write, authentication or
+   roles; `node scripts/quality/cloudinary-config.mjs` when it touches uploads or images. Both exit 1 while a known
+   violation is open (Tasks 956, 957): the review answers the invariants the change touches.
+6. The reference itself (owner request 2026-11-07). `node scripts/quality/owasp.mjs sync` and `check`: the registry of
+   every sheet of https://cheatsheetseries.owasp.org/index.html with its content hash, and the mapping of each sheet to
+   this project (`docs/security/owasp/controls.json`: applies or why not, triggers, verbatim requirements, and the control
+   file with the evidence text that implements each, or the open task that will). A sheet changed upstream fails until
+   it is re-read; a control whose evidence text disappears fails until it is re-checked. Then
+   `node scripts/quality/owasp.mjs review <kickoff> --base main` and "### OWASP check" in the review: a protection the
+   diff should have and lacks is a finding, also when the kickoff did not ask for it.
+7. Baseline review (project start, legacy code, after an incident, or when the owner asks for the whole project):
+   `node scripts/quality/audit-coverage.mjs` lists every tracked file by lane with its checks and reading rule; the
+   ledger of what was read, and how, is written next to the findings (`docs/security/audit-2026-11-06/coverage.md`).
 
 ## 2. Six steps (diff-based review)
 
@@ -39,6 +56,9 @@ same" in an existing, already-reviewed pattern needs no new threat analysis (Att
 - [ ] Deny by default; RLS enabled on every table the change touches, and the service role is used only where a user
       session cannot do the job, after an explicit authorization check.
 - [ ] Storage objects and signed URLs follow the same rule as their rows.
+- [ ] An application-only guard has a database twin: a permission key, rank rule or status rule checked in a Server
+      Action is also enforced by the policy or trigger of the table it writes (a session can call PostgREST directly);
+      `db-catalog-audit.mjs` I5 and I8 check the known cases.
 - [ ] Multi-step flows keep state on the server; check-then-act is atomic (conditional update with affected-row check,
       constraint, or transaction).
 

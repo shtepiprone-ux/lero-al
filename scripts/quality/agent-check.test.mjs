@@ -43,6 +43,17 @@ function write(name, text) {
 
 const clear = () => rmSync(DIR, { recursive: true, force: true });
 
+test('start: the session context carries the OWASP reference state and the plan and review commands', () => {
+  const id = `test-owasp-${process.pid}`;
+  const r = hook('start', { session_id: id });
+  rmSync(path.join(STATE, `${id}.json`), { force: true });
+  assert.equal(r.status, 0);
+  const context = JSON.parse(r.stdout).hookSpecificOutput;
+  assert.equal(context.hookEventName, 'SessionStart');
+  assert.match(context.additionalContext, /^OWASP reference: /);
+  assert.match(context.additionalContext, /owasp\.mjs plan <kickoff>[\s\S]*owasp\.mjs review <kickoff>/);
+});
+
 test('post: a lint error goes back to the agent with exit 2', () => {
   const id = session('lint');
   const rel = write('evil.ts', 'export function run(code: string) {\n  return eval(code);\n}\n');

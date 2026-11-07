@@ -57,6 +57,37 @@ Changed: CI permissions and secrets, agent permissions, the supply chain of acti
 - T6 Repudiation/bypass: an agent finishes with broken files, or a human merges without checks → mitigate: the Stop
   hook over every changed file, the pre-commit hook, `CI Required` in the `main` ruleset with signed commits.
 
+
+## OWASP
+
+Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
+
+- AI_Agent_Security: "Implement per-tool permission scoping (read-only vs. write, specific resources)." — settings.json denies mutating Git and the agent loop blocks a failing write — AC1.
+- Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names each entry point the task adds, removes or changes — AC1, AC6.
+- Authorization: "Implement defense in depth. Do not depend on any single framework, library, technology, or control to be the sole thing enforcing proper access control." — the CI authorization regression on real RLS is one gate among lint, types and tests — AC6.
+- Authorization_Decisions_And_Output_Handling: not applicable — the task builds gates; it changes no authorization decision of the product.
+- Authorization_Patterns: not applicable — no product access check is moved or added by the CI and hook work.
+- Authorization_Regression_Testing: "Automated tests should specifically target the ways authorization usually degrades over time." — the CI job runs the authorization suite on every pull request — AC6.
+- Authorization_Testing_Automation: not applicable — the authorization matrix itself is Task 950; this task only runs the existing suite.
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the change reaches main only through the pull request with CI Required green, merged by the owner — AC6.
+- Dependency_Graph_SBOM: "Validate the document against its format's schema before publication or ingestion" — the CI SBOM job generates and validates CycloneDX for the new tree — AC6.
+- GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the workflow keeps permissions: {} at the top and per-job grants (ci-workflow.test.mjs) — AC6.
+- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the quality scripts pass file names and arguments as array items; no value is joined into a command line — AC1.
+- JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC3.
+- Key_Management: not applicable — no key is created; CI reads the existing repository secrets in the jobs that need them.
+- LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — the hooks check each tool call outside the model (agent-check.mjs) — AC1.
+- MCP_Security: "Grant each MCP server the minimum permissions needed for its function." — mutating Vercel MCP tools are denied in settings.json; agent-settings.test.mjs checks the list — AC1.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — install scripts stay off and every package with a script is reviewed (install-scripts.test.mjs) — AC6.
+- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the quality scripts start git and node with argument arrays, never a shell string — AC1.
+- Secrets_Management: "This is not the same as committing it to code." — check-files scans every file for secrets and refuses environment files — AC2.
+- Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC2, AC3.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC1, AC2.
+- Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC6.
+- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the lockfile pins every version; CI installs with npm ci — AC6.
+- Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC6.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC1, AC2.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — the CI dependency audit runs npm audit on the changed tree — AC6.
+
 ## UI
 
 No visible change.

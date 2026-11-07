@@ -6,7 +6,9 @@
 // refused), AI Agent Security (the check does not trust the agent's own report).
 //
 //   node scripts/quality/agent-check.mjs start  SessionStart: records which files are already changed, so the
-//                                               session is answerable for what it changes, not for older work.
+//                                               session is answerable for what it changes, not for older work;
+//                                               re-reads the OWASP Cheat Sheet Series when the last read is a day
+//                                               old and puts the reference's state and commands into the session.
 //   node scripts/quality/agent-check.mjs post   PostToolUse on Edit|Write|MultiEdit|NotebookEdit: every written
 //                                               file gets scripts/quality/check-files.mjs; code also gets ESLint.
 //                                               Findings go back to the agent at once (exit 2).
@@ -23,6 +25,8 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { untestedSourceChange } from './change-report.mjs';
+import { sessionCheck } from './ac-tests.mjs';
+import { sessionContext } from './owasp.mjs';
 
 const ROOT = process.env.CLAUDE_PROJECT_DIR || process.cwd();
 const CODE = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
@@ -161,6 +165,8 @@ function checkWritten(files) {
 
 function start() {
   saveState({ baseline: snapshot(), blocks: 0 });
+  // Owner request 2026-11-07: every session starts held against the current OWASP Cheat Sheet Series (owasp.mjs).
+  process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: sessionContext({ root: ROOT }) } }));
   process.exit(0);
 }
 
@@ -193,6 +199,12 @@ function stop() {
   const untested = untestedSourceChange(changed.map((p) => ({ code: 'M', path: p })));
   if (untested.length) {
     failures.push(`Product code changed in this session with no test added or updated (every change is covered by a test — quality-gates.md §8):\n${untested.join('\n')}`);
+  }
+  try {
+    const missing = sessionCheck(changed);
+    if (missing.length) failures.push(`An acceptance criterion's test is missing (quality-gates.md §8; ac-tests.mjs):\n${missing.join('\n')}`);
+  } catch (e) {
+    failures.push(`ac-tests could not run (a crash is a finding, never a pass): ${e.message}`);
   }
   if (changed.some((f) => TYPED.test(f))) {
     const types = run('tsc', ['--noEmit', '-p', 'tsconfig.json']);

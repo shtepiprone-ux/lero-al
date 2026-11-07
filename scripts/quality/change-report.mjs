@@ -8,6 +8,8 @@
 //
 // Prints a Markdown report (also to $GITHUB_STEP_SUMMARY). Exit 1 when a hard rule fails:
 //   - product code under src/ is added or changed and no test file is added or changed;
+//   - a kickoff with a review verdict names a test that does not exist, or adds or changes an acceptance criterion
+//     whose named test the same change neither adds nor changes (ac-tests.mjs);
 //   - a dependency added to package.json does not exist on npm, or its first release is younger than 30 days;
 //   - a lockfile entry resolves outside https://registry.npmjs.org/ or has no integrity hash.
 // Everything else is a flag for the human reviewer, who answers it in the review (secure-code-review.md).
@@ -16,6 +18,7 @@ import { spawnSync } from 'node:child_process';
 import { appendFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { rangeFindings } from './ac-tests.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DAY = 24 * 60 * 60 * 1000;
@@ -28,8 +31,11 @@ export const SENSITIVE = [
   ['CI, repository settings and quality scripts', /^(\.github\/|\.githooks\/|scripts\/quality\/)/],
   ['Dependencies and package manager', /^(package\.json|package-lock\.json|\.npmrc|\.nvmrc)$/],
   ['Lint, type and test configuration', /^(eslint\.config\.mjs|tsconfig\.json|vitest(\.[a-z]+)?\.config\.ts|\.gitignore|scripts\/mojibake-allowlist\.json)$/],
-  ['Security-relevant runtime configuration', /^(next\.config\.ts|middleware\.ts|src\/middleware\.ts|sentry\.[a-z]+\.config\.ts|vercel\.json)$/],
-  ['Database schema and policies', /^supabase\/(migrations|policies)\//],
+  ['Security-relevant runtime configuration', /^(next\.config\.ts|(src\/)?(middleware|proxy|instrumentation)\.ts|sentry\.[a-z]+\.config\.ts|vercel\.json)$/],
+  ['Database schema and policies', /^supabase\/(migrations|policies|schema)\//],
+  // Secure Coding with AI §8: "Require human review of all AI-generated test modifications" for the security-critical
+  // tests (authentication, authorization, input validation); the owner is the human reviewer.
+  ['Security tests (authorization, authentication, input validation)', /\.(security|integration)\.test\.(ts|tsx)$|^src\/__tests__\/security\/|^src\/tests\/authz-matrix\.json$/],
 ];
 const TEST_FILE = /(\.test|\.spec)\.(ts|tsx|js|jsx|mjs|cjs)$|(^|\/)__tests__\//;
 
@@ -140,6 +146,7 @@ export function run(base, head, now = Date.now()) {
   lines.push(...(testFlags.length ? testFlags : ['None.']), '');
   const untested = untestedSourceChange(changes);
   if (untested.length) failures.push(`product code changed with no test added or updated: ${untested.slice(0, 20).join(', ')}${untested.length > 20 ? ' …' : ''}`);
+  for (const f of rangeFindings(base, head, changes)) failures.push(`acceptance criterion: ${f}`);
 
   lines.push('### Dependencies', '');
   const { added, changed } = dependencyChanges(json(show(base, 'package.json')), json(show(head, 'package.json')));

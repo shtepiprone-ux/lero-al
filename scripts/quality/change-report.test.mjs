@@ -20,6 +20,11 @@ test('sensitive paths are grouped; ordinary product files are not', () => {
   assert.deepEqual(c.get('CI, repository settings and quality scripts'), ['.github/workflows/ci.yml', 'scripts/quality/check-files.mjs']);
   assert.deepEqual(c.get('Dependencies and package manager'), ['package-lock.json']);
   assert.deepEqual(c.get('Database schema and policies'), ['supabase/migrations/1.sql']);
+  assert.deepEqual(classify(['src/proxy.ts', 'src/middleware.ts', 'src/instrumentation.ts']).get('Security-relevant runtime configuration'),
+    ['src/proxy.ts', 'src/middleware.ts', 'src/instrumentation.ts']);
+  assert.deepEqual(classify(['src/a/x.security.test.ts', 'src/b/y.integration.test.ts', 'src/__tests__/security/proxyFile.test.ts', 'src/c/z.test.ts'])
+    .get('Security tests (authorization, authentication, input validation)'),
+  ['src/a/x.security.test.ts', 'src/b/y.integration.test.ts', 'src/__tests__/security/proxyFile.test.ts']);
   assert.equal([...c.values()].flat().includes('src/app/page.tsx'), false);
 });
 

@@ -15,13 +15,16 @@
 //   node scripts/quality/check-files.mjs --stdin-list       the same, one path per line on standard input
 // Exit 0 = no finding; exit 1 = findings (printed); exit 2 = the checker could not run.
 
-import { readFileSync, existsSync, openSync, fstatSync, closeSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, openSync, fstatSync, closeSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { findMojibake, loadAllowlist, isAllowlisted } from '../check-mojibake.mjs';
+import { checkKickoff, checkReview, loadJson, REGISTRY, CONTROLS, OWASP_GRANDFATHERED } from './owasp.mjs';
+import { scan as sinkScan, PRODUCT as SINK_PRODUCT } from './client-sinks.mjs';
+import { check as localeCheck, LOCALES, loadParser } from './locale-safety.mjs';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -65,9 +68,10 @@ export const SECRET_PATTERNS = [
 ];
 const CODE_EXT = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
 const KICKOFF = /^tasks\/Sprints\/Sprint_(\d+)_kickoff_prompt_Task_\d+_.+\.md$/;
-export const KICKOFF_SECTIONS = ['## Goal', '## Scope', '## Attack surface', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
+export const KICKOFF_SECTIONS = ['## Goal', '## Scope', '## Attack surface', '## OWASP', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
 const KICKOFF_FIRST_SPRINT = 93;
 const KICKOFF_MAX_LINES = 200;
+// Kickoffs approved before the OWASP gate existed: OWASP_GRANDFATHERED in owasp.mjs, one list for both tools.
 
 const lineOf = (text, index) => text.slice(0, index).split('\n').length;
 const finding = (rule, message, line) => ({ rule, message, line });
@@ -119,8 +123,10 @@ export function checkFile(rel, buf, { exists = inRepository } = {}) {
   if (!isAllowlisted(rel, mojibakeAllow)) for (const h of findMojibake(body).slice(0, 3)) out.push(finding('mojibake', `${h.name}: "…${h.snippet}…"`, h.line));
 
   if (ext === '.json') {
-    try { JSON.parse(body); } catch (e) { out.push(finding('json', e.message)); }
+    let parsed = true;
+    try { JSON.parse(body); } catch (e) { parsed = false; out.push(finding('json', e.message)); }
     if (rel === 'package.json') for (const m of brokenScripts(body, exists)) out.push(finding('stale-path', m));
+    if (parsed) out.push(...localeFindings(rel, body));
   } else if (ext === '.yml' || ext === '.yaml') {
     try { jsYaml().loadAll(body); } catch (e) { out.push(finding('yaml', e.message.split('\n')[0], e.mark ? e.mark.line + 1 : undefined)); }
   } else if (CODE_EXT.test(rel)) {
@@ -128,6 +134,7 @@ export function checkFile(rel, buf, { exists = inRepository } = {}) {
     const kind = /\.tsx$/i.test(rel) ? t.ScriptKind.TSX : /\.(ts|mts|cts)$/i.test(rel) ? t.ScriptKind.TS : /\.jsx$/i.test(rel) ? t.ScriptKind.JSX : t.ScriptKind.JS;
     const sf = t.createSourceFile(rel, body, t.ScriptTarget.Latest, false, kind);
     for (const d of (sf.parseDiagnostics ?? []).slice(0, 3)) out.push(finding('syntax', t.flattenDiagnosticMessageText(d.messageText, ' '), lineOf(body, d.start ?? 0)));
+    out.push(...productCodeFindings(rel, body));
   } else if (ext === '.css') {
     try { postcssParse().parse(body, { from: rel }); } catch (e) { out.push(finding('css', e.reason ?? e.message, e.line)); }
   } else if (ext === '.sql') {
@@ -143,8 +150,9 @@ export function checkFile(rel, buf, { exists = inRepository } = {}) {
         ? finding('stale-path', `names \`${p.target}\`, which is not a package.json script — name the current command, or say on the same line that it was removed`, p.line)
         : finding('stale-path', `names \`${p.target}\`, which is not in the repository — point to the current file, or say on the same line that it was removed`, p.line));
     }
+    out.push(...ledgerFindings(rel, body, exists));
     const k = KICKOFF.exec(rel);
-    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) out.push(...kickoffFindings(body));
+    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) out.push(...kickoffFindings(body), ...owaspFindings(rel, body));
   }
   return out;
 }
@@ -238,11 +246,103 @@ export function brokenLinks(rel, body, exists) {
   return out;
 }
 
+const FINDINGS_LEDGER = /^docs\/security\/.+\/findings[^/]*\.md$/;
+const FINDING_ROW = /^\| ([A-Z]+-\d+) \|/;
+/**
+ * The golden rule (owner, 2026-11-07, translated: "you are forbidden to walk past the gaps you find and only report that
+ * you found something but did not fix it; this must be a golden, inviolable rule, always"). Every finding row of an
+ * audit ledger ends in one of: `fixed …` with the existing test or tool that proves it; `not a gap …` with the existing
+ * test that proves the control holds; `accepted …` only with the owner's decision (D<n>) and its existing test; or the
+ * open task(s) `Task N` that close it, each of whose kickoff cites the finding's ID (the backlog row when the task has no
+ * kickoff yet). A finding that is only reported fails.
+ */
+export function ledgerFindings(rel, body, exists, { root = ROOT } = {}) {
+  if (!FINDINGS_LEDGER.test(rel)) return [];
+  const out = [];
+  const backlogFile = path.join(root, 'docs', 'backlog.md');
+  const backlog = existsSync(backlogFile) ? readFileSync(backlogFile, 'utf8') : '';
+  const kickoffDir = path.join(root, 'tasks', 'Sprints');
+  const kickoffs = existsSync(kickoffDir) ? readdirSync(kickoffDir) : [];
+  const paths = (s) => [...s.matchAll(/`([^`\s]+\/[^`\s]+\.[a-z]+)(?::\d+)?`/g)].map((m) => m[1]).filter((p) => exists(p));
+  body.split('\n').forEach((line, i) => {
+    const m = FINDING_ROW.exec(line);
+    if (!m) return;
+    const id = m[1];
+    const status = line.replace(/\s*\|\s*$/, '').split(' | ').pop().trim();
+    const bad = (message) => out.push(finding('finding-status', `${id}: ${message}`, i + 1));
+    if (/^fixed\b/i.test(status)) { if (!paths(status).length) bad('"fixed" names the existing test or tool that proves it (a backticked path)'); return; }
+    if (/^not a gap\b/i.test(status)) { if (!paths(status).length) bad('"not a gap" names the existing test that proves the control holds (a backticked path)'); return; }
+    if (/^accepted\b/i.test(status)) {
+      if (!/\bD\d+\b/.test(status)) bad('only the owner accepts a risk: name the owner decision (D<n>), or fix it, or hand it to a task');
+      else if (!paths(status).length) bad('an accepted risk names the existing test that bounds it (a backticked path)');
+      return;
+    }
+    const tasks = [...status.matchAll(/\bTask (\d+)\b/g)].map((t) => t[1]);
+    if (!tasks.length) { bad('only reported: fix it (with its test), hand it to an open task that cites it, or name the owner decision that accepts it'); return; }
+    for (const n of new Set(tasks)) {
+      if (!backlog.includes(`**${n}**`)) { bad(`Task ${n} is not an open task of docs/backlog.md`); continue; }
+      const k = kickoffs.find((f) => new RegExp(`^Sprint_\\d+_kickoff_prompt_Task_${n}_`).test(f));
+      if (k ? !readFileSync(path.join(kickoffDir, k), 'utf8').includes(id) : !new RegExp(`\\*\\*${n}\\*\\*[^\\n]*\\b${id}\\b`).test(backlog)) {
+        bad(`Task ${n} does not cite ${id} (${k ? `tasks/Sprints/${k}` : 'its docs/backlog.md row; it has no kickoff yet'}): the finding is closed only by a task that carries it`);
+      }
+    }
+  });
+  return out;
+}
+
+let icuParse;
+/** Locale data (owner 2026-11-07: "quality protection" of the translations, not a key census): every value of every
+ *  locale through locale-safety.mjs M1-M5 (markup, dangerous schemes, plain http, ICU validity, placeholder parity) at
+ *  every write, commit and CI run — the locale under check from its own (staged) text, the others from disk. */
+export function localeFindings(rel, body) {
+  const locale = /^messages\/([a-z]{2})\.json$/.exec(rel)?.[1];
+  if (!locale || !LOCALES.includes(locale)) return [];
+  const messages = {};
+  for (const l of LOCALES) {
+    try { messages[l] = l === locale ? JSON.parse(body) : JSON.parse(readFileSync(path.join(ROOT, 'messages', `${l}.json`), 'utf8')); } catch { /* that file's own check reports it */ }
+  }
+  icuParse ??= loadParser(ROOT);
+  return localeCheck(messages, [], icuParse)
+    .filter((f) => /^M[1-5]$/.test(f.id) || (f.id === 'M0' && !f.at.startsWith('src/')))
+    .map((f) => finding('locale', `${f.id} ${f.at}: ${f.message} (scripts/quality/locale-safety.mjs)`));
+}
+
+/** Product code: the client sinks of client-sinks.mjs (K1-K8) and the translation calls that bypass next-intl's text
+ *  output (locale-safety.mjs M6), on the file's own text, at every write, commit and CI run. */
+export function productCodeFindings(rel, body) {
+  if (!SINK_PRODUCT(rel)) return [];
+  const sinks = sinkScan([{ file: rel, text: body }]).filter((f) => f.file === rel)
+    .map((f) => finding('client-sink', `${f.id} ${f.message} (scripts/quality/client-sinks.mjs)`, f.line || undefined));
+  icuParse ??= loadParser(ROOT);
+  const bypass = localeCheck({}, [{ file: rel, text: body }], icuParse, [])
+    .filter((f) => f.id === 'M6' || (f.id === 'M0' && f.at === rel))
+    .map((f) => finding('locale', `${f.id} ${f.message} (scripts/quality/locale-safety.mjs)`, Number(/:(\d+)$/.exec(f.at)?.[1]) || undefined));
+  return [...sinks, ...bypass];
+}
+
+let owaspData;
+/** The OWASP gate on a kickoff (scripts/quality/owasp.mjs): "## OWASP" names every sheet the task triggers, with a quote
+ *  verified against the sheet's text and the acceptance criteria that implement it; a written review carries
+ *  "### OWASP check". */
+export function owaspFindings(rel, body) {
+  const task = /_Task_(\d+)_/.exec(rel)?.[1];
+  if (OWASP_GRANDFATHERED.has(task)) return [];
+  owaspData ??= { registry: loadJson(REGISTRY, ROOT), controls: loadJson(CONTROLS, ROOT) };
+  if (!owaspData.registry || !owaspData.controls) return [finding('owasp', `${REGISTRY} or ${CONTROLS} is missing: run node scripts/quality/owasp.mjs sync`)];
+  return [...checkKickoff(body, owaspData.registry, owaspData.controls), ...checkReview(body, owaspData.registry, owaspData.controls)]
+    .filter((f) => !f.message.startsWith('missing section "## OWASP"')) // kickoffFindings reports the missing section
+    .map((f) => finding('owasp', f.message, f.line));
+}
+
 /** A kickoff written from Sprint 93 on follows .claude/rules/kickoff-template.md. */
 export function kickoffFindings(body) {
   const out = [];
   const lines = body.split('\n');
-  if (lines.length > KICKOFF_MAX_LINES + 1) out.push(finding('kickoff', `${lines.length} lines > ${KICKOFF_MAX_LINES} (flow.md §1: split the task)`));
+  // The "## OWASP" section is a checklist with one line per required sheet; it does not count towards the length limit.
+  const owaspStart = lines.findIndex((l) => l.trim() === '## OWASP');
+  const owaspEnd = owaspStart < 0 ? -1 : lines.findIndex((l, i) => i > owaspStart && /^## /.test(l));
+  const owaspLines = owaspStart < 0 ? 0 : (owaspEnd < 0 ? lines.length : owaspEnd) - owaspStart;
+  if (lines.length - owaspLines > KICKOFF_MAX_LINES + 1) out.push(finding('kickoff', `${lines.length - owaspLines} lines > ${KICKOFF_MAX_LINES}, the "## OWASP" checklist not counted (flow.md §1: split the task)`));
   if (!/^# Task \d+ — \S/.test(lines[0] ?? '')) out.push(finding('kickoff', 'first line must be "# Task <n> — <outcome>"', 1));
   let last = -1;
   for (const s of KICKOFF_SECTIONS) {

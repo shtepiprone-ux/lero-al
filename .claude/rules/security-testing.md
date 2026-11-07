@@ -6,7 +6,11 @@ with AI (security-critical tests are reviewed by a human).
 
 ## Required tests for a changed attack surface
 
-For every entry point the change adds or alters (Server Action, Route Handler, RLS policy, Storage policy):
+For every entry point the change adds, alters, moves or renames (Server Action, Route Handler, page or
+`generateMetadata` of a signed-in or staff route, the request proxy `src/proxy.ts`, RLS policy, Storage policy). A moved
+or renamed entry point keeps its tests: they import the new path in the same change, and the old path no longer exists
+(Authorization Regression Testing: "validate that this middleware has not been bypassed or disabled following a
+refactor").
 
 | Actor | Expected |
 |---|---|
@@ -24,7 +28,10 @@ A business invariant also gets a repeat/skip/out-of-order case, and a race case 
 
 The authorization rules live in one machine-readable matrix: actor × resource × action → allow | deny, each row naming
 the test tag that proves it. A test enumerates the entry points of the code base (Server Actions, Route Handlers, RLS
-policies) and fails when one is not in the matrix, so a new entry point cannot ship unclassified. Task 950 builds the
+policies, pages) and fails when one is not in the matrix, so a new entry point cannot ship unclassified.
+Measured 2026-11-06: each of the 93 Server Actions and 20 of the 22 Route Handler methods is imported and named by at
+least one test; admin pages are enumerated and called by `src/lib/auth/__tests__/staffPage.security.test.ts`; signed-in
+pages under `src/app/[locale]` are guarded in code but no test enumerates them. Task 950 builds the
 matrix and the enumeration test from a baseline review of every entry point; until it lands, each task's kickoff lists
 its rows.
 

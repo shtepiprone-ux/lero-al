@@ -81,6 +81,60 @@ Changed → threat model:
 
 Authorization matrix: unchanged.
 
+
+## OWASP
+
+Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
+
+- Abuse_Case: not applicable — the upgrade adds no feature or entry point that a new abuse case could use.
+- Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names each entry point the task adds, removes or changes — AC1, AC2, AC4.
+- Authentication: not applicable — the session code is moved with the proxy rename, not changed; the tests import @/proxy.
+- Authentication_Patterns: "Do not embed authentication in new systems." — the proxy still asks Supabase for the user; no own auth is added — AC2.
+- Authorization: "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source." — serverEntryGuards and the action security tests run unchanged on Next 16 — AC6.
+- Authorization_Decisions_And_Output_Handling: not applicable — the cache-tag call change does not touch any access decision.
+- Authorization_Patterns: not applicable — no guard moves; only revalidateTag call sites change their signature.
+- Authorization_Regression_Testing: "Automated tests should specifically target the ways authorization usually degrades over time." — the existing action tests run on the upgraded framework — AC3, AC6.
+- Authorization_Testing_Automation: not applicable — the matrix is Task 950; this task keeps the existing suite green.
+- Bot_Management_and_Anti-Automation: not applicable — no endpoint gains or loses a limit in the upgrade.
+- Clickjacking_Defense: "The "DENY" setting is recommended unless a specific need has been identified for framing." — next.config.ts keeps the security headers through the upgrade — AC6.
+- Content_Security_Policy: "Use object-src 'none' when embedded objects are unnecessary" — the proxy still issues the nonce; headers.security.test.ts stays green — AC2.
+- Cookie_Theft_Mitigation: not applicable — cookie attributes are unchanged by the upgrade; HttpOnly is Task 960.
+- Credential_Stuffing_Prevention: not applicable — the sign-in path and its captcha are untouched by the upgrade.
+- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — ImageUpload and the upgraded pages render text through React escaping only; lint (react/no-danger, no-script-url) runs on them — AC5, AC6.
+- Cryptographic_Storage: not applicable — the nonce generation is moved with the proxy rename and unchanged.
+- Denial_of_Service: not applicable — no limit changes; the upgrade fixes advisories that Task 947 measured.
+- Dependency_Graph_SBOM: "Validate the document against its format's schema before publication or ingestion" — the CI SBOM job generates and validates CycloneDX for the new tree — AC1.
+- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — ImageUpload and the upgraded pages add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC5, AC6.
+- File_Upload: "Validate the file type, don't trust the Content-Type header as it can be spoofed" — the widget contract is kept; server-side validation stays as it is until Task 957 — AC5.
+- HTTP_Headers: "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers" — headers.security.test.ts runs unchanged on Next 16 — AC6.
+- HTTP_Strict_Transport_Security: "This example sets a long (2 years = 63072000 seconds) max-age for the issuing host." — the HSTS value is unchanged and tested — AC6.
+- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the edited check scripts pass file names and arguments as array items; no value is joined into a command line — AC6.
+- Input_Validation: not applicable — argument schemas are Task 955; the upgrade changes no validation.
+- Insecure_Direct_Object_Reference_Prevention: not applicable — no object lookup changes; the actions change only their cache calls.
+- JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4, AC6.
+- Key_Management: not applicable — no key is added or moved by the upgrade.
+- Logging: not applicable — Sentry is upgraded with its configuration unchanged; log content is Task 955.
+- Logging_Vocabulary: not applicable — no log line changes in the upgrade; the vocabulary is Task 955.
+- Mass_Assignment: not applicable — no request binding changes in the actions touched for cache tags.
+- Multifactor_Authentication: not applicable — no sign-in factor changes; staff MFA is Task 960.
+- Nextjs_Security: "Rendering the form only on a protected page does not authenticate the action request." — the proxy keeps the session refresh and the CSP nonce after the rename — AC2.
+- Nodejs_Security: not applicable — the runtime stays Node 22.22.3; the version line is Task 958.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — install scripts stay off and every package with a script is reviewed (install-scripts.test.mjs); next-cloudinary 7.0.0 is the owner's dated exception D3 — AC1.
+- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the edited check scripts start git and node with argument arrays, never a shell string — AC6.
+- Prototype_Pollution_Prevention: not applicable — no object merging of request data is added by the upgrade.
+- Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC6.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC6.
+- Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC2, AC4.
+- Session_Management: "Follow the session logging protections and session renewal guidance." — the proxy refresh keeps every cookie option unchanged — AC2.
+- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the lockfile pins every version; CI installs with npm ci — AC1.
+- Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC2, AC4.
+- Transport_Layer_Security: not applicable — no transport setting changes; the upgrade keeps the same headers and hosts.
+- User_Privacy_Protection: not applicable — no personal data flow changes with the framework upgrade.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC6.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — the CI dependency audit runs npm audit on the changed tree — AC1.
+- Web_Cache_Security: "Define an explicit policy for every route." — updateTag or revalidateTag(tag, 'max') keeps every tag expiry as before — AC3.
+- Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — ImageUpload and the upgraded pages use no innerHTML; lint (react/no-danger) fails on one — AC5, AC6.
+
 ## UI
 
 No visible change. A visual difference in Storybook or the click-shield run is a stop-and-report.
@@ -100,7 +154,7 @@ No visible change. A visual difference in Storybook or the click-shield run is a
 - AC4 A lint error stops the build — test: `scripts/quality/build-lints.test.mjs` (new, node:test). It fails when the
   `build` script does not run `npm run lint` before `next build`. Opus places it, because `scripts/quality/` is
   Opus-owned. Sonnet puts the draft in the report.
-- AC5 The upload widget keeps its contract — test: `src/modules/listings/components/__tests__/ImageUpload.test.tsx`
+- AC5 The upload widget keeps its contract (a new or extended test) — test: `src/modules/listings/components/__tests__/ImageUpload.test.tsx`
   (new or extended). With `next-cloudinary` mocked at the v7 API, a successful upload calls the form's change handler
   with the Cloudinary URL.
 - AC6 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `npm run build`, `npm run build-storybook`,

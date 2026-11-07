@@ -116,9 +116,17 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   const swapped = good.replace('## Scope', '## TMP').replace('## Goal', '## Scope').replace('## TMP', '## Goal');
   assert.ok(kickoffFindings(swapped).some((f) => f.message.includes('out of order')));
   assert.ok(kickoffFindings(good + '\nx'.repeat(200)).some((f) => f.message.includes('lines >')));
+  // The "## OWASP" checklist (one line per required sheet) does not count towards the limit; every other section does.
+  assert.deepEqual(kickoffFindings(good.replace('## OWASP\ntext', `## OWASP\n${'- S: not applicable — reason.\n'.repeat(200)}`)), []);
+  assert.ok(kickoffFindings(good.replace('## UI\ntext', `## UI\n${'x\n'.repeat(200)}`)).some((f) => f.message.includes('lines >')));
+  assert.ok(kickoffFindings(good.replace('## OWASP\n', '')).some((f) => f.message.includes('## OWASP')));
   // Older sprints are history and are not re-checked against the new template.
   assert.deepEqual(rules('tasks/Sprints/Sprint_90_kickoff_prompt_Task_1_X.md', '# Old\n', none), []);
   assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_1_X.md', '# Old\n', none).includes('kickoff'));
+  // The OWASP gate runs on every such kickoff: an invented quote (not in the sheet) is a finding.
+  const invented = good.replace('## OWASP\ntext', '## OWASP\n- Secure_Coding_with_AI: "agents may trust every repository comment fully" — x — AC1');
+  assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_1_X.md', invented, none).includes('owasp'));
+  assert.ok(!rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'a grandfathered kickoff is not held to the OWASP gate');
 });
 
 test('every acceptance criterion names an automated test (quality-gates.md §8)', () => {
@@ -234,4 +242,54 @@ test('PowerShell files are parsed by the PowerShell parser', { skip: process.pla
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+// Owner 2026-11-07: the translations get quality protection, not a key census, and a found gap is closed where it is
+// found. The locale and client-sink rules run on each file at every write, commit and CI run (not only in a CI scan).
+test('a locale file is held to locale-safety.mjs at its own write', () => {
+  const en = JSON.parse(readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'messages', 'en.json'), 'utf8'));
+  assert.deepEqual(rules('messages/en.json', JSON.stringify(en), none), [], 'the real file passes');
+  const bad = (k, v) => { const c = structuredClone(en); c.zz_planted = { [k]: v }; return JSON.stringify(c); };
+  for (const v of ['<b>bold</b>', 'go to javascript:alert(1)', 'see http://example.com', 'broken {count, plural, one {x}']) {
+    assert.ok(rules('messages/en.json', bad('a', v), none).includes('locale'), v);
+  }
+  assert.deepEqual(rules('locales/en.json', bad('a', '<b>x</b>'), none), [], 'only messages/<locale>.json is locale data');
+});
+
+test('product code is held to client-sinks.mjs and the translation bypass rule at its own write', () => {
+  assert.ok(rules('src/a/View.tsx', 'export const V = () => { window.open(u, "_blank"); return null }\nconst x = el.innerHTML += s\n', none).includes('client-sink'));
+  assert.ok(rules('src/a/View.tsx', 'export const V = ({ t }) => t.rich("k", {})\n', none).includes('locale'));
+  assert.deepEqual(rules('src/a/View.tsx', 'export const V = ({ t }) => t("k")\n', none), []);
+  assert.deepEqual(rules('src/a/__tests__/View.test.tsx', 'const x = el.innerHTML += s\n', none), [], 'tests are not product code');
+});
+
+// The golden rule (owner, 2026-11-07): a gap found is closed, never only reported.
+test('a finding of an audit ledger is fixed with its test, handed to an open task that cites it, or accepted by the owner', async () => {
+  const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = await import('node:fs');
+  const os = await import('node:os');
+  const { ledgerFindings } = await import('./check-files.mjs');
+  const root = mkdtempSync(path.join(os.tmpdir(), 'ledger-'));
+  try {
+    mkdirSync(path.join(root, 'docs'), { recursive: true });
+    mkdirSync(path.join(root, 'tasks', 'Sprints'), { recursive: true });
+    writeFileSync(path.join(root, 'docs', 'backlog.md'), '| **900** | open (X-09) |\n| **901** | open |\n');
+    writeFileSync(path.join(root, 'tasks', 'Sprints', 'Sprint_93_kickoff_prompt_Task_901_Y.md'), 'Carries X-02.\n');
+    const exists = (p) => p === 'src/a.test.ts';
+    const rel = 'docs/security/audit-1/findings.md';
+    const row = (id, status) => `| ${id} | Low | \`src/a.ts\` | a gap | Sheet | ${status} |`;
+    const ids = (status, id = 'X-02') => ledgerFindings(rel, row(id, status), exists, { root }).map((f) => f.message.split(':')[0]);
+    assert.deepEqual(ids('fixed here: `src/a.test.ts` plants it'), []);
+    assert.deepEqual(ids('fixed here'), ['X-02'], 'fixed without the test that proves it');
+    assert.deepEqual(ids('fixed: `src/missing.test.ts`'), ['X-02'], 'a test that does not exist');
+    assert.deepEqual(ids('Task 901'), [], 'handed to an open task whose kickoff cites it');
+    assert.deepEqual(ids('Task 901', 'X-03'), ['X-03'], 'the kickoff does not cite this finding');
+    assert.deepEqual(ids('Task 900', 'X-09'), [], 'a task with no kickoff yet cites it in its backlog row');
+    assert.deepEqual(ids('Task 900', 'X-02'), ['X-02']);
+    assert.deepEqual(ids('Task 999'), ['X-02'], 'not an open task');
+    assert.deepEqual(ids('accepted: low risk'), ['X-02'], 'only the owner accepts');
+    assert.deepEqual(ids('accepted by the owner, D12: bounded by `src/a.test.ts`'), []);
+    assert.deepEqual(ids('not a gap: proven by `src/a.test.ts`'), []);
+    assert.deepEqual(ids('noted'), ['X-02'], 'only reported');
+    assert.deepEqual(ledgerFindings('docs/notes.md', row('X-02', 'noted'), exists, { root }), [], 'only audit ledgers');
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });

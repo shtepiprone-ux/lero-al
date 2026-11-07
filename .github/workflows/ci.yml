@@ -40,6 +40,15 @@ jobs:
           node-version: "22.22.3"
           cache: npm
       - run: npm ci
+      # OWASP Cheat Sheet Series kept in sync (owner request 2026-11-07): a sheet added, changed or removed upstream fails
+      # here until Opus re-reads it and updates docs/security/owasp/controls.json; the step also caches the sheet texts
+      # that the mapping check, the kickoff checks and the self-tests verify quotes against.
+      - name: OWASP reference — upstream equals the committed registry
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/quality/owasp.mjs sync --verify
+      - name: OWASP mapping — every sheet mapped at its version, every quote and control evidence verified
+        run: node scripts/quality/owasp.mjs check
       - name: ESLint (includes the OWASP JS/TS security rules)
         run: npm run lint
       - name: TypeScript
@@ -97,10 +106,9 @@ jobs:
     concurrency:
       group: security-ci-database
       cancel-in-progress: false
+    # Secrets are bound to the steps that read them, never to the job (audit 2026-11-06, CI-01; OWASP CI/CD Security
+    # "least privilege for pipeline credentials"): the third-party actions, `npm ci` and the browser install never see them.
     env:
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
       SECURITY_TEST_TARGET: ${{ vars.SECURITY_TEST_TARGET }}
       SECURITY_TEST_PROJECT_REF: ${{ vars.SECURITY_TEST_PROJECT_REF }}
     steps:
@@ -116,10 +124,22 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Refuse anything but the approved development project
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: node scripts/quality/ci-target.mjs
       - name: Build (the Server Action manifest that serverActionManifest.integration.test.ts reads)
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run build
       - name: Anonymous, other-user, wrong-role and cross-owner cases against real RLS
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run test:security-integration
 
   dependencies:
@@ -167,6 +187,38 @@ jobs:
           base="$BASE_SHA"
           case "$base" in ""|0000000000000000000000000000000000000000) base="HEAD~1" ;; esac
           node scripts/quality/change-report.mjs "$base" HEAD
+
+  owasp-gate:
+    # Owner request 2026-11-07: the OWASP Cheat Sheet Series holds every task, the existing ones and every one created
+    # later, and no change bypasses it. Code or configuration lands only with a task whose review is approved in the
+    # same change, whose "### OWASP check" holds, and whose checks together judge every sheet the diff triggers.
+    name: OWASP task gate (an approved review covers every sheet the change triggers)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - name: Sheet texts of the committed registry (quotes are verified against them)
+        run: node scripts/quality/owasp.mjs cache
+      - name: Every change of code or configuration carries its approved task
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          case "$EVENT" in schedule|workflow_dispatch) echo "A $EVENT run changes nothing: no change to gate"; exit 0 ;; esac
+          base="$BASE_SHA"
+          case "$base" in ""|0000000000000000000000000000000000000000) base="HEAD~1" ;; esac
+          node scripts/quality/owasp.mjs gate --base "$base"
 
   sbom:
     name: SBOM (CycloneDX, production dependencies)
@@ -351,10 +403,8 @@ jobs:
     environment: security-ci
     permissions:
       contents: read
+    # Secrets on the steps that read them only (CI-01, see the authz job).
     env:
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
       SECURITY_TEST_TARGET: ${{ vars.SECURITY_TEST_TARGET }}
       SECURITY_TEST_PROJECT_REF: ${{ vars.SECURITY_TEST_PROJECT_REF }}
       CLICK_SHIELD_CI_FIXTURE: "1"
@@ -370,11 +420,23 @@ jobs:
           node-version: "22.22.3"
           cache: npm
       - run: npm ci
-      - run: node scripts/quality/ci-target.mjs
+      - env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/quality/ci-target.mjs
       - run: npx playwright install chromium --with-deps
-      - run: npm run build
+      - env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run build
       - run: npm run check:css-vars
       - name: Start the production server
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: nohup npm start > server.log 2>&1 &
       - name: Wait for the server
         run: |
@@ -401,7 +463,7 @@ jobs:
     name: CI Required
     runs-on: ubuntu-latest
     if: always()
-    needs: [quality, unit, authz, dependencies, change-report, sbom, codeql, secrets, workflows, storybook-build, homepage-grid, locale-leak, click-shield]
+    needs: [quality, unit, authz, dependencies, change-report, owasp-gate, sbom, codeql, secrets, workflows, storybook-build, homepage-grid, locale-leak, click-shield]
     timeout-minutes: 5
     permissions: {}
     steps:

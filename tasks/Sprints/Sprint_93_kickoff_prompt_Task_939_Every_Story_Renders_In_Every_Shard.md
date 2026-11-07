@@ -36,6 +36,24 @@ After the task every Story renders at every width and locale of the six shards.
 Unchanged: Storybook build only; the stub never reaches the Next.js build (`next build` does not read `.storybook/`).
 Check: `grep -r "stubs/supabase-client" src` returns nothing.
 
+
+## OWASP
+
+Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
+
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the shard fix reaches main through the pull request with CI Required green — AC2, AC4.
+- Third_Party_Javascript_Management: not applicable — the stub is a module of this repository; no third-party script is added to Storybook's head or to the site.
+- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — the Story and stub changes render text through React escaping only; lint (react/no-danger, no-script-url) runs on them — AC4.
+- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — the Story and stub changes add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC4.
+- GitHub_Actions_Security: not applicable — the workflow file is not edited; the CI jobs already run the shards.
+- JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4.
+- Nextjs_Security: not applicable — Storybook renders components only; no Server Action, route or proxy changes.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC4.
+- Software_Supply_Chain_Security: not applicable — no dependency or install step changes; only Storybook code and a test stub.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC4.
+- Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — the Story and stub changes use no innerHTML; lint (react/no-danger) fails on one — AC4.
+- WebSocket_Security: "Don't assume WebSocket connection equals unlimited access. Check authorization for each action" — the Storybook stub answers channel().subscribe() without a connection; the product hook is unchanged and Realtime stays behind RLS — AC1.
+
 ## UI
 
 No visible change of production UI. The Stories render their intended states instead of the error screen.

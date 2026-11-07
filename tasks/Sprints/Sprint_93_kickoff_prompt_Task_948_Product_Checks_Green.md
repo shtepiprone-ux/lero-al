@@ -45,6 +45,24 @@ After the task both commands exit 0 and no behaviour changes.
 
 Unchanged (styling and comments only).
 
+
+## OWASP
+
+Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
+
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the product checks this task turns green are part of CI Required — AC5.
+- Content_Security_Policy: not applicable — the style sheet changes are a comment and a marker; no url(), @import, font or image source is added, so no directive changes.
+- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — the token and Story fixes render text through React escaping only; lint (react/no-danger, no-script-url) runs on them — AC5.
+- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — the token and Story fixes add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC5.
+- GitHub_Actions_Security: not applicable — the workflow file is read for the job list only; the task edits no workflow.
+- Injection_Prevention: not applicable — the design-token script gets baseline data changes only; no command or query is built.
+- JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC5.
+- OS_Command_Injection_Defense: not applicable — no script that starts a process is changed; the baselines are data files.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC5.
+- Software_Supply_Chain_Security: not applicable — no dependency, lockfile or install step changes in this task.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC5.
+- Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — the token and Story fixes use no innerHTML; lint (react/no-danger) fails on one — AC5.
+
 ## UI
 
 No visible change. `MantineListingGalleryPattern` mobile frame keeps `overflow: clip`; the cabinet alert icon stays

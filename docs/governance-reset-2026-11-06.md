@@ -140,11 +140,11 @@ and its consumers is done before deletion.
    PR could never merge under the old ruleset (`node scripts/quality/check-ruleset.mjs`, 2026-11-06: 4 differences).
 3. The first CI run of the reset PR. Known red until the tasks land: product checks `design-tokens:strict` and
    `enrolled-tailwind` (948), dependency audit (947), locale leak (939), possibly click-shield (938).
-4. **947 → 952 → 948 → 939 → 951 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
+4. **947 → 952 → 953 → 948 → 939 → 951 (→ 938 if click-shield is red) land on the reset branch itself**, each its own commit, reviewed
    by Opus, before the reset PR merges. Reason: `main` changes only through a PR whose `CI Required` is green, and CI
    runs on pull requests into `main` only, so a stacked PR into the reset branch would get no CI at all. The reset PR
    merges when `CI Required` is green.
-5. Then 926 → 949 → 950, each a task on its own branch from `main`, reviewed by Opus, merged by the owner.
+5. Then 926 → 954 → 949 → 950, each a task on its own branch from `main`, reviewed by Opus, merged by the owner.
 
 ## 7. Done on 2026-11-06
 
@@ -252,3 +252,50 @@ Red and not expected — each fixed with a test, or filed:
   - agent-check tools started through `cmd.exe` (Node now starts them with an argv array).
 
   The other 320 are Task 951, which lands on this branch before the merge.
+
+## 11. Fourth pass on 2026-11-06 — owner: "re-read every page of the reference; do the tests see the routes change?"
+
+All 137 sheets of https://cheatsheetseries.owasp.org/index.html were read again (10 batches). 43 target a stack this
+project does not use (Java, .NET, PHP, Python, Ruby, Kubernetes, Docker, XML, SAML, GraphQL, gRPC, WebSocket servers,
+mobile, payments, drones, cars) or are deprecated stubs (Access Control, TLS Cipher String, Transport Layer Protection).
+The rest were compared with the rules, the skills, CI and the code.
+
+The owner's three questions, answered from the code:
+- **When an entry point moves, do the tests follow it?**
+  - Yes for Task 952's move of the former middleware file (now removed) to `src/proxy.ts`. The two proxy suites import `@/proxy`.
+    `src/__tests__/security/proxyFile.test.ts` (new in Task 952) fails while a `middleware.ts` exists or the proxy lacks its nonce.
+  - Every live document that names a missing path fails `check-files.mjs`.
+  - Each of the 93 Server Actions, and 20 of the 22 Route Handler methods, is imported and named by a test.
+  - `serverEntryGuards.test.ts` fails on a renamed or deleted allow-listed entry point.
+  - **Gap:** pages under `src/app/[locale]` are guarded in code, but no test enumerates them. Task 950 revision 1 adds
+    pages, the proxy and every table to the matrix test.
+- **Are tests created while a task is executed?**
+  - The kickoff check refuses an AC that names no test.
+  - The agent loop and the change report refuse product code changed with no test change.
+  - Changed-line coverage runs in CI.
+  - **Gap:** nothing checked that *the* test an AC names exists after execution, or that a revised AC changed its test.
+    It was left to the reviewer's reading, against Verifying Third Party Agent Execution Evidence ("keep the
+    verification policy and expected values outside the evidence under review").
+  - Fixed: `scripts/quality/ac-tests.mjs` with 7 tests. The executor and the reviewer run it per kickoff.
+    `change-report.mjs` runs it on every PR for each kickoff with a verdict, as a hard failure. On this branch it found
+    Task 952 AC4 (`build-lints.test.mjs`); Opus places that test at review.
+- **Are the tests of a revised route rewritten?** The same check covers it: an AC changed against the base needs its
+  test changed.
+
+Other gaps, each fixed now or filed:
+- AI Agent Security ("Block releases when high-risk tool policies … change without updated tests"): no test pinned
+  `.claude/settings.json`. Fixed: `scripts/quality/agent-settings.test.mjs` (6 tests; a loosened copy fails 3).
+- Secure Coding with AI §8 ("Require human review of all AI-generated test modifications"):
+  - the change report now lists every changed security or integration test for the owner;
+  - `src/proxy.ts`, `instrumentation.ts` and the schema folder Task 950 will create joined the sensitive paths, because after Task 952 the
+    proxy is the request gate.
+- HTTP Headers, Transport Layer Security, Next.js Security, Key Management, Vulnerability Disclosure → **Task 954**:
+  - production answers `X-Powered-By: Next.js`;
+  - the `NEXT_LOCALE` cookie has no `Secure`;
+  - no test scans the client bundle for secrets or pins the `NEXT_PUBLIC_` names;
+  - there is no `security.txt`.
+- Multi Tenant Security ("Fail when a new table has no classification, RLS is disabled"): no check covers every table.
+  → Task 950 revision 1.
+- Already met, no change: security headers (tested), safe redirects (tested), CSRF (Server Actions' origin check),
+  action pinning, the 14-day dependency hold, the SBOM, the secret scan, CodeQL, zizmor, the daily run, hidden
+  characters in every file, the two-revision loop limit, the owner's merge.

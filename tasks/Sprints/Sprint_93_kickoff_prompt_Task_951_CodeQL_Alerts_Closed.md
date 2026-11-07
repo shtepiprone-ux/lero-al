@@ -11,7 +11,8 @@ The first full CodeQL scan (PR #19, run 42263240996, 2026-11-06) left 325 open a
 `gh api "repos/shtepiprone-ux/lero-al/code-scanning/alerts?ref=refs/pull/19/merge&state=open"`. Opus closed the five
 in `scripts/quality/` in the same session (agent-check, push-safety, check-files). The rest: 14 files under `src/`
 (9 product, 5 tests), 38 files under `scripts/`, 183 one-off evidence scripts under `docs/` (174 in
-`docs/sessions/evidence/`, 8 in `docs/reviews/artifacts/`, 1 in `docs/research/references/`). After the task the API
+`docs/sessions/evidence/`, 8 in `docs/reviews/artifacts/`, 1 in `docs/research/references/`; finding E-01 of
+`docs/security/audit-2026-11-06/findings.md`). After the task the API
 returns no open alert for the PR, the `CodeQL` check passes, and each product fix has a test that fails without it.
 No alert is dismissed and no path is excluded from the scan (D2): each one is fixed, or its file is deleted.
 
@@ -83,6 +84,67 @@ Controls change on existing entry points (no new entry point) → threat model:
 - T5 Tampering (a weak hash on the signed Cloudinary request): mitigate. SHA-256.
 - T6 Injection (a `javascript:` image source): eliminate. Scheme allowlist.
 Authorization matrix: unchanged (no actor gains or loses an action).
+
+
+## OWASP
+
+Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
+
+- Abuse_Case: "it is important to identify the attacks which the application must defend against" — the oversized address (ReDoS) and the poisoned catalog are the abuse cases — AC2, AC4.
+- Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names each entry point the task adds, removes or changes — AC2, AC3, AC4, AC5, AC6, AC7, AC8.
+- Authentication: not applicable — the auth callback test file is touched for a CodeQL alert only; no sign-in behaviour changes.
+- Authentication_Patterns: not applicable — no authentication code changes; one test file is corrected.
+- Authorization: not applicable — the admin test file is corrected for an alert; no access decision changes.
+- Authorization_Decisions_And_Output_Handling: not applicable — no authorization decision changes; the fixes are input and output helpers.
+- Authorization_Patterns: not applicable — no access check moves; one removed-feature test is corrected.
+- Authorization_Regression_Testing: not applicable — no authorization test changes meaning; one file is fixed for CodeQL.
+- Authorization_Testing_Automation: not applicable — the matrix is Task 950; this task closes scanner alerts.
+- Bot_Management_and_Anti-Automation: not applicable — no endpoint gains or loses a limit; limits are Task 959.
+- Business_Logic_Security: not applicable — the race named in the alerts is in a test script; no product workflow changes.
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the CodeQL check on the pull request must show no open alert before the owner merges — AC1.
+- Cookie_Theft_Mitigation: not applicable — no cookie changes in any of the fixes.
+- Credential_Stuffing_Prevention: not applicable — no sign-in path changes in any of the fixes.
+- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — AppImage renders no src for javascript: and other refused schemes — AC7.
+- Cryptographic_Storage: "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness" — CodeQL security-extended guards randomness; the Cloudinary signature moves to SHA-256 — AC6.
+- Denial_of_Service: "Using validation that is cheap in resources first" — the address check is linear and refuses a 100 000-character input in under 100 ms — AC4.
+- Dependency_Graph_SBOM: "Validate the document against its format's schema before publication or ingestion" — the CI SBOM job generates and validates CycloneDX for the new tree — AC10.
+- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — AppImage and the media helpers add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC10.
+- DOM_Clobbering_Prevention: not applicable — no HTML is sanitized or injected by these fixes; the CMS sanitizer is untouched.
+- File_Upload: not applicable — the signature fix changes the algorithm only; upload validation is Task 957.
+- GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the workflow keeps permissions: {} at the top and per-job grants (ci-workflow.test.mjs) — AC1.
+- HTTP_Strict_Transport_Security: not applicable — no header changes; https is enforced in the helper, HSTS stays in headers.ts.
+- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the fixed scripts pass file names and arguments as array items; no value is joined into a command line — AC8.
+- Input_Validation: "Validate on the server even when the browser checks the same fields." — the address, the image source and the Cloudinary host are validated on the server path that uses them — AC4, AC5, AC7.
+- Insecure_Direct_Object_Reference_Prevention: not applicable — no object reference handling changes in these fixes.
+- JavaScript_and_TypeScript_Security: "Never pass untrusted input to a recursive merge or set-by-path helper" — no catalog key writes into an object path; Object.prototype stays untouched — AC2.
+- Key_Management: not applicable — the signing secret and its storage are unchanged; only the digest algorithm changes.
+- Logging: "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted" — the unhandled hook type is logged as one bounded line without control characters — AC3.
+- Logging_Vocabulary: not applicable — the event vocabulary is introduced by Task 955 AC12; this task only bounds one existing line.
+- Mass_Assignment: not applicable — no request is bound to a model by the changed code.
+- Multifactor_Authentication: not applicable — no sign-in factor changes; staff MFA is Task 960.
+- Nextjs_Security: not applicable — no Server Action or route contract changes; the fixes are inside helpers.
+- Nodejs_Security: "some third-party rulesets can be used to flag dangerous patterns such as eval()" — lint keeps no-eval on; the click-shield Function constructor stays removed — AC10.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — install scripts stay off and every package with a script is reviewed (install-scripts.test.mjs) — AC10.
+- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the fixed scripts start git and node with argument arrays, never a shell string — AC8.
+- Prototype_Pollution_Prevention: "If objects have to be used then they should be created using the Object.create(null) API" — the currency catalog is read into a Map or a null-prototype object; __proto__ yields no rate — AC2.
+- REST_Security: not applicable — no route changes its access decision; the hook route only bounds a log value.
+- Secrets_Management: not applicable — no secret is added or moved; the fixes read the existing server variables.
+- Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC9, AC10.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC10.
+- Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC2, AC3, AC4, AC5, AC6, AC7, AC8.
+- Server_Side_Request_Forgery_Prevention: "Application can send request only to identified and trusted applications" — the Cloudinary host check accepts only https on res.cloudinary.com — AC5.
+- Serverless_FaaS_Security: not applicable — no function trigger or permission changes; helpers only.
+- Session_Management: not applicable — no session handling changes; the callback route test is the only auth file touched.
+- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the lockfile pins every version; CI installs with npm ci — AC10.
+- Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC2, AC3, AC4, AC5, AC6, AC7, AC8.
+- Transport_Layer_Security: "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS" — http:// Cloudinary addresses are refused, https only — AC5.
+- User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — a look-alike host gets no transform, srcset or preload, so no visitor request reaches it — AC5.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC10.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — the CI dependency audit runs npm audit on the changed tree — AC10.
+- Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — AppImage and the media helpers use no innerHTML; lint (react/no-danger) fails on one — AC10.
+- Web_Service_Security: not applicable — no schema or contract of a service changes in these fixes.
+- Webhook_Security: "Accept only the signature scheme you expect" — the email hook keeps its standardwebhooks verification; only its log line changes — AC3.
+- XSS_Filter_Evasion: "input filtering is an incomplete defense for XSS" — the image source is allow-listed by scheme and host, not filtered by pattern — AC5, AC7.
 
 ## UI
 

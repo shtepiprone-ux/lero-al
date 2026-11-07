@@ -50,6 +50,12 @@ Dependency change → threat model (`.claude/rules/threat-model.md`):
   gains an `install`/`postinstall` script (`npm query ":attr(scripts, [postinstall])"` before and after).
 - T2 (Denial of service / regressions): the upgrade breaks behaviour → the full test suite, the build, Storybook build.
 
+## OWASP
+
+Reviewed and approved on 2026-11-06, before the OWASP gate existed (2026-11-07): listed in `OWASP_GRANDFATHERED` of
+`scripts/quality/check-files.mjs`. Its sheets (NPM Security, Vulnerable Dependency Management, Software Supply Chain
+Security, Dependency Graph SBOM) are checked by the "### OWASP check" of Task 952, which carries its AC1.
+
 ## UI
 
 No visible change. If the build or Storybook shows a visual difference, stop and report it.

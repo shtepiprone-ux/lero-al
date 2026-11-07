@@ -1,0 +1,2248 @@
+{
+ "generatedFrom": "Opus mapping of 2026-11-07; every quote verified by scripts/quality/owasp.mjs check",
+ "sheets": {
+  "Abuse_Case": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(rate[- ]limit\\w*|abuse|bots?|spam|scrap\\w*|DoS|denial of service|CAPTCHA|Turnstile|anonymous)\\b",
+     "\\b(state machine|status transitions?|race|count-then-insert|compare-and-set|premium|prices?|quota|caps? of|one-of rule)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "it is important to identify the attacks which the application must defend against",
+     "control": ".claude/rules/threat-model.md",
+     "evidence": "Add abuse cases for the business rules"
+    }
+   ],
+   "reviewedSha": "547f1a6c6511032bc99fb148d15f22490baf84ac",
+   "reviewedOn": "2026-11-07"
+  },
+  "Access_Control": {
+   "applies": false,
+   "why": "deprecated upstream page that only points to the Authorization sheet, which is mapped",
+   "reviewedSha": "eebb0aff65c546613de0df8396260bd96faba29a",
+   "reviewedOn": "2026-11-07"
+  },
+  "AI_Agent_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^\\.claude/",
+     "^AGENTS\\.md$",
+     "^CLAUDE\\.md$",
+     "\\.mcp\\.json$",
+     "^scripts/quality/agent-"
+    ],
+    "words": [
+     "\\b(MCP|prompt injection|AI agents?|agent hooks?|PreToolUse|PostToolUse|SessionStart|settings\\.json)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Implement per-tool permission scoping (read-only vs. write, specific resources).",
+     "control": ".claude/settings.json",
+     "evidence": "\"Bash(git push *)\""
+    },
+    {
+     "quote": "Require explicit tool authorization for sensitive operations.",
+     "control": ".claude/settings.json",
+     "evidence": "\"mcp__plugin_vercel_vercel__add_project_domain\""
+    }
+   ],
+   "reviewedSha": "e70913f940cb89781282cd9e5c77587cb46b8571",
+   "reviewedOn": "2026-11-07"
+  },
+  "AI-Powered_Advertising_Systems_Security": {
+   "applies": false,
+   "why": "the product shows no advertising and runs no AI ad system",
+   "reviewedSha": "a6d4fc34cc9f6604dd97c256e563405224e3a730",
+   "reviewedOn": "2026-11-07"
+  },
+  "AML_Sanctions_AI_Agent_Payments": {
+   "applies": false,
+   "why": "the product takes no payments and no AI agent moves money",
+   "reviewedSha": "d8412ff08b2243f0a2b335b4f33fe32c4e89416d",
+   "reviewedOn": "2026-11-07"
+  },
+  "Attack_Surface_Analysis": {
+   "applies": true,
+   "always": "surface-changed",
+   "requirements": [
+    {
+     "quote": "developers should understand and monitor the Attack Surface as they design and build and change a system",
+     "control": ".claude/rules/threat-model.md",
+     "evidence": "## When it is required (attack-surface change)"
+    },
+    {
+     "quote": "developers should understand and monitor the Attack Surface as they design and build and change a system",
+     "control": "scripts/quality/audit-coverage.mjs",
+     "evidence": "A file that matches no lane fails the run"
+    }
+   ],
+   "reviewedSha": "c1ca5603856d210b652f066a308c7913383a66a3",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authentication": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Minimum length for passwords should be enforced by the application.",
+     "task": "959"
+    },
+    {
+     "quote": "Maximum password length should be at least 64 characters to allow passphrases (NIST SP800-63B).",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "a3f16afd1a7893bc67ce1b839f2b25bc5faa4b28",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authentication_Patterns": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Do not embed authentication in new systems.",
+     "control": "src/lib/auth/server.ts",
+     "evidence": "await supabase.auth.getUser()"
+    }
+   ],
+   "reviewedSha": "ef29c98cd36db5b04a3769950805d9d98ab89d6f",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "^src/app/admin/",
+     "^src/lib/auth/(staff|permissions)",
+     "^supabase/"
+    ],
+    "words": [
+     "\\b(authori[sz]\\w*|permission keys?|moderators?|administrators?|staff|checkStaff|requireStaffPage|hasPermission)\\b",
+     "\\b(RLS|own rows?|user_id|another (person|account|user)|other accounts?|cross-account)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source.",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "every server entry point authenticates or is public by design"
+    },
+    {
+     "quote": "Implement defense in depth. Do not depend on any single framework, library, technology, or control to be the sole thing enforcing proper access control.",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "Authorization (the data layer enforces what the"
+    },
+    {
+     "quote": "Create tests that validate that the permissions mapped out in the design phase are being correctly enforced.",
+     "task": "950"
+    }
+   ],
+   "reviewedSha": "0147e8a8b90849403eb23c422a8a86f301ef5a80",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization_Decisions_And_Output_Handling": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "^src/app/admin/",
+     "^src/lib/auth/(staff|permissions)",
+     "\\.sql$",
+     "[Qq]ueries",
+     "filterEngine"
+    ],
+    "words": [
+     "\\b(authori[sz]\\w*|permission keys?|moderators?|administrators?|staff|checkStaff|requireStaffPage|hasPermission)\\b",
+     "(\\.or\\(|\\bilike\\b|\\brpc\\(|\\braw SQL\\b|\\bfilter strings?\\b|\\bquery builder\\b)"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output.",
+     "control": "src/lib/auth/permissions.ts",
+     "evidence": "return false"
+    },
+    {
+     "quote": "Intersect predicates. Combine authorization restrictions with application and tenant predicates using logical AND.",
+     "task": "956"
+    }
+   ],
+   "reviewedSha": "1dec03aa4568e64cbaa178091f35ecc3994cf856",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization_Patterns": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "^src/app/admin/",
+     "^src/lib/auth/(staff|permissions)"
+    ],
+    "words": [
+     "\\b(authori[sz]\\w*|permission keys?|moderators?|administrators?|staff|checkStaff|requireStaffPage|hasPermission)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant.",
+     "control": "src/lib/auth/staff.ts",
+     "evidence": "export async function checkStaff("
+    }
+   ],
+   "reviewedSha": "e4bca6802d4ab4076055129654dd5d9f1dececef",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization_Policy_And_Data_Distribution": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "permissionKeys",
+     "permissions\\.ts$"
+    ],
+    "words": [
+     "\\b(role_permissions|permission keys?|caller_has_permission)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Avoid embedding mutable account status or revocation data in releases that cannot update promptly.",
+     "control": "src/lib/auth/permissions.ts",
+     "evidence": "export async function roleHasPermission("
+    }
+   ],
+   "reviewedSha": "d75bc50eb1259184d43bf6ba9b76cad8f4436fc9",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization_Regression_Testing": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "^src/app/admin/",
+     "^src/lib/auth/(staff|permissions)"
+    ],
+    "words": [
+     "\\b(authori[sz]\\w*|permission keys?|moderators?|administrators?|staff|checkStaff|requireStaffPage|hasPermission)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Relying on UI hiding is insufficient; the API layer must enforce the check",
+     "control": "src/tests/integration/accessHardening.integration.test.ts",
+     "evidence": "describe('accessHardening'"
+    },
+    {
+     "quote": "Automated tests should specifically target the ways authorization usually degrades over time.",
+     "control": "src/__tests__/security/serverActionManifest.integration.test.ts",
+     "evidence": "is not reachable as a public Server Action"
+    }
+   ],
+   "reviewedSha": "37e053e945902c12e332f01fb331aa61d270d224",
+   "reviewedOn": "2026-11-07"
+  },
+  "Authorization_Testing_Automation": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "^src/app/admin/",
+     "^src/lib/auth/(staff|permissions)"
+    ],
+    "words": [
+     "\\b(authori[sz]\\w*|permission keys?|moderators?|administrators?|staff|checkStaff|requireStaffPage|hasPermission)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Integration test cases validate the correct implementation of the authorization matrix.",
+     "task": "950"
+    }
+   ],
+   "reviewedSha": "57bf936ea9c024b96e367ee2d1b8b271a0701b25",
+   "reviewedOn": "2026-11-07"
+  },
+  "Automotive_Security": {
+   "applies": false,
+   "why": "no vehicle or automotive software exists in this project",
+   "reviewedSha": "2ef857ab6f4610fd29a913c6b7c1189dda2a349f",
+   "reviewedOn": "2026-11-07"
+  },
+  "Bean_Validation": {
+   "applies": false,
+   "why": "Java Bean Validation; the project validates with zod in TypeScript (Input_Validation is mapped)",
+   "reviewedSha": "feef2181354a99dba5f661b25bb46c638db0ab93",
+   "reviewedOn": "2026-11-07"
+  },
+  "Bot_Management_and_Anti-Automation": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(rate[- ]limit\\w*|abuse|bots?|spam|scrap\\w*|DoS|denial of service|CAPTCHA|Turnstile|anonymous)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Per endpoint — the login endpoint deserves a tighter limit than the home page.",
+     "task": "959"
+    },
+    {
+     "quote": "Avoid fixed-window counters: they allow bursts at boundary times.",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "93381efa6743b6239415b3ce702c9644cbb0fb6a",
+   "reviewedOn": "2026-11-07"
+  },
+  "Browser_Extension_Vulnerabilities": {
+   "applies": false,
+   "why": "the project builds no browser extension",
+   "reviewedSha": "aedb5e8dc6c15480767ffb7b200933a46f680130",
+   "reviewedOn": "2026-11-07"
+  },
+  "Business_Logic_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(state machine|status transitions?|race|count-then-insert|compare-and-set|premium|prices?|quota|caps? of|one-of rule)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Always re-derive security-relevant values (prices, permissions, ownership) on the server. Client state is input, not truth.",
+     "control": "src/modules/listings/actions/updateListing.ts",
+     "evidence": ".select('id, slug, user_id, status, price, price_old, currency')"
+    },
+    {
+     "quote": "Enforce workflows as explicit state machines. Don't rely on the UI to gate the order of steps.",
+     "task": "956"
+    }
+   ],
+   "reviewedSha": "c20114483291f06ab62ea9deac89e2232f9a9b6a",
+   "reviewedOn": "2026-11-07"
+  },
+  "C-Based_Toolchain_Hardening": {
+   "applies": false,
+   "why": "no C or C++ code is built by this project",
+   "reviewedSha": "f54ce6476da13a270eb2f7e68d880a0b95855038",
+   "reviewedOn": "2026-11-07"
+  },
+  "Choosing_and_Using_Security_Questions": {
+   "applies": false,
+   "why": "the product never uses security questions for authentication or recovery",
+   "reviewedSha": "832f6e332b89c918681064b2d327a1239ed897b8",
+   "reviewedOn": "2026-11-07"
+  },
+  "CI_CD_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^\\.github/",
+     "^\\.githooks/"
+    ],
+    "words": [
+     "\\b(GitHub Actions|harden-runner|CI jobs?|ci\\.yml|pipeline|runners?|ruleset|workflow file)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed.",
+     "control": "scripts/quality/main-ruleset.json",
+     "evidence": "\"bypass_actors\": []"
+    },
+    {
+     "quote": "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed.",
+     "control": "scripts/quality/check-ruleset.mjs",
+     "evidence": "scripts/quality/main-ruleset.json"
+    }
+   ],
+   "reviewedSha": "c674ee990a45bc24ca64afc4209b7d7b5c0b5025",
+   "reviewedOn": "2026-11-07"
+  },
+  "Clickjacking_Defense": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "headers\\.ts$",
+     "next\\.config",
+     "proxy\\.ts$",
+     "security\\.txt"
+    ],
+    "words": [
+     "\\b(CSP|Content-Security-Policy|response headers?|HSTS|X-Frame-Options|frame-ancestors|nosniff|X-Powered-By)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The \"DENY\" setting is recommended unless a specific need has been identified for framing.",
+     "control": "src/lib/security/headers.ts",
+     "evidence": "{ key: 'X-Frame-Options', value: 'DENY' }"
+    }
+   ],
+   "reviewedSha": "59883600770b63dd411f854dee5d0ce6677a314c",
+   "reviewedOn": "2026-11-07"
+  },
+  "Content_Security_Policy": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "headers\\.ts$",
+     "next\\.config",
+     "proxy\\.ts$",
+     "security\\.txt",
+     "CaptchaWidget",
+     "[Aa]nalytics",
+     "\\.css$"
+    ],
+    "words": [
+     "\\b(CSP|Content-Security-Policy|response headers?|HSTS|X-Frame-Options|frame-ancestors|nosniff|X-Powered-By)\\b",
+     "\\b(third-party scripts?|Turnstile|analytics|Speed Insights|script src|SRI)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The strict-dynamic directive can optionally also be used to make it easier to implement a Strict CSP.",
+     "task": "954"
+    },
+    {
+     "quote": "Use object-src 'none' when embedded objects are unnecessary",
+     "control": "src/lib/security/headers.ts",
+     "evidence": "\"object-src 'none'\""
+    }
+   ],
+   "reviewedSha": "8bfc59e61d6e55a3b6e210cd6a94be60d6ea59e4",
+   "reviewedOn": "2026-11-07"
+  },
+  "Cookie_Theft_Mitigation": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Apply the preventive controls in the Session Management Cheat Sheet, and monitor for misuse of stolen cookies.",
+     "task": "960"
+    }
+   ],
+   "reviewedSha": "950ef7cb4470f509bc4b83c8e5db128edf859e91",
+   "reviewedOn": "2026-11-07"
+  },
+  "Credential_Stuffing_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b",
+     "\\b(rate[- ]limit\\w*|abuse|bots?|spam|scrap\\w*|DoS|denial of service|CAPTCHA|Turnstile|anonymous)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "or similar puzzle for each login attempt can help to identify automated/bot attacks",
+     "control": "src/lib/auth/browser.ts",
+     "evidence": "export function signIn(email: string, password: string, captchaToken: string)"
+    },
+    {
+     "quote": "it may not be feasible to enforce MFA for all users",
+     "task": "960"
+    }
+   ],
+   "reviewedSha": "1f8550482d702ffec810da2f54017790741cb4fe",
+   "reviewedOn": "2026-11-07"
+  },
+  "Cross_Site_Scripting_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.tsx$",
+     "sanitize",
+     "[Cc]ms",
+     "^messages/",
+     "^public/",
+     "\\.svg$"
+    ],
+    "words": [
+     "\\b(dangerouslySetInnerHTML|innerHTML|sanitiz\\w*|XSS|raw HTML)\\b",
+     "\\b(sanitiz\\w*|rich text|CMS (body|page)|raw HTML)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K8'"
+    },
+    {
+     "quote": "Output encoding is not perfect. It will not always prevent XSS.",
+     "control": "src/__tests__/security/clientSinks.test.ts",
+     "evidence": "codeEvalViolations"
+    }
+   ],
+   "reviewedSha": "869f9fac7e582a15d445fef89122336902da1d1c",
+   "reviewedOn": "2026-11-07"
+  },
+  "Cross-Site_Request_Forgery_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(CSRF|SameSite|Origin header|state-changing GET|GET (that|which) (changes|confirms))\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "First, check if your framework has built-in CSRF protection and use it",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "e4dbb1cf3e75de11cbfa29a2e090346aec7fafd3",
+   "reviewedOn": "2026-11-07"
+  },
+  "Cryptographic_Storage": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "uploadGrant",
+     "recovery\\.ts$"
+    ],
+    "words": [
+     "\\b(HMAC|SHA-?256|hash(ed|es)?|encrypt\\w*|nonces?|signatures?|randomBytes|Math\\.random)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "queries: security-extended"
+    }
+   ],
+   "reviewedSha": "0887a950a61c76a73eb24db61ec6c3c8cb316dc5",
+   "reviewedOn": "2026-11-07"
+  },
+  "Database_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Configured with the minimum permissions required as discussed in the permissions section below.",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "least privilege, RLS on every table"
+    }
+   ],
+   "reviewedSha": "ac8164c80fea3bccd551d2d191e3c63dd63d5826",
+   "reviewedOn": "2026-11-07"
+  },
+  "Denial_of_Service": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "upload",
+     "[Cc]loudinary",
+     "ImageUpload",
+     "imageUrl"
+    ],
+    "words": [
+     "\\b(rate[- ]limit\\w*|abuse|bots?|spam|scrap\\w*|DoS|denial of service|CAPTCHA|Turnstile|anonymous)\\b",
+     "\\b(upload\\w*|Cloudinary|MIME|file type|byte sniff)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Using validation that is cheap in resources first",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "c948a8a26f9aaedccdb126a880487e965b5a9547",
+   "reviewedOn": "2026-11-07"
+  },
+  "Dependency_Graph_SBOM": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)package(-lock)?\\.json$",
+     "\\.npmrc$",
+     "\\.nvmrc$"
+    ],
+    "words": [
+     "\\b(npm (install|ci|audit|view)|advisor(y|ies)|SBOM|lockfile|package-lock|new dependenc(y|ies)|production dependencies|devDependencies|npm packages?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Validate the document against its format's schema before publication or ingestion",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "--omit dev --validate"
+    }
+   ],
+   "reviewedSha": "ad14a834620ac5ec0d80182708182896500f3fd5",
+   "reviewedOn": "2026-11-07"
+  },
+  "Deserialization": {
+   "applies": false,
+   "why": "the project parses only JSON with JSON.parse; the sheet covers pickle, Java, .NET and PHP object deserialization; JSON object risks are mapped under Prototype_Pollution_Prevention",
+   "reviewedSha": "85733863924a070bee7fb21cf358ed6ec3d42b51",
+   "reviewedOn": "2026-11-07"
+  },
+  "Django_REST_Framework": {
+   "applies": false,
+   "why": "no Python or Django code exists in the project",
+   "reviewedSha": "675f3ce1b6e71829b9bba871d9ecb29a3cbfd666",
+   "reviewedOn": "2026-11-07"
+  },
+  "Django_Security": {
+   "applies": false,
+   "why": "no Python or Django code exists in the project",
+   "reviewedSha": "ef3db06a696fd9917e88b11349da94fe72731564",
+   "reviewedOn": "2026-11-07"
+  },
+  "Docker_Security": {
+   "applies": false,
+   "why": "no container image is built or deployed; Vercel runs the functions",
+   "reviewedSha": "951deb39a45f82c00023e1eef779a98f77ab96bf",
+   "reviewedOn": "2026-11-07"
+  },
+  "DOM_based_XSS_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.tsx$"
+    ],
+    "words": [
+     "\\b(dangerouslySetInnerHTML|innerHTML|sanitiz\\w*|XSS|raw HTML)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "It is always a bad idea to use a user-controlled input in dangerous sources such as eval.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K6'"
+    }
+   ],
+   "reviewedSha": "df2b76e8fece6ce52b6303eba6d0e79227621412",
+   "reviewedOn": "2026-11-07"
+  },
+  "DOM_Clobbering_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "sanitize",
+     "[Cc]ms"
+    ],
+    "words": [
+     "\\b(sanitiz\\w*|rich text|CMS (body|page)|raw HTML)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering.",
+     "control": "src/modules/cms/lib/sanitizeCmsHtml.ts",
+     "evidence": "allowedAttributes: {"
+    }
+   ],
+   "reviewedSha": "d5d0b55746afde3e1ad5a1c2774f05798d2d8d9e",
+   "reviewedOn": "2026-11-07"
+  },
+  "DotNet_Security": {
+   "applies": false,
+   "why": "no .NET code exists in the project",
+   "reviewedSha": "d96d7e41a20b5559cf1730a0cc4d55c213487815",
+   "reviewedOn": "2026-11-07"
+  },
+  "Drone_Security": {
+   "applies": false,
+   "why": "no drone or unmanned aircraft software exists here",
+   "reviewedSha": "5a1b0852f1a0afc6f9ae72210013a9136c999dd3",
+   "reviewedOn": "2026-11-07"
+  },
+  "Email_Validation_and_Verification": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "emailChange",
+     "confirm-email",
+     "auth/confirm"
+    ],
+    "words": [
+     "\\b(e-?mail change|pending_email|confirmation (link|token)|verification link|e-?mail confirmation)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Require confirmation of the new email address",
+     "control": "src/modules/cabinet/actions/emailChange.integration.test.ts",
+     "evidence": "email-token-once refused on the real project"
+    },
+    {
+     "quote": "Applications must define a consistent normalization strategy before storing or comparing email addresses.",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "82a5d3a16e243ee370c9a38e5a1ac249356206ee",
+   "reviewedOn": "2026-11-07"
+  },
+  "Error_Handling": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(error (text|message)s?|empty catch|catch \\{\\}|swallow\\w*|stack traces?|supabaseErrorMessage)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Unhandled errors can assist an attacker in this initial phase, which is very important for the rest of the attack.",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "dfdd934dda52d468835baa580a3562d7d70b1993",
+   "reviewedOn": "2026-11-07"
+  },
+  "FastAPI_Security": {
+   "applies": false,
+   "why": "no Python or FastAPI code exists in the project",
+   "reviewedSha": "1bb00293c6461b2f99375c6b36b08810cc148faa",
+   "reviewedOn": "2026-11-07"
+  },
+  "File_Upload": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "upload",
+     "[Cc]loudinary",
+     "ImageUpload",
+     "imageUrl"
+    ],
+    "words": [
+     "\\b(upload\\w*|Cloudinary|MIME|file type|byte sniff)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Validate the file type, don't trust the Content-Type header as it can be spoofed",
+     "control": "src/lib/uploads/imageSniff.ts",
+     "evidence": "export function sniffImageType("
+    },
+    {
+     "quote": "List allowed extensions. Only allow safe and critical extensions for business functionality",
+     "task": "957"
+    }
+   ],
+   "reviewedSha": "7539234b18fb9938fe95f5845eecb909c13fc702",
+   "reviewedOn": "2026-11-07"
+  },
+  "Forgot_Password": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "recovery",
+     "ResetPassword"
+    ],
+    "words": [
+     "\\b(forgot|reset password|password reset|password recovery)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Return a consistent message for both existent and non-existent accounts.",
+     "control": "src/modules/auth/components/AuthSheet.tsx",
+     "evidence": "Always show neutral success — never reveal whether email is registered"
+    }
+   ],
+   "reviewedSha": "d42b843a433df4f4e68aaf32307fd984680a3e8e",
+   "reviewedOn": "2026-11-07"
+  },
+  "GitHub_Actions_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^\\.github/",
+     "^\\.githooks/"
+    ],
+    "words": [
+     "\\b(GitHub Actions|harden-runner|CI jobs?|ci\\.yml|pipeline|runners?|ruleset|workflow file)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Always set permissions: {} at the workflow level to disable all permissions by default.",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "permissions: {}"
+    },
+    {
+     "quote": "it must be treated as a critical asset, potentially even more critical than the source code it processes",
+     "task": "958"
+    }
+   ],
+   "reviewedSha": "5d9b780d952011c6ac3f6c3dbc47c496a848e927",
+   "reviewedOn": "2026-11-07"
+  },
+  "GraphQL": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Ensure that the API has proper access control checks.",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "least privilege, RLS on every table"
+    }
+   ],
+   "reviewedSha": "c36de8b79318bc82dfd772333d8e0ae73dd0a2bd",
+   "reviewedOn": "2026-11-07"
+  },
+  "gRPC_Security": {
+   "applies": false,
+   "why": "the project exposes and calls no gRPC services",
+   "reviewedSha": "d21ee14be2ca82ee0d207d76972c327b1cce8396",
+   "reviewedOn": "2026-11-07"
+  },
+  "HTML5_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(postMessage|localStorage|sessionStorage|CORS|message listeners?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Check the origin attribute of the sender to verify the data is originating from the expected location.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K2'"
+    }
+   ],
+   "reviewedSha": "9f0f0c80e689070977e9c1b4bb5b9b0d3cd2d3f1",
+   "reviewedOn": "2026-11-07"
+  },
+  "HTTP_Headers": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "headers\\.ts$",
+     "next\\.config",
+     "proxy\\.ts$",
+     "security\\.txt"
+    ],
+    "words": [
+     "\\b(CSP|Content-Security-Policy|response headers?|HSTS|X-Frame-Options|frame-ancestors|nosniff|X-Powered-By)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers",
+     "control": "src/lib/security/__tests__/headers.security.test.ts",
+     "evidence": "toContain(\"frame-ancestors 'none'\")"
+    }
+   ],
+   "reviewedSha": "7281e183888d6c702312afc1392a828576dd2c39",
+   "reviewedOn": "2026-11-07"
+  },
+  "HTTP_Strict_Transport_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "headers\\.ts$",
+     "next\\.config",
+     "proxy\\.ts$",
+     "security\\.txt"
+    ],
+    "words": [
+     "\\b(CSP|Content-Security-Policy|response headers?|HSTS|X-Frame-Options|frame-ancestors|nosniff|X-Powered-By)\\b",
+     "\\b(TLS|HTTPS|certificates?|sslmode|HSTS)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "This example sets a long (2 years = 63072000 seconds) max-age for the issuing host.",
+     "control": "src/lib/security/headers.ts",
+     "evidence": "max-age=63072000"
+    }
+   ],
+   "reviewedSha": "f22077f1db989525372a5938f2294fc8c762febd",
+   "reviewedOn": "2026-11-07"
+  },
+  "Identity_Propagation_Patterns": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "supabase/admin"
+    ],
+    "words": [
+     "\\b(service[_ ]role|admin client|p_caller|createAdminClient|on behalf of)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Each receiving service must still authorize the requested action and resource.",
+     "control": "src/modules/listings/actions/contactGateway.ts",
+     "evidence": "p_caller: viewer.userId"
+    }
+   ],
+   "reviewedSha": "88a305a1b66198ea647a31534140ca752f917fbe",
+   "reviewedOn": "2026-11-07"
+  },
+  "Infrastructure_as_Code_Security": {
+   "applies": false,
+   "why": "no infrastructure is provisioned from code; vercel.json holds cron schedules only and is covered by the CI/CD and Serverless sheets",
+   "reviewedSha": "bd10e847dc2c2996dd97956d66e2c0364ece4073",
+   "reviewedOn": "2026-11-07"
+  },
+  "Injection_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.sql$",
+     "[Qq]ueries",
+     "filterEngine",
+     "^scripts/",
+     "^\\.githooks/"
+    ],
+    "words": [
+     "(\\.or\\(|\\bilike\\b|\\brpc\\(|\\braw SQL\\b|\\bfilter strings?\\b|\\bquery builder\\b)",
+     "\\b(spawn\\w*|execFile|child_process|shell commands?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "the values for commands and the relevant arguments should be both validated",
+     "control": "scripts/quality/agent-check.mjs",
+     "evidence": "started by Node with an argv array: no shell"
+    }
+   ],
+   "reviewedSha": "e323ae32204d740069e40f661403b12743860658",
+   "reviewedOn": "2026-11-07"
+  },
+  "Injection_Prevention_in_Java": {
+   "applies": false,
+   "why": "no Java code exists in the project; Injection_Prevention is mapped",
+   "reviewedSha": "b4ebfd56cbf4cc63f84cf96b86fd169225a27525",
+   "reviewedOn": "2026-11-07"
+  },
+  "Input_Validation": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "/schemas?\\.ts$",
+     "validations"
+    ],
+    "words": [
+     "\\b(zod|schemas?|validat\\w*|request body|payload)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Validate on the server even when the browser checks the same fields.",
+     "task": "955"
+    },
+    {
+     "quote": "Reject invalid requests with a clear error; do not continue with partially validated data.",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "eb7ed3acc6c8e9b73fe4ea2d1e2c3c5104e2e207",
+   "reviewedOn": "2026-11-07"
+  },
+  "Insecure_Direct_Object_Reference_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$"
+    ],
+    "words": [
+     "\\b(listingId|userId|ticketId|another (person|account|user)'s|someone else's|IDOR)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "implement access control checks for each object that users try to access",
+     "control": "src/modules/listings/actions/updateListing.ts",
+     "evidence": "if (existing.user_id !== user.id)"
+    },
+    {
+     "quote": "This verification should be performed for all operations involving object references, including read, create, update, delete, export, and administrative actions.",
+     "task": "956"
+    }
+   ],
+   "reviewedSha": "60a0448f99df31ffcb816cb03be4c788e46c2b3b",
+   "reviewedOn": "2026-11-07"
+  },
+  "JAAS": {
+   "applies": false,
+   "why": "Java Authentication and Authorization Service; no Java code exists",
+   "reviewedSha": "adc81e9d38b539c4e664e4131ff20791ec631059",
+   "reviewedOn": "2026-11-07"
+  },
+  "Java_Security": {
+   "applies": false,
+   "why": "no Java code exists in the project at all",
+   "reviewedSha": "382c9f085f3ce1dd3410c150621b6e9a43d4e71c",
+   "reviewedOn": "2026-11-07"
+  },
+  "JavaScript_and_TypeScript_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.(ts|tsx|mjs|cjs|js)$"
+    ],
+    "words": []
+   },
+   "requirements": [
+    {
+     "quote": "Never pass untrusted input to a recursive merge or set-by-path helper",
+     "task": "955"
+    },
+    {
+     "quote": "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters.",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "queries: security-extended"
+    }
+   ],
+   "reviewedSha": "7f3f6a5cdaeb61facb95052a7ff97964a4f84923",
+   "reviewedOn": "2026-11-07"
+  },
+  "JSON_Web_Token": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(JWTs?|access tokens?|anon key|ID tokens?|getSession)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "if you use JWTs for user sessions, you will need a solution for managing session invalidation",
+     "control": "src/lib/auth/server.ts",
+     "evidence": "await supabase.auth.getUser()"
+    },
+    {
+     "quote": "This can be achieved using a deny list of revoked sessions/tokens.",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "001d2b938d6e377781f5ab16c41d20b261e0e185",
+   "reviewedOn": "2026-11-07"
+  },
+  "Key_Management": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)\\.env",
+     "^docs/env\\.md$",
+     "uploadGrant",
+     "uploadGrant",
+     "recovery\\.ts$"
+    ],
+    "words": [
+     "\\b(secrets?|HMAC|salt|credentials?|service[- ]role key|API key|signing key)\\b",
+     "\\b(HMAC|SHA-?256|hash(ed|es)?|encrypt\\w*|nonces?|signatures?|randomBytes|Math\\.random)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "a single key should be used for only one purpose",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "16e6a550caea0c6c8de863527a96d0a263bd266b",
+   "reviewedOn": "2026-11-07"
+  },
+  "Kubernetes_Security": {
+   "applies": false,
+   "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
+   "reviewedSha": "a5ff31b831448e049023ec13cf4247fb4105b01b",
+   "reviewedOn": "2026-11-07"
+  },
+  "Laravel": {
+   "applies": false,
+   "why": "no PHP or Laravel code exists in the project",
+   "reviewedSha": "253357dcf3e04401a1437426e5a51b715329ee68",
+   "reviewedOn": "2026-11-07"
+  },
+  "LDAP_Injection_Prevention": {
+   "applies": false,
+   "why": "no LDAP directory is queried by the project",
+   "reviewedSha": "f7c03deca33c61558ad9a0be9ee8d56e890b77d5",
+   "reviewedOn": "2026-11-07"
+  },
+  "Legacy_Application_Management": {
+   "applies": false,
+   "why": "no separate legacy application runs; the legacy UI layer is part of the same codebase under the same gates",
+   "reviewedSha": "6a8d0fb0bd3c932726b731a9ae9be9b56d6ad097",
+   "reviewedOn": "2026-11-07"
+  },
+  "LLM_Prompt_Injection_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^\\.claude/",
+     "^AGENTS\\.md$",
+     "^CLAUDE\\.md$",
+     "\\.mcp\\.json$",
+     "^scripts/quality/agent-"
+    ],
+    "words": [
+     "\\b(MCP|prompt injection|AI agents?|agent hooks?|PreToolUse|PostToolUse|SessionStart|settings\\.json)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Enforce permissions and parameter validation at the tool boundary",
+     "control": ".claude/settings.json",
+     "evidence": "\"Bash(git commit *)\""
+    }
+   ],
+   "reviewedSha": "a633d1beb039eae0549ba4d9a7d12231a01a6807",
+   "reviewedOn": "2026-11-07"
+  },
+  "Logging": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "sentry",
+     "instrumentation"
+    ],
+    "words": [
+     "\\b(log lines?|logging|logged|console\\.(error|warn|log)|Sentry|audit (rows?|trail|log))\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted",
+     "task": "955"
+    },
+    {
+     "quote": "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted",
+     "control": "src/modules/auth/actions/recovery.ts",
+     "evidence": "function hashEmailForCorrelation("
+    }
+   ],
+   "reviewedSha": "712c9219ebb762a074447d90b80e821dca27fd95",
+   "reviewedOn": "2026-11-07"
+  },
+  "Logging_Vocabulary": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "sentry",
+     "instrumentation"
+    ],
+    "words": [
+     "\\b(log lines?|logging|logged|console\\.(error|warn|log)|Sentry|audit (rows?|trail|log))\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Developers must embrace this standard and begin to implement",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "61843bd5c4d4bee33e351dd37cd0f315b9bc6243",
+   "reviewedOn": "2026-11-07"
+  },
+  "Mass_Assignment": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "/schemas?\\.ts$",
+     "validations",
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "\\b(zod|schemas?|validat\\w*|request body|payload)\\b",
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "DTOs and field allowlists restrict writable properties; they do not replace authorization for the requested object and operation.",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "Mass Assignment (column grants)"
+    },
+    {
+     "quote": "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable.",
+     "task": "956"
+    }
+   ],
+   "reviewedSha": "41ff0ce4208bfdea7ffc4efc2747d0cec9e11c70",
+   "reviewedOn": "2026-11-07"
+  },
+  "MCP_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^\\.claude/",
+     "^AGENTS\\.md$",
+     "^CLAUDE\\.md$",
+     "\\.mcp\\.json$",
+     "^scripts/quality/agent-"
+    ],
+    "words": [
+     "\\b(MCP|prompt injection|AI agents?|agent hooks?|PreToolUse|PostToolUse|SessionStart|settings\\.json)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Grant each MCP server the minimum permissions needed for its function.",
+     "control": ".claude/settings.json",
+     "evidence": "\"mcp__plugin_vercel_vercel__assign_alias\""
+    },
+    {
+     "quote": "Monitor for changes to tool descriptions post-installation (rug pull detection).",
+     "task": "961"
+    }
+   ],
+   "reviewedSha": "72cbf983078358fae944dbb4eae9153253c3d1a8",
+   "reviewedOn": "2026-11-07"
+  },
+  "Micro_Frontend_Security": {
+   "applies": false,
+   "why": "the site is one Next.js application without micro frontends or remote modules",
+   "reviewedSha": "ab1f1ae11b5e40267e8614dadadb0673fe1d82b3",
+   "reviewedOn": "2026-11-07"
+  },
+  "Microservices_based_Security_Arch_Doc": {
+   "applies": false,
+   "why": "the application is one Next.js deployment, not a set of microservices",
+   "reviewedSha": "605420b2f71928388eb4356004133fe416fcdbbf",
+   "reviewedOn": "2026-11-07"
+  },
+  "Microservices_Security": {
+   "applies": false,
+   "why": "the application is one Next.js deployment, not a set of microservices",
+   "reviewedSha": "96877ec3c568eddf6913485495fdfb16916a3ae5",
+   "reviewedOn": "2026-11-07"
+  },
+  "Mobile_Application_Security": {
+   "applies": false,
+   "why": "the product is a web site only; no mobile application is built",
+   "reviewedSha": "9ae6c3e32491783a8e8c05e57b8113d716725121",
+   "reviewedOn": "2026-11-07"
+  },
+  "Multi_Tenant_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^supabase/",
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "\\b(RLS|own rows?|user_id|another (person|account|user)|other accounts?|cross-account)\\b",
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Treat client-supplied tenant identifiers as selectors only.",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "least privilege, RLS on every table"
+    },
+    {
+     "quote": "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths",
+     "task": "956"
+    }
+   ],
+   "reviewedSha": "d99953928237409dc8a70a2ccb254bb298ed51f6",
+   "reviewedOn": "2026-11-07"
+  },
+  "Multifactor_Authentication": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Require MFA for administrative or other high privileged users.",
+     "task": "960"
+    }
+   ],
+   "reviewedSha": "57a70bc4fbdd41c3e66f954d2cadc90e2830166f",
+   "reviewedOn": "2026-11-07"
+  },
+  "Network_Segmentation": {
+   "applies": false,
+   "why": "no network is operated by the project; Vercel, Supabase and Cloudinary are managed services reached over TLS",
+   "reviewedSha": "b32fa9cc5caaf7d3680ad02efc0fec21844b3024",
+   "reviewedOn": "2026-11-07"
+  },
+  "Nextjs_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/app/",
+     "/actions/",
+     "next\\.config",
+     "proxy\\.ts$"
+    ],
+    "words": [
+     "\\b(Server Actions?|Route Handlers?|Next\\.js|Next 1\\d|middleware|Server Components?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Treat each reachable action as a client-callable POST entry point.",
+     "task": "955"
+    },
+    {
+     "quote": "Rendering the form only on a protected page does not authenticate the action request.",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "no unguarded entry point is missing from the allowlist"
+    },
+    {
+     "quote": "Return only authorized result fields because Server Action return values are serialized to the client.",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "debe364bdf2274dedcc74cd036e4efc0b072e768",
+   "reviewedOn": "2026-11-07"
+  },
+  "NodeJS_Docker": {
+   "applies": false,
+   "why": "no Node.js container image is built; Vercel runs the functions",
+   "reviewedSha": "e5a2456b4be5461105f4a917999afd086dd75d1a",
+   "reviewedOn": "2026-11-07"
+  },
+  "Nodejs_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/app/api/"
+    ],
+    "words": [
+     "\\b(Node\\.js|ReDoS|regular expressions?|request bod(y|ies))\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "some third-party rulesets can be used to flag dangerous patterns such as eval()",
+     "control": "eslint.config.mjs",
+     "evidence": "\"no-eval\": \"error\""
+    }
+   ],
+   "reviewedSha": "451d68d9b36b875b4bac5960978dd376b2514396",
+   "reviewedOn": "2026-11-07"
+  },
+  "NoSQL_Security": {
+   "applies": false,
+   "why": "the only database is Postgres through Supabase; no NoSQL store is used",
+   "reviewedSha": "44c8cf8e4a82581402249533cc635b4305c67882",
+   "reviewedOn": "2026-11-07"
+  },
+  "NPM_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)package(-lock)?\\.json$",
+     "\\.npmrc$",
+     "\\.nvmrc$"
+    ],
+    "words": [
+     "\\b(npm (install|ci|audit|view)|advisor(y|ies)|SBOM|lockfile|package-lock|new dependenc(y|ies)|production dependencies|devDependencies|npm packages?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility.",
+     "control": "scripts/quality/install-scripts.test.mjs",
+     "evidence": "install scripts off, every package with a script reviewed"
+    }
+   ],
+   "reviewedSha": "fe291e1b03739b8df806c69750b7d35556b41e9d",
+   "reviewedOn": "2026-11-07"
+  },
+  "OAuth2": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "[Gg]oogle",
+     "safeRedirect",
+     "sanitizeReturnTo"
+    ],
+    "words": [
+     "\\b(OAuth|OIDC|Google sign-in|ID tokens?)\\b",
+     "\\b(redirect\\w*|return path|returnTo|open redirect)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Clients and Authorization Server must not expose URLs that forward the user's browser to arbitrary URIs obtained from a query parameter",
+     "control": "src/lib/auth/__tests__/safeRedirect.security.test.ts",
+     "evidence": "the URL the route would redirect to always stays on the site origin"
+    }
+   ],
+   "reviewedSha": "765d6e48772e36bc5e82c8a1452c2c6af665565b",
+   "reviewedOn": "2026-11-07"
+  },
+  "OS_Command_Injection_Defense": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^scripts/",
+     "^\\.githooks/"
+    ],
+    "words": [
+     "\\b(spawn\\w*|execFile|child_process|shell commands?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The primary defense is to avoid calling OS commands directly.",
+     "control": "scripts/quality/agent-check.mjs",
+     "evidence": "started by Node with an argv array: no shell"
+    }
+   ],
+   "reviewedSha": "000161fc8a96257f12a5436336c7f5836ad50049",
+   "reviewedOn": "2026-11-07"
+  },
+  "Passkey_Security": {
+   "applies": false,
+   "why": "the product offers no passkeys today; Authentication and Multifactor_Authentication are mapped",
+   "reviewedSha": "eb3d6c1e3514d4788ec75f62e438dba9d640520f",
+   "reviewedOn": "2026-11-07"
+  },
+  "Password_Storage": {
+   "applies": false,
+   "why": "passwords are stored only by Supabase Auth (GoTrue, bcrypt); the application never stores or hashes a password",
+   "reviewedSha": "598510f4ca1e5b918a44a4bc001ca7a074f237d7",
+   "reviewedOn": "2026-11-07"
+  },
+  "PHP_Configuration": {
+   "applies": false,
+   "why": "no PHP runtime exists in the project",
+   "reviewedSha": "3a86ec3b1f514f28ed8de93c1d151d0396d7c16c",
+   "reviewedOn": "2026-11-07"
+  },
+  "Pinning": {
+   "applies": false,
+   "why": "certificate pinning concerns mobile and thick clients; the product is a browser site",
+   "reviewedSha": "52a0f842a9dd3cccae1e2fd1dd28357ecd239efb",
+   "reviewedOn": "2026-11-07"
+  },
+  "Post_Quantum_Cryptography": {
+   "applies": false,
+   "why": "the project designs no cryptographic protocol; TLS is terminated by Vercel and Supabase",
+   "reviewedSha": "19ad60f0354ef2cf2ce99a34f29b5b00a2d5d5d4",
+   "reviewedOn": "2026-11-07"
+  },
+  "Prototype_Pollution_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "/actions/",
+     "route\\.ts$",
+     "/schemas?\\.ts$",
+     "validations"
+    ],
+    "words": [
+     "\\b(Object\\.assign|__proto__|set-by-path|deep ?merge|lodash)\\b",
+     "\\b(zod|schemas?|validat\\w*|request body|payload)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "If objects have to be used then they should be created using the Object.create(null) API",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "8e34d7c3e48743779ba9de12db8d459c6e258143",
+   "reviewedOn": "2026-11-07"
+  },
+  "Query_Parameterization": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.sql$",
+     "[Qq]ueries",
+     "filterEngine",
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "(\\.or\\(|\\bilike\\b|\\brpc\\(|\\braw SQL\\b|\\bfilter strings?\\b|\\bquery builder\\b)",
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure.",
+     "control": "src/modules/listings/domain/filterEngine.ts",
+     "evidence": "q = q.eq('property_type', propertyType)"
+    }
+   ],
+   "reviewedSha": "66045657b06f4996ba74d3fbb523690ba351af05",
+   "reviewedOn": "2026-11-07"
+  },
+  "RAG_Security": {
+   "applies": false,
+   "why": "the product has no retrieval-augmented generation or any LLM feature",
+   "reviewedSha": "99f742ca78caa944eab9f6a29b5803e6a44389a4",
+   "reviewedOn": "2026-11-07"
+  },
+  "REST_Assessment": {
+   "applies": false,
+   "why": "a penetration testing guide; the project equivalent is the authorization matrix and route tests mapped under Authorization_Testing_Automation",
+   "reviewedSha": "abed78dda84c846f18bf50d58c9a97091bce7543",
+   "reviewedOn": "2026-11-07"
+  },
+  "REST_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/app/api/",
+     "route\\.ts$"
+    ],
+    "words": [
+     "\\b(API routes?|endpoints?|Route Handlers?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "the access control decision should be taken locally by REST endpoints",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "every server entry point authenticates or is public by design"
+    }
+   ],
+   "reviewedSha": "4572f92d8c4d2585981795d78e34035e23b027e0",
+   "reviewedOn": "2026-11-07"
+  },
+  "Ruby_on_Rails": {
+   "applies": false,
+   "why": "no Ruby or Rails code exists in the project",
+   "reviewedSha": "ac6936b4f50bec1c3e5ce5146a8f00d85b59f3a2",
+   "reviewedOn": "2026-11-07"
+  },
+  "SAML_Security": {
+   "applies": false,
+   "why": "no SAML identity provider or service provider is used",
+   "reviewedSha": "9958308ace7f70d1ef628d983088c401a20196e2",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secrets_Management": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)\\.env",
+     "^docs/env\\.md$",
+     "uploadGrant",
+     "^\\.(gitignore|orchestratorignore)$"
+    ],
+    "words": [
+     "\\b(secrets?|HMAC|salt|credentials?|service[- ]role key|API key|signing key)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "This is not the same as committing it to code.",
+     "control": "scripts/quality/check-files.mjs",
+     "evidence": "Secrets Management (scan at every stage)"
+    },
+    {
+     "quote": "prevent them from leaking and compromising the organization",
+     "control": "src/__tests__/security/clientSinks.test.ts",
+     "evidence": "a \"use client\" file reads a server secret"
+    }
+   ],
+   "reviewedSha": "d4d1b7151cefe09337795ad0924a8231b37f2b50",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secure_AI_Model_Ops": {
+   "applies": false,
+   "why": "the project trains, hosts and serves no AI model",
+   "reviewedSha": "e6c02b6cfdf3b8d9b815d4ea6441893caf984dc2",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secure_Cloud_Architecture": {
+   "applies": false,
+   "why": "no cloud account, network or IAM role is configured by the project; the managed services are covered by the Serverless and Database sheets",
+   "reviewedSha": "6addb40d1e2a719b2814b6abfb365c315221d27c",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secure_Code_Review": {
+   "applies": true,
+   "always": "surface-changed",
+   "requirements": [
+    {
+     "quote": "Diff-Based Reviews focus on code changes only.",
+     "control": ".claude/skills/review-task/SKILL.md",
+     "evidence": "The six diff-based steps"
+    },
+    {
+     "quote": "Security-Focused Review differs from functional code review by specifically targeting security concerns",
+     "control": ".claude/rules/secure-code-review.md",
+     "evidence": "**Relevant patterns** — the category checklists below."
+    }
+   ],
+   "reviewedSha": "2dbf5188c6cf464abeafa8a99deda3ef395ccb38",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secure_Coding_with_AI": {
+   "applies": true,
+   "always": "every-task",
+   "requirements": [
+    {
+     "quote": "AI coding assistants frequently suggest package names that do not exist on public registries",
+     "control": ".claude/skills/create-task/SKILL.md",
+     "evidence": "npm view <name> time repository scripts --json"
+    },
+    {
+     "quote": "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent.",
+     "control": ".claude/skills/review-task/SKILL.md",
+     "evidence": "The executor's report is a supplier assertion"
+    }
+   ],
+   "reviewedSha": "e841b7cdbf4462f33453b3e5138c9b758b768691",
+   "reviewedOn": "2026-11-07"
+  },
+  "Secure_Product_Design": {
+   "applies": true,
+   "always": "surface-changed",
+   "requirements": [
+    {
+     "quote": "Threat Modeling - which results in security related stories being added during",
+     "control": ".claude/skills/create-task/SKILL.md",
+     "evidence": "Answer the attack-surface question"
+    }
+   ],
+   "reviewedSha": "86931f59567c42cf60748e49210e5d56d1a7da01",
+   "reviewedOn": "2026-11-07"
+  },
+  "Security_Terminology": {
+   "applies": false,
+   "why": "a glossary of terms; it states definitions, not requirements to implement",
+   "reviewedSha": "e3b2fa4eca2bfc5f97e1b9e8c52ca0072f96e183",
+   "reviewedOn": "2026-11-07"
+  },
+  "Server_Side_Request_Forgery_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "cloudinaryUpload",
+     "cloudinaryDelete",
+     "exchange-rate",
+     "breachedPassword"
+    ],
+    "words": [
+     "\\b(outbound requests?|server-side requests?|Have I Been Pwned|HIBP|fetch(es)? an? (URL|address))\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Application can send request only to identified and trusted applications",
+     "control": "src/lib/cloudinaryUpload.ts",
+     "evidence": "fetch(`https://api.cloudinary.com/v1_1/"
+    }
+   ],
+   "reviewedSha": "b97bb26cf6394d7a9366fa31acf1939bdb304abd",
+   "reviewedOn": "2026-11-07"
+  },
+  "Server_Side_Template_Injection_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "sendTemplatedEmail",
+     "emailTemplates",
+     "email-templates"
+    ],
+    "words": [
+     "\\be-?mail templates?\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Do not try to filter template syntax out of input.",
+     "control": "src/modules/notifications/lib/sendTemplatedEmail.ts",
+     "evidence": "escapeHtml(value)"
+    }
+   ],
+   "reviewedSha": "4a4facecc876215b324e2814b44b784ca825b0e7",
+   "reviewedOn": "2026-11-07"
+  },
+  "Serverless_FaaS_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/app/api/",
+     "vercel\\.json$"
+    ],
+    "words": [
+     "\\b(crons?|serverless|function runtime|Fluid Compute)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT).",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "every server entry point authenticates or is public by design"
+    }
+   ],
+   "reviewedSha": "d903889694e946f204246abedab45797607d4807",
+   "reviewedOn": "2026-11-07"
+  },
+  "Session_Management": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/lib/auth/",
+     "^src/modules/auth/",
+     "^src/app/auth/",
+     "^src/app/\\[locale\\]/auth/",
+     "passwordRules"
+    ],
+    "words": [
+     "\\b(sign[- ]?in|sign[- ]?up|password|Turnstile|captcha|re-?auth\\w*|session cookie|session token|getSession|signInWith\\w+)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The HttpOnly cookie attribute instructs web browsers not to allow scripts",
+     "task": "960"
+    },
+    {
+     "quote": "Follow the session logging protections and session renewal guidance.",
+     "control": "src/lib/auth/__tests__/sessionMiddleware.test.ts",
+     "evidence": "asks Supabase for the user straight after creating the client"
+    }
+   ],
+   "reviewedSha": "efc40ef2b9aad37af07539c03f35091e62db4d9e",
+   "reviewedOn": "2026-11-07"
+  },
+  "Software_Supply_Chain_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)package(-lock)?\\.json$",
+     "\\.npmrc$",
+     "\\.nvmrc$",
+     "^\\.github/",
+     "^\\.githooks/",
+     "^tsconfig\\.json$",
+     "^components\\.json$",
+     "^\\.gitattributes$"
+    ],
+    "words": [
+     "\\b(npm (install|ci|audit|view)|advisor(y|ies)|SBOM|lockfile|package-lock|new dependenc(y|ies)|production dependencies|devDependencies|npm packages?)\\b",
+     "\\b(GitHub Actions|harden-runner|CI jobs?|ci\\.yml|pipeline|runners?|ruleset|workflow file)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "npm ci --ignore-scripts"
+    }
+   ],
+   "reviewedSha": "f250e6f8947f7a00cb922977801131ac25b7b4b6",
+   "reviewedOn": "2026-11-07"
+  },
+  "SQL_Injection_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.sql$",
+     "[Qq]ueries",
+     "filterEngine",
+     "^supabase/",
+     "\\.sql$"
+    ],
+    "words": [
+     "(\\.or\\(|\\bilike\\b|\\brpc\\(|\\braw SQL\\b|\\bfilter strings?\\b|\\bquery builder\\b)",
+     "\\b(RLS|row level security|SECURITY DEFINER|PostgREST|pg_graphql|revoke|grants? (on|to)|CREATE POLICY|policies on|migration)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Use least privilege alongside parameterized queries and allow-list mapping.",
+     "control": "src/modules/listings/domain/filterEngine.ts",
+     "evidence": "q = q.eq('listing_type', listingType)"
+    }
+   ],
+   "reviewedSha": "0eaaccf24478fbf809ceabb685e5f881ec445194",
+   "reviewedOn": "2026-11-07"
+  },
+  "Subdomain_Takeover_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "vercel\\.json$"
+    ],
+    "words": [
+     "\\b(DNS|subdomains?|CNAME|custom domains?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "DNS change monitoring: Alert when new CNAME records are created and when target resources return errors such as HTTP 404, NXDOMAIN, or cloud provider default error pages.",
+     "task": "961"
+    }
+   ],
+   "reviewedSha": "57c5b22a9fa92790b89a374e24091ca057b9b07c",
+   "reviewedOn": "2026-11-07"
+  },
+  "Symfony": {
+   "applies": false,
+   "why": "no PHP or Symfony code exists in the project",
+   "reviewedSha": "3546b63a5314f56a90ad13b812772ac8238330ab",
+   "reviewedOn": "2026-11-07"
+  },
+  "Third_Party_Javascript_Management": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "CaptchaWidget",
+     "[Aa]nalytics",
+     "^\\.storybook/"
+    ],
+    "words": [
+     "\\b(third-party scripts?|Turnstile|analytics|Speed Insights|script src|SRI)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Secure transmission of the third-party code (to prevent modifications while in-transit) and various types of sandboxing.",
+     "task": "954"
+    }
+   ],
+   "reviewedSha": "c09882b9f1889607e6fefc58c6b012e919156744",
+   "reviewedOn": "2026-11-07"
+  },
+  "Third_Party_Payment_Gateway_Integration": {
+   "applies": false,
+   "why": "the product integrates no payment gateway at all",
+   "reviewedSha": "c7865fdb17878159a83e33021fd3c7610e4d5570",
+   "reviewedOn": "2026-11-07"
+  },
+  "Threat_Modeling": {
+   "applies": true,
+   "always": "surface-changed",
+   "requirements": [
+    {
+     "quote": "the threat modeling process should answer the following four questions",
+     "control": ".claude/rules/threat-model.md",
+     "evidence": "**What are we working on?**"
+    },
+    {
+     "quote": "Do not add techniques only to make the model appear comprehensive.",
+     "control": ".claude/rules/threat-model.md",
+     "evidence": "\"Do not add techniques only to make the model appear comprehensive.\""
+    }
+   ],
+   "reviewedSha": "9515f5343c6e1327fc5dd7a5c263bd98eade3a81",
+   "reviewedOn": "2026-11-07"
+  },
+  "TLS_Cipher_String": {
+   "applies": false,
+   "why": "TLS cipher suites are configured by Vercel and Supabase, not by this project",
+   "reviewedSha": "55e01a02c9acc4fbafc36b372319f4ff4c4e04ab",
+   "reviewedOn": "2026-11-07"
+  },
+  "Transaction_Authorization": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "deleteAccount",
+     "reauth",
+     "emailChange"
+    ],
+    "words": [
+     "\\b(delete (the |an |their )?account|e-?mail change|password change|re-?auth\\w*|hard delete)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "An authorization method must permit a user to identify and acknowledge the data that is significant to a given",
+     "control": "src/modules/cabinet/actions/reauth.integration.test.ts",
+     "evidence": "reauth-email refused on the real project"
+    }
+   ],
+   "reviewedSha": "7d6c236f8d412bc6d9759a542f17837c64fc62e0",
+   "reviewedOn": "2026-11-07"
+  },
+  "Transport_Layer_Protection": {
+   "applies": false,
+   "why": "deprecated upstream page that only points to the Transport Layer Security sheet, which is mapped",
+   "reviewedSha": "779b0721e6b4e8596d1e2e9b4bdf12a933d09258",
+   "reviewedOn": "2026-11-07"
+  },
+  "Transport_Layer_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(TLS|HTTPS|certificates?|sslmode|HSTS)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS",
+     "control": "src/lib/security/headers.ts",
+     "evidence": "max-age=63072000"
+    }
+   ],
+   "reviewedSha": "9a70e2b9b8900db1a709f28818b1ba5f9a34aa9a",
+   "reviewedOn": "2026-11-07"
+  },
+  "Unvalidated_Redirects_and_Forwards": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "safeRedirect",
+     "sanitizeReturnTo"
+    ],
+    "words": [
+     "\\b(redirect\\w*|return path|returnTo|open redirect)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "If used, do not allow the URL as user input for the destination.",
+     "control": "src/lib/auth/__tests__/safeRedirect.security.test.ts",
+     "evidence": "it.each(ATTACKS)"
+    },
+    {
+     "quote": "If used, do not allow the URL as user input for the destination.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K7'"
+    }
+   ],
+   "reviewedSha": "77fabf15dbd93bc730c9a6923dd85f8bf73de8f1",
+   "reviewedOn": "2026-11-07"
+  },
+  "User_Privacy_Protection": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "upload",
+     "[Cc]loudinary",
+     "ImageUpload",
+     "imageUrl"
+    ],
+    "words": [
+     "\\b(personal data|PII|e-?mail address(es)?|phone numbers?|WhatsApp|IP address(es)?|retention|privacy|fingerprint\\w*)\\b",
+     "\\b(upload\\w*|Cloudinary|MIME|file type|byte sniff)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Preventing leakage of user IP addresses is of great significance when user protection is in scope.",
+     "control": "src/lib/uploads/imageUrl.ts",
+     "evidence": "another site's tracking pixel"
+    },
+    {
+     "quote": "Preventing leakage of user IP addresses is of great significance when user protection is in scope.",
+     "task": "959"
+    }
+   ],
+   "reviewedSha": "9ac6289f294be2de3651d04610c64f1be21a16c4",
+   "reviewedOn": "2026-11-07"
+  },
+  "Verifying_Third_Party_Agent_Execution_Evidence": {
+   "applies": true,
+   "always": "every-task",
+   "requirements": [
+    {
+     "quote": "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier.",
+     "control": ".claude/skills/review-task/SKILL.md",
+     "evidence": "rerun each claim; a claim that does not reproduce is a finding"
+    }
+   ],
+   "reviewedSha": "96600b4f39788cf0d1686a490a594f492d315ccd",
+   "reviewedOn": "2026-11-07"
+  },
+  "Virtual_Patching": {
+   "applies": false,
+   "why": "fixes ship as code changes through CI the same day; the Vercel firewall is operated by the owner outside the repository",
+   "reviewedSha": "dc342e4db8de0ce32780fdccbf4fabf72ae71340",
+   "reviewedOn": "2026-11-07"
+  },
+  "Vulnerability_Disclosure": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "security\\.txt"
+    ],
+    "words": [
+     "\\b(security\\.txt|vulnerability disclosure|security researchers?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "A security.txt file on the website at /.well-known/security.txt as per RFC 9116.",
+     "task": "954"
+    }
+   ],
+   "reviewedSha": "02a3686a9c217941205c0533fe4d4ee7247447ce",
+   "reviewedOn": "2026-11-07"
+  },
+  "Vulnerable_Dependency_Management": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "(^|/)package(-lock)?\\.json$",
+     "\\.npmrc$",
+     "\\.nvmrc$"
+    ],
+    "words": [
+     "\\b(npm (install|ci|audit|view)|advisor(y|ies)|SBOM|lockfile|package-lock|new dependenc(y|ies)|production dependencies|devDependencies|npm packages?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "It's highly recommended to perform automated analysis of the dependencies from the birth of the project.",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "npm audit --omit=dev --audit-level=high"
+    }
+   ],
+   "reviewedSha": "0b545548ae4b385e187a3e0165f7dcc1a34e8091",
+   "reviewedOn": "2026-11-07"
+  },
+  "Web_Cache_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "revalidat",
+     "cacheTags?"
+    ],
+    "words": [
+     "\\b(Cache-Control|revalidat\\w*|ISR|CDN|shared cach\\w*|unstable_cache|use cache|static render\\w*|prerender\\w*)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Default to preventing shared caching for authenticated, personalized, tenant-specific, or otherwise sensitive responses.",
+     "task": "954"
+    }
+   ],
+   "reviewedSha": "861b650e37a158ee11f2b38369f462a07a1b2269",
+   "reviewedOn": "2026-11-07"
+  },
+  "Web_Frontend_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "\\.tsx$"
+    ],
+    "words": [
+     "\\b(dangerouslySetInnerHTML|innerHTML|sanitiz\\w*|XSS|raw HTML)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The fundamental security rule is to never use innerHTML with untrusted data.",
+     "control": "scripts/quality/client-sinks.mjs",
+     "evidence": "id: 'K8'"
+    }
+   ],
+   "reviewedSha": "57c314993c07b8d4ab43317c77a71705152ac5fb",
+   "reviewedOn": "2026-11-07"
+  },
+  "Web_Service_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "^src/app/api/",
+     "route\\.ts$"
+    ],
+    "words": [
+     "\\b(API routes?|endpoints?|Route Handlers?)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Schema validation enforces constraints and syntax defined by the schema.",
+     "task": "955"
+    }
+   ],
+   "reviewedSha": "be2a9f1c09cadffbca6c179e7d3c27c20a053226",
+   "reviewedOn": "2026-11-07"
+  },
+  "Webhook_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "hook/route\\.ts$",
+     "webhook"
+    ],
+    "words": [
+     "\\bwebhooks?\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Accept only the signature scheme you expect",
+     "control": "src/app/api/auth-email-hook/route.ts",
+     "evidence": "import { Webhook } from 'standardwebhooks'"
+    }
+   ],
+   "reviewedSha": "2ff8661773c12186d0c96dd51b94ed0b06c2a13c",
+   "reviewedOn": "2026-11-07"
+  },
+  "WebSocket_Security": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "[Rr]ealtime"
+    ],
+    "words": [
+     "\\b(Realtime|websockets?|postgres_changes)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Don't assume WebSocket connection equals unlimited access. Check authorization for each action",
+     "control": "scripts/quality/db-catalog-audit.mjs",
+     "evidence": "least privilege, RLS on every table"
+    }
+   ],
+   "reviewedSha": "f8a5494d85b890a29949a3c064035448c73a0501",
+   "reviewedOn": "2026-11-07"
+  },
+  "Workload_Identity_Federation": {
+   "applies": false,
+   "why": "no workload federates into a cloud provider; CI uses repository secrets for the one test project",
+   "reviewedSha": "a1a4b1505c2a203eca02fef9074b9e1fecf5511f",
+   "reviewedOn": "2026-11-07"
+  },
+  "XML_External_Entity_Prevention": {
+   "applies": false,
+   "why": "the project parses no XML documents anywhere",
+   "reviewedSha": "7489eecb4b94257520f26b5b5cf3755e37fdb98e",
+   "reviewedOn": "2026-11-07"
+  },
+  "XML_Security": {
+   "applies": false,
+   "why": "the project parses and signs no XML documents",
+   "reviewedSha": "2570f95c36153b0f93968253bcaa9ef1736b2abf",
+   "reviewedOn": "2026-11-07"
+  },
+  "XPath_Injection_Prevention": {
+   "applies": false,
+   "why": "the project runs no XPath queries anywhere",
+   "reviewedSha": "7eca1ad517316e784738525009dfda0cb79c38f6",
+   "reviewedOn": "2026-11-07"
+  },
+  "XS_Leaks": {
+   "applies": true,
+   "triggers": {
+    "paths": [],
+    "words": [
+     "\\b(cross-origin|COOP|CORP|SameSite|window\\.open|iframes?|postMessage)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "The SameSite attribute of a cookie tells the browser whether it should include the cookie in the request from the other site.",
+     "task": "954"
+    }
+   ],
+   "reviewedSha": "67ee19de194b75a7183e440a019e5df21c6c16ed",
+   "reviewedOn": "2026-11-07"
+  },
+  "XSS_Filter_Evasion": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "sanitize",
+     "[Cc]ms"
+    ],
+    "words": [
+     "\\b(sanitiz\\w*|rich text|CMS (body|page)|raw HTML)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "input filtering is an incomplete defense for XSS",
+     "control": "src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts",
+     "evidence": "EVASIONS"
+    }
+   ],
+   "reviewedSha": "0728eb9f644f5821d014e4679bb141fc8871d9a1",
+   "reviewedOn": "2026-11-07"
+  },
+  "Zero_Trust_Architecture": {
+   "applies": false,
+   "why": "no private network or internal zone exists: every request reaches Vercel functions over the internet and is authenticated per request",
+   "reviewedSha": "2938267527b3a5ac40208ebd3e821aa7f43e89eb",
+   "reviewedOn": "2026-11-07"
+  }
+ }
+}

@@ -119,6 +119,8 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   // The "## OWASP" checklist (one line per required sheet) does not count towards the limit; every other section does.
   assert.deepEqual(kickoffFindings(good.replace('## OWASP\ntext', `## OWASP\n${'- S: not applicable — reason.\n'.repeat(200)}`)), []);
   assert.ok(kickoffFindings(good.replace('## UI\ntext', `## UI\n${'x\n'.repeat(200)}`)).some((f) => f.message.includes('lines >')));
+  // The review's per-sheet verdicts live in their own record: a checklist pasted into the review counts like any other text.
+  assert.ok(kickoffFindings(`${good}\n### OWASP check\n${'- S: not applicable — reason.\n'.repeat(200)}`).some((x) => x.message.includes('lines >')));
   assert.ok(kickoffFindings(good.replace('## OWASP\n', '')).some((f) => f.message.includes('## OWASP')));
   // Older sprints are history and are not re-checked against the new template.
   assert.deepEqual(rules('tasks/Sprints/Sprint_90_kickoff_prompt_Task_1_X.md', '# Old\n', none), []);

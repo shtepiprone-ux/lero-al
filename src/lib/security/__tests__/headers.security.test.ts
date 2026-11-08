@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CSP_BASELINE, CSP_SCRIPT_HOSTS, SECURITY_HEADERS, carriesScriptReportOnly, newScriptNonce, scriptReportOnlyPolicy } from '../headers'
 
-// the middleware (Task 923 R70 (f)) is the real one; the Supabase client and next-intl's middleware are doubles that, like the real ones, copy the request headers into the response
+// the proxy (Task 923 R70 (f), renamed from the middleware by Task 952) is the real one; the Supabase client and next-intl's middleware are doubles that, like the real ones, copy the request headers into the response
 vi.mock('@supabase/ssr', () => ({ createServerClient: () => ({ auth: { getUser: async () => ({ data: {}, error: null }) } }) }))
 vi.mock('next-intl/middleware', () => ({
   default: () => (req: NextRequest) => NextResponse.next({ request: { headers: new Headers(req.headers) } }),
@@ -94,10 +94,10 @@ describe('headers', () => {
   const forwardedPolicy = (res: Response) => res.headers.get('x-middleware-request-content-security-policy-report-only')
 
   it('[SEC-X-SRV-CSP-REPORT-ONLY] dynamic routes carry the report-only script policy', async () => {
-    const { middleware } = await import('@/middleware')
+    const { proxy } = await import('@/proxy')
     const nonces: string[] = []
     for (const path of ['/admin', '/admin/users', '/sq/cabinet', '/en/cabinet/statistics', '/sq/auth/login', '/uk/auth/register']) {
-      const res = await middleware(new NextRequest(`https://lero.al${path}`))
+      const res = await proxy(new NextRequest(`https://lero.al${path}`))
       const policy = res.headers.get('Content-Security-Policy-Report-Only') ?? ''
       expect(policy, `${path}: a script policy in report-only mode`).toContain('script-src')
       expect(policy, `${path}: a nonce`).toMatch(/'nonce-[A-Za-z0-9+/=]{16,}'/)
@@ -113,9 +113,9 @@ describe('headers', () => {
   })
 
   it('the pages that are not dynamic admin, cabinet and auth routes carry no policy, and the baseline policy is unchanged', async () => {
-    const { middleware } = await import('@/middleware')
+    const { proxy } = await import('@/proxy')
     for (const path of ['/sq', '/en/listings', '/sq/listings/some-slug', '/api/presence']) {
-      const res = await middleware(new NextRequest(`https://lero.al${path}`))
+      const res = await proxy(new NextRequest(`https://lero.al${path}`))
       expect(res.headers.get('Content-Security-Policy-Report-Only'), path).toBeNull()
     }
     expect(CSP_BASELINE).toBe("frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'")

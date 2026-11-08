@@ -25,13 +25,13 @@ anyone, by any means (audit, review, tool, test, a question of the owner), is cl
   an acceptance criterion with its test, written in the same turn (a new kickoff, or a revision of an open one);
 - only the owner accepts a risk, by a numbered decision; Opus never accepts one.
 An answer to the owner never lists a gap without its fix or its task. `check-files.mjs` enforces it on every audit
-ledger (`docs/security/**/findings*.md`: rule `finding-status`) and on every review (`### OWASP check`: a missing
+ledger (`docs/security/**/findings*.md`: rule `finding-status`) and on every review (its OWASP record: a missing
 protection is a finding, and `NEEDS REVISION` returns it).
 
 **Every task and every change, now and later, is held to the OWASP Cheat Sheet Series** (owner, 2026-11-07): the design
 (§1 step 5, `owasp.mjs plan`, enforced by `check-files.mjs` on every kickoff), the review (§3, `owasp.mjs review`), the
 CI task gate on every pull request and push (`owasp.mjs gate`: code or configuration lands only with an approved task
-whose "### OWASP check" judges every sheet the diff triggers), the mapping (`owasp.mjs check`: upstream drift, a broken
+whose OWASP review record judges every sheet the diff triggers), the mapping (`owasp.mjs check`: upstream drift, a broken
 quote or control, and any file no sheet covers fail CI), and every session's start (`agent-check.mjs start`).
 
 ## 1. Design (Opus)
@@ -80,9 +80,10 @@ reviewer reruns every claimed command on the candidate commit and reads every ch
 `node scripts/quality/ac-tests.mjs --base main <kickoff>`, which compares the kickoff's criteria with the diff (the
 expected tests come from the kickoff, not from the report). Follow
 `secure-code-review.md`: tools first, then the six diff-based steps and the checklist of every category the diff touches.
-Findings and the review summary use its templates and go into the kickoff's "Review" section, with "### OWASP check":
+Findings and the review summary use its templates and go into the kickoff's "Review" section; the per-sheet verdicts go
+to the task's OWASP review record (`docs/security/owasp/reviews/Task_<n>.json`, `kickoff-template.md`):
 `node scripts/quality/owasp.mjs review <kickoff> --base main` names the sheets of the kickoff and those the actual diff
-triggers, and each gets `met` (quote and evidence), `finding F<n>` or `not applicable` (reason).
+triggers, and each gets `met` (quote and evidence), `finding` (its number) or `not applicable` (reason).
 
 **Quality check of the review:** `node scripts/quality/check-files.mjs <kickoff>` and
 `node scripts/quality/owasp.mjs review <kickoff> --base main` exit 0 after the review is written;

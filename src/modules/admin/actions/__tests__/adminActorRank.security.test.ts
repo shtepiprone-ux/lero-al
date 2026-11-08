@@ -47,7 +47,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/lib/auth/accountAccess', async (orig) => ({ ...(await orig<typeof import('@/lib/auth/accountAccess')>()), syncAccountAccess: async () => ({ ok: true }) }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => undefined }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async (id: string, _s: string, actor: { role: string | null }) => { transitions.push({ id, role: actor.role }); return { ok: true } } }))

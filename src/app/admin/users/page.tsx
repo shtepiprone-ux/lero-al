@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import { requireStaffPage } from '@/lib/auth/staff'
 import { Button, Group, Text } from '@mantine/core'
 import { UserPlus } from 'lucide-react'
@@ -96,7 +96,7 @@ export default async function AdminUsersPage({
                 {t('users_total', { count })}
               </Text>
             )}
-            <Button component={Link} href="/admin/users/new" leftSection={<UserPlus size={iconSize.standard} />}>
+            <Button component={ClientLink} href="/admin/users/new" leftSection={<UserPlus size={iconSize.standard} />}>
               {t('users_new_btn')}
             </Button>
           </Group>

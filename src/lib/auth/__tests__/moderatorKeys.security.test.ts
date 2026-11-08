@@ -58,7 +58,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({ from: (t: string) => { state.reached.push(`session.${t}`); return chain(t) } }) }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined, set: () => undefined, getAll: () => [] }), headers: async () => ({ get: () => null }) }))
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: async () => undefined }))
 vi.mock('@/lib/getExchangeRateServer', () => ({ isRatePublished: async () => true }))   // the single rate source (Task 923 R79): published, so the catalogue actions reach their database

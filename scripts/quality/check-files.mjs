@@ -22,7 +22,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { findMojibake, loadAllowlist, isAllowlisted } from '../check-mojibake.mjs';
-import { checkKickoff, checkReview, loadJson, REGISTRY, CONTROLS, OWASP_GRANDFATHERED } from './owasp.mjs';
+import { checkKickoff, checkReview, loadJson, readReviewRecord, REGISTRY, CONTROLS, OWASP_GRANDFATHERED } from './owasp.mjs';
 import { scan as sinkScan, PRODUCT as SINK_PRODUCT } from './client-sinks.mjs';
 import { check as localeCheck, LOCALES, loadParser } from './locale-safety.mjs';
 
@@ -322,14 +322,14 @@ export function productCodeFindings(rel, body) {
 
 let owaspData;
 /** The OWASP gate on a kickoff (scripts/quality/owasp.mjs): "## OWASP" names every sheet the task triggers, with a quote
- *  verified against the sheet's text and the acceptance criteria that implement it; a written review carries
- *  "### OWASP check". */
+ *  verified against the sheet's text and the acceptance criteria that implement it; a written review has its record
+ *  under docs/security/owasp/reviews/. */
 export function owaspFindings(rel, body) {
   const task = /_Task_(\d+)_/.exec(rel)?.[1];
   if (OWASP_GRANDFATHERED.has(task)) return [];
   owaspData ??= { registry: loadJson(REGISTRY, ROOT), controls: loadJson(CONTROLS, ROOT) };
   if (!owaspData.registry || !owaspData.controls) return [finding('owasp', `${REGISTRY} or ${CONTROLS} is missing: run node scripts/quality/owasp.mjs sync`)];
-  return [...checkKickoff(body, owaspData.registry, owaspData.controls), ...checkReview(body, owaspData.registry, owaspData.controls)]
+  return [...checkKickoff(body, owaspData.registry, owaspData.controls), ...checkReview(body, owaspData.registry, owaspData.controls, [], { record: readReviewRecord(rel, ROOT) })]
     .filter((f) => !f.message.startsWith('missing section "## OWASP"')) // kickoffFindings reports the missing section
     .map((f) => finding('owasp', f.message, f.line));
 }

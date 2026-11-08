@@ -42,7 +42,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('next/cache', () => ({ revalidatePath: (p: string) => { paths.push(p) }, revalidateTag: (t: string) => { tags.push(t) }, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: (p: string) => { paths.push(p) }, updateTag: (t: string) => { tags.push(t) }, revalidateTag: (t: string, profile?: string) => { tags.push(`revalidateTag:${t}:${profile}`) }, unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async (n: Record<string, unknown>) => { notifications.push(n) } }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async (id: string, to: string, actor: Record<string, unknown>) => { transitions.push({ id, to, actor }); return transitionResult } }))
 

@@ -52,7 +52,7 @@ function adminFrom(table: string) {
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => db.client }))
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => ({ from: (t: string) => adminFrom(t), auth: { admin: {} } }) }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/lib/auth/accountAccess', async (orig) => ({ ...(await orig<typeof import('@/lib/auth/accountAccess')>()), syncAccountAccess: async () => ({ ok: true }) }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => undefined }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async () => ({ ok: true }) }))

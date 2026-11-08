@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import { Box, Breadcrumbs, Anchor, Text } from '@mantine/core'
 import styles from './ListingsPageFrame.module.css'
 
@@ -71,11 +71,11 @@ export function ListingsPageFrame({
               separator: { color: 'var(--mantine-color-gray-4)' },
             }}
           >
-            <Anchor component={Link} href={homeHref} size="sm" c="gray.5" className={styles.homeLink}>
+            <Anchor component={ClientLink} href={homeHref} size="sm" c="gray.5" className={styles.homeLink}>
               {homeLabel}
             </Anchor>
             {intermediate.map((item, i) => (
-              <Anchor key={i} component={Link} href={item.href} size="sm" c="gray.5" className={styles.homeLink}>
+              <Anchor key={i} component={ClientLink} href={item.href} size="sm" c="gray.5" className={styles.homeLink}>
                 {item.label}
               </Anchor>
             ))}

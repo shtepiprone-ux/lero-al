@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import dynamic from 'next/dynamic'
 import { getTranslations } from 'next-intl/server'
 import { Info } from 'lucide-react'
@@ -448,7 +448,7 @@ export function ListingDetailViewBody({
                 </Text>
                 {previewBanner === 'published' && (
                   <Anchor
-                    component={Link}
+                    component={ClientLink}
                     href={`/${locale}/listings/${listing.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"

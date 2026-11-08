@@ -29,7 +29,7 @@ same" in an existing, already-reviewed pattern needs no new threat analysis (Att
    this project (`docs/security/owasp/controls.json`: applies or why not, triggers, verbatim requirements, and the control
    file with the evidence text that implements each, or the open task that will). A sheet changed upstream fails until
    it is re-read; a control whose evidence text disappears fails until it is re-checked. Then
-   `node scripts/quality/owasp.mjs review <kickoff> --base main` and "### OWASP check" in the review: a protection the
+   `node scripts/quality/owasp.mjs review <kickoff> --base main` and the task's OWASP review record: a protection the
    diff should have and lacks is a finding, also when the kickoff did not ask for it.
 7. Baseline review (project start, legacy code, after an incident, or when the owner asks for the whole project):
    `node scripts/quality/audit-coverage.mjs` lists every tracked file by lane with its checks and reading rule; the

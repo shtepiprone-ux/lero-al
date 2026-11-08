@@ -191,7 +191,7 @@ jobs:
   owasp-gate:
     # Owner request 2026-11-07: the OWASP Cheat Sheet Series holds every task, the existing ones and every one created
     # later, and no change bypasses it. Code or configuration lands only with a task whose review is approved in the
-    # same change, whose "### OWASP check" holds, and whose checks together judge every sheet the diff triggers.
+    # same change, whose OWASP review record holds, and whose records together judge every sheet the diff triggers.
     name: OWASP task gate (an approved review covers every sheet the change triggers)
     runs-on: ubuntu-latest
     timeout-minutes: 10

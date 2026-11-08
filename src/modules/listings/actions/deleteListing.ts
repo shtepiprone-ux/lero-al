@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidateTag, revalidatePath } from 'next/cache'
+import { updateTag, revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
@@ -15,7 +15,7 @@ import { deleteAsset } from '@/lib/cloudinaryDelete'
  * Ownership (or the `listings.delete` permission) is decided in this action, with the session's client; the DELETE itself runs with the service role and must
  * delete exactly one row (Task 923 R71 (l)): the session has no DELETE policy on listings, so a delete through it removed nothing and still answered success.
  *
- * Calls revalidateTag('site-stats') on success so the homepage active-listing
+ * Calls updateTag('site-stats') on success so the homepage active-listing
  * counter reflects the deletion immediately instead of waiting for the 1-hour
  * cache TTL.
  */
@@ -76,7 +76,7 @@ export async function deleteListingAction(
     )
   }
 
-  revalidateTag('site-stats')
+  updateTag('site-stats')
   // Removed listing must disappear from the public listings index immediately.
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')

@@ -1,5 +1,5 @@
 import { Info } from 'lucide-react'
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import { Alert, Anchor, Stack, Text } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { LISTING_STATUS_COLOR } from '@/modules/listings/lib/listingStatusTone'
@@ -33,7 +33,7 @@ export function ListingStatusBanner({ status, message, similarLabel, href }: Pro
           {message}
         </Text>
         <Anchor
-          component={Link}
+          component={ClientLink}
           href={href}
           size="xs"
           underline="always"

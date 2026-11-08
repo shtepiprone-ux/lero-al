@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import { Box, Flex, SimpleGrid, Text, Title } from '@mantine/core'
 import { MapPin } from 'lucide-react'
 import { AppImage } from '@/design-system/media/AppImage'
@@ -64,7 +64,7 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
         {locations.map((loc, i) => (
           <Flex
             key={loc.id}
-            component={Link}
+            component={ClientLink}
             href={loc.href}
             direction="column"
             justify="flex-end"

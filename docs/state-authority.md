@@ -208,7 +208,7 @@ before any props or admin data reach the client.
 
 ### Middleware role: session refresh only (not authorization)
 
-`src/middleware.ts` calls `refreshSession(request)` (from `src/lib/auth/middleware.ts`)
+`src/proxy.ts` (the Next 16 name of the former middleware) calls `refreshSession(request)` (from `src/lib/auth/middleware.ts`)
 on every matched request. Its ONLY auth responsibility is to refresh expired tokens so
 all downstream Server Components receive a valid session. It does NOT authorize routes
 or redirect protected paths.
@@ -221,7 +221,7 @@ traffic on other routes. This exclusion is intentional and acceptable.
 
 `src/lib/auth/middleware.ts` is the canonical location for `refreshSession`.
 `src/lib/supabase/middleware.ts` does NOT exist.
-`src/middleware.ts` imports via `@/lib/auth/middleware`.
+`src/proxy.ts` imports via `@/lib/auth/middleware`.
 
 ### `sanitizeReturnTo`: path-safety only (not an authorization check)
 

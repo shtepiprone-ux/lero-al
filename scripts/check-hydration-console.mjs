@@ -244,7 +244,7 @@ function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
   }
 
   // Session is available — list route is always navigated.
-  // The admin tree has no [locale] segment (src/middleware.ts excludes /admin), so no /en prefix.
+  // The admin tree has no [locale] segment (src/proxy.ts excludes /admin), so no /en prefix.
   routes.push({ path: '/admin/users', label: 'Admin users list (Task 434 area)' });
 
   // Detail route gated on UUID
@@ -589,7 +589,7 @@ function verifyAdminConfig() {
     console.log(`   ✅ [3] session+UUID: dashboard route → ${fullDash.path}`);
   }
 
-  // The admin tree has no locale segment (src/middleware.ts): a locale-prefixed admin path is a permanent 404.
+  // The admin tree has no locale segment (src/proxy.ts): a locale-prefixed admin path is a permanent 404.
   const localePrefixed = [sessionNoUuidPlan, fullPlan]
     .flat()
     .filter(r => typeof r.path === 'string' && /^[/][a-z]{2}[/]admin([/]|$)/.test(r.path))

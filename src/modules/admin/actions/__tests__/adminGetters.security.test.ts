@@ -37,7 +37,7 @@ vi.mock('@/lib/supabase/admin', () => ({
     },
   })),
 }))
-vi.mock('next/cache', () => ({ revalidateTag: vi.fn(), revalidatePath: vi.fn(), unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidateTag: vi.fn(), updateTag: vi.fn(), revalidatePath: vi.fn(), unstable_cache: (fn: unknown) => fn }))
 
 import { getAllCurrenciesAdmin } from '../currencies'
 import { getAllPropertyTypesAdmin } from '../propertyTypes'

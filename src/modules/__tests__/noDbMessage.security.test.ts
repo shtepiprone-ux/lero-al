@@ -46,7 +46,7 @@ vi.mock('@/lib/auth/server', () => ({ getUser: async () => ({ id: 'user-1', emai
 vi.mock('@/lib/auth/requireViewer', () => ({ requireViewer: async () => ({ ok: true, userId: 'user-1', role: 'admin' }) }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
 vi.mock('@/lib/auth/permissions', () => ({ hasPermission: async () => true, assertPermission: async () => undefined, roleHasPermission: async () => true }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('next/headers', () => ({ headers: async () => ({ get: () => null }), cookies: async () => ({ get: () => undefined, set: () => undefined, getAll: () => [] }) }))
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: async () => undefined }))
 vi.mock('@/lib/getExchangeRateServer', () => ({ isRatePublished: async () => true }))   // the single rate source (Task 923 R79): published, so the catalogue actions reach their database

@@ -28,7 +28,7 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    break, restored afterwards).
 6. OWASP: `node scripts/quality/owasp.mjs review <kickoff> --base main` lists every sheet of the kickoff's "## OWASP"
    and every sheet the actual diff triggers (a diff can reach further than its design). For each, read the requirement in
-   the sheet text and check the diff against it; write "### OWASP check" under "## Review": `met` with the quote and the
+   the sheet text and check the diff against it; write `docs/security/owasp/reviews/Task_<n>.json` (`kickoff-template.md`): `met` with the quote and the
    evidence you ran, `finding F<n>`, or `not applicable` with a reason. A protection the diff should have and lacks is a
    finding, also when the kickoff did not ask for it.
 7. Write the review summary and the findings (templates in `secure-code-review.md`) into the kickoff's "Review" section.

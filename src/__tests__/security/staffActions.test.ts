@@ -51,7 +51,7 @@ vi.mock('@/lib/supabase/server', () => ({ createClient: async () => recorder('us
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => recorder('admin') }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
 vi.mock('@/lib/getExchangeRateServer', () => ({ isRatePublished: async () => true }))   // the single rate source (Task 923 R79): published, so the catalogue actions reach their database
-vi.mock('next/cache', () => ({ revalidatePath: () => { sideEffects.push('revalidatePath') }, revalidateTag: () => { sideEffects.push('revalidateTag') }, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => { sideEffects.push('revalidatePath') }, revalidateTag: () => { sideEffects.push('revalidateTag') }, updateTag: () => { sideEffects.push('updateTag') }, unstable_cache: (fn: unknown) => fn }))
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined, set: () => { sideEffects.push('cookie') }, getAll: () => [] }), headers: async () => ({ get: () => null }) }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => { sideEffects.push('notification') } }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async () => { sideEffects.push('listing-transition'); return { ok: true } }, applyListingTransition: async () => { sideEffects.push('listing-transition'); return { ok: true } } }))

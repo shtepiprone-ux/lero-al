@@ -58,6 +58,8 @@ After the task:
   keeping `CSP_BASELINE`; `carriesScriptReportOnly` becomes the list of routes still report-only, empty when every route
   is dynamic. A route the build marks static cannot carry a nonce: list each with its reason in the report; Opus brings
   the trade-off (enforce through dynamic rendering, or keep report-only there) to the owner as a decision.
+  Known blocker (Task 952 review, 2026-11-07): the inline `<script data-mantine-script="true">` that `ColorSchemeScript` writes (`src/app/layout.tsx:44`) has no nonce, on every
+  page (32 of 33 scripts of `/sq/auth/login` carry the nonce, this one does not). It gets the nonce or is removed; `check-csp-violations.mjs` is the test.
 - Shared caches (added 2026-11-07 by the OWASP gate, Web Cache Security, finding OW-04): every answer rendered for a session (the
   cabinet, `/admin`, the auth pages, any route handler reading the session) carries `Cache-Control` with `private` or
   `no-store`; `src/proxy.ts` sets it where the framework does not. The click-shield run reads the answer of

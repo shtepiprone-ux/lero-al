@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   ROOT, REGISTRY, CONTROLS, CACHE, VERIFIED, normalise, quotesOf, quoteFound, triggered, pathsIn, surfaceChanged,
-  checkMapping, checkKickoff, checkReview, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict,
+  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict,
 } from './owasp.mjs';
 
 const SHEET_A = '# Alpha\n\nThe server **must** validate every `request` before use, [see](x.md) always.\n';
@@ -157,16 +157,43 @@ test('the kickoff check: every required sheet with a verified quote and an exist
 test('the review check: needed once a verdict is written; a verdict per sheet; "met" carries a verified quote and evidence', () => {
   const root = fixture();
   const owasp = `- Alpha: "${QA}" — x — AC1`;
-  const run = (review, extra = []) => checkReview(KICK(owasp, review), registry(), controls(), extra, { root }).map((f) => f.message);
+  const body = (review) => `# Task 900 — Outcome\n\n${KICK(owasp, review)}`;
+  const rec = (sheets, task = '900') => ({ task, sheets });
+  const run = (review, record = null, extra = []) => checkReview(body(review), registry(), controls(), extra, { root, record }).map((f) => f.message);
+  const met = { verdict: 'met', quotes: [QA], evidence: '`src/a.test.ts` passes' };
   try {
     assert.deepEqual(run('Not reviewed yet.'), []);
-    assert.match(run('**APPROVED**').join(), /no "### OWASP check"/);
-    assert.deepEqual(run(`**APPROVED**\n\n### OWASP check\n- Alpha: met — "${QA}" — \`src/a.test.ts\` passes`), []);
-    assert.match(run('**APPROVED**\n\n### OWASP check\n- Beta: not applicable — the diff writes no log line').join(), /no verdict for Alpha/);
-    assert.match(run(`**APPROVED**\n\n### OWASP check\n- Alpha: met — "${QA}"`).join(), /needs its evidence/);
-    assert.match(run('**APPROVED**\n\n### OWASP check\n- Alpha: met — `src/a.test.ts`').join(), /needs the quote/);
-    assert.match(run('**APPROVED**\n\n### OWASP check\n- Alpha: fine').join(), /verdict must start/);
-    assert.match(run(`**NEEDS REVISION**\n\n### OWASP check\n- Alpha: finding F1 — no schema`, ['Beta']).join(), /no verdict for Beta \(triggered by the diff\)/);
+    assert.match(run('**APPROVED**').join(), /no record docs\/security\/owasp\/reviews\/Task_900\.json/);
+    assert.deepEqual(run('**APPROVED**', rec({ Alpha: met })), []);
+    assert.match(run('**APPROVED**', { unreadable: true }).join(), /not valid JSON/);
+    assert.match(run('**APPROVED**', rec({ Alpha: met }, '901')).join(), /record is for Task 901/);
+    assert.match(run('**APPROVED**', rec({ Beta: { verdict: 'not applicable', reason: 'the diff writes no log line' } })).join(), /no verdict for Alpha/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { ...met, evidence: 'looked fine' } })).join(), /needs its evidence/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { ...met, quotes: [] } })).join(), /needs the quote/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { ...met, quotes: ['this sentence is not in the sheet'] } })).join(), /quote not found/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { verdict: 'fine' } })).join(), /verdict must be/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { ...met, reason: 'also a reason' } })).join(), /field "reason" does not belong/);
+    assert.match(run('**APPROVED**', rec({ Alpha: { verdict: 'not applicable', reason: 'no' } })).join(), /at least five words/);
+    assert.match(run('**APPROVED**', rec({ Alpha: met, Nope: met })).join(), /Nope is not a sheet/);
+    assert.match(run('**NEEDS REVISION**', rec({ Alpha: { verdict: 'finding', finding: 'one' } })).join(), /names its number/);
+    assert.match(run('**NEEDS REVISION**', rec({ Alpha: { verdict: 'finding', finding: 'F1' } })).join(), /F1 is not in the findings/);
+    assert.deepEqual(run('**NEEDS REVISION**\n\nF1 — no schema\n', rec({ Alpha: { verdict: 'finding', finding: 'F1', note: 'no schema' } })), []);
+    assert.match(run('**NEEDS REVISION**\n\nF1 — no schema\n', rec({ Alpha: { verdict: 'finding', finding: 'F1' } }), ['Beta']).join(), /no verdict for Beta \(triggered by the diff\)/);
+    assert.match(run('**APPROVED**\n\n### OWASP check\n- Alpha: met', rec({ Alpha: met })).join(), /no longer belongs in the kickoff/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('a review record is found by the task number of its kickoff', () => {
+  const root = fixture();
+  const file = 'tasks/Sprints/Sprint_93_kickoff_prompt_Task_900_X.md';
+  try {
+    assert.equal(readReviewRecord(file, root), null);
+    assert.equal(readReviewRecord('tasks/Sprints/other.md', root), null);
+    mkdirSync(path.join(root, REVIEWS), { recursive: true });
+    writeFileSync(path.join(root, REVIEWS, 'Task_900.json'), '{ "task": "900", "sheets": {} }');
+    assert.deepEqual(readReviewRecord(file, root), { task: '900', sheets: {} });
+    writeFileSync(path.join(root, REVIEWS, 'Task_900.json'), '{ broken');
+    assert.deepEqual(readReviewRecord(file, root), { unreadable: true });
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
@@ -183,22 +210,22 @@ test('O9: every file but documentation is covered by a sheet, so a task touching
 
 test('the task gate: code lands only with an approved task whose reviews cover every sheet the diff triggers', () => {
   const root = fixture();
-  const check = `### OWASP check\n- Alpha: met — "${QA}" — \`src/guard.ts\` parseRequest()\n`;
-  const approved = KICK(`- Alpha: "${QA}" — schema — AC1`, `Verdict: APPROVED\n\n${check}`);
+  const record = { task: '900', sheets: { Alpha: { verdict: 'met', quotes: [QA], evidence: '`src/guard.ts` parseRequest()' } } };
+  const head = '# Task 900 — Outcome\n\n';
+  const approved = head + KICK(`- Alpha: "${QA}" — schema — AC1`, 'Verdict: APPROVED');
   const file = 'tasks/Sprints/Sprint_93_kickoff_prompt_Task_900_X.md';
   const gate = (over) => ids(checkGate({ files: ['src/a.ts'], added: '', kickoffs: [], registry: registry(), controls: controls(), root, ...over }));
   try {
     assert.deepEqual(gate({ files: ['docs/a.md', 'tasks/Sprints/y.md'] }), [], 'documentation alone needs no task');
     assert.deepEqual(gate({}), ['G1'], 'code without any task');
     assert.deepEqual(gate({ kickoffs: [{ file, body: KICK(`- Alpha: "${QA}" — schema — AC1`, 'Verdict: NEEDS REVISION') }] }), ['G1'], 'a task not approved');
-    assert.deepEqual(gate({ kickoffs: [{ file, body: KICK(`- Alpha: "${QA}" — schema — AC1`, `Review 1: NEEDS REVISION\n\nReview 2: APPROVED\n\n${check}`) }] }), [], 'the last verdict counts');
-    assert.deepEqual(gate({ kickoffs: [{ file, body: approved }] }), []);
-    assert.deepEqual(gate({ kickoffs: [{ file, body: KICK(`- Alpha: "${QA}" — schema — AC1`, 'Verdict: APPROVED') }] }), ['G2', 'G3'], 'an approved review without its OWASP check');
+    assert.deepEqual(gate({ kickoffs: [{ file, body: head + KICK(`- Alpha: "${QA}" — schema — AC1`, 'Review 1: NEEDS REVISION\n\nReview 2: APPROVED'), record }] }), [], 'the last verdict counts');
+    assert.deepEqual(gate({ kickoffs: [{ file, body: approved, record }] }), []);
+    assert.deepEqual(gate({ kickoffs: [{ file, body: approved }] }), ['G2', 'G3'], 'an approved review without its record');
     // the diff triggers Alpha by its path; an approved review that never judged Alpha does not cover it
-    const other = KICK('- Alpha: not applicable — this task changes only the documentation pages', 'Verdict: APPROVED\n\n### OWASP check\n- Alpha: not applicable — this task changes only the documentation pages\n');
-    assert.deepEqual(gate({ kickoffs: [{ file, body: other }] }), []);
-    const none = KICK('', 'Verdict: APPROVED\n\n### OWASP check\n');
-    assert.deepEqual(gate({ kickoffs: [{ file, body: none }] }), ['G3']);
+    const other = head + KICK('- Alpha: not applicable — this task changes only the documentation pages', 'Verdict: APPROVED');
+    assert.deepEqual(gate({ kickoffs: [{ file, body: other, record: { task: '900', sheets: { Alpha: { verdict: 'not applicable', reason: 'this task changes only the documentation pages' } } } }] }), []);
+    assert.deepEqual(gate({ kickoffs: [{ file, body: head + KICK('', 'Verdict: APPROVED'), record: { task: '900', sheets: {} } }] }), ['G3']);
     assert.deepEqual(gate({ dependencyOnly: true }), [], 'a version-only dependency update is held by the dependency gates');
     assert.equal(lastVerdict('## Review\nReview 1: APPROVED\nReview 2: NEEDS REVISION\n'), 'NEEDS REVISION');
   } finally { rmSync(root, { recursive: true, force: true }); }

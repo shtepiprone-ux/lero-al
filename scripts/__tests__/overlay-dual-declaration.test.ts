@@ -29,7 +29,7 @@
  *      re-introduced anywhere else).
  *   2. `--color-overlay` and `--color-overlay-foreground` are declared NOWHERE in the file.
  *   3. Zero `bg-overlay*` / `text-overlay-foreground*` / `border-overlay*` rules are generated in
- *      the built bundle (`.next/static/css/*.css`) — the same census the kickoff's own §11 uses
+ *      the built bundle (`.next/static/chunks/*.css`) — the same census the kickoff's own §11 uses
  *      for AC3, reused here as a machine-enforced gate rather than a one-off manual command.
  *
  * The planted-violation assertions run against literal in-memory fixture strings, never the real
@@ -47,7 +47,8 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..', '..')
 const GLOBALS_CSS_PATH = join(ROOT, 'src', 'app', 'globals.css')
-const CSS_DIR = join(ROOT, '.next', 'static', 'css')
+// Task 952: Next 16 builds with Turbopack, which writes the shipped stylesheets to .next/static/chunks (Next 15 / webpack wrote .next/static/css).
+const CSS_DIR = join(ROOT, '.next', 'static', 'chunks')
 
 function readGlobalsCss(): string {
   return readFileSync(GLOBALS_CSS_PATH, 'utf8')

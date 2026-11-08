@@ -13,7 +13,7 @@
  * TWO ARMS, because one is not enough (kickoff §0.2 D1 — draft 1's own motivating example,
  * `LightboxView.tsx`/`MantineListingGalleryPattern.tsx`'s `var(--color-overlay-foreground)`
  * TSX-inline-style consumers, would have been invisible to a CSS-only scan):
- *   Arm A — every `var(--owned)` in the shipped CSS (`.next/static/css/*.css` by default)
+ *   Arm A — every `var(--owned)` in the shipped CSS (`.next/static/chunks/*.css` by default)
  *           resolves to a shipped declaration or an `@property` registration.
  *   Arm B — every `var(--owned)` written in `src/**\/*.{css,tsx,ts}` (excluding `globals.css`,
  *           the ownership source) resolves the same way. The glob is `.css`, not `.module.css`
@@ -107,7 +107,7 @@ function getFlag(name, def) {
 }
 const VERIFY_GATE = process.argv.includes('--verify-gate');
 const UPDATE_SNAPSHOT = process.argv.includes('--update-snapshot');
-const CSS_DIR = resolve(process.cwd(), getFlag('css-dir', resolve(ROOT, '.next/static/css')));
+const CSS_DIR = resolve(process.cwd(), getFlag('css-dir', resolve(ROOT, '.next/static/chunks')));
 const GLOBALS_PATH = resolve(process.cwd(), getFlag('globals-path', resolve(ROOT, 'src/app/globals.css')));
 const SRC_DIR = resolve(process.cwd(), getFlag('src-dir', resolve(ROOT, 'src')));
 const SNAPSHOT_PATH = resolve(process.cwd(), getFlag('snapshot-path', resolve(ROOT, 'scripts/css-var-ownership-snapshot.json')));
@@ -885,8 +885,8 @@ function setupTempTree() {
   const srcDir = join(base, 'src');
   mkdirSync(cssDir, { recursive: true });
   mkdirSync(srcDir, { recursive: true });
-  for (const f of listCssDirFiles(resolve(ROOT, '.next/static/css'))) {
-    cpSync(f, join(cssDir, relative(resolve(ROOT, '.next/static/css'), f)));
+  for (const f of listCssDirFiles(resolve(ROOT, '.next/static/chunks'))) {
+    cpSync(f, join(cssDir, relative(resolve(ROOT, '.next/static/chunks'), f)));
   }
   // Arm B only ever needs .css/.tsx/.ts files, but copying the whole src tree
   // keeps relative import/reference shapes intact for anything a future plant

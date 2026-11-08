@@ -56,12 +56,24 @@ outside `tasks/Archive/`.)
    output for each security test.
 
 ## Review
-<filled by Opus: the review summary and the findings in the templates of secure-code-review.md>
+<filled by Opus: the review summary and the findings in the templates of secure-code-review.md, with a link to the
+task's OWASP review record>
+```
 
-### OWASP check
-(Required once the review carries a verdict. `node scripts/quality/owasp.mjs review <kickoff> --base main` lists the
-sheets of "## OWASP" and those the actual diff triggers; one line each:)
-- <Sheet>: met — "<quote>" — <evidence: `test file` or `command` or path:line>.
-- <Sheet>: finding F<n> — <one line; the finding is in the findings list above>.
-- <Sheet>: not applicable — <reason of at least five words>.
+## OWASP review record
+
+`docs/security/owasp/reviews/Task_<n>.json`, required once the review carries a verdict. The per-sheet verdicts are
+evidence sized by the diff, for the tools; the kickoff stays a document people read. A record is written by the reviewer
+and committed with the review; `node scripts/quality/owasp.mjs review <kickoff> --base main` lists the sheets of
+"## OWASP" and those the actual diff triggers, and refuses a record that misses one:
+
+```json
+{
+  "task": "<n>",
+  "sheets": {
+    "<Sheet>": { "verdict": "met", "quotes": ["<verbatim, at least six words>"], "evidence": "<`test file`, `command` or path:line>" },
+    "<Sheet>": { "verdict": "finding", "finding": "F<n>", "note": "<one line; the finding is in \"## Review\">" },
+    "<Sheet>": { "verdict": "not applicable", "reason": "<at least five words>" }
+  }
+}
 ```

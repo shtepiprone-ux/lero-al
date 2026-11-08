@@ -23,10 +23,10 @@
 //   plan <kickoff>    print a draft "## OWASP" section: each required sheet, what triggered it, its mapped requirements
 //   kickoff <file..>  the kickoff's "## OWASP" section names every required sheet, each with a verified quote and the
 //                     acceptance criteria that implement it, or "not applicable" with a reason
-//   review <kickoff> [--base <ref>]   the kickoff's "### OWASP check" in "## Review" gives a verdict for every sheet the
-//                     kickoff names AND every sheet the actual diff against <ref> triggers
+//   review <kickoff> [--base <ref>]   the task's review record (docs/security/owasp/reviews/Task_<n>.json) gives a
+//                     verdict for every sheet the kickoff names AND every sheet the actual diff against <ref> triggers
 //   gate [--base <ref>]  CI on every pull request and push to main: a change of anything but documentation carries an
-//                     approved task whose "### OWASP check" passes, and the approved reviews together cover every sheet
+//                     approved task whose review record passes, and the approved reviews together cover every sheet
 //                     the diff triggers (a version-only dependency update is held by the dependency gates instead)
 // OWASP: Secure Code Review (the reference is part of the review), Threat Modeling (re-done when the reference changes),
 // Vulnerable Dependency Management (a reference is a dependency: track its version), Secure Coding with AI (the agent's
@@ -39,6 +39,9 @@ import { fileURLToPath } from 'node:url';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const REGISTRY = 'docs/security/owasp/sheets.json';
 export const CONTROLS = 'docs/security/owasp/controls.json';
+// One file per reviewed task: the per-sheet verdicts are evidence for the tools, sized by the diff, so they stay out of the
+// kickoff, which people read and which is held to its line limit. checkReview is the schema of a record.
+export const REVIEWS = 'docs/security/owasp/reviews';
 export const CACHE = '.cache/owasp';
 const UPSTREAM = 'OWASP/CheatSheetSeries';
 const SITE = 'https://cheatsheetseries.owasp.org/cheatsheets/';
@@ -46,7 +49,7 @@ export const MAX_AGE_DAYS = 7;
 export const VERIFIED = '.verified.json'; // in CACHE: when upstream was last read (sync or sync --verify)
 export const MIN_QUOTE_WORDS = 6;
 // Kickoffs reviewed and approved before this gate existed (2026-11-07); every other kickoff from Sprint 93 on is held to
-// "## OWASP" and, once reviewed, to "### OWASP check" (check-files.mjs and the `kickoff` command alike). A number leaves
+// "## OWASP" and, once reviewed, to its review record (check-files.mjs and the `kickoff` command alike). A number leaves
 // this set when its kickoff is archived; no number is ever added.
 export const OWASP_GRANDFATHERED = new Set(['947']);
 const SUFFIX = /_Cheat_Sheet\.md$|\.md$/;
@@ -197,7 +200,7 @@ export function sessionBrief(registry, controls, findings, { refresh = null } = 
   }
   lines.push('Every task design, edit and review is held against it: node scripts/quality/owasp.mjs plan <kickoff> before writing "## OWASP" ' +
     '(a missing protection goes into Scope and an AC with its test); node scripts/quality/owasp.mjs review <kickoff> before the verdict ' +
-    '("### OWASP check"; a protection the diff needs and lacks is a finding).');
+    `(the record ${REVIEWS}/Task_<n>.json; a protection the diff needs and lacks is a finding).`);
   return lines.join('\n');
 }
 
@@ -330,36 +333,57 @@ export function checkKickoff(body, registry, controls, { root = ROOT, text = she
   return out;
 }
 
-const VERDICT = /^(met|finding F\d+|not applicable)\b/i;
+/** The review record of a task, by its kickoff's file name: the parsed file, null when there is none, or { unreadable: true }. */
+export function readReviewRecord(file, root = ROOT) {
+  const task = /_Task_(\d+)_/.exec(file)?.[1];
+  if (!task) return null;
+  const f = path.join(root, REVIEWS, `Task_${task}.json`);
+  if (!existsSync(f)) return null;
+  try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return { unreadable: true }; }
+}
 
-/** Findings for "### OWASP check" in the Review section; `extra` = sheets the diff triggers. */
-export function checkReview(body, registry, controls, extra = [], { root = ROOT, text = sheetText } = {}) {
+const RECORD_FIELDS = { met: ['verdict', 'quotes', 'evidence'], finding: ['verdict', 'finding', 'note'], 'not applicable': ['verdict', 'reason'] };
+
+/** Findings for the review record of a kickoff with a written verdict; `extra` = sheets the diff triggers. */
+export function checkReview(body, registry, controls, extra = [], { root = ROOT, text = sheetText, record = null } = {}) {
   const out = [];
   const add = (line, message) => out.push({ id: 'owasp-review', line, message });
   const review = section(body, '## Review') ?? [];
   if (!review.some((l) => /\b(APPROVED|NEEDS REVISION)\b/.test(l.text))) return out; // no verdict written yet
-  const sec = section(body, '### OWASP check');
-  if (!sec) { add(review[0]?.line, 'the review has no "### OWASP check": a verdict per sheet of "## OWASP" and of the diff (owasp.mjs review)'); return out; }
+  const legacy = section(body, '### OWASP check');
+  if (legacy) add(legacy[0]?.line, `"### OWASP check" no longer belongs in the kickoff: the verdicts go to ${REVIEWS}/Task_<n>.json`);
+  const task = /^# Task (\d+) —/.exec(body)?.[1];
+  if (!record) { add(review[0]?.line, `the review has no record ${REVIEWS}/Task_${task}.json: a verdict per sheet of "## OWASP" and of the diff (owasp.mjs review)`); return out; }
+  if (record.unreadable) { add(review[0]?.line, `${REVIEWS}/Task_${task}.json is not valid JSON`); return out; }
+  if (String(record.task) !== String(task)) add(review[0]?.line, `the review record is for Task ${record.task}, this kickoff is Task ${task}`);
+  const reviewText = review.map((l) => l.text).join('\n');
+  const entries = Object.entries(record.sheets ?? {});
+  const named = new Set(entries.map(([sheet]) => sheet));
   const kick = sheetItems(section(body, '## OWASP') ?? []).map((i) => i.sheet);
-  const items = sheetItems(sec);
-  const named = new Set(items.map((i) => i.sheet));
   const sha = Object.fromEntries((registry?.sheets ?? []).map((s) => [s.name, s]));
-  for (const r of new Set([...kick, ...extra])) if (!named.has(r)) add(sec[0]?.line, `no verdict for ${r}${extra.includes(r) ? ' (triggered by the diff)' : ''}`);
-  for (const it of items) {
-    if (!sha[it.sheet]) { add(it.line, `${it.sheet} is not a sheet of the registry`); continue; }
-    if (controls?.sheets?.[it.sheet]?.reviewedSha !== sha[it.sheet].sha) add(it.line, `${it.sheet}: mapping not read at the current version`);
-    if (!VERDICT.test(it.rest)) { add(it.line, `${it.sheet}: verdict must start with "met", "finding F<n>" or "not applicable"`); continue; }
-    if (/^met\b/i.test(it.rest)) {
-      const qs = quotesOf(it.rest);
-      if (!qs.length) add(it.line, `${it.sheet}: "met" needs the quote it was checked against`);
+  const line = review[0]?.line;
+  for (const r of new Set([...kick, ...extra])) if (!named.has(r)) add(line, `no verdict for ${r}${extra.includes(r) ? ' (triggered by the diff)' : ''}`);
+  for (const [sheet, v] of entries) {
+    if (!sha[sheet]) { add(line, `${sheet} is not a sheet of the registry`); continue; }
+    if (controls?.sheets?.[sheet]?.reviewedSha !== sha[sheet].sha) add(line, `${sheet}: mapping not read at the current version`);
+    const fields = RECORD_FIELDS[v?.verdict];
+    if (!fields) { add(line, `${sheet}: verdict must be "met", "finding" or "not applicable"`); continue; }
+    for (const k of Object.keys(v)) if (!fields.includes(k)) add(line, `${sheet}: field "${k}" does not belong to a "${v.verdict}" verdict`);
+    if (v.verdict === 'met') {
+      const qs = (Array.isArray(v.quotes) ? v.quotes : []).filter((q) => String(q).trim().split(/\s+/).length >= MIN_QUOTE_WORDS);
+      if (!qs.length) add(line, `${sheet}: "met" needs the quote it was checked against, at least ${MIN_QUOTE_WORDS} words`);
       for (const q of qs) {
-        const f = quoteFound(q, text(it.sheet, root));
-        if (f === null) add(it.line, `${it.sheet}: sheet text not cached — run node scripts/quality/owasp.mjs sync`);
-        else if (!f) add(it.line, `${it.sheet}: quote not found in the sheet: "${q.slice(0, 60)}"`);
+        const f = quoteFound(q, text(sheet, root));
+        if (f === null) add(line, `${sheet}: sheet text not cached — run node scripts/quality/owasp.mjs sync`);
+        else if (!f) add(line, `${sheet}: quote not found in the sheet: "${q.slice(0, 60)}"`);
       }
-      if (!/`[^`]+`|\b[\w./-]+\.(ts|tsx|mjs|sql|yml):\d+/.test(it.rest)) add(it.line, `${it.sheet}: "met" needs its evidence (a test, a command or path:line)`);
+      if (!/`[^`]+`|\b[\w./-]+\.(ts|tsx|mjs|sql|yml):\d+/.test(v.evidence ?? '')) add(line, `${sheet}: "met" needs its evidence (a test, a command or path:line)`);
     }
-    if (/^not applicable\b/i.test(it.rest) && it.rest.replace(/^not applicable\W*/i, '').split(/\s+/).length < 5) add(it.line, `${it.sheet}: "not applicable" needs a reason of at least five words`);
+    if (v.verdict === 'finding') {
+      if (!/^F\d+$/.test(v.finding ?? '')) add(line, `${sheet}: a finding names its number, "F<n>"`);
+      else if (!new RegExp(`^${v.finding} —`, 'm').test(reviewText)) add(line, `${sheet}: ${v.finding} is not in the findings of "## Review"`);
+    }
+    if (v.verdict === 'not applicable' && String(v.reason ?? '').trim().split(/\s+/).filter(Boolean).length < 5) add(line, `${sheet}: "not applicable" needs a reason of at least five words`);
   }
   return out;
 }
@@ -375,8 +399,8 @@ export function lastVerdict(body) {
  * The task gate on a change (CI, every pull request and every push to main). Owner request 2026-11-07: the reference
  * holds every task, the ones that exist and every one created later, and no change bypasses it. A change of anything
  * but documentation lands only through a task: the change carries at least one kickoff whose last verdict is APPROVED,
- * each approved review passes its "### OWASP check", and together those checks give a verdict on every sheet the diff
- * itself triggers. `kickoffs` are the kickoffs the change adds or edits, `{ file, body }`. A dependency update that
+ * each approved review passes its record, and together those records give a verdict on every sheet the diff itself
+ * triggers. `kickoffs` are the kickoffs the change adds or edits, `{ file, body, record }`. A dependency update that
  * changes versions only (`dependencyOnly`) is held by the dependency gates instead (npm audit, install scripts, SBOM,
  * zizmor) and needs no task.
  */
@@ -396,11 +420,11 @@ export function checkGate({ files, added = '', kickoffs = [], registry, controls
   for (const k of approved) {
     if (OWASP_GRANDFATHERED.has(task(k))) continue;
     surface ||= surfaceChanged(k.body);
-    for (const f of checkReview(k.body, registry, controls, [], { root, text })) add('G2', `${k.file}${f.line ? `:${f.line}` : ''}`, f.message);
-    for (const i of sheetItems(section(k.body, '### OWASP check') ?? [])) covered.add(i.sheet);
+    for (const f of checkReview(k.body, registry, controls, [], { root, text, record: k.record ?? null })) add('G2', `${k.file}${f.line ? `:${f.line}` : ''}`, f.message);
+    for (const s of Object.keys(k.record?.sheets ?? {})) covered.add(s);
   }
   for (const s of triggered(controls, { text: added, paths: changed, surfaceChanged: surface })) {
-    if (!covered.has(s)) add('G3', s, `the diff triggers ${s}, and no approved review of this change gives it a verdict in "### OWASP check"`);
+    if (!covered.has(s)) add('G3', s, `the diff triggers ${s}, and no approved review record of this change gives it a verdict`);
   }
   return out;
 }
@@ -562,7 +586,7 @@ async function main(argv) {
     for (const f of files.filter((x) => x.startsWith('.github/'))) diffLines[f] = git(['diff', mb, '--unified=0', '--', f]).split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)/.test(l)).map((l) => l.slice(1));
     const dependencyOnly = isDependencyOnly(files, diffLines, (ref, f) => (ref === 'HEAD' ? readFileSync(path.join(ROOT, f), 'utf8') : git(['show', `${ref}:${f}`])), mb);
     const kickoffs = files.filter((f) => /^tasks\/Sprints\/Sprint_\d+_kickoff_prompt_Task_\d+_.+\.md$/.test(f) && existsSync(path.join(ROOT, f)))
-      .map((file) => ({ file, body: readFileSync(path.join(ROOT, file), 'utf8') }));
+      .map((file) => ({ file, body: readFileSync(path.join(ROOT, file), 'utf8'), record: readReviewRecord(file) }));
     const f = checkGate({ files, added, kickoffs, registry, controls, dependencyOnly });
     print(f);
     const code = files.filter((x) => !DOCUMENTATION.test(x)).length;
@@ -597,7 +621,7 @@ async function main(argv) {
     const { files, added } = changedFiles(base);
     const extra = triggered(controls, { text: added, paths: files, surfaceChanged: false });
     console.log(`owasp review: the diff against ${base} (${files.length} files) triggers: ${extra.join(', ') || 'none'}`);
-    const f = checkReview(readFileSync(path.join(ROOT, file), 'utf8'), registry, controls, extra).map((x) => ({ ...x, at: file }));
+    const f = checkReview(readFileSync(path.join(ROOT, file), 'utf8'), registry, controls, extra, { record: readReviewRecord(file) }).map((x) => ({ ...x, at: file }));
     print(f);
     return f.length ? 1 : 0;
   }

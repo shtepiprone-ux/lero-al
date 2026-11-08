@@ -175,12 +175,12 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 
 ## UI
 
-Visible: the password hint text (four locales) and a confirm button on the e-mail confirmation page, both built from
+Visible (text changes inside existing components; the button is the existing primary button, so the mobile adaptation scope is none): the password hint text (four locales) and a confirm button on the e-mail confirmation page, both built from
 existing canonical components (`.claude/rules/shared/canonical-component-reuse.md`); the hint is the existing
 component with new text.
 
 ## Mobile adaptation record
-- Scope: none (text changes inside existing components; the button is the existing primary button)
+- Scope: none
 
 ## Acceptance criteria
 

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { ClientLink } from '@/lib/navigation/ClientLink'
 import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { cn } from '@/lib/utils'
@@ -14,7 +14,7 @@ function FooterLink_({ link, locale }: { link: FooterLink; locale: string }) {
   return (
     <Anchor
       unstyled
-      component={Link}
+      component={ClientLink}
       href={target.href}
       className={styles.footerLink}
       {...(target.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
@@ -65,7 +65,7 @@ export function FooterView({
 
           {/* Brand */}
           <Stack gap="md">
-            <Anchor unstyled component={Link} href={`/${locale}`} className={styles.brandLink}>
+            <Anchor unstyled component={ClientLink} href={`/${locale}`} className={styles.brandLink}>
               <Text unstyled component="span" className={styles.textPrimary}>{brand}</Text>
               <Text unstyled component="span" className={styles.textForeground}>{tld}</Text>
             </Anchor>

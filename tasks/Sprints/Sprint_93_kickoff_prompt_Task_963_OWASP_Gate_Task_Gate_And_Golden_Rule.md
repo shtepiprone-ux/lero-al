@@ -24,7 +24,7 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   `757270a26306`) and `docs/security/owasp/controls.json` (the mapping: 84 apply, 53 not, each requirement a verified
   quote held by a control's evidence text or by an open task whose kickoff cites it). `.cache/` ignored.
 - `scripts/quality/check-files.mjs` (+ test): "## OWASP" in every Sprint 93+ kickoff (not counted in the 200 lines),
-  "### OWASP check" in every written review, `OWASP_GRANDFATHERED` (947 only, may only shrink); the per-file locale
+  the OWASP review record of every written review, `OWASP_GRANDFATHERED` (947 only, may only shrink); the per-file locale
   rules M1-M5 on `messages/<locale>.json` and K1-K8 plus M6 on product code; the golden rule on audit ledgers
   (`finding-status`).
 - `scripts/quality/locale-safety.mjs`, `scripts/quality/client-sinks.mjs` (+ tests): tracked and untracked files.
@@ -120,7 +120,7 @@ No visible change.
 1. The reviewing Opus session reads this kickoff, `flow.md` and `secure-code-review.md`; runs `owasp.mjs sync`, `check`.
 2. AC1-AC8 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
    removed, a planted sink, a finding status cleared), shown failing, then restored.
-3. Review written here with "### OWASP check"; `node scripts/quality/owasp.mjs gate --base main` then names what the
+3. Review written here with its OWASP review record; `node scripts/quality/owasp.mjs gate --base main` then names what the
    other Sprint 93 reviews still have to cover before PR #19 can merge.
 
 ## Review

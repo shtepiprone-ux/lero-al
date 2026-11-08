@@ -2,12 +2,9 @@
 import storybook from "eslint-plugin-storybook";
 
 import { defineConfig, globalIgnores } from "eslint/config";
-import { FlatCompat } from "@eslint/eslintrc";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const compat = new FlatCompat({ baseDirectory: __dirname });
+// Task 952: eslint-config-next 16 ships native flat configs; FlatCompat (`compat.extends("next/...")`) no longer loads them.
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FLAT CONFIG OVERRIDE WARNING
@@ -83,7 +80,24 @@ const IMAGE_RENDER_EXCEPTIONS = [
 ];
 
 const eslintConfig = defineConfig([
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextVitals,
+  ...nextTs,
+  // react-hooks v7 React Compiler rules: findings fixed and rules turned on as errors in Task 953.
+  // eslint-config-next 16 brings eslint-plugin-react-hooks 7 with five React Compiler rules that did not exist before (Task 952); the 55 findings they report today are
+  // listed in docs/sessions/2026-11-06-task952-react-hooks-v7-findings.json. Exactly these five are off; the two classic hook rules stay errors
+  // (guarded by src/__tests__/eslintConfig.test.ts). Owner/Opus decision 2026-11-06.
+  {
+    name: "task-952/react-hooks-v7-compiler-rules-off",
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/refs": "off",
+      "react-hooks/purity": "off",
+      "react-hooks/immutability": "off",
+      "react-hooks/incompatible-library": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+    },
+  },
   // A disable comment that silences nothing hides the next real finding at that line.
   { linterOptions: { reportUnusedDisableDirectives: "error" } },
   // ── No warning debt (governance reset 2026-11-06) ─────────────────────────

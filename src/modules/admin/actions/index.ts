@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { checkActorRank, checkStaff } from '@/lib/auth/staff'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
 import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
@@ -165,7 +165,7 @@ export async function deleteListing(listingId: string): Promise<{ error?: string
     publicIds.map((id) => deleteAsset(id, { reason: 'listing_deleted_by_staff' }).catch((err) => console.error('[deleteListing] image cleanup failed:', err))),
   )
 
-  revalidateTag('site-stats')
+  updateTag('site-stats')
   revalidatePath('/admin/listings')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')

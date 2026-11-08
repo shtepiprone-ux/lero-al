@@ -99,3 +99,34 @@ test('the planted case: a job-level secret is refused', () => {
   const planted = { jobs: { x: { env: { KEY: '${{ secrets.X }}' }, steps: [] } } };
   assert.ok(carriesSecret(planted.jobs.x.env));
 });
+
+// Task 963 AC13 (found in the Task 953 review 2, 2026-11-08): `ubuntu-latest` moved from ubuntu-24.04 to ubuntu-26.04,
+// where Playwright 1.60 cannot install Chromium, so every browser job failed before its first check (run 42465743137).
+// Every job names its image; a moved label can no longer change the machine CI tests on.
+const PINNED_RUNNER = 'ubuntu-24.04';
+/** The runner labels of one job that are not the pinned image (a job calling a reusable workflow has none). */
+const unpinnedRunners = (def) => {
+  if (def.uses && def['runs-on'] === undefined) return [];
+  const labels = [def['runs-on']].flat();
+  return labels.filter((label) => label !== PINNED_RUNNER);
+};
+
+test('every job of every workflow runs on the pinned ubuntu-24.04 image, never ubuntu-latest', async () => {
+  const { readdirSync } = await import('node:fs');
+  const dir = new URL('../../.github/workflows/', import.meta.url);
+  const files = readdirSync(dir).filter((f) => /\.ya?ml$/.test(f));
+  assert.ok(files.length >= 3, 'the workflows directory was read');
+  for (const file of files) {
+    const wf = yaml.load(readFileSync(new URL(file, dir), 'utf8'));
+    for (const [job, def] of Object.entries(wf.jobs ?? {})) {
+      assert.deepEqual(unpinnedRunners(def), [], `${file}/${job}: runs-on must be ${PINNED_RUNNER}`);
+    }
+  }
+});
+
+test('the planted case: a job on ubuntu-latest, or on a list holding it, is refused', () => {
+  assert.deepEqual(unpinnedRunners({ 'runs-on': 'ubuntu-latest', steps: [] }), ['ubuntu-latest']);
+  assert.deepEqual(unpinnedRunners({ 'runs-on': ['ubuntu-latest'], steps: [] }), ['ubuntu-latest']);
+  assert.deepEqual(unpinnedRunners({ 'runs-on': undefined, steps: [] }), [undefined]);
+  assert.deepEqual(unpinnedRunners({ 'runs-on': PINNED_RUNNER, steps: [] }), []);
+});

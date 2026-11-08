@@ -28,8 +28,16 @@ After the task every Story renders at every width and locale of the six shards.
   `window.matchMedia(belowMobileGateQuery(theme)).matches` (the gate the picker uses), choose the start and end day in the
   mobile body and press its Confirm button; otherwise keep the desktop path. Then assert the same localized 90-day alert.
 - The FavoritesShell Story's comment that claims the realtime hook "degrades gracefully" is corrected.
+- Found in the Task 953 review 2 (2026-11-08): on `next@16.4.3` (Task 952) no Story renders. `useRouter` reads
+  `LayoutRouterContext.parentRenderTree.data.bfcacheId` (`node_modules/next/dist/client/components/navigation.js:158`);
+  `@storybook/nextjs-vite@10.4.2` provides `parentTree` and `parentCacheNode` only
+  (`dist/_browser-chunks/chunk-4ZRKYE2G.js:106-121`), so every Story ends with `Cannot read properties of undefined
+  (reading 'data')` (the 953 executor's locale-leak run: 0 of 4320 tuples, 1440 render errors; a clean `HEAD` build fails
+  the same). `package.json` and `package-lock.json`: `storybook`, `@storybook/nextjs-vite`, `@storybook/addon-docs` and
+  `eslint-plugin-storybook` move to `10.6.3` (2026-10-20, the first release whose mock sets `parentRenderTree`, read in
+  its tarball; no install script; peer `next ^16.0.0`), and the lockfile changes only by them.
 - Out of scope: product code, other Stories, the detector.
-- Dependencies: none.
+- Dependencies: the four Storybook packages above at `10.6.3` (`npm view <name>@10.6.3 time scripts peerDependencies`).
 
 ## Attack surface
 
@@ -49,7 +57,10 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4.
 - Nextjs_Security: not applicable — Storybook renders components only; no Server Action, route or proxy changes.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC4.
-- Software_Supply_Chain_Security: not applicable — no dependency or install step changes; only Storybook code and a test stub.
+- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the four Storybook packages are pinned to `10.6.3`, read in its tarball, and the lockfile changes only by them — AC5.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — release date (≥ 14 days), install scripts (none) and peers read with `npm view` before the change — AC5.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — `npm audit --omit=dev --audit-level=high` and the CI dependency audit run on the new lockfile — AC5.
+- Dependency_Graph_SBOM: "Validate the document against its format's schema before publication or ingestion" — the CI SBOM job regenerates and validates the CycloneDX document from the new lockfile — AC5.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC4.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — the Story and stub changes use no innerHTML; lint (react/no-danger) fails on one — AC4.
 - WebSocket_Security: "Don't assume WebSocket connection equals unlimited access. Check authorization for each action" — the Storybook stub answers channel().subscribe() without a connection; the product hook is unchanged and Realtime stays behind RLS — AC1.
@@ -72,6 +83,11 @@ No visible change of production UI. The Stories render their intended states ins
   --mantine-only --report-only-leaks --shard=N/6` runs it at 320, 639, 640 and 1280 px in sq, en, uk, it with no play
   failure.
 - AC4 `npm run lint`, `npm run typecheck`, `npm test`, `node scripts/quality/check-files.mjs --worktree` exit 0.
+- AC5 Stories render on Next 16 (found in the Task 953 review 2) — test: `.storybook/__tests__/next-router-mock.test.ts`
+  (new): the `LayoutRouterContext` value of the installed `@storybook/nextjs-vite` holds `parentRenderTree.data`, the
+  field `next/navigation` `useRouter` reads (red on `10.4.2`); AC2's six shards with no tuple failing on "reading 'data'";
+  `npm ls storybook @storybook/nextjs-vite @storybook/addon-docs eslint-plugin-storybook` prints `10.6.3` only, and
+  `npm audit --omit=dev --audit-level=high` exits 0.
 
 ## Route
 

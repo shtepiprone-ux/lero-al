@@ -57,7 +57,9 @@ const MANIFEST_PATH = join(ROOT, 'scripts', 'mantine-migration-scope.json');
 const SRC_DIR = join(ROOT, 'src');
 
 export const DEFAULT_MAX_CHANGED_FILES = 300;
-export const DEFAULT_MAX_SURFACES = 60;
+// Owner decision O-CS1 (2026-11-08, Task 963 AC14): 200, up from 60. Every mapped surface is still censused and named;
+// the limit bounds run time (65 surfaces took 40 s), not coverage. PR #19 with Task 953 maps 65.
+export const DEFAULT_MAX_SURFACES = 200;
 
 function resolveImportSpecifier(fromFile, spec) {
   return resolveImportSpecifierShared(ROOT, fromFile, spec);

@@ -385,7 +385,7 @@ export function runPipeline(
 // pipeline end-to-end with `--base HEAD --head HEAD` (an empty diff, real git + real fs, no server) to
 // prove the unplanted/empty-diff path is clean.
 function runSelfTest() {
-  const ARM_COUNT = 12;
+  const ARM_COUNT = 14;
   console.log(`check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running ${ARM_COUNT} arms\n`);
   let passed = 0;
   let failed = 0;
@@ -630,6 +630,36 @@ function runSelfTest() {
     record(
       hookCensus.ok && !hookSelfBlocked && controlCensus.ok && controlHasBlocking,
       `Arm 12 — real census: '${hookSurface}' (a .ts root) is not self-blocking; '${controlSurface}' (a .tsx control) still blocks normally`
+    );
+  }
+
+  // Arms 13 and 14 (Task 963 AC14, owner decision O-CS1 of 2026-11-08) — the default limit holds the integration PR
+  // (#19 with Task 953 mapped 65 surfaces), and one surface beyond the limit still fails closed. Driven through the real
+  // `runPipeline` with an injected mapping and a census that finds nothing, so only the limit decides.
+  {
+    const limitRun = (count) => {
+      const included = Array.from({ length: count }, (_, i) => `src/fake/verify/LimitSurface${i}.tsx`);
+      const mappingFn = () => ({
+        failClosed: false, base: 'x', head: 'y', mergeBase: 'z', changedCount: count,
+        excluded: [], included, candidates: included,
+        limits: { maxChangedFiles: DEFAULT_MAX_CHANGED_FILES, maxSurfaces: DEFAULT_MAX_SURFACES }, graphFileCount: 0,
+      });
+      const loadBaselineFn = () => ({ version: 1, blocks: {} });
+      const censusFn = () => ({ ok: true, exitCode: 0, result: { blocking: [] } });
+      return runPipeline(
+        { base: 'x', head: 'y', maxChangedFiles: DEFAULT_MAX_CHANGED_FILES, maxSurfaces: DEFAULT_MAX_SURFACES },
+        censusFn, () => true, mappingFn, loadBaselineFn,
+      );
+    };
+    const pr19 = limitRun(65);
+    record(
+      pr19.failClosed === false && pr19.perSurfaceBlocks.length === 65,
+      `Arm 13 — 65 mapped surfaces (PR #19 with Task 953) pass the default limit of ${DEFAULT_MAX_SURFACES} and are all censused`
+    );
+    const over = limitRun(DEFAULT_MAX_SURFACES + 1);
+    record(
+      over.failClosed === true && over.mapping?.reason === 'surface-limit-exceeded' && over.mapping?.limit === DEFAULT_MAX_SURFACES,
+      `Arm 14 — ${DEFAULT_MAX_SURFACES + 1} mapped surfaces exceed the default limit -> fail-closed with surface-limit-exceeded`
     );
   }
 

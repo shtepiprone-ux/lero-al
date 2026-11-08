@@ -47,6 +47,15 @@ no behaviour changes.
     allowlist row with a reason and an owning task), never into the baseline.
   - R5 (F5) `src/modules/listings/lib/isListingNew.ts`: the comment says what is true: the page still reads the clock while it
     renders, which is right for a Server Component rendered per request; the function exists so a test can set `now`.
+- **Revision 2 (review of 2026-11-08, findings F6 to F8), the last one allowed.** Fixes only these:
+  - R6 (F6) `scripts/surface-census-baseline.json`: the four rows the census reads as stale once this diff is committed
+    (`ListingContact.tsx :: ui/input.tsx`, `ListingFormShell.tsx :: StatusChangeControl.tsx`, `:: StatusChangeHistory.tsx`,
+    `:: Combobox.tsx`; neither file imports them any more) are removed through the census's own path
+    (`node scripts/check-surface-census-changed.mjs --base main --update-baseline`).
+    The file's diff removes lines only; nothing is added (R4 stands).
+  - R7 (F7) `src/components/shared/Combobox.tsx:176`: the comment names typing among the openings that place the dropdown.
+  - R8 (F8) `src/stories/patterns/mantine/ClientLink.stories.tsx`: the `Button` carries no `variant` or `color` the app does
+    not use; it renders as `src/app/admin/users/page.tsx:99` does (a Story makes no visual decision).
 
 ## Attack surface
 
@@ -70,6 +79,8 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - DOM_based_XSS_Prevention: not applicable — no sink, `eval` or computed URL is added by these fixes.
 - Denial_of_Service: not applicable — no limit or expensive path changes; `ImageUpload.tsx` changes only a ref update.
 - File_Upload: not applicable — the upload contract stays as Task 952 left it; signed uploads are Task 957.
+- Injection_Prevention: not applicable — the words come from the census command of R6; no query, command or interpreter input changes.
+- OS_Command_Injection_Defense: not applicable — R6 runs a repository script by hand; no product code starts a process.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL run on every changed file, and the five rules become errors — AC1, AC4.
 - Multifactor_Authentication: not applicable — no sign-in factor changes; staff MFA is Task 960.
 - OAuth2: not applicable — R3 changes only how a test waits; the Google sign-in flow and its state check stay as they are.
@@ -110,7 +121,10 @@ No visible change. A visual difference in Storybook or the click-shield run is a
 - AC8 Revision 1: the unit job is stable — test: `src/components/layout/__tests__/header-hydration-id-parity.test.tsx` and
   `src/lib/auth/__tests__/googlePopup.test.ts` pass 20 runs in a row (`for i in $(seq 20); do npx vitest run <both> || exit 1; done`),
   and the CI job "Unit and component tests" of PR #19 is green on the revision commit.
-- AC9 Revision 1: no new census block — test: `node scripts/check-surface-census-changed.mjs --base main` lists no block for the two files of R4.
+- AC9 Revision 1: no new census block — test: `node scripts/check-surface-census-changed.mjs --base main`
+  (PR #19 with this diff maps 65 surfaces; the default limit is 200 since Task 963 AC14, owner decision O-CS1) lists no block for the two files of R4.
+- AC10 Revision 2: the census passes on the committed change — test: `node scripts/check-surface-census-changed.mjs --base main`
+  exits 0 (no new block, no stale row), and `git diff --numstat -- scripts/surface-census-baseline.json` shows 0 added lines.
 
 ## Route
 
@@ -141,18 +155,52 @@ Claims of the report that do not hold:
 
 F1 — Typing reopens the portal dropdown where it was last placed
 Severity: Low   Category: Behaviour (the kickoff's "no behaviour changes")   Location: `src/components/shared/Combobox.tsx:302`
-Description: the open effect no longer places the dropdown; focus (`:303`) and click (`:317`) do, typing (`:302`) does not. After focus, Escape and a scroll (the scroll listener is off while closed), a key opens the dropdown at the old coordinates. Reproduction: those steps with `portal`. Recommendation: R1. Status: open.
+Description: the open effect no longer places the dropdown; focus (`:303`) and click (`:317`) do, typing (`:302`) does not. After focus, Escape and a scroll (the scroll listener is off while closed), a key opens the dropdown at the old coordinates. Reproduction: those steps with `portal`. Recommendation: R1. Status: fixed by Revision 1, verified in Review 2 (working tree, not yet committed).
 F2 — `useIsMobile` holds module state shaped by a test double
 Severity: Low   Category: Code quality   Location: `src/hooks/useIsMobile.ts:5-24`
-Description: `lastEvent` and `subscribers` exist because the double in `simpleHooks.test.ts` does not update `matches`, which a browser does: state shared across hook instances for a test's sake. Reproduction: the report ("the test I did not touch, I made the hook fit"). Recommendation: R2. Status: open.
+Description: `lastEvent` and `subscribers` exist because the double in `simpleHooks.test.ts` does not update `matches`, which a browser does: state shared across hook instances for a test's sake. Reproduction: the report ("the test I did not touch, I made the hook fit"). Recommendation: R2. Status: fixed by Revision 1, verified in Review 2 (working tree, not yet committed).
 F3 — The CI unit job fails now and then
 Severity: Low   Category: Tests   Location: `header-hydration-id-parity.test.tsx:168`, `googlePopup.test.ts:39-41`
-Description: every test passes, yet the job exits 1: on `aa8ef7c20` and `0d53a41ae` an unhandled `ReferenceError: window is not defined` after teardown (the `hydrateRoot` roots are never unmounted); on `8a40c38a7` two `googlePopup` cases ran out of 500 promise turns; `abfc664b4` was green. AC4's `npm test` is not reliably 0. Reproduction: `gh run view 42463339826`, `42460858858`, `42455177615`. Recommendation: R3. Status: open.
+Description: every test passes, yet the job exits 1: on `aa8ef7c20` and `0d53a41ae` an unhandled `ReferenceError: window is not defined` after teardown (the `hydrateRoot` roots are never unmounted); on `8a40c38a7` two `googlePopup` cases ran out of 500 promise turns; `abfc664b4` was green. AC4's `npm test` is not reliably 0. Reproduction: `gh run view 42463339826`, `42460858858`, `42455177615`. Recommendation: R3. Status: fixed by Revision 1, verified in Review 2 (working tree, not yet committed).
 F4 — Two new census blocks, and the report's claim about them
 Severity: Low   Category: Governance (GR-1, GR-3)   Location: `src/components/admin/AdminUsersTable.tsx`, `src/lib/navigation/ClientLink.tsx`
-Description: `check:surface-census:changed` fails with `tier1-unenrolled-or-unstoried` for both. Reproduction: `node scripts/quality/product-gates.mjs`. Recommendation: R4. Status: open. The census cannot see uncommitted files during a local review; Task 963 carries that (its AC11).
+Description: `check:surface-census:changed` fails with `tier1-unenrolled-or-unstoried` for both. Reproduction: `node scripts/quality/product-gates.mjs`. Recommendation: R4. Status: fixed by Revision 1, verified in Review 2 (working tree, not yet committed). The census cannot see uncommitted files during a local review; Task 963 carries that (its AC11).
 F5 — The `isListingNew` comment says the clock left the render
 Severity: Info   Category: Documentation   Location: `src/modules/listings/lib/isListingNew.ts:5-8`
-Description: the page still reads the clock while it renders; for a per-request Server Component that is correct, and the comment should say so. Recommendation: R5. Status: open.
+Description: the page still reads the clock while it renders; for a per-request Server Component that is correct, and the comment should say so. Recommendation: R5. Status: fixed by Revision 1, verified in Review 2 (working tree, not yet committed).
+
+**Review 2 of Revision 1, working tree on `governance/reset-2026-11-06` at `3ec61742a` — NEEDS REVISION**
+
+Scope: the eleven files Revision 1 wrote after `3ec61742a` (mtime census: `Combobox.tsx`, `useIsMobile.ts`, `isListingNew.ts`, `mantine-migration-scope.json`, three new Stories, the AC6 test and three changed tests), read whole; the rest of the diff is unchanged since Review 1. Entry points: none.
+Tools (rerun by the reviewer, 2026-11-08): `owasp sync`, `check`, `check-ruleset` 0; `npm run lint` 0; `npm run typecheck` 0; `npm test -- --coverage` 0, 370 files, 6119 tests; `SENTRY_AUTH_TOKEN= npm run build` 0; `npm run build-storybook` 0; `changed-lines-coverage --base main` 0; `check-files --worktree` 0, 72 files; `ac-tests --base main` PASS; `npm audit --omit=dev --audit-level=high` 0; `product-gates` 32 of 34, the two failures (`check:design-tokens:strict`, `check:enrolled-tailwind`) are in files outside this diff and are Task 948's Scope 1 and 2. CI of PR #19 (run 42465743137, `3ec61742a`): the browser jobs fail installing Chromium, not on this code (filed below). CodeQL and the change report cannot see an uncommitted diff.
+Findings: Critical 0, High 0, Medium 0, Low 1, Info 2. Revision 2 of at most 2.
+Overall risk: low; R1-R5 are correct and their tests fail without them; the committed change would turn the census red.
+
+Measured beyond the report:
+- Deliberate breaks, files restored and sha-checked: `updateDropdownPosition()` dropped from `onChange` (AC6: 2 of 3 red, `144px` for `344px`, `''` for `244px`); `useIsMobile.ts` put back to `HEAD` (AC7: the disagreeing-event case red); the three manifest rows removed (AC9: 3 new blocks, `cabinet/page.tsx`, `admin/users/page.tsx`, `ClientLink.tsx`).
+- AC8: 20 runs in a row of both files, 11 of 11 each, no unhandled error, while Storybook was being built on the same machine. `vi.waitFor` advances fake timers by its 5 ms interval once the window opens; the poll and timeout tests keep their counts (500 ms polls, 5 minutes).
+- Every way to open the dropdown now places it: focus, click, typing, `defaultOpen` (`Combobox.tsx` has no other `setOpen(true)`).
+- Storybook: no Story renders on `next@16.4.3` with `@storybook/nextjs-vite@10.4.2` (`useRouter` reads `LayoutRouterContext.parentRenderTree.data`, the mock sets `parentTree` only; the report's cause is right). With that one field added to the mock in `node_modules` (restored, sha-checked), both `HEAD` and this tree were built and all 592 Stories rendered at 1280 and 375 px: 0 render or play failures, the three new Stories' play included. Same environment on both sides: 0 pixel differences beyond the jitter `HEAD` shows against itself (charts, `AuthSheet` logo). The UI section's "no visible change" holds.
+- Click-shield on this tree's production build (`CLICK_SHIELD_CI_FIXTURE=1`, as CI): 48 cells, 1368 elements, 0 interceptions.
+
+Claims of the report that do not hold:
+- "surface-census:changed now passes": it passes only because it reads committed files. Run on this tree (`--base main`, limits widened), it shows 0 new blocks and 4 stale baseline rows; committed, it fails (F6).
+- "The four stale ListingFormShell rows are Opus's work": they appear because this diff reaches those surfaces, and the census's own message sends them to `--update-baseline`, which only removes paid-off rows (R4 forbade adding rows). They belong to this task (R6).
+
+Gaps found outside this task, filed in the same turn:
+- CI runs on `ubuntu-26.04` since `ubuntu-latest` moved, and Playwright 1.60 refuses it, so no Story or page has been rendered in CI since Next 16.4.3: Task 963 AC13.
+- The census limit of 60 surfaces: PR #19 with this diff maps 65, so it fails closed whatever the code: Task 963 AC14, owner decision O-CS1.
+- Storybook 10.4.2 against Next 16.4.3: Task 939 AC5 (the four packages to `10.6.3`).
+- AC9's command could not run as written (limit exceeded): a design error of the kickoff, corrected here in AC9 and AC10.
+
+F6 — The committed change fails the census on four stale baseline rows
+Severity: Low   Category: Governance (GR-1, AC5)   Location: `scripts/surface-census-baseline.json` (rows of `ListingContact.tsx` and `ListingFormShell.tsx`)
+Description: once committed, the census reaches `ListingContact.tsx` and `ListingFormShell.tsx`, which no longer import `ui/input.tsx`, `StatusChangeControl.tsx`, `StatusChangeHistory.tsx` or `Combobox.tsx`; their four baseline rows are stale and the census fails. Reproduction: `node scripts/check-surface-census-changed.mjs --base main --max-surfaces 200 --max-changed-files 5000` → "FAIL 4 stale baseline entr(ies)". Recommendation: R6. Status: open.
+F7 — The Combobox comment omits typing
+Severity: Info   Category: Documentation   Location: `src/components/shared/Combobox.tsx:176`
+Description: "every other opening (focus, click)"; typing places the dropdown too since R1. Recommendation: R7. Status: open.
+F8 — The ClientLink Story picks a Button look the app does not use
+Severity: Info   Category: UI rules (one visual contract, no visual decision in a Story)   Location: `src/stories/patterns/mantine/ClientLink.stories.tsx:33`
+Description: `variant="outline" color="gray"`; the app's `Button component={ClientLink}` (`src/app/admin/users/page.tsx:99`) sets neither. Recommendation: R8. Status: open.
 
 OWASP verdicts per sheet: [docs/security/owasp/reviews/Task_953.json](../../docs/security/owasp/reviews/Task_953.json).

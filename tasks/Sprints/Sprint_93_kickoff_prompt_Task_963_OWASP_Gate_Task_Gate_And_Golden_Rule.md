@@ -62,6 +62,18 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   every other alert.
 - `.github/workflows/ci.yml` (+ `scripts/quality/ci-workflow.test.mjs`): the quality job's `sync --verify` and `check`
   steps; the `owasp-gate` job, required by `CI Required`.
+- The runner image (found in the Task 953 review 2, 2026-11-08): every job of `ci.yml`, `repository-settings.yml` and
+  `scorecard.yml` says `runs-on: ubuntu-latest`, which GitHub moved from `ubuntu-24.04` (run 42293555720, 2026-11-06) to
+  `ubuntu-26.04` (run 42455177615 onward). Playwright 1.60.0 refuses that image (`ERROR: Playwright does not support
+  chromium on ubuntu26.04-x64`), so Locale leak 1-6, Click-shield, Homepage grid and the browser step of "Lint, types and
+  product checks" fail before any check runs (run 42465743137): no Story or page has been rendered in CI since Next 16.4.3
+  landed. Every job names `ubuntu-24.04`, so a moved label cannot change the image unseen.
+- The census limit (found in the Task 953 review 2): `scripts/map-changed-surfaces.mjs:60` `DEFAULT_MAX_SURFACES = 60`;
+  PR #19 with Task 953 maps 65 surfaces (`--base main`; the whole census takes 40 s), so once 953 is committed the census
+  fails closed with `surface-limit-exceeded` in CI, and each later Sprint 93 task adds surfaces. Owner decision O-CS1
+  (2026-11-08, translated: "option (a), raise the limit to 200"): `DEFAULT_MAX_SURFACES = 200` with its reason in the
+  file; every mapped surface is still censused and named, the limit bounds run time, not coverage, and one surface
+  beyond it still fails closed.
 - Rules and skills: `CLAUDE.md` (golden rule), `.claude/rules/flow.md` (golden rule, the OWASP chain),
   `.claude/rules/quality-gates.md`, `.claude/rules/kickoff-template.md`, `.claude/rules/secure-code-review.md`,
   `.claude/skills/create-task/SKILL.md`, `.claude/skills/review-task/SKILL.md`, `.claude/skills/execute-task/SKILL.md`.
@@ -105,6 +117,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Key_Management: not applicable — the content hash of the stop hook uses no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.
 - MCP_Security: not applicable — no MCP server is added or configured; Task 961 watches the tool definitions.
+- Nextjs_Security: not applicable — the word comes from the runner finding (no page rendered in CI since Next 16.4.3); no route, action or proxy changes.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — owasp.mjs starts only git and node, with fixed argument arrays and no shell — AC2.
 - Secrets_Management: "prevent them from leaking and compromising the organization" — the Cloudinary credentials read by `cloudinary-config.mjs` are sent to `https://api.cloudinary.com` only, refused for any other host — AC10.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff of the governance files and reruns every check — AC8.
@@ -159,6 +172,14 @@ No visible change.
   arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run.
 - AC12 A task under revision holds no change — test: `scripts/quality/owasp.test.mjs` (the task gate: a review whose verdict line
   says NEEDS REVISION and whose prose names APPROVED is not approved and the change fails G1; bold, older and two-review forms).
+- AC13 CI runs on a named image (owner, 2026-11-08, translated: "yes, do AC13, pin ubuntu-24.04") — test:
+  `scripts/quality/ci-workflow.test.mjs` (every job of every file in `.github/workflows/` runs on `ubuntu-24.04`; red on
+  the 17 `ubuntu-latest` jobs before the change, measured 2026-11-08; a planted `ubuntu-latest` job is refused), and
+  `gh run view <PR #19 run> --log` has no "does not support chromium" line.
+- AC14 The census runs on the integration PR (O-CS1: limit 200) — test: `node scripts/check-surface-census-changed.mjs
+  --verify-gate` arms 13 and 14: 65 mapped surfaces pass the default limit and are all censused, 201 fail closed with
+  `surface-limit-exceeded` (arm 13 red on the limit of 60, arm 14 red with the limit check disabled; both measured
+  2026-11-08).
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.

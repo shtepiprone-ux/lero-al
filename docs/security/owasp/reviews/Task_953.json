@@ -161,7 +161,7 @@
       "quotes": [
         "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
       ],
-      "evidence": "`npm run lint` exit 0 with the five rules at error (`src/__tests__/eslintConfig.test.ts`, red when one is off); no regular expression is added."
+      "evidence": "`npm run lint` exit 0 with the five rules at error (`src/__tests__/eslintConfig.test.ts`); review 2: Revision 1 adds no regular expression (`git diff HEAD -- src`)."
     },
     "Key_Management": {
       "verdict": "not applicable",
@@ -204,7 +204,7 @@
       "quotes": [
         "Rendering the form only on a protected page does not authenticate the action request."
       ],
-      "evidence": "no Server Action changes in `git diff HEAD`; `npm test -- --coverage` 6114 tests green, serverEntryGuards included."
+      "evidence": "no Server Action changes; the two container Stories import their actions but never call them (`AdminUsersTableContainer.stories.tsx`, `CabinetEmailChangeSectionContainer.stories.tsx`); `npm test -- --coverage` 6119 tests green, serverEntryGuards included."
     },
     "Nodejs_Security": {
       "verdict": "not applicable",
@@ -212,7 +212,7 @@
     },
     "OAuth2": {
       "verdict": "not applicable",
-      "reason": "R3 changes only how googlePopup.test.ts waits; the sign-in flow and its state check are untouched."
+      "reason": "R3 changes only how `googlePopup.test.ts` waits (`vi.waitFor`, 10 s limit); its assertions on state, nonce and origin are unchanged and pass 20 runs in a row."
     },
     "OS_Command_Injection_Defense": {
       "verdict": "not applicable",
@@ -243,7 +243,7 @@
       "quotes": [
         "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
       ],
-      "evidence": "each command of the report rerun by the reviewer (`npm test -- --coverage`, `npm run lint`, `node scripts/quality/product-gates.mjs`); four deliberate breaks of AC1 to AC3, each red."
+      "evidence": "review 2 reran every command of the report (`npm test -- --coverage` 370 files, 6119 tests; `node scripts/quality/product-gates.mjs`; `node scripts/quality/ac-tests.mjs --base main`) and broke AC6, AC7 and AC9 once each, red, restored."
     },
     "Serverless_FaaS_Security": {
       "verdict": "not applicable",
@@ -283,8 +283,8 @@
     },
     "Verifying_Third_Party_Agent_Execution_Evidence": {
       "verdict": "finding",
-      "finding": "F4",
-      "note": "the report says the census failure is unrelated to the change; `AdminUsersTable.tsx` is in the diff."
+      "finding": "F6",
+      "note": "review 2: the report says the census passes; it reads committed files only, and the committed change fails on four stale rows."
     },
     "Vulnerable_Dependency_Management": {
       "verdict": "not applicable",
@@ -303,7 +303,7 @@
       "quotes": [
         "The fundamental security rule is to never use innerHTML with untrusted data."
       ],
-      "evidence": "`git diff HEAD -- src` adds no innerHTML or dangerouslySetInnerHTML; lint `react/no-danger` at error."
+      "evidence": "`git diff HEAD -- src` adds no innerHTML write (one read in `header-hydration-id-parity.test.tsx`); the three new Stories render through React; lint `react/no-danger` at error."
     },
     "Web_Service_Security": {
       "verdict": "not applicable",

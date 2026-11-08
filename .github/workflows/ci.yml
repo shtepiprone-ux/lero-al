@@ -23,7 +23,7 @@ concurrency:
 jobs:
   quality:
     name: Lint, types and product checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
       contents: read
@@ -67,7 +67,7 @@ jobs:
 
   unit:
     name: Unit and component tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
       contents: read
@@ -98,7 +98,7 @@ jobs:
 
   authz:
     name: Authorization regression (real Supabase development project)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: security-ci
     permissions:
@@ -144,7 +144,7 @@ jobs:
 
   dependencies:
     name: Dependency audit (high and critical block)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -165,7 +165,7 @@ jobs:
 
   change-report:
     name: Change report (sensitive paths, weakened tests, new dependencies)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -193,7 +193,7 @@ jobs:
     # later, and no change bypasses it. Code or configuration lands only with a task whose review is approved in the
     # same change, whose OWASP review record holds, and whose records together judge every sheet the diff triggers.
     name: OWASP task gate (an approved review covers every sheet the change triggers)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -222,7 +222,7 @@ jobs:
 
   sbom:
     name: SBOM (CycloneDX, production dependencies)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -248,7 +248,7 @@ jobs:
 
   codeql:
     name: CodeQL (SAST)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     permissions:
       contents: read
@@ -270,7 +270,7 @@ jobs:
 
   secrets:
     name: Secret scan (gitleaks)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -290,7 +290,7 @@ jobs:
 
   workflows:
     name: Workflow security (zizmor)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read
@@ -307,7 +307,7 @@ jobs:
 
   storybook-build:
     name: Storybook build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
       contents: read
@@ -332,7 +332,7 @@ jobs:
 
   homepage-grid:
     name: Homepage grid
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [storybook-build]
     timeout-minutes: 45
     permissions:
@@ -359,7 +359,7 @@ jobs:
 
   locale-leak:
     name: Locale leak (${{ matrix.shard }}/6)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [storybook-build]
     timeout-minutes: 25
     permissions:
@@ -398,7 +398,7 @@ jobs:
 
   click-shield:
     name: Click-shield (production build, real interactions)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment: security-ci
     permissions:
@@ -461,7 +461,7 @@ jobs:
 
   required:
     name: CI Required
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: always()
     needs: [quality, unit, authz, dependencies, change-report, owasp-gate, sbom, codeql, secrets, workflows, storybook-build, homepage-grid, locale-leak, click-shield]
     timeout-minutes: 5

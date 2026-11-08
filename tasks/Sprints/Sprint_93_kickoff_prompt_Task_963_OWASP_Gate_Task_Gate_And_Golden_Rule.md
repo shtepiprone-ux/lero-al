@@ -35,6 +35,14 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   (`:226` before), so the next stop judged every uncommitted file of the branch. Now a file is stamped by its size and
   content hash (`readRegularFile`, one descriptor), and the limit releases the stop with the baseline kept.
 - `scripts/quality/audit-coverage.mjs` (+ test): lane `owasp-reference`.
+- The CodeQL alerts of this task's own files, open on PR #19 on 2026-11-08 (`gh api` code-scanning alerts,
+  `ref=refs/pull/19/merge`, `state=open`), each fixed in code and none dismissed (owner D2, 2026-11-06):
+  `scripts/quality/owasp.mjs:474` (file-access-to-http), `:477`, `:558`, `:564` (http-to-file-access), `:478`
+  (file-system-race), `scripts/quality/cloudinary-config.mjs:50` (file-access-to-http). The gap behind them: the cache
+  writes a downloaded sheet without checking it against the Git blob SHA the registry holds (`owasp.mjs:473-478`). Fix:
+  a download is kept only when its blob SHA equals the registry's `sha`; the URL is built only from a 40-hex commit and
+  a file name of `^[A-Za-z0-9_-]+\.md$`; the cache is written through one descriptor; the Cloudinary credentials go only
+  to `https://api.cloudinary.com`.
 - `.github/workflows/ci.yml` (+ `scripts/quality/ci-workflow.test.mjs`): the quality job's `sync --verify` and `check`
   steps; the `owasp-gate` job, required by `CI Required`.
 - Rules and skills: `CLAUDE.md` (golden rule), `.claude/rules/flow.md` (golden rule, the OWASP chain),
@@ -64,6 +72,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Abuse_Case: "it is important to identify the attacks which the application must defend against" — T1-T4 name how the governance path could be bypassed or tampered with — AC1, AC2, AC5.
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — O9 holds every file to a sheet; the task gate monitors each change — AC1, AC2.
 - Bot_Management_and_Anti-Automation: not applicable — no endpoint or limit of the product changes; the words came from the threat list.
+- Business_Logic_Security: not applicable — "race" here is a file-descriptor race in the scripts; no product workflow or price changes.
 - CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the task gate requires an approved review in every change, and CI Required waits for it — AC2.
 - Credential_Stuffing_Prevention: not applicable — no sign-in or credential path changes; the words came from the threat list.
 - Cryptographic_Storage: not applicable — the stop hook's content hash only detects a changed file; it stores no secret or password.
@@ -73,17 +82,20 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Denial_of_Service: not applicable — the product's request paths are unchanged; cloudinary-config.mjs only reads the upload presets once.
 - File_Upload: not applicable — cloudinary-config.mjs reads the presets read-only; the upload paths change in Task 957.
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the new job reads contents only, holds no secret, and takes the base SHA through env — AC2.
+- HTTP_Strict_Transport_Security: not applicable — the scripts are HTTP clients of fixed hosts; no response header of the site changes.
 - Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — owasp.mjs runs git with an argument array and a base ref from CI's env, never a shell string — AC2.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — the trigger and rule patterns are flat alternations over fixed words — AC1.
 - Key_Management: not applicable — the content hash of the stop hook uses no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.
 - MCP_Security: not applicable — no MCP server is added or configured; Task 961 watches the tool definitions.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — owasp.mjs starts only git and node, with fixed argument arrays and no shell — AC2.
+- Secrets_Management: "prevent them from leaking and compromising the organization" — the Cloudinary credentials read by `cloudinary-config.mjs` are sent to `https://api.cloudinary.com` only, refused for any other host — AC10.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff of the governance files and reruns every check — AC8.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — an agent's citation of a sheet counts only when the tool finds the quote in the sheet — AC1, AC3.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — every gap the mapping found became a task with tested criteria (959, 954, 955, 960, 961, 962) — AC5.
 - Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the reference itself is pinned by its upstream commit and per-sheet hashes; the new job pins every action by SHA — AC1, AC2.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the attack surface section answers them for the governance path — AC1-AC6.
+- Transport_Layer_Security: not applicable — the scripts call fixed `https:` hosts through Node's default TLS; no server TLS setting changes.
 - User_Privacy_Protection: not applicable — no personal data is read or stored; cloudinary-config.mjs reads preset settings only.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a fresh Opus session reviews and reruns every check; the implementer's report is not evidence — AC8.
 - Web_Frontend_Security: not applicable — no page, header or browser-side code of the product changes; the words came from the sanitizer tests.
@@ -120,6 +132,11 @@ No visible change.
 - AC9 The stop judges content, and its limit does not widen the next check — test: `scripts/quality/agent-check.test.mjs`
   (a byte-exact restore with a new mtime is no change; a same-size edit with the old mtime put back is; after the third
   block the state stays, older work is not added and a remaining failure blocks again).
+- AC10 The OWASP cache keeps only what upstream holds, and the task's files carry no CodeQL alert — test:
+  `scripts/quality/owasp.test.mjs` (a download whose blob SHA differs is refused and not written; a commit or file name
+  of another shape is refused before any request), `scripts/quality/cloudinary-config.test.mjs` (another host is
+  refused), and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs`, `cloudinary-config.mjs` or
+  `agent-check*.mjs`.
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.
@@ -127,7 +144,7 @@ No visible change.
 ## Route
 
 1. The reviewing Opus session reads this kickoff, `flow.md` and `secure-code-review.md`; runs `owasp.mjs sync`, `check`.
-2. AC1-AC9 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
+2. AC1-AC10 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
    removed, a planted sink, a finding status cleared), and for AC9 three (mtime put back into the stamp, the stamp cut
    to the size, the state deleted at the limit), shown failing, then restored.
 3. Review written here with its OWASP review record; `node scripts/quality/owasp.mjs gate --base main` then names what the

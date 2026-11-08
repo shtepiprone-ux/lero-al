@@ -46,6 +46,8 @@ Product code — the alert, the fault, the fix:
   - `src/lib/__tests__/exchangeRateServer.test.ts:51,141,142` and `src/lib/__tests__/exchangeRates.security.test.ts:56`
     (compare `new URL(u).hostname` or `origin`, not a substring);
   - `src/modules/admin/actions/__tests__/exchangeProvidersRemoved.security.test.ts:18` (group the alternation).
+  - `src/__tests__/serverLinkComponent.test.ts:24` (redos, added by Task 952, open 2026-11-08): read `'use client'` from
+    the syntax tree (`ts.createSourceFile`, the directive prologue), not with a nested-quantifier regex.
 
 Scripts (`scripts/`):
 - Used by `package.json` or a workflow: fix each alert in place.

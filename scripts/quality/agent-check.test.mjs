@@ -3,7 +3,7 @@
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync, utimesSync } from 'node:fs';
+import { closeSync, existsSync, fstatSync, futimesSync, mkdirSync, openSync, readFileSync, writeFileSync, writeSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -155,10 +155,17 @@ function isolated(name, body) {
 test('stop: a file restored byte for byte after a deliberate break is not a change', () => isolated('restored', (start) => {
   const rel = write('restored.ts', 'export const twice = (n: number): number => n * 2;\n');
   const id = start('restored');
-  const abs = path.join(ROOT, rel);
-  writeFileSync(abs, readFileSync(abs));
-  const later = new Date(statSync(abs).mtimeMs + 60_000);
-  utimesSync(abs, later, later);
+  // One descriptor for the read, the write and the timestamps, so the file cannot be swapped between them
+  // (CodeQL js/file-system-race).
+  const fd = openSync(path.join(ROOT, rel), 'r+');
+  try {
+    const bytes = readFileSync(fd);
+    writeSync(fd, bytes, 0, bytes.length, 0);
+    const later = new Date(fstatSync(fd).mtimeMs + 60_000);
+    futimesSync(fd, later, later);
+  } finally {
+    closeSync(fd);
+  }
   const r = hook('stop', { session_id: id });
   assert.equal(r.stdout, '', r.stdout);
 }));
@@ -166,11 +173,16 @@ test('stop: a file restored byte for byte after a deliberate break is not a chan
 test('stop: a same-size edit with the old mtime put back is still checked', () => isolated('same-size', (start) => {
   const rel = write('same-size.md', '# Same size\n\nabc\n');
   const id = start('same-size');
-  const abs = path.join(ROOT, rel);
-  const before = statSync(abs);
-  writeFileSync(abs, `# Same size\n\n${String.fromCodePoint(0x200b)}\n`);
-  assert.equal(statSync(abs).size, before.size);
-  utimesSync(abs, before.atime, before.mtime);
+  const fd = openSync(path.join(ROOT, rel), 'r+');
+  try {
+    const before = fstatSync(fd);
+    const edited = Buffer.from(`# Same size\n\n${String.fromCodePoint(0x200b)}\n`);
+    assert.equal(edited.length, before.size);
+    writeSync(fd, edited, 0, edited.length, 0);
+    futimesSync(fd, before.atime, before.mtime);
+  } finally {
+    closeSync(fd);
+  }
   const out = JSON.parse(hook('stop', { session_id: id }).stdout || '{}');
   assert.equal(out.decision, 'block');
   assert.match(out.reason, /invisible-character/);

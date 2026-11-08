@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   ROOT, REGISTRY, CONTROLS, CACHE, VERIFIED, normalise, quotesOf, quoteFound, triggered, pathsIn, surfaceChanged,
-  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict,
+  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict, refreshCache, gitBlobSha, sheetText,
 } from './owasp.mjs';
 
 const SHEET_A = '# Alpha\n\nThe server **must** validate every `request` before use, [see](x.md) always.\n';
@@ -273,4 +273,54 @@ test('the repository: every sheet mapped at its current version, every quote and
   const r0 = sheet.requirements.find((r) => r.control);
   const broken = { sheets: { ...ctl.sheets, [name]: { ...sheet, requirements: [{ ...r0, quote: `${r0.quote} planted-word`, evidence: 'planted evidence that is nowhere' }] } } };
   assert.deepEqual([...new Set(ids(checkMapping({ ...reg, fetchedOn: new Date().toISOString() }, broken)))], ['O6', 'O7']);
+});
+
+// Task 963 AC10: the cache keeps only what upstream holds at the registry's commit.
+const GOOD = Buffer.from('# Alpha\n\nThe server must validate every request before use.\n');
+const cacheRegistry = (over = {}) => ({ commit: 'a'.repeat(40), sheets: [{ name: 'Alpha', file: 'Alpha_Cheat_Sheet.md', sha: gitBlobSha(GOOD) }], ...over });
+const answering = (bytes) => { const calls = []; return { calls, get: async (url) => { calls.push(url); return new Response(bytes); } }; };
+
+test('gitBlobSha is the Git object id the GitHub contents API gives (blob of "hello\n")', () => {
+  assert.equal(gitBlobSha(Buffer.from('hello\n')), 'ce013625030ba8dba906f756967f9e9ca394464a');
+});
+
+test('cache: a download whose blob SHA differs from the registry is refused and not written', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-cache-'));
+  const { get } = answering(Buffer.from('# Alpha\n\nplanted text\n'));
+  await assert.rejects(refreshCache(cacheRegistry(), root, get), /does not match the registry/);
+  assert.equal(existsSync(path.join(root, CACHE, 'Alpha.md')), false);
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('cache: a matching download is written once; a cached text that drifted is downloaded again', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-cache-'));
+  const first = answering(GOOD);
+  assert.equal(await refreshCache(cacheRegistry(), root, first.get), 1);
+  assert.deepEqual(first.calls, [`https://raw.githubusercontent.com/OWASP/CheatSheetSeries/${'a'.repeat(40)}/cheatsheets/Alpha_Cheat_Sheet.md`]);
+  assert.equal(sheetText('Alpha', root), GOOD.toString('utf8'));
+  const again = answering(GOOD);
+  assert.equal(await refreshCache(cacheRegistry(), root, again.get), 0);
+  writeFileSync(path.join(root, CACHE, 'Alpha.md'), 'drifted');
+  const third = answering(GOOD);
+  assert.equal(await refreshCache(cacheRegistry(), root, third.get), 1);
+  assert.equal(sheetText('Alpha', root), GOOD.toString('utf8'));
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('cache: a commit, sheet name, file name or blob id of another shape is refused before any request', async () => {
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-cache-'));
+  const sheet = cacheRegistry().sheets[0];
+  for (const reg of [
+    cacheRegistry({ commit: 'c0ffee' }),
+    cacheRegistry({ commit: `${'a'.repeat(40)}/../evil` }),
+    cacheRegistry({ sheets: [{ ...sheet, file: '../../evil.md' }] }),
+    cacheRegistry({ sheets: [{ ...sheet, file: 'Alpha.md?x=1' }] }),
+    cacheRegistry({ sheets: [{ ...sheet, name: '../Alpha' }] }),
+    cacheRegistry({ sheets: [{ ...sheet, sha: 'not-a-sha' }] }),
+  ]) {
+    const { calls, get } = answering(GOOD);
+    await assert.rejects(refreshCache(reg, root, get), /refused/);
+    assert.deepEqual(calls, []);
+  }
+  rmSync(root, { recursive: true, force: true });
 });

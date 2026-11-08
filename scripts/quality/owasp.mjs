@@ -31,7 +31,8 @@
 // OWASP: Secure Code Review (the reference is part of the review), Threat Modeling (re-done when the reference changes),
 // Vulnerable Dependency Management (a reference is a dependency: track its version), Secure Coding with AI (the agent's
 // claim of having read a source is checked against the source).
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { closeSync, existsSync, fstatSync, mkdirSync, openSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -464,22 +465,54 @@ async function readUpstream() {
   return { source: `https://github.com/${UPSTREAM}`, site: 'https://cheatsheetseries.owasp.org/index.html', commit: commit.sha, fetchedOn: new Date().toISOString(), sheets };
 }
 
-async function refreshCache(reg, root = ROOT) {
+/** Git's object id of a file's bytes: the `sha` the GitHub contents API gives for each sheet. SHA-1 here is Git's
+ *  content address of the pinned commit's tree, used to prove the download is that blob, not a hash chosen for a secret. */
+export function gitBlobSha(bytes) {
+  return createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+}
+
+/** The bytes of a regular file, or null; one descriptor serves the type check and the read (CodeQL js/file-system-race). */
+function readRegular(abs) {
+  let fd;
+  try {
+    fd = openSync(abs, 'r');
+    return fstatSync(fd).isFile() ? readFileSync(fd) : null;
+  } catch {
+    return null;
+  } finally {
+    if (fd !== undefined) closeSync(fd);
+  }
+}
+
+const GIT_ID = /^[0-9a-f]{40}$/;
+const SHEET_NAME = /^[A-Za-z0-9_-]+$/;
+const SHEET_FILE = /^[A-Za-z0-9_-]+\.md$/;
+
+/** Task 963 AC10: the cache holds exactly the blobs of the registry's commit. The request URL is built only from a Git
+ *  id and a plain file name, checked before any request; a download is written only when its blob id equals the
+ *  registry's `sha`; a cached file is kept only while it still is that blob, so a drifted cache is downloaded again. */
+export async function refreshCache(reg, root = ROOT, get = fetch) {
+  if (!GIT_ID.test(String(reg?.commit ?? ''))) throw new Error('registry commit refused: not a 40-hex Git id');
+  for (const s of reg.sheets ?? []) {
+    if (!SHEET_NAME.test(String(s.name ?? '')) || !SHEET_FILE.test(String(s.file ?? '')) || !GIT_ID.test(String(s.sha ?? ''))) {
+      throw new Error(`registry sheet refused: name, file or blob id of another shape (${JSON.stringify(s.name)})`);
+    }
+  }
   const dir = path.join(root, CACHE);
   mkdirSync(dir, { recursive: true });
   let n = 0;
   for (const s of reg.sheets) {
-    const shaFile = path.join(dir, `${s.name}.sha`);
-    if (existsSync(shaFile) && readFileSync(shaFile, 'utf8').trim() === s.sha && existsSync(path.join(dir, `${s.name}.md`))) continue;
-    const r = await fetch(`https://raw.githubusercontent.com/${UPSTREAM}/${reg.commit}/cheatsheets/${s.file}`);
+    const target = path.join(dir, `${s.name}.md`);
+    const cached = readRegular(target);
+    if (cached && gitBlobSha(cached) === s.sha) continue;
+    const r = await get(`https://raw.githubusercontent.com/${UPSTREAM}/${reg.commit}/cheatsheets/${s.file}`);
     if (!r.ok) throw new Error(`${s.file}: HTTP ${r.status}`);
-    const body = await r.text();
-    writeFileSync(path.join(dir, `${s.name}.md`), body);
-    writeFileSync(shaFile, s.sha);
-    s.title = (/^#\s+(.+)$/m.exec(body) ?? [])[1]?.trim();
+    const bytes = Buffer.from(await r.arrayBuffer());
+    if (gitBlobSha(bytes) !== s.sha) throw new Error(`${s.file}: the download does not match the registry's blob ${s.sha}; not written`);
+    writeFileSync(target, bytes);
     n++;
   }
-  for (const s of reg.sheets) if (!s.title) s.title = (/^#\s+(.+)$/m.exec(readFileSync(path.join(dir, `${s.name}.md`), 'utf8')) ?? [])[1]?.trim();
+  for (const s of reg.sheets) if (!s.title) s.title = (/^#\s+(.+)$/m.exec(readRegular(path.join(dir, `${s.name}.md`))?.toString('utf8') ?? '') ?? [])[1]?.trim();
   return n;
 }
 
@@ -555,7 +588,8 @@ async function main(argv) {
     for (const k of ['added', 'changed', 'removed']) for (const s of delta[k]) console.log(`  ${k}: ${s}`);
     const differs = !registry || delta.added.length + delta.changed.length + delta.removed.length > 0;
     // Upstream was read now: the age rule (O1) counts from this run, so an unchanged registry needs no commit.
-    writeFileSync(path.join(ROOT, CACHE, VERIFIED), `${JSON.stringify({ checkedOn: fresh.fetchedOn, commit: fresh.commit })}\n`);
+    // Only the local time of this read is kept (lastRead reads checkedOn alone); no upstream data goes into the marker.
+    writeFileSync(path.join(ROOT, CACHE, VERIFIED), `${JSON.stringify({ checkedOn: new Date().toISOString() })}\n`);
     if (argv.includes('--verify')) {
       if (differs) console.log(`owasp sync: upstream differs from ${REGISTRY}: run node scripts/quality/owasp.mjs sync, re-read the listed sheets, update ${CONTROLS}`);
       return differs ? 1 : 0;

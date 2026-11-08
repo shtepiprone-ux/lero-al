@@ -36,13 +36,22 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   content hash (`readRegularFile`, one descriptor), and the limit releases the stop with the baseline kept.
 - `scripts/quality/audit-coverage.mjs` (+ test): lane `owasp-reference`.
 - The CodeQL alerts of this task's own files, open on PR #19 on 2026-11-08 (`gh api` code-scanning alerts,
-  `ref=refs/pull/19/merge`, `state=open`), each fixed in code and none dismissed (owner D2, 2026-11-06):
-  `scripts/quality/owasp.mjs:474` (file-access-to-http), `:477`, `:558`, `:564` (http-to-file-access), `:478`
-  (file-system-race), `scripts/quality/cloudinary-config.mjs:50` (file-access-to-http). The gap behind them: the cache
-  writes a downloaded sheet without checking it against the Git blob SHA the registry holds (`owasp.mjs:473-478`). Fix:
-  a download is kept only when its blob SHA equals the registry's `sha`; the URL is built only from a 40-hex commit and
-  a file name of `^[A-Za-z0-9_-]+\.md$`; the cache is written through one descriptor; the Cloudinary credentials go only
-  to `https://api.cloudinary.com`.
+  `ref=refs/pull/19/merge`, `state=open`): `scripts/quality/owasp.mjs:474` (file-access-to-http), `:477`, `:558`,
+  `:564` (http-to-file-access), `:478` (file-system-race), `scripts/quality/cloudinary-config.mjs:50`
+  (file-access-to-http). The gap behind them: the cache wrote a downloaded sheet without checking it against the Git
+  blob SHA the registry holds, and trusted a side `.sha` file (`owasp.mjs:473-478` before). Fixed in code: `refreshCache`
+  refuses a commit that is not a 40-hex Git id and a sheet name, file name or blob id of another shape before any
+  request; keeps a download only when its blob SHA equals the registry's `sha`; keeps a cached file only while it still
+  is that blob (no `.sha` file, no check-then-use: `:478` gone); the `sync` marker keeps only the local read time (`:558`
+  gone). Left by design: `:474`, `:477`, `:564` download a sheet at the pinned commit and write it or the registry, and
+  `cloudinary-config.mjs:50` sends the Cloudinary credentials to their own Admin API (`https://api.cloudinary.com`, cloud
+  name `^[a-z0-9_-]+$`). CodeQL has no barrier for these flows (its `FileAccessToHttp` sanitizers are `.length` reads and
+  generated code only; `HttpToFileAccess` has none, read 2026-11-08), so only a change of purpose would silence them.
+  Owner decision D-CQ1 (2026-11-08, translated: "decide according to development best practices of 2026"), an
+  exception to D2 for these four alerts only: each is dismissed as "won't fix" with a comment that names its control
+  and test (`owasp.test.mjs` cache cases; the fixed host and the cloud-name check of `cloudinary-config.mjs`). No path
+  is excluded from the scan; a changed flow in these files raises a new alert, which is triaged again. D2 stands for
+  every other alert.
 - `.github/workflows/ci.yml` (+ `scripts/quality/ci-workflow.test.mjs`): the quality job's `sync --verify` and `check`
   steps; the `owasp-gate` job, required by `CI Required`.
 - Rules and skills: `CLAUDE.md` (golden rule), `.claude/rules/flow.md` (golden rule, the OWASP chain),
@@ -132,11 +141,12 @@ No visible change.
 - AC9 The stop judges content, and its limit does not widen the next check — test: `scripts/quality/agent-check.test.mjs`
   (a byte-exact restore with a new mtime is no change; a same-size edit with the old mtime put back is; after the third
   block the state stays, older work is not added and a remaining failure blocks again).
-- AC10 The OWASP cache keeps only what upstream holds, and the task's files carry no CodeQL alert — test:
-  `scripts/quality/owasp.test.mjs` (a download whose blob SHA differs is refused and not written; a commit or file name
-  of another shape is refused before any request), `scripts/quality/cloudinary-config.test.mjs` (another host is
-  refused), and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs`, `cloudinary-config.mjs` or
-  `agent-check*.mjs`.
+- AC10 The OWASP cache keeps only what upstream holds at the pinned commit — test: `scripts/quality/owasp.test.mjs`
+  (`gitBlobSha` equals `git hash-object`; a download whose blob SHA differs is refused and not written; a drifted cached
+  file is downloaded again; a commit, sheet name, file name or blob id of another shape is refused before any request),
+  and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs`, `cloudinary-config.mjs` or
+  `agent-check*.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
+  decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths).
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.

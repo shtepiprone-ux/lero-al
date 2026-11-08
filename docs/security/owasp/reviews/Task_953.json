@@ -1,0 +1,325 @@
+{
+  "task": "953",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "`AuthContext.tsx` now creates its controller in a state initializer instead of a ref; the session check and its calls are unchanged."
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication code is added; the same Supabase client and controller are used as before."
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the changed admin managers only mirror their props in render; every guard stays on the server pages and actions, unchanged."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no access decision or returned field changes; the diff moves state updates out of effects."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no guard moves; the preview page keeps its staff check and only calls `isListingNew`."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "no permission changes; the existing action and guard tests run unchanged in the 6114-test suite."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the matrix is Task 950; no authorization rule changes in this lint task."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "CI_CD_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie is read, written or changed by these lint fixes."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "`AuthSheet.tsx` keeps its captcha and sign-in calls; only the reset and the notice read move."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no output path changes; every changed view renders text through React escaping."
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the diff adds no sink: `git diff` adds no innerHTML, eval, Function or navigation call."
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "no limit or expensive path changes; the data hooks keep their singletons and caches."
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "`ImageUpload.tsx` only moves its onChange ref update into an effect; the upload contract stays as Task 952 left it."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTML5_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Use the object sessionStorage instead of localStorage if persistent storage is not needed."
+      ],
+      "evidence": "`src/modules/listings/lib/savedListingsPosition.ts` and `src/modules/auth/lib/useSessionLostNotice.ts` keep sessionStorage for a return position and a flag only; no credential or personal data is stored."
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object lookup changes; the admin tables keep the rows the server sends."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "`npm run lint` exit 0 with the five rules at error (`src/__tests__/eslintConfig.test.ts`, red when one is off); no regular expression is added."
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "no log line is added or changed; `useCompanies` keeps logging the same error object."
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the task adds no log event; the vocabulary is Task 955."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "`useNotifications` keeps its RLS-scoped read and drops a response for a user who is no longer signed in."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in factor changes; staff MFA is Task 960."
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Rendering the form only on a protected page does not authenticate the action request."
+      ],
+      "evidence": "no Server Action changes in `git diff HEAD`; `npm test -- --coverage` 6114 tests green, serverEntryGuards included."
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "R3 changes only how googlePopup.test.ts waits; the sign-in flow and its state check are untouched."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "each command of the report rerun by the reviewer (`npm test -- --coverage`, `npm run lint`, `node scripts/quality/product-gates.mjs`); four deliberate breaks of AC1 to AC3, each red."
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "the session refresh and its cookies are untouched; `AuthContext.tsx` only moves where the controller is created."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no personal data flow changes; only the timing of state updates changes."
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "finding",
+      "finding": "F4",
+      "note": "the report says the census failure is unrelated to the change; `AdminUsersTable.tsx` is in the diff."
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "WebSocket_Security": {
+      "verdict": "not applicable",
+      "reason": "the realtime hooks keep their channels and filters; only the callback ref update moves into an effect."
+    },
+    "Web_Cache_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "`git diff HEAD -- src` adds no innerHTML or dangerouslySetInnerHTML; lint `react/no-danger` at error."
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Webhook_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 953 diff (`git diff` of 66 files on 0d53a41ae) does not touch this area; the branch verdict is in Task_952.json."
+    }
+  }
+}

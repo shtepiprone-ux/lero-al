@@ -228,6 +228,13 @@ test('the task gate: code lands only with an approved task whose reviews cover e
     assert.deepEqual(gate({ kickoffs: [{ file, body: head + KICK('', 'Verdict: APPROVED'), record: { task: '900', sheets: {} } }] }), ['G3']);
     assert.deepEqual(gate({ dependencyOnly: true }), [], 'a version-only dependency update is held by the dependency gates');
     assert.equal(lastVerdict('## Review\nReview 1: APPROVED\nReview 2: NEEDS REVISION\n'), 'NEEDS REVISION');
+    // Task 963 AC12 (found in the Task 953 review, 2026-11-08): only a verdict line counts, never the word in the prose under it.
+    const revision = '## Review\n**Review 1 of the tree at `abc` — NEEDS REVISION**\n\n- the report\'s `APPROVED` marker was the reviewer\'s\nAPPROVED once the census passes.\n';
+    assert.equal(lastVerdict(revision), 'NEEDS REVISION', 'prose that names a verdict is not a verdict');
+    assert.deepEqual(gate({ kickoffs: [{ file, body: head + KICK(`- Alpha: "${QA}" — schema — AC1`, revision.replace('## Review\n', '')), record }] }), ['G1'], 'a task under revision holds no change');
+    assert.equal(lastVerdict('## Review\n**Opus, 2026-11-06 — APPROVED WITH NOTES** (candidate: x)\n'), 'APPROVED WITH NOTES');
+    assert.equal(lastVerdict('## Review\n**Review 1 of `a` — NEEDS REVISION**\n\n**Review 2 of `b` — APPROVED**\n'), 'APPROVED');
+    assert.equal(lastVerdict('## Review\n- APPROVED\n> APPROVED\n'), null, 'a list item or a quote is not a verdict line');
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 

@@ -34,6 +34,19 @@ no behaviour changes.
 - Remove the findings file when the rules are on; it has no reader after that.
 - No `eslint-disable` of these rules. A finding that truly cannot be fixed stops the task and is reported to Opus.
 - Dependencies: none. Out of scope: turning on the React Compiler itself, any visible change.
+- **Revision 1 (review of 2026-11-08, findings F1 to F5).** Fixes only these:
+  - R1 (F1) `src/components/shared/Combobox.tsx:302`: typing that opens the portal dropdown places it in the same handler
+    (`updateDropdownPosition()`), as focus and click do, so a dropdown reopened after Escape and a scroll is not drawn at the old place.
+  - R2 (F2) `src/hooks/useIsMobile.ts`: `getSnapshot` reads `window.matchMedia(query).matches`; no module-level `lastEvent` or
+    subscriber count. The test double in `src/hooks/__tests__/simpleHooks.test.ts` keeps `matches` in step with `fire()`, as a browser does.
+  - R3 (F3) The two tests that make the CI unit job fail now and then: `src/components/layout/__tests__/header-hydration-id-parity.test.tsx`
+    unmounts each `hydrateRoot` root inside `act` before it removes the container; `src/lib/auth/__tests__/googlePopup.test.ts`
+    waits with `vi.waitFor` (a time limit), not 500 promise turns. Assertions stay as they are.
+  - R4 (F4) `check:surface-census:changed` reports no new block for `src/components/admin/AdminUsersTable.tsx` and
+    `src/lib/navigation/ClientLink.tsx`: each goes through the census's own path (its message names enrolment with a Story or an
+    allowlist row with a reason and an owning task), never into the baseline.
+  - R5 (F5) `src/modules/listings/lib/isListingNew.ts`: the comment says what is true: the page still reads the clock while it
+    renders, which is right for a Server Component rendered per request; the function exists so a test can set `now`.
 
 ## Attack surface
 
@@ -59,6 +72,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - File_Upload: not applicable — the upload contract stays as Task 952 left it; signed uploads are Task 957.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL run on every changed file, and the five rules become errors — AC1, AC4.
 - Multifactor_Authentication: not applicable — no sign-in factor changes; staff MFA is Task 960.
+- OAuth2: not applicable — R3 changes only how a test waits; the Google sign-in flow and its state check stay as they are.
 - Nextjs_Security: "Rendering the form only on a protected page does not authenticate the action request." — no Server Action changes; `serverEntryGuards.test.ts` runs unchanged — AC4.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input; Opus reruns each command — AC4.
 - Session_Management: not applicable — the session refresh and its cookies are untouched; `AuthContext.tsx` only reads the user.
@@ -88,6 +102,15 @@ No visible change. A visual difference in Storybook or the click-shield run is a
   `node scripts/quality/changed-lines-coverage.mjs --base main` and `node scripts/quality/check-files.mjs --worktree`
   exit 0.
 - AC5 `node scripts/quality/product-gates.mjs` has no new failure compared with before (lists before and after).
+- AC6 Revision 1: typing reopens the portal dropdown at the field — test: `src/components/shared/__tests__/Combobox.portal.test.tsx`
+  (new): portal Combobox, focus, Escape, the field moved (`getBoundingClientRect` mocked), a key typed: the dropdown's top and left
+  follow the new rectangle.
+- AC7 Revision 1: `useIsMobile` follows the browser's answer — test: `src/hooks/__tests__/simpleHooks.test.ts` (the double's
+  `matches` follows `fire()`; an event whose `matches` disagrees with the query gives the query's value; two hooks agree).
+- AC8 Revision 1: the unit job is stable — test: `src/components/layout/__tests__/header-hydration-id-parity.test.tsx` and
+  `src/lib/auth/__tests__/googlePopup.test.ts` pass 20 runs in a row (`for i in $(seq 20); do npx vitest run <both> || exit 1; done`),
+  and the CI job "Unit and component tests" of PR #19 is green on the revision commit.
+- AC9 Revision 1: no new census block — test: `node scripts/check-surface-census-changed.mjs --base main` lists no block for the two files of R4.
 
 ## Route
 
@@ -98,3 +121,38 @@ No visible change. A visual difference in Storybook or the click-shield run is a
    deliberate break of AC1 and AC2. Build with `SENTRY_AUTH_TOKEN=` empty.
 
 ## Review
+
+**Review 1 of the working tree on `governance/reset-2026-11-06` at `0d53a41ae` — NEEDS REVISION**
+
+Scope: diff review of all 53 changed and 12 new files (`git diff HEAD`, 709+ / 678-); entry points: none changed (`AuthContext`, the realtime hooks and the two `purity` pages read through).
+Tools (rerun by the reviewer, 2026-11-08): `owasp sync` and `check` 0; `check-ruleset` 0; `npm run lint` 0; the five rules forced on: 0 findings (55 on HEAD); `npm run typecheck` 0; `SENTRY_AUTH_TOKEN= npm run build` 0; `npm test -- --coverage` 0, 369 files, 6114 tests; `changed-lines-coverage --base main` 0; `check-files --worktree` 0; `ac-tests --base main` PASS; `product-gates` 31 of 34 (see F4). CI of PR #19 on `0d53a41ae` read with `gh run view` (F3).
+Findings: Critical 0, High 0, Medium 0, Low 4, Info 1. Revision 1 of at most 2.
+Overall risk: low; the fixes are sound and tested, one behaviour changed that the kickoff says must not.
+
+Measured beyond the report:
+- The three sessionStorage reads moved into initializers do not mismatch hydration: `LoginView` mounts only after `Header` opens the sheet on the client (`authOpen` starts false); `returnUrl` and `scrollTargetSlug` are never rendered. The move into `.ts` files is safe here for that reason, not because the scanner stopped seeing it.
+- `useNotifications` keeps its cross-user guard (`userIdRef` is written before `loadFor` runs); sign-out now empties the list in the same render.
+- Deliberate breaks, each red, files restored byte for byte: one rule back to off (AC1), a `react-hooks/purity` disable comment (AC2), `useStateFromProp` no longer following its prop (21 tests in 9 files), the `isListingNew` edge flipped (6 tests in 3 files).
+- `git diff HEAD -- src` adds no innerHTML, eval, Function or navigation call.
+
+Claims of the report that do not hold:
+- "surface-census and backlog-active are not related to my change": `check:backlog-active` failed on the reviewer's own `APPROVED` marker for Task 952 in `docs/backlog.md`, fixed by the reviewer in this turn (31 of 34 now); the census blocks are `AdminUsersTable.tsx`, which this diff changes, and `ClientLink.tsx` from Task 952, which the 952 review could not see because the census reads committed files only (F4).
+- "No visible change expected": the Combobox reopen path changed (F1). Storybook and click-shield stay unrun; Review 2 measures them.
+
+F1 — Typing reopens the portal dropdown where it was last placed
+Severity: Low   Category: Behaviour (the kickoff's "no behaviour changes")   Location: `src/components/shared/Combobox.tsx:302`
+Description: the open effect no longer places the dropdown; focus (`:303`) and click (`:317`) do, typing (`:302`) does not. After focus, Escape and a scroll (the scroll listener is off while closed), a key opens the dropdown at the old coordinates. Reproduction: those steps with `portal`. Recommendation: R1. Status: open.
+F2 — `useIsMobile` holds module state shaped by a test double
+Severity: Low   Category: Code quality   Location: `src/hooks/useIsMobile.ts:5-24`
+Description: `lastEvent` and `subscribers` exist because the double in `simpleHooks.test.ts` does not update `matches`, which a browser does: state shared across hook instances for a test's sake. Reproduction: the report ("the test I did not touch, I made the hook fit"). Recommendation: R2. Status: open.
+F3 — The CI unit job fails now and then
+Severity: Low   Category: Tests   Location: `header-hydration-id-parity.test.tsx:168`, `googlePopup.test.ts:39-41`
+Description: every test passes, yet the job exits 1: on `aa8ef7c20` and `0d53a41ae` an unhandled `ReferenceError: window is not defined` after teardown (the `hydrateRoot` roots are never unmounted); on `8a40c38a7` two `googlePopup` cases ran out of 500 promise turns; `abfc664b4` was green. AC4's `npm test` is not reliably 0. Reproduction: `gh run view 42463339826`, `42460858858`, `42455177615`. Recommendation: R3. Status: open.
+F4 — Two new census blocks, and the report's claim about them
+Severity: Low   Category: Governance (GR-1, GR-3)   Location: `src/components/admin/AdminUsersTable.tsx`, `src/lib/navigation/ClientLink.tsx`
+Description: `check:surface-census:changed` fails with `tier1-unenrolled-or-unstoried` for both. Reproduction: `node scripts/quality/product-gates.mjs`. Recommendation: R4. Status: open. The census cannot see uncommitted files during a local review; Task 963 carries that (its AC11).
+F5 — The `isListingNew` comment says the clock left the render
+Severity: Info   Category: Documentation   Location: `src/modules/listings/lib/isListingNew.ts:5-8`
+Description: the page still reads the clock while it renders; for a per-request Server Component that is correct, and the comment should say so. Recommendation: R5. Status: open.
+
+OWASP verdicts per sheet: [docs/security/owasp/reviews/Task_953.json](../../docs/security/owasp/reviews/Task_953.json).

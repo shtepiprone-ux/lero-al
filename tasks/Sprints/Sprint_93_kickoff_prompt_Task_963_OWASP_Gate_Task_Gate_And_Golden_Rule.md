@@ -35,6 +35,14 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   (`:226` before), so the next stop judged every uncommitted file of the branch. Now a file is stamped by its size and
   content hash (`readRegularFile`, one descriptor), and the limit releases the stop with the baseline kept.
 - `scripts/quality/audit-coverage.mjs` (+ test): lane `owasp-reference`.
+- The task gate's verdict (found in the Task 953 review, 2026-11-08): `lastVerdict` took the last of the words APPROVED or
+  NEEDS REVISION anywhere under "## Review" (`owasp.mjs:393-397` before), so a review in revision that quoted the word APPROVED held
+  the change as approved (measured: Task 953 under revision was listed among the approved reviews). Now only a verdict line counts
+  (secure-code-review.md §5: a line that starts with Review, Verdict or Opus, the verdict after the dash or the colon).
+- `scripts/check-surface-census-changed.mjs` and `scripts/quality/product-gates.mjs` (found in the Task 953 review, 2026-11-08): the census
+  maps `base..head` only, so a new file not yet committed is never censused in a local review; Task 952's `ClientLink.tsx` passed
+  review 2 that way and failed once committed. A local run (no `HEAD_SHA` set) also maps the untracked and modified files of the
+  working tree; CI keeps `base..head`.
 - The CodeQL alerts of this task's own files, open on PR #19 on 2026-11-08 (`gh api` code-scanning alerts,
   `ref=refs/pull/19/merge`, `state=open`): `scripts/quality/owasp.mjs:474` (file-access-to-http), `:477`, `:558`,
   `:564` (http-to-file-access), `:478` (file-system-race), `scripts/quality/cloudinary-config.mjs:50`
@@ -147,6 +155,10 @@ No visible change.
   and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs`, `cloudinary-config.mjs` or
   `agent-check*.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
   decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths).
+- AC11 A local product check sees uncommitted files — test: `node scripts/check-surface-census-changed.mjs --verify-gate`, whose self-test
+  arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run.
+- AC12 A task under revision holds no change — test: `scripts/quality/owasp.test.mjs` (the task gate: a review whose verdict line
+  says NEEDS REVISION and whose prose names APPROVED is not approved and the change fails G1; bold, older and two-review forms).
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.
@@ -154,7 +166,7 @@ No visible change.
 ## Route
 
 1. The reviewing Opus session reads this kickoff, `flow.md` and `secure-code-review.md`; runs `owasp.mjs sync`, `check`.
-2. AC1-AC10 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
+2. AC1-AC12 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
    removed, a planted sink, a finding status cleared), and for AC9 three (mtime put back into the stamp, the stamp cut
    to the size, the state deleted at the limit), shown failing, then restored.
 3. Review written here with its OWASP review record; `node scripts/quality/owasp.mjs gate --base main` then names what the

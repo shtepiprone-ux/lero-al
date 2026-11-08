@@ -390,10 +390,19 @@ export function checkReview(body, registry, controls, extra = [], { root = ROOT,
 }
 
 /** The last verdict written in a kickoff's "## Review" (a later review supersedes an earlier one), or null. */
+// A verdict line of the review summary (secure-code-review.md §5, "Review <n> of <sha> — <verdict>", bold or not; also
+// "Verdict: <verdict>" and the older "Opus, <date> — <verdict>"): the verdict follows "—" or ":" on a line that starts with
+// Review, Verdict or Opus. Task 963 AC12: the word in the prose under it (a quoted marker, a list item) never counts, so a
+// task under revision cannot hold a change in the gate because its review mentions APPROVED.
+const VERDICT_LINE = /^(?:\*\*)?(?:Review|Verdict|Opus)\b[^\n]*?(?:—|:)\s*(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)(?:\*\*)?(?=\s|$)/;
+
 export function lastVerdict(body) {
-  const text = (section(body, '## Review') ?? []).map((l) => l.text).join('\n');
-  const all = [...text.matchAll(/\b(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)\b/g)];
-  return all.length ? all[all.length - 1][1] : null;
+  let last = null;
+  for (const l of section(body, '## Review') ?? []) {
+    const m = VERDICT_LINE.exec(l.text.trim());
+    if (m) last = m[1];
+  }
+  return last;
 }
 
 /**

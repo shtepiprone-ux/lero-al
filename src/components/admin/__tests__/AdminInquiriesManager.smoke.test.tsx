@@ -215,3 +215,30 @@ describe('AdminInquiriesManager — Task 894', () => {
     expect(within(dialog).getByText(t.reply_history_load_failed)).toBeTruthy()
   })
 })
+
+// Task 953 (set-state-in-effect): the rows and replies follow the props the server sends after a refresh, and nothing else resets them.
+describe('AdminInquiriesManager — local copy follows the server props (Task 953)', () => {
+  const tree = (inquiries: InquiryRow[], replies: ReplyRow[] = []) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminInquiriesManager inquiries={inquiries} replies={replies} mailboxScope="sales" />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+
+  it('replaces its rows when new inquiries arrive', () => {
+    const view = renderManager(INQUIRIES)
+    expect(rows()).toHaveLength(3)
+    view.rerender(tree([PROGRESS_INQUIRY]))
+    expect(rows()).toHaveLength(1)
+    expect(rows()[0]).toHaveTextContent('Invoice question')
+    view.rerender(tree(INQUIRIES))
+    expect(rows()).toHaveLength(3)
+  })
+
+  it('keeps its rows when it is rendered again with the same props', () => {
+    const view = renderManager(INQUIRIES)
+    view.rerender(tree(INQUIRIES))
+    expect(rows()).toHaveLength(3)
+  })
+})

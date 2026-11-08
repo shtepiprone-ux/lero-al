@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEventHandler, type ReactNode } from 'react'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import {
   Box,
   Combobox,
@@ -223,15 +224,15 @@ export function MantineCombobox({
   const selectedSheetOptionRef = useRef<HTMLButtonElement | null>(null)
 
   // Reset search when the value is cleared externally (parity with legacy Combobox.tsx).
-  useEffect(() => {
+  useResetOnChange(value, () => {
     if (!value) setSearch('')
-  }, [value])
+  })
 
   // Reset the mobile sheet's own search whenever it closes (fresh state on re-open — Negative
   // flow "double-open / re-entry").
-  useEffect(() => {
+  useResetOnChange(drawerOpened, () => {
     if (!drawerOpened) setSheetSearch('')
-  }, [drawerOpened])
+  })
 
   // Task 893 R13: when the mobile sheet opens, bring the current value's row into view (the sheet renders from
   // the top). The Drawer mounts its content after `opened` flips, so the ref is read on the next frame.

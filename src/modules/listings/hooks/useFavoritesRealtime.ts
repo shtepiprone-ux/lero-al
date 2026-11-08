@@ -33,7 +33,9 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
   // Always-latest callback ref — lets the subscription closure stay stable
   // while callers can update onEvent without re-subscribing.
   const onEventRef = useRef(onEvent)
-  onEventRef.current = onEvent
+  useEffect(() => {
+    onEventRef.current = onEvent
+  })
 
   useEffect(() => {
     // Cancellation flag: set true in cleanup so in-flight INSERT fetches that

@@ -282,9 +282,11 @@
       "reason": "no personal data flow changes; only the timing of state updates changes."
     },
     "Verifying_Third_Party_Agent_Execution_Evidence": {
-      "verdict": "finding",
-      "finding": "F6",
-      "note": "review 2: the report says the census passes; it reads committed files only, and the committed change fails on four stale rows."
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "review 3 reran every command of the Revision 2 report (`node scripts/check-surface-census-changed.mjs --base main` PASS, 65 surfaces, 0 new, 0 stale; `npm test -- --coverage`; `node scripts/quality/product-gates.mjs`) and re-added one removed baseline row: 1 stale, red, restored by sha. F4 and F6 closed."
     },
     "Vulnerable_Dependency_Management": {
       "verdict": "not applicable",

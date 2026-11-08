@@ -507,3 +507,36 @@ describe('AdminListingsPage — listing summary columns (T9)', () => {
     expect(pageSelects).toHaveLength(0)
   })
 })
+
+// Task 953 (set-state-in-effect): the rows follow the listings the server sends after a refresh.
+describe('AdminListingsTable — local copy follows the server props (Task 953)', () => {
+  const tree = (listings: AdminListing[]) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminListingsTable
+          listings={listings}
+          total={listings.length}
+          page={1}
+          perPage={25}
+          activeStatus=""
+          searchQuery=""
+          activeTab="all"
+          activeVisibility=""
+          activeReason=""
+          auditCounts={{ total: 2, expired: 1, noExpiry: 1 }}
+        />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+
+  it('replaces its rows when new listings arrive', () => {
+    const view = renderTable()
+    expect(screen.queryAllByText(ACTIVE_LISTING.title).length).toBeGreaterThan(0)
+    expect(screen.queryAllByText(PENDING_LISTING.title).length).toBeGreaterThan(0)
+    view.rerender(tree([PENDING_LISTING]))
+    expect(screen.queryAllByText(ACTIVE_LISTING.title)).toHaveLength(0)
+    expect(screen.queryAllByText(PENDING_LISTING.title).length).toBeGreaterThan(0)
+    view.rerender(tree([ACTIVE_LISTING, PENDING_LISTING]))
+    expect(screen.queryAllByText(ACTIVE_LISTING.title).length).toBeGreaterThan(0)
+  })
+})

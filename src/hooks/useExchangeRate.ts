@@ -16,8 +16,12 @@ let fetchedAt = 0
 let inflight: Promise<ExchangeRates | null> | null = null
 const CACHE_TTL_MS = 60 * 60 * 1000
 
+function isCacheFresh(): boolean {
+  return cachedRates !== null && Date.now() - fetchedAt < CACHE_TTL_MS
+}
+
 function fetchRatesSingleton(): Promise<ExchangeRates | null> {
-  if (cachedRates !== null && Date.now() - fetchedAt < CACHE_TTL_MS) {
+  if (cachedRates !== null && isCacheFresh()) {
     return Promise.resolve(cachedRates)
   }
   if (inflight) return inflight
@@ -37,18 +41,13 @@ function fetchRatesSingleton(): Promise<ExchangeRates | null> {
 
 export function useExchangeRate(): ExchangeRateResult {
   const [rates, setRates] = useState<ExchangeRates | null>(cachedRates)
-  const [loading, setLoading] = useState(cachedRates === null)
+  // Loading from the first render unless the cache is fresh: the state is known before any effect runs.
+  const [loading, setLoading] = useState(() => !isCacheFresh())
 
   useEffect(() => {
     let cancelled = false
 
-    if (cachedRates !== null && Date.now() - fetchedAt < CACHE_TTL_MS) {
-      setRates(cachedRates)
-      setLoading(false)
-      return
-    }
-
-    setLoading(true)
+    // A fresh cache answers at once (an already-resolved promise); a stale or empty one is fetched.
     fetchRatesSingleton().then(r => {
       if (!cancelled) {
         setRates(r)

@@ -115,10 +115,8 @@ export function useIdleMount(defer: boolean, forceNow = false): boolean {
     }
   }, [defer, ready])
 
-  // When the user triggers the component (e.g., opens a panel), mount immediately
-  useEffect(() => {
-    if (forceNow) setReady(true)
-  }, [forceNow])
+  // When the user triggers the component (e.g., opens a panel), mount immediately — in the same render, and for good (`ready` never goes back to false).
+  if (forceNow && !ready) setReady(true)
 
   return ready
 }

@@ -311,3 +311,30 @@ describe('AdminSupportManager — user picker (Task 859)', () => {
     expect(mockSearchUsersForPicker).toHaveBeenCalledWith('ag')
   })
 })
+
+// Task 953 (set-state-in-effect): the tickets follow the props the server sends after a refresh, and the filters stay as the person set them.
+describe('AdminSupportManager — local copy follows the server props (Task 953)', () => {
+  const tree = (tickets: SupportTicketRow[]) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminSupportManager tickets={tickets} events={[]} initialFilters={adm06Filters()} />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+
+  it('replaces its rows when new tickets arrive, under the same filters', () => {
+    const view = renderManager()
+    expect(rows(view.container).map(r => r.textContent ?? '').join(' ')).toContain('Alpha open unassigned')
+    view.rerender(tree([{ ...TICKETS[1], id: 'tk-new', subject: 'Zulu freshly arrived', status: 'open' }]))
+    const shown = rows(view.container).map(r => r.textContent ?? '')
+    expect(shown).toHaveLength(1)
+    expect(shown[0]).toContain('Zulu freshly arrived')
+    expect(shown.join(' ')).not.toContain('Alpha')
+  })
+
+  it('keeps its rows when it is rendered again with the same props', () => {
+    const view = renderManager()
+    view.rerender(tree(TICKETS))
+    expect(rows(view.container)).toHaveLength(2)
+  })
+})

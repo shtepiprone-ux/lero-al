@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
@@ -27,7 +27,7 @@ export function ContactForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     formState: { errors },
     reset,
@@ -35,7 +35,7 @@ export function ContactForm() {
     defaultValues: { topic: '', customSubject: '', name: '', email: '', message: '' },
   })
 
-  const topic = watch('topic')
+  const topic = useWatch({ control, name: 'topic' })
   const isOther = topic === 'other'
 
   const topicOptions: ComboboxOption[] = [

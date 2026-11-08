@@ -686,3 +686,38 @@ describe('company picker (agent registration)', () => {
     expect(captcha.signUpWithCaptcha.mock.calls[0][0].data.company_id).toBe('c1')
   })
 })
+
+// Task 953 (set-state-in-effect): the session-recovery note is read once by whichever view opens first (Welcome back or Login), and a reopened sheet starts from the asked view.
+describe('Welcome back and the reopened sheet (Task 953)', () => {
+  const account = { sub: 'g-1', name: 'Arta', maskedEmail: 'ar•••••@example.com', picture: null }
+
+  it('Welcome back shows the session-recovery note once and removes the flag', () => {
+    sessionStorage.setItem(AUTH_SESSION_LOST_KEY, 'true')
+    renderApp(<AuthSheet open onOpenChange={onOpenChange} initialView="login" googleAccount={account} onForgetGoogleAccount={vi.fn()} />)
+    expect(screen.getByText(a.session_recovery_message)).toBeInTheDocument()
+    expect(sessionStorage.getItem(AUTH_SESSION_LOST_KEY)).toBeNull()
+  })
+
+  it('Welcome back shows no note when the flag is absent', () => {
+    renderApp(<AuthSheet open onOpenChange={onOpenChange} initialView="login" googleAccount={account} onForgetGoogleAccount={vi.fn()} />)
+    expect(screen.queryByText(a.session_recovery_message)).toBeNull()
+  })
+
+  it('Login after Welcome back does not show the note a second time', () => {
+    sessionStorage.setItem(AUTH_SESSION_LOST_KEY, 'true')
+    renderApp(<AuthSheet open onOpenChange={onOpenChange} initialView="login" googleAccount={account} onForgetGoogleAccount={vi.fn()} />)
+    click(a.welcome_back_more_options ?? /more options/i)
+    expect(screen.queryByText(a.session_recovery_message)).toBeNull()
+  })
+
+  it('starts on the asked view when it is opened again after a different one was used', () => {
+    const wrap = (node: React.ReactElement) => <NextIntlClientProvider locale="en" messages={messages as never}><MantineProvider theme={theme} env="test">{node}</MantineProvider></NextIntlClientProvider>
+    const { rerender } = render(wrap(<AuthSheet open onOpenChange={onOpenChange} initialView="login" />))
+    click(a.register)
+    expect(field(/^Name/)).toBeInTheDocument()
+    rerender(wrap(<AuthSheet open={false} onOpenChange={onOpenChange} initialView="login" />))
+    rerender(wrap(<AuthSheet open onOpenChange={onOpenChange} initialView="login" />))
+    expect(screen.queryByLabelText(/^Name/)).toBeNull()
+    expect(field(/^Email/)).toBeInTheDocument()
+  })
+})

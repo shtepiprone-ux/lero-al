@@ -25,8 +25,11 @@ interface Options {
 }
 
 export function useCabinetListingsRealtime({ userId, onEvent }: Options) {
+  // Always-latest callback: updated after every commit (an effect, not the render body), so the subscription below stays stable while the caller changes onEvent.
   const onEventRef = useRef(onEvent)
-  onEventRef.current = onEvent
+  useEffect(() => {
+    onEventRef.current = onEvent
+  })
 
   useEffect(() => {
     let cancelled = false

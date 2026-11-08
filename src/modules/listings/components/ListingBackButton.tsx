@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { Button } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
-
-const RESTORE_KEY = 'listings_restore'
+import { readSavedPosition } from '@/modules/listings/lib/savedListingsPosition'
 
 interface Props {
   locale: string
@@ -15,17 +14,11 @@ interface Props {
 
 export function ListingBackButton({ locale, label }: Props) {
   const router = useRouter()
-  const [returnUrl, setReturnUrl] = useState<string | null>(null)
+  // Read when the button first renders; nothing on the page shows it, only the click uses it.
+  const [returnUrl] = useState<string | null>(() => readSavedPosition()?.returnUrl ?? null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    try {
-      const raw = sessionStorage.getItem(RESTORE_KEY)
-      if (raw) {
-        const { returnUrl: url } = JSON.parse(raw)
-        setReturnUrl(url)
-      }
-    } catch {}
   }, [])
 
   function handleBack() {

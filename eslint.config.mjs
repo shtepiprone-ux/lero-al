@@ -82,20 +82,19 @@ const IMAGE_RENDER_EXCEPTIONS = [
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // react-hooks v7 React Compiler rules: findings fixed and rules turned on as errors in Task 953.
-  // eslint-config-next 16 brings eslint-plugin-react-hooks 7 with five React Compiler rules that did not exist before (Task 952); the 55 findings they report today are
-  // listed in docs/sessions/2026-11-06-task952-react-hooks-v7-findings.json. Exactly these five are off; the two classic hook rules stay errors
-  // (guarded by src/__tests__/eslintConfig.test.ts). Owner/Opus decision 2026-11-06.
+  // react-hooks v7 (eslint-plugin-react-hooks 7, brought by eslint-config-next 16): the two classic hook rules and the five React Compiler rules are errors. The five were off
+  // in Task 952 (block task-952/react-hooks-v7-compiler-rules-off); Task 953 fixed their 55 findings and removed that block. They are listed here, not left to the preset's
+  // own levels, so that a preset change can never weaken them (guarded by src/__tests__/eslintConfig.test.ts, which reads the configuration ESLint resolves).
   {
-    name: "task-952/react-hooks-v7-compiler-rules-off",
+    name: "task-953/react-hooks-error",
     rules: {
-      "react-hooks/set-state-in-effect": "off",
-      "react-hooks/refs": "off",
-      "react-hooks/purity": "off",
-      "react-hooks/immutability": "off",
-      "react-hooks/incompatible-library": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "error",
+      "react-hooks/set-state-in-effect": "error",
+      "react-hooks/refs": "error",
+      "react-hooks/purity": "error",
+      "react-hooks/immutability": "error",
+      "react-hooks/incompatible-library": "error",
     },
   },
   // A disable comment that silences nothing hides the next real finding at that line.

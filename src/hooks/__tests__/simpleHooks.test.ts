@@ -19,7 +19,12 @@ describe('useIsMobile', () => {
     const matchMedia = vi.fn(() => mq)
     vi.stubGlobal('matchMedia', matchMedia)
     window.matchMedia = matchMedia as never
-    return { mq, matchMedia, fire: (m: boolean) => listeners.forEach((l) => l({ matches: m })), listeners }
+    // A browser keeps `matches` in step with the change event it fires; `fireDisagreeing` sends an event whose payload is not what the query answers.
+    return {
+      mq, matchMedia, listeners,
+      fire: (m: boolean) => { mq.matches = m; listeners.forEach((l) => l({ matches: m })) },
+      fireDisagreeing: (payload: boolean) => listeners.forEach((l) => l({ matches: payload })),
+    }
   }
 
   it('asks for "narrower than 1024px", and takes the real answer after the first render', async () => {
@@ -39,6 +44,35 @@ describe('useIsMobile', () => {
     expect(result.current).toBe(false)
     act(() => s.fire(true))
     expect(result.current).toBe(true)
+  })
+
+  it("Task 953 R2: an event whose matches disagrees with the query gives the query's value", async () => {
+    const { useIsMobile } = await import('../useIsMobile')
+    const s = stubMatchMedia(false)
+    const { result } = renderHook(() => useIsMobile())
+    expect(result.current).toBe(false)
+    act(() => s.fireDisagreeing(true))
+    expect(result.current).toBe(false)
+    s.mq.matches = true
+    act(() => s.fireDisagreeing(false))
+    expect(result.current).toBe(true)
+  })
+
+  it("Task 953 R2: two hooks agree, also after a resize, and a hook mounted later reads the query's current answer", async () => {
+    const { useIsMobile } = await import('../useIsMobile')
+    const s = stubMatchMedia(true)
+    const first = renderHook(() => useIsMobile())
+    const second = renderHook(() => useIsMobile())
+    expect([first.result.current, second.result.current]).toEqual([true, true])
+    act(() => s.fire(false))
+    expect([first.result.current, second.result.current]).toEqual([false, false])
+    second.unmount()
+    act(() => s.fire(true))
+    expect(first.result.current).toBe(true)
+    first.unmount()
+    s.mq.matches = false
+    const third = renderHook(() => useIsMobile())
+    expect(third.result.current).toBe(false)
   })
 
   it('stops listening when the component goes away', async () => {

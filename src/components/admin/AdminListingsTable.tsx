@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { AdminListingsView, type AdminListingsAuditCounts } from '@/components/admin/AdminListingsView'
@@ -54,7 +55,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const search = useAdminSearchQuery(searchQuery)
   const [premiumDialog, setPremiumDialog] = useState<AdminListing | null>(null)
   const [previewListing, setPreviewListing] = useState<AdminListing | null>(null)
-  const [items, setItems] = useState(init)
+  const [items, setItems] = useStateFromProp(init)
   const totalPages = Math.ceil(total / perPage)
 
   const statusLabel = (s: string) => getListingStatusLabel(s, k => tc(k as Parameters<typeof tc>[0]))
@@ -62,8 +63,6 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const STATUS_LABEL: Record<ListingStatus, string> = Object.fromEntries(
     LISTING_STATUS_CODES.map(s => [s, statusLabel(s)])
   ) as Record<ListingStatus, string>
-
-  useEffect(() => { setItems(init) }, [init])
 
   function navigate(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams.toString())

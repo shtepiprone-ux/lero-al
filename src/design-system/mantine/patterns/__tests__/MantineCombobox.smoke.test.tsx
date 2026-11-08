@@ -453,3 +453,55 @@ describe('MantineCombobox — scroll to the selected option (Task 893 R12/R13)',
     expect(spy).not.toHaveBeenCalled()
   })
 })
+
+// Task 953 (set-state-in-effect): the typed search is forgotten when the value is cleared from outside, and the mobile sheet's search is forgotten when the sheet closes.
+describe('MantineCombobox — typed search is reset (Task 953)', () => {
+  const options = [{ value: 'tirana', label: 'Tirana' }, { value: 'durres', label: 'Durres' }]
+  const matchMediaStub = (mobile: boolean) =>
+    vi.fn().mockImplementation((query: string) => ({
+      matches: mobile && query.includes('max-width'),
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }))
+  const tree = (value: string, extra: Partial<React.ComponentProps<typeof MantineCombobox>> = {}) =>
+    withProvider(<MantineCombobox options={options} value={value} onChange={() => {}} variant="input" noResultsLabel="none" triggerAriaLabel="probe" searchPlaceholder="Find a city" {...extra} />)
+
+  afterEach(() => { vi.stubGlobal('matchMedia', matchMediaStub(false)) })
+
+  it('shows the typed text until a value is chosen, and drops it when the value is cleared from outside', () => {
+    const view = render(tree(''))
+    const input = () => view.baseElement.querySelector('input') as HTMLInputElement
+    fireEvent.change(input(), { target: { value: 'du' } })
+    expect(input().value).toBe('du')
+    view.rerender(tree('durres'))
+    expect(input().value).toBe('Durres')
+    view.rerender(tree(''))
+    expect(input().value).toBe('')
+  })
+
+  it('keeps the typed text while the value stays empty', () => {
+    const view = render(tree(''))
+    const input = () => view.baseElement.querySelector('input') as HTMLInputElement
+    fireEvent.change(input(), { target: { value: 'du' } })
+    view.rerender(tree(''))
+    expect(input().value).toBe('du')
+  })
+
+  it('opens the mobile sheet with an empty search every time', async () => {
+    vi.stubGlobal('matchMedia', matchMediaStub(true))
+    const view = render(tree(''))
+    fireEvent.click(view.baseElement.querySelector('input')!)
+    const search = await screen.findByPlaceholderText('Find a city')
+    fireEvent.change(search, { target: { value: 'tir' } })
+    expect((screen.getByPlaceholderText('Find a city') as HTMLInputElement).value).toBe('tir')
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' })
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    fireEvent.click(view.baseElement.querySelector('input')!)
+    expect(((await screen.findByPlaceholderText('Find a city')) as HTMLInputElement).value).toBe('')
+  })
+})

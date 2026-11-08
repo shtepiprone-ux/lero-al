@@ -70,6 +70,11 @@ After the task:
   search, a listing, a CMS page, sign-in, cabinet and admin with the `.env.local` test accounts) in Playwright and fails
   on any `securitypolicyviolation` event or CSP console error; `--verify` serves a page with an inline script without the
   nonce and must fail. Opus adds the CI step to the click-shield job.
+- The CI fixture page (found in the Task 953 review 2, from the Vercel build log of `b23104b`, 2026-11-08):
+  `/[locale]/ci/click-shield-modal` ships in every production build and is closed only by
+  `process.env.CLICK_SHIELD_CI_FIXTURE !== '1'` → `notFound()` (`src/app/[locale]/ci/click-shield-modal/page.tsx:10`);
+  production answers 404 today (`curl https://lero.al/en/ci/click-shield-modal`, 2026-11-08), but no test holds the
+  guard. A test does: without the flag, or with any value other than `'1'`, the page calls `notFound()`.
 - Dependencies: none.
 - Out of scope: other headers (already set and tested).
 
@@ -173,6 +178,9 @@ No visible change.
 - AC7 No session answer can be stored by a shared cache — test: `scripts/check-click-shield.mjs` (extended: signed in,
   `/sq/cabinet` and `/admin` answer `Cache-Control` with `private` or `no-store`; anonymous `/sq` is unaffected) and
   `src/lib/auth/__tests__/sessionMiddleware.test.ts` (extended: a request with a session gets the header from the proxy).
+- AC8 The CI fixture page stays closed outside CI — test: `src/app/[locale]/ci/click-shield-modal/__tests__/page.test.tsx`
+  (new): the flag unset, `''`, `'0'` and `'true'` each make the page call `notFound()`; `'1'` renders the fixture; red
+  when the guard is removed.
 - AC6 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `npm run build`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
   `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_954_Response_Headers_Cookies_And_Client_Bundle.md`

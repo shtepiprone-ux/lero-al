@@ -604,3 +604,16 @@ describe('AdminUsersTable — data rendering', () => {
     expect(moderatorBadge?.getAttribute('data-color')).toBe('orange')
   })
 })
+
+// Task 953 (set-state-in-effect): the rows follow the users the server sends after a refresh.
+describe('AdminUsersTable — local copy follows the server props (Task 953)', () => {
+  it('replaces its rows when new users arrive', async () => {
+    const { AdminUsersTable } = await import('../AdminUsersTable')
+    const { container, rerender } = render(React.createElement(AdminUsersTable, DEFAULT_PROPS))
+    expect(container.querySelector('[data-testid="row-usr-001"]')).toBeTruthy()
+    expect(container.querySelector('[data-testid="row-usr-002"]')).toBeTruthy()
+    rerender(React.createElement(AdminUsersTable, { ...DEFAULT_PROPS, users: [UNVERIFIED_USER], total: 1 }))
+    expect(container.querySelector('[data-testid="row-usr-001"]')).toBeNull()
+    expect(container.querySelector('[data-testid="row-usr-002"]')).toBeTruthy()
+  })
+})

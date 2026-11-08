@@ -69,35 +69,41 @@ const TRANSITION_MS = 280
 export function useSwipeTrackSync(activeIndex: number, count: number, onIndexChange: (index: number) => void, ariaLabel: string) {
   const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null)
   const [trackEl, setTrackEl] = useState<HTMLDivElement | null>(null)
-  const containerRef = useCallback((node: HTMLDivElement | null) => setContainerEl(node), [])
+  const [width, setWidth] = useState(0)
+  // The container's own width is read when the element attaches (a ref callback, not an effect): the first paint already has a real value, no 0-width flash.
+  const containerRef = useCallback((node: HTMLDivElement | null) => {
+    setContainerEl(node)
+    if (node) setWidth(node.clientWidth)
+  }, [])
   const trackRef = useCallback((node: HTMLDivElement | null) => setTrackEl(node), [])
   const wraps = count > 1
 
-  const [width, setWidth] = useState(0)
   const [internalIndex, setInternalIndex] = useState(() => (wraps ? activeIndex + 1 : activeIndex))
   const [dragOffset, setDragOffset] = useState(0)
   const [transitionEnabled, setTransitionEnabled] = useState(false)
 
   const activeIndexRef = useRef(activeIndex)
-  activeIndexRef.current = activeIndex
   const countRef = useRef(count)
-  countRef.current = count
   const onIndexChangeRef = useRef(onIndexChange)
-  onIndexChangeRef.current = onIndexChange
   const internalIndexRef = useRef(internalIndex)
-  internalIndexRef.current = internalIndex
   const isInternalChange = useRef(false)
+  // The refs hold the latest committed values for the gesture handlers below. They are written after every commit (a layout effect, so before any event
+  // or passive effect can read them), never in the render body.
+  useLayoutEffect(() => {
+    activeIndexRef.current = activeIndex
+    countRef.current = count
+    onIndexChangeRef.current = onIndexChange
+    internalIndexRef.current = internalIndex
+  })
 
   function toInternal(index: number) {
     return wraps ? index + 1 : index
   }
 
-  // Measure the container's own width whenever it (re)attaches — the fixed pixel size every
-  // slide and the transform math are based on. useLayoutEffect so the first paint already has a
-  // real value, no 0-width flash.
+  // Follow the container's width after it attaches — the fixed pixel size every slide and the
+  // transform math are based on (the first value is read in `containerRef` above).
   useLayoutEffect(() => {
     if (!containerEl) return
-    setWidth(containerEl.clientWidth)
     const observer = new ResizeObserver((entries) => {
       const w = entries[0]?.contentRect.width
       if (w) setWidth(w)

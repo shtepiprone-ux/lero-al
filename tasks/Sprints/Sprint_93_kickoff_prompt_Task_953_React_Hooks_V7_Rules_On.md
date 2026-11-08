@@ -195,12 +195,24 @@ Gaps found outside this task, filed in the same turn:
 
 F6 — The committed change fails the census on four stale baseline rows
 Severity: Low   Category: Governance (GR-1, AC5)   Location: `scripts/surface-census-baseline.json` (rows of `ListingContact.tsx` and `ListingFormShell.tsx`)
-Description: once committed, the census reaches `ListingContact.tsx` and `ListingFormShell.tsx`, which no longer import `ui/input.tsx`, `StatusChangeControl.tsx`, `StatusChangeHistory.tsx` or `Combobox.tsx`; their four baseline rows are stale and the census fails. Reproduction: `node scripts/check-surface-census-changed.mjs --base main --max-surfaces 200 --max-changed-files 5000` → "FAIL 4 stale baseline entr(ies)". Recommendation: R6. Status: open.
+Description: once committed, the census reaches `ListingContact.tsx` and `ListingFormShell.tsx`, which no longer import `ui/input.tsx`, `StatusChangeControl.tsx`, `StatusChangeHistory.tsx` or `Combobox.tsx`; their four baseline rows are stale and the census fails. Reproduction: `node scripts/check-surface-census-changed.mjs --base main --max-surfaces 200 --max-changed-files 5000` → "FAIL 4 stale baseline entr(ies)". Recommendation: R6. Status: fixed by Revision 2, verified in Review 3 (working tree, not yet committed).
 F7 — The Combobox comment omits typing
 Severity: Info   Category: Documentation   Location: `src/components/shared/Combobox.tsx:176`
-Description: "every other opening (focus, click)"; typing places the dropdown too since R1. Recommendation: R7. Status: open.
+Description: "every other opening (focus, click)"; typing places the dropdown too since R1. Recommendation: R7. Status: fixed by Revision 2, verified in Review 3 (working tree, not yet committed).
 F8 — The ClientLink Story picks a Button look the app does not use
 Severity: Info   Category: UI rules (one visual contract, no visual decision in a Story)   Location: `src/stories/patterns/mantine/ClientLink.stories.tsx:33`
-Description: `variant="outline" color="gray"`; the app's `Button component={ClientLink}` (`src/app/admin/users/page.tsx:99`) sets neither. Recommendation: R8. Status: open.
+Description: `variant="outline" color="gray"`; the app's `Button component={ClientLink}` (`src/app/admin/users/page.tsx:99`) sets neither. Recommendation: R8. Status: fixed by Revision 2, verified in Review 3 (working tree, not yet committed).
+
+OWASP verdicts per sheet: [docs/security/owasp/reviews/Task_953.json](../../docs/security/owasp/reviews/Task_953.json).
+
+**Review 3 of Revision 2, working tree on `governance/reset-2026-11-06` at `b23104b14` — APPROVED**
+
+Scope: the three files Revision 2 wrote (`scripts/surface-census-baseline.json`, `Combobox.tsx:176`, `ClientLink.stories.tsx:33`; mtime census: nothing else changed after Review 2), read whole; the rest of the diff is unchanged since Review 2. Entry points: none.
+Tools (rerun by the reviewer, 2026-11-08): `owasp sync`, `check`, `check-ruleset` 0; `npm run lint` 0; `npm run typecheck` 0; `npm test -- --coverage` 0, 370 files, 6119 tests; `SENTRY_AUTH_TOKEN= npm run build` 0; `npm run build-storybook` 0; `changed-lines-coverage --base main` 0; `check-files --worktree` 0, 77 files; `ac-tests --base main` PASS; `node scripts/check-surface-census-changed.mjs --base main` 0 (65 surfaces, 0 new, 0 stale); `product-gates` 32 of 34, the two failures are Task 948's (`MantineListingGalleryPattern.tsx`, outside this diff). CI of PR #19 on `b23104b14` (run 42494046985, before this diff): every job on `ubuntu-24.04`, Unit and component tests green; the census fails there on F4's two blocks, whose fix is this uncommitted diff.
+Findings: Critical 0, High 0, Medium 0, Low 0. F1-F8 fixed.
+Overall risk: low; the five rules are errors with no finding left, behaviour and rendering unchanged as measured in Review 2.
+
+Measured: the baseline diff removes exactly the four keys of R6 (`--numstat` 0 added, 12 deleted) and adds nothing; one key put back makes the census report 1 stale row on that key, file restored by sha. The report's claims reproduce.
+Condition carried by AC8: its second half (the CI job "Unit and component tests" green on the commit that holds this diff) can only be read after the commit; Opus reads that run, and a red job reopens this review.
 
 OWASP verdicts per sheet: [docs/security/owasp/reviews/Task_953.json](../../docs/security/owasp/reviews/Task_953.json).

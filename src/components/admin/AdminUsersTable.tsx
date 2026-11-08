@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useTransition, useEffect, useRef } from 'react'
+import { useState, useEffect, useTransition, useRef } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { toggleUserVerified } from '@/modules/admin/actions'
@@ -44,11 +45,9 @@ export function AdminUsersTable({
   const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
   const [loadingId, setLoadingId] = useState<string | null>(null)
-  const [items, setItems] = useState(init)
+  const [items] = useStateFromProp(init)
   const [searchValue, setSearchValue] = useState(searchQuery)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(() => { setItems(init) }, [init])
 
   // Sync search field from URL only when no debounce is pending (user not mid-type).
   useEffect(() => {

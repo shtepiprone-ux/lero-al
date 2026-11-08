@@ -49,20 +49,18 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
     ? Math.max(1, parseInt(rawPage, 10))
     : 1
 
-  let fetchError = false
-
   const [favResult, typeCounts, collections] = await Promise.all([
     getFavoriteListingsPaginated(authUser.id, typeFilter, page, FAVORITES_PER_PAGE)
+      .then((result) => ({ ...result, failed: false }))
       .catch((err) => {
         console.error('Failed to fetch favorite listings', err)
-        fetchError = true
-        return { listings: [] as CardListingData[], total: 0 }
+        return { listings: [] as CardListingData[], total: 0, failed: true }
       }),
     getFavoriteTypeCounts(authUser.id),
     getUserCollections(authUser.id).catch(() => []),
   ])
 
-  const { listings } = favResult
+  const { listings, failed: fetchError } = favResult
 
   return (
     <div className="min-h-screen bg-background">

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import type { UseFormSetValue } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -169,12 +169,13 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         },
   })
 
-  const { handleSubmit, watch, setValue, formState: { errors, isDirty, isSubmitted } } = form
-  const profileType = watch('profileType')
-  const statusValue = watch('status')
-  const useMainPhone = watch('useMainPhone')
-  const phoneValue = watch('phone')
-  const values = watch()
+  const { handleSubmit, control, setValue, formState: { errors, isDirty, isSubmitted } } = form
+  const profileType = useWatch({ control, name: 'profileType' })
+  const statusValue = useWatch({ control, name: 'status' })
+  const useMainPhone = useWatch({ control, name: 'useMainPhone' })
+  const phoneValue = useWatch({ control, name: 'phone' })
+  // `useWatch` without a name is typed as a partial of the form; at run time it holds every field, as `watch()` did.
+  const values = useWatch({ control }) as FormValues
 
   const isBusiness = ['agent', 'developer'].includes(profileType)
   const displayName = user ? [user.name, user.last_name].filter(Boolean).join(' ') || '—' : ''
@@ -188,8 +189,15 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   const { interceptHref, confirmLeave } = useUnsavedChangesGuard(needsGuard, handleShowGuardDialog)
 
   useEffect(() => {
-    if (useMainPhone) { setValue('whatsapp', phoneValue); setWhatsappState(phoneState) }
-  }, [useMainPhone, phoneValue, phoneState, setValue])
+    if (useMainPhone) setValue('whatsapp', phoneValue)
+  }, [useMainPhone, phoneValue, setValue])
+
+  // While "use the main phone" is on, the WhatsApp number is the main phone: copied in the render that sees the toggle or a new main phone (not in an effect that sets state).
+  const [mirrored, setMirrored] = useState({ useMainPhone, phoneState })
+  if (mirrored.useMainPhone !== useMainPhone || mirrored.phoneState !== phoneState) {
+    setMirrored({ useMainPhone, phoneState })
+    if (useMainPhone) setWhatsappState(phoneState)
+  }
   useEffect(() => { if (statusValue !== 'blocked') setValue('blockReason', '') }, [statusValue, setValue])
   useEffect(() => {
     if (!isBusiness) { setValue('companyName', ''); setValue('website', ''); setValue('position', ''); setValue('yearStarted', undefined) }

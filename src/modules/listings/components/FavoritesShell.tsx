@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useLocale, useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Heart, AlertCircle } from 'lucide-react'
@@ -39,21 +40,13 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
 
-  const [displayedListings, setDisplayedListings] = useState<CardListingData[]>(initialListings)
+  // Both copies follow the server-provided state on filter navigation (URL change → SSR re-render); live changes made here stay until then.
+  const [displayedListings, setDisplayedListings] = useStateFromProp<CardListingData[]>(initialListings)
 
   // Live type counts — initialized from SSR snapshot and updated incrementally as
   // listings are added/removed in this session. This keeps totalFavorites and the
   // filter chip counts correct without requiring a round-trip to the server.
-  const [liveCounts, setLiveCounts] = useState<Record<string, number>>(typeCounts)
-
-  // Sync with server-provided state on filter navigation (URL change → SSR re-render).
-  useEffect(() => {
-    setDisplayedListings(initialListings)
-  }, [initialListings])
-
-  useEffect(() => {
-    setLiveCounts(typeCounts)
-  }, [typeCounts])
+  const [liveCounts, setLiveCounts] = useStateFromProp<Record<string, number>>(typeCounts)
 
   // Tracks the currently displayed listing IDs so the realtime handler can skip
   // DB fetches for listings that are already on screen (dedup optimization).

@@ -100,4 +100,18 @@ describe('ImageUpload with next-cloudinary 7', () => {
     mount([image(1)], vi.fn(), { disabled: true })
     expect(widget.props).toBeNull()
   })
+
+  // Task 953 (refs): the callback of the latest render receives the upload result, not the one the widget was opened with.
+  it('[AC5] an upload that finishes after a re-render reports to the latest change handler only', () => {
+    const first = vi.fn()
+    const second = vi.fn()
+    const tree = (onChange: typeof first) => <MantineProvider theme={theme} env="test"><ImageUpload images={[]} onChange={onChange} uploadPreset="preset" uploadFolder="user/listings" /></MantineProvider>
+    const view = render(tree(first))
+    fireEvent.click(uploadButton())
+    const handler = props().onSuccess!
+    view.rerender(tree(second))
+    handler(success(1), closeWidget)
+    expect(first).not.toHaveBeenCalled()
+    expect(second).toHaveBeenCalledTimes(1)
+  })
 })

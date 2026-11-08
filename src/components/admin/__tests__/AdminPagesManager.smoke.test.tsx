@@ -275,3 +275,37 @@ describe('AdminPagesManager — editor image upload (T12)', () => {
     expect(screen.getAllByRole('dialog').length).toBe(2)
   })
 })
+
+// Task 953 (set-state-in-effect): the list follows the pages the server sends after a refresh (the editor calls router.refresh()).
+describe('AdminPagesManager — local copy follows the server props (Task 953)', () => {
+  const tree = (pages: Page[]) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminPagesManager pages={pages} adminLocale="en" />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+
+  it('replaces its rows when new pages arrive', () => {
+    const view = renderManager([PAGE_A, PAGE_B])
+    expect(screen.queryAllByText('Kushtet').length).toBeGreaterThan(0)
+    expect(screen.queryAllByText('Rreth nesh').length).toBeGreaterThan(0)
+    view.rerender(tree([PAGE_B]))
+    expect(screen.queryAllByText('Kushtet')).toHaveLength(0)
+    expect(screen.queryAllByText('Rreth nesh').length).toBeGreaterThan(0)
+  })
+
+  it('keeps a row removed by a delete while the server list is the same one, and takes the new list when it changes', async () => {
+    mockDelete.mockResolvedValue({})
+    const pages = [PAGE_A, PAGE_B]
+    const view = render(tree(pages))
+    fireEvent.click(screen.getAllByRole('button', { name: tc.delete })[0])
+    const dialog = await screen.findByRole('dialog')
+    fireEvent.click(within(dialog).getByRole('button', { name: tc.delete }))
+    await waitFor(() => expect(screen.queryByText('Kushtet')).toBeNull())
+    view.rerender(tree(pages))
+    expect(screen.queryByText('Kushtet')).toBeNull()
+    view.rerender(tree([...pages]))
+    expect(screen.queryAllByText('Kushtet').length).toBeGreaterThan(0)
+  })
+})

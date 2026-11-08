@@ -86,6 +86,8 @@ No visible change of production UI. The Stories render their intended states ins
 - AC5 Stories render on Next 16 (found in the Task 953 review 2) — test: `.storybook/__tests__/next-router-mock.test.ts`
   (new): the `LayoutRouterContext` value of the installed `@storybook/nextjs-vite` holds `parentRenderTree.data`, the
   field `next/navigation` `useRouter` reads (red on `10.4.2`); AC2's six shards with no tuple failing on "reading 'data'";
+  `npm run check:card-track-monotonicity` finds its track Stories again (PR #19 run 42494046985: "in scope: 0 canonical
+  stories rendering the track", every Story errored) and passes;
   `npm ls storybook @storybook/nextjs-vite @storybook/addon-docs eslint-plugin-storybook` prints `10.6.3` only, and
   `npm audit --omit=dev --audit-level=high` exits 0.
 

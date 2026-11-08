@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useTranslations } from 'next-intl'
 import { toast } from '@/lib/toast'
 import { AdminInquiriesView, type InquiryMailboxFilter, type InquiryStatusFilter } from '@/components/admin/AdminInquiriesView'
@@ -52,10 +53,9 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
   const t = useTranslations('admin.inquiries')
   const tc = useTranslations('contact.topics')
 
-  const [inquiries, setInquiries] = useState(initialInquiries)
-  const [allReplies, setAllReplies] = useState<ReplyRow[]>(initialReplies)
-  useEffect(() => { setInquiries(initialInquiries) }, [initialInquiries])
-  useEffect(() => { setAllReplies(initialReplies) }, [initialReplies])
+  // The local copies follow the props the server sends after a refresh; edits made here stay until then.
+  const [inquiries, setInquiries] = useStateFromProp(initialInquiries)
+  const [allReplies, setAllReplies] = useStateFromProp<ReplyRow[]>(initialReplies)
   const [selected, setSelected]   = useState<InquiryRow | null>(null)
   const [statusFilter, setStatusFilter] = useState<InquiryStatusFilter>('all')
   const [mailboxFilter, setMailboxFilter] = useState<InquiryMailboxFilter>('all')

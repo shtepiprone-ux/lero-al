@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -30,14 +31,12 @@ interface UseHomepageFiltersProps {
 export function useHomepageFilters({
   values, onChange, onApply, onClose, locations,
 }: UseHomepageFiltersProps) {
-  const [local, setLocal] = useState<FilterValues>(values)
+  // Syncs the local draft from the parent `values` prop on external change (e.g., URL deep-link sync)
+  const [local, setLocal] = useStateFromProp<FilterValues>(values)
   const { rates } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
   const { currencies } = useCurrencies()
   const today = useMemo(() => new Date(), [])
-
-  // Sync local draft when parent applies external changes (e.g., URL deep-link sync)
-  useEffect(() => { setLocal(values) }, [values])
 
   const cityRegionLocs = useMemo(
     () => locations.filter(l => l.type === 'city' || l.type === 'region'),

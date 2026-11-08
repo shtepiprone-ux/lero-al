@@ -29,7 +29,11 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   (`finding-status`).
 - `scripts/quality/locale-safety.mjs`, `scripts/quality/client-sinks.mjs` (+ tests): tracked and untracked files.
 - `scripts/quality/agent-check.mjs` (+ test): SessionStart re-reads upstream after a day and puts the reference's
-  state, findings first, into the session.
+  state, findings first, into the session. Owner decision 2026-11-08 (translated: "put it into 963 and do it"), found
+  in the Task 952 review 2: the stop stamped a file by size and mtime (`agent-check.mjs:143` before), so a byte-exact
+  restore after a deliberate break blocked three times, and after the third block it deleted the session state
+  (`:226` before), so the next stop judged every uncommitted file of the branch. Now a file is stamped by its size and
+  content hash (`readRegularFile`, one descriptor), and the limit releases the stop with the baseline kept.
 - `scripts/quality/audit-coverage.mjs` (+ test): lane `owasp-reference`.
 - `.github/workflows/ci.yml` (+ `scripts/quality/ci-workflow.test.mjs`): the quality job's `sync --verify` and `check`
   steps; the `owasp-gate` job, required by `CI Required`.
@@ -62,6 +66,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Bot_Management_and_Anti-Automation: not applicable — no endpoint or limit of the product changes; the words came from the threat list.
 - CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the task gate requires an approved review in every change, and CI Required waits for it — AC2.
 - Credential_Stuffing_Prevention: not applicable — no sign-in or credential path changes; the words came from the threat list.
+- Cryptographic_Storage: not applicable — the stop hook's content hash only detects a changed file; it stores no secret or password.
 - Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — locale values, client sinks and the CMS sanitizer are each checked at every write — AC4, AC7.
 - DOM_Clobbering_Prevention: "Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering." — the evasion vectors include form, base and meta tags, and the sanitizer must remove each — AC7.
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — client-sinks K1-K8 run on each product file at its write — AC4.
@@ -70,6 +75,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the new job reads contents only, holds no secret, and takes the base SHA through env — AC2.
 - Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — owasp.mjs runs git with an argument array and a base ref from CI's env, never a shell string — AC2.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — the trigger and rule patterns are flat alternations over fixed words — AC1.
+- Key_Management: not applicable — the content hash of the stop hook uses no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.
 - MCP_Security: not applicable — no MCP server is added or configured; Task 961 watches the tool definitions.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — owasp.mjs starts only git and node, with fixed argument arrays and no shell — AC2.
@@ -111,6 +117,9 @@ No visible change.
 - AC7 The audit's direct fixes detect — test: `src/__tests__/security/clientSinks.test.ts`,
   `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`, `scripts/quality/db-catalog-audit.test.mjs`,
   `scripts/quality/cloudinary-config.test.mjs`, `scripts/quality/audit-coverage.test.mjs`.
+- AC9 The stop judges content, and its limit does not widen the next check — test: `scripts/quality/agent-check.test.mjs`
+  (a byte-exact restore with a new mtime is no change; a same-size edit with the old mtime put back is; after the third
+  block the state stays, older work is not added and a remaining failure blocks again).
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.
@@ -118,8 +127,9 @@ No visible change.
 ## Route
 
 1. The reviewing Opus session reads this kickoff, `flow.md` and `secure-code-review.md`; runs `owasp.mjs sync`, `check`.
-2. AC1-AC8 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
-   removed, a planted sink, a finding status cleared), shown failing, then restored.
+2. AC1-AC9 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
+   removed, a planted sink, a finding status cleared), and for AC9 three (mtime put back into the stamp, the stamp cut
+   to the size, the state deleted at the limit), shown failing, then restored.
 3. Review written here with its OWASP review record; `node scripts/quality/owasp.mjs gate --base main` then names what the
    other Sprint 93 reviews still have to cover before PR #19 can merge.
 

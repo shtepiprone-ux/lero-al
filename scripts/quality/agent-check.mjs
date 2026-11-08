@@ -16,15 +16,19 @@
 //                                               the last clean stop — by any tool, Bash included — gets the file
 //                                               checks, ESLint for code, the whole-project typecheck when
 //                                               TypeScript changed and the tests related to changed src/ files.
-//                                               A failure blocks the stop, at most MAX_STOP_BLOCKS times.
+//                                               A failure blocks the stop, at most MAX_STOP_BLOCKS times; then the
+//                                               stop is released with "the work is NOT done" and the baseline kept.
+//                                               "Changed" means the bytes differ (size and SHA-256), never the mtime.
 //
 // The script reads the hook payload, Git's list of changed files and the files themselves. It parses no shell
 // command and runs no command taken from a file or the payload.
 
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { untestedSourceChange } from './change-report.mjs';
+import { readRegularFile } from './check-files.mjs';
 import { sessionCheck } from './ac-tests.mjs';
 import { sessionContext } from './owasp.mjs';
 
@@ -125,7 +129,9 @@ function clip(text) {
   return text.length > MAX_OUTPUT ? `${text.slice(0, MAX_OUTPUT)}\n... (output cut at ${MAX_OUTPUT} characters)` : text;
 }
 
-/** Changed files (against HEAD, plus untracked and not ignored) with a size/mtime stamp. */
+/** Changed files (against HEAD, plus untracked and not ignored), each stamped by its size and the SHA-256 of its bytes.
+ *  The content decides, never the mtime: a file restored byte for byte after a deliberate break (quality-gates.md §8)
+ *  is unchanged, and an edit with its old size and mtime put back is still a change (Task 963 AC9). */
 function snapshot() {
   const list = (args) => {
     const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28, windowsHide: true });
@@ -138,12 +144,9 @@ function snapshot() {
   ]);
   const out = {};
   for (const rel of files) {
-    try {
-      const st = statSync(path.join(ROOT, rel));
-      if (st.isFile()) out[rel] = `${st.size}:${Math.trunc(st.mtimeMs)}`;
-    } catch {
-      /* deleted between the listing and the stat */
-    }
+    // One descriptor for the type check and the read (CodeQL js/file-system-race); null for a deleted or non-regular path.
+    const bytes = readRegularFile(path.join(ROOT, rel));
+    if (bytes) out[rel] = `${bytes.length}:${createHash('sha256').update(bytes).digest('hex')}`;
   }
   return out;
 }
@@ -222,8 +225,10 @@ function stop() {
   }
   const blocks = state.blocks + 1;
   if (blocks > MAX_STOP_BLOCKS) {
-    // Never trap the agent in a loop: let it stop, and make it say the work is not done.
-    rmSync(stateFile, { force: true });
+    // Never trap the agent in a loop: let it stop, and make it say the work is not done. The baseline stays (Task 963
+    // AC9): deleting it would make the next stop judge every uncommitted file of the branch as this session's work, while
+    // keeping it means the next turn judges the same files again, so a failure that remains blocks again.
+    saveState({ baseline: state.baseline, blocks: 0 });
     process.stdout.write(JSON.stringify({
       systemMessage: `agent-check: the changed files still fail after ${MAX_STOP_BLOCKS} attempts. The work is NOT done; the owner must be told.\n\n${failures.join('\n\n')}`,
     }));

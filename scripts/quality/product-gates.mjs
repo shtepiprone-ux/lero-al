@@ -38,6 +38,9 @@ const GATES = [
   ['npm', 'run', 'governance:tailwind'],
   ['npm', 'run', 'check:design-tokens:strict'],
   ['npm', 'run', 'check:tailwind-runtime-tokens'],
+  // Homepage theme runtime tokens: no CI job ran it, so it went red unseen (Task 968)
+  ['npm', 'run', 'check:homepage-theme-runtime-deps'],
+  ['npm', 'run', 'check:homepage-theme-runtime-deps:verify-gate'],
   ['npm', 'run', 'check:enrolled-tailwind'],
   ['npm', 'run', 'check:type-responsive'],
   ['npm', 'run', 'check:pattern-enrolment'],

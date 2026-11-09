@@ -222,35 +222,36 @@ No visible change. Images render from the same sources; a source that is refused
 
 ## Review
 
-Review 1 of the working tree on 39d0fecc7 — NEEDS REVISION (1 of 2)
-Scope: every changed file read; the 199 deletions checked by path (each in `d8a07a3c7`, none run by `package.json`,
-`.github/` or a script). OWASP record `docs/security/owasp/reviews/Task_951.json`.
-Tools (2026-11-09, reviewer reruns): `owasp.mjs sync`/`check` 0; `check-ruleset` 0; lint 0; typecheck 0; `npm test --
---coverage` 0 (382 files, 6279 tests); changed-lines coverage 0 (`main`, `origin/main`); `check-files` 0 (`--worktree`
-98, `--all` 14749); `ac-tests` PASS; `product-gates` 34/34; quality tests 146/146; `npm audit` 0; `cloudinary-config` 1
-(U1, Task 957); change report 1 (`next-cloudinary@7.0.0`, owner D3 exception). AC9, AC11 greps empty; the junction run
-prints. Breaks (control reverted, test run, restored, sha equal): AC2 5 red, AC3 2, AC4 4, AC5 10 + 6, AC7 9 + 2 + 4,
-AC8 26. AC1 after the push. Opus, AC11: `PENDING_951` emptied; the guard test red with one raw guard back, restored.
-Findings: Critical 0, High 1, Medium 0, Low 1.
+Review 1 of the working tree on 39d0fecc7 — NEEDS REVISION (1 of 2). Every changed file read; the 199 deletions
+checked by path (none run by `package.json`, `.github/` or a script); OWASP record `docs/security/owasp/reviews/Task_951.json`.
+Tools as in review 2 (quality tests then 146/146). Breaks (reverted, red, restored, sha equal): AC2 5, AC3 2, AC4 4,
+AC5 10 + 6, AC7 9 + 2 + 4, AC8 26. AC1 after the push. Opus emptied `PENDING_951` (the guard test red with one back).
 
 F1 — the SHA-256 signature signs a string Cloudinary does not sign (High, CWE-347; `cloudinaryUpload.ts:40`,
-`cloudinaryDelete.ts:117`; cause: this kickoff's AC6 text). The live upload got 401 "String to sign -
-'folder=task951-signature-check&timestamp=…'": every upload and destroy would fail. R1: SHA-256 of the old string,
-`signature_algorithm` sent but not signed, both test files, two breaks, one live upload and destroy.
-Status: fixed in Revision 1 (review 2).
-
-F2 — `import { isEntryPoint }` appended after its use, without a final newline, in 8 scripts (Low; the reviewer's
-case in `scripts/quality/entry-point-guards.test.mjs` red on exactly them). R2: the import into the import block.
-Status: fixed in Revision 1 (review 2).
+`cloudinaryDelete.ts:117`; cause: AC6's text): the live upload got 401, every upload and destroy would fail. R1: SHA-256
+of the old string, `signature_algorithm` sent but not signed, two breaks, one live upload and destroy. Status: fixed.
+F2 — `import { isEntryPoint }` after its use, no final newline, in 8 scripts (Low; the reviewer's case in
+`scripts/quality/entry-point-guards.test.mjs`). R2: the import into the import block. Status: fixed.
 
 Not findings: the four LCP probes are run by `package.json`; `safeImageSrc` refusing `http:` breaks no Story, fixture
 or source. The executor's `check:homepage-theme-runtime-deps` find (red on `HEAD` too) is filed as Task 968.
 
-Review 2 of Revision 1 — APPROVED (AC1 is checked on the pushed PR before the merge)
+Review 2 of Revision 1 (`be1e715aa`) — NEEDS REVISION (2 of 2): AC1 red after the push, F3
 Tools (2026-11-09, reviewer reruns): `owasp.mjs sync`/`check`/`gate` 0; `check-ruleset` 0; change report 1 (the same
 D3 exception); lint 0; typecheck 0; `npm test -- --coverage` 0 (382 files, 6279 tests);
 changed-lines coverage 0 (`main`, `origin/main`; 337/341); `check-files --all` 0 (14751); `ac-tests` PASS; quality
 tests 147/147 (`entry-point-guards` 3/3); `product-gates` 34/34; `npm audit` 0; `cloudinary-config` 1 (U1, Task 957).
 AC6: the two Cloudinary test files 29/29; `signature_algorithm` signed again 4 red, SHA-1 4 red, restored, sha equal.
 The executor's live upload and destroy (200, `result: ok`) checked by an Admin API read: the asset 404, the folder
-empty. AC11: the grep empty, the 8 imports in their import blocks, each file ends with a newline. Findings: none new.
+empty. AC11: the grep empty, the 8 imports in their import blocks, each file ends with a newline.
+
+F3 — AC1: 2 `js/xss-through-dom` alerts open on `refs/pull/19/merge` (High, CWE-79; `AppImage.tsx:148` #340 new,
+`AdminCompaniesManager.tsx:159` #5). SARIF: `e.target.files` / `e.target.value` of 3 admin forms reach `<img src>`
+through `safeImageSrc`, which returns `src` itself; CodeQL has no barrier for a scheme check on a URL attribute
+(its `DomBasedXss`/`XssThroughDom` libraries, read 2026-11-09). The allow-list works (AC7 tests); AC1 does not.
+Status: fixed in Revision 2 (Opus, owner's choice 2026-11-09): `.github/codeql/extensions/lero-al-javascript-models`
+declares the return of `safeImageSrc` an `html-injection` barrier; `scripts/quality/codeql-models.test.mjs` allows
+only reviewed barrier rows with their refusing test (red on an unknown function 2, on a `sinkModel` row 1).
+
+Review 3 — APPROVED (Revision 2) Local CodeQL 2.27.4, `javascript-queries@2.5.0` `XssThroughDom.ql`: the same 2 results without the
+pack, 0 with it. Quality tests 149/149; `safeImageSrc` 20/20. AC1 is rerun on the pushed PR before the merge.

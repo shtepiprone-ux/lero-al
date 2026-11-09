@@ -87,7 +87,7 @@
       "quotes": [
         "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
       ],
-      "evidence": "`src/design-system/media/__tests__/safeImageSrc.test.ts` (9 red with every scheme passed, 2 red with AppImage reverted) and `src/components/admin/__tests__/AdminCompaniesManager.logo.security.test.tsx` (4 red)"
+      "evidence": "`src/design-system/media/__tests__/safeImageSrc.test.ts` (9 red with every scheme passed, 2 red with AppImage reverted) and `src/components/admin/__tests__/AdminCompaniesManager.logo.security.test.tsx` (4 red); F3 (review 2) fixed: the safeImageSrc barrier model, guarded by `node --test scripts/quality/codeql-models.test.mjs`; local CodeQL 2.27.4 XssThroughDom.ql 2 results without it, 0 with it"
     },
     "Cryptographic_Storage": {
       "verdict": "met",

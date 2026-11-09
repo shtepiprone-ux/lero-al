@@ -92,7 +92,8 @@ export const DialogOpen: Story = {
     const canvas = within(doc.body)
     const trigger = await canvas.findByRole('button', { name: storyT(locale, 'collections.save_to') });
     await userEvent.click(trigger)
-    await canvas.findByText(storyT(locale, 'collections.save_to'), {}, { timeout: 4000 })
+    // The trigger and the modal title carry the same text, so the open state is the dialog named by it.
+    await canvas.findByRole('dialog', { name: storyT(locale, 'collections.save_to') }, { timeout: 4000 })
   },
 }
 

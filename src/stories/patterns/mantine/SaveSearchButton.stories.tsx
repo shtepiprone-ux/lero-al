@@ -77,8 +77,9 @@ export const OpenModal: Story = {
     const canvas = within(doc.body);
     const trigger = await canvas.findByRole('button', { name: ssT(locale, 'save_action') });
     await userEvent.click(trigger);
-    // Modal content (name TextInput) confirms the open state before the screenshot is taken.
-    await canvas.findByPlaceholderText(ssT(locale, 'name_placeholder'), {}, { timeout: 4000 });
+    // Modal content (name TextInput) confirms the open state before the screenshot is taken. The localized
+    // `name_placeholder` text is the field's label (the placeholder is the filter-derived auto name).
+    await canvas.findByLabelText(ssT(locale, 'name_placeholder'), {}, { timeout: 4000 });
   },
 };
 

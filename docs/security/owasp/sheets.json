@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "3751c8beb70f0d94fc6ea6d0ca30857d3df9f2de",
- "fetchedOn": "2026-11-09T08:43:35.014Z",
+ "commit": "a13983001cb3ed79af5c52b9558db39a1cae8b0a",
+ "fetchedOn": "2026-11-09T15:59:00.817Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -470,7 +470,7 @@
    "name": "LLM_Prompt_Injection_Prevention",
    "file": "LLM_Prompt_Injection_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
-   "sha": "a633d1beb039eae0549ba4d9a7d12231a01a6807",
+   "sha": "d5cbaaad125797e8a3680f68429b76564486ca82",
    "title": "LLM Prompt Injection Prevention Cheat Sheet"
   },
   {

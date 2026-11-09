@@ -1157,10 +1157,15 @@
      "quote": "Enforce permissions and parameter validation at the tool boundary",
      "control": ".claude/settings.json",
      "evidence": "\"Bash(git commit *)\""
+    },
+    {
+     "quote": "Check all hidden text, not only text that reads like an instruction.",
+     "control": "scripts/quality/check-files.mjs",
+     "evidence": "hidden prompt text"
     }
    ],
-   "reviewedSha": "a633d1beb039eae0549ba4d9a7d12231a01a6807",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "d5cbaaad125797e8a3680f68429b76564486ca82",
+   "reviewedOn": "2026-11-09"
   },
   "Logging": {
    "applies": true,

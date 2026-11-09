@@ -84,6 +84,46 @@ No visible change of production UI. Stories render as before; a play that fails 
 2. Build Storybook (`NEXT_PUBLIC_SUPABASE_URL= NEXT_PUBLIC_SUPABASE_ANON_KEY= npm run build-storybook`); run the six
    shards; list every play failure with its cause.
 3. Fix each failing play or its Story data; report a product cause to Opus instead of fixing it.
-4. Run AC2's deliberate break both ways, then AC3 and AC4. Report each command, exit code and the relevant lines.
+4. Run AC2's deliberate break both ways, then AC3 and AC4. The detector reads `storybook-static/`, so each AC2 state
+   (break with the AC1 parameter, break without it, restored) gets its own `build-storybook` before its run, and AC3
+   runs on the build of the restored tree. Report each command, exit code and the relevant lines.
 
 ## Review
+
+Review 1 of the working tree on `247cb08f1` — APPROVED WITH NOTES
+Scope: the whole diff read: `.storybook/preview.tsx:225-226` (the parameter), `.storybook/__tests__/preview.test.ts`
+(new), the plays of `SaveSearchButton.stories.tsx:80-82` and `SaveToCollectionButton.stories.tsx:95-96`, the Route
+step 4 note of this kickoff, and the LLM_Prompt_Injection_Prevention re-read in `docs/security/owasp/sheets.json` and
+`controls.json` (registry `a13983001cb3`, sheet `d5cbaaad`; the new quote maps to `scripts/quality/check-files.mjs:54`;
+not the executor's change, it lands with this task). Both play fixes checked against the product: the text is the
+field's label (`src/modules/listings/components/SaveSearchButton.tsx:108-111`), and the trigger and the modal title
+share `save_to` by design (`SaveToCollectionButton.tsx:121,128`); no product cause.
+Tools (2026-11-09, reviewer reruns): `owasp.mjs sync` and `check` 0; `check-ruleset` 0; lint 0; typecheck 0;
+`npm test -- --coverage` 0 (383 files, 6282 tests); changed-lines coverage 0; `check-files --all` and `--worktree` 0;
+`product-gates` 36/36; `npm audit --omit=dev --audit-level=high` 0; change report 0 (no hard failures); `ac-tests`
+PASS. AC1: 3/3; with the parameter removed 1 failed (`expected false to be true`), restored, sha `d9173494…` equal.
+AC2, each state on its own build: a) exit 1, `reason: "Story render/play failed"`; b) exit 0, 3/3, "ZERO leaks" (the
+blind spot); c) exit 0, 3/3; Story `ef2ecd11…` and preview `d9173494…` sha equal before and after. AC3 on the build of
+the restored tree, one shard at a time: shards 1-4 and 6 exit 0, 0 errors (729 + 4 × 720); shard 5 exit 1, 717/720,
+one 15 s render-wait timeout (F1); shard 5 rerun on the same build exit 0, 720/720
+(`.screenshots/locale-leak/2026-11-09T19-06-30-211Z-shard-5-6/report.json`). No tuple of any run failed a render or a
+play. CI runs the shards on six runners (`.github/workflows/ci.yml:367-370`); the last three PR runs passed all 18.
+OWASP record: `docs/security/owasp/reviews/Task_967.json`.
+Findings: Critical 0, High 0, Medium 0, Low 1.
+Overall risk: low; a failed play now fails every Story in the render gates, proven end to end by AC2.
+
+F1 — A 15 s render wait times out locally on a Story that renders alone; the report's cause does not reproduce
+Severity: Low      Category: Testing and gate reliability      CWE: none
+Location: `scripts/check-locale-leak.mjs:458-461`
+Description: the detector's render wait times out on Stories without a play, and its reason is Playwright's line,
+which names neither the render's id nor its phase. The report put the executor's three timeouts on two browsers
+running at once; the review ran one browser and still hit one.
+Impact: local AC measurements of any task that runs the shards (this task's AC3) need reruns; the cause is unknown.
+CI is unaffected so far (18 of 18 shard jobs green in the last three PR runs).
+Reproduction: six shards one after another on one build; shard 5/6 exit 1, `mantine-primitives-modal--delete-confirm-typed`
+375/en, `page.waitForFunction: Timeout 15000ms exceeded.`
+(`.screenshots/locale-leak/2026-11-09T18-45-24-449Z-shard-5-6/report.json`); `--story=… --widths=375` exits 0 three
+times out of three.
+Recommendation: name the render's id and phase in the timeout reason, measure two serial runs, remove the cause.
+References: Verifying_Third_Party_Agent_Execution_Evidence; `.claude/rules/flow.md` (Golden rule)
+Status: task 969

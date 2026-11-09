@@ -145,7 +145,7 @@
     "@mantine/tiptap": "8.3.18",
     "@marsidev/react-turnstile": "^1.5.2",
     "@react-email/components": "^1.0.12",
-    "@sentry/nextjs": "^10.76.2",
+    "@sentry/nextjs": "^11.6.0",
     "@solar-icons/react": "2.3.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",

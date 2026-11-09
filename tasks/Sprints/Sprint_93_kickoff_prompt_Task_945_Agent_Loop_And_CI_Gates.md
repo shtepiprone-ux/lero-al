@@ -79,7 +79,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - MCP_Security: "Grant each MCP server the minimum permissions needed for its function." — mutating Vercel MCP tools are denied in settings.json; agent-settings.test.mjs checks the list — AC1.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — install scripts stay off and every package with a script is reviewed (install-scripts.test.mjs) — AC6.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the quality scripts start git and node with argument arrays, never a shell string — AC1.
-- Secrets_Management: "This is not the same as committing it to code." — check-files scans every file for secrets and refuses environment files — AC2.
+- Secrets_Management: "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR" — check-files scans every file for secrets and refuses environment files — AC2.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC2, AC3.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC1, AC2.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC6.

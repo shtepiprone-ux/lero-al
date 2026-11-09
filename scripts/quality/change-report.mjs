@@ -11,11 +11,13 @@
 //   - a kickoff with a review verdict names a test that does not exist, or adds or changes an acceptance criterion
 //     whose named test the same change neither adds nor changes (ac-tests.mjs);
 //   - a dependency added to package.json does not exist on npm, or its first release is younger than 30 days;
-//   - a lockfile entry resolves outside https://registry.npmjs.org/ or has no integrity hash.
+//   - a lockfile entry resolves outside https://registry.npmjs.org/ or has no integrity hash;
+//   - a version the lockfile did not resolve before, transitive ones included, is younger than 14 days (unless pinned
+//     exactly in package.json `overrides`).
 // Everything else is a flag for the human reviewer, who answers it in the review (secure-code-review.md).
 
 import { spawnSync } from 'node:child_process';
-import { appendFileSync } from 'node:fs';
+import { appendFileSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rangeFindings } from './ac-tests.mjs';
@@ -88,6 +90,39 @@ export function lockfileProblems(lock) {
   return out;
 }
 
+/** Every `name@version` the head lockfile resolves that the base lockfile resolved nowhere: the versions a change brings
+ *  in, transitive ones included (Task 939 review 1: `ws@8.22.2` entered three hours after its release, through a
+ *  range of `storybook`, and only the direct dependencies were aged). */
+export function newLockfileVersions(baseLock, headLock) {
+  const entries = (lock) => Object.entries(lock?.packages ?? {})
+    .filter(([key, entry]) => key && !entry.link && entry.version)
+    .map(([key, entry]) => ({ name: entry.name ?? key.slice(key.lastIndexOf('node_modules/') + 'node_modules/'.length), version: entry.version }));
+  const before = new Set(entries(baseLock).map((e) => `${e.name}@${e.version}`));
+  const seen = new Set();
+  return entries(headLock).filter((e) => {
+    const id = `${e.name}@${e.version}`;
+    if (before.has(id) || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  }).sort((a, b) => `${a.name}@${a.version}`.localeCompare(`${b.name}@${b.version}`));
+}
+
+/** Versions released less than MIN_VERSION_AGE_DAYS before `now` (NPM Security: vet what you install; a version
+ *  published hours ago has had no time to be reported). A version pinned exactly in package.json `overrides` is the
+ *  owner's visible decision (a security fix) and is reported, not refused. `timesOf(name)` is `npm view <name> time`. */
+export function youngLockfileVersions(versions, timesOf, overrides = {}, now = Date.now()) {
+  const failures = [];
+  for (const { name, version } of versions) {
+    const released = timesOf(name)?.[version];
+    if (!released) { failures.push(`${name}@${version}: no release time on npm`); continue; }
+    const age = Math.floor((now - Date.parse(released)) / DAY);
+    if (age < MIN_VERSION_AGE_DAYS && overrides[name] !== version) {
+      failures.push(`${name}@${version} was released ${age} day(s) ago (< ${MIN_VERSION_AGE_DAYS}); regenerate the lockfile with npm install --before=<a date ${MIN_VERSION_AGE_DAYS} days back>`);
+    }
+  }
+  return failures;
+}
+
 const DEP_FIELDS = ['dependencies', 'devDependencies', 'optionalDependencies', 'peerDependencies'];
 const deps = (pkg) => Object.assign({}, ...DEP_FIELDS.map((f) => pkg?.[f] ?? {}));
 
@@ -111,7 +146,14 @@ const show = (rev, p) => {
 };
 const json = (text) => { try { return text ? JSON.parse(text) : null; } catch { return null; } };
 
+/** An npm package name (scope optional). Names come from a pull request's package.json and lockfile and reach
+ *  `npm view` through a shell on Windows, so anything else is never passed on (OS Command Injection Defense). */
+export function isNpmName(name) {
+  return typeof name === 'string' && name.length <= 214 && /^(@[a-z0-9][a-z0-9._~-]*\/)?[a-z0-9][a-z0-9._~-]*$/i.test(name);
+}
+
 function npmTimes(name) {
+  if (!isNpmName(name)) return null;
   const isWin = process.platform === 'win32';
   const r = spawnSync(isWin ? 'npm.cmd' : 'npm', ['view', name, 'time', '--json'], { encoding: 'utf8', shell: isWin, windowsHide: true });
   return r.status === 0 ? json(r.stdout) : null;
@@ -170,13 +212,38 @@ export function run(base, head, now = Date.now()) {
   const pkgChanged = changes.some((c) => c.path === 'package.json');
   if (lockChanged && !pkgChanged) lines.push('- **package-lock.json changed without package.json** — check every resolved version.');
   if (headLock) for (const p of lockfileProblems(headLock)) failures.push(`lockfile: ${p}`);
+  if (lockChanged && headLock) {
+    const fresh = newLockfileVersions(json(show(base, 'package-lock.json')), headLock);
+    const cache = new Map();
+    const timesOf = (name) => { if (!cache.has(name)) cache.set(name, npmTimes(name)); return cache.get(name); };
+    lines.push(`- the lockfile brings in ${fresh.length} version(s) it did not resolve before; each is at least ${MIN_VERSION_AGE_DAYS} days old or refused`);
+    const overrides = Object.fromEntries(Object.entries(json(show(head, 'package.json'))?.overrides ?? {}).filter(([, v]) => typeof v === 'string'));
+    for (const f of youngLockfileVersions(fresh, timesOf, overrides, now)) failures.push(`lockfile: ${f}`);
+  }
   lines.push('');
 
   lines.push('### Hard failures', '', ...(failures.length ? failures.map((f) => `- ${f}`) : ['None.']), '');
   return { text: lines.join('\n'), failures };
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+/** `--lockfile-age <base>`: the working-tree lockfile against `<base>:package-lock.json`, before anything is committed
+ *  (an executor may not commit; the same check runs on the pull request through `run`). */
+export function lockfileAge(base, now = Date.now()) {
+  const head = json(readFileSync(path.join(ROOT, 'package-lock.json'), 'utf8'));
+  const fresh = newLockfileVersions(json(show(base, 'package-lock.json')), head);
+  const overrides = Object.fromEntries(Object.entries(json(readFileSync(path.join(ROOT, 'package.json'), 'utf8'))?.overrides ?? {}).filter(([, v]) => typeof v === 'string'));
+  return { count: fresh.length, failures: youngLockfileVersions(fresh, npmTimes, overrides, now) };
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] === '--lockfile-age') {
+  const base = process.argv[3] ?? 'HEAD';
+  const { count, failures } = lockfileAge(base);
+  console.log(`lockfile-age: ${count} version(s) the working-tree lockfile brings in against ${base}; ${failures.length} younger than ${MIN_VERSION_AGE_DAYS} days`);
+  for (const f of failures) console.log(`  ${f}`);
+  process.exit(failures.length ? 1 : 0);
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] !== '--lockfile-age') {
   const [base, head = 'HEAD'] = process.argv.slice(2);
   if (!base) {
     console.error('usage: change-report.mjs <base> [head]');

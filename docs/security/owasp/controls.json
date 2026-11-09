@@ -198,8 +198,8 @@
      "task": "956"
     }
    ],
-   "reviewedSha": "1dec03aa4568e64cbaa178091f35ecc3994cf856",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "11adad6b47a69b764583bcd4504b254206f162e1",
+   "reviewedOn": "2026-11-08"
   },
   "Authorization_Patterns": {
    "applies": true,
@@ -656,8 +656,8 @@
   "Docker_Security": {
    "applies": false,
    "why": "no container image is built or deployed; Vercel runs the functions",
-   "reviewedSha": "951deb39a45f82c00023e1eef779a98f77ab96bf",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "a5cf4e7893333d879a7af4e8a7a74a47aa5f680d",
+   "reviewedOn": "2026-11-09"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,
@@ -974,8 +974,8 @@
      "evidence": "started by Node with an argv array: no shell"
     }
    ],
-   "reviewedSha": "e323ae32204d740069e40f661403b12743860658",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "efa9327f4ace29dacbb94a66b33d40cfbd059a5a",
+   "reviewedOn": "2026-11-08"
   },
   "Injection_Prevention_in_Java": {
    "applies": false,
@@ -1117,8 +1117,8 @@
   "Kubernetes_Security": {
    "applies": false,
    "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
-   "reviewedSha": "a5ff31b831448e049023ec13cf4247fb4105b01b",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "d54243879fee9a2f1483a284220ab69314fb2dde",
+   "reviewedOn": "2026-11-09"
   },
   "Laravel": {
    "applies": false,
@@ -1260,10 +1260,15 @@
     {
      "quote": "Monitor for changes to tool descriptions post-installation (rug pull detection).",
      "task": "961"
+    },
+    {
+     "quote": "Enforce spending limits in the component that makes payments, outside the model's context",
+     "control": ".claude/settings.json",
+     "evidence": "\"mcp__plugin_vercel_vercel__buy_domain\""
     }
    ],
-   "reviewedSha": "72cbf983078358fae944dbb4eae9153253c3d1a8",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "814a73d4fa8b5ff043487a9047c0a39a3edd5abe",
+   "reviewedOn": "2026-11-09"
   },
   "Micro_Frontend_Security": {
    "applies": false,
@@ -1311,10 +1316,14 @@
     {
      "quote": "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths",
      "task": "956"
+    },
+    {
+     "quote": "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.",
+     "task": "957"
     }
    ],
-   "reviewedSha": "d99953928237409dc8a70a2ccb254bb298ed51f6",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "5541fce67722143f09680d16a70d4739e3d05e26",
+   "reviewedOn": "2026-11-08"
   },
   "Multifactor_Authentication": {
    "applies": true,
@@ -1379,8 +1388,8 @@
   "NodeJS_Docker": {
    "applies": false,
    "why": "no Node.js container image is built; Vercel runs the functions",
-   "reviewedSha": "e5a2456b4be5461105f4a917999afd086dd75d1a",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "8124669fef334dad9dd315d4458d2de595726182",
+   "reviewedOn": "2026-11-09"
   },
   "Nodejs_Security": {
    "applies": true,
@@ -1425,10 +1434,15 @@
      "quote": "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility.",
      "control": "scripts/quality/install-scripts.test.mjs",
      "evidence": "install scripts off, every package with a script reviewed"
+    },
+    {
+     "quote": "so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install",
+     "control": ".npmrc",
+     "evidence": "ignore-scripts=true"
     }
    ],
-   "reviewedSha": "fe291e1b03739b8df806c69750b7d35556b41e9d",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "e664404d43bf39d606c284e541c2c1d8869664dc",
+   "reviewedOn": "2026-11-09"
   },
   "OAuth2": {
    "applies": true,
@@ -1549,8 +1563,8 @@
      "evidence": "q = q.eq('property_type', propertyType)"
     }
    ],
-   "reviewedSha": "66045657b06f4996ba74d3fbb523690ba351af05",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "733ea94a03ba470113c902c426116926d6931ead",
+   "reviewedOn": "2026-11-08"
   },
   "RAG_Security": {
    "applies": false,
@@ -1612,7 +1626,7 @@
    },
    "requirements": [
     {
-     "quote": "This is not the same as committing it to code.",
+     "quote": "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR",
      "control": "scripts/quality/check-files.mjs",
      "evidence": "Secrets Management (scan at every stage)"
     },
@@ -1622,8 +1636,8 @@
      "evidence": "a \"use client\" file reads a server secret"
     }
    ],
-   "reviewedSha": "d4d1b7151cefe09337795ad0924a8231b37f2b50",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "47c3ad1129aa8b182336345b4474903fd6e63d3e",
+   "reviewedOn": "2026-11-09"
   },
   "Secure_AI_Model_Ops": {
    "applies": false,
@@ -1712,8 +1726,8 @@
      "evidence": "fetch(`https://api.cloudinary.com/v1_1/"
     }
    ],
-   "reviewedSha": "b97bb26cf6394d7a9366fa31acf1939bdb304abd",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "10fd6e31d6428a8586028fef377421f8f48f922f",
+   "reviewedOn": "2026-11-09"
   },
   "Server_Side_Template_Injection_Prevention": {
    "applies": true,
@@ -1831,13 +1845,13 @@
    },
    "requirements": [
     {
-     "quote": "Use least privilege alongside parameterized queries and allow-list mapping.",
+     "quote": "use parameterized queries for dynamic data values",
      "control": "src/modules/listings/domain/filterEngine.ts",
      "evidence": "q = q.eq('listing_type', listingType)"
     }
    ],
-   "reviewedSha": "0eaaccf24478fbf809ceabb685e5f881ec445194",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "9635381af9c42a1bd652b22b83a855da94e7fee0",
+   "reviewedOn": "2026-11-08"
   },
   "Subdomain_Takeover_Prevention": {
    "applies": true,
@@ -1958,8 +1972,8 @@
      "evidence": "max-age=63072000"
     }
    ],
-   "reviewedSha": "9a70e2b9b8900db1a709f28818b1ba5f9a34aa9a",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "8fa32709299f0f7b9c6de2e1dc26c14aeecb9e0e",
+   "reviewedOn": "2026-11-09"
   },
   "Unvalidated_Redirects_and_Forwards": {
    "applies": true,
@@ -2191,8 +2205,8 @@
   "XML_Security": {
    "applies": false,
    "why": "the project parses and signs no XML documents",
-   "reviewedSha": "2570f95c36153b0f93968253bcaa9ef1736b2abf",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "ef9a73afdbf55fe9d5d30d5f67dea443426b88d0",
+   "reviewedOn": "2026-11-09"
   },
   "XPath_Injection_Prevention": {
    "applies": false,
@@ -2235,8 +2249,8 @@
      "evidence": "EVASIONS"
     }
    ],
-   "reviewedSha": "0728eb9f644f5821d014e4679bb141fc8871d9a1",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "0a15c1777188ccee1140f5d8300779390e6c5448",
+   "reviewedOn": "2026-11-09"
   },
   "Zero_Trust_Architecture": {
    "applies": false,

@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "757270a26306e5edda9957bb7f86cfcde03c30f9",
- "fetchedOn": "2026-11-07T07:40:28.933Z",
+ "commit": "121e76561a58a28790fd7fa927236eec8d63ea59",
+ "fetchedOn": "2026-11-09T06:32:45.070Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -71,7 +71,7 @@
    "name": "Authorization_Decisions_And_Output_Handling",
    "file": "Authorization_Decisions_And_Output_Handling_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Decisions_And_Output_Handling_Cheat_Sheet.html",
-   "sha": "1dec03aa4568e64cbaa178091f35ecc3994cf856",
+   "sha": "11adad6b47a69b764583bcd4504b254206f162e1",
    "title": "Authorization Decisions and Output Handling Cheat Sheet"
   },
   {
@@ -253,7 +253,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "951deb39a45f82c00023e1eef779a98f77ab96bf",
+   "sha": "a5cf4e7893333d879a7af4e8a7a74a47aa5f680d",
    "title": "Docker Security Cheat Sheet"
   },
   {
@@ -379,7 +379,7 @@
    "name": "Injection_Prevention",
    "file": "Injection_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html",
-   "sha": "e323ae32204d740069e40f661403b12743860658",
+   "sha": "efa9327f4ace29dacbb94a66b33d40cfbd059a5a",
    "title": "Injection Prevention Cheat Sheet"
   },
   {
@@ -442,7 +442,7 @@
    "name": "Kubernetes_Security",
    "file": "Kubernetes_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html",
-   "sha": "a5ff31b831448e049023ec13cf4247fb4105b01b",
+   "sha": "d54243879fee9a2f1483a284220ab69314fb2dde",
    "title": "Kubernetes Security Cheat Sheet"
   },
   {
@@ -498,7 +498,7 @@
    "name": "MCP_Security",
    "file": "MCP_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html",
-   "sha": "72cbf983078358fae944dbb4eae9153253c3d1a8",
+   "sha": "814a73d4fa8b5ff043487a9047c0a39a3edd5abe",
    "title": "MCP (Model Context Protocol) Security Cheat Sheet"
   },
   {
@@ -533,7 +533,7 @@
    "name": "Multi_Tenant_Security",
    "file": "Multi_Tenant_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html",
-   "sha": "d99953928237409dc8a70a2ccb254bb298ed51f6",
+   "sha": "5541fce67722143f09680d16a70d4739e3d05e26",
    "title": "Multi-Tenant Application Security Cheat Sheet"
   },
   {
@@ -561,7 +561,7 @@
    "name": "NodeJS_Docker",
    "file": "NodeJS_Docker_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html",
-   "sha": "e5a2456b4be5461105f4a917999afd086dd75d1a",
+   "sha": "8124669fef334dad9dd315d4458d2de595726182",
    "title": "Node.js Docker Cheat Sheet"
   },
   {
@@ -582,7 +582,7 @@
    "name": "NPM_Security",
    "file": "NPM_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html",
-   "sha": "fe291e1b03739b8df806c69750b7d35556b41e9d",
+   "sha": "e664404d43bf39d606c284e541c2c1d8869664dc",
    "title": "NPM Security best practices"
   },
   {
@@ -645,7 +645,7 @@
    "name": "Query_Parameterization",
    "file": "Query_Parameterization_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html",
-   "sha": "66045657b06f4996ba74d3fbb523690ba351af05",
+   "sha": "733ea94a03ba470113c902c426116926d6931ead",
    "title": "Query Parameterization Cheat Sheet"
   },
   {
@@ -687,7 +687,7 @@
    "name": "Secrets_Management",
    "file": "Secrets_Management_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
-   "sha": "d4d1b7151cefe09337795ad0924a8231b37f2b50",
+   "sha": "47c3ad1129aa8b182336345b4474903fd6e63d3e",
    "title": "Secrets Management Cheat Sheet"
   },
   {
@@ -736,7 +736,7 @@
    "name": "Server_Side_Request_Forgery_Prevention",
    "file": "Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
-   "sha": "b97bb26cf6394d7a9366fa31acf1939bdb304abd",
+   "sha": "10fd6e31d6428a8586028fef377421f8f48f922f",
    "title": "Server-Side Request Forgery Prevention Cheat Sheet"
   },
   {
@@ -771,7 +771,7 @@
    "name": "SQL_Injection_Prevention",
    "file": "SQL_Injection_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
-   "sha": "0eaaccf24478fbf809ceabb685e5f881ec445194",
+   "sha": "9635381af9c42a1bd652b22b83a855da94e7fee0",
    "title": "SQL Injection Prevention Cheat Sheet"
   },
   {
@@ -834,7 +834,7 @@
    "name": "Transport_Layer_Security",
    "file": "Transport_Layer_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html",
-   "sha": "9a70e2b9b8900db1a709f28818b1ba5f9a34aa9a",
+   "sha": "8fa32709299f0f7b9c6de2e1dc26c14aeecb9e0e",
    "title": "Transport Layer Security Cheat Sheet"
   },
   {
@@ -932,7 +932,7 @@
    "name": "XML_Security",
    "file": "XML_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html",
-   "sha": "2570f95c36153b0f93968253bcaa9ef1736b2abf",
+   "sha": "ef9a73afdbf55fe9d5d30d5f67dea443426b88d0",
    "title": "XML Security Cheat Sheet"
   },
   {
@@ -953,7 +953,7 @@
    "name": "XSS_Filter_Evasion",
    "file": "XSS_Filter_Evasion_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html",
-   "sha": "0728eb9f644f5821d014e4679bb141fc8871d9a1",
+   "sha": "0a15c1777188ccee1140f5d8300779390e6c5448",
    "title": "XSS Filter Evasion Cheat Sheet"
   },
   {

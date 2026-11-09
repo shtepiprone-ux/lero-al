@@ -1,7 +1,7 @@
 // node --test scripts/quality/ac-tests.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { kickoffAcs, hasVerdict, resolveTest, acTestFindings, isImplemented, sessionFindings } from './ac-tests.mjs';
+import { kickoffAcs, hasVerdict, resolveTest, acTestFindings, isImplemented, sessionFindings, testsNamedElsewhere } from './ac-tests.mjs';
 
 const kickoff = (acs, review = '') => [
   '# Task 1 — x', '', '## Goal', '', '## Acceptance criteria', '', ...acs, '', '## Route', '', '1. go', '', '## Review', '', review, '',
@@ -68,4 +68,21 @@ test('the executor session may not finish a started task while a named test is m
   assert.deepEqual(sessionFindings({ kickoffs: [{ path: 'k.md', body }], files: FILES, added: new Set() }), [], 'a task not started is not checked');
   const done = new Set([...FILES, 'src/c/new.test.ts']);
   assert.deepEqual(sessionFindings({ kickoffs: [{ path: 'k.md', body }], files: done, added: started }), []);
+});
+
+// Task 963 AC16 (found in the Task 939 review 2, 2026-11-09): PR #19's change report failed on 957, 962 and 965, open
+// kickoffs with no verdict, because each names a test another task added on the branch (`cloudinary-config.test.mjs`,
+// `ImageUpload.test.tsx`, `db-catalog-audit.test.mjs`, `ci-workflow.test.mjs`).
+test('a test another kickoff also names is no evidence that an open task was implemented', () => {
+  const open = kickoff(['- AC1 test: `x.test.mjs`', '- AC2 test: `src/c/new.test.ts`']);
+  const owner = kickoff(['- AC1 test: `scripts/quality/x.test.mjs`'], 'APPROVED');
+  const added = new Set(['scripts/quality/x.test.mjs']);
+  const shared = testsNamedElsewhere('open.md', [{ path: 'open.md', body: open }, { path: 'owner.md', body: owner }], FILES);
+  assert.deepEqual([...shared], ['scripts/quality/x.test.mjs']);
+  assert.equal(isImplemented(open, FILES, added, shared), false);
+  assert.equal(isImplemented(open, FILES, added), true, 'without the shared set the arm still counts an added test');
+  assert.deepEqual(sessionFindings({ kickoffs: [{ path: 'open.md', body: open }, { path: 'owner.md', body: owner }], files: FILES, added }), [],
+    'the session is not blocked for an open task whose only added test belongs to another task');
+  const own = new Set([...FILES, 'src/c/new.test.ts']);
+  assert.equal(isImplemented(open, own, new Set(['src/c/new.test.ts']), shared), true, 'a test only this kickoff names still counts');
 });

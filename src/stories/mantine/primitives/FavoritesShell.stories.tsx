@@ -17,8 +17,10 @@ import type { User } from '@/types/database'
  * `FavoritesShell` internally calls `useExchangeRate()` (a `fetch('/api/exchange-rate')` with a
  * built-in catch → static fallback, no story-breaking effect) and `useFavoritesRealtime()` (an
  * async Supabase realtime channel subscribe, fire-and-forget in a `useEffect`, non-blocking for
- * render). Neither is mocked — the kickoff's own §5/§8 name `useFavoritesRealtime` out of this
- * task's scope, and both degrade gracefully rather than throwing. `AuthContext.Provider` supplies a
+ * render). Neither hook is mocked. `useExchangeRate` falls back to a static rate by itself. `useFavoritesRealtime` calls the real
+ * browser Supabase client, which throws in a Storybook build (no Supabase configuration), so Storybook resolves
+ * `@/lib/supabase/client` to an inert stub kept in the `.storybook` folder (Task 939): no connection, no network call.
+ * `AuthContext.Provider` supplies a
  * signed-in fixture the same way `Mantine/Primitives/ListingCard` does — `FavoritesTypeFilter`
  * (`useRouter`) and `SaveToCollectionButton`/`CollectionsSection` (`useAuth`) all need it.
  */

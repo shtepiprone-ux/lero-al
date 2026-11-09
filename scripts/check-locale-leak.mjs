@@ -26,12 +26,14 @@
  * Usage:
  *   npm run check:locale-leak        — full run (requires built Storybook)
  *   node scripts/check-locale-leak.mjs
+ *   node scripts/check-locale-leak.mjs --story=<id> --widths=<px,px,…>
+ *       — opt-in (Task 939): one Story and/or explicit viewport widths; with neither flag the run is 320, 375 and 1280 px over every Story
  *
  * First run — install Playwright browsers:
  *   npx playwright install chromium
  */
 
-import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, readFileSync, realpathSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
@@ -56,29 +58,53 @@ const ROOT = resolve(__dirname, '..');
 
 // ── CLI flags ─────────────────────────────────────────────────────────────────
 
-const args = process.argv.slice(2);
-const FAST_MODE = args.includes('--fast');
-// Owner decision 2026-07-19: migration leaks are reported, not release blockers. Rendering must still complete.
-const REPORT_ONLY_LEAKS = args.includes('--report-only-leaks');
-// Task Q0R — restricts the scan to canonical Mantine stories only (scripts/lib/mantine-story-scope.mjs),
-// the same criterion check-stories-rendered.mjs enforces. Legacy stories are excluded entirely —
-// they never run this gate and can never block a PR on it.
-const MANTINE_ONLY = args.includes('--mantine-only');
-const SHARD = args.find(arg => arg.startsWith('--shard='))?.slice('--shard='.length) || '1/1';
+const DEFAULT_WIDTHS = [320, 375, 1280];
+const MIN_WIDTH = 200;
+const MAX_WIDTH = 4000;
+
+/** Task 939 (review 1, F3): '320,639,640' → [320, 639, 640]; anything that is not a list of whole widths in range is refused. */
+export function parseWidths(value) {
+  const parts = String(value ?? '').split(',');
+  const widths = parts.map(part => (/^\d{1,4}$/.test(part) ? Number(part) : Number.NaN));
+  if (widths.some(w => !Number.isInteger(w) || w < MIN_WIDTH || w > MAX_WIDTH)) {
+    throw new Error(`Invalid --widths: expected whole pixel widths from ${MIN_WIDTH} to ${MAX_WIDTH} separated by commas`);
+  }
+  return [...new Set(widths)];
+}
+
+/** One viewport per width: below 640px a phone-height viewport, from 640px a desktop one (the heights the default run always used). */
+export function viewportsForWidths(widths) {
+  return widths.map(width => (width < 640
+    ? { name: `mobile-${width}`, width, height: 812 }
+    : { name: `desktop-${width}`, width, height: 800 }));
+}
+
+/** Pure parse of the command line. No flag keeps the defaults of the CI command: every Story at 320, 375 and 1280 px, shard 1/1. */
+export function parseCliArgs(argv) {
+  const value = name => argv.find(arg => arg.startsWith(`${name}=`))?.slice(name.length + 1);
+  const fast = argv.includes('--fast');
+  const widthsValue = value('--widths');
+  const story = value('--story');
+  if (story !== undefined && !/^[a-z0-9_-]+$/i.test(story)) throw new Error('Invalid --story: expected a Storybook Story id');
+  const widths = widthsValue === undefined ? (fast ? [DEFAULT_WIDTHS[0]] : DEFAULT_WIDTHS) : parseWidths(widthsValue);
+  return {
+    fast,
+    // Owner decision 2026-07-19: migration leaks are reported, not release blockers. Rendering must still complete.
+    reportOnlyLeaks: argv.includes('--report-only-leaks'),
+    // Task Q0R — restricts the scan to canonical Mantine stories only (scripts/lib/mantine-story-scope.mjs),
+    // the same criterion check-stories-rendered.mjs enforces. Legacy stories are excluded entirely —
+    // they never run this gate and can never block a PR on it.
+    mantineOnly: argv.includes('--mantine-only'),
+    shard: value('--shard') || '1/1',
+    story,
+    widths,
+    viewports: viewportsForWidths(widths),
+  };
+}
 
 // ── Locales to compare (en = baseline; sq/uk/it = detection targets) ──────────
 
 const TARGET_LOCALES = ['sq', 'uk', 'it'];
-
-// ── Viewport for leak detection (use standard mobile + desktop) ───────────────
-
-const VIEWPORTS = FAST_MODE
-  ? [{ name: 'mobile-320', width: 320, height: 812 }]
-  : [
-      { name: 'mobile-320', width: 320,  height: 812 },
-      { name: 'mobile-375', width: 375,  height: 812 },
-      { name: 'desktop-1280', width: 1280, height: 800 },
-    ];
 
 // ── Multi-locale demo story exclusions ────────────────────────────────────────
 //
@@ -390,29 +416,49 @@ function loadStoryIds(storybookStaticDir) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
-async function collectStoryTokens(browser, baseUrl, story, viewport, locale) {
-  const page = await browser.newPage();
-  let runtimeFailure = false;
-  // Storybook can log a failed play assertion and then report phase=finished. Retain that failure.
-  page.on('pageerror', () => { runtimeFailure = true; });
-  page.on('console', message => {
-    if (message.type() === 'error' && message.text().includes(`Error rendering story '${story.id}'`)) runtimeFailure = true;
-  });
+// Task 939 (review 1, F4): a page load that the browser's network stack refuses (net::ERR_NO_BUFFER_SPACE, net::ERR_NETWORK_IO_SUSPENDED, …) says nothing
+// about the Story; it is retried once on a fresh page. A render or play failure, an HTTP failure and the 15 s render wait are never retried.
+export function isTransportError(error) {
+  return /net::ERR_[A-Z0-9_]+/.test(String(error?.message ?? ''));
+}
+
+async function loadStoryPage(browser, url, viewport, story, onRetry) {
+  for (let attempt = 1; ; attempt += 1) {
+    const page = await browser.newPage();
+    const state = { runtimeFailure: false };
+    // Storybook can log a failed play assertion and then report phase=finished. Retain that failure.
+    page.on('pageerror', () => { state.runtimeFailure = true; });
+    page.on('console', message => {
+      if (message.type() === 'error' && message.text().includes(`Error rendering story '${story.id}'`)) state.runtimeFailure = true;
+    });
+    try {
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+      const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      return { page, state, response };
+    } catch (error) {
+      await page.close();
+      if (attempt === 1 && isTransportError(error)) {
+        onRetry?.({ storyId: story.id, viewport: viewport.name, reason: renderErrorReason(error) });
+        continue;
+      }
+      throw error;
+    }
+  }
+}
+
+export async function collectStoryTokens(browser, baseUrl, story, viewport, locale, onRetry) {
+  const url = `${baseUrl}/iframe.html?id=${encodeURIComponent(story.id)}&globals=locale:${locale}&viewMode=story`;
+  const { page, state, response } = await loadStoryPage(browser, url, viewport, story, onRetry);
   try {
-    await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    const url = `${baseUrl}/iframe.html?id=${encodeURIComponent(story.id)}&globals=locale:${locale}&viewMode=story`;
-    const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
     if (!response?.ok()) throw new Error('Story HTTP response failed');
     // Network-idle waits on unrelated assets and cannot establish that Storybook actually rendered.
-     
     await page.waitForFunction(id => {
       const render = window.__STORYBOOK_PREVIEW__?.currentRender;
       return render?.id === id && ['finished', 'errored'].includes(render.phase);
     }, story.id, { timeout: 15000 });
     const failed = await page.evaluate(() => document.body.classList.contains('sb-show-errordisplay')
       || window.__STORYBOOK_PREVIEW__?.currentRender?.phase === 'errored');
-     
-    if (failed || runtimeFailure) throw new Error('Story render/play failed');
+    if (failed || state.runtimeFailure) throw new Error('Story render/play failed');
     return await page.evaluate(COLLECT_TOKENS_FN);
   } finally {
     await page.close();
@@ -425,6 +471,7 @@ function renderErrorReason(error) {
 }
 
 async function run() {
+  const { fast: FAST_MODE, reportOnlyLeaks: REPORT_ONLY_LEAKS, mantineOnly: MANTINE_ONLY, shard: SHARD, story: ONLY_STORY, viewports: VIEWPORTS } = parseCliArgs(process.argv.slice(2));
   const storybookStaticDir = join(ROOT, 'storybook-static');
   if (!existsSync(storybookStaticDir)) {
     console.error('storybook-static/ not found. Build first: npm run build-storybook');
@@ -460,23 +507,30 @@ async function run() {
   mkdirSync(outputDir, { recursive: true });
 
   const eligible = scopedStories.filter(s => !DEMO_STORY_SKIP.test(s.id));
-  const scannable = selectShard(eligible, SHARD);
+  // Task 939 (F3): --story=<id> narrows the run to one eligible Story; an id that matches none is a hard error, never an empty pass.
+  const pool = ONLY_STORY === undefined ? eligible : eligible.filter(s => s.id === ONLY_STORY);
+  if (ONLY_STORY !== undefined && pool.length === 0) {
+    console.error(`❌ check-locale-leak --story=${ONLY_STORY}: no eligible Story has this id (Mantine scope and demo-story exclusions apply).`);
+    process.exit(1);
+  }
+  const scannable = selectShard(pool, SHARD);
   console.log(`🔍  Locale leak detector — ${FAST_MODE ? 'fast' : 'full'} mode${MANTINE_ONLY ? ' (mantine-only)' : ''}`);
   if (MANTINE_ONLY) {
     console.log(`Mantine selected: ${scopedStories.length}; non-Mantine excluded: ${allStories.length - scopedStories.length}`);
   }
-  console.log(`    Shard: ${SHARD} | Stories: ${scannable.length}/${eligible.length} | Locales: sq/uk/it | Viewports: ${VIEWPORTS.length}`);
+  console.log(`    Shard: ${SHARD} | Stories: ${scannable.length}/${eligible.length} | Locales: sq/uk/it | Viewports: ${VIEWPORTS.map(v => v.width).join('/')}${ONLY_STORY === undefined ? '' : ` | Story: ${ONLY_STORY}`}`);
   console.log(`    Output: ${outputDir}`);
   console.log('');
 
   let server, browser;
   const leaks = [];
   const errors = [];
+  const retries = [];
   let scanned = 0;
   const expected = scannable.length * VIEWPORTS.length * TARGET_LOCALES.length;
   const reportPath = join(outputDir, 'report.json');
   const persist = (complete = false) => writeFileSync(reportPath, JSON.stringify({
-    timestamp, shard: SHARD, complete, expected, scanned, errors, leaksBlocking: !REPORT_ONLY_LEAKS,
+    timestamp, shard: SHARD, complete, expected, scanned, errors, retried: retries.length, retries, leaksBlocking: !REPORT_ONLY_LEAKS,
     storyIds: scannable.map(s => s.id), leakCount: leaks.length, leaks,
   }, null, 2), 'utf8');
   persist();
@@ -486,6 +540,8 @@ async function run() {
     baseUrl = `http://127.0.0.1:${server.address().port}`;
     browser = await chromium.launch();
 
+    const onRetry = retry => retries.push(retry);
+
     for (const story of scannable) {
 
       const storyLeaks = [];
@@ -494,7 +550,7 @@ async function run() {
         // ── Step 1: render in `en` → collect baseline tokens ─────────────────
         let enTokens = new Set();
         try {
-          const tokens = await collectStoryTokens(browser, baseUrl, story, viewport, 'en');
+          const tokens = await collectStoryTokens(browser, baseUrl, story, viewport, 'en', onRetry);
           enTokens = new Set(tokens);
         } catch (error) {
           errors.push({ storyId: story.id, viewport: viewport.name, locale: 'en', reason: renderErrorReason(error) });
@@ -505,7 +561,7 @@ async function run() {
         // ── Step 2: render in each target locale, compare ─────────────────────
         for (const locale of TARGET_LOCALES) {
           try {
-            const targetTokens = await collectStoryTokens(browser, baseUrl, story, viewport, locale);
+            const targetTokens = await collectStoryTokens(browser, baseUrl, story, viewport, locale, onRetry);
 
             // ── Step 3: diff — find leaks ─────────────────────────────────────
             for (const token of targetTokens) {
@@ -534,7 +590,7 @@ async function run() {
 
       leaks.push(...storyLeaks);
       persist();
-      console.log(` ${story.id}: ${scanned}/${expected} tuples, ${errors.length} render errors`);
+      console.log(` ${story.id}: ${scanned}/${expected} tuples, ${errors.length} render errors, ${retries.length} retried`);
     }
 
     console.log('\n');
@@ -556,6 +612,8 @@ async function run() {
       expected,
       scanned,
       errors,
+      retried: retries.length,
+      retries,
       storyIds: scannable.map(s => s.id),
       mode: FAST_MODE ? 'fast' : 'full',
       mantineOnly: MANTINE_ONLY,
@@ -571,7 +629,7 @@ async function run() {
 
     // ── Summary ────────────────────────────────────────────────────────────────
     if (!report.complete) {
-      console.error(`Incomplete locale scan: ${scanned}/${expected} tuples; ${errors.length} render errors. Report: ${reportPath}`);
+      console.error(`Incomplete locale scan: ${scanned}/${expected} tuples; ${errors.length} render errors; ${retries.length} retried. Report: ${reportPath}`);
       process.exitCode = 1;
     } else if (uniqueLeaks.length === 0) {
       console.log(`✅  Locale leak detector: ZERO leaks across ${scannable.length} stories × sq/uk/it.`);
@@ -604,7 +662,13 @@ async function run() {
   }
 }
 
-run().catch(err => {
-  console.error('Fatal:', err);
-  process.exit(1);
-});
+// Importing this module (the unit test) must not start a scan: run only when it is the entry point. Both sides are real
+// paths (Task 963 AC17): Node gives import.meta.url the symlink-resolved path but keeps argv[1] as typed, so comparing
+// them raw skipped run() through a symlinked checkout and the gate exited 0 having scanned nothing.
+const realPath = p => { try { return realpathSync(p); } catch { return null; } };
+if (process.argv[1] && realPath(process.argv[1]) === realPath(fileURLToPath(import.meta.url))) {
+  run().catch(err => {
+    console.error('Fatal:', err);
+    process.exit(1);
+  });
+}

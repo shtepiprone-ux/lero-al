@@ -42,7 +42,10 @@ could stay a remark. After the task each of those is a gate that fails, with a s
 - `scripts/check-surface-census-changed.mjs` and `scripts/quality/product-gates.mjs` (found in the Task 953 review, 2026-11-08): the census
   maps `base..head` only, so a new file not yet committed is never censused in a local review; Task 952's `ClientLink.tsx` passed
   review 2 that way and failed once committed. A local run (no `HEAD_SHA` set) also maps the untracked and modified files of the
-  working tree; CI keeps `base..head`.
+  working tree; CI keeps `base..head`. The same blind spot hides `check:ui-contract` and the mobile-adaptation contract
+  (found in the Task 953 review 3, 2026-11-08): Task 953 passed locally with 32 of 34 and failed `check:ui-contract` once
+  committed (PR #19 run 42499113506, three enrolled components without a contract; the fix is Task 948 Goal 3). Every
+  diff-based product gate of `product-gates.mjs` reads the working tree in a local run.
 - The CodeQL alerts of this task's own files, open on PR #19 on 2026-11-08 (`gh api` code-scanning alerts,
   `ref=refs/pull/19/merge`, `state=open`): `scripts/quality/owasp.mjs:474` (file-access-to-http), `:477`, `:558`,
   `:564` (http-to-file-access), `:478` (file-system-race), `scripts/quality/cloudinary-config.mjs:50`
@@ -81,6 +84,9 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts` and the four `messages/*.json` captions (T-04),
   `scripts/quality/db-catalog-audit.mjs` and `scripts/quality/cloudinary-config.mjs` (G-01), the ledgers
   `docs/security/audit-2026-11-06/findings.md` and `coverage.md`.
+- `scripts/quality/change-report.mjs`: a version the lockfile did not resolve before, transitive ones included, younger
+  than 14 days is a hard failure unless `package.json` `overrides` pins it exactly; `--lockfile-age <base>` runs the
+  same check on the working-tree lockfile before a commit (AC15).
 - Dependencies: none (Node built-ins; the ICU parser next-intl already ships).
 - Out of scope: product fixes of the findings (Tasks 949-962 carry them).
 
@@ -108,6 +114,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — locale values, client sinks and the CMS sanitizer are each checked at every write — AC4, AC7.
 - DOM_Clobbering_Prevention: "Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering." — the evasion vectors include form, base and meta tags, and the sanitizer must remove each — AC7.
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — client-sinks K1-K8 run on each product file at its write — AC4.
+- Dependency_Graph_SBOM: not applicable — the SBOM job is unchanged; AC15 only ages the versions the lockfile brings in.
 - Denial_of_Service: not applicable — the product's request paths are unchanged; cloudinary-config.mjs only reads the upload presets once.
 - File_Upload: not applicable — cloudinary-config.mjs reads the presets read-only; the upload paths change in Task 957.
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the new job reads contents only, holds no secret, and takes the base SHA through env — AC2.
@@ -117,8 +124,9 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Key_Management: not applicable — the content hash of the stop hook uses no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.
 - MCP_Security: not applicable — no MCP server is added or configured; Task 961 watches the tool definitions.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — every version a lockfile change brings in, transitive ones included, is refused when younger than 14 days — AC15.
 - Nextjs_Security: not applicable — the word comes from the runner finding (no page rendered in CI since Next 16.4.3); no route, action or proxy changes.
-- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — owasp.mjs starts only git and node, with fixed argument arrays and no shell — AC2.
+- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — owasp.mjs starts only git and node, with fixed argument arrays and no shell — AC2; change-report.mjs passes to `npm view` only a name that `isNpmName` accepts — AC15.
 - Secrets_Management: "prevent them from leaking and compromising the organization" — the Cloudinary credentials read by `cloudinary-config.mjs` are sent to `https://api.cloudinary.com` only, refused for any other host — AC10.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff of the governance files and reruns every check — AC8.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — an agent's citation of a sheet counts only when the tool finds the quote in the sheet — AC1, AC3.
@@ -127,6 +135,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the attack surface section answers them for the governance path — AC1-AC6.
 - Transport_Layer_Security: not applicable — the scripts call fixed `https:` hosts through Node's default TLS; no server TLS setting changes.
 - User_Privacy_Protection: not applicable — no personal data is read or stored; cloudinary-config.mjs reads preset settings only.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — the change report ages every new lockfile version on every pull request — AC15.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a fresh Opus session reviews and reruns every check; the implementer's report is not evidence — AC8.
 - Web_Frontend_Security: not applicable — no page, header or browser-side code of the product changes; the words came from the sanitizer tests.
 - XSS_Filter_Evasion: "input filtering is an incomplete defense for XSS" — the evasion vectors prove the sanitizer, not a filter, holds — AC7.
@@ -169,7 +178,9 @@ No visible change.
   `agent-check*.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
   decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths).
 - AC11 A local product check sees uncommitted files — test: `node scripts/check-surface-census-changed.mjs --verify-gate`, whose self-test
-  arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run.
+  arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run; and
+  `node scripts/check-ui-contract.mjs --verify-gate` and `node scripts/check-mobile-adaptation-contract.mjs --verify-gate`
+  gain the same arm (an uncommitted manifest enrolment without a contract fails a local run).
 - AC12 A task under revision holds no change — test: `scripts/quality/owasp.test.mjs` (the task gate: a review whose verdict line
   says NEEDS REVISION and whose prose names APPROVED is not approved and the change fails G1; bold, older and two-review forms).
 - AC13 CI runs on a named image (owner, 2026-11-08, translated: "yes, do AC13, pin ubuntu-24.04") — test:
@@ -180,6 +191,18 @@ No visible change.
   --verify-gate` arms 13 and 14: 65 mapped surfaces pass the default limit and are all censused, 201 fail closed with
   `surface-limit-exceeded` (arm 13 red on the limit of 60, arm 14 red with the limit check disabled; both measured
   2026-11-08).
+- AC15 Every version a lockfile change brings in is at least 14 days old, transitive ones included (from the Task 939
+  review 1: `ws@8.22.2` entered the lockfile three hours after its release, and `change-report.mjs` aged only direct
+  dependencies) — test: `scripts/quality/change-report.test.mjs` (`newLockfileVersions`, `youngLockfileVersions`: nested
+  and aliased entries counted once, a 0-day and a 6-day version refused, an exact `overrides` pin reported, not refused; `isNpmName`: a crafted lockfile name never reaches `npm view`;
+  red with the age check disabled, with nested entries skipped and with the name check removed, measured 2026-11-08); done by Opus 2026-11-08.
+- AC16 An open kickoff counts as implemented only through a test no other kickoff names (Task 939 review 2: PR #19's
+  change report failed on 957, 962 and 965 through tests 947, 952 and 963 added) — test: `scripts/quality/ac-tests.test.mjs`
+  (`testsNamedElsewhere`; red with the shared set ignored, measured 2026-11-09); done by Opus 2026-11-09.
+- AC17 The locale-leak gate fails closed when started through a symlinked path (Task 939 review 2: its entry-point guard
+  compared `argv[1]` as typed with the real path, skipped the scan and exited 0) — test:
+  `scripts/__tests__/check-locale-leak.test.ts` ("entry point": own path and a junction both reach the flag check, exit 1;
+  red before the fix, `expected +0 to be 1`, measured 2026-11-09); done by Opus 2026-11-09.
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.

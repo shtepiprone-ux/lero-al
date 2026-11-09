@@ -1,7 +1,7 @@
 // node --test scripts/quality/change-report.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classify, testWeakening, lockfileProblems, dependencyChanges, untestedSourceChange } from './change-report.mjs';
+import { classify, testWeakening, lockfileProblems, dependencyChanges, untestedSourceChange, newLockfileVersions, youngLockfileVersions, isNpmName } from './change-report.mjs';
 
 test('product code changed without any test change is refused', () => {
   const src = { code: 'M', path: 'src/modules/companies/actions.ts' };
@@ -52,4 +52,40 @@ test('added and changed dependencies across every dependency field', () => {
   const head = { dependencies: { a: '^1.0.0', b: '^2.1.0', d: '^1.0.0' }, devDependencies: { c: '1.0.0', e: '3.0.0' } };
   assert.deepEqual(dependencyChanges(base, head), { added: ['d', 'e'], changed: ['b'] });
   assert.deepEqual(dependencyChanges(null, { dependencies: { x: '1' } }), { added: ['x'], changed: [] });
+});
+
+// Task 963 AC15 (from the Task 939 review 1): the transitive versions a lockfile change brings in are aged too.
+test('the lockfile versions a change brings in, transitive and nested ones included, each once', () => {
+  const base = { packages: { '': { name: 'app' }, 'node_modules/ws': { version: '8.20.1' }, 'node_modules/a': { version: '1.0.0' } } };
+  const head = { packages: {
+    '': { name: 'app' },
+    'node_modules/ws': { version: '8.20.1' },
+    'node_modules/storybook/node_modules/ws': { version: '8.22.2' },
+    'node_modules/x/node_modules/ws': { version: '8.22.2' },
+    'node_modules/a': { version: '1.1.0' },
+    'node_modules/alias': { name: 'real-name', version: '2.0.0' },
+    'node_modules/linked': { link: true, resolved: 'packages/linked' },
+  } };
+  assert.deepEqual(newLockfileVersions(base, head), [
+    { name: 'a', version: '1.1.0' }, { name: 'real-name', version: '2.0.0' }, { name: 'ws', version: '8.22.2' },
+  ]);
+  assert.deepEqual(newLockfileVersions(head, head), []);
+});
+
+test('a version younger than 14 days is refused unless package.json overrides pin it exactly', () => {
+  const now = Date.parse('2026-11-08T18:00:00Z');
+  const times = { ws: { '8.22.2': '2026-11-08T14:55:20Z', '8.22.0': '2026-09-26T00:00:00Z' }, semver: { '7.8.6': '2026-11-02T17:05:43Z' } };
+  const timesOf = (name) => times[name] ?? null;
+  const young = youngLockfileVersions([{ name: 'ws', version: '8.22.2' }, { name: 'ws', version: '8.22.0' }, { name: 'semver', version: '7.8.6' }], timesOf, {}, now);
+  assert.equal(young.length, 2);
+  assert.ok(young[0].startsWith('ws@8.22.2 was released 0 day(s) ago (< 14)'), young[0]);
+  assert.ok(young[1].startsWith('semver@7.8.6 was released 6 day(s) ago'), young[1]);
+  assert.deepEqual(youngLockfileVersions([{ name: 'semver', version: '7.8.6' }], timesOf, { semver: '7.8.6' }, now), []);
+  assert.equal(youngLockfileVersions([{ name: 'semver', version: '7.8.6' }], timesOf, { semver: '^7.8.6' }, now).length, 1);
+  assert.deepEqual(youngLockfileVersions([{ name: 'ghost', version: '1.0.0' }], timesOf, {}, now), ['ghost@1.0.0: no release time on npm']);
+});
+
+test('only an npm package name reaches npm view (a crafted lockfile name is never passed to a shell)', () => {
+  for (const ok of ['ws', '@storybook/nextjs-vite', '@napi-rs/wasm-runtime', 'is-core-module', 'lodash.merge']) assert.equal(isNpmName(ok), true, ok);
+  for (const bad of ['ws & calc', 'a|b', '$(id)', '`id`', 'a;b', '../x', '@scope/../x', '', ' ws', 'a\nb', null]) assert.equal(isNpmName(bad), false, String(bad));
 });

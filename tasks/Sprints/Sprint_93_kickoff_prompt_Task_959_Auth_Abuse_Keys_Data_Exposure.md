@@ -153,14 +153,14 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Prototype_Pollution_Prevention: not applicable — no request object is merged; actions read named fields.
 - Query_Parameterization: "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure." — bucket and subject are bound parameters of the function — AC2.
 - REST_Security: "the access control decision should be taken locally by REST endpoints" — the retention cron checks CRON_SECRET itself — AC12.
-- Secrets_Management: "This is not the same as committing it to code." — docs/env.md lists the three new server variables; none is committed — AC6.
+- Secrets_Management: "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR" — docs/env.md lists the three new server variables; none is committed — AC6.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC11.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC11.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC2, AC3, AC4, AC6, AC8, AC9, AC12.
 - Server_Side_Request_Forgery_Prevention: "Application can send request only to identified and trusted applications" — the breached-password check calls one fixed host with a 3 s timeout — AC1.
 - Serverless_FaaS_Security: "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)." — the new cron refuses calls without the secret — AC12.
 - Session_Management: not applicable — session cookies keep their options; HttpOnly is Task 960.
-- SQL_Injection_Prevention: "Use least privilege alongside parameterized queries and allow-list mapping." — the limiter takes parameters only, search_path empty — AC2.
+- SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — the limiter takes parameters only, search_path empty — AC2.
 - Subdomain_Takeover_Prevention: not applicable — vercel.json gains a cron path; no DNS record changes (DNS watch is Task 961).
 - Third_Party_Javascript_Management: not applicable — Turnstile is loaded as on sign-up; its script policy is Task 954.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC2, AC3, AC4, AC6, AC8, AC9, AC12.

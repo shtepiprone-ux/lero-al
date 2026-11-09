@@ -138,7 +138,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC11.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Session_Management: not applicable — no session handling changes in the database hardening.
-- SQL_Injection_Prevention: "Use least privilege alongside parameterized queries and allow-list mapping." — the definer function has search_path empty and takes the key as a parameter — AC9, AC10.
+- SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — the definer function has search_path empty and takes the key as a parameter — AC9, AC10.
 - Third_Party_Javascript_Management: not applicable — no script loading changes in a database task.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Transport_Layer_Security: not applicable — connections stay Supabase-managed TLS; no transport change.

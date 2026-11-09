@@ -19,8 +19,13 @@ measured 2026-11-06 on `task/935-governance-approval-route`:
 2. `npm run check:enrolled-tailwind` — `src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx:98`
    `overflow-clip` is a new Tailwind utility in an enrolled Mantine file (the baseline is remove-only), and the
    `overflow-hidden` entry is stale (count 1, baseline 2).
+3. `npm run check:ui-contract` (split from Task 953 after its two revisions, owner's flow rule; PR #19 run 42499113506
+   on `263cbf642`): Task 953 R4 enrolled `src/components/admin/AdminUsersTable.tsx`, `src/lib/navigation/ClientLink.tsx`
+   and `src/modules/cabinet/components/CabinetEmailChangeSection.tsx` in `scripts/mantine-migration-scope.json`, and
+   `scripts/ui-contract-registry.json` has no contract for them ("newly enrolled component lacks an explicit UI
+   contract"). The local review did not see it: the gate reads committed `base..head` only (Task 963 AC11).
 
-After the task both commands exit 0 and no behaviour changes.
+After the task the three commands exit 0 and no behaviour changes.
 
 ## Scope
 
@@ -38,6 +43,12 @@ After the task both commands exit 0 and no behaviour changes.
   `overflow: clip` (the reason is in the comment at lines 86–87: a hidden-overflow box is a scroll container and
   scrolls the wrong slide into view). Then `npm run check:enrolled-tailwind:update-baseline` to record the paid-down
   `overflow-hidden` entry — the update may only remove or lower entries; show the baseline diff.
+- `scripts/ui-contract-registry.json`: one entry per component of Goal 3, in the shape of the existing
+  `admin-users-table-view` and `cabinet-email-change-section-view` entries. Each container adds no markup of its own,
+  so its contract points at its direct Story (`AdminUsersTableContainer.stories.tsx`, `ClientLink.stories.tsx`,
+  `CabinetEmailChangeSectionContainer.stories.tsx`), `tokenOwners` `src/design-system/mantine/theme.ts`, and a
+  `parity` element naming the View (or the Mantine component, for `ClientLink`) it renders, with that Story's exports.
+  No Story or component changes.
 - Out of scope: the detectors themselves, any other finding, any visual change.
 - Dependencies: none.
 
@@ -55,6 +66,12 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — the token and Story fixes render text through React escaping only; lint (react/no-danger, no-script-url) runs on them — AC5.
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — the token and Story fixes add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC5.
 - GitHub_Actions_Security: not applicable — the workflow file is read for the job list only; the task edits no workflow.
+- Database_Security: not applicable — "registry" and "entry" name a JSON file of the UI gate; no database, grant or policy is touched.
+- GraphQL: not applicable — no API of any kind is added or changed; the task edits styling, Stories and gate data.
+- Mass_Assignment: not applicable — no request body is bound to a record; the registry entries are written by hand.
+- Multi_Tenant_Security: not applicable — no data access or tenant boundary changes; the task edits styling and gate data.
+- Query_Parameterization: not applicable — no query is built; the gate reads a committed JSON file.
+- SQL_Injection_Prevention: not applicable — no SQL is written or run; `base..head` is a Git revision range.
 - Injection_Prevention: not applicable — the design-token script gets baseline data changes only; no command or query is built.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC5.
 - OS_Command_Injection_Defense: not applicable — no script that starts a process is changed; the baselines are data files.
@@ -80,6 +97,9 @@ No visible change. `MantineListingGalleryPattern` mobile frame keeps `overflow: 
   `scrollLeft` stays 0 (the Task 923 R33 case); `node scripts/check-locale-leak.mjs` runs it at 320 and 390 px.
 - AC4 `src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.test.tsx` asserts the pending-state alert
   icon is rendered with `theme.other.iconSize.roomy` (20) and no raw number.
+- AC6 Every newly enrolled component has its UI contract — test: `node scripts/check-ui-contract.mjs --base main`
+  exits 0 with "Newly enrolled components requiring a contract: 3" listed and no FAIL line (red today on `263cbf642`),
+  and `node scripts/check-ui-contract.mjs --verify-gate` exits 0 (the registry is valid and each Story imports its component).
 - AC5 `node scripts/quality/product-gates.mjs` reports no failing gate, and `npm run lint`, `npm run typecheck`,
   `npm test`, `node scripts/quality/check-files.mjs --worktree` exit 0.
 

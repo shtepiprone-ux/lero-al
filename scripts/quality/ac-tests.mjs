@@ -80,9 +80,24 @@ export const OPUS_OWNED = /^(\.claude\/|\.github\/|\.githooks\/|scripts\/quality
  * by the change (did not exist at the base, exists now). The second arm catches a task implemented but not yet
  * reviewed, and the executor's session before any review.
  */
-export function isImplemented(body, files, added) {
+export function isImplemented(body, files, added, shared = new Set()) {
   if (hasVerdict(body)) return true;
-  return kickoffAcs(body).some((ac) => ac.tests.some((named) => resolveTest(named, files).some((f) => added.has(f))));
+  return kickoffAcs(body).some((ac) => ac.tests.some((named) => resolveTest(named, files).some((f) => added.has(f) && !shared.has(f))));
+}
+
+/**
+ * The test files that kickoffs other than `self` name. Such a test is shared: another task may add it, so its arrival
+ * is no evidence that `self` was implemented (Task 963 AC16: open kickoffs 957, 962 and 965 failed PR #19's change
+ * report through tests that 947, 952 and 963 added).
+ * @param {string} self @param {{ path: string, body: string }[]} kickoffs @param {Set<string>} files
+ */
+export function testsNamedElsewhere(self, kickoffs, files) {
+  const out = new Set();
+  for (const { path: p, body } of kickoffs) {
+    if (p === self) continue;
+    for (const ac of kickoffAcs(body)) for (const named of ac.tests) for (const f of resolveTest(named, files)) out.add(f);
+  }
+  return out;
 }
 
 /**
@@ -94,7 +109,7 @@ export function isImplemented(body, files, added) {
 export function sessionFindings({ kickoffs, files, added }) {
   const out = [];
   for (const { path: kickoff, body } of kickoffs) {
-    if (!isImplemented(body, files, added) || hasVerdict(body)) continue;
+    if (!isImplemented(body, files, added, testsNamedElsewhere(kickoff, kickoffs, files)) || hasVerdict(body)) continue;
     for (const ac of kickoffAcs(body)) {
       for (const named of ac.tests) {
         if (OPUS_OWNED.test(named) || resolveTest(named, files).length) continue;
@@ -143,10 +158,11 @@ export function rangeFindings(base, head, changes) {
   // it adds — a task implemented without its kickoff being edited is still checked.
   const from = new Map(changes.filter((c) => c.code !== 'D' && isKickoff(c.path)).map((c) => [c.path, c.from ?? c.path]));
   for (const p of files) if (isActiveKickoff(p) && !from.has(p)) from.set(p, p);
+  const active = [...files].filter(isActiveKickoff).map((p) => ({ path: p, body: show(head, p) ?? '' }));
   const out = [];
   for (const [kickoff, before] of from) {
     const headText = show(head, kickoff);
-    if (!headText || !isImplemented(headText, files, added)) continue;
+    if (!headText || !isImplemented(headText, files, added, testsNamedElsewhere(kickoff, active, files))) continue;
     out.push(...acTestFindings({ path: kickoff, base: show(base, before), head: headText, files, changed }));
   }
   return out;

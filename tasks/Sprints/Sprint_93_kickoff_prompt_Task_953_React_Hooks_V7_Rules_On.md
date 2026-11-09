@@ -216,3 +216,12 @@ Measured: the baseline diff removes exactly the four keys of R6 (`--numstat` 0 a
 Condition carried by AC8: its second half (the CI job "Unit and component tests" green on the commit that holds this diff) can only be read after the commit; Opus reads that run, and a red job reopens this review.
 
 OWASP verdicts per sheet: [docs/security/owasp/reviews/Task_953.json](../../docs/security/owasp/reviews/Task_953.json).
+
+**Review 3 addendum, CI of the commit `263cbf642` (PR #19 run 42499113506) — APPROVED WITH NOTES**
+
+- AC8 met: "Unit and component tests" green on the commit that holds this diff; `check:surface-census:changed` passes in CI (F4 closed).
+- N1 (Low, AC5): `check:ui-contract` fails in CI on the three components R4 enrolled (`AdminUsersTable.tsx`, `ClientLink.tsx`,
+  `CabinetEmailChangeSection.tsx`): "newly enrolled component lacks an explicit UI contract". The local runs of the executor and
+  the reviewer showed 32 of 34 because the gate reads committed `base..head` only. Both revisions are used (flow.md §3), so the
+  fix is split off: Task 948 Goal 3 and AC6 (the three registry entries). The blind spot is Task 963 AC11 (every diff-based
+  product gate reads the working tree in a local run). Status: task 948.

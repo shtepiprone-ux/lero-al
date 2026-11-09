@@ -1,0 +1,419 @@
+{
+  "task": "951",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": [
+        "it is important to identify the attacks which the application must defend against"
+      ],
+      "evidence": "`src/lib/__tests__/exchangeRateServer.test.ts` (poisoned catalogue) and `src/modules/notifications/lib/emails/__tests__/send.address.test.ts` (oversized address); both red with the control reverted (5 and 4)"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "kickoff \"## Attack surface\" T1-T6; each mitigation has its AC test, rerun by the reviewer (`npx vitest run` per AC)"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the auth callback test file is touched for a CodeQL alert only; no sign-in behaviour changes."
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication code changes; one test file is corrected."
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the admin test file is corrected for an alert; no access decision changes."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no authorization decision changes; the fixes are input and output helpers."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no access check moves; one removed-feature test is corrected."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "no authorization test changes meaning; one file is fixed for CodeQL."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the matrix is Task 950; this task closes scanner alerts."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "no endpoint gains or loses a limit; limits are Task 959."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the race named in the alerts is in a test script; no product workflow changes."
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`node scripts/quality/check-ruleset.mjs` exit 0 (main needs a reviewed PR); AC1 (`codeql-alerts.mjs`) runs after the push"
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie changes in any of the fixes."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no sign-in path changes in any of the fixes."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "`src/design-system/media/__tests__/safeImageSrc.test.ts` (9 red with every scheme passed, 2 red with AppImage reverted) and `src/components/admin/__tests__/AdminCompaniesManager.logo.security.test.tsx` (4 red)"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "met",
+      "quotes": [
+        "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness"
+      ],
+      "evidence": "`src/lib/__tests__/cloudinarySignature.test.ts` and `src/lib/__tests__/cloudinary.security.test.ts` (29): SHA-256 of the string Cloudinary signs; 4 red with SHA-1 and 4 red with signature_algorithm signed, restored with sha equal (review 2); the executor live upload and destroy 200, the asset then 404 by an Admin API read"
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no HTML is sanitized or injected by these fixes; the CMS sanitizer is untouched."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "`npm run lint` exit 0; `src/design-system/media/AppImage.tsx:148` adds no sink, only the allow-listed src"
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Denial_of_Service": {
+      "verdict": "met",
+      "quotes": [
+        "Using validation that is cheap in resources first"
+      ],
+      "evidence": "`src/modules/notifications/lib/emails/__tests__/send.address.test.ts`: 50 000 x \"!@\" refused under 100 ms; 4 red with send.ts reverted"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the document against its format's schema before publication or ingestion"
+      ],
+      "evidence": "no dependency change: `git diff --quiet HEAD -- package.json package-lock.json` exit 0; the CI SBOM job runs on the push"
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "the signature fix changes the algorithm only; upload validation is Task 957."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always set permissions: {} at the workflow level to disable all permissions by default."
+      ],
+      "evidence": "no workflow changed; `node --test \"scripts/quality/*.test.mjs\"` 147/147 (ci-workflow.test.mjs included)"
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "no header changes; https is enforced in the helper, HSTS stays in headers.ts."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": "`node --test \"scripts/quality/*.test.mjs\"` 147/147; the changed scripts add no command line, `scripts/lib/__tests__/within-repository.test.ts` 26 red with the check removed"
+    },
+    "Input_Validation": {
+      "verdict": "met",
+      "quotes": [
+        "Validate on the server even when the browser checks the same fields."
+      ],
+      "evidence": "`src/modules/notifications/lib/emails/__tests__/send.address.test.ts`, `src/design-system/media/__tests__/cloudinaryUrl.test.ts`, `src/design-system/media/__tests__/safeImageSrc.test.ts`, each red with its control reverted"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object reference handling changes in these fixes."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Never pass untrusted input to a recursive merge or set-by-path helper"
+      ],
+      "evidence": "`src/lib/__tests__/exchangeRateServer.test.ts` (\"Object.prototype is untouched\"); 5 red with getExchangeRateServer.ts reverted"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the signing secret and its storage are unchanged; only the digest algorithm changes."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging": {
+      "verdict": "met",
+      "quotes": [
+        "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+      ],
+      "evidence": "`src/app/api/auth-email-hook/__tests__/unhandledType.test.ts`: one line, no control characters, at most 64 characters; 2 red with route.ts reverted"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the event vocabulary is introduced by Task 955 AC12; this task only bounds one existing line."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no request is bound to a model by the changed code."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in factor changes; staff MFA is Task 960."
+    },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+      ],
+      "evidence": "no dependency change: `git diff --quiet HEAD -- package.json package-lock.json` exit 0"
+    },
+    "Nextjs_Security": {
+      "verdict": "not applicable",
+      "reason": "no Server Action or route contract changes; the fixes are inside helpers."
+    },
+    "Nodejs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "some third-party rulesets can be used to flag dangerous patterns such as eval()"
+      ],
+      "evidence": "`npm run lint` exit 0 (no-eval on); no Function constructor added by the diff"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "`node --test \"scripts/quality/*.test.mjs\"` 147/147; no changed script builds a shell string"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "If objects have to be used then they should be created using the Object.create(null) API"
+      ],
+      "evidence": "`src/lib/__tests__/exchangeRateServer.test.ts`: a Map keyed by 3-letter codes, `__proto__` gets no rate; 5 red with the control reverted"
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "no route changes its access decision; the hook route only bounds a log value."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "no secret is added or moved; the fixes read the existing server variables."
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "every changed file read; `node scripts/quality/changed-lines-coverage.mjs --base main` exit 0; `node scripts/quality/check-files.mjs --all` exit 0"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "every executor claim rerun (`npm test -- --coverage` 382/6279, the deliberate breaks with equal sha)"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "each security story of the threat model is an AC whose test the reviewer reran and broke; T5 (SHA-256 signature) by `npx vitest run src/lib/__tests__/cloudinarySignature.test.ts` in review 2 (F1 fixed)"
+    },
+    "Server_Side_Request_Forgery_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Application can send request only to identified and trusted applications"
+      ],
+      "evidence": "`src/design-system/media/__tests__/cloudinaryUrl.test.ts`: look-alike hosts get no transform or preload; 10 red as a substring test"
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "no function trigger or permission changes; helpers only."
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "no session handling changes; the callback route test is the only auth file touched."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "lockfile unchanged: `git diff --quiet HEAD -- package-lock.json` exit 0"
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "kickoff \"## Attack surface\" T1-T6, each mitigation an AC with its test rerun and broken by the reviewer (review 1: AC2-AC5, AC7, AC8; review 2: AC6 `npx vitest run src/lib/__tests__/cloudinarySignature.test.ts`)"
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "met",
+      "quotes": [
+        "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS"
+      ],
+      "evidence": "`src/design-system/media/__tests__/cloudinaryUrl.test.ts`: `http://res.cloudinary.com/...` gets no transform"
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "met",
+      "quotes": [
+        "Preventing leakage of user IP addresses is of great significance when user protection is in scope."
+      ],
+      "evidence": "`src/design-system/media/__tests__/cloudinaryUrl.test.ts` and `src/lib/imageDelivery.ts:44`: no preload for a look-alike host; 6 red with imageDelivery.ts reverted"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "each report claim rerun by the reviewer (`npm test -- --coverage`, `ac-tests.mjs`, the deliberate breaks); the AC6 live 200 checked by an Admin API read (asset 404, folder empty)"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "`npm audit --omit=dev --audit-level=high` exit 0"
+    },
+    "WebSocket_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Cache_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "`npm run lint` exit 0 (react/no-danger); no innerHTML in the diff"
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "no schema or contract of a service changes in these fixes."
+    },
+    "Webhook_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Accept only the signature scheme you expect"
+      ],
+      "evidence": "`src/app/api/auth-email-hook/__tests__/unhandledType.test.ts` signs each request with the standard-webhooks scheme; verification code unchanged"
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "met",
+      "quotes": [
+        "input filtering is an incomplete defense for XSS"
+      ],
+      "evidence": "`src/design-system/media/__tests__/safeImageSrc.test.ts`: scheme allow-list, not a pattern filter"
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 951 diff (reviews 1-2, 2026-11-09: product helpers for currency codes, the hook log line, the address check, Cloudinary hosts and signatures, image sources; scripts and deleted evidence files) does not touch this area; the branch verdict is in Task_952.json."
+    }
+  }
+}

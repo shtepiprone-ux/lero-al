@@ -36,6 +36,7 @@ import { createRequire } from 'module'
 import { mkdir, writeFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { mentionsCloudinaryUrl } from './lib/cloudinary-host.mjs'
 
 const require       = createRequire(import.meta.url)
 const __dirname     = path.dirname(fileURLToPath(import.meta.url))
@@ -100,7 +101,7 @@ function probeGalleryImg(html) {
   if (!m) return { present: false }
   return {
     present: true,
-    isCloudinary: m[0].includes('res.cloudinary.com'),
+    isCloudinary: mentionsCloudinaryUrl(m[0]),
     hasSrcSet: m[0].includes('srcSet='),
     hasEager: m[0].includes('loading="eager"'),
   }

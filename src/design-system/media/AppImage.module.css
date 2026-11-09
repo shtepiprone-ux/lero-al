@@ -66,7 +66,7 @@
  * effects compose: this pattern's own `.card:hover .imageSection img{transform:scale(1.05)}` in
  * `MantineListingCardPattern.module.css:67-68`, PLUS Tailwind's `group-hover:scale-105`'s own
  * `scale:105% 105%` — different CSS properties, so they multiply: 1.05×1.05=1.1025, reproduced
- * exactly at `docs/sessions/evidence/task763/debug-hover-titlearea.mjs`'s output). Rooting the
+ * exactly at the output of docs/sessions/evidence/task763/debug-hover-titlearea.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/docs/sessions/evidence/task763/debug-hover-titlearea.mjs)). Rooting the
  * hover trigger on AppImage's own container (as this file does for `hoverBrightness`) would only
  * fire while the pointer is directly over the image, silently shrinking the card's hover-zoom from
  * 1.1025× to 1.05× whenever the pointer is over the title/price area instead — exactly the

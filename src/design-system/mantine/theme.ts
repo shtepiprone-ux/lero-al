@@ -257,8 +257,8 @@ declare module '@mantine/core' {
     //   notificationPanelWidth (320) — `NotificationBellView.tsx:46`'s `width={320}`.
     //   notificationPanelMaxHeight (480) — `NotificationBellView.tsx:48`'s `maxHeight: 480`.
     // Task 797 — `heroSearchFallbackHeight`: `HeroSearchFallback.tsx`'s `Skeleton` `h={{ base,
-    //   sm, md }}` responsive-object triple, MEASURED (`scripts/task670-qa-hero-fallback-geometry.mjs
-    //   --baseline`, per `HeroSearchFallback.tsx`'s own docblock) — a per-breakpoint geometry, so it
+    //   sm, md }}` responsive-object triple, MEASURED (scripts/task670-qa-hero-fallback-geometry.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task670-qa-hero-fallback-geometry.mjs)
+    //   --baseline, per `HeroSearchFallback.tsx`'s own docblock) — a per-breakpoint geometry, so it
     //   is its own nested shape, not three flat `layout` keys.
     layout: {
       authFormMaxWidth: number

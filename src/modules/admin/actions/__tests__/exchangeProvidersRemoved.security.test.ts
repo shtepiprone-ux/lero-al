@@ -15,7 +15,7 @@ const SRC = join(process.cwd(), 'src')
 /** the table, the type and the components of the removed screen, as they were named in code */
 const REMOVED_NAMES = /exchange_providers|exchangeProviders|ExchangeProvider|exchange-providers|AdminCurrencyTabs/i
 /** tests (they name the table to prove it is gone) are not production code */
-const isTestFile = (path: string) => /(?:^|[\\/])__tests__[\\/]|\.(?:test|spec)\.[cm]?[jt]sx?$/.test(path)
+const isTestFile = (path: string) => /(?:(?:^|[\\/])__tests__[\\/]|\.(?:test|spec)\.[cm]?[jt]sx?$)/.test(path)
 
 function productionFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {

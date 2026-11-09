@@ -7,14 +7,12 @@ Implementer: Sonnet, on the branch `governance/reset-2026-11-06`. Reviewer: Opus
 
 ## Goal
 
-The first full CodeQL scan (PR #19, run 42263240996, 2026-11-06) left 325 open alerts:
-`gh api "repos/shtepiprone-ux/lero-al/code-scanning/alerts?ref=refs/pull/19/merge&state=open"`. Opus closed the five
-in `scripts/quality/` in the same session (agent-check, push-safety, check-files). The rest: 14 files under `src/`
-(9 product, 5 tests), 38 files under `scripts/`, 183 one-off evidence scripts under `docs/` (174 in
-`docs/sessions/evidence/`, 8 in `docs/reviews/artifacts/`, 1 in `docs/research/references/`; finding E-01 of
-`docs/security/audit-2026-11-06/findings.md`). After the task the API
-returns no open alert for the PR, the `CodeQL` check passes, and each product fix has a test that fails without it.
-No alert is dismissed and no path is excluded from the scan (D2): each one is fixed, or its file is deleted.
+The first full CodeQL scan (PR #19, run 42263240996, 2026-11-06) left 325 open alerts; Opus closed the five in
+`scripts/quality/`. Re-measured 2026-11-09 on `39d0fecc7` with `node scripts/quality/codeql-alerts.mjs --ref
+refs/pull/19/merge` (exit 1): 325 open — 26 under `src/`, 57 under `scripts/`, 242 under `docs/` (183 one-off evidence
+scripts, finding E-01 of `docs/security/audit-2026-11-06/findings.md`); new: `src/__tests__/eslintConfig.test.ts`
+(Task 953). After the task the API returns no open alert for the PR, the `CodeQL` check passes, and each product fix
+has a test that fails without it. No alert is dismissed and no path is excluded (D2): each is fixed, or its file deleted.
 
 ## Scope
 
@@ -33,9 +31,11 @@ Product code — the alert, the fault, the fix:
   `https://evil.example/res.cloudinary.com/…`. Fix: one exported helper, `isCloudinaryDeliveryUrl(src)` in
   `appImageConfig.ts`: `new URL(src)`, protocol `https:`, hostname exactly `res.cloudinary.com`. All five sites use it.
 - `src/lib/cloudinaryUpload.ts:40`, `src/lib/cloudinaryDelete.ts:117` (weak-cryptographic-algorithm): the API signature
-  is SHA-1. Fix: SHA-256 with the signed parameter `signature_algorithm=sha256` (Cloudinary "Generating authentication
-  signatures"). Prove it with one real signed upload and one destroy against the development Cloudinary account in
-  `.env.local`. If Cloudinary refuses SHA-256, stop and report the response. Do not dismiss the alert.
+  is SHA-1. Fix (revised by review 1, F1): SHA-256 of the old string plus the secret; `signature_algorithm=sha256` is
+  sent as a form field, NOT signed (Cloudinary "Generating authentication signatures": "Cloudinary supports both SHA-1
+  and SHA-256 digests for validation"; the live 401 of 2026-11-09 named its string without the parameter). Prove it
+  with one real signed upload and the destroy of that asset against the development account in `.env.local`. If
+  Cloudinary refuses SHA-256, stop and report the response. Do not dismiss the alert.
 - `src/design-system/media/AppImage.tsx:148`, `src/components/admin/AdminCompaniesManager.tsx:157` (xss-through-dom):
   an `<img src>` takes a string from the DOM or props. Fix: one helper `safeImageSrc(src)` in `appImageConfig.ts` that
   returns the value only for `https:`, `blob:`, `data:image/` or a root-relative `/path`, else `undefined`. Both sites
@@ -48,6 +48,8 @@ Product code — the alert, the fault, the fix:
   - `src/modules/admin/actions/__tests__/exchangeProvidersRemoved.security.test.ts:18` (group the alternation).
   - `src/__tests__/serverLinkComponent.test.ts:24` (redos, added by Task 952, open 2026-11-08): read `'use client'` from
     the syntax tree (`ts.createSourceFile`, the directive prologue), not with a nested-quantifier regex.
+  - `src/__tests__/eslintConfig.test.ts:56,58,70,71` (identity-replacement, useless-regexp-character-escape; Task 953):
+    remove the no-op `replace` and the needless escapes; the assertions stay.
 
 Scripts (`scripts/`):
 - Used by `package.json` or a workflow: fix each alert in place.
@@ -55,20 +57,29 @@ Scripts (`scripts/`):
     `readRegularFile` in `scripts/quality/check-files.mjs`.
   - insecure-temporary-file: `mkdtempSync`.
   - incomplete-url-substring-sanitization: `new URL(u).hostname ===`.
-  - path-injection: a path from `argv` goes through a new `scripts/lib/within-repository.mjs`, which resolves it and
-    throws when it leaves the repository root.
+  - path-injection: a path from `argv`, or from a request URL in a detector's static server
+    (`check-locale-leak.mjs:315`, `check-stories-rendered.mjs`, `check-homepage-grid.mjs`,
+    `check-card-track-monotonicity.mjs`, `responsive-screenshots.mjs`, `rendered-state-census/runner.mjs`), goes through
+    a new `scripts/lib/within-repository.mjs`: `withinRoot(root, candidate)` resolves real paths and throws when the
+    candidate leaves `root` (the repository, or the directory the server serves).
   - missing-regexp-anchor: group the alternation.
+  - incomplete-sanitization (`check-hardcoded-i18n.mjs`): `replaceAll` or an escape of every special character.
+  - resource-exhaustion and xss-through-exception (`rendered-state-census/runner.mjs`): cap the value; never write an
+    error's text into HTML.
+- Any script with an alert that nothing runs (no hit in `package.json`, `.github/` or another script for
+  `git grep -n "<file name>" -- . ":!docs" ":!tasks"`), for example the LCP probes `validate-production-lcp.mjs`,
+  `profile-listing-lcp.mjs`, `diagnose-lcp-preload-network.mjs`, `compare-listing-lcp-lighthouse.mjs`: deleted with the
+  permalink rule below, like the `task*` probes; one that something runs is fixed.
+- Entry-point guards (Task 963 AC18, 2026-11-09): every file in `PENDING_951` of
+  `scripts/quality/entry-point-guards.test.mjs` replaces its `process.argv[1]` comparison with
+  `isEntryPoint(import.meta.url)` from `scripts/lib/entry-point.mjs` (a raw comparison skips the run through a symlinked
+  path and exits 0), or is deleted as unused. Do not edit the test or its list (Opus empties it in review).
   - `scripts/check-hydration-console.mjs:735` (clear-text-logging): find what the logged value can carry (a URL with
     credentials, a token) and redact it.
 - `scripts/rendered-state-census/runner.mjs` (used by `check-rendered-state-census.mjs`): fix all four alerts.
-- The 16 one-off `scripts/task*-*.mjs` probes that no script, `package.json` or workflow calls: delete. Check first that
-  nothing runs them: `git grep -n "<file name>" -- . ":!docs" ":!tasks"`. For each one that is also in `origin/main`
-  (`git cat-file -e d8a07a3c7:<path>`), rewrite every Markdown link to it as a permalink
-  `https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/<path>`. One that is not in `origin/main` is fixed, not
-  deleted.
-
-Evidence scripts under `docs/` (183 files): delete them, with the same permalink rule. They are records of past
-probes that nothing runs, and Git history keeps them; a permalink keeps every document honest.
+- The 16 one-off `scripts/task*-*.mjs` probes nothing runs (`git grep -n "<file name>" -- . ":!docs" ":!tasks"`) and
+  the 183 evidence scripts under `docs/`: delete. Each Markdown link to one that is in `origin/main` (`git cat-file -e
+  d8a07a3c7:<path>`) becomes `https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/<path>`; one not there is fixed.
 
 - Dependencies: none.
 - Out of scope: any rule outside CodeQL; behaviour changes beyond the listed fixes; `.github/codeql` configuration (the
@@ -158,9 +169,10 @@ No visible change. Images render from the same sources; a source that is refused
 ## Acceptance criteria
 
 - AC1 Every alert of the PR is closed — test: `node scripts/quality/codeql-alerts.mjs --ref refs/pull/19/merge`
-  (new). It reads the code-scanning API through `gh`, prints each open alert as `rule path:line`, exits 1 when any is
-  open and 2 when it cannot read. Its unit test `scripts/quality/codeql-alerts.test.mjs` feeds a recorded response.
-  Opus runs it after the push, once the CodeQL run of the new head has finished.
+  exits 0. It reads the code-scanning API through `gh`, prints each open alert as `rule path:line`, exits 1 when any is
+  open and 2 when it cannot read (written by Opus 2026-11-09, the path is Opus's; its unit test
+  `scripts/quality/codeql-alerts.test.mjs` feeds a recorded response; red today: exit 1, 325 lines). Opus runs it after
+  the push, once the CodeQL run of the new head has finished.
 - AC2 The currency fix — test: `src/lib/__tests__/exchangeRateServer.test.ts` gains cases. A catalog with `__proto__`,
   `ab`, `A.C` and `EUR` yields rates for `EUR` only; `Object.prototype` is untouched; a code with regex characters
   cannot change the match.
@@ -174,29 +186,71 @@ No visible change. Images render from the same sources; a source that is refused
   - `https://evil.example/res.cloudinary.com/x/upload/y`, `http://res.cloudinary.com/…`,
     `https://res.cloudinary.com.evil.example/…` and a non-URL string get no transform, srcset or preload;
   - a real `https://res.cloudinary.com/<cloud>/image/upload/…` URL does.
-- AC6 The signature fix — test: `src/lib/__tests__/cloudinarySignature.test.ts` (new) checks the SHA-256 hex digest of
-  a known input and that `signature_algorithm=sha256` is in the signed and sent parameters. The report holds the real
-  upload and destroy responses (status 200, `public_id`).
+- AC6 The signature fix (revised by review 1, F1) — test: `src/lib/__tests__/cloudinarySignature.test.ts` (new) and
+  `src/lib/__tests__/cloudinary.security.test.ts` check the SHA-256 hex digest of a known input, that the signature is
+  the SHA-256 of `folder=<f>&timestamp=<ts><secret>` (upload) and `public_id=<id>&timestamp=<ts><secret>` (destroy)
+  with no `signature_algorithm` in the signed string, and that `signature_algorithm=sha256` is sent; each is red with
+  the parameter signed again and with SHA-1 restored. The report holds the real upload response (status 200,
+  `public_id`) and the destroy of that `public_id` (status 200, `result: ok`).
 - AC7 The image source fix — test: `src/design-system/media/__tests__/safeImageSrc.test.ts` (new). It covers each
   allowed and refused scheme. `AppImage` with `javascript:alert(1)` renders no `src` attribute (RTL).
-- AC8 The script fixes — test: `scripts/lib/__tests__/within-repository.test.ts` (new) refuses `../x`, an absolute path
-  outside the root and a path through a symlink out of the root. `npm run check:hydration:verify`,
+- AC8 The script fixes — test: `scripts/lib/__tests__/within-repository.test.ts` (new) refuses `../x`, `%2e%2e/x` as a
+  request path, an absolute path outside the root and a path through a symlink out of the root, for the repository and
+  for a served directory as root. `npm run check:hydration:verify`,
   `npm run check:rendered-state-census:verify` and
   `node --test "scripts/quality/*.test.mjs"` exit 0.
 - AC9 Nothing is left dangling — test: `node scripts/quality/check-files.mjs --all` exits 0 (no broken link, no stale
   path), and `git grep -nE "scripts/task[0-9]" -- package.json .github` prints nothing.
 - AC10 The usual gates — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage` and
   `node scripts/quality/changed-lines-coverage.mjs --base origin/main` exit 0.
+- AC11 No script decides "am I the entry point" from `argv[1]` as typed — test:
+  `node --test scripts/quality/entry-point-guards.test.mjs` exits 0 (review 1, F2: each script imports `isEntryPoint`
+  in its import block and ends with a newline), and
+  `git grep -nE "process\.argv\[1\].*import\.meta\.url|import\.meta\.url.*process\.argv\[1\]" -- scripts ":!scripts/quality" ":!scripts/lib"`
+  prints nothing; one converted gate started through a junction runs (its normal output, not a silent exit 0).
 
 ## Route
 
-1. Read the alert list (Goal command) and save it as `docs/sessions/2026-11-06-task951-codeql-before.json`.
+1. Read the alert list: `node scripts/quality/codeql-alerts.mjs --ref refs/pull/19/merge` (keep the output in your
+   scratchpad, not in the repository).
 2. Tests first: write AC2–AC8. Run them on the unchanged code and save the failing output for the report.
-3. Product fixes, then tests, then scripts, then deletions with permalinks, in that order. After each group, run
-   `node scripts/quality/check-files.mjs --worktree` and the related tests.
-4. Write `scripts/quality/codeql-alerts.mjs` and its test (AC1).
-5. Run AC2–AC10. Report each command, its exit code and the relevant output, plus each new test's failing run from
+3. Product fixes, then tests, then scripts (entry-point guards included), then deletions with permalinks, in that
+   order. After each group, run `node scripts/quality/check-files.mjs --worktree` and the related tests.
+4. Run AC2–AC11. Report each command, its exit code and the relevant output, plus each new test's failing run from
    step 2. List the deleted files with their permalink count, and the Cloudinary responses.
-6. Opus gives the owner the commit and push; after the CodeQL run of the new head, Opus runs AC1.
+5. Opus gives the owner the commit and push; after the CodeQL run of the new head, Opus runs AC1.
 
 ## Review
+
+Review 1 of the working tree on 39d0fecc7 — NEEDS REVISION (1 of 2)
+Scope: every changed file read; the 199 deletions checked by path (each in `d8a07a3c7`, none run by `package.json`,
+`.github/` or a script). OWASP record `docs/security/owasp/reviews/Task_951.json`.
+Tools (2026-11-09, reviewer reruns): `owasp.mjs sync`/`check` 0; `check-ruleset` 0; lint 0; typecheck 0; `npm test --
+--coverage` 0 (382 files, 6279 tests); changed-lines coverage 0 (`main`, `origin/main`); `check-files` 0 (`--worktree`
+98, `--all` 14749); `ac-tests` PASS; `product-gates` 34/34; quality tests 146/146; `npm audit` 0; `cloudinary-config` 1
+(U1, Task 957); change report 1 (`next-cloudinary@7.0.0`, owner D3 exception). AC9, AC11 greps empty; the junction run
+prints. Breaks (control reverted, test run, restored, sha equal): AC2 5 red, AC3 2, AC4 4, AC5 10 + 6, AC7 9 + 2 + 4,
+AC8 26. AC1 after the push. Opus, AC11: `PENDING_951` emptied; the guard test red with one raw guard back, restored.
+Findings: Critical 0, High 1, Medium 0, Low 1.
+
+F1 — the SHA-256 signature signs a string Cloudinary does not sign (High, CWE-347; `cloudinaryUpload.ts:40`,
+`cloudinaryDelete.ts:117`; cause: this kickoff's AC6 text). The live upload got 401 "String to sign -
+'folder=task951-signature-check&timestamp=…'": every upload and destroy would fail. R1: SHA-256 of the old string,
+`signature_algorithm` sent but not signed, both test files, two breaks, one live upload and destroy.
+Status: fixed in Revision 1 (review 2).
+
+F2 — `import { isEntryPoint }` appended after its use, without a final newline, in 8 scripts (Low; the reviewer's
+case in `scripts/quality/entry-point-guards.test.mjs` red on exactly them). R2: the import into the import block.
+Status: fixed in Revision 1 (review 2).
+
+Not findings: the four LCP probes are run by `package.json`; `safeImageSrc` refusing `http:` breaks no Story, fixture
+or source. The executor's `check:homepage-theme-runtime-deps` find (red on `HEAD` too) is filed as Task 968.
+
+Review 2 of Revision 1 — APPROVED (AC1 is checked on the pushed PR before the merge)
+Tools (2026-11-09, reviewer reruns): `owasp.mjs sync`/`check`/`gate` 0; `check-ruleset` 0; change report 1 (the same
+D3 exception); lint 0; typecheck 0; `npm test -- --coverage` 0 (382 files, 6279 tests);
+changed-lines coverage 0 (`main`, `origin/main`; 337/341); `check-files --all` 0 (14751); `ac-tests` PASS; quality
+tests 147/147 (`entry-point-guards` 3/3); `product-gates` 34/34; `npm audit` 0; `cloudinary-config` 1 (U1, Task 957).
+AC6: the two Cloudinary test files 29/29; `signature_algorithm` signed again 4 red, SHA-1 4 red, restored, sha equal.
+The executor's live upload and destroy (200, `result: ok`) checked by an Admin API read: the asset 404, the folder
+empty. AC11: the grep empty, the 8 imports in their import blocks, each file ends with a newline. Findings: none new.

@@ -74,15 +74,25 @@ test('the executor session may not finish a started task while a named test is m
 // kickoffs with no verdict, because each names a test another task added on the branch (`cloudinary-config.test.mjs`,
 // `ImageUpload.test.tsx`, `db-catalog-audit.test.mjs`, `ci-workflow.test.mjs`).
 test('a test another kickoff also names is no evidence that an open task was implemented', () => {
-  const open = kickoff(['- AC1 test: `x.test.mjs`', '- AC2 test: `src/c/new.test.ts`']);
-  const owner = kickoff(['- AC1 test: `scripts/quality/x.test.mjs`'], 'APPROVED');
-  const added = new Set(['scripts/quality/x.test.mjs']);
+  const open = kickoff(['- AC1 test: `gate.security.test.ts`', '- AC2 test: `src/c/new.test.ts`']);
+  const owner = kickoff(['- AC1 test: `src/a/__tests__/gate.security.test.ts`'], 'APPROVED');
+  const added = new Set(['src/a/__tests__/gate.security.test.ts']);
   const shared = testsNamedElsewhere('open.md', [{ path: 'open.md', body: open }, { path: 'owner.md', body: owner }], FILES);
-  assert.deepEqual([...shared], ['scripts/quality/x.test.mjs']);
+  assert.deepEqual([...shared], ['src/a/__tests__/gate.security.test.ts']);
   assert.equal(isImplemented(open, FILES, added, shared), false);
   assert.equal(isImplemented(open, FILES, added), true, 'without the shared set the arm still counts an added test');
   assert.deepEqual(sessionFindings({ kickoffs: [{ path: 'open.md', body: open }, { path: 'owner.md', body: owner }], files: FILES, added }), [],
     'the session is not blocked for an open task whose only added test belongs to another task');
   const own = new Set([...FILES, 'src/c/new.test.ts']);
   assert.equal(isImplemented(open, own, new Set(['src/c/new.test.ts']), shared), true, 'a test only this kickoff names still counts');
+});
+
+// Task 963 AC16 (2026-11-09, the Task 951 design): Opus placed 951's AC1 test `scripts/quality/codeql-alerts.test.mjs`
+// before the executor started, and the Stop hook took 951 for started and demanded every test Sonnet still has to write.
+test('a test on a path only Opus may write is no evidence that the executor started a task', () => {
+  const body = kickoff(['- AC1 test: `scripts/quality/x.test.mjs`', '- AC2 test: `src/c/new.test.ts`']);
+  const added = new Set(['scripts/quality/x.test.mjs']);
+  assert.equal(isImplemented(body, FILES, added), false);
+  assert.deepEqual(sessionFindings({ kickoffs: [{ path: 'k.md', body }], files: FILES, added }), []);
+  assert.equal(isImplemented(body, new Set([...FILES, 'src/c/new.test.ts']), new Set(['src/c/new.test.ts'])), true, 'the executor\'s own test still counts');
 });

@@ -193,6 +193,21 @@ function verifyHookSignature(
 //   (verifyOtp token-hash flow, cross-device, no PKCE cookie needed).
 // appOrigin is derived from redirect_to; locale is derived from the ?next= param when present.
 
+/**
+ * A value from the request body, made safe for ONE log line (Task 951 AC3, CodeQL js/log-injection): line breaks and every other control character are removed, so
+ * the value cannot start a forged log line, and at most 64 characters are kept.
+ */
+function forLog(value: unknown): string {
+  const withoutBreaks = String(value).replace(/[\r\n]/g, '')
+  let kept = ''
+  for (const char of withoutBreaks) {
+    const code = char.codePointAt(0) ?? 0
+    const isControl = code < 0x20 || (code >= 0x7f && code <= 0x9f) || code === 0x2028 || code === 0x2029
+    if (!isControl) kept += char
+  }
+  return kept.slice(0, 64)
+}
+
 const LOCALE_SEGMENT_RE = /^\/(sq|en|uk|it)\//
 
 function buildConfirmUrl(tokenHash: string, type: string, redirectTo: string): string {
@@ -332,7 +347,7 @@ export async function POST(request: NextRequest) {
       }
 
       default: {
-        console.warn('[auth-email-hook] Unhandled email_action_type:', email_action_type)
+        console.warn('[auth-email-hook] Unhandled email_action_type:', forLog(email_action_type))
         // Return success so Supabase does not retry indefinitely for unknown types.
         break
       }

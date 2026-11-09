@@ -13,6 +13,7 @@ import { readFileSync, existsSync, appendFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 /** Source files whose behaviour tests must cover: product code under src/, not tests, Stories, type declarations or test helpers. */
@@ -114,7 +115,7 @@ export function run(argv) {
   return evaluate(added, coverage, min);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   let r;
   try {
     r = run(process.argv.slice(2));

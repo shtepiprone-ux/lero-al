@@ -51,11 +51,15 @@ function sourceFiles(dir: string, found: string[] = []): string[] {
   return found
 }
 
+/**
+ * An `eslint-disable` comment that names one of the five rules. A rule name ends where a word character or "-" would continue it. The pattern is assembled from parts
+ * so that this file does not match itself; the rule names hold no character that needs an escape ("/" is not special in a RegExp built from a string).
+ */
+const disableCommentPattern = () => new RegExp(String.raw`eslint-${'disable'}[^\n]*?(?:${COMPILER_RULES.join('|')})(?![\w-])`)
+
 describe('no suppression hides a React Compiler finding', () => {
   it('[AC2] no file under src/ has an eslint-disable comment that names one of the five rules', () => {
-    const named = COMPILER_RULES.map((rule) => rule.replace('/', '\/')).join('|')
-    // The pattern is assembled from parts so that this file does not match itself.
-    const comment = new RegExp(`eslint-${'disable'}[^\n]*?(?:${named})(?![\w-])`)
+    const comment = disableCommentPattern()
     const offenders: string[] = []
     for (const file of sourceFiles('src')) {
       const lines = readFileSync(file, 'utf8').split('\n')
@@ -67,8 +71,7 @@ describe('no suppression hides a React Compiler finding', () => {
   })
 
   it('[AC2] the matcher itself catches a disable comment for each of the five rules', () => {
-    const named = COMPILER_RULES.map((rule) => rule.replace('/', '\/')).join('|')
-    const comment = new RegExp(`eslint-${'disable'}[^\n]*?(?:${named})(?![\w-])`)
+    const comment = disableCommentPattern()
     for (const rule of COMPILER_RULES) {
       expect(comment.test(`// eslint-${'disable'}-next-line ${rule} -- reason`), rule).toBe(true)
       expect(comment.test(`/* eslint-${'disable'} react-hooks/exhaustive-deps, ${rule} */`), rule).toBe(true)

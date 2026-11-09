@@ -21,6 +21,7 @@ import { appendFileSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rangeFindings } from './ac-tests.mjs';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DAY = 24 * 60 * 60 * 1000;
@@ -235,7 +236,7 @@ export function lockfileAge(base, now = Date.now()) {
   return { count: fresh.length, failures: youngLockfileVersions(fresh, npmTimes, overrides, now) };
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] === '--lockfile-age') {
+if (isEntryPoint(import.meta.url) && process.argv[2] === '--lockfile-age') {
   const base = process.argv[3] ?? 'HEAD';
   const { count, failures } = lockfileAge(base);
   console.log(`lockfile-age: ${count} version(s) the working-tree lockfile brings in against ${base}; ${failures.length} younger than ${MIN_VERSION_AGE_DAYS} days`);
@@ -243,7 +244,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   process.exit(failures.length ? 1 : 0);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) && process.argv[2] !== '--lockfile-age') {
+if (isEntryPoint(import.meta.url) && process.argv[2] !== '--lockfile-age') {
   const [base, head = 'HEAD'] = process.argv.slice(2);
   if (!base) {
     console.error('usage: change-report.mjs <base> [head]');

@@ -50,6 +50,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import ts from 'typescript';
 import { resolveImportSpecifier as resolveImportSpecifierShared } from './lib/import-resolver.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -465,7 +466,7 @@ function parseArgs(argv) {
   return args;
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isEntryPoint(import.meta.url);
 if (isMain) {
   const args = parseArgs(process.argv.slice(2));
   const result = runMapping(args);

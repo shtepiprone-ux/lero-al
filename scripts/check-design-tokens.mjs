@@ -97,6 +97,7 @@ import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from '
 import { resolve, join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -1517,6 +1518,6 @@ function run() {
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
 // Guarded so this module can be `import`-ed by tests (Task 408, §E) without
 // triggering process.exit().
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   run();
 }

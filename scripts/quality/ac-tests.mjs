@@ -21,6 +21,7 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { acceptanceCriteria, readRegularFile } from './check-files.mjs';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const NAMED_TEST = /`([^`\s]+\.(?:(?:test|spec)\.(?:ts|tsx|mts|mjs|js)|stories\.tsx))`/g;
@@ -78,11 +79,12 @@ export const OPUS_OWNED = /^(\.claude\/|\.github\/|\.githooks\/|scripts\/quality
 /**
  * A kickoff counts as implemented when its Review section has a verdict, or when one of the tests it names was added
  * by the change (did not exist at the base, exists now). The second arm catches a task implemented but not yet
- * reviewed, and the executor's session before any review.
+ * reviewed, and the executor's session before any review. A test on a path only Opus may write does not count: Opus
+ * places such a test while designing (Task 963 AC16: 951's `codeql-alerts.test.mjs`), before the executor starts.
  */
 export function isImplemented(body, files, added, shared = new Set()) {
   if (hasVerdict(body)) return true;
-  return kickoffAcs(body).some((ac) => ac.tests.some((named) => resolveTest(named, files).some((f) => added.has(f) && !shared.has(f))));
+  return kickoffAcs(body).some((ac) => ac.tests.some((named) => resolveTest(named, files).some((f) => added.has(f) && !shared.has(f) && !OPUS_OWNED.test(f))));
 }
 
 /**
@@ -189,7 +191,7 @@ export function worktreeFindings(base, named) {
   return out;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   const args = process.argv.slice(2);
   const at = args.indexOf('--base');
   if (at < 0 || !args[at + 1]) { console.error('usage: ac-tests.mjs --base <ref> [<kickoff> ...]'); process.exit(2); }

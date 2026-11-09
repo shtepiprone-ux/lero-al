@@ -13,7 +13,7 @@
 import { readFileSync, openSync, fstatSync, closeSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const PROTECTED = /^(?:refs\/heads\/)?(?:main|master)$/i;
 const REQUIRED_CHECK = 'CI Required';
@@ -135,7 +135,7 @@ function latestReply(event) {
   return latest;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   try {
     const raw = readFileSync(0, 'utf8');
     const event = JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);

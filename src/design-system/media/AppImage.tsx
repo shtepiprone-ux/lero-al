@@ -12,7 +12,7 @@ import styles from './AppImage.module.css'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { useAdaptiveImageConfig } from './useAdaptiveImageConfig'
 import { usePredictivePreload } from '@/lib/performance/predictive'
-import { VARIANTS } from './appImageConfig'
+import { VARIANTS, safeImageSrc } from './appImageConfig'
 import { MediaPlaceholder } from './MediaPlaceholder'
 import { notifyPriorityPreload } from '@/lib/performance/imageGuard'
 
@@ -97,7 +97,7 @@ export function AppImage({
 
   // React 19 render-phase resource preload — explicitly safe to call during render.
   // Registers a <link rel="preload"> hint; React deduplicates automatically.
-  if (shouldPreload) {
+  if (shouldPreload && safeImageSrc(optimizedSrc)) {
     preload(optimizedSrc, {
       as: 'image',
       imageSrcSet: srcset,
@@ -145,7 +145,7 @@ export function AppImage({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           ref={imgRef}
-          src={optimizedSrc}
+          src={safeImageSrc(optimizedSrc)}
           srcSet={srcset || undefined}
           sizes={srcset ? effectiveSizes : undefined}
           alt={alt}

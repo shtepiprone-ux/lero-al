@@ -41,7 +41,7 @@ describe('after a good code', () => {
     [`/${BS}evil.example`],
     ['https://evil.example'],
     ['javascript:alert(1)'],
-    ['/%09/evil.example'.replace('%09', '\t')],
+    ['/%09/evil.example'.replaceAll('%09', '\t')],
   ])('never leaves the site for next=%j', async (next) => {
     const res = await get(`code=abc&next=${encodeURIComponent(next)}`)
     expect(location(res).origin).toBe(ORIGIN)

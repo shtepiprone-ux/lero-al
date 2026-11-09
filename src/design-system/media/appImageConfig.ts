@@ -231,9 +231,42 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
 // Never inline Cloudinary transform strings in component code.
 
 const UPLOAD_MARKER = '/upload/'
+const CLOUDINARY_DELIVERY_HOST = 'res.cloudinary.com'
+
+/**
+ * Is this address a Cloudinary delivery address? Exactly https on the host res.cloudinary.com, read from the parsed URL: a text that merely CONTAINS the host name
+ * (in a path, a longer host, a user-info part, a query) is not one (Task 951 AC5, CodeQL js/incomplete-url-substring-sanitization).
+ */
+export function isCloudinaryDeliveryUrl(src: string): boolean {
+  try {
+    const url = new URL(src)
+    return url.protocol === 'https:' && url.hostname === CLOUDINARY_DELIVERY_HOST && url.username === '' && url.password === ''
+  } catch {
+    return false
+  }
+}
+
+/**
+ * The value for an <img src>, or undefined when it is not safe to render: only https:, blob:, data:image/ and a root-relative /path pass. Everything else (javascript:,
+ * data:text/html, http:, a protocol-relative //host, a relative path) gives undefined, and the element then has no src attribute (Task 951 AC7, CodeQL js/xss-through-dom).
+ */
+export function safeImageSrc(src: string | null | undefined): string | undefined {
+  if (typeof src !== 'string' || src === '') return undefined
+  // a root-relative path: one leading slash, and not "//host" or "/\host", which browsers read as another host
+  if (src.startsWith('/')) return src.startsWith('//') || src.startsWith('/\\') ? undefined : src
+  let url: URL
+  try {
+    url = new URL(src)
+  } catch {
+    return undefined
+  }
+  if (url.protocol === 'https:' || url.protocol === 'blob:') return src
+  if (url.protocol === 'data:' && src.startsWith('data:image/')) return src
+  return undefined
+}
 
 export function insertTransform(src: string, transform: string): string {
-  if (!transform || !src.includes('res.cloudinary.com')) return src
+  if (!transform || !isCloudinaryDeliveryUrl(src)) return src
   const idx = src.indexOf(UPLOAD_MARKER)
   if (idx === -1) return src
   const at = idx + UPLOAD_MARKER.length
@@ -241,7 +274,7 @@ export function insertTransform(src: string, transform: string): string {
 }
 
 export function buildSrcset(src: string, base: string, entries: SrcsetEntry[]): string {
-  if (!src.includes('res.cloudinary.com')) return ''
+  if (!isCloudinaryDeliveryUrl(src)) return ''
   return entries
     .map(({ w, h }) => {
       const dims = h !== undefined ? `w_${w},h_${h}` : `w_${w}`
@@ -272,7 +305,7 @@ export const STATIC_BLUR: string = (() => {
 })()
 
 export function buildBlurUrl(src: string): string {
-  if (!src.includes('res.cloudinary.com')) return STATIC_BLUR
+  if (!isCloudinaryDeliveryUrl(src)) return STATIC_BLUR
   const idx = src.indexOf(UPLOAD_MARKER)
   if (idx === -1) return STATIC_BLUR
   const at = idx + UPLOAD_MARKER.length

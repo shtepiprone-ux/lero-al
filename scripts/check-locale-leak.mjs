@@ -33,12 +33,14 @@
  *   npx playwright install chromium
  */
 
-import { existsSync, mkdirSync, writeFileSync, readFileSync, realpathSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { requestPathWithin } from './lib/within-repository.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 // One CI shard of the Story list: stable code-unit order, every n-th Story from the shard's index.
 function selectShard(stories, shard) {
@@ -310,8 +312,9 @@ function startStaticServer(staticDir, port) {
     const server = createServer(async (req, res) => {
       let urlPath = req.url.split('?')[0];
       if (urlPath === '/') urlPath = '/index.html';
-      const filePath = join(staticDir, urlPath);
       try {
+        // the request path is decoded and held inside the served directory (Task 951 AC8): "../", "%2e%2e/", a link out of it all fall through to the fallback below
+        const filePath = requestPathWithin(staticDir, urlPath);
         const data = await readFile(filePath);
         const mime = MIME[extname(filePath)] ?? 'application/octet-stream';
         res.writeHead(200, { 'Content-Type': mime });
@@ -662,11 +665,10 @@ async function run() {
   }
 }
 
-// Importing this module (the unit test) must not start a scan: run only when it is the entry point. Both sides are real
-// paths (Task 963 AC17): Node gives import.meta.url the symlink-resolved path but keeps argv[1] as typed, so comparing
+// Importing this module (the unit test) must not start a scan: run only when it is the entry point. isEntryPoint compares real
+// paths (Task 963 AC17/AC18): Node gives import.meta.url the symlink-resolved path but keeps argv[1] as typed, so comparing
 // them raw skipped run() through a symlinked checkout and the gate exited 0 having scanned nothing.
-const realPath = p => { try { return realpathSync(p); } catch { return null; } };
-if (process.argv[1] && realPath(process.argv[1]) === realPath(fileURLToPath(import.meta.url))) {
+if (isEntryPoint(import.meta.url)) {
   run().catch(err => {
     console.error('Fatal:', err);
     process.exit(1);

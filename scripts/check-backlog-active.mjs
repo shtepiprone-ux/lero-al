@@ -31,8 +31,8 @@
  * Exit: 0 clean · 1 violations · 2 the script itself could not run.
  */
 import { readFileSync, existsSync, readdirSync } from 'node:fs'
-import { join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const ROOT = process.cwd()
 const BACKLOG = join(ROOT, 'docs', 'backlog.md')
@@ -171,4 +171,4 @@ function main() {
   console.log('✅ check:backlog-active PASSED — docs/backlog.md holds active state only.')
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()
+if (isEntryPoint(import.meta.url)) main()

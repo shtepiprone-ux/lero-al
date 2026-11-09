@@ -8,7 +8,8 @@
  */
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { extname, join, normalize, sep } from 'node:path';
+import { extname } from 'node:path';
+import { withinRoot } from '../lib/within-repository.mjs';
 import { installCensus } from './in-page.mjs';
 import { appliesAtWidth, rangeEdges } from './registry.mjs';
 
@@ -30,6 +31,8 @@ export const HEIGHT = 844;
 
 export const DEFAULT_CLOSE_SELECTOR = '.mantine-Modal-close, .mantine-Drawer-close, .mantine-CloseButton-root, [data-census-close]';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+/** the longest a self-test request may be answered late */
+const MAX_CENSUS_DELAY_MS = 30000;
 /** R32 (d): the read errors that mean "no such file" (a 404); every other error is a 503 that names its code. */
 const NOT_FOUND_CODES = new Set(['ENOENT', 'ENOTDIR', 'EISDIR']);
 const MIME = {
@@ -58,11 +61,17 @@ export function startStaticServer(dir, port) {
         }
         let urlPath = decodeURIComponent(rawPath);
         if (urlPath === '/') urlPath = '/index.html';
-        const file = normalize(join(dir, urlPath));
-        if (!file.startsWith(normalize(dir) + sep) && file !== normalize(dir)) throw Object.assign(new Error('outside root'), { code: 'ENOENT' });
+        // the decoded path is resolved to a real path and must stay inside the served directory (Task 951 AC8, CodeQL js/path-injection); outside is a 404
+        let file;
+        try {
+          file = withinRoot(dir, urlPath.replace(/^\/+/, ''));
+        } catch {
+          throw Object.assign(new Error('outside root'), { code: 'ENOENT' });
+        }
         const data = await readFile(file);
         const delay = Number(params.get('__census_delay'));
-        if (Number.isFinite(delay) && delay > 0) await sleep(Math.min(delay, 30000));
+        // the wait is bounded by an explicit upper limit before it is used (Task 951, CodeQL js/resource-exhaustion)
+        if (Number.isFinite(delay) && delay > 0) await sleep(delay <= MAX_CENSUS_DELAY_MS ? delay : MAX_CENSUS_DELAY_MS);
         res.writeHead(200, { 'Content-Type': MIME[extname(file)] ?? 'application/octet-stream' });
         res.end(data);
       } catch (e) {
@@ -73,8 +82,10 @@ export function startStaticServer(dir, port) {
           res.writeHead(404);
           res.end('Not found');
         } else {
-          res.writeHead(503, { 'x-census-error': String(code) });
-          res.end(`Census server error ${code}`);
+          // the error's text is never written into the response (Task 951, CodeQL js/xss-through-exception): only a plain upper-case code name, in a header
+          const plainCode = /^[A-Z][A-Z0-9_]{0,31}$/.test(String(code)) ? String(code) : 'UNKNOWN';
+          res.writeHead(503, { 'x-census-error': plainCode });
+          res.end('Census server error');
         }
       }
     });
@@ -611,7 +622,7 @@ export async function runRangeJob(page, ctx, state, locale, width, { inRangeWidt
 export const RENDER_TIMEOUT = /^render did not reach finished\/errored within \d+s/;
 /** R32 (c): a same-origin document, script or stylesheet that failed (the reason `resourceFailure` gives) is a transient load failure too. */
 export const RESOURCE_FAILED = /^resource failed: /;
-const isTransientLoad = (d) => /^navigation failed|net::ERR_/.test(d) || RENDER_TIMEOUT.test(d) || RESOURCE_FAILED.test(d);
+const isTransientLoad = (d) => /(?:^navigation failed|net::ERR_)/.test(d) || RENDER_TIMEOUT.test(d) || RESOURCE_FAILED.test(d);
 /**
  * Task 923 R52 / R33 (i): a dismissal check reopens the state (`could not reopen the state (<reason>)`, written under the `dismiss-*` rule it was measuring). A reopen is an open: when its
  * reason is a transient load failure (a render timeout under load, a navigation error, a failed resource) the job is retried too, with that inner reason as the first failure. Found in the

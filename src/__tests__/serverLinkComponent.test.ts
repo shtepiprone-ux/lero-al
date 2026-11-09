@@ -21,7 +21,15 @@ function walk(dir: string, acc: string[] = []): string[] {
 }
 const product = walk(join(ROOT, 'src')).filter((f) => /\.tsx$/.test(f) && !/\.(test|spec|stories)\.tsx$/.test(f))
 
-const isClientModule = (text: string) => /^\s*(\/\/[^\n]*\n|\/\*[\s\S]*?\*\/\s*)*\s*['"]use client['"]/.test(text)
+/** `'use client'` read from the syntax tree: a string-literal statement in the directive prologue (comments before it are trivia), with no pattern that can backtrack */
+const isClientModule = (text: string): boolean => {
+  const sf = ts.createSourceFile('module.tsx', text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX)
+  for (const statement of sf.statements) {
+    if (!ts.isExpressionStatement(statement) || !ts.isStringLiteral(statement.expression)) return false
+    if (statement.expression.text === 'use client') return true
+  }
+  return false
+}
 
 /** the local names under which a file imports the default export of `next/link` */
 function linkNames(sf: ts.SourceFile): Set<string> {

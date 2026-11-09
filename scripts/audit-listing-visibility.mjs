@@ -24,7 +24,7 @@ import { createClient } from '@supabase/supabase-js'
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { config } from 'dotenv'
-import { fileURLToPath } from 'node:url'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 // Mirror of the canonical policy from src/modules/listings/lib/visibility.ts.
 // Drift-guarded: visibility.test.ts imports this export and asserts deep-equal.
@@ -133,7 +133,7 @@ async function main() {
 
 // Only run the audit when invoked directly (node scripts/audit-listing-visibility.mjs).
 // Importing this module for its exports does NOT execute main().
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main().catch((err) => {
     console.error('Audit script failed:', err)
     process.exit(1)

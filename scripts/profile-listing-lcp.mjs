@@ -29,6 +29,8 @@
  * Viewports documented (for manual Lighthouse runs): see VIEWPORTS below
  */
 
+import { mentionsCloudinaryUrl } from './lib/cloudinary-host.mjs'
+
 const BASE_URL = process.argv[2] || 'http://localhost:3000'
 const SLUG     = process.argv[3] || 'test-7-molyl9c8'
 
@@ -79,7 +81,7 @@ function checkGalleryImg(html) {
   const position = html.indexOf(m[0])
   const firstScript = html.indexOf('<script ')
   const isBeforeScripts = firstScript === -1 || position < firstScript
-  const isCloudinary = m[0].includes('res.cloudinary.com')
+  const isCloudinary = mentionsCloudinaryUrl(m[0])
   return {
     present: true,
     position,
@@ -120,7 +122,7 @@ function findCloudinaryPreload(rawHeader) {
   const h = rawHeader.replace(/\r?\n/g, ', ')
   for (const e of splitLinkEntries(h)) {
     const lo = e.toLowerCase()
-    if (!lo.includes('res.cloudinary.com')) continue
+    if (!mentionsCloudinaryUrl(lo)) continue
     if (!/\brel\s*=\s*"?preload"?\b/.test(lo)) continue
     if (!/\bas\s*=\s*"?image"?\b/.test(lo)) continue
     const urlM = e.match(/^<([^>]+)>/)

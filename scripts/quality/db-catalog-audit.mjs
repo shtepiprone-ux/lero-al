@@ -15,8 +15,8 @@
 // 2 = the catalog could not be read. Errors are printed with the connection string, host, user and password removed.
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 export const QUERIES = {
   tables: `select c.relname as name, c.relrowsecurity as rls from pg_class c join pg_namespace n on n.oid = c.relnamespace
@@ -200,4 +200,4 @@ async function main(argv) {
   return findings.length ? 1 : 0;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exitCode = await main(process.argv.slice(2));
+if (isEntryPoint(import.meta.url)) process.exitCode = await main(process.argv.slice(2));

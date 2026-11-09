@@ -8,8 +8,7 @@ import { Box, Skeleton, useMantineTheme } from '@mantine/core'
  * enrolled in `scripts/mantine-migration-scope.json` (agent-contract clause 16c). No hooks, no
  * props, no data-fetching — the fallback carries no text (nothing to translate).
  *
- * Height is per-breakpoint and MEASURED (`scripts/task670-qa-hero-fallback-geometry.mjs
- * --baseline`, `.screenshots/task670/baseline.json`), not invented: the real `HeroSearchView`
+ * Height is per-breakpoint and MEASURED (scripts/task670-qa-hero-fallback-geometry.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task670-qa-hero-fallback-geometry.mjs) --baseline, `.screenshots/task670/baseline.json`), not invented: the real `HeroSearchView`
  * renders 279px below Mantine `sm` (640px, 3-row mobile stack), 175px in the `sm`-`md` band
  * (640-767px, Task 572's Search-alone second row), and 123px at `md`+ (768px, single row) —
  * identical across all 4 locales against this task's fixture (Task 670 kickoff §5 A1:

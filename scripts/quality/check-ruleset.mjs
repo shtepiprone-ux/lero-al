@@ -10,6 +10,7 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -45,7 +46,7 @@ function arg(argv, name, fallback) {
   return i >= 0 && argv[i + 1] ? argv[i + 1] : fallback;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   const argv = process.argv.slice(2);
   const id = arg(argv, '--id', '26303244');
   const repo = arg(argv, '--repo', 'shtepiprone-ux/lero-al');

@@ -21,6 +21,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import ts from 'typescript'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const BADGE_COMPONENT = 'src/design-system/mantine/patterns/MantineBadge.tsx'
@@ -121,7 +122,7 @@ function verifyGate() {
 
 if (process.argv.includes('--verify-gate')) {
   process.exit(verifyGate())
-} else if (import.meta.url === `file:///${process.argv[1].split('\\').join('/')}` || process.argv[1]?.endsWith('check-badge-canonical.mjs')) {
+} else if (isEntryPoint(import.meta.url)) {
   const { files, violations } = scanTree()
   console.log(`check:badge-canonical — scope: ${files.length} production .ts/.tsx files under src/ (stories, tests, src/stories excluded); rules: no Badge import from @mantine/core outside ${BADGE_COMPONENT}; no *_COLOR / *_TONE map outside ${TONES_FILE}.`)
   console.log('GR-2: it reads import and variable declarations; it cannot see a colour chosen another way (a literal color prop, a differently named map).')

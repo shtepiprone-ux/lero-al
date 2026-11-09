@@ -4,12 +4,12 @@
  *
  * Modelled on `scripts/task766-route-shell-probe.mjs` (per-label retained JSON evidence under
  * `docs/sessions/evidence/task<N>/`, `BASE_URL` env, `<nextjs-portal>` dev-server preflight
- * refusal) and `scripts/task764-pointer-probe.mjs` (retained per-label PNG + JSON pairs).
+ * refusal) and scripts/task764-pointer-probe.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task764-pointer-probe.mjs) (retained per-label PNG + JSON pairs).
  *
  * WHY THIS SCRIPT EXISTS: `page.tsx` has no story (a route page, not a component) and none may be
  * created (kickoff §3.9 — "reuse (nothing to create)"), so the hero title/subtitle/search-bar
  * geometry claim (AC7) has no proof path except a real `next start` route capture. This is
- * EVIDENCE TOOLING, not a gate: no CI wiring, exactly like `scripts/task764-pointer-probe.mjs` and
+ * EVIDENCE TOOLING, not a gate: no CI wiring, exactly like scripts/task764-pointer-probe.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task764-pointer-probe.mjs) and
  * `scripts/task766-route-shell-probe.mjs`.
  *
  * Usage:

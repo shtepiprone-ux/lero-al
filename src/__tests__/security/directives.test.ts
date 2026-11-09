@@ -46,7 +46,7 @@ describe('hasDirective', () => {
 
 // Task 923 R38 (case SEC-S28-SRV-DENY)
 it('[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a public Server Action and no public action accepts an actor', async () => {
-  const { readdirSync, readFileSync, statSync } = await import('node:fs')
+  const { readdirSync, readFileSync } = await import('node:fs')
   const { join } = await import('node:path')
   const gateway = readFileSync('src/modules/listings/actions/applyListingTransition.ts', 'utf8')
   expect(hasDirective(gateway, 'use server')).toBe(false)
@@ -54,9 +54,11 @@ it('[SEC-S28-SRV-DENY] applyListingTransitionByStatus is not reachable as a publ
   // no use server module exports an async function that takes an actor
   const offenders: string[] = []
   const walk = (dir: string) => {
-    for (const name of readdirSync(dir)) {
+    // the entry kind comes with the directory listing (no separate stat of the path before the read, Task 951 CodeQL js/file-system-race)
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const name = entry.name
       const path = join(dir, name)
-      if (statSync(path).isDirectory()) { if (name !== 'node_modules' && name !== '__tests__') walk(path); continue }
+      if (entry.isDirectory()) { if (name !== 'node_modules' && name !== '__tests__') walk(path); continue }
       if (!/\.tsx?$/.test(name) || /\.(test|stories)\./.test(name)) continue
       const text = readFileSync(path, 'utf8')
       if (!hasDirective(text, 'use server')) continue

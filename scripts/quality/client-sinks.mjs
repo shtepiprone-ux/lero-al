@@ -13,6 +13,7 @@ import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 /** Product code: every src/ .ts/.tsx except tests, Stories and test helpers. */
 export const PRODUCT = (f) => /^src\/.+\.(ts|tsx)$/.test(f) && !/\.(test|spec|stories)\.(ts|tsx)$|(^|\/)(__tests__|__mocks__)\/|^src\/(stories|tests)\//.test(f);
@@ -100,4 +101,4 @@ function main() {
   return findings.length ? 1 : 0;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exitCode = main();
+if (isEntryPoint(import.meta.url)) process.exitCode = main();

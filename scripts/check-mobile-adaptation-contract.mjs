@@ -21,7 +21,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const REGISTRY_PATH = 'scripts/mobile-adaptation-patterns.json'
 const MANTINE_PATTERN_ROOT = 'src/design-system/mantine/patterns'
 const UI_PATH = /^(?:src\/(?:(?:stories|components)\/.*\.stories\.(?:ts|tsx)|design-system\/(?:mantine|media)\/.*\.(?:ts|tsx|css)|components\/.*\.(?:ts|tsx|css)|modules\/[^/]+\/components\/.*\.(?:ts|tsx|css)|app\/(?:\[locale\]|admin)\/.*\.(?:ts|tsx|css)))$/i
-const TEST_PATH = /(?:^|\/)(?:__tests__|tests)\/|\.(?:test|spec)\.(?:ts|tsx)$/i
+const TEST_PATH = /(?:(?:^|\/)(?:__tests__|tests)\/|\.(?:test|spec)\.(?:ts|tsx)$)/i
 const ACTIVE_KICKOFF = /^tasks\/(?!Archive\/).*kickoff.*\.md$/i
 const FORBIDDEN_TEXT_CLIPPING = [
   { id: 'truncate', re: /\btruncate\b/ },

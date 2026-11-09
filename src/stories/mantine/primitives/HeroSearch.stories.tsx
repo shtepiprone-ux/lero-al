@@ -108,7 +108,7 @@ export const Default: Story = {
  * `loading:` component extracted into its own presentational component so it can be
  * story-rendered deterministically (the dynamic import itself can't be story-rendered in its
  * loading branch, per the kickoff §3.4). Rendered in the SAME wrapper/background as `Default` so
- * `scripts/task670-qa-hero-fallback-geometry.mjs` measures both under identical conditions
+ * The script scripts/task670-qa-hero-fallback-geometry.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task670-qa-hero-fallback-geometry.mjs) measures both under identical conditions
  * (AC3/AC4). Enrolled in `scripts/mantine-migration-scope.json`.
  */
 export const Fallback: Story = {

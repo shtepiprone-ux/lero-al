@@ -25,6 +25,7 @@ import { findMojibake, loadAllowlist, isAllowlisted } from '../check-mojibake.mj
 import { checkKickoff, checkReview, loadJson, readReviewRecord, REGISTRY, CONTROLS, OWASP_GRANDFATHERED } from './owasp.mjs';
 import { scan as sinkScan, PRODUCT as SINK_PRODUCT } from './client-sinks.mjs';
 import { check as localeCheck, LOCALES, loadParser } from './locale-safety.mjs';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const require = createRequire(import.meta.url);
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -544,7 +545,7 @@ export function run(argv) {
   return { checked: files.length, findings };
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   let result;
   try {
     result = run(process.argv.slice(2));

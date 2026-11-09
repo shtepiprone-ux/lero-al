@@ -24,6 +24,7 @@ import { spawnSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 export const LOCALES = ['sq', 'en', 'uk', 'it'];
 export const PRIMARY = 'sq';
@@ -148,4 +149,4 @@ function main() {
   return findings.length ? 1 : 0;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exitCode = main();
+if (isEntryPoint(import.meta.url)) process.exitCode = main();

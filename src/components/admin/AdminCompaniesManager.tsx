@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AppImage } from '@/design-system/media/AppImage'
+import { safeImageSrc } from '@/design-system/media/appImageConfig'
 import {
   Dialog,
   DialogContent,
@@ -124,7 +125,8 @@ function CompanyFormDialog({
     })
   }
 
-  const logoSrc = logoPreview ?? currentLogoUrl
+  // Task 951 AC7: only https:, blob:, data:image/ and root-relative sources reach the <img>; anything else shows the placeholder icon
+  const logoSrc = safeImageSrc(logoPreview ?? currentLogoUrl)
 
   return (
     <Dialog open onOpenChange={open => { if (!open) onClose() }}>

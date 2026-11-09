@@ -32,7 +32,7 @@
  * Build first: `npm run build-storybook`. No baseline, allowlist or inline suppression exists: a Story x state
  * that must differ needs a dated owner decision named in its registry row (`ownerDecision`).
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -181,7 +181,8 @@ async function main() {
         }
       }
     }
-    const outDir = opts.out ?? join(tmpdir(), 'rendered-state-census');
+    // a private directory with an unpredictable name (Task 951, CodeQL js/insecure-temporary-file); an explicit --out is used as given
+    const outDir = opts.out ?? mkdtempSync(join(tmpdir(), 'rendered-state-census-'));
     mkdirSync(outDir, { recursive: true });
     const concurrency = opts.jobs ?? Math.max(2, Math.min(6, cpus().length - 1));
     const closedJobCount = jobs.length - stateJobCount - rangeJobCount;

@@ -95,6 +95,7 @@ import { join, resolve, dirname, relative, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -1155,7 +1156,9 @@ function runPlantP4(tree) {
   // in-class and must fail. (Draft 2's plant used `var(--${x})`, a shape that
   // occurs nowhere in this repo — §0.3 E1.)
   const fixturePath = join(tree.srcDir, '__task700_verify_gate_fixture_p4.tsx');
-  const original = existsSync(fixturePath) ? readFileSync(fixturePath, 'utf8') : null;
+  // read without a separate existence check (Task 951, CodeQL js/file-system-race): a missing fixture is null
+  let original = null;
+  try { original = readFileSync(fixturePath, 'utf8'); } catch (error) { if (error?.code !== 'ENOENT') throw error; }
   writeFileSync(fixturePath, `const style = { padding: \`var(--space-\${n})\` }\n`, 'utf8');
   try {
     touchCssDir(tree.cssDir);
@@ -1507,7 +1510,7 @@ function verifyGate() {
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   if (VERIFY_GATE) verifyGate();
   else if (UPDATE_SNAPSHOT) updateSnapshot();
   else run();

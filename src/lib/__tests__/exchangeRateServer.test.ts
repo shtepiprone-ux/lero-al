@@ -32,6 +32,8 @@ let getExchangeRate: Server['getExchangeRate']
 let getExchangeRates: Server['getExchangeRates']
 
 const fetchMock = vi.fn()
+/** the host of an address, compared as a whole (never a substring of the text) */
+const hostOf = (u: unknown): string => { try { return new URL(String(u)).hostname } catch { return '' } }
 let pageHtml: string | null = null
 let pageOk = true
 let crossRates: Record<string, number> | null = null
@@ -48,7 +50,7 @@ beforeEach(async () => {
   crossOk = true
   fetchMock.mockReset()
   fetchMock.mockImplementation(async (url: string) => {
-    if (url.startsWith('https://iliria98.com')) {
+    if (hostOf(url) === 'iliria98.com') {
       if (pageHtml === null) throw new Error('offline')
       return { ok: pageOk, text: async () => pageHtml }
     }
@@ -138,8 +140,8 @@ describe('one source (Task 923 R79)', () => {
     crossRates = { GBP: 0.85 }                                   // a cross-rate service would have answered: it is not asked
     activeCodes = ['EUR', 'USD', 'GBP']
     expect(await getExchangeRates()).toEqual({ EUR: 100.5, USD: 90.5 })
-    expect(fetchMock.mock.calls.every(([u]) => String(u).startsWith('https://iliria98.com'))).toBe(true)
-    expect(fetchMock.mock.calls.some(([u]) => String(u).includes('open.er-api.com'))).toBe(false)
+    expect(fetchMock.mock.calls.every(([u]) => hostOf(u) === 'iliria98.com')).toBe(true)
+    expect(fetchMock.mock.calls.some(([u]) => hostOf(u) === 'open.er-api.com')).toBe(false)
   })
 
   it('an unknown currency is left out, and the miss is logged', async () => {
@@ -173,9 +175,49 @@ it('[SEC-S56-SRV-DENY] The exchange-rate lookup reads only the requested currenc
   const rates = await getExchangeRates()
   expect(rates?.EUR).toBe(100.5)
   expect(rates?.['A.*']).not.toBe(rates?.EUR)                // the pattern character does not match the rate of the euro
-  expect(rates?.['A.*']).toBe(50)                            // only its own literal label on the page is read for it (the code is escaped)
+  expect(rates?.['A.*']).toBeUndefined()                     // Task 951 AC2: a code that is not three letters is never read at all (before: only its own literal label, the code being escaped)
   // a neighbouring currency whose label starts like the requested one is not read as it
   activeCodes = ['EUR', 'USD']
   pageHtml = '<img src="EUR.png"> 100.00 101.00 <img src="USDT.png"> 5.00 6.00 <img src="USD.png"> 90.00 91.00'
   expect((await getExchangeRates())?.USD).toBe(90.5)
+})
+
+describe('the catalogue is data from outside (Task 951 AC2)', () => {
+  it('only three-letter upper-case codes are read: "__proto__", "ab" and "A.C" get no rate, EUR does', async () => {
+    activeCodes = ['__proto__', 'ab', 'A.C', 'EUR']
+    pageHtml = '<img src="EUR.png"> 100.00 101.00 ab 90.00 91.00 ABC 70.00 71.00 __proto__ 95.00 96.00 A.C 80.00 81.00'
+    expect(await getExchangeRates()).toEqual({ EUR: 100.5 })
+  })
+
+  it('Object.prototype is untouched by a hostile code, and the rates have no inherited keys', async () => {
+    const before = Object.getOwnPropertyNames(Object.prototype).sort()
+    activeCodes = ['__proto__', 'constructor', 'EUR']
+    pageHtml = '<img src="EUR.png"> 100.00 101.00 __proto__ 95.00 96.00 constructor 85.00 86.00'
+    const rates = await getExchangeRates()
+    expect(Object.getOwnPropertyNames(Object.prototype).sort()).toEqual(before)
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined()
+    expect(Object.keys(rates ?? {})).toEqual(['EUR'])
+    expect(Object.getPrototypeOf(rates)).toSatisfy((proto: unknown) => proto === Object.prototype || proto === null)
+  })
+
+  it('a code with regex characters cannot change which numbers a letter code gets', async () => {
+    activeCodes = ['A.C', 'A|E', 'EUR']
+    pageHtml = '<img src="EUR.png"> 100.00 101.00 ABC 70.00 71.00 AEUR 60.00 61.00'
+    expect(await getExchangeRates()).toEqual({ EUR: 100.5 })
+  })
+
+  it('a catalogue with no valid code falls back to EUR, USD and GBP', async () => {
+    activeCodes = ['__proto__', 'ab']
+    expect(Object.keys((await getExchangeRates()) ?? {}).sort()).toEqual(['EUR', 'GBP', 'USD'])
+  })
+
+  it('isRatePublished refuses a code that is not three letters without asking the source', async () => {
+    const { isRatePublished } = await import('../getExchangeRateServer')
+    fetchMock.mockClear()
+    expect(await isRatePublished('__proto__')).toBe(false)
+    expect(await isRatePublished('A.C')).toBe(false)
+    expect(await isRatePublished('ab')).toBe(false)
+    expect(fetchMock).not.toHaveBeenCalled()
+    expect(await isRatePublished(' eur ')).toBe(true)
+  })
 })

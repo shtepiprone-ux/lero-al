@@ -2,7 +2,7 @@
 /**
  * task766-route-shell-probe.mjs — Task 766 §13.1 AC5 rendered evidence.
  *
- * Modelled on `scripts/task764-pointer-probe.mjs` (per-label retained JSON evidence under
+ * Modelled on scripts/task764-pointer-probe.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task764-pointer-probe.mjs) (per-label retained JSON evidence under
  * `docs/sessions/evidence/task<N>/`) and `scripts/check-click-shield.mjs` (`BASE_URL` env,
  * `<nextjs-portal>` dev-server preflight refusal — kickoff §13.1/§3.4).
  *
@@ -12,7 +12,7 @@
  * other proof path, so this task-owned probe drives a real `next start` production server.
  *
  * It is EVIDENCE TOOLING, not a gate: no `package.json` script entry, nothing in CI depends on
- * it, exactly like `scripts/task764-pointer-probe.mjs`.
+ * it, exactly like scripts/task764-pointer-probe.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task764-pointer-probe.mjs).
  *
  * Usage:
  *   node scripts/task766-route-shell-probe.mjs <label>

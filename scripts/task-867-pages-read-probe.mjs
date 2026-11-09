@@ -24,7 +24,7 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { config } from 'dotenv'
-import { fileURLToPath } from 'node:url'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const LOCALES = ['sq', 'en', 'uk', 'it']
 
@@ -110,7 +110,7 @@ async function main() {
   console.log(`CENSUS_ROW_COUNT=${rows.length} (F22 recorded exactly 1 on 2026-09-21 — this run states whether that still holds)`)
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main().catch((err) => {
     console.error('Probe failed:', err)
     process.exit(1)

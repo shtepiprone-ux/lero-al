@@ -8,6 +8,7 @@
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const MACHINE = 'check-files.mjs (encoding, invisible characters, secrets, syntax, links, stale paths), gitleaks';
 const CODE = `${MACHINE}, ESLint (security rules), TypeScript, CodeQL`;
@@ -79,4 +80,4 @@ function main(argv) {
   return unassigned.length ? 1 : 0;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exitCode = main(process.argv.slice(2));
+if (isEntryPoint(import.meta.url)) process.exitCode = main(process.argv.slice(2));

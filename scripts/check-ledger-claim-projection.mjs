@@ -42,10 +42,11 @@
  * docs/backlog.md and docs/sessions/2026-08-20-task747-phase2-ledger-claim-projection.md.
  */
 
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { closeSync, existsSync, fstatSync, openSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 // Crash guard — house pattern shared with check-assertion-liveness.mjs /
 // check-homepage-grid.mjs: the process must always exit with a controlled integer code,
@@ -454,7 +455,9 @@ export function evaluateParsedMarker(parsed, { fileLabel, line }, gitOps) {
 
   // (2) exists / readable.
   const absolute = resolve(ROOT, normalized);
-  if (!existsSync(absolute) || !statSync(absolute).isFile()) {
+  // one file descriptor serves the type check and the read, so the file cannot be swapped between them (Task 951, CodeQL js/file-system-race)
+  const sourceText = readRegularText(absolute);
+  if (sourceText === null) {
     return { kind: 'bad-input', code: 'MISSING-SOURCE', message: `${fileLabel}:${line}: data-source does not exist or is not a readable file: "${normalized}"` };
   }
 
@@ -469,7 +472,7 @@ export function evaluateParsedMarker(parsed, { fileLabel, line }, gitOps) {
 
   let ledger;
   try {
-    ledger = JSON.parse(readFileSync(absolute, 'utf8'));
+    ledger = JSON.parse(sourceText);
   } catch {
     return { kind: 'bad-input', code: 'SOURCE-VALIDATION-FAILED', message: `${fileLabel}:${line}: data-source is not valid JSON despite passing check-review-ledger: "${normalized}"` };
   }
@@ -563,6 +566,19 @@ export function runScan(gitOps = createRealGitOps(), files = listScanFiles()) {
   return summarizeResults(allResults);
 }
 
+/** The text of a regular file, or null (missing, not a file, unreadable). One file descriptor serves the type check and the read. */
+function readRegularText(absolutePath) {
+  let fd;
+  try {
+    fd = openSync(absolutePath, 'r');
+    return fstatSync(fd).isFile() ? readFileSync(fd, 'utf8') : null;
+  } catch {
+    return null;
+  } finally {
+    if (fd !== undefined) closeSync(fd);
+  }
+}
+
 // ── Entry point ────────────────────────────────────────────────────────────
 
 function main() {
@@ -573,6 +589,6 @@ function main() {
 
 // Guarded so this module can be `import`-ed by tests without triggering the CLI scan
 // (house pattern, check-design-tokens.mjs).
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main();
 }

@@ -83,6 +83,7 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { stripComments, extractCssDeclaredNames, findVarReferences } from './check-css-var-resolvability.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -617,7 +618,7 @@ function runVerifyGate() {
 }
 
 // ── CLI entrypoint ──
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   if (process.argv.includes('--verify-gate')) runVerifyGate();
   else if (process.argv.includes('--report')) runReport();
   else run();

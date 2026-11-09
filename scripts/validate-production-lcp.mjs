@@ -45,6 +45,7 @@ import { createRequire } from 'module'
 import { mkdir, writeFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { mentionsCloudinaryUrl } from './lib/cloudinary-host.mjs'
 
 const require      = createRequire(import.meta.url)
 const __dirname    = path.dirname(fileURLToPath(import.meta.url))
@@ -112,7 +113,7 @@ function findCloudinaryPreload(rawHeader) {
   // Strategy 1: RFC 8288-aware entry split
   for (const e of splitLinkEntries(h)) {
     const lo = e.toLowerCase()
-    if (!lo.includes('res.cloudinary.com')) continue
+    if (!mentionsCloudinaryUrl(lo)) continue
     if (!/\brel\s*=\s*"?preload"?\b/.test(lo)) continue
     if (!/\bas\s*=\s*"?image"?\b/.test(lo)) continue
     const urlM = e.match(/^<([^>]+)>/)
@@ -197,7 +198,7 @@ function probePreload(html) {
     hasFetchPriority: /fetchpriority/i.test(tag),
     fetchPriorityValue: tag.match(/fetchpriority="([^"]*)"/i)?.[1] ?? null,
     href: tag.match(/href="([^"]*)"/)?.[1] ?? null,
-    isCloudinary: tag.includes('res.cloudinary.com'),
+    isCloudinary: mentionsCloudinaryUrl(tag),
     raw: tag.slice(0, 300),
   }
 }
@@ -207,7 +208,7 @@ function probeGalleryImg(html) {
   if (!m) return { present: false }
   return {
     present: true,
-    isCloudinary: m[0].includes('res.cloudinary.com'),
+    isCloudinary: mentionsCloudinaryUrl(m[0]),
     hasSrcSet: m[0].includes('srcSet='),
     hasEager: m[0].includes('loading="eager"'),
     raw: m[0].slice(0, 300),

@@ -56,8 +56,8 @@
  */
 
 import { config } from 'dotenv'
-import { fileURLToPath } from 'node:url'
 import { createClient } from '@supabase/supabase-js'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const PROBE_TITLE = '[task-881 probe]'
 const PROBE_BODY = 'Task 881 grant-contract probe — safe to ignore, auto-deleted.'
@@ -476,6 +476,6 @@ async function main() {
   }
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main()
 }

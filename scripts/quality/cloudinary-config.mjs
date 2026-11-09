@@ -11,6 +11,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from '../lib/entry-point.mjs';
 
 /** Every invariant, applied to the preset list of the Admin API. Returns `{ id, object, message }` per violation. */
 export function checkPresets(presets, { widgetPreset } = {}) {
@@ -74,4 +75,4 @@ async function main(argv) {
   return findings.length ? 1 : 0;
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) process.exitCode = await main(process.argv.slice(2));
+if (isEntryPoint(import.meta.url)) process.exitCode = await main(process.argv.slice(2));

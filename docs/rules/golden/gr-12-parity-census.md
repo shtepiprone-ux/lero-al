@@ -15,7 +15,7 @@ before any verdict (Opus), for every visible element type the task creates, chan
    The executor returns `BLOCKED — GR-12`; the reviewer returns `NEEDS REVISION`.
 
 The census is a script run on the built Storybook, never a reading of source. Its output is saved as evidence. The
-first such script is `docs/sessions/evidence/task859/review-8/r8-badge-census.mjs`.
+first such script is [r8-badge-census.mjs of the Task 859 review 8](https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/docs/sessions/evidence/task859/review-8/r8-badge-census.mjs) (deleted from the working tree; the permalink keeps it).
 
 **3. A kickoff never authorizes a local look.** A kickoff that names a colour, size or radius for one consumer, instead
 of the canonical entry that owns it, is unpublishable. An executor who finds one stops with `BLOCKED — GR-12`.

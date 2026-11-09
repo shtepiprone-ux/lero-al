@@ -55,6 +55,7 @@ import {
   DEFAULT_MAX_SURFACES,
   changedFileLimit,
 } from './map-changed-surfaces.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -878,7 +879,7 @@ function main() {
   process.exit(exitCode);
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isEntryPoint(import.meta.url);
 if (isMain) {
   if (VERIFY_GATE) runSelfTest();
   else main();

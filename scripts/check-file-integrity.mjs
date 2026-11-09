@@ -26,7 +26,7 @@
  * Rule:  docs/agent-contract.md clause 14
  */
 
-import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
+import { closeSync, existsSync, fstatSync, openSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve, join, relative, extname, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -191,18 +191,25 @@ function checkTruncation(content, ext) {
 function checkFile(filePath) {
   const errors = [];
 
-  if (!existsSync(filePath)) return errors;
-  let stat;
-  try { stat = statSync(filePath); } catch { return errors; }
-  if (!stat.isFile()) return errors;
-
   const ext = extname(filePath).toLowerCase();
   if (BINARY_EXTS.has(ext)) return errors;
 
+  // One file descriptor serves the type check and the read, so the file cannot be swapped between them (Task 951, CodeQL js/file-system-race).
+  // A missing file or one that is not a regular file is skipped, as before; any other failure to open or read is reported.
   let buf;
-  try { buf = readFileSync(filePath); } catch (e) {
+  let fd;
+  try {
+    try { fd = openSync(filePath, 'r'); } catch (e) {
+      if (e?.code === 'ENOENT' || e?.code === 'ENOTDIR') return errors;
+      throw e;
+    }
+    if (!fstatSync(fd).isFile()) return errors;
+    buf = readFileSync(fd);
+  } catch (e) {
     errors.push(`Cannot read file: ${e.message}`);
     return errors;
+  } finally {
+    if (fd !== undefined) closeSync(fd);
   }
 
   // Check 1: NUL bytes — must be first; stops further checks (content unreliable)

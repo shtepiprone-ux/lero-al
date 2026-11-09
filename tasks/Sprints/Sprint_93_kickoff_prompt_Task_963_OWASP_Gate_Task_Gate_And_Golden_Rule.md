@@ -198,11 +198,18 @@ No visible change.
   red with the age check disabled, with nested entries skipped and with the name check removed, measured 2026-11-08); done by Opus 2026-11-08.
 - AC16 An open kickoff counts as implemented only through a test no other kickoff names (Task 939 review 2: PR #19's
   change report failed on 957, 962 and 965 through tests 947, 952 and 963 added) — test: `scripts/quality/ac-tests.test.mjs`
-  (`testsNamedElsewhere`; red with the shared set ignored, measured 2026-11-09); done by Opus 2026-11-09.
+  (`testsNamedElsewhere`; red with the shared set ignored, measured 2026-11-09); nor through a test on a path only Opus
+  may write (the Stop hook took 951 for started when Opus placed its AC1 test; red with that rule removed, measured
+  2026-11-09); done by Opus 2026-11-09.
 - AC17 The locale-leak gate fails closed when started through a symlinked path (Task 939 review 2: its entry-point guard
   compared `argv[1]` as typed with the real path, skipped the scan and exited 0) — test:
   `scripts/__tests__/check-locale-leak.test.ts` ("entry point": own path and a junction both reach the flag check, exit 1;
   red before the fix, `expected +0 to be 1`, measured 2026-11-09); done by Opus 2026-11-09.
+- AC18 No gate decides "am I the entry point" from `argv[1]` as typed (the AC17 fault, found in 35 scripts while
+  designing Task 951) — test: `scripts/quality/entry-point-guards.test.mjs` (`isEntryPoint` of `scripts/lib/entry-point.mjs`
+  true by the real path and through a junction, false for an importer; a raw guard outside Task 951's list fails: red
+  with one reintroduced in `ac-tests.mjs`, measured 2026-11-09); the 12 guards of `scripts/quality/` done by Opus
+  2026-11-09, the other 22 scripts are Task 951 AC11.
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.

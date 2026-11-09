@@ -1,0 +1,12 @@
+# Task 951 F3: `safeImageSrc` (src/design-system/media/appImageConfig.ts) is the allow-list every <img src> passes
+# through: it returns only a root-relative path, an https: or blob: URL, or a data:image/ URL, and undefined for
+# anything else (javascript:, http:, other data:, "//host", unparsable). CodeQL has no barrier for a scheme check on a
+# URL attribute, so the return value is declared an html-injection barrier here. The declaration is held by
+# src/design-system/media/__tests__/safeImageSrc.test.ts (every refused scheme) and by
+# scripts/quality/codeql-models.test.mjs (this row names a function that exists and returns a checked value).
+extensions:
+  - addsTo:
+      pack: codeql/javascript-all
+      extensible: barrierModel
+    data:
+      - ["file:src/design-system/media/appImageConfig.ts", "Member[safeImageSrc].ReturnValue", "html-injection"]

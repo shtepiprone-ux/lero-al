@@ -1,0 +1,480 @@
+# Lero.al CI — governance reset 2026-11-06 (.claude/rules/quality-gates.md).
+# OWASP basis: CI/CD Security, GitHub Actions Security, Software Supply Chain Security, NPM Security,
+# Vulnerable Dependency Management, Authorization Regression Testing, Secure Code Review.
+# Every job below is a gate: a failure blocks the merge through the "CI Required" check.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Daily: new advisories, CodeQL rules and secret patterns reach code that has not changed (OWASP CI/CD Security).
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  quality:
+    name: Lint, types and product checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      # OWASP Cheat Sheet Series kept in sync (owner request 2026-11-07): a sheet added, changed or removed upstream fails
+      # here until Opus re-reads it and updates docs/security/owasp/controls.json; the step also caches the sheet texts
+      # that the mapping check, the kickoff checks and the self-tests verify quotes against.
+      - name: OWASP reference — upstream equals the committed registry
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/quality/owasp.mjs sync --verify
+      - name: OWASP mapping — every sheet mapped at its version, every quote and control evidence verified
+        run: node scripts/quality/owasp.mjs check
+      - name: ESLint (includes the OWASP JS/TS security rules)
+        run: npm run lint
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Quality script tests (every scripts/quality/*.test.mjs, so a new one cannot be left out)
+        run: node --test "scripts/quality/*.test.mjs"
+      - name: Every file in the repository (encoding, invisible characters, secrets, syntax of every file type, links, kickoffs)
+        run: node scripts/quality/check-files.mjs --all
+      - name: Browser for the hydration gate's planted-violation self-test
+        run: npx playwright install chromium --with-deps
+      - name: Product checks (i18n, design system, UI contract, grants)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: node scripts/quality/product-gates.mjs
+
+  unit:
+    name: Unit and component tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - name: Build (compiled CSS used by regression tests)
+        run: npm run build
+      - name: Tests with coverage, no focused tests, no retries
+        run: npm test -- --coverage --allowOnly=false --passWithNoTests=false --retry=0
+      - name: Every changed product line runs in a test (quality-gates.md §8)
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          base="$BASE_SHA"
+          case "$base" in ""|0000000000000000000000000000000000000000) base="HEAD~1" ;; esac
+          node scripts/quality/changed-lines-coverage.mjs --base "$base"
+
+  authz:
+    name: Authorization regression (real Supabase development project)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: security-ci
+    permissions:
+      contents: read
+    concurrency:
+      group: security-ci-database
+      cancel-in-progress: false
+    # Secrets are bound to the steps that read them, never to the job (audit 2026-11-06, CI-01; OWASP CI/CD Security
+    # "least privilege for pipeline credentials"): the third-party actions, `npm ci` and the browser install never see them.
+    env:
+      SECURITY_TEST_TARGET: ${{ vars.SECURITY_TEST_TARGET }}
+      SECURITY_TEST_PROJECT_REF: ${{ vars.SECURITY_TEST_PROJECT_REF }}
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - name: Refuse anything but the approved development project
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/quality/ci-target.mjs
+      - name: Build (the Server Action manifest that serverActionManifest.integration.test.ts reads)
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run build
+      - name: Anonymous, other-user, wrong-role and cross-owner cases against real RLS
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run test:security-integration
+
+  dependencies:
+    name: Dependency audit (high and critical block)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - name: Lockfile is enforced
+        run: npm ci --ignore-scripts
+      - name: Production dependencies have no high or critical advisory
+        run: npm audit --omit=dev --audit-level=high
+
+  change-report:
+    name: Change report (sensitive paths, weakened tests, new dependencies)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - name: Report; a missing or brand-new package or a foreign lockfile source fails
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          base="$BASE_SHA"
+          case "$base" in ""|0000000000000000000000000000000000000000) base="HEAD~1" ;; esac
+          node scripts/quality/change-report.mjs "$base" HEAD
+
+  owasp-gate:
+    # Owner request 2026-11-07: the OWASP Cheat Sheet Series holds every task, the existing ones and every one created
+    # later, and no change bypasses it. Code or configuration lands only with a task whose review is approved in the
+    # same change, whose OWASP review record holds, and whose records together judge every sheet the diff triggers.
+    name: OWASP task gate (an approved review covers every sheet the change triggers)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - name: Sheet texts of the committed registry (quotes are verified against them)
+        run: node scripts/quality/owasp.mjs cache
+      - name: Every change of code or configuration carries its approved task
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          case "$EVENT" in schedule|workflow_dispatch) echo "A $EVENT run changes nothing: no change to gate"; exit 0 ;; esac
+          base="$BASE_SHA"
+          case "$base" in ""|0000000000000000000000000000000000000000) base="HEAD~1" ;; esac
+          node scripts/quality/owasp.mjs gate --base "$base"
+
+  sbom:
+    name: SBOM (CycloneDX, production dependencies)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - run: npm ci --ignore-scripts
+      # The dependency tree is valid (Task 947: `npm ls --omit dev --all` exits 0), so an npm error fails the SBOM.
+      - name: Generate and validate the SBOM
+        run: npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --omit dev --validate --output-format JSON --output-file sbom.cdx.json
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: sbom
+          path: sbom.cdx.json
+          retention-days: 90
+
+  codeql:
+    name: CodeQL (SAST)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          languages: javascript-typescript, actions
+          queries: security-extended
+      - uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          category: codeql
+
+  secrets:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITLEAKS_ENABLE_COMMENTS: "false"
+          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+
+  workflows:
+    name: Workflow security (zizmor)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@85b2b9fb8e3325e7a23d7d0a9d7ba5ae0f999e3e # v0.7.1
+        with:
+          advanced-security: false
+
+  storybook-build:
+    name: Storybook build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - run: npm run build-storybook
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: storybook-build
+          path: storybook-static/
+          retention-days: 1
+
+  homepage-grid:
+    name: Homepage grid
+    runs-on: ubuntu-24.04
+    needs: [storybook-build]
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: storybook-build
+          path: storybook-static
+      - run: npm run check:card-track-monotonicity
+      - run: npm run check:homepage-grid
+
+  locale-leak:
+    name: Locale leak (${{ matrix.shard }}/6)
+    runs-on: ubuntu-24.04
+    needs: [storybook-build]
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6]
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install chromium --with-deps
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: storybook-build
+          path: storybook-static
+      - name: Every Story renders in every locale; leaks reported under the owner's migration exception
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: node scripts/check-locale-leak.mjs --mantine-only --report-only-leaks "--shard=${SHARD}/6"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: failure()
+        with:
+          name: locale-leak-${{ matrix.shard }}
+          path: .screenshots/locale-leak/
+          retention-days: 7
+
+  click-shield:
+    name: Click-shield (production build, real interactions)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment: security-ci
+    permissions:
+      contents: read
+    # Secrets on the steps that read them only (CI-01, see the authz job).
+    env:
+      SECURITY_TEST_TARGET: ${{ vars.SECURITY_TEST_TARGET }}
+      SECURITY_TEST_PROJECT_REF: ${{ vars.SECURITY_TEST_PROJECT_REF }}
+      CLICK_SHIELD_CI_FIXTURE: "1"
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+          cache: npm
+      - run: npm ci
+      - env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/quality/ci-target.mjs
+      - run: npx playwright install chromium --with-deps
+      - env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run build
+      - run: npm run check:css-vars
+      - name: Start the production server
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: nohup npm start > server.log 2>&1 &
+      - name: Wait for the server
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:3000/; then exit 0; fi
+            sleep 2
+          done
+          cat server.log
+          exit 1
+      - name: Real interactions are not blocked by overlays
+        env:
+          BASE_URL: http://127.0.0.1:3000
+        run: npm run check:click-shield
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: failure()
+        with:
+          name: click-shield-report
+          path: |
+            server.log
+            test-results/
+          retention-days: 7
+
+  required:
+    name: CI Required
+    runs-on: ubuntu-24.04
+    if: always()
+    needs: [quality, unit, authz, dependencies, change-report, owasp-gate, sbom, codeql, secrets, workflows, storybook-build, homepage-grid, locale-leak, click-shield]
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - name: Every gate passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Results: $RESULTS"
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then echo "::error::A required gate did not pass ($result)"; exit 1; fi
+          done

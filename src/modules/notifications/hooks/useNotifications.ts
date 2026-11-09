@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/modules/auth/context/AuthContext'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import type { Notification } from '@/types/database'
 
 const PAGE_SIZE = 30
@@ -13,7 +14,17 @@ export function useNotifications() {
 
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
-  const [loading, setLoading] = useState(true)
+  // Nothing to load for a visitor with no session, so there is nothing to wait for either.
+  const [loading, setLoading] = useState(userId !== null)
+
+  // Signing out empties the list at once, in the render that sees the sign-out: a later sign-in never shows the previous user's rows.
+  useResetOnChange(userId, () => {
+    if (userId === null) {
+      setNotifications([])
+      setUnreadCount(0)
+      setLoading(false)
+    }
+  })
 
   // Tracks the current userId for every in-flight fetchAll() to consult after its await —
   // a response for a user who has since signed out (or been replaced by a different user)
@@ -22,6 +33,36 @@ export function useNotifications() {
   useEffect(() => {
     userIdRef.current = userId
   }, [userId])
+
+  // Reads the notifications of `requestedUserId` and applies the answer after the read — never synchronously, so an effect can start it.
+  const loadFor = useCallback((requestedUserId: string): Promise<void> => {
+    const supabase = createClient()
+    return Promise.resolve(
+      supabase
+        .from('notifications')
+        .select('id, user_id, type, title, body, link, is_read, created_at, template_id, template_params')
+        .order('created_at', { ascending: false })
+        .limit(PAGE_SIZE),
+    ).then(({ data, error }) => {
+      if (requestedUserId !== userIdRef.current) {
+        // The signed-in user changed (or signed out) while this request was in flight.
+        // Its response belongs to a session that is no longer current; drop it.
+        return
+      }
+
+      if (error) {
+        // Query failed — keep the previously loaded list rather than clearing it.
+        console.error('[notifications] fetch failed', error)
+        setLoading(false)
+        return
+      }
+
+      const list = (data ?? []) as Notification[]
+      setNotifications(list)
+      setUnreadCount(list.filter(n => !n.is_read).length)
+      setLoading(false)
+    })
+  }, [])
 
   const fetchAll = useCallback(async () => {
     if (!userId) {
@@ -32,37 +73,13 @@ export function useNotifications() {
       return
     }
 
-    const requestedUserId = userId
-    const supabase = createClient()
-    const { data, error } = await supabase
-      .from('notifications')
-      .select('id, user_id, type, title, body, link, is_read, created_at, template_id, template_params')
-      .order('created_at', { ascending: false })
-      .limit(PAGE_SIZE)
-
-    if (requestedUserId !== userIdRef.current) {
-      // The signed-in user changed (or signed out) while this request was in flight.
-      // Its response belongs to a session that is no longer current; drop it.
-      return
-    }
-
-    if (error) {
-      // Query failed — keep the previously loaded list rather than clearing it.
-      console.error('[notifications] fetch failed', error)
-      setLoading(false)
-      return
-    }
-
-    const list = (data ?? []) as Notification[]
-    setNotifications(list)
-    setUnreadCount(list.filter(n => !n.is_read).length)
-    setLoading(false)
-  }, [userId])
+    await loadFor(userId)
+  }, [userId, loadFor])
 
   useEffect(() => {
-    fetchAll()
-
     if (!userId) return
+
+    loadFor(userId)
 
     const supabase = createClient()
     // cancelled guards against acting on a status callback fired by the hook's own
@@ -101,7 +118,7 @@ export function useNotifications() {
       cancelled = true
       supabase.removeChannel(channel)
     }
-  }, [userId, fetchAll])
+  }, [userId, fetchAll, loadFor])
 
   useEffect(() => {
     const onVisibilityChange = () => {

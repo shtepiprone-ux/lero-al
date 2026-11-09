@@ -119,7 +119,7 @@ describe('FooterView refuses a script URL', () => {
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => null }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({}) }))
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => { throw new Error('the save must be refused before any database client') } }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 
 it('[SEC-S09-SRV-DENY] A stored link with an unsafe scheme is refused on save', async () => {
   const { upsertFooterContent } = await import('@/modules/admin/actions/footer')

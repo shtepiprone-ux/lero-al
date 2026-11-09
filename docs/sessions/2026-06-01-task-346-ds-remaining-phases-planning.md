@@ -67,13 +67,13 @@ migration concern is not lost — it falls under Task 344's Phase 2 route-migrat
 
 ## 5. Generated task files (Sonnet-ready)
 
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md` — READY
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` — QUEUED
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` — QUEUED (HIGH risk)
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md` — QUEUED
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md` — BLOCKED + OWNER REVIEW (route)
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md` — BLOCKED + OWNER REVIEW (surface)
-- `tasks/Sprints/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md` — QUEUED (audit-only, zero code)
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md` — READY
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` — QUEUED
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` — QUEUED (HIGH risk)
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md` — QUEUED
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md` — BLOCKED + OWNER REVIEW (route)
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md` — BLOCKED + OWNER REVIEW (surface)
+- `tasks/Archive/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md` — QUEUED (audit-only, zero code)
 
 Every file contains all 20 required sections (Title; Type/priority/area; Required pre-read; Role contract;
 Problem; Goal; Current behavior to preserve; Required after behavior; Positive flow; Negative flow; Scope; Out
@@ -133,13 +133,13 @@ actions/business logic, no `globals.css`, no `.storybook/**`. No primitive imple
 
 | File | Change | Rationale |
 |---|---|---|
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md` | NEW | DS-2 PageHeader Sonnet kickoff (READY) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` | NEW | DS-3 ActionBar Sonnet kickoff (QUEUED) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` | NEW | DS-4 FilterBar Sonnet kickoff (QUEUED, HIGH risk) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md` | NEW | DS-5 proof-hardening Sonnet kickoff (QUEUED) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md` | NEW | DS-6 public route pilot kickoff (BLOCKED + OWNER REVIEW route) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md` | NEW | DS-7 cabinet/auth pilot kickoff (BLOCKED + OWNER REVIEW surface) |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md` | NEW | DS-8 admin compat review + migration plan (QUEUED, audit-only) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md` | NEW | DS-2 PageHeader Sonnet kickoff (READY) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md` | NEW | DS-3 ActionBar Sonnet kickoff (QUEUED) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` | NEW | DS-4 FilterBar Sonnet kickoff (QUEUED, HIGH risk) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md` | NEW | DS-5 proof-hardening Sonnet kickoff (QUEUED) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md` | NEW | DS-6 public route pilot kickoff (BLOCKED + OWNER REVIEW route) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md` | NEW | DS-7 cabinet/auth pilot kickoff (BLOCKED + OWNER REVIEW surface) |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md` | NEW | DS-8 admin compat review + migration plan (QUEUED, audit-only) |
 | `docs/sessions/2026-06-01-task-346-ds-remaining-phases-planning.md` | NEW — this log | Inventory, queue, dependencies, provenance, owner git commands |
 | `docs/backlog.md` | UPDATE — Last Session block + DS queue line | Per agent-contract clause 10 (concise; full detail here) |
 
@@ -149,7 +149,7 @@ If `git status` shows phantom-corruption mods first run:
 `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add tasks/Sprints/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md tasks/Sprints/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md docs/sessions/2026-06-01-task-346-ds-remaining-phases-planning.md docs/backlog.md
+git add tasks/Archive/Sprint_30_kickoff_prompt_Task_347_DS-2_PageHeader.md tasks/Archive/Sprint_30_kickoff_prompt_Task_348_DS-3_ActionBar.md tasks/Archive/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md tasks/Archive/Sprint_30_kickoff_prompt_Task_350_DS-5_StorybookProofHardening.md tasks/Archive/Sprint_30_kickoff_prompt_Task_351_DS-6_PublicRoutePilot.md tasks/Archive/Sprint_30_kickoff_prompt_Task_352_DS-7_CabinetAuthPilot.md tasks/Archive/Sprint_30_kickoff_prompt_Task_353_DS-8_AdminCompatibilityReview.md docs/sessions/2026-06-01-task-346-ds-remaining-phases-planning.md docs/backlog.md
 git commit -m "docs(Task346): form remaining DS queue — DS-2..DS-8 Sonnet kickoffs (Tasks 347-353) + planning session + backlog"
 ```
 

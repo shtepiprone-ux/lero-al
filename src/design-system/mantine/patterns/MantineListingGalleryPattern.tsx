@@ -11,6 +11,9 @@ import { resolveGalleryOffsetValue } from './GalleryNavActionIcon'
 import { MantineBadge } from './MantineBadge'
 import { useSwipeTrackSync, buildWrappedSlides } from '@/hooks/useSwipeTrackSync'
 
+// The mobile frame clips, it is not a scroll container (see the comment above the frame): the clip is the pattern's own style, not a Tailwind utility.
+const mobileFrameStyle = { overflow: 'clip' } as const
+
 export interface MantineListingGalleryImage {
   url: string
 }
@@ -83,7 +86,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
             the accessibility tree (a unique `aria-label`, focusable); every clone/off-screen slide
             is `aria-hidden` and untabbable, so the accessible name stays unambiguous. Desktop: the
             single static image tied to `activeIndex` plus arrow controls. */}
-        {/* The mobile frame is `overflow-clip`, not `overflow-hidden`: a hidden-overflow box is still a scroll container, and the browser scrolls
+        {/* The mobile frame is `overflow: clip` (`mobileFrameStyle`), not `overflow-hidden`: a hidden-overflow box is still a scroll container, and the browser scrolls
             it to reveal a slide that takes focus before the track has moved (scrollLeft 288, the wrong slide in the frame; Task 923 R33, Story 197). */}
         {!isMobile ? (
           <UnstyledButton
@@ -95,7 +98,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
             <AppImage variant="gallery-main" src={images[activeIndex].url} alt={title} />
           </UnstyledButton>
         ) : (
-          <div ref={mobileContainerRef} {...containerA11yProps} className="h-full w-full overflow-clip">
+          <div ref={mobileContainerRef} {...containerA11yProps} className="h-full w-full" style={mobileFrameStyle}>
             <div ref={mobileTrackRef} style={mobileTrackStyle}>
               {buildWrappedSlides(images).map((img, i) => {
                 const isVisible = i === activeWrappedIndex

@@ -1,4 +1,4 @@
-﻿platform: win32 x64
+platform: win32 x64
 recorded: 2026-10-23T15:48:38.1741751Z
 purpose: sha256 of each R131-R133 path BEFORE the first edit (kickoff 62.3)
 2b3d010aef3c7d18befc803b6832c22f10276bf299bd482e6650e14e0a8b3df1  src/modules/listings/components/ListingDetailView.tsx

@@ -1,7 +1,7 @@
 # Session — Task 531: control-family resting shadow TailAdmin conformance (`shadow-theme-xs`)
 
 **Date:** 2026-07-03
-**Kickoff:** `tasks/Sprints/Sprint_40_kickoff_prompt_Task_531_ControlShadowXsConformance.md`
+**Kickoff:** `tasks/Archive/Sprint_40_kickoff_prompt_Task_531_ControlShadowXsConformance.md`
 **Executor:** Sonnet (this session)
 
 ## Summary

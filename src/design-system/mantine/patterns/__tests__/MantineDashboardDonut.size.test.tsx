@@ -4,7 +4,6 @@
  */
 import React from 'react'
 import { describe, it, expect, vi, beforeAll, beforeEach } from 'vitest'
-import { theme } from '@/design-system/mantine/theme'
 import { chartState, renderChart, stubMatchMedia, tokens, type ApexProps } from './chartTestKit'
 
 vi.mock('next/dynamic', () => ({

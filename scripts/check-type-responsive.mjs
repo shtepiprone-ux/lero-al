@@ -34,6 +34,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { resolve, join, dirname, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
@@ -445,7 +446,7 @@ function runSelfTest() {
   process.exit(0)
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+const isMain = isEntryPoint(import.meta.url)
 if (isMain) {
   const args = process.argv.slice(2)
   const unknown = args.filter((a) => a !== '--verify-gate')

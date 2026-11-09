@@ -24,7 +24,7 @@ vi.mock('@/lib/auth/permissions', () => ({ hasPermission: async (key: string) =>
 let cleanupFails = false
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: async (publicId: string) => { if (cleanupFails) throw new Error('cloudinary down'); cleaned.push(publicId) } }))
 vi.mock('@/lib/cloudinaryUpload', () => ({ publicIdFromUrl: (u: string) => (u.includes('/listings/') ? u.split('/listings/')[1].replace(/\.\w+$/, '') : null) }))
-vi.mock('next/cache', () => ({ revalidateTag: (t: string) => { revalidated.push(`tag:${t}`) }, revalidatePath: (p: string) => { revalidated.push(`path:${p}`) } }))
+vi.mock('next/cache', () => ({ updateTag: (t: string) => { revalidated.push(`tag:${t}`) }, revalidateTag: (t: string, profile?: string) => { revalidated.push(`revalidateTag:${t}:${profile}`) }, revalidatePath: (p: string) => { revalidated.push(`path:${p}`) } }))
 
 import { deleteListingAction } from '../deleteListing'
 

@@ -132,7 +132,7 @@ git status --short
  M docs/backlog.md
  M docs/component-catalog.md
  M src/components/layout/index.ts
- M tasks/Sprints/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md
+ M tasks/Archive/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md
 ?? src/components/layout/FilterBar.stories.tsx
 ?? src/components/layout/FilterBar.tsx
 
@@ -238,4 +238,4 @@ Code-level analysis is not sufficient per §19. The Storybook stories provide fi
 | `docs/component-catalog.md` | UPDATE | Registered FilterBar as §7 Tier-2 CANONICAL (client-only note); total count 211→212; stories count 20→21 |
 | `docs/backlog.md` | UPDATE | Last Session block updated to Task 349 (21 stories); DS queue reflects DS-4 ✅ |
 | `docs/sessions/2026-06-01-task-349-ds4-filterbar.md` | NEW | This session log |
-| `tasks/Sprints/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` | M (orchestrator, pre-session) | Orchestrator released the task: status QUEUED→READY, added D1/D2/D3 decisions, finalised prop shape; this file was already `M` in git before the executor session began — not a Sonnet edit |
+| `tasks/Archive/Sprint_30_kickoff_prompt_Task_349_DS-4_FilterBar.md` | M (orchestrator, pre-session) | Orchestrator released the task: status QUEUED→READY, added D1/D2/D3 decisions, finalised prop shape; this file was already `M` in git before the executor session began — not a Sonnet edit |

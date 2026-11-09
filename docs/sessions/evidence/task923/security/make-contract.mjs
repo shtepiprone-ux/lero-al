@@ -297,7 +297,7 @@ const row = (x) => `| ${x.id} | ${x.layer} | ${x.outcome} | ${x.critical ? 'yes'
 const md = `# Security task record — Task 923 Revision 7: owner decisions D8 and D9, and the session check of the contact actions
 
 > **Status: DRAFT, stage \`planned\`.** Written by the Sonnet executor on the owner's explicit instruction of 2026-10-17 ("make the security contract at once"). It is a
-> security addendum to Task 923 (\`tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md\`, Revision 7) and is NOT a kickoff: no number is reserved
+> security addendum to Task 923 (\`tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md\`, Revision 7) and is NOT a kickoff: no number is reserved
 > and no backlog row is created. Per \`.claude/rules/shared/workflow-gates.md\` the invariants, scope and applicability below belong to Opus: **Opus must review and either adopt or
 > correct this record before it is treated as authoritative**. Sonnet changes only the stage and report metadata from here on.
 

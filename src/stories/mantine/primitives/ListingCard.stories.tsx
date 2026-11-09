@@ -132,7 +132,7 @@ export const Default: Story = {
  * Reproduces the `/[locale]/favorites` composition (`FavoritesShell.tsx`): the real
  * `MantineListingCardTrack mode="grid"` (the same track `/listings` uses) holding a favorited vertical
  * card with `layoutContext="card-track-grid"`, for the pointer probes
- * (`scripts/task764-pointer-probe.mjs favorites`). Task 886 R34 (owner O83-1): cards carry no
+ * (scripts/task764-pointer-probe.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task764-pointer-probe.mjs), mode favorites). Task 886 R34 (owner O83-1): cards carry no
  * save-to-collection control; that action lives only on the listing-detail page. It needs the same
  * `AuthContext.Provider` signed-in fixture as `Default` for the real `FavoriteButton`.
  */

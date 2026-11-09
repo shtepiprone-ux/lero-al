@@ -1,4 +1,4 @@
-﻿Moved from docs/ (sha256  old -> new)
+Moved from docs/ (sha256  old -> new)
 2b382f2552fc7b16246e8544e1a73ab603db3425dae29eeabf802dd50dd35937  docs\sessions\evidence\task923\db-catalog\price-old-before-v7.1.sql -> supabase\sql_migrations\task923\db-catalog\price-old-before-v7.1.sql
 9d5110ff1ae9477af1230a5206b1a1d988b8f47dadf043a400d65122309e2bf1  docs\sessions\evidence\task923\db-catalog\proposed-account-deletion-rollback.sql -> supabase\sql_migrations\task923\db-catalog\proposed-account-deletion-rollback.sql
 ff269d318d7e37deb8e0815178d503cc95e42b93ad2882ce2c6570004bfab95e  docs\sessions\evidence\task923\db-catalog\proposed-account-deletion-rollback.v1.sql.bak -> supabase\sql_migrations\task923\db-catalog\proposed-account-deletion-rollback.v1.sql.bak

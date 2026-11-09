@@ -5,7 +5,7 @@
 **Scope:** Every dynamic `t()` call site (`t(\`...${var}\`)` and bare `t(variableExpr)`) across
 `src/app`, `src/components`, `src/modules`, `src/lib`, `src/stories`.
 **Supersedes:** `tasks/Archive/Sprint_24_kickoff_prompt_Task_316.md` (per
-`tasks/Epics/Epic_II_kickoff_prompt_Task_316.md`).
+`tasks/Archive/Epic_II_kickoff_prompt_Task_316.md`).
 
 This report supplies the evidence base for Task 317 (scanner), Task 318 (notification
 locale-binding audit), Task 319 (notification render fix), Task 320 (remediation), Task 321

@@ -2,7 +2,7 @@
 
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
-Task: `tasks/Sprints/Sprint_48_kickoff_prompt_Task_707_HomepageTail_DeTailwind.md`. Sprint 48. Executed on branch
+Task: `tasks/Archive/Sprint_48_kickoff_prompt_Task_707_HomepageTail_DeTailwind.md`. Sprint 48. Executed on branch
 `task/q0-ci-rendered-locale-split`, starting HEAD `7852a183e` (clean worktree, verified `git status --porcelain`
 empty at session start, matching kickoff §3.8).
 

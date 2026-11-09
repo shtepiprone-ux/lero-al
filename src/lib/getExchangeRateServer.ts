@@ -43,6 +43,9 @@ const DEFAULT_BOUNDS: [number, number] = [0, 9999]
 // Used when the DB is unavailable — mirrors the canonical seed rows (Task 177).
 const FALLBACK_CODES = ['EUR', 'USD', 'GBP']
 
+/** a currency code from the catalogue is data from outside: only three upper-case letters are ever used as a key or put into a pattern (Task 951 AC2) */
+const CURRENCY_CODE = /^[A-Z]{3}$/
+
 async function getActiveCurrencyCodes(): Promise<string[]> {
   try {
     const db = createAdminClient()
@@ -51,7 +54,8 @@ async function getActiveCurrencyCodes(): Promise<string[]> {
       .select('code')
       .eq('is_active', true)
       .neq('code', PIVOT)
-    if (data && data.length > 0) return (data as { code: string }[]).map(r => r.code)
+    const codes = (data as { code: string }[] | null)?.map(r => r.code).filter(code => typeof code === 'string' && CURRENCY_CODE.test(code)) ?? []
+    if (codes.length > 0) return codes
   } catch {
     // fall through to fallback
   }
@@ -65,10 +69,10 @@ function escapeRegExp(value: string): string {
 /** `reachable` tells "the page could not be read" from "the page does not publish this currency" */
 async function scrapeIliria98Rates(
   currencies: string[],
-): Promise<{ rates: Record<string, number | null>; reachable: boolean }> {
-  const result: Record<string, number | null> = Object.fromEntries(
-    currencies.map(c => [c, null]),
-  )
+): Promise<{ rates: Map<string, number | null>; reachable: boolean }> {
+  // a Map, never an object keyed by the catalogue: a code such as "__proto__" cannot write to a prototype (Task 951 AC2)
+  const result = new Map<string, number | null>()
+  for (const code of currencies) if (CURRENCY_CODE.test(code)) result.set(code, null)
   try {
     const res = await fetch(SOURCE_URL, {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; lero.al/1.0)' },
@@ -77,7 +81,7 @@ async function scrapeIliria98Rates(
     if (!res.ok) return { rates: result, reachable: false }
     const html = await res.text()
 
-    for (const currency of currencies) {
+    for (const currency of result.keys()) {
       const [min, max] = ALL_RATE_BOUNDS[currency] ?? DEFAULT_BOUNDS
       // the code is a literal word in the patterns below (Task 923 Revision 7): a code with a pattern character in it must not change or break them
       const word = escapeRegExp(currency)
@@ -95,11 +99,11 @@ async function scrapeIliria98Rates(
           .map(m => parseFloat(m[1].replace(',', '.')))
           .filter(n => n >= min && n <= max)
         if (nums.length >= 2) {
-          result[currency] = Math.round(((nums[0] + nums[1]) / 2) * 100) / 100
+          result.set(currency, Math.round(((nums[0] + nums[1]) / 2) * 100) / 100)
           continue
         }
         if (nums.length === 1) {
-          result[currency] = nums[0]
+          result.set(currency, nums[0])
           continue
         }
       }
@@ -109,7 +113,7 @@ async function scrapeIliria98Rates(
       )
       if (generic) {
         const rate = parseFloat(generic[1].replace(',', '.'))
-        if (rate >= min && rate <= max) result[currency] = rate
+        if (rate >= min && rate <= max) result.set(currency, rate)
       }
     }
     return { rates: result, reachable: true }
@@ -126,9 +130,11 @@ async function scrapeIliria98Rates(
 export async function isRatePublished(code: string): Promise<boolean | null> {
   const normalized = code.trim().toUpperCase()
   if (normalized === PIVOT) return true
+  if (!CURRENCY_CODE.test(normalized)) return false
   const { rates, reachable } = await scrapeIliria98Rates([normalized])
   if (!reachable) return null
-  return rates[normalized] !== null && rates[normalized] !== undefined
+  const rate = rates.get(normalized)
+  return rate !== null && rate !== undefined
 }
 
 class RatesUnavailable extends Error {}
@@ -168,14 +174,14 @@ async function storeRates(rates: ExchangeRates): Promise<void> {
 async function fetchAllRates(): Promise<ExchangeRates> {
   const activeCodes = await getActiveCurrencyCodes()
   const { rates: iliria98 } = await scrapeIliria98Rates(activeCodes)
-  const eurAll = iliria98['EUR']
+  const eurAll = iliria98.get('EUR')
   // The pivot could not be read: THROW. A thrown error is not cached by `unstable_cache`, so one failed read does not remove the rates for an hour; the caller serves
   // the stored set (R79 (b), C682).
   if (!eurAll) throw new RatesUnavailable('the euro rate could not be read')
 
   const rates: ExchangeRates = {}
   for (const code of activeCodes) {
-    const rate = iliria98[code]
+    const rate = iliria98.get(code)
     if (rate !== null && rate !== undefined) {
       rates[code] = rate
     } else {

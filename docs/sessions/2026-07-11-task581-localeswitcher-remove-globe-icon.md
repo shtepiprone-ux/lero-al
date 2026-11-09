@@ -1,6 +1,6 @@
 # Task 581 — `LocaleSwitcher` — remove the leading Globe icon (owner request)
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_581_LocaleSwitcherRemoveGlobeIcon.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_581_LocaleSwitcherRemoveGlobeIcon.md`.
 Depends on Task 576 (landed).
 
 ## Why

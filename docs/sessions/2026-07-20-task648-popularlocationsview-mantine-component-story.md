@@ -1,6 +1,6 @@
 # Session — Task 648: `PopularLocationsView` canonical Mantine component + story (block B, Story-first slice 1/2)
 
-**Task path:** `tasks/kickoff_prompt_Task_648_PopularLocationsView_Mantine_Component_And_Story.md`
+**Task path:** `tasks/Archive/kickoff_prompt_Task_648_PopularLocationsView_Mantine_Component_And_Story.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 
 ## Requirement ledger (restated pre-implementation)

@@ -20,31 +20,31 @@ interface Props {
  */
 export function UserPickerField({ label, icon, value, onChange, error, placeholder }: Props) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<PickerUser[]>([])
-  const [isSearching, setIsSearching] = useState(false)
-  const [open, setOpen] = useState(false)
+  // The last answer of the server search and the query it answered. What the field shows is derived from it and the query: no state is set to mirror the query.
+  const [answer, setAnswer] = useState<{ query: string; results: PickerUser[] } | null>(null)
+  const searchable = query.length >= 2
+  const results = searchable && answer ? answer.results : []
+  const isSearching = searchable && answer?.query !== query
+  const open = searchable && answer !== null
 
   useEffect(() => {
-    if (query.length < 2) {
-      setResults([])
-      setOpen(false)
-      return
-    }
-    setIsSearching(true)
+    if (query.length < 2) return
     const timer = setTimeout(async () => {
       const res = await searchUsersForPicker(query)
-      setResults(res)
-      setIsSearching(false)
-      setOpen(true)
+      setAnswer({ query, results: res })
     }, 300)
     return () => clearTimeout(timer)
   }, [query])
 
+  function handleQueryChange(next: string) {
+    setQuery(next)
+    // A query shorter than two characters forgets the last answer, so a later search for the same text starts empty.
+    if (next.length < 2) setAnswer(null)
+  }
+
   function handleSelect(user: PickerUser) {
     onChange(user)
-    setQuery('')
-    setResults([])
-    setOpen(false)
+    handleQueryChange('')
   }
 
   return (
@@ -54,7 +54,7 @@ export function UserPickerField({ label, icon, value, onChange, error, placehold
       value={value}
       onClear={() => onChange(null)}
       query={query}
-      onQueryChange={setQuery}
+      onQueryChange={handleQueryChange}
       results={results}
       open={open}
       isSearching={isSearching}

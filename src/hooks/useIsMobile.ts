@@ -1,6 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useSyncExternalStore } from 'react'
+
+const MOBILE_QUERY = '(max-width: 1023px)'
+
+function subscribe(onChange: () => void): () => void {
+  const mq = window.matchMedia(MOBILE_QUERY)
+  mq.addEventListener('change', onChange)
+  return () => mq.removeEventListener('change', onChange)
+}
+
+// The browser's own answer to the query, read each time React asks: every hook instance sees the same value.
+const getSnapshot = (): boolean => window.matchMedia(MOBILE_QUERY).matches
+
+// Mobile-first on the server and during hydration: the same markup on both sides, corrected right after.
+const getServerSnapshot = (): boolean => true
 
 /**
  * Returns true when the viewport is narrower than the lg: breakpoint (1024px).
@@ -8,18 +22,10 @@ import { useState, useEffect } from 'react'
  * Used to switch between bottom-Sheet (mobile/tablet) and centered Dialog (desktop)
  * in admin components — matches the table↔card boundary in AdminTable (admin-ux-rules §14.3).
  *
- * Starts as `true` (mobile-first default, safe for SSR). Updates on first client render.
+ * Starts as `true` on the server and while hydrating (mobile-first default, safe for SSR), then follows the media query.
  * Since dialogs only open after user interaction, the correct value is set by the time
  * any dialog or sheet renders.
  */
 export function useIsMobile(): boolean {
-  const [mobile, setMobile] = useState(true)
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 1023px)')
-    setMobile(mq.matches)
-    const handler = (e: MediaQueryListEvent) => setMobile(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
-  return mobile
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

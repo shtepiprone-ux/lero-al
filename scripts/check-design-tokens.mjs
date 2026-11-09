@@ -97,6 +97,7 @@ import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from '
 import { resolve, join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -108,8 +109,7 @@ const args = process.argv.slice(2);
 const STRICT_MODE = args.includes('--strict');
 const UPDATE_ALLOWLIST = args.includes('--update-allowlist');
 const SCOPE_MANTINE = args.includes('--scope=mantine');
-// --report is the default; --strict overrides the exit code
-const REPORT_ONLY = !STRICT_MODE || args.includes('--report');
+// --report is the default (exit 0 with findings); --strict makes findings fail the run.
 
 // ── File exclusions ───────────────────────────────────────────────────────────
 const SKIP_DIRS = new Set([
@@ -1518,6 +1518,6 @@ function run() {
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
 // Guarded so this module can be `import`-ed by tests (Task 408, §E) without
 // triggering process.exit().
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   run();
 }

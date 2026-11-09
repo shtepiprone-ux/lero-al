@@ -4,7 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { checkActorRank, checkStaff } from '@/lib/auth/staff'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
 import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
@@ -165,7 +165,7 @@ export async function deleteListing(listingId: string): Promise<{ error?: string
     publicIds.map((id) => deleteAsset(id, { reason: 'listing_deleted_by_staff' }).catch((err) => console.error('[deleteListing] image cleanup failed:', err))),
   )
 
-  revalidateTag('site-stats')
+  updateTag('site-stats')
   revalidatePath('/admin/listings')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')
@@ -472,7 +472,7 @@ export async function updateUserProfileFull(
   if (userId === me.id && data.status !== 'active') return { error: 'Forbidden' }
   // Task 923 R71 (j): a dated block is saved only with an end that parses and lies in the future. An end in the past used to be saved as "blocked" while the Auth ban
   // was lifted at once (accountAccess.ts), so the screen said blocked and the person could sign in. Checked before anything is read or written.
-  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
+   
   if (data.status === 'blocked' && data.suspendedUntil != null) {
     const end = typeof data.suspendedUntil === 'string' ? Date.parse(data.suspendedUntil) : Number.NaN
     if (!Number.isFinite(end) || end <= Date.now()) return { error: 'invalid_suspension' }

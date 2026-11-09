@@ -1,6 +1,6 @@
 # Session Archive: Task 603 — `FavoriteButton` (icon shape) mobile full-width stretch fix — 2026-07-15
 
-Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_603_FavoriteButtonIconMobileFullWidthFix.md`
+Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_603_FavoriteButtonIconMobileFullWidthFix.md`
 
 ## Root cause (confirmed exactly as the kickoff's source review stated)
 

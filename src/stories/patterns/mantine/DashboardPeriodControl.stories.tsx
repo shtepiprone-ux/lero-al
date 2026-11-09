@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
-import { Stack } from '@mantine/core';
+import { DEFAULT_THEME, mergeMantineTheme, Stack } from '@mantine/core';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineDashboardPeriodControl } from '@/design-system/mantine/patterns/MantineDashboardPeriodControl';
+import { belowMobileGateQuery } from '@/design-system/mantine/belowMobileGate';
+import { theme } from '@/design-system/mantine/theme';
 import type { PeriodSelection } from '@/lib/dashboard/period';
 import { DASHBOARD_PERIOD_NOW, dashboardPeriodLabels } from '@/stories/fixtures/dashboardPeriod.fixture';
 
@@ -100,11 +102,17 @@ export const CustomRangeTooLong: Story = {
     await waitFor(() => expect(document.body.querySelector('[data-date="2026-01-05"]')).not.toBeNull());
 
     await pressEnterOn(document.body.querySelector<HTMLElement>('[data-date="2026-01-05"]')!);
-    const next = await body.findByRole('button', { name: storyT(l, 'common.aria_next') });
-    for (let i = 0; i < 3; i += 1) await userEvent.click(next);
+    // Below the mobile gate the picker is the scrolling sheet: every month is in the DOM, there is no Next arrow, and a Confirm button commits. From the gate up it is the
+    // desktop popover, which shows two months from 700px and one month between 640px and 700px, so Next is pressed until the end month is on screen.
+    const belowMobileGate = window.matchMedia(belowMobileGateQuery(mergeMantineTheme(DEFAULT_THEME, theme))).matches;
+    if (!belowMobileGate) {
+      for (let i = 0; i < 6 && !document.body.querySelector('[data-date="2026-05-05"]'); i += 1) {
+        await userEvent.click(await body.findByRole('button', { name: storyT(l, 'common.aria_next') }));
+      }
+    }
     await waitFor(() => expect(document.body.querySelector('[data-date="2026-05-05"]')).not.toBeNull());
     await pressEnterOn(document.body.querySelector<HTMLElement>('[data-date="2026-05-05"]')!);
-    await pressEnterOn(await body.findByRole('button', { name: storyT(l, 'common.apply') }));
+    await pressEnterOn(await body.findByRole('button', { name: storyT(l, belowMobileGate ? 'common.confirm' : 'common.apply') }));
 
     const alert = await body.findByRole('alert');
     expect(alert.textContent).toBe(storyT(l, 'dashboard.period.error_longer_than_90_days'));

@@ -3,7 +3,7 @@
 Sprint 78 · P1 · QA profile **Q3** · Wave D (D78-9) · depends on **845** (archived) · blocks **890** and **891** ·
 **Status: 🔁 NEEDS REVISION (review 3, 2026-09-27, owner returned O889-1 rows 1 and 3) — execute §18 (revision 2)**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) → **D78-9** (owner,
 2026-09-27): charts on both dashboards, composition from the owner's references, colours from the theme (D78-5 stands).
 
 ## 1. Mode and task type

@@ -1,4 +1,4 @@
-﻿listingprice--default en@320 gaps t/r/b/l 24/24/501/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
+listingprice--default en@320 gaps t/r/b/l 24/24/501/16 ovf 0 popups 0 heads H1:14px H1:22px blocks 4 bad 0
     125,000 EUR  x1
     138,000 EUR~125,000 EUR  x1
     12,500,000 ALL / Price in the owner's currency: 125,000 EUR  x1

@@ -17,7 +17,7 @@ These are independent of the Epic HH / Epic II planning workstreams and can ship
 
 ### Task 315 — Email Templates ICU hotfix [HIGH]
 
-- Kickoff: [`Sprint_25_kickoff_prompt_Task_315.md`](Sprint_25_kickoff_prompt_Task_315.md)
+- Kickoff: [`Sprint_25_kickoff_prompt_Task_315.md`](../Archive/Sprint_25_kickoff_prompt_Task_315.md)
 - Type: bugfix (i18n runtime, page-crash class)
 - Files: `messages/{sq,en,uk,it}.json` (1 key × 4 = 4 string changes) + `AdminEmailTemplatesManager.tsx` (2 call sites) + session log + backlog.
 - AC: dialog opens in all 4 locales without `MALFORMED_ARGUMENT`; literal `{{variableName}}` example still visible.
@@ -26,7 +26,7 @@ These are independent of the Epic HH / Epic II planning workstreams and can ship
 
 ### Task 324 — Footer internal-link target validation [HIGH]
 
-- Kickoff: [`Sprint_25_kickoff_prompt_Task_324.md`](Sprint_25_kickoff_prompt_Task_324.md)
+- Kickoff: [`Sprint_25_kickoff_prompt_Task_324.md`](../Archive/Sprint_25_kickoff_prompt_Task_324.md)
 - Type: feature / UX guard / admin content integrity
 - Files: `AdminFooterManager.tsx` (inline warning + save-block) + `actions/footer.ts` (server validation) + `src/lib/footer-route-allowlist.ts` (NEW canonical helper) + `messages/{sq,en,uk,it}.json` (3-4 new keys × 4 = 12-16 strings) + session log + backlog.
 - AC: `/test`-style invalid internal links BLOCKED client + server-side; valid static routes save normally; external `https://` links save normally; admin-managed page slugs (if system exists) included in allowlist.
@@ -65,6 +65,6 @@ Sprint 25 closes when:
 ## References
 
 - Epic II — Global i18n Hardening (Task 315 is Phase 0 second slice, alongside Task 300): [`../Epics/Epic_II_Global_i18n_Hardening.md`](../Epics/Epic_II_Global_i18n_Hardening.md)
-- Task 302 (Footer source-of-truth — Task 324 dependency): [`Sprint_21_kickoff_prompt_Task_302.md`](Sprint_21_kickoff_prompt_Task_302.md)
+- Task 302 (Footer source-of-truth — Task 324 dependency): [`Sprint_21_kickoff_prompt_Task_302.md`](../Archive/Sprint_21_kickoff_prompt_Task_302.md)
 - Task 247 (original Footer Admin Manager): [`../../docs/sessions/2026-05-28-task-247-ee1-footer-admin-manager.md`](../../docs/sessions/2026-05-28-task-247-ee1-footer-admin-manager.md)
 - Task 201 (Email Templates modal-width precedent): in Session Archive.

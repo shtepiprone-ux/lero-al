@@ -112,8 +112,9 @@
  */
 
 import { createServer } from 'node:http';
-import { resolve, dirname } from 'node:path';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { cookieValues, redactSensitive } from './lib/redact-log.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -138,6 +139,11 @@ const ADMIN_USER_ID   = process.env.HYDRATION_ADMIN_USER_ID  || null;
 // If BOTH are set → fail-fast (never silently merge stale sessions).
 const STORAGE_STATE_PATH = process.env.HYDRATION_GATE_STORAGE_STATE || null;
 const COOKIES_JSON       = process.env.HYDRATION_GATE_COOKIES       || null;
+
+// Text from the page under test (console messages, errors, URLs) is redacted before it is kept or logged: URL credentials, token-like query values, authorization
+// values, JWTs and the values of the session cookies given to this run never reach a log (Task 951, CodeQL js/clear-text-logging).
+const SESSION_SECRETS = COOKIES_JSON ? cookieValues(COOKIES_JSON) : [];
+const redact = text => redactSensitive(text, SESSION_SECRETS);
 
 // ── Hydration / console-error patterns ───────────────────────────────────────
 
@@ -244,7 +250,7 @@ function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
   }
 
   // Session is available — list route is always navigated.
-  // The admin tree has no [locale] segment (src/middleware.ts excludes /admin), so no /en prefix.
+  // The admin tree has no [locale] segment (src/proxy.ts excludes /admin), so no /en prefix.
   routes.push({ path: '/admin/users', label: 'Admin users list (Task 434 area)' });
 
   // Detail route gated on UUID
@@ -302,7 +308,7 @@ async function checkRoute(page, url, label) {
     const type = msg.type();
     if ((type === 'error' || type === 'warning') &&
         (HYDRATION_PATTERNS.some(p => p.test(text)) || RUNTIME_ERROR_PATTERNS.some(p => p.test(text)))) {
-      violations.push({ type, text: text.slice(0, 300) });
+      violations.push({ type, text: redact(text).slice(0, 300) });
     }
   };
 
@@ -310,7 +316,7 @@ async function checkRoute(page, url, label) {
   // their own listener. This is what catches "Cannot find module …[turbopack]_runtime.js" and
   // any other thrown runtime error that previously produced a false PASS.
   const pageErrorHandler = err => {
-    violations.push({ type: 'pageerror', text: String(err.message ?? err).slice(0, 300) });
+    violations.push({ type: 'pageerror', text: redact(err.message ?? err).slice(0, 300) });
   };
 
   page.on('console', consoleHandler);
@@ -330,7 +336,7 @@ async function checkRoute(page, url, label) {
   // Task 600: fail on a non-OK navigation response (e.g. a corrupted-.next 500) — a hard error
   // page has no hydration-pattern console text to match, so this was previously a false PASS.
   if (response && !response.ok()) {
-    violations.push({ type: 'http', text: `HTTP ${response.status()} on ${url}` });
+    violations.push({ type: 'http', text: redact(`HTTP ${response.status()} on ${url}`) });
   }
 
   // Task 888: page.goto follows redirects, so a stale/non-staff session lands on the login page and
@@ -343,7 +349,7 @@ async function checkRoute(page, url, label) {
   const requestedPath = normalisePath(url);
   const landedPath = normalisePath(page.url());
   if (requestedPath !== landedPath) {
-    violations.push({ type: 'redirect', text: `redirected ${requestedPath} → ${landedPath}` });
+    violations.push({ type: 'redirect', text: redact(`redirected ${requestedPath} → ${landedPath}`) });
   }
 
   // Task 600: detect the Next.js dev error-overlay in the DOM even if console/pageerror were
@@ -359,7 +365,7 @@ async function checkRoute(page, url, label) {
     return label ? label.textContent : null;
   }).catch(() => null);
   if (overlayText) {
-    violations.push({ type: 'overlay', text: overlayText.slice(0, 300) });
+    violations.push({ type: 'overlay', text: redact(overlayText).slice(0, 300) });
   }
 
   return { label, url, status: violations.length === 0 ? 'PASS' : 'FAIL', violations };
@@ -589,7 +595,7 @@ function verifyAdminConfig() {
     console.log(`   ✅ [3] session+UUID: dashboard route → ${fullDash.path}`);
   }
 
-  // The admin tree has no locale segment (src/middleware.ts): a locale-prefixed admin path is a permanent 404.
+  // The admin tree has no locale segment (src/proxy.ts): a locale-prefixed admin path is a permanent 404.
   const localePrefixed = [sessionNoUuidPlan, fullPlan]
     .flat()
     .filter(r => typeof r.path === 'string' && /^[/][a-z]{2}[/]admin([/]|$)/.test(r.path))
@@ -732,9 +738,9 @@ async function runChecks() {
   if (failed.length > 0) {
     console.log('\n❌ Hydration violations found:\n');
     for (const r of failed) {
-      console.error(`   Route: ${r.label} (${r.url})`);
+      console.error(`   Route: ${r.label} (${redact(r.url)})`);
       r.violations.forEach((v, i) => {
-        console.error(`   [${i + 1}] (${v.type}) ${v.text}`);
+        console.error(`   [${i + 1}] (${v.type}) ${redact(v.text)}`);
       });
       console.error('');
     }

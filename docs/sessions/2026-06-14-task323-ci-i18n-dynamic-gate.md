@@ -1,6 +1,6 @@
 # Task 323 — Wire `check:i18n-dynamic` into CI as a blocking gate (Epic II Phase 3, final)
 
-Source kickoff: `tasks/Epics/Epic_II_kickoff_prompt_Task_323.md`. CI / governance-wiring task —
+Source kickoff: `tasks/Archive/Epic_II_kickoff_prompt_Task_323.md`. CI / governance-wiring task —
 no product code, no UI, no scanner-logic changes.
 
 ## 1. Precondition — clean-tree transcript (decision 4)

@@ -13,7 +13,7 @@
 ---
 
 ## 1. Files inspected
-- Kickoffs: `tasks/Sprints/Sprint_17_kickoff_prompt_Task_281.md`, `…_Task_291.md`, `…_Task_292.md`
+- Kickoffs: `tasks/Archive/Sprint_17_kickoff_prompt_Task_281.md`, `…_Task_291.md`, `…_Task_292.md`
 - Session logs: `docs/sessions/2026-05-29-task-281-auth-session-persistence.md`, `…-task-291-auth-test-reconciliation.md`
 - Auth core: `src/lib/auth/controller.ts`, `src/lib/auth/middleware.ts`, `src/lib/auth/browser.ts`
 - Supabase clients: `src/lib/supabase/client.ts`, `server.ts`, `admin.ts`; (`src/lib/supabase/middleware.ts` — **empty/non-existent**)
@@ -124,5 +124,5 @@ tsc **FAIL(2)** · lint **FAIL(9; +2 new)** · build **NOT PROVEN** · auth vite
 **Sprint 17 auth closure is NOT complete.** Do **not** commit the 281/291 batch as-is and do **not** trust the backlog "FULLY CLOSED" line. Corrective **Task 293** must (A) repair the two truncated test files to a green, contract-correct state, and (B) close the 281 literal gaps + document the accepted deviations + produce real validation proof. The `revalidateTag` test-env follow-up remains separate **Task 292** (kickoff already filed, untracked).
 
 ## 12. Corrective task
-Created: `tasks/Sprints/Sprint_17_kickoff_prompt_Task_293.md` (Task 293).
+Created: `tasks/Archive/Sprint_17_kickoff_prompt_Task_293.md` (Task 293).
 Numbering: 292 is reserved for the already-filed `revalidateTag` test-env stub kickoff (untracked); this closure correction is **293**.

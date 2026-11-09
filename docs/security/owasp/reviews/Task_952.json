@@ -1,0 +1,399 @@
+{
+  "task": "952",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the upgrade adds no feature or entry point that a new abuse case could use."
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "`git diff HEAD` read in full; 40 page routes and 7 API, robots and sitemap paths requested on `next start`, no 500."
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the session code is moved with the proxy rename, not changed; the tests import @/proxy."
+    },
+    "Authentication_Patterns": {
+      "verdict": "met",
+      "quotes": [
+        "Do not embed authentication in new systems."
+      ],
+      "evidence": "`diff` of `src/proxy.ts` with the old `src/middleware.ts`: only the export name and comments differ."
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": [
+        "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+      ],
+      "evidence": "`npm test -- --coverage` 360 files, 5987 tests, `serverEntryGuards.test.ts` included; deliberate breaks of AC2."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the cache-tag call change does not touch any access decision."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no guard moves; only revalidateTag call sites change their signature."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": [
+        "Automated tests should specifically target the ways authorization usually degrades over time."
+      ],
+      "evidence": "`.next/server/server-reference-manifest.json` read under Turbopack: 91 actions, `filename` and `exportedName` on each, no `createNotification`, no `applyListingTransitionByStatus`, so `serverActionManifest.integration.test.ts` still reads a real manifest."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the matrix is Task 950; this task keeps the existing suite green."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "no endpoint gains or loses a limit in the upgrade."
+    },
+    "Clickjacking_Defense": {
+      "verdict": "met",
+      "quotes": [
+        " setting is recommended unless a specific need has been identified for framing."
+      ],
+      "evidence": "\"The \"DENY — `curl` of `/sq/auth/login` on `next start`: `X-Frame-Options: DENY`, `frame-ancestors 'none'`."
+    },
+    "Content_Security_Policy": {
+      "verdict": "met",
+      "quotes": [
+        "Use object-src 'none' when embedded objects are unnecessary"
+      ],
+      "evidence": "`curl` of `/sq/auth/login`, `/en/cabinet`, `/admin`: `object-src 'none'`, a fresh nonce per request, on every script but one (Mantine, carried by Task 954)."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "cookie attributes are unchanged by the upgrade; HttpOnly is Task 960."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the sign-in path and its captcha are untouched by the upgrade."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "`npx eslint --print-config`: `react/no-danger`, `no-script-url` at error."
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the nonce generation is moved with the proxy rename and unchanged."
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "no limit changes; the upgrade fixes advisories that Task 947 measured."
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the document against its format's schema before publication or ingestion"
+      ],
+      "evidence": "`npm ls --omit dev --all` exit 0; the SBOM job itself runs on the PR."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "`npx eslint --print-config`: `no-eval`, `no-implied-eval` at error; `npm run lint` exit 0."
+    },
+    "File_Upload": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the file type, don't trust the Content-Type header as it can be spoofed"
+      ],
+      "evidence": "`src/modules/listings/components/__tests__/ImageUpload.test.tsx`, 4 of 6 red with `onUpload`."
+    },
+    "HTTP_Headers": {
+      "verdict": "met",
+      "quotes": [
+        "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers"
+      ],
+      "evidence": "`curl` of `/sq/auth/login`: `Content-Security-Policy: frame-ancestors 'none'`."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "met",
+      "quotes": [
+        "This example sets a long (2 years = 63072000 seconds) max-age for the issuing host."
+      ],
+      "evidence": "`curl` of `/sq/auth/login`: `Strict-Transport-Security: max-age=63072000`."
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": "`git diff HEAD -- scripts/`: comments and one path constant only."
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "argument schemas are Task 955; the upgrade changes no validation."
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object lookup changes; the actions change only their cache calls."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "`npm run lint` exit 0; CodeQL runs on the PR."
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is added or moved by the upgrade."
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "Sentry is upgraded with its configuration unchanged; log content is Task 955."
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "no log line changes in the upgrade; the vocabulary is Task 955."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no request binding changes in the actions touched for cache tags."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in factor changes; staff MFA is Task 960."
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Rendering the form only on a protected page does not authenticate the action request."
+      ],
+      "evidence": "`src/__tests__/security/proxyFile.test.ts`, red when the export is renamed or the nonce removed."
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "the runtime stays Node 22.22.3; the version line is Task 958."
+    },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+      ],
+      "evidence": "`node --test scripts/quality/install-scripts.test.mjs` 4 of 4; no new install script in the lock."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "`git diff HEAD -- scripts/`: no command line changes."
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object merging of request data is added by the upgrade."
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "`git diff HEAD` every file, 53 changed and 9 new."
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "each command of the report rerun, `scripts/quality/ac-tests.mjs` run; the claims that do not hold are recorded above."
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": ["Threat Modeling - which results in security related stories being added during"],
+      "evidence": "Review 2: the T1 mitigation \"a built check\" is `[SEC-T1-SRV-BUILT-PROXY]` in `src/__tests__/security/proxyFile.test.ts`; red with no `/_middleware`, with runtime `edge` and with another matcher in the built manifest (F5 closed)."
+    },
+    "Session_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Follow the session logging protections and session renewal guidance."
+      ],
+      "evidence": "`src/lib/auth/__tests__/sessionMiddleware.test.ts` and `middlewareScope.security.test.ts` red when the proxy export is renamed."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "registry times of the 35 changed versions read: only `next-cloudinary@7.0.0` under 14 days (D3); each from the npm registry with integrity."
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": ["the threat modeling process should answer the following four questions"],
+      "evidence": "Review 2: every T1 mitigation has its test, the built check included (`[SEC-T1-SRV-BUILT-PROXY]`, three deliberate breaks of the built manifest, each red; F5 closed)."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "no transport setting changes; the upgrade keeps the same headers and hosts."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no personal data flow changes with the framework upgrade."
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "this review reran the claims, and `scripts/quality/ac-tests.mjs` read the criteria from the kickoff."
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "`npm audit --omit=dev --audit-level=high` exit 0."
+    },
+    "Web_Cache_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Define an explicit policy for every route."
+      ],
+      "evidence": "`src/__tests__/security/cacheTags.test.ts`; the `updateTag` guard read at `node_modules/next/dist/server/web/spec-extension/revalidate.js:55`; no Route Handler reaches it."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "`npx eslint --print-config`: `react/no-danger` at error."
+    },
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "CI_CD_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow file changes in this task; `npm run build` in CI now lints first, which adds a check, and `vercel.json` pins the same build command on Vercel (`scripts/quality/build-lints.test.mjs`, F2 closed)."
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; see the line in \"## OWASP\"."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": ["prevent them from leaking and compromising the organization"],
+      "evidence": "Review 2: `npm run build` with the live token of `.env.local` in place and `VERCEL` unset (dead `SENTRY_URL` as a safety net) exit 0, no Sentry, upload or release line, 0 `.map` under `.next/static`; `.env.local` has no `VERCEL` key; `src/__tests__/sentryBuild.test.ts` red when `usesSentryBuild` drops the `VERCEL` test or `next.config.ts` tests the token directly (F1 closed)."
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; see the line in \"## OWASP\"."
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; see the line in \"## OWASP\"."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; see the line in \"## OWASP\"."
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "Webhook_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 952 diff does not touch this area; the trigger comes from other commits of the reset branch, reviewed under their own tasks."
+    }
+  }
+}

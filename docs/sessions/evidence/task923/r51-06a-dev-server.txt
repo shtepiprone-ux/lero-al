@@ -1,4 +1,4 @@
-﻿# r51-06a: is a Next.js dev server or Storybook running? (Task 923 Revision 51, R156; the two read-only commands of review-50/rv50-06-dev-server.txt; second run after the owner stopped the dev server, the first run gave 5 and 1)
+# r51-06a: is a Next.js dev server or Storybook running? (Task 923 Revision 51, R156; the two read-only commands of review-50/rv50-06-dev-server.txt; second run after the owner stopped the dev server, the first run gave 5 and 1)
 platform: Windows PowerShell 5.1.26100.9711; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 command: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where CommandLine -match 'next|storybook'; Get-NetTCPConnection -State Listen | Where LocalPort -in 3000,3001,3002,3003,6006
 started: 2026-10-25T12:52:10.5236492Z

@@ -18,8 +18,12 @@ export function useCompanies() {
   }, [])
 
   useEffect(() => {
-    load().finally(() => setLoading(false))
-  }, [load])
+    // The first read runs here, without the state-setting `load`: the answer is applied in the callback, after the read.
+    getCompanies()
+      .then(data => setCompanies(data))
+      .catch(err => console.error(err))
+      .finally(() => setLoading(false))
+  }, [])
 
   return { companies, loading, refetch: load }
 }

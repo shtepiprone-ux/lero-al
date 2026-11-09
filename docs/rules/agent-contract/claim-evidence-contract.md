@@ -3,7 +3,7 @@
 An executable kickoff may not convert a plausible statement into a requirement. Every decision-relevant repository,
 runtime, UI, test, command-result, absence, or scope claim is either a current observation with a reproducible
 locator or an explicit owner decision. The exact operational grammar and stop conditions are in
-`.claude/rules/shared/claim-evidence-contract.md`.
+`.claude/rules/shared/claim-evidence-contract.md` (removed 2026-11-06).
 
 `FACT` means the author opened the named current source/artifact and recorded a path, applicable line range, and
 literal observation that appears there. `OWNER DECISION` means a dated owner choice, faithfully translated into English; it defines desired

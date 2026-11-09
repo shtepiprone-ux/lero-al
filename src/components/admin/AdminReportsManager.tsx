@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { AdminReportsView } from '@/components/admin/AdminReportsView'
 import type { ReportStatusFilter } from '@/components/admin/reportStatusFilter'
@@ -49,11 +50,9 @@ export function AdminReportsManager({
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const [reports, setReports] = useState<ReportRow[]>(initial)
-  useEffect(() => { setReports(initial) }, [initial])
-  const [filter, setFilter] = useState<ReportStatusFilter>(initialFilter)
-  // A navigation to another `?status=` while the page stays mounted (e.g. the dashboard card).
-  useEffect(() => { setFilter(initialFilter) }, [initialFilter])
+  const [reports, setReports] = useStateFromProp<ReportRow[]>(initial)
+  // A navigation to another `?status=` while the page stays mounted (e.g. the dashboard card) hands over a new initial filter.
+  const [filter, setFilter] = useStateFromProp<ReportStatusFilter>(initialFilter)
   const [selected, setSelected] = useState<ReportRow | null>(null)
 
   const filtered = useMemo(

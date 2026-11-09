@@ -12,7 +12,7 @@ import type { PermissionKey } from '@/lib/auth/permissionKeys'
 
 const acting = vi.hoisted(() => ({ client: null as unknown }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => acting.client }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 
 import { updateUserProfileFull } from '@/modules/admin/actions'
 import { getBlockedError } from './blockCheck'
@@ -44,7 +44,7 @@ async function blockThroughAdminAction(who: SyntheticUser) {
 
 /** the inactivity mark exactly as cron/inactivity writes it: deleted_at and status inactive through the service role, no Auth ban */
 async function markInactive(who: SyntheticUser) {
-  // eslint-disable-next-line no-restricted-syntax -- user status (fixture preparation by service_role), not listing status
+   
   const written = await run.admin.from('users').update({ deleted_at: new Date().toISOString(), status: 'inactive' }).eq('id', who.id)
   expect(written.error, `${who.id}: the inactivity mark is written`).toBeNull()
   const stillValid = await who.client.auth.getUser()

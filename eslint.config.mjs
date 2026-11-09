@@ -2,12 +2,9 @@
 import storybook from "eslint-plugin-storybook";
 
 import { defineConfig, globalIgnores } from "eslint/config";
-import { FlatCompat } from "@eslint/eslintrc";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const compat = new FlatCompat({ baseDirectory: __dirname });
+// Task 952: eslint-config-next 16 ships native flat configs; FlatCompat (`compat.extends("next/...")`) no longer loads them.
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // FLAT CONFIG OVERRIDE WARNING
@@ -83,14 +80,38 @@ const IMAGE_RENDER_EXCEPTIONS = [
 ];
 
 const eslintConfig = defineConfig([
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  // ── Downgrade no-explicit-any to warning ──────────────────────────────────
-  // The codebase predates strict typing enforcement. Errors block CI; warnings
-  // surface the debt without halting deployment.
+  ...nextVitals,
+  ...nextTs,
+  // react-hooks v7 (eslint-plugin-react-hooks 7, brought by eslint-config-next 16): the two classic hook rules and the five React Compiler rules are errors. The five were off
+  // in Task 952 (block task-952/react-hooks-v7-compiler-rules-off); Task 953 fixed their 55 findings and removed that block. They are listed here, not left to the preset's
+  // own levels, so that a preset change can never weaken them (guarded by src/__tests__/eslintConfig.test.ts, which reads the configuration ESLint resolves).
   {
-    files: ["src/**/*.ts", "src/**/*.tsx"],
+    name: "task-953/react-hooks-error",
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "error",
+      "react-hooks/set-state-in-effect": "error",
+      "react-hooks/refs": "error",
+      "react-hooks/purity": "error",
+      "react-hooks/immutability": "error",
+      "react-hooks/incompatible-library": "error",
+    },
+  },
+  // A disable comment that silences nothing hides the next real finding at that line.
+  { linterOptions: { reportUnusedDisableDirectives: "error" } },
+  // ── No warning debt (governance reset 2026-11-06) ─────────────────────────
+  // The 81 warnings left were fixed; a warning nobody must fix is a finding nobody reads, so both rules are errors.
+  // A parameter or binding that a signature needs but the body does not use is named with a leading underscore.
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-unused-vars": ["error", {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+        destructuredArrayIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      }],
     },
   },
   globalIgnores([
@@ -99,12 +120,23 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Utility scripts are Node.js/CommonJS files — not part of the Next.js app.
-    "scripts/**",
     // Storybook static build output — minified bundles trigger false-positive lint errors.
     "storybook-static/**",
     // Task 741's retained BEFORE witness is a generated Storybook static bundle, not authored code.
     "docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/**",
+    // Evidence and scratch output: recorded files, not authored code.
+    "docs/sessions/**",
+    "test-results/**",
+    ".screenshots/**",
+    ".playwright-mcp/**",
+    // Git-ignored local folders (.gitignore): never part of the repository, so never linted.
+    ".artifacts/**",
+    ".codex/**",
+    ".vercel/**",
+    "coverage/**",
+    "playwright-report/**",
+    "tech-materials/**",
+    "docs/chat-gpt-reports/**",
   ]),
   // ── Import governance ─────────────────────────────────────────────────────
   //
@@ -513,7 +545,37 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-  ...storybook.configs["flat/recommended"]
+  ...storybook.configs["flat/recommended"],
+
+  // ── Security rules (OWASP JavaScript and TypeScript Security, XSS Prevention) ──
+  // Code from strings never runs; raw HTML reaches the DOM only through a reviewed sanitizer,
+  // marked at the call site with an eslint-disable comment that names the sanitizer.
+  {
+    // Every authored JavaScript/TypeScript file: product code, scripts, Storybook and root configuration.
+    files: ["**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}"],
+    rules: {
+      "no-eval": "error",
+      "no-implied-eval": "error",
+      "no-new-func": "error",
+      "no-script-url": "error",
+      "react/no-danger": "error",
+      // Hidden or misleading characters and regular expressions (Secure Coding with AI: invisible characters;
+      // JavaScript and TypeScript Security: ReDoS and unsafe patterns).
+      "no-irregular-whitespace": ["error", { skipStrings: false, skipComments: false, skipRegExps: false, skipTemplates: false }],
+      "no-misleading-character-class": "error",
+      "no-control-regex": "error",
+      "no-unsafe-finally": "error",
+      "no-unsafe-negation": "error",
+      "no-unsafe-optional-chaining": "error",
+      "no-prototype-builtins": "error",
+      "no-new-wrappers": "error",
+    },
+  },
+  {
+    // Security tests feed `javascript:` URLs on purpose to prove they are refused.
+    files: ["src/**/__tests__/**", "src/**/*.test.{ts,tsx}", "scripts/**/*.test.{mjs,js,ts}"],
+    rules: { "no-script-url": "off" },
+  },
 ]);
 
 export default eslintConfig;

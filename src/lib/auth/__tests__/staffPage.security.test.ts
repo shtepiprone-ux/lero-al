@@ -77,7 +77,7 @@ vi.mock('next-intl/server', () => ({
   getTranslations: async () => (key: string) => key,
   setRequestLocale: () => undefined,
 }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 
 const ADMIN_ROOT = join(process.cwd(), 'src', 'app', 'admin')
 

@@ -40,6 +40,7 @@
 import { mkdir, writeFile } from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { isCloudinaryUrl, mentionsCloudinaryUrl } from './lib/cloudinary-host.mjs'
 
 const __dirname    = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(__dirname, '..')
@@ -91,7 +92,7 @@ function findCloudinaryPreload(rawHeader) {
   // Strategy 1: RFC 8288-aware entry split
   for (const e of splitLinkEntries(h)) {
     const lo = e.toLowerCase()
-    if (!lo.includes('res.cloudinary.com')) continue
+    if (!mentionsCloudinaryUrl(lo)) continue
     if (!/\brel\s*=\s*"?preload"?\b/.test(lo)) continue
     if (!/\bas\s*=\s*"?image"?\b/.test(lo)) continue
     const urlM = e.match(/^<([^>]+)>/)
@@ -197,7 +198,7 @@ async function diagnoseLocale(browser, locale, viewport) {
   // Fix: store t.responseEnd directly as durationMs.
   const cdnRequests = []
   page.on('requestfinished', req => {
-    if (!req.url().includes('res.cloudinary.com')) return
+    if (!isCloudinaryUrl(req.url())) return
     try {
       const t = req.timing()
       cdnRequests.push({
@@ -291,7 +292,7 @@ async function diagnoseLocale(browser, locale, viewport) {
     }
   }
 
-  if (rawLcp && rawLcp.tag !== 'IMG' && !lcpImgUrl?.includes('res.cloudinary.com')) {
+  if (rawLcp && rawLcp.tag !== 'IMG' && !isCloudinaryUrl(lcpImgUrl)) {
     diagnosis = 'LCP_NOT_GALLERY_IMAGE'
   }
 
@@ -317,7 +318,7 @@ async function diagnoseLocale(browser, locale, viewport) {
     lcpMs:                        rawLcp ? Math.round(rawLcp.t) : null,
     lcpElementTag:                rawLcp?.tag ?? null,
     lcpElementUrl:                lcpImgUrl,
-    lcpIsGalleryImage:            !!(rawLcp?.tag === 'IMG' && lcpImgUrl?.includes('res.cloudinary.com')),
+    lcpIsGalleryImage:            !!(rawLcp?.tag === 'IMG' && isCloudinaryUrl(lcpImgUrl)),
     diagnosis,
     cdnRequests:                  normalised.map(r => ({ ...r, url: r.url.slice(0, 180) })),
   }
@@ -325,7 +326,6 @@ async function diagnoseLocale(browser, locale, viewport) {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
-function icon(ok) { return ok ? '✅' : '❌' }
 
 async function main() {
   let chromium

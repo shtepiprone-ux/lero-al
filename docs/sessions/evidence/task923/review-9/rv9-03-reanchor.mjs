@@ -6,7 +6,7 @@
 import fs from 'node:fs'
 import { execFileSync } from 'node:child_process'
 
-const K = 'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
+const K = 'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md'
 const SNAP = 'docs/sessions/evidence/task923/review-9/rv9-03-base-snapshot.txt'
 const HEAD_SHA = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim()
 const FALLBACK = {

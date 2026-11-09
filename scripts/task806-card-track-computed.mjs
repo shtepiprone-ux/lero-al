@@ -14,7 +14,7 @@
  * PRECONDITION: `storybook-static/` must already be built (`npm run build-storybook`) and served at
  * BASE_URL, e.g. `npx http-server storybook-static -p 6006 -a 127.0.0.1` (any static file server
  * works — this script only ever GETs `/iframe.html`). It does not start a server itself, unlike
- * `scripts/task770-storybook-capture.mjs`, so the SAME served build can be probed repeatedly across
+ * scripts/task770-storybook-capture.mjs (deleted from the tree; permalink https://github.com/shtepiprone-ux/lero-al/blob/d8a07a3c7/scripts/task770-storybook-capture.mjs), so the SAME served build can be probed repeatedly across
  * the two-armed plant/revert cycle without a restart between requests.
  *
  * EVIDENCE TOOLING, not a gate: no `package.json` script entry, nothing in CI depends on it.

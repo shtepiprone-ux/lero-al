@@ -100,22 +100,7 @@ decision in the saved kickoff.
 
 ## Required decision and proof
 
-Before an in-scope UI/Story write, register exactly this receipt through the **PowerShell tool** (with real values,
-not placeholders):
-
-```powershell
-& .\.claude\hooks\emit-phase-receipt.ps1 -Kind MobileAdaptation -Receipt 'MOBILE ADAPTATION PREFLIGHT COMPLETE - surfaces: <paths and semantic regions>; component families: <IDs from scripts/mobile-adaptation-patterns.json>; pattern IDs: <allowed IDs from those families>; standards: <direct catalogue source IDs>; mantine mechanism: <allowed registry IDs>; mantine owner: <canonical pattern path in selected family>; mobile range: <640px (theme.other.mobileGate / sm); mobile order: <ordered content/actions>; required content: no semantic loss; verification: <direct Story> across actual <640px thresholds and the 640px transition x <locales>.'
-```
-
-The tool call, rather than prose emitted beside another tool call, is the durable transcript evidence. `mobile order` is
-free text: ordinary semicolons are permitted there, and it ends only at the required delimiter `; required content:`.
-If any receipt value contains an apostrophe, escape it in the PowerShell single-quoted literal as `''`; the helper and
-gate recover the original value before validation.
-The helper checks receipt structure and prints it without writing project state. Immediately before a guarded write,
-the phase gate separately checks the selected family, patterns, standards, Mantine mechanism, and single canonical
-owner against the registry; the helper is not a bypass.
-
-Every saved kickoff contains a `## Mobile adaptation record`. For non-visible work it says only `Scope: none`. For
+The decision is made in the kickoff, before any UI or Story is written. Every saved kickoff contains a `## Mobile adaptation record`. For non-visible work it says only `Scope: none`. For
 visible work it contains these exact fields, one value each:
 
 ```md
@@ -148,10 +133,11 @@ decision 2026-10-10). A census that reads only `#storybook-root` proves nothing 
 
 ## Enforcement and stop states
 
-- `.claude/hooks/phase-write-gate.ps1` rejects an in-scope UI/Story write without the mobile preflight, canonical
-  preflight, and (for a Story) Storybook preflight.
-- `scripts/check-mobile-adaptation-contract.mjs` is a fail-closed CI diff gate. It rejects added clipping/truncation
-  primitives in changed UI source and malformed changed kickoff records; its planted self-test runs in CI.
+- The reviewer rejects visible work whose kickoff has no complete `## Mobile adaptation record`, or whose code
+  differs from it.
+- `scripts/check-mobile-adaptation-contract.mjs` is a fail-closed CI gate. It rejects added clipping/truncation
+  primitives in changed UI source, and a missing or malformed record in every kickoff outside `tasks/Archive/`; its
+  planted self-test runs in CI (`scripts/quality/product-gates.mjs`).
 - The task designer, executor, and reviewer must research a primary source when the selected profile does not cover
   a material interaction. Existing Stories may expose a defect but cannot justify retaining it. Only Opus may extend
   the profile catalogue/component map before an executable task is published. That extension also declares the

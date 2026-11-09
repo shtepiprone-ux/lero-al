@@ -9,7 +9,7 @@
 > admin route migration resumes. The original 308/309 sections are kept as historical scope reference only.
 > **Status:** ⚠️ **HOLD on Task 306** as of 2026-05-31 — owner re-QA on AdminListingsTable pilot at 320/375/390/480/1024/2560 FAILED. Sprint 28 cannot ship until Task 306-Fix (added 2026-05-31) closes the responsive contract at the primitive level. Tasks 308 + 309 BLOCKED until Task 306-Fix PASSes owner re-QA. Task 307 already PASSED gate G4.
 > **Run order (REVISED 2026-05-31):** **Task 327 ‖ Task 328 → Task 306 → ⚠️ Task 306-Fix → owner re-QA gate G3' → Task 307 → Task 308 ‖ Task 309**.
-> **Task 306-Fix kickoff:** [`Sprint_28_kickoff_prompt_Task_306_Fix.md`](Sprint_28_kickoff_prompt_Task_306_Fix.md) — primitive-level responsive-contract fix (table↔card switch at `lg:`, wide-screen container `.container-admin`, 9-width verification canon expanded from 7, NEW `docs/admin-ux-rules.md §14` canonical responsive contract for ALL admin pages — Task 310 migration sweep consumes this contract).
+> **Task 306-Fix kickoff:** [`Sprint_28_kickoff_prompt_Task_306_Fix.md`](../Archive/Sprint_28_kickoff_prompt_Task_306_Fix.md) — primitive-level responsive-contract fix (table↔card switch at `lg:`, wide-screen container `.container-admin`, 9-width verification canon expanded from 7, NEW `docs/admin-ux-rules.md §14` canonical responsive contract for ALL admin pages — Task 310 migration sweep consumes this contract).
 > **Owner gates:**
 > 1. Owner reviews Task 327 evidence matrix BEFORE Task 306 starts. ✅ DONE
 > 2. Owner reviews Task 328 canonical spec BEFORE Task 307 starts. ✅ DONE
@@ -48,7 +48,7 @@ Notes:
 
 ### Task 327 — Owner evidence-driven mobile QA matrix + Task 303 severity supersession (AUDIT-ONLY) [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_327.md`](Sprint_28_kickoff_prompt_Task_327.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_327.md`](../Archive/Sprint_28_kickoff_prompt_Task_327.md)
 - Type: audit
 - Output: `docs/governance-reports/2026-05-30-sprint-28-admin-mobile-evidence-matrix.md` (NEW) + `docs/admin-ux-rules.md` per-route policy table updated + Task 303 audit doc annotated as superseded for severity (historical inventory only) + backlog Severity-baseline note added to `docs/qa-rules.md` (or noted in Sprint 28 plan if qa-rules has no slot).
 - 5 surfaces × 7 breakpoints × 4 locales = 140 cells minimum (5×7×4). Each cell classified CRITICAL / HIGH / MEDIUM / LOW per owner baseline.
@@ -57,7 +57,7 @@ Notes:
 
 ### Task 328 — Canonical `StatusChangeControl` spec + per-surface assignment (SPEC-ONLY) [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_328.md`](Sprint_28_kickoff_prompt_Task_328.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_328.md`](../Archive/Sprint_28_kickoff_prompt_Task_328.md)
 - Type: spec
 - Output: `docs/admin-ux-rules.md` new §13 "Canonical StatusChangeControl" section + per-surface assignment table + API surface + locale-key list. Inventory of the 4 current implementations (AdminSupportManager workflow / AdminInquiriesManager combobox / AdminReportsManager inline action-button / AdminListingsTable transition button-cards) in the session log.
 - Encodes owner Decision 1 (Tiered: variant=select | variant=workflow) verbatim. NO RE-LITIGATION.
@@ -66,7 +66,7 @@ Notes:
 
 ### Task 306 — `AdminPageShell` + `AdminTable` (controlled-scroll) + `AdminCardList` (card-row) primitives [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_306.md`](Sprint_28_kickoff_prompt_Task_306.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_306.md`](../Archive/Sprint_28_kickoff_prompt_Task_306.md)
 - Type: feature (canonical primitives)
 - Output: `src/components/admin/AdminPageShell.tsx` (NEW) + `src/components/admin/AdminTable.tsx` (NEW) + `src/components/admin/AdminCardList.tsx` (NEW) + storybook stories for each + 1 pilot integration on `/admin/listings` (validates AdminTable end-to-end without scope creep into other tables).
 - Activates Epic HH Phase 2 reserved number 306. Scope reduced from "all 18 routes" to "owner-flagged surfaces only".
@@ -74,7 +74,7 @@ Notes:
 
 ### Task 307 — `StatusChangeControl` primitive implementation [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_307.md`](Sprint_28_kickoff_prompt_Task_307.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_307.md`](../Archive/Sprint_28_kickoff_prompt_Task_307.md)
 - Type: feature (canonical primitive)
 - Output: `src/components/admin/StatusChangeControl.tsx` (NEW) + `src/components/admin/StatusChangeHistory.tsx` (NEW shared timeline subcomponent) + storybook stories + 1 pilot integration on `AdminInquiriesManager` (variant=select, lowest risk surface).
 - Activates Epic HH Phase 2 reserved number 307.
@@ -82,7 +82,7 @@ Notes:
 
 ### Task 308 — Migrate `/admin/listings` + `/admin/users` to AdminPageShell + AdminTable [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_308.md`](Sprint_28_kickoff_prompt_Task_308.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_308.md`](../Archive/Sprint_28_kickoff_prompt_Task_308.md)
 - Type: refactor + UX
 - Output: `AdminListingsTable.tsx` + `AdminUsersTable.tsx` migrated to shell + table primitives. AdminListingsTable transition row-actions migrated to StatusChangeControl `variant="workflow"`. AdminUsersTable: no StatusChangeControl change (Verified Agents = Task 313). Header/count/action layout fixed per Task 327 evidence. 7 bp × 4 loc.
 - Activates Epic HH Phase 3 reserved number 308. Scope = ONLY these two surfaces.
@@ -90,7 +90,7 @@ Notes:
 
 ### Task 309 — Migrate `/admin/support` + `/admin/inquiries/support` + `/admin/inquiries/sales` to AdminPageShell + AdminCardList [HIGH]
 
-- Kickoff: [`Sprint_28_kickoff_prompt_Task_309.md`](Sprint_28_kickoff_prompt_Task_309.md)
+- Kickoff: [`Sprint_28_kickoff_prompt_Task_309.md`](../Archive/Sprint_28_kickoff_prompt_Task_309.md)
 - Type: refactor + UX
 - Output: `AdminSupportManager.tsx` migrated to shell + card-list. Existing inline workflow block REPLACED with `StatusChangeControl variant="workflow"` (preserving note, timeline, transition set, locale keys). `AdminInquiriesManager.tsx` migrated similarly with `StatusChangeControl variant="select"` (preserving Combobox UX semantics). Ticket detail modal + Inquiry detail modal become Sheet on `<md` per Epic HH Decision 5. 7 bp × 4 loc.
 - Activates Epic HH Phase 3 reserved number 309. Scope = ONLY these three surfaces.

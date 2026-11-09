@@ -36,7 +36,6 @@ function* walkTsx(dir) {
 }
 
 // Canonical spacing scale values (canonical py-* values allowed)
-const CANONICAL_PY = new Set(['py-0', 'py-1', 'py-2', 'py-3', 'py-4', 'py-5', 'py-6', 'py-8', 'py-12', 'py-16', 'py-20', 'py-24']);
 // Non-canonical values that should never appear as section spacing
 const FORBIDDEN_SECTION_PY = new Set(['py-7', 'py-9', 'py-10', 'py-11', 'py-13', 'py-14', 'py-15']);
 

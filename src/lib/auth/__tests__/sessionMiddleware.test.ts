@@ -1,6 +1,6 @@
 // @vitest-environment node
 /**
- * Session refresh and routing at the edge (Task 923 Revision 7): refreshSession, middleware.ts and proxy.ts.
+ * Session refresh and routing at the edge (Task 923 Revision 7): refreshSession and the proxy (`src/proxy.ts`, the Next 16 name of the middleware; Task 952 merged the two former test groups, one file is live).
  *  - the refreshed auth cookies reach the browser with the options Supabase chose (httpOnly / secure / sameSite are never weakened);
  *  - the service-role key goes only to the Supabase REST address, and a locale value from the database is checked against the four supported ones;
  *  - /admin and /api never get a locale prefix; a timed-out database call keeps the previous behaviour instead of failing the request.
@@ -65,18 +65,18 @@ describe('refreshSession', () => {
   })
 })
 
-describe('middleware.ts', () => {
+describe('proxy.ts: session cookies and matcher', () => {
   it('copies the refreshed session cookies onto the localised response', async () => {
     state.toSet = [{ name: 'sb', value: 'v', options: { httpOnly: true } }]
-    const { middleware } = await import('@/middleware')
-    const res = await middleware(req('/sq/listings'))
+    const { proxy } = await import('@/proxy')
+    const res = await proxy(req('/sq/listings'))
     expect(res.cookies.get('sb')).toMatchObject({ value: 'v', httpOnly: true })
     expect(res.headers.get('x-intl-path')).toBe('/sq/listings')
   })
 
   describe('matcher', () => {
     const matches = async (path: string) => {
-      const { config } = await import('@/middleware')
+      const { config } = await import('@/proxy')
       return new RegExp(`^${config.matcher[0]}$`).test(path)
     }
     it.each(['/', '/sq', '/en/listings', '/uk/listings/some-slug', '/it/cabinet'])('%s gets locale routing and session refresh', async (p) => { expect(await matches(p)).toBe(true) })
@@ -86,12 +86,12 @@ describe('middleware.ts', () => {
   })
 })
 
-describe('proxy.ts', () => {
+describe('proxy.ts: default locale', () => {
   const fetchOk = (value: unknown) => vi.fn(async () => ({ ok: true, json: async () => [{ value }] }) as unknown as Response)
 
   it('/admin and /api are never given a locale prefix, but the session is still refreshed', async () => {
     vi.stubGlobal('fetch', fetchOk('en'))
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     for (const p of ['/admin/users', '/api/anything', '/api']) {
       const res = await proxy(req(p))
       expect(res.headers.get('x-intl-path')).toBeNull()
@@ -103,7 +103,7 @@ describe('proxy.ts', () => {
   it('takes the default locale from the database and sends the service key only to the Supabase address', async () => {
     const f = fetchOk('it')
     vi.stubGlobal('fetch', f)
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     const res = await proxy(req('/listings'))
     expect(res.headers.get('x-intl-default')).toBe('it')
     const [url, init] = f.mock.calls[0] as unknown as [string, { headers: Record<string, string> }]
@@ -113,7 +113,7 @@ describe('proxy.ts', () => {
 
   it.each([['xx'], [''], [null], ['sq"; drop table'], [42], ['EN']])('a database value %j is not a locale: keeps "sq"', async (value) => {
     vi.stubGlobal('fetch', fetchOk(value))
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     const res = await proxy(req('/listings'))
     expect(res.headers.get('x-intl-default')).toBe('sq')
   })
@@ -123,7 +123,7 @@ describe('proxy.ts', () => {
     vi.setSystemTime(new Date('2026-10-17T10:00:00Z'))
     const f = fetchOk('en')
     vi.stubGlobal('fetch', f)
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     await proxy(req('/a'))
     await proxy(req('/b'))
     expect(f).toHaveBeenCalledTimes(1)
@@ -135,7 +135,7 @@ describe('proxy.ts', () => {
   it('a failing or timed-out database call does not fail the request, and is not retried at once', async () => {
     const f = vi.fn(async () => { throw new Error('timeout') })
     vi.stubGlobal('fetch', f)
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     const res = await proxy(req('/listings'))
     expect(res.headers.get('x-intl-default')).toBe('sq')
     await proxy(req('/listings'))
@@ -144,7 +144,7 @@ describe('proxy.ts', () => {
 
   it('a non-200 answer keeps the previous locale', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false, json: async () => [{ value: 'en' }] }) as unknown as Response))
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     expect((await proxy(req('/x'))).headers.get('x-intl-default')).toBe('sq')
   })
 
@@ -152,7 +152,7 @@ describe('proxy.ts', () => {
     delete process.env.SUPABASE_SERVICE_ROLE_KEY
     const f = fetchOk('en')
     vi.stubGlobal('fetch', f)
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     await proxy(req('/x'))
     expect(f).not.toHaveBeenCalled()
   })
@@ -160,7 +160,7 @@ describe('proxy.ts', () => {
   it('carries the refreshed cookies onto the localised response', async () => {
     vi.stubGlobal('fetch', fetchOk('sq'))
     state.toSet = [{ name: 'sb', value: 'v' }]
-    const { default: proxy } = await import('@/proxy')
+    const { proxy } = await import('@/proxy')
     const res = await proxy(req('/listings'))
     expect(res.cookies.get('sb')?.value).toBe('v')
   })

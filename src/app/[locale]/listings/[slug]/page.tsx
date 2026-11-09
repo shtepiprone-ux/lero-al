@@ -15,7 +15,7 @@ import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates } from '@/lib/getExchangeRateServer'
 import { convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
-import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
+import { isListingNew } from '@/modules/listings/lib/isListingNew'
 import type { PublicUserProfile } from '@/types/database'
 import { ListingDetailView } from '@/modules/listings/components/ListingDetailView'
 import { ListingAccessRestrictedView } from '@/modules/listings/components/ListingAccessRestrictedView'
@@ -269,7 +269,7 @@ export default async function ListingPage({ params }: Props) {
 
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${slug}`
 
-  const isNew = new Date(listing.created_at) > new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
+  const isNew = isListingNew(listing.created_at)
   const isPriceReduced = listing.price_old && listing.price < listing.price_old
 
   const features    = getDetailFeatures(listing)

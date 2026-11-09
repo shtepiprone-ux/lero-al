@@ -18,6 +18,7 @@ import {
   useContext,
   useEffect,
   useRef,
+  useState,
   useTransition,
   useSyncExternalStore,
 } from 'react'
@@ -68,18 +69,14 @@ interface Props {
 }
 
 export function AuthProvider({ children, initialUser }: Props) {
-  // Controller is created synchronously in the render body — not inside an
-  // effect — so the initial state is available for both the server snapshot
+  // Controller is created once by the state initializer — synchronously in the
+  // first render, not inside an effect — so the initial state is available for both the server snapshot
   // (SSR rendering) and the client snapshot (hydration), guaranteeing they
   // are identical and hydration never mismatches.
-  const controllerRef = useRef<AuthController | null>(null)
-  if (controllerRef.current === null) {
-    controllerRef.current = new AuthController({
-      status: initialUser ? 'authenticated' : 'unauthenticated',
-      user: initialUser,
-    })
-  }
-  const controller = controllerRef.current
+  const [controller] = useState(() => new AuthController({
+    status: initialUser ? 'authenticated' : 'unauthenticated',
+    user: initialUser,
+  }))
 
   // useSyncExternalStore ensures tear-safe subscriptions in concurrent mode.
   //

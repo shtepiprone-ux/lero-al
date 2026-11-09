@@ -37,7 +37,7 @@ import { deleteAsset } from '../cloudinaryDelete'
 
 const ENV = { ...process.env }
 const fetchMock = vi.fn()
-const sha1 = (s: string) => createHash('sha1').update(s).digest('hex')
+const sha256 = (s: string) => createHash('sha256').update(s).digest('hex')   // Task 951 AC6: the signature is SHA-256 (it was SHA-1)
 
 beforeEach(() => {
   vi.useFakeTimers()
@@ -70,7 +70,8 @@ describe('uploadToCloudinary', () => {
     expect(url).toBe('https://api.cloudinary.com/v1_1/demo/image/upload')
     expect(init.method).toBe('POST')
     const form = init.body as FormData
-    expect(form.get('signature')).toBe(sha1(`folder=listings&timestamp=${TS}TOP-SECRET`))
+    expect(form.get('signature')).toBe(sha256(`folder=listings&timestamp=${TS}TOP-SECRET`))   // signature_algorithm is sent, never signed (Cloudinary 401, 2026-11-09)
+    expect(form.get('signature_algorithm')).toBe('sha256')
     expect(form.get('api_key')).toBe('key-1')
     expect(form.get('folder')).toBe('listings')
     expect(form.get('timestamp')).toBe(String(TS))
@@ -134,7 +135,8 @@ describe('deleteAsset', () => {
     expect(url).toBe('https://api.cloudinary.com/v1_1/demo/image/destroy')
     const form = init.body as FormData
     expect(form.get('public_id')).toBe('avatars/me')
-    expect(form.get('signature')).toBe(sha1(`public_id=avatars/me&timestamp=${TS}TOP-SECRET`))
+    expect(form.get('signature')).toBe(sha256(`public_id=avatars/me&timestamp=${TS}TOP-SECRET`))   // signature_algorithm is sent, never signed
+    expect(form.get('signature_algorithm')).toBe('sha256')
     expect([...form.values()].some((v) => typeof v === 'string' && v.includes('TOP-SECRET'))).toBe(false)
   })
 

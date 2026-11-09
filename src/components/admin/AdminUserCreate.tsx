@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useTranslations } from 'next-intl'
@@ -112,7 +112,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
     [t],
   )
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       firstName: '',
@@ -126,16 +126,21 @@ export function AdminUserCreate({ cities, regions }: Props) {
     },
   })
 
-  const useMainPhone = watch('useMainPhone')
-  const phoneValue = watch('phone')
-  const locationIdValue = watch('locationId')
+  const useMainPhone = useWatch({ control, name: 'useMainPhone' })
+  const phoneValue = useWatch({ control, name: 'phone' })
+  const locationIdValue = useWatch({ control, name: 'locationId' })
+  const profileTypeValue = useWatch({ control, name: 'profileType' })
 
   useEffect(() => {
-    if (useMainPhone) {
-      setValue('whatsapp', phoneValue)
-      setWhatsappState(phoneState)
-    }
-  }, [useMainPhone, phoneValue, phoneState, setValue])
+    if (useMainPhone) setValue('whatsapp', phoneValue)
+  }, [useMainPhone, phoneValue, setValue])
+
+  // While "use the main phone" is on, the WhatsApp number is the main phone: copied in the render that sees the toggle or a new main phone (not in an effect that sets state).
+  const [mirrored, setMirrored] = useState({ useMainPhone, phoneState })
+  if (mirrored.useMainPhone !== useMainPhone || mirrored.phoneState !== phoneState) {
+    setMirrored({ useMainPhone, phoneState })
+    if (useMainPhone) setWhatsappState(phoneState)
+  }
 
   async function onSubmit(data: FormValues) {
     setError(null)
@@ -217,7 +222,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
               <Label className="text-sm">{t('fields.profile_type')}</Label>
               <Combobox
                 options={profileTypeOptions}
-                value={watch('profileType')}
+                value={profileTypeValue}
                 onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
                 variant="button"
                 size="sm"

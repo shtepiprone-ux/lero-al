@@ -17,8 +17,11 @@ import type * as React from 'react'
 
 export const FROM_ADDRESS = 'Lero.al <noreply@lero.al>'
 
-/** one address, no whitespace, list separators, angle brackets, quotes or backslashes */
-const SINGLE_ADDRESS = /^[^\s,;<>"()\\]+@[^\s,;<>"()\\]+$/
+/** one address, no whitespace, list separators, angle brackets, quotes or backslashes, and exactly one "@" (neither half may hold one, so the match stays linear) */
+const SINGLE_ADDRESS = /^[^\s,;<>"()\\@]+@[^\s,;<>"()\\@]+$/
+/** the longest address (RFC 5321 path limit); a longer value is refused before any pattern runs (Task 951 AC4) */
+const MAX_ADDRESS_LENGTH = 254
+const isSingleAddress = (value: string): boolean => value.length <= MAX_ADDRESS_LENGTH && SINGLE_ADDRESS.test(value)
 /** a header value on one line: any line or paragraph break becomes a space */
 const oneLine = (value: string) => value.replace(/[\r\n\u2028\u2029]+/g, ' ').trim()
 
@@ -72,7 +75,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
 
   // Header-injection and fan-out guard (Task 923 Revision 7, finding S34): `to` and `replyTo` are exactly one plain address, `from` and the subject are one line.
   // The subject carries text a stranger wrote (the contact topic, a listing title); a line break in it, or "a@x.com, b@y.com" in an address, must not reach the mail provider.
-  if (!SINGLE_ADDRESS.test(params.to) || (params.replyTo && !SINGLE_ADDRESS.test(params.replyTo)) || (params.from && /[\r\n]/.test(params.from))) {
+  if (!isSingleAddress(params.to) || (params.replyTo && !isSingleAddress(params.replyTo)) || (params.from && /[\r\n]/.test(params.from))) {
     console.error('[email] sendEmail: refused an unsafe address', { subject: params.subject })
     return { error: 'send_failed' }
   }

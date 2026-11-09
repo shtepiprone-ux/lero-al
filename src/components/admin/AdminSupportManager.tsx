@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { usePathname, useRouter } from 'next/navigation'
 import type { TicketStatus, ComplaintType } from '@/types/database'
 import { AdminSupportView } from '@/components/admin/AdminSupportView'
@@ -69,10 +70,8 @@ interface Props {
 export function AdminSupportManager({ tickets: init, events: initEvents, initialFilters = DEFAULT_SUPPORT_FILTERS }: Props) {
   const router = useRouter()
   const pathname = usePathname()
-  const [items, setItems] = useState(init)
-  const [allEvents, setAllEvents] = useState(initEvents)
-  useEffect(() => { setItems(init) }, [init])
-  useEffect(() => { setAllEvents(initEvents) }, [initEvents])
+  const [items, setItems] = useStateFromProp(init)
+  const [allEvents, setAllEvents] = useStateFromProp(initEvents)
   const [showNew, setShowNew] = useState(false)
   const [selected, setSelected] = useState<SupportTicketRow | null>(null)
   const [filters, setFilters] = useState<SupportFilters>(initialFilters)

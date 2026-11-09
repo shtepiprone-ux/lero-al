@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** · Wave A · depends on **843** approved · **Status: ✅ APPROVED WITH NOTES 2026-09-18 (review 3, joint closure with 843) — archived**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
 ## 1. Mode and task type
 

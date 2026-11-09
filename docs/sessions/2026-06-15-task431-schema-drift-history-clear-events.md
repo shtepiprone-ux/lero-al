@@ -145,7 +145,7 @@ The **final task** changeset additionally includes the required governance docs:
 `src/types/database.ts` is NOT in the touched set — unchanged, as required (AC5). No `src/`, `app/`, component,
 locale, or runtime file was touched.
 
-**Note:** `git status` also shows `tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md`
+**Note:** `git status` also shows `tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md`
 as modified. This is a **pre-existing, unrelated** uncommitted change from Task 427 (not part of Task 431's scope
 or diff) — left untouched, not included in this task's Files Changed table below.
 

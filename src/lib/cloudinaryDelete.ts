@@ -113,14 +113,16 @@ async function cloudinaryDestroyAsset(publicId: string): Promise<void> {
   if (!cloudName || !apiKey || !apiSecret) throw new Error('Cloudinary env vars missing')
 
   const timestamp = Math.round(Date.now() / 1000)
+  // SHA-256 (Task 951 AC6): the signed string is the one SHA-1 signed; `signature_algorithm=sha256` is sent as a form field and is NOT signed (Cloudinary 401, 2026-11-09)
   const paramsToSign = `public_id=${publicId}&timestamp=${timestamp}`
-  const signature = createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex')
+  const signature = createHash('sha256').update(`${paramsToSign}${apiSecret}`).digest('hex')
 
   const form = new FormData()
   form.append('public_id', publicId)
   form.append('timestamp', String(timestamp))
   form.append('api_key', apiKey)
   form.append('signature', signature)
+  form.append('signature_algorithm', 'sha256')
 
   const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
     method: 'POST',

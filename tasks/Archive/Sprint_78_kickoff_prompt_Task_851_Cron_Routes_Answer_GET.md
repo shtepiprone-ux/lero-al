@@ -8,7 +8,7 @@ Vercel, so §3's 405 INFERENCE stays UNKNOWN and is moot; enabling all four (own
 separate active owner action, not part of this task. Ledger
 `docs/reviews/2026-09-20-task851-cron-routes-answer-get.review-ledger.json`; archive row in `docs/backlog-archive.md`.**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed because 849's
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). Filed because 849's
 design read the Vercel cron docs (D78-4) and found the existing routes cannot be invoked the way Vercel invokes them.
 ADM-09's "expired" count depends on the expiry sweep actually running.
 

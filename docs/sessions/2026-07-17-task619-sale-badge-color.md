@@ -1,6 +1,6 @@
 # Task 619 — Dedicated `sale` theme color (#dd0939) for the price-reduced badge
 
-**Task path:** `tasks/Sprints/Sprint_44_kickoff_prompt_Task_619_SaleBadgeColor.md`
+**Task path:** `tasks/Archive/Sprint_44_kickoff_prompt_Task_619_SaleBadgeColor.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 **QA profile:** Q2 Standard UI
 
@@ -86,7 +86,7 @@ No other defects found. `new`/`premium`/`type`/`status_*` badges confirmed uncha
 
 - **Deviation (evidenced, reported above, not silent):** `#dd0939` placed at tuple index 7, not index 6 as the kickoff's initial assumption stated — corrected per the kickoff's own "adjust with evidence" clause.
 - The `sale` tuple's 9 non-authoritative stops are approximated (no TailAdmin source), same derivation spirit as `brand`/`purple`.
-- `ListingDetailPattern.stories.tsx`'s `demoBadges()` comment (line ~82-83, "new/premium/reduced map to the `--badge-*` tokens... brand") was **not** updated — it is not in this task's file scope (`tasks/Sprints/Sprint_44_kickoff_prompt_Task_619_SaleBadgeColor.md` § Scope lists only the 6 files above); the comment is now stale prose (the actual color resolution lives in `MantineListingDetailPattern.tsx`'s `BADGE_TONE_COLOR`, already corrected), not a functional defect. Flagging for Opus in case a follow-up doc cleanup is wanted.
+- `ListingDetailPattern.stories.tsx`'s `demoBadges()` comment (line ~82-83, "new/premium/reduced map to the `--badge-*` tokens... brand") was **not** updated — it is not in this task's file scope (`tasks/Archive/Sprint_44_kickoff_prompt_Task_619_SaleBadgeColor.md` § Scope lists only the 6 files above); the comment is now stale prose (the actual color resolution lives in `MantineListingDetailPattern.tsx`'s `BADGE_TONE_COLOR`, already corrected), not a functional defect. Flagging for Opus in case a follow-up doc cleanup is wanted.
 - No change to `--badge-reduced` in `globals.css` or any legacy `@/components/ui/badge` consumer — confirmed out of scope and unaffected (see Visual source trace).
 
 ## Opus handoff

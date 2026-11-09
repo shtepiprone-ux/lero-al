@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { AppImage } from '@/design-system/media/AppImage'
 import { CldUploadWidget } from 'next-cloudinary'
@@ -42,7 +42,9 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
   const sessionBaseRef = useRef<ListingImage[]>([])
   const sessionNewRef = useRef<ListingImage[]>([])
   const onChangeRef = useRef(onChange)
-  onChangeRef.current = onChange
+  useEffect(() => {
+    onChangeRef.current = onChange
+  })
 
   const handleUpload = useCallback((result: CloudinaryUploadWidgetResults) => {
     if (result.event !== 'success' || !result.info || typeof result.info === 'string') return

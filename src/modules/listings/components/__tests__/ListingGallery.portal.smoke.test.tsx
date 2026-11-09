@@ -213,7 +213,7 @@ describe('ListingGallery lightbox — counter above a clipping photo container (
     const media = counter.nextElementSibling
     expect(media).not.toBeNull()
     expect(media!.querySelector('img, [data-testid="media-placeholder"]')).not.toBeNull()
-    // eslint-disable-next-line no-bitwise -- DOM position bitmask comparison
+     
     expect(counter.compareDocumentPosition(media!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
   })
 

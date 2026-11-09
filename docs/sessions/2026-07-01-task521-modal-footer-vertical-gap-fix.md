@@ -1,6 +1,6 @@
 # Task 521 — Fix missing vertical gap between `MantineModal` body and footer (Task 520 REWORK)
 
-Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_521_ModalFooterVerticalGapFix.md`. Origin: owner rejected Task 520 on rendered review — `Mantine/Primitives/Modal → Default`, "standard dialog" section, at 275px: `MantineModal.tsx` concatenated `{children}{footer}` with zero vertical gap on both the mobile `SheetContent` branch and the desktop `Modal` branch. Task 520's rendered-proof matrix measured horizontal geometry only and never caught this.
+Kickoff: `tasks/Archive/Sprint_39_kickoff_prompt_Task_521_ModalFooterVerticalGapFix.md`. Origin: owner rejected Task 520 on rendered review — `Mantine/Primitives/Modal → Default`, "standard dialog" section, at 275px: `MantineModal.tsx` concatenated `{children}{footer}` with zero vertical gap on both the mobile `SheetContent` branch and the desktop `Modal` branch. Task 520's rendered-proof matrix measured horizontal geometry only and never caught this.
 
 ## Fix
 

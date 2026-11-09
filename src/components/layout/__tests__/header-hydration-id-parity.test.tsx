@@ -59,7 +59,7 @@ import React from 'react'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { act } from 'react'
-import { hydrateRoot } from 'react-dom/client'
+import { hydrateRoot, type Root } from 'react-dom/client'
 import { MantineProvider } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
 import { readFileSync } from 'node:fs'
@@ -165,17 +165,25 @@ async function runHydrationExperiment({
   container.innerHTML = serverHtml
   document.body.appendChild(container)
 
+  let root: Root | undefined
   await act(async () => {
-    hydrateRoot(container, <HeaderTreeUnderTest bellPresent={clientBellPresent} />, {
+    root = hydrateRoot(container, <HeaderTreeUnderTest bellPresent={clientBellPresent} />, {
       onRecoverableError: (error) => {
         recoveredErrors.push(String((error as Error)?.message ?? error))
       },
     })
   })
 
+  const finalHtml = container.innerHTML
+
+  // The root is unmounted inside act before its container goes away: a root left mounted keeps scheduling work after the test environment is torn down
+  // (an unhandled "window is not defined" that fails the unit job although every test passed).
+  await act(async () => {
+    root?.unmount()
+  })
   document.body.removeChild(container)
 
-  return { recoveredErrors, finalHtml: container.innerHTML }
+  return { recoveredErrors, finalHtml }
 }
 
 afterEach(() => {

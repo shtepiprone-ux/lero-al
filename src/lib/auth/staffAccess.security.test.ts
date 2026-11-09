@@ -48,7 +48,7 @@ vi.mock('@/lib/supabase/admin', () => ({
     auth: { admin: new Proxy({}, { get: (_t, name: string) => async () => { env.effects.push(`auth.admin.${name}`); return { data: { user: { id: 'u' }, users: [] }, error: null } } }) },
   }),
 }))
-vi.mock('next/cache', () => ({ revalidatePath: () => { env.effects.push('revalidate') }, revalidateTag: () => { env.effects.push('revalidate') }, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => { env.effects.push('revalidate') }, revalidateTag: () => { env.effects.push('revalidate') }, updateTag: () => { env.effects.push('revalidate') }, unstable_cache: (fn: unknown) => fn }))
 vi.mock('next/headers', () => ({ cookies: async () => ({ get: () => undefined, set: () => {}, getAll: () => [] }), headers: async () => ({ get: () => null }) }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => { env.effects.push('notification') } }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async () => { env.effects.push('listing-transition'); return { ok: true } } }))

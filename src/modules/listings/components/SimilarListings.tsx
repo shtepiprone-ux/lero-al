@@ -220,6 +220,7 @@ export async function SimilarListings({
         <script
           type="speculationrules"
           // Task 923 R66 (g): the URLs hold a stored slug; `jsonForScript` keeps a slug with `</script>` inside the JSON (JSON.stringify alone would close the element)
+          // eslint-disable-next-line react/no-danger -- JSON escaped for a script element by jsonForScript
           dangerouslySetInnerHTML={{
             __html: jsonForScript({
               prerender: [{

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo, useEffect, useCallback } from 'react'
+import { useState, useMemo, useCallback } from 'react'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { AppImage } from '@/design-system/media/AppImage'
@@ -74,9 +75,9 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
   const [confirmId,   setConfirmId]   = useState<string | null>(null)
 
   // Re-sync Live-L3 when SSR-L2 changes (filter navigation / router.refresh)
-  useEffect(() => {
+  useResetOnChange(initial, () => {
     setLivePatches(new Map())
-  }, [initial])
+  })
 
   // Memoized projection: recomputes only when the server dataset or the UI overlays change.
   const items = useMemo(

@@ -85,7 +85,7 @@ for (const file of walkTsx(SRC)) {
   const lines = content.split('\n');
   const relPath = relative(ROOT, file);
 
-  if (/src[/\\]components[/\\]ui[/\\]|\.test\.(ts|tsx)$/.test(relPath)) continue;
+  if (/(?:src[/\\]components[/\\]ui[/\\]|\.test\.(?:ts|tsx)$)/.test(relPath)) continue;
 
   lines.forEach((line, i) => {
     const lineNum = i + 1;

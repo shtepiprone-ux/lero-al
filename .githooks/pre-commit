@@ -1,0 +1,11 @@
+#!/bin/sh
+# Pre-commit checks (governance reset 2026-11-06). OWASP basis: Secrets Management (scan before the secret reaches
+# history), Secure Code Review (lightweight checks before commit). The staged version of every staged file is checked:
+# encoding, invisible characters, secrets, syntax of its type, links, kickoffs; staged code also gets ESLint.
+# Enabled once per clone by the owner: git config core.hooksPath .githooks
+set -e
+node scripts/quality/check-files.mjs --staged
+code=$(git diff --cached --name-only --diff-filter=ACMR -z | tr '\0' '\n' | grep -E '\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$' || true)
+if [ -n "$code" ]; then
+  printf '%s\n' "$code" | tr '\n' '\0' | xargs -0 npx eslint --no-warn-ignored --max-warnings 0
+fi

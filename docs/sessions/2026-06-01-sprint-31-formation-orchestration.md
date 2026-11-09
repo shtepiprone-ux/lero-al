@@ -47,16 +47,16 @@ Run order: 354 → 355 → 356 (354 is parallel-safe — disjoint file scope).
 | Path | Change | Rationale |
 |---|---|---|
 | `tasks/Sprints/Sprint_31_—_Owner_Issues_2026-06-01.md` | NEW | Sprint 31 inventory + run order + cross-refs |
-| `tasks/Sprints/Sprint_31_kickoff_prompt_Task_354_AdminDSPrimitivesHardening.md` | NEW | Sonnet kickoff — DS hardening (owner priority #1) |
-| `tasks/Sprints/Sprint_31_kickoff_prompt_Task_355_ListingStatusLifecycleCorrection.md` | NEW | Sonnet kickoff — sold/rented status correction |
-| `tasks/Sprints/Sprint_31_kickoff_prompt_Task_356_AgentAccountUpgrade_OpusPlanning.md` | NEW | Opus planning kickoff — Private→Agent upgrade |
+| `tasks/Archive/Sprint_31_kickoff_prompt_Task_354_AdminDSPrimitivesHardening.md` | NEW | Sonnet kickoff — DS hardening (owner priority #1) |
+| `tasks/Archive/Sprint_31_kickoff_prompt_Task_355_ListingStatusLifecycleCorrection.md` | NEW | Sonnet kickoff — sold/rented status correction |
+| `tasks/Archive/Sprint_31_kickoff_prompt_Task_356_AgentAccountUpgrade_OpusPlanning.md` | NEW | Opus planning kickoff — Private→Agent upgrade |
 | `docs/sessions/2026-06-01-sprint-31-formation-orchestration.md` | NEW | This session log |
 | `docs/backlog.md` | UPDATE | Last Session block + Sprint 31 run order |
 
 ## Suggested commit (owner runs in PowerShell — orchestrator-emitted, explicit paths)
 
 ```
-git add tasks/Sprints/Sprint_31_—_Owner_Issues_2026-06-01.md tasks/Sprints/Sprint_31_kickoff_prompt_Task_354_AdminDSPrimitivesHardening.md tasks/Sprints/Sprint_31_kickoff_prompt_Task_355_ListingStatusLifecycleCorrection.md tasks/Sprints/Sprint_31_kickoff_prompt_Task_356_AgentAccountUpgrade_OpusPlanning.md docs/sessions/2026-06-01-sprint-31-formation-orchestration.md docs/backlog.md
+git add tasks/Sprints/Sprint_31_—_Owner_Issues_2026-06-01.md tasks/Archive/Sprint_31_kickoff_prompt_Task_354_AdminDSPrimitivesHardening.md tasks/Archive/Sprint_31_kickoff_prompt_Task_355_ListingStatusLifecycleCorrection.md tasks/Archive/Sprint_31_kickoff_prompt_Task_356_AgentAccountUpgrade_OpusPlanning.md docs/sessions/2026-06-01-sprint-31-formation-orchestration.md docs/backlog.md
 git commit -m "docs(Sprint31): form Sprint 31 (Tasks 354-356) from 2026-06-01 owner issues — DS hardening first"
 ```
 

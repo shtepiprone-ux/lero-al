@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
+import { RESTORE_KEY, readSavedPosition } from '@/modules/listings/lib/savedListingsPosition'
 import { useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { Stack, Skeleton } from '@mantine/core'
@@ -35,7 +37,6 @@ const SaveSearchButton = dynamic(
   { ssr: false },
 )
 
-const RESTORE_KEY = 'listings_restore'
 
 interface Location {
   id: number
@@ -65,9 +66,9 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
     () => new Set(favoriteIds ?? [])
   )
   // Re-sync from SSR on filter navigation or router.refresh (new favoriteIds array arrives).
-  useEffect(() => {
+  useResetOnChange(favoriteIds, () => {
     setLocalFavoriteIds(new Set(favoriteIds ?? []))
-  }, [favoriteIds])
+  })
 
   const handleFavoriteToggled = useCallback((listingId: string, newState: boolean) => {
     setLocalFavoriteIds(prev => {
@@ -83,7 +84,8 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const [extraListings, setExtraListings] = useState<CardListingData[]>([])
   const [loadedExtraPage, setLoadedExtraPage] = useState(0)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const [scrollTargetSlug, setScrollTargetSlug] = useState<string | null>(null)
+  // The listing to scroll to when the person comes back from it: read from the saved position when this component first renders (nothing on the server).
+  const [scrollTargetSlug, setScrollTargetSlug] = useState<string | null>(() => readSavedPosition()?.slug ?? null)
 
   // Reset appended listings when the filter or pagination URL changes.
   // Keying on the serialized search params (not the listings prop) means
@@ -91,19 +93,19 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   // views_count) do NOT discard the user's loaded-more state. Only genuine filter or
   // page navigation — which always changes the URL — triggers the reset.
   const searchParamsStr = searchParams.toString()
-  useEffect(() => {
+  useResetOnChange(searchParamsStr, () => {
     setExtraListings([])
     setLoadedExtraPage(0)
-  }, [searchParamsStr])
+  })
 
-  // On mount: restore position from sessionStorage if returning from a listing
+  // On mount: restore position from sessionStorage if returning from a listing. The scroll target was read with the state's initializer; here the saved position
+  // is consumed (removed) and the extra pages the person had loaded are fetched again.
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem(RESTORE_KEY)
       if (!raw) return
       const restore = JSON.parse(raw) as { returnUrl: string; slug: string; extraPage: number }
       sessionStorage.removeItem(RESTORE_KEY)
-      setScrollTargetSlug(restore.slug)
 
       if (restore.extraPage > 0) {
         ;(async () => {

@@ -1,4 +1,4 @@
-﻿# r56-05 part 1 (R173 (c)): is a Next.js dev server or Storybook running? (read-only)
+# r56-05 part 1 (R173 (c)): is a Next.js dev server or Storybook running? (read-only)
 platform: win32 x64; Windows PowerShell 5.1; node: v22.22.3; cwd: C:\Claude_Code_Projects\lero-al
 command: Get-CimInstance Win32_Process -Filter "Name='node.exe'" | Where CommandLine -match 'next|storybook'; Get-NetTCPConnection -State Listen | Where LocalPort -in 3000,3001,3002,3003,6006
 started: 2026-10-29T13:22:06.7042043Z

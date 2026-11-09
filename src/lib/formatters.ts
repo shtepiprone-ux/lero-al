@@ -29,8 +29,8 @@ export function normalizeCurrencyCode(code: string): string {
  */
 const NUMBER_GROUPING: Record<string, { separator: string; minimumGroupingDigits: number }> = {
   en: { separator: ',', minimumGroupingDigits: 1 },
-  uk: { separator: ' ', minimumGroupingDigits: 1 },
-  sq: { separator: ' ', minimumGroupingDigits: 2 },
+  uk: { separator: '\u00A0', minimumGroupingDigits: 1 },
+  sq: { separator: '\u00A0', minimumGroupingDigits: 2 },
   it: { separator: '.', minimumGroupingDigits: 2 },
 }
 

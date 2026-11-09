@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import { Box, Button, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
 import { MantineModal } from './MantineModal'
 import { MantineDialogSection, MantineDialogSections } from './MantineDialogSections'
@@ -76,12 +77,12 @@ export function MantineDeleteConfirmModal({
   const [typed, setTyped] = useState('')
   const [passwordVisible, setPasswordVisible] = useState(false)
   // The field starts empty every time the dialog opens: a word typed before a cancel never carries over (Task 923 R46); a password is never left visible either.
-  useEffect(() => {
+  useResetOnChange(opened, () => {
     if (opened) {
       setTyped('')
       setPasswordVisible(false)
     }
-  }, [opened])
+  })
   const typedOk = !typedConfirm || typed.trim().toUpperCase() === typedConfirm.word.toUpperCase()
   const passwordOk = !passwordConfirm || passwordConfirm.value !== ''
 

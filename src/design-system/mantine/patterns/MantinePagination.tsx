@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { Group, Pagination, type MantineColor, type MantineSize } from '@mantine/core'
 import styles from './MantinePagination.module.css'
 
@@ -170,6 +170,11 @@ export const SHED_LEVELS: ReadonlyArray<{ siblings: number; leadingBoundaries: 0
 ]
 const FLOOR_LEVEL = SHED_LEVELS.length - 1
 
+// "Is mounted" without an effect: the server snapshot is false, the client snapshot true, and there is nothing to subscribe to.
+const subscribeNever = () => () => {}
+const readTrue = () => true
+const readFalse = () => false
+
 /**
  * Canonical single-line, shed-to-fit Pagination (Task 535).
  *
@@ -236,13 +241,10 @@ export function MantinePagination({
 
   // Rule 4 — SSR-safe: floor on the server and on the first client render.
   const [level, setLevel] = useState(FLOOR_LEVEL)
-  const [mounted, setMounted] = useState(false)
+  // false on the server and while hydrating, true on the client from then on (the standard "is mounted" read, no effect that sets state).
+  const mounted = useSyncExternalStore(subscribeNever, readTrue, readFalse)
   const rowRef = useRef<HTMLDivElement>(null)
   const probeRef = useRef<HTMLButtonElement>(null)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useLayoutEffect(() => {
     if (!mounted) return
@@ -282,7 +284,7 @@ export function MantinePagination({
     ro.observe(parent)
     measureAndSet()
     return () => ro.disconnect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [mounted, total, activePage])
 
   if (total <= 0) return null

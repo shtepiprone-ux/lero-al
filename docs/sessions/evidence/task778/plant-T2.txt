@@ -1,4 +1,4 @@
-﻿
+
  RUN  v4.1.6 C:/Claude_Code_Projects/lero-al
 
  ❯ src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx (14 tests | 1 failed | 13 skipped) 495ms

@@ -2,7 +2,7 @@
 
 **Status: `BLOCKED — ONE UNRESOLVED OWNER DECISION (OQ4, global rule 7)`.
 Sixth full recomputation, 2026-07-27**, against the current text of
-`tasks/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md`, the current governing rule files —
+`tasks/Archive/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md`, the current governing rule files —
 `orchestrator-evidence-first-preflight.md`, `orchestrator-execution-contract-template.md` §§1–4,
 `orchestrator-rule-compliance-ledger-template.md` rules 1–7, `agent-contract.md` clauses 9/10/14, and
 `ai-behavior.md` L670–703 — and a fresh inspection of `HEAD`. Recomputed from scratch per ledger rule 5, not
@@ -25,7 +25,7 @@ AC9 and the old backlog checkpoint are deleted; a new content-witness pair (CP1 
 is left byte-identical, because the preflight is explicit that an equal `git status` cannot carry that claim.
 `docs/backlog-archive.md` and the session log remain mandatory by the owner's own wording.
 
-Governs: `tasks/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md`, a **blocked decision note**. It
+Governs: `tasks/Archive/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md`, a **blocked decision note**. It
 must not be handed to an executor.
 
 Retained per `orchestrator-execution-contract-template.md` §4.
@@ -259,5 +259,5 @@ This pass:
 4. Separately, when the owner schedules the deferred `BACKLOG LIMIT BREACH` work: OQ5 (which metric governs
    clause 10) and OQ6 (`ai-behavior.md` L694 versus additive-only) are still unresolved and will need answering
    there. They are out of Task 674's scope, not solved.
-5. Until 1 is resolved: `tasks/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md` is a **blocked
+5. Until 1 is resolved: `tasks/Archive/kickoff_prompt_Task_674_mojibake_gate_scripts_coverage.md` is a **blocked
    decision note**. No executor handoff, no worktree creation, no commit-and-run.

@@ -159,3 +159,38 @@ describe('closedListing', () => {
     expect((await meta('slug-act-old')).robots, 'active is never noindex, however old').toBeUndefined()
   })
 })
+
+// Task 953 (purity): the "new" badge compares the creation time with the clock. The clock is read outside the render body now, and the answer on either side of the
+// LISTING_NEW_DAYS window must be the same as before.
+describe('closedListing: the new-listing window follows the clock', () => {
+  const NOW = Date.parse('2026-06-15T12:00:00.000Z')
+  const WINDOW = 7 * DAY
+
+  async function isNewAt(now: number, createdAt: number): Promise<unknown> {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(now)
+    try {
+      const created = new Date(createdAt).toISOString()
+      sessionDb = createFakeDb({ listings: [{ ...listing('fresh', 'active', created), created_at: created }] })
+      const element = (await ListingPage(params('slug-fresh'))) as unknown as PageElement
+      return element.props.isNew
+    } finally {
+      vi.useRealTimers()
+    }
+  }
+
+  it('[SEC-X-SRV-CLOSED-PAGE] a listing created inside the window is new, one created outside it is not', async () => {
+    expect(await isNewAt(NOW, NOW - 2 * DAY)).toBe(true)
+    expect(await isNewAt(NOW, NOW - WINDOW + 1)).toBe(true)
+    expect(await isNewAt(NOW, NOW - WINDOW)).toBe(false)
+    expect(await isNewAt(NOW, NOW - WINDOW - 1)).toBe(false)
+    expect(await isNewAt(NOW, NOW - 40 * DAY)).toBe(false)
+  })
+
+  it('[SEC-X-SRV-CLOSED-PAGE] the same listing stops being new when the clock moves past the window', async () => {
+    const createdAt = NOW - DAY
+    expect(await isNewAt(NOW, createdAt)).toBe(true)
+    expect(await isNewAt(createdAt + WINDOW - 1, createdAt)).toBe(true)
+    expect(await isNewAt(createdAt + WINDOW + DAY, createdAt)).toBe(false)
+  })
+})

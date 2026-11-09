@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
@@ -10,7 +10,6 @@ import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
 import { mapAuthError } from '@/modules/auth/lib/mapAuthError'
 import { completeGoogleSignIn, openStoredDestination } from '@/modules/auth/lib/googleSignIn'
 import type { RememberedGoogleAccount } from '@/lib/auth/rememberedGoogleAccount'
-import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
@@ -27,6 +26,7 @@ import { PhoneField } from '@/components/shared/PhoneField'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone } from '@/lib/phone'
 import { SITE_URL } from '@/lib/siteUrl'
+import { useSessionLostNotice } from '@/modules/auth/lib/useSessionLostNotice'
 
 export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password' | 'welcome-back'
 
@@ -59,16 +59,10 @@ function LoginView({
   const [passwordVisible, setPasswordVisible] = useState(false)
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [sessionLost, setSessionLost] = useState(false)
+  const sessionLost = useSessionLostNotice()
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
-  useEffect(() => {
-    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
-      setSessionLost(true)
-      sessionStorage.removeItem(AUTH_SESSION_LOST_KEY)
-    }
-  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -186,14 +180,8 @@ function WelcomeBackView({
   const t = useTranslations('auth')
   const router = useRouter()
   const [errorKey, setErrorKey] = useState<string | null>(null)
-  const [sessionLost, setSessionLost] = useState(false)
+  const sessionLost = useSessionLostNotice()
 
-  useEffect(() => {
-    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
-      setSessionLost(true)
-      sessionStorage.removeItem(AUTH_SESSION_LOST_KEY)
-    }
-  }, [])
 
   async function handleGoogle(result: { credential: string; nonce: string }) {
     setErrorKey(null)
@@ -806,12 +794,16 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login', googleAcc
   const [view, setView] = useState<AuthView>(openingView)
   const [regShared, setRegShared] = useState<SharedRegFields>({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
 
-  useEffect(() => {
+  // Opening the sheet (or asking for another opening view or account while it is open) starts from the asked view with empty registration values — decided in the
+  // render that sees the change, so no frame shows the previous view.
+  const [seen, setSeen] = useState({ open, openingView, googleAccount })
+  if (seen.open !== open || seen.openingView !== openingView || seen.googleAccount !== googleAccount) {
+    setSeen({ open, openingView, googleAccount })
     if (open) {
       setView(openingView)
       setRegShared({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
     }
-  }, [open, openingView, googleAccount])
+  }
 
   const titles: Record<AuthView, string> = {
     'welcome-back': t('welcome_back_title'),

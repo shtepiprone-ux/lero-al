@@ -1,62 +1,35 @@
-# Lero.al rule architecture
+# Lero.al rules
 
-This directory is the operational rule tree. It replaces large, repeated workflow prompts with small files read at
-the moment a rule becomes relevant. `CLAUDE.md` is the entry point; a role's `SKILL.md` is its parent checklist.
+Rewritten 2026-11-06 at the owner's instruction (governance reset, `docs/governance-reset-2026-11-06.md`) on the basis
+of the OWASP Cheat Sheet Series. Read only what the task needs.
 
-## Reading model
+| File | Read when |
+|---|---|
+| `flow.md` | always — roles, design → implementation → review → merge, loop limit |
+| `quality-gates.md` | always — the agent loop hooks and the CI gates |
+| `kickoff-template.md` | writing a kickoff |
+| `threat-model.md` | the change touches the attack surface (list in the file) |
+| `security-testing.md` | the change touches the attack surface; reviewing tests |
+| `secure-code-review.md` | reviewing any change |
+| `shared/project-language.md` | always — Ukrainian to the owner, English in files |
+| `shared/canonical-component-reuse.md`, `shared/ui-token-contract.md`, `shared/mobile-adaptation-contract.md` (+ `-patterns`, `-component-map`), `shared/enforcement-model.md`, `shared/storybook-proof.md`, `shared/reference-research.md`, `shared/rendered-state-census.md` | visible UI, tokens, Stories |
 
-Read [shared/workflow-gates.md](shared/workflow-gates.md) for every task. It owns the executable plan, write,
-verification, CI-summary and release gates; the numbered role phases invoke it at their boundary.
+Rules are changed only at the owner's request, in a PR the owner reviews. A rule states one thing once; a new rule goes
+into the smallest file that owns it.
 
-1. Read the role parent in `.claude/skills/<workflow>/SKILL.md`. It is deliberately short and establishes the gate.
-2. Read the numbered phase file it names **before** starting that phase. Never treat a parent summary as permission
-   to skip the phase file.
-   Opus completes C1-C7 (design) or R1-R7 (review) with evidence and explicit exit conditions. Both use
-   [shared/task-readiness.md](shared/task-readiness.md) before publishing any executor route, including revisions.
-   [shared/orchestration-state.md](shared/orchestration-state.md) owns draft/ready transitions and proof freshness.
-3. Before a kickoff or material review conclusion, read `shared/claim-evidence-contract.md`. It is the shared
-   contract for factual claims; task/review phases say when its ledger is required.
-4. For UI, Storybook, tokens, or visual review, Opus first reads `shared/canonical-component-reuse.md` and inspects
-   ready components/Stories before external research. Its owner-approved reuse scope takes precedence over blanket
-   research/remeasurement. Then read `shared/mobile-adaptation-contract.md`, then
-   `shared/ui-token-contract.md` and `shared/enforcement-model.md`, before proposing or changing the visual
-   implementation, then `shared/storybook-proof.md` before producing Storybook evidence. Mantine and the project
-   theme remain authoritative for responsive mechanism, interaction, accessibility, and canonical owner; the mobile
-   contract supplies semantic outcome/proof only. Opus inherits ready adaptations; a new pattern needs source support.
-5. Read the exact legacy/reference document named by `docs/rule-index.md` only when the task type needs it. The
-   long documents remain the historical and detailed source of record; they are not a default "read everything" list.
-6. For every new or edited task, read [shared/security-testing.md](shared/security-testing.md) and its selected
-   companion files. Every product task requires frontend AND server security tests, named by Opus, implemented or
-   rerun by Sonnet, and independently verified by Opus. The contract defines the narrow Q0-only N/A exception.
+## Precedence over older documents
 
-7. Opus and Sonnet communicate with the owner in Ukrainian only; Russian replies and mixed Ukrainian/Russian prose
-   are forbidden. Read [shared/project-language.md](shared/project-language.md). Every project file you write is
-   English, owner quotes included; only product localization data may be in another language.
+Process — roles, flow, gates, review, evidence, Git — is defined in this folder only. The older documents
+(`docs/agent-contract.md` and `docs/rules/agent-contract/`, `docs/golden-rules.md` and `docs/rules/golden/`,
+`docs/rule-index.md`, `docs/orchestrator-role.md`, `docs/orchestrator-procedures.md`, `docs/governance-enforcement.md`,
+`docs/ai-behavior.md`, `docs/maintenance-playbook.md`, `docs/governance-checklists.md`) keep their product requirements
+(UI, tokens, Stories, mobile, tables, i18n, data, security); where they describe process, this folder wins:
 
-## Size and ownership rules
-
-- Parent workflow files contain only role boundary, stop conditions, ordered checks, receipts, and links.
-- A phase file should cover one decision point and stay under 8 KB. Create a sibling phase file instead of appending
-  a new unrelated policy.
-- A policy is stated once in `shared/` or its most-specific `docs/` source. Role files link to it; they do not copy it.
-- Current ordered phase workflows own sequencing; historical incident narratives do not add another workflow.
-  Keep one current execution route in a kickoff and retain history as linked evidence, preserving open obligations.
-- A change to a shared policy must update every affected role checklist and the relevant validation/gate in the same
-  change. A role-specific exception belongs in that role's phase file and needs an owner decision with date and scope.
-
-## Tree
-
-```text
-.claude/rules/
-  shared/     cross-role contracts
-  create/     Opus task-design phases
-  review/     Opus implementation-review phases
-  execute/    Sonnet implementation phases
-```
-
-## Canonical sources
-
-- `docs/golden-rules.md` indexes the detailed GR-0…GR-12 fragments and exact receipts in `docs/rules/golden/`.
-- `docs/agent-contract.md` indexes P0 invariants and role authority fragments in `docs/rules/agent-contract/`.
-- `docs/rule-index.md` selects task-specific source documents.
-- The files here make the mandatory sequence small enough to follow; they never weaken those sources.
+- A **receipt** those documents require is no longer a string a hook looks for, and a response is not void without one.
+  The check the receipt stood for is an acceptance criterion with an automated test where it can be automated
+  (`quality-gates.md` §8); otherwise the reviewer states the check and its result, with `path:line` evidence, in the
+  review (`secure-code-review.md`).
+- **Phases, ledgers, the claim ledger, `BLOCKED — KICKOFF EVIDENCE GAP`** are replaced by the kickoff's sources
+  (`kickoff-template.md`) and the reviewer's rerun of every claim.
+- A reference in any active document to a file or `npm run` script that no longer exists fails `check-files.mjs`
+  (`stale-path`, `quality-gates.md` §1), so a removed mechanism cannot stay quoted as if it were in force.

@@ -83,6 +83,7 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { stripComments, extractCssDeclaredNames, findVarReferences } from './check-css-var-resolvability.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -96,6 +97,7 @@ export const MIGRATION_INPUTS_REL = [
   'src/design-system/mantine/patterns/MantineCopyIdButton.module.css',
   'src/design-system/mantine/patterns/MantineHomeSection.tsx',
   'src/design-system/mantine/patterns/MantineListingCardPattern.module.css',
+  'src/design-system/mantine/patterns/MantineListingCardPattern.tsx',
   'src/modules/listings/components/FeaturedListingsView.module.css',
   'src/modules/listings/components/LatestListingsView.module.css',
   'src/modules/listings/components/ListingCard.module.css',
@@ -118,6 +120,43 @@ export const EXPECTED_ZERO_PROPERTY = '--space-0';
 // (34-4 pairs, 66-8 uses — this manifest's four HeaderView rows totalled 1+1+5+1=8 uses); the
 // FULL_CENSUS_*/MIGRATION_SIGNATURE constants below are re-measured against the post-change tree
 // (this gate's own `--report` output), not derived by hand.
+// Task 968 (2026-11-09) brought the manifest to today's tree. Since `1a851f8df` (Task 879, the commit
+// that set the 65/123 census and signature `f3093b7d…`) the listing card moved to Mantine in two
+// commits, and a third commit added a touch-target rule to one file. Rows follow their uses (Opus
+// decision 2026-11-09); each row below was checked with `git log -S"<token>" -- <file>` and
+// `git show <commit> -- <file>`:
+//   Removed — the uses moved to Mantine theme tokens or props:
+//     MantineListingCardPattern.module.css `--homepage-runtime-space-1` (2 uses) — 7b4b81f8c (Task 741);
+//     MantineListingCardPattern.module.css `--homepage-runtime-space-2` (14 uses) — 7b4b81f8c (Task 741),
+//       with its CSS shrink in 4197ae7d8 (Task 886);
+//     ListingCard.module.css `--homepage-runtime-space-1` (1 use) — 7b4b81f8c (Task 741);
+//     ListingCard.module.css `--homepage-runtime-space-6` (2 uses) — 4197ae7d8 (Task 886);
+//     ListingCard.module.css `--homepage-runtime-space-8` (2 uses) — 4197ae7d8 (Task 886).
+//   Re-counted — the uses left in the file, pinned by the signature:
+//     MantineListingCardPattern.module.css `--homepage-runtime-space-0` 3 -> 2 uses (:99, :123) — 7b4b81f8c;
+//     MantineListingCardPattern.module.css `--homepage-runtime-space-3` 8 -> 1 use (:34) — 7b4b81f8c.
+//   Moved — the use followed the token into another file:
+//     `--homepage-runtime-space-20` (1 use, `mih`, MantineListingCardPattern.tsx:262) left
+//     MantineListingCardPattern.module.css and sits in MantineListingCardPattern.tsx — 7b4b81f8c; that
+//     `.tsx` joined MIGRATION_INPUTS_REL (the manifest reads eleven files again).
+// Census 65/123 -> 64/89 by `--report` category and file (blocking stays 0/0, unknown 0/0,
+// theme-inline-only 0/0, module-local 0/0, expected-zero 0):
+//   root-owned      63/119 -> 59/82;  mantine-external 2/4 -> 5/7.
+//   MantineListingCardPattern.module.css 13/46 -> 11/17 — 7b4b81f8c (with 4197ae7d8 for `--status-info`
+//     and `--status-rented`): besides the rows above, `--muted`, `--muted-foreground`, `--radius`,
+//     `--overlay`, `--overlay-foreground` left the CSS (7b4b81f8c); `--motion-duration-slow/base`,
+//     `--mantine-spacing-micro`, `--mantine-shadow-lg` appeared (7b4b81f8c); `--status-info/rented`
+//     are now read here at 2 uses each.
+//   MantineListingCardPattern.tsx (new input) 0/0 -> 5/5 — read from the tree after 7b4b81f8c
+//     (`--status-info`, `--status-rented`, `--overlay`, `--overlay-foreground`,
+//     `--homepage-runtime-space-20`); d8a07a3c7 edited the file without a var() change.
+//   ListingCard.module.css 6/13 -> 1/1 — 7b4b81f8c (`--homepage-runtime-space-1`, `--mantine-shadow-xs`
+//     appears) and 4197ae7d8 (`--homepage-runtime-space-6/8`, `--muted-foreground`,
+//     `--status-info/rented` left); only `--mantine-shadow-xs` is left.
+//   MantineCopyIdButton.module.css 5/6 -> 6/8 — d8a07a3c7 (Task 923/927, R33): a new 44px touch-target
+//     rule reads `--homepage-runtime-space-11` twice (`min-width`, `min-height`). Not a Mantine move, not
+//     a MIGRATION_TARGETS row; a root-owned token, so it only raises the census.
+// The `imageActions` slot removed by 7b4b81f8c is Task 741's approved product change, not this gate's.
 // Each tuple is (file, legacyProperty, expectedToken, uses), derived from the kickoff §3.1 census
 // and the §10.2 replacement mapping, then re-verified against the migrated tree. Line numbers are
 // deliberately absent: re-indentation or an added declaration must never invalidate the signature,
@@ -141,29 +180,27 @@ export const MIGRATION_TARGETS = [
   { file: 'src/design-system/mantine/patterns/MantineHomeSection.tsx', legacyProperty: '--home-section-py-md', expectedToken: '--homepage-runtime-section-py-md', uses: 1 },
   { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--color-badge-premium', expectedToken: '--badge-premium', uses: 1 },
   { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--shadow-listing-card-elevation-lg', expectedToken: '--homepage-runtime-listing-card-shadow', uses: 1 },
-  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 3 },
-  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-1', expectedToken: '--homepage-runtime-space-1', uses: 2 },
-  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 14 },
-  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-20', expectedToken: '--homepage-runtime-space-20', uses: 1 },
-  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-3', expectedToken: '--homepage-runtime-space-3', uses: 8 },
+  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-0', expectedToken: '--homepage-runtime-space-0', uses: 2 },
+  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.tsx', legacyProperty: '--space-20', expectedToken: '--homepage-runtime-space-20', uses: 1 },
+  { file: 'src/design-system/mantine/patterns/MantineListingCardPattern.module.css', legacyProperty: '--space-3', expectedToken: '--homepage-runtime-space-3', uses: 1 },
   { file: 'src/modules/listings/components/FeaturedListingsView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 1 },
   { file: 'src/modules/listings/components/FeaturedListingsView.module.css', legacyProperty: '--space-3', expectedToken: '--homepage-runtime-space-3', uses: 1 },
   { file: 'src/modules/listings/components/LatestListingsView.module.css', legacyProperty: '--space-2', expectedToken: '--homepage-runtime-space-2', uses: 1 },
   { file: 'src/modules/listings/components/LatestListingsView.module.css', legacyProperty: '--space-3', expectedToken: '--homepage-runtime-space-3', uses: 1 },
-  { file: 'src/modules/listings/components/ListingCard.module.css', legacyProperty: '--space-1', expectedToken: '--homepage-runtime-space-1', uses: 1 },
-  { file: 'src/modules/listings/components/ListingCard.module.css', legacyProperty: '--space-6', expectedToken: '--homepage-runtime-space-6', uses: 2 },
-  { file: 'src/modules/listings/components/ListingCard.module.css', legacyProperty: '--space-8', expectedToken: '--homepage-runtime-space-8', uses: 2 },
 ];
 
 // The three independent invariants Case 5 asserts (owner decision 2026-08-27).
-export const MIGRATION_TARGET_PAIRS = 30;
-export const MIGRATION_TARGET_USES = 58;
+export const MIGRATION_TARGET_PAIRS = 25;
+export const MIGRATION_TARGET_USES = 29;
 // FULL_CENSUS_PAIRS/USES and MIGRATION_SIGNATURE re-measured against the post-Task-879 tree via
 // this gate's own `--report` output (2026-09-25): "TOTAL CLASSIFIED (all categories): 65 pair(s) /
 // 123 use(s)" and "observed signature f3093b7d265f43b81b687420e4897f411c498f21ba44612a67b2496de896939f".
-export const FULL_CENSUS_PAIRS = 65;
-export const FULL_CENSUS_USES = 123;
-export const MIGRATION_SIGNATURE = 'f3093b7d265f43b81b687420e4897f411c498f21ba44612a67b2496de896939f';
+// Task 968 (2026-11-09) re-measured them again with `--report` on the tree after the card's move to
+// Mantine (see the Task 968 block above `MIGRATION_TARGETS`): "TOTAL CLASSIFIED (all categories): 64
+// pair(s) / 89 use(s)" and "observed signature 25eba7c6c06095180628a07d509a1a49d169ba7be867ffce07fd81b468a48539".
+export const FULL_CENSUS_PAIRS = 64;
+export const FULL_CENSUS_USES = 89;
+export const MIGRATION_SIGNATURE = '25eba7c6c06095180628a07d509a1a49d169ba7be867ffce07fd81b468a48539';
 
 function canonicalTargetLine(t) {
   return `${t.file}|${t.legacyProperty}|${t.expectedToken}|${t.uses}`;
@@ -527,10 +564,13 @@ function runCase4() {
 // token reused, not a new one (R7): 77/141 -> 77/142 and 34/65 -> 34/66). Task 879 (D81-7, R13,
 // 2026-09-25) then deleted `HeaderView.module.css` from the manifest entirely — the header's
 // chrome moved to Mantine props/theme tokens — dropping both invariants again: 77/142 -> 65/123
-// and 34/66 -> 30/58, over ten manifest files, not eleven:
-//   FULL_CENSUS       — exactly 65 pairs / 123 uses across the ten manifest files, all five
-//                       categories.
-//   MIGRATED_TARGETS  — exactly 30 pairs / 58 uses, AND every approved (file, legacyProperty,
+// and 34/66 -> 30/58, over ten manifest files, not eleven. Task 968 (2026-11-09) re-measured both
+// against today's tree (65/123 -> 64/89 and 30/58 -> 25/29, eleven manifest files again; see the
+// Task 968 block above `MIGRATION_TARGETS`), so the numbers below are the FULL_CENSUS_* and
+// MIGRATION_TARGET_* constants, not the 2026-09-25 values:
+//   FULL_CENSUS       — exactly FULL_CENSUS_PAIRS / FULL_CENSUS_USES (64/89) across the manifest
+//                       files, all five categories.
+//   MIGRATED_TARGETS  — exactly 25 pairs / 29 uses, AND every approved (file, legacyProperty,
 //                       expectedToken, uses) tuple matches, witnessed by an exact signature match.
 //   BLOCKING          — exactly 0 pairs / 0 uses, and 0 expected-zero violations.
 // A count alone is not sufficient: two wrong-but-root-owned substitutions can preserve every count.
@@ -617,7 +657,7 @@ function runVerifyGate() {
 }
 
 // ── CLI entrypoint ──
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   if (process.argv.includes('--verify-gate')) runVerifyGate();
   else if (process.argv.includes('--report')) runReport();
   else run();

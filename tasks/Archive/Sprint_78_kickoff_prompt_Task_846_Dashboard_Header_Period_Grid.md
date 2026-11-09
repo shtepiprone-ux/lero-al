@@ -2,7 +2,7 @@
 
 Sprint 78 · P1 · QA profile **Q3** · Wave A, last · depends on **843** approved · **Status: ✅ `APPROVED WITH NOTES` 2026-09-20 (review 2) — CLOSED AND ARCHIVED.** Re-reviewed unchanged after **Task 861** landed, per §16.1's Option B: only AC3 was re-verified (now keyboard-only end to end in real Chromium) and all six production hashes matched the review-1 witnesses byte-for-byte. See §17. Ledger row → `docs/backlog-archive.md`. **Wave A is complete; Wave B (847/848) is open.**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md) (D78-1…D78-6).
 
 ## 1. Mode and task type
 

@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { describe, it, expect, vi } from 'vitest'
-import * as visibilityModule from '../visibility'
+import { describe, it, expect } from 'vitest'
 import {
   PUBLIC_VISIBLE_STATUSES,
   isListingPubliclyVisible,
@@ -181,7 +180,6 @@ describe('applyPublicVisibility — mixed policy guard', () => {
   })
 
   it('mixed requiresUnexpired policy throws explicitly', () => {
-    const original = { ...PUBLIC_VISIBLE_STATUSES }
     // Temporarily inject a mixed policy: active requires unexpired, but a
     // hypothetical 'reserved' (simulated via 'pending') does not.
     const saved = PUBLIC_VISIBLE_STATUSES.pending

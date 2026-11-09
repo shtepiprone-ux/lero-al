@@ -64,6 +64,7 @@ import { createServer } from 'node:http';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
+import { requestPathWithin } from './lib/within-repository.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -101,8 +102,9 @@ function startStaticServer(staticDir, port) {
     const server = createServer(async (req, res) => {
       let urlPath = req.url.split('?')[0];
       if (urlPath === '/') urlPath = '/index.html';
-      const filePath = join(staticDir, decodeURIComponent(urlPath));
       try {
+        // the request path is decoded and held inside the served directory (Task 951 AC8): "../", "%2e%2e/", a link out of it all fall through to the fallback below
+        const filePath = requestPathWithin(staticDir, urlPath);
         const data = await readFile(filePath);
         const mime = MIME[extname(filePath)] ?? 'application/octet-stream';
         res.writeHead(200, { 'Content-Type': mime });

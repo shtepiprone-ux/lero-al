@@ -1,0 +1,330 @@
+{
+  "task": "948",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`node scripts/quality/check-ruleset.mjs` exit 0 (2026-11-09); AC1 `npm run check:design-tokens:strict` 0 (0 raw, 0 stale), AC2 `npm run check:enrolled-tailwind` 0, AC6 `node scripts/check-ui-contract.mjs --base <main> --head <scratch commit of the worktree>` PASS (reviewer, a scratch clone; the gate reads commits only)."
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the style sheet changes are a comment and a marker; no url(), @import, font or image source is added."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "the diff renders text through React escaping only (read in full); `npm run lint` exit 0 (react/no-danger)."
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "\"registry\" names a JSON file of the UI gate; no database, grant or policy is touched."
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "no eval, Function, innerHTML or computed URL in the diff (read in full); `npm run lint` exit 0."
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow file is edited by this task."
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "no API of any kind is added or changed; the task edits styling, a Story and gate data."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the baselines and the registry are data; no command or query is built from them."
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "the diff adds no regular expression; `npm run lint` and `npm run typecheck` exit 0 (2026-11-09)."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no request body is bound to a record; the registry entries are written by hand."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "no data access or tenant boundary changes; the task edits styling and gate data."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Nextjs_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "no script that starts a process is changed."
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "no query is built; the UI gate reads a committed JSON file."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "every claim of both reports was rerun (lint, typecheck, `npm test -- --coverage` 373 files 6143 tests, AC1, AC2, AC4 with `size={20}` restored: 1 failed, AC3 red and green, AC6 on a scratch commit); the review 1 claim on AC3 did not hold (F1), revision 1 fixed it."
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "no dependency, lockfile or install step changes in this task."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no SQL is written or run by this diff."
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "review 2 reran AC3 itself: `node scripts/check-locale-leak.mjs --mantine-only --report-only-leaks --story=patterns-mantine-listinggallerypattern--default --widths=320,390,639,640,1280` exit 1 with `overflow: hidden` and the computed-style line removed (console `expected 576 to be +0`), exit 0 restored; review 1 found F1 the same way (probe), fixed in revision 1."
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Cache_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "no innerHTML in the diff (read in full); `npm run lint` exit 0."
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Webhook_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "WebSocket_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the Task 948 diff (review 1, 2026-11-09: `Map.module.css`, `input-chrome.css`, `MantineListingGalleryPattern.tsx`, `CabinetEmailChangeSectionView.tsx` and its test, the `ListingGalleryPattern` Story, the enrolled-tailwind baseline and the UI-contract registry) does not touch this area; the branch verdict is in Task_952.json."
+    }
+  }
+}

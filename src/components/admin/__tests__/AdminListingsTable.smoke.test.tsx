@@ -24,6 +24,8 @@
  *   T7 — Open public is absent for a hidden listing and present for a visible one.
  *   T9 — (Revision 8, R57) the page's listings select carries `premium_until` (the dialogs' premium state) and no
  *        longer selects the listing images: the preview dialog shows no listing card.
+ *        (Task 931 R3) The page runs through the REAL `requireStaffPage` on a `requireViewer` double: a staff viewer
+ *        reads the listings, a viewer of role `user` gets `notFound()` and the admin client is never selected from.
  *
  * Planted-violation proofs (transcripts in docs/sessions/evidence/task857/):
  *   P1 — `visibilityFilter.ts` maps `'visible'` to nothing → T1 fails.
@@ -48,10 +50,37 @@ import AdminListingsPage from '@/app/admin/listings/page'
 
 const mockPush = vi.fn()
 let mockSearch = ''
+// Task 931 R3: the real `requireStaffPage` runs on the page, so `notFound` and `redirect` must behave like Next.js: they never return.
+// They throw errors this test can recognise.
+const nav = vi.hoisted(() => {
+  class NotFoundError extends Error {
+    constructor() {
+      super('NEXT_NOT_FOUND')
+    }
+  }
+  class RedirectError extends Error {
+    constructor(readonly url: string) {
+      super(`NEXT_REDIRECT ${url}`)
+    }
+  }
+  return { NotFoundError, RedirectError }
+})
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush, refresh: vi.fn() }),
   usePathname: () => '/admin/listings',
   useSearchParams: () => new URLSearchParams(mockSearch),
+  notFound: () => {
+    throw new nav.NotFoundError()
+  },
+  redirect: (url: string) => {
+    throw new nav.RedirectError(url)
+  },
+}))
+
+// The viewer boundary of the page (Task 923 R68 (a)): the REAL `requireStaffPage` stays in the path and decides from this viewer.
+const mockRequireViewer = vi.fn()
+vi.mock('@/lib/auth/requireViewer', () => ({
+  requireViewer: () => mockRequireViewer(),
 }))
 
 vi.mock('next/link', () => ({
@@ -124,6 +153,7 @@ beforeEach(() => {
   mockSetListingPremium.mockResolvedValue({})
   mockDeleteListing.mockResolvedValue(undefined)
   mockUpdateListingStatus.mockResolvedValue({})
+  mockRequireViewer.mockResolvedValue({ ok: true, userId: 'admin-1', role: 'admin' })
   // The property-type hook falls back to the static constants when the API is unreachable.
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')))
   // jsdom has no scrollIntoView; Mantine's Combobox calls it on the selected option.
@@ -345,7 +375,7 @@ describe('ListingPreviewDialog — status select (T4)', () => {
     await waitFor(() => expect(dialogSelect.value).toBe(soldLabel))
   })
 
-  it('a failed update toasts status_change_error and leaves the row unchanged', async () => {
+  it('[SEC-931-FE-STATUS-ERROR] a failed update toasts status_change_error and leaves the row unchanged', async () => {
     mockUpdateListingStatus.mockResolvedValue({ error: 'forbidden' })
     renderTable([ACTIVE_LISTING])
     await openPreview(ACTIVE_LISTING.title)
@@ -456,12 +486,57 @@ describe('ListingPreviewDialog — action hierarchy (T8)', () => {
 // ── T9 — the page's select: premium_until yes, listing images no (Revision 8, R57) ─
 
 describe('AdminListingsPage — listing summary columns (T9)', () => {
-  it('selects premium_until for the dialogs and does not select listing_images', async () => {
+  beforeEach(() => {
     pageSelects.length = 0
+  })
+
+  it('[SEC-931-FE-PAGE-ALLOW] a staff viewer: selects premium_until for the dialogs and does not select listing_images', async () => {
     await AdminListingsPage({ searchParams: Promise.resolve({}) })
+    expect(mockRequireViewer).toHaveBeenCalledTimes(1)
     const rows = pageSelects.find(columns => columns.includes('owner:users'))
     expect(rows).toBeDefined()
     expect(rows).toContain('premium_until')
     expect(rows).not.toContain('listing_images')
+  })
+
+  // Task 923 R68 (a), Task 931 R3: the page checks the viewer before its first read; a plain user gets `notFound()`, never the listings.
+  it('[SEC-931-FE-PAGE-DENY] a non-staff viewer is refused by requireStaffPage before any listings read', async () => {
+    mockRequireViewer.mockResolvedValue({ ok: true, userId: 'user-1', role: 'user' })
+    await expect(AdminListingsPage({ searchParams: Promise.resolve({}) })).rejects.toBeInstanceOf(nav.NotFoundError)
+    expect(mockRequireViewer).toHaveBeenCalledTimes(1)
+    expect(pageSelects).toHaveLength(0)
+  })
+})
+
+// Task 953 (set-state-in-effect): the rows follow the listings the server sends after a refresh.
+describe('AdminListingsTable — local copy follows the server props (Task 953)', () => {
+  const tree = (listings: AdminListing[]) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminListingsTable
+          listings={listings}
+          total={listings.length}
+          page={1}
+          perPage={25}
+          activeStatus=""
+          searchQuery=""
+          activeTab="all"
+          activeVisibility=""
+          activeReason=""
+          auditCounts={{ total: 2, expired: 1, noExpiry: 1 }}
+        />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+
+  it('replaces its rows when new listings arrive', () => {
+    const view = renderTable()
+    expect(screen.queryAllByText(ACTIVE_LISTING.title).length).toBeGreaterThan(0)
+    expect(screen.queryAllByText(PENDING_LISTING.title).length).toBeGreaterThan(0)
+    view.rerender(tree([PENDING_LISTING]))
+    expect(screen.queryAllByText(ACTIVE_LISTING.title)).toHaveLength(0)
+    expect(screen.queryAllByText(PENDING_LISTING.title).length).toBeGreaterThan(0)
+    view.rerender(tree([ACTIVE_LISTING, PENDING_LISTING]))
+    expect(screen.queryAllByText(ACTIVE_LISTING.title).length).toBeGreaterThan(0)
   })
 })

@@ -4,7 +4,7 @@ Sprint 78 · P1 · QA profile **Q4** (new table, RLS, scheduled write path) · W
 (shared cron auth helper, `vercel.json` edited first) and **846** approved (`period.ts`) and owner action **O78-1**
 (Vercel plan) · **Status: 📝 KICKOFF FILED 2026-09-18 — READY FOR SONNET**
 
-Sprint plan: [`Sprint_78_…`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-1:** the
+Sprint plan: [`Sprint_78_…`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md). **D78-1:** the
 aggregate is in scope. **D78-4** (owner, 2026-09-18, verbatim): *"перечитай інформацію тут
 https://vercel.com/docs/cron-jobs, після чого необхідно буле обрати варіант, в пріоритеті авжеж
 /api/cron/listing-activity зі schedule щогодини; ідемпотентний перерахунок сьогодні+вчора."*

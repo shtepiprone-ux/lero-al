@@ -2,7 +2,7 @@
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 
-Task: `tasks/kickoff_prompt_Task_624_LocaleLeak_MantineAllowlist.md`
+Task: `tasks/Archive/kickoff_prompt_Task_624_LocaleLeak_MantineAllowlist.md`
 
 ## Requirement ledger (from the kickoff)
 
@@ -92,7 +92,7 @@ No other files were touched. (`git status` also shows pre-existing uncommitted c
 `.github/workflows/governance-pr.yml`, `docs/backlog.md`, `docs/storybook-governance.md`, `package.json`,
 `scripts/check-stories-rendered.mjs`, `scripts/check-story-coverage.mjs`, `scripts/lib/`,
 `scripts/mantine-migration-scope.json`, `docs/sessions/2026-07-19-taskQ0R-*.md`,
-`tasks/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md` — these predate this session, are Task Q0R's own diff still
+`tasks/Archive/kickoff_prompt_Task_Q0R_MantineOnlyCIScope.md` — these predate this session, are Task Q0R's own diff still
 awaiting orchestrator review, and were not modified by this task.)
 
 ## Validation evidence

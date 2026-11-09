@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 565, `tasks/Sprints/Sprint_42_kickoff_prompt_Task_565_DatePickerRuntimeICUFix.md`. Opened from
+Task 565, `tasks/Archive/Sprint_42_kickoff_prompt_Task_565_DatePickerRuntimeICUFix.md`. Opened from
 the Task 564 orchestrator review (2026-07-09): the grep sweep in that task left
 `src/components/shared/DatePicker.tsx` as the last remaining site calling `Intl.DateTimeFormat` with
 a runtime `locale` variable. Owner decision (2026-07-09): fix it now as a standalone task rather than

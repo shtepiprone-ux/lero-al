@@ -3,7 +3,7 @@
 > **Status:** OPEN (created 2026-06-17)
 > **Owner-layer:** Orchestrator-planned (Opus); implementation delegated to Sonnet 4.6.
 > **Primary task:** Task 452 (single task + reserved follow-ups). Kickoff:
-> `tasks/kickoff_prompt_Task_452_AdminDataFreshness.md`.
+> `tasks/Archive/kickoff_prompt_Task_452_AdminDataFreshness.md`.
 
 ## Problem
 

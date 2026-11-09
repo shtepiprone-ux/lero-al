@@ -73,7 +73,7 @@ fixed-header month + year dropdowns; D3 weekday row under EACH month title; D4 C
 the `disablePastDates` prop). 560 is independent and deferred. Hand **561 to Sonnet next**; 559 after 561 is approved.
 
 Kickoffs:
-- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_558_RangeDatePickerComponent.md` (original — REJECTED, retained for history)
-- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_561_RangeDatePickerFixes.md` (active — fixes the 6 rejection points)
-- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_559_ListingsFiltersRangeIntegration.md`
+- `tasks/Archive/Sprint_42_kickoff_prompt_Task_558_RangeDatePickerComponent.md` (original — REJECTED, retained for history)
+- `tasks/Archive/Sprint_42_kickoff_prompt_Task_561_RangeDatePickerFixes.md` (active — fixes the 6 rejection points)
+- `tasks/Archive/Sprint_42_kickoff_prompt_Task_559_ListingsFiltersRangeIntegration.md`
 - Task 560 — deferred; a stub row here until its schema semantics are defined with the owner.

@@ -1,9 +1,16 @@
 # Orchestrator / Reviewer Role
 
+> **Superseded in part (governance reset 2026-11-06).** The flow, the gates, review and security testing are defined in
+> `.claude/rules/README.md` (`flow.md`, `quality-gates.md`, `secure-code-review.md`, `security-testing.md`). CI is
+> `.github/workflows/ci.yml` with the single required check **CI Required**. The hooks, receipts, phase files,
+> `workflow-gates`, `role-boundaries`, `git-publication` and the `governance-pr.yml`/`governance-scheduled.yml`
+> workflows named below no longer exist; where this file conflicts with `.claude/rules/`, `.claude/rules/` wins.
+
+
 This file defines the Opus orchestration and review layer. The compact executable workflow lives in
 `.claude/skills/` and `.claude/rules/`; detailed task-specific sources are selected by `docs/rule-index.md`.
 Task design follows C1-C7 and review follows R1-R7. Each step needs its observed evidence and exit condition; loaded
-rules or a receipt cannot complete it. Both workflows share `.claude/rules/shared/task-readiness.md` at publication.
+rules or a receipt cannot complete it. Both workflows share `.claude/rules/shared/task-readiness.md` (removed 2026-11-06) at publication.
 
 ## Role
 
@@ -44,7 +51,7 @@ opening an existing task, source, diff, executor report, or evidence, open these
 order:
 
 1. `.claude/skills/create-task/SKILL.md`
-2. `.claude/rules/shared/role-boundaries.md`
+2. `.claude/rules/shared/role-boundaries.md` (removed 2026-11-06)
 3. `.claude/rules/create/01-preflight.md`
 
 The preflight phase selects the exact Agent Contract fragments and additional bundle. For visible UI, it requires
@@ -68,8 +75,8 @@ is the only permitted action before the gate. Before opening the task, diff, sou
 open these files in the current session, in order:
 
 1. `.claude/skills/review-task/SKILL.md`
-2. `.claude/rules/shared/role-boundaries.md`
-3. `.claude/rules/review/01-preflight.md`
+2. `.claude/rules/shared/role-boundaries.md` (removed 2026-11-06)
+3. `.claude/rules/review/01-preflight.md` (removed 2026-11-06)
 
 The preflight phase selects the exact Agent Contract fragments and additional bundle. For visible UI, it requires
 [`P0 16–16c`](rules/agent-contract/p0-16-16c-ui-canonical.md),
@@ -115,7 +122,8 @@ Mutating git is owner-only and native PowerShell only, including:
 Opus may emit explicit-path commit commands for the owner after a verified task design that changed task/docs
 artifacts, after the verified kickoff amendment of a `NEEDS REVISION` review, or after an `APPROVED` /
 `APPROVED WITH NOTES` review. Only after the latter approved review may Opus also emit
-`git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream read-only
+`git push -u origin <verified-task-branch>` for the owner; main changes only through a green PR under
+`.claude/rules/shared/git-publication.md` (removed 2026-11-06) (owner decision 2026-11-01). It must verify the remote and branch read-only
 before emitting that command, and it must not run any of these commands. A task-design handoff and every non-approved
 review are never authorization to emit a push command.
 
@@ -138,10 +146,12 @@ The handoff is an unattributed owner commit. The command and every commit-messag
 `Co-Authored-By` in every spelling/case, all AI/agent/vendor names or emails, and `--author`. This is a prohibition,
 not a formatting preference; a client or model-generated template never authorizes an exception.
 
-For an approved review only, append the verified owner-run push command:
+For an approved review only, append the verified owner-run branch push and PR creation; the merge is a later
+separate handoff after green PR checks (`.claude/rules/shared/git-publication.md` (removed 2026-11-06)):
 
 ```powershell
-git push <verified-remote> <verified-branch>
+git push -u origin <verified-task-branch>
+gh pr create --base main --head <verified-task-branch> --fill
 ```
 
 Forbidden emission:
@@ -197,7 +207,7 @@ Every kickoff must be executable by a fresh Sonnet session with no hidden chat c
 - completion report contract.
 
 Before the kickoff can be published, apply the compact
-`.claude/rules/shared/claim-evidence-contract.md` and run `npm run check:kickoff-evidence`. Each material premise has
+`.claude/rules/shared/claim-evidence-contract.md` (removed 2026-11-06) and run `npm run check:kickoff-evidence`. Each material premise has
 a `C# FACT` with a current path/range/literal or a `D# OWNER DECISION` with a dated owner choice in faithful English translation. `INFERENCE`,
 `UNKNOWN`, `UNVERIFIED`, `CONTRADICTION`, and `ASSUMPTION` cannot support scope, requirements, ACs, exclusions, or
 expected command output; resolve them or return `BLOCKED — KICKOFF EVIDENCE GAP`.

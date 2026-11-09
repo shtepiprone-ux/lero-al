@@ -7,21 +7,21 @@ cloudflare responses: 11 (302 /turnstile/v0/api.js; 200 /turnstile/v0/b/d2d3316b
 console lines about turnstile: none
 screenshot failed locator.screenshot: Timeout 29974.75ms exceeded.
 Call log:
-[2m  - taking element screenshot[22m
-[2m  - waiting for fonts to load...[22m
-[2m  - fonts loaded[22m
-[2m  - attempting scroll into view action[22m
-[2m    2 × waiting for element to be stable[22m
-[2m      - element is not visible[22m
-[2m    - retrying scroll into view action[22m
-[2m    - waiting 20ms[22m
-[2m    2 × waiting for element to be stable[22m
-[2m      - element is not visible[22m
-[2m    - retrying scroll into view action[22m
-[2m      - waiting 100ms[22m
-[2m    55 × waiting for element to be stable[22m
-[2m       - element is not visible[22m
-[2m     - retrying scroll into view action[22m
-[2m       - waiting 500ms[22m
+  - taking element screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+  - attempting scroll into view action
+    2 × waiting for element to be stable
+      - element is not visible
+    - retrying scroll into view action
+    - waiting 20ms
+    2 × waiting for element to be stable
+      - element is not visible
+    - retrying scroll into view action
+      - waiting 100ms
+    55 × waiting for element to be stable
+       - element is not visible
+     - retrying scroll into view action
+       - waiting 500ms
 
 EXIT_CODE=0

@@ -1,6 +1,6 @@
 # Task 620 — Correct the `theme.ts` shade-index comments for the five pre-existing badge colors
 
-**Task path:** `tasks/Sprints/Sprint_44_kickoff_prompt_Task_620_BadgeShadeCommentAccuracy.md`
+**Task path:** `tasks/Archive/Sprint_44_kickoff_prompt_Task_620_BadgeShadeCommentAccuracy.md`
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`
 **QA profile:** Q0 Docs/Governance
 

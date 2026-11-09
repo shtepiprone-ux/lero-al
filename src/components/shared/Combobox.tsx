@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { cn, normalizeSearch } from '@/lib/utils'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import { MOBILE_POPUP, DRAG_HANDLE_WRAPPER, DRAG_HANDLE_BAR } from '@/components/ui/mobile-bottom-sheet'
 
 export interface ComboboxOption {
@@ -94,7 +95,7 @@ export function Combobox({
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(defaultOpen)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  const containerRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   const t = useTranslations('common')
   const selected = options.find(o => o.value === value)
@@ -113,14 +114,15 @@ export function Combobox({
     )
   }, [options, search, variant, searchable, internalSearch])
 
-  useEffect(() => {
+  // The typed text is forgotten when the value is cleared from outside.
+  useResetOnChange(value, () => {
     if (!value) setSearch('')
-  }, [value])
+  })
 
   // Reset internal search when dropdown closes
-  useEffect(() => {
+  useResetOnChange(open, () => {
     if (!open) setInternalSearch('')
-  }, [open])
+  })
 
   // Recalculate portal dropdown position
   const updateDropdownPosition = useCallback(() => {
@@ -171,9 +173,14 @@ export function Combobox({
     }
   }, [portal, dropdownMinWidth])
 
+  // A dropdown that starts open is placed when the container attaches; every other opening (focus, click, typing) places it in its own handler, before it shows.
+  const attachContainer = useCallback((node: HTMLDivElement | null) => {
+    containerRef.current = node
+    if (node && defaultOpen) updateDropdownPosition()
+  }, [defaultOpen, updateDropdownPosition])
+
   useEffect(() => {
     if (!open || !portal) return
-    updateDropdownPosition()
     window.addEventListener('scroll', updateDropdownPosition, true)
     window.addEventListener('resize', updateDropdownPosition)
     return () => {
@@ -275,7 +282,7 @@ export function Combobox({
   )
 
   return (
-    <div ref={containerRef} data-testid="combobox" className={cn('relative', className)}>
+    <div ref={attachContainer} data-testid="combobox" className={cn('relative', className)}>
       {icon && (
         <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10 text-muted-foreground">
           {icon}
@@ -292,7 +299,7 @@ export function Combobox({
           aria-haspopup="listbox"
           aria-controls={open ? listboxId : undefined}
           value={selected ? selected.label : search}
-          onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true); onInputChange?.(e.target.value) }}
+          onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true); updateDropdownPosition(); onInputChange?.(e.target.value) }}
           onFocus={() => { setOpen(true); updateDropdownPosition() }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           onKeyDown={e => {

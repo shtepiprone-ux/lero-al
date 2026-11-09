@@ -47,7 +47,7 @@
 // the role from the session); `server-only` makes importing it from a client bundle a build error.
 import 'server-only'
 
-import { revalidateTag, revalidatePath } from 'next/cache'
+import { updateTag, revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { routing } from '@/i18n/routing'
 import {
@@ -153,7 +153,8 @@ async function writeListingStatus(
 
   // Invalidate the homepage stats counter — any status transition may affect the
   // public active-listing count (approve: +1, deactivate/archive: -1, etc.)
-  revalidateTag('site-stats')
+  // Next 16: `updateTag` expires the tag at once and works only inside a Server Action; every importer of this gateway is a 'use server' file (src/__tests__/security/cacheTags.test.ts).
+  updateTag('site-stats')
 
   // Invalidate the public listings index AND the detail page across all locales
   // so status changes (approve, archive, sell) are immediately visible everywhere.

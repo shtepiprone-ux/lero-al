@@ -46,8 +46,8 @@
  */
 
 import { config } from 'dotenv'
-import { fileURLToPath } from 'node:url'
 import { createClient } from '@supabase/supabase-js'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const EVENT_WAIT_MS = 10_000
 const SUBSCRIBE_SETUP_MS = 10_000
@@ -211,6 +211,6 @@ async function main() {
   }
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main()
 }

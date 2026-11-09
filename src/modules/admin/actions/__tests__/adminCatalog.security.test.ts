@@ -41,7 +41,7 @@ vi.mock('@/lib/auth/permissions', () => {
   return { hasPermission: allowed, assertPermission: async () => { if (!(await allowed())) throw new Error('forbidden') } }
 })
 // The role guards read the caller's own row with the service role (Task 923 R44): the fake database already holds it, so the REAL requireViewer runs.
-vi.mock('next/cache', () => ({ revalidateTag: (t: string) => { tags.push(t) }, revalidatePath: (p: string) => { paths.push(p) }, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ updateTag: (t: string) => { tags.push(t) }, revalidateTag: (t: string, profile?: string) => { tags.push(`revalidateTag:${t}:${profile}`) }, revalidatePath: (p: string) => { paths.push(p) }, unstable_cache: (fn: unknown) => fn }))
 
 import { createCurrency, deleteCurrency, getAllCurrenciesAdmin, setDefaultCurrency, toggleCurrencyActive, updateCurrency } from '../currencies'
 import { createPropertyType, deletePropertyType, getAllPropertyTypesAdmin, togglePropertyTypeActive, updatePropertyType } from '../propertyTypes'

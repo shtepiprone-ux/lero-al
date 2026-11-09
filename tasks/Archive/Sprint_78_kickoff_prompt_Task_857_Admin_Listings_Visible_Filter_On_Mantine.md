@@ -6,7 +6,7 @@
 `APPROVED WITH NOTES` — review 14, 2026-10-03 (§33). All 26 O78-12 tuples are accepted, and the kickoff is archived.
 Earlier "Execute §N" lines are history.**
 
-Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
+Sprint plan: [`Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md`](../Sprints/Sprint_78_Admin_And_Agent_Dashboards_On_Canonical_Mantine.md)
 ("Execution order" item 6: 858, then 857 · 859). Precedents, read-only: **877** (container/View split, `AdminTable`
 adapter, page wrapper), **893** (shared legacy files stop being imported; logic extracted to a hook), **896**
 (`adminPageShellMaxWidth`).

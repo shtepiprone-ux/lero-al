@@ -78,7 +78,7 @@ Measured empirically, not assumed:
 5. Mobile `ResponsiveBottomSheet`'s own `≤90dvh` cap is untouched — no double cap, no scope leak
    into the mobile path.
 6. New primitive smoke test + planted-violation transcript (below). Kickoff file's
-   `tasks/Sprints/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md` updated with
+   `tasks/Archive/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md` updated with
    a "Scope-expansion trail" section recording this exact finding-→-ruling-→-fix chain.
 
 ## Files Changed
@@ -92,7 +92,7 @@ Measured empirically, not assumed:
 | `messages/{en,sq,uk,it}.json` | Added `storybook.mantine.combobox_numeric_placeholder` (4-locale parity) | Story block 9's placeholder — reusing `combobox_placeholder` ("Search city...") would have been semantically wrong for a year field |
 | `docs/mantine-tailadmin-migration-tracker.md` | PHASE 2 section: struck `YearCombobox` done, added the Slice-2/both-STOP-and-ASK note | Tracker discipline |
 | `docs/backlog.md` | Task 552 entry added/updated, including the third-finding fix | Backlog tidy rule |
-| `tasks/Sprints/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md` | Added a "Scope-expansion trail" section recording the third finding, owner ruling, and verification chain | Owner-required: document scope expansions in the kickoff itself |
+| `tasks/Archive/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md` | Added a "Scope-expansion trail" section recording the third finding, owner ruling, and verification chain | Owner-required: document scope expansions in the kickoff itself |
 | `src/stories/mantine/primitives/Select.stories.tsx` | Temporarily edited (80-item long-list block) to measure `MantineSelect`'s dropdown height, then reverted byte-identical | Measurement only — confirmed empty diff via `git diff --stat` |
 
 No change to `YearComboboxField.tsx`, `StepDetails.tsx`, `FiltersPanel.tsx`, `ListingsFilters.tsx`,

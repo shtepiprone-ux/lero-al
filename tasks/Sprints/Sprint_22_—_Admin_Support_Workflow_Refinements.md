@@ -32,7 +32,7 @@ Backlog 2026-05-30 reservations:
 
 ### Task 314 — Admin complaint-type selector [MEDIUM-HIGH]
 
-- Kickoff: [`Sprint_22_kickoff_prompt_Task_314.md`](Sprint_22_kickoff_prompt_Task_314.md)
+- Kickoff: [`Sprint_22_kickoff_prompt_Task_314.md`](../Archive/Sprint_22_kickoff_prompt_Task_314.md)
 - Type: feature + small data-model addition (admin / support-ticket workflow)
 - Files: `AdminSupportManager.tsx` + `actions/index.ts` + `types/database.ts` + `scripts/task-314-complaint-type.sql` (NEW) + `scripts/schema-drift-check.sql` (extend) + `messages/{sq,en,uk,it}.json` (12 keys × 4 = 48 strings) + session log + backlog (optional `docs/domain-rules.md` 1-paragraph addition).
 - New schema: `CREATE TYPE complaint_type_t AS ENUM (8 values)` + `ALTER TABLE support_tickets ADD COLUMN complaint_type complaint_type_t NOT NULL DEFAULT 'other'`.

@@ -1,0 +1,9 @@
+# Task 951 F3 (owner decision 2026-11-09): repository models for CodeQL's JavaScript analysis. The CodeQL action
+# includes every model pack under .github/codeql/extensions in the analysis; nothing here disables a query or an alert.
+name: lero-al/javascript-models
+version: 0.0.1
+library: true
+extensionTargets:
+  codeql/javascript-all: '*'
+dataExtensions:
+  - models/*.model.yml

@@ -222,6 +222,8 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    // Task 967: `storybook/test` sets this to false, which hides a failed play from the render gates; true fails the Story.
+    throwPlayFunctionExceptions: true,
     // Accessibility — will be used when @storybook/addon-a11y is added in Phase 5
     a11y: { disable: true },
     // Enable App Router context globally so stories using next/navigation hooks

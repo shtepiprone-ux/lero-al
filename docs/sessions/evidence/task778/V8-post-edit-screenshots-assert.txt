@@ -1,4 +1,4 @@
-﻿win32
+win32
 
 01 September 2026 17:38:43
 
@@ -54,242 +54,242 @@ At line:3 char:1
   Patterns/Mantine/AuthSheet/Register × sq × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × sq × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × sq × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × sq × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × en × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × en × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × en × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × en × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × uk × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × uk × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × uk × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × uk × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × it × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × it × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × it × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register × it × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × sq × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × sq × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × sq × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × sq × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × en × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × en × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × en × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × en × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × uk × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × uk × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × uk × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × uk × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × it × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × it × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × it × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent × it × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × sq × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × sq × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × sq × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × sq × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × en × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × en × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × en × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × en × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × uk × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × uk × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × uk × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × uk × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × it × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × it × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × it × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Forgot Password × it × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--forgot-password&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Login Validation Error × sq × mobile-375
     ✗ text button not full-width at <640: trigger (Story opens the drawer directly
@@ -310,32 +310,32 @@ Call log:
   Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × sq × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:sq&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"
 
 ⚠️  27 cells have ambiguous findings (needs-owner-decision):
   Admin/AdminUsersTable/Default × sq × mobile-320
@@ -417,51 +417,51 @@ Call log:
   Patterns/Mantine/AuthSheet/Register Agent Add Company × en × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × en × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:en&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × uk × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:uk&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-320
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-375
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × it × mobile-390
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"
 
   Patterns/Mantine/AuthSheet/Register Agent Add Company × it × desktop-1024
     Error: page.goto: Timeout 20000ms exceeded.
 Call log:
-[2m  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"[22m
+  - navigating to "http://127.0.0.1:6008/iframe.html?id=patterns-mantine-authsheet--register-agent-add-company&globals=locale:it&viewMode=story", waiting until "networkidle"
 
 EXIT_CODE=1

@@ -11,7 +11,7 @@ const targeted = [
   'src/lib/auth/__tests__/staffPage.security.test.ts',
 ]
 const mobileFiles = [
-  'tasks/Sprints/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md',
+  'tasks/Archive/Sprint_78_kickoff_prompt_Task_923_Rendered_State_Census_Gate.md',
   'src/components/admin/AdminPageHeader.tsx',
   'src/app/admin/users/page.tsx',
   'src/app/admin/users/[id]/page.tsx',

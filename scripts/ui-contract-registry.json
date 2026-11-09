@@ -297,6 +297,60 @@
           ]
         }
       ]
+    },
+    {
+      "id": "admin-users-table-container",
+      "component": "src/components/admin/AdminUsersTable.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/AdminUsersTableContainer.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "admin users table, as rendered by AdminUsersTableView (the container adds no markup)",
+          "storyExports": [
+            "Default"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "client-link",
+      "component": "src/lib/navigation/ClientLink.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/ClientLink.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "Mantine Anchor and Button rendered as a link through ClientLink (it adds no markup or style)",
+          "storyExports": [
+            "AsAnchorAndButton"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cabinet-email-change-section-container",
+      "component": "src/modules/cabinet/components/CabinetEmailChangeSection.tsx",
+      "stories": [
+        "src/stories/patterns/mantine/CabinetEmailChangeSectionContainer.stories.tsx"
+      ],
+      "tokenOwners": [
+        "src/design-system/mantine/theme.ts"
+      ],
+      "parity": [
+        {
+          "element": "cabinet e-mail change section, as rendered by CabinetEmailChangeSectionView (the container adds no markup)",
+          "storyExports": [
+            "Default"
+          ]
+        }
+      ]
     }
   ]
 }

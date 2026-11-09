@@ -14,15 +14,15 @@
 Close two outstanding work streams that were either blocked or unassigned:
 
 1. **Universal bottom-sheet modal pattern for `<lg` (mobile + tablet).** Owner request 2026-05-31 (Ukrainian chat): all modals on mobile + tablet must render as full-width bottom-sheet (slide-up, rounded-top, drag-handle, stacked footer). Strategy: extend `DialogContent` className with responsive variants so every Dialog consumer auto-inherits; migrate the 2 remaining `div.fixed.inset-0` admin form modals so they go through `Dialog`.
-2. **Footer ↔ CMS pages integration (Task 326B) + CMS pages polish (Task 326C).** Both kickoffs already exist in Sprint 27 and have been BLOCKED since 2026-05-30 by Sprint 28's existence. Sprint 29 re-homes them logically (they remain in `tasks/Sprints/Sprint_27_kickoff_prompt_Task_326B.md` / `_326C.md` — kickoff files are not renamed) and tracks them to completion.
+2. **Footer ↔ CMS pages integration (Task 326B) + CMS pages polish (Task 326C).** Both kickoffs already exist in Sprint 27 and have been BLOCKED since 2026-05-30 by Sprint 28's existence. Sprint 29 re-homes them logically (they remain in `tasks/Archive/Sprint_27_kickoff_prompt_Task_326B.md` / `_326C.md` — kickoff files are not renamed) and tracks them to completion.
 
 ## Scope tasks
 
 | # | Task | Type | Kickoff | Status |
 |---|------|------|---------|--------|
-| 1 | **329 — Epic Z.2 — Mobile + Tablet bottom-sheet modal pattern** | feature + refactor (UI primitive change + 2 admin migrations + 5 doc updates) | [`Epic_Z_kickoff_prompt_Task_329.md`](../Epics/Epic_Z_kickoff_prompt_Task_329.md) | READY |
-| 2 | **326B — Footer ↔ CMS Create-page CTA + Select-existing-page picker + delete/unpublish/slug-change protection** | feature (Footer ↔ CMS integration; UX + workflow guards) | [`Sprint_27_kickoff_prompt_Task_326B.md`](Sprint_27_kickoff_prompt_Task_326B.md) | UNBLOCKED on Sprint 28 close |
-| 3 | **326C — CMS pages polish + SEO metadata + sidebar/namespace cleanup + 7-bp × 4-loc QA** | polish + QA + cleanup | [`Sprint_27_kickoff_prompt_Task_326C.md`](Sprint_27_kickoff_prompt_Task_326C.md) | BLOCKED until 326B ships |
+| 1 | **329 — Epic Z.2 — Mobile + Tablet bottom-sheet modal pattern** | feature + refactor (UI primitive change + 2 admin migrations + 5 doc updates) | [`Epic_Z_kickoff_prompt_Task_329.md`](../Archive/Epic_Z_kickoff_prompt_Task_329.md) | READY |
+| 2 | **326B — Footer ↔ CMS Create-page CTA + Select-existing-page picker + delete/unpublish/slug-change protection** | feature (Footer ↔ CMS integration; UX + workflow guards) | [`Sprint_27_kickoff_prompt_Task_326B.md`](../Archive/Sprint_27_kickoff_prompt_Task_326B.md) | UNBLOCKED on Sprint 28 close |
+| 3 | **326C — CMS pages polish + SEO metadata + sidebar/namespace cleanup + 7-bp × 4-loc QA** | polish + QA + cleanup | [`Sprint_27_kickoff_prompt_Task_326C.md`](../Archive/Sprint_27_kickoff_prompt_Task_326C.md) | BLOCKED until 326B ships |
 
 ## Run order
 

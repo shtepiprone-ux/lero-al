@@ -1,4 +1,4 @@
-﻿# rv8-01: GIS button size probe; platform win32; node v22.22.3; origin http://127.0.0.1:<port>; 2026-10-25T18:35:05.120Z
+# rv8-01: GIS button size probe; platform win32; node v22.22.3; origin http://127.0.0.1:<port>; 2026-10-25T18:35:05.120Z
 {
  "before": {
   "a": 0,

@@ -54,7 +54,7 @@
  M tasks/Sprints/Sprint_74_One_Card_Width_For_The_Whole_Site.md
  M tasks/Sprints/Sprint_78_kickoff_prompt_Task_859_Admin_Support_Unassigned_Landing_On_Mantine.md
  M tasks/Sprints/Sprint_89_The_Listing_Card_Rebuilt_On_The_Owners_Reference.md
- M tasks/Sprints/Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md
+ M tasks/Archive/Sprint_89_kickoff_prompt_Task_918_Listing_Card_Reference_Rebuild.md
 ?? docs/sessions/2026-10-04-task741r3-closed-status-hardcode-exit.md
 ?? docs/sessions/2026-10-04-task859-admin-support-mantine.md
 ?? docs/sessions/evidence/task741r3/00_build-storybook-before.txt

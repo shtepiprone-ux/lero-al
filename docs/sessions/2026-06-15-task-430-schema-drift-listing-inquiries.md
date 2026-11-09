@@ -105,7 +105,7 @@ hand-edit the generated SQL.
 | `scripts/schema-drift-check.sql` | Regenerated via `npm run check:schema-drift` — fully generator-emitted, no hand edits. Now covers 32 tables / 305 columns, including the new `listing_inquiries` (9 cols) block in both result sets. |
 
 **Not part of this diff (pre-existing, untouched by this session):**
-`tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` shows as modified
+`tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` shows as modified
 in `git status` from a prior/parallel session — left as-is.
 
 ## AC-by-AC self-audit

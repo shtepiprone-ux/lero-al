@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useTransition } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, Trash2, ArrowRight, Mail, Trash } from 'lucide-react'
@@ -56,12 +57,10 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
   const tc = useTranslations('cabinet')
   const locale = useLocale()
   const router = useRouter()
-  const [items, setItems] = useState(initial)
+  const [items, setItems] = useStateFromProp(initial)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [showDeleteAll, setShowDeleteAll] = useState(false)
   const [isPendingDeleteAll, startDeleteAll] = useTransition()
-
-  useEffect(() => { setItems(initial) }, [initial])
 
   function buildUrl(filters: Record<string, unknown>): string {
     const params = canonicalToSearchParams(filters as CanonicalFilters)

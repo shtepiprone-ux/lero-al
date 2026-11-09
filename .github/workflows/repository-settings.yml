@@ -1,0 +1,35 @@
+# Repository settings drift (governance reset 2026-11-06, Task 945 AC7). OWASP basis: CI/CD Security and GitHub Actions
+# Security — branch protection is configuration that drifts silently, so it is compared with its payload like code.
+# Not part of "CI Required": the ruleset is repository configuration that no PR can change, so it is checked on its own
+# schedule and on every ruleset change, not as a merge condition.
+name: Repository settings
+
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  branch_protection_rule:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ruleset:
+    name: main ruleset matches scripts/quality/main-ruleset.json
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
+        with:
+          egress-policy: audit
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: "22.22.3"
+      - name: Compare the live ruleset (bypass actors are visible only to a token with Administration read)
+        env:
+          GH_TOKEN: ${{ secrets.RULESET_READ_TOKEN || github.token }}
+        run: node scripts/quality/check-ruleset.mjs

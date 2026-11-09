@@ -1,6 +1,6 @@
 # Session Log — 2026-06-13 — Task 319
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_319.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_319.md`
 **Scope:** Notification locale-binding FIX (Model C — template-ID + small typed params hybrid).
 Epic II Phase 2. Eliminates the wrong-locale in-app notification bug class diagnosed in Task 318
 (`docs/governance-reports/2026-06-13-notification-locale-audit.md`).

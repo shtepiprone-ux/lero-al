@@ -1,0 +1,334 @@
+{
+  "task": "967",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "CI_CD_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow, job or permission changes; the six locale-leak shards keep their matrix in .github/workflows/ci.yml."
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "the two play fixes only query the DOM (`findByLabelText`, `findByRole('dialog', { name })` in `SaveSearchButton.stories.tsx:82`, `SaveToCollectionButton.stories.tsx:96`); no render output changes; `npm run lint` exit 0 (react/no-danger, no-script-url) by the reviewer"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "`.storybook/preview.tsx:226` adds a boolean parameter; no eval, Function, innerHTML or computed URL in the diff (read whole); `npm run lint` exit 0 (no-eval, no-implied-eval)"
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the detector runs with fixed flags only and its code, which builds the iframe URL, is unchanged."
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "no regex, merge or input handling in the diff; `.storybook/__tests__/preview.test.ts` reads files under `node_modules` with a fixed package list; `npm run lint` and `npm run typecheck` exit 0 by the reviewer"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Check all hidden text, not only text that reads like an instruction."
+      ],
+      "evidence": "the LLM_Prompt_Injection_Prevention re-read (sheet `d5cbaaad`, registry `a13983001cb3`) maps the new quote to `scripts/quality/check-files.mjs:54` (hidden prompt text: zero-width, bidi and tag characters); `node scripts/quality/owasp.mjs check` exit 0 (every quote verified) by the reviewer"
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "no product log changes; the console.error of a failed play is Storybook preview output only."
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "no security event is logged or renamed; only Storybook play error handling in the preview changes."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Nextjs_Security": {
+      "verdict": "not applicable",
+      "reason": "Storybook renders components only; no Server Action, route, proxy or Next.js build input changes."
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "no script that starts a process changes; the new test reads files under node_modules only and spawns nothing."
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "the executor's report was treated as input: every AC command rerun by the reviewer (AC1 red/green with its own break, AC2 three builds, AC3 six shards, AC4 tools); the two play fixes checked against `SaveSearchButton.tsx:108-111` (the text is the label) and `SaveToCollectionButton.tsx:121,128` (trigger and title share the text)"
+    },
+    "Server_Side_Request_Forgery_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the preview gets one parameter; no third-party script is added to the Storybook head or to the site."
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "reviewer reruns: AC1 3/3, red with the parameter removed (expected false to be true), sha restored; AC2 a exit 1 `Story render/play failed`, b exit 0 (blind spot), c exit 0, sha equal; AC3 shards 1-4 and 6 exit 0 serially, shard 5 one 15 s render-wait timeout on a Story without a play (F1), rerun exit 0; the report's claim that the timeouts need two parallel browsers did not reproduce (F1)"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "WebSocket_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Cache_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "no innerHTML or dangerouslySetInnerHTML in the diff (read whole); `npm run lint` exit 0 (react/no-danger)"
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Webhook_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 967 diff (review 1, 2026-11-09: one `.storybook/preview.tsx` parameter, its Vitest test, two Story play queries, the LLM_Prompt_Injection_Prevention re-read in the OWASP registry) does not touch this area; the branch verdict is in Task_952.json."
+    }
+  }
+}

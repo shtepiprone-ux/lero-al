@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { updateTag } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { checkStaff } from '@/lib/auth/staff'
 import { PROPERTY_TYPES_CACHE_TAG } from '@/modules/admin/lib/propertyTypes'
@@ -70,7 +70,7 @@ export async function createPropertyType(
     return { error: 'create_failed' }
   }
 
-  revalidateTag(PROPERTY_TYPES_CACHE_TAG)
+  updateTag(PROPERTY_TYPES_CACHE_TAG)
   return { id: data.id }
 }
 
@@ -129,7 +129,7 @@ export async function updatePropertyType(
     return { error: 'update_failed' }
   }
 
-  revalidateTag(PROPERTY_TYPES_CACHE_TAG)
+  updateTag(PROPERTY_TYPES_CACHE_TAG)
   return {}
 }
 
@@ -146,7 +146,7 @@ export async function togglePropertyTypeActive(id: number, isActive: boolean): P
     .eq('id', id)
 
   if (error) { console.error('togglePropertyTypeActive failed', { code: error.code }); return { error: 'update_failed' } }
-  revalidateTag(PROPERTY_TYPES_CACHE_TAG)
+  updateTag(PROPERTY_TYPES_CACHE_TAG)
   return {}
 }
 
@@ -195,7 +195,7 @@ export async function deletePropertyType(
     return { error: 'delete_failed' }
   }
 
-  revalidateTag(PROPERTY_TYPES_CACHE_TAG)
+  updateTag(PROPERTY_TYPES_CACHE_TAG)
   return {}
 }
 

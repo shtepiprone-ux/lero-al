@@ -34,7 +34,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => undefined }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: async () => ({ ok: true }) }))
 

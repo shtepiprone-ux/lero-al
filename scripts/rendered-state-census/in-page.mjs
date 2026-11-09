@@ -388,7 +388,6 @@ export function installCensus() {
     //  - `svg-text-clipped`: an svg <text> whose box leaves the svg's viewport while the svg hides its overflow (the default of an inline svg),
     //    or leaves the padding box of the nearest ancestor that hides its overflow: the label is cut.
     // Text that is not painted (display none, visibility hidden, opacity 0, fill none) is not text a person reads.
-    const quad = (l, t, r, b) => [{ x: l, y: t }, { x: r, y: t }, { x: r, y: b }, { x: l, y: b }];
     const svgPainted = (t) => {
       for (let p = t; p && p !== root.parentElement; p = p.parentElement) {
         const s = csOf(p);

@@ -304,3 +304,6 @@ Counterexamples: an alternate route (narrowing) is excluded by D897-1. For an em
 `02` script records `MISSING` for absent paths, so a valid empty start set still produces a file. An unexpected new
 path is caught because `30` minus `01` is compared with §7. The new gate behaviour is covered by arms A/B. A
 task-created artifact (plant, report) is scheduled after `01` and deleted before `30`.
+
+## Mobile adaptation record
+- Scope: none

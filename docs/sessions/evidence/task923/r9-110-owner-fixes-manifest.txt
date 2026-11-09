@@ -1,4 +1,4 @@
-﻿{"changedProductPaths":442,"d89":108,"ownerFixes":93,"t859":49,"t790":1,"r7UncontractedNamedByEvidence":143,"other":48}
+{"changedProductPaths":442,"d89":108,"ownerFixes":93,"t859":49,"t790":1,"r7UncontractedNamedByEvidence":143,"other":48}
 R7  M src/app/api/cron/price-alerts/route.ts <- docs/sessions/evidence/task923/r8-151-security-surface.json
 R7  M src/app/api/cron/saved-searches/route.ts <- docs/sessions/evidence/task923/r8-151-security-surface.json
 R7  M src/components/admin/AdminLegalManager.tsx <- docs/sessions/evidence/task923/r8-144-inventory.json

@@ -12,7 +12,7 @@ import { createRun, type Run, type SyntheticUser } from '@/tests/integration/fix
 
 const acting = vi.hoisted(() => ({ client: null as unknown, released: [] as string[] }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => acting.client }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: async (publicId: string) => { acting.released.push(publicId); return { skipped: true, dryRun: false, deleted: false } } }))
 
 import { deleteListingAction } from './deleteListing'

@@ -2,7 +2,7 @@
 
 ## Task path and status
 
-`tasks/kickoff_prompt_Task_634_AuthSheet_Slice2a_Button_MantineMigration.md`
+`tasks/Archive/kickoff_prompt_Task_634_AuthSheet_Slice2a_Button_MantineMigration.md`
 
 **Status: IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW**
 

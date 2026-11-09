@@ -8,9 +8,10 @@ import type { ListingStatus } from '@/types/database'
 
 const notify = vi.hoisted(() => vi.fn())
 const revalidateTag = vi.hoisted(() => vi.fn())
+const updateTag = vi.hoisted(() => vi.fn())
 const revalidatePath = vi.hoisted(() => vi.fn())
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: (...args: unknown[]) => notify(...args) }))
-vi.mock('next/cache', () => ({ revalidateTag: (...a: unknown[]) => revalidateTag(...a), revalidatePath: (...a: unknown[]) => revalidatePath(...a) }))
+vi.mock('next/cache', () => ({ updateTag: (...a: unknown[]) => updateTag(...a), revalidateTag: (...a: unknown[]) => revalidateTag(...a), revalidatePath: (...a: unknown[]) => revalidatePath(...a) }))
 
 import { applyListingTransitionByStatus, type TransitionActorContext } from './applyListingTransition'
 
@@ -49,12 +50,12 @@ const ownerNoRole: TransitionActorContext = { userId: 'owner-1', role: null, sou
 const stranger: TransitionActorContext = { userId: 'someone-else', role: 'user', source: 'cabinet' }
 const strangerNoRole: TransitionActorContext = { userId: 'someone-else', role: null }
 
-beforeEach(() => { notify.mockReset().mockResolvedValue(undefined); revalidateTag.mockReset(); revalidatePath.mockReset(); vi.spyOn(console, 'error').mockImplementation(() => {}) })
+beforeEach(() => { notify.mockReset().mockResolvedValue(undefined); revalidateTag.mockReset(); updateTag.mockReset(); revalidatePath.mockReset(); vi.spyOn(console, 'error').mockImplementation(() => {}) })
 
 describe('status gateway: publishing is staff-only', () => {
   it('[SEC-D8-SRV-ALLOW] an administrator and a moderator publish a pending listing and the owner is notified', async () => {
     for (const actor of [admin, moderator]) {
-      notify.mockClear(); revalidateTag.mockClear()
+      notify.mockClear(); revalidateTag.mockClear(); updateTag.mockClear()
       const { db, updates } = makeDb(listing('pending'))
       const result = await applyListingTransitionByStatus('l1', 'active', actor, db)
       expect(result, String(actor.role)).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
@@ -64,7 +65,9 @@ describe('status gateway: publishing is staff-only', () => {
       expect(new Date(updates[0].expires_at as string).getTime()).toBeGreaterThan(Date.now())
       expect(notify).toHaveBeenCalledTimes(1)
       expect(notify.mock.calls[0][0]).toMatchObject({ userId: 'owner-1', type: 'listing_status_change' })
-      expect(revalidateTag).toHaveBeenCalledWith('site-stats')
+      // Next 16: a Server Action expires the tag at once with updateTag (the one-argument revalidateTag is deprecated and would only mark it stale)
+      expect(updateTag).toHaveBeenCalledWith('site-stats')
+      expect(revalidateTag).not.toHaveBeenCalled()
     }
   })
 
@@ -91,6 +94,7 @@ describe('status gateway: publishing is staff-only', () => {
     }
     expect(notify).not.toHaveBeenCalled()
     expect(revalidateTag).not.toHaveBeenCalled()
+    expect(updateTag).not.toHaveBeenCalled()
     expect(revalidatePath).not.toHaveBeenCalled()
   })
 
@@ -119,6 +123,7 @@ describe('status gateway: publishing is staff-only', () => {
     expect(failing.updates).toHaveLength(1)           // the write was attempted once and refused
     expect(notify).not.toHaveBeenCalled()
     expect(revalidateTag).not.toHaveBeenCalled()
+    expect(updateTag).not.toHaveBeenCalled()
     expect(revalidatePath).not.toHaveBeenCalled()
   })
 })

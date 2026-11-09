@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useTransition, useMemo, useEffect } from 'react'
+import { useState, useTransition, useMemo } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Plus, Loader2, Star } from 'lucide-react'
@@ -193,10 +194,8 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   const [deleteTarget, setDeleteTarget] = useState<Location | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [togglingId, setTogglingId] = useState<number | null>(null)
-  const [items, setItems] = useState(init)
-
   // Re-sync from server after router.refresh() delivers new props.
-  useEffect(() => { setItems(init) }, [init])
+  const [items, setItems] = useStateFromProp(init)
 
   const typeLabels: Record<string, string> = {
     region: t('type_region'),

@@ -101,7 +101,7 @@ vi.mock('@/lib/cloudinaryDelete', () => ({
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => world.user, resolveSession: async () => ({ user: world.user }), getSession: async () => null }))
 vi.mock('@/lib/auth/permissions', () => ({ hasPermission: async () => world.permitted, assertPermission: async () => undefined, roleHasPermission: () => false }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 // the rest of what the two callers import: the session client (re-authentication reads the Google sign-in claims), the SDK's verify client, the cookies and the mail
 vi.mock('@/lib/supabase/server', () => ({ createClient: async () => ({ auth: { getClaims: async () => ({ data: { claims: { amr: world.amr } }, error: null }) } }) }))
 vi.mock('@supabase/ssr', () => ({

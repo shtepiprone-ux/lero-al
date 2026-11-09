@@ -1,6 +1,6 @@
 # Task 580 — `Header` thin-container audit + final parity matrix
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_580_HeaderThinContainer.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_580_HeaderThinContainer.md`.
 Depends on Tasks 575–579 (all landed/approved).
 
 ## Why

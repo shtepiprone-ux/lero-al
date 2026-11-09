@@ -1,4 +1,4 @@
-﻿11b9c0652c97334fbc0011db4e9437ec0a9d1e63ef31789c7df4cb499349545f  ./docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql
+11b9c0652c97334fbc0011db4e9437ec0a9d1e63ef31789c7df4cb499349545f  ./docs/sessions/evidence/task923/db-catalog/proposed-hardening.sql
 e4c12ef4a9db6873606654f3cb6f55708abaccb0a2a771b4764b824479ebb353  ./docs/sessions/evidence/task923/db-catalog/proposed-hardening-rollback.sql
 691007fc5f8e1fd136596fb5b101849c6c25437387fa6af71a4c762bcc04c55e  ./docs/sessions/evidence/task923/db-catalog/proposed-account-deletion.sql
 ff269d318d7e37deb8e0815178d503cc95e42b93ad2882ce2c6570004bfab95e  ./docs/sessions/evidence/task923/db-catalog/proposed-account-deletion-rollback.sql

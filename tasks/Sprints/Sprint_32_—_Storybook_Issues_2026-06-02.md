@@ -39,12 +39,12 @@ settlement localization, and story-level localization/interaction hygiene. Each 
 | **365** | Storybook story batch: RecentlyViewedSection, PasswordInput, PasswordRequirementsHint, AdminLayout, ListingGrid, StatusChangeControl, AdminTable badge | the listed `*.stories.tsx` (+ AdminTable badge logic if runtime) | Story-only / low risk |
 
 ### Kickoff files
-- [Task 360](./Sprint_32_kickoff_prompt_Task_360.md)
-- [Task 361](./Sprint_32_kickoff_prompt_Task_361.md)
-- [Task 362](./Sprint_32_kickoff_prompt_Task_362.md)
-- [Task 363](./Sprint_32_kickoff_prompt_Task_363.md)
-- [Task 364](./Sprint_32_kickoff_prompt_Task_364.md)
-- [Task 365](./Sprint_32_kickoff_prompt_Task_365.md)
+- [Task 360](../Archive/Sprint_32_kickoff_prompt_Task_360.md)
+- [Task 361](../Archive/Sprint_32_kickoff_prompt_Task_361.md)
+- [Task 362](../Archive/Sprint_32_kickoff_prompt_Task_362.md)
+- [Task 363](../Archive/Sprint_32_kickoff_prompt_Task_363.md)
+- [Task 364](../Archive/Sprint_32_kickoff_prompt_Task_364.md)
+- [Task 365](../Archive/Sprint_32_kickoff_prompt_Task_365.md)
 
 ## Cross-references / file-scope discipline
 

@@ -31,7 +31,7 @@ vi.mock('@/lib/supabase/admin', () => ({
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => state.user }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 vi.mock('next/headers', () => ({ headers: async () => ({ get: () => null }), cookies: async () => ({ getAll: () => [] }) }))
 vi.mock('@supabase/ssr', () => ({ createServerClient: () => ({ auth: { signInWithPassword: async () => ({ error: null }), signOut: async () => ({ error: null }) } }) }))
 vi.mock('@/lib/auth/accountAccess', async (orig) => ({ ...(await orig<typeof import('@/lib/auth/accountAccess')>()), syncAccountAccess: async () => ({ ok: true }) }))

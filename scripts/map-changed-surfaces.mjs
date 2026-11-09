@@ -50,6 +50,7 @@ import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import ts from 'typescript';
 import { resolveImportSpecifier as resolveImportSpecifierShared } from './lib/import-resolver.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -57,7 +58,9 @@ const MANIFEST_PATH = join(ROOT, 'scripts', 'mantine-migration-scope.json');
 const SRC_DIR = join(ROOT, 'src');
 
 export const DEFAULT_MAX_CHANGED_FILES = 300;
-export const DEFAULT_MAX_SURFACES = 60;
+// Owner decision O-CS1 (2026-11-08, Task 963 AC14): 200, up from 60. Every mapped surface is still censused and named;
+// the limit bounds run time (65 surfaces took 40 s), not coverage. PR #19 with Task 953 maps 65.
+export const DEFAULT_MAX_SURFACES = 200;
 
 function resolveImportSpecifier(fromFile, spec) {
   return resolveImportSpecifierShared(ROOT, fromFile, spec);
@@ -342,6 +345,20 @@ export function loadManifestSet() {
  * full included/excluded scope. Never throws for an ordinary failure condition (git absent, no merge
  * base, limits exceeded, unresolved candidate) — those are all `failClosed` results, not exceptions.
  */
+/** The changed-file limit bounds the census work, so it counts only the files the census maps (production .ts/.tsx
+ *  under src/). A PR that also changes many documents, rules or tests is not refused for them (governance reset
+ *  2026-11-06: the limit counted every changed path, so a rules-only PR of 300+ files failed with no surface involved). */
+export function changedFileLimit(candidates, maxChangedFiles, totalChanged = candidates.length) {
+  if (candidates.length <= maxChangedFiles) return null;
+  return {
+    failClosed: true,
+    reason: 'changed-file-limit-exceeded',
+    detail: `${candidates.length} changed production file(s) exceeds the limit of ${maxChangedFiles} (${totalChanged} changed in total)`,
+    changedCount: candidates.length,
+    limit: maxChangedFiles,
+  };
+}
+
 export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CHANGED_FILES, maxSurfaces = DEFAULT_MAX_SURFACES }) {
   if (!base) {
     return { failClosed: true, reason: 'missing-base', detail: '--base <ref> is required' };
@@ -359,16 +376,6 @@ export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CH
     return { failClosed: true, reason: 'diff-unavailable', detail: String(err.message).split('\n')[0] };
   }
 
-  if (entries.length > maxChangedFiles) {
-    return {
-      failClosed: true,
-      reason: 'changed-file-limit-exceeded',
-      detail: `${entries.length} changed file(s) exceeds the limit of ${maxChangedFiles}`,
-      changedCount: entries.length,
-      limit: maxChangedFiles,
-    };
-  }
-
   const excluded = [];
   const candidates = [];
   for (const entry of entries) {
@@ -377,6 +384,9 @@ export function runMapping({ base, head = null, maxChangedFiles = DEFAULT_MAX_CH
     else candidates.push(entry.path);
   }
   candidates.sort();
+
+  const overLimit = changedFileLimit(candidates, maxChangedFiles, entries.length);
+  if (overLimit) return overLimit;
   excluded.sort((a, b) => a.path.localeCompare(b.path));
 
   const included = new Set();
@@ -456,7 +466,7 @@ function parseArgs(argv) {
   return args;
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isEntryPoint(import.meta.url);
 if (isMain) {
   const args = parseArgs(process.argv.slice(2));
   const result = runMapping(args);

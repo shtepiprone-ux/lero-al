@@ -47,7 +47,7 @@ describe('parsePhoneValue', () => {
 
 describe('normalizeNational', () => {
   it('removes spaces, dashes, dots, brackets, the non-breaking space and the zero-width space', () => {
-    expect(normalizeNational('69 12-34.5(67) ​')).toBe('691234567')
+    expect(normalizeNational('69 12-34.5(67)\u00A0\u200B')).toBe('691234567')
   })
   it('keeps letters and plus signs (the validator refuses those later)', () => {
     expect(normalizeNational('+69a')).toBe('+69a')

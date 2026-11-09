@@ -19,6 +19,9 @@
  *      `Status:` line is not closed. A closed sprint's plan moves to `tasks/Archive/`
  *      (orchestrator-procedures.md → "Physical sprint-plan archive").
  *   4. No number in the Task registry's first column has an archive-ledger row `**Task NNN (… APPROVED`.
+ *   5. Every number `docs/backlog-reserved.md` records as reserved is in the Task registry's first column
+ *      (governance reset 2026-11-06: 929, 930, 932, 933 and 934 were reserved there and missing here, so the
+ *      "single source for every open number" did not list them).
  *
  * Scope statement (GR-2): it reads `docs/backlog.md`, the plan files it names, and the archive
  * ledger's single-task rows. It cannot judge whether an open row's *prose* is still accurate, and it
@@ -29,10 +32,12 @@
  */
 import { readFileSync, existsSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const ROOT = process.cwd()
 const BACKLOG = join(ROOT, 'docs', 'backlog.md')
 const ARCHIVE = join(ROOT, 'docs', 'backlog-archive.md')
+const RESERVED = join(ROOT, 'docs', 'backlog-reserved.md')
 const SPRINTS = join(ROOT, 'tasks', 'Sprints')
 const LAST_SESSION_MAX_LINES = 4
 const LAST_SESSION_MAX_CHARS = 1200
@@ -41,6 +46,24 @@ const LAST_SESSION_MAX_CHARS = 1200
 const CLOSED_MARKER =
   /✅|\bCLOSED\b|\bAPPROVED\b|\bARCHIVED\b|\bFOLDED\b|\barchived (?:on )?\d{4}-\d{2}-\d{2}|\b(?:was|were|been|and) archived\b|\bis folded\b|\bfolded into\b/
 const CLOSED_STATUS = /\bCLOSED\b|✅|🗄️|\bCOMPLETE\b/
+
+/** Numbers recorded as reserved in backlog-reserved.md that the backlog's Task registry does not list. */
+export function unregisteredReserved(backlogText, reservedText) {
+  const regStart = backlogText.indexOf('## Task registry')
+  if (regStart < 0) return []
+  const regEnd = backlogText.indexOf('\n## ', regStart + 1)
+  const registered = new Set()
+  for (const row of backlogText.slice(regStart, regEnd < 0 ? undefined : regEnd).split(/\r?\n/)) {
+    if (!row.startsWith('| ')) continue
+    for (const n of (row.split('|')[1] ?? '').match(/\b\d{3}\b/g) ?? []) registered.add(n)
+  }
+  const missing = []
+  for (const row of reservedText.split(/\r?\n/)) {
+    const m = /^\| \*\*(\d{3})\*\* \| reserved\b/.exec(row)
+    if (m && !registered.has(m[1])) missing.push(m[1])
+  }
+  return missing
+}
 
 function main() {
   let text
@@ -116,6 +139,13 @@ function main() {
     }
   }
 
+  // 5. Reserved numbers missing from the registry.
+  let reserved = ''
+  try { reserved = readFileSync(RESERVED, 'utf8') } catch { problems.push('docs/backlog-reserved.md could not be read') }
+  for (const n of unregisteredReserved(text, reserved)) {
+    problems.push(`number ${n} is reserved in docs/backlog-reserved.md but missing from the Task registry — add it to the registry (or retire it in backlog-reserved.md).`)
+  }
+
   // Non-blocking notice: closed plans the backlog does not name (physical archive owed).
   let closedPlansOnDisk = 0
   try {
@@ -141,4 +171,4 @@ function main() {
   console.log('✅ check:backlog-active PASSED — docs/backlog.md holds active state only.')
 }
 
-main()
+if (isEntryPoint(import.meta.url)) main()

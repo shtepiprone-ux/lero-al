@@ -39,10 +39,10 @@ function windowOpenViolations(sources: { file: string; text: string }[]): string
   return bad
 }
 
-describe('new-tab links', () => {
-  it('every target="_blank" has rel with noopener, on the same element', () => {
-    const bad: string[] = []
-    for (const f of files) {
+/** Every `target="_blank"` with no `noopener` near it, and every spread object that adds `target: '_blank'` without it. */
+function blankTargetViolations(sources: { file: string; text: string }[]): string[] {
+  const bad: string[] = []
+  for (const f of sources) {
       // JSX attributes can hold `<Icon />` elements, so a tag cannot be cut out with a simple pattern: each `target="_blank"` needs a `noopener` within the few lines around it
       const lines = f.text.split('\n')
       lines.forEach((line, i) => {
@@ -54,7 +54,27 @@ describe('new-tab links', () => {
       for (const m of f.text.matchAll(/target:\s*['"]_blank['"][^}]*\}/g)) {
         if (!/noopener/.test(m[0])) bad.push(`${f.file}: ${m[0].slice(0, 100)}`)
       }
-    }
+  }
+  return bad
+}
+
+/** Every eval, Function constructor, innerHTML write (`=` and `+=`), document.write / writeln and string timer, outside comments. */
+function codeEvalViolations(sources: { file: string; text: string }[]): string[] {
+  const bad: string[] = []
+  for (const f of sources) {
+    const code = f.text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1')
+    if (/\beval\s*\(/.test(code)) bad.push(`${f.file}: eval`)
+    if (/(^|[^\w$.])Function\s*\(/.test(code)) bad.push(`${f.file}: Function constructor`)
+    if (/\.innerHTML\s*\+?=(?!=)/.test(code)) bad.push(`${f.file}: innerHTML write`)
+    if (/document\.write(ln)?\s*\(/.test(code)) bad.push(`${f.file}: document.write`)
+    if (/set(Timeout|Interval)\(\s*['"`]/.test(code)) bad.push(`${f.file}: string timer`)
+  }
+  return bad
+}
+
+describe('new-tab links', () => {
+  it('every target="_blank" has rel with noopener, on the same element', () => {
+    const bad = blankTargetViolations(files)
     expect(bad, bad.join('\n')).toEqual([])
   })
 
@@ -63,10 +83,10 @@ describe('new-tab links', () => {
     expect(bad, bad.join('\n')).toEqual([])
   })
 
-  it('the checker sees an unsafe link (planted)', () => {
-    const planted = '<a href="https://x.example" target="_blank">x</a>'
-    expect(/noopener/.test(planted)).toBe(false)
-    expect(/target=["']_blank["']/.test(planted)).toBe(true)
+  it('the checker sees an unsafe link (planted, through the same function the rule uses)', () => {
+    expect(blankTargetViolations([{ file: 'src/x.tsx', text: '<a href="https://x.example" target="_blank">x</a>' }])).toHaveLength(1)
+    expect(blankTargetViolations([{ file: 'src/x.tsx', text: "{...(ext ? { target: '_blank' } : {})}" }])).toHaveLength(1)
+    expect(blankTargetViolations([{ file: 'src/x.tsx', text: '<a href="https://x.example" target="_blank" rel="noopener noreferrer">x</a>' }])).toEqual([])
   })
 })
 
@@ -87,17 +107,23 @@ describe('raw HTML and code evaluation', () => {
     expect(cms).toMatch(/dangerouslySetInnerHTML=\{\{\s*__html:\s*sanitizeCmsHtml\(/)
   })
 
-  it('no eval, new Function, innerHTML assignment, document.write or string timers', () => {
-    const bad: string[] = []
-    for (const f of files) {
-      const code = f.text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1')
-      if (/\beval\s*\(/.test(code)) bad.push(`${f.file}: eval`)
-      if (/new Function\s*\(/.test(code)) bad.push(`${f.file}: new Function`)
-      if (/\.innerHTML\s*=(?!=)/.test(code)) bad.push(`${f.file}: innerHTML =`)
-      if (/document\.write\s*\(/.test(code)) bad.push(`${f.file}: document.write`)
-      if (/set(Timeout|Interval)\(\s*['"`]/.test(code)) bad.push(`${f.file}: string timer`)
-    }
+  it('no eval, Function constructor, innerHTML write, document.write or string timers', () => {
+    const bad = codeEvalViolations(files)
     expect(bad, bad.join('\n')).toEqual([])
+  })
+
+  it('each code-evaluation rule sees its planted sink, and a comment is not code', () => {
+    for (const text of ['eval(x)', 'new Function(x)', 'const f = Function(x)', 'el.innerHTML = x', 'el.innerHTML += x', 'document.write(x)', 'document.writeln(x)', "setTimeout('go()', 1)"]) {
+      expect(codeEvalViolations([{ file: 'src/x.ts', text }]), text).toHaveLength(1)
+    }
+    expect(codeEvalViolations([{ file: 'src/x.ts', text: '// eval(x)\n/* el.innerHTML = x */\nel.textContent = x' }])).toEqual([])
+  })
+
+  it('an allow-listed file uses raw HTML exactly once (a second use needs its own review)', () => {
+    for (const file of Object.keys(RAW_HTML_ALLOWED)) {
+      const text = files.find((f) => f.file === file)?.text ?? ''
+      expect(text.match(/dangerouslySetInnerHTML/g)?.length ?? 0, file).toBe(1)
+    }
   })
 })
 

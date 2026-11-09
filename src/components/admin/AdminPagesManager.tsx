@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition } from 'react'
+import { useStateFromProp } from '@/hooks/useStateFromProp'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { toast } from '@/lib/toast'
@@ -157,8 +158,7 @@ export function AdminPagesManager({ pages: init, adminLocale }: Props) {
   const [modal, setModal] = useState<'create' | Page | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Page | null>(null)
-  const [items, setItems] = useState(init)
-  useEffect(() => { setItems(init) }, [init])
+  const [items, setItems] = useStateFromProp(init)
 
   const migrationPending = isMigrationPending(items)
 

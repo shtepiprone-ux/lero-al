@@ -361,3 +361,41 @@ describe('AdminReportsManager — Task 858 URL filter', () => {
     }
   })
 })
+
+// Task 953 (set-state-in-effect): the reports and the active filter follow what the server sends; a filter chosen by hand stays until the server asks for another.
+describe('AdminReportsManager — local copy follows the server props (Task 953)', () => {
+  const tree = (reports: ReportRow[], initialFilter?: ReportStatusFilter) => (
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <MantineProvider theme={theme} env="test">
+        <AdminReportsManager reports={reports} locale="uk" canOverrideReportStatus={false} canDeleteReports={false} initialFilter={initialFilter} />
+      </MantineProvider>
+    </NextIntlClientProvider>
+  )
+  const RESOLVED: ReportRow = { ...BASE_REPORT, id: 'r-2', status: 'resolved' }
+
+  it('replaces its rows when new reports arrive', () => {
+    const view = renderManager({ reports: [BASE_REPORT] })
+    expect(rows(view.container)).toHaveLength(1)
+    view.rerender(tree([BASE_REPORT, { ...BASE_REPORT, id: 'r-3' }]))
+    expect(rows(view.container)).toHaveLength(2)
+  })
+
+  it('follows a new initial filter from the URL while it stays mounted', () => {
+    const view = renderManager({ reports: [BASE_REPORT, RESOLVED], initialFilter: 'pending' })
+    expect(rows(view.container)).toHaveLength(1)
+    view.rerender(tree([BASE_REPORT, RESOLVED], 'all'))
+    expect(rows(view.container)).toHaveLength(2)
+    view.rerender(tree([BASE_REPORT, RESOLVED], 'resolved'))
+    expect(rows(view.container)).toHaveLength(1)
+  })
+
+  it('keeps a filter chosen by hand when it is rendered again with the same initial filter', async () => {
+    const view = renderManager({ reports: [BASE_REPORT, RESOLVED], initialFilter: 'pending' })
+    expect(rows(view.container)).toHaveLength(1)
+    await act(async () => { fireEvent.click(screen.getByRole('tab', { name: new RegExp(t.filter_resolved) })) })
+    expect(rows(view.container)).toHaveLength(1)
+    expect(rows(view.container)[0]).toHaveTextContent(t.status_resolved)
+    view.rerender(tree([BASE_REPORT, RESOLVED], 'pending'))
+    expect(rows(view.container)).toHaveLength(1)
+  })
+})

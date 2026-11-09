@@ -15,7 +15,6 @@
 
 import { describe, it, expect } from 'vitest'
 
-// @ts-ignore — .mjs module
 import { scanRawEnumLeaks } from '../check-i18n-parity.mjs'
 
 type Finding = { line: number; text: string }

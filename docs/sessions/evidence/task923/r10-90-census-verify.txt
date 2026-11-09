@@ -1,4 +1,4 @@
-﻿platform: win32 10.0.26300.0 node v22.22.3
+platform: win32 10.0.26300.0 node v22.22.3
 command: npm run check:rendered-state-census:verify
 
 > lero-al@0.1.0 check:rendered-state-census:verify

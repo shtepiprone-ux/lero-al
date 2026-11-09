@@ -1,0 +1,349 @@
+{
+  "task": "939",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the Storybook stub answers signed-out shapes to Stories only; no sign-in, sign-up or session code of the product changes (`src/lib/auth/` untouched)."
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication flow changes; the stub never reaches the Next.js build (`next build` does not read `.storybook/`)."
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no access decision or returned field of the product changes; the stub answers Stories with empty data."
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`node scripts/quality/check-ruleset.mjs` exit 0 (2026-11-09); the revision's entry-point guard skipped the scan and exited 0 when started through a symlinked path (reviewer: a junction run exited 0 with no output) — fixed by Opus under Task 963 AC17 with `scripts/__tests__/check-locale-leak.test.ts` (\"entry point\", red before the fix); nothing is committed or pushed by the executor."
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "the stub sets and reads no cookie; product session cookies are unchanged (Task 960 owns them)."
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the stub never sends a credential anywhere; product sign-in is unchanged."
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."
+      ],
+      "evidence": "the stub returns plain objects and the play function only queries and clicks; no HTML sink in the diff; `npm run lint` exit 0 (react/no-danger)."
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Database_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the document against its format's schema before publication or ingestion"
+      ],
+      "evidence": "`npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --omit dev --validate` exit 0 on the candidate lockfile (reviewer, 2026-11-08); the CI SBOM job runs the same command."
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "It is always a bad idea to use a user-controlled input in dangerous sources such as eval."
+      ],
+      "evidence": "no eval, Function, innerHTML or computed URL in `.storybook/stubs/supabase-client.ts` or the two Stories (read in full); `npm run lint` exit 0."
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Email_Validation_and_Verification": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Forgot_Password": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "the workflow file is not edited; the CI jobs already run the shards."
+    },
+    "GraphQL": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the stub builds no query, command or URL; the detector's `--story` value must match `/^[a-z0-9_-]+$/i` and an eligible Story id before it enters the iframe URL through `encodeURIComponent` (`scripts/__tests__/check-locale-leak.test.ts`: `../x`, `id&globals=locale:xx` refused)."
+    },
+    "Input_Validation": {
+      "verdict": "met",
+      "quotes": [
+        "Define what the application accepts and reject values outside those rules."
+      ],
+      "evidence": "`parseWidths` accepts only whole widths 200-4000 and `parseCliArgs` only a Story id of `[a-z0-9_-]`; an unknown Story id is a hard error, never an empty pass (`scripts/__tests__/check-locale-leak.test.ts`: 12 bad width lists and 5 bad ids refused)."
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "the revision adds three regular expressions, all linear with no nested quantifier: `/^\\d{1,4}$/` and `/^[a-z0-9_-]+$/i` in `scripts/check-locale-leak.mjs` (flag checks), `/net::ERR_[A-Z0-9_]+/` (transport error); the stub Proxy answers property reads only; `npm run lint` and `npm run typecheck` exit 0 (2026-11-09)."
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the stub holds and verifies no token; product token handling is unchanged."
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no factor or sign-in step changes; the stub answers signed-out shapes only."
+    },
+    "Nextjs_Security": {
+      "verdict": "not applicable",
+      "reason": "Storybook renders components only; no Server Action, route or proxy changes."
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility.",
+        "so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install"
+      ],
+      "evidence": "F1 fixed: `node scripts/quality/change-report.mjs --lockfile-age HEAD` exit 0 (52 versions, 0 younger than 14 days); the reviewer regenerated the lockfile from `HEAD` with `npm install --package-lock-only --ignore-scripts --before=2026-10-25` in a scratch copy and it is byte-identical; no `hasInstallScript` entry added; every `resolved` is registry.npmjs.org; `.npmrc` keeps `ignore-scripts=true` (2026-11-09)."
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "the detector flags parse a Story id and widths for Playwright; no OS command is built from them (the detector spawns no process)."
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Query_Parameterization": {
+      "verdict": "not applicable",
+      "reason": "no SQL or PostgREST filter is built; the stub query builder returns a fixed empty answer."
+    },
+    "REST_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "every claim of the revision 1 report was rerun by the reviewer (2026-11-09): lint, typecheck, `npm test -- --coverage` (372 files, 6139 tests), changed-lines coverage, the AC1 test with a broken `getSession` shape (2 failed), the AC2 test with the retry disabled (3 failed | 12 passed), the AC3 command (12/12), card-track (19 stories), the lockfile (byte-identical regeneration); one claim did not hold in every environment: the guard (CI_CD_Security)."
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "the stub keeps no session (`getSession` answers `{ data: { session: null } }`); product sessions are unchanged."
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "F1 fixed: the four Storybook packages are pinned to `10.6.3` (`npm ls` prints 10.6.3 only) and every transitive version is at least 14 days old (`node scripts/quality/change-report.mjs --lockfile-age HEAD` exit 0; reproduced byte for byte by the reviewer, 2026-11-09)."
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no query reaches a database from the stub or the detector."
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "the stub is a module of this repository; no third-party script is added to Storybook's head or to the site."
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "review 2 reran every claimed command instead of reading the report: `node scripts/quality/change-report.mjs --lockfile-age HEAD` exit 0, the lockfile regenerated by the reviewer byte-identical, `node scripts/check-locale-leak.mjs --mantine-only --report-only-leaks --story=patterns-mantine-dashboardperiodcontrol--custom-range-too-long --widths=320,639,640,1280` exit 0 (12/12), the shards run by the reviewer (Review 2 tools line), and the guard run through a junction, which did not reproduce the report (fixed: Task 963 AC17)."
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "`npm audit --omit=dev --audit-level=high` exit 0 on the revised lockfile (reviewer, 2026-11-09); `npm ci --dry-run` exit 0."
+    },
+    "Web_Cache_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": [
+        "The fundamental security rule is to never use innerHTML with untrusted data."
+      ],
+      "evidence": "no innerHTML in the diff (read in full); `npm run lint` exit 0."
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "Webhook_Security": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "WebSocket_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Don't assume WebSocket connection equals unlimited access. Check authorization for each action"
+      ],
+      "evidence": "`.storybook/__tests__/supabase-client-stub.test.ts`: the stub opens no WebSocket (spy not called); `useFavoritesRealtime.ts` is unchanged and Realtime stays behind RLS."
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the Task 939 diff (review 2, 2026-11-09: `.storybook/` stub, alias and test, two Stories, the four Storybook packages and the lockfile, `scripts/check-locale-leak.mjs` and its test) does not touch this area; the branch verdict is in Task_952.json."
+    }
+  }
+}

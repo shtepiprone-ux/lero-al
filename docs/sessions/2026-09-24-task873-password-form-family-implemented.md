@@ -2,7 +2,7 @@
 
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** (superseded by Revision 1 below — see that section for the current state)
 
-Kickoff: [`Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md`](../../tasks/Sprints/Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md).
+Kickoff: [`Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md`](../../tasks/Archive/Sprint_81_kickoff_prompt_Task_873_Password_Form_Family_On_Mantine.md).
 Platform: `win32` (`node v22.22.3`). Evidence directory: `docs/sessions/evidence/task873/`.
 I0 base commit (pre-implementation `HEAD`): `b5074e624d727a2212a1245898af980effc2e9c2`.
 

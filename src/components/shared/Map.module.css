@@ -34,6 +34,6 @@
   }
 
   .map :global(.leaflet-control-zoom a) {
-    line-height: 30px; /* Leaflet's own */ /* design-tokens-allow: line-height: 30px - restores Leaflet's stylesheet value from 640px up */
+    line-height: 30px; /* design-tokens-allow: line-height: 30px — Leaflet's own value, restored from 640px up (not a project design value) */
   }
 }

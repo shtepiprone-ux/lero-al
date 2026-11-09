@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; temporary (pg_temp) objects only, one transaction, ROLLBACK
+platform win32 10.0.26300.0 node v22.22.3; pg 8.21.0 from a scratchpad prefix via NODE_PATH; temporary (pg_temp) objects only, one transaction, ROLLBACK
 cmd node docs/sessions/evidence/task923/db-catalog/r14-trigger-logic.cjs --i-confirm-dev-database
  ok  B1 INSERT with an id and a supplied name: the name is the trigger's | observed: "Alice Staff"
  ok  B2 INSERT with a null id and a supplied name: the name is null | observed: null

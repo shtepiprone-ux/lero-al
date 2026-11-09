@@ -84,9 +84,9 @@ Error: Unable to fire a "change" event - please provide a DOM element.
 TestingLibraryElementError: Unable to find a label with the text of: /password_new_label/
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div />
+</body>
  ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
  ❯ getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17

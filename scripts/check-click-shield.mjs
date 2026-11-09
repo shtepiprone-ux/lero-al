@@ -157,11 +157,11 @@ const DIALOG_SELECTOR = '[role="dialog"], [role="alertdialog"]';
 // it visually covers, backdrop or panel. The candidate side is unchanged and is what actually
 // implements R1/R3: a candidate INSIDE the dialog is never exempt, regardless of which of the two
 // the interceptor is (even the backdrop intercepting the dialog's own control is a violation).
-const N6_EXEMPT_PREDICATE_BODY = `
-  var hitIsOverlaySystem = !!(hit.closest(overlaySelector) || hit.closest(dialogSelector));
-  if (!hitIsOverlaySystem) return false;
-  return el.closest(dialogSelector) === null;
-`;
+// The predicate is written inline in each page.evaluate callback below (a callback cannot receive a function, and
+// building one from a string with the Function constructor is eval — OWASP JavaScript and TypeScript Security). The
+// three copies are identical:
+//   (el, hit, overlaySelector, dialogSelector) =>
+//     !!(hit.closest(overlaySelector) || hit.closest(dialogSelector)) && el.closest(dialogSelector) === null
 
 // CI baseline recovery (2026-08-15) — listing slugs are mutable data, so they are not a valid
 // blocking-CI fixture. The guarded `/${locale}/ci/click-shield-modal` route mounts the actual
@@ -418,8 +418,9 @@ async function hitTestPage(page) {
   // phase 1, generalized to run more than once and to dedupe across runs.
   const runBand = (page_) =>
     page_.evaluate(
-      ({ selector, overlaySelector, dialogSelector, predicateBody, resolvedIndices }) => {
-        const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
+      ({ selector, overlaySelector, dialogSelector, resolvedIndices }) => {
+        const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
+          !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
         const resolvedSet = new Set(resolvedIndices);
         function realClass(el) {
           const attr = el.getAttribute && el.getAttribute('class');
@@ -634,7 +635,7 @@ async function hitTestPage(page) {
 
           // N6 — contextual overlay exemption (Task 727 R1): exempt only when the CANDIDATE sits
           // outside any active dialog. A candidate inside [role="dialog"]/[role="alertdialog"]
-          // intercepted by the overlay backdrop is never exempt — see N6_EXEMPT_PREDICATE_BODY.
+          // intercepted by the overlay backdrop is never exempt — see the inline N6 exemption predicate.
           if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) {
             results.push({ index: i, kind: 'clean' });
             continue;
@@ -690,7 +691,6 @@ async function hitTestPage(page) {
         selector: CANDIDATE_SELECTOR,
         overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
         dialogSelector: DIALOG_SELECTOR,
-        predicateBody: N6_EXEMPT_PREDICATE_BODY,
         resolvedIndices: Array.from(resolved),
       }
     );
@@ -725,7 +725,7 @@ async function hitTestPage(page) {
     if (resolved.has(idx)) continue;
     const targetOffset = Math.max(0, Math.min(initialMaxScrollY, Math.round(info.docCentreY - innerHeight / 2)));
     const recheck = await page.evaluate(
-      ({ selector, index, offset, overlaySelector, dialogSelector, predicateBody }) => {
+      ({ selector, index, offset, overlaySelector, dialogSelector }) => {
         window.scrollTo({ top: offset, left: 0, behavior: 'instant' });
         const el = Array.from(document.querySelectorAll(selector))[index];
         if (!el) return { outcome: 'gone' };
@@ -737,7 +737,8 @@ async function hitTestPage(page) {
         const hit = document.elementFromPoint(cx, cy);
         if (!hit) return { outcome: 'null' };
         if (hit === el || el.contains(hit) || hit.contains(el)) return { outcome: 'clean' };
-        const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
+        const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
+          !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
         if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { outcome: 'clean' };
         function realClass(elx) {
           const attr = elx.getAttribute && elx.getAttribute('class');
@@ -764,7 +765,6 @@ async function hitTestPage(page) {
         offset: targetOffset,
         overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
         dialogSelector: DIALOG_SELECTOR,
-        predicateBody: N6_EXEMPT_PREDICATE_BODY,
       }
     );
     resolved.add(idx);
@@ -796,8 +796,9 @@ async function hitTestPage(page) {
     let resolvedOffset = null;
     for (const offset of tc.candidateOffsets) {
       const recheck = await page.evaluate(
-        ({ selector, selectorIndex, offset, overlaySelector, dialogSelector, predicateBody }) => {
-          const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
+        ({ selector, selectorIndex, offset, overlaySelector, dialogSelector }) => {
+          const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
+          !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
           // `behavior: 'instant'` deliberately overrides any page-level `scroll-behavior: smooth`
           // CSS (confirmed present on this project's `<html>`) — a smooth scroll animates
           // asynchronously, so a synchronous re-read immediately after a bare `scrollTo(x, y)`
@@ -824,7 +825,6 @@ async function hitTestPage(page) {
           offset,
           overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
           dialogSelector: DIALOG_SELECTOR,
-          predicateBody: N6_EXEMPT_PREDICATE_BODY,
         }
       );
       if (recheck.cleared) {
@@ -849,7 +849,13 @@ async function hitTestPage(page) {
   // band's reason happened to be — it was already resolved, one way or the other, by the targeted
   // recheck above. A genuine below/above/left/right-of-viewport entry that was never deferred
   // keeps today's behavior unchanged.
-  const excluded = finalExcluded.filter((e) => !deferredInfo.has(e.index)).map(({ index, edgeBand, docCentreY, ...rest }) => rest);
+  const excluded = finalExcluded.filter((e) => !deferredInfo.has(e.index)).map((entry) => {
+    const rest = { ...entry };
+    delete rest.index;
+    delete rest.edgeBand;
+    delete rest.docCentreY;
+    return rest;
+  });
 
   return { checked, violations, cleared, excluded };
 }
@@ -1173,7 +1179,7 @@ const RIGHT_DIALOG_PAGE_HTML = `<!DOCTYPE html>
 // just the nav drawer": exactly one [role="dialog"]/[role="alertdialog"] in the DOM (the nav
 // drawer, itself a dialog, must have closed) AND that one dialog contains input[type="email"].
 // Shared verbatim between the live gate's openDrawerScenario and this self-test's R5c arm, so the
-// two cannot silently drift apart (same reasoning as N6_EXEMPT_PREDICATE_BODY above).
+// two cannot silently drift apart (the same reasoning as the inline N6 exemption predicate above).
 async function isAuthSheetSettled(page) {
   return page.evaluate(() => {
     const dialogs = document.querySelectorAll('[role="dialog"], [role="alertdialog"]');
@@ -1192,7 +1198,6 @@ async function runGateSelfTest() {
   });
 
   let server;
-  const pages = { violation: null, clean: null, overlayExempt: null, transient: null, permanent: null };
   const baseUrl = await new Promise((res, rej) => {
     server = createServer((req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -1351,7 +1356,7 @@ async function runChecks() {
   const browser = await chromium.launch({ headless: true });
 
   // Task 758 item 4 — dev-server preflight. This gate is designed for a local PRODUCTION build
-  // (governance-pr.yml: npm run build -> npm start -> check:click-shield). Run against
+  // (ci.yml click-shield job: npm run build -> npm start -> check:click-shield). Run against
   // `npm run dev` instead, every candidate on every cell reports a false interception attributed
   // to `<nextjs-portal>` at (0,0) — the Next.js DevTools overlay, which exists only under `next
   // dev` and paints over the whole viewport. `document.querySelector('nextjs-portal')` is the

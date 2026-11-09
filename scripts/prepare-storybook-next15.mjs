@@ -63,12 +63,11 @@ if (!existsSync(sourcePath)) {
 }
 
 // Idempotent: skip if the stub already exists with the correct content.
-if (existsSync(stubPath)) {
-  try {
-    if (readFileSync(stubPath, 'utf8') === STUB_CONTENT) process.exit(0);
-  } catch {
-    // Fall through and rewrite.
-  }
+// no existence check before the read (Task 951, CodeQL js/file-system-race): a missing or unreadable stub falls through to the rewrite
+try {
+  if (readFileSync(stubPath, 'utf8') === STUB_CONTENT) process.exit(0);
+} catch {
+  // Fall through and rewrite.
 }
 
 mkdirSync(dirname(stubPath), { recursive: true });

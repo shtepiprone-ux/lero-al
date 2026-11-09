@@ -1,6 +1,6 @@
 # Task 583 — Header: show the Favorites (heart) icon at ALL breakpoints
 
-Sprint 44. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_583_FavoritesIconAllBreakpoints.md`.
+Sprint 44. Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_583_FavoritesIconAllBreakpoints.md`.
 Depends on Task 575 (landed).
 
 ## Why

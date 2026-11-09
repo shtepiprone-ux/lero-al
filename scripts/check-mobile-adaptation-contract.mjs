@@ -4,7 +4,9 @@
  *
  * It has two deliberately narrow, mechanical jobs:
  *  - reject a newly added textual clipping primitive in a visible UI source; and
- *  - require a structured mobile-adaptation record when an active kickoff changes.
+ *  - require a structured mobile-adaptation record in every active kickoff (every kickoff outside tasks/Archive/,
+ *    read from disk, so a local run and CI give the same answer; until 2026-11-06 only changed kickoffs were read,
+ *    and 377 of 380 active kickoffs had no record).
  *
  * It does not pretend a static scan can prove rendered reflow.  The contract separately requires the built-Storybook
  * probe across the project's actual compact range and at the 640px transition. There is intentionally no baseline,
@@ -19,7 +21,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const REGISTRY_PATH = 'scripts/mobile-adaptation-patterns.json'
 const MANTINE_PATTERN_ROOT = 'src/design-system/mantine/patterns'
 const UI_PATH = /^(?:src\/(?:(?:stories|components)\/.*\.stories\.(?:ts|tsx)|design-system\/(?:mantine|media)\/.*\.(?:ts|tsx|css)|components\/.*\.(?:ts|tsx|css)|modules\/[^/]+\/components\/.*\.(?:ts|tsx|css)|app\/(?:\[locale\]|admin)\/.*\.(?:ts|tsx|css)))$/i
-const TEST_PATH = /(?:^|\/)(?:__tests__|tests)\/|\.(?:test|spec)\.(?:ts|tsx)$/i
+const TEST_PATH = /(?:(?:^|\/)(?:__tests__|tests)\/|\.(?:test|spec)\.(?:ts|tsx)$)/i
 const ACTIVE_KICKOFF = /^tasks\/(?!Archive\/).*kickoff.*\.md$/i
 const FORBIDDEN_TEXT_CLIPPING = [
   { id: 'truncate', re: /\btruncate\b/ },
@@ -47,7 +49,6 @@ function assertCommit(revision, label) {
   if (!revision) throw new Error(`${label} is required`)
   git(['rev-parse', '--verify', `${revision}^{commit}`])
 }
-function readRevision(revision, rel) { return git(['show', `${revision}:${rel}`]) }
 function changedFiles(base, head) {
   return git(['diff', '--name-only', '--diff-filter=ACMR', base, head, '--'])
     .split(/\r?\n/).filter(Boolean).map(normalize)
@@ -188,17 +189,23 @@ export function kickoffProblems(rel, text, registry) {
   return problems
 }
 
+/** Every kickoff of an open task: under tasks/ and not in tasks/Archive/, tracked or untracked-not-ignored. */
+export function activeKickoffs(listed) {
+  return listed.map(normalize).filter((rel) => ACTIVE_KICKOFF.test(rel))
+}
+
 function runGate(base, head) {
   assertCommit(base, 'base')
   assertCommit(head, 'head')
-  const registry = readRegistry()
   const files = changedFiles(base, head)
   const clipping = []
-  const records = []
   for (const rel of files) {
     if (isUiPath(rel)) clipping.push(...clippingProblems(rel, addedLines(base, head, rel)))
-    if (ACTIVE_KICKOFF.test(rel)) records.push(...kickoffProblems(rel, readRevision(head, rel), registry))
   }
+  // Every active kickoff, not only the changed ones, and as it is on disk: a record that is missing from an unchanged
+  // kickoff, or from work not yet committed, is found by the same run locally and in CI.
+  const listed = git(['ls-files', '-co', '--exclude-standard', '--', 'tasks']).split(/\r?\n/).filter(Boolean)
+  const records = runFiles(activeKickoffs(listed).filter((rel) => existsSync(join(ROOT, rel))))
   return { files, clipping, records }
 }
 
@@ -248,6 +255,13 @@ function verify() {
   const unmappedPass = componentMappingProblems(['src/design-system/mantine/patterns/Unmapped.tsx'], registry.memberToFamily).some((problem) => problem.rule === 'unmapped-mantine-pattern')
   console.log(`${unmappedPass ? 'GREEN' : 'FAIL '} unmapped canonical Mantine pattern is rejected`)
   ok &&= unmappedPass
+  const active = activeKickoffs(['tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', 'tasks/Archive/Sprint_8_kickoff_prompt_Task_172.md', 'tasks\\Epics\\Epic_A_kickoff_prompt_Task_103.md', 'tasks/Sprints/Sprint_93_Plan.md'])
+  const activePass = active.length === 2 && active.includes('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md') && active.includes('tasks/Epics/Epic_A_kickoff_prompt_Task_103.md')
+  console.log(`${activePass ? 'GREEN' : 'FAIL '} every kickoff outside tasks/Archive is checked; archived kickoffs and plans are not`)
+  ok &&= activePass
+  const nonePass = kickoffProblems('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', '## Mobile adaptation record\n- Scope: none\n', registry).length === 0
+  console.log(`${nonePass ? 'GREEN' : 'FAIL '} a non-visible task's "Scope: none" record is accepted`)
+  ok &&= nonePass
   console.log(ok ? 'check:mobile-adaptation-contract self-test PASSED' : 'check:mobile-adaptation-contract self-test FAILED')
   return ok ? 0 : 1
 }
@@ -278,7 +292,7 @@ try {
     console.error('Fix the semantic layout: reflow/stack/wrap full content or use a canonical presentation. Do not add a truncation, suppression, or local Story workaround.')
     process.exit(1)
   }
-  console.log('PASS  check:mobile-adaptation-contract — no newly added text clipping primitive; changed kickoff records are complete.')
+  console.log('PASS  check:mobile-adaptation-contract — no newly added text clipping primitive; every active kickoff record is complete.')
 } catch (error) {
   console.error(`FAIL  check:mobile-adaptation-contract — fail closed: ${error.message}`)
   process.exit(1)

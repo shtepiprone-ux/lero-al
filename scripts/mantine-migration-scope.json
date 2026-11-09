@@ -151,5 +151,8 @@
   "src/design-system/mantine/patterns/MantineDeleteConfirmModal.tsx",
   "src/design-system/mantine/patterns/MantineFilterChips.tsx",
   "src/design-system/mantine/patterns/MantineRadioCardOption.tsx",
-  "src/components/admin/AdminUsersTableView.tsx"
+  "src/components/admin/AdminUsersTableView.tsx",
+  "src/components/admin/AdminUsersTable.tsx",
+  "src/lib/navigation/ClientLink.tsx",
+  "src/modules/cabinet/components/CabinetEmailChangeSection.tsx"
 ]

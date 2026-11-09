@@ -1,11 +1,11 @@
 // @vitest-environment node
 /**
- * Security (Task 923 R68 (b), R72 (e)): which requests `src/middleware.ts` refreshes the session on, and the default language it routes with.
+ * Security (Task 923 R68 (b), R72 (e)): which requests `src/proxy.ts` (Next 16 name of the former middleware) refreshes the session on, and the default language it routes with.
  *  - SEC-X-SRV-SESSION-REFRESH-SCOPE: the session is refreshed on /admin and on the API routes, so a refused (banned or deleted) session ends there too (R45 (a)) and an
  *    expired one is renewed before a page or handler reads it; the routes that carry no session (the cron jobs and the Auth e-mail hook) are left out of the matcher;
  *    /admin and /api get no locale routing (no prefix, no redirect).
  *  - R72 (e): the staff-chosen default language drives locale routing, is cached for five minutes, accepts only the four supported languages, and the service-role key
- *    goes only to the Supabase REST address. (`src/proxy.ts` used to hold this logic and was never run by this Next.js version.)
+ *    goes only to the Supabase REST address. (Before Task 952 an older copy of this logic sat in a `src/proxy.ts` that Next 15 never ran; Next 16 runs `src/proxy.ts` itself, and it is the only gate.)
  * The real middleware runs; the Supabase client, next-intl's middleware and the network are doubles. Every value is synthetic.
  */
 import { NextRequest, NextResponse } from 'next/server'
@@ -44,7 +44,7 @@ beforeEach(() => {
 afterEach(() => { process.env = { ...ENV }; vi.unstubAllGlobals(); vi.useRealTimers() })
 
 const matcherMatches = async (path: string) => {
-  const { config } = await import('@/middleware')
+  const { config } = await import('@/proxy')
   return new RegExp(`^${config.matcher[0]}$`).test(path)
 }
 
@@ -60,10 +60,10 @@ describe('middlewareScope', () => {
     }
 
     // the middleware: the session is refreshed on /admin and /api, and nothing is routed by locale there
-    const { middleware } = await import('@/middleware')
+    const { proxy } = await import('@/proxy')
     for (const path of ['/admin/users', '/api/presence', '/api', '/admin']) {
       state.getUserCalls = 0
-      const res = await middleware(req(path))
+      const res = await proxy(req(path))
       expect(state.getUserCalls, `${path} refreshes the session`).toBe(1)
       expect(res.headers.get('x-intl-path'), `${path} is not locale routed`).toBeNull()
       expect(res.headers.get('location'), `${path} is not redirected`).toBeNull()
@@ -72,7 +72,7 @@ describe('middlewareScope', () => {
 
     // the control: a page of the site still gets the session refresh AND locale routing
     state.getUserCalls = 0
-    const page = await middleware(req('/sq/listings'))
+    const page = await proxy(req('/sq/listings'))
     expect(state.getUserCalls).toBe(1)
     expect(page.headers.get('x-intl-path')).toBe('/sq/listings')
   })
@@ -82,8 +82,8 @@ describe('middlewareScope', () => {
     vi.setSystemTime(new Date('2026-10-20T10:00:00Z'))
     const fetchSpy = fetchOk('en')
     vi.stubGlobal('fetch', fetchSpy)
-    const { middleware } = await import('@/middleware')
-    const res = await middleware(req('/'))
+    const { proxy } = await import('@/proxy')
+    const res = await proxy(req('/'))
     expect(res.headers.get('x-intl-default')).toBe('en')
     expect(fetchSpy).toHaveBeenCalledTimes(1)
     // the key goes to the Supabase REST address and nowhere else
@@ -91,10 +91,10 @@ describe('middlewareScope', () => {
     expect(url.startsWith('https://x.supabase.co/rest/v1/site_settings?key=eq.default_locale')).toBe(true)
     expect(init.headers.apikey).toBe('service-SECRET')
     // cached: a second request inside five minutes does not ask again; after five minutes it does
-    await middleware(req('/sq'))
+    await proxy(req('/sq'))
     expect(fetchSpy).toHaveBeenCalledTimes(1)
     vi.setSystemTime(new Date('2026-10-20T10:05:01Z'))
-    await middleware(req('/sq'))
+    await proxy(req('/sq'))
     expect(fetchSpy).toHaveBeenCalledTimes(2)
   })
 
@@ -102,8 +102,8 @@ describe('middlewareScope', () => {
     for (const answer of [fetchOk('xx'), vi.fn(async () => { throw new Error('timeout') }), vi.fn(async () => ({ ok: false }) as unknown as Response)]) {
       vi.resetModules()
       vi.stubGlobal('fetch', answer)
-      const { middleware } = await import('@/middleware')
-      const res = await middleware(req('/'))
+      const { proxy } = await import('@/proxy')
+      const res = await proxy(req('/'))
       expect(res.headers.get('x-intl-default')).toBe('sq')
     }
   })

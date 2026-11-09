@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-06  
 **Executor:** Sonnet 4.6  
-**Kickoff:** `tasks/Sprints/Sprint_34_kickoff_prompt_Task_400_FileIntegrityGate.md`
+**Kickoff:** `tasks/Archive/Sprint_34_kickoff_prompt_Task_400_FileIntegrityGate.md`
 
 ---
 

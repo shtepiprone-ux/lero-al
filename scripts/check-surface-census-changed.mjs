@@ -53,7 +53,9 @@ import {
   loadManifestSet,
   DEFAULT_MAX_CHANGED_FILES,
   DEFAULT_MAX_SURFACES,
+  changedFileLimit,
 } from './map-changed-surfaces.mjs';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -384,7 +386,7 @@ export function runPipeline(
 // pipeline end-to-end with `--base HEAD --head HEAD` (an empty diff, real git + real fs, no server) to
 // prove the unplanted/empty-diff path is clean.
 function runSelfTest() {
-  const ARM_COUNT = 12;
+  const ARM_COUNT = 14;
   console.log(`check:surface-census:changed gate self-test (--verify-gate, Task 819 R7) — running ${ARM_COUNT} arms\n`);
   let passed = 0;
   let failed = 0;
@@ -422,11 +424,11 @@ function runSelfTest() {
     record(res.unresolved === true && exitCode === 1, 'Arm 2 — changed file trapped in a rootless cycle -> unresolved, drives exit non-zero');
   }
 
-  // Arm 3 — an over-limit diff drives the exit decision to non-zero (fail-closed, R5). Uses `HEAD~1`
-  // as base so the diff is real and non-empty (base===head would always be 0 changed files, which can
-  // never exceed a limit of 0 — this arm needs an actual changed-file count to cap).
+  // Arm 3 — an over-limit set of changed production files drives the exit decision to non-zero (fail-closed, R5).
+  // The limit counts census candidates only (changedFileLimit), so the arm feeds it one candidate and a limit of 0
+  // instead of depending on what the last commit happened to change.
   {
-    const mapping = runMapping({ base: 'HEAD~1', head: 'HEAD', maxChangedFiles: 0, maxSurfaces: DEFAULT_MAX_SURFACES });
+    const mapping = changedFileLimit(['src/fake/verify/Surface.tsx'], 0, 3);
     const exitCode = evaluateGateExitCode({ newBlocksCount: 0, staleKeysCount: 0, failClosedCount: mapping.failClosed ? 1 : 0 });
     record(
       mapping.failClosed === true && mapping.reason === 'changed-file-limit-exceeded' && exitCode === 1,
@@ -629,6 +631,36 @@ function runSelfTest() {
     record(
       hookCensus.ok && !hookSelfBlocked && controlCensus.ok && controlHasBlocking,
       `Arm 12 — real census: '${hookSurface}' (a .ts root) is not self-blocking; '${controlSurface}' (a .tsx control) still blocks normally`
+    );
+  }
+
+  // Arms 13 and 14 (Task 963 AC14, owner decision O-CS1 of 2026-11-08) — the default limit holds the integration PR
+  // (#19 with Task 953 mapped 65 surfaces), and one surface beyond the limit still fails closed. Driven through the real
+  // `runPipeline` with an injected mapping and a census that finds nothing, so only the limit decides.
+  {
+    const limitRun = (count) => {
+      const included = Array.from({ length: count }, (_, i) => `src/fake/verify/LimitSurface${i}.tsx`);
+      const mappingFn = () => ({
+        failClosed: false, base: 'x', head: 'y', mergeBase: 'z', changedCount: count,
+        excluded: [], included, candidates: included,
+        limits: { maxChangedFiles: DEFAULT_MAX_CHANGED_FILES, maxSurfaces: DEFAULT_MAX_SURFACES }, graphFileCount: 0,
+      });
+      const loadBaselineFn = () => ({ version: 1, blocks: {} });
+      const censusFn = () => ({ ok: true, exitCode: 0, result: { blocking: [] } });
+      return runPipeline(
+        { base: 'x', head: 'y', maxChangedFiles: DEFAULT_MAX_CHANGED_FILES, maxSurfaces: DEFAULT_MAX_SURFACES },
+        censusFn, () => true, mappingFn, loadBaselineFn,
+      );
+    };
+    const pr19 = limitRun(65);
+    record(
+      pr19.failClosed === false && pr19.perSurfaceBlocks.length === 65,
+      `Arm 13 — 65 mapped surfaces (PR #19 with Task 953) pass the default limit of ${DEFAULT_MAX_SURFACES} and are all censused`
+    );
+    const over = limitRun(DEFAULT_MAX_SURFACES + 1);
+    record(
+      over.failClosed === true && over.mapping?.reason === 'surface-limit-exceeded' && over.mapping?.limit === DEFAULT_MAX_SURFACES,
+      `Arm 14 — ${DEFAULT_MAX_SURFACES + 1} mapped surfaces exceed the default limit -> fail-closed with surface-limit-exceeded`
     );
   }
 
@@ -847,7 +879,7 @@ function main() {
   process.exit(exitCode);
 }
 
-const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMain = isEntryPoint(import.meta.url);
 if (isMain) {
   if (VERIFY_GATE) runSelfTest();
   else main();

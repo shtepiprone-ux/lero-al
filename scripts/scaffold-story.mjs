@@ -69,12 +69,6 @@ const compBaseName = basename(compAbsPath, '.tsx');    // e.g. "MyComponent"
 const storyPath = join(compDir, `${compBaseName}.stories.tsx`);
 const storyRelPath = relative(ROOT, storyPath).replace(/\\/g, '/');
 
-if (existsSync(storyPath)) {
-  console.error(`❌  Story file already exists: ${storyRelPath}`);
-  console.error('    Delete it first if you want to regenerate.');
-  process.exit(1);
-}
-
 // ── Derive Storybook category from directory name ──────────────────────────────
 // src/components/ui/ → "Primitives"
 // src/components/shared/ → "Shared"
@@ -166,7 +160,15 @@ export const LocaleStress: Story = {
 `;
 
 // ── Write ─────────────────────────────────────────────────────────────────────
-writeFileSync(storyPath, content, 'utf8');
+// flag 'wx' creates the file only if it does not exist, in one step: no check before the write that another process could outrun (Task 951, CodeQL js/file-system-race)
+try {
+  writeFileSync(storyPath, content, { encoding: 'utf8', flag: 'wx' });
+} catch (error) {
+  if (error?.code !== 'EEXIST') throw error;
+  console.error(`❌  Story file already exists: ${storyRelPath}`);
+  console.error('    Delete it first if you want to regenerate.');
+  process.exit(1);
+}
 
 console.log(`✅  Story scaffold created: ${storyRelPath}`);
 console.log('');

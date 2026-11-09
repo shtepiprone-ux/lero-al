@@ -10,7 +10,7 @@ import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingHidden } from '@/modules/listings/domain'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
-import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
+import { isListingNew } from '@/modules/listings/lib/isListingNew'
 import type { ListingStatus, PublicUserProfile } from '@/types/database'
 import { ListingDetailView } from '@/modules/listings/components/ListingDetailView'
 
@@ -73,7 +73,7 @@ export default async function AdminListingPreviewPage({ params }: Props) {
 
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${listing.slug}`
 
-  const isNew = new Date(listing.created_at) > new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
+  const isNew = isListingNew(listing.created_at)
   const isPriceReduced = !!(listing.price_old && listing.price < listing.price_old)
 
   const features = getDetailFeatures(listing)

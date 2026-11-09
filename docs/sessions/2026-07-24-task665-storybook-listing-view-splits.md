@@ -1,7 +1,7 @@
 # Session Log — Task 665: Storybook listing/grid story cleanup via Container/Presentational View splits
 
 **Date:** 2026-07-24
-**Kickoff:** `tasks/kickoff_prompt_Task_665_Storybook_Listing_Story_Cleanup_View_Splits.md`
+**Kickoff:** `tasks/Archive/kickoff_prompt_Task_665_Storybook_Listing_Story_Cleanup_View_Splits.md`
 **QA profile:** Q3 Full Visual Matrix.
 **Status:** `PARTIALLY IMPLEMENTED` — all code/story/deletion requirements are implemented and evidenced; the
 §13.7 pre/after live-route byte-identical DOM/computed-style baseline (AC1, AC8) could not be captured in this

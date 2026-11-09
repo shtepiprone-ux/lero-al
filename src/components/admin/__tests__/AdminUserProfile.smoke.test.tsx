@@ -425,3 +425,34 @@ describe('AdminUserProfile (T1–T9)', () => {
     await waitFor(() => expect(save()).toBeDisabled())
   })
 })
+
+// Task 953 (incompatible-library): the profile form reads the account type, the status and the phone with react-hook-form; the fields they drive must behave the same
+// after the reads moved to `useWatch`.
+describe('AdminUserProfile — fields driven by watched values (Task 953)', () => {
+  it('a business account shows the company fields; switching it to private hides them and saves them empty', async () => {
+    renderProfile()
+    enterEditMode()
+    expect(screen.getByLabelText(t.fields.company_name)).toBeTruthy()
+
+    fireEvent.click(getSelectInput(t.fields.profile_type.replace(' *', '')))
+    fireEvent.click(await screen.findByRole('option', { name: t.profile_types.private }))
+    await waitFor(() => expect(screen.queryByLabelText(t.fields.company_name)).toBeNull())
+
+    fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect(mockUpdate).toHaveBeenCalledWith(
+      USER.id,
+      expect.objectContaining({ profileType: 'private', companyName: '', website: '', position: '' }),
+    )
+  })
+
+  it('moving a blocked account to active saves an empty block reason', async () => {
+    renderProfile({ user: FIXTURE_PROFILE_USER_BLOCKED })
+    enterEditMode()
+    fireEvent.click(getSelectInput(t.sections.account_status))
+    fireEvent.click(await screen.findByRole('option', { name: t.statuses.active }))
+    fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect(mockUpdate).toHaveBeenCalledWith(FIXTURE_PROFILE_USER_BLOCKED.id, expect.objectContaining({ status: 'active', blockReason: '' }))
+  })
+})

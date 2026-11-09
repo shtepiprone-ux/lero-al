@@ -1,7 +1,7 @@
 # Task 612 — `ListingGallery` lightbox → Mantine `fullScreen Modal` root-cause z-index/portal fix
 
 Sprint 44. Executed 2026-07-16 against the RE-SCOPED kickoff:
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_612_ListingGalleryLightboxPortalZIndex.md`.
+`tasks/Archive/Sprint_44_kickoff_prompt_Task_612_ListingGalleryLightboxPortalZIndex.md`.
 
 ## Summary
 

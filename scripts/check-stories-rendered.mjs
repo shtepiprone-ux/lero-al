@@ -53,6 +53,7 @@ import { fileURLToPath } from 'node:url';
 import { checkGeometryIntegrity } from './geometry-integrity.mjs';
 import { MANTINE_STORY_TITLE_PREFIXES, MANTINE_STORY_ENROLLED_TITLES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
 import { describeRunMode } from './lib/rendered-run-mode.mjs';
+import { requestPathWithin } from './lib/within-repository.mjs';
 
 // Crash guards: ensure the process always exits with a controlled integer
 // code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
@@ -305,7 +306,7 @@ const LOADER_ALLOWLIST = new Set([
 
 // Task 607 — tracked known-failure registry for `Patterns/Mantine/*` stories with an
 // ALREADY-FILED, REAL defect this task's coverage extension surfaced (not a gate false
-// positive). `--mantine-only` is a hard-blocking CI gate (.github/workflows/governance-pr.yml)
+// positive). `--mantine-only` is a hard-blocking CI gate (.github/workflows/ci.yml)
 // — allowlisting a TRUE positive here would be exactly the "ship invisibly" failure mode this
 // task exists to close (the `LOADER_ALLOWLIST` precedent is for FALSE positives only and does
 // NOT apply to real defects; owner decision, Task 607 review, 2026-07-15).
@@ -509,8 +510,9 @@ function startStaticServer(staticDir, port) {
     const server = createServer(async (req, res) => {
       let urlPath = req.url.split('?')[0];
       if (urlPath === '/') urlPath = '/index.html';
-      const filePath = join(staticDir, urlPath);
       try {
+        // the request path is decoded and held inside the served directory (Task 951 AC8): "../", "%2e%2e/", a link out of it all fall through to the fallback below
+        const filePath = requestPathWithin(staticDir, urlPath);
         const data = await readFile(filePath);
         const mime = MIME[extname(filePath)] ?? 'application/octet-stream';
         res.writeHead(200, { 'Content-Type': mime });
@@ -744,10 +746,9 @@ async function assertScreenshotHasMeaningfulPixels(screenshotPath, { domRenderPa
       const key = `${data[i]},${data[i + 1]},${data[i + 2]}`;
       colourCounts.set(key, (colourCounts.get(key) ?? 0) + 1);
     }
-    let dominantKey = '';
     let dominantCount = 0;
-    for (const [k, v] of colourCounts) {
-      if (v > dominantCount) { dominantKey = k; dominantCount = v; }
+    for (const v of colourCounts.values()) {
+      if (v > dominantCount) dominantCount = v;
     }
 
     const backgroundRatio = dominantCount / pixelCount;

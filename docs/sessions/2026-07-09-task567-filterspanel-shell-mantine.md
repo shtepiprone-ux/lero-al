@@ -2,7 +2,7 @@
 
 ## Context
 
-Task 567, `tasks/Sprints/Sprint_43_kickoff_prompt_Task_567_FiltersPanelShellMantine.md`. Sprint 43
+Task 567, `tasks/Archive/Sprint_43_kickoff_prompt_Task_567_FiltersPanelShellMantine.md`. Sprint 43
 (FiltersPanel/HeroSearch → Mantine, Epic MM Phase-2 composite). Depends on Task 566 (leaf
 sub-components, approved). This task migrates only the shell of `FiltersPanel.tsx`: the overlay, the
 close affordance, the property-type + market-type toggle grids, the listing-id input, and the

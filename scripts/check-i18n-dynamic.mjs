@@ -119,15 +119,15 @@ for (const entry of manifest.entries) {
 
 // ── load baseline ───────────────────────────────────────────────────────────
 
-if (!existsSync(BASELINE_PATH)) {
-  console.error('❌ check:i18n-dynamic — scripts/i18n-dynamic-baseline.json not found / unreadable.')
-  process.exit(1)
-}
-
 let baseline
 try {
   baseline = JSON.parse(readFileSync(BASELINE_PATH, 'utf8'))
 } catch (err) {
+  // one read, no separate existence check before it: the file cannot be swapped between the check and the use (Task 951, CodeQL js/file-system-race)
+  if (err?.code === 'ENOENT') {
+    console.error('❌ check:i18n-dynamic — scripts/i18n-dynamic-baseline.json not found / unreadable.')
+    process.exit(1)
+  }
   console.error(`❌ check:i18n-dynamic — scripts/i18n-dynamic-baseline.json is not valid JSON: ${err.message}`)
   process.exit(1)
 }

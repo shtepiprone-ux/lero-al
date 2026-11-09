@@ -473,5 +473,5 @@
 /* Task 923 (R33, owner D6) - the link editor's field of the rich text editor: its section (the 44px external-link toggle) spans the border box, like
    the PasswordInput one, so the toggle lies inside it instead of 1px past it on both sides. */
 .mantine-RichTextEditor-linkEditor .mantine-TextInput-section {
-  inset-block: -1px; /* design-tokens-allow: inset-block: -1px - the 1px border of the field */
+  inset-block: -1px; /* the 1px border of the field */
 }

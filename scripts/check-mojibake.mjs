@@ -27,6 +27,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { resolve, extname, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -46,7 +47,7 @@ const BINARY_EXTS = new Set([
 // ── Mojibake signatures (ordered: most specific first) ──────────────────────
 // Each pattern is a literal decoded-string sequence produced when UTF-8 bytes
 // are re-decoded as CP1252/Latin-1 (or, for U+FFFD, lost entirely).
-const SIGNATURES = [
+export const SIGNATURES = [
   { pattern: '�', name: 'U+FFFD replacement character', hint: 'Lossy decode — re-save the file as UTF-8 from the original source.' },
   { pattern: 'Ô£à', name: 'CP1252-of-UTF-8 for "✅"', hint: 'Re-encode as UTF-8 (intended: ✅ U+2705).' },
   { pattern: 'ÔåÆ', name: 'CP1252-of-UTF-8 for "→"', hint: 'Re-encode as UTF-8 (intended: → U+2192).' },
@@ -69,7 +70,7 @@ const SIGNATURES = [
   { pattern: 'Ã§', name: 'CP1252-of-UTF-8 for "ç"', hint: 'Re-encode as UTF-8 (intended: ç U+00E7).' },
 
   // "Â…" family — specific paired sequences only, never bare "Â" — Task 429.
-  { pattern: 'Â ', name: 'CP1252-of-UTF-8 for U+00A0 (NBSP)', hint: 'Re-encode as UTF-8 (intended: non-breaking space U+00A0).' },
+  { pattern: 'Â\u00A0', name: 'CP1252-of-UTF-8 for U+00A0 (NBSP)', hint: 'Re-encode as UTF-8 (intended: non-breaking space U+00A0).' },
   { pattern: 'Â«', name: 'CP1252-of-UTF-8 for "«"', hint: 'Re-encode as UTF-8 (intended: « U+00AB).' },
   { pattern: 'Â»', name: 'CP1252-of-UTF-8 for "»"', hint: 'Re-encode as UTF-8 (intended: » U+00BB).' },
   { pattern: 'Â©', name: 'CP1252-of-UTF-8 for "©"', hint: 'Re-encode as UTF-8 (intended: © U+00A9).' },
@@ -96,7 +97,7 @@ const SIGNATURES = [
 // ── Allowlist ─────────────────────────────────────────────────────────────────
 const ALLOWLIST_PATH = resolve(ROOT, 'scripts/mojibake-allowlist.json');
 
-function loadAllowlist() {
+export function loadAllowlist() {
   if (!existsSync(ALLOWLIST_PATH)) return [];
   const raw = readFileSync(ALLOWLIST_PATH, 'utf8');
   const list = JSON.parse(raw);
@@ -127,7 +128,7 @@ function globToRegExp(glob) {
   return new RegExp(`^${out}$`);
 }
 
-function isAllowlisted(relPath, allowlist) {
+export function isAllowlisted(relPath, allowlist) {
   return allowlist.some((glob) => globToRegExp(glob).test(relPath));
 }
 
@@ -145,6 +146,8 @@ function gitTrackedFiles() {
 function shouldScan(relPath) {
   const ext = extname(relPath).toLowerCase();
   if (BINARY_EXTS.has(ext)) return false;
+  // Recorded session evidence (transcripts of earlier runs) is not authored content.
+  if (relPath.startsWith('docs/sessions/')) return false;
   if (SCAN_DIR_PREFIXES.some((p) => relPath.startsWith(p))) return true;
   // root-level *.md (e.g. CLAUDE.md, README.md)
   if (!relPath.includes('/') && ext === '.md') return true;
@@ -163,6 +166,11 @@ function scanFile(absPath) {
     return { errors: ['Not valid UTF-8 — file must be re-saved as UTF-8 (no BOM)'], hits: [] };
   }
 
+  return { errors: [], hits: findMojibake(text) };
+}
+
+/** Mojibake signature hits in decoded text (this gate and scripts/quality/check-files.mjs). */
+export function findMojibake(text) {
   const hits = [];
   const lines = text.split('\n');
   for (let i = 0; i < lines.length; i++) {
@@ -194,7 +202,7 @@ function scanFile(absPath) {
     }
   }
 
-  return { errors: [], hits };
+  return hits;
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -265,4 +273,4 @@ function run() {
   process.exit(1);
 }
 
-run();
+if (isEntryPoint(import.meta.url)) run();

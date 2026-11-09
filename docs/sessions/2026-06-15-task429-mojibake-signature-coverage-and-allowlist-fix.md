@@ -26,10 +26,10 @@
 
 2. **Allowlist surgery — `scripts/mojibake-allowlist.json`**: removed `"docs/backlog.md"`
    (proven to contain no mojibake artifact — confirmed below, tree stays clean without it); kept
-   the other 4 entries (`tasks/kickoff_prompt_Task_428_mojibake_encoding_guard.md`,
+   the other 4 entries (`tasks/Archive/kickoff_prompt_Task_428_mojibake_encoding_guard.md`,
    `docs/sessions/2026-06-15-task426-canonical-first-ac-clause.md`, `docs/qa-rules.md`,
    `docs/sessions/2026-06-15-task428-mojibake-encoding-guard.md`); added
-   `"tasks/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md"` (this
+   `"tasks/Archive/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md"` (this
    kickoff legitimately quotes the new artifact families as examples — same justified pattern as
    the Task 428 kickoff entry) and, for the same reason (this session log itself quotes the new
    artifact families in its own transcripts — 72 hits on the first run before this entry was
@@ -206,16 +206,16 @@ same justified pattern as the Task 428 session log in the prior task.)
 
 ```json
 [
-  "tasks/kickoff_prompt_Task_428_mojibake_encoding_guard.md",
+  "tasks/Archive/kickoff_prompt_Task_428_mojibake_encoding_guard.md",
   "docs/sessions/2026-06-15-task426-canonical-first-ac-clause.md",
   "docs/qa-rules.md",
   "docs/sessions/2026-06-15-task428-mojibake-encoding-guard.md",
-  "tasks/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md",
+  "tasks/Archive/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md",
   "docs/sessions/2026-06-15-task429-mojibake-signature-coverage-and-allowlist-fix.md"
 ]
 ```
 Net change from the Task-428 version: **removed** `"docs/backlog.md"`; **added**
-`"tasks/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md"` and
+`"tasks/Archive/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md"` and
 `"docs/sessions/2026-06-15-task429-mojibake-signature-coverage-and-allowlist-fix.md"`; the other 4
 entries are unchanged (only their order shifted).
 

@@ -2,7 +2,7 @@
 
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`**
 
-Kickoff: `tasks/Sprints/Sprint_49_kickoff_prompt_Task_710_Assertion_Liveness_Meta_Gate.md`. Branch
+Kickoff: `tasks/Archive/Sprint_49_kickoff_prompt_Task_710_Assertion_Liveness_Meta_Gate.md`. Branch
 `task/q0-ci-rendered-locale-split`, pre-write HEAD `c55c7d183` (worktree clean at start, confirmed
 via `git status --porcelain`).
 

@@ -1,7 +1,7 @@
 # Session Log — Task 518: Canonical responsive NavigationMenu (`MantineNavigationMenu`)
 
 **Date:** 2026-07-01
-**Kickoff:** `tasks/Sprints/Sprint_39_kickoff_prompt_Task_518_NavigationMenuBottomSheet.md`
+**Kickoff:** `tasks/Archive/Sprint_39_kickoff_prompt_Task_518_NavigationMenuBottomSheet.md`
 **Executor:** Sonnet (this session)
 
 ## Summary

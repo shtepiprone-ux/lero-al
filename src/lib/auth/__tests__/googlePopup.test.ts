@@ -35,10 +35,9 @@ function installWindow(options: { fakeTimers?: boolean; blocked?: boolean } = {}
     return options.blocked ? null : (popup as unknown as Window)
   })
 }
-/** Waits, on real macrotasks, until the attempt has opened its window (the nonce is hashed first). */
+/** Waits, with a time limit and not a count of promise turns, until the attempt has opened its window (the nonce is hashed first; a loaded machine takes longer). */
 async function until(check: () => boolean) {
-  for (let turn = 0; turn < 500 && !check(); turn++) await new Promise<void>(resolve => setImmediate(resolve))
-  expect(check()).toBe(true)
+  await vi.waitFor(() => expect(check()).toBe(true), { timeout: 10_000, interval: 5 })
 }
 const addressOf = (open: ReturnType<typeof installWindow>, call = 0) => new URL(open.mock.calls[call][0] as string)
 /** What the callback page's `window.opener.postMessage` is, seen from the opener. */

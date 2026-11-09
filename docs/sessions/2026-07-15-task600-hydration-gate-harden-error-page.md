@@ -1,7 +1,7 @@
 # Task 600 — Harden `check:hydration`: fail on ANY errored page, prove it catches a real hydration mismatch
 
 Sprint 44 (Epic MM Phase-2 / Epic RS — Regression Shield). Follow-up from the Task 599 review.
-Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_600_HydrationGateHardenErrorPage.md`.
+Kickoff: `tasks/Archive/Sprint_44_kickoff_prompt_Task_600_HydrationGateHardenErrorPage.md`.
 
 ## Summary
 

@@ -1,6 +1,6 @@
 ERROR lero-card-status-badge page.setContent: Target page, context or browser has been closed
 Call log:
-[2m  - setting frame content, waiting until 
+  - setting frame content, waiting until 
 node:internal/modules/run_main:123
     triggerUncaughtException(
     ^

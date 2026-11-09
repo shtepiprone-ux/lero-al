@@ -36,7 +36,7 @@
  */
 
 import { config } from 'dotenv'
-import { fileURLToPath } from 'node:url'
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const R_TABLES = [
   'email_change_tokens', 'user_status_history', 'user_change_log',
@@ -176,7 +176,7 @@ async function main() {
   }
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   main().catch((err) => {
     console.error('Probe failed:', err)
     process.exit(1)

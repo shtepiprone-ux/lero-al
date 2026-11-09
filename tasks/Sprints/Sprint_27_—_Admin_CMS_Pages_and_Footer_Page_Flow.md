@@ -32,7 +32,7 @@ Backlog 2026-05-30 reservations BEFORE Sprint 27:
 
 ### Task 326A — Admin CMS pages source-of-truth + per-locale content + `/admin/pages` rebuild + public `[locale]/[slug]` renderer [HIGH]
 
-- Kickoff: [`Sprint_27_kickoff_prompt_Task_326A.md`](Sprint_27_kickoff_prompt_Task_326A.md)
+- Kickoff: [`Sprint_27_kickoff_prompt_Task_326A.md`](../Archive/Sprint_27_kickoff_prompt_Task_326A.md)
 - Type: feature + schema reshape (JSONB-only, no new columns/tables) + new admin route + new public route
 - Owner action required: run `scripts/task-326-pages-locale-jsonb.sql` in Supabase SQL editor between 326A diff approval and 326B start.
 - Output: `scripts/task-326-pages-locale-jsonb.sql` (NEW) + `src/app/admin/pages/page.tsx` (NEW) + `AdminPagesManager.tsx` (NEW) + `src/lib/reserved-slugs.ts` + `slug-validator.ts` (NEW) + `src/app/[locale]/[slug]/page.tsx` (NEW) + types update + redirect `/admin/legal` → `/admin/pages` + delete `/admin/pages-admin` stub + sidebar update + 23 new locale keys × 4 locales = 92 string additions.
@@ -41,7 +41,7 @@ Backlog 2026-05-30 reservations BEFORE Sprint 27:
 
 ### Task 326B — Footer integration with CMS pages: create-page flow + select-existing-page picker + delete/unpublish/slug-change protection [HIGH]
 
-- Kickoff: [`Sprint_27_kickoff_prompt_Task_326B.md`](Sprint_27_kickoff_prompt_Task_326B.md)
+- Kickoff: [`Sprint_27_kickoff_prompt_Task_326B.md`](../Archive/Sprint_27_kickoff_prompt_Task_326B.md)
 - Type: feature (Footer ↔ CMS integration; UX + workflow guards)
 - Dependency: **326A shipped + owner ran migration SQL + Task 324 shipped (Sprint 25)**. Verify all three before starting.
 - Output: AdminFooterManager + AdminPagesManager extensions + `src/lib/footer-page-references.ts` (NEW canonical helper) + actions/footer.ts extension + actions/index.ts (`updatePage`+`deletePage`) edits + 11 new locale keys × 4 locales = 44 string additions.
@@ -50,7 +50,7 @@ Backlog 2026-05-30 reservations BEFORE Sprint 27:
 
 ### Task 326C — CMS pages polish + SEO metadata + sidebar/namespace cleanup + 7-bp × 4-loc QA [MEDIUM]
 
-- Kickoff: [`Sprint_27_kickoff_prompt_Task_326C.md`](Sprint_27_kickoff_prompt_Task_326C.md)
+- Kickoff: [`Sprint_27_kickoff_prompt_Task_326C.md`](../Archive/Sprint_27_kickoff_prompt_Task_326C.md)
 - Type: polish + QA + cleanup (small targeted edits)
 - Dependency: 326A + 326B shipped.
 - Output: Preview button + SEO `generateMetadata` extension + `meta_description` per locale + Used-in-Footer details modal + `admin.legal` namespace consolidation (STOP & ASK gated) + `/admin/legal` redirect removal (STOP & ASK gated) + vitest reserved-slugs spec + comprehensive 7-bp × 4-loc audit report.
@@ -98,7 +98,7 @@ Sprint 27 closes when:
 ## References
 
 - Opus planning session log: [`../../docs/sessions/2026-05-30-task-326-admin-pages-footer-flow-planning.md`](../../docs/sessions/2026-05-30-task-326-admin-pages-footer-flow-planning.md)
-- Task 324 (Footer link validation — Sprint 25, dependency for 326B): [`Sprint_25_kickoff_prompt_Task_324.md`](Sprint_25_kickoff_prompt_Task_324.md)
-- Task 302 (Footer source-of-truth — Sprint 21, foundational): [`Sprint_21_kickoff_prompt_Task_302.md`](Sprint_21_kickoff_prompt_Task_302.md)
+- Task 324 (Footer link validation — Sprint 25, dependency for 326B): [`Sprint_25_kickoff_prompt_Task_324.md`](../Archive/Sprint_25_kickoff_prompt_Task_324.md)
+- Task 302 (Footer source-of-truth — Sprint 21, foundational): [`Sprint_21_kickoff_prompt_Task_302.md`](../Archive/Sprint_21_kickoff_prompt_Task_302.md)
 - Task 247 (original Footer Admin Manager): [`../../docs/sessions/2026-05-28-task-247-ee1-footer-admin-manager.md`](../../docs/sessions/2026-05-28-task-247-ee1-footer-admin-manager.md)
 - Epic HH — Admin UX System (Sprint 27 is INDEPENDENT track; product feature, not admin-UX-system phase): [`../Epics/Epic_HH_Admin_UX_System.md`](../Epics/Epic_HH_Admin_UX_System.md)

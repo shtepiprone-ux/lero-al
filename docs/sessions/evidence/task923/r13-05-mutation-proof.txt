@@ -1,4 +1,4 @@
-﻿platform win32 10.0.26300.0 node v22.22.3
+platform win32 10.0.26300.0 node v22.22.3
 cmd node docs/sessions/evidence/task923/r8-50-bound-mutations.mjs
 PROVED     negative margin exempts only its own size: with it removed, the benign fixture neg-margin-fullbleed fails component-overflow on portal:0: p "Full-bleed band" x 16..374 past div.stack 32..358
 PROVED     table box parent (the table algorithm places its own rows): with it removed, the benign fixture table-rowspan fails component-overflow on portal:0: td "Spans two rows" y 143.6..204.4 past tr 143.6..173.6

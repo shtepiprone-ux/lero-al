@@ -54,7 +54,7 @@ const VIEWPORTS = [
 const LOCALES = ['sq', 'en', 'uk', 'it'];
 const MANDATORY_SHOT = new Set(['320__uk', '375__uk', '390__uk', '1280__en']);
 
-/* eslint-disable no-undef */
+ 
 function evalLightboxStacking() {
   const dialog = document.querySelector('[role="dialog"][aria-modal="true"]');
   if (!dialog) return { dialogFound: false };
@@ -105,7 +105,7 @@ function evalLightboxStacking() {
     dialogCoversViewport,
   };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const { chromium } = await import('playwright');

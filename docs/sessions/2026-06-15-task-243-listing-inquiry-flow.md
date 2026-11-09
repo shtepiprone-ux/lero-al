@@ -142,7 +142,7 @@ for this task per the Note 19/20 "no redesign beyond spec" boundary; flagging fo
 | `messages/sq.json`, `messages/en.json`, `messages/uk.json`, `messages/it.json` | 15 `listing.inquiry_*` keys each (dialog title/labels/placeholders/submit/success/5 error toasts + 1 partial-success toast), identical key sets, 4-locale parity. Rework: replaced `inquiry_error_email_transient` with `inquiry_success_email_pending` in all 4. |
 
 **Not part of this diff (pre-existing, untouched by this session):** `docs/backlog.md` and
-`tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` show as modified
+`tasks/Archive/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md` show as modified
 in `git status` from a prior/parallel session — left as-is, not edited here, and excluded from this
 table per the orchestrator-owned-backlog rule.
 

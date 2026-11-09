@@ -147,101 +147,101 @@ to the trigger (AC2)
 AssertionError: expected false to be true // Object.is equality
 
 Ignored nodes: comments, script, style
-[36m<html[39m
-  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
-[36m>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m""[39m
-        [33mstyle[39m=[32m"align-self: stretch;"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
-          [33mdata-size[39m=[32m"sm"[39m
-          [33mstyle[39m=[32m"cursor: pointer; width: 100%;"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
-            [33mdata-size[39m=[32m"sm"[39m
-            [33mdata-variant[39m=[32m"default"[39m
-            [33mdata-with-left-section[39m=[32m"true"[39m
-            [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
---input-radius: var(--mantine-radius-lg);"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
-              [33mdata-position[39m=[32m"left"[39m
-            [36m>[39m
-              [36m<svg[39m
-                [33maria-hidden[39m=[32m"true"[39m
-                [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
-                [33mfill[39m=[32m"none"[39m
-                [33mheight[39m=[32m"16"[39m
-                [33mstroke[39m=[32m"currentColor"[39m
-                [33mstroke-linecap[39m=[32m"round"[39m
-                [33mstroke-linejoin[39m=[32m"round"[39m
-                [33mstroke-width[39m=[32m"2"[39m
-                [33mstyle[39m=[32m"color: var(--mantine-color-gray-5);"[39m
-                [33mviewBox[39m=[32m"0 0 24 24"[39m
-                [33mwidth[39m=[32m"16"[39m
-                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-              [36m>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 2v4"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 2v4"[39m
-                [36m/>[39m
-                [36m<rect[39m
-                  [33mheight[39m=[32m"18"[39m
-                  [33mrx[39m=[32m"2"[39m
-                  [33mwidth[39m=[32m"18"[39m
-                  [33mx[39m=[32m"3"[39m
-                  [33my[39m=[32m"4"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M3 10h18"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M12 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 18h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M12 18h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 18h.01"[39m
-                [36m/>[39m
-              [36m</svg>[39m
-            [36m</div>[39m
-            [36m<input[39m
-              [33maria-expanded[39m=[32m"false"[39m
-              [33maria-haspopup[39m=[32m"dialog"[39m
-              [33maria-invalid[39m=[32m"false"[39m
-              [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
-              [33mdata-variant[39m=[32m"default"[39m
-              [33mid[39m=[32m"mantine-enwceppbh-target"[39m
-              [33mplaceholder[39m=[32m"Select dates"[39m
-              [33mreadonly[39m=[32m""[39m
-              [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
-              [33mvalue[39m=[32m""[39m
-            [36m/>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</body>[39m
-[36m</html>[39m...
+<html
+  data-mantine-color-scheme="light"
+>
+  <head />
+  <body>
+    <div>
+      <div
+        class=""
+        style="align-self: stretch;"
+      >
+        <div
+          class="m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"
+          data-size="sm"
+          style="cursor: pointer; width: 100%;"
+        >
+          <div
+            class="m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"
+            data-size="sm"
+            data-variant="default"
+            data-with-left-section="true"
+            style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
+--input-radius: var(--mantine-radius-lg);"
+          >
+            <div
+              class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+              data-position="left"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-calendar-days"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                style="color: var(--mantine-color-gray-5);"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 2v4"
+                />
+                <path
+                  d="M16 2v4"
+                />
+                <rect
+                  height="18"
+                  rx="2"
+                  width="18"
+                  x="3"
+                  y="4"
+                />
+                <path
+                  d="M3 10h18"
+                />
+                <path
+                  d="M8 14h.01"
+                />
+                <path
+                  d="M12 14h.01"
+                />
+                <path
+                  d="M16 14h.01"
+                />
+                <path
+                  d="M8 18h.01"
+                />
+                <path
+                  d="M12 18h.01"
+                />
+                <path
+                  d="M16 18h.01"
+                />
+              </svg>
+            </div>
+            <input
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              aria-invalid="false"
+              class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
+              data-variant="default"
+              id="mantine-enwceppbh-target"
+              placeholder="Select dates"
+              readonly=""
+              style="min-height: 2.75rem; color: var(--mantine-color-gray-8);"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>...
 
 - Expected
 + Received
@@ -327,116 +327,116 @@ returns focus to the trigger (AC2)
 AssertionError: expected false to be true // Object.is equality
 
 Ignored nodes: comments, script, style
-[36m<html[39m
-  [33mdata-mantine-color-scheme[39m=[32m"light"[39m
-[36m>[39m
-  [36m<head />[39m
-  [36m<body>[39m
-    [36m<div>[39m
-      [36m<div[39m
-        [33mclass[39m=[32m""[39m
-        [33mstyle[39m=[32m"display: flex; flex-direction: column;"[39m
-      [36m>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"[39m
-          [33mdata-size[39m=[32m"sm"[39m
-          [33mstyle[39m=[32m"cursor: pointer; width: 100%;"[39m
-        [36m>[39m
-          [36m<div[39m
-            [33mclass[39m=[32m"m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"[39m
-            [33mdata-size[39m=[32m"sm"[39m
-            [33mdata-variant[39m=[32m"default"[39m
-            [33mdata-with-left-section[39m=[32m"true"[39m
-            [33mstyle[39m=[32m"--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
---input-radius: var(--mantine-radius-lg);"[39m
-          [36m>[39m
-            [36m<div[39m
-              [33mclass[39m=[32m"m_82577fc2 mantine-Input-section mantine-TextInput-section"[39m
-              [33mdata-position[39m=[32m"left"[39m
-            [36m>[39m
-              [36m<svg[39m
-                [33maria-hidden[39m=[32m"true"[39m
-                [33mclass[39m=[32m"lucide lucide-calendar-days"[39m
-                [33mfill[39m=[32m"none"[39m
-                [33mheight[39m=[32m"16"[39m
-                [33mstroke[39m=[32m"currentColor"[39m
-                [33mstroke-linecap[39m=[32m"round"[39m
-                [33mstroke-linejoin[39m=[32m"round"[39m
-                [33mstroke-width[39m=[32m"2"[39m
-                [33mstyle[39m=[32m"color: var(--mantine-color-gray-5);"[39m
-                [33mviewBox[39m=[32m"0 0 24 24"[39m
-                [33mwidth[39m=[32m"16"[39m
-                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
-              [36m>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 2v4"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 2v4"[39m
-                [36m/>[39m
-                [36m<rect[39m
-                  [33mheight[39m=[32m"18"[39m
+<html
+  data-mantine-color-scheme="light"
+>
+  <head />
+  <body>
+    <div>
+      <div
+        class=""
+        style="display: flex; flex-direction: column;"
+      >
+        <div
+          class="m_46b77525 mantine-InputWrapper-root mantine-TextInput-root"
+          data-size="sm"
+          style="cursor: pointer; width: 100%;"
+        >
+          <div
+            class="m_6c018570 mantine-Input-wrapper mantine-TextInput-wrapper"
+            data-size="sm"
+            data-variant="default"
+            data-with-left-section="true"
+            style="--input-height: var(--input-height-sm); --input-fz: var(--mantine-font-size-sm); 
+--input-radius: var(--mantine-radius-lg);"
+          >
+            <div
+              class="m_82577fc2 mantine-Input-section mantine-TextInput-section"
+              data-position="left"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-calendar-days"
+                fill="none"
+                height="16"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                style="color: var(--mantine-color-gray-5);"
+                viewBox="0 0 24 24"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 2v4"
+                />
+                <path
+                  d="M16 2v4"
+                />
+                <rect
+                  height="18"
 
  Test Files  1 failed (1)
       Tests  16 failed | 15 passed (31)
    Start at  10:47:29
    Duration  11.72s (transform 155ms, setup 87ms, import 1.51s, tests 9.24s, environment 721ms)
 
-                  [33mrx[39m=[32m"2"[39m
-                  [33mwidth[39m=[32m"18"[39m
-                  [33mx[39m=[32m"3"[39m
-                  [33my[39m=[32m"4"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M3 10h18"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M12 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 14h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M8 18h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M12 18h.01"[39m
-                [36m/>[39m
-                [36m<path[39m
-                  [33md[39m=[32m"M16 18h.01"[39m
-                [36m/>[39m
-              [36m</svg>[39m
-            [36m</div>[39m
-            [36m<input[39m
-              [33maria-expanded[39m=[32m"false"[39m
-              [33maria-haspopup[39m=[32m"dialog"[39m
-              [33maria-invalid[39m=[32m"false"[39m
-              [33mclass[39m=[32m"m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"[39m
-              [33mdata-variant[39m=[32m"default"[39m
-              [33mid[39m=[32m"mantine-mc8mk4x5g"[39m
-              [33mplaceholder[39m=[32m"Select dates"[39m
-              [33mreadonly[39m=[32m""[39m
-              [33mstyle[39m=[32m"min-height: 2.75rem; color: var(--mantine-color-gray-8);"[39m
-              [33mvalue[39m=[32m""[39m
-            [36m/>[39m
-          [36m</div>[39m
-        [36m</div>[39m
-      [36m</div>[39m
-      [36m<div>[39m
-        [36m<div[39m
-          [33mclass[39m=[32m"m_f11b401e mantine-Drawer-root"[39m
-          [33mdata-size[39m=[32m"auto"[39m
-          [33mstyle[39m=[32m"--drawer-size: var(--drawer-size-auto); --drawer-flex: 0 0 calc(100% - 
+                  rx="2"
+                  width="18"
+                  x="3"
+                  y="4"
+                />
+                <path
+                  d="M3 10h18"
+                />
+                <path
+                  d="M8 14h.01"
+                />
+                <path
+                  d="M12 14h.01"
+                />
+                <path
+                  d="M16 14h.01"
+                />
+                <path
+                  d="M8 18h.01"
+                />
+                <path
+                  d="M12 18h.01"
+                />
+                <path
+                  d="M16 18h.01"
+                />
+              </svg>
+            </div>
+            <input
+              aria-expanded="false"
+              aria-haspopup="dialog"
+              aria-invalid="false"
+              class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"
+              data-variant="default"
+              id="mantine-mc8mk4x5g"
+              placeholder="Select dates"
+              readonly=""
+              style="min-height: 2.75rem; color: var(--mantine-color-gray-8);"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          class="m_f11b401e mantine-Drawer-root"
+          data-size="auto"
+          style="--drawer-size: var(--drawer-size-auto); --drawer-flex: 0 0 calc(100% - 
 var(--drawer-offset, 0rem) * 2); --drawer-height: var(--drawer-size); --drawer-align: flex-end; --mb-z-index: 
-200;"[39m
-        [36m/>[39m
-      [36m</div>[39m
-    [36m</div>[39m
-  [36m</body>[39m
-[36m</html>[39m...
+200;"
+        />
+      </div>
+    </div>
+  </body>
+</html>...
 
 - Expected
 + Received

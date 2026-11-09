@@ -72,9 +72,6 @@ playwright/.auth/
 !.claude/rules/**
 # Shared enforcement is versioned; local credentials, state, worktrees and settings.local.json stay ignored.
 !.claude/settings.json
-!.claude/hooks/
-.claude/hooks/*
-!.claude/hooks/*.ps1
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/create-task/
@@ -114,3 +111,18 @@ prod-ca-2021.crt
 # Supabase migrations
 supabase/*
 !supabase/sql_migrations/
+# Logs, editor backups and tool scratch output never belong in the repository (governance reset 2026-11-06;
+# scripts/quality/check-files.mjs refuses them).
+*.log
+*.bak
+*.nul
+*.orig
+*.rej
+*.tmp
+*.swp
+.playwright-mcp/
+test-results/
+.screenshots/
+
+# OWASP cheat sheet texts downloaded by scripts/quality/owasp.mjs sync (upstream content, never committed)
+.cache/

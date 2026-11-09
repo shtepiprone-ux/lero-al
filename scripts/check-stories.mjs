@@ -52,6 +52,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { resolve, join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -1203,7 +1204,7 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   const { violations, storyFilesCount } = runGate(ROOT, { verbose: true });
 
   console.log('');

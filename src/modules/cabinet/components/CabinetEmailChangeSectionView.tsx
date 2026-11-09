@@ -2,7 +2,7 @@
 
 import type { ChangeEvent, FormEvent, ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
-import { Alert, Anchor, Button, Group, PasswordInput, Stack, Text, TextInput } from '@mantine/core'
+import { Alert, Anchor, Button, Group, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { Info } from 'lucide-react'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 
@@ -56,6 +56,7 @@ export function CabinetEmailChangeSectionView({
 }: CabinetEmailChangeSectionViewProps) {
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
+  const theme = useMantineTheme()
 
   return (
     <Stack gap="md">
@@ -67,7 +68,7 @@ export function CabinetEmailChangeSectionView({
 
       {pendingEmail ? (
         <>
-          <Alert color="blueLight" icon={<Info size={20} />} title={t('email_change_pending_title')}>
+          <Alert color="blueLight" icon={<Info size={theme.other!.iconSize!.roomy} />} title={t('email_change_pending_title')}>
             {t('email_change_pending', { email: pendingEmail })}
           </Alert>
 

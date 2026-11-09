@@ -121,7 +121,7 @@ function collectTsxFiles(dir) {
  * Known limitation: a line containing BOTH a real render AND an attribute/interpolation is silently
  * skipped (AC1 fires on the attribute side). Such mixed-concern lines are extremely rare in practice.
  */
-export function scanRawEnumLeaks(content, relPath) {
+export function scanRawEnumLeaks(content, _relPath) {
   const findings = []
   const lines = content.split('\n')
   for (let i = 0; i < lines.length; i++) {

@@ -72,7 +72,7 @@ describe('subject', () => {
   it.each([
     ['Hi\r\nBcc: spy@evil.com', 'Hi Bcc: spy@evil.com'],
     ['Hi\nthere', 'Hi there'],
-    ['Hi there', 'Hi there'],
+    ['Hi\u2028there', 'Hi there'],
     ['  padded  ', 'padded'],
   ])('%j is sent on one line as %j', async (subject, expected) => {
     await sendEmail({ ...base, subject })

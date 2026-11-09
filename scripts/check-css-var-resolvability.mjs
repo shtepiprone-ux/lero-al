@@ -13,7 +13,7 @@
  * TWO ARMS, because one is not enough (kickoff §0.2 D1 — draft 1's own motivating example,
  * `LightboxView.tsx`/`MantineListingGalleryPattern.tsx`'s `var(--color-overlay-foreground)`
  * TSX-inline-style consumers, would have been invisible to a CSS-only scan):
- *   Arm A — every `var(--owned)` in the shipped CSS (`.next/static/css/*.css` by default)
+ *   Arm A — every `var(--owned)` in the shipped CSS (`.next/static/chunks/*.css` by default)
  *           resolves to a shipped declaration or an `@property` registration.
  *   Arm B — every `var(--owned)` written in `src/**\/*.{css,tsx,ts}` (excluding `globals.css`,
  *           the ownership source) resolves the same way. The glob is `.css`, not `.module.css`
@@ -83,7 +83,7 @@
  * violation-report format; `scripts/__tests__/` as the unit-test location the `governance` CI job
  * already runs.
  *
- * Wired into CI: `.github/workflows/governance-pr.yml`, `click-shield` job, after `npm run build`
+ * Wired into CI: `.github/workflows/ci.yml`, `click-shield` job, after `npm run build`
  * (the only job in this file that runs a real Next.js build — kickoff §3.6).
  */
 
@@ -95,6 +95,7 @@ import { join, resolve, dirname, relative, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { execFileSync } from 'node:child_process';
+import { isEntryPoint } from './lib/entry-point.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -107,7 +108,7 @@ function getFlag(name, def) {
 }
 const VERIFY_GATE = process.argv.includes('--verify-gate');
 const UPDATE_SNAPSHOT = process.argv.includes('--update-snapshot');
-const CSS_DIR = resolve(process.cwd(), getFlag('css-dir', resolve(ROOT, '.next/static/css')));
+const CSS_DIR = resolve(process.cwd(), getFlag('css-dir', resolve(ROOT, '.next/static/chunks')));
 const GLOBALS_PATH = resolve(process.cwd(), getFlag('globals-path', resolve(ROOT, 'src/app/globals.css')));
 const SRC_DIR = resolve(process.cwd(), getFlag('src-dir', resolve(ROOT, 'src')));
 const SNAPSHOT_PATH = resolve(process.cwd(), getFlag('snapshot-path', resolve(ROOT, 'scripts/css-var-ownership-snapshot.json')));
@@ -885,8 +886,8 @@ function setupTempTree() {
   const srcDir = join(base, 'src');
   mkdirSync(cssDir, { recursive: true });
   mkdirSync(srcDir, { recursive: true });
-  for (const f of listCssDirFiles(resolve(ROOT, '.next/static/css'))) {
-    cpSync(f, join(cssDir, relative(resolve(ROOT, '.next/static/css'), f)));
+  for (const f of listCssDirFiles(resolve(ROOT, '.next/static/chunks'))) {
+    cpSync(f, join(cssDir, relative(resolve(ROOT, '.next/static/chunks'), f)));
   }
   // Arm B only ever needs .css/.tsx/.ts files, but copying the whole src tree
   // keeps relative import/reference shapes intact for anything a future plant
@@ -1155,7 +1156,9 @@ function runPlantP4(tree) {
   // in-class and must fail. (Draft 2's plant used `var(--${x})`, a shape that
   // occurs nowhere in this repo — §0.3 E1.)
   const fixturePath = join(tree.srcDir, '__task700_verify_gate_fixture_p4.tsx');
-  const original = existsSync(fixturePath) ? readFileSync(fixturePath, 'utf8') : null;
+  // read without a separate existence check (Task 951, CodeQL js/file-system-race): a missing fixture is null
+  let original = null;
+  try { original = readFileSync(fixturePath, 'utf8'); } catch (error) { if (error?.code !== 'ENOENT') throw error; }
   writeFileSync(fixturePath, `const style = { padding: \`var(--space-\${n})\` }\n`, 'utf8');
   try {
     touchCssDir(tree.cssDir);
@@ -1507,7 +1510,7 @@ function verifyGate() {
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isEntryPoint(import.meta.url)) {
   if (VERIFY_GATE) verifyGate();
   else if (UPDATE_SNAPSHOT) updateSnapshot();
   else run();

@@ -1,6 +1,6 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { updateTag } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { checkStaff } from '@/lib/auth/staff'
 import { isRatePublished } from '@/lib/getExchangeRateServer'
@@ -86,7 +86,7 @@ export async function createCurrency(
     return { error: 'create_failed' }
   }
 
-  revalidateTag(CURRENCIES_CACHE_TAG)
+  updateTag(CURRENCIES_CACHE_TAG)
   return { id: data.id }
 }
 
@@ -131,7 +131,7 @@ export async function updateCurrency(
     return { error: 'update_failed' }
   }
 
-  revalidateTag(CURRENCIES_CACHE_TAG)
+  updateTag(CURRENCIES_CACHE_TAG)
   return {}
 }
 
@@ -170,7 +170,7 @@ export async function toggleCurrencyActive(
     .eq('id', id)
 
   if (error) { console.error('toggleCurrencyActive failed', { code: error.code }); return { error: 'update_failed' } }
-  revalidateTag(CURRENCIES_CACHE_TAG)
+  updateTag(CURRENCIES_CACHE_TAG)
   return {}
 }
 
@@ -192,7 +192,7 @@ export async function setDefaultCurrency(id: number): Promise<{ error?: string }
     return { error: 'Could not set the default currency' }
   }
 
-  revalidateTag(CURRENCIES_CACHE_TAG)
+  updateTag(CURRENCIES_CACHE_TAG)
   return {}
 }
 
@@ -220,6 +220,6 @@ export async function deleteCurrency(
     return { error: 'delete_failed' }
   }
 
-  revalidateTag(CURRENCIES_CACHE_TAG)
+  updateTag(CURRENCIES_CACHE_TAG)
   return {}
 }

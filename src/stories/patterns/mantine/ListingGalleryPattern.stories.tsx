@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Stack, Text } from '@mantine/core';
-import { within, userEvent } from 'storybook/test';
+import { DEFAULT_THEME, mergeMantineTheme, Stack, Text } from '@mantine/core';
+import { expect, waitFor, within, userEvent } from 'storybook/test';
+import { belowMobileGateQuery } from '@/design-system/mantine/belowMobileGate';
+import { theme } from '@/design-system/mantine/theme';
 import { storyT } from '@/stories/_storyI18n';
 import { StoryPageGutter } from '@/stories/_StoryPageGutter';
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
@@ -66,10 +68,31 @@ export const Default: Story = {
       </StoryPageGutter>
     );
   },
+  // A failed assertion of the play must fail the render (Storybook otherwise only logs it), as `CustomRangeTooLong` does.
+  parameters: { throwPlayFunctionExceptions: true },
   play: async ({ canvasElement, globals }) => {
     const l = (globals?.locale as string) ?? 'en';
     const title = storyT(l, 'storybook.mantine.card_title_1');
     const canvas = within(canvasElement);
+    // Below the mobile gate (Task 923 R33 / Task 948 AC3) the frame is a clipping box, not a scroll container. The R33 defect is a slide that takes focus before the track has moved:
+    // a hidden-overflow frame then scrolls itself to reveal it (scrollLeft 288, the wrong slide in the frame). So ArrowRight and Tab go in one keyboard call, with no wait between
+    // them; then the track must have moved, the frame's own `scrollLeft` must still be 0 and the focus must stand on the visible slide (its aria-label is the title).
+    // From the gate up the gallery is the static photo and this play is unchanged.
+    const belowMobileGate = window.matchMedia(belowMobileGateQuery(mergeMantineTheme(DEFAULT_THEME, theme))).matches;
+    if (belowMobileGate) {
+      const frame = await canvas.findByRole('group', { name: title });
+      await expect(getComputedStyle(frame).overflow).toBe('clip');
+      const track = frame.firstElementChild as HTMLElement;
+      const before = track.style.transform;
+      frame.focus();
+      await userEvent.keyboard('{ArrowRight}{Tab}');
+      await waitFor(() => expect(track.style.transform).not.toBe(before));
+      await expect(frame.scrollLeft).toBe(0);
+      const focused = document.activeElement as HTMLElement;
+      await expect(frame.contains(focused)).toBe(true);
+      await expect(focused.getAttribute('aria-label')).toBe(title);
+      await expect(focused.getAttribute('aria-hidden')).toBeNull();
+    }
     // The main-photo button's accessible name is exactly `title`; every thumbnail's is
     // `"${title} ${index + 1}"`. `getByRole` name-matching is exact, so this uniquely resolves the
     // main-photo trigger without ambiguity against the thumbnail row.

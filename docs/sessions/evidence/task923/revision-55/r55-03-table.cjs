@@ -1,4 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS evidence script (Task 923 Revision 55), not product code */
+/* eslint-disable @typescript-eslint/no-require-imports -- CommonJS evidence script (Task 923 Revision 55), not product code */
 const fs = require('fs')
 const src = fs.readFileSync('docs/sessions/evidence/task923/security/sensitivity.mjs', 'utf8')
 // the 21 database cases: FRESH entries with a db key (the 20 SEC-DB-* / SEC-X-INT-REVEAL-TABLE-* ids from the spread list plus SEC-DEL-INT-STAFF)

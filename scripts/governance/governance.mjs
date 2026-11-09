@@ -33,7 +33,15 @@ const ROOT = join(__dirname, '..', '..');
 // another, and leaves silent headroom (primitives sat 21 below its count, localization 15). See
 // docs/governance-enforcement.md §9 "Baseline Policy".
 const BASELINE_PATH = join(__dirname, 'baseline.json');
-const baseline = existsSync(BASELINE_PATH) ? JSON.parse(readFileSync(BASELINE_PATH, 'utf-8')) : null;
+// one read, no separate existence check before it (Task 951, CodeQL js/file-system-race): a missing baseline is null, an unreadable or invalid one throws
+const baseline = (() => {
+  try {
+    return JSON.parse(readFileSync(BASELINE_PATH, 'utf-8'));
+  } catch (error) {
+    if (error?.code === 'ENOENT') return null;
+    throw error;
+  }
+})();
 if (baseline && baseline.version !== 2) {
   console.error(`❌ ${BASELINE_PATH} is not a version 2 per-finding baseline. Count baselines are retired.`);
   process.exit(2);
@@ -122,7 +130,7 @@ console.log('╚═════════════════════�
 console.log(`Scan scope: ${scanArg}`);
 
 if (scanArg === 'all') {
-  for (const [key, [name, path, scanKey]] of Object.entries(scans)) {
+  for (const [name, path, scanKey] of Object.values(scans)) {
     await runScan(name, path, scanKey);
   }
 } else if (scans[scanArg]) {

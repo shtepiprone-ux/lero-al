@@ -1,6 +1,6 @@
 # Session Log — 2026-06-13 — Task 316
 
-**Task:** `tasks/Epics/Epic_II_kickoff_prompt_Task_316.md`
+**Task:** `tasks/Archive/Epic_II_kickoff_prompt_Task_316.md`
 **Scope:** Project-wide dynamic-`t()` + missing-key i18n AUDIT (audit/spec only). Output:
 `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md`. **0 src/messages/scripts delta.**
 

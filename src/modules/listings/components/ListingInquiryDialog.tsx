@@ -35,8 +35,8 @@ export function ListingInquiryDialog({ listingId, defaultName, defaultEmail, tri
   const [email, setEmail] = useState(defaultEmail ?? '')
   const [message, setMessage] = useState('')
   const [isPending, startTransition] = useTransition()
-  // Set when the dialog closed because the session ended: the next opening keeps the typed values.
-  const keepDraft = useRef(false)
+  // Set when the dialog closed because the session ended: the next opening keeps the typed values. State, not a ref: the trigger's click handler reads it while the trigger is rendered.
+  const [keepDraft, setKeepDraft] = useState(false)
   // The human check inside the dialog: invisible until Cloudflare asks for interaction; every send gets one fresh token.
   const humanCheckRef = useRef<CaptchaWidgetHandle>(null)
 
@@ -45,8 +45,8 @@ export function ListingInquiryDialog({ listingId, defaultName, defaultEmail, tri
     && message.trim().length >= 20
 
   function handleOpen() {
-    if (keepDraft.current) {
-      keepDraft.current = false
+    if (keepDraft) {
+      setKeepDraft(false)
       setName(current => current.trim() ? current : (defaultName ?? ''))
       setEmail(current => current.trim() ? current : (defaultEmail ?? ''))
     } else {
@@ -112,7 +112,7 @@ export function ListingInquiryDialog({ listingId, defaultName, defaultEmail, tri
         case 'unauthenticated':
           // The session ended: one sheet at a time (Apple HIG) — close this dialog, keep the text, then ask to sign in.
           toast.error(t('inquiry_error_unauthenticated'))
-          keepDraft.current = true
+          setKeepDraft(true)
           setOpen(false)
           openAuthSheet('login')
           return

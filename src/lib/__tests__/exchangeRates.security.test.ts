@@ -53,7 +53,7 @@ beforeEach(async () => {
   page = '<img src="EUR.png"> 100.00 101.00 <img src="USD.png"> 90.00 91.00 <img src="GBP.png"> 120.00 121.00'
   fetchMock.mockReset()
   fetchMock.mockImplementation(async (url: string) => {
-    if (!String(url).startsWith('https://iliria98.com')) throw new Error(`a request to another host: ${url}`)
+    if (new URL(String(url)).origin !== 'https://iliria98.com') throw new Error(`a request to another host: ${url}`)
     if (page === null) throw new Error('offline')
     return { ok: true, text: async () => page }
   })

@@ -41,22 +41,22 @@ Visit https://react.dev/link/error-boundaries to learn more about error boundari
 TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div />[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-[36m</body>[39m
+<body>
+  <div />
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+</body>
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div />[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-[36m</body>[39m
+<body>
+  <div />
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+</body>
  ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
  ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
@@ -74,22 +74,22 @@ Ignored nodes: comments, script, style
 TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
  ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
  ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
@@ -107,22 +107,22 @@ Ignored nodes: comments, script, style
 TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
  ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
  ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17
@@ -140,22 +140,22 @@ Ignored nodes: comments, script, style
 TestingLibraryElementError: Unable to find role="dialog" and name "Close gallery"
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
 
 Ignored nodes: comments, script, style
-[36m<body>[39m
-  [36m<div[39m
-    [33mdata-mantine-shared-portal-node[39m=[32m"true"[39m
-    [33mdata-portal[39m=[32m"true"[39m
-  [36m/>[39m
-  [36m<div />[39m
-[36m</body>[39m
+<body>
+  <div
+    data-mantine-shared-portal-node="true"
+    data-portal="true"
+  />
+  <div />
+</body>
  ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
  ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
  ❯ openLightbox src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx:101:17

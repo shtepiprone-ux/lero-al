@@ -38,7 +38,7 @@ const VIEWPORTS = [
 const LOCALES = ['sq', 'en', 'uk', 'it'];
 const MOBILE_NAMES = new Set(['320', '375', '390']);
 
-/* eslint-disable no-undef */
+ 
 function evalListRow() {
   const links = [...document.querySelectorAll('a.listing-card--horizontal')];
   const pageOverflow = document.documentElement.scrollWidth > document.documentElement.clientWidth + 2;
@@ -115,7 +115,7 @@ async function evalTitleHover(page) {
 
   return { found: true, before, after, changed: before !== after };
 }
-/* eslint-enable no-undef */
+ 
 
 async function main() {
   const { chromium } = await import('playwright');

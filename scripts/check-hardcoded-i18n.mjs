@@ -162,7 +162,8 @@ const ATTR_PATTERNS = WATCHED_ATTRS.flatMap(attr => {
   }
   // General case: word-boundary match is safe for attrs that aren't suffixes
   // of other attrs (aria-label, placeholder, alt, title, aria-description, …).
-  const a = attr.replace(/[-]/g, '\\-');
+  // every character that is special in a pattern is escaped, not only the hyphen (Task 951, CodeQL js/incomplete-sanitization)
+  const a = attr.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
   return [
     { re: new RegExp(`\\b${a}\\s*=\\s*"([^"\\n]+)"`, 'g'), attr },
     { re: new RegExp(`\\b${a}\\s*=\\s*'([^'\\n]+)'`, 'g'), attr },

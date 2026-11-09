@@ -24,7 +24,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: () => undefined, unstable_cache: (fn: unknown) => fn }))
 // This suite is about who may act on whom; the Auth ban that follows a status change is tested in ../accountBan.security.test.ts (ids here are not UUIDs)
 vi.mock('@/lib/auth/accountAccess', async (orig) => ({ ...(await orig<typeof import('@/lib/auth/accountAccess')>()), syncAccountAccess: async () => ({ ok: true }) }))
 vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotification: async () => undefined }))

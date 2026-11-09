@@ -10,8 +10,12 @@ let fetchedAt = 0
 let inflight: Promise<DBCurrency[]> | null = null
 const CACHE_TTL_MS = 5 * 60 * 1000
 
+function isCacheFresh(): boolean {
+  return cachedCurrencies !== null && Date.now() - fetchedAt < CACHE_TTL_MS
+}
+
 function fetchCurrenciesSingleton(): Promise<DBCurrency[]> {
-  if (cachedCurrencies !== null && Date.now() - fetchedAt < CACHE_TTL_MS) {
+  if (cachedCurrencies !== null && isCacheFresh()) {
     return Promise.resolve(cachedCurrencies)
   }
   if (inflight) return inflight
@@ -38,18 +42,13 @@ const FALLBACK: DBCurrency[] = [
 
 export function useCurrencies() {
   const [currencies, setCurrencies] = useState<DBCurrency[]>(cachedCurrencies ?? FALLBACK)
-  const [loading, setLoading] = useState(cachedCurrencies === null)
+  // Loading from the first render unless the cache is fresh: the state is known before any effect runs.
+  const [loading, setLoading] = useState(() => !isCacheFresh())
 
   useEffect(() => {
     let cancelled = false
 
-    if (cachedCurrencies !== null && Date.now() - fetchedAt < CACHE_TTL_MS) {
-      setCurrencies(cachedCurrencies)
-      setLoading(false)
-      return
-    }
-
-    setLoading(true)
+    // A fresh cache answers at once (an already-resolved promise); a stale or empty one is fetched.
     fetchCurrenciesSingleton().then(data => {
       if (!cancelled) {
         setCurrencies(data.length > 0 ? data : FALLBACK)

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useLocale } from 'next-intl'
+import { useResetOnChange } from '@/hooks/useStateFromProp'
 import { PROPERTY_TYPES } from '@/modules/listings/constants'
 
 export interface DynamicPropertyType { value: string; label: string }
@@ -47,13 +48,18 @@ export function usePropertyTypes(): { propertyTypes: DynamicPropertyType[]; load
   )
   const [loading, setLoading] = useState(!cache[locale])
 
-  useEffect(() => {
+  // A new locale shows its cached list at once, or keeps the list on screen and reports loading while the new one is fetched.
+  useResetOnChange(locale, () => {
     if (cache[locale]) {
       setPropertyTypes(cache[locale])
       setLoading(false)
-      return
+    } else {
+      setLoading(true)
     }
-    setLoading(true)
+  })
+
+  useEffect(() => {
+    // A cached locale answers at once (an already-resolved promise); the others are fetched.
     fetchForLocale(locale).then(data => {
       setPropertyTypes(data)
       setLoading(false)

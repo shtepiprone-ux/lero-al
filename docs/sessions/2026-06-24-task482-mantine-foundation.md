@@ -320,14 +320,14 @@ cannot self-certify rendered proof — this is OWNER QA REQUIRED.
 | `src/stories/patterns/mantine/ListingDetailPattern.stories.tsx` | NEW — Default only | Story |
 | `src/stories/patterns/mantine/AdminSurfacePattern.stories.tsx` | NEW — Default only | Story |
 | `src/stories/patterns/mantine/AuthFormPattern.stories.tsx` | NEW — Default shows login + register | Story |
-| `tasks/kickoff_prompt_Task_482_Mantine_ResponsiveUIDesignSystem_Foundation.md` | NEW — kickoff doc | Task record |
+| `tasks/Archive/kickoff_prompt_Task_482_Mantine_ResponsiveUIDesignSystem_Foundation.md` | NEW — kickoff doc | Task record |
 
 **NOT included in Task 482 commit (separate tasks):**
 
 | File | Reason |
 |---|---|
-| `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md` | Task 463 file — separate commit |
-| `tasks/Epics/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md` | Task 462 file — separate commit |
+| `tasks/Archive/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md` | Task 463 file — separate commit |
+| `tasks/Archive/Epic_BB_kickoff_prompt_Task_462_AdminReportOwnerRowCleanup.md` | Task 462 file — separate commit |
 
 **Not in git diff (net no-op vs HEAD):**
 

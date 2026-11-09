@@ -25,7 +25,8 @@ measured 2026-11-06 on `task/935-governance-approval-route`:
    `scripts/ui-contract-registry.json` has no contract for them ("newly enrolled component lacks an explicit UI
    contract"). The local review did not see it: the gate reads committed `base..head` only (Task 963 AC11).
 
-After the task the three commands exit 0 and no behaviour changes.
+Re-measured 2026-11-09 on `14c8eb283` (PR #19 run 42581191928 and a local `product-gates.mjs`): the same three gates,
+the same findings and lines. After the task the three commands exit 0 and no behaviour changes.
 
 ## Scope
 
@@ -92,9 +93,15 @@ No visible change. `MantineListingGalleryPattern` mobile frame keeps `overflow: 
 
 - AC1 `npm run check:design-tokens:strict` exits 0 with `Total: 0 raw … | 0 stale-marker(s)`.
 - AC2 `npm run check:enrolled-tailwind` exits 0; the baseline diff only removes or lowers entries.
-- AC3 The `MantineListingGalleryPattern` mobile Story gets a play function (in its `.stories.tsx`) asserting the
-  frame's computed `overflow` is `clip` and that tabbing to the second slide moves the track while the frame's
-  `scrollLeft` stays 0 (the Task 923 R33 case); `node scripts/check-locale-leak.mjs` runs it at 320 and 390 px.
+- AC3 The play function of `Default` in `src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx` (there is no
+  separate mobile Story), before its lightbox click: below the mobile gate (`window.matchMedia(belowMobileGateQuery(…))`,
+  as `CustomRangeTooLong` does) it asserts the frame's computed `overflow` is `clip` and that ArrowRight followed at
+  once by Tab (the next slide takes focus before the track has moved) leaves the frame's `scrollLeft` at 0 with the
+  visible slide focused (the Task 923 R33 case; review 1, F1); from the gate up the play is
+  unchanged — test (refined 2026-11-09: Task 939 added the flags): `node scripts/check-locale-leak.mjs --mantine-only
+  --report-only-leaks --story=patterns-mantine-listinggallerypattern--default --widths=320,390,639,640,1280` exits 0
+  with every tuple scanned (red at 320, 390 and 639 px with the frame's clip set to `hidden`, and red again from the
+  `scrollLeft` line, `expected 576 to be +0` at 320 px, with the computed-style line also removed).
 - AC4 `src/modules/cabinet/components/__tests__/CabinetEmailChangeSectionView.test.tsx` asserts the pending-state alert
   icon is rendered with `theme.other.iconSize.roomy` (20) and no raw number.
 - AC6 Every newly enrolled component has its UI contract — test: `node scripts/check-ui-contract.mjs --base main`
@@ -111,3 +118,44 @@ No visible change. `MantineListingGalleryPattern` mobile frame keeps `overflow: 
 4. Run AC5. Report each command, exit code and the relevant lines.
 
 ## Review
+
+Review 1 of the working tree on 14c8eb283 — NEEDS REVISION (1 of 2)
+Scope: every changed file read in full; OWASP record `docs/security/owasp/reviews/Task_948.json`.
+Tools (2026-11-09, reviewer reruns): `owasp.mjs sync` found Multi_Tenant_Security changed (rate-limit text consolidated,
+no new requirement for this project; mapping re-read), then `check` 0; `check-ruleset` 0; lint 0; typecheck 0; `npm test
+-- --coverage` 0 (373 files, 6143 tests); changed-lines coverage 0; `check-files --worktree` 0; `ac-tests` PASS; AC1 0
+(0 raw, 0 stale); AC2 0 (baseline only `overflow-hidden` 2 → 1); AC4 2/2, red with `size={20}` restored (`expected '20'
+to be '23'`), restored (sha 08f8123f); AC6 `check-ui-contract --base main --head <scratch commit>` PASS (the gate reads
+commits only, so the worktree was committed in a scratch clone; the project's Git untouched). CRLF in the worktree is
+the checkout's (an untouched `Map.tsx` has it too); `.gitattributes` `eol=lf` normalises on commit. CI not run.
+Findings: Critical 0, High 0, Medium 1, Low 0.
+
+F1 — AC3's behaviour check passes with the defect it guards against
+Severity: Medium      Category: Tests      CWE: —
+Location: `src/stories/patterns/mantine/ListingGalleryPattern.stories.tsx` (the `Default` play, ArrowRight branch)
+Description: the play focuses the frame, presses ArrowRight, waits for the track and asserts `scrollLeft` 0. Focus never
+leaves the frame, so the browser has nothing to scroll into view: with `overflow: hidden` the frame stays at 0. The red
+of the deliberate break came from the computed-style line alone, which mirrors the implementation. The R33 defect is a
+slide that takes focus before the track has moved. The design caused part of it: the refinement of 2026-11-09 wrote
+"moving to the second slide" where the first text said "tabbing".
+Reproduction (reviewer probe on the built Storybook, 320 px, frame style set in the page): ArrowRight → `scrollLeft` 0
+for `clip` and for `hidden`; ArrowRight then Tab at once → 0 for `clip`, **288** for `hidden` (the R33 number).
+Recommendation: R1 — the play presses Tab right after ArrowRight (no wait between them), then waits for the track and
+asserts `scrollLeft` 0 and that the focused element is the visible slide; the deliberate break is run twice: with
+`overflow: 'hidden'`, and with `'hidden'` plus the computed-style line removed, and the second red must come from the
+`scrollLeft` line (`expected 288 to be 0`).
+Status: open
+
+Not findings: `throwPlayFunctionExceptions: true` on `Default` is needed and right; it exposed a gate gap that every
+Story without it shares (`storybook/test` sets the project default to `false`): filed as Task 967. The `input-chrome.css`
+marker removal is right (the value is no finding). `mobileFrameStyle` keeps the clip in the pattern, its owner.
+Revision 1 (Sonnet): R1, then AC3 both ways and AC5.
+
+Review 2 of the working tree on 14c8eb283 (revision 1) — APPROVED
+Tools (2026-11-09, reviewer reruns): `owasp.mjs sync` 0 changed, `check` 0; `check-ruleset` 0; lint 0; typecheck 0;
+`check-files --worktree` 0; F1 fixed: the play presses ArrowRight and Tab in one call, then asserts `scrollLeft` 0 and
+the visible slide focused. AC3 rerun by the reviewer: with `mobileFrameStyle` set to `hidden` and the computed-style
+line removed, exit 1 (6/15; 320, 390, 639 px), the Story's console `AssertionError: expected 576 to be +0` at 320 and
+`716` at 390 (the focused slide's offset; review 1's probe focused another slide, 288); restored (both sha equal), exit
+0 (15/15). AC6 on a scratch commit of the whole tree: PASS (6 changed Stories, 3 contracts). Unchanged since review 1:
+AC1, AC2, AC4, the unit suite. Findings: none open. Task 967 carries the play-exception gap found in review 1.

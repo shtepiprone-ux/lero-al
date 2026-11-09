@@ -1322,8 +1322,8 @@
      "task": "957"
     }
    ],
-   "reviewedSha": "5541fce67722143f09680d16a70d4739e3d05e26",
-   "reviewedOn": "2026-11-08"
+   "reviewedSha": "b19270d945052d6c28ef0841f46365cab0e8fd37",
+   "reviewedOn": "2026-11-09"
   },
   "Multifactor_Authentication": {
    "applies": true,

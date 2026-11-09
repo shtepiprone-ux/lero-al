@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "121e76561a58a28790fd7fa927236eec8d63ea59",
- "fetchedOn": "2026-11-09T06:32:45.070Z",
+ "commit": "3751c8beb70f0d94fc6ea6d0ca30857d3df9f2de",
+ "fetchedOn": "2026-11-09T08:43:35.014Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -533,7 +533,7 @@
    "name": "Multi_Tenant_Security",
    "file": "Multi_Tenant_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html",
-   "sha": "5541fce67722143f09680d16a70d4739e3d05e26",
+   "sha": "b19270d945052d6c28ef0841f46365cab0e8fd37",
    "title": "Multi-Tenant Application Security Cheat Sheet"
   },
   {

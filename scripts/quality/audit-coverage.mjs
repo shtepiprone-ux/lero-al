@@ -32,7 +32,7 @@ export const LANES = [
     checks: `${CODE}; scripts/quality/client-sinks.mjs on every line (postMessage, message listeners, outerHTML / insertAdjacentHTML, storage, stored URLs as href, DOM HTML / code / URL APIs, computed navigation, each dangerouslySetInnerHTML) and src/__tests__/security/clientSinks.test.ts (window.open, target _blank, dangerouslySetInnerHTML, eval, innerHTML, document.write); component tests` },
   { id: 'sql', read: true, test: (f) => /^supabase\//.test(f),
     checks: `${MACHINE}; scripts/quality/db-catalog-audit.mjs on the live catalog` },
-  { id: 'ci-agent-config', read: true, test: (f) => /^(\.github|\.githooks|\.claude)\//.test(f) || /^(AGENTS|CLAUDE)\.md$/.test(f),
+  { id: 'ci-agent-config', read: true, test: (f) => /^(\.github|\.githooks|\.claude)\//.test(f) || /^(AGENTS|CLAUDE)\.md$/.test(f) || /^\.gitleaks(ignore|\.toml)$/.test(f),
     checks: `${MACHINE}; zizmor, ci-workflow.test.mjs, agent-settings.test.mjs, agent-check.test.mjs` },
   { id: 'build-config', read: true, test: (f) => /^[^/]+\.(ts|mjs|cjs|json|js)$/.test(f) || /^\.(npmrc|nvmrc|gitignore|gitattributes|orchestratorignore)$/.test(f),
     checks: `${MACHINE}; npm audit, install-scripts.test.mjs, SBOM, the build itself` },

@@ -282,11 +282,37 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+      # Task 970: gitleaks-action took a pull request's range from one page of the commits API (30 commits), so the later
+      # commits of a long pull request were never scanned. This step scans the event's own range with a pinned binary:
+      # base..head of a pull request or a push, the whole history on the daily run (reviewed fingerprints: .gitleaksignore).
+      - name: Every commit of the change is scanned for secrets (gitleaks, version and sha256 pinned)
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          GITLEAKS_ENABLE_COMMENTS: "false"
-          GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
+          GITLEAKS_VERSION: "8.24.3"
+          GITLEAKS_SHA256: 9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          # Task 970 review 1 (F1): gitleaks loads <source>/.gitleaks.toml before its default rules, so a change could add
+          # an allow-list next to a secret. Rules come only from the pinned release; a config in the tree stops the scan.
+          if [ -e .gitleaks.toml ]; then
+            echo "::error file=.gitleaks.toml::a .gitleaks.toml would replace the scanner's rules; remove it (Task 970)"
+            exit 1
+          fi
+          archive="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSL --retry 3 -o "${RUNNER_TEMP}/${archive}" "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${archive}"
+          echo "${GITLEAKS_SHA256}  ${RUNNER_TEMP}/${archive}" | sha256sum --check --strict
+          tar -xzf "${RUNNER_TEMP}/${archive}" -C "${RUNNER_TEMP}" gitleaks
+          case "$EVENT" in
+            schedule|workflow_dispatch) range="${HEAD_SHA}" ;;
+            *) case "$BASE_SHA" in
+                 ""|0000000000000000000000000000000000000000) range="-1" ;;
+                 *) range="--no-merges ${BASE_SHA}..${HEAD_SHA}" ;;
+               esac ;;
+          esac
+          echo "gitleaks ${GITLEAKS_VERSION}, ${EVENT}, range: ${range}"
+          "${RUNNER_TEMP}/gitleaks" git --redact --verbose --no-banner --exit-code=2 --log-opts="${range}" .
 
   workflows:
     name: Workflow security (zizmor)

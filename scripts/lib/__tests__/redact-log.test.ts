@@ -7,6 +7,8 @@ import { cookieValues, redactSensitive } from '../redact-log.mjs'
 
 // built from parts so that the file holds no complete token (the file check refuses one)
 const JWT = ['eyJhbGciOiJIUzI1NiJ9', 'eyJzdWIiOiIxMjM0NTY3ODkwIn0', 'c2lnbmF0dXJl'].join('.')
+// the same for a key in a query string: a whole one is what the secret scan reports (Task 970)
+const API_KEY = ['ANONKEY', '9876543'].join('')
 
 describe('redactSensitive', () => {
   it.each([
@@ -14,7 +16,7 @@ describe('redactSensitive', () => {
     ['a bearer token', 'request failed: Authorization: Bearer abcdef1234567890abcdef', 'abcdef1234567890abcdef'],
     ['a JWT', `session ${JWT} end`, 'eyJhbGciOiJIUzI1NiJ9'],
     ['an access token in a query string', 'GET /cb?access_token=SECRETVALUE123&next=/x', 'SECRETVALUE123'],
-    ['an api key in a query string', 'https://x.supabase.co/rest/v1/a?apikey=ANONKEY9876543', 'ANONKEY9876543'],
+    ['an api key in a query string', `https://x.supabase.co/rest/v1/a?apikey=${API_KEY}`, API_KEY],
     ['a password parameter', 'form password=correct-horse-battery', 'correct-horse-battery'],
   ])('removes %s', (_label, text, secret) => {
     const out = redactSensitive(text)

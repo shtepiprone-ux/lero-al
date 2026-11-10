@@ -1623,7 +1623,7 @@
      "(^|/)\\.env",
      "^docs/env\\.md$",
      "uploadGrant",
-     "^\\.(gitignore|orchestratorignore)$"
+     "^\\.(gitignore|orchestratorignore|gitleaksignore)$"
     ],
     "words": [
      "\\b(secrets?|HMAC|salt|credentials?|service[- ]role key|API key|signing key)\\b"

@@ -15,6 +15,16 @@
  * Planted-violation proofs (transcripts in docs/sessions/evidence/task868/):
  *   P1 — remove the `sq_body_required` branch in `PageEditorDialog` → T1 fails.
  *   P2 — delete without opening the confirm → T4 (cancel) fails.
+ *
+ * Task 971 — the leaks the pending-timer guard of `src/tests/setup.ts` caught in this file, and their measured causes (Revision 1 run with a wait budget of 0):
+ *   - Tiptap `scheduleDestroy` (a 1 ms timer) and ProseMirror's DOM observer and focus handler (20 ms timers) start when the editor unmounts, so they were still
+ *     pending the instant the test ended (T1, T2, T3, T6 and both T12 tests).
+ *   - A Mantine `Transition` frame (`use-transition.mjs:52`/`:56`) and its `setTimeout(duration)`: when `mounted` flips inside the `flushSync` of the previous
+ *     frame (a dialog opened and closed within one frame, which a loaded machine makes likely), `handleStateChange` runs inside that frame's callback and the
+ *     callback then overwrites `rafRef` with its own second frame, so the frame the re-entrant call scheduled is never cancelled on unmount. Its timer is the one
+ *     that crashed CI run 42766290854 with `window is not defined` from `use-transition.mjs:61`.
+ *   Fix: none in this file. After Testing Library's cleanup the guard waits on the real clock (it never clears anything, 3 s budget) for these timers and frames to
+ *   run while the environment is alive, and fails the test by name for what is still pending. That wait is what settles them.
  */
 
 import React from 'react'

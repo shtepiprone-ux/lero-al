@@ -1,0 +1,114 @@
+{
+  "task": "971",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "the race is a test-teardown timer race, not an attack an application must defend"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the two Google test files only close the test popup in an afterEach; no sign-in code changes"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication mechanism is designed or changed; only unit-test setup and test hooks change"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "no bot or human-check file is in the final diff; the human check is unchanged"
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow, price, permission or ownership value changes in this test-only diff"
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "src/proxy.ts is cited as a timer origin only; no framing header changes in the diff"
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "no CSP header code is in the diff; src/proxy.ts is only cited in a comment"
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie is set, read or changed; a unit test gets a fixed fetch answer only"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no login path, attempt limit or captcha test is in the final diff; test setup only"
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "not applicable",
+      "reason": "test setup and test hooks only; no output, encoding or rendering of untrusted data changes"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the new tests render fixed components and never read untrusted input into the DOM"
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "no request handling changes; upload is only named as excluded surface in the kickoff"
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "no upload code or upload test is in the final diff; only unit-test setup changes"
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "no response header is set or changed; src/proxy.ts is cited, not edited"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the HSTS header code is untouched; the session middleware test only gets a fetch answer"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Never pass untrusted input to a recursive merge or set-by-path helper"
+      ],
+      "evidence": "src/tests/pendingTimerGuard.ts:61-104 and src/tests/unexpectedFetchGuard.ts:17-23 read in full: the timer globals and fetch are replaced by fixed functions; only own properties of the native setTimeout are copied; no input is merged"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no factor, enrolment or challenge changes; the reauth tests only gain an afterEach hook"
+    },
+    "Nextjs_Security": {
+      "verdict": "not applicable",
+      "reason": "no route, action or proxy code changes; src/proxy.ts is only cited in a comment"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Google popup tests close the attempt in an afterEach; googlePopup.ts and the OAuth flow are unchanged"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "AI coding assistants frequently suggest package names that do not exist on public registries"
+      ],
+      "evidence": "`git diff --stat main` lists no package.json or package-lock.json change; the guard uses Vitest and Testing Library APIs already installed"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "session handling is unchanged; its unit test only stops a real network call with a fixed answer"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the https URL is a test fixture value; no transport configuration changes in the diff"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no user data, IP address or upload path is touched by test setup or test hooks"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "Review 1: Opus reran `npm test -- --coverage` on Revision 1, exit 1, the executor AC4 claim did not reproduce (F1). Review 2: Opus reran every claim: two full runs exit 0 (6296 tests, 0 Unhandled Errors), AC1 3 runs 10/10, AC2 and AC6 14/14, and broke each control once (stubGlobal: fetchGuard 3 failed; budget 0: P7a and P7b failed)"
+    },
+    "Web_Frontend_Security": {
+      "verdict": "not applicable",
+      "reason": "no frontend code ships; only the jsdom unit-test environment and test files change"
+    }
+  }
+}

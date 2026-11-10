@@ -36,6 +36,10 @@ beforeEach(() => {
   process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://x.supabase.co'
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon'
   process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-SECRET'
+  // Task 971: `vi.unstubAllGlobals()` below also removes the setup file's fetch stub, so a test that did not install its own answer called the REAL `fetch` (undici)
+  // against https://x.supabase.co: a network attempt from a unit test whose timer (the guard named it: "499 ms timer created at src/proxy.ts") outlived the test.
+  // Every test starts with an explicit answer ("not ok", so the default locale stays) and a test that cares about the call installs its own.
+  vi.stubGlobal('fetch', vi.fn(async () => ({ ok: false }) as unknown as Response))
 })
 afterEach(() => { process.env = { ...ENV }; vi.unstubAllGlobals(); vi.useRealTimers() })
 

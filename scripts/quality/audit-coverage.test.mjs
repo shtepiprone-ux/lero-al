@@ -23,6 +23,9 @@ test('each kind of file lands in the lane that reads it', () => {
     'src/modules/listings/components/ImageUpload.tsx': 'client-ui',
     'supabase/sql_migrations/task923/db-catalog/proposed-hardening.sql': 'sql',
     '.github/workflows/ci.yml': 'ci-agent-config',
+    // Task 970: the secret scan's reviewed fingerprints and any future config are read by gitleaks in CI.
+    '.gitleaksignore': 'ci-agent-config',
+    '.gitleaks.toml': 'ci-agent-config',
     '.claude/skills/review-task/SKILL.md': 'ci-agent-config',
     'next.config.ts': 'build-config',
     '.npmrc': 'build-config',

@@ -49,6 +49,10 @@
       "verdict": "not applicable",
       "reason": "no request handling changes; upload is only named as excluded surface in the kickoff"
     },
+    "Error_Handling": {
+      "verdict": "not applicable",
+      "reason": "no error response, handler or message reaching a user changes; the words come from the test fetch guard, which records a call even when the code under test swallows the exception, so the test fails instead of hiding it"
+    },
     "File_Upload": {
       "verdict": "not applicable",
       "reason": "no upload code or upload test is in the final diff; only unit-test setup changes"
@@ -60,6 +64,13 @@
     "HTTP_Strict_Transport_Security": {
       "verdict": "not applicable",
       "reason": "the HSTS header code is untouched; the session middleware test only gets a fetch answer"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": "scripts/quality/owasp.mjs:552 refuses a --base without a ref or commit shape before git runs; scripts/quality/owasp.mjs:554-558 the command is the fixed git binary with fixed argv arrays (spawnSync, no shell); scripts/quality/owasp.test.mjs:361 passes (node --test scripts/quality/owasp.test.mjs: 21/21)"
     },
     "JavaScript_and_TypeScript_Security": {
       "verdict": "met",
@@ -79,6 +90,13 @@
     "OAuth2": {
       "verdict": "not applicable",
       "reason": "the Google popup tests close the attempt in an afterEach; googlePopup.ts and the OAuth flow are unchanged"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "use structured mechanisms that automatically enforce the separation between data and command"
+      ],
+      "evidence": "scripts/quality/owasp.mjs:554-558 argv arrays to spawnSync without a shell; scripts/quality/owasp.mjs:565 untracked paths are only read with readFileSync, never passed to a command; scripts/quality/owasp.mjs:552 a base starting with \"-\" (argument injection) is refused, tested at scripts/quality/owasp.test.mjs:361"
     },
     "Secure_Coding_with_AI": {
       "verdict": "met",

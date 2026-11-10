@@ -543,18 +543,29 @@ function print(findings) {
 }
 
 /** The candidate against <base>: committed and uncommitted changes since the merge base, untracked files included.
- *  The words of the added lines count only outside documentation (a review written into a kickoff triggers nothing). */
-function changedFiles(base) {
+ *  The words of the added lines count only outside documentation (a review written into a kickoff triggers nothing).
+ *  An untracked file is added in full: `git diff` does not show it, so before this the local gate and review missed the
+ *  words of a new file that CI, reading the commit, then reported (Task 971, PR #28). */
+export function changedFiles(base, root = ROOT) {
+  // The base is a git argument: a value that starts with "-" would be read as an option (OS Command Injection Defense,
+  // argument injection), so only a ref or commit shape is passed on.
+  if (typeof base !== 'string' || !/^[A-Za-z0-9][\w./~^-]*$/.test(base)) throw new Error(`owasp: refused base ${JSON.stringify(base)}: not a git ref or commit`);
   const run = (args) => {
-    const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', windowsHide: true, maxBuffer: 1 << 28 });
+    const r = spawnSync('git', args, { cwd: root, encoding: 'utf8', windowsHide: true, maxBuffer: 1 << 28 });
     if (r.status !== 0) throw new Error(`git ${args.join(' ')} failed: ${r.stderr}`);
     return r.stdout;
   };
   const mb = run(['merge-base', base, 'HEAD']).trim();
-  const files = [...new Set([...run(['diff', '--name-only', mb]).split('\n'), ...run(['ls-files', '--others', '--exclude-standard']).split('\n')].filter(Boolean))];
+  const untracked = run(['ls-files', '--others', '--exclude-standard']).split('\n').filter(Boolean);
+  const files = [...new Set([...run(['diff', '--name-only', mb]).split('\n'), ...untracked].filter(Boolean))];
   // Documentation is not the change: its words (the mapping itself holds every trigger) would require every sheet.
-  const added = run(['diff', mb, '--unified=0', '--', '.', ':(exclude)*.md', ':(exclude)docs', ':(exclude)tasks', ':(exclude)LICENSE']).split('\n').filter((l) => l.startsWith('+') && !l.startsWith('+++')).join('\n');
-  return { files, added };
+  const isDoc = (f) => f.endsWith('.md') || f.startsWith('docs/') || f.startsWith('tasks/') || f === 'LICENSE';
+  const lines = run(['diff', mb, '--unified=0', '--', '.', ':(exclude)*.md', ':(exclude)docs', ':(exclude)tasks', ':(exclude)LICENSE']).split('\n').filter((l) => l.startsWith('+') && !l.startsWith('+++'));
+  for (const f of untracked.filter((x) => !isDoc(x))) {
+    const text = readFileSync(path.join(root, f), 'utf8');
+    if (!text.includes('\0')) lines.push(...text.split('\n').map((l) => `+${l}`));
+  }
+  return { files, added: lines.join('\n') };
 }
 
 /** Why each sheet is required: the first path or word of the text that triggered it. */

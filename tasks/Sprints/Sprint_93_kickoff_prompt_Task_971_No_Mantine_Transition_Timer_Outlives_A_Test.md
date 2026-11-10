@@ -220,3 +220,9 @@ Deliberate breaks, restored and byte-compared: the fetch stub back on `vi.stubGl
 fails P7a and P7b. F1 and F2 of Review 1 are fixed. Not run: a break of P5's hook order (P5b observes it directly).
 Sonnet's `vi.unstubAllGlobals()` concern for leftover fetch answers was measured: the 6 files that set a lasting `fetch`
 answer each reset or re-stub it, so no test inherits another test's answer.
+
+Review 2 addendum (PR #28, 79d853932): CI "OWASP task gate" failed, "G3 Error_Handling the diff triggers Error_Handling,
+and no approved review record of this change gives it a verdict"; all other checks passed. Cause: `owasp.mjs`
+`changedFiles` read words from `git diff` only, which skips untracked files ("swallow" in the new fetch guard files).
+Fixed here (small tooling fix): untracked non-doc files are read in full and a `--base` without a ref shape is refused;
+`owasp.test.mjs` 21/21, the untracked case fails without the fix; three verdicts added; review and gate exit 0.

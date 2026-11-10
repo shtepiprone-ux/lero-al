@@ -1,0 +1,159 @@
+{
+  "task": "970",
+  "sheets": {
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": ".github/workflows/ci.yml:288 (the download-and-run step named in kickoff \"Attack surface\"); review 1 reran each threat: `sha256sum gitleaks_8.24.3_linux_x64.tar.gz` against the release checksums, PR #19 range 60/60, the 6 fingerprints judged"
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the word comes from an evidence file the scan reads; no access decision changes in this CI diff"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no authorization decision or output path is touched by the secret-scan job change"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the OAuth probe file is old evidence text; no authorization pattern is designed or changed"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "no role, policy or route changes; the authorization regression job is untouched by this diff"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "no authorization rule changes, so no new authorization test is due here"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "review 1: gitleaks 8.24.3 with `--log-opts=\"--no-merges d8a07a3c7..f7838ca9a\"` scans 60 of PR #19's 60 commits and finds the fixture line run 42690395258 missed (30 scanned); review 2: the silencing channels are closed (Secrets_Management)"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "sha256 only verifies a downloaded archive; nothing is stored or encrypted by this change"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "package.json and the lockfile do not change; the SBOM job is untouched by this diff"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "it must be treated as a critical asset, potentially even more critical than the source code it processes"
+      ],
+      "evidence": ".github/workflows/ci.yml job secrets: permissions contents read, no secret bound, persist-credentials false, event values only through env (ci-workflow.test.mjs; review 1 mutation with `${{` in run is refused by the test's env check)"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the only URL is the CI download from github.com; no response header of the site changes"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": ".github/workflows/ci.yml:292-309: BASE_SHA, HEAD_SHA and EVENT come through env, are GitHub-generated SHAs or event names, and the range is selected by a case on fixed patterns"
+    },
+    "JSON_Web_Token": {
+      "verdict": "not applicable",
+      "reason": "the word names the test's existing parts-built fixture; no token handling changes"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "not applicable",
+      "reason": "the test fixture literal is split into two joined parts; no regex on input, merge or sink changes"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the scan finds keys; none is created, stored or rotated by this task"
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "no npm package is added; the scanner is a release binary pinned by version and checksum"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Google authError is an error text in old evidence; no OAuth flow or client changes"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "no OS call is added to project code; the CI step runs one fixed scanner command whose range comes from env values set by GitHub (.github/workflows/ci.yml:309)"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the only merge is Object.assign of fixed literal keys onto a copy of process.env in a test; no untrusted key reaches an object"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Make secrets detection part of the threat model. Consider secrets as part of the attack surface during threat modeling exercises.",
+        "Evaluate detection utilities and related signatures often to ensure they meet expectations."
+      ],
+      "evidence": "review 2: .github/workflows/ci.yml:299 refuses a .gitleaks.toml before the scanner; scripts/quality/change-report.mjs:40 groups the suppression files; `node --test scripts/quality/change-report.test.mjs` 10/10 and red with the group, the toml path or the marker search removed"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "review 1 in the kickoff: every changed file read, every supplier claim rerun: `node --test scripts/quality/*.test.mjs` 152/152, `gitleaks git --log-opts=<origin/main>` 1820 commits no leak, 22 matches without the ignore file, PR #19 60 commits"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Measure security confidence by adversarial testing results and independent analysis, not by"
+      ],
+      "evidence": "review 2 mutations M3, M4, M6, M7, refusal off, --no-merges dropped, empty daily range, extra scanner flag: each turns `node --test scripts/quality/ci-workflow.test.mjs` red; restored"
+    },
+    "Secure_Product_Design": {
+      "verdict": "not applicable",
+      "reason": "no product feature is designed; only a CI gate's commit range and download change"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "`gh release download v8.24.3 -R gitleaks/gitleaks -p gitleaks_8.24.3_checksums.txt` (published 2025-04-11): linux_x64 9991e0b2...ee29c equals GITLEAKS_SHA256 at .github/workflows/ci.yml:291; a wrong pin turns `node --test scripts/quality/ci-workflow.test.mjs` red"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "kickoff Attack surface and review 1 F1: the config file and inline marker channels are now closed; `node --test scripts/quality/ci-workflow.test.mjs` red with the .gitleaks.toml refusal off"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "curl uses https to github.com with default verification; no TLS configuration of the site changes"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "the scan reads repository history only; no personal data is collected or shown"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "`gh run view 42690395258 --log` (083129ce1^..0115c131c, 30 commits scanned) and `gh pr view 19 --json commits` (60), read by the reviewer"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "no dependency is added or upgraded; the scanner version stays 8.24.3"
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "no page, frame or cross-origin response changes; the diff is a CI job and tests"
+    }
+  }
+}

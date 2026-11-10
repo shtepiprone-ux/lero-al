@@ -1,0 +1,14 @@
+# gitleaks fingerprints read and judged no secret (Task 970, 2026-11-09). History cannot change, so the daily scan of the
+# whole history would fail on them. scripts/quality/ci-workflow.test.mjs pins this exact list: a new entry is reviewed.
+
+# The redaction test's fake key (`apikey=` in a URL it must redact); built from parts since Task 970.
+b1c7b41479675d9a1737b19d216d8ac55f770cf4:scripts/lib/__tests__/redact-log.test.ts:generic-api-key:17
+# A Google OAuth `authError` code in a recorded 302 Location header (Task 927 review 11 evidence), not a credential.
+d8a07a3c7841022207fd5331f53e5a80b4d7c7e2:docs/sessions/evidence/task927/review-11/rv11-07-authorize-probe.txt:generic-api-key:14
+# Google's own public browser keys inside saved copies of Google's documentation pages (Task 927 sources; deleted since).
+d8a07a3c7841022207fd5331f53e5a80b4d7c7e2:docs/sessions/evidence/task927/design/sources/gis-js-reference.html:gcp-api-key:4375
+d8a07a3c7841022207fd5331f53e5a80b4d7c7e2:docs/sessions/evidence/task927/review-8/g-branding-guidelines.html:gcp-api-key:4400
+# `o=e.key` in a minified Storybook bundle (Task 741 artifact; deleted since).
+0295d7f10d3165b4947de99a3fea14e33b099bf8:docs/reviews/artifacts/2026-08-14-task741/before-storybook-static/assets/iframe-BWqC60Cj.js:generic-api-key:1034
+# "token, …" in the prose of the Task 646 kickoff (deleted since).
+1cb0ba80cce1a2cff555492fad86a872b16751bb:tasks/kickoff_prompt_Task_646_Homepage_Inline_Chrome_Mantine.md:generic-api-key:161

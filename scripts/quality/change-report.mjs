@@ -36,11 +36,41 @@ export const SENSITIVE = [
   ['Lint, type and test configuration', /^(eslint\.config\.mjs|tsconfig\.json|vitest(\.[a-z]+)?\.config\.ts|\.gitignore|scripts\/mojibake-allowlist\.json)$/],
   ['Security-relevant runtime configuration', /^(next\.config\.ts|(src\/)?(middleware|proxy|instrumentation)\.ts|sentry\.[a-z]+\.config\.ts|vercel\.json)$/],
   ['Database schema and policies', /^supabase\/(migrations|policies|schema)\//],
+  // Task 970 review 1 (F1): what the secret scan obeys. An ignore entry or a config file can hide a secret from it.
+  ['Secret-scan suppressions', /^\.gitleaksignore$|(^|\/)\.gitleaks\.toml$/],
   // Secure Coding with AI §8: "Require human review of all AI-generated test modifications" for the security-critical
   // tests (authentication, authorization, input validation); the owner is the human reviewer.
   ['Security tests (authorization, authentication, input validation)', /\.(security|integration)\.test\.(ts|tsx)$|^src\/__tests__\/security\/|^src\/tests\/authz-matrix\.json$/],
 ];
 const TEST_FILE = /(\.test|\.spec)\.(ts|tsx|js|jsx|mjs|cjs)$|(^|\/)__tests__\//;
+
+/** gitleaks skips a line that carries this marker. Built from parts, so this file's own line is no marker. */
+export const ALLOW_MARKER = ['gitleaks', 'allow'].join(':');
+
+/** Every added line of a `git diff -U0` that carries the inline allow marker, as `path:line` (Task 970 review 1, F1).
+ *  Listed for the owner, not refused: a review or a rule may name the marker in prose. */
+export function allowMarkerLines(diff) {
+  const out = [];
+  let file = null;
+  let line = 0;
+  let inHeader = false;
+  for (const text of String(diff).split('\n')) {
+    if (text.startsWith('diff --git ')) { file = null; inHeader = true; continue; }
+    // "--- a/x" then "+++ b/x" open a file; inside a hunk an added line "++ x" also starts with "+++", so only the header counts
+    if (inHeader) {
+      if (text.startsWith('+++ ')) { file = text === '+++ /dev/null' ? null : text.slice(4).replace(/^b\//, ''); inHeader = false; }
+      continue;
+    }
+    const hunk = /^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/.exec(text);
+    if (hunk) { line = Number(hunk[1]); continue; }
+    if (!file) continue;
+    if (text.startsWith('+')) {
+      if (text.includes(ALLOW_MARKER)) out.push(`${file}:${line}`);
+      line += 1;
+    }
+  }
+  return out;
+}
 
 export function classify(paths) {
   const out = new Map();
@@ -177,6 +207,11 @@ export function run(base, head, now = Date.now()) {
   if (!sensitive.size) lines.push('None.');
   for (const [group, list] of sensitive) lines.push(`- **${group}** (${list.length}): ${list.slice(0, 40).map((p) => `\`${p}\``).join(', ')}${list.length > 40 ? ' …' : ''}`);
   lines.push('');
+
+  // -G keeps the diff to the files whose added or removed lines hold the marker
+  const markers = allowMarkerLines(git(['diff', '-U0', '--no-color', '--no-ext-diff', `-G${ALLOW_MARKER}`, `${base}...${head}`]));
+  lines.push('### Added lines the secret scan skips (inline allow marker; the owner reads each)', '');
+  lines.push(...(markers.length ? markers.map((m) => `- \`${m}\``) : ['None.']), '');
 
   lines.push('### Tests deleted or weakened', '');
   const testFlags = [];

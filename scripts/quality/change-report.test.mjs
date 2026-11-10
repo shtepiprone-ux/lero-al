@@ -1,7 +1,45 @@
 // node --test scripts/quality/change-report.test.mjs
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classify, testWeakening, lockfileProblems, dependencyChanges, untestedSourceChange, newLockfileVersions, youngLockfileVersions, isNpmName } from './change-report.mjs';
+import { classify, testWeakening, lockfileProblems, dependencyChanges, untestedSourceChange, newLockfileVersions, youngLockfileVersions, isNpmName, allowMarkerLines, ALLOW_MARKER } from './change-report.mjs';
+
+// Task 970 review 1 (F1): what the secret scan obeys is the owner's to read.
+test('the secret-scan ignore file and any gitleaks config are sensitive paths', () => {
+  const c = classify(['.gitleaksignore', '.gitleaks.toml', 'tools/.gitleaks.toml', 'docs/gitleaks.md', 'src/a.ts']);
+  assert.deepEqual(c.get('Secret-scan suppressions'), ['.gitleaksignore', '.gitleaks.toml', 'tools/.gitleaks.toml']);
+  assert.equal([...c.values()].flat().includes('docs/gitleaks.md'), false);
+});
+
+test('every added line with the inline allow marker is listed with its file and line; removed ones are not', () => {
+  const diff = [
+    'diff --git a/src/config.ts b/src/config.ts',
+    'index 1111111..2222222 100644',
+    '--- a/src/config.ts',
+    '+++ b/src/config.ts',
+    '@@ -3,0 +4,2 @@ export const x = 1',
+    `+const token = 'ghp_example' // ${ALLOW_MARKER}`,
+    '+const other = 2',
+    '@@ -9 +11 @@',
+    `-const old = 'v' // ${ALLOW_MARKER}`,
+    `+const kept = 'v' // ${ALLOW_MARKER}`,
+    'diff --git a/notes.md b/notes.md',
+    'new file mode 100644',
+    '--- /dev/null',
+    '+++ b/notes.md',
+    '@@ -0,0 +1,3 @@',
+    '+++ a markdown line that starts with two pluses',
+    '+plain',
+    `+key ${ALLOW_MARKER}`,
+    'diff --git a/gone.txt b/gone.txt',
+    'deleted file mode 100644',
+    '--- a/gone.txt',
+    '+++ /dev/null',
+    '@@ -1 +0,0 @@',
+    `-secret ${ALLOW_MARKER}`,
+  ].join('\n');
+  assert.deepEqual(allowMarkerLines(diff), ['src/config.ts:4', 'src/config.ts:11', 'notes.md:3']);
+  assert.deepEqual(allowMarkerLines(''), []);
+});
 
 test('product code changed without any test change is refused', () => {
   const src = { code: 'M', path: 'src/modules/companies/actions.ts' };

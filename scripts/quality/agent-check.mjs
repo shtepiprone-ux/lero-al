@@ -31,6 +31,7 @@ import { untestedSourceChange } from './change-report.mjs';
 import { readRegularFile } from './check-files.mjs';
 import { sessionCheck } from './ac-tests.mjs';
 import { sessionContext } from './owasp.mjs';
+import { fixtureHidden, isFixturePath, sweepStaleFixture, withoutFixtureErrors } from './test-fixtures.mjs';
 
 const ROOT = process.env.CLAUDE_PROJECT_DIR || process.cwd();
 const CODE = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
@@ -133,6 +134,11 @@ function clip(text) {
  *  The content decides, never the mtime: a file restored byte for byte after a deliberate break (quality-gates.md §8)
  *  is unchanged, and an edit with its old size and mtime put back is still a change (Task 963 AC9). */
 function snapshot() {
+  // Test fixtures (test-fixtures.mjs): a directory no living test holds is removed; one a test holds right now is not
+  // the session's work, unless this hook is that test's own child.
+  const gitDir = gitDirectory();
+  sweepStaleFixture(ROOT, gitDir);
+  const hidden = fixtureHidden(gitDir);
   const list = (args) => {
     const r = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28, windowsHide: true });
     if (r.status !== 0) throw new Error(`git ${args[0]} failed: ${(r.stderr || '').trim()}`);
@@ -144,6 +150,7 @@ function snapshot() {
   ]);
   const out = {};
   for (const rel of files) {
+    if (hidden && isFixturePath(rel)) continue;
     // One descriptor for the type check and the read (CodeQL js/file-system-race); null for a deleted or non-regular path.
     const bytes = readRegularFile(path.join(ROOT, rel));
     if (bytes) out[rel] = `${bytes.length}:${createHash('sha256').update(bytes).digest('hex')}`;
@@ -211,7 +218,9 @@ function stop() {
   }
   if (changed.some((f) => TYPED.test(f))) {
     const types = run('tsc', ['--noEmit', '-p', 'tsconfig.json']);
-    if (!types.ok) failures.push(`Typecheck of the whole project (effect on other code):\n${clip(types.output)}`);
+    // a fixture a living test holds is not the session's work (test-fixtures.mjs): its deliberate type errors are left out
+    const found = types.ok ? '' : fixtureHidden(gitDirectory()) ? withoutFixtureErrors(types.output) : types.output;
+    if (found) failures.push(`Typecheck of the whole project (effect on other code):\n${clip(found)}`);
   }
   const testable = changed.filter((f) => f.startsWith('src/') && CODE.test(f));
   if (testable.length) {

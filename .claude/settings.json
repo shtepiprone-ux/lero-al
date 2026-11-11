@@ -132,7 +132,9 @@
       "mcp__plugin_vercel_vercel__upload_file",
       "mcp__plugin_vercel_vercel__upsert_connector_project_connection",
       "mcp__plugin_vercel_vercel__verify_project_domain",
-      "mcp__plugin_vercel_vercel__write_session_files"
+      "mcp__plugin_vercel_vercel__write_session_files",
+      "Edit(./.git/**)",
+      "Write(./.git/**)"
     ],
     "ask": [
       "Edit(./.claude/**)",
@@ -175,6 +177,16 @@
             ],
             "timeout": 60,
             "statusMessage": "Record the files already changed"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/claims.mjs",
+              "start"
+            ],
+            "timeout": 120,
+            "statusMessage": "Replies about CI that the claim check does not know yet"
           }
         ]
       }
@@ -209,6 +221,25 @@
             ],
             "timeout": 900,
             "statusMessage": "Checks of every file changed in this session"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/pipeline.mjs",
+              "stop"
+            ],
+            "timeout": 120,
+            "statusMessage": "Every claimed phase has its complete pipeline ledger"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/push-safety.mjs"
+            ],
+            "timeout": 60,
+            "statusMessage": "Push and merge commands in the reply are safe"
           }
         ]
       }
@@ -226,6 +257,16 @@
             ],
             "timeout": 900,
             "statusMessage": "Checks of every file changed in this session"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/pipeline.mjs",
+              "stop"
+            ],
+            "timeout": 120,
+            "statusMessage": "Every claimed phase has its complete pipeline ledger"
           }
         ]
       }

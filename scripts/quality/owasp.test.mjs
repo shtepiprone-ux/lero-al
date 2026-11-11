@@ -359,6 +359,23 @@ test('changedFiles: the words of an untracked new file count before its commit, 
 });
 
 test('changedFiles: a base that git would read as an option is refused before git runs', () => {
-  for (const base of ['--output=x', '-p', '', 'main;rm', 'a b', undefined]) assert.throws(() => changedFiles(base, ROOT), /refused base/);
-  for (const base of ['main', 'origin/main', 'HEAD~1', '6ae9105d51bb7a7bf748e27293d9059c81955d7c']) assert.doesNotThrow(() => changedFiles(base, ROOT));
+  // The refs live in a fixture repository: the CI checkout of a pull request has no local `main` branch, so a test that
+  // reads the developer's own refs passes locally and fails in CI (Task 971, PR #28, second run).
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-base-'));
+  const git = (...args) => {
+    const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false', '-c', 'init.defaultBranch=main', ...args], { cwd: root, encoding: 'utf8', windowsHide: true });
+    assert.equal(r.status, 0, r.stderr);
+    return r.stdout.trim();
+  };
+  git('init', '-q');
+  for (const n of ['1', '2']) {
+    writeFileSync(path.join(root, 'a.ts'), `export const a = ${n}\n`);
+    git('add', '.');
+    git('commit', '-q', '-m', n);
+  }
+  git('update-ref', 'refs/remotes/origin/main', 'HEAD');
+  const sha = git('rev-parse', 'HEAD~1');
+  for (const base of ['--output=x', '-p', '', 'main;rm', 'a b', undefined]) assert.throws(() => changedFiles(base, root), /refused base/);
+  for (const base of ['main', 'origin/main', 'HEAD~1', sha]) assert.doesNotThrow(() => changedFiles(base, root));
+  rmSync(root, { recursive: true, force: true });
 });

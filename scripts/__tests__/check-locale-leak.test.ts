@@ -15,7 +15,24 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 
-import { collectStoryTokens, isTransportError, parseCliArgs, parseWidths, viewportsForWidths } from '../check-locale-leak.mjs'
+import { collectStoryTokens, isTransportError, parseCliArgs, parseWidths, renderErrorLines, viewportsForWidths } from '../check-locale-leak.mjs'
+import { diagnose } from '../quality/load-watch.mjs'
+
+describe('check-locale-leak render errors in the log', () => {
+  it('names each failed tuple and its reason, so the log and the timeout diagnosis can read it', () => {
+    // the reason was only in report.json: ci-local saw "1 render errors" and could not tell a timeout (2026-11-11)
+    const lines = renderErrorLines([
+      { storyId: 'patterns-mantine-cmspageview--body-only', viewport: 'mobile-375', locale: 'sq', reason: 'page.waitForFunction: Timeout 15000ms exceeded.' },
+      { reason: 'scan runtime failed' },
+    ])
+    expect(lines).toEqual([
+      '  render error: patterns-mantine-cmspageview--body-only at mobile-375 in sq: page.waitForFunction: Timeout 15000ms exceeded.',
+      '  render error: (scan): scan runtime failed',
+    ])
+    const calm = [{ cpu: 20, memFree: 60, ports: 40 }]
+    expect(diagnose(`Incomplete locale scan: 728/729 tuples\n${lines.join('\n')}`, calm)).toMatchObject({ timeout: true, cause: 'stall' })
+  })
+})
 
 // ── Entry point (Task 963 AC17) ───────────────────────────────────────────────
 
@@ -115,6 +132,8 @@ function fakeBrowser(options: {
   renderFailed?: boolean
   waitRejects?: Error
   pageError?: boolean
+  evaluateHangs?: boolean
+  closeHangs?: boolean
 }) {
   const pages: Array<{ closed: boolean }> = []
   const gotoSteps = [...options.gotos]
@@ -138,8 +157,10 @@ function fakeBrowser(options: {
         waitForFunction: async () => {
           if (options.waitRejects) throw options.waitRejects
         },
-        evaluate: async (arg: unknown) => (typeof arg === 'function' ? options.renderFailed === true : ['Leaked word', 'Another token']),
-        close: async () => { state.closed = true },
+        evaluate: (arg: unknown) => (options.evaluateHangs
+          ? new Promise(() => {})
+          : Promise.resolve(typeof arg === 'function' ? options.renderFailed === true : ['Leaked word', 'Another token'])),
+        close: () => { state.closed = true; return options.closeHangs ? new Promise(() => {}) : Promise.resolve() },
       }
     }),
   }
@@ -226,6 +247,22 @@ describe('check-locale-leak transport retry', () => {
     expect(fake.browser.newPage).toHaveBeenCalledTimes(1)
     expect(onRetry).not.toHaveBeenCalled()
     expect(fake.pages.every(page => page.closed)).toBe(true)
+  })
+
+  it('ends a tuple whose renderer hangs at its deadline, names it, and does not wait for its page to close', async () => {
+    // shard 1/6 of a local run of 2026-11-10 stopped at tuple 468 of 729 and waited 19 hours: evaluate and close have no
+    // timeout of their own
+    vi.useFakeTimers()
+    try {
+      const fake = fakeBrowser({ gotos: [{ ok: true }], evaluateHangs: true, closeHangs: true })
+      const result = collectStoryTokens(fake.browser, 'http://127.0.0.1:1', STORY, VIEWPORT, 'sq', undefined, 50)
+      const settled = expect(result).rejects.toThrow(`Timeout 50ms exceeded: ${STORY.id} at mobile-320 in sq`)
+      await vi.advanceTimersByTimeAsync(50 + 5000)
+      await settled
+      expect(fake.pages.every(page => page.closed)).toBe(true)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   it('never retries a page load timeout or an HTTP failure', async () => {

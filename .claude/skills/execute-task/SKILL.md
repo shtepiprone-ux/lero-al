@@ -18,13 +18,17 @@ description: Implement one saved Lero.al task as Sonnet, run its tests and repor
    and keep the failing output, then implement until it passes. Product code changed without a test change blocks your
    finish.
 6. For each security test of the kickoff: remove the control once locally, show the test failing, restore it.
-7. Quality check of the implementation: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
-   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree`,
-   `node scripts/quality/ac-tests.mjs --base main <kickoff>` and the kickoff's tests. A kickoff that changes the database
+7. Quality check of the implementation, step by step and never in part (`flow.md`, completeness rule and Pipeline):
+   `node scripts/quality/pipeline.mjs run execute <kickoff>` exits 0. Its steps, in order: `lint`, `typecheck`,
+   `unit-coverage` (the CI flags), `changed-lines`, `worktree-files`, `ac-tests` and `kickoff-tests` (every test and
+   command the criteria name). A stopped phase: fix the cause and run it again from the first step; your stop is refused
+   while the phase is not complete for the files as they are. A kickoff that changes the database
    or the upload configuration: run `node scripts/quality/db-catalog-audit.mjs` / `cloudinary-config.mjs` (read-only)
    before the owner applies anything and again after, and report both outputs. A route, entry point or file you
    move or rename: every test, script and live document that names the old one is updated in the same change
    (`check-files.mjs` stale paths; the moved entry point's own tests import the new path).
-8. Report in Ukrainian: changed files; each command with exit code and the relevant output; the failing-first output of
-   each new test; the deliberate-break output;
+8. Report in Ukrainian: changed files; the pipeline's last line and each step with its exit code and the relevant
+   output; the failing-first output of each new test; the deliberate-break output. Every line that states a result
+   names its source, `[pipeline: execute]` or `[локально: \`<command>\`]` for a command this session ran
+   (`flow.md`, completeness rule; your stop is refused otherwise);
    anything not done, stated as not done. The reviewer reruns every claim. No Git mutations.

@@ -40,6 +40,16 @@ Mobile is a semantic presentation, not compressed desktop geometry: reflow/stack
 compact range and its `640px` transition follows `.claude/rules/shared/mobile-adaptation-contract.md`. Mantine and the
 project theme stay authoritative for the responsive mechanism, interaction, accessibility and breakpoint.
 
+## Completeness rule: nothing is done partially
+
+Owner, 2026-11-10 (translated): "you must never do your work partially, it is strictly forbidden! Creating, editing and
+reviewing tasks and checking CI are forbidden to be done partially!" Every phase runs step by step through
+`node scripts/quality/pipeline.mjs run <design|execute|review|handoff> <kickoff>` (Opus designs, reviews and hands over;
+Sonnet executes); every CI job runs locally first in a CI-shaped checkout (`scripts/quality/ci-local.mjs`); a PR's CI is
+stated only with `pipeline.mjs ci-status <pr>`; every stated result names its source, `[CI: PR #<n>]`,
+`[локально: \`<command>\`]` or `[pipeline: <phase>]` (`scripts/quality/provenance.mjs`). The Stop hook refuses a reply
+that claims a phase without its complete ledger, or a result without a backed source. Details: `.claude/rules/flow.md` (completeness rule, Pipeline).
+
 ## Golden rule: no gap is only reported
 
 Owner, 2026-11-07 (translated): "you are forbidden to walk past the gaps you find and only give me a report that you

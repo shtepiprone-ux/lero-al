@@ -5,6 +5,13 @@
       "verdict": "not applicable",
       "reason": "the race is a test-teardown timer race, not an attack an application must defend"
     },
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require explicit tool authorization for sensitive operations."
+      ],
+      "evidence": "`node --test scripts/quality/agent-settings.test.mjs scripts/quality/pipeline.test.mjs`: Stop and SubagentStop run scripts/quality/pipeline.mjs stop, and Stop runs push-safety.mjs (.claude/settings.json; scripts/quality/agent-settings.test.mjs, red on the settings of HEAD); Edit(./.git/**) and Write(./.git/**) are denied so a ledger is not written through the file tools; 16 deliberate breaks of the pipeline, ci-local and settings controls each fail a test"
+    },
     "Authentication": {
       "verdict": "not applicable",
       "reason": "the two Google test files only close the test popup in an afterEach; no sign-in code changes"
@@ -13,6 +20,26 @@
       "verdict": "not applicable",
       "reason": "no authentication mechanism is designed or changed; only unit-test setup and test hooks change"
     },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the words are the CI job name \"Authorization regression\" in the claims vocabulary test; no authorization code, role or policy changes"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the words are the CI job name \"Authorization regression\" in the claims vocabulary test; no authorization code, role or policy changes"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the words are the CI job name \"Authorization regression\" in the claims vocabulary test; no authorization code, role or policy changes"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "the words are the CI job name \"Authorization regression\" in the claims vocabulary test; no authorization code, role or policy changes"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the words are the CI job name \"Authorization regression\" in the claims vocabulary test; no authorization code, role or policy changes"
+    },
     "Bot_Management_and_Anti-Automation": {
       "verdict": "not applicable",
       "reason": "no bot or human-check file is in the final diff; the human check is unchanged"
@@ -20,6 +47,13 @@
     "Business_Logic_Security": {
       "verdict": "not applicable",
       "reason": "no workflow, price, permission or ownership value changes in this test-only diff"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`node --test scripts/quality/agent-settings.test.mjs scripts/quality/push-safety.test.mjs scripts/quality/pipeline.test.mjs`: the workflow is unchanged; the publication guard push-safety.mjs (a merge only --squash while CI Required is green) now runs at every Stop (agent-settings.test.mjs); a commit or push handoff needs a complete handoff ledger, whose first step ci-local.mjs runs every job of ci.yml, and a git add that is exactly the changed files (pipeline.test.mjs)"
     },
     "Clickjacking_Defense": {
       "verdict": "not applicable",
@@ -41,13 +75,24 @@
       "verdict": "not applicable",
       "reason": "test setup and test hooks only; no output, encoding or rendering of untrusted data changes"
     },
-    "DOM_based_XSS_Prevention": {
+    "Cryptographic_Storage": {
       "verdict": "not applicable",
-      "reason": "the new tests render fixed components and never read untrusted input into the DOM"
+      "reason": "SHA-256 only fingerprints local file bytes and step output; nothing secret is stored or encrypted"
     },
     "Denial_of_Service": {
       "verdict": "not applicable",
-      "reason": "no request handling changes; upload is only named as excluded surface in the kickoff"
+      "reason": "no request handling changes; a local CI step is bounded by its job timeout-minutes, a timed-out browser step is retried at most twice and only after its cause is diagnosed (load-watch.test.mjs), and the wait for free ports has no deadline by owner decision 2026-11-10, logged every 30 s"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the document against its format's schema before publication or ingestion"
+      ],
+      "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs runs the sbom job of ci.yml as written (cyclonedx-npm --validate); ci-local.test.mjs: the plan of the real ci.yml has every job and none is unverified"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the new tests render fixed components and never read untrusted input into the DOM"
     },
     "Error_Handling": {
       "verdict": "not applicable",
@@ -56,6 +101,10 @@
     "File_Upload": {
       "verdict": "not applicable",
       "reason": "no upload code or upload test is in the final diff; only unit-test setup changes"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "not applicable",
+      "reason": "no workflow file changes; ci-local.mjs only reads ci.yml and runs it outside GitHub Actions"
     },
     "HTTP_Headers": {
       "verdict": "not applicable",
@@ -70,14 +119,51 @@
       "quotes": [
         "the values for commands and the relevant arguments should be both validated"
       ],
-      "evidence": "scripts/quality/owasp.mjs:552 refuses a --base without a ref or commit shape before git runs; scripts/quality/owasp.mjs:554-558 the command is the fixed git binary with fixed argv arrays (spawnSync, no shell); scripts/quality/owasp.test.mjs:361 passes (node --test scripts/quality/owasp.test.mjs: 21/21)"
+      "evidence": "scripts/quality/owasp.mjs:552 and pipeline.mjs runPhase refuse a base without a ref or commit shape; pipeline.mjs namedCommands runs a command a kickoff names only as `node scripts/<path>.mjs` or `npm run <script of package.json>` with safe characters (pipeline.test.mjs); ci-local.mjs refuses an overlay path with .. and a gitleaks version of another shape"
+    },
+    "Input_Validation": {
+      "verdict": "met",
+      "quotes": [
+        "Reject invalid requests with a clear error; do not continue with partially validated data."
+      ],
+      "evidence": "`node --test scripts/quality/pipeline.test.mjs scripts/quality/ci-local.test.mjs`: pipeline.mjs: a phase needing a kickoff refuses a path outside tasks/Sprints/, ci-status refuses a PR that is not a number, an unknown phase is refused; ci-local.mjs: an unknown action, expression or condition makes the job UNVERIFIED and the run fail (ci-local.test.mjs)"
     },
     "JavaScript_and_TypeScript_Security": {
       "verdict": "met",
       "quotes": [
         "Never pass untrusted input to a recursive merge or set-by-path helper"
       ],
-      "evidence": "src/tests/pendingTimerGuard.ts:61-104 and src/tests/unexpectedFetchGuard.ts:17-23 read in full: the timer globals and fetch are replaced by fixed functions; only own properties of the native setTimeout are copied; no input is merged"
+      "evidence": "src/tests/pendingTimerGuard.ts:61-104 and src/tests/unexpectedFetchGuard.ts:17-23 read in full: the timer globals and fetch are replaced by fixed functions; only own properties of the native setTimeout are copied; no input is merged. pipeline.mjs and ci-local.mjs merge no input object"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is created, stored, rotated or given a second purpose by this change"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Enforce permissions and parameter validation at the tool boundary"
+      ],
+      "evidence": "`node --test scripts/quality/pipeline.test.mjs`: the Stop hook pipeline.mjs stop reads the reply only as data (claims and git add paths), runs no command from it and fails closed (pipeline.test.mjs: the hook blocks through the process, not only the function); kickoff text runs only through namedCommands' safe shapes"
+    },
+    "Logging": {
+      "verdict": "met",
+      "quotes": [
+        "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+      ],
+      "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs redacts the token in every stored step log (ci-local.test.mjs: named:*** and no token text; break B6 fails it); pipeline ledgers keep the SHA-256 of each step's output, never the output"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "local quality tooling emits no application security events for monitoring"
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no request data is bound to objects, models or database rows"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the MCP permission entries of .claude/settings.json are not changed by this diff"
     },
     "Multifactor_Authentication": {
       "verdict": "not applicable",
@@ -86,6 +172,10 @@
     "Nextjs_Security": {
       "verdict": "not applicable",
       "reason": "no route, action or proxy code changes; src/proxy.ts is only cited in a comment"
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "no npm package is added, updated or installed outside the lockfile by this change"
     },
     "OAuth2": {
       "verdict": "not applicable",
@@ -96,22 +186,47 @@
       "quotes": [
         "use structured mechanisms that automatically enforce the separation between data and command"
       ],
-      "evidence": "scripts/quality/owasp.mjs:554-558 argv arrays to spawnSync without a shell; scripts/quality/owasp.mjs:565 untracked paths are only read with readFileSync, never passed to a command; scripts/quality/owasp.mjs:552 a base starting with \"-\" (argument injection) is refused, tested at scripts/quality/owasp.test.mjs:361"
+      "evidence": "scripts/quality/owasp.mjs:554-558, pipeline.mjs and ci-local.mjs start every program with an argv array (spawnSync, no shell; npm through its CLI file with this Node); the only scripts run through Bash are the run: steps of the repository's own ci.yml, written to a file, as CI runs them; a base starting with \"-\" is refused (owasp.test.mjs, pipeline.test.mjs)"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "If objects have to be used then they should be created using the Object.create(null) API"
+      ],
+      "evidence": "`node --test scripts/quality/pipeline.test.mjs`: pipeline.mjs changedPaths and ci-local.mjs job and step env maps are Object.create(null); pipeline.test.mjs: a file named __proto__ is a key and the map has no prototype"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "prevent them from leaking and compromising the organization"
+      ],
+      "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs strips GITHUB_TOKEN, GH_TOKEN and GITHUB_PAT from the inherited environment and gives the token only to steps whose CI env names github.token; zizmor runs offline and never gets the owner's token; logs redacted (ci-local.test.mjs; breaks B3 and B6 fail it)"
     },
     "Secure_Coding_with_AI": {
       "verdict": "met",
       "quotes": [
         "AI coding assistants frequently suggest package names that do not exist on public registries"
       ],
-      "evidence": "`git diff --stat main` lists no package.json or package-lock.json change; the guard uses Vitest and Testing Library APIs already installed"
+      "evidence": "`git diff --stat main` lists no package.json or package-lock.json change; the guard uses Vitest and Testing Library APIs already installed; ci-local.mjs uses js-yaml, already a dependency (check-files.mjs:83)"
     },
     "Session_Management": {
       "verdict": "not applicable",
       "reason": "session handling is unchanged; its unit test only stops a real network call with a fixed answer"
     },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs ZIZMOR 1.31.1 (released 2026-10-15, at least 14 days old) installed by uv with --require-hashes from wheels whose SHA-256 is pinned (a wrong digest is refused, run 2026-11-10), and GITLEAKS_WINDOWS_SHA256 for gitleaks 8.24.3 (the archive must match the release checksum and the pinned hash); ci-local.test.mjs asserts the pins, the digests and the age"
+    },
     "Transport_Layer_Security": {
       "verdict": "not applicable",
       "reason": "the https URL is a test fixture value; no transport configuration changes in the diff"
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the tooling follows no URL taken from any input; download URLs are built from pinned versions"
     },
     "User_Privacy_Protection": {
       "verdict": "not applicable",
@@ -122,7 +237,14 @@
       "quotes": [
         "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
       ],
-      "evidence": "Review 1: Opus reran `npm test -- --coverage` on Revision 1, exit 1, the executor AC4 claim did not reproduce (F1). Review 2: Opus reran every claim: two full runs exit 0 (6296 tests, 0 Unhandled Errors), AC1 3 runs 10/10, AC2 and AC6 14/14, and broke each control once (stubGlobal: fetchGuard 3 failed; budget 0: P7a and P7b failed)"
+      "evidence": "Review 1: Opus reran `npm test -- --coverage` on Revision 1, exit 1, the executor AC4 claim did not reproduce (F1). Review 2: Opus reran every claim: two full runs exit 0 (6296 tests, 0 Unhandled Errors), AC1 3 runs 10/10, AC2 and AC6 14/14, and broke each control once. Addendum 3: an agent's phase claim now needs a ledger bound to the files (pipeline.mjs; pipeline.test.mjs). Addendum 4: every result line of a reply names its source and its numbers are reconciled with the output Claude Code recorded for that run (provenance.mjs; `node --test scripts/quality/provenance.test.mjs`)"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs runs the dependencies job of ci.yml (npm ci --ignore-scripts, npm audit --omit=dev --audit-level=high) before every handoff, so an advisory blocks the handoff locally as in CI"
     },
     "Web_Frontend_Security": {
       "verdict": "not applicable",

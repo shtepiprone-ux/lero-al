@@ -29,10 +29,15 @@ description: Design one Lero.al task kickoff as Opus — short, evidence-based, 
    note.
 7. Write the kickoff (≤ 200 lines) to `tasks/Sprints/`, add one row to `docs/backlog.md`. Every `- AC<n>` names its
    automated test (`.claude/rules/quality-gates.md` §8); revising a criterion revises its test in the same revision.
-8. Quality check of the design: `node scripts/quality/check-files.mjs <kickoff> docs/backlog.md` exits 0 (it runs the
-   OWASP section check) and `node scripts/quality/owasp.mjs check` exits 0, and every route
-   step runs in Sonnet's session (paths exist, commands work).
+8. Quality check of the design, step by step and never in part (`flow.md`, completeness rule and Pipeline):
+   `node scripts/quality/pipeline.mjs run design <kickoff>` exits 0. Its steps, in order: `owasp-sync`, `owasp-check`,
+   `owasp-plan`, `kickoff-files` (`check-files.mjs <kickoff> docs/backlog.md`, the OWASP section check included),
+   `route-paths` (every Route path exists or is created by the Scope) and `ac-names-test` (every criterion names its
+   test). A stopped phase: fix the cause and run it again. Editing an existing kickoff runs the same phase on it, and the
+   change that carries the edit must pass what CI applies to it (`ac-tests.mjs --base main <kickoff>` once implemented).
 9. Golden rule (`flow.md`): every gap the design finds, inside or outside this task, is carried in the same turn by
    this kickoff or another open kickoff as scope plus a tested acceptance criterion; an audit finding gets its status
    in its ledger (`finding-status`). Nothing is left as a remark.
-10. Tell the owner in Ukrainian: what the task does, the kickoff path, and the exact next step.
+10. Tell the owner in Ukrainian: what the task does, the kickoff path, and the exact next step; a result the reply
+    states names its source (`[pipeline: design]`, `[локально: \`<command>\`]`). The Stop hook refuses the reply while
+    the design phase is not complete for the kickoff as it is now, or a result has no backed source.

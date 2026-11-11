@@ -395,7 +395,7 @@ export function checkReview(body, registry, controls, extra = [], { root = ROOT,
 // "Verdict: <verdict>" and the older "Opus, <date> — <verdict>"): the verdict follows "—" or ":" on a line that starts with
 // Review, Verdict or Opus. Task 963 AC12: the word in the prose under it (a quoted marker, a list item) never counts, so a
 // task under revision cannot hold a change in the gate because its review mentions APPROVED.
-const VERDICT_LINE = /^(?:\*\*)?(?:Review|Verdict|Opus)\b[^\n]*?(?:—|:)\s*(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)(?:\*\*)?(?=\s|$)/;
+export const VERDICT_LINE = /^(?:\*\*)?(?:Review|Verdict|Opus)\b[^\n]*?(?:—|:)\s*(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)(?:\*\*)?(?=\s|$)/;
 
 export function lastVerdict(body) {
   let last = null;

@@ -221,8 +221,8 @@ fails P7a and P7b. F1 and F2 of Review 1 are fixed. Not run: a break of P5's hoo
 Sonnet's `vi.unstubAllGlobals()` concern for leftover fetch answers was measured: the 6 files that set a lasting `fetch`
 answer each reset or re-stub it, so no test inherits another test's answer.
 
-Review 2 addendum (PR #28, 79d853932): CI "OWASP task gate" failed, "G3 Error_Handling the diff triggers Error_Handling,
-and no approved review record of this change gives it a verdict"; all other checks passed. Cause: `owasp.mjs`
-`changedFiles` read words from `git diff` only, which skips untracked files ("swallow" in the new fetch guard files).
-Fixed here (small tooling fix): untracked non-doc files are read in full and a `--base` without a ref shape is refused;
-`owasp.test.mjs` 21/21, the untracked case fails without the fix; three verdicts added; review and gate exit 0.
+Review 2 addenda (PR #28). 79d853932: the OWASP gate failed ("G3 Error_Handling"): `changedFiles` read only `git diff`,
+blind to untracked files; fixed (untracked files read, option-shaped `--base` refused), 3 verdicts added. 49899c40f:
+`not ok 149` "Not a valid object name main": the new test read the developer's refs, and CI's checkout has no local
+`main`; the test now builds its refs in a fixture repo. In a fresh clone without `main` the old test fails the same way,
+the fixed one passes; the quality job there: sync and check exit 0, tests 155/155, check-files 0, product gates 36/36.

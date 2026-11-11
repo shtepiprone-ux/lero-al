@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "a13983001cb3ed79af5c52b9558db39a1cae8b0a",
- "fetchedOn": "2026-11-09T15:59:00.817Z",
+ "commit": "238de68952893e2d830f79cce0503078548ac48a",
+ "fetchedOn": "2026-11-11T00:03:01.624Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -197,7 +197,7 @@
    "name": "Cross-Site_Request_Forgery_Prevention",
    "file": "Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
-   "sha": "e4dbb1cf3e75de11cbfa29a2e090346aec7fafd3",
+   "sha": "6c40b18615136832144b0655eaf236b770ea767a",
    "title": "Cross-Site Request Forgery Prevention Cheat Sheet"
   },
   {
@@ -253,7 +253,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "a5cf4e7893333d879a7af4e8a7a74a47aa5f680d",
+   "sha": "67bd941e3a2abe96696b163092a759daef4dc799",
    "title": "Docker Security Cheat Sheet"
   },
   {
@@ -295,7 +295,7 @@
    "name": "Error_Handling",
    "file": "Error_Handling_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html",
-   "sha": "dfdd934dda52d468835baa580a3562d7d70b1993",
+   "sha": "a20adf879e45e82ecc302d021cd99295f3e5813d",
    "title": "Error Handling Cheat Sheet"
   },
   {
@@ -736,7 +736,7 @@
    "name": "Server_Side_Request_Forgery_Prevention",
    "file": "Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
-   "sha": "10fd6e31d6428a8586028fef377421f8f48f922f",
+   "sha": "69c84db039ce2bbd07f44582f50bde94717ae3e1",
    "title": "Server-Side Request Forgery Prevention Cheat Sheet"
   },
   {
@@ -757,7 +757,7 @@
    "name": "Session_Management",
    "file": "Session_Management_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
-   "sha": "efc40ef2b9aad37af07539c03f35091e62db4d9e",
+   "sha": "a9eb4ecb8b60fc159151c00086938489bcbee6f0",
    "title": "Session Management Cheat Sheet"
   },
   {
@@ -904,7 +904,7 @@
    "name": "Webhook_Security",
    "file": "Webhook_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Webhook_Security_Cheat_Sheet.html",
-   "sha": "2ff8661773c12186d0c96dd51b94ed0b06c2a13c",
+   "sha": "a0020d9ee262c2ca70a694ea2b410e6ce624e21f",
    "title": "Webhook Security Cheat Sheet"
   },
   {

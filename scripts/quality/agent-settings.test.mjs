@@ -59,6 +59,23 @@ test('the agent loop runs at session start, after every file write, and at every
   assert.ok(runs('SubagentStop', 'stop'), 'SubagentStop checks every changed file');
 });
 
+// Owner, 2026-11-10: nothing is done partially. The pipeline's stop check refuses a reply that claims a design, a
+// verdict, an implementation, a commit or push handoff or a CI result without its complete ledger; the publication
+// guard checks every push and merge command (docs/governance-reset-2026-11-06.md said it ran, but no settings file
+// registered it until 2026-11-10).
+test('every stop runs the pipeline check, and the main stop runs the publication guard (flow.md, completeness rule)', () => {
+  const runs = (event, script, mode) => (settings.hooks?.[event] ?? []).some((h) => h.hooks.some((x) => x.type === 'command'
+    && x.command === 'node' && x.args?.[0] === `\${CLAUDE_PROJECT_DIR}/scripts/quality/${script}` && x.args?.[1] === mode));
+  assert.ok(runs('Stop', 'pipeline.mjs', 'stop'), 'Stop runs pipeline.mjs stop');
+  assert.ok(runs('SubagentStop', 'pipeline.mjs', 'stop'), 'SubagentStop runs pipeline.mjs stop');
+  assert.ok(runs('Stop', 'push-safety.mjs', undefined), 'Stop runs push-safety.mjs');
+  assert.ok(runs('SessionStart', 'claims.mjs', 'start'), 'SessionStart reports new replies about CI for the claims corpus');
+});
+
+test('the pipeline ledgers in the Git directory cannot be written through the file tools', () => {
+  assert.deepEqual(['Edit(./.git/**)', 'Write(./.git/**)'].filter((r) => !deny.has(r)), []);
+});
+
 test('no setting turns permission checks off', () => {
   assert.notEqual(settings.permissions?.defaultMode, 'bypassPermissions');
   assert.equal(settings.disableAllHooks ?? false, false);

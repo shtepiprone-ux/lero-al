@@ -7,6 +7,7 @@ import { closeSync, existsSync, fstatSync, futimesSync, mkdirSync, openSync, rea
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { claimFixture, releaseFixture, sweepStaleFixture } from './test-fixtures.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const DIR = path.join(ROOT, 'src', '__agent_check_test__');
@@ -14,8 +15,16 @@ const REL = 'src/__agent_check_test__';
 const HOOK = path.join(ROOT, 'scripts', 'quality', 'agent-check.mjs');
 const STATE = path.join(spawnSync('git', ['rev-parse', '--absolute-git-dir'], { cwd: ROOT, encoding: 'utf8' }).stdout.trim(), 'lero-al-agent-check');
 
+// The planted files leave src/ on every exit this process sees (test-fixtures.mjs); a run stopped from outside is swept
+// by the hooks, since its process id in the lock is then gone.
+const GIT_DIR = path.dirname(STATE);
+sweepStaleFixture(ROOT, GIT_DIR);
 rmSync(DIR, { recursive: true, force: true });
-after(() => rmSync(DIR, { recursive: true, force: true }));
+claimFixture(GIT_DIR);
+const releaseOnce = () => { try { releaseFixture(ROOT, GIT_DIR); } catch { /* best effort on the way out */ } };
+after(releaseOnce);
+process.on('exit', releaseOnce);
+for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK']) process.on(sig, () => { releaseOnce(); process.exit(130); });
 
 function hook(mode, payload) {
   const r = spawnSync(process.execPath, [HOOK, mode], {

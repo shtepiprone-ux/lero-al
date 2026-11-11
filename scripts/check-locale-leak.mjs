@@ -449,10 +449,20 @@ async function loadStoryPage(browser, url, viewport, story, onRetry) {
   }
 }
 
-export async function collectStoryTokens(browser, baseUrl, story, viewport, locale, onRetry) {
+// One tuple (Story × viewport × locale) has one deadline over every await on its page. Playwright gives goto and
+// waitForFunction a timeout, but newPage, setViewportSize, evaluate and close wait forever on a renderer that hangs:
+// shard 1/6 of an ad hoc local run of 2026-11-10 printed tuple 468 of 729 at 15:00:48 and nothing more for 19 hours
+// (no deadline above it). In CI the job's timeout-minutes ends such a hang without naming the Story. With this deadline
+// the tuple fails as "Timeout <n>ms exceeded" with its Story, viewport and locale, is counted as a render error, and the
+// scan goes on; the page is closed without waiting for it.
+export const TUPLE_DEADLINE_MS = 90_000; // above the longest normal tuple: two 20 s page loads (one transport retry) and the 15 s render wait
+
+export async function collectStoryTokens(browser, baseUrl, story, viewport, locale, onRetry, deadlineMs = TUPLE_DEADLINE_MS) {
   const url = `${baseUrl}/iframe.html?id=${encodeURIComponent(story.id)}&globals=locale:${locale}&viewMode=story`;
-  const { page, state, response } = await loadStoryPage(browser, url, viewport, story, onRetry);
-  try {
+  const held = { page: null };
+  const collect = async () => {
+    const { page, state, response } = await loadStoryPage(browser, url, viewport, story, onRetry);
+    held.page = page;
     if (!response?.ok()) throw new Error('Story HTTP response failed');
     // Network-idle waits on unrelated assets and cannot establish that Storybook actually rendered.
     await page.waitForFunction(id => {
@@ -463,9 +473,32 @@ export async function collectStoryTokens(browser, baseUrl, story, viewport, loca
       || window.__STORYBOOK_PREVIEW__?.currentRender?.phase === 'errored');
     if (failed || state.runtimeFailure) throw new Error('Story render/play failed');
     return await page.evaluate(COLLECT_TOKENS_FN);
+  };
+  let timer;
+  const deadline = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`Timeout ${deadlineMs}ms exceeded: ${story.id} at ${viewport.name} in ${locale}`)), deadlineMs);
+  });
+  try {
+    return await Promise.race([collect(), deadline]);
   } finally {
-    await page.close();
+    clearTimeout(timer);
+    // a page whose renderer hangs may never close: the close is started, never awaited past a short grace
+    if (held.page) {
+      let grace;
+      await Promise.race([held.page.close().catch(() => {}), new Promise(resolve => { grace = setTimeout(resolve, 5000); })]);
+      clearTimeout(grace); // no timer outlives the tuple
+    }
   }
+}
+
+/**
+ * One line per render error for the log: which tuple and why. The reasons were only in report.json, so the log said
+ * "1 render errors" and nothing more; neither the reader of a CI log nor ci-local's timeout diagnosis (load-watch.mjs
+ * reads the step's output) could see that it was "page.waitForFunction: Timeout 15000ms exceeded" (ci-local run of
+ * 2026-11-11, patterns-mantine-cmspageview--body-only at mobile-375 in sq; the Story alone passed 5 runs of 5).
+ */
+export function renderErrorLines(errors) {
+  return errors.map(e => `  render error: ${e.storyId ?? '(scan)'}${e.viewport ? ` at ${e.viewport}` : ''}${e.locale ? ` in ${e.locale}` : ''}: ${e.reason}`);
 }
 
 function renderErrorReason(error) {
@@ -633,6 +666,7 @@ async function run() {
     // ── Summary ────────────────────────────────────────────────────────────────
     if (!report.complete) {
       console.error(`Incomplete locale scan: ${scanned}/${expected} tuples; ${errors.length} render errors; ${retries.length} retried. Report: ${reportPath}`);
+      for (const line of renderErrorLines(errors)) console.error(line);
       process.exitCode = 1;
     } else if (uniqueLeaks.length === 0) {
       console.log(`✅  Locale leak detector: ZERO leaks across ${scannable.length} stories × sq/uk/it.`);

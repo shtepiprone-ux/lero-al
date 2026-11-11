@@ -52,6 +52,14 @@ a blocking finding, never a pass.
 | `SessionStart` | records the files already changed, so the session answers for what it changes; re-reads the OWASP Cheat Sheet Series when the last read is a day old (`owasp.mjs sync --verify`, the registry is never rewritten here) and puts the reference's state, its findings first, and the `plan` / `review` commands into the session context (§6) | — (a failure to read upstream is reported in the context; the session still starts) |
 | `PostToolUse` Edit / Write / MultiEdit / NotebookEdit | §1 on the written file (any type); ESLint when it is code | the findings go back to the agent at once (exit 2) |
 | `Stop` / `SubagentStop` | every file changed since the session start or the last clean stop, by any tool (Bash included): §1, ESLint for code, `tsc --noEmit` on the whole project when TypeScript changed, `vitest related --run` for changed `src/` code, product code under `src/` changed with no test file added or changed (§8), and a started task (the session added a test its kickoff names) with a named test still missing (`ac-tests.mjs`; tests on Opus-owned paths are left to the review) | the stop is blocked, up to 3 times; after that it is released with the baseline kept and the agent must report the work as **not done**. A file counts as changed when its bytes differ (size and content hash), never because its mtime moved |
+| `Stop` / `SubagentStop` | `pipeline.mjs stop` (`flow.md`, Pipeline): a changed kickoff design, an added verdict, an executor's stop, a commit or push handoff (and its `git add` against the changed files) and a stated CI result of a PR each need their complete ledger for the current files, or this turn's `ci-status` line; every stated result names its source and its numbers appear in that source's recorded output (`provenance.mjs`) | the stop is blocked, up to 3 times; then released with "the work is NOT done" |
+| `SessionStart` | `claims.mjs start`: replies of recent turns that looked at CI and are not yet in the local claims corpus, or that the CI-claim check misses (`flow.md`, Pipeline) | — (reported in the session context; the `claims` step of review and handoff fails until they are judged) |
+| `Stop` | `push-safety.mjs`: a push only of the current task branch to `origin`, a merge only `--squash` while `CI Required` is green | exit 2, the reply is refused |
+
+Test fixtures in the working tree (`test-fixtures.mjs`, owner 2026-11-10): `agent-check.test.mjs` plants files in a
+fixture directory under src/ that exists only while it runs (FIXTURE_REL), claims it with a lock holding its process id and removes it on every exit it
+sees; the `agent-check.mjs` and `pipeline.mjs` hooks remove a directory whose process is gone (a run stopped from
+outside) and leave out, as not the session's work, one a living test holds, unless the hook is that test's own child.
 
 Least privilege (AI Agent Security, MCP Security): `permissions.deny` refuses every mutating `git` command and every
 Vercel MCP tool that creates, changes, deletes, deploys, promotes, rolls back or buys; the owner does those.
@@ -107,6 +115,10 @@ hard failures of §5, and the ruleset drift check. When a second maintainer join
 and CODEOWNERS for the sensitive paths.
 
 ## 6. Running the gates locally
+
+All of CI, the way CI runs it, on exactly the files that will be committed (owner, 2026-11-10: nothing is checked in
+part; `flow.md`, Pipeline): `node scripts/quality/ci-local.mjs`, run by `pipeline.mjs run review <kickoff>` and
+`pipeline.mjs run handoff`. A single gate while working:
 
 ```
 npm run lint

@@ -140,6 +140,13 @@ beforeEach(() => {
   browser.signInWithGoogleIdToken.mockResolvedValue({ data: {}, error: null })
   sessionStorage.clear(); localStorage.clear()
 })
+// Task 971 (pending-timer guard): the Google window. An attempt that a test leaves waiting for Google keeps its 5-minute `deadline` timer (googlePopup.ts:104) until
+// the window closes, far beyond the guard's wait. The person closing Google's window ends it (the attempt polls `popup.closed` every 500 ms and clears its timers), and
+// the guard's wait after the test lets that poll run. Declared before the hook below that restores mocks, so it runs after it and `hasFocus` stays true for the poll.
+afterEach(() => {
+  popup.closed = true
+  vi.spyOn(document, 'hasFocus').mockReturnValue(true)   // jsdom has no focused element; a person who closed Google's window is back on this page
+})
 afterEach(() => {
   cleanup()
   resetGis()

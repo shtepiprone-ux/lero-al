@@ -7,8 +7,9 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   ROOT, REGISTRY, CONTROLS, CACHE, VERIFIED, normalise, quotesOf, quoteFound, triggered, pathsIn, surfaceChanged,
-  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict, refreshCache, gitBlobSha, sheetText,
+  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict, refreshCache, gitBlobSha, sheetText, changedFiles,
 } from './owasp.mjs';
+import { spawnSync } from 'node:child_process';
 
 const SHEET_A = '# Alpha\n\nThe server **must** validate every `request` before use, [see](x.md) always.\n';
 const SHEET_B = '# Beta\n\n- Never log a raw e-mail address in any log line at all.\n';
@@ -329,5 +330,52 @@ test('cache: a commit, sheet name, file name or blob id of another shape is refu
     await assert.rejects(refreshCache(reg, root, get), /refused/);
     assert.deepEqual(calls, []);
   }
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('changedFiles: the words of an untracked new file count before its commit, documentation still does not', () => {
+  // Task 971 (PR #28): the local gate read only `git diff`, which shows no untracked file, so a word in a new test file
+  // triggered a sheet in CI that the local review and gate had not seen.
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-diff-'));
+  const git = (...args) => {
+    const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false', ...args], { cwd: root, encoding: 'utf8', windowsHide: true });
+    assert.equal(r.status, 0, r.stderr);
+  };
+  git('init', '-q');
+  writeFileSync(path.join(root, 'base.ts'), 'export const a = 1\n');
+  git('add', '.');
+  git('commit', '-q', '-m', 'base');
+  writeFileSync(path.join(root, 'base.ts'), 'export const a = 1\nexport const tracked = "tracked word"\n');
+  mkdirSync(path.join(root, 'src'), { recursive: true });
+  writeFileSync(path.join(root, 'src', 'new.ts'), 'export const b = "untracked word"\n');
+  mkdirSync(path.join(root, 'docs'), { recursive: true });
+  writeFileSync(path.join(root, 'docs', 'note.md'), 'documentation word\n');
+  const { files, added } = changedFiles('HEAD', root);
+  assert.deepEqual([...files].sort(), ['base.ts', 'docs/note.md', 'src/new.ts']);
+  assert.match(added, /tracked word/);
+  assert.match(added, /untracked word/);
+  assert.doesNotMatch(added, /documentation word/);
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('changedFiles: a base that git would read as an option is refused before git runs', () => {
+  // The refs live in a fixture repository: the CI checkout of a pull request has no local `main` branch, so a test that
+  // reads the developer's own refs passes locally and fails in CI (Task 971, PR #28, second run).
+  const root = mkdtempSync(path.join(os.tmpdir(), 'owasp-base-'));
+  const git = (...args) => {
+    const r = spawnSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@t', '-c', 'commit.gpgsign=false', '-c', 'init.defaultBranch=main', ...args], { cwd: root, encoding: 'utf8', windowsHide: true });
+    assert.equal(r.status, 0, r.stderr);
+    return r.stdout.trim();
+  };
+  git('init', '-q');
+  for (const n of ['1', '2']) {
+    writeFileSync(path.join(root, 'a.ts'), `export const a = ${n}\n`);
+    git('add', '.');
+    git('commit', '-q', '-m', n);
+  }
+  git('update-ref', 'refs/remotes/origin/main', 'HEAD');
+  const sha = git('rev-parse', 'HEAD~1');
+  for (const base of ['--output=x', '-p', '', 'main;rm', 'a b', undefined]) assert.throws(() => changedFiles(base, root), /refused base/);
+  for (const base of ['main', 'origin/main', 'HEAD~1', sha]) assert.doesNotThrow(() => changedFiles(base, root));
   rmSync(root, { recursive: true, force: true });
 });

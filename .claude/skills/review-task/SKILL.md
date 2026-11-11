@@ -8,12 +8,11 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
 1. Read the kickoff, `.claude/rules/flow.md` §3 and `.claude/rules/secure-code-review.md`. Refresh the reference:
    `node scripts/quality/owasp.mjs sync` and `node scripts/quality/owasp.mjs check` exit 0 (a sheet changed upstream since
    the kickoff was written is re-read and re-mapped before the review continues).
-2. Tools first, on the candidate commit: `node scripts/quality/check-ruleset.mjs` (the `main` ruleset has not drifted),
-   CI (`gh pr checks <n>`) or locally `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
-   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --all`,
-   `node scripts/quality/product-gates.mjs`; then
-   `npm audit --omit=dev --audit-level=high`, CodeQL alerts, and the change report
-   (`node scripts/quality/change-report.mjs main HEAD`). Live configuration (`secure-code-review.md` §1.5): a diff that
+2. Tools first, on the candidate files: `node scripts/quality/check-ruleset.mjs` (the `main` ruleset has not drifted)
+   and `node scripts/quality/ci-local.mjs` (every CI job the way CI runs it: lint, types, all tests with coverage,
+   changed lines, every file, product gates, `npm audit`, SBOM, CodeQL, gitleaks, zizmor, Storybook, homepage grid,
+   locale leak, the change report and the OWASP gate; the `security-ci` jobs are CI-only and their result is read with
+   `node scripts/quality/pipeline.mjs ci-status <pr>`). A partial set of tools is not this step. Live configuration (`secure-code-review.md` §1.5): a diff that
    touches SQL, RLS, grants, a data write, authentication or roles runs `node scripts/quality/db-catalog-audit.mjs`; an
    upload or image path runs `node scripts/quality/cloudinary-config.mjs`. A violation the change creates, or one the
    kickoff says it removes and the tool still reports, is a finding.
@@ -33,10 +32,23 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    finding, also when the kickoff did not ask for it.
 7. Write the review summary and the findings (templates in `secure-code-review.md`) into the kickoff's "Review" section.
    `NEEDS REVISION` at most twice per task; after the second, report to the owner with a proposed scope cut.
-8. Quality check of the review: `node scripts/quality/check-files.mjs <kickoff>` and
-   `node scripts/quality/owasp.mjs review <kickoff> --base main` exit 0; every `APPROVED WITH NOTES`
-   note is fixed now or filed as a numbered task in the same turn (golden rule, `flow.md`: no gap is only reported).
-   Before handing the commit to the owner: `node scripts/quality/owasp.mjs gate --base main` exits 0, so the CI task
-   gate passes with this review.
-9. On approval: give the owner the commit / push / PR commands (where to run them, what they change; no AI attribution),
-   naming the sensitive paths the owner must approve. After the merge, check the `main` CI run.
+8. Quality check of the review, step by step and never in part (`flow.md`, completeness rule and Pipeline), once the
+   review, its verdict and the OWASP record are written: `node scripts/quality/pipeline.mjs run review <kickoff>` exits
+   0. Its steps, in order: `owasp-sync`, `owasp-check`, `ruleset`, `claims` (the CI-claim corpus is current: new replies
+   harvested, none unlabeled, every `ci` one caught; quick, so before the long run), `ci-local`, `ac-tests`,
+   `kickoff-tests`, `owasp-review`, `kickoff-files`, `verdict` (a verdict line and the record exist) and `owasp-gate`
+   (the CI task gate passes with this review). Every `APPROVED WITH NOTES` note is fixed now or filed as a numbered task in the same turn
+   (golden rule, `flow.md`: no gap is only reported). The Stop hook refuses a verdict without this complete phase.
+9. On approval: `node scripts/quality/pipeline.mjs run handoff` exits 0 on exactly the files to commit (steps
+   `ruleset`, `claims`, `ci-local`, `owasp-gate`); then give the owner the commit / push / PR commands (where to run
+   them, what they change; no AI attribution; a `git add` naming every changed file), naming the sensitive paths the
+   owner must approve.
+10. After the push: `node scripts/quality/pipeline.mjs ci-status <pr>` until every check concluded; every statement
+    about the PR's CI, and every reply of a turn that looked at CI, quotes its last line. A failure is opened to its log
+    line and closed by the golden rule. After the merge, check the `main` CI run the same way.
+11. Every line of the review and of the reply that states a result names its source: `[CI: PR #<n>]` with this
+    turn's `ci-status` line, `[локально: \`<command>\`]` for a command this turn ran, or `[pipeline: <phase>]`
+    (`scripts/quality/provenance.mjs`; the Stop hook refuses a result without a backed source).
+12. The `claims` step fails on an unlabeled reply: read it (`node scripts/quality/claims.mjs list unlabeled`) and judge
+    it with `claims.mjs label <id> <ci|none|ambiguous> <reason>`. A `ci` reply the detector misses: add its wording to
+    `claims.test.mjs` first (red), then widen `mentionsCi` in `claims.mjs` until it passes.

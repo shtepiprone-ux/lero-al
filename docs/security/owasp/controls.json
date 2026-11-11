@@ -545,8 +545,8 @@
      "task": "959"
     }
    ],
-   "reviewedSha": "e4dbb1cf3e75de11cbfa29a2e090346aec7fafd3",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "6c40b18615136832144b0655eaf236b770ea767a",
+   "reviewedOn": "2026-11-11"
   },
   "Cryptographic_Storage": {
    "applies": true,
@@ -656,8 +656,8 @@
   "Docker_Security": {
    "applies": false,
    "why": "no container image is built or deployed; Vercel runs the functions",
-   "reviewedSha": "a5cf4e7893333d879a7af4e8a7a74a47aa5f680d",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "67bd941e3a2abe96696b163092a759daef4dc799",
+   "reviewedOn": "2026-11-11"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,
@@ -752,8 +752,8 @@
      "task": "955"
     }
    ],
-   "reviewedSha": "dfdd934dda52d468835baa580a3562d7d70b1993",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "a20adf879e45e82ecc302d021cd99295f3e5813d",
+   "reviewedOn": "2026-11-11"
   },
   "FastAPI_Security": {
    "applies": false,
@@ -1731,8 +1731,8 @@
      "evidence": "fetch(`https://api.cloudinary.com/v1_1/"
     }
    ],
-   "reviewedSha": "10fd6e31d6428a8586028fef377421f8f48f922f",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "69c84db039ce2bbd07f44582f50bde94717ae3e1",
+   "reviewedOn": "2026-11-11"
   },
   "Server_Side_Template_Injection_Prevention": {
    "applies": true,
@@ -1802,8 +1802,8 @@
      "evidence": "asks Supabase for the user straight after creating the client"
     }
    ],
-   "reviewedSha": "efc40ef2b9aad37af07539c03f35091e62db4d9e",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "a9eb4ecb8b60fc159151c00086938489bcbee6f0",
+   "reviewedOn": "2026-11-11"
   },
   "Software_Supply_Chain_Security": {
    "applies": true,
@@ -2172,8 +2172,8 @@
      "evidence": "import { Webhook } from 'standardwebhooks'"
     }
    ],
-   "reviewedSha": "2ff8661773c12186d0c96dd51b94ed0b06c2a13c",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "a0020d9ee262c2ca70a694ea2b410e6ce624e21f",
+   "reviewedOn": "2026-11-11"
   },
   "WebSocket_Security": {
    "applies": true,

@@ -1,0 +1,255 @@
+{
+  "_comment": "Owner, 2026-11-10: nothing is done partially; tasks are created, executed and reviewed step by step. Each phase is run by scripts/quality/pipeline.mjs in this order and stops at the first failing step. {kickoff} is the kickoff path, {base} the base ref (main). A step is an argv run without a shell, or a built-in check of pipeline.mjs.",
+  "phases": {
+    "design": {
+      "role": "Opus",
+      "flow": "flow.md §1",
+      "skill": "create-task",
+      "scope": "kickoff",
+      "steps": [
+        {
+          "id": "owasp-sync",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "sync"
+          ]
+        },
+        {
+          "id": "owasp-check",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "check"
+          ]
+        },
+        {
+          "id": "owasp-plan",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "plan",
+            "{kickoff}"
+          ]
+        },
+        {
+          "id": "kickoff-files",
+          "argv": [
+            "node",
+            "scripts/quality/check-files.mjs",
+            "{kickoff}",
+            "docs/backlog.md"
+          ]
+        },
+        {
+          "id": "route-paths",
+          "check": "route-paths"
+        },
+        {
+          "id": "ac-names-test",
+          "check": "ac-names-test"
+        }
+      ]
+    },
+    "execute": {
+      "role": "Sonnet",
+      "flow": "flow.md §2",
+      "skill": "execute-task",
+      "scope": "code",
+      "steps": [
+        {
+          "id": "lint",
+          "argv": [
+            "npm",
+            "run",
+            "lint"
+          ]
+        },
+        {
+          "id": "typecheck",
+          "argv": [
+            "npm",
+            "run",
+            "typecheck"
+          ]
+        },
+        {
+          "id": "unit-coverage",
+          "argv": [
+            "npm",
+            "test",
+            "--",
+            "--coverage",
+            "--allowOnly=false",
+            "--passWithNoTests=false",
+            "--retry=0"
+          ]
+        },
+        {
+          "id": "changed-lines",
+          "argv": [
+            "node",
+            "scripts/quality/changed-lines-coverage.mjs",
+            "--base",
+            "{base}"
+          ]
+        },
+        {
+          "id": "worktree-files",
+          "argv": [
+            "node",
+            "scripts/quality/check-files.mjs",
+            "--worktree"
+          ]
+        },
+        {
+          "id": "ac-tests",
+          "argv": [
+            "node",
+            "scripts/quality/ac-tests.mjs",
+            "--base",
+            "{base}",
+            "{kickoff}"
+          ]
+        },
+        {
+          "id": "kickoff-tests",
+          "check": "kickoff-tests"
+        }
+      ]
+    },
+    "review": {
+      "role": "Opus",
+      "flow": "flow.md §3",
+      "skill": "review-task",
+      "scope": "tree",
+      "steps": [
+        {
+          "id": "owasp-sync",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "sync"
+          ]
+        },
+        {
+          "id": "owasp-check",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "check"
+          ]
+        },
+        {
+          "id": "ruleset",
+          "argv": [
+            "node",
+            "scripts/quality/check-ruleset.mjs"
+          ]
+        },
+        {
+          "id": "claims",
+          "argv": [
+            "node",
+            "scripts/quality/claims.mjs",
+            "check"
+          ]
+        },
+        {
+          "id": "ci-local",
+          "argv": [
+            "node",
+            "scripts/quality/ci-local.mjs"
+          ]
+        },
+        {
+          "id": "ac-tests",
+          "argv": [
+            "node",
+            "scripts/quality/ac-tests.mjs",
+            "--base",
+            "{base}",
+            "{kickoff}"
+          ]
+        },
+        {
+          "id": "kickoff-tests",
+          "check": "kickoff-tests"
+        },
+        {
+          "id": "owasp-review",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "review",
+            "{kickoff}",
+            "--base",
+            "{base}"
+          ]
+        },
+        {
+          "id": "kickoff-files",
+          "argv": [
+            "node",
+            "scripts/quality/check-files.mjs",
+            "{kickoff}"
+          ]
+        },
+        {
+          "id": "verdict",
+          "check": "verdict"
+        },
+        {
+          "id": "owasp-gate",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "gate",
+            "--base",
+            "{base}"
+          ]
+        }
+      ]
+    },
+    "handoff": {
+      "role": "Opus",
+      "flow": "flow.md §4",
+      "skill": "review-task",
+      "scope": "tree",
+      "steps": [
+        {
+          "id": "ruleset",
+          "argv": [
+            "node",
+            "scripts/quality/check-ruleset.mjs"
+          ]
+        },
+        {
+          "id": "claims",
+          "argv": [
+            "node",
+            "scripts/quality/claims.mjs",
+            "check"
+          ]
+        },
+        {
+          "id": "ci-local",
+          "argv": [
+            "node",
+            "scripts/quality/ci-local.mjs"
+          ]
+        },
+        {
+          "id": "owasp-gate",
+          "argv": [
+            "node",
+            "scripts/quality/owasp.mjs",
+            "gate",
+            "--base",
+            "{base}"
+          ]
+        }
+      ]
+    }
+  }
+}

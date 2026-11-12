@@ -143,13 +143,18 @@ export function PageEditorDialog({ page, locale: adminLocale, onClose, onDone }:
 
 // ── Main manager ──────────────────────────────────────────────────────────────
 
-interface Props { pages: Page[]; adminLocale: PageLocale }
+interface Props {
+  pages: Page[]
+  adminLocale: PageLocale
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
+}
 
 /**
  * Container of `/admin/pages` (Task 868). Holds the list, the editor target, the delete target and the
  * server actions; renders only `AdminPagesView`.
  */
-export function AdminPagesManager({ pages: init, adminLocale }: Props) {
+export function AdminPagesManager({ pages: init, adminLocale, now }: Props) {
   const tLegal = useTranslations('admin.legal')
   const router = useRouter()
   const locale = useLocale() as PageLocale
@@ -183,6 +188,7 @@ export function AdminPagesManager({ pages: init, adminLocale }: Props) {
 
   return (
     <AdminPagesView
+      now={now}
       pages={items}
       activeLocale={activeLocale}
       migrationPending={migrationPending}

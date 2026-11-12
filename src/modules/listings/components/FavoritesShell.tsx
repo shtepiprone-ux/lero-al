@@ -31,9 +31,11 @@ interface Props {
   perPage: number
   error?: boolean
   initialCollections: CollectionWithCount[]
+  /** The instant (ISO) the server rendered the page at: the listing cards decide their `new` badge against it (Task 965 R1-2). */
+  now?: string
 }
 
-export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts, page, perPage, error, initialCollections }: Props) {
+export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts, page, perPage, error, initialCollections, now }: Props) {
   const t = useTranslations('favorites')
   const locale = useLocale()
   const { rates } = useExchangeRate()
@@ -203,6 +205,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
                 layoutContext="card-track-grid"
                 displayCurrency={displayCurrency}
                 rates={rates}
+                now={now}
               />
             ))}
           </MantineListingCardTrack>

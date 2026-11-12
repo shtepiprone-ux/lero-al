@@ -18,6 +18,8 @@ export interface SimilarListingsViewProps {
   viewAllHref?: string
   /** Pre-translated `view_all` label — required alongside `viewAllHref` to render the control. */
   viewAllLabel?: string
+  /** The instant (ISO) the server rendered the page at: the listing cards decide their `new` badge against it (Task 965 R1-2). */
+  now?: string
 }
 
 /**
@@ -44,7 +46,7 @@ export interface SimilarListingsViewProps {
  * `MantinePageHeaderWithActions.tsx:55-66` and `AuthSheet.tsx:518` already use in place of a
  * CSS-module `@media` override.
  */
-export function SimilarListingsView({ heading, listings, rates, displayCurrency, viewAllHref, viewAllLabel }: SimilarListingsViewProps) {
+export function SimilarListingsView({ heading, listings, rates, displayCurrency, viewAllHref, viewAllLabel, now }: SimilarListingsViewProps) {
   if (!listings.length) return null
 
   return (
@@ -59,7 +61,7 @@ export function SimilarListingsView({ heading, listings, rates, displayCurrency,
       </Flex>
       <MantineListingCardTrack mode="rail">
         {listings.map(l => (
-          <ListingCard key={l.id} listing={l} layoutContext="card-track-rail" displayCurrency={displayCurrency} rates={rates} />
+          <ListingCard key={l.id} listing={l} layoutContext="card-track-rail" displayCurrency={displayCurrency} rates={rates} now={now} />
         ))}
       </MantineListingCardTrack>
     </>

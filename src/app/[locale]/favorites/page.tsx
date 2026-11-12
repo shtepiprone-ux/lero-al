@@ -91,6 +91,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
           perPage={FAVORITES_PER_PAGE}
           error={fetchError}
           initialCollections={collections}
+          now={new Date().toISOString()}
         />
       </div>
     </div>

@@ -34,7 +34,7 @@ function CompanyFormDialog({
 }: {
   company?: CompanyRow
   onClose: () => void
-  onDone: (updated: CompanyRow) => void
+  onDone: (updated: CompanyRow, savedAt: string) => void
 }) {
   const t = useTranslations('admin.companies')
   const tc = useTranslations('common')
@@ -115,13 +115,15 @@ function CompanyFormDialog({
       toast.success(company ? t('success_updated') : t('success_created'))
       if (logoPreview) URL.revokeObjectURL(logoPreview)
 
+      // One instant for the save: a new company's `created_at`, and the instant the list's relative times move to (a company has no `updated_at`)
+      const savedAt = new Date().toISOString()
       onDone({
         id: companyId!,
         name: name.trim(),
         logo_url: newLogoUrl,
-        created_at: company?.created_at ?? new Date().toISOString(),
+        created_at: company?.created_at ?? savedAt,
         agentCount: company?.agentCount ?? 0,
-      })
+      }, savedAt)
     })
   }
 
@@ -231,13 +233,18 @@ function CompanyFormDialog({
 
 interface Props {
   companies: CompanyRow[]
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
-export function AdminCompaniesManager({ companies: initial }: Props) {
+export function AdminCompaniesManager({ companies: initial, now }: Props) {
   const t = useTranslations('admin.companies')
   const tc = useTranslations('common')
 
   const [items, setItems] = useState<CompanyRow[]>(initial)
+  // The instant the relative times are measured against: the server's `now` while the page is the one the server rendered (so the hydrating render prints what the
+  // server printed), then the instant a company was saved in the browser (a new row's `created_at` is the browser clock's, and against the page's older `now` it would read in the future).
+  const [asOf, setAsOf] = useState(now)
   const [search, setSearch] = useState('')
   const [creating, setCreating] = useState(false)
   const [editing, setEditing] = useState<CompanyRow | null>(null)
@@ -250,12 +257,14 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
     return items.filter(c => normalizeSearch(c.name).includes(q))
   }, [items, search])
 
-  function handleCreated(company: CompanyRow) {
+  function handleCreated(company: CompanyRow, savedAt: string) {
+    setAsOf(savedAt)
     setItems(prev => [...prev, company].sort((a, b) => a.name.localeCompare(b.name)))
     setCreating(false)
   }
 
-  function handleUpdated(company: CompanyRow) {
+  function handleUpdated(company: CompanyRow, savedAt: string) {
+    setAsOf(savedAt)
     setItems(prev => prev.map(c => c.id === company.id ? company : c).sort((a, b) => a.name.localeCompare(b.name)))
     setEditing(null)
   }
@@ -333,7 +342,7 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
       visibility: 'md',
       cell: company => (
         <span className="text-muted-foreground">
-          <RelativeTime date={company.created_at} />
+          <RelativeTime date={company.created_at} baseDate={asOf} />
         </span>
       ),
     },

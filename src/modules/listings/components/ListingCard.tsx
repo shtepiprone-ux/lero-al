@@ -1,12 +1,13 @@
 'use client'
 
+import { useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { Group, Text, useMantineTheme } from '@mantine/core'
 import { AppImage } from '@/design-system/media/AppImage'
 import { MantineListingCardPattern, MantineCopyIdButton } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
-import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
+import { isListingNew } from '@/modules/listings/lib/isListingNew'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
@@ -50,7 +51,19 @@ interface ListingCardProps {
   priority?: boolean
   /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
   layoutContext?: ListingLayoutContext
+  /**
+   * The instant (ISO) the page rendered at, from the server. The `new` badge is decided against it, so the server HTML and the browser's first render agree whatever the
+   * browser clock says (Task 965 R1-2). Without it (a list that only exists in the browser) the first render shows no `new` badge and the browser clock decides from the
+   * next render on.
+   */
+  now?: string
 }
+
+// false on the server and while hydrating, true on the client from then on (the standard "is mounted" read, no effect that sets state): the browser clock is never read
+// in a render that has to match server HTML.
+const subscribeNever = () => () => {}
+const readTrue = () => true
+const readFalse = () => false
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
 // The sold/rented overlay colour is owned by `MantineListingCardPattern` (`overlay.tone`, Task 886 R40).
@@ -77,7 +90,7 @@ function isListingPriceReduced(listing: CardListingData): boolean {
   return listing.price_old != null && listing.price < listing.price_old
 }
 
-function getBadges(listing: CardListingData) {
+function getBadges(listing: CardListingData, isNew: boolean) {
   const badges: { label: string; meaning: MantineBadgeMeaning }[] = []
 
   // Status badges take priority for non-active listings
@@ -113,8 +126,7 @@ function getBadges(listing: CardListingData) {
   }
 
   // Active listing badges
-  const sevenDaysAgo = new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
-  if (new Date(listing.created_at) > sevenDaysAgo) {
+  if (isNew) {
     badges.push({ label: 'new', meaning: { variant: 'tone', tone: 'success' } })
   }
   // Premium is expressed through card styling, not a text badge
@@ -124,11 +136,15 @@ function getBadges(listing: CardListingData) {
   return badges
 }
 
-export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext, now }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const theme = useMantineTheme()
-  const badges = getBadges(listing)
+  const browserClockReady = useSyncExternalStore(subscribeNever, readTrue, readFalse)
+  const isNew = now !== undefined
+    ? isListingNew(listing.created_at, new Date(now).getTime())
+    : browserClockReady && isListingNew(listing.created_at)
+  const badges = getBadges(listing, isNew)
   const isClosed = isListingClosed(listing.status as ListingStatus)
   const closedLabel = isClosed ? t(`action_disabled_${listing.status}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const copyIdLabel = `#${listing.public_id ?? listing.id.slice(0, 8)}`

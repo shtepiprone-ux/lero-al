@@ -16,6 +16,8 @@ import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 
 export interface AdminPagesViewProps {
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
   pages: Page[]
   /** Locale of the public preview link (`/${activeLocale}/${slug}`). */
   activeLocale: string
@@ -58,6 +60,7 @@ export function AdminPagesView({
   onCancelDelete,
   onConfirmDelete,
   editorSlot,
+  now,
 }: AdminPagesViewProps) {
   const t = useTranslations('admin.pages')
   const tLegal = useTranslations('admin.legal')
@@ -140,7 +143,7 @@ export function AdminPagesView({
       key: 'updated',
       label: t('col_updated'),
       visibleFrom: 'lg',
-      render: r => <RelativeTime date={r.page.updated_at} />,
+      render: r => <RelativeTime date={r.page.updated_at} baseDate={now} />,
     },
     { key: 'actions', label: tLegal('col_actions'), align: 'right', render: r => actionIcons(r.page, false) },
   ]
@@ -151,7 +154,7 @@ export function AdminPagesView({
     badge: r => statusBadge(r.page),
     meta: [
       { label: t('col_slug'), value: r => <Text size="xs" c="dimmed" ff="monospace">{r.page.slug}</Text> },
-      { label: t('col_updated'), value: r => <RelativeTime date={r.page.updated_at} /> },
+      { label: t('col_updated'), value: r => <RelativeTime date={r.page.updated_at} baseDate={now} /> },
     ],
   }
 

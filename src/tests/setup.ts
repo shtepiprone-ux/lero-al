@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import { configure } from '@testing-library/dom'
 import { afterEach } from 'vitest'
 import { assertNoPendingTimers, installPendingTimerGuard, observeGuardRun } from './pendingTimerGuard'
 import { installUnexpectedFetchGuard, takeUnexpectedFetches } from './unexpectedFetchGuard'
@@ -11,6 +12,11 @@ import { installUnexpectedFetchGuard, takeUnexpectedFetches } from './unexpected
 // (one no test installed an answer for) now throws at the call site AND fails the test that made it, even when the code under test swallows the exception.
 // Task 971 (F2): the stub survives `vi.unstubAllGlobals()` (see `unexpectedFetchGuard.ts`).
 installUnexpectedFetchGuard()
+
+// Task 965 Review 2: `findBy*` and `waitFor` waited Testing Library's default 1 000 ms, so a first render slowed by machine load failed a test at random
+// (`ListingDetailView.contactSession.security.test.tsx` during a CI-shaped run). A wait that passes returns at once; only a failing one waits the full 5 s.
+// `src/tests/__tests__/asyncUtilTimeout.test.tsx` holds it.
+configure({ asyncUtilTimeout: 5000 })
 
 afterEach(() => {
   const seen = takeUnexpectedFetches()

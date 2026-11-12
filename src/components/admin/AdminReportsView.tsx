@@ -16,6 +16,8 @@ export interface AdminReportsViewProps {
   counts: Record<string, number>
   onFilterChange: (filter: ReportStatusFilter) => void
   onSelect: (report: ReportRow) => void
+  /** The server's `now` (ISO): relative times are measured against it (Task 965). */
+  now?: string
 }
 
 /**
@@ -24,7 +26,7 @@ export interface AdminReportsViewProps {
  * are Mantine `Tabs` with a count `Badge`; the list is the shared `AdminTable` adapter (table from 768px,
  * record cards below, D36). The detail dialog is the separate `ReportDetailDialogView`.
  */
-export function AdminReportsView({ reports, filter, counts, onFilterChange, onSelect }: AdminReportsViewProps) {
+export function AdminReportsView({ reports, filter, counts, onFilterChange, onSelect, now }: AdminReportsViewProps) {
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
   const theme = useMantineTheme()
@@ -69,7 +71,7 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
     {
       key: 'date',
       header: t('col_date'),
-      cell: r => <Text size="xs" c="dimmed" component="div"><RelativeTime date={r.created_at} /></Text>,
+      cell: r => <Text size="xs" c="dimmed" component="div"><RelativeTime date={r.created_at} baseDate={now} /></Text>,
     },
   ]
 
@@ -113,7 +115,7 @@ export function AdminReportsView({ reports, filter, counts, onFilterChange, onSe
             <Group gap="xs" wrap="wrap">
               {statusBadge(r)}
               {/* the same dimmed xs time the table cell shows; outside the subtitle it no longer inherits that size */}
-              <Text size="xs" c="dimmed" component="span"><RelativeTime date={r.created_at} /></Text>
+              <Text size="xs" c="dimmed" component="span"><RelativeTime date={r.created_at} baseDate={now} /></Text>
             </Group>
           ),
           meta: (

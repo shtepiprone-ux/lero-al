@@ -219,11 +219,16 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
 interface Props {
   initialTypes: DBPropertyType[]
   searchQuery: string
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
-export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) {
+export function AdminPropertyTypesManager({ initialTypes, searchQuery, now }: Props) {
   const t = useTranslations('admin.property_types')
   const [types, setTypes] = useState(initialTypes)
+  // The instant the relative times are measured against: the server's `now` while the page is the one the server rendered (so the hydrating render prints what the
+  // server printed), then the timestamp of a row saved in the browser (its `updated_at` is the browser clock's, and against the page's older `now` it would read in the future).
+  const [asOf, setAsOf] = useState(now)
   const [editTarget, setEditTarget] = useState<DBPropertyType | null | 'new'>()
   const [deleteTarget, setDeleteTarget] = useState<DBPropertyType | null>(null)
   const [isPending, startTransition] = useTransition()
@@ -241,6 +246,7 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
   }, [types, searchQuery])
 
   function handleSaved(updated: DBPropertyType) {
+    setAsOf(updated.updated_at)
     setTypes(prev => {
       const idx = prev.findIndex(p => p.id === updated.id)
       if (idx >= 0) {
@@ -335,7 +341,7 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
       visibility: 'xl',
       cell: pt => (
         <span className="text-xs text-muted-foreground">
-          <RelativeTime date={pt.created_at} />
+          <RelativeTime date={pt.created_at} baseDate={asOf} />
         </span>
       ),
     },

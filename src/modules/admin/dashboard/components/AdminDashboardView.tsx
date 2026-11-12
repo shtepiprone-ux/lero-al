@@ -249,7 +249,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         id: row.id,
         href: listingPreviewHref(row.id),
         primary: row.title,
-        meta: [row.authorName, <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} focusable={false} />],
+        meta: [row.authorName, <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} baseDate={now} focusable={false} />],
         ctaLabel: t('worklist_cta_preview'),
       }))
     : []
@@ -261,7 +261,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         primary: tl(`report_reason_${row.reason}` as Parameters<typeof tl>[0]),
         meta: [
           row.listingTitle ?? '—',
-          <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} focusable={false} />,
+          <RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} baseDate={now} focusable={false} />,
         ],
         status: { label: trep(`status_${row.status}` as Parameters<typeof trep>[0]), tone: 'warning' },
         ctaLabel: t('worklist_cta_review'),
@@ -273,7 +273,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
         id: row.id,
         href: unassignedSupportHref(),
         primary: tsup(row.ticketType === 'user_complaint' ? 'type_user_complaint' : 'type_support'),
-        meta: [<RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} focusable={false} />],
+        meta: [<RelativeTime key="t" date={row.createdAt} absoluteLabel={absoluteLabel(row.createdAt)} baseDate={now} focusable={false} />],
         // R57(a): the ticket's registered meaning, so "Open" / "In progress" look here as they do on /admin/support.
         status: {
           label: tsup(row.status === 'in_progress' ? 'support_status_in_progress' : 'support_status_open'),
@@ -624,6 +624,7 @@ export function AdminDashboardView({ data, activity, freshness, trends, cities, 
             <AdminDashboardRecentListings
               listings={data.recentListings.data}
               locale={locale}
+              now={now}
               emptyText={t('recent_listings_empty')}
             />
           )}

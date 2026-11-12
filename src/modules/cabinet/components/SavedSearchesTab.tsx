@@ -24,6 +24,8 @@ import { canonicalToSearchParams, type CanonicalFilters } from '@/modules/listin
 
 interface Props {
   savedSearches: SavedSearch[]
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
 function FilterSummary({ filters }: { filters: Record<string, unknown> }) {
@@ -52,7 +54,7 @@ function FilterSummary({ filters }: { filters: Record<string, unknown> }) {
 }
 
 
-export function SavedSearchesTab({ savedSearches: initial }: Props) {
+export function SavedSearchesTab({ savedSearches: initial, now }: Props) {
   const t = useTranslations('saved_search')
   const tc = useTranslations('cabinet')
   const locale = useLocale()
@@ -185,7 +187,7 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                 </div>
                 <FilterSummary filters={filters} />
                 <p className="text-xs text-muted-foreground mt-1">
-                  <RelativeTime date={search.created_at} />
+                  <RelativeTime date={search.created_at} baseDate={now} />
                 </p>
               </div>
 

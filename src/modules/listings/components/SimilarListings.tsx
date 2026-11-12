@@ -214,6 +214,7 @@ export async function SimilarListings({
         displayCurrency={displayCurrency}
         viewAllHref={viewAllHref}
         viewAllLabel={hasMore ? t('view_all') : undefined}
+        now={new Date().toISOString()}
       />
 
       {speculationUrls.length > 0 && (

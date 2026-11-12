@@ -94,6 +94,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       email={authUser.email ?? null}
       profileRecentlyViewed={<RecentlyViewedSection limit={25} showEmptyState showClear />}
       contactCountMap={contactCountMap}
+      now={new Date().toISOString()}
     />
   )
 }

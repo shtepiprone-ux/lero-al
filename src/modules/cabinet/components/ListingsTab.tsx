@@ -37,13 +37,15 @@ interface Props {
   initialPremium:  boolean
   userId:          string
   contactCountMap?: Record<string, number>
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium, userId, contactCountMap }: Props) {
+export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium, userId, contactCountMap, now }: Props) {
   const t            = useTranslations('cabinet')
   const tl           = useTranslations('listing')
   const activeLocale  = useLocale()
@@ -336,7 +338,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                   <Phone className="h-3 w-3" />
                   {t('contact_count', { count: contactCountMap?.[listing.id] ?? 0 })}
                 </span>
-                <RelativeTime date={listing.created_at} />
+                <RelativeTime date={listing.created_at} baseDate={now} />
               </div>
             </div>
 

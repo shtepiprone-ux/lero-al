@@ -37,9 +37,11 @@ interface Props {
   email?: string | null
   profileRecentlyViewed?: ReactNode
   contactCountMap?: Record<string, number>
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
-export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email, profileRecentlyViewed, contactCountMap }: Props) {
+export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email, profileRecentlyViewed, contactCountMap, now }: Props) {
   const t = useTranslations('cabinet')
   const router = useRouter()
   const pathname = usePathname()
@@ -129,8 +131,8 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
 
         {/* Tab content */}
         {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} recentlyViewed={profileRecentlyViewed} />}
-        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} contactCountMap={contactCountMap} />}
-        {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} />}
+        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} contactCountMap={contactCountMap} now={now} />}
+        {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} now={now} />}
 
       </div>
     </div>

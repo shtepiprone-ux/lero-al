@@ -22,7 +22,7 @@ export default async function AdminCurrencyPage() {
         title={t('title')}
         subtitle={t('subtitle')}
       />
-      <AdminCurrenciesManager initialCurrencies={currencies} />
+      <AdminCurrenciesManager initialCurrencies={currencies} now={new Date().toISOString()} />
     </AdminPageFrame>
   )
 }

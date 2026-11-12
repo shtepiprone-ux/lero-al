@@ -130,6 +130,7 @@ export default async function AdminListingsPage({
         activeVisibility={visibility}
         activeReason={reason}
         auditCounts={auditCounts}
+        now={new Date().toISOString()}
       />
     </AdminPageFrame>
   )

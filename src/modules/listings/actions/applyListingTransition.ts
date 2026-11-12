@@ -50,6 +50,7 @@ import 'server-only'
 import { updateTag, revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { routing } from '@/i18n/routing'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import {
   resolveTransition,
   canSetStatusPrivileged,
@@ -155,6 +156,8 @@ async function writeListingStatus(
   // public active-listing count (approve: +1, deactivate/archive: -1, etc.)
   // Next 16: `updateTag` expires the tag at once and works only inside a Server Action; every importer of this gateway is a 'use server' file (src/__tests__/security/cacheTags.test.ts).
   updateTag('site-stats')
+  // Task 964 R1-2: a status change decides which listings are public, so the sitemap files and robots.txt expire with it (only here, after the one row was written)
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
 
   // Invalidate the public listings index AND the detail page across all locales
   // so status changes (approve, archive, sell) are immediately visible everywhere.

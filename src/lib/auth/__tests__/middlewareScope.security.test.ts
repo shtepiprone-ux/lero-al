@@ -77,6 +77,19 @@ describe('middlewareScope', () => {
     expect(page.headers.get('x-intl-path')).toBe('/sq/listings')
   })
 
+  it('[Task 964 AC1] robots.txt and each sitemap file are left out of the proxy, and nothing that only resembles them is', async () => {
+    // the crawler documents: no session to refresh and no language prefix, so next-intl never redirects them to /sq/robots.txt (a 404)
+    // (Revision 1, R1-3: an id of one to three digits; a route that serves request-time ids caches every path it answers, 404 included, so a fourth digit keeps the
+    // proxy, which sends it to a 404 page, and the paths an anonymous visitor can add to the cache stay at 1 110)
+    for (const path of ['/robots.txt', '/sitemap/0.xml', '/sitemap/12.xml', '/sitemap/999.xml']) {
+      expect(await matcherMatches(path), `${path} is left out`).toBe(false)
+    }
+    // every other path keeps its session refresh and language routing
+    for (const path of ['/robots.txt.bak', '/sitemapx', '/sitemap', '/sitemap.xml', '/sitemap/abc.xml', '/sitemap/0.xml/x', '/sitemap/1234.xml', '/sq/listings', '/admin']) {
+      expect(await matcherMatches(path), `${path} is still matched`).toBe(true)
+    }
+  })
+
   it('the default language set by staff drives the locale routing, is cached for five minutes and is checked against the four languages', async () => {
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-10-20T10:00:00Z'))

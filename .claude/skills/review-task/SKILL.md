@@ -37,7 +37,8 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    0. Its steps, in order: `owasp-sync`, `owasp-check`, `ruleset`, `claims` (the CI-claim corpus is current: new replies
    harvested, none unlabeled, every `ci` one caught; quick, so before the long run), `ci-local`, `ac-tests`,
    `kickoff-tests`, `owasp-review`, `kickoff-files`, `verdict` (a verdict line and the record exist) and `owasp-gate`
-   (the CI task gate passes with this review). Every `APPROVED WITH NOTES` note is fixed now or filed as a numbered task in the same turn
+   (the CI task gate passes with this review). Under a `NEEDS REVISION` verdict the phase runs `ci-local` with
+   `--hold owasp-gate` and skips `owasp-gate`, because the gate needs an approved task (`flow.md`, Pipeline). Every `APPROVED WITH NOTES` note is fixed now or filed as a numbered task in the same turn
    (golden rule, `flow.md`: no gap is only reported). The Stop hook refuses a verdict without this complete phase.
 9. On approval: `node scripts/quality/pipeline.mjs run handoff` exits 0 on exactly the files to commit (steps
    `ruleset`, `claims`, `ci-local`, `owasp-gate`); then give the owner the commit / push / PR commands (where to run

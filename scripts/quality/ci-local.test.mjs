@@ -10,7 +10,7 @@ import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BROWSER, GITLEAKS_WINDOWS_SHA256, ZIZMOR, checkoutDir, withCleanTree, connectionHolders, newAlerts, overlayOf, planWorkflow, portsInUse, waitForPorts, windowsTar, workRoot, prepareCheckout, resolveExpressions, runPlan, summaryLine } from './ci-local.mjs';
+import { BROWSER, GITLEAKS_WINDOWS_SHA256, HELD, ZIZMOR, holdJobs, checkoutDir, withCleanTree, connectionHolders, newAlerts, overlayOf, planWorkflow, portsInUse, waitForPorts, windowsTar, workRoot, prepareCheckout, resolveExpressions, runPlan, summaryLine } from './ci-local.mjs';
 
 const require = createRequire(import.meta.url);
 const yaml = require('js-yaml');
@@ -109,8 +109,10 @@ test('the checkouts live in the user cache: never the shared temp directory, nev
   assert.doesNotMatch(cli, /\.git|tmpdir/, 'the command line names no other location');
   // the whole progress, port counts and step times included, is kept in <work>/run.log, redacted
   assert.match(cli, /appendFileSync\(path\.join\(work, 'run\.log'\), `\$\{new Date\(\)\.toISOString\(\)\} \$\{redact\(m, token\)\}\\n`\)/);
-  // the real run stops the checks an earlier run left (load-watch.mjs sweepStrays); a test's runPlan never does
-  assert.match(cli, /runPlan\(plan, ctx, \{ log: say, sweep: sweepStrays \}\)/);
+  // the real run stops the checks an earlier run left (load-watch.mjs sweepStrays); a test's runPlan never does; it holds
+  // only what --hold names, refused unless HOLDABLE (holdJobs)
+  assert.match(cli, /runPlan\(plan, ctx, \{ log: say, sweep: sweepStrays, hold \}\)/);
+  assert.match(cli, /hold = holdJobs\(take\('--hold'\)\)/);
   // a run that stopped at a failure never exits 0 for the jobs it did not run
   assert.match(cli, /const bad = results\.some\(\(r\) => r\.status === 'FAIL' \|\| r\.status === 'UNVERIFIED' \|\| r\.status === NOT_RUN\)/);
 });
@@ -281,4 +283,30 @@ test('the aggregate CI Required job is CI-only when it aggregates a CI-only job,
   assert.equal(st({ ok: { steps: [{ run: 'true' }] }, sec: { environment: 'security-ci', steps: [{ run: 'true' }] }, required: required(['ok', 'sec']) }).required, 'CI-ONLY');
   rmSync(work, { recursive: true, force: true });
   r.done();
+});
+
+test('--hold: only the OWASP task gate can be held; it and the aggregate are HELD, never PASS, are named in the summary, and every other job runs', { timeout: 60000 }, () => {
+  // Task 964 Review 1 (owner, 2026-11-11): a review under NEEDS REVISION cannot pass a gate that needs an approved task
+  assert.throws(() => holdJobs(['codeql']), /refused --hold codeql/);
+  assert.throws(() => holdJobs(['owasp-gate', 'unit']), /refused --hold unit/);
+  assert.deepEqual([...holdJobs(['owasp-gate'])], ['owasp-gate']);
+  const r = repo();
+  const work = mkdtempSync(path.join(os.tmpdir(), 'ci-local-work-'));
+  const dir = path.join(work, 'repo');
+  mkdirSync(work, { recursive: true });
+  const ctx = { ...prepareCheckout(r.root, dir), work, dir, token: null };
+  const required = { needs: ['ok', 'owasp-gate'], if: 'always()', steps: [{ run: 'for r in $RESULTS; do [ "$r" = success ] || exit 1; done', env: { RESULTS: "${{ join(needs.*.result, ' ') }}" } }] };
+  const wf = { ok: { steps: [{ run: 'true' }] }, 'owasp-gate': { steps: [{ run: 'false' }] }, after: { needs: ['ok'], steps: [{ run: 'true' }] }, required };
+  try {
+    const held = runPlan(planWorkflow({ jobs: wf }, ctx), ctx, { hold: new Set(['owasp-gate']) });
+    assert.deepEqual(Object.fromEntries(held.map((x) => [x.job, x.status])), { ok: 'PASS', 'owasp-gate': HELD, after: 'PASS', required: HELD });
+    assert.match(summaryLine('x', held), /0 failed, 0 unverified, 0 not run; CI-only: none; held \(under revision\): owasp-gate, required;/);
+    // without --hold the same gate fails and stops the run
+    const plain = Object.fromEntries(runPlan(planWorkflow({ jobs: wf }, ctx), ctx).map((x) => [x.job, x.status]));
+    assert.equal(plain['owasp-gate'], 'FAIL');
+    assert.throws(() => runPlan(planWorkflow({ jobs: wf }, ctx), ctx, { hold: new Set(['ok']) }), /refused --hold ok/);
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+    r.done();
+  }
 });

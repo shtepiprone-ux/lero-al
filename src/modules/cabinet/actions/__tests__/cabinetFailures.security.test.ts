@@ -6,6 +6,7 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 let db = createFakeDb()
 let currentUser: { id: string; email?: string } | null = null
@@ -47,7 +48,9 @@ vi.mock('@/lib/supabase/admin', () => ({
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => { if (getUserThrows) throw new Error('session store down'); return currentUser } }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => blocked }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined }))
+// Task 964 R1-2: a successful account deletion expires the public-listings tag, a failed or refused one does not
+const expiredTags = vi.hoisted(() => [] as string[])
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, updateTag: (tag: string) => { expiredTags.push(tag) } }))
 const cookieWrites: unknown[][] = []
 const storedCookies = [{ name: 'sb-access', value: 'jwt' }]
 vi.mock('next/headers', () => ({ headers: async () => ({ get: () => null }), cookies: async () => ({ getAll: () => storedCookies, set: (...a: unknown[]) => { cookieWrites.push(a) } }) }))
@@ -110,7 +113,9 @@ describe('updateCabinetProfile', () => {
 
 describe('deleteOwnAccount', () => {
   it('asks for the one complete deletion of the caller\'s own account only, as "self": nothing is archived and the action writes no row', async () => {
+    expiredTags.length = 0
     expect(await deleteOwnAccount()).toEqual({})
+    expect(expiredTags, 'the listings went with the account: the sitemap tag expires once').toEqual([PUBLIC_LISTINGS_CACHE_TAG])
     expect(deletions).toEqual([{ userId: 'user-b', reason: 'self' }])
     expect(transitions, 'the listings are deleted with the account, never archived first').toEqual([])
     expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
@@ -120,8 +125,10 @@ describe('deleteOwnAccount', () => {
 
   it('when the deletion fails the answer is "delete_failed": there is no half-deleted answer any more', async () => {
     deleteAccountResult = { ok: false, error: 'delete_failed' }
+    expiredTags.length = 0
     expect(await deleteOwnAccount()).toEqual({ error: 'delete_failed' })
     expect(deletions).toEqual([{ userId: 'user-b', reason: 'self' }])
+    expect(expiredTags, 'a failed deletion expires nothing').toEqual([])
   })
 
   it('a file that could not be removed does not make the deletion fail', async () => {
@@ -131,10 +138,12 @@ describe('deleteOwnAccount', () => {
 
   it('an anonymous caller deletes nothing', async () => {
     currentUser = null
+    expiredTags.length = 0
     expect(await deleteOwnAccount()).toEqual({ error: 'Unauthorized' })
     expect(db.log).toEqual([])
     expect(transitions).toEqual([])
     expect(deletions).toEqual([])
+    expect(expiredTags, 'a refused call expires nothing').toEqual([])
   })
 
   it('a person with no listings is asked for the same single deletion', async () => {

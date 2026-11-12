@@ -89,8 +89,13 @@ export const config = {
   //   api/cron/*          — cron jobs authenticate with the CRON_SECRET and carry no session
   //   api/auth-email-hook — the Supabase Auth hook authenticates with its webhook signature and carries no session
   //   auth/*              — Supabase OAuth callback and confirmation live outside the [locale] tree and handle the session themselves
+  //   robots.txt, sitemap/<id>.xml — the public crawler documents (Task 964): they read no session, and a language prefix sent them to /sq/robots.txt, a 404.
+  //                         Exactly these paths: `/robots.txt.bak`, `/sitemap`, `/sitemap.xml` and `/sitemap/abc.xml` keep the session refresh and locale routing.
+  //                         The id is one to three digits (Revision 1, R1-3): the sitemap route serves request-time ids and caches every path it answers, 404 included, so
+  //                         three digits bound the paths an anonymous visitor can add to the cache to 1 110 (1 000 files, 5 000 000 listings); `/sitemap/1234.xml` keeps the
+  //                         proxy, which sends it to a 404 page.
   // Every other /api route and /admin are INCLUDED so that an expired or refused session is renewed or ended there too (R45 (a)); locale routing stays off on them.
   matcher: [
-    '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!api/cron|api/auth-email-hook|auth|_next/static|_next/image|favicon.ico|robots\\.txt$|sitemap/\\d{1,3}\\.xml$|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

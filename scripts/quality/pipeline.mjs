@@ -28,7 +28,7 @@ import { isEntryPoint } from '../lib/entry-point.mjs';
 import { kickoffAcs } from './ac-tests.mjs';
 import { spawnLogged } from './ci-local.mjs';
 import { readRegularFile } from './check-files.mjs';
-import { section, VERDICT_LINE } from './owasp.mjs';
+import { lastVerdict, section, VERDICT_LINE } from './owasp.mjs';
 import { commands } from './push-safety.mjs';
 import { isOwnerMessage, loadVocabulary, looksAtCi, mentionsCi } from './claims.mjs';
 import { provenanceFindings } from './provenance.mjs';
@@ -106,7 +106,10 @@ export function readLedger(phase, kickoff, root = ROOT) {
 export function isComplete(ledger, phaseDef, fp) {
   if (!ledger || ledger.fingerprint !== fp || !Array.isArray(ledger.steps)) return false;
   const ran = new Map(ledger.steps.map((s) => [s.id, s.exit]));
-  return phaseDef.steps.every((s) => ran.get(s.id) === 0);
+  // a step the phase defines as "skip" under revision counts only in a ledger of a run under revision that skipped it;
+  // the fingerprint binds the kickoff, so a verdict changed after the run makes the ledger stale
+  const skipped = new Set(ledger.underRevision === true ? ledger.steps.filter((s) => s.skipped).map((s) => s.id) : []);
+  return phaseDef.steps.every((s) => ran.get(s.id) === 0 || (s.underRevision === 'skip' && skipped.has(s.id)));
 }
 
 /** npm is a .cmd shim on Windows; start its CLI with this Node instead, so no shell is ever involved. */
@@ -228,16 +231,28 @@ export function runPhase(phase, { kickoff = null, base = 'main', root = ROOT, ph
   const fp = fingerprint(def.scope, { root, kickoff });
   const body = kickoff ? readFileSync(path.join(root, kickoff), 'utf8') : '';
   const ledger = { phase, kickoff, base, role: def.role, fingerprint: fp, startedAt: new Date().toISOString(), steps: [] };
+  // A review whose last verdict is NEEDS REVISION (owner, 2026-11-11): the OWASP task gate needs a task approved by
+  // review, which such a task cannot have, so the steps that name "underRevision" run their variant or are skipped; the
+  // gate still runs at the approving review, the handoff and in CI.
+  const underRevision = Boolean(kickoff) && def.steps.some((s) => s.underRevision) && lastVerdict(body) === 'NEEDS REVISION';
+  if (underRevision) ledger.underRevision = true;
   let failed = null;
   for (const step of def.steps) {
     const t0 = Date.now();
+    if (underRevision && step.underRevision === 'skip') {
+      const summary = 'skipped: the last verdict is NEEDS REVISION; this step runs at the approving review, the handoff and in CI';
+      ledger.steps.push({ id: step.id, argv: [], exit: null, skipped: true, summary, startedAt: new Date(t0).toISOString(), ms: 0 });
+      log(`[${phase}] ${step.id} ${summary}`);
+      continue;
+    }
     log(`[${phase}] ${step.id} …`);
+    const argv = underRevision && Array.isArray(step.underRevision) ? step.underRevision : step.argv;
     const r = step.check
       ? BUILTIN[step.check]({ body, kickoff, root, timeoutMs })
-      : runArgv(step.argv.map((a) => a.replace('{kickoff}', kickoff ?? '').replace('{base}', base)), root, timeoutMs);
+      : runArgv(argv.map((a) => a.replace('{kickoff}', kickoff ?? '').replace('{base}', base)), root, timeoutMs);
     // the step's last output line, so a [pipeline: <phase>] result can be reconciled with what the step printed
     const summary = r.output.split(/\r?\n/).map((l) => l.trim()).filter(Boolean).at(-1)?.slice(0, 300) ?? '';
-    const entry = { id: step.id, argv: step.argv ?? [`builtin:${step.check}`], exit: r.exit, outputSha256: sha256(r.output), summary, startedAt: new Date(t0).toISOString(), ms: Date.now() - t0 };
+    const entry = { id: step.id, argv: argv ?? [`builtin:${step.check}`], exit: r.exit, outputSha256: sha256(r.output), summary, startedAt: new Date(t0).toISOString(), ms: Date.now() - t0 };
     ledger.steps.push(entry);
     log(`[${phase}] ${step.id} exit ${r.exit} (${Math.round(entry.ms / 1000)}s)`);
     if (r.exit !== 0) { failed = step.id; log(r.output.split('\n').slice(-40).join('\n')); break; }

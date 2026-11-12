@@ -9,11 +9,14 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 const state = vi.hoisted(() => ({
   userId: 'owner-1',
   role: 'user' as string,
   order: [] as string[],
+  /** the cache tags expired with `updateTag` (Task 964 R1-2) */
+  tags: [] as string[],
   transitionFails: false,
   contentFails: false,
   /** the keys a moderator holds (Task 923 R75): editing ANOTHER person's listing needs `listings.moderate` */
@@ -27,7 +30,7 @@ vi.mock('@/lib/auth/server', () => ({ getUser: async () => ({ id: state.userId }
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
 vi.mock('@/lib/auth/requireViewer', () => ({ requireViewer: async () => ({ ok: true, userId: state.userId, role: state.role }) }))
 vi.mock('@/lib/auth/permissions', () => ({ roleHasPermission: async (role: string, key: string) => role === 'admin' || (role === 'moderator' && state.keys.has(key)), hasPermission: async () => false }))
-vi.mock('next/cache', () => ({ revalidatePath: vi.fn() }))
+vi.mock('next/cache', () => ({ revalidatePath: vi.fn(), updateTag: (tag: string) => { state.tags.push(tag) } }))
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: vi.fn(async () => undefined) }))
 vi.mock('@/modules/listings/validations', () => ({ listingSchema: { safeParse: (p: Record<string, unknown>) => { const { images: _images, ...rest } = p; return { success: true, data: rest } } } }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
@@ -72,6 +75,7 @@ function arrange(status: string) {
   state.userId = 'owner-1'
   state.role = 'user'
   state.order = []
+  state.tags = []
   state.transitionFails = false
   state.contentFails = false
   state.keys = new Set(['listings.moderate'])
@@ -121,6 +125,31 @@ describe('updateListing', () => {
       expect(state.order.filter((o) => o.startsWith('transition')), status).toEqual([])
       expect(listing(), status).toMatchObject({ status, title: 'Edited' })
     }
+  })
+
+  it('[Task 964 AC7] the public-listings tag expires once the listing row was written, and never on a refused or failed write', async () => {
+    // the owner's edit of a pending listing: the row is written, so `updated_at` changes and the sitemap files expire
+    arrange('pending')
+    expect(await updateListing(ID, payload as never)).toEqual({ slug: 'flat', status: 'pending' })
+    expect(state.tags).toEqual([PUBLIC_LISTINGS_CACHE_TAG])
+
+    // refused: a moderator without the key, an invalid payload, a failed move to review and a failed content write
+    arrange('active')
+    state.userId = 'moderator-1'
+    state.role = 'moderator'
+    state.keys = new Set()
+    expect(await updateListing(ID, payload as never)).toEqual({ error: 'forbidden' })
+    expect(state.tags, 'forbidden').toEqual([])
+
+    arrange('active')
+    state.transitionFails = true
+    expect(await updateListing(ID, payload as never)).toEqual({ error: 'transition_failed' })
+    expect(state.tags, 'the gateway failed: it expired nothing and the content was not written').toEqual([])
+
+    arrange('pending')
+    state.contentFails = true
+    expect(await updateListing(ID, payload as never)).toEqual({ error: 'update_failed' })
+    expect(state.tags, 'the row write failed').toEqual([])
   })
 
   it('a staff edit of another person\'s active listing keeps the status and requests no transition (the control)', async () => {

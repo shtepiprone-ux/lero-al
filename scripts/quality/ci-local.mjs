@@ -8,7 +8,11 @@
 // (the agent's "CI is green" is backed by a run on the exact inputs), OS Command Injection Defense (no shell is built
 // from input: the commands are the repository's own workflow, started as Bash scripts, every other call is an argv).
 //
-//   node scripts/quality/ci-local.mjs [--job <id>]... [--workflow <path>] [--keep]
+//   node scripts/quality/ci-local.mjs [--job <id>]... [--hold owasp-gate] [--workflow <path>] [--keep]
+//
+// --hold owasp-gate (the review phase of pipeline.mjs, only while the kickoff's last verdict is NEEDS REVISION): the OWASP
+// task gate needs a task approved by review, which a task under revision cannot have, so the job is HELD, named in the
+// summary line, and runs at the approving review, the handoff and in CI. No other job can be held (HOLDABLE).
 //
 // The checkout: a fresh clone of the repository in the user's cache directory (workRoot); HEAD detached; no local branch (so no
 // local `main`); `origin/main` kept; the push URL disabled; the changed and untracked files of the working tree laid
@@ -471,13 +475,25 @@ export function waitForPorts({ count = portsInUse, holders = connectionHolders, 
 // its restarts) or is unverified stops the run: every job after it is NOT RUN, named with the job that stopped it, and
 // the run fails. A run is never a pass with jobs it did not run.
 export const NOT_RUN = 'NOT RUN';
+export const HELD = 'HELD';
+/** The only job a run may hold: it depends on the review's verdict, not on the files (pipeline.mjs, review phase). */
+export const HOLDABLE = new Set(['owasp-gate']);
+const HELD_REASON = 'held: the task is under revision (its last verdict is NEEDS REVISION); this job runs at the approving review, the handoff and in CI';
+
+/** The --hold job ids, refused unless each is HOLDABLE. */
+export function holdJobs(ids) {
+  const bad = ids.filter((id) => !HOLDABLE.has(id));
+  if (bad.length) throw new Error(`refused --hold ${bad.join(', ')}: only ${[...HOLDABLE].join(', ')} can be held`);
+  return new Set(ids);
+}
 
 /**
  * Runs the plan in the checkout; returns one result per job instance. `sweep` stops the checks an earlier run left
  * (load-watch.mjs sweepStrays): once at the start and again before each browser job. The command line passes the real
  * one; the default does nothing, so a test never stops a run on the developer's machine.
  */
-export function runPlan(plan, ctx, { log = () => {}, minuteMs = 60_000, ports = waitForPorts, watch = startWatch, calm = waitForCalm, retries = MAX_RETRIES, failFast = true, sweep = () => [] } = {}) {
+export function runPlan(plan, ctx, { log = () => {}, minuteMs = 60_000, ports = waitForPorts, watch = startWatch, calm = waitForCalm, retries = MAX_RETRIES, failFast = true, sweep = () => [], hold = new Set() } = {}) {
+  holdJobs([...hold]);
   const bash = bashPath();
   const results = [];
   const done = new Map();
@@ -494,6 +510,7 @@ export function runPlan(plan, ctx, { log = () => {}, minuteMs = 60_000, ports = 
   for (const job of plan) {
     const tag = `${job.id}${Object.keys(job.matrix ?? {}).length ? `-${Object.values(job.matrix).join('-')}` : ''}`;
     if (stoppedBy) { results.push({ job: tag, name: job.name, status: NOT_RUN, reason: `the run stopped at ${stoppedBy}, which did not pass: fix it first`, steps: [] }); log(`${NOT_RUN}\t${job.name}`); continue; }
+    if (hold.has(job.id)) { results.push({ job: tag, name: job.name, status: HELD, reason: HELD_REASON, steps: [] }); done.set(job.id, HELD); log(`${HELD}\t${job.name}\t${HELD_REASON}`); continue; }
     if (job.status !== 'run') {
       results.push({ job: tag, name: job.name, status: job.status, reason: job.reason, steps: [] }); done.set(job.id, job.status); log(`${job.status}\t${job.name}\t${job.reason}`);
       if (failFast && job.status === 'UNVERIFIED') stoppedBy = tag;
@@ -504,6 +521,8 @@ export function runPlan(plan, ctx, { log = () => {}, minuteMs = 60_000, ports = 
     if (job.steps.some((s) => s.needsResults)) {
       const ciOnly = job.needs.filter((n) => done.get(n) === 'CI-ONLY');
       if (ciOnly.length) { results.push({ job: tag, name: job.name, status: 'CI-ONLY', reason: `aggregates jobs that run only in CI: ${ciOnly.join(', ')}`, steps: [] }); done.set(job.id, 'CI-ONLY'); log(`CI-ONLY	${job.name}`); continue; }
+      const held = job.needs.filter((n) => done.get(n) === HELD);
+      if (held.length) { results.push({ job: tag, name: job.name, status: HELD, reason: `aggregates the held job(s) ${held.join(', ')}`, steps: [] }); done.set(job.id, HELD); log(`${HELD}\t${job.name}`); continue; }
       const list = job.needs.map((n) => (done.get(n) === 'PASS' ? 'success' : 'failure')).join(' ');
       for (const s of job.steps) for (const k of Object.keys(s.env)) s.env[k] = s.env[k].split(NEEDS_RESULTS).join(list);
     }
@@ -603,15 +622,18 @@ export function runPlan(plan, ctx, { log = () => {}, minuteMs = 60_000, ports = 
 export function summaryLine(fp, results) {
   const n = (s) => results.filter((r) => r.status === s);
   const ciOnly = n('CI-ONLY').map((r) => r.job);
+  const held = n(HELD).map((r) => r.job);
   const retried = results.filter((r) => r.retried?.length).map((r) => `${r.job} (${r.retried.flatMap((x) => x.causes).join(', ')}, ${r.status})`);
   const stop = n(NOT_RUN)[0]?.reason.match(/stopped at (\S+),/)?.[1];
-  return `ci-local ${fp}: ${n('PASS').length} passed, ${n('FAIL').length} failed, ${n('UNVERIFIED').length} unverified, ${n(NOT_RUN).length} not run${stop ? ` (stopped at ${stop})` : ''}; CI-only: ${ciOnly.length ? ciOnly.join(', ') : 'none'}; retried after a diagnosed timeout: ${retried.length ? retried.join('; ') : 'none'}`;
+  return `ci-local ${fp}: ${n('PASS').length} passed, ${n('FAIL').length} failed, ${n('UNVERIFIED').length} unverified, ${n(NOT_RUN).length} not run${stop ? ` (stopped at ${stop})` : ''}; CI-only: ${ciOnly.length ? ciOnly.join(', ') : 'none'}; ${held.length ? `held (under revision): ${held.join(', ')}; ` : ''}retried after a diagnosed timeout: ${retried.length ? retried.join('; ') : 'none'}`;
 }
 
 if (isEntryPoint(import.meta.url)) {
   const args = process.argv.slice(2);
   const take = (flag) => { const out = []; for (let i = args.indexOf(flag); i >= 0; i = args.indexOf(flag)) out.push(args.splice(i, 2)[1]); return out; };
   const only = new Set(take('--job'));
+  let hold;
+  try { hold = holdJobs(take('--hold')); } catch (e) { console.error(`ci-local: ${e.message}`); process.exit(2); }
   const workflow = take('--workflow')[0] ?? WORKFLOW;
   const keep = args.includes('--keep');
   const root = path.resolve(process.env.CLAUDE_PROJECT_DIR || ROOT);
@@ -631,7 +653,7 @@ if (isEntryPoint(import.meta.url)) {
     const doc = require('js-yaml').load(readFileSync(path.join(dir, workflow), 'utf8'));
     let plan = planWorkflow(doc, ctx);
     if (only.size) plan = plan.filter((j) => only.has(j.id));
-    const results = runPlan(plan, ctx, { log: say, sweep: sweepStrays });
+    const results = runPlan(plan, ctx, { log: say, sweep: sweepStrays, hold });
     writeFileSync(path.join(work, 'report.json'), JSON.stringify({ ctx: { ...ctx, token: undefined }, results }, null, 2));
     for (const r of results.filter((x) => x.status === 'FAIL')) {
       const s = r.steps.find((x) => x.exit !== 0);

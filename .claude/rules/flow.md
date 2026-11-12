@@ -96,7 +96,15 @@ restarts, and a timeout that repeats on every attempt is reproducible and fails.
 Every restart, its cause and its samples are in the report and in the summary line, so a pass after a restart is never
 silent. CI itself never retries. The first job that fails or is unverified stops the run (owner, 2026-11-11: "there is
 no point in continuing the check once something is wrong; the problem has to be fixed at once"): every job after it is
-`NOT RUN`, the summary line names where it stopped, the run fails, and the failure is fixed before the next run. At its
+`NOT RUN`, the summary line names where it stopped, the run fails, and the failure is fixed before the next run. A
+review whose last verdict is `NEEDS REVISION` holds one job (owner, 2026-11-11, Task 964 Review 1: the OWASP task gate
+needs a task approved by review, which a task under revision cannot have, so such a review could never complete): the
+review phase runs `ci-local.mjs --hold owasp-gate` and skips its `owasp-gate` step. The held job and the `CI Required`
+aggregate are `HELD`, never `PASS`, and named in the summary line; every other job runs; no other job can be held. The gate
+runs at the approving review, the handoff and in CI, and the ledger counts the skip only for a run under revision of
+the kickoff as it is. A revision that adds or changes criteria is executed in the same turn (owner, 2026-11-11: "launch
+the Sonnet agent, let it write the test now, then continue the review"), so `ac-tests` and `kickoff-tests` of the
+review phase find the revision's tests. At its
 start and before each browser job the run stops the check processes an earlier run left (`sweepStrays`: node running a
 browser check or `ci-local.mjs` outside this run, together with the script that started it; owner, 2026-11-11: "why do
 you not watch your own processes?", after a locale-leak shard of an earlier ad hoc run had hung for 19 hours). Why

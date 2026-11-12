@@ -1,5 +1,5 @@
 {
-  "_comment": "Owner, 2026-11-10: nothing is done partially; tasks are created, executed and reviewed step by step. Each phase is run by scripts/quality/pipeline.mjs in this order and stops at the first failing step. {kickoff} is the kickoff path, {base} the base ref (main). A step is an argv run without a shell, or a built-in check of pipeline.mjs.",
+  "_comment": "Owner, 2026-11-10: nothing is done partially; tasks are created, executed and reviewed step by step. Each phase is run by scripts/quality/pipeline.mjs in this order and stops at the first failing step. {kickoff} is the kickoff path, {base} the base ref (main). A step is an argv run without a shell, or a built-in check of pipeline.mjs. A review step may name \"underRevision\": while the kickoff's last verdict is NEEDS REVISION, an argv run instead, or \"skip\" (the OWASP task gate needs an approved task, so it runs at the approving review, the handoff and in CI).",
   "phases": {
     "design": {
       "role": "Opus",
@@ -160,6 +160,12 @@
           "argv": [
             "node",
             "scripts/quality/ci-local.mjs"
+          ],
+          "underRevision": [
+            "node",
+            "scripts/quality/ci-local.mjs",
+            "--hold",
+            "owasp-gate"
           ]
         },
         {
@@ -207,7 +213,8 @@
             "gate",
             "--base",
             "{base}"
-          ]
+          ],
+          "underRevision": "skip"
         }
       ]
     },

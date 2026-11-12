@@ -1300,8 +1300,8 @@
   "Mobile_Application_Security": {
    "applies": false,
    "why": "the product is a web site only; no mobile application is built",
-   "reviewedSha": "9ae6c3e32491783a8e8c05e57b8113d716725121",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "ced3c7015ac858147375de57852d43c66e99456d",
+   "reviewedOn": "2026-11-12"
   },
   "Multi_Tenant_Security": {
    "applies": true,

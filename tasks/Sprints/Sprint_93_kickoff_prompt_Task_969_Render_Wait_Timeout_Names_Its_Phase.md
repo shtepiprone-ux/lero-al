@@ -2,7 +2,8 @@
 
 Sprint 93 (governance reset). Priority P2. Owner decision D2 (2026-11-06): "Quality must cover all files in the project,
 without exceptions"; golden rule (2026-11-07): a gap found is closed, not reported. Found in the Task 967 review 1
-(2026-11-09).
+(2026-11-09). Revision 1 (2026-11-12, Opus, from the handoff run of PR #30): the homepage grid gate has the same
+wait defect (Goal, last paragraph; AC5, AC6).
 Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
@@ -27,6 +28,12 @@ After the task a timeout's reason names the render's id and phase at the moment 
 local serial runs are listed with their phase, and the cause is removed at its owner, so the six shards pass serially
 on one build without a timeout.
 
+The homepage grid gate judges a Story after a fixed pause: `navigateAndCheck` (`scripts/check-homepage-grid.mjs:531-534`)
+waits for `networkidle`, then 400 ms, then fails the cell as `blank-canvas` when `#storybook-root` has no child
+(`:183`). On 2026-11-12 the handoff run of PR #30, a documentation-only change, stopped there: 115/116,
+`I-F Page cap @ en@2560 - render: blank-canvas` (`ci-local` log `homepage-grid--08.log`). A render that finishes after
+the pause fails a gate whose subject did not change. No test covers `navigateAndCheck`.
+
 ## Scope
 
 - `scripts/check-locale-leak.mjs` (`collectStoryTokens`): when the render wait rejects with a timeout, read
@@ -40,6 +47,12 @@ on one build without a timeout.
   locale and the phase from the new reason. Then **stop and report the list to Opus**, as Task 968 did: the fix depends
   on the phase (a phase that never advances is a Story, component or Storybook defect fixed at its owner; a render
   that finishes late is a wait-budget question). Opus writes the fix and its test into this kickoff as a revision.
+- `scripts/check-homepage-grid.mjs`: `navigateAndCheck` (exported for the test) waits for
+  `window.__STORYBOOK_PREVIEW__.currentRender` of the Story id to reach `finished` or `errored`, within the same 15 s
+  budget and never retried, instead of the 400 ms pause; a timeout fails the cell with
+  `render wait timed out (render <id|none>, phase <phase|none>, document <readyState>)`; a finished render with an
+  empty `#storybook-root` still fails as `blank-canvas`. New test `scripts/__tests__/check-homepage-grid.test.ts` with a
+  fake page, as the locale-leak test does.
 - Out of scope: product code (a product cause is reported, Opus files it), CI workflow, `scripts/quality/**`, the
   transport retry.
 - Dependencies: none.
@@ -81,7 +94,12 @@ No visible change.
 - AC3 Every timeout of two local serial runs is listed with its phase — test: six
   `node scripts/check-locale-leak.mjs --mantine-only --report-only-leaks --shard=N/6` runs, one after another, twice on
   one build; each `report.json` path, exit code and every `errors[]` entry are in the report.
-- AC4 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
+- AC5 The homepage grid gate judges a Story only after its render finished, and a render that never finishes names its
+  phase — test: `scripts/__tests__/check-homepage-grid.test.ts` (a render that finishes after 400 ms passes; a
+  timeout names `render <id>` and `phase <phase>`; a finished empty root is `blank-canvas`; one `goto`, no retry).
+- AC6 The homepage grid gate passes three times in a row on one Storybook build — test: `npm run check:homepage-grid`,
+  three runs, each exit 0, outputs in the report.
+- AC4 The whole change passes the project gates — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
   `node scripts/quality/ac-tests.mjs --base main <kickoff>` exit 0.
 
@@ -91,6 +109,9 @@ No visible change.
    run it green with AC2.
 2. `NEXT_PUBLIC_SUPABASE_URL= NEXT_PUBLIC_SUPABASE_ANON_KEY= npm run build-storybook`; run AC3 (one shard at a time,
    no other browser or build running).
-3. Run AC4. Report each command, exit code and the relevant lines, and the AC3 list. Stop: Opus writes the fix.
+3. Write the AC5 test; run it red (`npx vitest run scripts/__tests__/check-homepage-grid.test.ts`); change
+   `navigateAndCheck`; run it green; run AC6 on the build of step 2.
+4. Run AC4. Report each command, exit code and the relevant lines, and the AC3 list and the AC6 outputs. Stop: Opus writes the
+   locale-leak fix.
 
 ## Review

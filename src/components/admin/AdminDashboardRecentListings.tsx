@@ -21,6 +21,8 @@ import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 export interface AdminDashboardRecentListingsProps {
   listings: RecentListingRow[]
   locale: string
+  /** The server's `now` (ISO): every relative time is measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
   /** R14 — shown instead of the row list when `listings` is empty; no row button in that state. */
   emptyText: string
 }
@@ -48,7 +50,7 @@ function initials(name: string): string {
  * is the avatar plus a full-width title column (with the premium star) and the owner name, line 2 is
  * the status badge plus the relative time.
  */
-export function AdminDashboardRecentListings({ listings, locale, emptyText }: AdminDashboardRecentListingsProps) {
+export function AdminDashboardRecentListings({ listings, locale, now, emptyText }: AdminDashboardRecentListingsProps) {
   const t = useTranslations('admin.dashboard')
   const tl = useTranslations('listing')
   const tc = useTranslations('common')
@@ -117,6 +119,7 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                     <RelativeTime
                       date={listing.createdAt}
                       absoluteLabel={tiraneAbsoluteLabel(listing.createdAt, locale)}
+                      baseDate={now}
                       focusable={false}
                     />
                   </Text>
@@ -159,6 +162,7 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                     <RelativeTime
                       date={listing.createdAt}
                       absoluteLabel={tiraneAbsoluteLabel(listing.createdAt, locale)}
+                      baseDate={now}
                       focusable={false}
                     />
                   </Text>
@@ -200,7 +204,7 @@ export function AdminDashboardRecentListings({ listings, locale, emptyText }: Ad
                   { label: t('dialog_price'), value: formatPrice(selected.price, selected.currency, locale) },
                   {
                     label: t('dialog_created'),
-                    value: <RelativeTime date={selected.createdAt} absoluteLabel={tiraneAbsoluteLabel(selected.createdAt, locale)} />,
+                    value: <RelativeTime date={selected.createdAt} absoluteLabel={tiraneAbsoluteLabel(selected.createdAt, locale)} baseDate={now} />,
                   },
                 ]}
               />

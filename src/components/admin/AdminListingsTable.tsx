@@ -41,11 +41,13 @@ interface Props {
   activeVisibility?: string
   activeReason?: string
   auditCounts?: AdminListingsAuditCounts
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
 // ── Container ─────────────────────────────────────────────────────────────────
 
-export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all', activeVisibility = '', activeReason = '', auditCounts }: Props) {
+export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all', activeVisibility = '', activeReason = '', auditCounts, now }: Props) {
   const tc = useTranslations('cabinet')
   const tl = useTranslations('listing')
   const { propertyTypes } = usePropertyTypes()
@@ -116,6 +118,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
       )}
 
       <AdminListingsView
+        now={now}
         listings={items}
         page={page}
         totalPages={totalPages}

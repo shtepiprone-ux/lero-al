@@ -330,7 +330,9 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
   const theme = useMantineTheme()
   if (rows.length === 0) {
     return (
-      <Text c="dimmed" ta="center" py="xl">
+      // `emptyLabel` is any ReactNode, and the two admin lists pass a `<Text>` (a `<p>`): a `<p>` wrapper would nest a `<p>` in a `<p>`, which the browser's HTML
+      // parser closes early, so React threw the server HTML away on `/admin/reports` and `/admin/support` (Task 965). A `div` takes text and a paragraph alike.
+      <Text component="div" c="dimmed" ta="center" py="xl">
         {emptyLabel}
       </Text>
     )

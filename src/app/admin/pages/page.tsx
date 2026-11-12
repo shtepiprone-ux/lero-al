@@ -25,7 +25,7 @@ export default async function AdminPagesPage() {
         title={t('title')}
         subtitle={t('subtitle')}
       />
-      <AdminPagesManager pages={pages ?? []} adminLocale={locale} />
+      <AdminPagesManager pages={pages ?? []} adminLocale={locale} now={new Date().toISOString()} />
     </AdminPageFrame>
   )
 }

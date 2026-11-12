@@ -104,11 +104,16 @@ export function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProp
 
 interface Props {
   initialCurrencies: DBCurrency[]
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
-export function AdminCurrenciesManager({ initialCurrencies }: Props) {
+export function AdminCurrenciesManager({ initialCurrencies, now }: Props) {
   const t = useTranslations('admin.currency.currencies')
   const [currencies, setCurrencies] = useState<DBCurrency[]>(initialCurrencies)
+  // The instant the relative times are measured against: the server's `now` while the page is the one the server rendered (so the hydrating render prints what the
+  // server printed), then the timestamp of a row saved in the browser (its `updated_at` is the browser clock's, and against the page's older `now` it would read in the future).
+  const [asOf, setAsOf] = useState(now)
   const [query, setQuery] = useState('')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<DBCurrency | null>(null)
@@ -130,6 +135,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
   function openEdit(c: DBCurrency) { setEditing(c); setDialogOpen(true) }
 
   function handleSaved(saved: DBCurrency) {
+    setAsOf(saved.updated_at)
     setCurrencies(prev => {
       const idx = prev.findIndex(c => c.id === saved.id)
       if (idx >= 0) { const next = [...prev]; next[idx] = saved; return next }
@@ -177,6 +183,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
 
   return (
     <AdminCurrenciesView
+      now={asOf}
       currencies={filtered}
       query={query}
       onQueryChange={setQuery}

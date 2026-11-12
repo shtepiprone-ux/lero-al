@@ -16,6 +16,8 @@ interface ReportDetailDialogProps {
   onDeleted: (id: string) => void
   canOverrideReportStatus: boolean
   canDeleteReports: boolean
+  /** The server's `now` (ISO): relative times are measured against it (Task 965). */
+  now?: string
 }
 
 /**
@@ -31,6 +33,7 @@ export function ReportDetailDialog({
   onDeleted,
   canOverrideReportStatus,
   canDeleteReports,
+  now,
 }: ReportDetailDialogProps) {
   const t = useTranslations('admin.reports')
   const [isPending, startTransition] = useTransition()
@@ -79,6 +82,7 @@ export function ReportDetailDialog({
       locale={locale}
       canOverrideReportStatus={canOverrideReportStatus}
       canDeleteReports={canDeleteReports}
+      now={now}
       isPending={isPending}
       notes={notes}
       onNotesChange={setNotes}

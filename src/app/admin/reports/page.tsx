@@ -50,6 +50,7 @@ export default async function AdminReportsPage({
         canOverrideReportStatus={canOverrideReportStatus}
         canDeleteReports={canDeleteReports}
         initialFilter={initialFilter}
+        now={new Date().toISOString()}
       />
     </AdminPageFrame>
   )

@@ -32,6 +32,8 @@ interface Props {
   canDeleteReports: boolean
   /** Tab the list opens on (the page's parsed `?status=`). */
   initialFilter?: ReportStatusFilter
+  /** The server's `now` (ISO) the relative times are measured against, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
 }
 
 /**
@@ -45,6 +47,7 @@ export function AdminReportsManager({
   canOverrideReportStatus,
   canDeleteReports,
   initialFilter = 'pending',
+  now,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -90,6 +93,7 @@ export function AdminReportsManager({
         counts={counts}
         onFilterChange={handleFilterChange}
         onSelect={setSelected}
+        now={now}
       />
       {selected && (
         <ReportDetailDialog
@@ -100,6 +104,7 @@ export function AdminReportsManager({
           onDeleted={handleDeleted}
           canOverrideReportStatus={canOverrideReportStatus}
           canDeleteReports={canDeleteReports}
+          now={now}
         />
       )}
     </>

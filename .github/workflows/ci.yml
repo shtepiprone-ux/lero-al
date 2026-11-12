@@ -481,6 +481,15 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:3000
         run: npm run check:click-shield
+      # Task 965: signs in as admin, moderator, agent and user on the development project (the target check above
+      # refused anything else) and opens every signed-in page of this build; it only reads and removes its users.
+      - name: Signed-in pages of every role are walked on the build (Task 965)
+        env:
+          BASE_URL: http://127.0.0.1:3000
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/check-signed-in-pages.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: failure()
         with:

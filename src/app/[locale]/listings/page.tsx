@@ -92,6 +92,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
         activeFiltersCount={countActiveFilters(filters)}
         tab={tab}
         favoriteIds={favoriteIds}
+        now={new Date().toISOString()}
       />
     </ListingsPageFrame>
   )

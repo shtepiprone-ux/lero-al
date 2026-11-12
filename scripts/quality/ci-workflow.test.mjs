@@ -20,7 +20,7 @@ const runs = (job) => (ci.jobs[job].steps ?? []).map((s) => s.run ?? '');
 const stepIndex = (job, re) => runs(job).findIndex((r) => re.test(r));
 
 /** Commands that start a real browser. */
-const BROWSER = /product-gates\.mjs|check:hydration|check-locale-leak|check:homepage-grid|check:click-shield|check:card-track/;
+const BROWSER = /product-gates\.mjs|check:hydration|check-locale-leak|check:homepage-grid|check:click-shield|check:card-track|check-signed-in-pages/;
 
 test('every job that starts a browser installs Playwright before it', () => {
   const jobs = Object.keys(ci.jobs).filter((job) => stepIndex(job, BROWSER) >= 0);
@@ -276,4 +276,85 @@ test('.gitleaksignore holds exactly the fingerprints reviewed in Task 970', () =
   const entries = readFileSync(new URL('../../.gitleaksignore', import.meta.url), 'utf8')
     .split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
   assert.deepEqual([...entries].sort(), [...REVIEWED_FINGERPRINTS].sort());
+});
+
+// Task 965 AC4: CI signs in as each role on the development project and walks every signed-in page of the production
+// build (`scripts/check-signed-in-pages.mjs`). The walk creates test users, so it runs only after `ci-target.mjs` has
+// refused anything but the approved development project, on the server this job started; it is never skipped, never
+// allowed to fail, its secrets are bound to the step alone, and `CI Required` waits for its job.
+const WALK = /^node scripts\/check-signed-in-pages\.mjs$/;
+
+/** Why the `click-shield` job would not walk the signed-in pages as Task 965 requires; empty when it holds. */
+export function signedInWalkProblems(workflow) {
+  const problems = [];
+  const job = workflow?.jobs?.['click-shield'];
+  if (!job) return ['no click-shield job'];
+  const steps = job.steps ?? [];
+  const at = (re) => steps.findIndex((s) => re.test(String(s.run ?? '')));
+  const walk = at(WALK);
+  if (walk < 0) return ['no step runs `node scripts/check-signed-in-pages.mjs`'];
+  const step = steps[walk];
+  const target = at(/scripts\/quality\/ci-target\.mjs/);
+  if (target < 0 || target > walk) problems.push('the target check must run before the walk');
+  for (const [label, re] of [['the production build', /^npm run build$/m], ['the server start', /npm start/], ['the wait for the server', /curl -sf/], ['the click-shield check', /check:click-shield/]]) {
+    const index = at(re);
+    if (index < 0 || index > walk) problems.push(`the walk must follow ${label}`);
+  }
+  if (step.if !== undefined) problems.push('the walk step must not have an if: condition');
+  if (step['continue-on-error'] !== undefined) problems.push('the walk step must not continue on error');
+  if (job.if !== undefined) problems.push('the click-shield job must not have an if: condition');
+  if (job['continue-on-error'] !== undefined) problems.push('the click-shield job must not continue on error');
+  if (job.environment !== 'security-ci') problems.push('the walk runs in the security-ci environment');
+  if (!/vars\.SECURITY_TEST_TARGET/.test(String(job.env?.SECURITY_TEST_TARGET)) || !/vars\.SECURITY_TEST_PROJECT_REF/.test(String(job.env?.SECURITY_TEST_PROJECT_REF))) {
+    problems.push('the target variables come from the environment vars');
+  }
+  if (carriesSecret(job.env)) problems.push('a secret in the job env');
+  const env = step.env ?? {};
+  if (env.BASE_URL !== 'http://127.0.0.1:3000') problems.push('the walk opens the server of this job only');
+  const bound = {
+    NEXT_PUBLIC_SUPABASE_URL: '${{ secrets.SECURITY_CI_SUPABASE_URL }}',
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: '${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}',
+    SUPABASE_SERVICE_ROLE_KEY: '${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}',
+  };
+  for (const [name, secret] of Object.entries(bound)) if (env[name] !== secret) problems.push(`the step binds ${name} to its security-ci secret`);
+  if (!(workflow.jobs.required?.needs ?? []).includes('click-shield')) problems.push('CI Required must need the click-shield job');
+  return problems;
+}
+
+test('the signed-in pages of every role are walked on the production build after the target check (Task 965 AC4)', () => {
+  assert.deepEqual(signedInWalkProblems(ci), []);
+});
+
+test('the planted cases: a walk that is missing, skippable, allowed to fail, early, or with a job-level secret is refused', () => {
+  const clone = () => structuredClone(ci);
+  const walkStep = (wf) => wf.jobs['click-shield'].steps.find((s) => WALK.test(String(s.run ?? '')));
+  const missing = clone();
+  missing.jobs['click-shield'].steps = missing.jobs['click-shield'].steps.filter((s) => !WALK.test(String(s.run ?? '')));
+  assert.deepEqual(signedInWalkProblems(missing), ['no step runs `node scripts/check-signed-in-pages.mjs`']);
+
+  const skipped = clone();
+  walkStep(skipped).if = "github.event_name == 'push'";
+  assert.ok(signedInWalkProblems(skipped).some((p) => /if: condition/.test(p)));
+
+  const tolerated = clone();
+  walkStep(tolerated)['continue-on-error'] = true;
+  assert.ok(signedInWalkProblems(tolerated).some((p) => /continue on error/.test(p)));
+
+  const early = clone();
+  const steps = early.jobs['click-shield'].steps;
+  const [moved] = steps.splice(steps.findIndex((s) => WALK.test(String(s.run ?? ''))), 1);
+  steps.splice(steps.findIndex((s) => /ci-target\.mjs/.test(String(s.run ?? ''))), 0, moved);
+  assert.ok(signedInWalkProblems(early).some((p) => /target check must run before/.test(p)));
+
+  const jobSecret = clone();
+  jobSecret.jobs['click-shield'].env = { ...jobSecret.jobs['click-shield'].env, SUPABASE_SERVICE_ROLE_KEY: '${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}' };
+  assert.ok(signedInWalkProblems(jobSecret).some((p) => /job env/.test(p)));
+
+  const remote = clone();
+  walkStep(remote).env.BASE_URL = 'https://lero.al';
+  assert.ok(signedInWalkProblems(remote).some((p) => /server of this job/.test(p)));
+
+  const unneeded = clone();
+  unneeded.jobs.required.needs = unneeded.jobs.required.needs.filter((job) => job !== 'click-shield');
+  assert.ok(signedInWalkProblems(unneeded).some((p) => /CI Required/.test(p)));
 });

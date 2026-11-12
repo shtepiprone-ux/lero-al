@@ -1,0 +1,199 @@
+{
+  "task": "965",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "not applicable",
+      "reason": "no feature or entry point is added; the walk is a read-only check that runs in CI only"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "sign-in is unchanged; the walk reuses the password sign-in of the integration fixtures by a service-role caller"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication mechanism is designed or changed; no new way to a session reaches the product"
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "no permission check changes; the diff threads a render instant through props and changes one wrapper element"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no decision or returned field changes; `now` is the server's own instant, not data of any user"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no guard moves; the route table only records the redirects and not-found answers that exist today"
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "no permission data changes; the moderator rows run with no permission key, read on each request as today"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": ["Automated tests should specifically target the ways authorization usually degrades over time."],
+      "evidence": "`scripts/check-signed-in-pages.mjs` ROUTES: each of 27 pages has an expected page, redirect or not-found per role; a user shown an admin page fails (`check-signed-in-pages.test.ts`, AC2); live walk 108 rows on `next start` [Review 1]"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "met",
+      "quotes": ["Integration test cases validate the correct implementation of the authorization matrix."],
+      "evidence": "the route table is data checked against every `page.tsx` under the five roots (`checkRouteTable`); a page missing from it or a role without a row fails (AC3, two deliberate breaks each failing a test in Review 1)"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "Turnstile is unchanged; the walk signs in through the fixtures and runs only against the development project"
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "no rule, invariant or state transition changes; the relative-time defect of F1 is display, not logic"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": ["Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."],
+      "evidence": "the walk step in `click-shield` has no `if:` or `continue-on-error`, follows `ci-target.mjs`, and `CI Required` needs its job: `signedInWalkProblems` in `scripts/quality/ci-workflow.test.mjs`, 15/15, 2 fail with the step removed; `check-ruleset.mjs` 0"
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "no header or policy changes here; the policy work belongs to Task 954"
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie attribute changes; the walk writes the session cookie with `@supabase/ssr` inside the CI run only"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no sign-in limit changes; the test users exist only in the development project during one run"
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the hydration fix adds no raw HTML sink; one `Text` becomes a `div` and props carry an ISO string"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the diff adds no DOM write from a URL, storage or user value"
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "no public endpoint changes; the walk is bounded by the 27-row table and a 60 s navigation deadline"
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "the word comes from untouched upload code near the diff; no upload path changes in this task"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": ["Always set permissions: {} at the workflow level to disable all permissions by default."],
+      "evidence": "`ci.yml` keeps `permissions: {}` at the workflow level; the new step uses no action and binds its three secrets on itself only (`signedInWalkProblems`: a job-level secret is refused, planted case)"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "no response header changes; the walk opens only the local server of the CI job"
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no identity crosses a new boundary; the browser gets the same Supabase session cookie the product writes"
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the walk builds no query or command from outside input; route parameters are URI-encoded fixture ids"
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "no input crossing a trust boundary is added; `now` is created by the server page itself"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object lookup changes; the walk opens the run agent's listing with the existing page checks"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "not applicable",
+      "reason": "the new script takes fixed routes, uses no dynamic evaluation and matches fixed patterns on bounded text"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is created or stored; the service-role key stays a CI secret bound to its steps"
+    },
+    "Logging": {
+      "verdict": "met",
+      "quotes": ["The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"],
+      "evidence": "`runCheck` passes every line through `redactSensitive` with the tokens, passwords and cookie values of the run; the aborted-request list keeps method and path only (`check-signed-in-pages.test.ts`, AC2 and AC5 cases); the live walk output holds no token [Review 1]"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "no security event is logged by the product; the walk's output is a CI step log"
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no insert or update payload changes; props gain one optional string"
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "not applicable",
+      "reason": "no tenant or ownership boundary changes; the walk's rows are scoped to its own run prefix"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no second factor exists or changes in this task"
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": ["Treat each reachable action as a client-callable POST entry point."],
+      "evidence": "the diff adds no Server Action or Route Handler; the pages pass a server instant to Client Components; the walk aborts every POST in the browser (`scripts/check-signed-in-pages.mjs:193`, AC5 cases of `scripts/__tests__/check-signed-in-pages.test.ts`), so no action runs during it"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "no provider flow changes; the walk does not use Google sign-in"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "the new script starts no process; it launches Chromium through the Playwright API only"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object is built from untrusted keys; the cookie map is keyed by names the Supabase library writes"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": ["prevent them from leaking and compromising the organization"],
+      "evidence": "the three Supabase secrets reach only the walk step's env (`signedInWalkProblems`); the script never prints a token, password or cookie value (`no token, password or cookie value reaches the log` case); `check-files.mjs` 0 on the diff"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
+      "evidence": "every claim of both executor reports was rerun on the working tree (`npx vitest run` of the task's test files, `node mutate965.mjs`, the live walk on `next start`); the one that did not reproduce in Review 1 is F2, fixed in Revision 1"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "session handling is unchanged; the walk only reads with test sessions it deletes after the run"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": ["limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"],
+      "evidence": "no dependency or action is added: `tsx`, `playwright` and `@supabase/ssr` are already in `package.json`; `package-lock.json` unchanged (`git diff --stat`)"
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "no third-party script is added, removed or moved here"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "the walk opens only the local server of the job; the base URL is refused unless it is this machine"
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "no redirect target changes; the walk only compares the redirects that exist"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no personal data is collected or shown anew; the walk's users are synthetic and deleted after the run"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
+      "evidence": "Review 1 F2 (a reported break that did not reproduce) fixed in Revision 1; Review 2 reran every claim: `node mutate965.mjs` (11 breaks of the script, each fails; the no-session one 4 tests), the two product breaks, `npx vitest run` of the seven files 85/85, and the live walk 216 rows on `next start`"
+    },
+    "Web_Frontend_Security": {
+      "verdict": "not applicable",
+      "reason": "the fix changes when markup renders and one wrapper element, not what the browser receives from third parties"
+    }
+  }
+}

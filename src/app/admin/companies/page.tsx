@@ -46,7 +46,7 @@ export default async function AdminCompaniesPage() {
         title={t('companies_title')}
         subtitle={t('companies_subtitle', { count: count ?? 0 })}
       />
-      <AdminCompaniesManager companies={rows} />
+      <AdminCompaniesManager companies={rows} now={new Date().toISOString()} />
     </div>
   )
 }

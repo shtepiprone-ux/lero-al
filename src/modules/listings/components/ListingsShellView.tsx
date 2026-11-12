@@ -44,6 +44,8 @@ export interface ListingsShellViewProps {
   onFavoriteToggled: (listingId: string, newState: boolean) => void
   filtersSlot: ReactNode
   saveSearchSlot: ReactNode
+  /** The instant (ISO) the server rendered the page at: the listing cards decide their `new` badge against it (Task 965 R1-2). */
+  now?: string
 }
 
 export function ListingsShellView({
@@ -69,6 +71,7 @@ export function ListingsShellView({
   onFavoriteToggled,
   filtersSlot,
   saveSearchSlot,
+  now,
 }: ListingsShellViewProps) {
   const t = useTranslations('listing')
   const theme = useMantineTheme()
@@ -140,6 +143,7 @@ export function ListingsShellView({
                       isFavorited={favoriteIds.has(listing.id)}
                       onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
                       layoutContext="card-track-grid"
+                      now={now}
                     />
                   ))}
                 </MantineListingCardTrack>
@@ -156,6 +160,7 @@ export function ListingsShellView({
                     rates={rates}
                     isFavorited={favoriteIds.has(listing.id)}
                     onFavoriteToggled={(newState) => onFavoriteToggled(listing.id, newState)}
+                    now={now}
                   />
                 ))}
               </Stack>

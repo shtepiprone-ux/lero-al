@@ -12,6 +12,8 @@ import type { DBCurrency } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
 
 export interface AdminCurrenciesViewProps {
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
   /** Already filtered by the container's search query. */
   currencies: DBCurrency[]
   query: string
@@ -56,6 +58,7 @@ export function AdminCurrenciesView({
   onCancelDelete,
   onConfirmDelete,
   formSlot,
+  now,
 }: AdminCurrenciesViewProps) {
   const t = useTranslations('admin.currency.currencies')
   const tc = useTranslations('common')
@@ -99,7 +102,7 @@ export function AdminCurrenciesView({
       visibility: 'lg',
       cell: c => (
         <Text size="xs" c="dimmed">
-          <RelativeTime date={c.updated_at} />
+          <RelativeTime date={c.updated_at} baseDate={now} />
         </Text>
       ),
     },

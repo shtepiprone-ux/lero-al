@@ -52,9 +52,11 @@ interface Props {
   activeFiltersCount: number
   tab: 'active' | 'closed'
   favoriteIds?: string[]
+  /** The instant (ISO) the server rendered the page at: the listing cards decide their `new` badge against it (Task 965 R1-2). */
+  now?: string
 }
 
-export function ListingsShell({ listings, total, page, locations, activeFiltersCount, tab, favoriteIds }: Props) {
+export function ListingsShell({ listings, total, page, locations, activeFiltersCount, tab, favoriteIds, now }: Props) {
   const searchParams = useSearchParams()
   const { rates } = useExchangeRate()
   const { user } = useAuth()
@@ -179,6 +181,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
       activeFiltersCount={activeFiltersCount}
       displayCurrency={displayCurrency}
       rates={rates}
+      now={now}
       favoriteIds={localFavoriteIds}
       view={view}
       filtersOpen={filtersOpen}

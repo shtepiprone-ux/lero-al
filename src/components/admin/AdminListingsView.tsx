@@ -27,6 +27,8 @@ export interface AdminListingsAuditCounts {
 
 export interface AdminListingsViewProps {
   listings: AdminListing[]
+  /** The server's `now` (ISO): relative times are measured against it, so the server render and the browser's first render print the same text (Task 965). */
+  now?: string
   page: number
   totalPages: number
   activeStatus: string
@@ -70,6 +72,7 @@ export function AdminListingsView({
   onAuditSelect,
   onPageChange,
   onSelect,
+  now,
 }: AdminListingsViewProps) {
   const t = useTranslations('admin.listings')
   const tc = useTranslations('cabinet')
@@ -165,7 +168,7 @@ export function AdminListingsView({
       key: 'date',
       header: t('col_date'),
       visibility: 'xl',
-      cell: l => <Text size="xs" c="dimmed" component="span"><RelativeTime date={l.created_at} /></Text>,
+      cell: l => <Text size="xs" c="dimmed" component="span"><RelativeTime date={l.created_at} baseDate={now} /></Text>,
     },
   ]
 

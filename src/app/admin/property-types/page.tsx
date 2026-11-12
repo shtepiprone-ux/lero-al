@@ -26,7 +26,7 @@ export default async function AdminPropertyTypesPage({
         title={t('title')}
         subtitle={t('subtitle')}
       />
-      <AdminPropertyTypesManager initialTypes={types} searchQuery={q} />
+      <AdminPropertyTypesManager initialTypes={types} searchQuery={q} now={new Date().toISOString()} />
     </div>
   )
 }

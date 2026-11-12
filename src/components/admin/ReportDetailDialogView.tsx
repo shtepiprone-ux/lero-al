@@ -31,6 +31,8 @@ export interface ReportDetailDialogViewProps {
   locale: string
   canOverrideReportStatus: boolean
   canDeleteReports: boolean
+  /** The server's `now` (ISO): relative times are measured against it (Task 965). */
+  now?: string
   /** A status update or delete is in flight: every action shows `loading` / disables. */
   isPending: boolean
   notes: string
@@ -72,6 +74,7 @@ export function ReportDetailDialogView({
   onCancelDelete,
   onConfirmDelete,
   onClose,
+  now,
 }: ReportDetailDialogViewProps) {
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
@@ -197,7 +200,7 @@ export function ReportDetailDialogView({
                 },
                 { label: t('col_reason'), value: tl(reasonKey) },
                 { label: t('col_reporter'), value: report.reporter?.name ?? t('anonymous') },
-                { label: t('col_date'), value: <RelativeTime date={report.created_at} /> },
+                { label: t('col_date'), value: <RelativeTime date={report.created_at} baseDate={now} /> },
                 {
                   label: t('col_owner'),
                   value: report.listing?.owner ? (report.listing.owner.name ?? '—') : t('owner_not_found'),

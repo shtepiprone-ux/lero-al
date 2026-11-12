@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "238de68952893e2d830f79cce0503078548ac48a",
- "fetchedOn": "2026-11-11T00:03:01.624Z",
+ "commit": "ef7070e672ad3791b6cbad20491a29b9abe01a82",
+ "fetchedOn": "2026-11-12T11:36:54.789Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -351,7 +351,7 @@
    "name": "HTTP_Headers",
    "file": "HTTP_Headers_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html",
-   "sha": "7281e183888d6c702312afc1392a828576dd2c39",
+   "sha": "c32d21c37597b992cb506a2325d5e27611c8a40a",
    "title": "HTTP Security Response Headers Cheat Sheet"
   },
   {
@@ -526,7 +526,7 @@
    "name": "Mobile_Application_Security",
    "file": "Mobile_Application_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Mobile_Application_Security_Cheat_Sheet.html",
-   "sha": "9ae6c3e32491783a8e8c05e57b8113d716725121",
+   "sha": "ced3c7015ac858147375de57852d43c66e99456d",
    "title": "Mobile Application Security Cheat Sheet"
   },
   {

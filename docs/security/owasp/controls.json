@@ -897,10 +897,14 @@
      "quote": "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers",
      "control": "src/lib/security/__tests__/headers.security.test.ts",
      "evidence": "toContain(\"frame-ancestors 'none'\")"
+    },
+    {
+     "quote": "Repeat the security headers in each such block",
+     "task": "954"
     }
    ],
-   "reviewedSha": "7281e183888d6c702312afc1392a828576dd2c39",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "c32d21c37597b992cb506a2325d5e27611c8a40a",
+   "reviewedOn": "2026-11-12"
   },
   "HTTP_Strict_Transport_Security": {
    "applies": true,
@@ -1296,8 +1300,8 @@
   "Mobile_Application_Security": {
    "applies": false,
    "why": "the product is a web site only; no mobile application is built",
-   "reviewedSha": "9ae6c3e32491783a8e8c05e57b8113d716725121",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "ced3c7015ac858147375de57852d43c66e99456d",
+   "reviewedOn": "2026-11-12"
   },
   "Multi_Tenant_Security": {
    "applies": true,

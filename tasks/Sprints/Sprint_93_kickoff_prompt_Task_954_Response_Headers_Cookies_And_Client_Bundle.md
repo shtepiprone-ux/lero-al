@@ -75,8 +75,19 @@ After the task:
   `process.env.CLICK_SHIELD_CI_FIXTURE !== '1'` → `notFound()` (`src/app/[locale]/ci/click-shield-modal/page.tsx:10`);
   production answers 404 today (`curl https://lero.al/en/ci/click-shield-modal`, 2026-11-08), but no test holds the
   guard. A test does: without the flag, or with any value other than `'1'`, the page calls `notFound()`.
+- Every route class carries the security headers (added 2026-11-12 by the OWASP re-read of HTTP Headers, sheet
+  `c32d21c3`: "Repeat the security headers in each such block", the new warning that a header set at one level can
+  silently drop the headers of the level above). `next.config.ts` sets `SECURITY_HEADERS` once for `source: '/:path*'`,
+  and `headers.security.test.ts` checks only that line; nothing reads a served answer. Task 964 took `/robots.txt` and
+  `/sitemap/<id>.xml` out of the proxy. `scripts/check-security-headers-live.mjs` (new, the executor) reads the header list from
+  `src/lib/security/headers.ts`, the one source, and asserts every header with its value on the built server for: a
+  localized page (`/sq`), a signed-in page (`/sq/cabinet`, `.env.local` HYDRATION_* login), a route handler outside the
+  proxy (`/robots.txt`, `/sitemap/0.xml`), a 404 (`/sq/no-such-page`), an API route and a file under `/_next/static`.
+  Its comparison function is unit-tested in `scripts/__tests__/check-security-headers-live.test.ts` with an answer that
+  lacks one header, so the test is red without the header. Opus adds the CI step to the click-shield job, after `npm start`, with a flag so it never skips there (as
+  `ROBOTS_LIVE_REQUIRED` in `robots-sitemap-live.test.mjs`).
 - Dependencies: none.
-- Out of scope: other headers (already set and tested).
+- Out of scope: other headers (already set; AC9 proves each reaches every route class).
 
 ## Attack surface
 
@@ -119,7 +130,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Dependency_Graph_SBOM: not applicable — no dependency changes; the SBOM job is unaffected.
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — strict-dynamic without unsafe-eval blocks string evaluation in the browser — AC5.
 - DOM_Clobbering_Prevention: not applicable — the CMS sanitizer is unchanged; the CSP does not address named-element clobbering.
-- HTTP_Headers: "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers" — the header test asserts the baseline and the removed X-Powered-By — AC1.
+- HTTP_Headers: "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers" — the header test asserts the baseline and the removed X-Powered-By — AC1. "Repeat the security headers in each such block" (sheet `c32d21c3`, 2026-11-12) — the one `SECURITY_HEADERS` list reaches every route class on the built server, the routes outside the proxy included — AC9.
 - HTTP_Strict_Transport_Security: "This example sets a long (2 years = 63072000 seconds) max-age for the issuing host." — the HSTS value stays under test — AC1.
 - Identity_Propagation_Patterns: not applicable — the service-role key is only scanned for in the bundle; no caller identity is passed anywhere new.
 - Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — check-client-bundle.mjs and check-csp-violations.mjs pass file names and arguments as array items; no value is joined into a command line — AC3, AC5.
@@ -181,10 +192,16 @@ No visible change.
 - AC8 The CI fixture page stays closed outside CI — test: `src/app/[locale]/ci/click-shield-modal/__tests__/page.test.tsx`
   (new): the flag unset, `''`, `'0'` and `'true'` each make the page call `notFound()`; `'1'` renders the fixture; red
   when the guard is removed.
-- AC6 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `npm run build`,
-  `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
+- AC9 Every route class answers every security header with its value: a page, a signed-in page, `/robots.txt`,
+  `/sitemap/0.xml`, a 404, an API route and a static file — test: `scripts/__tests__/check-security-headers-live.test.ts` (new; the
+  comparison is red on an answer missing one header) and `node scripts/check-security-headers-live.mjs`, which the CI
+  click-shield job runs on the production server, where it cannot skip (the step and its case in
+  `scripts/quality/ci-workflow.test.mjs` are Opus's).
+- AC6 The whole change passes the project gates — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
+  `npm run build`, `node scripts/quality/changed-lines-coverage.mjs --base main`,
+  `node scripts/quality/check-files.mjs --worktree` and
   `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_954_Response_Headers_Cookies_And_Client_Bundle.md`
-  exit 0.
+  each exit 0.
 
 ## Route
 

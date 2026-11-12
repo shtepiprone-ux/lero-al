@@ -21,7 +21,7 @@ function walk(dir: string, acc: string[] = []): string[] {
 }
 const product = walk(join(ROOT, 'src')).filter((f) => /\.tsx?$/.test(f) && !/\.(test|spec|stories)\.tsx?$/.test(f) && !rel(f).startsWith('src/tests/'))
 
-interface Call { file: string; line: number; callee: string; args: number; secondArg: string | null }
+interface Call { file: string; line: number; callee: string; args: number; firstArg: string; secondArg: string | null }
 function cacheCalls(): Call[] {
   const out: Call[] = []
   for (const f of product) {
@@ -31,7 +31,7 @@ function cacheCalls(): Call[] {
     const visit = (n: ts.Node) => {
       if (ts.isCallExpression(n) && ts.isIdentifier(n.expression) && (n.expression.text === 'revalidateTag' || n.expression.text === 'updateTag')) {
         const second = n.arguments[1]
-        out.push({ file: rel(f), line: sf.getLineAndCharacterOfPosition(n.getStart()).line + 1, callee: n.expression.text, args: n.arguments.length, secondArg: second && ts.isStringLiteralLike(second) ? second.text : null })
+        out.push({ file: rel(f), line: sf.getLineAndCharacterOfPosition(n.getStart()).line + 1, callee: n.expression.text, args: n.arguments.length, firstArg: n.arguments[0]?.getText(sf) ?? '', secondArg: second && ts.isStringLiteralLike(second) ? second.text : null })
       }
       ts.forEachChild(n, visit)
     }
@@ -50,8 +50,10 @@ describe('cache tags expire as before (Next 16)', () => {
   })
 
   it('[SEC-T3-SRV-TAG-UPDATE] the twelve former revalidateTag(tag) calls of the Server Actions are updateTag(tag) with exactly the tag', () => {
-    const calls = cacheCalls().filter((c) => c.callee === 'updateTag')
+    // Task 964 R1-2 added calls with the public-listings constant, one per change of the public listings (guarded by publicListingsTag.test.ts); the twelve are the others
+    const calls = cacheCalls().filter((c) => c.callee === 'updateTag' && c.firstArg !== 'PUBLIC_LISTINGS_CACHE_TAG')
     expect(calls.length).toBe(12)
+    expect(cacheCalls().filter((c) => c.callee === 'updateTag' && c.firstArg === 'PUBLIC_LISTINGS_CACHE_TAG').every((c) => c.args === 1)).toBe(true)
     expect(calls.filter((c) => c.args !== 1).map((c) => `${c.file}:${c.line}`)).toEqual([])
   })
 

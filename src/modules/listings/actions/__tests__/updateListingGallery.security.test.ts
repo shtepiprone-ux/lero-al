@@ -15,7 +15,7 @@ vi.mock('@/lib/supabase/server', () => ({
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => ({ id: 'owner-1' }) }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
 vi.mock('@/lib/auth/requireViewer', () => ({ requireViewer: async () => ({ ok: true, userId: 'owner-1', role: 'user' }) }))
-vi.mock('next/cache', () => ({ revalidatePath: vi.fn() }))
+vi.mock('next/cache', () => ({ revalidatePath: vi.fn(), updateTag: vi.fn() }))
 // the move of an owner's edit of an ACTIVE listing to review goes through the one status gateway (Task 923 R74); its own behaviour is proved in
 // updateListing.security.test.ts and applyListingTransition.test.ts, here it is a boundary double that succeeds
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListingTransitionByStatus: vi.fn(async (id: string, to: string) => ({ ok: true, nextStatus: to, listingId: id })) }))

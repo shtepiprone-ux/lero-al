@@ -7,7 +7,8 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { getBlockedError } from '@/lib/auth/blockCheck'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import type { PreferredCurrency } from '@/types/database'
 import { sendEmailChangeEmails } from '@/modules/notifications/lib/emails/emailChange'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
@@ -410,7 +411,10 @@ export async function deleteOwnAccount(data?: { password?: string }): Promise<{ 
   // Task 923 R142: one complete deletion for every role and path (owner decision D30). The Auth user, the profile, the listings and their files go together; the
   // old order (archive, profile row, Auth user) could leave a profile-less account that still signed in, and it archived what the person asked to delete.
   const result = await deleteAccount(userId, { reason: 'self' })
-  return result.ok ? {} : { error: 'delete_failed' }
+  if (!result.ok) return { error: 'delete_failed' }
+  // Task 964 R1-2: the cascade of the account deletion removed the person's listings, so they leave the sitemap files at once (never after a refused deletion)
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
+  return {}
 }
 
 // ── Email change ──────────────────────────────────────────────────────────────

@@ -1,0 +1,256 @@
+{
+  "task": "964",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": [
+        "it is important to identify the attacks which the application must defend against"
+      ],
+      "evidence": "kickoff \"## Attack surface\" T1 and T2; AC3 and AC4 tests in `src/app/__tests__/sitemap.security.test.ts`, each failing on its deliberate break in Review 1"
+    },
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require explicit tool authorization for sensitive operations."
+      ],
+      "evidence": "`scripts/quality/pipeline.test.mjs` and `ci-local.test.mjs`: under NEEDS REVISION only the OWASP task gate is held (holdJobs refuses any other job), the skip counts only in a ledger of a run under revision of the kickoff as it is; the handoff phase and CI keep the gate; six deliberate breaks each fail a test"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "kickoff \"## Attack surface\" names `/robots.txt` and `/sitemap/<id>.xml`; `scripts/quality/robots-sitemap-live.test.mjs` 3/3 on `next start`"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no sign-in, session or credential code changes"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no authentication mechanism is designed or changed"
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": [
+        "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+      ],
+      "evidence": "the two paths are public by design; the listing read stays behind `applyPublicVisibility` (`src/app/sitemap.ts`), AC4 fails when the call is removed"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "no protected decision exists on the two public crawler paths"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no guard moves; the proxy never carried authorization on any route"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "no protected action changes; the visibility rule is tested in AC4"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the matrix is Task 950; this task adds two public anonymous read rows only"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the answer is a cached public document, so no per-actor limit applies; AC3 bounds the read"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "the OWASP task gate still runs in CI and in the handoff phase (`pipeline-steps.json` handoff has no variant; `pipeline.test.mjs` asserts the only variants are review steps); `check-ruleset.mjs` 0"
+    },
+    "Clickjacking_Defense": {
+      "verdict": "not applicable",
+      "reason": "a text and an XML document are not framed pages, and next.config.ts headers still apply"
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "the two documents run no script; the report-only script policy never covered them"
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no cookie is set or read by the change"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "neither path takes a credential or touches the sign-in flow"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); nothing is encrypted, hashed or stored"
+    },
+    "Denial_of_Service": {
+      "verdict": "met",
+      "quotes": [
+        "Using validation that is cheap in resources first"
+      ],
+      "evidence": "`src/app/__tests__/sitemap.security.test.ts`: a bad id 404s before any read; an id past the last file is answered from the cached count (unstable_cache, one query per cache); `src/lib/auth/__tests__/middlewareScope.security.test.ts`: `/sitemap/1234.xml` keeps the proxy, so at most 1 110 sitemap paths reach the route cache; `/sitemap/999.xml` 404 on next start (Review 2)"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always set permissions: {} at the workflow level to disable all permissions by default."
+      ],
+      "evidence": "`.github/workflows/ci.yml`: the new click-shield step sets two literal env values and runs `node --test` on a repository file; no expression of untrusted input; the workflow keeps `permissions: {}`"
+    },
+    "HTTP_Headers": {
+      "verdict": "not applicable",
+      "reason": "the headers come from next.config.ts, which runs for these paths without the proxy"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "the HSTS header comes from next.config.ts; curl of /sitemap/0.xml shows it"
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no identity is passed between services"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": "ci-local `--hold` takes only job ids from the closed set HOLDABLE (`holdJobs`, refused otherwise, exit 2); the pipeline variants are argv arrays from `pipeline-steps.json`, started without a shell"
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "Revision 1 adds one updateTag call after existing successful writes; no input parsing changes"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the tag is expired only after each action's existing check and write; no lookup changes"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "`src/proxy.ts` matcher: the robots and sitemap alternatives are fixed strings and one digit run; `WHOLE_NUMBER` in `src/app/sitemap.ts` is one anchored digit run"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no key or secret is created, read or rotated"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no model prompt or model output is processed"
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); the only new output is the HELD line of the ci-local summary, holding no data"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no security event is logged or renamed"
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "no write payload or bound field changes in this diff"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no MCP server or tool configuration changes"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no factor or sign-in step changes"
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Return only authorized result fields because Server Action return values are serialized to the client."
+      ],
+      "evidence": "`src/app/sitemap.ts` selects only `slug, updated_at`; AC4 fails on `select('*')` (Review 1 break)"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the words come from the pipeline scripts and rules this change edits (ci-local --hold, review underRevision); no OAuth flow or redirect URI changes"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "`pipeline.mjs` runs the underRevision argv through `runArgv` (spawn with an argv, no shell); ci-local builds no command from `--hold`"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object is built from input in this diff"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "`node scripts/quality/ac-tests.mjs --base main <kickoff>` 0 and `npx vitest run src/app/__tests__/sitemap.security.test.ts` after each deliberate break; every file of the diff read, with node_modules/next/dist/build/templates/app-route.js; findings F1 and F2 in \"## Review\""
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "the executor's claims rerun: `npx vitest run` of the three AC files 13/13, `npm run build`, `node --test scripts/quality/robots-sitemap-live.test.mjs` 3/3 on next start, the curl answers"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "`src/app/__tests__/sitemap.security.test.ts` (AC3, AC4 from T1 and T2); F1 became Revision 1 with AC7"
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "not applicable",
+      "reason": "both routes stay public by design; no trigger or function authentication changes"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "the two paths now skip the session refresh; they read no session and set no cookie"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "no dependency, lockfile or pinned tool changes in this diff"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "kickoff \"## Attack surface\" answered by `src/app/__tests__/sitemap.security.test.ts` (AC3 T2, AC4 T1)"
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "the account deletion actions only gain an updateTag call after their existing re-authenticated deletion; no transaction or its authorization changes"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "no transport setting changes; the Sitemap line keeps the configured origin"
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "no redirect target is built; the two paths now answer without the locale redirect"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "the sitemap lists public listing addresses only, no personal data"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "`scripts/quality/robots-sitemap-live.test.mjs` third test (F2) backs the configuration-only AC3 case with the served answer; each report claim rerun in Review 1"
+    },
+    "Web_Cache_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Default to preventing shared caching for authenticated, personalized, tenant-specific, or otherwise sensitive responses."
+      ],
+      "evidence": "the cached answers are public (`applyPublicVisibility`, `slug, updated_at` only, AC4); `src/__tests__/security/publicListingsTag.test.ts`: every change of the public listings expires the tag, so no withdrawn listing stays in a cached file; the 404 paths are bounded by `src/proxy.ts` (AC1)"
+    }
+  }
+}

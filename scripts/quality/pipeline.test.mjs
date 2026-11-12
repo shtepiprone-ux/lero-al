@@ -79,6 +79,51 @@ test('runPhase: steps run in order, the first failure stops the phase, and the l
   f.done();
 });
 
+test('runPhase: under NEEDS REVISION a review runs the variant and skips the gate; any other verdict runs both, and only a skipping run under revision counts the skip', () => {
+  // Task 964 Review 1 (owner, 2026-11-11): the OWASP task gate needs a task approved by review, so a NEEDS REVISION
+  // review could never complete its phase and its verdict was refused by the stop hook
+  const f = fixture();
+  const kickoff = 'tasks/Sprints/Sprint_93_kickoff_prompt_Task_999_Demo.md';
+  mkdirSync(path.join(f.root, 'tasks', 'Sprints'), { recursive: true });
+  const write = (verdict) => writeFileSync(path.join(f.root, kickoff), `# Task 999\n\n## Review\n\nReview 1 of x — ${verdict}\n`);
+  // outside the repository: a file the step writes inside it would change the tree the ledger is bound to
+  const out = mkdtempSync(path.join(os.tmpdir(), 'pipeline-variant-'));
+  const marker = path.join(out, 'variant-ran.txt');
+  const phases = { review: { role: 'Opus', scope: 'tree', steps: [
+    { id: 'local', argv: ['node', '-e', 'process.exit(0)'], underRevision: ['node', '-e', `require('fs').writeFileSync(${JSON.stringify(marker)}, 'x')`] },
+    { id: 'gate', argv: ['node', '-e', 'process.exit(1)'], underRevision: 'skip' },
+  ] } };
+  try {
+    write('NEEDS REVISION');
+    const r = runPhase('review', { root: f.root, kickoff, phases });
+    assert.equal(r.complete, true, r.failed);
+    assert.equal(r.ledger.underRevision, true);
+    assert.equal(readFileSync(marker, 'utf8'), 'x', 'the underRevision argv ran instead of the plain one');
+    assert.deepEqual(r.ledger.steps.map((s) => [s.id, s.exit, !!s.skipped]), [['local', 0, false], ['gate', null, true]]);
+    assert.equal(isComplete(r.ledger, phases.review, fingerprint('tree', { root: f.root })), true);
+    // the skip counts only in a run under revision that skipped the step
+    assert.equal(isComplete({ ...r.ledger, underRevision: false }, phases.review, r.ledger.fingerprint), false);
+    assert.equal(isComplete({ ...r.ledger, steps: r.ledger.steps.filter((s) => s.id !== 'gate') }, phases.review, r.ledger.fingerprint), false);
+    // a verdict changed after the run makes the ledger stale
+    write('APPROVED');
+    assert.equal(isComplete(r.ledger, phases.review, fingerprint('tree', { root: f.root })), false);
+    // APPROVED runs the plain argv and the gate, which fails here
+    unlinkSync(marker);
+    const a = runPhase('review', { root: f.root, kickoff, phases });
+    assert.equal(a.complete, false);
+    assert.equal(a.failed, 'gate');
+    assert.equal(a.ledger.underRevision, undefined);
+    assert.throws(() => readFileSync(marker), /ENOENT/, 'the plain argv ran');
+    // a phase whose steps name no variant ignores the verdict (the handoff)
+    write('NEEDS REVISION');
+    const plain = { handoff: { role: 'Opus', scope: 'tree', steps: [{ id: 'gate', argv: ['node', '-e', 'process.exit(1)'] }] } };
+    assert.equal(runPhase('handoff', { root: f.root, kickoff, phases: plain }).failed, 'gate');
+  } finally {
+    rmSync(out, { recursive: true, force: true });
+    f.done();
+  }
+});
+
 test('runPhase: a step past its deadline fails at the deadline, though a process it started holds its output, and stops the phase', { timeout: 60000 }, () => {
   // a step's output through a pipe held the phase as long as any process it left lived (owner, 2026-11-11: "monitor
   // every stage and its status")
@@ -116,6 +161,12 @@ test('the phases cover both models, and every skill runs its phase and names eac
     assert.ok(ids.includes('ci-local') && ids.includes('ruleset') && ids.indexOf('ci-local') < ids.indexOf('owasp-gate'), `${p} checks the ruleset and runs every CI job locally before the gate`);
     assert.ok(ids.indexOf('claims') >= 0 && ids.indexOf('claims') < ids.indexOf('ci-local'), `${p}: the quick claims step fails before the long local CI run`);
   }
+  // under NEEDS REVISION only the review holds the OWASP task gate, and every other CI job still runs
+  const variants = Object.entries(phases).flatMap(([p, def]) => def.steps.filter((s) => s.underRevision).map((s) => [p, s.id, s.underRevision]));
+  assert.deepEqual(variants, [
+    ['review', 'ci-local', ['node', 'scripts/quality/ci-local.mjs', '--hold', 'owasp-gate']],
+    ['review', 'owasp-gate', 'skip'],
+  ]);
   const flow = readFileSync(path.join(ROOT, '.claude', 'rules', 'flow.md'), 'utf8');
   for (const name of Object.keys(phases)) assert.match(flow, new RegExp(`pipeline\\.mjs run ${name}\\b`), `flow.md names the ${name} phase`);
 });

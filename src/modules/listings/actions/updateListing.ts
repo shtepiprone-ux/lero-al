@@ -1,6 +1,7 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { createAdminClient } from '@/lib/supabase/admin'
@@ -129,6 +130,9 @@ export async function updateListing(
     console.error('Failed to update listing', { error: updateError, listingId })
     return { error: 'update_failed' }
   }
+
+  // Task 964 R1-2: the row was written, so `updated_at` (and the slug) a sitemap shows changed: the sitemap files expire at once, never after a refused or failed write
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
 
   // Capture the old image rows before wiping: their URLs feed the H.5 Cloudinary cleanup below, and the whole rows restore the gallery if the new rows cannot be
   // written (Task 923 R67 (a)). A failed read refuses before anything is deleted: without the old rows a failure could not be undone.

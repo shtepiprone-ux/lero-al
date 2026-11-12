@@ -10,6 +10,7 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 let db = createFakeDb()
 let currentUser: { id: string; email?: string } | null = null
@@ -39,7 +40,9 @@ vi.mock('@/lib/supabase/admin', () => ({
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
-vi.mock('next/cache', () => ({ revalidatePath: vi.fn() }))
+// Task 964 R1-2: the account deletion's cascade removes the listings, so a successful deletion expires the public-listings tag
+const expiredTags = vi.hoisted(() => [] as string[])
+vi.mock('next/cache', () => ({ revalidatePath: vi.fn(), updateTag: (tag: string) => { expiredTags.push(tag) } }))
 vi.mock('next/headers', () => ({ headers: async () => ({ get: () => null }), cookies: async () => ({ getAll: () => [] }) }))
 vi.mock('@supabase/ssr', () => ({ createServerClient: () => ({ auth: { signInWithPassword: async () => ({ error: currentPasswordOk ? null : { message: 'Invalid login credentials' } }), signOut: async () => ({ error: null }) } }) }))
 vi.mock('@/modules/notifications/lib/emails/emailChange', () => ({ sendEmailChangeEmails: async (a: Record<string, unknown>) => { sentEmails.push(a) } }))
@@ -170,11 +173,14 @@ describe('deleteOwnAccount', () => {
     expect(db.log.filter((l) => l.op === 'delete')).toEqual([])
     expect(adminAuthCalls).toEqual([])
     expect(deletions).toEqual([])
+    expect(expiredTags, 'a refused call expires nothing').toEqual([])
   })
 
   it('asks for the deletion of ONLY the caller\'s own account, as "self"', async () => {
+    expiredTags.length = 0
     expect(await deleteOwnAccount()).toEqual({})
     expect(deletions).toEqual([{ userId: 'user-b', reason: 'self' }])
+    expect(expiredTags, 'the listings went with the account: the sitemap tag expires once').toEqual([PUBLIC_LISTINGS_CACHE_TAG])
     expect(db.tables.users.map((u) => u.id).sort(), 'the other person\'s profile is untouched').toEqual(['user-a', 'user-b'])
   })
 })

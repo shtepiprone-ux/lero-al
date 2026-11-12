@@ -16,8 +16,13 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 // ── Module mocks (hoisted before any imports) ─────────────────────────────────
+
+// Task 964 R1-2: the cascade removes the person's listings, so a successful deletion expires the public-listings tag (a refused or failed one does not)
+const mockUpdateTag = vi.fn()
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, revalidateTag: () => undefined, updateTag: (...args: unknown[]) => mockUpdateTag(...args), unstable_cache: (fn: unknown) => fn }))
 
 const mockHasPermission = vi.fn()
 vi.mock('@/lib/auth/permissions', () => ({
@@ -93,6 +98,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     expect(result).toEqual({})
     expect(mockDeleteAccount).toHaveBeenCalledTimes(1)
     expect(mockDeleteAccount).toHaveBeenCalledWith(TARGET_USER_ID, { reason: 'staff' })
+    expect(mockUpdateTag.mock.calls).toEqual([[PUBLIC_LISTINGS_CACHE_TAG]])
     // the account goes with its listings: nothing is archived first
     expect(mockApplyTransition).not.toHaveBeenCalled()
   })
@@ -115,6 +121,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     expect(result).toEqual({ error: 'forbidden' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
     expect(mockDeleteAccount).not.toHaveBeenCalled()
+    expect(mockUpdateTag).not.toHaveBeenCalled()
   })
 
   it('forbidden — hasPermission throws → { error: "forbidden" } + zero side effects', async () => {
@@ -126,6 +133,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     expect(result).toEqual({ error: 'forbidden' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
     expect(mockDeleteAccount).not.toHaveBeenCalled()
+    expect(mockUpdateTag).not.toHaveBeenCalled()
   })
 
   // ── Unauthorized ──────────────────────────────────────────────────────────
@@ -139,6 +147,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     expect(result).toEqual({ error: 'Unauthorized' })
     expect(mockApplyTransition).not.toHaveBeenCalled()
     expect(mockDeleteAccount).not.toHaveBeenCalled()
+    expect(mockUpdateTag).not.toHaveBeenCalled()
   })
 
   // ── Own id and rank ───────────────────────────────────────────────────────
@@ -147,6 +156,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     const { hardDeleteUser } = await import('../index')
     expect(await hardDeleteUser(ADMIN_ID)).toEqual({ error: 'forbidden' })
     expect(mockDeleteAccount).not.toHaveBeenCalled()
+    expect(mockUpdateTag).not.toHaveBeenCalled()
   })
 
   it('forbidden — the rank rule refuses a moderator who targets an administrator', async () => {
@@ -159,6 +169,7 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
     const { hardDeleteUser } = await import('../index')
     expect(await hardDeleteUser(TARGET_USER_ID)).toEqual({ error: 'forbidden' })
     expect(mockDeleteAccount).not.toHaveBeenCalled()
+    expect(mockUpdateTag).not.toHaveBeenCalled()
   })
 
   // ── Deletion failure ──────────────────────────────────────────────────────
@@ -171,5 +182,6 @@ describe('hardDeleteUser — smoke tests (Guard 1, Task 443; Task 923 R142)', ()
 
     expect(result).toEqual({ error: 'delete_failed' })
     expect(mockDeleteAccount).toHaveBeenCalledTimes(1)
+    expect(mockUpdateTag, 'a failed deletion expires nothing').not.toHaveBeenCalled()
   })
 })

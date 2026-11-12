@@ -8,6 +8,7 @@ import { revalidatePath, updateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
 import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
 import type { PermissionKey } from '@/lib/auth/permissionKeys'
@@ -166,6 +167,8 @@ export async function deleteListing(listingId: string): Promise<{ error?: string
   )
 
   updateTag('site-stats')
+  // Task 964 R1-2: the deleted listing leaves the sitemap files at once (only after the one row was deleted)
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
   revalidatePath('/admin/listings')
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')
@@ -719,6 +722,8 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
   const result = await deleteAccount(userId, { reason: 'staff' })
   if (!result.ok) return { error: 'delete_failed' }
 
+  // Task 964 R1-2: the cascade of the account deletion removed the person's listings, so they leave the sitemap files at once (never after a refused deletion)
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
   revalidatePath('/admin/users')
   revalidatePath('/admin/listings')
   return {}

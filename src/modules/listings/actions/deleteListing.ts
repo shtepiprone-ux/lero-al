@@ -9,6 +9,7 @@ import { hasPermission } from '@/lib/auth/permissions'
 import { routing } from '@/i18n/routing'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
 import { deleteAsset } from '@/lib/cloudinaryDelete'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 /**
  * Deletes a listing owned by the authenticated user.
@@ -77,6 +78,8 @@ export async function deleteListingAction(
   }
 
   updateTag('site-stats')
+  // Task 964 R1-2: the deleted listing leaves the sitemap files at once (only after the one row was deleted)
+  updateTag(PUBLIC_LISTINGS_CACHE_TAG)
   // Removed listing must disappear from the public listings index immediately.
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')

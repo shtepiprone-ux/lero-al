@@ -472,6 +472,11 @@ jobs:
           done
           cat server.log
           exit 1
+      - name: Search engines read robots.txt and every sitemap file (Task 964)
+        env:
+          BASE_URL: http://127.0.0.1:3000
+          ROBOTS_LIVE_REQUIRED: '1'
+        run: node --test scripts/quality/robots-sitemap-live.test.mjs
       - name: Real interactions are not blocked by overlays
         env:
           BASE_URL: http://127.0.0.1:3000

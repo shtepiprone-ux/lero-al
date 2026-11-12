@@ -33,7 +33,7 @@ vi.mock('@/lib/auth/server', () => ({ getUser: async () => ({ id: 'owner-1' }) }
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
 vi.mock('@/lib/auth/requireViewer', () => ({ requireViewer: async () => ({ ok: true, userId: 'owner-1', role: 'user' }) }))
 vi.mock('@/lib/auth/permissions', () => ({ roleHasPermission: async () => false, hasPermission: async () => false }))
-vi.mock('next/cache', () => ({ revalidatePath: vi.fn() }))
+vi.mock('next/cache', () => ({ revalidatePath: vi.fn(), updateTag: vi.fn() }))
 vi.mock('@/lib/cloudinaryDelete', () => ({ deleteAsset: vi.fn(async () => undefined) }))
 vi.mock('@/modules/listings/actions/applyListingTransition', () => ({
   applyListingTransitionByStatus: async (_id: string, to: string) => { state.transitions.push(to); return { ok: true, nextStatus: to, listingId: 'l-1' } },

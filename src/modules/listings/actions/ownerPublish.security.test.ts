@@ -14,6 +14,7 @@ vi.mock('@/modules/notifications/lib/createNotification', () => ({ createNotific
 vi.mock('next/cache', () => ({ updateTag: (...a: unknown[]) => updateTag(...a), revalidateTag: (...a: unknown[]) => revalidateTag(...a), revalidatePath: (...a: unknown[]) => revalidatePath(...a) }))
 
 import { applyListingTransitionByStatus, type TransitionActorContext } from './applyListingTransition'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 type Db = NonNullable<Parameters<typeof applyListingTransitionByStatus>[3]>
 interface Row { id: string; status: ListingStatus; slug: string; title: string; user_id: string }
@@ -67,6 +68,8 @@ describe('status gateway: publishing is staff-only', () => {
       expect(notify.mock.calls[0][0]).toMatchObject({ userId: 'owner-1', type: 'listing_status_change' })
       // Next 16: a Server Action expires the tag at once with updateTag (the one-argument revalidateTag is deprecated and would only mark it stale)
       expect(updateTag).toHaveBeenCalledWith('site-stats')
+      // Task 964 R1-2: a publish changes the public listings, so the sitemap files and robots.txt are expired once, at the same moment
+      expect(updateTag.mock.calls.filter(([tag]) => tag === PUBLIC_LISTINGS_CACHE_TAG)).toHaveLength(1)
       expect(revalidateTag).not.toHaveBeenCalled()
     }
   })
@@ -95,6 +98,7 @@ describe('status gateway: publishing is staff-only', () => {
     expect(notify).not.toHaveBeenCalled()
     expect(revalidateTag).not.toHaveBeenCalled()
     expect(updateTag).not.toHaveBeenCalled()
+    expect(updateTag).not.toHaveBeenCalledWith(PUBLIC_LISTINGS_CACHE_TAG)     // a refused publish expires nothing (Task 964 R1-2)
     expect(revalidatePath).not.toHaveBeenCalled()
   })
 
@@ -124,6 +128,7 @@ describe('status gateway: publishing is staff-only', () => {
     expect(notify).not.toHaveBeenCalled()
     expect(revalidateTag).not.toHaveBeenCalled()
     expect(updateTag).not.toHaveBeenCalled()
+    expect(updateTag).not.toHaveBeenCalledWith(PUBLIC_LISTINGS_CACHE_TAG)     // a failed write expires nothing (Task 964 R1-2)
     expect(revalidatePath).not.toHaveBeenCalled()
   })
 })

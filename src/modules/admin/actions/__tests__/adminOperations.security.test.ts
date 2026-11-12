@@ -6,6 +6,7 @@
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
+import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 
 let db = createFakeDb()
 let currentUser: { id: string } | null = null
@@ -157,7 +158,7 @@ describe('deleteListing', () => {
     db.tables.listings.push({ id: 'l2', slug: 'x' })
     await deleteListing('l1')
     expect(db.tables.listings.map((l) => l.id)).toEqual(['l2'])
-    expect(tags).toEqual(['site-stats'])
+    expect(tags).toEqual(['site-stats', PUBLIC_LISTINGS_CACHE_TAG])     // Task 964 R1-2: the sitemap files expire with the counter
     expect(paths).toEqual(['/admin/listings', '/sq/listings', '/en/listings', '/uk/listings', '/it/listings'])
   })
 

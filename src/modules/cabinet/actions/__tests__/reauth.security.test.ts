@@ -66,7 +66,7 @@ vi.mock('@/lib/supabase/server', () => ({
 }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => state.user }))
 vi.mock('@/lib/auth/blockCheck', () => ({ getBlockedError: async () => null }))
-vi.mock('next/cache', () => ({ revalidatePath: () => undefined }))
+vi.mock('next/cache', () => ({ revalidatePath: () => undefined, updateTag: () => undefined }))
 vi.mock('next/headers', () => ({ headers: async () => ({ get: () => null }), cookies: async () => ({ getAll: () => [] }) }))
 vi.mock('@supabase/ssr', () => ({
   createServerClient: (_url: string, key: string) => {

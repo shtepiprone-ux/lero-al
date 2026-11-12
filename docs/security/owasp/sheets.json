@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "238de68952893e2d830f79cce0503078548ac48a",
- "fetchedOn": "2026-11-11T00:03:01.624Z",
+ "commit": "a270842ecd9bd6bd62d88b58a84730a2e854a0f1",
+ "fetchedOn": "2026-11-12T09:03:05.209Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -351,7 +351,7 @@
    "name": "HTTP_Headers",
    "file": "HTTP_Headers_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html",
-   "sha": "7281e183888d6c702312afc1392a828576dd2c39",
+   "sha": "c32d21c37597b992cb506a2325d5e27611c8a40a",
    "title": "HTTP Security Response Headers Cheat Sheet"
   },
   {

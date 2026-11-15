@@ -59,7 +59,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Dependency_Graph_SBOM: not applicable — the SBOM job only gains its egress list; its content is unchanged.
 - File_Upload: not applicable — only CI artifact uploads are named; no product upload changes.
 - GitHub_Actions_Security: "it must be treated as a critical asset, potentially even more critical than the source code it processes" — every job blocks egress to its listed hosts — AC1, AC3.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the extended ci-secrets.test.mjs cases read the workflow files as data and start no command; no value is joined into a command line — AC4.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the extended ci-secrets.test.mjs cases read the workflow files as data and start no command; no value is joined into a command line — AC4.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4.
 - Key_Management: not applicable — no key is added; the jobs keep their existing secrets.
 - Nodejs_Security: "Starting with Node.js v20, a Permission Model is available to restrict application privileges." — one Node 22 line in .nvmrc, engines and every job, so the supported runtime is the tested one — AC2.

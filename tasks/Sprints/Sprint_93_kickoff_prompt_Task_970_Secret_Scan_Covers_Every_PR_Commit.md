@@ -77,7 +77,7 @@ Required by `node scripts/quality/owasp.mjs plan` (a13983001cb3, mapping of 2026
 - Cryptographic_Storage: not applicable — sha256 is used only to verify a downloaded file; nothing is stored or encrypted.
 - Dependency_Graph_SBOM: not applicable — `package.json` is named only to say it does not change; the SBOM job is untouched.
 - GitHub_Actions_Security: "it must be treated as a critical asset, potentially even more critical than the source code it processes" — the job keeps read-only contents and no secret, event values pass through `env:`, zizmor runs on the change — AC2.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the commit range comes from event SHAs through `env:`, never interpolated into `run:`, and the test asserts it — AC2.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the commit range comes from event SHAs through `env:`, never interpolated into `run:`, and the test asserts it — AC2.
 - JSON_Web_Token: not applicable — the word names the test's existing parts-built fixture; no token handling changes.
 - JavaScript_and_TypeScript_Security: not applicable — the test fixture's literal is split into two parts; no regex, merge or input handling changes.
 - Key_Management: not applicable — the scan finds keys but none is created, stored or rotated by this task.

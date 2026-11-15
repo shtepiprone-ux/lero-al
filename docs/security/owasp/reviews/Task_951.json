@@ -171,7 +171,7 @@
     "Injection_Prevention": {
       "verdict": "met",
       "quotes": [
-        "the values for commands and the relevant arguments should be both validated"
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
       ],
       "evidence": "`node --test \"scripts/quality/*.test.mjs\"` 147/147; the changed scripts add no command line, `scripts/lib/__tests__/within-repository.test.ts` 26 red with the check removed"
     },

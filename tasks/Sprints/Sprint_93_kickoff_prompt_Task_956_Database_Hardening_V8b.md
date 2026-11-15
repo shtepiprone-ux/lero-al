@@ -5,8 +5,18 @@ found must be fixed"; D53 / R74 (an owner's edit of an active listing is publish
 (a visitor may open an active, sold or rented listing address); D77 / D79 / D80 (contact reveal limits); R75 (a key for
 every action that admits a moderator); D91 (pre-launch checks on the one project are allowed). Filed by the whole-project
 audit (`docs/security/audit-2026-11-06/findings.md`: DB-01 to DB-08, SQL-01, L-04, P-06 database part).
-Implementer: Sonnet (writes the SQL, the rollback, the checks and the tests; never applies SQL). The owner applies.
-Reviewer: Opus (proves the preflight and the rollback read-only on the owner's delivery path before the apply).
+Implementers: Part A, Opus (the `scripts/quality/**` tools: AC8, AC9, AC10, and the `pg` dev dependency; `flow.md` §2
+forbids `scripts/quality/**` to Sonnet), reviewed by a separate Opus session; Part B, Sonnet (the SQL, the rollback,
+the application changes and the integration tests; never applies SQL), after Part A is in the working tree. The owner
+applies. Reviewer of Part B: Opus (proves the preflight and the rollback read-only on the owner's delivery path before
+the apply).
+Revision 1 (Opus, 2026-11-15, re-checked against `main` after Task 926): every file and line cited still holds (the
+`pending_email` writes moved to `cabinet/actions/index.ts:534,788`); nothing merged since 2026-11-07 touches the scope;
+`owasp.mjs plan` asks for the same sheets. Two blockers fixed: the tools were assigned to Sonnet, and `pg` is not a
+dependency (`db-catalog-audit.mjs` exits 2, "Cannot find module 'pg'", on 2026-11-15), so no one could run AC1, AC8 or
+AC10. The baseline of 59 was read on 2026-11-07 and was not committed (`coverage.md:39`); Part A re-measures it.
+Revision 2 (Opus, 2026-11-15, Part A review 1): the 42 drift differences no Scope item removes (22 nullability, 19
+columns, the enum) go to Tasks 978 (types, CI step) and 979 (`parking`); AC8 proves the tool and adds no difference.
 
 ## Goal
 
@@ -29,8 +39,8 @@ catalog read read-only on 2026-11-07):
 - `notifications` has two duplicate SELECT and two duplicate UPDATE policies (P-06; the column grant is already
   `is_read` only). `src/types/database.ts` is written by hand (L-04).
 
-After the task the same command against the live catalog exits 0, and CI fails when the hand types and the catalog
-differ.
+After the task the same command against the live catalog exits 0, and the committed snapshot `supabase/catalog.json`
+is the one Task 978 holds the hand types to.
 
 ## Scope
 
@@ -56,7 +66,7 @@ differ.
     CHECKs on `name`, `last_name`, `company_name`, `position` (length), `website` (length, `https://` prefix),
     `phone`, `whatsapp` (E.164: `^\+[1-9][0-9]{6,14}$`), each bound equal to or looser than the application's bound
     (cited per column from `src/lib/security/inputs.ts` and the profile schemas). Every application write of a revoked
-    column goes through the admin client (`cabinet/actions/index.ts:530,786`, `api/upload-avatar/route.ts:136` and any
+    column goes through the admin client (`cabinet/actions/index.ts:534,788`, `api/upload-avatar/route.ts:136` and any
     other the grep `\.update\(\{[^}]*(<column>)` finds).
   - `listings`: a BEFORE UPDATE trigger `listings_owner_edit_moderation` refuses (`raise exception`, SQLSTATE `42501`)
     an update by the owning session (`auth.uid() = old.user_id`, not staff) of a content column while
@@ -71,13 +81,19 @@ differ.
   - `public_user_profiles`: only the columns a public page renders (each consumer named in the report); `deleted_at`
     and the has-phone flags leave unless a consumer needs them.
   - `notifications`: drop `notifications_select` and `notifications_update` (duplicates).
-- Types: `db-catalog-audit.mjs` gains a `columns` query and writes `supabase/catalog.json` with `--save`; a new
+- Part A (Opus), before Part B: `pg` 8.23.1 exact in `devDependencies` (npm, 2026-11-15: first release 2010-12-19,
+  8.23.1 released 2026-09-30, no install script, repository `brianc/node-postgres`; its new lockfile entries at least 14
+  days old, `npm install --before`); the `caller_has_permission` allow-list and `PERMISSION_CHECK` entries below; the
+  two tools below with their tests; `node scripts/quality/db-catalog-audit.mjs --save <scratch>/before.json` and its
+  finding count, recorded under "## Review" as the baseline.
+- Types (Part A): `db-catalog-audit.mjs` gains a `columns` query and writes `supabase/catalog.json` with `--save`; a new
   `scripts/quality/db-types-drift.mjs` (+ `.test.mjs`) compares every table and column of `src/types/database.ts` with
   `supabase/catalog.json` and exits 1 on a difference; the snapshot is committed after the apply.
-- Rollback proof: a new `scripts/quality/db-sql-roundtrip.mjs` (+ `.test.mjs`, reusable by every database task):
+- Rollback proof (Part A): a new `scripts/quality/db-sql-roundtrip.mjs` (+ `.test.mjs`, reusable by every database task):
   inside ONE transaction it reads the catalog, runs the change file, then the rollback file, reads the catalog again and
   ends with `rollback`; exit 1 when the two catalogs differ or either file fails. Nothing it runs is ever committed.
-- Dependencies: none.
+- Dependencies: `pg` 8.23.1 (development only, Part A). Task 926 merged (the `companies` key stays `companies.manage`).
+  Task 978 follows the apply (it needs `supabase/catalog.json`); Task 979 does not depend on this task.
 - Out of scope: the application-side reveal limits (they exist), uploads (Task 957), applied-file headers (Task 950), the
   rest of v8b (Task 962: avatar and logo prefix, sign-up trigger, price ceiling, catalogue rule, image moderation,
   `exchange_providers`).
@@ -117,6 +133,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Credential_Stuffing_Prevention: not applicable — no sign-in path changes; limits are Task 959.
 - Database_Security: "Configured with the minimum permissions required as discussed in the permissions section below." — anon writes nothing, the bucket is bounded, duplicate policies go — AC1, AC7.
 - Denial_of_Service: "Using validation that is cheap in resources first" — the bucket size limit refuses large files before storage — AC7.
+- Dependency_Graph_SBOM: not applicable — `pg` is a development dependency; the SBOM job covers production dependencies and is unchanged.
 - Email_Validation_and_Verification: not applicable — pending_email becomes server-only by column grant; the confirmation flow is unchanged.
 - File_Upload: "Validate the file type, don't trust the Content-Type header as it can be spoofed" — the avatars bucket allows only jpeg, png and webp up to 2 MB — AC7.
 - GraphQL: "Ensure that the API has proper access control checks." — the same policies guard pg_graphql; the catalog audit reads them — AC1.
@@ -129,6 +146,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Mass_Assignment: "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable." — server-only users columns are revoked by column grant, an allow-list in the database — AC4.
 - Multi_Tenant_Security: "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths" — the contact RPC is closed to sessions; only the server gateway with its own checks reveals — AC3.
 - Multifactor_Authentication: not applicable — no sign-in factor changes; staff MFA is Task 960.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — `pg` is checked with `npm view` (age, maintainer repository, no install script) and `ignore-scripts=true` stays — AC12.
 - Nextjs_Security: not applicable — the cabinet action changes no contract; the database now enforces the same rules.
 - OS_Command_Injection_Defense: not applicable — db-catalog-audit.mjs gains an allow-list entry; no process call changes.
 - Prototype_Pollution_Prevention: not applicable — the cabinet action keeps its field list; no request object is merged.
@@ -138,12 +156,14 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC11.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — the mitigations of the threat model are the acceptance criteria of this task — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Session_Management: not applicable — no session handling changes in the database hardening.
+- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — `pg` pinned to 8.23.1 and every new lockfile version at least 14 days old — AC12.
 - SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — the definer function has search_path empty and takes the key as a parameter — AC9, AC10.
 - Third_Party_Javascript_Management: not applicable — no script loading changes in a database task.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Transport_Layer_Security: not applicable — connections stay Supabase-managed TLS; no transport change.
 - User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — public_user_profiles exposes only the columns a page renders — AC7.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC11.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — the CI dependency audit runs on the change that adds `pg` — AC12.
 - Web_Service_Security: not applicable — no service schema changes; the database adds constraints behind the same API.
 
 ## UI
@@ -178,8 +198,10 @@ No visible change (an expired active listing already shows as hidden in the appl
   columns — test: `node scripts/quality/db-catalog-audit.mjs` (I4, I9) and
   `src/tests/integration/accessHardening.integration.test.ts` (extended: the exact column set of
   `public_user_profiles`; the policy names on `notifications`).
-- AC8 The hand types equal the catalog — test: `node scripts/quality/db-types-drift.mjs` exits 0, and
-  `scripts/quality/db-types-drift.test.mjs` proves a removed, an added and a retyped column each fail.
+- AC8 The drift tool fails on drift, and this task adds none — test: `scripts/quality/db-types-drift.test.mjs` proves a
+  removed, an added and a retyped column each fail; after the apply `node scripts/quality/db-types-drift.mjs` prints no
+  line for `public_user_profiles` or any other object this task changes (Part B updates `PublicUserProfile` with the
+  view), and no difference beyond the 42 of Part A review 1 (those are Task 978's and 979's).
 - AC9 The audit tool knows the new function — test: `scripts/quality/db-catalog-audit.test.mjs` (extended: a policy
   calling `caller_has_permission(` passes I5; a definer function not on the allow-list still fails I3).
 - AC10 Rollback restores the previous catalog — test:
@@ -190,17 +212,42 @@ No visible change (an expired active listing already shows as hidden in the appl
   `node --test "scripts/quality/*.test.mjs"` and
   `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
+- AC12 (Part A) `pg` 8.23.1 is the only new direct dependency, without an install script, every new lockfile version at
+  least 14 days old — test: `node --test scripts/quality/install-scripts.test.mjs`,
+  `node scripts/quality/change-report.mjs --lockfile-age main`, each exit 0, and `npm audit --json` lists no advisory for `pg` or a package it brings (the whole tree still holds the advisories of Task 972).
 
 ## Route
 
-1. Branch from `main`. Run `node scripts/quality/db-catalog-audit.mjs --save <scratch>/before.json`; keep the output.
-2. Tests first (AC2-AC9) against the live project with `SECURITY_TEST_PROJECT_REF`; save each failing output.
+0. Part A (Opus): the `pg` dependency, the tool changes and AC8-AC10 tests (each failing first), the baseline run;
+   reviewed by a separate Opus session; Part B starts on the same branch after that review.
+1. Branch from `main` (Part B: the branch of Part A). Run `node scripts/quality/db-catalog-audit.mjs --save
+   <scratch>/before.json`; keep the output.
+2. Tests first (AC2-AC7) against the live project with `SECURITY_TEST_PROJECT_REF`; save each failing output.
 3. Move every application write of a revoked column to the admin client; align `visibility.ts`,
-   `listingAccessState.ts`, the recently-viewed queries; write the four SQL files; extend the audit tool; add the
-   drift tool.
+   `listingAccessState.ts`, the recently-viewed queries; write the four SQL files (the tools are Part A's; a needed
+   tool change is reported to Opus, not made).
 4. Run `v8b-preflight.sql` read-only; report every count. Hand over to Opus; Opus proves the preflight and the rollback
    (LF and CRLF, md5) and gives the owner the apply step.
 5. After the owner's apply: `v8b-verify.sql`, AC1-AC11, `--save supabase/catalog.json`.
 6. Report: each command, exit code and relevant output; each failing-first run; one deliberate break per AC.
 
 ## Review
+Part A baseline (Opus, 2026-11-15, read only): `node scripts/quality/db-catalog-audit.mjs --save <scratch>/before.json`
+exit 1, 59 findings: I3 1, I4 15, I5 22, I6 17, I7 1, I8 1, I9 2 (52 tables, 176 policies, 29 functions, 1 bucket). The
+same count after the Part A tool change (452 columns read). Not committed (`flow.md` Records).
+
+Review 1 (Part A, working tree on 631dee374, a separate Opus session, 2026-11-15) — NEEDS REVISION (1 of 2).
+Every changed file read in full. Rerun, exit 0: the three tool tests 35/35, `node --test "scripts/quality/*.test.mjs"`
+(140 pass, 3 skipped), lint, typecheck, `check-ruleset.mjs`, `install-scripts.test.mjs`, `--lockfile-age main` (7, none
+under 14 days), `npm test -- --coverage` (397 files, 6394 tests), `changed-lines-coverage.mjs --base main`; `npm audit`
+has 73 (Task 972's), none on `pg`, `pg-*`, `pgpass`, `split2`. Live: the audit reproduces 59 and the drift tool 42; the
+round trip (D91) of a probe table exits 0 and, with a rollback that drops nothing, 1 naming the 4 rows; 52 tables after.
+Breaks restored by sha256: old `PERMISSION_CHECK` (AC9), no null check (AC8), no txid check (AC10), each red.
+`owasp.mjs sync`: Injection_Prevention rewritten upstream (f05e79fd); mapping, 8 kickoffs, 6 records moved to Rule #2.
+F1 — (P2) `scripts/quality/db-sql-roundtrip.mjs:125-133` splits the first words on whitespace only: `commit/**/;`,
+  `commit--x` and `begin/* */;` pass `prepareSqlFile` (probe), and Postgres reads a comment as whitespace, so such a
+  file commits on the live project before the txid check sees it. Fix: first words with comments removed; a test each.
+F2 — (P3) the report's counts do not reproduce: "15 `*_name`, 24 NULL" is 17 and 22 in the tool's output (plus
+  `companies.created_by`, `listings.price_initial`, the enum). Fix: the next report quotes the tool's output.
+F3 — (open) Part B (AC1-AC7) is not in the diff; every sheet whose evidence is AC1-AC7 waits for its review. AC8 could
+  not pass: Revision 2, Tasks 978 and 979 (978 also removes `scripts/check-schema-drift.mjs`, which maps a gone type).

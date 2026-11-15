@@ -126,7 +126,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - File_Upload: not applicable — the signature fix changes the algorithm only; upload validation is Task 957.
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the workflow keeps permissions: {} at the top and per-job grants (ci-workflow.test.mjs) — AC1.
 - HTTP_Strict_Transport_Security: not applicable — no header changes; https is enforced in the helper, HSTS stays in headers.ts.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the fixed scripts pass file names and arguments as array items; no value is joined into a command line — AC8.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the fixed scripts pass file names and arguments as array items; no value is joined into a command line — AC8.
 - Input_Validation: "Validate on the server even when the browser checks the same fields." — the address, the image source and the Cloudinary host are validated on the server path that uses them — AC4, AC5, AC7.
 - Insecure_Direct_Object_Reference_Prevention: not applicable — no object reference handling changes in these fixes.
 - JavaScript_and_TypeScript_Security: "Never pass untrusted input to a recursive merge or set-by-path helper" — no catalog key writes into an object path; Object.prototype stays untouched — AC2.

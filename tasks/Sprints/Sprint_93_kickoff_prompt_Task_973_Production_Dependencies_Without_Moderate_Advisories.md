@@ -4,7 +4,7 @@ Sprint 93. Priority P2. Found 2026-11-12 by Opus with Task 972 (the GitHub notic
 decision needed (golden rule, 2026-11-07). Implementer: Sonnet, on `task/973-production-moderate-advisories` from
 `main` after Task 972 merges, and not before 2026-11-24, the day `@sentry/nextjs` 11.12.0 (released 2026-11-10) is 14
 days old. Opus, not the executor (`execute-task` forbids `.github/**` and `.claude/**`), raises the CI production audit
-level, writes its `scripts/quality/ci-workflow.test.mjs` case and the `.claude/rules/quality-gates.md` row. Reviewer: Opus.
+level and writes the `.claude/rules/quality-gates.md` row. Reviewer: Opus.
 Human owner of the change: the owner.
 
 ## Goal
@@ -33,8 +33,8 @@ dependency, and a test fails the day the email code starts the plain-text path t
 - `src/modules/notifications/lib/emails/__tests__/send.security.test.ts`: a case that fails when `sendEmail` calls
   `render` with options, and a source check that fails when any file under `src/` asks `@react-email/render` for plain
   text (`plainText` or `toPlainText`).
-- Opus: the production step of `.github/workflows/ci.yml` runs `npm audit --omit=dev --audit-level=moderate`, its
-  `scripts/quality/ci-workflow.test.mjs` case, the "Dependency audit" row of `.claude/rules/quality-gates.md`.
+- Opus: the production step of `.github/workflows/ci.yml` runs `npm audit --omit=dev --audit-level=moderate` (its own
+  command is AC5's test), the "Dependency audit" row of `.claude/rules/quality-gates.md`.
 - Dependencies: none added; one major version of an existing package.
 - Out of scope: Sentry configuration beyond what the major version requires; development dependencies (Task 972).
 
@@ -102,8 +102,8 @@ No visible change.
   `src/modules/notifications/lib/emails/__tests__/send.security.test.ts`.
 - AC4 The project still builds and passes — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `npm run build`, `npm run build-storybook`, each exit 0.
-- AC5 CI blocks a moderate advisory in a production dependency — test: `scripts/quality/ci-workflow.test.mjs`
-  (Opus writes the case with the step).
+- AC5 CI blocks a moderate advisory in a production dependency — test: `npm audit --omit=dev --audit-level=moderate` (the
+  step's own command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
 
 ## Route
 
@@ -114,7 +114,7 @@ No visible change.
 4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npm audit --omit=dev --audit-level=moderate ·
    npm audit --audit-level=high · npm run build · npm run build-storybook ·
-   node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_973_Production_Dependencies_Without_Moderate_Advisories.md
+   node scripts/quality/change-report.mjs main HEAD
 5. Report: each command, exit code, relevant output; the upgrade-guide verdicts; the deliberate breaks of AC3; the CI step
    the change needs, for Opus.
 

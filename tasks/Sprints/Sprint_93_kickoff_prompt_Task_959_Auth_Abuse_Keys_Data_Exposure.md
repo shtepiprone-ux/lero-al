@@ -224,7 +224,7 @@ component with new text.
 - AC11 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree`,
   `node scripts/quality/product-gates.mjs` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_959_Auth_Abuse_Keys_Data_Exposure.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 
 ## Route

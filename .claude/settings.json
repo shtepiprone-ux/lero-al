@@ -172,101 +172,11 @@
             "type": "command",
             "command": "node",
             "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
-              "start"
+              "${CLAUDE_PROJECT_DIR}/scripts/quality/owasp.mjs",
+              "session"
             ],
             "timeout": 60,
-            "statusMessage": "Record the files already changed"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/claims.mjs",
-              "start"
-            ],
-            "timeout": 120,
-            "statusMessage": "Replies about CI that the claim check does not know yet"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
-              "post"
-            ],
-            "timeout": 120,
-            "statusMessage": "File checks and ESLint on the written file"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
-              "stop"
-            ],
-            "timeout": 900,
-            "statusMessage": "Checks of every file changed in this session"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/pipeline.mjs",
-              "stop"
-            ],
-            "timeout": 120,
-            "statusMessage": "Every claimed phase has its complete pipeline ledger"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/push-safety.mjs"
-            ],
-            "timeout": 60,
-            "statusMessage": "Push and merge commands in the reply are safe"
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs",
-              "stop"
-            ],
-            "timeout": 900,
-            "statusMessage": "Checks of every file changed in this session"
-          },
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PROJECT_DIR}/scripts/quality/pipeline.mjs",
-              "stop"
-            ],
-            "timeout": 120,
-            "statusMessage": "Every claimed phase has its complete pipeline ledger"
+            "statusMessage": "The state of the OWASP Cheat Sheet Series reference"
           }
         ]
       }

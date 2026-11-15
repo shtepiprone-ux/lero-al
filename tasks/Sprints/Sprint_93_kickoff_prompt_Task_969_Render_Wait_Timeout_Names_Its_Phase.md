@@ -31,7 +31,7 @@ on one build without a timeout.
 The homepage grid gate judges a Story after a fixed pause: `navigateAndCheck` (`scripts/check-homepage-grid.mjs:531-534`)
 waits for `networkidle`, then 400 ms, then fails the cell as `blank-canvas` when `#storybook-root` has no child
 (`:183`). On 2026-11-12 the handoff run of PR #30, a documentation-only change, stopped there: 115/116,
-`I-F Page cap @ en@2560 - render: blank-canvas` (`ci-local` log `homepage-grid--08.log`). A render that finishes after
+`I-F Page cap @ en@2560 - render: blank-canvas` (the local run log `homepage-grid--08.log`). A render that finishes after
 the pause fails a gate whose subject did not change. No test covers `navigateAndCheck`.
 
 ## Scope
@@ -101,7 +101,7 @@ No visible change.
   three runs, each exit 0, outputs in the report.
 - AC4 The whole change passes the project gates — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
-  `node scripts/quality/ac-tests.mjs --base main <kickoff>` exit 0.
+  `node scripts/quality/change-report.mjs main HEAD` exit 0.
 
 ## Route
 

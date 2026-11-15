@@ -452,6 +452,10 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: node scripts/quality/ci-target.mjs
       - run: npx playwright install chromium --with-deps
+      # Task 974: the gate's own planted pages (a shield over a button, the viewport-edge cases, a carousel card on the
+      # right edge) prove it fails and passes where it should before it judges the build; no secret, no server.
+      - name: The click-shield gate passes its self-test (Task 974)
+        run: npm run check:click-shield:verify
       - env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}

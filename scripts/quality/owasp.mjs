@@ -28,6 +28,8 @@
 //   gate [--base <ref>]  CI on every pull request and push to main: a change of anything but documentation carries an
 //                     approved task whose review record passes, and the approved reviews together cover every sheet
 //                     the diff triggers (a version-only dependency update is held by the dependency gates instead)
+//   session           the Claude Code SessionStart hook (.claude/settings.json): prints `hookSpecificOutput` whose
+//                     `additionalContext` is the state of the reference and the plan / review commands (sessionContext)
 // OWASP: Secure Code Review (the reference is part of the review), Threat Modeling (re-done when the reference changes),
 // Vulnerable Dependency Management (a reference is a dependency: track its version), Secure Coding with AI (the agent's
 // claim of having read a source is checked against the source).
@@ -183,7 +185,7 @@ export function lastRead(registry, root = ROOT) {
   return readOn;
 }
 
-/** The text every Claude Code session starts with (agent-check.mjs start): the state of the reference and the commands
+/** The text every Claude Code session starts with (owasp.mjs session): the state of the reference and the commands
  *  that hold a task design, edit or review against it. Findings come first, so a drifted reference is fixed before work. */
 export function sessionBrief(registry, controls, findings, { refresh = null } = {}) {
   const lines = [];
@@ -208,10 +210,11 @@ export function sessionBrief(registry, controls, findings, { refresh = null } = 
 
 /** `sync --verify` in a child process: reads upstream, refreshes the cache and the marker, never rewrites the registry. */
 function syncVerify(root) {
+  // Started by Node with an argv array: no shell, so no value is ever parsed as a command line.
   return spawnSync(process.execPath, [path.join(root, 'scripts', 'quality', 'owasp.mjs'), 'sync', '--verify'], { cwd: root, encoding: 'utf8', timeout: 30_000, windowsHide: true });
 }
 
-/** The SessionStart context (agent-check.mjs start). Upstream is read again when the last read is older than
+/** The SessionStart context (owasp.mjs session). Upstream is read again when the last read is older than
  *  `refreshMs`; a difference is reported (`sync` plus the mapping update is then the session's first job), a failure to
  *  read is reported and the last read counts. Never throws: the session always starts, and always with this text. */
 export function sessionContext({ root = ROOT, now = Date.now(), refreshMs = 86_400_000, sync = syncVerify } = {}) {
@@ -680,7 +683,12 @@ async function main(argv) {
     print(f);
     return f.length ? 1 : 0;
   }
-  console.error('usage: owasp.mjs sync [--verify] | cache | check | plan <kickoff> | kickoff <file..> | review <kickoff> [--base <ref>] | gate [--base <ref>]');
+  if (cmd === 'session') {
+    // The Claude Code SessionStart hook (.claude/settings.json): every session starts held against the current reference.
+    process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: 'SessionStart', additionalContext: sessionContext({ root: ROOT }) } }));
+    return 0;
+  }
+  console.error('usage: owasp.mjs sync [--verify] | cache | check | plan <kickoff> | kickoff <file..> | review <kickoff> [--base <ref>] | gate [--base <ref>] | session');
   return 2;
 }
 

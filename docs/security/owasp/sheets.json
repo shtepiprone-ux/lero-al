@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "ef7070e672ad3791b6cbad20491a29b9abe01a82",
- "fetchedOn": "2026-11-12T11:36:54.789Z",
+ "commit": "ca7f2af5e2f963ac97abc9d3f41b140c2f3f2f07",
+ "fetchedOn": "2026-11-15T05:55:31.736Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -218,7 +218,7 @@
    "name": "Denial_of_Service",
    "file": "Denial_of_Service_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html",
-   "sha": "c948a8a26f9aaedccdb126a880487e965b5a9547",
+   "sha": "5de1d6acde21d36dbfa234c091b460ce767d95e7",
    "title": "Denial of Service Cheat Sheet"
   },
   {
@@ -253,7 +253,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "67bd941e3a2abe96696b163092a759daef4dc799",
+   "sha": "82248990a316f0a4fc37405a4c0d0f130394b9bb",
    "title": "Docker Security Cheat Sheet"
   },
   {
@@ -540,7 +540,7 @@
    "name": "Multifactor_Authentication",
    "file": "Multifactor_Authentication_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html",
-   "sha": "57a70bc4fbdd41c3e66f954d2cadc90e2830166f",
+   "sha": "0a8b7f179f7586ce3d52348eef267056d7b77538",
    "title": "Multifactor Authentication Cheat Sheet"
   },
   {
@@ -834,7 +834,7 @@
    "name": "Transport_Layer_Security",
    "file": "Transport_Layer_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html",
-   "sha": "8fa32709299f0f7b9c6de2e1dc26c14aeecb9e0e",
+   "sha": "532cb24dedb9f479807ae48ec62bc60eafaf4850",
    "title": "Transport Layer Security Cheat Sheet"
   },
   {

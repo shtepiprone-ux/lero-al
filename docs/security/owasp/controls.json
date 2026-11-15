@@ -75,11 +75,6 @@
      "quote": "developers should understand and monitor the Attack Surface as they design and build and change a system",
      "control": ".claude/rules/threat-model.md",
      "evidence": "## When it is required (attack-surface change)"
-    },
-    {
-     "quote": "developers should understand and monitor the Attack Surface as they design and build and change a system",
-     "control": "scripts/quality/audit-coverage.mjs",
-     "evidence": "A file that matches no lane fails the run"
     }
    ],
    "reviewedSha": "c1ca5603856d210b652f066a308c7913383a66a3",
@@ -608,10 +603,15 @@
     {
      "quote": "Using validation that is cheap in resources first",
      "task": "955"
+    },
+    {
+     "quote": "can take exponential time on some inputs, so one short request can keep a CPU core busy",
+     "control": ".github/workflows/ci.yml",
+     "evidence": "queries: security-extended"
     }
    ],
-   "reviewedSha": "c948a8a26f9aaedccdb126a880487e965b5a9547",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "5de1d6acde21d36dbfa234c091b460ce767d95e7",
+   "reviewedOn": "2026-11-15"
   },
   "Dependency_Graph_SBOM": {
    "applies": true,
@@ -656,8 +656,8 @@
   "Docker_Security": {
    "applies": false,
    "why": "no container image is built or deployed; Vercel runs the functions",
-   "reviewedSha": "67bd941e3a2abe96696b163092a759daef4dc799",
-   "reviewedOn": "2026-11-11"
+   "reviewedSha": "82248990a316f0a4fc37405a4c0d0f130394b9bb",
+   "reviewedOn": "2026-11-15"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,
@@ -974,8 +974,8 @@
    "requirements": [
     {
      "quote": "the values for commands and the relevant arguments should be both validated",
-     "control": "scripts/quality/agent-check.mjs",
-     "evidence": "started by Node with an argv array: no shell"
+     "control": "scripts/quality/owasp.mjs",
+     "evidence": "Started by Node with an argv array: no shell"
     }
    ],
    "reviewedSha": "efa9327f4ace29dacbb94a66b33d40cfbd059a5a",
@@ -1352,10 +1352,22 @@
     {
      "quote": "Require MFA for administrative or other high privileged users.",
      "task": "960"
+    },
+    {
+     "quote": "Never return the seed to the client after enrollment.",
+     "task": "960"
+    },
+    {
+     "quote": "Reject a code that has already been accepted for that user, even if it is still inside the window",
+     "task": "960"
+    },
+    {
+     "quote": "If a seed may have been exposed, for example in a database breach, have the user enroll a new seed.",
+     "task": "960"
     }
    ],
-   "reviewedSha": "57a70bc4fbdd41c3e66f954d2cadc90e2830166f",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "0a8b7f179f7586ce3d52348eef267056d7b77538",
+   "reviewedOn": "2026-11-15"
   },
   "Network_Segmentation": {
    "applies": false,
@@ -1490,8 +1502,8 @@
    "requirements": [
     {
      "quote": "The primary defense is to avoid calling OS commands directly.",
-     "control": "scripts/quality/agent-check.mjs",
-     "evidence": "started by Node with an argv array: no shell"
+     "control": "scripts/quality/owasp.mjs",
+     "evidence": "Started by Node with an argv array: no shell"
     }
    ],
    "reviewedSha": "000161fc8a96257f12a5436336c7f5836ad50049",
@@ -1979,10 +1991,14 @@
      "quote": "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS",
      "control": "src/lib/security/headers.ts",
      "evidence": "max-age=63072000"
+    },
+    {
+     "quote": "so the main defense is making sure safe methods have no side effects",
+     "task": "950"
     }
    ],
-   "reviewedSha": "8fa32709299f0f7b9c6de2e1dc26c14aeecb9e0e",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "532cb24dedb9f479807ae48ec62bc60eafaf4850",
+   "reviewedOn": "2026-11-15"
   },
   "Unvalidated_Redirects_and_Forwards": {
    "applies": true,

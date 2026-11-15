@@ -247,8 +247,8 @@ test('PowerShell files are parsed by the PowerShell parser', { skip: process.pla
 });
 
 // Owner 2026-11-07: the translations get quality protection, not a key census, and a found gap is closed where it is
-// found. The locale and client-sink rules run on each file at every write, commit and CI run (not only in a CI scan).
-test('a locale file is held to locale-safety.mjs at its own write', () => {
+// found. The locale and client-sink rules run on each file's own text at every commit and CI run (not only in a CI scan).
+test('a locale file is held to locale-safety.mjs on its own text', () => {
   const en = JSON.parse(readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'messages', 'en.json'), 'utf8'));
   assert.deepEqual(rules('messages/en.json', JSON.stringify(en), none), [], 'the real file passes');
   const bad = (k, v) => { const c = structuredClone(en); c.zz_planted = { [k]: v }; return JSON.stringify(c); };
@@ -258,7 +258,7 @@ test('a locale file is held to locale-safety.mjs at its own write', () => {
   assert.deepEqual(rules('locales/en.json', bad('a', '<b>x</b>'), none), [], 'only messages/<locale>.json is locale data');
 });
 
-test('product code is held to client-sinks.mjs and the translation bypass rule at its own write', () => {
+test('product code is held to client-sinks.mjs and the translation bypass rule on its own text', () => {
   assert.ok(rules('src/a/View.tsx', 'export const V = () => { window.open(u, "_blank"); return null }\nconst x = el.innerHTML += s\n', none).includes('client-sink'));
   assert.ok(rules('src/a/View.tsx', 'export const V = ({ t }) => t.rich("k", {})\n', none).includes('locale'));
   assert.deepEqual(rules('src/a/View.tsx', 'export const V = ({ t }) => t("k")\n', none), []);

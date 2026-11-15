@@ -37,7 +37,7 @@ its rows.
 
 ## Where the tests live
 
-- Unit level, mocked Supabase: `src/**/__tests__/*.security.test.ts` — fast, run by `npm test` and by the agent loop.
+- Unit level, mocked Supabase: `src/**/__tests__/*.security.test.ts` — fast, run by `npm test` and by CI.
 - Real boundary, real Auth and RLS on the approved development project: `src/**/*.integration.test.ts`, run by
   `npm run test:security-integration` and by the CI `authz` job. An RLS or Storage policy change always has a
   real-boundary test; a mocked database cannot prove a policy.

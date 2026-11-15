@@ -151,7 +151,7 @@ and its consumers is done before deletion.
 - Rules: `.claude/rules/README.md`, `flow.md`, `quality-gates.md`, `secure-code-review.md`, `threat-model.md`,
   `security-testing.md`, `kickoff-template.md`; UI rules in `shared/` kept; skills, agents, `CLAUDE.md`, `AGENTS.md`
   rewritten; older docs carry a "superseded in part" banner.
-- Agent loop: `scripts/quality/agent-check.mjs` (+ 6 tests, pass); `.claude/settings.json` denies mutating Git by
+- Agent loop: `scripts/quality/agent-check.mjs` (+ 6 tests, pass; removed 2026-11-14, Task 974); `.claude/settings.json` denies mutating Git by
   permission rules; all old project hooks removed.
 - ESLint security rules (`no-eval`, `no-implied-eval`, `no-new-func`, `no-script-url`, `react/no-danger`); `eslint .`
   exit 0, `tsc` 0 errors, unit suite green locally.
@@ -224,7 +224,7 @@ The reference was re-read against the project. What changed:
   `repository-settings.yml` runs it daily and on every ruleset change; the reviewer runs it at every review start.
 - **One maintainer**: a required approval is impossible on GitHub with one maintainer — a constraint, not a decision;
   the compensating controls are written in `quality-gates.md` §5.
-- **Publication guard**: `scripts/quality/push-safety.mjs` (5 tests) — a push only of the current task branch to
+- **Publication guard**: `scripts/quality/push-safety.mjs` (5 tests; removed 2026-11-14, Task 974) — a push only of the current task branch to
   `origin`, never `main`, never force/delete/mirror; a merge only as `--squash`, never `--admin`, and only while
   `CI Required` is green on an open PR to `main`. The owner repointed the user-level Stop hook to it on 2026-11-06 (an
   agent may not edit its own hooks).
@@ -234,10 +234,10 @@ The reference was re-read against the project. What changed:
 Red as expected: dependency audit (947), design tokens and enrolled Tailwind (948), locale leak shards 1–4 (939).
 Red and not expected — each fixed with a test, or filed:
 - **The hydration gate's self-test had no browser** in the quality job. The job now installs Chromium;
-  `scripts/quality/ci-workflow.test.mjs` fails when a job starts a browser gate without installing Playwright first.
+  `scripts/quality/ci-workflow.test.mjs` (removed 2026-11-14, Task 974) failed when a job started a browser gate without installing Playwright first.
 - **The authorization suite read a Server Action manifest its job never built.** The `authz` job now builds first; the
-  same test file fails when `test:security-integration` runs before `npm run build`. It also fails when `CI Required`
-  does not wait for every job.
+  same test file failed when `test:security-integration` ran before `npm run build`, and when `CI Required` did not
+  wait for every job (since 2026-11-14 that case is `requiredProblems` in `scripts/quality/ci-secrets.test.mjs`).
 - **The mobile-adaptation gate read only changed kickoffs, from the commit, not the disk.** A local run therefore passed
   while CI failed. 377 of 380 kickoffs outside `tasks/Archive/` had no record, because closed tasks' kickoffs were never
   archived. Changes:
@@ -271,13 +271,13 @@ The owner's three questions, answered from the code:
     pages, the proxy and every table to the matrix test.
 - **Are tests created while a task is executed?**
   - The kickoff check refuses an AC that names no test.
-  - The agent loop and the change report refuse product code changed with no test change.
+  - The change report (and, until 2026-11-14, the agent loop) refuses product code changed with no test change.
   - Changed-line coverage runs in CI.
   - **Gap:** nothing checked that *the* test an AC names exists after execution, or that a revised AC changed its test.
     It was left to the reviewer's reading, against Verifying Third Party Agent Execution Evidence ("keep the
     verification policy and expected values outside the evidence under review").
-  - Fixed: `scripts/quality/ac-tests.mjs` with 7 tests. The executor and the reviewer run it per kickoff.
-    `change-report.mjs` runs it on every PR for each kickoff with a verdict, as a hard failure. On this branch it found
+  - Fixed: `scripts/quality/ac-tests.mjs` with 7 tests (removed 2026-11-14, Task 974). The executor and the reviewer ran it per kickoff.
+    `change-report.mjs` ran it on every PR for each kickoff with a verdict, as a hard failure. On this branch it found
     Task 952 AC4 (`build-lints.test.mjs`); Opus places that test at review.
 - **Are the tests of a revised route rewritten?** The same check covers it: an AC changed against the base needs its
   test changed.

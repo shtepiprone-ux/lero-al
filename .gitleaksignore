@@ -1,5 +1,5 @@
 # gitleaks fingerprints read and judged no secret (Task 970, 2026-11-09). History cannot change, so the daily scan of the
-# whole history would fail on them. scripts/quality/ci-workflow.test.mjs pins this exact list: a new entry is reviewed.
+# whole history would fail on them. scripts/quality/ci-secrets.test.mjs pins this exact list: a new entry is reviewed.
 
 # The redaction test's fake key (`apikey=` in a URL it must redact); built from parts since Task 970.
 b1c7b41479675d9a1737b19d216d8ac55f770cf4:scripts/lib/__tests__/redact-log.test.ts:generic-api-key:17

@@ -2,7 +2,7 @@
 // function the gate uses, and the repository's own mapping is checked when the sheet cache exists (CI syncs it first).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {
@@ -95,7 +95,7 @@ test('the mapping check fails on each planted defect (O1-O8)', () => {
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
-// Owner request 2026-11-07: every session starts held against the current reference (agent-check.mjs start).
+// Owner request 2026-11-07: every session starts held against the current reference (owasp.mjs session).
 test('the session context: upstream re-read after a day, a change or a read failure reported, findings first', () => {
   const root = fixture();
   const save = (rel, v) => { mkdirSync(path.dirname(path.join(root, rel)), { recursive: true }); writeFileSync(path.join(root, rel), JSON.stringify(v)); };
@@ -128,6 +128,25 @@ test('the session context: upstream re-read after a day, a change or a read fail
     writeFileSync(path.join(root, CONTROLS), '{ broken');
     assert.match(sessionContext({ root, sync: fake(0) }), /the check could not run/);
   } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+// Task 974 R5-6: the one agent hook (.claude/settings.json) is `owasp.mjs session`; Claude Code reads only
+// `hookSpecificOutput.additionalContext` of a SessionStart event, so the command's output is pinned, not only its text.
+test('owasp.mjs session prints the SessionStart hook output Claude Code reads', () => {
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'quality', 'owasp.mjs'), 'session'], { cwd: ROOT, encoding: 'utf8', timeout: 60_000, windowsHide: true });
+  assert.equal(r.status, 0, r.stderr);
+  const out = JSON.parse(r.stdout).hookSpecificOutput;
+  assert.equal(out.hookEventName, 'SessionStart');
+  assert.match(out.additionalContext, /^OWASP reference: /);
+  assert.match(out.additionalContext, /owasp\.mjs plan <kickoff>[\s\S]*owasp\.mjs review <kickoff>/);
+});
+
+test('the command list at the top of owasp.mjs names every command it runs', () => {
+  const source = readFileSync(path.join(ROOT, 'scripts', 'quality', 'owasp.mjs'), 'utf8');
+  const header = source.slice(0, source.indexOf('\nimport '));
+  const commands = [...source.matchAll(/\bcmd === '([a-z]+)'/g)].map((m) => m[1]);
+  assert.ok(commands.includes('session'), 'the session command is found');
+  assert.deepEqual(commands.filter((c) => !new RegExp(`^//   ${c}\\b`, 'm').test(header)), []);
 });
 
 test('a requirement handed to a task passes once its kickoff cites the quote', () => {

@@ -1,8 +1,8 @@
-# Task 864 — no kickoff can ship a `git grep` that is blind to the files its task creates; `period.ts` exports `addDays`
+# Task 864 — `period.ts` exports `addDays` (the kickoff `git grep` guard is withdrawn by Revision 2, §17)
 
 **Sprint 78** (hosted by discovery, not goal fit) · **P2** · **Q1** · Track B (non-UI) · filed 2026-09-20 by Task 848's
 review; partly applied 2026-09-25 (the 852–856 kickoffs) · kickoff written 2026-09-29 · **Status: 📝 `KICKOFF FILED` —
-revision 1 (2026-09-30, §16): waits for 886's commit; policy edits moved to Opus. §16 overrides every section it names.**
+revision 2 (2026-11-14, §17, owner D974-1): only R6 and R7 remain; the guard, its Stop hook and the wait for Task 886 are withdrawn. §17 overrides every section.**
 
 Executor: run this file through the `execute-task` workflow. Strongest permitted status: `IMPLEMENTED - AWAITING
 ORCHESTRATOR REVIEW`. No mutating Git command, ever.
@@ -10,18 +10,18 @@ ORCHESTRATOR REVIEW`. No mutating Git command, ever.
 ## 1. Mode and task type
 
 - Mode: `TASK DESIGN` → implementation handoff.
-- Task type: **Governance / tooling** (a kickoff guard wired into the Opus `Stop` hook, one procedure paragraph, one
-  skill line) + **a small library export** (`src/lib/dashboard/period.ts`) and its one consumer. No UI, no database.
+- Task type: **a small library export** (`src/lib/dashboard/period.ts`) and its one consumer. No UI, no database.
+  (The governance part, a kickoff guard in the Opus `Stop` hook, is withdrawn, §17.)
 - Execution state: `from-scratch`.
 - GR-1 / GR-3 / GR-3a–d: **not applicable** (no visible surface).
 
 ## 2. Objective
 
-1. State once, in the procedures, that a kickoff's `git grep` is written `git --no-optional-locks grep --untracked`,
-   and why.
-2. Build `check:kickoff-git-grep`: it fails when a live kickoff in `tasks/Sprints/` carries a `git grep` command without
+1. ~~State once, in the procedures, that a kickoff's `git grep` is written `git --no-optional-locks grep --untracked`,
+   and why.~~ Withdrawn (§17).
+2. ~~Build `check:kickoff-git-grep`: it fails when a live kickoff in `tasks/Sprints/` carries a `git grep` command without
    `--untracked`, except the files baselined at execution time. Wire it into the Opus `Stop` hook next to
-   `check:backlog-active`, so the orchestrator cannot publish a new plain-form kickoff.
+   `check:backlog-active`, so the orchestrator cannot publish a new plain-form kickoff.~~ Withdrawn (§17).
 3. Export `addDays` from `src/lib/dashboard/period.ts` and move Task 848's `expiringWindowUtc` onto it, with its
    existing test unchanged and green.
 
@@ -87,43 +87,39 @@ Task 893 holds four modified paths and one untracked evidence folder — `EXCLUD
 
 | ID | Source | Observable requirement | P | Verification | Status |
 |---|---|---|---|---|---|
-| R1 | reserved row | `docs/orchestrator-procedures.md` → "Detector-aware requirements and migrations" gains one paragraph: *a `git grep` in a kickoff is written `git --no-optional-locks grep --untracked`; the plain form reads only tracked files and is vacuous over paths the task creates (two-armed proof: Task 848, reserved row 864); `--untracked` still skips ignored paths, which need `rg`/`Select-String`; enforced by `check:kickoff-git-grep` in the Opus Stop hook.* `.claude/skills/create-task/SKILL.md` → "Quality gate before publication" gains one bullet pointing at that paragraph. | P1 | AC1 | Confirmed |
-| R2 | reserved row | `scripts/check-kickoff-git-grep.mjs` (Node, UTF-8 I/O) scans `tasks/Sprints/*kickoff_prompt*.md`. A **finding** is: (a) a line inside a fenced code block whose trimmed text starts with `git` and matches `\bgit(\.exe)?\s+(--no-optional-locks\s+)?grep\s+\S`; or (b) an inline code span whose content starts with `git` and matches the same pattern (so the bare noun `` `git grep` `` with no argument is not a command). A finding without `--untracked` is **plain**. A line containing the literal marker `kickoff-git-grep:quoted` (written as an HTML comment) is skipped: it is how a kickoff quotes a historical command verbatim. Prose outside backticks is ignored. Every run prints one scope line stating (a), (b), the marker, the prose exclusion and that `tasks/Archive/` is not scanned. | P1 | AC2 | Confirmed |
-| R3 | §3.2 | `scripts/kickoff-git-grep-baseline.json` `{ "<path>": <plain count> }`, written by `--update-baseline` at I0. Exit 1 when a file outside the baseline has ≥ 1 plain finding, or a baselined file's plain count grew; the message names file, line and text. A baselined file that is gone or whose count fell prints `stale baseline entry` and does **not** fail (kickoffs move to `tasks/Archive/` on every approval). Exit 2 on unreadable input. `package.json` gains `check:kickoff-git-grep`, `check:kickoff-git-grep:update-baseline`, `check:kickoff-git-grep:verify`. | P1 | AC3 | Confirmed |
-| R4 | two-armed rule | `--verify-gate` runs built-in fixtures: plain fenced line → finding; `--untracked` fenced line → clean; plain inline span with arguments → finding; inline noun span with no argument → clean; prose without backticks → clean; a plain line carrying the `kickoff-git-grep:quoted` marker → clean; an `--untracked` inline span with `-n x -- src` → clean; baselined count unchanged → clean; count +1 → fail. 9/9 expected, 0 failed. | P1 | AC4 | Confirmed |
-| R5 | §3.3 | The Stop hook runs `node scripts/check-kickoff-git-grep.mjs` exactly as it runs `check-backlog-active.mjs` (same `Continue` wrapper, blocks on exit 1 only, fails open otherwise), and appends the output under the heading `GR-6/864 VIOLATED — a kickoff carries a git grep without --untracked`. Nothing else in the hook changes. | P1 | AC5 | Confirmed |
+| R1 | reserved row | `docs/orchestrator-procedures.md` → "Detector-aware requirements and migrations" gains one paragraph: *a `git grep` in a kickoff is written `git --no-optional-locks grep --untracked`; the plain form reads only tracked files and is vacuous over paths the task creates (two-armed proof: Task 848, reserved row 864); `--untracked` still skips ignored paths, which need `rg`/`Select-String`; enforced by `check:kickoff-git-grep` in the Opus Stop hook.* `.claude/skills/create-task/SKILL.md` → "Quality gate before publication" gains one bullet pointing at that paragraph. | P1 | AC1 | Withdrawn (§17) |
+| R2 | reserved row | `scripts/check-kickoff-git-grep.mjs` (Node, UTF-8 I/O) scans `tasks/Sprints/*kickoff_prompt*.md`. A **finding** is: (a) a line inside a fenced code block whose trimmed text starts with `git` and matches `\bgit(\.exe)?\s+(--no-optional-locks\s+)?grep\s+\S`; or (b) an inline code span whose content starts with `git` and matches the same pattern (so the bare noun `` `git grep` `` with no argument is not a command). A finding without `--untracked` is **plain**. A line containing the literal marker `kickoff-git-grep:quoted` (written as an HTML comment) is skipped: it is how a kickoff quotes a historical command verbatim. Prose outside backticks is ignored. Every run prints one scope line stating (a), (b), the marker, the prose exclusion and that `tasks/Archive/` is not scanned. | P1 | AC2 | Withdrawn (§17) |
+| R3 | §3.2 | `scripts/kickoff-git-grep-baseline.json` `{ "<path>": <plain count> }`, written by `--update-baseline` at I0. Exit 1 when a file outside the baseline has ≥ 1 plain finding, or a baselined file's plain count grew; the message names file, line and text. A baselined file that is gone or whose count fell prints `stale baseline entry` and does **not** fail (kickoffs move to `tasks/Archive/` on every approval). Exit 2 on unreadable input. `package.json` gains `check:kickoff-git-grep`, `check:kickoff-git-grep:update-baseline`, `check:kickoff-git-grep:verify`. | P1 | AC3 | Withdrawn (§17) |
+| R4 | two-armed rule | `--verify-gate` runs built-in fixtures: plain fenced line → finding; `--untracked` fenced line → clean; plain inline span with arguments → finding; inline noun span with no argument → clean; prose without backticks → clean; a plain line carrying the `kickoff-git-grep:quoted` marker → clean; an `--untracked` inline span with `-n x -- src` → clean; baselined count unchanged → clean; count +1 → fail. 9/9 expected, 0 failed. | P1 | AC4 | Withdrawn (§17) |
+| R5 | §3.3 | The Stop hook runs `node scripts/check-kickoff-git-grep.mjs` exactly as it runs `check-backlog-active.mjs` (same `Continue` wrapper, blocks on exit 1 only, fails open otherwise), and appends the output under the heading `GR-6/864 VIOLATED — a kickoff carries a git grep without --untracked`. Nothing else in the hook changes. | P1 | AC5 | Withdrawn (§17) |
 | R6 | reserved row fold-in | `period.ts` exports `addDays` (the existing function, unchanged body) with a doc comment. `period.test.ts` gains a `describe('addDays')`: +1 over the DST start (`2026-03-28` → `2026-03-29`), −1 over a year boundary (`2026-01-01` → `2025-12-31`), +8 from `2026-09-29` → `2026-10-07`. | P2 | AC6 | Confirmed |
 | R7 | reserved row fold-in; §3.4 | `data.ts` `expiringWindowUtc` becomes `const today = tiraneDateOf(now); return periodUtcBounds(resolvePeriod({ kind: 'custom', from: today, to: addDays(today, EXPIRING_DAYS_AHEAD) }, now))`; the `listDates` import goes if unused. `data.test.ts:269` passes **unchanged**; line 354 is byte-identical. | P1 | AC7 | Confirmed |
-| R8 | agent-contract 10 | Session log; `docs/backlog.md` 864 cell; ≤ 80 lines. | P2 | AC8 | Confirmed |
+| R8 | agent-contract 10; §17 | The `docs/backlog.md` 864 cell only. | P2 | AC8 | Confirmed |
 
 ## 5. Assumptions and open questions
 
-- A1: the baseline freezes today's plain forms instead of rewriting them. Rewriting live kickoffs (one of them in
+- ~~A1: the baseline freezes today's plain forms instead of rewriting them. Rewriting live kickoffs (one of them in
   execution) would change executor instructions mid-task. A kickoff revised later drops out of the baseline naturally
-  when its count falls (stale warning, then `--update-baseline`).
-- A2 (INFERENCE): a `git grep` inside a PowerShell block that also pipes through `Tee-Object` still starts with `git`
-  on its trimmed line, so R2(a) sees it.
+  when its count falls (stale warning, then `--update-baseline`).~~ Withdrawn with R3 (§17).
+- ~~A2 (INFERENCE): a `git grep` inside a PowerShell block that also pipes through `Tee-Object` still starts with `git`
+  on its trimmed line, so R2(a) sees it.~~ Withdrawn with R2 (§17).
 - Open owner questions: none.
 
 ## 6. Pre-read rule bundle
 
-`docs/golden-rules.md` (GR-5, GR-6 and the enforcement table) · `docs/agent-contract.md` (9, 10, 14) ·
-`docs/rule-index.md` → governance/tooling · `docs/qa-profiles.md` (Q1) · `docs/orchestrator-procedures.md` →
-"Detector-aware requirements and migrations" and the 818/819 corollary · `.claude/hooks/orchestrator-response-gate.ps1`
-in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
+`docs/agent-contract.md` (9, 10, 14) · `docs/qa-profiles.md` (Q1) · §3.4 · this kickoff, §17 first. (Revision 2: the hook,
+the procedures paragraph and the guard's model script are not pre-read; `.claude/hooks/` was deleted.)
 
 ## 7. Scope — the exact allowed write set
 
-1. new `scripts/check-kickoff-git-grep.mjs`, new `scripts/kickoff-git-grep-baseline.json`
-2. `package.json` — three script lines only
-3. ~~`.claude/hooks/orchestrator-response-gate.ps1` — R5 block only~~ **Opus, not the executor (§16.2)**
-4. ~~`docs/orchestrator-procedures.md` — one paragraph (R1); `.claude/skills/create-task/SKILL.md` — one bullet (R1)~~
-   **Opus, not the executor (§16.2)**
-5. ~~`docs/golden-rules.md` — the GR-6 enforcement-table row gains `+ check:kickoff-git-grep (Task 864)`~~ **Opus,
-   not the executor (§16.2)**
+1. ~~new `scripts/check-kickoff-git-grep.mjs`, new `scripts/kickoff-git-grep-baseline.json`~~ withdrawn (§17)
+2. ~~`package.json` — three script lines only~~ withdrawn (§17)
+3. ~~`.claude/hooks/orchestrator-response-gate.ps1` — R5 block only~~ withdrawn (§17)
+4. ~~`docs/orchestrator-procedures.md` — one paragraph (R1); `.claude/skills/create-task/SKILL.md` — one bullet (R1)~~ withdrawn (§17)
+5. ~~`docs/golden-rules.md` — the GR-6 enforcement-table row gains `+ check:kickoff-git-grep (Task 864)`~~ withdrawn (§17)
 6. `src/lib/dashboard/period.ts` (`export` + comment), `src/lib/dashboard/__tests__/period.test.ts` (R6)
 7. `src/modules/cabinet/statistics/data.ts` — `expiringWindowUtc` and its import line only (R7)
-8. `docs/sessions/2026-MM-DD-task864-kickoff-grep-guard.md`, `docs/sessions/evidence/task864/`
+8. `docs/sessions/evidence/task864/` (the I0 and P4 evidence; the session log is withdrawn, §17)
 9. `docs/backlog.md` — the 864 text only
 
 ## 8. Out of scope
@@ -136,9 +132,7 @@ in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
 
 | | Current | Required after |
 |---|---|---|
-| New kickoff with a plain `git grep` | ships silently | Opus Stop hook blocks the response, naming file and line |
-| Existing kickoffs | unchanged | unchanged (baselined) |
-| Kickoff archived on approval | — | stale warning, no block |
+| Kickoff `git grep` guard | — | withdrawn (§17): no guard, no hook, no baseline |
 | `addDays` | private | exported, same body |
 | AGT-01 expiring window | today..today+8 via `listDates` | same bounds via `addDays` (test `:269` unchanged) |
 
@@ -146,76 +140,54 @@ in full · `scripts/check-backlog-active.mjs` (shape to copy) · this kickoff.
 
 ### 10.1 I0
 
-0. **Revision 1 start gate (§16.1).** `package.json` must equal `HEAD`, and `HEAD` must already carry Task 886's
-   `check:type-responsive` script. Otherwise stop with `BLOCKED — 886 NOT LANDED` and write nothing.
+0. ~~Revision 1 start gate (§16.1)~~ withdrawn (§17): R6 and R7 touch no `package.json`, so the task does not wait for
+   Task 886.
 1. `node.exe -p "process.platform + ' ' + process.version"` → `win32`.
 2. `git --no-optional-locks status --porcelain` → `docs/sessions/evidence/task864/00-status.txt`; a §7 path already
    modified → `BLOCKED — WRITE PATH NOT CLEAN`.
-3. `git hash-object` of every §7 existing path → `01-hash-before.txt`; compare with §3.3/§3.4 and re-read on mismatch.
+3. `git hash-object` of every §7 existing path → `01-hash-before.txt`; compare with §3.4 and re-read on mismatch.
 4. `npx.cmd vitest run src/lib/dashboard/__tests__/period.test.ts src/modules/cabinet/statistics/__tests__/data.test.ts`
    → `02-tests-before.txt` (exit 0 expected).
 
 ### 10.2 Order
 
-I0 → R2/R4 script + `--verify-gate` → `--update-baseline` (R3) → R6 → R7 → gates → session log. R1, R5 and the P3
-hook proof are Opus's, at review (§16.2).
+I0 → R6 → R7 → gates → the 864 backlog cell (§17: the guard, its baseline and the hook proof are withdrawn).
 
 ### 10.3 Proofs
 
 | Proof | Steps | Expected |
 |---|---|---|
-| **P1** guard, failing arm | through Node, append to one baselined kickoff a fenced block holding the plain command (git, grep, then -n foo -- src, with no untracked flag); run the guard | exit 1 naming that file and line; restore → hash equal, exit 0 |
-| **P2** guard, new file | create `tasks/Sprints/Sprint_78_kickoff_prompt_Task_000_Probe.md` with one plain fenced line; run; delete | exit 1; after delete exit 0; the file absent from status |
-| **P3** hook — **run by Opus at review, not the executor (§16.2)** | pipe a synthetic Opus Stop event (copy the shape the backlog proof used: `transcript_path` to a JSONL whose last assistant text contains `TASK-DESIGN PREFLIGHT COMPLETE`) into `powershell -File .claude\hooks\orchestrator-response-gate.ps1` with P2's probe file present, then absent | exit 2 with the R5 heading, then exit 0; `git status --short tasks/` shows no probe |
+| P1–P3 | withdrawn with the guard and the hook (§17) | — |
 | **P4** period | temporarily change R7's `EXPIRING_DAYS_AHEAD` argument to `EXPIRING_DAYS_AHEAD - 1` | `data.test.ts:269` fails; restore → passes, hash equal |
 
 Node `fs` I/O for every plant; `git hash-object` before and after each.
 
 ## 11. Positive and negative flows
 
-**Positive flow.** An orchestrator writes a kickoff whose AC greps a folder the task creates, in the plain form; the
-response is blocked with the file and line; it adds `--untracked`; the response finishes.
-
-| Branch | Applicable? | Expected | Evidence |
-|---|---:|---|---|
-| Plain grep in a new kickoff | Yes | exit 1 / hook exit 2 | P1–P3 |
-| `--untracked` form | Yes | clean | R4 |
-| Prose mention | Yes | clean (boundary) | R4 |
-| Kickoff archived | Yes | stale warning, exit 0 | R3 |
-| Script crash / missing node | Yes | hook fails open | R5 (same wrapper) |
-| Sonnet session | Yes | hook exits 0 before the check (Opus-only, `:41-46`) | code path |
+The guard's flows are withdrawn with it (§17). R7's one flow: the expiring window keeps its bounds, pinned by
+`data.test.ts:269` and broken on purpose by P4.
 
 ## 12. Acceptance criteria
 
-- **AC1 [R1] — Opus review closure (§16.2), not an executor criterion.** Given the two docs, then each carries the R1
-  text and no other line changed.
-- **AC2 [R2]** Given any run mode, then the scope line prints once before results.
-- **AC3 [R3]** Given the final tree, when `check:kickoff-git-grep` runs, then it exits 0; the baseline's keys equal the
-  files the I0 `--update-baseline` run found, and none of this response's new kickoffs (887, 888, 864, 892, 896, 858,
-  857, 859, 894, 895) is a key.
-- **AC4 [R4]** Given `check:kickoff-git-grep:verify`, then it reports 9 passed, 0 failed.
-- **AC5 [R5] — Opus review closure (§16.2), not an executor criterion.** Given P3, then the hook exits 2 with the R5 heading while the probe exists and 0 after; the hook diff
-  adds only the R5 block.
+- AC1 to AC5 (R1 to R5) withdrawn (§17).
 - **AC6 [R6]** Given `period.test.ts`, then the three `addDays` cases pass and every earlier case passes unchanged.
 - **AC7 [R7]** Given P4 and the final tree, then `data.test.ts` passes unchanged, P4 makes `:269` fail, and
   `data.ts:354` has the same text as in `01`.
-- **AC8 [R8]** Given the session log, then its Files Changed table equals the real diff of §7; backlog ≤ 80 lines.
+- **AC8 [R8]** Given the final tree, then the 864 cell of `docs/backlog.md` names what landed and `npm run check:backlog-active` exits 0.
 
-`GR-4 AC AUDIT — 8 criteria; each states an observable property; absolutes: none.`
+`GR-4 AC AUDIT — 3 criteria remain (AC6, AC7, AC8); each states an observable property; absolutes: none.`
 
-`GR-2 SCOPE STATED — check:kickoff-git-grep inspects fenced lines and inline code spans that start with git in tasks/Sprints/*kickoff_prompt*.md; it cannot see prose mentions, archived kickoffs, or a vacuous rg/Select-String; the criteria are closed by the P1–P4 transcripts and hashes.`
+`GR-2 SCOPE STATED — the guard is withdrawn (§17); AC6 and AC7 are closed by the unit tests and P4 with hashes.`
 
 ## 13. QA profile and verification plan
 
-**Q1** — tooling and a behaviour-preserving library refactor with an existing pinning test.
+**Q1** — a behaviour-preserving library refactor with an existing pinning test (the tooling is withdrawn, §17).
 
 ### 13.1 Final gate block (executor)
 
 ```powershell
 $ev = "docs\sessions\evidence\task864"
 node.exe -p "process.platform + ' ' + process.version"
-npm.cmd run check:kickoff-git-grep *> "$ev\20-guard.txt"; "guard exit=$LASTEXITCODE"
-npm.cmd run check:kickoff-git-grep:verify *> "$ev\21-guard-verify.txt"; "verify exit=$LASTEXITCODE"
 npm.cmd run check:backlog-active *> "$ev\22-backlog-active.txt"; "backlog exit=$LASTEXITCODE"
 npx.cmd vitest run src/lib/dashboard/__tests__/period.test.ts src/modules/cabinet/statistics/__tests__/data.test.ts *> "$ev\23-tests.txt"; "tests exit=$LASTEXITCODE"
 npm.cmd run check:listing-visibility *> "$ev\24-listing-visibility.txt"; "listing-visibility exit=$LASTEXITCODE"
@@ -224,27 +196,27 @@ npm.cmd run lint *> "$ev\26-lint.txt"; "lint exit=$LASTEXITCODE"
 npm.cmd run check:file-integrity *> "$ev\27-file-integrity.txt"; "file-integrity exit=$LASTEXITCODE"
 npm.cmd run check:mojibake *> "$ev\28-mojibake.txt"; "mojibake exit=$LASTEXITCODE"
 npm.cmd run build *> "$ev\29-build.txt"; "build exit=$LASTEXITCODE"
-git hash-object scripts\check-kickoff-git-grep.mjs scripts\kickoff-git-grep-baseline.json .claude\hooks\orchestrator-response-gate.ps1 src\lib\dashboard\period.ts src\modules\cabinet\statistics\data.ts
+git hash-object src\lib\dashboard\period.ts src\lib\dashboard\__tests__\period.test.ts src\modules\cabinet\statistics\data.ts
 git --no-optional-locks status --porcelain
 ```
 
-Expected: `win32`; guard, verify, backlog, tests, typecheck, lint, integrity, mojibake and build exit 0;
+Expected: `win32`; backlog, tests, typecheck, lint, integrity, mojibake and build exit 0;
 `check:listing-visibility` exit as in `01`'s era (0 if 887 landed, else 1 on `contactEvents.ts:50` only — never a new
 line from `data.ts`).
 
 ## 14. Completion report contract
 
-Status per `execute-task`. Include the changed files and hashes, R1–R8/AC1–AC8 with evidence, each command's real exit
-code, P1–P4 with hashes, the final baseline's keys, and limitations (prose blind spot, CI not wired). Update the 864
-cell of `docs/backlog.md`; write the session log. No Git commands.
+Status per `execute-task`. Include the changed files and hashes, R6–R8/AC6–AC8 with evidence, each command's real exit
+code and P4 with hashes. Update the 864 cell of `docs/backlog.md`. No Git commands. (R1–R5, P1–P3 and the session
+log are withdrawn, §17.)
 
 ## 15. Task quality gate
 
 | Check | Result |
 |---|---|
 | Executable without chat context | yes |
-| Every requirement has an AC | R1→AC1 … R8→AC8 |
-| Guard can fail | P1, P2, P3 |
+| Every requirement has an AC | R6→AC6, R7→AC7, R8→AC8 (R1–R5 withdrawn, §17) |
+| Guard can fail | withdrawn (§17) |
 | Refactor pinned | `data.test.ts:269` + P4 |
 | 863 collision avoided | §3.4, R7 (`:354` untouched) |
 | Owner decision needed | none |
@@ -295,12 +267,24 @@ Expected: `win32`; `clean exit=0`; one match line. Any other result → `BLOCKED
 - **Why at review and not now.** The R1 text says "enforced by `check:kickoff-git-grep`". Writing it before the script
   exists would record an enforcement that is not there (GR-2).
 
+## 17. Revision 2 — 2026-11-14, owner decision D974-1
+
+- **Withdrawn: R1 to R5, AC1 to AC5 and §16.2.** Owner, 2026-11-14 (translated): "the tasks that verify your code went
+  into deep over-engineering; they must follow the GitHub workflow and the OWASP workflow". A detector of `git grep`
+  spellings in kickoffs, run by an agent Stop hook, checks the agent's documents, not the product; the governance reset
+  removed the Stop hook it was to join, and no CI job would run it. Nothing of R1 to R5 is written.
+- **Kept: R6 and R7 with AC6 and AC7** (`period.ts` exports `addDays`; `expiringWindowUtc` uses it), product code with its
+  unit tests, run by the CI `unit` job. §16.1 (`package.json` after Task 886) no longer applies: R6 and R7 touch no
+  `package.json`, so the task no longer waits for Task 886. R8 becomes the backlog cell only.
+- **Every section follows this one** (Task 974 R5-5, 2026-11-14): the title, the status line, §1, §2, §4 to §7, §9 to
+  §15 and Appendices A to C were edited to match; §3 and §16 stay as the record of what was measured and decided.
+
 ## Appendix A — Evidence preflight
 
 | Claim | Evidence | Status |
 |---|---|---|
 | Plain `git grep` blind to created files | reserved row two-armed measurement (848) | VERIFIED (recorded) |
-| Live-kickoff census | shell loop 2026-09-29 | VERIFIED (loose; the guard re-measures) |
+| Live-kickoff census | shell loop 2026-09-29 | VERIFIED (loose; not re-measured: the guard is withdrawn, §17) |
 | Hook runs backlog check, fails open | hook `:52-68` | VERIFIED |
 | CI is PR-only | `governance-pr.yml:3-4` | VERIFIED |
 | `addDays` exists privately | `period.ts:71-73` | VERIFIED |
@@ -310,19 +294,16 @@ Expected: `win32`; `clean exit=0`; one match line. Any other result → `BLOCKED
 
 | Rule | Outcome | Result |
 |---|---|---|
-| agent-contract 9 | build exit 0; new script referenced from `package.json` and the hook | COMPLIANT |
+| agent-contract 9 | build exit 0 (no new script: the guard is withdrawn, §17) | COMPLIANT |
 | agent-contract 14 | Node I/O, hash witnesses | COMPLIANT |
-| GR-2 | scope line printed every run | COMPLIANT (R2) |
-| Corollary (Sprint 75) | narrowing stated in the kickoff and printed | COMPLIANT |
+| GR-2 | the withdrawal stated in §17 | COMPLIANT |
 
 ## Appendix C — Execution contract
 
 | # | Checkpoint | Failure |
 |---|---|---|
 | 0 | I0 | `BLOCKED` |
-| 1 | Verify 9/9 | fix the detector before baselining |
-| 2 | Baseline written; guard exit 0 | a new kickoff in the baseline → remove it and fix the kickoff |
-| 3 | P1–P2 (P3 is Opus's, §16.2) | any arm not failing → `BLOCKED` |
+| 1–3 | the guard's checkpoints | withdrawn (§17) |
 | 4 | R6/R7 + P4 | `:269` changed or failing → `PARTIALLY IMPLEMENTED` |
 | 5 | Final gates | non-zero → `PARTIALLY IMPLEMENTED` |
 

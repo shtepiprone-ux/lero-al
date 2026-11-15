@@ -83,6 +83,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Nextjs_Security: "Rendering the form only on a protected page does not authenticate the action request." — each Server Action is a row whether or not a protected page renders its form — AC1, AC3.
 - Prototype_Pollution_Prevention: not applicable — the matrix test parses source with the TypeScript tree; no request object is merged.
 - Query_Parameterization: not applicable — no query is written by this task; the dumped schema is read, not executed.
+- Transport_Layer_Security: "so the main defense is making sure safe methods have no side effects" (TLS 1.3 early data can be replayed; mapping of 2026-11-15) — every `GET` route handler is a row whose action is read, or a single-use token exchange or a `CRON_SECRET` cron with its reason — AC7.
 - REST_Security: "the access control decision should be taken locally by REST endpoints" — each route handler is a matrix row with its own deny cases — AC1.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the executor's report is input: Opus reruns every acceptance command in review — AC5.
 - SQL_Injection_Prevention: not applicable — the task reads the schema and adds no query; queries stay parameterized PostgREST calls.
@@ -111,6 +112,9 @@ No visible change.
   without a row (deliberate break of each shown, then removed).
 - AC6 No applied SQL file claims it is not applied (SQL-02) — test: `scripts/quality/sql-headers.test.mjs` (new: a planted
   "NOT APPLIED" header over an object of the schema fails; the repository passes).
+- AC7 `src/__tests__/security/authzMatrix.test.ts` also fails when a `GET` route handler's row has an action other than
+  read without a reason naming a single-use token exchange or a `CRON_SECRET` cron (deliberate break: a planted `GET`
+  row with a write action, shown, then removed).
 - AC5 `npm run lint`, `npm run typecheck`, `npm test`, `node scripts/quality/check-files.mjs --worktree` exit 0.
 
 ## Route
@@ -118,6 +122,6 @@ No visible change.
 1. Opus: baseline review, findings filed, matrix rows drafted in the review.
 2. Owner: run the read-only schema dump (command in the handoff: where to run it, what it changes — local file only).
 3. Sonnet: `authz-matrix.json`, `authzMatrix.test.ts`, the missing deny tests for existing entry points.
-4. Run AC2–AC6. Report each command, exit code, relevant output, and the deliberate-break output.
+4. Run AC2–AC7. Report each command, exit code, relevant output, and the deliberate-break output.
 
 ## Review

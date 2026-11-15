@@ -1,0 +1,176 @@
+{
+  "task": "974",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Block releases when high-risk tool policies, approval logic, or credential scopes change without updated tests"
+      ],
+      "evidence": "`node --test scripts/quality/agent-settings.test.mjs` 8/8: `hookProblems` refuses a second SessionStart entry or command, another event and a changed command (planted, scripts/quality/agent-settings.test.mjs:55-84); the deny and ask rules pinned as before"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "kickoff \"Attack surface\" names what checks a change before a push and each threat with its control; review 6 reran each: `agent-settings.test.mjs`, `npm run check:click-shield:verify` 0, `requiredProblems` of ci.yml `[]` and red in memory without `owasp-gate` in `needs`"
+    },
+    "Authorization": {
+      "verdict": "not applicable",
+      "reason": "the diff adds only Task 950 kickoff AC7 and its OWASP line (the TLS early-data requirement of the 2026-11-15 remap); no authorization code, policy or test changes here"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the diff adds only Task 950 kickoff AC7 and its OWASP line (the TLS early-data requirement of the 2026-11-15 remap); no authorization code, policy or test changes here"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "the diff adds only Task 950 kickoff AC7 and its OWASP line (the TLS early-data requirement of the 2026-11-15 remap); no authorization code, policy or test changes here"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "not applicable",
+      "reason": "the diff adds only Task 950 kickoff AC7 and its OWASP line (the TLS early-data requirement of the 2026-11-15 remap); no authorization code, policy or test changes here"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the diff adds only Task 950 kickoff AC7 and its OWASP line (the TLS early-data requirement of the 2026-11-15 remap); no authorization code, policy or test changes here"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`requiredProblems` (scripts/quality/ci-secrets.test.mjs:48-64): CI Required needs all 14 other jobs of ci.yml, runs with if: always() and fails on any result but success; in-memory break (owasp-gate dropped from needs) refused; `node scripts/quality/check-ruleset.mjs` 0"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "sha256 only verifies a downloaded CI binary; nothing is stored or encrypted"
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "no request handler, queue or resource limit of the product changes in this diff; the remap adds a CodeQL control to the mapping only"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "package.json, the lockfile and the SBOM job are unchanged; the trigger is a word in the rules"
+    },
+    "File_Upload": {
+      "verdict": "not applicable",
+      "reason": "no upload path changes; the Cloudinary configuration check is kept unchanged"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "it must be treated as a critical asset, potentially even more critical than the source code it processes"
+      ],
+      "evidence": "`node --test scripts/quality/ci-secrets.test.mjs` 11/11: secrets['X'], toJSON(secrets), secrets: inherit and a secrets map refused (:160-172); every workflow on ubuntu-24.04; in memory a job-level secret in `authz` refused; the CI step added at .github/workflows/ci.yml:455-458 has no env, secret or if. Note N1 (a brace before `secrets` in one expression passes) is Task 977"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "the values for commands and the relevant arguments should be both validated"
+      ],
+      "evidence": "scripts/quality/owasp.mjs:212-214 starts Node with an argv array and no shell, and `session` takes no argument; `node scripts/quality/owasp.mjs check` 0"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "scripts/quality/ci-secrets.test.mjs:21 is one quantifier over a negated class, :23 a flat alternation of fixed words; no nested quantifier in the added patterns; `npm run lint` 0"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is created, stored or rotated; secrets stay in the security-ci environment"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no model input or tool boundary of the product changes; agent permissions equal main"
+    },
+    "Logging": {
+      "verdict": "not applicable",
+      "reason": "only a comment of the locale-leak render-error lines changed; no product log content changes"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "no security event is logged or renamed by this rules and CI change"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "no MCP server or tool definition is added; the Vercel MCP write denials equal main"
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "no package is added or updated; the new CI step runs an existing npm script"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "scripts/quality/owasp.mjs:212-214 (`spawnSync(process.execPath, [...])`, no shell); the owasp.test.mjs session case spawns Node with an argv array; `owasp.mjs check` 0 finds the controls.json evidence"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR"
+      ],
+      "evidence": "`secretScanProblems` (ci-secrets.test.mjs:67-92): pinned gitleaks, sha256 checked before tar, base..head, no gitleaks-action, a .gitleaks.toml refused; `gitleaksIgnoreProblems`: exactly the six Task 970 fingerprints; each planted case red (:204-246); pre-commit secret scan unchanged"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "review 6 read the whole diff (73 paths) and reran every command of the report: quality tests 116 pass 3 skipped, `npm test -- --coverage` 6403/6403, lint, typecheck, check-files, change report, click-shield self-test, each exit 0; AC12 break (hookEventName) red, restored by hash"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "the executor report was rerun, not trusted; its R5-3 claim \"every expression form\" did not fully reproduce (N1, Task 977); the PR result is read with `gh pr checks <n>`"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "the kickoff threats became AC1, AC3, AC8 and AC10; review 6 ran `node --test scripts/quality/agent-settings.test.mjs scripts/quality/ci-secrets.test.mjs` 0 and `npm run check:click-shield:verify` 0"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "no dependency, action pin or install step changes in this diff"
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no DNS record or domain changes; Task 961 keeps the DNS watch"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "kickoff \"Attack surface\" names what changes, what can go wrong, the control and the AC of each; review 6 reran each control: `node --test scripts/quality/agent-settings.test.mjs scripts/quality/ci-secrets.test.mjs`, `npm run check:click-shield:verify`, .github/workflows/ci.yml:506-524 (CI Required)"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no personal data is read, stored or shown by the changed code"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Reconcile supplier reports with observations you control when possible"
+      ],
+      "evidence": "every report command rerun by review 6 with its exit code; spot breaks: in memory `secretScopeProblems` and `requiredProblems` of ci.yml, and a file break of scripts/quality/owasp.mjs:688 (`node --test scripts/quality/owasp.test.mjs` red, hash d2c8711b before and after); CI is read with `gh pr checks <n>` after the push"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "no dependency version or audit level changes in this diff"
+    },
+    "XS_Leaks": {
+      "verdict": "not applicable",
+      "reason": "no response, frame, window or cross-site resource of the product changes; the trigger is a word in a kickoff"
+    }
+  }
+}

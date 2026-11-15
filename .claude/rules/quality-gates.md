@@ -1,8 +1,9 @@
 # Quality gates
 
 Owner decisions 2026-11-06 (Task 945, governance reset): the gates are rewritten on the OWASP basis, and "quality must
-cover all files in the project, without exceptions". Four layers check the same rules: the agent loop while files are
-written, the pre-commit hook, CI before anything reaches `main`, and the daily CI run on `main`. Basis: OWASP Secure Code
+cover all files in the project, without exceptions". Three layers check the same rules: the pre-commit hook, CI before
+anything reaches `main`, and the daily CI run on `main` (owner, 2026-11-14: the local agent-loop hooks were removed; the
+gates follow the GitHub workflow and the OWASP workflow). Basis: OWASP Secure Code
 Review (tools before people), Secure Coding with AI, AI Agent Security, MCP Security, Secrets Management, CI/CD Security,
 GitHub Actions Security, NPM Security, Vulnerable Dependency Management, Software Supply Chain Security, SBOM,
 Authorization Regression Testing, JavaScript and TypeScript Security.
@@ -17,7 +18,7 @@ mojibake on purpose) listed in `scripts/mojibake-allowlist.json` with a reason i
 |---|---|
 | all | no log/backup/scratch file (`.log .bak .nul .orig .rej .tmp .swp`), no build output or tool scratch folder, no environment file other than `.env.example`; ≤ 20 MB; binary types match their signature; text is valid UTF-8 without NUL; BOM only at the start of `.ps1`; no invisible, bidi, tag or control character (Trojan Source, hidden prompt text); no merge-conflict marker; no secret (private key, GitHub, AWS, Stripe live, JWT, Supabase secret, Slack, Google API, npm, Vercel tokens); no mojibake |
 | `.ts .tsx .mts .cts .js .jsx .mjs .cjs` | parses (TypeScript parser); plus ESLint (§2) and `tsc`; product code under `src/` also gets the client-sink rules K1-K8 of `client-sinks.mjs` and the translation-bypass rule M6 of `locale-safety.mjs` on its own text (`client-sink`, `locale`) |
-| `.json` | parses; in `package.json` every script runs a file that is in the repository and calls only scripts that exist; `messages/<locale>.json` gets `locale-safety.mjs` M1-M5 on every value (markup, dangerous schemes, plain http, ICU validity, placeholder parity with `sq`) at every write, commit and CI run (`locale`) |
+| `.json` | parses; in `package.json` every script runs a file that is in the repository and calls only scripts that exist; `messages/<locale>.json` gets `locale-safety.mjs` M1-M5 on every value (markup, dangerous schemes, plain http, ICU validity, placeholder parity with `sq`) at every commit and CI run (`locale`) |
 | `.yml .yaml` | parses (all documents) |
 | `.css` | parses (PostCSS) |
 | `.sql` | strings, quoted identifiers, dollar quotes, comments and parentheses balanced |
@@ -42,30 +43,19 @@ Security rules on every file: `no-eval`, `no-implied-eval`, `no-new-func`, `no-s
 (`npm run lint` is `eslint --max-warnings 0`); `no-explicit-any` and `no-unused-vars` are errors, a binding a signature
 needs but the body does not use starts with `_`.
 
-## 3. Agent loop — `scripts/quality/agent-check.mjs` (Claude Code hooks, `.claude/settings.json`)
+## 3. Agent settings — `.claude/settings.json`
 
-It reads the hook payload, Git's list of changed files and the files; it parses no shell command. A crash of the check is
-a blocking finding, never a pass.
+One hook only:
 
 | Event | What runs | On failure |
 |---|---|---|
-| `SessionStart` | records the files already changed, so the session answers for what it changes; re-reads the OWASP Cheat Sheet Series when the last read is a day old (`owasp.mjs sync --verify`, the registry is never rewritten here) and puts the reference's state, its findings first, and the `plan` / `review` commands into the session context (§6) | — (a failure to read upstream is reported in the context; the session still starts) |
-| `PostToolUse` Edit / Write / MultiEdit / NotebookEdit | §1 on the written file (any type); ESLint when it is code | the findings go back to the agent at once (exit 2) |
-| `Stop` / `SubagentStop` | every file changed since the session start or the last clean stop, by any tool (Bash included): §1, ESLint for code, `tsc --noEmit` on the whole project when TypeScript changed, `vitest related --run` for changed `src/` code, product code under `src/` changed with no test file added or changed (§8), and a started task (the session added a test its kickoff names) with a named test still missing (`ac-tests.mjs`; tests on Opus-owned paths are left to the review) | the stop is blocked, up to 3 times; after that it is released with the baseline kept and the agent must report the work as **not done**. A file counts as changed when its bytes differ (size and content hash), never because its mtime moved |
-| `Stop` / `SubagentStop` | `pipeline.mjs stop` (`flow.md`, Pipeline): a changed kickoff design, an added verdict, an executor's stop, a commit or push handoff (and its `git add` against the changed files) and a stated CI result of a PR each need their complete ledger for the current files, or this turn's `ci-status` line; every stated result names its source and its numbers appear in that source's recorded output (`provenance.mjs`) | the stop is blocked, up to 3 times; then released with "the work is NOT done" |
-| `SessionStart` | `claims.mjs start`: replies of recent turns that looked at CI and are not yet in the local claims corpus, or that the CI-claim check misses (`flow.md`, Pipeline) | — (reported in the session context; the `claims` step of review and handoff fails until they are judged) |
-| `Stop` | `push-safety.mjs`: a push only of the current task branch to `origin`, a merge only `--squash` while `CI Required` is green | exit 2, the reply is refused |
-
-Test fixtures in the working tree (`test-fixtures.mjs`, owner 2026-11-10): `agent-check.test.mjs` plants files in a
-fixture directory under src/ that exists only while it runs (FIXTURE_REL), claims it with a lock holding its process id and removes it on every exit it
-sees; the `agent-check.mjs` and `pipeline.mjs` hooks remove a directory whose process is gone (a run stopped from
-outside) and leave out, as not the session's work, one a living test holds, unless the hook is that test's own child.
+| `SessionStart` | `owasp.mjs session`: re-reads the OWASP Cheat Sheet Series when the last read is a day old (`owasp.mjs sync --verify`, the registry is never rewritten here) and puts the reference's state, its findings first, and the `plan` / `review` commands into the session context (§6) | — (a failure to read upstream is reported in the context; the session still starts) |
 
 Least privilege (AI Agent Security, MCP Security): `permissions.deny` refuses every mutating `git` command and every
 Vercel MCP tool that creates, changes, deletes, deploys, promotes, rolls back or buys; the owner does those.
 `permissions.ask` makes every edit of policy files (`.claude/**`, `CLAUDE.md`, `AGENTS.md`, `.github/**`, `.githooks/**`,
 `scripts/quality/**`, `eslint.config.mjs`, `package.json`, `package-lock.json`, `.npmrc`) and every `npm install` wait for
-the owner's approval. `scripts/quality/agent-settings.test.mjs` pins these denials, asks and hooks, so a change that
+the owner's approval. `scripts/quality/agent-settings.test.mjs` pins these denials, asks and the one hook, so a change that
 loosens them fails CI unless the test changes too (AI Agent Security: "Block releases when high-risk tool policies …
 change without updated tests"). Rules files are security-critical configuration (Secure Coding with AI): they change only at the
 owner's request and every change is listed in the PR's change report.
@@ -88,13 +78,13 @@ only in the `security-ci` environment and only in the jobs that need them.
 | Unit and component tests | `npm run build`, then `npm test -- --coverage` with no focused tests and no retries, then `changed-lines-coverage.mjs` (§8) | any failing test; a changed product line set below the coverage rule |
 | Authorization regression | `ci-target.mjs` (only the approved development Supabase project), then `npm run test:security-integration` against real Auth and RLS | any failing case |
 | Dependency audit | `npm ci --ignore-scripts` (lockfile enforced), `npm audit --omit=dev --audit-level=high` | a high or critical advisory in a production dependency |
-| Change report | `change-report.mjs`: product code changed with no test changed (§8), an AC's named test missing or not changed with its AC (§8), sensitive paths (rules, agents, CI, dependencies, lint/type/test config, runtime security config including `src/proxy.ts`, migrations and schema, security tests), deleted tests, fewer cases or assertions, new skip/only/todo, added dependencies with their age | product code changed with no test changed; an AC test finding; an added package that does not exist on npm or is younger than 30 days; a lockfile entry outside `registry.npmjs.org` or without integrity. The rest is listed for the owner |
+| Change report | `change-report.mjs`: product code changed with no test changed (§8), sensitive paths (rules, agents, CI, dependencies, lint/type/test config, runtime security config including `src/proxy.ts`, migrations and schema, security tests), deleted tests, fewer cases or assertions, new skip/only/todo, added dependencies with their age | product code changed with no test changed; an added package that does not exist on npm or is younger than 30 days; a lockfile entry outside `registry.npmjs.org` or without integrity. The rest is listed for the owner |
 | OWASP task gate | `owasp.mjs cache`, then `owasp.mjs gate --base <base>` on every pull request and push (a schedule run changes nothing and passes): a change of anything but documentation carries a task whose last verdict is `APPROVED`, each approved review passes its record, and those records together judge every sheet the diff triggers; a version-only dependency update (manifest versions, lockfile, full-SHA action pins) is held by the dependency gates instead | code or configuration without an approved task; a review without its OWASP record; a sheet the diff triggers that no approved review judged |
 | SBOM | CycloneDX of the production dependencies, validated, kept 90 days | generation or validation fails |
 | CodeQL | `security-extended` for TypeScript/JavaScript and for the workflows | the analysis fails; alerts are triaged (high/critical fixed before merge) |
-| Secret scan | gitleaks over the history | any secret |
+| Secret scan | the pinned, sha256-verified gitleaks binary over every commit of a pull request or push (base..head), the whole history on the daily run; `.gitleaksignore` holds only the fingerprints reviewed in Task 970 (both pinned by `scripts/quality/ci-secrets.test.mjs`) | any secret |
 | Workflow security | zizmor over `.github/workflows` | any finding |
-| Storybook build, Homepage grid, Locale leak ×6, Click-shield | product end-to-end checks | any failure |
+| Storybook build, Homepage grid, Locale leak ×6, Click-shield | product end-to-end checks; Click-shield first runs its own self-test (`npm run check:click-shield:verify`) | any failure |
 | **CI Required** | all of the above | any job not `success` — the one check the `main` ruleset requires |
 
 Also on GitHub: `scorecard.yml` (OpenSSF Scorecard, weekly and on `main`, results in code scanning);
@@ -116,9 +106,8 @@ and CODEOWNERS for the sensitive paths.
 
 ## 6. Running the gates locally
 
-All of CI, the way CI runs it, on exactly the files that will be committed (owner, 2026-11-10: nothing is checked in
-part; `flow.md`, Pipeline): `node scripts/quality/ci-local.mjs`, run by `pipeline.mjs run review <kickoff>` and
-`pipeline.mjs run handoff`. A single gate while working:
+GitHub is the authority: CI runs every job on the pull request, and its result is read with `gh pr checks <n>` (owner,
+2026-11-14: no local replica of the workflow). A single gate while working:
 
 ```
 npm run lint
@@ -135,11 +124,9 @@ node scripts/quality/changed-lines-coverage.mjs --base main
 node scripts/quality/product-gates.mjs
 node scripts/quality/check-ruleset.mjs
 node scripts/quality/change-report.mjs main HEAD
-node scripts/quality/ac-tests.mjs --base main <kickoff>
 npm audit --omit=dev --audit-level=high
 node scripts/quality/client-sinks.mjs
 node scripts/quality/locale-safety.mjs
-node scripts/quality/audit-coverage.mjs
 node scripts/quality/db-catalog-audit.mjs
 node scripts/quality/cloudinary-config.mjs
 ```
@@ -149,15 +136,15 @@ the upstream repository the site is built from (`GITHUB_TOKEN` or `GH_TOKEN` rai
 and caches the sheet texts in `.cache/owasp/` (ignored); `check` fails on an unmapped, renamed or changed sheet, a quote
 not in its sheet, a control file without its evidence text, a task number that is not open, or a requirement handed to a
 task whose kickoff does not cite it; the registry older than 7 days fails too, so the daily CI run and every design
-step re-read upstream. The agent loop puts the state into every session at its start (§3). Tests:
-`scripts/quality/owasp.test.mjs`, `scripts/quality/agent-check.test.mjs`.
+step re-read upstream. `owasp.mjs session` puts the state into every session at its start (§3). Tests:
+`scripts/quality/owasp.test.mjs`.
 
 `client-sinks.mjs` (every line of product code: postMessage to `*`, message listeners without an origin check,
 `outerHTML` / `insertAdjacentHTML`, credential-like storage, stored URLs as `href`, DOM HTML / code / URL APIs, computed
 navigation, each `dangerouslySetInnerHTML`; `src/__tests__/security/clientSinks.test.ts`
 covers the other client sinks), `locale-safety.mjs` (every value of `messages/*.json`: markup, dangerous schemes, plain
-http, ICU validity, placeholder parity between locales, bypassing translation calls) and `audit-coverage.mjs` (every
-tracked file in a lane) run in CI through their self-tests. `db-catalog-audit.mjs` and `cloudinary-config.mjs` read the live database catalog and the live upload presets
+http, ICU validity, placeholder parity between locales, bypassing translation calls) run in CI through `check-files.mjs`
+and their self-tests. `db-catalog-audit.mjs` and `cloudinary-config.mjs` read the live database catalog and the live upload presets
 with `.env.local` credentials (the database CA in `prod-ca-2021.crt` or `SUPABASE_CA_FILE`); they are not CI jobs because
 CI holds no production credential. They are steps of `create-task`, `execute-task`, `review-task` and
 `secure-code-review.md` §1.5, and their invariants are tested on fixtures in CI.
@@ -180,9 +167,8 @@ Evidence (the evidence is a test the reviewer reruns, not the agent's report).
 |---|---|---|
 | Task design | every `- AC<n>` names an automated test: a test file (`.test.`/`.spec.`), a Story with a `play` function, or a command in backticks that exits non-zero on failure (`npm …`, `npx …`, `node …`, `gh …`). A visual criterion names the Story and the check that pins it | `check-files.mjs` kickoff rule (§1): the kickoff fails its checks |
 | Task revision | a changed or added AC changes or adds its test in the same revision | the same rule; the reviewer checks each changed AC against its test |
-| Implementation | every test an AC names exists, and every AC that is new or changed against the base has its named test added or changed in the same change. An AC that only reruns an existing check names a command, not the test file | `agent-check.mjs` `Stop` blocks the executor's finish while a started task's named test is missing (§3); `ac-tests.mjs --base main <kickoff>` (the executor before reporting, the reviewer before the verdict); `change-report.mjs` on every PR for each implemented kickoff — a verdict, or a named test the PR adds, even when the kickoff itself is not edited (§5), hard failure |
+| Implementation | every test an AC names exists | the reviewer compares the kickoff's criteria with the diff (`flow.md` §3) |
 | Implementation | the test is written first and fails on the current code, then passes with the change; the report gives both runs | the reviewer reproduces the failure by undoing the product change in the working tree, rerunning, restoring |
-| Every agent session | product code under `src/` changed while no test file was added or changed | `agent-check.mjs` `Stop` (§3) blocks the finish |
 | Every PR | the same rule over the whole PR; deleted tests, fewer cases or assertions, new `skip`/`only`/`todo` are listed | `change-report.mjs` (§5), hard failure |
 | Every PR | every changed product file has at least one changed executable line run by a test, and at least 80 % of all changed executable lines run | `changed-lines-coverage.mjs` after `npm test -- --coverage` (§5) |
 | Every PR, push and day | the whole suite passes | Unit and component tests (§5) |

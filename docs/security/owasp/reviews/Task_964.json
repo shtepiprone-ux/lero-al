@@ -113,7 +113,7 @@
     "Injection_Prevention": {
       "verdict": "met",
       "quotes": [
-        "the values for commands and the relevant arguments should be both validated"
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
       ],
       "evidence": "ci-local `--hold` takes only job ids from the closed set HOLDABLE (`holdJobs`, refused otherwise, exit 2); the pipeline variants are argv arrays from `pipeline-steps.json`, started without a shell"
     },

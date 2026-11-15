@@ -123,7 +123,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - File_Upload: "Validate the file type, don't trust the Content-Type header as it can be spoofed" — the widget contract is kept; server-side validation stays as it is until Task 957 — AC5.
 - HTTP_Headers: "Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers" — headers.security.test.ts runs unchanged on Next 16 — AC6.
 - HTTP_Strict_Transport_Security: "This example sets a long (2 years = 63072000 seconds) max-age for the issuing host." — the HSTS value is unchanged and tested — AC6.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the edited check scripts pass file names and arguments as array items; no value is joined into a command line — AC6.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the edited check scripts pass file names and arguments as array items; no value is joined into a command line — AC6.
 - Input_Validation: not applicable — argument schemas are Task 955; the upgrade changes no validation.
 - Insecure_Direct_Object_Reference_Prevention: not applicable — no object lookup changes; the actions change only their cache calls.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4, AC6.

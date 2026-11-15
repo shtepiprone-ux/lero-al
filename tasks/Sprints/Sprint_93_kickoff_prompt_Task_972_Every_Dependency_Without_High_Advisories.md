@@ -33,6 +33,17 @@ pin) and took `vite` 6.4.5, `lighthouse` 13.6.0, `shadcn` 4.23.0, `sanitize-html
 `js-yaml` 4.3.2 and `react-email` 6.11.5; `proxy-addr`, `hono` and `@modelcontextprotocol/sdk` left the tree. After the
 task `npm audit --audit-level=high` exits 0 and CI runs it on every change.
 
+Added 2026-11-15 (owner choice, from the Task 926 session): Dependabot alert #178, GHSA-5pm8-86m8-9m6r (medium, opened
+2026-11-13): `basic-ftp` `<=6.2.3` throws a TypeError on a `__proto__` fact name in an MLSD listing, a DoS in
+`Client.list()`. The tree holds `basic-ftp` 5.3.1 through `lighthouse` 13.3.0 → `puppeteer-core` 24.43.1 →
+`@puppeteer/browsers` → `proxy-agent` → `pac-proxy-agent` → `get-uri` 6.0.5 (`npm ls basic-ftp --all`), and `get-uri`
+calls `client.list()` (`node_modules/get-uri/dist/ftp.js:55`). Dependabot cannot update it: the fix is 6.2.4 and
+`get-uri` up to its latest 8.0.1 asks for `^5.3.1` (`npm view get-uri@latest dependencies`). The `lighthouse` 13.6.0
+this task already takes removes the whole chain: a copy of today's manifest and lockfile with `lighthouse` `^13.6.0`
+(`npm install --package-lock-only --ignore-scripts --before=2026-11-01`, Opus 2026-11-15) resolves `puppeteer-core`
+25.16.0, has no `get-uri` and no `basic-ftp`, and `npm audit --package-lock-only` has no `basic-ftp` entry. No override
+is needed (an override probe showed a range would take `basic-ftp` 6.2.6, under 14 days old).
+
 ## Scope
 
 - `package.json`, `package-lock.json`: remove `happy-dom`; `sanitize-html` range `^2.18.1`; then
@@ -43,6 +54,9 @@ task `npm audit --audit-level=high` exits 0 and CI runs it on every change.
   `sanitizeCmsHtml`; the output has no `noscript` content, no `meta`, no `javascript:` or `data:` URL and no SVG
   animation element.
 - No package gains an install script: `scripts/quality/install-scripts.test.mjs` (Task 947) passes unchanged.
+- `basic-ftp` leaves the tree with `lighthouse` 13.6.0 (Goal). If the run does not take `lighthouse` 13.6.0 or
+  `basic-ftp` is still in the tree, the task stops and reports `npm ls basic-ftp --all` to Opus; no override is added
+  without a revision.
 - Opus: in the `dependency-audit` job of `.github/workflows/ci.yml` a step "Every dependency has no high or critical
   advisory" running `npm audit --audit-level=high`, next to the production step (its own command is AC5's test); the
   "Dependency audit" row of `.claude/rules/quality-gates.md`.
@@ -97,7 +111,7 @@ Required by `node scripts/quality/owasp.mjs plan` (mapping of 2026-11-12).
 - Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — only versions at least 14 days old, the lockfile written by npm — AC1, AC4.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the Attack surface answers them for the dependency change — AC1, AC2, AC3, AC5.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns both audits and reads the CI run, not the summary — AC1, AC5.
-- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI audits the whole tree on every change — AC1, AC5.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI audits the whole tree on every change, and the medium `basic-ftp` advisory leaves with `lighthouse` 13.6.0 — AC1, AC5, AC6.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — the CMS body reaches the page only through the patched sanitizer — AC2.
 - XSS_Filter_Evasion: "input filtering is an incomplete defense for XSS" — the sanitizer is one layer, and the payloads of its three advisories are tested on it — AC2.
 
@@ -119,6 +133,8 @@ No visible change. A visual difference in the build or Storybook stops the task 
 - AC4 No package gains an install script — test: `scripts/quality/install-scripts.test.mjs`.
 - AC5 CI blocks a high or critical advisory in any dependency — test: `npm audit --audit-level=high` (the step's own
   command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
+- AC6 `basic-ftp` (GHSA-5pm8-86m8-9m6r) is no longer in the tree — test: `npm ls basic-ftp --all` prints no
+  `basic-ftp` and `npm audit --json` has no `basic-ftp` entry (both in the report, before and after).
 
 ## Route
 
@@ -126,10 +142,12 @@ No visible change. A visual difference in the build or Storybook stops the task 
    `happy-dom` outside `package.json` and `package-lock.json`.
 2. Test first: the AC2 cases on `sanitize-html` 2.17.7; save the failing output (a case that already passes on 2.17.7
    says so, with the payload).
-3. Change `package.json` and the lockfile per Scope; `npm ci`; `npm ls --omit dev --all` exits 0.
+3. Change `package.json` and the lockfile per Scope; `npm ci`; `npm ls --omit dev --all` exits 0. AC6:
+   `npm ls basic-ftp --all` before and after the change.
 4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npm audit --audit-level=high · npm audit --omit=dev --audit-level=high ·
    npm run build · npm run build-storybook · node --test scripts/quality/install-scripts.test.mjs ·
+   npm ls basic-ftp --all ·
    node scripts/quality/change-report.mjs main HEAD
 5. Report: each command, exit code, relevant output; the before and after audit summaries; every version change with
    its release date; the CI step the change needs, for Opus.

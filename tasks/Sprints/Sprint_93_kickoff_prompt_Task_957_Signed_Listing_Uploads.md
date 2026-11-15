@@ -85,7 +85,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — ImageUpload and the listing pages add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC4, AC8.
 - DOM_Clobbering_Prevention: not applicable — the CMS route stores images only; the HTML sanitizer is untouched.
 - File_Upload: "List allowed extensions. Only allow safe and critical extensions for business functionality" — the signature fixes allowed_formats; the CMS route sniffs bytes — AC1, AC5, AC7.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — cloudinary-config.mjs pass file names and arguments as array items; no value is joined into a command line — AC7.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — cloudinary-config.mjs pass file names and arguments as array items; no value is joined into a command line — AC7.
 - Input_Validation: "Validate on the server even when the browser checks the same fields." — the CMS route checks the bytes whatever the declared type — AC5.
 - Insecure_Direct_Object_Reference_Prevention: "implement access control checks for each object that users try to access" — an image in another account's folder is refused on save — AC3.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC8.

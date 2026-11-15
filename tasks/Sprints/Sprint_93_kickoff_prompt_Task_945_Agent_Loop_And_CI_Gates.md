@@ -72,7 +72,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the change reaches main only through the pull request with CI Required green, merged by the owner — AC6.
 - Dependency_Graph_SBOM: "Validate the document against its format's schema before publication or ingestion" — the CI SBOM job generates and validates CycloneDX for the new tree — AC6.
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the workflow keeps permissions: {} at the top and per-job grants (ci-workflow.test.mjs) — AC6.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the quality scripts pass file names and arguments as array items; no value is joined into a command line — AC1.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the quality scripts pass file names and arguments as array items; no value is joined into a command line — AC1.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC3.
 - Key_Management: not applicable — no key is created; CI reads the existing repository secrets in the jobs that need them.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — the hooks check each tool call outside the model (agent-check.mjs) — AC1.

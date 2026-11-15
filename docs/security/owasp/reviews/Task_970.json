@@ -57,7 +57,7 @@
     "Injection_Prevention": {
       "verdict": "met",
       "quotes": [
-        "the values for commands and the relevant arguments should be both validated"
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
       ],
       "evidence": ".github/workflows/ci.yml:292-309: BASE_SHA, HEAD_SHA and EVENT come through env, are GitHub-generated SHAs or event names, and the range is selected by a case on fixed patterns"
     },

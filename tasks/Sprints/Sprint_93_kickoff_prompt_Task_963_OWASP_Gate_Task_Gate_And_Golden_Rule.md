@@ -115,7 +115,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - File_Upload: not applicable — cloudinary-config.mjs reads the presets read-only; the upload paths change in Task 957.
 - GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the new job reads contents only, holds no secret, and takes the base SHA through env — AC2.
 - HTTP_Strict_Transport_Security: not applicable — the scripts are HTTP clients of fixed hosts; no response header of the site changes.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — owasp.mjs runs git with an argument array and a base ref from CI's env, never a shell string — AC2.
+- Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — owasp.mjs runs git with an argument array and a base ref from CI's env, never a shell string — AC2.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — the trigger and rule patterns are flat alternations over fixed words — AC1.
 - Key_Management: not applicable — the scripts create, store or use no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.

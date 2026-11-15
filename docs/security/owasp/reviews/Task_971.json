@@ -117,7 +117,7 @@
     "Injection_Prevention": {
       "verdict": "met",
       "quotes": [
-        "the values for commands and the relevant arguments should be both validated"
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
       ],
       "evidence": "scripts/quality/owasp.mjs:552 and pipeline.mjs runPhase refuse a base without a ref or commit shape; pipeline.mjs namedCommands runs a command a kickoff names only as `node scripts/<path>.mjs` or `npm run <script of package.json>` with safe characters (pipeline.test.mjs); ci-local.mjs refuses an overlay path with .. and a gitleaks version of another shape"
     },

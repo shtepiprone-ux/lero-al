@@ -973,13 +973,13 @@
    },
    "requirements": [
     {
-     "quote": "the values for commands and the relevant arguments should be both validated",
+     "quote": "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface",
      "control": "scripts/quality/owasp.mjs",
      "evidence": "Started by Node with an argv array: no shell"
     }
    ],
-   "reviewedSha": "efa9327f4ace29dacbb94a66b33d40cfbd059a5a",
-   "reviewedOn": "2026-11-08"
+   "reviewedSha": "f05e79fdd976b420ae21be9d90da9ad3d1148daf",
+   "reviewedOn": "2026-11-15"
   },
   "Injection_Prevention_in_Java": {
    "applies": false,

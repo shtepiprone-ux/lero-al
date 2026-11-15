@@ -1,0 +1,95 @@
+{
+  "task": "956",
+  "sheets": {
+    "Abuse_Case": { "verdict": "finding", "finding": "F3", "note": "the abuse case (a direct PostgREST write that skips moderation) is closed by Part B, AC5" },
+    "Attack_Surface_Analysis": { "verdict": "finding", "finding": "F3", "note": "every entry point of the attack surface changes in Part B, AC1-AC7" },
+    "Authentication": { "verdict": "not applicable", "reason": "no sign-in change; permissions.ts reads the same keys the policies will use" },
+    "Authentication_Patterns": { "verdict": "not applicable", "reason": "no authentication code; the database authorizes by auth.uid() as before" },
+    "Authorization": { "verdict": "finding", "finding": "F3", "note": "the key in each policy is Part B, AC2" },
+    "Authorization_Decisions_And_Output_Handling": { "verdict": "finding", "finding": "F3", "note": "the one public predicate is Part B, AC6" },
+    "Authorization_Patterns": { "verdict": "finding", "finding": "F3", "note": "caller_has_permission inside each policy is Part B, AC2" },
+    "Authorization_Policy_And_Data_Distribution": { "verdict": "finding", "finding": "F3", "note": "keys read at query time are Part B, AC2" },
+    "Authorization_Regression_Testing": { "verdict": "finding", "finding": "F3", "note": "the PostgREST key tests are Part B, AC2" },
+    "Authorization_Testing_Automation": { "verdict": "finding", "finding": "F3", "note": "the moderator-key matrix test is Part B, AC2" },
+    "Bot_Management_and_Anti-Automation": { "verdict": "not applicable", "reason": "no limit changes; the limiter belongs to Task 959" },
+    "Business_Logic_Security": { "verdict": "finding", "finding": "F3", "note": "the moderation trigger is Part B, AC5" },
+    "Content_Security_Policy": { "verdict": "not applicable", "reason": "no header or script change in this database task" },
+    "Cookie_Theft_Mitigation": { "verdict": "not applicable", "reason": "no cookie changes in the database hardening or its tools" },
+    "Credential_Stuffing_Prevention": { "verdict": "not applicable", "reason": "no sign-in path changes; limits belong to Task 959" },
+    "Cryptographic_Storage": { "verdict": "not applicable", "reason": "the Part A tools store and encrypt nothing; sha256 only names the proven files" },
+    "Database_Security": { "verdict": "finding", "finding": "F3", "note": "the grants, bucket bounds and policy cleanup are Part B, AC1 and AC7" },
+    "Denial_of_Service": { "verdict": "finding", "finding": "F3", "note": "the bucket size limit is Part B, AC7" },
+    "Dependency_Graph_SBOM": { "verdict": "not applicable", "reason": "pg is a development dependency; the SBOM job covers production dependencies and is unchanged" },
+    "Email_Validation_and_Verification": { "verdict": "not applicable", "reason": "pending_email becomes server-only by column grant in Part B; the confirmation flow is unchanged" },
+    "File_Upload": { "verdict": "finding", "finding": "F3", "note": "the avatars bucket bounds are Part B, AC7" },
+    "GraphQL": { "verdict": "finding", "finding": "F3", "note": "the policies that guard pg_graphql change in Part B, AC1" },
+    "HTTP_Strict_Transport_Security": { "verdict": "not applicable", "reason": "no response header changes in a database task" },
+    "Identity_Propagation_Patterns": { "verdict": "finding", "finding": "F3", "note": "the admin-client writes are Part B, AC4" },
+    "Injection_Prevention": { "verdict": "not applicable", "reason": "the round trip sends reviewed static migration files; no value from input is joined into SQL or a command" },
+    "Input_Validation": { "verdict": "finding", "finding": "F3", "note": "the users CHECKs are Part B, AC4" },
+    "Insecure_Direct_Object_Reference_Prevention": { "verdict": "finding", "finding": "F3", "note": "the per-role read, update and delete tests are Part B, AC4-AC6" },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": ["Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."],
+      "evidence": "`npm run lint` exit 0; `PERMISSION_CHECK` (`scripts/quality/db-catalog-audit.mjs:78`) and the dollar-quote pattern (`scripts/quality/db-sql-roundtrip.mjs:89`) have no nested quantifier"
+    },
+    "Key_Management": { "verdict": "not applicable", "reason": "no key is created, stored or rotated; DATABASE_URL stays in the environment or .env.local" },
+    "Logging": { "verdict": "not applicable", "reason": "the tools print to the terminal only; no application log is added or changed" },
+    "Logging_Vocabulary": { "verdict": "not applicable", "reason": "no application security event is logged by the Part A tools" },
+    "Mass_Assignment": { "verdict": "finding", "finding": "F3", "note": "the users column grants are Part B, AC4" },
+    "Multi_Tenant_Security": { "verdict": "finding", "finding": "F3", "note": "closing the contact RPC to sessions is Part B, AC3" },
+    "Multifactor_Authentication": { "verdict": "not applicable", "reason": "no sign-in factor changes; staff MFA belongs to Task 960" },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": ["Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."],
+      "evidence": "`node --test scripts/quality/install-scripts.test.mjs` 4/4; `pg` 8.23.1 exact, its 7 lockfile versions from registry.npmjs.org with integrity (`package-lock.json`)"
+    },
+    "Nextjs_Security": { "verdict": "not applicable", "reason": "Part A changes no Next.js route, action or configuration" },
+    "OS_Command_Injection_Defense": { "verdict": "not applicable", "reason": "the new tools start no process; only db-sql-roundtrip.test.mjs spawns node with an argument array" },
+    "Prototype_Pollution_Prevention": { "verdict": "not applicable", "reason": "the tools read JSON snapshots into plain records and merge no request object" },
+    "Query_Parameterization": {
+      "verdict": "met",
+      "quotes": ["Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."],
+      "evidence": "`scripts/quality/db-catalog-audit.test.mjs` AC9: a key read from a column or an empty key fails I5, only a literal key passes; red with the previous `PERMISSION_CHECK` (review 1 break)"
+    },
+    "REST_Security": { "verdict": "finding", "finding": "F3", "note": "the bucket bounds behind the avatar route are Part B, AC7" },
+    "SQL_Injection_Prevention": { "verdict": "finding", "finding": "F3", "note": "the definer function with an empty search_path is Part B, AC9 and AC10" },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": ["prevent them from leaking and compromising the organization"],
+      "evidence": "`connect` scrubs the connection string, host, user and password from every error (`scripts/quality/db-catalog-audit.mjs:197`), the round trip scrubs each problem (`scripts/quality/db-sql-roundtrip.mjs:269`); test \"never reach a printed error\" in `scripts/quality/db-catalog-audit.test.mjs`"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": ["Diff-Based Reviews focus on code changes only."],
+      "evidence": "review 1 read every changed file in full; `node scripts/quality/changed-lines-coverage.mjs --base main` and `node scripts/quality/check-files.mjs --worktree` exit 0; F1 found by a probe of `prepareSqlFile`"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
+      "evidence": "every command of the report rerun (kickoff Review 1), e.g. `node scripts/quality/db-types-drift.mjs --catalog <live snapshot>`; the counts that did not reproduce are F2"
+    },
+    "Secure_Product_Design": { "verdict": "finding", "finding": "F3", "note": "the threat-model mitigations are Part B, AC1-AC7" },
+    "Session_Management": { "verdict": "not applicable", "reason": "no session handling changes in the database hardening" },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": ["limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"],
+      "evidence": "`package.json` pins `\"pg\": \"8.23.1\"`; `node scripts/quality/change-report.mjs --lockfile-age main` exit 0, 7 versions, none under 14 days"
+    },
+    "Third_Party_Javascript_Management": { "verdict": "not applicable", "reason": "no script loading changes in a database task" },
+    "Threat_Modeling": { "verdict": "finding", "finding": "F3", "note": "each mitigation of the attack surface is an acceptance criterion of Part B" },
+    "Transport_Layer_Security": { "verdict": "not applicable", "reason": "the refactored connect keeps verified TLS with the project CA, unchanged from main" },
+    "User_Privacy_Protection": { "verdict": "finding", "finding": "F3", "note": "the narrowed public_user_profiles view is Part B, AC7" },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
+      "evidence": "the live audit, drift and round trip were rerun by the reviewer (`node scripts/quality/db-catalog-audit.mjs`, `node scripts/quality/db-sql-roundtrip.mjs`), not taken from the report"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": ["It's highly recommended to perform automated analysis of the dependencies from the birth of the project."],
+      "evidence": "`npm audit --json`: 73 advisories, none on pg, pg-cloudflare, pg-connection-string, pg-pool, pg-protocol, pgpass or split2"
+    },
+    "Web_Service_Security": { "verdict": "not applicable", "reason": "no service schema changes; the database adds constraints behind the same API" }
+  }
+}

@@ -68,7 +68,7 @@
     "Injection_Prevention": {
       "verdict": "met",
       "quotes": [
-        "the values for commands and the relevant arguments should be both validated"
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
       ],
       "evidence": "scripts/quality/owasp.mjs:212-214 starts Node with an argv array and no shell, and `session` takes no argument; `node scripts/quality/owasp.mjs check` 0"
     },

@@ -1,0 +1,231 @@
+{
+  "task": "926",
+  "sheets": {
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": ["it is important to identify the attacks which the application must defend against"],
+      "evidence": "kickoff \"## Attack surface\" T1 (anonymous company spam) and T2 (anonymous Cloudinary upload); SEC-926-CREATE-DENY in `src/modules/companies/__tests__/companyActions.security.test.ts` and SEC-926-LOGO-DENY in `src/app/api/upload-company-logo/__tests__/route.security.test.ts` fail on their deliberate breaks (review 1: 6 and 4 cases)"
+    },
+    "AI_Agent_Security": {
+      "verdict": "not applicable",
+      "reason": "no agent permission, tool, hook or rule file changes in this diff"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": ["developers should understand and monitor the Attack Surface as they design and build and change a system"],
+      "evidence": "kickoff \"## Attack surface\" names both entry points; `src/__tests__/security/serverEntryGuards.test.ts` no longer lists `createCompanyAction` as public and [SEC-926-COMPANIES-STAFF] fails when the guard is removed (review 1)"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "sign-in and sign-up mechanics are unchanged; only the company picker loses its add panel"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no authentication code is added or changed; the session check stays in lib/auth/server.ts"
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": ["Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."],
+      "evidence": "`src/modules/companies/actions.ts:27-28` and `src/app/api/upload-company-logo/route.ts:27-28` check `companies.manage` on every call; review 1 deliberate breaks B1 (9 failed) and B2 (6 failed)"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "met",
+      "quotes": ["Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."],
+      "evidence": "`assertAdminOrMod` returns unauthorized/forbidden for any non-ok `checkStaff` result; the ghost-profile and key-off cases in SEC-926-CREATE-DENY insert nothing"
+    },
+    "Authorization_Patterns": {
+      "verdict": "met",
+      "quotes": ["Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."],
+      "evidence": "the staff check is the first statement of `createCompanyAction` (`actions.ts:27`) and of the route `POST` (`route.ts:27`), before the body or the database is read; SEC-926-LOGO-DENY case \"before the body is read\""
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "not applicable",
+      "reason": "no policy data is distributed or cached; the existing companies.manage key is reused unchanged"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": ["Relying on UI hiding is insufficient; the API layer must enforce the check"],
+      "evidence": "SEC-926-CREATE-DENY in `src/modules/companies/__tests__/companyActions.security.test.ts` calls the server action directly and SEC-926-LOGO-DENY in `src/app/api/upload-company-logo/__tests__/route.security.test.ts` posts to the route directly; both reran green in review 1 (231 passed in the 8 target files)"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "met",
+      "quotes": ["Integration test cases validate the correct implementation of the authorization matrix."],
+      "evidence": "`src/__tests__/security/serverEntryGuards.test.ts` [SEC-926-COMPANIES-STAFF]: every export under src/modules/companies needs a staff guard, with planted scanner cases; fails on break B1"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "not applicable",
+      "reason": "the anonymous creation path is removed, so no anonymous caller remains to limit"
+    },
+    "Business_Logic_Security": {
+      "verdict": "not applicable",
+      "reason": "no business invariant changes; the duplicate-name rule and its race handling are unchanged and still tested"
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie is created, read or changed by this diff"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the sign-in path and its captcha check are unchanged by this diff"
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "met",
+      "quotes": ["Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS."],
+      "evidence": "the new note is rendered as React text through Mantine `description`; `npm run lint` exit 0 in review 1 (react/no-danger)"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "not applicable",
+      "reason": "the HMAC grant code is deleted; nothing new is hashed, signed or stored"
+    },
+    "Denial_of_Service": {
+      "verdict": "not applicable",
+      "reason": "the anonymous storage path is removed; staff uploads keep the 2 MB and 256 px limits"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "met",
+      "quotes": ["It is always a bad idea to use a user-controlled input in dangerous sources such as eval."],
+      "evidence": "`src/modules/auth/components/AuthSheet.tsx:353-362` and `src/design-system/mantine/patterns/MantineCombobox.tsx:310` add no eval, Function, innerHTML or computed URL; `npm run lint` exit 0"
+    },
+    "File_Upload": {
+      "verdict": "met",
+      "quotes": ["Validate the file type, don't trust the Content-Type header as it can be spoofed"],
+      "evidence": "`route.ts:63` keeps `declaredTypeMatchesBytes`; [SEC-S15-SRV-DENY] in `src/lib/uploads/__tests__/uploads.security.test.ts` green; the route now admits staff only (break B2)"
+    },
+    "HTML5_Security": {
+      "verdict": "not applicable",
+      "reason": "no storage, postMessage or HTML5 API use is added; the deleted panel's object URLs are gone"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "no response header or transport configuration changes in this diff"
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "met",
+      "quotes": ["Each receiving service must still authorize the requested action and resource."],
+      "evidence": "the service-role insert (`actions.ts:34` on) and the service-role logo update run only after `checkStaff` passes; break B1 and B2 show the DENY cases reach no insert or Cloudinary call"
+    },
+    "Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no query or command is built; the escaped ilike lookup is unchanged"
+    },
+    "Input_Validation": {
+      "verdict": "not applicable",
+      "reason": "no new input is accepted; the route loses its grant field, argument schemas are Task 955"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "met",
+      "quotes": ["implement access control checks for each object that users try to access"],
+      "evidence": "`src/modules/companies/__tests__/companyActions.security.test.ts` SEC-926-CREATE-DENY last case: a refused caller gets the same refusal for an existing name, never the company id; `src/app/api/upload-company-logo/route.ts:27-28` checks staff before the company lookup"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": ["Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."],
+      "evidence": "the only new regular expressions are in tests (`STAFF_GUARD_RE`, a literal alternation); `npm run lint` and `npm run typecheck` exit 0 in review 1; CodeQL runs on the PR"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is added; the grant's derived key is deleted (audit S-10 closed)"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no prompt, agent tool or model boundary changes in this diff"
+    },
+    "Mass_Assignment": {
+      "verdict": "not applicable",
+      "reason": "the insert keeps its explicit name field; the grant output field is removed"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "no MCP server or tool configuration changes in this diff"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in factor changes; staff MFA is Task 960"
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": ["Rendering the form only on a protected page does not authenticate the action request."],
+      "evidence": "`createCompanyAction` is guarded although only the admin page renders its form; SEC-926-CREATE-DENY calls it without any page"
+    },
+    "Nodejs_Security": {
+      "verdict": "not applicable",
+      "reason": "runtime and body handling unchanged except that the body is read after authorization"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "the Google sign-in code is untouched; only dead mocks were removed from its tests"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "no command call; the only script file touched is a JSON registry losing two rows"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no object is built from request keys; code paths are only removed"
+    },
+    "REST_Security": {
+      "verdict": "met",
+      "quotes": ["the access control decision should be taken locally by REST endpoints"],
+      "evidence": "`route.ts:27-28` decides access itself, 403 for anyone without companies.manage; SEC-926-LOGO-DENY and SEC-S03-SRV-DENY fail on break B2"
+    },
+    "Secrets_Management": {
+      "verdict": "not applicable",
+      "reason": "no secret is added, read or moved; UPLOAD_GRANT_SECRET usage is deleted"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": ["Diff-Based Reviews focus on code changes only."],
+      "evidence": "review 1 read the whole diff (27 files); `node scripts/quality/changed-lines-coverage.mjs --base main` and `node scripts/quality/check-files.mjs --worktree` exit 0"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
+      "evidence": "every command of the executor's report was rerun in review 1: `npm run lint`, `npm run typecheck`, `npm test -- --coverage` (6394 passed), `npm run build-storybook`, `node scripts/check-locale-leak.mjs`, five deliberate breaks"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": ["Threat Modeling - which results in security related stories being added during"],
+      "evidence": "T1 to T3 of the kickoff are AC1 and AC2: `src/modules/companies/__tests__/companyActions.security.test.ts`, `src/app/api/upload-company-logo/__tests__/route.security.test.ts`, `src/__tests__/security/serverEntryGuards.test.ts`"
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "met",
+      "quotes": ["Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."],
+      "evidence": "both triggers refuse callers without the staff key: `src/modules/companies/actions.ts:27-28`, `src/app/api/upload-company-logo/route.ts:27-28` (breaks B1, B2)"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "no session cookie, lifetime or renewal changes; the AuthSheet change is presentational"
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "not applicable",
+      "reason": "no third-party script is added, removed or loaded differently"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": ["the threat modeling process should answer the following four questions"],
+      "evidence": "kickoff \"## Attack surface\" answers them; each mitigation is AC1 or AC2 with `src/modules/companies/__tests__/companyActions.security.test.ts` and `src/app/api/upload-company-logo/__tests__/route.security.test.ts`"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "no transport, certificate or outbound connection setting changes"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "not applicable",
+      "reason": "no personal data is stored or shown; an anonymous write is removed"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
+      "evidence": "review 1 reproduced each claim of the report: 9/6/4/6/2 failing counts of the breaks, `npm test -- --coverage` 6394 tests, `node scripts/quality/changed-lines-coverage.mjs --base main`, 0 leaks on both Stories"
+    },
+    "Web_Frontend_Security": {
+      "verdict": "met",
+      "quotes": ["The fundamental security rule is to never use innerHTML with untrusted data."],
+      "evidence": "`src/modules/auth/components/AuthSheet.tsx:353-362` and `src/design-system/mantine/patterns/MantineCombobox.tsx:310` use no innerHTML; `npm run lint` exit 0"
+    },
+    "Web_Service_Security": {
+      "verdict": "not applicable",
+      "reason": "no new endpoint or schema; the logo route only loses its grant branch"
+    }
+  }
+}

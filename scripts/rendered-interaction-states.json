@@ -6143,28 +6143,6 @@
       "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
     },
     {
-      "id": "patterns-mantine-authsheet--register-agent-add-company",
-      "story": "patterns-mantine-authsheet--register-agent-add-company",
-      "open": {
-        "kind": "mount"
-      },
-      "portals": 1,
-      "focus": "trap",
-      "dismiss": [],
-      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
-    },
-    {
-      "id": "patterns-mantine-authsheet--register-agent-add-company-logo",
-      "story": "patterns-mantine-authsheet--register-agent-add-company-logo",
-      "open": {
-        "kind": "mount"
-      },
-      "portals": 1,
-      "focus": "trap",
-      "dismiss": [],
-      "reason": "the Story harness leaves onClose a no-op: Escape closes nothing in the built Storybook (observed by the registry probe), so no dismissal gesture can be exercised"
-    },
-    {
       "id": "patterns-mantine-authsheet--welcome-back",
       "story": "patterns-mantine-authsheet--welcome-back",
       "open": {

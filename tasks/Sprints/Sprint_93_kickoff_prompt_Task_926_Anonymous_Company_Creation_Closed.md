@@ -5,7 +5,10 @@ Sprint 93 (governance reset; rewritten 2026-11-06 from the Sprint 78 kickoff, wh
 D1 "do not allow creating a company during sign-up; a company is created only by a signed-in agent with a confirmed
 e-mail, in the cabinet"; D2 the note under the sign-up picker: "If you did not find your company, you can create it
 in your cabinet". The rest of the old Task 926 (one company model, cabinet creation, migration of the free text) is
-Task 949. Implementer: Sonnet. Reviewer: Opus.
+Task 949. Implementer: Sonnet. Reviewer: Opus. Revision 1 (Opus, 2026-11-15, re-checked against `main` dd0852c7e):
+`MantineCombobox` has no field description (its `description` is per option), so the note goes through a new prop
+of the shared owner with its direct Story; the picker's input gets its accessible name; every consumer of the grant is
+listed; the sign-up call moved to `AuthSheet.tsx:405`.
 
 ## Goal
 
@@ -14,7 +17,8 @@ anonymous POST inserts a row into `companies` through the service role (`:44-48`
 (`:61`) that lets it upload a file to Cloudinary through `/api/upload-company-logo` (`route.ts:46`). The new
 company appears at once in every agent's sign-up picker. The allowlist entry that permits this
 (`src/__tests__/security/serverEntryGuards.test.ts:93`) says "bounded and rate limited" — the action has no rate
-limit. The sign-up calls it at `src/modules/auth/components/AuthSheet.tsx:417`.
+limit. The sign-up calls it at `src/modules/auth/components/AuthSheet.tsx:405`. The picker's `InputLabel` (`:315`) has no
+`htmlFor`, so the company input has no accessible name.
 
 After the task: creating a company and setting its logo require staff with `companies.manage`; the sign-up only
 picks an existing company and shows the D2 note.
@@ -25,17 +29,25 @@ picks an existing company and shows the D2 note.
   the grant is no longer created or returned; the comment about registration is removed.
 - `src/app/api/upload-company-logo/route.ts`: staff only — the `grant` branch, its `logo_exists` rule for grants and
   the header lines about the grant are removed.
-- `src/lib/uploads/uploadGrant.ts`: delete it if `company-logo` is its only kind and nothing else imports it
-  (grep; state the result); its test goes with it.
+- `src/lib/uploads/uploadGrant.ts`: `company-logo` is its only kind (`:15`); delete it once nothing imports it. Its
+  consumers (grep 2026-11-15): the `upload grant` block of `src/lib/uploads/__tests__/uploads.security.test.ts` (from
+  `:63`; the file-signature cases stay), the grant cases of `src/modules/companies/__tests__/companies.security.test.ts`,
+  `companyActions.security.test.ts` and `upload-company-logo/__tests__/route.security.test.ts`, and the
+  `createCompanyAction` mock of `AuthSheet.banned.security.test.tsx:23` once AuthSheet no longer imports it.
+- `src/design-system/mantine/patterns/MantineCombobox.tsx` (shared owner, visual invariant): a field-level
+  `description?: ReactNode` prop, passed to the `TextInput` trigger of both variants, so the theme's
+  `inputWrapperOrder` (`theme.ts:1074`) puts it below the input and Mantine links it with `aria-describedby`; its
+  direct Story `WithDescription` in `src/stories/mantine/primitives/Combobox.stories.tsx` with a play function, and a
+  case in `src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx`.
 - `AuthSheet.tsx`: the inline add-company panel (`MantineAddItemPanel`, name field, logo picker, duplicate state,
   `handleCreate`, the logo state and their imports) is removed; the picker keeps its label and gets the D2 note as
-  the field description (`MantineCombobox`/`MantineSelect` description slot; the theme places it below the input,
-  `src/design-system/mantine/theme.ts` `inputWrapperOrder`). New i18n key in all four locales (`sq`, `en`, `uk`,
+  the field description through the new `description` prop; `triggerAriaLabel` gets the label text, so the input is
+  named. New i18n key in all four locales (`sq`, `en`, `uk`,
   `it`); `uk` is the owner's text verbatim: «Якщо ви не знайшли свою компанію, ви можете її створити у своєму
   кабінеті».
 - Stories: `RegisterAgentAddCompany` and `RegisterAgentAddCompanyLogo` in
   `src/stories/patterns/mantine/AuthSheet.stories.tsx` are deleted; `RegisterAgent` shows the note. Remove their
-  rows from `scripts/rendered-interaction-states.json` and any other registry the product checks name.
+  rows from `scripts/rendered-interaction-states.json` (`:6146`, `:6157`) and any other registry the product checks name.
 - `serverEntryGuards.test.ts:93`: the exception for `createCompanyAction` is removed (it is now guarded).
 - Unused i18n keys of the removed panel are deleted from all four locales.
 - Out of scope: the cabinet free-text company field (stays until Task 949), the admin companies page behaviour
@@ -137,8 +149,11 @@ description style (one look, canonical `MantineCombobox`). Mobile: no new geomet
   assertion in it fails if any `'use server'` export under `src/modules/companies` lacks a staff guard.
 - AC3 `src/modules/auth/components/__tests__/AuthSheet.registerAgent.test.tsx` (new): for `uk` and `sq` the agent
   sign-up renders the D2 note as the picker's description (the owner's `uk` text verbatim, after the input in DOM order)
-  and no "add company" option or panel; the `RegisterAgent` Story's play function in
+  and no "add company" option or panel, and the input's accessible name is the picker label; the `RegisterAgent` Story's play function in
   `src/stories/patterns/mantine/AuthSheet.stories.tsx` asserts the same and runs in `node scripts/check-locale-leak.mjs`.
+- AC5 `MantineCombobox` renders a field description below its input, linked by `aria-describedby`, in both variants
+  — test: `src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx` (new case) and the
+  `WithDescription` Story's play function in `src/stories/mantine/primitives/Combobox.stories.tsx`.
 - AC4 `npm run lint`, `npm run typecheck`, `npm test`, `npm run build-storybook`, `node scripts/quality/check-files.mjs --worktree` and
   `node scripts/quality/changed-lines-coverage.mjs --base main` (after `npx vitest run --coverage`) exit 0;
   `node scripts/quality/product-gates.mjs` shows no new failure versus before.
@@ -147,8 +162,47 @@ description style (one look, canonical `MantineCombobox`). Mobile: no new geomet
 
 1. Write SEC-926-CREATE-DENY and SEC-926-LOGO-DENY first; run them; they fail on today's code (paste).
 2. Guard the action, strip the grant path from the route; the tests pass.
-3. Sign-up: remove the panel, add the note and keys; update Stories and registries.
-4. Write the AC2 assertion and the AC3 test and play function; run AC1–AC4. Report each command, exit code and
+3. `MantineCombobox` `description` with its test and Story (AC5); then the sign-up: remove the panel, add the note,
+   the accessible name and the keys; update Stories and registries.
+4. Write the AC2 assertion and the AC3 test and play function; run AC1–AC5. Report each command, exit code and
    relevant output.
 
 ## Review
+
+Review 1 of the working tree on `main` dd0852c7e (uncommitted, 27 files + 1 new) — APPROVED
+Scope: diff-based; every hunk of the 28 files read; production files `actions.ts`, `route.ts`, `AuthSheet.tsx`
+(CompanyField), `MantineCombobox.tsx` read in full or around every change; entry points `createCompanyAction` (Server
+Action, now staff) and `POST /api/upload-company-logo` (Route Handler, now staff).
+Tools (local, Opus, 2026-11-15, each exit 0 unless stated): `node scripts/quality/owasp.mjs sync` and `check`;
+`node scripts/quality/check-ruleset.mjs`; `npm run lint`; `npm run typecheck`; `node scripts/quality/check-files.mjs
+--worktree` (27 files, 0 findings); `npm test -- --coverage` (397 files, 6394 tests passed);
+`node scripts/quality/changed-lines-coverage.mjs --base main` (no failure); the 8 target files 231 passed;
+`npm run build-storybook`; `node scripts/check-locale-leak.mjs --story=patterns-mantine-authsheet--register-agent` and
+`--story=mantine-primitives-combobox--with-description` (9/9 tuples each, 0 leaks, 0 render errors: the plays pass);
+`node scripts/quality/cloudinary-config.mjs` exit 1 with U1 only (the unsigned listing preset, Task 957; not touched
+here); `node scripts/quality/db-catalog-audit.mjs` exit 2, BLOCKED: `pg` is not installed (the diff has no SQL; the
+repository's `scripts/grant-discipline-audit.sql:42` revokes session writes on `companies`). `change-report.mjs`,
+CodeQL, `npm audit`, gitleaks and the browser jobs run on the pull request (`gh pr checks <n>`).
+Deliberate breaks (each restored, SHA-256 equal): B1 `assertAdminOrMod()` out of `createCompanyAction` → 9 failed
+(6 SEC-926-CREATE-DENY, SEC-926-COMPANIES-STAFF, 2 allowlist cases); B2 the route's staff refusal out → 6 failed
+(both SEC-926-LOGO-DENY, SEC-S03-SRV-DENY and 3 more); B3 `description` not passed by `MantineCombobox` → 4 failed
+(AC5 both variants, AC3 uk and sq); B4 `triggerAriaLabel` out of AuthSheet → 6 failed; B5 `description={note}` out →
+2 failed. Every count matches the executor's report. Mobile path: a temporary probe at 320, 639 and 640 px × both
+variants (6/6 passed, file deleted) shows the note under the read-only mobile trigger and `aria-describedby` intact.
+Findings: Critical 0, High 0, Medium 0, Low 0
+Overall risk: the anonymous company insert and the anonymous logo upload are gone; both entry points refuse every
+caller without `companies.manage` before reading the body or the database.
+
+Acceptance criteria: AC1 met (both files, all DENY cases fail on B1/B2); AC2 met (no allowlist entry; the new
+assertion fails on B1); AC3 met (6 of 11 fail on B4, 2 on B5; the play runs in the locale-leak detector); AC4 met
+(commands above; `product-gates.mjs` taken from the report, it runs again in CI); AC5 met (B3).
+
+Recorded, not findings: (1) the executor stated its self-review was not three full clean passes (two passes merged,
+part read in pieces, the locale JSON by hunk); review 1 read every changed line; the locale files were read by hunk
+and compared with `main` by script: 2689 keys in each of the four, the same 4 removed (`auth.company_add_new`,
+`auth.company_logo`, `auth.company_exists`, `common.select`, none still called) and 3 added in each. (2) Translations: en/it "account" and sq
+"kabinetin" follow each locale's own cabinet title (`cabinet.title`: "My Account", "Il mio account", "Kabineti");
+accepted. (3) `src/__tests__/security/clientSinks.test.ts:143` keeps `UPLOAD_GRANT_SECRET` in a secret-name pattern:
+a harmless extra guard. Gaps this change opened elsewhere, closed by Opus in this review: Task 959 still scoped the
+deleted grant key (S-10, Scope, Key_Management, AC6) — removed from its kickoff; `findings.md` S-03 and S-10 now read
+fixed by Task 926 with their tests.

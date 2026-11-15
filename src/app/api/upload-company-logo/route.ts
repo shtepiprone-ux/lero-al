@@ -4,7 +4,6 @@ import { checkStaff } from '@/lib/auth/staff'
 import { uploadToCloudinary, readImageSize, publicIdFromUrl } from '@/lib/cloudinaryUpload'
 import { deleteAsset } from '@/lib/cloudinaryDelete'
 import { declaredTypeMatchesBytes } from '@/lib/uploads/imageSniff'
-import { verifyUploadGrant } from '@/lib/uploads/uploadGrant'
 
 // ── Route handler ───────────────────────────────────────────────────────────
 //
@@ -13,11 +12,9 @@ import { verifyUploadGrant } from '@/lib/uploads/uploadGrant'
 // Body (multipart/form-data):
 //   logo      — File (required) — PNG/JPG/WEBP, max 256×256 px, max 2 MB
 //   companyId — string (required) — UUID of the company to update
-//   grant     — string (agent registration only) — the short-lived grant `createCompanyAction` returned for THIS new company
 //
-// Who may call it (Task 923 Revision 7, findings S3 / S15; before, nobody was checked and any company id was accepted):
-//   - an admin or a moderator, for any company;
-//   - or the holder of a valid grant for exactly this company, and only while the company has no logo yet (the registration flow has no session).
+// Who may call it (Task 923 Revision 7, findings S3 / S15; Task 926): staff only — an administrator, or a moderator who holds `companies.manage`.
+// Everyone else, signed in or not, gets 403 before the body is read, the company is looked up or anything is uploaded.
 // The file must be the image type it declares, judged by its first bytes, not by the browser-declared type.
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -25,6 +22,11 @@ const VALID_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_BYTES = 2 * 1024 * 1024
 
 export async function POST(req: NextRequest) {
+  // Authorisation first, before the body is parsed: a stranger learns nothing about which companies exist and cannot make the server buffer an upload.
+  // Task 923 R75: a moderator needs the `companies.manage` key to replace a company's logo (an administrator holds every key)
+  const staffCheck = await checkStaff({ permission: 'companies.manage' })
+  if (!staffCheck.ok) return NextResponse.json({ error: 'forbidden' }, { status: 403 })
+
   let formData: FormData
   try {
     formData = await req.formData()
@@ -34,17 +36,9 @@ export async function POST(req: NextRequest) {
 
   const file = formData.get('logo') as File | string | null
   const companyId = (formData.get('companyId') as string | null)?.trim()
-  const grant = formData.get('grant')
 
   if (!file || typeof file === 'string') return NextResponse.json({ error: 'no_file' }, { status: 400 })
   if (!companyId || !UUID_RE.test(companyId)) return NextResponse.json({ error: 'no_company_id' }, { status: 400 })
-
-  // Authorisation first: a stranger learns nothing about which companies exist.
-  // Task 923 R75: a moderator needs the `companies.manage` key to replace a company's logo (an administrator holds every key); the grant path is unchanged
-  const staffCheck = await checkStaff({ permission: 'companies.manage' })
-  const staff = staffCheck.ok ? staffCheck.role : null
-  const granted = !staff && typeof grant === 'string' && verifyUploadGrant('company-logo', companyId, grant)
-  if (!staff && !granted) return NextResponse.json({ error: 'forbidden' }, { status: 403 })
 
   if (!VALID_TYPES.includes(file.type)) return NextResponse.json({ error: 'invalid_type' }, { status: 400 })
   if (file.size > MAX_BYTES) return NextResponse.json({ error: 'file_too_large' }, { status: 400 })
@@ -61,8 +55,6 @@ export async function POST(req: NextRequest) {
   if (lookupErr || !company) {
     return NextResponse.json({ error: 'company_not_found' }, { status: 404 })
   }
-  // A grant sets the FIRST logo only; replacing one is a staff action.
-  if (!staff && company.logo_url) return NextResponse.json({ error: 'logo_exists' }, { status: 409 })
 
   const bytes = await file.arrayBuffer()
   if (bytes.byteLength === 0) {

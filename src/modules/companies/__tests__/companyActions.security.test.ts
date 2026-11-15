@@ -1,9 +1,8 @@
 // @vitest-environment node
 /**
- * Security (Task 923 Revision 7, findings S3 / S6): company records.
- *  - creation is open (agent registration happens before a session), so the name is checked, the duplicate lookup asks for ONE name with wildcards escaped,
- *    and only a NEW company gets the grant to set its first logo (a stranger must not be able to change an existing agency's logo);
- *  - renaming and deleting are for admin / moderator only.
+ * Security (Task 923 Revision 7, findings S3 / S6; Task 926): company records. Creating, renaming and deleting are for staff with `companies.manage` only
+ * (an administrator, or a moderator whose key is on); nobody else, signed in or not, reaches the database. For staff the name is checked and the duplicate lookup
+ * asks for ONE name with wildcards escaped.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createFakeDb } from '@/tests/fakeSupabase'
@@ -12,7 +11,6 @@ let db = createFakeDb()
 let currentUser: { id: string } | null = null
 vi.mock('@/lib/supabase/admin', () => ({ createAdminClient: () => db.client }))
 vi.mock('@/lib/auth/server', () => ({ getUser: async () => currentUser }))
-vi.mock('@/lib/uploads/uploadGrant', () => ({ createUploadGrant: (kind: string, id: string) => `grant:${kind}:${id}` }))
 const likePatterns: string[] = []
 
 import { createCompanyAction, deleteCompanyAction, updateCompanyAction } from '../actions'
@@ -46,19 +44,19 @@ beforeEach(() => {
   }) as never
 })
 
-describe('createCompanyAction (open to a visitor)', () => {
-  it('creates a new company and returns the grant for ITS logo', async () => {
+describe('createCompanyAction (staff)', () => {
+  beforeEach(() => { currentUser = { id: 'adm' } })
+
+  it('creates a new company and returns only its id', async () => {
     const res = await createCompanyAction('  Alba Homes  ')
-    expect(res.id).toBeDefined()
-    expect(res.logoGrant).toBe(`grant:company-logo:${res.id}`)
+    expect(res).toEqual({ id: expect.any(String) })
     expect(db.tables.companies.at(-1)?.name).toBe('Alba Homes')
   })
 
-  it('an existing name (any case, any spacing around) returns that company as a duplicate and NO grant', async () => {
+  it('an existing name (any case, any spacing around) returns that company as a duplicate', async () => {
     for (const name of ['Nova Real Estate', 'nova real estate', '  NOVA REAL ESTATE  ']) {
       const res = await createCompanyAction(name)
       expect(res).toEqual({ id: 'c1', duplicate: true })
-      expect(res.logoGrant).toBeUndefined()
     }
     expect(db.tables.companies).toHaveLength(1)
   })
@@ -81,7 +79,7 @@ describe('createCompanyAction (open to a visitor)', () => {
     expect((await createCompanyAction('y'.repeat(120))).id).toBeDefined()
   })
 
-  it('a race (unique violation) returns the company that won, with no grant', async () => {
+  it('a race (unique violation) returns the company that won', async () => {
     const real = db.client.from
     let inserted = false
     db.client.from = ((t: string) => {
@@ -95,7 +93,7 @@ describe('createCompanyAction (open to a visitor)', () => {
     expect(res).toEqual({ id: 'winner', duplicate: true })
   })
 
-  it('another database error is "save_failed" with no grant', async () => {
+  it('another database error is "save_failed"', async () => {
     const real = db.client.from
     db.client.from = ((t: string) => {
       const c = real(t) as Record<string, unknown>
@@ -103,6 +101,59 @@ describe('createCompanyAction (open to a visitor)', () => {
       return c
     }) as never
     expect(await createCompanyAction('Brand New Co')).toEqual({ error: 'save_failed' })
+  })
+})
+
+// Task 926: creating a company is a staff action. The cases call the action directly, not through a form (Authorization Regression Testing).
+const companyInserts = () => db.log.filter((l) => l.table === 'companies' && l.op === 'insert')
+
+describe('[SEC-926-CREATE-DENY] createCompanyAction refuses everyone without companies.manage and inserts nothing', () => {
+  it('an anonymous caller is "unauthorized"', async () => {
+    currentUser = null
+    expect(await createCompanyAction('Alba Homes')).toEqual({ error: 'unauthorized' })
+    expect(companyInserts()).toEqual([])
+    expect(db.tables.companies).toHaveLength(1)
+  })
+
+  it.each([['a signed-in agent', 'agt'], ['an ordinary user', 'usr']])('%s is "forbidden"', async (_l, id) => {
+    currentUser = { id }
+    expect(await createCompanyAction('Alba Homes')).toEqual({ error: 'forbidden' })
+    expect(companyInserts()).toEqual([])
+    expect(db.tables.companies).toHaveLength(1)
+  })
+
+  it('a session whose profile row is missing is "unauthorized" (a zombie session is a guest)', async () => {
+    currentUser = { id: 'ghost' }
+    expect(await createCompanyAction('Alba Homes')).toEqual({ error: 'unauthorized' })
+    expect(companyInserts()).toEqual([])
+    expect(db.tables.companies).toHaveLength(1)
+  })
+
+  it('a moderator whose companies.manage key is off is "forbidden"', async () => {
+    db.tables.role_permissions = [{ role: 'moderator', permission_key: 'companies.manage', allowed: false }]
+    currentUser = { id: 'mod' }
+    expect(await createCompanyAction('Alba Homes')).toEqual({ error: 'forbidden' })
+    expect(companyInserts()).toEqual([])
+    expect(db.tables.companies).toHaveLength(1)
+  })
+
+  it('a refused caller learns nothing about an existing company: a duplicate name gets the same refusal, not the company id', async () => {
+    currentUser = { id: 'usr' }
+    expect(await createCompanyAction('Nova Real Estate')).toEqual({ error: 'forbidden' })
+    currentUser = null
+    expect(await createCompanyAction('nova real estate')).toEqual({ error: 'unauthorized' })
+    expect(db.log.filter((l) => l.table === 'companies')).toEqual([])
+  })
+})
+
+describe('[SEC-926-CREATE-ALLOW] createCompanyAction inserts for staff with companies.manage', () => {
+  it.each([['an administrator', 'adm'], ['a moderator with companies.manage', 'mod']])('%s creates the row, with no logoGrant key', async (_l, id) => {
+    currentUser = { id }
+    const res = await createCompanyAction('  Alba Homes  ')
+    expect(res.id).toBeDefined()
+    expect(res).not.toHaveProperty('logoGrant')
+    expect(companyInserts()).toHaveLength(1)
+    expect(db.tables.companies.at(-1)?.name).toBe('Alba Homes')
   })
 })
 

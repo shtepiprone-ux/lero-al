@@ -1,9 +1,10 @@
 // @vitest-environment node
 /**
- * Security (Task 923 Revision 7, findings S3 / S15): POST /api/upload-company-logo.
+ * Security (Task 923 Revision 7, findings S3 / S15; Task 926): POST /api/upload-company-logo.
  *
  * It had no session check and a service-role client: anyone who knew a company id could replace that company's logo (and burn the Cloudinary quota). It now accepts
- * a staff session, or a short-lived grant that was issued for exactly this NEW company, and it stores a file only when its bytes are the image type it declares.
+ * a staff session with `companies.manage` and nobody else (Task 926 removed the registration upload grant), and it stores a file only when its bytes are the image
+ * type it declares.
  */
 import { NextRequest } from 'next/server'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -45,11 +46,12 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 
-import { createUploadGrant } from '@/lib/uploads/uploadGrant'
 import { POST } from '../route'
 
 const COMPANY = '3f1c2a54-9d0e-4c43-8d7a-0e5b1a6c7d21'
 const OTHER = '9a1c2a54-9d0e-4c43-8d7a-0e5b1a6c7d99'
+/** the shape the retired registration grant had (`<expiresAtMs>.<64 hex>`): the route must treat the field as noise, not as a credential */
+const WELL_FORMED_GRANT = `${Date.now() + 15 * 60 * 1000}.${'a1'.repeat(32)}`
 /** a PNG signature and header that declare a size; the rest of the file is not needed for what these tests ask */
 const pngOf = (width: number, height: number) => new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 13, 0x49, 0x48, 0x44, 0x52, 0, 0, width >> 8, width & 255, 0, 0, height >> 8, height & 255])
 const PNG = pngOf(100, 100)
@@ -72,8 +74,6 @@ beforeEach(() => {
   released.length = 0
   company = { id: COMPANY, logo_url: null }
   uploadDims = { width: 100, height: 100 }
-  process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-role-key-for-tests'
-  delete process.env.UPLOAD_GRANT_SECRET
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
@@ -88,7 +88,7 @@ describe('who may upload', () => {
     noSideEffects()
   })
 
-  it('a staff member may upload for any company, with no grant', async () => {
+  it('[SEC-926-LOGO-ALLOW] a staff member with the key may upload for any company, with no grant', async () => {
     staff = 'moderator'
     company = { id: COMPANY, logo_url: 'https://old.example/logo.png' }
     const res = await POST(request())
@@ -97,38 +97,41 @@ describe('who may upload', () => {
     expect(ops.find((o) => o.op === 'update')?.values).toEqual({ logo_url: 'https://res.cloudinary.test/logo.png' })
   })
 
-  it('a grant issued for this company lets a new agency set its first logo', async () => {
-    const res = await POST(request({ grant: createUploadGrant('company-logo', COMPANY) }))
-    expect(res.status).toBe(200)
-    expect(ops.find((o) => o.op === 'update')?.filters).toEqual([['id', COMPANY]])
-  })
-
-  it('a grant issued for ANOTHER company does not work here', async () => {
-    expect(await status(request({ grant: createUploadGrant('company-logo', OTHER) }))).toBe(403)
-    noSideEffects()
-  })
-
-  it('an expired grant does not work', async () => {
-    const old = createUploadGrant('company-logo', COMPANY, Date.now() - 60 * 60 * 1000)
-    expect(await status(request({ grant: old }))).toBe(403)
-    noSideEffects()
-  })
-
-  it('a grant never replaces a logo that already exists (it is for the first logo only)', async () => {
-    company = { id: COMPANY, logo_url: 'https://old.example/logo.png' }
-    expect(await status(request({ grant: createUploadGrant('company-logo', COMPANY) }))).toBe(409)
-    noSideEffects()
-  })
-
   it('a staff member may replace an existing logo', async () => {
     staff = 'admin'
     company = { id: COMPANY, logo_url: 'https://old.example/logo.png' }
     expect(await status(request())).toBe(200)
   })
 
-  it('the company must exist even for a valid grant', async () => {
+  it('a staff member may set the first logo of a company that has none', async () => {
+    staff = 'admin'
+    company = { id: COMPANY, logo_url: null }
+    expect(await status(request())).toBe(200)
+    expect(ops.find((o) => o.op === 'update')?.filters).toEqual([['id', COMPANY]])
+  })
+
+  it('the company must exist even for a staff member', async () => {
+    staff = 'admin'
     company = null
-    expect(await status(request({ grant: createUploadGrant('company-logo', COMPANY) }))).toBe(404)
+    expect(await status(request())).toBe(404)
+    noSideEffects()
+  })
+})
+
+// Task 926: the route is for staff only; the registration grant is gone, so a grant-shaped field is no credential.
+describe('[SEC-926-LOGO-DENY] an anonymous caller is refused even with a well-formed grant', () => {
+  it('answers 403 and neither calls Cloudinary nor writes the company', async () => {
+    const res = await POST(request({ grant: WELL_FORMED_GRANT }))
+    expect(res.status).toBe(403)
+    expect(uploads).toEqual([])
+    expect(ops.filter((o) => o.op === 'update')).toEqual([])
+  })
+
+  it('the staff check runs before the body is read: a request that would be refused as malformed is still 403 for an anonymous caller, and nothing is looked up', async () => {
+    expect(await status(request({ file: null }))).toBe(403)              // no file
+    expect(await status(request({ companyId: 'not-a-uuid' }))).toBe(403) // no valid company id
+    expect(await status(new NextRequest('http://localhost/api/upload-company-logo', { method: 'POST', body: 'not a form', headers: { 'content-type': 'text/plain' } }))).toBe(403)   // not a form at all
+    expect(ops).toEqual([])                                              // the company table was never read
     noSideEffects()
   })
 })
@@ -237,11 +240,11 @@ describe('what may be uploaded', () => {
 })
 
 // Task 923 R38 (case SEC-S03-SRV-DENY)
-it('[SEC-S03-SRV-DENY] Only staff or the holder of a one-record upload grant replace a company logo', async () => {
+it('[SEC-S03-SRV-DENY] Only staff replace a company logo', async () => {
   company = { id: OTHER, logo_url: 'https://res.cloudinary.test/old.png' }
   expect(await status(request({ companyId: OTHER }))).toBeGreaterThanOrEqual(401)                         // anonymous, no grant
   expect(await status(request({ companyId: OTHER }))).toBeLessThanOrEqual(403)
-  expect(await status(request({ companyId: OTHER, grant: createUploadGrant('company-logo', COMPANY) }))).toBeLessThanOrEqual(403)   // a grant for ANOTHER company
+  expect(await status(request({ companyId: OTHER, grant: WELL_FORMED_GRANT }))).toBeLessThanOrEqual(403)   // a grant-shaped field is no credential
   noSideEffects()                                                                                         // no upload, no change of companies.logo_url
   staff = 'admin'                                                                                         // the control: staff may
   expect(await status(request({ companyId: OTHER }))).toBe(200)

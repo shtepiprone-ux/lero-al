@@ -1,7 +1,7 @@
 // @vitest-environment node
 /**
- * Companies (Task 923 Revision 7, findings S3 / S6): `createCompanyAction` is public by design (registration has no session), so it must be bounded, must not
- * hand out a way to change an EXISTING company, and the staff actions must refuse everyone else.
+ * Companies (Task 923 Revision 7, findings S3 / S6; Task 926): `createCompanyAction` is a staff action (no anonymous registration path any more), so for staff it
+ * must be bounded and must not list other companies, and the staff actions must refuse everyone else.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -31,7 +31,6 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 
-import { verifyUploadGrant } from '@/lib/uploads/uploadGrant'
 import { createCompanyAction, deleteCompanyAction, updateCompanyAction } from '../actions'
 
 beforeEach(() => {
@@ -45,29 +44,29 @@ beforeEach(() => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
-describe('createCompanyAction (public: agent registration)', () => {
-  it('creates a new company and returns a grant for THAT company only', async () => {
+describe('createCompanyAction (staff)', () => {
+  // the staff session the action now requires (Task 926); `calls` also records the staff check's own reads, so the cases look at the companies table only
+  beforeEach(() => { sessionUser = { id: 's1' }; role = 'admin' })
+  const companyCalls = () => calls.filter((c) => c.table === 'companies')
+
+  it('creates a new company and returns only its id', async () => {
     const res = await createCompanyAction('Nova Real Estate')
-    expect(res.id).toBe('new-company-id')
-    expect(res.duplicate).toBeUndefined()
-    expect(verifyUploadGrant('company-logo', 'new-company-id', res.logoGrant)).toBe(true)
-    expect(verifyUploadGrant('company-logo', 'another-company', res.logoGrant)).toBe(false)
+    expect(res).toEqual({ id: 'new-company-id' })
   })
 
-  it('an existing name returns its id as a duplicate and NO grant (a stranger cannot change an existing agency)', async () => {
+  it('an existing name returns its id as a duplicate and inserts nothing', async () => {
     existingRows = [{ id: 'existing-1', name: 'Nova Real Estate' }]
     const res = await createCompanyAction('nova real estate')
     expect(res).toEqual({ id: 'existing-1', duplicate: true })
-    expect(res.logoGrant).toBeUndefined()
     expect(calls.some((c) => c.method === 'insert')).toBe(false)
   })
 
   it('looks the name up in the database with a bounded query, never reading the whole table', async () => {
     await createCompanyAction('Nova')
-    const select = calls.find((c) => c.method === 'select')
+    const select = companyCalls().find((c) => c.method === 'select')
     expect(select).toBeDefined()
     expect(calls.some((c) => c.method === 'ilike')).toBe(true)
-    expect(calls.find((c) => c.method === 'limit')?.args[0]).toBeLessThanOrEqual(10)
+    expect(companyCalls().find((c) => c.method === 'limit')?.args[0]).toBeLessThanOrEqual(10)
   })
 
   it('a percent sign or underscore in the name is searched literally, so one name cannot match many companies', async () => {
@@ -96,7 +95,7 @@ describe('createCompanyAction (public: agent registration)', () => {
 
   it.each([['', 'company_name_too_short'], [' a ', 'company_name_too_short'], ['x'.repeat(121), 'company_name_too_long']])('refuses the name %j', async (name, error) => {
     expect(await createCompanyAction(name)).toEqual({ error })
-    expect(calls).toEqual([])
+    expect(companyCalls()).toEqual([])
   })
 
   it('refuses a name that is not a string', async () => {
@@ -144,6 +143,8 @@ describe('staff-only company actions', () => {
 
 // Task 923 R38 (case SEC-S06-SRV-DENY)
 it('[SEC-S06-SRV-DENY] createCompanyAction never returns other companies and finds a duplicate by a bounded lookup', async () => {
+  sessionUser = { id: 's1' }                                                            // staff: the action refuses everyone else before any lookup (SEC-926-CREATE-DENY)
+  role = 'admin'
   existingRows = [{ id: 'c-1', name: 'Nova' }]
   const res = await createCompanyAction('100%_real')
   expect(JSON.stringify(res)).not.toContain('Nova')                                     // no list of companies in the answer
@@ -153,5 +154,5 @@ it('[SEC-S06-SRV-DENY] createCompanyAction never returns other companies and fin
   expect(calls.some((c) => c.table === 'companies' && c.method === 'limit')).toBe(true)  // one bounded query, never the whole table
   existingRows = [{ id: 'c-1', name: 'Nova' }]
   const dup = await createCompanyAction('Nova')
-  expect(JSON.stringify(dup)).not.toContain('grant')                                    // an existing company hands no upload grant to the caller
+  expect(JSON.stringify(dup)).not.toContain('grant')                                    // no upload grant exists any more (Task 926)
 })

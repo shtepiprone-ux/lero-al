@@ -505,3 +505,27 @@ describe('MantineCombobox — typed search is reset (Task 953)', () => {
     expect(((await screen.findByPlaceholderText('Find a city')) as HTMLInputElement).value).toBe('')
   })
 })
+
+// Task 926 (AC5): a field-level `description` is rendered below the input, in both variants, and the input points at it with `aria-describedby`.
+describe('MantineCombobox — field description (Task 926)', () => {
+  const options = [{ value: 'tirana', label: 'Tirana' }]
+  const NOTE = 'If you did not find your company, you can create it in your cabinet'
+  const tree = (variant: 'input' | 'button', description?: React.ReactNode) =>
+    withProvider(<MantineCombobox options={options} value="" onChange={() => {}} variant={variant} noResultsLabel="none" triggerAriaLabel="probe" description={description} />)
+
+  it.each(['input', 'button'] as const)('variant=%s: the description follows the input in DOM order and is its aria-describedby target', (variant) => {
+    const view = render(tree(variant, NOTE))
+    const input = view.baseElement.querySelector('input') as HTMLInputElement
+    const note = screen.getByText(NOTE)
+    expect(input.getAttribute('aria-describedby')).toBe(note.id)
+    expect(note.id).not.toBe('')
+    expect(input.compareDocumentPosition(note) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it.each(['input', 'button'] as const)('variant=%s: without a description nothing is rendered and the input has no aria-describedby', (variant) => {
+    const view = render(tree(variant))
+    const input = view.baseElement.querySelector('input') as HTMLInputElement
+    expect(input.getAttribute('aria-describedby')).toBeNull()
+    expect(screen.queryByText(NOTE)).toBeNull()
+  })
+})

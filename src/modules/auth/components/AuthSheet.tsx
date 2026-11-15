@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
-import { CheckCircle2, ImagePlus } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { signIn } from '@/lib/auth/browser'
 import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
 import { mapAuthError } from '@/modules/auth/lib/mapAuthError'
@@ -15,13 +15,12 @@ import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/au
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 import { GoogleWelcomeBack } from '@/components/auth/GoogleWelcomeBack'
-import { Alert, Anchor, Box, Button, Center, Divider, Flex, Group, Image as MantineImage, InputLabel, Paper, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
-import { MantineAddItemPanel, MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
+import { Alert, Anchor, Box, Button, Divider, Group, InputLabel, PasswordInput, Stack, Text, TextInput, useMantineTheme } from '@mantine/core'
+import { MantineCombobox, MantineDrawer, PasswordRequirementsHint } from '@/design-system/mantine/patterns'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useCompanies } from '@/modules/companies/hooks/useCompanies'
-import { createCompanyAction } from '@/modules/companies/actions'
 import { PhoneField } from '@/components/shared/PhoneField'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone } from '@/lib/phone'
@@ -325,126 +324,28 @@ function AgentCityField({
 }
 
 // ── Agent company field — isolated so useCompanies only mounts when isAgent=true ─
+// The sign-up only PICKS an existing company (Task 926, owner D1: no company is created during sign-up); the D2 note under the input tells the agent where to create one.
 
 function CompanyField({
   companyId,
   onCompanyId,
   label,
   selectPlaceholder,
-  addNewLabel,
+  note,
 }: {
   companyId: string
   onCompanyId: (id: string) => void
   label: string
   selectPlaceholder: string
-  addNewLabel: string
+  note: string
 }) {
-  const t = useTranslations('auth')
-  const theme = useMantineTheme()
   const tc = useTranslations('common')
-  const { companies, refetch } = useCompanies()
-  const logoInputRef = useRef<HTMLInputElement>(null)
-  const tile = theme.other.boxSize.providerLogoTile
-
-  const [showAdd, setShowAdd] = useState(false)
-  const [newName, setNewName] = useState('')
-  const [creating, setCreating] = useState(false)
-  const [logoFile, setLogoFile] = useState<File | null>(null)
-  const [logoPreview, setLogoPreview] = useState<string | null>(null)
-  const [logoError, setLogoError] = useState<string | null>(null)
-  const [duplicate, setDuplicate] = useState<{ id: string; name: string } | null>(null)
+  const { companies } = useCompanies()
 
   const options = companies.map(c => ({
     value: c.id,
     label: c.name,
   }))
-
-  function handleLogoSelect(file: File) {
-    setLogoError(null)
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-    if (!validTypes.includes(file.type)) {
-      setLogoError(t('company_logo_invalid_type'))
-      return
-    }
-    if (file.size > 2 * 1024 * 1024) {
-      setLogoError(t('company_logo_too_large'))
-      return
-    }
-    // Check dimensions via Image
-    const url = URL.createObjectURL(file)
-    const img = new Image()
-    img.onload = () => {
-      if (img.naturalWidth > 256 || img.naturalHeight > 256) {
-        setLogoError(t('company_logo_too_big'))
-        URL.revokeObjectURL(url)
-        return
-      }
-      setLogoFile(file)
-      setLogoPreview(url)
-    }
-    img.onerror = () => {
-      setLogoError(t('company_logo_invalid_type'))
-      URL.revokeObjectURL(url)
-    }
-    img.src = url
-  }
-
-  function resetAddForm() {
-    setShowAdd(false)
-    setNewName('')
-    setLogoFile(null)
-    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
-    setLogoError(null)
-    setDuplicate(null)
-  }
-
-  async function handleCreate() {
-    if (!newName.trim() || creating) return
-    setDuplicate(null)
-    setCreating(true)
-    const result = await createCompanyAction(newName.trim())
-    if (result.duplicate && result.id) {
-      setCreating(false)
-      setDuplicate({ id: result.id, name: newName.trim() })
-      return
-    }
-    if (!result.id) {
-      setCreating(false)
-      return
-    }
-    // Upload logo if selected
-    if (logoFile) {
-      try {
-        const fd = new FormData()
-        fd.append('logo', logoFile)
-        fd.append('companyId', result.id)
-        // the upload route accepts this one-record grant instead of a session (the person has none yet); Task 923 Revision 7, S3
-        if (result.logoGrant) fd.append('grant', result.logoGrant)
-        await fetch('/api/upload-company-logo', { method: 'POST', body: fd })
-      } catch {
-        // Logo upload failure is non-fatal — company is created successfully
-      }
-    }
-    try {
-      await refetch()
-    } catch (err) {
-      // Refetch failure is non-fatal — the company is already created and selected below
-      console.error(err)
-    }
-    setCreating(false)
-    onCompanyId(result.id)
-    resetAddForm()
-  }
-
-  function handleSelectDuplicate() {
-    if (!duplicate) return
-    onCompanyId(duplicate.id)
-    resetAddForm()
-  }
-
-  function handleCancel() {
-    resetAddForm()
-  }
 
   return (
     <Stack gap="compact">
@@ -456,117 +357,9 @@ function CompanyField({
         placeholder={selectPlaceholder}
         variant="input"
         noResultsLabel={tc('no_results')}
+        triggerAriaLabel={label}
+        description={note}
       />
-      {!showAdd ? (
-        <Button
-          type="button"
-          variant="transparent"
-          onClick={() => setShowAdd(true)}
-          styles={{ inner: { justifyContent: 'flex-start' } }}
-        >
-          + {addNewLabel}
-        </Button>
-      ) : (
-        <MantineAddItemPanel>
-          <TextInput
-            value={newName}
-            onChange={e => { setNewName(e.target.value); setDuplicate(null) }}
-            placeholder={label}
-            maxLength={120}
-            autoFocus
-            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreate() } }}
-          />
-
-          {/* Logo upload */}
-          <Stack gap="tight">
-            <Text component="label" size="xs" c="dimmed">{t('company_logo')}</Text>
-            <Group gap="xs" wrap="nowrap">
-              <Paper withBorder radius="lg" w={tile} h={tile} flex="none">
-                {logoPreview ? (
-                  <MantineImage src={logoPreview} alt="logo preview" fit="contain" h="100%" />
-                ) : (
-                  <Center h="100%">
-                    <ImagePlus size={theme.other.iconSize.standard} color="var(--mantine-color-gray-6)" />
-                  </Center>
-                )}
-              </Paper>
-              <Button
-                type="button"
-                variant="default"
-                size="xs"
-                onClick={() => logoInputRef.current?.click()}
-              >
-                {logoFile ? tc('replace') : tc('choose_file')}
-              </Button>
-              {logoFile && (
-                <Button
-                  type="button"
-                  variant="subtle"
-                  size="xs"
-                  miw={theme.other.touchTarget}
-                  aria-label={tc('aria_clear')}
-                  onClick={() => {
-                    setLogoFile(null)
-                    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
-                    setLogoError(null)
-                  }}
-                >
-                  ×
-                </Button>
-              )}
-              <input
-                ref={logoInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                hidden
-                onChange={e => {
-                  const f = e.target.files?.[0]
-                  if (f) handleLogoSelect(f)
-                  e.target.value = ''
-                }}
-              />
-            </Group>
-            {logoError ? (
-              <Text size="xs" c="red.6">{logoError}</Text>
-            ) : (
-              <Text fz="micro" c="dimmed">{t('company_logo_hint')}</Text>
-            )}
-          </Stack>
-
-          {duplicate && (
-            <Flex direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }} gap="xs">
-              <Text size="xs" c="dimmed">{t('company_exists')}</Text>
-              <Button
-                type="button"
-                size="xs"
-                onClick={handleSelectDuplicate}
-              >
-                {tc('select')}
-              </Button>
-            </Flex>
-          )}
-
-          <Flex direction={{ base: 'column', sm: 'row' }} gap="xs" pt="tight">
-            <Button
-              type="button"
-              size="sm"
-              onClick={handleCreate}
-              disabled={!newName.trim() || creating}
-              loading={creating}
-            >
-              {tc('add')}
-            </Button>
-            <Button
-              type="button"
-              variant="subtle"
-              size="sm"
-              onClick={handleCancel}
-            >
-              {tc('cancel')}
-            </Button>
-          </Flex>
-        </MantineAddItemPanel>
-      )}
     </Stack>
   )
 }
@@ -734,7 +527,7 @@ function RegisterView({
           onCompanyId={setCompanyId}
           label={t('company')}
           selectPlaceholder={t('company_select_placeholder')}
-          addNewLabel={t('company_add_new')}
+          note={t('company_not_found_hint')}
         />
       )}
 

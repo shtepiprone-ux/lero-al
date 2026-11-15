@@ -33,13 +33,16 @@ const GUARD_NAMES = [
   'getUser', 'getSession', 'resolveSession', 'getCurrentUser', 'requireUser', 'requireAuth', 'requireViewer', 'currentUser',
   'assertPermission', 'assertAdminAccess', 'assertAdmin', 'assertAdminOrMod', 'hasPermission', 'requirePermission', 'requireAdmin',
   'verifyOtp', 'exchangeCodeForSession',
-  'timingSafeEqual', 'verifyCronSecret', 'verifyCronRequest', 'verifyHookSignature', 'verifyUploadGrant', 'getStaffRole',
+  'timingSafeEqual', 'verifyCronSecret', 'verifyCronRequest', 'verifyHookSignature', 'getStaffRole',
   // the one staff guard of `@/lib/auth/staff` (Task 923 R71 (k)), and the guard of the admin pages
   'checkStaff', 'requireStaffPage',
 ]
 const GUARD_RE = new RegExp(`\\b(${GUARD_NAMES.join('|')})\\b|auth\\.getUser|CRON_SECRET|x-hook-signature`, 'i')
 
-type Entry = { file: string; name: string; guarded: boolean; usesServiceRole: boolean }
+/** the staff-only guards: unlike `getUser`, none of them is passed by an ordinary signed-in person (Task 926) */
+const STAFF_GUARD_RE = /\b(assertAdminOrMod|checkStaff|requireStaffPage)\b/
+
+type Entry = { file: string; name: string; guarded: boolean; staffGuarded: boolean; usesServiceRole: boolean }
 
 function entries(file: string, text: string): Entry[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX)
@@ -67,12 +70,14 @@ function entries(file: string, text: string): Entry[] {
   const bodyText = (n: ts.Node) => n.getText(sf).replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/(^|[^:'"`])\/\/[^\n]*/g, '$1')
   // a same-file helper is a guard when its own body calls a guard name
   const guardHelpers = new Set([...fns].filter(([, n]) => GUARD_RE.test(bodyText(n))).map(([k]) => k))
+  const staffHelpers = new Set([...fns].filter(([, n]) => STAFF_GUARD_RE.test(bodyText(n))).map(([k]) => k))
   const out: Entry[] = []
   for (const { name, node } of exported) {
     if (isRoute && !/^(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/.test(name)) continue
     const b = bodyText(node)
     const calls = [...guardHelpers].some((h) => new RegExp(`\\b${h}\\s*\\(`).test(b))
-    out.push({ file, name, guarded: GUARD_RE.test(b) || calls, usesServiceRole: /createAdminClient|SERVICE_ROLE|createServiceClient/.test(b) })
+    const staffCalls = [...staffHelpers].some((h) => new RegExp(`\\b${h}\\s*\\(`).test(b))
+    out.push({ file, name, guarded: GUARD_RE.test(b) || calls, staffGuarded: STAFF_GUARD_RE.test(b) || staffCalls, usesServiceRole: /createAdminClient|SERVICE_ROLE|createServiceClient/.test(b) })
   }
   return out
 }
@@ -81,7 +86,6 @@ const ALL: Entry[] = files.flatMap((f) => entries(f.file, f.text))
 
 /**
  * Entry points that are public ON PURPOSE. Each needs the reason; "it is only called from our UI" is not a reason (anyone can call it directly).
- * `signed` = authorised by a capability the caller must hold (an upload grant), not by a session.
  */
 const PUBLIC_BY_DESIGN: Record<string, string> = {
   'src/app/api/exchange-rate/route.ts#GET': 'public read of published exchange rates (no user data); cached for an hour',
@@ -90,7 +94,6 @@ const PUBLIC_BY_DESIGN: Record<string, string> = {
   'src/app/api/listings/[slug]/view/route.ts#POST': 'anonymous view counter for a publicly visible listing; deduplicated by a one-way hash; bots filtered',
   'src/app/api/auth/me/route.ts#GET': 'returns the caller\'s own session profile or null (resolveSession is the check)',
   'src/modules/auth/actions/recovery.ts#logPasswordRecoveryRequest': 'writes one structured log line (hashed e-mail) when someone asks for a recovery e-mail; no data is read or sent',
-  'src/modules/companies/actions.ts#createCompanyAction': 'agent registration creates the agency before there is a session (see the finding S6: bounded and rate limited)',
   'src/modules/contacts/actions/index.ts#submitContactInquiry': 'public contact form: it must work without a session; it validates its input and is rate limited per sender',
   'src/modules/auth/actions/captcha.ts#signUpWithCaptcha': 'sign-up has no session by definition; the captcha token is verified server-side before Supabase is called',
   'src/modules/auth/actions/captcha.ts#requestPasswordResetWithCaptcha': 'a password-reset request has no session by definition; the captcha token is verified server-side first and the answer is neutral',
@@ -124,6 +127,25 @@ describe('every server entry point authenticates or is public by design', () => 
   it('a service-role entry point that is public is on the allowlist AND says how it is bounded', () => {
     const risky = ALL.filter((e) => !e.guarded && e.usesServiceRole).map((e) => `${e.file}#${e.name}`)
     for (const id of risky) expect(PUBLIC_BY_DESIGN[id], id).toBeDefined()
+  })
+})
+
+// Task 926: creating a company used to be public (agent registration had no session). Every action of the companies module is for staff now, so a new one
+// cannot be added with a session-only check, and the module cannot get an allowlist entry again.
+describe('[SEC-926-COMPANIES-STAFF] every "use server" export under src/modules/companies has a staff guard', () => {
+  const companies = ALL.filter((e) => e.file.startsWith('src/modules/companies/'))
+
+  it('finds the three company actions (the check is not empty)', () => {
+    expect(companies.map((e) => e.name).sort()).toEqual(expect.arrayContaining(['createCompanyAction', 'deleteCompanyAction', 'updateCompanyAction']))
+  })
+
+  it('each of them calls a staff guard (assertAdminOrMod / checkStaff), not just a session check', () => {
+    const open = companies.filter((e) => !e.staffGuarded).map((e) => `${e.file}#${e.name}`)
+    expect(open, `these company actions have no staff guard:\n${open.join('\n')}`).toEqual([])
+  })
+
+  it('none of them is on the public-by-design allowlist', () => {
+    expect(Object.keys(PUBLIC_BY_DESIGN).filter((id) => id.startsWith('src/modules/companies/'))).toEqual([])
   })
 })
 
@@ -180,6 +202,17 @@ function contactEntryOffenders(list: { file: string; text: string }[]): string[]
 
 describe('the scanner itself (planted entry points)', () => {
   const scan = (file: string, src: string) => entries(file, src).map((e) => `${e.name}:${e.guarded ? 'guarded' : 'OPEN'}${e.usesServiceRole ? ':service' : ''}`)
+
+  const staffScan = (file: string, src: string) => entries(file, src).map((e) => `${e.name}:${e.staffGuarded ? 'staff' : 'NOT-STAFF'}`)
+
+  it('tells a staff guard from a session check: getUser alone is guarded but not staff-only', () => {
+    const file = 'src/modules/companies/actions.ts'
+    expect(staffScan(file, "'use server'\nexport async function create() { const u = await getUser(); if (!u) return }")).toEqual(['create:NOT-STAFF'])
+    expect(staffScan(file, "'use server'\nexport async function create() { const e = await assertAdminOrMod(); if (e) return }")).toEqual(['create:staff'])
+    expect(staffScan(file, "'use server'\nexport async function create() { await checkStaff({ permission: 'companies.manage' }) }")).toEqual(['create:staff'])
+    expect(staffScan(file, "'use server'\nasync function gate() { return await checkStaff() }\nexport async function create() { await gate() }")).toEqual(['create:staff'])
+    expect(staffScan(file, "'use server'\nexport async function create() { /* assertAdminOrMod later */ return 1 }")).toEqual(['create:NOT-STAFF'])
+  })
 
   it('flags each planted way to a contact number or a contact event, and not the gateway', () => {
     expect(contactEntryOffenders([{ file: 'src/x/actions.ts', text: "'use server'\nexport async function trackListingContactEvent() { return 1 }" }])).toHaveLength(1)

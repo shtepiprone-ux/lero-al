@@ -4,7 +4,7 @@
  * - the password-reset answer is always the same neutral success, whatever the server said (it must not tell whether an e-mail is registered);
  * - the post-login destination is used only when it is a safe path of this site;
  * - what the registration sends is exactly the typed values (trimmed rules, E.164 phone, agent-only fields only for agents);
- * - a company logo is checked for type, size and dimensions before it is offered, and an upload failure never loses the company.
+ * - the agent sign-up only picks an existing company and sends its id (the note and the absence of an add control are in `AuthSheet.registerAgent.test.tsx`).
  */
 import React from 'react'
 import { act, cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
@@ -24,12 +24,9 @@ const recovery = vi.hoisted(() => ({ logPasswordRecoveryRequest: vi.fn() }))
 vi.mock('@/modules/auth/actions/recovery', () => recovery)
 const captcha = vi.hoisted(() => ({ signUpWithCaptcha: vi.fn(), requestPasswordResetWithCaptcha: vi.fn() }))
 vi.mock('@/modules/auth/actions/captcha', () => captcha)
-const companyActions = vi.hoisted(() => ({ createCompanyAction: vi.fn() }))
-vi.mock('@/modules/companies/actions', () => companyActions)
 const router = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }))
 vi.mock('next/navigation', () => ({ useRouter: () => router }))
-const refetch = vi.fn()
-vi.mock('@/modules/companies/hooks/useCompanies', () => ({ useCompanies: () => ({ companies: [{ id: 'c1', name: 'ACME' }], refetch }) }))
+vi.mock('@/modules/companies/hooks/useCompanies', () => ({ useCompanies: () => ({ companies: [{ id: 'c1', name: 'ACME' }], refetch: vi.fn() }) }))
 vi.mock('@/modules/locations/hooks/useLocations', () => ({ useLocations: () => ({ locations: [{ id: 1, name_al: 'Tirana' }, { id: 2, name_al: 'Durres' }] }) }))
 vi.mock('@/components/shared/LocationCombobox', () => ({
   LocationCombobox: (p: { locations: { id: number; name_al: string }[]; value: string; onChange: (v: string | null) => void }) => (
@@ -87,8 +84,8 @@ let googleWindow: ReturnType<typeof vi.spyOn>
 beforeEach(() => {
   setViewport(1024)
   vi.stubEnv('NEXT_PUBLIC_GOOGLE_CLIENT_ID', 'zz-synthetic-client.apps.googleusercontent.com')
-  Object.values({ ...browser, ...recovery, ...captcha, ...companyActions, ...router, ...widget }).forEach((f) => (f as ReturnType<typeof vi.fn>).mockReset())
-  refetch.mockReset(); onOpenChange.mockReset(); sessionStorage.clear()
+  Object.values({ ...browser, ...recovery, ...captcha, ...router, ...widget }).forEach((f) => (f as ReturnType<typeof vi.fn>).mockReset())
+  onOpenChange.mockReset(); sessionStorage.clear()
   googleWindow = vi.spyOn(window, 'open').mockReturnValue({ closed: false, close: vi.fn() } as unknown as Window)
   browser.signIn.mockResolvedValue({ error: null })
   browser.signInWithGoogleIdToken.mockResolvedValue({ data: {}, error: null })
@@ -500,183 +497,6 @@ describe('registration', () => {
 })
 
 describe('company picker (agent registration)', () => {
-  class FakeImage {
-    static width = 100; static height = 100; static fail = false
-    naturalWidth = FakeImage.width; naturalHeight = FakeImage.height
-    onload: (() => void) | null = null; onerror: (() => void) | null = null
-    set src(_v: string) { queueMicrotask(() => (FakeImage.fail ? this.onerror?.() : this.onload?.())) }
-  }
-  const revoke = vi.fn()
-  beforeEach(() => {
-    FakeImage.width = 100; FakeImage.height = 100; FakeImage.fail = false
-    vi.stubGlobal('Image', FakeImage)
-    vi.stubGlobal('URL', Object.assign(URL, { createObjectURL: vi.fn(() => 'blob:preview'), revokeObjectURL: revoke }))
-    revoke.mockReset()
-    companyActions.createCompanyAction.mockResolvedValue({ id: 'new-1' })
-    refetch.mockResolvedValue(undefined)
-  })
-  const openAdd = () => { open('register-agent'); click(new RegExp(a.company_add_new)) }
-  const nameInput = () => screen.getByPlaceholderText(a.company) as HTMLInputElement
-  const fileInput = () => document.querySelector('input[type="file"]') as HTMLInputElement
-  const pick = (file: File) => fireEvent.change(fileInput(), { target: { files: [file] } })
-  const png = (size = 1000, type = 'image/png') => new File([new Uint8Array(size)], 'logo.png', { type })
-
-  it('lists the companies and the add panel opens and cancels', () => {
-    openAdd()
-    expect(screen.getByRole('button', { name: c.cancel })).toBeInTheDocument()
-    click(c.cancel)
-    expect(screen.getByRole('button', { name: new RegExp(a.company_add_new) })).toBeInTheDocument()
-  })
-
-  it('the add button needs a name; the name is limited to 120 characters', () => {
-    openAdd()
-    expect(screen.getByRole('button', { name: c.add })).toBeDisabled()
-    expect(nameInput()).toHaveAttribute('maxlength', '120')
-    set(nameInput(), '   ')
-    expect(screen.getByRole('button', { name: c.add })).toBeDisabled()
-  })
-
-  it('creates the company with the trimmed name, selects it and closes the panel', async () => {
-    openAdd()
-    set(nameInput(), '  New Agency  ')
-    click(c.add)
-    await waitFor(() => expect(screen.queryByRole('button', { name: c.cancel })).toBeNull())
-    expect(companyActions.createCompanyAction).toHaveBeenCalledWith('New Agency')
-    expect(refetch).toHaveBeenCalledTimes(1)
-  })
-
-  it('Enter in the name field creates it without submitting the registration form', async () => {
-    openAdd()
-    set(nameInput(), 'Agency')
-    const ev = fireEvent.keyDown(nameInput(), { key: 'Enter' })
-    expect(ev).toBe(false)
-    await waitFor(() => expect(companyActions.createCompanyAction).toHaveBeenCalledWith('Agency'))
-    expect(captcha.signUpWithCaptcha).not.toHaveBeenCalled()
-  })
-
-  it('an existing company is offered for selection instead of creating a second one', async () => {
-    companyActions.createCompanyAction.mockResolvedValue({ id: 'old-1', duplicate: true })
-    openAdd()
-    set(nameInput(), 'ACME')
-    click(c.add)
-    expect(await screen.findByText(a.company_exists)).toBeInTheDocument()
-    click(c.select)
-    await waitFor(() => expect(screen.queryByText(a.company_exists)).toBeNull())
-    expect(refetch).not.toHaveBeenCalled()
-  })
-
-  it('typing again withdraws the duplicate notice', async () => {
-    companyActions.createCompanyAction.mockResolvedValue({ id: 'old-1', duplicate: true })
-    openAdd()
-    set(nameInput(), 'ACME'); click(c.add)
-    await screen.findByText(a.company_exists)
-    set(nameInput(), 'ACME 2')
-    expect(screen.queryByText(a.company_exists)).toBeNull()
-  })
-
-  it('a refused name (no id) stops quietly and the panel stays open', async () => {
-    companyActions.createCompanyAction.mockResolvedValue({ error: 'company_name_too_short' })
-    openAdd()
-    set(nameInput(), 'A'); click(c.add)
-    await waitFor(() => expect(companyActions.createCompanyAction).toHaveBeenCalled())
-    expect(screen.getByRole('button', { name: c.cancel })).toBeInTheDocument()
-    expect(refetch).not.toHaveBeenCalled()
-  })
-
-  it('a refetch failure does not lose the new company', async () => {
-    refetch.mockRejectedValue(new Error('db'))
-    const err = vi.spyOn(console, 'error').mockImplementation(() => {})
-    openAdd()
-    set(nameInput(), 'Agency'); click(c.add)
-    await waitFor(() => expect(screen.queryByRole('button', { name: c.cancel })).toBeNull())
-    expect(err).toHaveBeenCalled()
-    err.mockRestore()
-  })
-
-  it.each([
-    ['a file of another type', () => png(1000, 'image/gif'), a.company_logo_invalid_type],
-    ['a PDF', () => png(1000, 'application/pdf'), a.company_logo_invalid_type],
-    ['a file over 2 MB', () => png(2 * 1024 * 1024 + 1), a.company_logo_too_large],
-  ])('%s is refused with its message and no preview', (_l, make, text) => {
-    openAdd()
-    pick(make())
-    expect(screen.getByText(text)).toBeInTheDocument()
-    expect(screen.queryByAltText('logo preview')).toBeNull()
-  })
-
-  it('a picture over 256 px is refused and its temporary address is released', async () => {
-    FakeImage.width = 257
-    openAdd()
-    pick(png())
-    expect(await screen.findByText(a.company_logo_too_big)).toBeInTheDocument()
-    expect(revoke).toHaveBeenCalledWith('blob:preview')
-  })
-
-  it('a file the browser cannot read as a picture is refused as the wrong type', async () => {
-    FakeImage.fail = true
-    openAdd()
-    pick(png())
-    expect(await screen.findByText(a.company_logo_invalid_type)).toBeInTheDocument()
-    expect(revoke).toHaveBeenCalledWith('blob:preview')
-  })
-
-  it('a good logo shows a preview, can be replaced, and cleared (releasing its address)', async () => {
-    openAdd()
-    pick(png())
-    expect(await screen.findByAltText('logo preview')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: c.replace })).toBeInTheDocument()
-    // the drawer's own close control has the same accessible name; the logo's clear control is the one that reads ×
-    fireEvent.click(screen.getAllByRole('button', { name: c.aria_clear }).find((b) => b.textContent === '×')!)
-    expect(screen.queryByAltText('logo preview')).toBeNull()
-    expect(revoke).toHaveBeenCalledWith('blob:preview')
-    expect(screen.getByRole('button', { name: c.choose_file })).toBeInTheDocument()
-  })
-
-  it('exactly the three picture types are accepted by the file chooser', () => {
-    openAdd()
-    expect(fileInput()).toHaveAttribute('accept', 'image/jpeg,image/png,image/webp')
-  })
-
-  it('the logo is uploaded with the company id and its grant after the company exists; the upload is a POST of form data', async () => {
-    companyActions.createCompanyAction.mockResolvedValue({ id: 'new-1', logoGrant: 'grant-xyz' })
-    const fetchMock = vi.fn(() => Promise.resolve(new Response('{}')))
-    vi.stubGlobal('fetch', fetchMock)
-    openAdd()
-    pick(png())
-    await screen.findByAltText('logo preview')
-    set(nameInput(), 'Agency'); click(c.add)
-    await waitFor(() => expect(fetchMock).toHaveBeenCalled())
-    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit]
-    expect(url).toBe('/api/upload-company-logo')
-    expect(init.method).toBe('POST')
-    const fd = init.body as FormData
-    expect(fd.get('companyId')).toBe('new-1')
-    expect(fd.get('grant')).toBe('grant-xyz')
-    expect((fd.get('logo') as File).name).toBe('logo.png')
-  })
-
-  it('no grant means none is sent; an upload failure is ignored and the company is still selected', async () => {
-    const fetchMock = vi.fn(() => Promise.reject(new Error('offline')))
-    vi.stubGlobal('fetch', fetchMock)
-    openAdd()
-    pick(png())
-    await screen.findByAltText('logo preview')
-    set(nameInput(), 'Agency'); click(c.add)
-    await waitFor(() => expect(screen.queryByRole('button', { name: c.cancel })).toBeNull())
-    const fd = (fetchMock.mock.calls[0] as unknown as [string, RequestInit])[1].body as FormData
-    expect(fd.has('grant')).toBe(false)
-    expect(refetch).toHaveBeenCalled()
-  })
-
-  it('no logo means no upload request', async () => {
-    const fetchMock = vi.fn()
-    vi.stubGlobal('fetch', fetchMock)
-    openAdd()
-    set(nameInput(), 'Agency'); click(c.add)
-    await waitFor(() => expect(screen.queryByRole('button', { name: c.cancel })).toBeNull())
-    expect(fetchMock).not.toHaveBeenCalled()
-  })
-
   it('choosing an existing company from the list sets it for the registration', async () => {
     open('register-agent')
     fireEvent.change(screen.getByTestId('company-select'), { target: { value: 'c1' } })

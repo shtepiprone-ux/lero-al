@@ -2,7 +2,7 @@
 
 Sprint 93. Priority P1. Owner decisions: D1 2026-11-06 (rules on the OWASP reference); the owner 2026-11-06 "all holes
 found must be fixed". Filed by the whole-project audit
-(`docs/security/audit-2026-11-06/findings.md`: A-03, A-04, A-09, S-02, S-06, S-09, S-10, S-11, OW-02, OW-03, L-02, L-03, C-01, P-01,
+(`docs/security/audit-2026-11-06/findings.md`: A-03, A-04, A-09, S-02, S-06, S-09, S-11, OW-02, OW-03, L-02, L-03, C-01, P-01,
 P-04, P-05, P-06 application part, P-07). Implementer: Sonnet, after Task 952 (it owns `src/proxy.ts`) and after Task 956
 (the read keys reuse `caller_has_permission`). Reviewer: Opus. The owner applies the SQL and sets the new variables.
 
@@ -29,8 +29,8 @@ Today:
   counter has no limit and an unsalted 24-hex fingerprint of IP and user agent (`api/listings/[slug]/view/route.ts:44-55`,
   A-03, A-04); saved searches have no cap and skip the block check, as does `getCollectionsWithMembership`
   (`cabinet/actions/index.ts:238-397`, `collectionActions.ts:11`, S-06).
-- Keys: `LOG_CORRELATION_SALT` falls back to the public constant `'lero-al'` (`recovery.ts:36`, S-09); the upload grant
-  key falls back to the service-role key (`uploadGrant.ts:20`, S-10); the proxy reads a public setting with the
+- Keys: `LOG_CORRELATION_SALT` falls back to the public constant `'lero-al'` (`recovery.ts:36`, S-09); (S-10, the
+  upload grant key, left this task: Task 926 deleted `uploadGrant.ts` with the grant, review 1 of 2026-11-15); the proxy reads a public setting with the
   service-role key (`src/proxy.ts:23`, C-01).
 - Session and redirects: a server `getSession()` export (`lib/auth/server.ts:30`, L-02); two return-path sanitizers
   with different rules (`lib/auth/safeRedirect.ts`, `modules/auth/lib/sanitizeReturnTo.ts`, P-04); the e-mail change is
@@ -67,8 +67,8 @@ Today:
 - View route: the fingerprint becomes HMAC-SHA-256 with `VIEW_HASH_SECRET` (new, server-only, required: no fallback).
 - Saved searches: `requireViewer` / `getBlockedError` on every action and `getCollectionsWithMembership`; a cap of 20
   per account (Opus proposal).
-- Keys: `LOG_CORRELATION_SALT` and `UPLOAD_GRANT_SECRET` required, no fallback (the server refuses to run the feature
-  and logs once); `src/proxy.ts` reads `default_locale` with the anon key; `docs/env.md` lists the three variables.
+- Keys: `LOG_CORRELATION_SALT` required, no fallback (the server refuses to run the feature and logs once);
+  `src/proxy.ts` reads `default_locale` with the anon key; `docs/env.md` lists the two variables (with `VIEW_HASH_SECRET`).
 - `getSession` removed from `lib/auth/server.ts`; one sanitizer in `lib/auth/safeRedirect.ts`, the other file deleted
   and its callers moved; the e-mail confirmation page renders a confirm button whose POST (a Server Action) consumes
   the token.
@@ -127,7 +127,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — the confirmation page and NotificationItem add no eval, Function, innerHTML or computed URL; lint (no-eval, no-implied-eval) and client-sinks check them — AC10, AC11.
 - DOM_Clobbering_Prevention: not applicable — the sanitizer handles paths, not HTML; no markup is sanitized here.
 - Email_Validation_and_Verification: "Applications must define a consistent normalization strategy before storing or comparing email addresses." — one normalizeEmail for every compare and store — AC13.
-- File_Upload: not applicable — the upload grant only stops falling back to the service-role key; upload rules are Task 957.
+- File_Upload: not applicable — no upload path changes here (the upload grant was deleted by Task 926); upload rules are Task 957.
 - Forgot_Password: "Return a consistent message for both existent and non-existent accounts." — the recovery action applies the password rule and keeps its neutral answer — AC1.
 - GraphQL: "Ensure that the API has proper access control checks." — the new table is invisible to sessions on PostgREST and graphql alike — AC2.
 - HTTP_Headers: not applicable — no header changes in this task; Task 954 owns them.
@@ -138,7 +138,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Insecure_Direct_Object_Reference_Prevention: "implement access control checks for each object that users try to access" — saved-search actions check the session owner and the block — AC5.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC11.
 - JSON_Web_Token: "This can be achieved using a deny list of revoked sessions/tokens." — the server reads the user through getUser, which sees revoked sessions; getSession is removed — AC7.
-- Key_Management: "a single key should be used for only one purpose" — a salt, a grant key and a view key, each required, none derived from the service-role key — AC6.
+- Key_Management: "a single key should be used for only one purpose" — a salt and a view key, each required, none derived from the service-role key — AC6.
 - LLM_Prompt_Injection_Prevention: not applicable — no agent tool or prompt boundary changes in this task.
 - Logging: "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted" — the breached-check fallback and refused limits log hashes, not addresses — AC1, AC6.
 - Logging_Vocabulary: "Developers must embrace this standard and begin to implement" — a refused limit writes excess_rate_limit_exceeded through the Task 955 helper — AC2.
@@ -203,8 +203,8 @@ component with new text.
   `src/modules/cabinet/actions/__tests__/savedSearches.security.test.ts` (new: a blocked session is refused; the 21st
   search is refused).
 - AC6 No secret falls back — test: `src/lib/security/__tests__/requiredSecrets.test.ts` (new: without
-  `LOG_CORRELATION_SALT`, `UPLOAD_GRANT_SECRET` or `VIEW_HASH_SECRET` the feature refuses; no code path reads
-  `SUPABASE_SERVICE_ROLE_KEY` for a hash or a grant) and `src/lib/auth/__tests__/middlewareScope.security.test.ts`
+  `LOG_CORRELATION_SALT` or `VIEW_HASH_SECRET` the feature refuses; no code path reads
+  `SUPABASE_SERVICE_ROLE_KEY` for a hash or a signature) and `src/lib/auth/__tests__/middlewareScope.security.test.ts`
   (extended: the proxy's locale read uses the anon key).
 - AC7 One redirect sanitizer, no server `getSession` — test: `src/lib/auth/__tests__/safeRedirect.security.test.ts`
   (extended with every case of `sanitizeReturnTo.test.ts`, which is deleted) and `npm run typecheck`.

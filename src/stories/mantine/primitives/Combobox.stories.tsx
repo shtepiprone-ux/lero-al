@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Text } from '@mantine/core'
+import { expect, within } from 'storybook/test'
 import { storyT } from '../../_storyI18n'
 // Direct file import (not the `patterns` barrel) — check:story-coverage resolves import specifiers
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
@@ -232,5 +233,63 @@ export const Default: Story = {
         </MantineStoryStack>
       </MantineStoryShell>
     )
+  },
+}
+
+/**
+ * Task 926 (AC5) — the field-level `description` prop, both variants. The text sits below the input (the theme's `inputWrapperOrder`) and the input points at it
+ * with `aria-describedby`; the play function asserts both for each variant. Not to be confused with an OPTION's `description` (the right-hand text of a row).
+ */
+export const WithDescription: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
+    const options: MantineComboboxOption[] = [
+      { value: 'tirana', label: t('combobox_option_tirana') },
+      { value: 'durres', label: t('combobox_option_durres') },
+    ]
+    return (
+      <MantineStoryShell>
+        <MantineStoryStack>
+          <MantineStorySection label={t('combobox_caption_description')}>
+            <MantineStoryStack>
+              <ControlledInput
+                options={options}
+                variant="input"
+                placeholder={t('combobox_placeholder')}
+                noResultsLabel={t('combobox_no_results')}
+                sheetTitle={t('combobox_sheet_title')}
+                triggerAriaLabel={t('combobox_trigger_aria')}
+                description={t('combobox_description_text')}
+              />
+              <ControlledInput
+                options={options}
+                variant="button"
+                placeholder={t('combobox_placeholder')}
+                noResultsLabel={t('combobox_no_results')}
+                sheetTitle={t('combobox_sheet_title')}
+                triggerAriaLabel={t('combobox_trigger_aria')}
+                description={t('combobox_description_text')}
+              />
+            </MantineStoryStack>
+          </MantineStorySection>
+        </MantineStoryStack>
+      </MantineStoryShell>
+    )
+  },
+  play: async ({ canvasElement, context }) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const canvas = within(canvasElement.ownerDocument.body)
+    const text = storyT(locale, 'storybook.mantine.combobox_description_text')
+    const notes = await canvas.findAllByText(text)
+    // one description per variant, each the aria-describedby target of its own input and rendered after it
+    await expect(notes).toHaveLength(2)
+    const inputs = canvas.getAllByLabelText(storyT(locale, 'storybook.mantine.combobox_trigger_aria'))
+    await expect(inputs).toHaveLength(2)
+    for (const [i, input] of inputs.entries()) {
+      await expect(notes[i].id).not.toBe('')
+      await expect(input).toHaveAttribute('aria-describedby', notes[i].id)
+      await expect(Boolean(input.compareDocumentPosition(notes[i]) & Node.DOCUMENT_POSITION_FOLLOWING)).toBe(true)
+    }
   },
 }

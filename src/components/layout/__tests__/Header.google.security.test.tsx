@@ -34,7 +34,6 @@ vi.mock('@/modules/notifications/components/NotificationBell', () => ({ Notifica
 vi.mock('@/modules/admin/actions/locale', () => ({ setAdminLocale: vi.fn() }))
 vi.mock('@/modules/auth/actions/recovery', () => ({ logPasswordRecoveryRequest: vi.fn() }))
 vi.mock('@/modules/auth/actions/captcha', () => ({ signUpWithCaptcha: vi.fn(), requestPasswordResetWithCaptcha: vi.fn() }))
-vi.mock('@/modules/companies/actions', () => ({ createCompanyAction: vi.fn() }))
 vi.mock('@/modules/companies/hooks/useCompanies', () => ({ useCompanies: () => ({ companies: [], refetch: vi.fn() }) }))
 vi.mock('@/modules/locations/hooks/useLocations', () => ({ useLocations: () => ({ locations: [] }) }))
 

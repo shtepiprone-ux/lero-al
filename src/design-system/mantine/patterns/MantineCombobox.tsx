@@ -39,6 +39,12 @@ export interface MantineComboboxProps {
   disabled?: boolean
   /** Validation error shown below the field (§6e — field only; label stays gray, per §6e). */
   error?: ReactNode
+  /**
+   * Field-level help text (Task 926), both variants. It is the trigger `TextInput`'s own `description`: the theme's `inputWrapperOrder` puts it below the input and
+   * Mantine links it to the input with `aria-describedby`. Not to be confused with `MantineComboboxOption.description`, which is per option row. Default
+   * `undefined` — this prop changes nothing when absent.
+   */
+  description?: ReactNode
   /** Leading icon inside the trigger. */
   icon?: ReactNode
   /**
@@ -194,6 +200,7 @@ export function MantineCombobox({
   placeholder,
   disabled,
   error,
+  description,
   icon,
   variant = 'input',
   searchable = false,
@@ -300,6 +307,7 @@ export function MantineCombobox({
     placeholder,
     disabled,
     error,
+    description,
     leftSection: icon,
     rightSection: <Combobox.Chevron />,
     // Confirmed live (Task 845 Pass 11): Mantine's own documented default for this prop is

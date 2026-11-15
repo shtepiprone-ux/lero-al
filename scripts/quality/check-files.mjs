@@ -11,7 +11,7 @@
 //   node scripts/quality/check-files.mjs --changed <base>   files changed since <base>
 //   node scripts/quality/check-files.mjs --worktree         modified, staged and untracked-not-ignored files
 //   node scripts/quality/check-files.mjs <path> [...]       the named files; paths outside the repository or
-//                                                           ignored by Git are skipped (the agent loop)
+//                                                           ignored by Git are skipped
 //   node scripts/quality/check-files.mjs --stdin-list       the same, one path per line on standard input
 // Exit 0 = no finding; exit 1 = findings (printed); exit 2 = the checker could not run.
 
@@ -294,7 +294,7 @@ export function ledgerFindings(rel, body, exists, { root = ROOT } = {}) {
 let icuParse;
 /** Locale data (owner 2026-11-07: "quality protection" of the translations, not a key census): every value of every
  *  locale through locale-safety.mjs M1-M5 (markup, dangerous schemes, plain http, ICU validity, placeholder parity) at
- *  every write, commit and CI run — the locale under check from its own (staged) text, the others from disk. */
+ *  every commit (pre-commit hook) and CI run — the locale under check from its own (staged) text, the others from disk. */
 export function localeFindings(rel, body) {
   const locale = /^messages\/([a-z]{2})\.json$/.exec(rel)?.[1];
   if (!locale || !LOCALES.includes(locale)) return [];
@@ -309,7 +309,7 @@ export function localeFindings(rel, body) {
 }
 
 /** Product code: the client sinks of client-sinks.mjs (K1-K8) and the translation calls that bypass next-intl's text
- *  output (locale-safety.mjs M6), on the file's own text, at every write, commit and CI run. */
+ *  output (locale-safety.mjs M6), on the file's own text, at every commit (pre-commit hook) and CI run. */
 export function productCodeFindings(rel, body) {
   if (!SINK_PRODUCT(rel)) return [];
   const sinks = sinkScan([{ file: rel, text: body }]).filter((f) => f.file === rel)

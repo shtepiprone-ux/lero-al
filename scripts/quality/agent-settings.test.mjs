@@ -49,30 +49,40 @@ test('Vercel MCP: every deploy, promote, rollback, env, domain, DNS, firewall an
   assert.deepEqual([...deny].filter((t) => t.startsWith('mcp__') && !t.startsWith('mcp__plugin_vercel_vercel__')), []);
 });
 
-test('the agent loop runs at session start, after every file write, and at every stop (quality-gates.md §3)', () => {
-  const runs = (event, mode, matcher) => (settings.hooks?.[event] ?? []).some((h) => (matcher === undefined || h.matcher === matcher)
-    && h.hooks.some((x) => x.type === 'command' && x.command === 'node'
-      && x.args?.[0] === '${CLAUDE_PROJECT_DIR}/scripts/quality/agent-check.mjs' && x.args?.[1] === mode));
-  assert.ok(runs('SessionStart', 'start'), 'SessionStart records the files already changed');
-  assert.ok(runs('PostToolUse', 'post', 'Edit|Write|MultiEdit|NotebookEdit'), 'PostToolUse checks every written file');
-  assert.ok(runs('Stop', 'stop'), 'Stop checks every changed file');
-  assert.ok(runs('SubagentStop', 'stop'), 'SubagentStop checks every changed file');
+// Owner, 2026-11-07: every session starts held against the current OWASP Cheat Sheet Series. Owner, 2026-11-14: the
+// local agent hooks (pipeline ledger, self-review, claims, push guard, agent loop) were removed; the gates are the CI
+// workflow and the pre-commit hook, and this is the only hook left.
+/** Why the hooks of a settings object are not exactly one SessionStart command, `owasp.mjs session`; empty when they are. */
+export function hookProblems(config) {
+  const out = [];
+  // every command of every SessionStart entry: a second entry or a second command would run at every session start
+  const commands = (config.hooks?.SessionStart ?? []).flatMap((h) => h.hooks ?? []);
+  const one = commands.length === 1 ? commands[0] : null;
+  const isSession = one && one.type === 'command' && one.command === 'node' && one.args?.length === 2
+    && one.args[0] === '${CLAUDE_PROJECT_DIR}/scripts/quality/owasp.mjs' && one.args[1] === 'session';
+  if (!isSession) out.push(`SessionStart must run exactly one command, owasp.mjs session (found ${commands.length})`);
+  const events = Object.keys(config.hooks ?? {}).filter((e) => e !== 'SessionStart');
+  if (events.length) out.push(`hooks on other events: ${events.join(', ')}`);
+  return out;
+}
+
+test('the session starts with the OWASP reference state, and no other hook is registered', () => {
+  assert.deepEqual(hookProblems(settings), []);
 });
 
-// Owner, 2026-11-10: nothing is done partially. The pipeline's stop check refuses a reply that claims a design, a
-// verdict, an implementation, a commit or push handoff or a CI result without its complete ledger; the publication
-// guard checks every push and merge command (docs/governance-reset-2026-11-06.md said it ran, but no settings file
-// registered it until 2026-11-10).
-test('every stop runs the pipeline check, and the main stop runs the publication guard (flow.md, completeness rule)', () => {
-  const runs = (event, script, mode) => (settings.hooks?.[event] ?? []).some((h) => h.hooks.some((x) => x.type === 'command'
-    && x.command === 'node' && x.args?.[0] === `\${CLAUDE_PROJECT_DIR}/scripts/quality/${script}` && x.args?.[1] === mode));
-  assert.ok(runs('Stop', 'pipeline.mjs', 'stop'), 'Stop runs pipeline.mjs stop');
-  assert.ok(runs('SubagentStop', 'pipeline.mjs', 'stop'), 'SubagentStop runs pipeline.mjs stop');
-  assert.ok(runs('Stop', 'push-safety.mjs', undefined), 'Stop runs push-safety.mjs');
-  assert.ok(runs('SessionStart', 'claims.mjs', 'start'), 'SessionStart reports new replies about CI for the claims corpus');
+test('planted: a second SessionStart entry or command, another event, a changed command are each refused (R5-6)', () => {
+  const one = settings.hooks.SessionStart[0].hooks[0];
+  const extra = { type: 'command', command: 'node', args: ['${CLAUDE_PROJECT_DIR}/scripts/other.mjs'] };
+  const withHooks = (hooks) => ({ hooks });
+  assert.equal(hookProblems(withHooks({ SessionStart: [{ matcher: '', hooks: [one] }, { matcher: '', hooks: [extra] }] })).length, 1, 'a second entry');
+  assert.equal(hookProblems(withHooks({ SessionStart: [{ matcher: '', hooks: [one, extra] }] })).length, 1, 'a second command');
+  assert.equal(hookProblems(withHooks({ SessionStart: [{ matcher: '', hooks: [one, one] }] })).length, 1, 'the same command twice');
+  assert.equal(hookProblems(withHooks({ SessionStart: [{ matcher: '', hooks: [one] }], Stop: [{ hooks: [extra] }] })).length, 1, 'another event');
+  assert.equal(hookProblems(withHooks({ SessionStart: [{ matcher: '', hooks: [{ ...one, args: [one.args[0], 'check'] }] }] })).length, 1, 'another command');
+  assert.equal(hookProblems(withHooks({})).length, 1, 'no hook');
 });
 
-test('the pipeline ledgers in the Git directory cannot be written through the file tools', () => {
+test('the Git directory cannot be written through the file tools', () => {
   assert.deepEqual(['Edit(./.git/**)', 'Write(./.git/**)'].filter((r) => !deny.has(r)), []);
 });
 

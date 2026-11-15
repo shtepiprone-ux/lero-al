@@ -165,7 +165,7 @@ No visible change.
   exits 0 (run by Opus before the apply, D91).
 - AC10 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/check-files.mjs --worktree`,
   `node --test "scripts/quality/*.test.mjs"` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 
 ## Route

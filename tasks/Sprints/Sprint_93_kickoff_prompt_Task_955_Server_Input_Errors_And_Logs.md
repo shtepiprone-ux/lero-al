@@ -164,7 +164,7 @@ No visible change.
   (stale paths) and `npm run typecheck`.
 - AC11 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_955_Server_Input_Errors_And_Logs.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 - AC13 The e-mail hook refuses every request when its secret is missing, in every environment (A-07: today
   `src/app/api/auth-email-hook/route.ts:237` refuses only when `NODE_ENV` is `production`) — test:

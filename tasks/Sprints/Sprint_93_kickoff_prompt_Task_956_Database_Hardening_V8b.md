@@ -188,7 +188,7 @@ No visible change (an expired active listing already shows as hidden in the appl
   missing one statement fails and that the transaction never commits.
 - AC11 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/check-files.mjs --worktree`,
   `node --test "scripts/quality/*.test.mjs"` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_956_Database_Hardening_V8b.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 
 ## Route

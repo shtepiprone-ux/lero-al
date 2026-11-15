@@ -94,7 +94,7 @@ process.on('uncaughtException', (err) => {
 
 // ── Shared matrix (Task 723) ──────────────────────────────────────────────────
 //
-// Deliberately the SAME 4 cells as MANTINE_VIEWPORTS in check-stories-rendered.mjs:392 (not
+// Deliberately the SAME 4 cells as `const MANTINE_VIEWPORTS` in check-stories-rendered.mjs (not
 // re-exported from there — that file is a Storybook-only harness with no shared module boundary
 // to import from; duplicated here as plain data, same values, same names).
 const VIEWPORTS = [
@@ -119,17 +119,14 @@ const INTENTIONAL_OVERLAY_SELECTOR = '.mantine-Overlay-root';
 // `grep -rc alertdialog src/` returns 0). Implemented, not exercised live.
 const DIALOG_SELECTOR = '[role="dialog"], [role="alertdialog"]';
 
-// Task 727 R1/R2 — the contextual N6 predicate, written ONCE here and reconstructed identically
-// inside BOTH hit-test page.evaluate() closures below (phase-1 direct path, formerly :223; phase-2
-// scroll-recheck path, formerly :276) via `new Function(...)`. Playwright serializes each
-// page.evaluate() callback independently — a Node-side function declared in this module is not
-// reachable inside the browser context, so a plain shared JS function cannot be called from both
-// closures directly (this file's existing convention already duplicates its DOM helpers for the
-// identical reason, see the hitTestPage docstring above). Passing this identical string as an
-// evaluate() argument and rebuilding the function from it at both sites is what makes the two
-// call sites agree BY CONSTRUCTION rather than by two hand-copied blocks that can drift apart
-// (the Task 725 §14.9.29 lesson: the scroll path and the direct path must not merely resemble
-// each other).
+// Task 727 R1/R2 — the contextual N6 predicate, used by every hit-test page.evaluate() closure
+// below (the band scan, the targeted recheck and the phase-2 scroll recheck). Playwright
+// serializes each page.evaluate() callback independently — a Node-side function declared in this
+// module is not reachable inside the browser context, so a plain shared JS function cannot be
+// called from the closures directly (this file's existing convention already duplicates its DOM
+// helpers for the identical reason, see the hitTestPage docstring below). The copies are kept
+// identical by hand, written as the one form given at the end of this note (the Task 725 §14.9.29
+// lesson: the scroll path and the direct path must not merely resemble each other).
 //
 // The rule (owner decision, Task 727 kickoff §3.1, closing OQ3, quoted verbatim): a backdrop MAY
 // still exempt a candidate that sits OUTSIDE any active dialog — a modal/drawer intentionally
@@ -160,8 +157,8 @@ const DIALOG_SELECTOR = '[role="dialog"], [role="alertdialog"]';
 // The predicate is written inline in each page.evaluate callback below (a callback cannot receive a function, and
 // building one from a string with the Function constructor is eval — OWASP JavaScript and TypeScript Security). The
 // three copies are identical:
-//   (el, hit, overlaySelector, dialogSelector) =>
-//     !!(hit.closest(overlaySelector) || hit.closest(dialogSelector)) && el.closest(dialogSelector) === null
+//   const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
+//     !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
 
 // CI baseline recovery (2026-08-15) — listing slugs are mutable data, so they are not a valid
 // blocking-CI fixture. The guarded `/${locale}/ci/click-shield-modal` route mounts the actual
@@ -200,7 +197,7 @@ const SCENARIOS = [
     // >=768px (this gate's desktop-1024 cell) — the header's own guest login Button
     // (HeaderActions.tsx, `visibleFrom="md"`); <768px (this gate's mobile-320/375/390 cells) — the
     // hamburger ActionIcon (HeaderView.tsx) opens MobileNavDrawer (itself a dialog), whose own
-    // guest login Button closes the drawer and opens AuthSheet (MobileNavDrawer.tsx:31-34,100).
+    // guest login Button closes the drawer and opens AuthSheet (MobileNavDrawer.tsx `openAuth('login')`).
     // Both buttons are located by accessible name loaded from messages/<locale>.json
     // (`nav.login`/`common.aria_open_menu`), never a lucide class or hard-coded text — see
     // openDrawerScenario/loadDrawerTriggerLabels below.
@@ -296,7 +293,7 @@ async function openDrawerScenario(page, vp, labels) {
 
 // ── Core hit-test, runs inside the page ────────────────────────────────────────
 //
-// Returns { checked, violations[], cleared[] }. A "violation"/"cleared" entry names both the
+// Returns { checked, violations[], cleared[], excluded[] }. A "violation"/"cleared" entry names both the
 // blocked element and the element that actually intercepted the click (R4's explicit requirement
 // — "print the blocked element and the intercepting element ... because 'something blocks
 // clicks' without naming the blocker is what made this defect survive a month").
@@ -366,8 +363,8 @@ async function openDrawerScenario(page, vp, labels) {
 // occlusion (content flush with the document's end, with no clearance before it) correctly stay
 // unclearable: the required offset would exceed `maxScrollY`.
 //
-// Task 729 R3 — below/above-fold band scan. `document.querySelectorAll(selector)` at :330 (now
-// inside `runBand` below) already enumerates every candidate in the DOM regardless of scroll
+// Task 729 R3 — below/above-fold band scan. `document.querySelectorAll(selector)` (inside
+// `runBand` below) already enumerates every candidate in the DOM regardless of scroll
 // position; the only thing the pre-729 gate never did was SCROLL anywhere to hit-test the ones
 // whose centre fell outside the viewport at scrollY=0. A Task 729 census against the real app
 // (docs/sessions/<date>-task729-below-fold-blind-spot.md) found ~900 such candidates on this
@@ -658,11 +655,12 @@ async function hitTestPage(page) {
           // (docs/sessions/2026-08-09-task740-clickshield-system-extent.md, R1 census): the extent's
           // computed top (745) matches `.fabLink`'s own top exactly and resolves all four survivors
           // `cleared` in all 12 measurements, where the landed box resolved inconsistently. Phase 2
-          // (`:495-539`) remains the sole arbiter regardless — a wrong hypothesis here still fails
-          // its real `scrollTo` + `elementFromPoint` recheck and falls through to `violation`, so an
-          // over-inclusive extent cannot manufacture a false `cleared` — it can only inflate the
-          // offset past `maxScrollY` and get it discarded, which is why R2's hit-testability filter
-          // (excluding `pointer-events:none`, hidden, and zero-area descendants) is load-bearing, not
+          // (the `transientCandidates` loop below) remains the sole arbiter regardless — a wrong
+          // hypothesis here still fails its real `scrollTo` + `elementFromPoint` recheck and falls
+          // through to `violation`, so an over-inclusive extent cannot manufacture a false
+          // `cleared` — it can only inflate the offset past `maxScrollY` and get it discarded, which
+          // is why R2's hit-testability filter (excluding `pointer-events:none`, hidden, and
+          // zero-area descendants) is load-bearing, not
           // decorative: an unfiltered union-everything rule turns clearable candidates into
           // permanent violations the moment a decorative overflow is large enough (R6's control).
           const fixedOrStickyAncestor = nearestFixedOrStickyAncestorOf(hit);
@@ -717,8 +715,9 @@ async function hitTestPage(page) {
   // any edge — then re-reads the SAME candidate (by selector + index, same pattern as phase 2
   // below) and classifies once, deterministically: clean if it (or an N6-exempt context) is hit;
   // a real interceptor if a genuine other element is hit; otherwise (still outside the R3 bounds
-  // after centering, a null hit, or the element is gone) a violation naming that it was never
-  // resolved. This replaces inspecting only the FINAL band's classification, which review 1 (F1)
+  // after centering, a null hit, or the element is gone) a violation, for each of the three with
+  // Task 832 R4's reason text `elementFromPoint returned null at every band`. This replaces
+  // inspecting only the FINAL band's classification, which review 1 (F1)
   // proved silently drops a real interception whenever the band right after the deferral band
   // isn't itself the final one.
   for (const [idx, info] of deferredInfo) {
@@ -729,35 +728,50 @@ async function hitTestPage(page) {
         window.scrollTo({ top: offset, left: 0, behavior: 'instant' });
         const el = Array.from(document.querySelectorAll(selector))[index];
         if (!el) return { outcome: 'gone' };
-        const rect = el.getBoundingClientRect();
-        const cx = rect.x + rect.width / 2;
-        const cy = rect.y + rect.height / 2;
-        const insideR3 = cx >= 0 && cy >= 0 && cx < window.innerWidth - 0.5 && cy < window.innerHeight - 0.5;
-        if (!insideR3) return { outcome: 'stillOutside' };
-        const hit = document.elementFromPoint(cx, cy);
-        if (!hit) return { outcome: 'null' };
-        if (hit === el || el.contains(hit) || hit.contains(el)) return { outcome: 'clean' };
-        const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
-          !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
-        if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { outcome: 'clean' };
-        function realClass(elx) {
-          const attr = elx.getAttribute && elx.getAttribute('class');
-          return attr ?? '';
+        // Task 974 — a card of a horizontal carousel cannot be brought inside by a vertical scroll: scroll its own
+        // scroll containers horizontally (inline: 'center'), then put the page back at the vertical offset this
+        // recheck chose, so only the horizontal position changes. Every container is scrolled back once the card is
+        // judged: phase 2 below rechecks the other candidates at the positions the band scan measured, and a
+        // carousel left scrolled would move a card of it out of the viewport there.
+        const saved = [];
+        for (let p = el.parentElement; p; p = p.parentElement) saved.push([p, p.scrollLeft, p.scrollTop]);
+        el.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' });
+        window.scrollTo({ top: offset, left: window.scrollX, behavior: 'instant' });
+        try {
+          const rect = el.getBoundingClientRect();
+          const cx = rect.x + rect.width / 2;
+          const cy = rect.y + rect.height / 2;
+          const insideR3 = cx >= 0 && cy >= 0 && cx < window.innerWidth - 0.5 && cy < window.innerHeight - 0.5;
+          if (!insideR3) return { outcome: 'stillOutside' };
+          const hit = document.elementFromPoint(cx, cy);
+          if (!hit) return { outcome: 'null' };
+          if (hit === el || el.contains(hit) || hit.contains(el)) return { outcome: 'clean' };
+          const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
+            !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
+          if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { outcome: 'clean' };
+          function realClass(elx) {
+            const attr = elx.getAttribute && elx.getAttribute('class');
+            return attr ?? '';
+          }
+          const hr = hit.getBoundingClientRect();
+          const hcs = window.getComputedStyle(hit);
+          return {
+            outcome: 'intercepted',
+            interceptor: {
+              tag: hit.tagName.toLowerCase(),
+              class: realClass(hit).slice(0, 120),
+              text: (hit.textContent ?? '').trim().slice(0, 40),
+              rect: { x: Math.round(hr.x), y: Math.round(hr.y), width: Math.round(hr.width), height: Math.round(hr.height) },
+              position: hcs.position,
+              zIndex: hcs.zIndex,
+              nearestPositionedAncestor: null,
+            },
+          };
+        } finally {
+          // `behavior: 'instant'`: a page-level `scroll-behavior: smooth` would animate the restore after this returns
+          for (const [p, left, top] of saved) p.scrollTo({ left, top, behavior: 'instant' });
+          window.scrollTo({ top: offset, left: 0, behavior: 'instant' });
         }
-        const hr = hit.getBoundingClientRect();
-        const hcs = window.getComputedStyle(hit);
-        return {
-          outcome: 'intercepted',
-          interceptor: {
-            tag: hit.tagName.toLowerCase(),
-            class: realClass(hit).slice(0, 120),
-            text: (hit.textContent ?? '').trim().slice(0, 40),
-            rect: { x: Math.round(hr.x), y: Math.round(hr.y), width: Math.round(hr.width), height: Math.round(hr.height) },
-            position: hcs.position,
-            zIndex: hcs.zIndex,
-            nearestPositionedAncestor: null,
-          },
-        };
       },
       {
         selector: CANDIDATE_SELECTOR,
@@ -798,7 +812,7 @@ async function hitTestPage(page) {
       const recheck = await page.evaluate(
         ({ selector, selectorIndex, offset, overlaySelector, dialogSelector }) => {
           const isN6Exempt = (elx, hitx, overlaySel, dialogSel) =>
-          !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
+            !!(hitx.closest(overlaySel) || hitx.closest(dialogSel)) && elx.closest(dialogSel) === null;
           // `behavior: 'instant'` deliberately overrides any page-level `scroll-behavior: smooth`
           // CSS (confirmed present on this project's `<html>`) — a smooth scroll animates
           // asynchronously, so a synchronous re-read immediately after a bare `scrollTo(x, y)`
@@ -813,9 +827,9 @@ async function hitTestPage(page) {
           const hit = document.elementFromPoint(cx, cy);
           if (!hit) return { cleared: false };
           if (hit === el || el.contains(hit) || hit.contains(el)) return { cleared: true };
-          // N6 — contextual overlay exemption (Task 727 R1/R2): same shared predicate as
-          // hitTestPage's phase-1 direct path, reconstructed identically from the same source
-          // string so this scroll-recheck path cannot silently diverge from it (§14.9.29).
+          // N6 — contextual overlay exemption (Task 727 R1/R2): the same predicate as
+          // hitTestPage's phase-1 direct path, written identically inline (the note above
+          // SCENARIOS) so this scroll-recheck path cannot silently diverge from it (§14.9.29).
           if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { cleared: true };
           return { cleared: false };
         },
@@ -1130,6 +1144,44 @@ const EDGE_PERMANENT_PAGE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Task 974 — a card of a horizontal carousel whose centre lies on the last half-pixel column of the viewport (the
+// `main` run 43307123420 of 2026-11-12: a listing card at x 216, width 207, centre 319.5 of a 320 px viewport). The
+// targeted recheck scrolled only vertically, so such a card stayed outside and failed as "null at every band" though
+// nothing covered it. Here: a 296 px spacer and a 207 px link in a 400 px wide scroller, centre 399.5 of this
+// self-test's 400×300 viewport, on a page no taller than the viewport. The covered twin adds a full-viewport shield, so
+// the recheck must still report a real interceptor.
+const EDGE_CAROUSEL_SCROLLER = `<div style="display:flex;overflow-x:auto;width:400px;"><div style="flex:0 0 296px;height:100px;"></div><a id="target" href="#card" style="flex:0 0 207px;height:100px;display:block;">Card</a><div style="flex:0 0 400px;height:100px;"></div></div>`;
+const EDGE_CAROUSEL_CLEAN_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (carousel card on the right edge)</title></head>
+<body style="margin:0;height:300px;overflow-y:hidden;">
+  ${EDGE_CAROUSEL_SCROLLER}
+</body>
+</html>`;
+const EDGE_CAROUSEL_COVERED_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (carousel card on the right edge, covered)</title></head>
+<body style="margin:0;height:300px;overflow-y:hidden;">
+  ${EDGE_CAROUSEL_SCROLLER}
+  <div id="shield" style="position:fixed;inset:0;background:transparent;"></div>
+</body>
+</html>`;
+// Task 974 — the recheck of a right-edge card scrolls its carousel, and the carousel must be scrolled back: card `near`
+// (x 0-120, y 250-290) sits under a 60 px fixed bottom bar on a 2000 px page, a transient candidate that phase 2
+// clears at scroll 51; card `edge` of the same scroller (x 296-503, centre 399.5) is deferred and rechecked first.
+// A carousel left scrolled by the recheck (scrollLeft about 200) puts `near` at x -200 and phase 2 reports it as
+// blocked though nothing covers it there.
+const EDGE_CAROUSEL_SHARED_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (carousel scrolled back after the edge recheck)</title></head>
+<body style="margin:0;height:2000px;position:relative;">
+  <div style="position:absolute;top:250px;left:0;width:400px;display:flex;overflow-x:auto;"><a id="near" href="#near" style="flex:0 0 120px;height:40px;display:block;">Near</a><div style="flex:0 0 176px;height:40px;"></div><a id="edge" href="#edge" style="flex:0 0 207px;height:40px;display:block;">Edge</a><div style="flex:0 0 400px;height:40px;"></div></div>
+  <div id="fixed-bar" style="position:fixed;bottom:0;left:0;right:0;height:60px;">
+    <span style="display:block;width:100%;height:100%;"></span>
+  </div>
+</body>
+</html>`;
+
 // Task 832 R9 (review 1, §16.3) — the multiband deferral fixtures F1 found missing: a body tall
 // enough that the band AFTER the edge-deferral band is NOT itself the final band (1000px → bands
 // at 0/300/600/700, vs. EDGE_RESOLVED_PAGE_HTML's 450px → only [0, 150]). Pre-R8, the candidate is
@@ -1158,7 +1210,7 @@ const EDGE_MULTIBAND_INTERCEPTED_PAGE_HTML = `<!DOCTYPE html>
 // failure mode described in §3.2 — a two-step trigger that stopped after opening ONLY the nav
 // drawer (a role="dialog" with ordinary nav buttons, no email field) must not be accepted as
 // AuthSheet having opened. The companion fixture is the correct shape: a single dialog containing
-// input[type="email"] (AuthSheet.tsx:111, the login view's identifying field).
+// input[type="email"] (the login view's identifying field, a `type="email"` TextInput of AuthSheet.tsx).
 const WRONG_DIALOG_PAGE_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8"><title>Click-shield gate self-test (R5c — wrong dialog, no email field)</title></head>
@@ -1218,6 +1270,9 @@ async function runGateSelfTest() {
       else if (req.url === '/edge-permanent') res.end(EDGE_PERMANENT_PAGE_HTML);
       else if (req.url === '/edge-multiband-clean') res.end(EDGE_MULTIBAND_CLEAN_PAGE_HTML);
       else if (req.url === '/edge-multiband-intercepted') res.end(EDGE_MULTIBAND_INTERCEPTED_PAGE_HTML);
+      else if (req.url === '/edge-carousel-clean') res.end(EDGE_CAROUSEL_CLEAN_PAGE_HTML);
+      else if (req.url === '/edge-carousel-covered') res.end(EDGE_CAROUSEL_COVERED_PAGE_HTML);
+      else if (req.url === '/edge-carousel-shared') res.end(EDGE_CAROUSEL_SHARED_PAGE_HTML);
       else if (req.url === '/wrong-dialog') res.end(WRONG_DIALOG_PAGE_HTML);
       else if (req.url === '/right-dialog') res.end(RIGHT_DIALOG_PAGE_HTML);
       else res.end(CLEAN_PAGE_HTML);
@@ -1277,6 +1332,11 @@ async function runGateSelfTest() {
     // silently dropped (violations=0) by the same defect.
     { url: `${baseUrl}/edge-multiband-clean`, label: 'Task 832 R9 arm (d) — multiband deferral, nothing covering (must be clean AND unexcluded)', expectFail: false, expectExcludedZero: true },
     { url: `${baseUrl}/edge-multiband-intercepted`, label: 'Task 832 R9 arm (e) — multiband deferral, real interceptor (must FAIL with a real interceptor)', expectFail: true },
+    // Task 974 — the recheck brings a carousel card on the right edge into view horizontally: clean when nothing covers
+    // it, a violation naming the real interceptor when something does.
+    { url: `${baseUrl}/edge-carousel-clean`, label: 'Task 974 — carousel card centred on the last half-pixel column, nothing covering (must PASS)', expectFail: false },
+    { url: `${baseUrl}/edge-carousel-covered`, label: 'Task 974 — carousel card on the right edge under a shield (must FAIL with a real interceptor)', expectFail: true, expectInterceptor: true },
+    { url: `${baseUrl}/edge-carousel-shared`, label: 'Task 974 — the edge recheck scrolls the carousel back, so another card of it under a fixed bar still clears (must PASS, cleared>0)', expectFail: false, expectCleared: true, expectExcludedZero: true },
   ];
 
   let allOk = true;
@@ -1288,7 +1348,9 @@ async function runGateSelfTest() {
     // Task 832 R9 — an explicit zero-exclusion assertion: a candidate that was ever deferred must
     // never resurface as a benign `excluded` entry (R8), so arm (d) fails loudly if it does.
     const excludedOk = c.expectExcludedZero ? result.excluded.length === 0 : true;
-    const ok = failed === c.expectFail && clearedOk && excludedOk;
+    // Task 974 — a covered case must name the element that covers it, never a null hit
+    const interceptorOk = c.expectInterceptor ? failed && result.violations.every((v) => v.interceptor) : true;
+    const ok = failed === c.expectFail && clearedOk && excludedOk && interceptorOk;
     console.log(`   ${ok ? '✅' : '❌'} ${c.label}: checked=${result.checked}, violations=${result.violations.length}, cleared=${result.cleared.length}, excluded=${result.excluded.length} (expected ${c.expectFail ? 'violations>0' : c.expectCleared ? 'cleared>0, violations=0' : 'violations=0'}${c.expectExcludedZero ? ', excluded=0' : ''})`);
     if (failed) {
       for (const v of result.violations) {

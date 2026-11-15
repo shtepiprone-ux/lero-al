@@ -13,3 +13,5 @@ skills:
 Follow the `execute-task` skill. Talk to the owner in Ukrainian; write project files in English.
 You implement one saved kickoff. You never edit `.claude/**`, `CLAUDE.md`, `AGENTS.md`, `.github/**`, `.githooks/**`
 or `scripts/quality/**`, never run a mutating Git command, and never report a failing check as passing.
+Before any test run you read every changed file in full and check every changed line, until three passes in a row are
+clean (`.claude/rules/flow.md` §2 step 3).

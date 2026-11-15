@@ -28,13 +28,9 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   rules M1-M5 on `messages/<locale>.json` and K1-K8 plus M6 on product code; the golden rule on audit ledgers
   (`finding-status`).
 - `scripts/quality/locale-safety.mjs`, `scripts/quality/client-sinks.mjs` (+ tests): tracked and untracked files.
-- `scripts/quality/agent-check.mjs` (+ test): SessionStart re-reads upstream after a day and puts the reference's
-  state, findings first, into the session. Owner decision 2026-11-08 (translated: "put it into 963 and do it"), found
-  in the Task 952 review 2: the stop stamped a file by size and mtime (`agent-check.mjs:143` before), so a byte-exact
-  restore after a deliberate break blocked three times, and after the third block it deleted the session state
-  (`:226` before), so the next stop judged every uncommitted file of the branch. Now a file is stamped by its size and
-  content hash (`readRegularFile`, one descriptor), and the limit releases the stop with the baseline kept.
-- `scripts/quality/audit-coverage.mjs` (+ test): lane `owasp-reference`.
+- `scripts/quality/owasp.mjs session` (the SessionStart hook): re-reads upstream after a day and puts the reference's
+  state, findings first, into the session. (Owner D974-1, 2026-11-14: the agent-loop hook `agent-check.mjs`, its stop
+  check and `audit-coverage.mjs` were deleted as over-engineering; their parts of this task are withdrawn.)
 - The task gate's verdict (found in the Task 953 review, 2026-11-08): `lastVerdict` took the last of the words APPROVED or
   NEEDS REVISION anywhere under "## Review" (`owasp.mjs:393-397` before), so a review in revision that quoted the word APPROVED held
   the change as approved (measured: Task 953 under revision was listed among the approved reviews). Now only a verdict line counts
@@ -63,8 +59,8 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   and test (`owasp.test.mjs` cache cases; the fixed host and the cloud-name check of `cloudinary-config.mjs`). No path
   is excluded from the scan; a changed flow in these files raises a new alert, which is triaged again. D2 stands for
   every other alert.
-- `.github/workflows/ci.yml` (+ `scripts/quality/ci-workflow.test.mjs`): the quality job's `sync --verify` and `check`
-  steps; the `owasp-gate` job, required by `CI Required`.
+- `.github/workflows/ci.yml`: the quality job's `sync --verify` and `check` steps; the `owasp-gate` job, required by
+  `CI Required` (pinned since D974-1 by `requiredProblems` in `scripts/quality/ci-secrets.test.mjs`).
 - The runner image (found in the Task 953 review 2, 2026-11-08): every job of `ci.yml`, `repository-settings.yml` and
   `scorecard.yml` says `runs-on: ubuntu-latest`, which GitHub moved from `ubuntu-24.04` (run 42293555720, 2026-11-06) to
   `ubuntu-26.04` (run 42455177615 onward). Playwright 1.60.0 refuses that image (`ERROR: Playwright does not support
@@ -110,10 +106,10 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Business_Logic_Security: not applicable — "race" here is a file-descriptor race in the scripts; no product workflow or price changes.
 - CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the task gate requires an approved review in every change, and CI Required waits for it — AC2.
 - Credential_Stuffing_Prevention: not applicable — no sign-in or credential path changes; the words came from the threat list.
-- Cryptographic_Storage: not applicable — the stop hook's content hash only detects a changed file; it stores no secret or password.
-- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — locale values, client sinks and the CMS sanitizer are each checked at every write — AC4, AC7.
+- Cryptographic_Storage: not applicable — the cache's Git blob hash only identifies a sheet text; nothing secret is stored or encrypted.
+- Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — locale values and client sinks are checked at every commit and CI run, the CMS sanitizer by its tests — AC4, AC7.
 - DOM_Clobbering_Prevention: "Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering." — the evasion vectors include form, base and meta tags, and the sanitizer must remove each — AC7.
-- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — client-sinks K1-K8 run on each product file at its write — AC4.
+- DOM_based_XSS_Prevention: "It is always a bad idea to use a user-controlled input in dangerous sources such as eval." — client-sinks K1-K8 run on each product file at every commit and CI run — AC4.
 - Dependency_Graph_SBOM: not applicable — the SBOM job is unchanged; AC15 only ages the versions the lockfile brings in.
 - Denial_of_Service: not applicable — the product's request paths are unchanged; cloudinary-config.mjs only reads the upload presets once.
 - File_Upload: not applicable — cloudinary-config.mjs reads the presets read-only; the upload paths change in Task 957.
@@ -121,7 +117,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - HTTP_Strict_Transport_Security: not applicable — the scripts are HTTP clients of fixed hosts; no response header of the site changes.
 - Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — owasp.mjs runs git with an argument array and a base ref from CI's env, never a shell string — AC2.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — the trigger and rule patterns are flat alternations over fixed words — AC1.
-- Key_Management: not applicable — the content hash of the stop hook uses no key; nothing is signed or encrypted.
+- Key_Management: not applicable — the scripts create, store or use no key; nothing is signed or encrypted.
 - LLM_Prompt_Injection_Prevention: "Enforce permissions and parameter validation at the tool boundary" — a sheet text, a kickoff or a review is data the tools check; none is run or followed as an instruction — AC1, AC3.
 - MCP_Security: not applicable — no MCP server is added or configured; Task 961 watches the tool definitions.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — every version a lockfile change brings in, transitive ones included, is refused when younger than 14 days — AC15.
@@ -153,29 +149,28 @@ No visible change.
   repository check, the session context, the plan, the kickoff and review checks) and `node scripts/quality/owasp.mjs check`.
 - AC2 No change bypasses a task — test: `scripts/quality/owasp.test.mjs` (the task gate: documentation alone passes;
   code without a task, with a task not approved, or approved without its OWASP check fails; a sheet the diff triggers
-  and no review judged fails; a version-only dependency update passes, a new script or workflow step does not) and
-  `scripts/quality/ci-workflow.test.mjs` (the `owasp-gate` job: never skipped, base through `env`, no secret).
+  and no review judged fails; a version-only dependency update passes, a new script or workflow step does not),
+  `scripts/quality/ci-secrets.test.mjs` (`CI Required` needs the `owasp-gate` job and fails on any result but success,
+  so a skipped gate fails it; a secret is bound only on the step that reads it) and `gh pr checks <n>` (the OWASP task
+  gate check ran and passed).
 - AC3 Every kickoff and review is held to the reference — test: `scripts/quality/check-files.test.mjs` (missing
   "## OWASP", an invented quote, the 200-line count without the checklist, a grandfathered kickoff) and
   `node scripts/quality/owasp.mjs kickoff tasks/Sprints/Sprint_93_*.md`.
-- AC4 Locale data and product code are checked at every write — test: `scripts/quality/check-files.test.mjs` (a planted
+- AC4 Locale data and product code are checked at every commit and CI run — test: `scripts/quality/check-files.test.mjs` (a planted
   tag, scheme, plain http address and broken ICU value each fail; a sink and a bypassing call fail; tests are not
   product code), `scripts/quality/locale-safety.test.mjs`, `scripts/quality/client-sinks.test.mjs`.
 - AC5 No finding is only reported — test: `scripts/quality/check-files.test.mjs` (`finding-status`: fixed without its
   test, a task that does not cite the finding, a closed task, an accepted risk without the owner, a bare remark each
   fail) and `node scripts/quality/check-files.mjs docs/security/audit-2026-11-06/findings.md`.
-- AC6 Every session starts with the reference — test: `scripts/quality/agent-check.test.mjs` (the start hook's context).
+- AC6 Every session starts with the reference — test: `scripts/quality/owasp.test.mjs` (the session context) and
+  `scripts/quality/agent-settings.test.mjs` (the SessionStart hook runs `owasp.mjs session`).
 - AC7 The audit's direct fixes detect — test: `src/__tests__/security/clientSinks.test.ts`,
   `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`, `scripts/quality/db-catalog-audit.test.mjs`,
-  `scripts/quality/cloudinary-config.test.mjs`, `scripts/quality/audit-coverage.test.mjs`.
-- AC9 The stop judges content, and its limit does not widen the next check — test: `scripts/quality/agent-check.test.mjs`
-  (a byte-exact restore with a new mtime is no change; a same-size edit with the old mtime put back is; after the third
-  block the state stays, older work is not added and a remaining failure blocks again).
+  `scripts/quality/cloudinary-config.test.mjs`.
 - AC10 The OWASP cache keeps only what upstream holds at the pinned commit — test: `scripts/quality/owasp.test.mjs`
   (`gitBlobSha` equals `git hash-object`; a download whose blob SHA differs is refused and not written; a drifted cached
   file is downloaded again; a commit, sheet name, file name or blob id of another shape is refused before any request),
-  and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs`, `cloudinary-config.mjs` or
-  `agent-check*.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
+  and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs` or `cloudinary-config.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
   decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths).
 - AC11 A local product check sees uncommitted files — test: `node scripts/check-surface-census-changed.mjs --verify-gate`, whose self-test
   arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run; and
@@ -184,9 +179,9 @@ No visible change.
 - AC12 A task under revision holds no change — test: `scripts/quality/owasp.test.mjs` (the task gate: a review whose verdict line
   says NEEDS REVISION and whose prose names APPROVED is not approved and the change fails G1; bold, older and two-review forms).
 - AC13 CI runs on a named image (owner, 2026-11-08, translated: "yes, do AC13, pin ubuntu-24.04") — test:
-  `scripts/quality/ci-workflow.test.mjs` (every job of every file in `.github/workflows/` runs on `ubuntu-24.04`; red on
-  the 17 `ubuntu-latest` jobs before the change, measured 2026-11-08; a planted `ubuntu-latest` job is refused), and
-  `gh run view <PR #19 run> --log` has no "does not support chromium" line.
+  `gh run view <PR #19 run> --log` has no "does not support chromium" line, and
+  `node --test scripts/quality/ci-secrets.test.mjs` (every job of `.github/workflows/` on `ubuntu-24.04`, a planted
+  `ubuntu-latest` job refused; done 2026-11-08; the case restored there on 2026-11-14 by the owner's decision, Task 974).
 - AC14 The census runs on the integration PR (O-CS1: limit 200) — test: `node scripts/check-surface-census-changed.mjs
   --verify-gate` arms 13 and 14: 65 mapped surfaces pass the default limit and are all censused, 201 fail closed with
   `surface-limit-exceeded` (arm 13 red on the limit of 60, arm 14 red with the limit check disabled; both measured
@@ -196,20 +191,16 @@ No visible change.
   dependencies) — test: `scripts/quality/change-report.test.mjs` (`newLockfileVersions`, `youngLockfileVersions`: nested
   and aliased entries counted once, a 0-day and a 6-day version refused, an exact `overrides` pin reported, not refused; `isNpmName`: a crafted lockfile name never reaches `npm view`;
   red with the age check disabled, with nested entries skipped and with the name check removed, measured 2026-11-08); done by Opus 2026-11-08.
-- AC16 An open kickoff counts as implemented only through a test no other kickoff names (Task 939 review 2: PR #19's
-  change report failed on 957, 962 and 965 through tests 947, 952 and 963 added) — test: `scripts/quality/ac-tests.test.mjs`
-  (`testsNamedElsewhere`; red with the shared set ignored, measured 2026-11-09); nor through a test on a path only Opus
-  may write (the Stop hook took 951 for started when Opus placed its AC1 test; red with that rule removed, measured
-  2026-11-09); done by Opus 2026-11-09.
+- AC16 Withdrawn by D974-1 (2026-11-14): `ac-tests.mjs` was deleted; the reviewer compares the criteria with the diff
+  — test: `node scripts/quality/change-report.mjs main HEAD` (the change report keeps the untested-code rule).
 - AC17 The locale-leak gate fails closed when started through a symlinked path (Task 939 review 2: its entry-point guard
   compared `argv[1]` as typed with the real path, skipped the scan and exited 0) — test:
   `scripts/__tests__/check-locale-leak.test.ts` ("entry point": own path and a junction both reach the flag check, exit 1;
   red before the fix, `expected +0 to be 1`, measured 2026-11-09); done by Opus 2026-11-09.
-- AC18 No gate decides "am I the entry point" from `argv[1]` as typed (the AC17 fault, found in 35 scripts while
-  designing Task 951) — test: `scripts/quality/entry-point-guards.test.mjs` (`isEntryPoint` of `scripts/lib/entry-point.mjs`
-  true by the real path and through a junction, false for an importer; a raw guard outside Task 951's list fails: red
-  with one reintroduced in `ac-tests.mjs`, measured 2026-11-09); the 12 guards of `scripts/quality/` done by Opus
-  2026-11-09, the other 22 scripts are Task 951 AC11.
+- AC18 The locale-leak gate decides "am I the entry point" by `isEntryPoint` of `scripts/lib/entry-point.mjs` (the AC17
+  fault; the 12 guards of `scripts/quality/` were moved to it by Opus 2026-11-09, the other 22 scripts are Task 951
+  AC11, and the meta-test that pinned all of them was deleted by owner decision D974-1, 2026-11-14) — test:
+  `scripts/__tests__/check-locale-leak.test.ts` ("entry point").
 - AC8 `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --all`, `npm run lint` and
   `npx vitest run src/__tests__/security/clientSinks.test.ts src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`
   exit 0.
@@ -217,9 +208,9 @@ No visible change.
 ## Route
 
 1. The reviewing Opus session reads this kickoff, `flow.md` and `secure-code-review.md`; runs `owasp.mjs sync`, `check`.
-2. AC1-AC12 on the branch; for AC1, AC2, AC4 and AC5 one deliberate break each (a quote changed, a review verdict
-   removed, a planted sink, a finding status cleared), and for AC9 three (mtime put back into the stamp, the stamp cut
-   to the size, the state deleted at the limit), shown failing, then restored.
+2. AC1-AC8 and AC10-AC12 on the branch (AC9 was deleted with its stop hook by D974-1); for AC1, AC2, AC4 and AC5 one
+   deliberate break each (a quote changed, a review verdict removed, a planted sink, a finding status cleared), shown
+   failing, then restored.
 3. Review written here with its OWASP review record; `node scripts/quality/owasp.mjs gate --base main` then names what the
    other Sprint 93 reviews still have to cover before PR #19 can merge.
 

@@ -8,8 +8,6 @@
 //
 // Prints a Markdown report (also to $GITHUB_STEP_SUMMARY). Exit 1 when a hard rule fails:
 //   - product code under src/ is added or changed and no test file is added or changed;
-//   - a kickoff with a review verdict names a test that does not exist, or adds or changes an acceptance criterion
-//     whose named test the same change neither adds nor changes (ac-tests.mjs);
 //   - a dependency added to package.json does not exist on npm, or its first release is younger than 30 days;
 //   - a lockfile entry resolves outside https://registry.npmjs.org/ or has no integrity hash;
 //   - a version the lockfile did not resolve before, transitive ones included, is younger than 14 days (unless pinned
@@ -20,7 +18,6 @@ import { spawnSync } from 'node:child_process';
 import { appendFileSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { rangeFindings } from './ac-tests.mjs';
 import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -224,7 +221,6 @@ export function run(base, head, now = Date.now()) {
   lines.push(...(testFlags.length ? testFlags : ['None.']), '');
   const untested = untestedSourceChange(changes);
   if (untested.length) failures.push(`product code changed with no test added or updated: ${untested.slice(0, 20).join(', ')}${untested.length > 20 ? ' …' : ''}`);
-  for (const f of rangeFindings(base, head, changes)) failures.push(`acceptance criterion: ${f}`);
 
   lines.push('### Dependencies', '');
   const { added, changed } = dependencyChanges(json(show(base, 'package.json')), json(show(head, 'package.json')));

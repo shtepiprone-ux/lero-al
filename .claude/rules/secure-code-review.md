@@ -32,8 +32,7 @@ same" in an existing, already-reviewed pattern needs no new threat analysis (Att
    `node scripts/quality/owasp.mjs review <kickoff> --base main` and the task's OWASP review record: a protection the
    diff should have and lacks is a finding, also when the kickoff did not ask for it.
 7. Baseline review (project start, legacy code, after an incident, or when the owner asks for the whole project):
-   `node scripts/quality/audit-coverage.mjs` lists every tracked file by lane with its checks and reading rule; the
-   ledger of what was read, and how, is written next to the findings (`docs/security/audit-2026-11-06/coverage.md`).
+   the ledger of what was read, and how, is written next to the findings (`docs/security/audit-2026-11-06/coverage.md`).
 
 ## 2. Six steps (diff-based review)
 

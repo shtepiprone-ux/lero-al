@@ -23,8 +23,7 @@ Start at `.claude/rules/README.md` (rewritten 2026-11-06 on the basis of the OWA
 
 - `flow.md` — design → implementation → review → merge; at most two `NEEDS REVISION` per task.
 - `quality-gates.md` — every file in the repository is checked (`scripts/quality/check-files.mjs`: encoding, invisible
-  characters, secrets, syntax of each file type, links, kickoffs); the agent loop (file checks and ESLint after every
-  write; every changed file, typecheck and related tests before finishing); the pre-commit hook; the CI gates (lint,
+  characters, secrets, syntax of each file type, links, kickoffs); the pre-commit hook; the CI gates (lint,
   types, all files, product checks, tests, authorization regression on real RLS, `npm audit`, change report, SBOM,
   CodeQL, gitleaks, zizmor, Storybook and end-to-end checks; daily). `CI Required` must be green before the owner merges.
 - `secure-code-review.md`, `threat-model.md`, `security-testing.md`, `kickoff-template.md`.
@@ -43,12 +42,22 @@ project theme stay authoritative for the responsive mechanism, interaction, acce
 ## Completeness rule: nothing is done partially
 
 Owner, 2026-11-10 (translated): "you must never do your work partially, it is strictly forbidden! Creating, editing and
-reviewing tasks and checking CI are forbidden to be done partially!" Every phase runs step by step through
-`node scripts/quality/pipeline.mjs run <design|execute|review|handoff> <kickoff>` (Opus designs, reviews and hands over;
-Sonnet executes); every CI job runs locally first in a CI-shaped checkout (`scripts/quality/ci-local.mjs`); a PR's CI is
-stated only with `pipeline.mjs ci-status <pr>`; every stated result names its source, `[CI: PR #<n>]`,
-`[локально: \`<command>\`]` or `[pipeline: <phase>]` (`scripts/quality/provenance.mjs`). The Stop hook refuses a reply
-that claims a phase without its complete ledger, or a result without a backed source. Details: `.claude/rules/flow.md` (completeness rule, Pipeline).
+reviewing tasks and checking CI are forbidden to be done partially!" Every step of each phase of `flow.md` is done. The
+gates are the GitHub workflow (`.github/workflows/ci.yml`), the pre-commit hook and the OWASP workflow
+(`scripts/quality/owasp.mjs`); owner, 2026-11-14: the local agent machinery that re-checked the agent (phase ledgers,
+the self-review hook, reply-wording checks, the local CI replica) was removed as over-engineering. A PR's CI is stated
+only from GitHub (`gh pr checks <n>`) after every check has concluded; a local result names its command. Details:
+`.claude/rules/flow.md` (completeness rule).
+
+## Self-review rule: every changed file read in full, three clean passes before any test
+
+Owner, 2026-11-13 (translated): "it is forbidden to run tests until you have checked the code you wrote three times,
+thoroughly"; "if a pass found a problem, that pass does not count … until all three passes are clean"; "depth is
+checking every line of code that is written"; "all models must read the code in a changed file completely, without
+exceptions; code not read completely in a file is a breach of the rules". Every model, implementer and reviewer, reads
+every changed file with the Read tool from its first line to its last in each pass and checks every changed line; a pass
+that finds a problem does not count and its fix starts the count again; tests run only after three clean passes in a
+row. No hook enforces it (owner, 2026-11-14); the reviewer checks the result. Details: `.claude/rules/flow.md` §2 step 3.
 
 ## Golden rule: no gap is only reported
 

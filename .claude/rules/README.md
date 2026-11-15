@@ -6,7 +6,7 @@ of the OWASP Cheat Sheet Series. Read only what the task needs.
 | File | Read when |
 |---|---|
 | `flow.md` | always — roles, design → implementation → review → merge, loop limit |
-| `quality-gates.md` | always — the agent loop hooks and the CI gates |
+| `quality-gates.md` | always — the file checks, the pre-commit hook and the CI gates |
 | `kickoff-template.md` | writing a kickoff |
 | `threat-model.md` | the change touches the attack surface (list in the file) |
 | `security-testing.md` | the change touches the attack surface; reviewing tests |

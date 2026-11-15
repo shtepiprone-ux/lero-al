@@ -16,11 +16,9 @@ import path from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 
 import { collectStoryTokens, isTransportError, parseCliArgs, parseWidths, renderErrorLines, viewportsForWidths } from '../check-locale-leak.mjs'
-import { diagnose } from '../quality/load-watch.mjs'
 
 describe('check-locale-leak render errors in the log', () => {
-  it('names each failed tuple and its reason, so the log and the timeout diagnosis can read it', () => {
-    // the reason was only in report.json: ci-local saw "1 render errors" and could not tell a timeout (2026-11-11)
+  it('names each failed tuple and its reason, so the CI log says why a render failed', () => {
     const lines = renderErrorLines([
       { storyId: 'patterns-mantine-cmspageview--body-only', viewport: 'mobile-375', locale: 'sq', reason: 'page.waitForFunction: Timeout 15000ms exceeded.' },
       { reason: 'scan runtime failed' },
@@ -29,8 +27,6 @@ describe('check-locale-leak render errors in the log', () => {
       '  render error: patterns-mantine-cmspageview--body-only at mobile-375 in sq: page.waitForFunction: Timeout 15000ms exceeded.',
       '  render error: (scan): scan runtime failed',
     ])
-    const calm = [{ cpu: 20, memFree: 60, ports: 40 }]
-    expect(diagnose(`Incomplete locale scan: 728/729 tuples\n${lines.join('\n')}`, calm)).toMatchObject({ timeout: true, cause: 'stall' })
   })
 })
 

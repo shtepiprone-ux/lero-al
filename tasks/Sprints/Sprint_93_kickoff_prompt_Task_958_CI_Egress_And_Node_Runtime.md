@@ -28,7 +28,7 @@ CI `node-version` are one version, and a test fails when they diverge.
   browser download, the Supabase project of the `authz` job). The list is built from the job logs: in block mode the
   runner annotates each refused host, and every addition names the step that needs it.
 - `.nvmrc` → `22.22.3`; `package.json` `"engines": { "node": "22.x" }`; `@types/node` stays on the 22 line (`^22`).
-- `scripts/quality/ci-workflow.test.mjs` (extended): every job has harden-runner first with `block` and a non-empty
+- `scripts/quality/ci-secrets.test.mjs` (extended; the workflow test D974-1 kept): every job has harden-runner first with `block` and a non-empty
   `allowed-endpoints`; every `node-version` equals `.nvmrc`; `engines.node` admits that version and no other major.
 - Owner: confirm in the Vercel project settings (Settings → Build and Deployment → Node.js Version) that it reads 22.x;
   Opus gives the exact screen path and reads the next deployment's build log for the Node version.
@@ -59,12 +59,12 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Dependency_Graph_SBOM: not applicable — the SBOM job only gains its egress list; its content is unchanged.
 - File_Upload: not applicable — only CI artifact uploads are named; no product upload changes.
 - GitHub_Actions_Security: "it must be treated as a critical asset, potentially even more critical than the source code it processes" — every job blocks egress to its listed hosts — AC1, AC3.
-- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — ci-workflow.test.mjs pass file names and arguments as array items; no value is joined into a command line — AC4.
+- Injection_Prevention: "the values for commands and the relevant arguments should be both validated" — the extended ci-secrets.test.mjs cases read the workflow files as data and start no command; no value is joined into a command line — AC4.
 - JavaScript_and_TypeScript_Security: "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters." — lint and CodeQL security-extended (CI) run on every changed file — AC4.
 - Key_Management: not applicable — no key is added; the jobs keep their existing secrets.
 - Nodejs_Security: "Starting with Node.js v20, a Permission Model is available to restrict application privileges." — one Node 22 line in .nvmrc, engines and every job, so the supported runtime is the tested one — AC2.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — npm reaches only the registry host the jobs list — AC1.
-- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — ci-workflow.test.mjs start git and node with argument arrays, never a shell string — AC4.
+- OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the extended ci-secrets.test.mjs cases call no OS command; they parse the workflow YAML — AC4.
 - REST_Security: not applicable — the endpoints named are hosts CI calls; no product endpoint changes.
 - Secrets_Management: "detect unauthorized access to or attempted exfiltration of secrets, such as anomalous secret retrieval, unexpected outbound network requests" — the egress block keeps job secrets from reaching unlisted hosts — AC1.
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff; changed-line coverage and the file checks run on it — AC4.
@@ -86,14 +86,14 @@ No visible change.
 
 ## Acceptance criteria
 
-- AC1 Every job blocks egress with its own list — test: `scripts/quality/ci-workflow.test.mjs` (extended: a job with
+- AC1 Every job blocks egress with its own list — test: `scripts/quality/ci-secrets.test.mjs` (extended: a job with
   `audit`, with no list, or with harden-runner not first fails; deliberate break on one job, restored).
-- AC2 One Node version — test: `scripts/quality/ci-workflow.test.mjs` (extended: `.nvmrc`, every `node-version` and
+- AC2 One Node version — test: `scripts/quality/ci-secrets.test.mjs` (extended: `.nvmrc`, every `node-version` and
   `engines.node` compared; a changed `.nvmrc` fails).
 - AC3 The pipeline passes with egress blocked — test: `gh pr checks <pr>` shows `CI Required` green on the PR of this
   task (Opus runs it; a refused host is either listed with its step or the step is removed).
 - AC4 `npm run lint`, `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/check-files.mjs --worktree` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_958_CI_Egress_And_Node_Runtime.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 
 ## Route

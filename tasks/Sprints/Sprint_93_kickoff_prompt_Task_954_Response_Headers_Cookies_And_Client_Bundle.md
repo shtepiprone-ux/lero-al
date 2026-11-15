@@ -195,12 +195,12 @@ No visible change.
 - AC9 Every route class answers every security header with its value: a page, a signed-in page, `/robots.txt`,
   `/sitemap/0.xml`, a 404, an API route and a static file — test: `scripts/__tests__/check-security-headers-live.test.ts` (new; the
   comparison is red on an answer missing one header) and `node scripts/check-security-headers-live.mjs`, which the CI
-  click-shield job runs on the production server, where it cannot skip (the step and its case in
-  `scripts/quality/ci-workflow.test.mjs` are Opus's).
+  click-shield job runs on the production server, where it cannot skip (the step is Opus's; its result:
+  `gh pr checks <n>`, the Click-shield check of this task's pull request).
 - AC6 The whole change passes the project gates — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `npm run build`, `node scripts/quality/changed-lines-coverage.mjs --base main`,
   `node scripts/quality/check-files.mjs --worktree` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_954_Response_Headers_Cookies_And_Client_Bundle.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   each exit 0.
 
 ## Route

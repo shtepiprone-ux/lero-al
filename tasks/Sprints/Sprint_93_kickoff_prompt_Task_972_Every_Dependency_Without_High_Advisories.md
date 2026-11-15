@@ -4,7 +4,7 @@ Sprint 93. Priority P1. Found 2026-11-12 by Opus from the GitHub notice on the p
 the default branch: 1 critical, 23 high, 58 moderate, 12 low"); no owner decision needed (owner D2, 2026-11-06: quality
 covers every file; golden rule, 2026-11-07). Implementer: Sonnet, on `task/972-dependency-advisories` from `main`.
 Opus, not the executor (`execute-task` forbids `.github/**`, `scripts/quality/**` and `.claude/**`), changes the CI
-audit step, its `scripts/quality/ci-workflow.test.mjs` case and `.claude/rules/quality-gates.md`. Reviewer: Opus.
+audit step and `.claude/rules/quality-gates.md`. Reviewer: Opus.
 Human owner of the change: the owner.
 
 ## Goal
@@ -44,8 +44,8 @@ task `npm audit --audit-level=high` exits 0 and CI runs it on every change.
   animation element.
 - No package gains an install script: `scripts/quality/install-scripts.test.mjs` (Task 947) passes unchanged.
 - Opus: in the `dependency-audit` job of `.github/workflows/ci.yml` a step "Every dependency has no high or critical
-  advisory" running `npm audit --audit-level=high`, next to the production step; its case in
-  `scripts/quality/ci-workflow.test.mjs`; the "Dependency audit" row of `.claude/rules/quality-gates.md`.
+  advisory" running `npm audit --audit-level=high`, next to the production step (its own command is AC5's test); the
+  "Dependency audit" row of `.claude/rules/quality-gates.md`.
 - Dependencies: none added; versions only, each at least 14 days old (`--before`).
 - Out of scope: the production moderate advisories of `glob` and `minimatch`, whose fix is `@sentry/nextjs` 11.12.0
   (major, released 2026-11-10, under 14 days old), and the production low advisories: Task 973.
@@ -117,8 +117,8 @@ No visible change. A visual difference in the build or Storybook stops the task 
 - AC3 The project still builds and passes — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `npm run build`, `npm run build-storybook`, each exit 0.
 - AC4 No package gains an install script — test: `scripts/quality/install-scripts.test.mjs`.
-- AC5 CI blocks a high or critical advisory in any dependency — test: `scripts/quality/ci-workflow.test.mjs`
-  (Opus writes the case with the step).
+- AC5 CI blocks a high or critical advisory in any dependency — test: `npm audit --audit-level=high` (the step's own
+  command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
 
 ## Route
 
@@ -130,7 +130,7 @@ No visible change. A visual difference in the build or Storybook stops the task 
 4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npm audit --audit-level=high · npm audit --omit=dev --audit-level=high ·
    npm run build · npm run build-storybook · node --test scripts/quality/install-scripts.test.mjs ·
-   node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_972_Every_Dependency_Without_High_Advisories.md
+   node scripts/quality/change-report.mjs main HEAD
 5. Report: each command, exit code, relevant output; the before and after audit summaries; every version change with
    its release date; the CI step the change needs, for Opus.
 

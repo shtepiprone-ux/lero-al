@@ -1,4 +1,4 @@
-<!-- Governance reset 2026-11-06: the hooks named in this table were removed; current enforcement is .claude/rules/quality-gates.md (agent loop hook scripts/quality/agent-check.mjs and CI .github/workflows/ci.yml). -->
+<!-- Governance reset 2026-11-06: the hooks named in this table were removed; current enforcement is .claude/rules/quality-gates.md (the pre-commit hook and CI .github/workflows/ci.yml). -->
 ## Enforcement status
 
 For Opus design/review, the 2026-10-20

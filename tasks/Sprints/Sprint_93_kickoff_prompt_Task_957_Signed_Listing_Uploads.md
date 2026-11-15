@@ -142,7 +142,7 @@ No visible change (the same widget, signed).
   `scripts/quality/cloudinary-config.test.mjs` (extended: U3 cases).
 - AC8 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
   `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` and
-  `node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md`
+  `node scripts/quality/change-report.mjs main HEAD`
   exit 0.
 
 ## Route

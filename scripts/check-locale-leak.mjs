@@ -493,9 +493,9 @@ export async function collectStoryTokens(browser, baseUrl, story, viewport, loca
 
 /**
  * One line per render error for the log: which tuple and why. The reasons were only in report.json, so the log said
- * "1 render errors" and nothing more; neither the reader of a CI log nor ci-local's timeout diagnosis (load-watch.mjs
- * reads the step's output) could see that it was "page.waitForFunction: Timeout 15000ms exceeded" (ci-local run of
- * 2026-11-11, patterns-mantine-cmspageview--body-only at mobile-375 in sq; the Story alone passed 5 runs of 5).
+ * "1 render errors" and nothing more; the reader of a CI log could not see that it was "page.waitForFunction: Timeout
+ * 15000ms exceeded" (a run on 2026-11-11 of the local CI replica that Task 974 later removed,
+ * patterns-mantine-cmspageview--body-only at mobile-375 in sq; the Story alone passed 5 runs of 5).
  */
 export function renderErrorLines(errors) {
   return errors.map(e => `  render error: ${e.storyId ?? '(scan)'}${e.viewport ? ` at ${e.viewport}` : ''}${e.locale ? ` in ${e.locale}` : ''}: ${e.reason}`);

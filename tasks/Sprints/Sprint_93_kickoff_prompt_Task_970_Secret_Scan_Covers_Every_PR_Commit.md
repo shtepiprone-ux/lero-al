@@ -88,7 +88,7 @@ Required by `node scripts/quality/owasp.mjs plan` (a13983001cb3, mapping of 2026
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the reviewing session reads the workflow and test diff and reruns AC1 to AC5 — AC1, AC2, AC5.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the release checksum is taken from the release's own checksums file, not from memory, and the reviewer refetches it — AC2.
 - Secure_Product_Design: not applicable — no product feature is designed; only a CI gate's commit range and download change.
-- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — gitleaks is pinned to 8.24.3 and its sha256 is checked before it runs — AC2.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — gitleaks is pinned to 8.24.3 and its sha256 is checked before it runs — AC2.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — Attack surface states what changes, what can go wrong (tampered binary, injected range, missed commits) and what is done about each — AC1, AC2, AC3.
 - User_Privacy_Protection: not applicable — the scan reads repository history only; no personal data is collected or shown.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reads the PR run's scan log and counts the PR's commits itself — AC3.

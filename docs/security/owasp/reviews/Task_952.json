@@ -225,7 +225,7 @@
     "Software_Supply_Chain_Security": {
       "verdict": "met",
       "quotes": [
-        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
       ],
       "evidence": "registry times of the 35 changed versions read: only `next-cloudinary@7.0.0` under 14 days (D3); each from the npm registry with integrity."
     },

@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "dde42860e25ade9956827864dc4f6b6263548314",
- "fetchedOn": "2026-11-15T15:29:50.760Z",
+ "commit": "98b59c58cf7a468f65e7cfb32c3b3707fc520baf",
+ "fetchedOn": "2026-11-15T17:23:33.863Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -764,7 +764,7 @@
    "name": "Software_Supply_Chain_Security",
    "file": "Software_Supply_Chain_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html",
-   "sha": "f250e6f8947f7a00cb922977801131ac25b7b4b6",
+   "sha": "d5b844a9298fb95e53b4f61eb0b431aa9ce7ae2a",
    "title": "Software Supply Chain Security"
   },
   {

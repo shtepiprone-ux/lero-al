@@ -265,7 +265,7 @@
     "Software_Supply_Chain_Security": {
       "verdict": "met",
       "quotes": [
-        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
       ],
       "evidence": "F1 fixed: the four Storybook packages are pinned to `10.6.3` (`npm ls` prints 10.6.3 only) and every transitive version is at least 14 days old (`node scripts/quality/change-report.mjs --lockfile-age HEAD` exit 0; reproduced byte for byte by the reviewer, 2026-11-09)."
     },

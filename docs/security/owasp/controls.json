@@ -1841,13 +1841,13 @@
    },
    "requirements": [
     {
-     "quote": "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure",
+     "quote": "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure",
      "control": ".github/workflows/ci.yml",
      "evidence": "npm ci --ignore-scripts"
     }
    ],
-   "reviewedSha": "f250e6f8947f7a00cb922977801131ac25b7b4b6",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "d5b844a9298fb95e53b4f61eb0b431aa9ce7ae2a",
+   "reviewedOn": "2026-11-15"
   },
   "SQL_Injection_Prevention": {
    "applies": true,

@@ -216,7 +216,7 @@
     "Software_Supply_Chain_Security": {
       "verdict": "met",
       "quotes": [
-        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
       ],
       "evidence": "`node --test scripts/quality/ci-local.test.mjs`: ci-local.mjs ZIZMOR 1.31.1 (released 2026-10-15, at least 14 days old) installed by uv with --require-hashes from wheels whose SHA-256 is pinned (a wrong digest is refused, run 2026-11-10), and GITLEAKS_WINDOWS_SHA256 for gitleaks 8.24.3 (the archive must match the release checksum and the pinned hash); ci-local.test.mjs asserts the pins, the digests and the age"
     },

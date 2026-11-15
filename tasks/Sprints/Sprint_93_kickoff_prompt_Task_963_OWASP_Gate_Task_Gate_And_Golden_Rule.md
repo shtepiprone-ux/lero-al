@@ -127,7 +127,7 @@ Changed: the governance path every change takes (agent sessions, kickoffs, revie
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the whole diff of the governance files and reruns every check — AC8.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — an agent's citation of a sheet counts only when the tool finds the quote in the sheet — AC1, AC3.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — every gap the mapping found became a task with tested criteria (959, 954, 955, 960, 961, 962) — AC5.
-- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the reference itself is pinned by its upstream commit and per-sheet hashes; the new job pins every action by SHA — AC1, AC2.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — the reference itself is pinned by its upstream commit and per-sheet hashes; the new job pins every action by SHA — AC1, AC2.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the attack surface section answers them for the governance path — AC1-AC6.
 - Transport_Layer_Security: not applicable — the scripts call fixed `https:` hosts through Node's default TLS; no server TLS setting changes.
 - User_Privacy_Protection: not applicable — no personal data is read or stored; cloudinary-config.mjs reads preset settings only.

@@ -79,7 +79,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-15).
 - Secrets_Management: "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR" — the committed snapshot passes the secret checks of check-files — AC6.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the reviewer reruns the drift tool and the AC tests, not the report — AC1, AC3.
 - Session_Management: not applicable — no session handling changes in this task.
-- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the CI step adds no action or package; it runs a repository script — AC2.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — the CI step adds no action or package; it runs a repository script — AC2.
 - Transaction_Authorization: not applicable — no transaction or approval flow changes.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Reconcile supplier reports with observations you control when possible" — the quality job result is read from GitHub with `gh pr checks <n>` — AC2.
 

@@ -73,7 +73,7 @@
     "Session_Management": { "verdict": "not applicable", "reason": "no session handling changes in the database hardening" },
     "Software_Supply_Chain_Security": {
       "verdict": "met",
-      "quotes": ["limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"],
+      "quotes": ["limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"],
       "evidence": "`package.json` pins `\"pg\": \"8.23.1\"`; `node scripts/quality/change-report.mjs --lockfile-age main` exit 0, 7 versions, none under 14 days"
     },
     "Third_Party_Javascript_Management": { "verdict": "not applicable", "reason": "no script loading changes in a database task" },

@@ -148,7 +148,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Server_Side_Request_Forgery_Prevention: "Application can send request only to identified and trusted applications" — the Cloudinary host check accepts only https on res.cloudinary.com — AC5.
 - Serverless_FaaS_Security: not applicable — no function trigger or permission changes; helpers only.
 - Session_Management: not applicable — no session handling changes; the callback route test is the only auth file touched.
-- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — the lockfile pins every version; CI installs with npm ci — AC10.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — the lockfile pins every version; CI installs with npm ci — AC10.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC2, AC3, AC4, AC5, AC6, AC7, AC8.
 - Transport_Layer_Security: "HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS" — http:// Cloudinary addresses are refused, https only — AC5.
 - User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — a look-alike host gets no transform, srcset or preload, so no visitor request reaches it — AC5.

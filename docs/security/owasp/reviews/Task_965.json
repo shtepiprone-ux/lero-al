@@ -167,7 +167,7 @@
     },
     "Software_Supply_Chain_Security": {
       "verdict": "met",
-      "quotes": ["limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"],
+      "quotes": ["limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"],
       "evidence": "no dependency or action is added: `tsx`, `playwright` and `@supabase/ssr` are already in `package.json`; `package-lock.json` unchanged (`git diff --stat`)"
     },
     "Third_Party_Javascript_Management": {

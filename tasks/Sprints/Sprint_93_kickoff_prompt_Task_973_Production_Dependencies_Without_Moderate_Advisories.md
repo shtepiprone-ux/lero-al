@@ -78,7 +78,7 @@ Required by `node scripts/quality/owasp.mjs plan` (mapping of 2026-11-12).
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads each Sentry API change against the upgrade guide — AC2, AC4.
 - Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the version is checked with `npm view` in the report — AC4.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — each threat of the model maps to an acceptance criterion — AC1, AC2, AC3.
-- Software_Supply_Chain_Security: "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure" — a major at least 14 days old, the lockfile written by npm — AC1, AC4.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — a major at least 14 days old, the lockfile written by npm — AC1, AC4.
 - Third_Party_Javascript_Management: not applicable — the CAPTCHA widget is checked for the Sentry API only; no script source changes.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the Attack surface answers them for the upgrade — AC1, AC2, AC3.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the audit and reads the CI run, not the summary — AC1, AC5.

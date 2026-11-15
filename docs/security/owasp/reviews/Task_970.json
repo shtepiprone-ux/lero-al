@@ -121,7 +121,7 @@
     "Software_Supply_Chain_Security": {
       "verdict": "met",
       "quotes": [
-        "limit the applications dependencies to a specific version that has been previously verified as legitimate and secure"
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
       ],
       "evidence": "`gh release download v8.24.3 -R gitleaks/gitleaks -p gitleaks_8.24.3_checksums.txt` (published 2025-04-11): linux_x64 9991e0b2...ee29c equals GITLEAKS_SHA256 at .github/workflows/ci.yml:291; a wrong pin turns `node --test scripts/quality/ci-workflow.test.mjs` red"
     },

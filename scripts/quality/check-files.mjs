@@ -17,6 +17,7 @@
 
 import { readFileSync, readdirSync, existsSync, openSync, fstatSync, closeSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import os from 'node:os';
+import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -73,16 +74,54 @@ export const KICKOFF_SECTIONS = ['## Goal', '## Cause', '## Scope', '## Read set
 const KICKOFF_FIRST_SPRINT = 93;
 const KICKOFF_MAX_LINES = 200;
 // Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it"; "the size
-// limit must be checked by a tool, not by the model". "## Cause" holds the fact with its source and a "Fix:" line; "## Read
-// set" lists every file the implementer will change with its line count, at most MAX_READ_SET_LINES in all (more: split
-// the task at design). Kickoffs written before that rule are listed here; an open one gains both sections when it is
-// next revised, and leaves the list then.
+// limit must be checked by a tool, not by the model". "## Cause" holds the fact with its sources and a "Fix:" line; "## Read
+// set" names the commit its counts were taken at ("Counted at <commit>") and lists every file the implementer will change
+// with its line count in that commit, at most MAX_READ_SET_LINES in all (more: split the task at design). Every source and
+// every count is checked on every run, not only at design (Task 956 Review 6, F20, F21).
 export const MAX_READ_SET_LINES = 3000;
-export const CAUSE_GRANDFATHERED = new Set(['926', '939', '945', '947', '948', '950', '951', '952', '953', '954', '955', '957', '958', '959', '962', '963', '964', '965', '967', '968', '969', '970', '971', '972', '973', '974', '977', '978', '979', '980']);
+/** The sha256 of a kickoff's text (checkFile has removed a BOM), line endings normalised: the same on Windows and in CI. */
+export const kickoffHash = (body) => createHash('sha256').update(String(body).replace(/\r\n/g, '\n')).digest('hex');
+// Kickoffs written before the rule, each with the sha256 of its text on 2026-11-16. A listed kickoff whose text differs
+// has been revised since, and is held to the rule like any other (Task 956 Review 6, F22).
+export const CAUSE_GRANDFATHERED = new Map([
+  ['926', 'af68a6807ae740a2015cb8ca8dbad0936a0acc648efb78c395cc14d50115be49'],
+  ['939', '0ecb856e27e4aa21c3162fa7f52cd913ad41b9a03e6361a480c0226d66662b54'],
+  ['945', '1d83a7d73fc2e07c37a7118c064a777954e057f2b6d715416d370814cb9ad595'],
+  ['947', 'b6020fe3733e267d50a0088b95e45c7a9fb4e1aea356759aa973e650b91f14f2'],
+  ['948', '329765840da7d46a3a78131445feaa49bb1f0bbf1bf116cbe7a9ffca6eea4f29'],
+  ['950', 'b3d65a342d8f9bebcbe4f72039d25cd9afa04e3a280c5715702b2442ee0382a8'],
+  ['951', '5f4d393b96e8fe58e7ba9f02956859d0ed56cffc1aa5f209ea681abf421019c7'],
+  ['952', 'b15e41f19a20eab6ed5b59ac3f33c76bd11b0da497d99f4eac4b1fda0c06738b'],
+  ['953', 'b10536cbdee8e2da96847502354e7debb33d72fafd883cd0f05f3358a0772ec2'],
+  ['954', 'bb47f365402043e016c50db9975f682d1f3305279479a35bce52907b4e8d2b07'],
+  ['955', 'bd2148064d63723bc0d756ce52c9185ea2d542a2ee0b008b41d245acd39319dc'],
+  ['957', '14c70fdca0575335097e13773f2945fada9e3ebc1f83292ae85580b588a8ac01'],
+  ['958', 'e3183b63925fc77c77a388c24e6e7b1e650f372203c70789bd336206e9b410f8'],
+  ['959', '575dab5fb22fdb1011dfa45e8c94f56381060b853610c44ad8a8aa2cdcfed4dd'],
+  ['962', '4bd89a630299e1b1681cd45baf790c0e824c0a0a3c2c8e67b3fedbc1c1d8d858'],
+  ['963', '323199cdcaebf74fcb04aa11a2893789ef8a0d4cc6974e9af7375c9b0e3f1762'],
+  ['964', '7f74cf0292fbc40bff0d9ce4265e113e63c27944ea791db5a884618ee5a8dca0'],
+  ['965', '01cc7f3a1ee44ab396c9cb5ac56b9ee0ca07b115604a1a5d4eb58e81ceb83d5f'],
+  ['967', '8f3ba3d9990a0c194ac107952440496ad5d12a33761656daf9bf597f70cdb2d2'],
+  ['968', 'bf5fb2c03c90c831d24385f1e7e43789536940a93236ddc6aa5e5f1f5153c8ca'],
+  ['969', 'a36ed7094e999bd0d0a8365917173f2bd9e2fb5794f1cbb3c8443bc03298d245'],
+  ['970', '51719dccf3cdb1336e1aad6adef089bfffab7b9608ed571af184526b3fab3d79'],
+  ['971', '437d9cff5b3cca24dcf2df9ae06d09e7235048e3de782990e0791175daefcdc6'],
+  ['972', '583db8dfd6f2d1f14ae22eeaa1d404d2b3858cecdc48d50b9d31edefe51eaceb'],
+  ['973', 'b4a090613ec51e6ba7ff178679194ceab240b2cf8f9d71c4dbf60afdcdbfb51f'],
+  ['974', 'eebe8a3663b3fd13bb70e188a074a48ab57ef928af5f4aac01def394462ca9f1'],
+  ['977', 'eaacf89b5378aa8fb43511740c5e17c2a342697427d1891afa0e145f5d73b8cd'],
+  ['978', '0d8be55863621a24c648dd05a67f6cf5d2065fe089d73d3d906539a99b5500ca'],
+  ['979', '58a98ce14feb3a81c63943deb69ceb80b161a04f035de05aaf5d24deeb910846'],
+  ['980', '386d4f95e5d9f7b41c4592d575bf87992c5a98bca353009be1b1f43351c1ffb2'],
+]);
 const NEW_SECTIONS = new Set(['## Cause', '## Read set']);
-/** A source of a fact: `path:line` (or a range), or a command or query in backticks whose output is quoted. */
-const CAUSE_SOURCE = /`[^`\s]+\.[A-Za-z0-9]+:\d+(?:-\d+)?`|`(?:node|npm|npx|gh|git|select|grep|rg) [^`]+`/;
+/** A `path:line` source (or a range): a repository path with a folder; a bare file name is not a source. */
+const PATH_SOURCE = /`([^`\s:]+\/[^`\s:]+\.[A-Za-z0-9]+):(\d+)(?:-(\d+))?`/g;
+/** A command or query source in backticks; its quoted output follows on the same line after "→". */
+const COMMAND_SOURCE = /`((?:node|npm|npx|gh|git|select|grep|rg) [^`]+)`/gi;
 const READ_SET_ENTRY = /^- `([^`]+)` — (?:(new), )?(\d+) lines?$/;
+const COUNTED_AT = /^Counted at `?([0-9a-f]{7,40})`?\.?$/i;
 // Kickoffs approved before the OWASP gate existed: OWASP_GRANDFATHERED in owasp.mjs, one list for both tools.
 
 const lineOf = (text, index) => text.slice(0, index).split('\n').length;
@@ -353,10 +392,30 @@ export function lineCount(rel, { root = ROOT } = {}) {
   const inside = path.relative(root, abs);
   if (!inside || inside.startsWith('..') || path.isAbsolute(inside)) return null;
   const buf = readRegularFile(abs);
-  if (!buf) return null;
+  return buf ? countLines(buf) : null;
+}
+
+/** The number of lines of a text (a final newline ends the last line). */
+function countLines(buf) {
   const lines = buf.toString('utf8').split('\n');
   return lines.length > 1 && lines[lines.length - 1] === '' ? lines.length - 1 : lines.length;
 }
+
+const HEX_COMMIT = /^[0-9a-f]{7,40}$/i;
+/**
+ * The files of a commit, read with Git: `exists(sha)` is true for a commit of this repository, `lineCount(sha, rel)` is the
+ * number of lines of the file `rel` in it, or null when it holds no such file. CI checks out every branch and tag
+ * (`fetch-depth: 0`), so a commit the owner pushed with the branch is there; one that is not makes the check fail, never
+ * skip.
+ */
+export const commitLines = {
+  exists: (sha) => HEX_COMMIT.test(sha) && spawnSync('git', ['cat-file', '-e', `${sha}^{commit}`], { cwd: ROOT, windowsHide: true }).status === 0,
+  lineCount: (sha, rel) => {
+    if (!HEX_COMMIT.test(sha)) return null;
+    const r = spawnSync('git', ['cat-file', 'blob', `${sha}:${rel}`], { cwd: ROOT, encoding: 'buffer', maxBuffer: 1 << 28, windowsHide: true });
+    return r.status === 0 ? countLines(r.stdout) : null;
+  },
+};
 
 /** The lines of one section (without its heading) and the 1-based number of its first line, or null without the section. */
 function sectionLines(lines, heading) {
@@ -367,36 +426,53 @@ function sectionLines(lines, heading) {
 }
 
 /**
- * "## Cause" names the fact behind the problem with its source and the fix; "## Read set" lists the files to change with
- * their line counts, within MAX_READ_SET_LINES. While "## Review" is empty (the design stage) each count must equal the
- * file as it is, so the numbers come from the files, not from the model.
+ * "## Cause" names the fact behind the problem with its sources and the fix: a `path:line` source is a file of the
+ * repository that has that line, a command source quotes its output after "→" (F21). "## Read set" names the commit its
+ * counts were taken at and lists the files to change with their line counts, within MAX_READ_SET_LINES; every count is
+ * compared with that commit on every run, so the numbers come from Git, not from the model (F20). `lineCount(rel)` reads
+ * the file now; `atCommit` reads a commit (`commitLines`).
  */
-export function causeAndReadSetFindings(lines, { lineCount: count = lineCount } = {}) {
+export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, atCommit = commitLines } = {}) {
   const out = [];
   const cause = sectionLines(lines, '## Cause');
   if (cause) {
-    if (!CAUSE_SOURCE.test(cause.lines.join('\n'))) out.push(finding('kickoff', '"## Cause" names no source of the fact (`path:line`, or a `command` or query whose output it quotes)', cause.first - 1));
+    let sources = 0;
+    cause.lines.forEach((l, k) => {
+      for (const m of l.matchAll(PATH_SOURCE)) {
+        const [, file, from, to] = m;
+        const cited = `${file}:${from}${to ? `-${to}` : ''}`;
+        const total = count(file);
+        if (total === null) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, which is not in the repository`, cause.first + k));
+        else if (Number(from) < 1 || Number(to ?? from) > total) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, but ${file} has ${total} lines`, cause.first + k));
+        else sources++;
+      }
+      for (const m of l.matchAll(COMMAND_SOURCE)) {
+        if (/→\s*\S/.test(l.slice(m.index + m[0].length))) sources++;
+        else out.push(finding('kickoff', `"## Cause" names the command \`${m[1]}\` but quotes no output (write "→ <its output>" after it)`, cause.first + k));
+      }
+    });
+    if (!sources) out.push(finding('kickoff', '"## Cause" names no source of the fact (`path:line` with a folder, or a `command` or query followed by "→ <its output>")', cause.first - 1));
     if (!cause.lines.some((l) => /^Fix: \S/.test(l))) out.push(finding('kickoff', '"## Cause" has no "Fix: <the change that removes the cause>" line', cause.first - 1));
   }
   const set = sectionLines(lines, '## Read set');
   if (set) {
-    // the design stage: "## Review" holds nothing but the template's placeholder. After it, the files change with the work
-    // (a new file exists, a count grows), so only the limit is checked.
-    const review = sectionLines(lines, '## Review');
-    const design = !review || !review.lines.join('\n').replace(/<[^>]*>/g, '').trim();
+    const sha = set.lines.map((l) => COUNTED_AT.exec(l.trim())).find(Boolean)?.[1] ?? null;
+    if (!sha) out.push(finding('kickoff', '"## Read set" has no "Counted at <commit>" line (the commit whose files the counts were taken from)', set.first - 1));
+    const known = sha !== null && atCommit.exists(sha);
+    if (sha && !known) out.push(finding('kickoff', `"## Read set": ${sha} is not a commit of this repository (the counts are checked against it; push the branch that holds it)`, set.first - 1));
     let total = 0;
     let entries = 0;
     set.lines.forEach((l, k) => {
-      if (!l.trim()) return;
+      if (!l.trim() || COUNTED_AT.test(l.trim())) return;
       const m = READ_SET_ENTRY.exec(l);
-      if (!m) { out.push(finding('kickoff', '"## Read set" line must be "- `path` — <n> lines" or "- `path` — new, <n> lines"', set.first + k)); return; }
+      if (!m) { out.push(finding('kickoff', '"## Read set" line must be "Counted at <commit>", "- `path` — <n> lines" or "- `path` — new, <n> lines"', set.first + k)); return; }
       entries++;
       total += Number(m[3]);
-      if (!design) return;
-      const actual = count(m[1]);
-      if (m[2] && actual !== null) out.push(finding('kickoff', `${m[1]} exists, so it is not new (${actual} lines)`, set.first + k));
-      if (!m[2] && actual === null) out.push(finding('kickoff', `${m[1]} does not exist: mark it "new, <n> lines"`, set.first + k));
-      if (!m[2] && actual !== null && actual !== Number(m[3])) out.push(finding('kickoff', `${m[1]} has ${actual} lines, not ${m[3]}`, set.first + k));
+      if (!known) return;
+      const actual = atCommit.lineCount(sha, m[1]);
+      if (m[2] && actual !== null) out.push(finding('kickoff', `${m[1]} is in ${sha}, so it is not new (${actual} lines)`, set.first + k));
+      if (!m[2] && actual === null) out.push(finding('kickoff', `${m[1]} is not in ${sha}: mark it "new, <n> lines"`, set.first + k));
+      if (!m[2] && actual !== null && actual !== Number(m[3])) out.push(finding('kickoff', `${m[1]} has ${actual} lines at ${sha}, not ${m[3]}`, set.first + k));
     });
     if (!entries) out.push(finding('kickoff', '"## Read set" lists no file', set.first - 1));
     if (total > MAX_READ_SET_LINES) out.push(finding('kickoff', `the read set is ${total} lines > ${MAX_READ_SET_LINES} (flow.md §1: split the task)`, set.first - 1));
@@ -405,7 +481,7 @@ export function causeAndReadSetFindings(lines, { lineCount: count = lineCount } 
 }
 
 /** A kickoff written from Sprint 93 on follows .claude/rules/kickoff-template.md. */
-export function kickoffFindings(body, { task, lineCount: count = lineCount } = {}) {
+export function kickoffFindings(body, { task, lineCount: count = lineCount, atCommit = commitLines, grandfathered = CAUSE_GRANDFATHERED } = {}) {
   const out = [];
   const lines = body.split('\n');
   // The "## OWASP" section is a checklist with one line per required sheet; it does not count towards the length limit.
@@ -415,14 +491,15 @@ export function kickoffFindings(body, { task, lineCount: count = lineCount } = {
   if (lines.length - owaspLines > KICKOFF_MAX_LINES + 1) out.push(finding('kickoff', `${lines.length - owaspLines} lines > ${KICKOFF_MAX_LINES}, the "## OWASP" checklist not counted (flow.md §1: split the task)`));
   if (!/^# Task \d+ — \S/.test(lines[0] ?? '')) out.push(finding('kickoff', 'first line must be "# Task <n> — <outcome>"', 1));
   let last = -1;
-  const grandfathered = CAUSE_GRANDFATHERED.has(task);
-  for (const s of KICKOFF_SECTIONS.filter((x) => !grandfathered || !NEW_SECTIONS.has(x))) {
+  // the text recorded on 2026-11-16, unchanged: written before the rule; any revision since is held to it
+  const oldRule = grandfathered.has(task) && grandfathered.get(task) === kickoffHash(body);
+  for (const s of KICKOFF_SECTIONS.filter((x) => !oldRule || !NEW_SECTIONS.has(x))) {
     const i = lines.findIndex((l) => l.trim() === s);
     if (i < 0) out.push(finding('kickoff', `missing section "${s}" (kickoff-template.md)`));
     else if (i < last) out.push(finding('kickoff', `section "${s}" is out of order`, i + 1));
     else last = i;
   }
-  if (!grandfathered) out.push(...causeAndReadSetFindings(lines, { lineCount: count }));
+  if (!oldRule) out.push(...causeAndReadSetFindings(lines, { lineCount: count, atCommit }));
   const ac = lines.findIndex((l) => l.trim() === '## Acceptance criteria');
   if (ac >= 0) {
     const end = lines.findIndex((l, i) => i > ac && l.startsWith('## '));

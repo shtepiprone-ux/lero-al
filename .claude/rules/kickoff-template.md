@@ -1,8 +1,9 @@
 # Kickoff template (at most 200 lines, the "## OWASP" checklist not counted)
 
 `scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>`, the
-200-line limit, a "## Cause" with a source and a "Fix:" line, and a "## Read set" within 3 000 lines for every kickoff
-from Sprint 93 on (those written before 2026-11-16 are listed in `CAUSE_GRANDFATHERED` until next revised), and runs
+200-line limit, a "## Cause" with real sources and a "Fix:" line, and a "## Read set" counted at a named commit and within
+3 000 lines for every kickoff from Sprint 93 on (those written before 2026-11-16 are listed in `CAUSE_GRANDFATHERED` with
+the sha256 of their text that day; a listed kickoff whose text differs from it is held to the rule), and runs
 the OWASP gate (`scripts/quality/owasp.mjs`, owner request 2026-11-07: every task design, edit and review is held
 against https://cheatsheetseries.owasp.org/index.html). A closed task's kickoff moves to `tasks/Archive/`; every
 kickoff outside it is an open task's and carries a complete mobile adaptation record. A kickoff is as long as its fix
@@ -18,7 +19,8 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 <2–5 sentences: what is wrong today (with source path:line or command output) and what is true after the task>
 
 ## Cause
-<the fact that produces the problem, with its source: `path:line`, or a `command` and its output>
+<the fact that produces the problem, with its source: `path:line` (a repository file that has that line), or a
+`command` → <its output>>
 Fix: <the change that removes that cause; the scope is this change and nothing more>
 
 ## Scope
@@ -27,11 +29,13 @@ Fix: <the change that removes that cause; the scope is this change and nothing m
 - Out of scope: <what is deliberately not touched>
 
 ## Read set
+Counted at <commit>
 - `<path>` — <n> lines
 - `<path>` — new, <n> lines
-(Every file the implementer changes, with its line count now; `check-files.mjs` compares each count with the file while
-"## Review" is empty and refuses a total over 3 000 lines: such a task is split. `read-coverage.mjs` holds the
-implementer to three full passes over these files.)
+(The commit the revision starts from, pushed with the branch; every file the implementer changes, with its line count in
+that commit, "new" when it is not in it. `check-files.mjs` compares each count with the commit on every run and refuses
+a commit it cannot find and a total over 3 000 lines: such a task is split. `read-coverage.mjs` holds the implementer to
+three full passes over every file that differs from the base.)
 
 ## Attack surface
 "Unchanged" — or the threat model of `.claude/rules/threat-model.md` (≤ 30 lines) and the authorization-matrix rows.

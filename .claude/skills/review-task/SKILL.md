@@ -5,14 +5,19 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
 
 # Review a task (Opus)
 
-1. Read the kickoff, `.claude/rules/flow.md` §3 and `.claude/rules/secure-code-review.md`. Refresh the reference:
-   `node scripts/quality/owasp.mjs sync` and `node scripts/quality/owasp.mjs check` exit 0 (a sheet changed upstream since
-   the kickoff was written is re-read and re-mapped before the review continues).
-2. Before any tool that runs tests, the self-review of `flow.md` §2 step 4: every file of the revision read in full,
-   every changed line checked, three clean passes in a row, and `node scripts/quality/read-coverage.mjs --files-since
-   <revision start>` exits 0 (the review runs in a session of its own); a hunk no Scope item needs is a finding, and so
-   is a change that does not remove the kickoff's "## Cause". The implementer's `read-coverage.mjs` output is checked:
-   missing or exit 1 is a finding; when the implementer's transcript is on this machine, rerun it with `--transcript`.
+1. Read the kickoff, `.claude/rules/flow.md` §3 and `.claude/rules/secure-code-review.md`. Refresh the reference after
+   the three passes of step 2 (a session that changes nothing counts its runs from its first command, so a run before
+   the passes breaks them): `node scripts/quality/owasp.mjs sync` and `node scripts/quality/owasp.mjs check` exit 0 (a
+   sheet changed upstream since the kickoff was written is re-read and re-mapped before the review continues; the
+   remap is a change and starts the passes again). What this writes stays within the review's read set:
+   `docs/security/owasp/sheets.json` is a generated file (`read-coverage.mjs` takes the session's own `owasp.mjs check`
+   as its proof), and `controls.json` is read only by the objects the remap changed.
+2. Before any command off the read-only allow-list, the self-review of `flow.md` §2 step 4: every file of the revision
+   read in full, every changed line checked, three clean passes in a row, and
+   `node scripts/quality/read-coverage.mjs --review <the commit the revision started from>` exits 0 (the review runs in
+   a session of its own; the commit is an ancestor of HEAD); a hunk no Scope item needs is a finding, and so is a change that does not remove the kickoff's "## Cause".
+   The implementer's `read-coverage.mjs` output is checked: missing or exit 1 is a finding; when the implementer's
+   record is on this machine, rerun it with `--transcript <record> --review <the same commit>`.
    Tools first, on the candidate files: `node scripts/quality/check-ruleset.mjs` (the `main` ruleset has not drifted),
    `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs
    --base main`, `node scripts/quality/check-files.mjs --worktree` and `node scripts/quality/change-report.mjs main HEAD`.
@@ -24,7 +29,8 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    kickoff says it removes and the tool still reports, is a finding.
 3. Read the whole diff: every file of the read set as `read-coverage.mjs` defines it, tests included; a generated file
    through the tools it names (`package-lock.json`: `change-report.mjs --lockfile-age`, `install-scripts.test.mjs`,
-   `npm audit`). The executor's report is a supplier assertion:
+   `npm audit`; `docs/security/owasp/sheets.json`: `owasp.mjs check`). The rest of the branch was read by the earlier
+   reviews in the kickoff's "## Review" (`secure-code-review.md` §1.4). The executor's report is a supplier assertion:
    rerun each claim; a claim that does not reproduce is a finding, and so is an unlabelled assumption in the report or
    in a file (`flow.md`, facts rule). A recommendation to the owner cites what was read (the code of the form or page).
 4. The six diff-based steps and the checklist of each category the diff touches. Visible UI: the `.claude/rules/shared/`

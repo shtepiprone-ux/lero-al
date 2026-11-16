@@ -12,7 +12,7 @@ translates every code: Task 956 AC14) and nothing names the removed one.
 
 ## Cause
 
-`src/app/admin/users/new/page.tsx:29` renders `AdminUserProfile`; `grep -rn "AdminUserCreate" src` finds only the file
+`src/app/admin/users/new/page.tsx:29` renders `AdminUserProfile`; `grep -rn "AdminUserCreate" src` → 7 lines: the file, the two comments of Scope
 and its own test (`src/components/admin/__tests__/AdminUserCreate.watch.test.tsx:20`), so the old form was left behind
 when the page moved, and it still calls `createAdminUser` and puts its code on screen
 (`src/components/admin/AdminUserCreate.tsx:172`: `setError(result.error)`).
@@ -31,6 +31,7 @@ repository at a single create form.
 - Out of scope: `createAdminUser` (Task 956 AC16), `AdminUserProfile` behaviour.
 
 ## Read set
+Counted at be5a3d867
 - `src/components/admin/__tests__/adminCreateForm.single.test.ts` — new, 30 lines
 - `scripts/story-coverage-exempt.json` — 52 lines
 - `scripts/surface-census-baseline.json` — 989 lines

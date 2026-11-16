@@ -45,10 +45,11 @@ INSERT grants, each with its failing test; the live baseline re-counted.
 - Done (Parts A, B, Revisions 1-3): the four SQL files in `supabase/sql_migrations/task956/`, the tools
   `db-catalog-audit.mjs`, `db-types-drift.mjs`, `db-sql-roundtrip.mjs`, `pg` 8.23.1 (dev), the application changes
   of AC4-AC6 and AC13-AC15.
-- Rules and tools (Opus, 2026-11-15/16): the facts rule, the cause rule and the read set in `CLAUDE.md`,
-  `.claude/rules/flow.md`, `.claude/rules/kickoff-template.md`, `.claude/rules/README.md`, the three skills, two
-  agents; `read-coverage.mjs` and the "## Cause"/"## Read set" checks of `check-files.mjs`, with their tests. Revision
-  4a (Opus): the F14-F22 fix in the files of "## Read set".
+- Rules and tools (Opus, 2026-11-15/16): the facts rule, the cause rule and the read set in `CLAUDE.md`, `flow.md`,
+  `kickoff-template.md`, `README.md`, the three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set"
+  checks of `check-files.mjs`, with their tests. Revision 4a (Opus): the F14-F22 fix in the files of "## Read set", and
+  two gaps its sessions met: execute-task step 8 named `CLAUDE_CODE_SESSION_ID`, which `read-coverage.mjs` holds as
+  touching the record; no rule said that a session that changes nothing counts its runs from its first command.
 - Revision 4, Opus: F5 in `db-catalog-audit.mjs` and its test (they hold unreviewed edits of the stopped session
   9de8af74). Revision 4, Sonnet: F13 in `createAdminUser` and its test. Their read set replaces the one below when
   Revision 4a is approved.
@@ -56,6 +57,7 @@ INSERT grants, each with its failing test; the live baseline re-counted.
   public profiles (980), the unused admin create form (982).
 
 ## Read set
+Counted at be5a3d867
 - `scripts/quality/read-coverage.mjs` — 315 lines
 - `scripts/quality/read-coverage.test.mjs` — 193 lines
 - `scripts/quality/check-files.mjs` — 631 lines
@@ -144,8 +146,7 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 
 ## Acceptance criteria
 
-- AC1 After the apply, the live catalog has no finding — test: `node scripts/quality/db-catalog-audit.mjs` exits 0
-  (run by Opus before and after the apply).
+- AC1 After the apply, the live catalog has no finding — test: `node scripts/quality/db-catalog-audit.mjs` exits 0 (run by Opus before and after the apply).
 - AC2 Each rewritten policy follows the key — test: `src/tests/integration/moderatorKeys.integration.test.ts` (per I5
   table and command through PostgREST: key off refused; where `authenticated` holds the privilege, key on and an admin
   succeed, elsewhere the grant refuses every session; `caller_has_permission` per role; keys restored in `afterAll`).
@@ -195,8 +196,7 @@ Every session starts from a tree the owner committed locally on this branch (no 
 0. Done: Review 6 (rules and tools), F14-F22.
 1. Revision 4a, Opus, own session: AC17-AC18 tests first (red), the F14-F22 fix, three passes, `read-coverage.mjs` 0,
    the gates; the Read set line names its commit.
-2. Review 7, Opus, own session: `read-coverage.mjs --review <commit before step 1>`; on approval the Read set becomes
-   that of steps 3 and 4.
+2. Review 7, Opus, own session: `read-coverage.mjs --review <commit before step 1>`; on approval the Read set becomes that of steps 3 and 4.
 3. Revision 4, Opus (F5) and 4. Revision 4, Sonnet (F13), each in its own session, one after the other.
 5. Review 8, Opus, own session: `--review <commit before step 3>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
    rolled-back apply; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`; the verdict; the apply step.
@@ -207,8 +207,7 @@ Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2
 Review 5 (2026-11-16) — F10-F12, AC13-AC15 closed; gates 0 (6589 tests); AC10 0 LF/CRLF/mixed, red without the CRLF
 block; rolled-back apply: preflight 0 (row 15 = 1), audit 0, verify 16/16, session INSERT on `users` 42501.
 F3 — (open) every sheet whose evidence is AC1-AC7 waits for the apply.
-F5 — (P2, open, Opus) see "## Cause"; Revision 4.
-F13 — (P3, open, Sonnet) see "## Cause"; Revision 4.
+F5 — (P2, open, Opus) and F13 — (P3, open, Sonnet): see "## Cause"; Revision 4.
 F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2).
 Review 6 (rules and tools, Route step 0, 2026-11-16, session b23abf9c) — facts: `read-coverage.mjs --files-since
   2026-11-16T05:50:00Z` exit 0 (17 files, 2823 lines, 3 passes each; `db-catalog-audit.mjs` and its test came in by

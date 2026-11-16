@@ -55,20 +55,25 @@ Owner, 2026-11-13 (translated): "it is forbidden to run tests until you have che
 thoroughly"; "if a pass found a problem, that pass does not count … until all three passes are clean"; "depth is
 checking every line of code that is written"; "all models must read the code in a changed file completely, without
 exceptions; code not read completely in a file is a breach of the rules". Every model, implementer and reviewer, reads
-every file of the read set (the files changed in the revision) with the Read tool from its first line to its last in
-each pass and checks every changed line; a pass that finds a problem does not count and its fix starts the count again;
-the order is failing runs of the new tests → the change → three clean passes → the green runs. Owner, 2026-11-16: a tool,
-not the model, decides: `node scripts/quality/read-coverage.mjs` reads the session transcript, prints each file's lines,
-the lines read and the complete passes over the file as it is now (generated files: the tools that check them; locale
-files: the objects of the changed keys), and exits 1 on a missing pass, an unread line, a test or gate run after the
-last change and before the third pass, or a read set over 3 000 lines. Details: `.claude/rules/flow.md` §2 steps 3-4.
+every file of the read set (every file whose content differs from the revision's base: HEAD, which the owner commits
+before each session, or the reviewer's `--review <commit>`) with the Read tool from its first line to its last in each
+pass and checks every changed line; a pass that finds a problem does not count and its fix starts the count again; the
+order is failing runs of the new tests → the change → three clean passes → the green runs. Owner, 2026-11-16: a tool,
+not the model, decides: `node scripts/quality/read-coverage.mjs` reads the session's own record and its subagents',
+prints each file's lines, the lines read and the complete passes over the file as it is now (generated files: the
+tools that check them, run as the whole command without error; JSON data files: the objects of the changed keys), and
+exits 1 on a missing pass, an unread or cut line, a shell command off its read-only allow-list after the last change
+(in a session that changes nothing, from its first command) and before the third pass, a session that touched its own
+record, or a read set over 3 000 lines. Details: `.claude/rules/flow.md` §2 steps 3-4.
 
 ## Cause rule: a kickoff names the cause and its fix
 
 Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it; the
 implementer removes that cause"; "where a couple of lines need fixing, the kickoff must not read as if half the project
-does". "## Cause" (the fact with its source and a "Fix:" line) and "## Read set" (each file to change with its line
-count, at most 3 000 lines) are required by `check-files.mjs`. Details: `.claude/rules/flow.md` §1.
+does". "## Cause" (the fact with its sources, each `path:line` a repository file with that line and each command
+followed by "→ <its output>", and a "Fix:" line) and "## Read set" ("Counted at <commit>" and each file to change with
+its line count in that commit, at most 3 000 lines) are required by `check-files.mjs`, which checks them on every run.
+Details: `.claude/rules/flow.md` §1.
 
 ## Facts rule: no assumptions, only facts
 

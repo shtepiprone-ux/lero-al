@@ -1,12 +1,13 @@
 // node --test scripts/quality/check-files.test.mjs
 // One case per rule of check-files.mjs, each with a passing and a failing input. Characters that must not appear
 // literally in a source file are built with String.fromCodePoint.
-import { test } from 'node:test';
+import { describe, it, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readRegularFile, checkFile,brokenLinks, stalePaths, brokenScripts, setScripts, inRepository, kickoffFindings, acceptanceCriteria, AUTOMATED_TEST, sqlStructure, checkPowerShell, checkShell, isShellScript, KICKOFF_SECTIONS } from './check-files.mjs';
+import * as cf from './check-files.mjs';
 
 const ch = (cp) => String.fromCodePoint(cp);
 const rules = (rel, text, opts) => checkFile(rel, Buffer.isBuffer(text) ? text : Buffer.from(text, 'utf8'), opts).map((f) => f.rule);
@@ -111,22 +112,25 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   const body = {
     '## Acceptance criteria': '- AC1 x — test: `src/a/x.test.ts`',
     '## Cause': '`src/a/x.ts:3` returns the raw code.\nFix: return the translated text.',
-    '## Read set': '- `src/a/not-there-yet.ts` — new, 10 lines',
+    '## Read set': 'Counted at abc1234\n- `src/a/not-there-yet.ts` — new, 10 lines',
   };
+  // the Cause source exists now with 10 lines; the commit exists and holds none of the read set
+  const io = { lineCount: (rel) => (rel === 'src/a/x.ts' ? 10 : null), atCommit: { exists: (sha) => sha === 'abc1234', lineCount: () => null } };
+  const k = (text) => kickoffFindings(text, io);
   const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, body[s] ?? 'text', ''])].join('\n');
-  assert.deepEqual(kickoffFindings(good), []);
-  assert.ok(kickoffFindings(good.replace('## UI\n', '')).some((f) => f.message.includes('## UI')));
-  assert.ok(kickoffFindings(good.replace('- AC1 x', 'AC1 x')).some((f) => f.message.includes('AC<n>')));
-  assert.ok(kickoffFindings(good.replace('# Task 1 — Outcome', '# Outcome')).some((f) => f.message.includes('first line')));
+  assert.deepEqual(k(good), []);
+  assert.ok(k(good.replace('## UI\n', '')).some((f) => f.message.includes('## UI')));
+  assert.ok(k(good.replace('- AC1 x', 'AC1 x')).some((f) => f.message.includes('AC<n>')));
+  assert.ok(k(good.replace('# Task 1 — Outcome', '# Outcome')).some((f) => f.message.includes('first line')));
   const swapped = good.replace('## Scope', '## TMP').replace('## Goal', '## Scope').replace('## TMP', '## Goal');
-  assert.ok(kickoffFindings(swapped).some((f) => f.message.includes('out of order')));
-  assert.ok(kickoffFindings(good + '\nx'.repeat(200)).some((f) => f.message.includes('lines >')));
+  assert.ok(k(swapped).some((f) => f.message.includes('out of order')));
+  assert.ok(k(good + '\nx'.repeat(200)).some((f) => f.message.includes('lines >')));
   // The "## OWASP" checklist (one line per required sheet) does not count towards the limit; every other section does.
-  assert.deepEqual(kickoffFindings(good.replace('## OWASP\ntext', `## OWASP\n${'- S: not applicable — reason.\n'.repeat(200)}`)), []);
-  assert.ok(kickoffFindings(good.replace('## UI\ntext', `## UI\n${'x\n'.repeat(200)}`)).some((f) => f.message.includes('lines >')));
+  assert.deepEqual(k(good.replace('## OWASP\ntext', `## OWASP\n${'- S: not applicable — reason.\n'.repeat(200)}`)), []);
+  assert.ok(k(good.replace('## UI\ntext', `## UI\n${'x\n'.repeat(200)}`)).some((f) => f.message.includes('lines >')));
   // The review's per-sheet verdicts live in their own record: a checklist pasted into the review counts like any other text.
-  assert.ok(kickoffFindings(`${good}\n### OWASP check\n${'- S: not applicable — reason.\n'.repeat(200)}`).some((x) => x.message.includes('lines >')));
-  assert.ok(kickoffFindings(good.replace('## OWASP\n', '')).some((f) => f.message.includes('## OWASP')));
+  assert.ok(k(`${good}\n### OWASP check\n${'- S: not applicable — reason.\n'.repeat(200)}`).some((x) => x.message.includes('lines >')));
+  assert.ok(k(good.replace('## OWASP\n', '')).some((f) => f.message.includes('## OWASP')));
   // Older sprints are history and are not re-checked against the new template.
   assert.deepEqual(rules('tasks/Sprints/Sprint_90_kickoff_prompt_Task_1_X.md', '# Old\n', none), []);
   assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_1_X.md', '# Old\n', none).includes('kickoff'));
@@ -136,35 +140,77 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   assert.ok(!rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'a grandfathered kickoff is not held to the OWASP gate');
 });
 
-test('a kickoff names the cause with its source and the fix, and a read set within the limit whose counts come from the files', () => {
+describe('a kickoff names the cause with real sources and the fix, and a read set counted at a named commit (F20, F21)', () => {
   const sections = (cause, set, review = '') => ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s,
     s === '## Cause' ? cause : s === '## Read set' ? set : s === '## Review' ? review : s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
-  const count = (rel) => ({ 'src/a.ts': 120, 'src/b.ts': 2900 })[rel] ?? null;
-  const check = (cause, set, review) => kickoffFindings(sections(cause, set, review), { lineCount: count }).map((f) => f.message);
+  // the files at the named commit abc1234, and the files now (where a "## Cause" source is looked up)
+  const atCommit = { exists: (sha) => sha === 'abc1234', lineCount: (sha, rel) => (sha === 'abc1234' ? ({ 'src/a.ts': 120, 'src/b.ts': 2900 })[rel] ?? null : null) };
+  const now = (rel) => ({ 'src/a.ts': 130, 'scripts/x.mjs': 50 })[rel] ?? null;
+  const check = (cause, set, review) => kickoffFindings(sections(cause, set, review), { lineCount: now, atCommit }).map((f) => f.message);
   const cause = '`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.';
-  assert.deepEqual(check(cause, '- `src/a.ts` — 120 lines\n- `src/new.ts` — new, 30 lines'), []);
-  // the cause: a source and a fix line are both required; a command whose output is quoted is a source too
-  assert.ok(check('the banner shows a raw code.\nFix: translate it.', '- `src/a.ts` — 120 lines').some((m) => m.includes('no source')));
-  assert.ok(check('`src/a.ts:42` returns the raw code.', '- `src/a.ts` — 120 lines').some((m) => m.includes('"Fix:')));
-  assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` reports I15 on notifications.\nFix: drop the duplicate.', '- `src/a.ts` — 120 lines'), []);
-  // the read set: the count must be the file's at design; a missing file must be marked new; an existing one must not be
-  assert.ok(check(cause, '- `src/a.ts` — 12 lines').some((m) => m.includes('has 120 lines, not 12')));
-  assert.ok(check(cause, '- `src/gone.ts` — 12 lines').some((m) => m.includes('does not exist')));
-  assert.ok(check(cause, '- `src/a.ts` — new, 120 lines').some((m) => m.includes('is not new')));
-  assert.ok(check(cause, 'src/a.ts 120').some((m) => m.includes('must be')));
-  assert.ok(check(cause, '').some((m) => m.includes('lists no file')));
-  // after the review starts, the files grow with the work: the count is no longer compared, the limit still is
-  assert.deepEqual(check(cause, '- `src/a.ts` — 100 lines', 'Review 1 — NEEDS REVISION'), []);
-  assert.deepEqual(check(cause, '- `src/a.ts` — new, 100 lines', 'Review 1 — NEEDS REVISION'), [], 'the work created the new file');
-  // the template's placeholder (over two lines) is still the design stage
-  assert.ok(check(cause, '- `src/a.ts` — 12 lines', '<filled by Opus: the summary\nand the findings>').some((m) => m.includes('has 120 lines, not 12')));
-  assert.ok(check(cause, '- `src/a.ts` — 120 lines\n- `src/b.ts` — 2900 lines').some((m) => m.includes('3020 lines > 3000')));
-  // a kickoff written before the rule keeps its old sections until it is next revised
+  const set = (...entries) => ['Counted at abc1234', ...entries].join('\n');
+
+  it('a cause with an existing source and a fix, a read set counted at the commit: no finding', () => {
+    assert.deepEqual(check(cause, set('- `src/a.ts` — 120 lines', '- `src/new.ts` — new, 30 lines')), []);
+    assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` → `I15 notifications: two PERMISSIVE policies`\nFix: drop one.', set('- `src/a.ts` — 120 lines')), []);
+    assert.deepEqual(check('`src/a.ts:120-130` and `scripts/x.mjs:50` return the raw code.\nFix: y.', set('- `src/a.ts` — 120 lines')), []);
+  });
+
+  it('the cause: a source and a fix line are both required', () => {
+    assert.ok(check('the banner shows a raw code.\nFix: translate it.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('no source')));
+    assert.ok(check('`src/a.ts:42` returns the raw code.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('"Fix:')));
+  });
+
+  it('F21: a `path:line` source must exist with that line; a bare file name is no source; a command source quotes its output', () => {
+    assert.ok(check('`src/nope/does-not-exist.ts:1` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/nope/does-not-exist.ts:1') && m.includes('not in the repository')));
+    assert.ok(check('`src/a.ts:131` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:131') && m.includes('has 130 lines')));
+    assert.ok(check('`src/a.ts:120-140` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:120-140') && m.includes('has 130 lines')));
+    assert.ok(check('`a.ts:3` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('no source')));
+    assert.ok(check('`grep -rn "AdminUserCreate" src` finds nothing.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')));
+    assert.ok(check('`src/a.ts:42` and `grep -rn x src` with no output.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')), 'every command source, not only the first');
+  });
+
+  it('F20: every count is compared with the named commit, also after the review is written', () => {
+    assert.ok(check(cause, set('- `src/a.ts` — 12 lines')).some((m) => m.includes('src/a.ts has 120 lines at abc1234, not 12')));
+    assert.ok(check(cause, set('- `src/a.ts` — 12 lines'), 'Review 1 — NEEDS REVISION').some((m) => m.includes('has 120 lines at abc1234, not 12')));
+    assert.equal(check(cause, set('- `src/a.ts` — 1 lines', '- `src/b.ts` — 5 lines'), 'Review 6 — written').filter((m) => m.includes('at abc1234, not')).length, 2);
+    assert.ok(check(cause, '- `src/a.ts` — 120 lines').some((m) => m.includes('no "Counted at <commit>" line')));
+    assert.ok(check(cause, 'Counted at fff9999\n- `src/a.ts` — 120 lines').some((m) => m.includes('fff9999 is not a commit of this repository')));
+    assert.ok(check(cause, set('- `src/gone.ts` — 12 lines')).some((m) => m.includes('src/gone.ts is not in abc1234')));
+    assert.ok(check(cause, set('- `src/a.ts` — new, 120 lines')).some((m) => m.includes('is not new')));
+    assert.ok(check(cause, set('src/a.ts 120')).some((m) => m.includes('must be')));
+    assert.ok(check(cause, 'Counted at abc1234').some((m) => m.includes('lists no file')));
+    assert.ok(check(cause, set('- `src/a.ts` — 120 lines', '- `src/b.ts` — 2900 lines')).some((m) => m.includes('3020 lines > 3000')));
+  });
+
+  it('the real commit reader: an unknown commit does not exist, a file of HEAD has its lines', async () => {
+    const { spawnSync } = await import('node:child_process');
+    assert.equal(cf.commitLines.exists('0000000'), false);
+    assert.equal(cf.commitLines.exists('HEAD'), false, 'only a hexadecimal commit name');
+    assert.equal(cf.commitLines.lineCount('0000000', 'package.json'), null);
+    const head = spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout.trim();
+    const shown = spawnSync('git', ['show', `${head}:package.json`], { encoding: 'utf8' }).stdout;
+    assert.equal(cf.commitLines.exists(head), true);
+    assert.equal(cf.commitLines.lineCount(head, 'package.json'), shown.replace(/\n$/, '').split('\n').length);
+    assert.equal(cf.commitLines.lineCount(head, 'scripts/quality'), null, 'a folder is not a file');
+  });
+});
+
+test('F22: a grandfathered kickoff keeps its old sections only while its text is the one recorded on 2026-11-16', () => {
   const old = ['# Task 962 — Outcome', '', ...KICKOFF_SECTIONS.filter((s) => s !== '## Cause' && s !== '## Read set').flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
-  assert.deepEqual(kickoffFindings(old, { task: '962', lineCount: count }), []);
-  // a kickoff rewritten under the rule leaves the list: Task 956 (2026-11-16) is held to it
-  assert.ok(kickoffFindings(old, { task: '956', lineCount: count }).some((f) => f.message.includes('## Cause')));
-  assert.ok(kickoffFindings(old, { task: '981', lineCount: count }).some((f) => f.message.includes('## Cause')));
+  const grandfathered = new Map([['962', cf.kickoffHash(old)]]);
+  assert.deepEqual(kickoffFindings(old, { task: '962', grandfathered }), []);
+  assert.equal(cf.kickoffHash(old.replace(/\n/g, '\r\n')), cf.kickoffHash(old), 'line endings do not change the text');
+  // the 962 kickoff with a revision line added: no longer the recorded text, so it is held to the rule
+  const revised = old.replace('## Review\ntext', '## Review\ntext\nRevision 2 — the read set grows');
+  assert.ok(kickoffFindings(revised, { task: '962', grandfathered }).some((f) => f.message.includes('## Cause')));
+  // a kickoff never listed is held to it: Task 956 (rewritten under the rule) and a new one
+  assert.ok(kickoffFindings(old, { task: '956', grandfathered }).some((f) => f.message.includes('## Cause')));
+  assert.ok(kickoffFindings(old, { task: '981', grandfathered }).some((f) => f.message.includes('## Cause')));
+  // the real list: one sha256 per kickoff written before the rule; 956 is not among them
+  assert.equal(cf.CAUSE_GRANDFATHERED.size, 30);
+  for (const [task, hash] of cf.CAUSE_GRANDFATHERED) assert.match(`${task} ${hash}`, /^9\d\d [0-9a-f]{64}$/);
+  assert.ok(!cf.CAUSE_GRANDFATHERED.has('956'));
 });
 
 test('lineCount reads only a regular file inside the repository', async () => {

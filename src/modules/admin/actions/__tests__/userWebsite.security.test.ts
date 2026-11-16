@@ -39,7 +39,7 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/auth/permissions', () => ({
-  hasPermission: async () => false,
+  hasPermission: async (key: string) => key === 'users.create',   // Task 956 F13: `createAdminUser` asks `hasPermission('users.create')` (it used to call `assertPermission`); every other key stays off
   assertPermission: async () => undefined,
   roleHasPermission: async (_role: string, key: string) => key === 'users.edit',   // the acting moderator holds the key of the full profile form (Task 923 R75)
 }))

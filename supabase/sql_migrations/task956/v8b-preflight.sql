@@ -50,7 +50,8 @@ from (
             ('page_translations', 'Admins can manage page translations'), ('pages', 'Admins can manage pages'),
             ('report_actions', 'report_actions_admin'), ('site_settings', 'site_settings_admin_write'),
             ('support_tickets', 'Admins can manage all tickets'), ('verification_requests', 'Admins can manage verification requests'),
-            ('listings', 'Listings viewable by everyone'), ('notifications', 'notifications_select'), ('notifications', 'notifications_update')
+            ('listings', 'Listings viewable by everyone'), ('notifications', 'notifications_select'), ('notifications', 'notifications_update'),
+            ('site_settings', 'site_settings_read')
           ) v(tbl, pol)
           where (select count(*) from pg_policies p where p.schemaname = 'public' and p.tablename = v.tbl and p.policyname = v.pol) <> 1)
   -- nothing v8b.sql creates may exist yet

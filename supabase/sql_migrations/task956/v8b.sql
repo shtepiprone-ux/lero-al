@@ -280,9 +280,10 @@ update storage.buckets
   set file_size_limit = 2097152, allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp']
   where id = 'avatars';
 
--- 9. notifications: the two later policies repeat the two original ones (P-06).
+-- 9. notifications: the two later policies repeat the two original ones (P-06); site_settings: "site_settings_read" repeats "site_settings_public_read" (both SELECT for public using true; audit I15, Task 956 F29).
 drop policy "notifications_select" on public.notifications;
 drop policy "notifications_update" on public.notifications;
+drop policy "site_settings_read" on public.site_settings;
 
 -- public.public_user_profiles is not changed: every column it lists is read by the listing page, the staff preview or the
 -- contact card (see the Task 956 report), so none can leave without a change of those pages.

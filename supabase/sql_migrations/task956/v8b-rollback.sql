@@ -4,11 +4,13 @@
 -- v8b.sql. The permission function goes last, after every policy that calls it is gone.
 begin;
 
--- 9. notifications: the two policies come back as they were.
+-- 9. notifications: the two policies come back as they were; site_settings_read as the live catalog of 2026-11-16 holds it (db-catalog-audit.mjs --save: PERMISSIVE, roles {public}, cmd SELECT, qual true, no with_check).
 create policy "notifications_select" on public.notifications for select to public
   using (user_id = auth.uid());
 create policy "notifications_update" on public.notifications for update to public
   using (user_id = auth.uid());
+create policy "site_settings_read" on public.site_settings for select to public
+  using (true);
 
 -- 8. avatars bucket: no limit, no type list.
 update storage.buckets

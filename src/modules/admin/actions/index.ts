@@ -587,7 +587,8 @@ export async function createAdminUser(data: {
   position?: string
   yearStarted?: number | null
 }): Promise<{ userId?: string; error?: string }> {
-  await assertPermission('users.create')
+  // Task 956 F13: a caller without `users.create` is answered with the code the banner translates (`forbidden`), not a thrown error the form never catches; the Auth admin API is not reached
+  if (!(await hasPermission('users.create'))) return { error: 'forbidden' }
   if (!isE164(data.phone) || (data.whatsapp && !isE164(data.whatsapp))) return { error: 'invalid_phone' }
   // Task 923 R100: the name and the last name are stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; checked before the Auth account is created
   if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }

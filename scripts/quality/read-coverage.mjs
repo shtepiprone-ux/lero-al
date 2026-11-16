@@ -26,8 +26,9 @@
 //     a write to the record found there is a finding (flow.md §3, review-task step 2; owner decision O956-3);
 //   - per file, the lines that must be read: every line of a source file; in a JSON data file (messages/<locale>.json,
 //     docs/security/owasp/controls.json, docs/security/owasp/reviews/*.json) the object that holds each key changed against
-//     the base; a generated file (package-lock.json, docs/security/owasp/sheets.json) is not read: the tools it names must
-//     have run in the session, each as the whole command (after `cd`), with a result that is not an error;
+//     the base; a generated file (package-lock.json, docs/security/owasp/sheets.json, supabase/catalog.json) is not read:
+//     the tools it names must have run in the session, each as the whole command (after `cd`), with a result that is not
+//     an error;
 //   - a line counts as read when a Read result of the session (not of a subagent) showed it whole, with the text the file
 //     has NOW, after the last Edit/Write of a file of the read set (a change starts every pass again). A Read result after
 //     that change that shows a line cut is a problem naming the file and the line. A pass is complete when every required
@@ -58,6 +59,12 @@ export const GENERATED = new Map([
   ]],
   ['docs/security/owasp/sheets.json', [
     ['owasp.mjs check', /^node\s+(?:\.\/)?scripts\/quality\/owasp\.mjs\s+check(?:\s|$)/],
+  ]],
+  // written by `db-catalog-audit.mjs --save supabase/catalog.json` from the live catalog (8391 lines on 2026-11-16, Task 956);
+  // the proof is the audit of that snapshot, which reads the whole file (owner decision O956-6, 2026-11-16: not
+  // db-types-drift.mjs, which exits 1 on the type differences of Tasks 978 and 979)
+  ['supabase/catalog.json', [
+    ['db-catalog-audit.mjs --snapshot supabase/catalog.json', /^node\s+(?:\.\/)?scripts\/quality\/db-catalog-audit\.mjs\s+--snapshot\s+(?:\.\/)?supabase\/catalog\.json(?:\s|$)/],
   ]],
 ]);
 const BINARY = /\.(png|jpe?g|gif|webp|avif|ico|woff2?|ttf|otf|pdf|zip|gz)$/i;

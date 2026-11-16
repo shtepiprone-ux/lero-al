@@ -122,8 +122,9 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
    does not count; an Edit or Write of any file of the read set makes every pass start again (only reads after the last
    change count, and a line counts only when a Read showed it whole, as the file has it now). What a person does not
    read is decided by the tool, not by the author: `package-lock.json` is checked by `change-report.mjs --lockfile-age`,
-   `install-scripts.test.mjs` and `npm audit`, and `docs/security/owasp/sheets.json` (written by `owasp.mjs sync`) by
-   `owasp.mjs check`, each run by the session itself as the whole command (after `cd`) with a result that is not an
+   `install-scripts.test.mjs` and `npm audit`, `docs/security/owasp/sheets.json` (written by `owasp.mjs sync`) by
+   `owasp.mjs check`, and `supabase/catalog.json` (written by `db-catalog-audit.mjs --save`) by
+   `db-catalog-audit.mjs --snapshot supabase/catalog.json` (owner, O956-6, 2026-11-16), each run by the session itself as the whole command (after `cd`) with a result that is not an
    error; in a JSON data file (`messages/<locale>.json`, `docs/security/owasp/controls.json`,
    `docs/security/owasp/reviews/*.json`) the object of each changed key is read. `node scripts/quality/read-coverage.mjs`
    reads the running session's record and its subagents' records (each revision and each review runs in a session of

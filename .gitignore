@@ -111,6 +111,8 @@ prod-ca-2021.crt
 # Supabase migrations
 supabase/*
 !supabase/sql_migrations/
+# the catalog snapshot `db-catalog-audit.mjs --save` writes and `db-types-drift.mjs` reads (Task 956, committed for Task 978)
+!supabase/catalog.json
 # Logs, editor backups and tool scratch output never belong in the repository (governance reset 2026-11-06;
 # scripts/quality/check-files.mjs refuses them).
 *.log

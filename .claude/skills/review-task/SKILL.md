@@ -35,7 +35,8 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    kickoff says it removes and the tool still reports, is a finding.
 3. Read the whole diff: every file of the read set as `read-coverage.mjs` defines it, tests included; a generated file
    through the tools it names (`package-lock.json`: `change-report.mjs --lockfile-age`, `install-scripts.test.mjs`,
-   `npm audit`; `docs/security/owasp/sheets.json`: `owasp.mjs check`). The rest of the branch was read by the earlier
+   `npm audit`; `docs/security/owasp/sheets.json`: `owasp.mjs check`; `supabase/catalog.json`:
+   `db-catalog-audit.mjs --snapshot supabase/catalog.json`). The rest of the branch was read by the earlier
    reviews in the kickoff's "## Review" (`secure-code-review.md` §1.4). The executor's report is a supplier assertion:
    rerun each claim; a claim that does not reproduce is a finding, and so is an unlabelled assumption in the report or
    in a file (`flow.md`, facts rule). A recommendation to the owner cites what was read (the code of the form or page).

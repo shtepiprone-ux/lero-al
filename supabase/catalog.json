@@ -1,0 +1,8391 @@
+{
+ "tables": [
+  {
+   "name": "agent_reviews",
+   "rls": true
+  },
+  {
+   "name": "amenities",
+   "rls": true
+  },
+  {
+   "name": "amenity_translations",
+   "rls": true
+  },
+  {
+   "name": "collection_items",
+   "rls": true
+  },
+  {
+   "name": "collections",
+   "rls": true
+  },
+  {
+   "name": "companies",
+   "rls": true
+  },
+  {
+   "name": "contact_inquiries",
+   "rls": true
+  },
+  {
+   "name": "contact_inquiry_replies",
+   "rls": true
+  },
+  {
+   "name": "conversations",
+   "rls": true
+  },
+  {
+   "name": "currencies",
+   "rls": true
+  },
+  {
+   "name": "currency_rates",
+   "rls": true
+  },
+  {
+   "name": "email_change_tokens",
+   "rls": true
+  },
+  {
+   "name": "email_templates",
+   "rls": true
+  },
+  {
+   "name": "exchange_providers",
+   "rls": true
+  },
+  {
+   "name": "favorite_price_alerts",
+   "rls": true
+  },
+  {
+   "name": "favorites",
+   "rls": true
+  },
+  {
+   "name": "history_clear_events",
+   "rls": true
+  },
+  {
+   "name": "languages",
+   "rls": true
+  },
+  {
+   "name": "listing_activity_daily",
+   "rls": true
+  },
+  {
+   "name": "listing_activity_refresh",
+   "rls": true
+  },
+  {
+   "name": "listing_amenities",
+   "rls": true
+  },
+  {
+   "name": "listing_contact_events",
+   "rls": true
+  },
+  {
+   "name": "listing_contact_reveals",
+   "rls": true
+  },
+  {
+   "name": "listing_images",
+   "rls": true
+  },
+  {
+   "name": "listing_inquiries",
+   "rls": true
+  },
+  {
+   "name": "listing_reports",
+   "rls": true
+  },
+  {
+   "name": "listing_translations",
+   "rls": true
+  },
+  {
+   "name": "listing_views",
+   "rls": true
+  },
+  {
+   "name": "listings",
+   "rls": true
+  },
+  {
+   "name": "location_translations",
+   "rls": true
+  },
+  {
+   "name": "locations",
+   "rls": true
+  },
+  {
+   "name": "messages",
+   "rls": true
+  },
+  {
+   "name": "notification_settings",
+   "rls": true
+  },
+  {
+   "name": "notifications",
+   "rls": true
+  },
+  {
+   "name": "page_translations",
+   "rls": true
+  },
+  {
+   "name": "pages",
+   "rls": true
+  },
+  {
+   "name": "property_types",
+   "rls": true
+  },
+  {
+   "name": "reauth_failures",
+   "rls": true
+  },
+  {
+   "name": "recently_viewed",
+   "rls": true
+  },
+  {
+   "name": "report_actions",
+   "rls": true
+  },
+  {
+   "name": "role_permission_events",
+   "rls": true
+  },
+  {
+   "name": "role_permissions",
+   "rls": true
+  },
+  {
+   "name": "saved_searches",
+   "rls": true
+  },
+  {
+   "name": "site_footer",
+   "rls": true
+  },
+  {
+   "name": "site_settings",
+   "rls": true
+  },
+  {
+   "name": "support_messages",
+   "rls": true
+  },
+  {
+   "name": "support_ticket_events",
+   "rls": true
+  },
+  {
+   "name": "support_tickets",
+   "rls": true
+  },
+  {
+   "name": "user_change_log",
+   "rls": true
+  },
+  {
+   "name": "user_status_history",
+   "rls": true
+  },
+  {
+   "name": "users",
+   "rls": true
+  },
+  {
+   "name": "verification_requests",
+   "rls": true
+  }
+ ],
+ "policies": [
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "name": "Agent reviews viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "name": "Users can create reviews",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = reviewer_id)"
+  },
+  {
+   "schema": "public",
+   "table": "agent_reviews",
+   "name": "Users can update own reviews",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = reviewer_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "name": "Amenities viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "name": "amenities_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "name": "amenities_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "amenities",
+   "name": "amenities_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "name": "Amenity translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "name": "amenity_translations_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "name": "amenity_translations_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "amenity_translations",
+   "name": "amenity_translations_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('catalog.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collection_items",
+   "name": "collection_items_owner_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM collections c\n  WHERE ((c.id = collection_items.collection_id) AND (c.user_id = auth.uid()))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM collections c\n  WHERE ((c.id = collection_items.collection_id) AND (c.user_id = auth.uid()))))"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "collections",
+   "name": "collections_owner_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(user_id = auth.uid())",
+   "with_check": "(user_id = auth.uid())"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "name": "companies_admin_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('companies.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "name": "companies_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('companies.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "name": "companies_insert_service_role",
+   "permissive": "PERMISSIVE",
+   "roles": "{service_role}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "true"
+  },
+  {
+   "schema": "public",
+   "table": "companies",
+   "name": "companies_read_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "name": "contact_inquiries_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "name": "contact_inquiries_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiries",
+   "name": "contact_inquiries_moderator_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('inquiries.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_moderator_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('inquiries.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "conversations",
+   "name": "Participants can view conversations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((auth.uid() = buyer_id) OR (auth.uid() = seller_id))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "conversations",
+   "name": "Users can create conversations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = buyer_id)"
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currencies",
+   "name": "currencies_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currency_rates",
+   "name": "Currency rates viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "currency_rates",
+   "name": "Only admins can manage currency rates",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "name": "email_templates_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "name": "email_templates_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('email_templates.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "name": "email_templates_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "email_templates",
+   "name": "email_templates_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('email_templates.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "exchange_providers",
+   "name": "exchange_providers_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorite_price_alerts",
+   "name": "price_alerts_owner_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "Users can manage own favorites",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "favorites_delete_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "favorites_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "favorites",
+   "name": "favorites_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "history_clear_events",
+   "name": "history_clear_events_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "history_clear_events",
+   "name": "history_clear_events_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "languages",
+   "name": "Languages viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "languages",
+   "name": "Only admins can manage languages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_amenities",
+   "name": "Listing amenities viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_amenities",
+   "name": "Users can manage own listing amenities",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_amenities.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_contact_events",
+   "name": "events_select_owner",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings l\n  WHERE ((l.id = listing_contact_events.listing_id) AND (l.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "Listing images viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings l\n  WHERE (l.id = listing_images.listing_id)))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "Users can manage own listing images",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_images.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_images",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "listing_inquiries_admin_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "listing_inquiries",
+   "name": "listing_inquiries_moderator_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('reports.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('reports.delete'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_reports",
+   "name": "listing_reports_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('reports.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_translations",
+   "name": "Listing translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_translations",
+   "name": "Users can manage own listing translations",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_translations.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "name": "Listing views viewable by listing owner",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM listings\n  WHERE ((listings.id = listing_views.listing_id) AND (listings.user_id = auth.uid()))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listing_views",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "Listings viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(((status = 'active'::listing_status) AND (expires_at > now())) OR (status = ANY (ARRAY['sold'::listing_status, 'rented'::listing_status])) OR (auth.uid() = user_id))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "Users can create listings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "Users can update own listings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "listings_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('listings.delete'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "listings_staff_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "listings",
+   "name": "listings_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('listings.moderate'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "name": "Location translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "name": "location_translations_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "name": "location_translations_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "location_translations",
+   "name": "location_translations_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "name": "Locations are viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "name": "locations_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "name": "locations_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "locations",
+   "name": "locations_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('locations.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "messages",
+   "name": "Participants can send messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "((auth.uid() = sender_id) AND (EXISTS ( SELECT 1\n   FROM conversations\n  WHERE ((conversations.id = messages.conversation_id) AND ((conversations.buyer_id = auth.uid()) OR (conversations.seller_id = auth.uid()))))))"
+  },
+  {
+   "schema": "public",
+   "table": "messages",
+   "name": "Participants can view messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM conversations\n  WHERE ((conversations.id = messages.conversation_id) AND ((conversations.buyer_id = auth.uid()) OR (conversations.seller_id = auth.uid())))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "name": "Users can manage own notification settings",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "name": "notification_settings_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notification_settings",
+   "name": "notification_settings_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "Users can update own notifications",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "Users can view own notifications",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "notifications_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "notifications",
+   "name": "notifications_insert_service_role",
+   "permissive": "PERMISSIVE",
+   "roles": "{service_role}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "true"
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "name": "Published page translations viewable by everyone",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "name": "page_translations_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "name": "page_translations_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "page_translations",
+   "name": "page_translations_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "pages_select_public",
+   "permissive": "PERMISSIVE",
+   "roles": "{anon,authenticated}",
+   "cmd": "SELECT",
+   "qual": "(is_published = true)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "pages_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "pages_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "pages_staff_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "pages",
+   "name": "pages_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('legal.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "property_types",
+   "name": "property_types_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "recently_viewed",
+   "name": "recently_viewed_owner_only",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "name": "report_actions_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('reports.delete'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "name": "report_actions_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('reports.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "name": "report_actions_staff_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "report_actions",
+   "name": "report_actions_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('reports.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "name": "role_permission_events_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "name": "role_permission_events_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "role_permission_events",
+   "name": "role_permission_events_moderator_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((role = 'moderator'::text) AND (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'moderator'::user_role)))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "Users can manage own saved searches",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "ALL",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "saved_searches_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "DELETE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "saved_searches_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(user_id = auth.uid())"
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "saved_searches_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "saved_searches",
+   "name": "saved_searches_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "site_footer_admin_write",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "ALL",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))",
+   "with_check": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = 'admin'::user_role))))"
+  },
+  {
+   "schema": "public",
+   "table": "site_footer",
+   "name": "site_footer_select_all",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "name": "site_settings_public_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "true",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "name": "site_settings_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('settings.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "name": "site_settings_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('settings.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "site_settings",
+   "name": "site_settings_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('settings.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_messages",
+   "name": "Participants can send support messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = sender_id)"
+  },
+  {
+   "schema": "public",
+   "table": "support_messages",
+   "name": "Ticket participants can view support messages",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "((EXISTS ( SELECT 1\n   FROM support_tickets\n  WHERE ((support_tickets.id = support_messages.ticket_id) AND ((support_tickets.user_id = auth.uid()) OR (support_tickets.assigned_to = auth.uid()))))) OR (EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role]))))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "name": "ste_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('support.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "support_ticket_events",
+   "name": "ste_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "Users can create tickets",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "Users can view own tickets",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_admin_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('support.manage'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_admin_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_admin_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('support.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_insert_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "((user_id = auth.uid()) AND (ticket_type = 'support'::text) AND (reported_user_id IS NULL) AND (created_by_admin_id IS NULL) AND (assigned_to IS NULL) AND (status = 'open'::ticket_status))"
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_select_own",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(user_id = auth.uid())",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "support_tickets",
+   "name": "support_tickets_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('support.manage'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "user_change_log",
+   "name": "Admin/moderator read change log",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "user_status_history",
+   "name": "Admin/moderator read status history",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "Users can update own profile",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "UPDATE",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "Users can view own profile",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "public",
+   "table": "users",
+   "name": "users_self_read",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "Users can create verification requests",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "(auth.uid() = user_id)"
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "Users can view own verification requests",
+   "permissive": "PERMISSIVE",
+   "roles": "{public}",
+   "cmd": "SELECT",
+   "qual": "(auth.uid() = user_id)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "verification_requests_staff_delete",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_has_permission('users.verify'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "verification_requests_staff_insert",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_has_permission('users.verify'::text) AS caller_has_permission)"
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "verification_requests_staff_select",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "(EXISTS ( SELECT 1\n   FROM users\n  WHERE ((users.id = auth.uid()) AND (users.role = ANY (ARRAY['admin'::user_role, 'moderator'::user_role])))))",
+   "with_check": null
+  },
+  {
+   "schema": "public",
+   "table": "verification_requests",
+   "name": "verification_requests_staff_update",
+   "permissive": "PERMISSIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_has_permission('users.verify'::text) AS caller_has_permission)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "name": "blocked_account_no_delete",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "DELETE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "name": "blocked_account_no_insert",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "INSERT",
+   "qual": null,
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "name": "blocked_account_no_select",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "SELECT",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": null
+  },
+  {
+   "schema": "storage",
+   "table": "objects",
+   "name": "blocked_account_no_update",
+   "permissive": "RESTRICTIVE",
+   "roles": "{authenticated}",
+   "cmd": "UPDATE",
+   "qual": "( SELECT caller_is_active() AS caller_is_active)",
+   "with_check": "( SELECT caller_is_active() AS caller_is_active)"
+  }
+ ],
+ "tableGrants": [
+  {
+   "table": "collection_items",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "collection_items",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "collections",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "collections",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "companies",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "companies",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "contact_inquiries",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "contact_inquiries",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "currencies",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "currencies",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "email_templates",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "email_templates",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "exchange_providers",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "exchange_providers",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "favorites",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "favorites",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "listing_contact_events",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "listing_contact_events",
+   "grantee": "authenticated",
+   "privs": "DELETE,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "listing_reports",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "listing_reports",
+   "grantee": "authenticated",
+   "privs": "INSERT,REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "listing_views",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "listing_views",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "listings",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "listings",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "locations",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "locations",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "notifications",
+   "grantee": "authenticated",
+   "privs": "SELECT"
+  },
+  {
+   "table": "property_types",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "property_types",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "public_user_profiles",
+   "grantee": "authenticated",
+   "privs": "SELECT"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "report_actions",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "report_actions",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "role_permission_events",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "role_permission_events",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "role_permissions",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "role_permissions",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "saved_searches",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "saved_searches",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,SELECT,TRIGGER,UPDATE"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "authenticated",
+   "privs": "DELETE,INSERT,REFERENCES,TRIGGER,UPDATE"
+  },
+  {
+   "table": "site_settings",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "site_settings",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "support_ticket_events",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "support_ticket_events",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "support_tickets",
+   "grantee": "anon",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "support_tickets",
+   "grantee": "authenticated",
+   "privs": "REFERENCES,TRIGGER"
+  },
+  {
+   "table": "users",
+   "grantee": "anon",
+   "privs": "REFERENCES,SELECT,TRIGGER"
+  },
+  {
+   "table": "users",
+   "grantee": "authenticated",
+   "privs": "DELETE,REFERENCES,SELECT,TRIGGER"
+  }
+ ],
+ "columnGrants": [
+  {
+   "table": "collection_items",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "collection_id,created_at,listing_id"
+  },
+  {
+   "table": "collection_items",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "collection_id,created_at,listing_id"
+  },
+  {
+   "table": "collections",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "created_at,id,name,updated_at,user_id"
+  },
+  {
+   "table": "collections",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "created_at,id,name,updated_at,user_id"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "last_notified_at,last_notified_price,listing_id,user_id"
+  },
+  {
+   "table": "favorite_price_alerts",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "last_notified_at,last_notified_price,listing_id,user_id"
+  },
+  {
+   "table": "favorites",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "created_at,id,listing_id,user_id"
+  },
+  {
+   "table": "favorites",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "created_at,id,listing_id,user_id"
+  },
+  {
+   "table": "listing_contact_events",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "actor_ip_hash,actor_user_id,channel,created_at,id,is_owner_click,listing_id,listing_owner_id,locale,source"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "id,is_cover,listing_id,order,url"
+  },
+  {
+   "table": "listing_images",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "id,is_cover,listing_id,order,url"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "created_at,email,id,listing_id,listing_owner_id,message,name,requester_ip,status"
+  },
+  {
+   "table": "listing_inquiries",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "created_at,email,id,listing_id,listing_owner_id,message,name,requester_ip,status"
+  },
+  {
+   "table": "listing_reports",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "comment,created_at,id,listing_id,reason,status,user_id,user_id_name"
+  },
+  {
+   "table": "listing_views",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "id,ip_hash,listing_id,user_id,viewed_at"
+  },
+  {
+   "table": "listing_views",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "id,ip_hash,listing_id,user_id,viewed_at"
+  },
+  {
+   "table": "listings",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
+  },
+  {
+   "table": "listings",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "address,area_gross,area_net,bathrooms,bedrooms,condition,created_at,currency,description,expires_at,floor,heating,id,is_premium,land_development_potential,land_legal_status,land_zoning,lat,listing_type,lng,location_id,market_type,multi_storey_building,offer_type,premium_until,price,price_initial,price_old,property_type,public_id,purchase_conditions,rooms,search_vector,slug,status,title,toilets,total_floors,updated_at,user_id,views_count,wall_type,year_built"
+  },
+  {
+   "table": "notifications",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "is_read"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "id,listing_id,user_id,viewed_at"
+  },
+  {
+   "table": "recently_viewed",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "id,listing_id,user_id,viewed_at"
+  },
+  {
+   "table": "saved_searches",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "created_at,filters,filters_hash,id,last_checked_at,last_viewed_at,name,new_count,notify_email,notify_frequency,updated_at,user_id"
+  },
+  {
+   "table": "saved_searches",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "created_at,filters,filters_hash,id,last_checked_at,last_viewed_at,name,new_count,notify_email,notify_frequency,updated_at,user_id"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "INSERT",
+   "cols": "brand_title,copyright_template,info_links,info_section_title,locale,nav_links,nav_section_title,social_links,social_section_title,tagline,updated_at,updated_by,updated_by_name"
+  },
+  {
+   "table": "site_footer",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "brand_title,copyright_template,info_links,info_section_title,locale,nav_links,nav_section_title,social_links,social_section_title,tagline,updated_at,updated_by,updated_by_name"
+  },
+  {
+   "table": "users",
+   "grantee": "authenticated",
+   "privilege": "UPDATE",
+   "cols": "block_reason,company_name,deleted_at,id,is_verified,last_name,location_id,name,phone,position,preferred_currency,preferred_locale,role,status,suspended_until,user_type,website,whatsapp,year_started"
+  }
+ ],
+ "functions": [
+  {
+   "name": "account_display_name",
+   "args": "p_user uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "account_has_password",
+   "args": "p_user uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "admin_search_users_by_email",
+   "args": "q text",
+   "definer": true,
+   "config": [
+    "search_path=auth, public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "caller_has_permission",
+   "args": "key text",
+   "definer": true,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": false,
+   "auth_exec": true
+  },
+  {
+   "name": "caller_is_active",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": true
+  },
+  {
+   "name": "caller_is_admin",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": true
+  },
+  {
+   "name": "clear_user_history",
+   "args": "p_history_source text, p_entity_id uuid, p_row_id uuid, p_actor_user_id uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "end_user_sessions",
+   "args": "p_user uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "get_listing_owner_contact",
+   "args": "listing_id_param uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "get_listing_owner_contact_as",
+   "args": "p_caller uuid, listing_id_param uuid",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "guard_listings_protected_columns",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "guard_users_protected_columns",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "handle_new_user",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "handle_new_user_notifications",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listing_activity_owner_by_listing",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listing_activity_owner_series",
+   "args": "p_owner uuid, p_from date, p_to date",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listing_activity_platform_series",
+   "args": "p_from date, p_to date",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listing_contact_events_set_owner",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "listings_owner_edit_moderation",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "listings_price_rule",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "lower_views_count_on_view_delete",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "process_saved_search_notify",
+   "args": "p_now timestamp with time zone",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "recompute_listing_activity",
+   "args": "p_from date, p_to date, p_job_version text",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "record_listing_view",
+   "args": "p_listing_id uuid, p_user_id uuid, p_ip_hash text",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "record_recently_viewed",
+   "args": "p_listing_id uuid, p_cap integer",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": true
+  },
+  {
+   "name": "rls_auto_enable",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=pg_catalog, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "set_actor_name",
+   "args": "",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "set_default_currency",
+   "args": "p_id integer",
+   "definer": true,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": false,
+   "auth_exec": false
+  },
+  {
+   "name": "update_listing_search_vector",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "update_updated_at",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
+   "name": "update_updated_at_column",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=public, pg_temp"
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  }
+ ],
+ "checks": [
+  {
+   "table": "agent_reviews",
+   "name": "agent_reviews_rating_check",
+   "def": "CHECK (((rating >= 1) AND (rating <= 5)))"
+  },
+  {
+   "table": "collections",
+   "name": "collections_name_check",
+   "def": "CHECK (((char_length(TRIM(BOTH FROM name)) >= 1) AND (char_length(TRIM(BOTH FROM name)) <= 100)))"
+  },
+  {
+   "table": "contact_inquiries",
+   "name": "contact_inquiries_status_check",
+   "def": "CHECK ((status = ANY (ARRAY['new'::text, 'in_progress'::text, 'closed'::text])))"
+  },
+  {
+   "table": "email_templates",
+   "name": "email_templates_locale_check",
+   "def": "CHECK ((locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
+  },
+  {
+   "table": "exchange_providers",
+   "name": "exchange_providers_mode_check",
+   "def": "CHECK ((mode = ANY (ARRAY['auto'::text, 'manual'::text, 'hybrid'::text])))"
+  },
+  {
+   "table": "history_clear_events",
+   "name": "history_clear_events_clear_scope_check",
+   "def": "CHECK ((clear_scope = ANY (ARRAY['row'::text, 'entity'::text])))"
+  },
+  {
+   "table": "listing_activity_daily",
+   "name": "listing_activity_daily_listing_inquiry_submissions_check",
+   "def": "CHECK ((listing_inquiry_submissions >= 0))"
+  },
+  {
+   "table": "listing_activity_daily",
+   "name": "listing_activity_daily_recorded_views_check",
+   "def": "CHECK ((recorded_views >= 0))"
+  },
+  {
+   "table": "listing_activity_daily",
+   "name": "listing_activity_daily_whatsapp_clicks_check",
+   "def": "CHECK ((whatsapp_clicks >= 0))"
+  },
+  {
+   "table": "listing_activity_refresh",
+   "name": "listing_activity_refresh_status_check",
+   "def": "CHECK ((status = ANY (ARRAY['success'::text, 'failure'::text])))"
+  },
+  {
+   "table": "listing_contact_events",
+   "name": "listing_contact_events_channel_check",
+   "def": "CHECK ((channel = 'whatsapp'::text))"
+  },
+  {
+   "table": "listing_contact_reveals",
+   "name": "listing_contact_reveals_channel_check",
+   "def": "CHECK ((channel = ANY (ARRAY['call'::text, 'whatsapp'::text])))"
+  },
+  {
+   "table": "listing_images",
+   "name": "listing_images_url_prefix_check",
+   "def": "CHECK (starts_with(url, 'https://res.cloudinary.com/die7okukn/'::text))"
+  },
+  {
+   "table": "listing_inquiries",
+   "name": "listing_inquiries_status_check",
+   "def": "CHECK ((status = ANY (ARRAY['new'::text, 'read'::text, 'archived'::text])))"
+  },
+  {
+   "table": "listing_reports",
+   "name": "listing_reports_reason_check",
+   "def": "CHECK ((reason = ANY (ARRAY['spam'::report_reason, 'fraud'::report_reason, 'duplicate'::report_reason, 'wrong_category'::report_reason, 'offensive'::report_reason, 'other'::report_reason])))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_description_length_check",
+   "def": "CHECK (((description IS NULL) OR (char_length(description) <= 5000)))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_land_development_potential_check",
+   "def": "CHECK ((land_development_potential = ANY (ARRAY['buildable'::text, 'change_of_use_required'::text, 'non_buildable'::text])))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_land_legal_status_check",
+   "def": "CHECK ((land_legal_status = ANY (ARRAY['agricultural'::text, 'urban'::text, 'forest'::text, 'pasture'::text])))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_land_zoning_check",
+   "def": "CHECK ((land_zoning = ANY (ARRAY['residential'::text, 'commercial'::text, 'tourism'::text, 'industrial'::text, 'mixed_use'::text])))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_lat_range_check",
+   "def": "CHECK (((lat IS NULL) OR ((lat >= ('-90'::integer)::double precision) AND (lat <= (90)::double precision))))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_lng_range_check",
+   "def": "CHECK (((lng IS NULL) OR ((lng >= ('-180'::integer)::double precision) AND (lng <= (180)::double precision))))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_offer_type_check",
+   "def": "CHECK ((offer_type = ANY (ARRAY['owner'::text, 'agency'::text, 'developer'::text])))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_price_old_positive_check",
+   "def": "CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_price_positive_check",
+   "def": "CHECK ((price > (0)::numeric))"
+  },
+  {
+   "table": "listings",
+   "name": "listings_title_length_check",
+   "def": "CHECK (((char_length(btrim(title)) >= 5) AND (char_length(btrim(title)) <= 150)))"
+  },
+  {
+   "table": "role_permissions",
+   "name": "role_permissions_role_check",
+   "def": "CHECK ((role = 'moderator'::text))"
+  },
+  {
+   "table": "saved_searches",
+   "name": "saved_searches_notify_frequency_check",
+   "def": "CHECK ((notify_frequency = ANY (ARRAY['instant'::text, 'daily'::text, 'weekly'::text])))"
+  },
+  {
+   "table": "site_footer",
+   "name": "site_footer_locale_check",
+   "def": "CHECK ((locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
+  },
+  {
+   "table": "support_ticket_events",
+   "name": "support_ticket_events_event_type_check",
+   "def": "CHECK ((event_type = ANY (ARRAY['created'::text, 'status_changed'::text, 'note_added'::text, 'assigned'::text, 'updated'::text])))"
+  },
+  {
+   "table": "support_tickets",
+   "name": "support_tickets_ticket_type_check",
+   "def": "CHECK ((ticket_type = ANY (ARRAY['support'::text, 'user_complaint'::text])))"
+  },
+  {
+   "table": "users",
+   "name": "users_company_name_length_check",
+   "def": "CHECK (((company_name IS NULL) OR (char_length(company_name) <= 200)))"
+  },
+  {
+   "table": "users",
+   "name": "users_last_name_length_check",
+   "def": "CHECK (((last_name IS NULL) OR (char_length(last_name) <= 100)))"
+  },
+  {
+   "table": "users",
+   "name": "users_name_length_check",
+   "def": "CHECK (((name IS NULL) OR (char_length(name) <= 200)))"
+  },
+  {
+   "table": "users",
+   "name": "users_phone_e164_check",
+   "def": "CHECK (((phone IS NULL) OR (phone = ''::text) OR (phone ~ '^\\+[1-9][0-9]{6,14}$'::text)))"
+  },
+  {
+   "table": "users",
+   "name": "users_position_length_check",
+   "def": "CHECK (((\"position\" IS NULL) OR (char_length(\"position\") <= 200)))"
+  },
+  {
+   "table": "users",
+   "name": "users_preferred_locale_check",
+   "def": "CHECK ((preferred_locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
+  },
+  {
+   "table": "users",
+   "name": "users_status_check",
+   "def": "CHECK ((status = ANY (ARRAY['active'::text, 'blocked'::text, 'inactive'::text])))"
+  },
+  {
+   "table": "users",
+   "name": "users_website_check",
+   "def": "CHECK (((website IS NULL) OR ((char_length(website) <= 200) AND (website ~ '^https://'::text))))"
+  },
+  {
+   "table": "users",
+   "name": "users_whatsapp_e164_check",
+   "def": "CHECK (((whatsapp IS NULL) OR (whatsapp = ''::text) OR (whatsapp ~ '^\\+[1-9][0-9]{6,14}$'::text)))"
+  }
+ ],
+ "triggers": [
+  {
+   "table": "contact_inquiries",
+   "name": "contact_inquiries_handled_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "name": "contact_inquiry_replies_replied_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "email_templates",
+   "name": "email_templates_updated_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "email_templates",
+   "name": "trg_email_templates_updated_at",
+   "timing": "BEFORE",
+   "events": "UPDATE"
+  },
+  {
+   "table": "history_clear_events",
+   "name": "history_clear_events_actor_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "listing_contact_events",
+   "name": "listing_contact_events_set_owner",
+   "timing": "BEFORE",
+   "events": "INSERT"
+  },
+  {
+   "table": "listing_reports",
+   "name": "listing_reports_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "listing_views",
+   "name": "listing_views_lower_count",
+   "timing": "AFTER",
+   "events": "DELETE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_guard_protected",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_owner_edit_moderation",
+   "timing": "BEFORE",
+   "events": "UPDATE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_price_rule",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_search_vector",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_updated_at",
+   "timing": "BEFORE",
+   "events": "UPDATE"
+  },
+  {
+   "table": "pages",
+   "name": "pages_updated_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "report_actions",
+   "name": "report_actions_actor_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "role_permission_events",
+   "name": "role_permission_events_actor_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "role_permissions",
+   "name": "role_permissions_updated_by_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "site_footer",
+   "name": "site_footer_updated_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "support_ticket_events",
+   "name": "support_ticket_events_actor_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "support_tickets",
+   "name": "support_tickets_assigned_to_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "support_tickets",
+   "name": "support_tickets_created_by_admin_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "support_tickets",
+   "name": "support_tickets_reported_user_id_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "support_tickets",
+   "name": "trg_support_tickets_updated_at",
+   "timing": "BEFORE",
+   "events": "UPDATE"
+  },
+  {
+   "table": "user_change_log",
+   "name": "user_change_log_changed_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "user_status_history",
+   "name": "user_status_history_changed_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "users",
+   "name": "on_user_created_notifications",
+   "timing": "AFTER",
+   "events": "INSERT"
+  },
+  {
+   "table": "users",
+   "name": "users_guard_protected",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  },
+  {
+   "table": "verification_requests",
+   "name": "verification_requests_reviewed_by_name",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
+  }
+ ],
+ "buckets": [
+  {
+   "id": "avatars",
+   "public": true,
+   "file_size_limit": "2097152",
+   "allowed_mime_types": [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+   ]
+  }
+ ],
+ "columns": [
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "agent_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "reviewer_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "rating",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "comment",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "agent_reviews",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenities",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenities",
+   "kind": "r",
+   "name": "name_al",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenities",
+   "kind": "r",
+   "name": "name_en",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenities",
+   "kind": "r",
+   "name": "category",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenities",
+   "kind": "r",
+   "name": "icon",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenity_translations",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenity_translations",
+   "kind": "r",
+   "name": "amenity_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenity_translations",
+   "kind": "r",
+   "name": "language_code",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "amenity_translations",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collection_items",
+   "kind": "r",
+   "name": "collection_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collection_items",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collection_items",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collections",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collections",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collections",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collections",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "collections",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "companies",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "companies",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "companies",
+   "kind": "r",
+   "name": "logo_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "companies",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "companies",
+   "kind": "r",
+   "name": "created_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "topic",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "custom_subject",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "email",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "message",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "target_mailbox",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "requester_ip",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "handled_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "handled_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "reply_count",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiries",
+   "kind": "r",
+   "name": "handled_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "inquiry_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "replied_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "body",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "contact_inquiry_replies",
+   "kind": "r",
+   "name": "replied_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "conversations",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "conversations",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "conversations",
+   "kind": "r",
+   "name": "buyer_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "conversations",
+   "kind": "r",
+   "name": "seller_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "conversations",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "code",
+   "type": "character varying(10)",
+   "udt": "varchar",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "symbol",
+   "type": "character varying(10)",
+   "udt": "varchar",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "name_sq",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "name_en",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "name_uk",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "name_it",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "is_active",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "is_default",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "decimals",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currencies",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "from_currency",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "to_currency",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "rate",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "source_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "currency_rates",
+   "kind": "r",
+   "name": "fetched_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "new_email",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "token_hash",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "expires_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "consumed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_change_tokens",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "key",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "locale",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "subject",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "html_body",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "variables",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "is_active",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "updated_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "email_templates",
+   "kind": "r",
+   "name": "updated_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "endpoint_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "api_key",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "refresh_interval_min",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "priority",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "mode",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "is_enabled",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "notes",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "exchange_providers",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorite_price_alerts",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorite_price_alerts",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorite_price_alerts",
+   "kind": "r",
+   "name": "last_notified_price",
+   "type": "numeric(12,2)",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorite_price_alerts",
+   "kind": "r",
+   "name": "last_notified_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorites",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorites",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorites",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "favorites",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "actor_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "entity_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "entity_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "history_source",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "clear_scope",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "cleared_row_ids",
+   "type": "uuid[]",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": true,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "cleared_row_count",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "metadata",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "history_clear_events",
+   "kind": "r",
+   "name": "actor_user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "code",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "name_native",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "name_en",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "is_active",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "languages",
+   "kind": "r",
+   "name": "is_default",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "metric_date",
+   "type": "date",
+   "udt": "date",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "recorded_views",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "whatsapp_clicks",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "listing_inquiry_submissions",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_daily",
+   "kind": "r",
+   "name": "job_version",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "id",
+   "type": "bigint",
+   "udt": "int8",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "ran_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "from_date",
+   "type": "date",
+   "udt": "date",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "to_date",
+   "type": "date",
+   "udt": "date",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "rows_written",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "job_version",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_activity_refresh",
+   "kind": "r",
+   "name": "error",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_amenities",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_amenities",
+   "kind": "r",
+   "name": "amenity_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "listing_owner_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "actor_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "channel",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "source",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "locale",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "is_owner_click",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_events",
+   "kind": "r",
+   "name": "actor_ip_hash",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "id",
+   "type": "bigint",
+   "udt": "int8",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "viewer_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "channel",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "requester_ip",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_contact_reveals",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_images",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_images",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_images",
+   "kind": "r",
+   "name": "url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_images",
+   "kind": "r",
+   "name": "order",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_images",
+   "kind": "r",
+   "name": "is_cover",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "listing_owner_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "email",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "message",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "requester_ip",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_inquiries",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "reason",
+   "type": "report_reason",
+   "udt": "report_reason",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "spam",
+    "fraud",
+    "duplicate",
+    "wrong_category",
+    "offensive",
+    "other"
+   ]
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "comment",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "status",
+   "type": "report_status",
+   "udt": "report_status",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "pending",
+    "reviewed",
+    "resolved",
+    "dismissed"
+   ]
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_reports",
+   "kind": "r",
+   "name": "user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "language_code",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "description",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_translations",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_views",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_views",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_views",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_views",
+   "kind": "r",
+   "name": "ip_hash",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listing_views",
+   "kind": "r",
+   "name": "viewed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "location_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "slug",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "description",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "price",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "price_old",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "currency",
+   "type": "listing_currency",
+   "udt": "listing_currency",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "ALL",
+    "EUR"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "listing_type",
+   "type": "listing_type",
+   "udt": "listing_type",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "sale",
+    "rent"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "property_type",
+   "type": "property_type",
+   "udt": "property_type",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "apartment",
+    "house",
+    "land",
+    "commercial",
+    "office",
+    "garage",
+    "warehouse",
+    "other",
+    "room"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "condition",
+   "type": "listing_condition",
+   "udt": "listing_condition",
+   "typtype": "e",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": [
+    "new_build",
+    "good",
+    "needs_repair",
+    "needs_renovation",
+    "under_construction"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "wall_type",
+   "type": "wall_type",
+   "udt": "wall_type",
+   "typtype": "e",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": [
+    "brick",
+    "concrete",
+    "panel",
+    "wood",
+    "other"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "heating",
+   "type": "heating_type",
+   "udt": "heating_type",
+   "typtype": "e",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": [
+    "electric",
+    "wood",
+    "central",
+    "gas",
+    "none"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "rooms",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "bedrooms",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "bathrooms",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "toilets",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "area_gross",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "area_net",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "floor",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "total_floors",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "year_built",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "address",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "lat",
+   "type": "double precision",
+   "udt": "float8",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "lng",
+   "type": "double precision",
+   "udt": "float8",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "views_count",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "is_premium",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "status",
+   "type": "listing_status",
+   "udt": "listing_status",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "active",
+    "inactive",
+    "sold",
+    "rented",
+    "archived",
+    "pending",
+    "expired"
+   ]
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "expires_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "search_vector",
+   "type": "tsvector",
+   "udt": "tsvector",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "land_legal_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "land_zoning",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "land_development_potential",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "multi_storey_building",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "offer_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "purchase_conditions",
+   "type": "text[]",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": true,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "public_id",
+   "type": "bigint",
+   "udt": "int8",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "premium_until",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "market_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "listings",
+   "kind": "r",
+   "name": "price_initial",
+   "type": "numeric",
+   "udt": "numeric",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "location_translations",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "location_translations",
+   "kind": "r",
+   "name": "location_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "location_translations",
+   "kind": "r",
+   "name": "language_code",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "location_translations",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "name_al",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "name_en",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "slug",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "type",
+   "type": "location_type",
+   "udt": "location_type",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "region",
+    "city",
+    "village",
+    "district"
+   ]
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "parent_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "region_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "lat",
+   "type": "double precision",
+   "udt": "float8",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "lng",
+   "type": "double precision",
+   "udt": "float8",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "image_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "is_featured",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "locations",
+   "kind": "r",
+   "name": "display_order",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "conversation_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "sender_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "content",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "messages",
+   "kind": "r",
+   "name": "read_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "new_message",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "saved_search_match",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "listing_status_change",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "support_reply",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "listing_expires_soon",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "marketing",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "channel_email",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notification_settings",
+   "kind": "r",
+   "name": "channel_push",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "type",
+   "type": "notification_type",
+   "udt": "notification_type",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "new_message",
+    "saved_search_match",
+    "listing_status_change",
+    "support_reply",
+    "listing_expires_soon",
+    "agent_verified",
+    "marketing",
+    "report_outcome",
+    "price_change"
+   ]
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "body",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "link",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "is_read",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "template_id",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "notifications",
+   "kind": "r",
+   "name": "template_params",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "page_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "language_code",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "content",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "page_translations",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "slug",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "content",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "is_published",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "updated_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "pages",
+   "kind": "r",
+   "name": "updated_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "slug",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "name_sq",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "name_en",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "name_uk",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "name_it",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "is_active",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "sort_order",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "property_types",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "avatar_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "user_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "is_verified",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "company_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "deleted_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "has_phone",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "public_user_profiles",
+   "kind": "v",
+   "name": "has_whatsapp",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "reauth_failures",
+   "kind": "r",
+   "name": "id",
+   "type": "bigint",
+   "udt": "int8",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "reauth_failures",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "reauth_failures",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "recently_viewed",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "recently_viewed",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "recently_viewed",
+   "kind": "r",
+   "name": "listing_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "recently_viewed",
+   "kind": "r",
+   "name": "viewed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "report_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "actor_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "actor_role",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "old_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "new_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "notes",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "report_actions",
+   "kind": "r",
+   "name": "actor_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "role",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "permission_key",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "old_allowed",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "new_allowed",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "actor_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "note",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permission_events",
+   "kind": "r",
+   "name": "actor_user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "role",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "permission_key",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "allowed",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "updated_by_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "role_permissions",
+   "kind": "r",
+   "name": "updated_by_user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "filters",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "notify_email",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "filters_hash",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "last_checked_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "last_viewed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "new_count",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "saved_searches",
+   "kind": "r",
+   "name": "notify_frequency",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "locale",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "brand_title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "tagline",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "nav_section_title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "nav_links",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "info_section_title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "info_links",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "social_section_title",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "social_links",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "copyright_template",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "updated_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_footer",
+   "kind": "r",
+   "name": "updated_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_settings",
+   "kind": "r",
+   "name": "key",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_settings",
+   "kind": "r",
+   "name": "value",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "site_settings",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_messages",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_messages",
+   "kind": "r",
+   "name": "ticket_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_messages",
+   "kind": "r",
+   "name": "sender_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_messages",
+   "kind": "r",
+   "name": "content",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_messages",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "ticket_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "actor_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "actor_role",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "event_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "old_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "new_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "note",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_ticket_events",
+   "kind": "r",
+   "name": "actor_user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "subject",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "status",
+   "type": "ticket_status",
+   "udt": "ticket_status",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "open",
+    "in_progress",
+    "resolved",
+    "closed"
+   ]
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "assigned_to",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "reported_user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "reason",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "created_by_admin_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "ticket_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "updated_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "complaint_type",
+   "type": "complaint_type_t",
+   "udt": "complaint_type_t",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "fraud_or_scam",
+    "fake_listing_or_profile",
+    "harassment_or_abuse",
+    "inappropriate_content",
+    "spam",
+    "payment_or_deposit_issue",
+    "duplicate_or_impersonation",
+    "other"
+   ]
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "assigned_to_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "created_by_admin_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "support_tickets",
+   "kind": "r",
+   "name": "reported_user_id_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "changed_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "field_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "old_value",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "new_value",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "changed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_change_log",
+   "kind": "r",
+   "name": "changed_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "old_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "new_status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "reason",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "changed_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "changed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "user_status_history",
+   "kind": "r",
+   "name": "changed_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "phone",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "whatsapp",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "avatar_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "role",
+   "type": "user_role",
+   "udt": "user_role",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "admin",
+    "moderator",
+    "agent",
+    "user"
+   ]
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "user_type",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "company_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "is_verified",
+   "type": "boolean",
+   "udt": "bool",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "social_provider",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "last_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "status",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "block_reason",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "location_id",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "position",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "year_started",
+   "type": "integer",
+   "udt": "int4",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "website",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "company_logo_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "deleted_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "location_request",
+   "type": "jsonb",
+   "udt": "jsonb",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "preferred_currency",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "pending_email",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "last_seen_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "company_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "preferred_locale",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "inactivity_warning_sent_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "suspended_until",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "users",
+   "kind": "r",
+   "name": "public_id",
+   "type": "bigint",
+   "udt": "int8",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "user_id",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "document_url",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "status",
+   "type": "verification_status",
+   "udt": "verification_status",
+   "typtype": "e",
+   "nullable": false,
+   "is_array": false,
+   "enum_values": [
+    "pending",
+    "approved",
+    "rejected"
+   ]
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "reviewed_by",
+   "type": "uuid",
+   "udt": "uuid",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "reviewed_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "created_at",
+   "type": "timestamp with time zone",
+   "udt": "timestamptz",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  },
+  {
+   "table": "verification_requests",
+   "kind": "r",
+   "name": "reviewed_by_name",
+   "type": "text",
+   "udt": "text",
+   "typtype": "b",
+   "nullable": true,
+   "is_array": false,
+   "enum_values": null
+  }
+ ]
+}

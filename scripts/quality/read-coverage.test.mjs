@@ -2,7 +2,8 @@
 // the record says; only the session's own record (and its subagents') is read; a line counts only when the Read tool
 // showed it whole as the file has it now; three complete passes; JSON data files are read by the objects of their changed
 // keys; generated files are proved by their tools' own runs; every shell command off the read-only allow-list is a run.
-// Each proof of Task 956 Review 6 (F14-F18) and Review 7 (F23, F24, F27) is a case below.
+// Each proof of Task 956 Review 6 (F14-F18) and Review 7 (F23, F24, F27) is a case below, and so is the catalog snapshot
+// of Revision 6 (AC20, owner decision O956-6).
 import { describe, it, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
@@ -167,7 +168,7 @@ test('changedLeaves: added, changed and removed keys, not the unchanged ones', (
 test('the JSON data files read by changed objects and the generated files', () => {
   for (const f of ['messages/en.json', 'docs/security/owasp/controls.json', 'docs/security/owasp/reviews/Task_956.json']) assert.ok(rc.JSON_DATA.test(f), f);
   for (const f of ['package.json', 'docs/security/owasp/sheets.json', 'scripts/x.json']) assert.ok(!rc.JSON_DATA.test(f), f);
-  assert.deepEqual([...rc.GENERATED.keys()].sort(), ['docs/security/owasp/sheets.json', 'package-lock.json']);
+  assert.deepEqual([...rc.GENERATED.keys()].sort(), ['docs/security/owasp/sheets.json', 'package-lock.json', 'supabase/catalog.json']);
 });
 
 test('runsBeforePasses: a run after the last change and before the passes is a breach', () => {
@@ -273,6 +274,23 @@ describe('evaluate: the read set by content, the passes after the last change, t
     assert.ok(!r.problems.some((p) => p.includes('over 3000')), r.problems.join('\n'));
     assert.ok(!r.problems.some((p) => p.startsWith('docs/security/owasp/sheets.json')), r.problems.join('\n'));
     assert.ok(check([], { fs, base }).problems.some((p) => p.startsWith('docs/security/owasp/sheets.json: no run of `owasp.mjs check`')));
+  });
+
+  it('Task 956 Revision 6: supabase/catalog.json (8391 lines) is generated, proved only by the session\'s own audit of that snapshot (O956-6)', () => {
+    const fs = { ...files, 'supabase/catalog.json': `{\n${' "k": 1,\n'.repeat(8389)}}\n` };
+    const base = [edit(4, 'src/a.ts'), ...three(20)];
+    const problems = (entries) => check([...base, ...entries], { fs }).problems;
+    const missing = (entries) => problems(entries).filter((p) => p.startsWith('supabase/catalog.json: no run of `db-catalog-audit.mjs --snapshot supabase/catalog.json`'));
+    const proof = 'node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json';
+    assert.deepEqual(problems(shellEntries(30, `cd /repo && ${proof}`)), [], 'not read, within the limit, proved');
+    assert.ok(!problems([]).some((p) => p.includes('over 3000')), 'its lines are not in the read set');
+    assert.equal(missing([]).length, 1);
+    assert.equal(missing(shellEntries(30, proof, { error: true })).length, 1, 'a failed run proves nothing');
+    assert.equal(missing(shellEntries(30, `echo ${proof}`)).length, 1, 'an echo is not a run');
+    for (const other of ['node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json.bak',
+      'node scripts/quality/db-catalog-audit.mjs --save supabase/catalog.json', 'node scripts/quality/db-types-drift.mjs']) {
+      assert.equal(missing(shellEntries(30, other)).length, 1, `${other}: another file, the write itself, or the drift tool (exit 1 until Tasks 978 and 979)`);
+    }
   });
 
   it('a read set over 3 000 lines is refused', () => {

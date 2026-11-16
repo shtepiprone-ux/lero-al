@@ -20,11 +20,12 @@ also carries the rules and tools that hold every session to its read set (owner 
   `Error('forbidden')` (`src/lib/auth/permissions.ts:42`); `handleCreate`
   (`src/components/admin/AdminUserProfile.tsx:244-258`) awaits it without a catch: "saving" forever, no banner.
 Fix: `createAdminUser` returns `{ error: 'forbidden' }` (translated, AC14) when the caller lacks `users.create`.
-- F5: `scripts/quality/db-catalog-audit.mjs:121` collects only UPDATE grants for I6 and no invariant compares two
-  PERMISSIVE policies of one table and command: the `notifications` duplicates (AC7) and a session INSERT on a
-  server-only `users` column pass unseen.
-Fix: invariant I15 (two PERMISSIVE policies of one table, command and roles with the same expressions) and I6 over
-INSERT grants, each with its failing test; the live baseline re-counted.
+- F29: `supabase/sql_migrations/task956/v8b.sql:283-285` drops only the two `notifications` duplicates; the live
+  catalog also holds `site_settings_read`, a copy of `site_settings_public_read` (both SELECT for public, `true`):
+  `node scripts/quality/db-catalog-audit.mjs` → `I15 public.site_settings.site_settings_read: repeats "site_settings_public_read" (SELECT for public)`.
+  After the apply AC1 would still fail on it.
+Fix: `v8b.sql` drops `site_settings_read`; `v8b-rollback.sql` creates it again as it is live (SELECT to public using
+`true`); `v8b-preflight.sql` lists it among the policies that must exist (`:53`).
 
 ## Scope
 
@@ -35,18 +36,18 @@ INSERT grants, each with its failing test; the live baseline re-counted.
   `kickoff-template.md`, `README.md`, the three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set"
   checks of `check-files.mjs`, with their tests; Revision 4a (993c14088, F14-F22); Revision 4b (F23-F27, approved in
   Review 8). No further change of the command allow-list in this task (O956-4).
-- Revision 4, Opus: F5 in `db-catalog-audit.mjs` and its test (they hold unreviewed edits of the stopped session
-  9de8af74). Revision 4, Sonnet: F13 in `createAdminUser` and its test (the banner already translates `forbidden`:
-  Review 8).
+- F5 closed without a change (Revision 4 check, see "## Review"). Revision 4, Sonnet: F13 in `createAdminUser` and
+  its test (the banner already translates `forbidden`: Review 8); F29 in the three SQL files of "## Read set".
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979),
   public profiles (980), the unused admin create form (982).
 
 ## Read set
-Counted at 3c002a197
-- `scripts/quality/db-catalog-audit.mjs` — 265 lines
-- `scripts/quality/db-catalog-audit.test.mjs` — 178 lines
+Counted at dfcf2085b
 - `src/modules/admin/actions/index.ts` — 1022 lines
 - `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts` — 92 lines
+- `supabase/sql_migrations/task956/v8b.sql` — 290 lines
+- `supabase/sql_migrations/task956/v8b-rollback.sql` — 191 lines
+- `supabase/sql_migrations/task956/v8b-preflight.sql` — 80 lines
 
 ## Attack surface
 
@@ -173,10 +174,11 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Revision 4a (993c14088), Review 7 (F23-F27), Revision 4b, Review 8 (APPROVED, O956-4).
-3. Revision 4, Opus (F5) and 4. Revision 4, Sonnet (F13), each in its own session, one after the other.
-5. Review 9, Opus, own session: `--review <commit before step 3>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
-   rolled-back apply; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`; the verdict; the apply step.
+0. Done: Revision 4a (993c14088), Review 7 (F23-F27), Revision 4b, Review 8 (APPROVED, O956-4), F5 check.
+4. Revision 4, Sonnet, own session from dfcf2085b plus this kickoff: F13 and F29.
+5. Review 9, Opus, own session: `--review <commit before step 4>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
+   rolled-back apply with `db-catalog-audit.mjs` 0; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`;
+   the verdict; the apply step.
 6. After the owner's apply: `v8b-verify.sql`, AC1-AC11, `--save supabase/catalog.json`.
 
 ## Review
@@ -184,7 +186,7 @@ Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2
 Review 5 (2026-11-16) — F10-F12, AC13-AC15 closed; gates 0 (6589 tests); AC10 0 LF/CRLF/mixed, red without the CRLF
 block; rolled-back apply: preflight 0 (row 15 = 1), audit 0, verify 16/16, session INSERT on `users` 42501.
 F3 — (open) every sheet whose evidence is AC1-AC7 waits for the apply.
-F5 — (P2, open, Opus) and F13 — (P3, open, Sonnet): see "## Cause"; Revision 4.
+F5 — closed (Revision 4 check, see below). F13 — (P3, open, Sonnet): see "## Cause"; Revision 4.
 F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2).
 Review 6 (rules and tools, 2026-11-16, session b23abf9c) — F14-F22 found (read-coverage trusted what the session sets;
   check-files held the kickoff only at design); OWASP: OAuth2, Unvalidated_Redirects_and_Forwards are Review 9's.
@@ -217,3 +219,10 @@ F28 — Read-only allow-list runs a quoted command word (Medium, Agent and tool 
   F23, F28); the allow-list stays an aid, and the reviewer reading every command of the session (O956-3) is the
   control). The OWASP remap of the 8 changed sheets goes to its own pull request from `main` (owner, 2026-11-16).
   For F13 the admin banner already maps `forbidden` to `save_errors.forbidden` (AdminUserProfile.tsx line 214).
+Revision 4, F5 check (dfcf2085b, 2026-11-16, session 2c16cac1, Opus). The I6 INSERT grants and I15 of the stopped
+  session 9de8af74 were already in `db-catalog-audit.mjs` (lines 124-134, 160-172) and its test; read in full, no change
+  needed. `node --test scripts/quality/db-catalog-audit.test.mjs` 0 (18 pass); 3 deliberate breaks (INSERT grants
+  ignored, I15 off, operand order not normalised) each red (tests 12, 13, 13), restored byte for byte. Live baseline:
+  `node scripts/quality/db-catalog-audit.mjs` 1, 62 findings (I3 1, I4 15, I5 22, I6 17, I7 1, I8 1, I9 2, I15 3);
+  the I15 pair of `notifications` is dropped by `v8b.sql`, the `site_settings` pair is not: F29.
+F29 — (P2, open, Sonnet) a duplicate public read on `site_settings` stays after the apply: see "## Cause"; Revision 4.

@@ -19,8 +19,8 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 <2–5 sentences: what is wrong today (with source path:line or command output) and what is true after the task>
 
 ## Cause
-<the fact that produces the problem, with its source: `path:line` (a repository file that has that line), or a
-`command` → <its output>>
+<the fact that produces the problem, with its source: `path:line` (a file of the "Counted at" commit that has that
+line), or a `command` → <its output>>
 Fix: <the change that removes that cause; the scope is this change and nothing more>
 
 ## Scope

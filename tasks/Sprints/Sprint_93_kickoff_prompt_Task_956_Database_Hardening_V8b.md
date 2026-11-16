@@ -1,7 +1,7 @@
 # Task 956 — Hardening v8b: the database enforces the moderator keys, the contact gateway, the profile bounds, edit moderation and one public-listing rule
 
 Sprint 93. Priority P0. Owner decisions: D1, D53/R74, D72, D77/D79/D80, R75, D91, O956-1, O956-2 (2026-11-15, "everything
-must be fixed in the current task"), 2026-11-16 (cause rule; the rules and tools ship here), O956-3 (F25). Filed by the audit
+must be fixed in the current task"), 2026-11-16 (cause rule; the rules and tools ship here), O956-3 (F25), O956-4 (F28). Filed by the audit
 `docs/security/audit-2026-11-06/findings.md` (DB-01 to DB-08, SQL-01, L-04, P-06). Implementers: Opus
 (`scripts/quality/**`, rules), Sonnet (SQL, application, tests; never applies SQL). The owner applies. Reviewer: Opus.
 
@@ -16,21 +16,6 @@ also carries the rules and tools that hold every session to its read set (owner 
 
 ## Cause
 
-- F23-F27 (Review 7 gives each proof): the read-only allow-list reads only the first word of each segment while the
-  shells run code inside arguments: `scripts/quality/read-coverage.mjs:83-95` splits a command without shell escapes and
-  :72 allows cmdlets that run `( )` and `{ }`, so `echo \" ; npm test`, `Write-Output (npm test)`,
-  `Get-ChildItem x | Where-Object { npm test }` and the pager option of git grep (:78) count as read-only (F23); :281
-  matches the bare session id, which also names the session's scratchpad folder, so every scratchpad command is "the
-  record touched" (F24); :78 refuses `-o` in every command, so the only-matching option of grep makes it a run (F27);
-  `scripts/quality/check-files.mjs:444` looks a `path:line` source up in the tree now, so a cause removed by deleting
-  its file fails its own kickoff (F26); a program the session runs can append Read entries to the record, while
-  `scripts/quality/read-coverage.mjs:12` says nothing the session sets decides the verdict (F25).
-Fix: an unquoted backslash escapes the next character and never opens a quote; an unquoted `(` or `{` makes the command
-a run; `--open-files-in-pager` is an output option; output options are refused only for the commands that write with
-them; a command touches the record when it names the record or its `projects/<project>/<id>` folder; a `path:line`
-source is looked up in the "Counted at" commit; the tool's comment and the rules say what it detects (an Edit or Write
-of the record, a command naming it) and that the reviewer reads every run command and every script of the session for
-the rest (F25, O956-3: `flow.md` §3 and review-task step 2).
 - F13: `src/modules/admin/actions/index.ts:590` calls `assertPermission('users.create')`, which throws
   `Error('forbidden')` (`src/lib/auth/permissions.ts:42`); `handleCreate`
   (`src/components/admin/AdminUserProfile.tsx:244-258`) awaits it without a catch: "saving" forever, no banner.
@@ -48,25 +33,20 @@ INSERT grants, each with its failing test; the live baseline re-counted.
   of AC4-AC6 and AC13-AC15.
 - Rules and tools (Opus, 2026-11-15/16): the facts rule, the cause rule and the read set in `CLAUDE.md`, `flow.md`,
   `kickoff-template.md`, `README.md`, the three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set"
-  checks of `check-files.mjs`, with their tests; Revision 4a (993c14088, F14-F22). Revision 4b (Opus): the F23-F27 fix
-  in the files of "## Read set".
+  checks of `check-files.mjs`, with their tests; Revision 4a (993c14088, F14-F22); Revision 4b (F23-F27, approved in
+  Review 8). No further change of the command allow-list in this task (O956-4).
 - Revision 4, Opus: F5 in `db-catalog-audit.mjs` and its test (they hold unreviewed edits of the stopped session
-  9de8af74). Revision 4, Sonnet: F13 in `createAdminUser` and its test. Their read set replaces the one below when
-  Revision 4b is approved.
+  9de8af74). Revision 4, Sonnet: F13 in `createAdminUser` and its test (the banner already translates `forbidden`:
+  Review 8).
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979),
   public profiles (980), the unused admin create form (982).
 
 ## Read set
-Counted at 993c14088
-- `scripts/quality/read-coverage.mjs` — 431 lines
-- `scripts/quality/read-coverage.test.mjs` — 306 lines
-- `scripts/quality/check-files.mjs` — 708 lines
-- `scripts/quality/check-files.test.mjs` — 387 lines
-- `.claude/rules/flow.md` — 188 lines
-- `.claude/rules/kickoff-template.md` — 97 lines
-- `CLAUDE.md` — 107 lines
-- `.claude/skills/review-task/SKILL.md` — 58 lines
-- `.claude/skills/execute-task/SKILL.md` — 41 lines
+Counted at 3c002a197
+- `scripts/quality/db-catalog-audit.mjs` — 265 lines
+- `scripts/quality/db-catalog-audit.test.mjs` — 178 lines
+- `src/modules/admin/actions/index.ts` — 1022 lines
+- `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts` — 92 lines
 
 ## Attack surface
 
@@ -193,10 +173,7 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Revision 4a (993c14088), Review 7 (F23-F27).
-1. Revision 4b, Opus, own session: the AC17-AC18 cases of F23-F27 first (red), the fix, three passes,
-   `read-coverage.mjs` 0, the gates.
-2. Review 8, Opus, own session: `read-coverage.mjs --review <commit before step 1>`; on approval the Read set becomes that of steps 3 and 4.
+0. Done: Revision 4a (993c14088), Review 7 (F23-F27), Revision 4b, Review 8 (APPROVED, O956-4).
 3. Revision 4, Opus (F5) and 4. Revision 4, Sonnet (F13), each in its own session, one after the other.
 5. Review 9, Opus, own session: `--review <commit before step 3>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
    rolled-back apply; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`; the verdict; the apply step.
@@ -220,7 +197,23 @@ Review 7 of 993c14088 (Revision 4a, 2026-11-16, session c38a3209) — NEEDS REVI
   CI: the quality job checks out with `fetch-depth: 0` (`.github/workflows/ci.yml:36`), fetches `+refs/heads/*` (run
   43745661716) and runs `check-files --all` (:59); `delete_branch_on_merge` is false. F14-F22 closed (F14's rest is
   F25); the 982 kickoff edit is required by F20 and F21.
-F23, F24, F26 — (P2, open, Opus) and F27 — (P3, open, Opus): see "## Cause"; Revision 4b.
-F25 — (P3, open) a program the session runs appended three forged passes and the tool found no problem (Review 7
-  probe on `evaluate`). O956-3 (owner, 2026-11-16, translated: "write the limit in the rules: the reviewer reads every run
-  command and every script of the session"): the limit and that duty are written in Revision 4b.
+F23, F24, F26, F27 — fixed in Revision 4b (Review 8).
+F25 — fixed in Revision 4b: the limit and the reviewer's duty are written (O956-3, `flow.md` §3, review-task step 2).
+Review 8 of Revision 4b (working tree on 3c002a197, 2026-11-16, session 2c16cac1) — APPROVED.
+  Scope: the 9 files of `git diff 3c002a197` (2491 lines), three passes; `read-coverage.mjs --review 3c002a197` exit 0;
+  the implementer's record e573d35b rerun with `--transcript` exit 0; every command of that session and both of its
+  scripts (`probe.mjs`, `break.ps1` in `%TEMP%\rc956`) read: none writes the record. Tools: check-ruleset 0, eslint 0,
+  `npm run lint` 0, `npm run typecheck` 0, `npm test -- --coverage` 0 (399 files, 6589 tests), changed-lines-coverage 0
+  (73/73), `check-files --worktree` 0, change-report 0. `node --test "scripts/quality/*.test.mjs"` 1 (206 pass, 1 fail:
+  `owasp.test.mjs:287`) and `check-files` on this kickoff 1 (O3 File_Upload, Input_Validation): both from upstream
+  OWASP changes this session's `owasp.mjs sync` wrote into `sheets.json` (2 sheets added, 6 changed), not from the
+  revision. 5 deliberate breaks (Bash escape, `(`/`{`, bare id, global `-o`, Cause source read now) each red, restored
+  by sha256 (f3caa165fcd1, 772d9e30e08f). Findings: Critical 0, High 0, Medium 1 (F28, accepted), Low 0.
+F28 — Read-only allow-list runs a quoted command word (Medium, Agent and tool output). `scripts/quality/read-coverage.mjs:80`
+  takes a whole segment in double quotes as a PowerShell string, but Bash runs it as a command, and PowerShell runs it
+  after `&`: `isReadOnly('"./node_modules/.bin/vitest"')` and `isReadOnly('& "node_modules/.bin/vitest.cmd"')` are
+  true; `"pwd"` ran pwd in this session's Bash. Status: accepted by the owner on 2026-11-16 (O956-4, translated: "I
+  accept your proposal": a hand-written shell reader cannot be completed, each review found another spelling (F15,
+  F23, F28); the allow-list stays an aid, and the reviewer reading every command of the session (O956-3) is the
+  control). The OWASP remap of the 8 changed sheets goes to its own pull request from `main` (owner, 2026-11-16).
+  For F13 the admin banner already maps `forbidden` to `save_errors.forbidden` (AdminUserProfile.tsx line 214).

@@ -9,7 +9,7 @@
 //
 //   node scripts/quality/read-coverage.mjs [--review <commit>] [--transcript <session.jsonl>]
 //
-// Nothing the session sets decides the verdict (Task 956 Review 6, F14-F18):
+// Nothing the session sets decides the verdict, within what a record shows (Task 956 Review 6, F14-F18; Review 7, F25):
 //   - the read set is the content that differs from a committed base: every tracked file whose text differs from the base
 //     and every untracked file that is not ignored. The base is HEAD: the owner commits the tree before a revision starts,
 //     so whatever differs from HEAD is the revision's work; a file left uncommitted at the start is in the read set too and
@@ -19,7 +19,11 @@
 //   - the record is the running session's transcript (`<config>/projects/<project>/<CLAUDE_CODE_SESSION_ID>.jsonl`) or the
 //     one the reviewer names with --transcript, with its subagents' records (`<session id>/subagents/agent-*.jsonl`). Only
 //     user and assistant entries with a timestamp and the record's own session id count; a record without one exits 2. An
-//     Edit or Write of the record, or a shell command that names it, is a problem;
+//     Edit or Write of the record or of its folder, or a shell command that names the record (`<id>.jsonl`) or its folder
+//     (`<project>/<id>`), is a problem; the bare id is not, since it also names the session's scratchpad folder (F24).
+//     What the tool does not see: a program the session runs (a script, a test, a hook or profile it set up) that writes
+//     the record. The reviewer reads every command the session ran and every script it wrote or ran, in its record, and
+//     a write to the record found there is a finding (flow.md §3, review-task step 2; owner decision O956-3);
 //   - per file, the lines that must be read: every line of a source file; in a JSON data file (messages/<locale>.json,
 //     docs/security/owasp/controls.json, docs/security/owasp/reviews/*.json) the object that holds each key changed against
 //     the base; a generated file (package-lock.json, docs/security/owasp/sheets.json) is not read: the tools it names must
@@ -61,8 +65,9 @@ const WRITE_TOOLS = ['Edit', 'Write', 'NotebookEdit', 'MultiEdit'];
 const SHELL_TOOLS = ['Bash', 'PowerShell'];
 
 /**
- * The read-only allow-list: a shell command is read-only when every segment starts with one of these and nothing in it
- * can write (a redirection, a command substitution, an output option). Everything else is a run or a change.
+ * The read-only allow-list: a shell command is read-only when, read as Bash and as PowerShell read it (readCommand), every
+ * segment starts with one of these, no argument runs a program or writes a file (argumentsRun), and nothing in it can
+ * write or run code (WRITES anywhere; RUNS_OUTSIDE_QUOTES outside quotes). Everything else is a run or a change.
  */
 const READ_ONLY_SEGMENT = [
   /^cd(?:\s|$)/,
@@ -74,33 +79,102 @@ const READ_ONLY_SEGMENT = [
   /^node\s+(?:\.\/)?scripts\/quality\/read-coverage\.mjs(?:\s|$)/,
   /^"[^"$`]*(?:\$[A-Za-z_]\w*[^"$`]*)*"$/, // a PowerShell string that only expands variables, e.g. "EXIT=$LASTEXITCODE"
 ];
-/** What can write or run a program inside an allowed command: a substitution, an output file, a preprocessor or pager. */
-const WRITES = /\$\(|`|<\(|>\(|--output\b|--pre\b|(?:^|\s)-(?:o|O\S*)(?:\s|$)/;
+/** What can write or run a program anywhere in a command, in quotes or not: a substitution, an output file, a preprocessor. */
+const WRITES = /\$\(|`|<\(|>\(|--output\b|--pre\b/;
+/** Outside quotes: ">" writes a file; "(" and "{" run code (a PowerShell subexpression or script block, a Bash subshell or group). */
+const RUNS_OUTSIDE_QUOTES = /[>({]/;
 /** The redirections that only discard or merge output: not writes, and the exit status stays the command's. */
 const NOOP_REDIRECT = /\d?>\s*(?:&\d|\/dev\/null|\$null)(?=\s|$|[;|&)])/g;
+/** The characters that separate commands outside quotes; PowerShell also ends a line at a carriage return. */
+const SEPARATORS = ';|&\n\r';
+/**
+ * The long options of an allowed command that are refused (F23, F27). Git documents --output ("Output to a specific file
+ * instead of stdout", git-log), --open-files-in-pager (git grep, the pager to run) and --upload-pack (git ls-remote, the
+ * path of git-upload-pack); --exec of git and --pre and --hostname-bin of rg are refused fail-closed (UNKNOWN: --exec is
+ * not in git-ls-remote.html of this machine, and no rg is on its PowerShell PATH to describe its options). Git takes a long
+ * option abbreviated to a unique prefix (gitcli: "Many commands allow a long option --option to be abbreviated only to
+ * their unique prefix"), so a prefix of one of these counts as the option; so does an option that starts with one.
+ */
+const RUN_OPTIONS = new Map([
+  ['git', ['--output', '--open-files-in-pager', '--upload-pack', '--exec']],
+  ['rg', ['--pre', '--hostname-bin']],
+]);
 
-/** A command split on the separators ; | & and newlines that are outside quotes. */
-export function splitSegments(command) {
-  const out = [];
+/**
+ * A command as one shell reads it (F23): its `segments`, split on ; | & and line ends outside quotes, and `outside`, its
+ * text outside quotes. `shell` is 'bash' or 'powershell'; isReadOnly reads every command both ways, so the reading of
+ * either tool is covered. Bash: outside single quotes a backslash escapes the next character (an escaped quote opens or
+ * closes nothing, an escaped separator separates nothing), and $'…' is a quote whose backslash escapes. PowerShell: a
+ * backslash is a plain character, and the typographic quotes are quotes. null when the shell reads the quotes by rules
+ * this reader does not follow: a comment (#, <#), a here-document or here-string (<<, @" @'), a substitution ($( ${ `),
+ * a redirection from a file (<) or PowerShell's stop-parsing token (--%).
+ */
+export function readCommand(command, shell) {
+  const ps = shell === 'powershell';
+  const s = ps ? String(command).replace(/[\u201c\u201d\u201e]/g, '"').replace(/[\u2018\u2019\u201a\u201b]/g, "'") : String(command);
+  if (/\$\(|\$\{|`/.test(s)) return null;
+  const segments = [];
+  let outside = '';
   let cur = '';
-  let quote = null;
-  for (const c of String(command)) {
-    if (quote) { cur += c; if (c === quote) quote = null; continue; }
-    if (c === '"' || c === "'") { quote = c; cur += c; continue; }
-    if (c === ';' || c === '|' || c === '&' || c === '\n') { if (cur.trim()) out.push(cur.trim()); cur = ''; continue; }
+  let quote = null; // '"', "'" or "$'" (Bash ANSI-C quoting)
+  let dollar = false; // the previous character was an unquoted, unescaped $
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    const afterDollar = dollar;
+    dollar = false;
+    if (quote) {
+      cur += c;
+      if (c === '\\' && !ps && quote !== "'") cur += s[++i] ?? '';
+      else if (c === quote.at(-1)) quote = null;
+      continue;
+    }
+    if (c === '\\' && !ps) { cur += c + (s[++i] ?? ''); continue; }
+    if (c === '#' || c === '<' || (ps && ((c === '@' && /["']/.test(s[i + 1] ?? '')) || s.startsWith('--%', i)))) return null;
+    if (c === '"' || c === "'") { quote = !ps && c === "'" && afterDollar ? "$'" : c; cur += c; continue; }
+    if (SEPARATORS.includes(c)) { if (cur.trim()) segments.push(cur.trim()); cur = ''; continue; }
     cur += c;
+    outside += c;
+    dollar = c === '$';
   }
-  if (cur.trim()) out.push(cur.trim());
-  return out;
+  if (cur.trim()) segments.push(cur.trim());
+  return { segments, outside };
 }
 
-/** True when every segment of the command is on the read-only allow-list (F15). */
+/** The segments of a command as `shell` reads it (readCommand); none when the shell's reading is not followed. */
+export function splitSegments(command, shell = 'bash') {
+  return readCommand(command, shell)?.segments ?? [];
+}
+
+/**
+ * True when an argument of an allowed segment can run a program or write a file (F23, F27). Each word is taken as the
+ * command receives it, without its quotes and backslashes. Git: a short option group with -O (git grep runs the pager it
+ * names) or with -o or -u (refused fail-closed: the kickoff refuses `git log -o`, and a short form of the upload-pack
+ * option is UNKNOWN), or a long option of RUN_OPTIONS; rg: a long option of RUN_OPTIONS; find: an action that runs or
+ * writes. In those three a word with $ (a variable the shell expands) or an option word with * ? [ (a pattern the shell
+ * expands to a file name) is a run too. The -o of grep (`grep --help`: "--only-matching") and of find (`find --help`:
+ * "EXPR1 -o EXPR2") writes nothing; the kickoff (F27) holds `rg -o` read-only too (rg's options: UNKNOWN, see above).
+ */
+function argumentsRun(segment) {
+  const [command, ...words] = segment.split(/\s+/).map((w) => w.replace(/["'\\]/g, ''));
+  if (!['git', 'rg', 'find'].includes(command)) return false;
+  const runOption = (w) => {
+    const name = w.split('=')[0];
+    return /^--[^-=]/.test(name) && (RUN_OPTIONS.get(command) ?? []).some((o) => o.startsWith(name) || name.startsWith(o));
+  };
+  return words.some((w) => w.includes('$') || (w.startsWith('-') && /[*?[]/.test(w)) || runOption(w)
+    || (command === 'git' && /^-[A-Za-z0-9]*[oOu]/.test(w))
+    || (command === 'find' && /^-(?:exec|execdir|ok|okdir|delete|fprint\w*|fls)$/.test(w)));
+}
+
+/** True when every segment of the command is on the read-only allow-list, as Bash and as PowerShell read it (F15, F23). */
 export function isReadOnly(command) {
   const scrubbed = String(command ?? '').replace(NOOP_REDIRECT, ' ');
-  // any other ">" outside quotes is a redirection into a file
-  if (WRITES.test(scrubbed) || />/.test(scrubbed.replace(/"[^"]*"|'[^']*'/g, ''))) return false;
-  const segments = splitSegments(scrubbed);
-  return segments.length > 0 && segments.every((s) => READ_ONLY_SEGMENT.some((re) => re.test(s)));
+  if (WRITES.test(scrubbed)) return false;
+  return ['bash', 'powershell'].every((shell) => {
+    const read = readCommand(scrubbed, shell);
+    return read !== null && !RUNS_OUTSIDE_QUOTES.test(read.outside) && read.segments.length > 0
+      && read.segments.every((s) => READ_ONLY_SEGMENT.some((re) => re.test(s)) && !argumentsRun(s));
+  });
 }
 
 /** A path from a tool call as a repository-relative path with forward slashes, or null when it is outside the root. */
@@ -268,7 +342,11 @@ export function runsBeforePasses(runs, lastChange, passesDoneAt) {
   return runs.filter((r) => r.ts > lastChange && (passesDoneAt === null || r.ts < passesDoneAt));
 }
 
-/** True when a tool call touches the session's record: a write to the record or its folder, or a shell command naming it. */
+/**
+ * True when a tool call touches the session's record: a write to the record or its folder, or a shell command naming one
+ * of them, the record as `<id>.jsonl` or the folder as `<project>/<id>`. The bare id names neither: it also names the
+ * session's scratchpad folder, which the session may use (F24).
+ */
 export function touchesRecord(event, record) {
   if (event.kind === 'write') {
     const norm = (p) => path.resolve(p).toLowerCase();
@@ -278,17 +356,23 @@ export function touchesRecord(event, record) {
   }
   if (event.kind !== 'shell') return false;
   const c = event.command;
-  return c.includes(record.id) || /CLAUDE_CODE_SESSION_ID|CLAUDE_CONFIG_DIR/.test(c) || (/\.claude[\\/]+projects/i.test(c) && !event.readOnly);
+  const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const names = new RegExp(`${esc(record.id)}\\.jsonl|${esc(path.basename(path.dirname(record.path)))}[\\\\/]+${esc(record.id)}`, 'i');
+  return names.test(c) || /CLAUDE_CODE_SESSION_ID|CLAUDE_CONFIG_DIR/.test(c) || (/\.claude[\\/]+projects/i.test(c) && !event.readOnly);
 }
 
-/** The labels of the runs a generated file needs that the session itself did not make, as the whole command, without error. */
+/**
+ * The labels of the runs a generated file needs that the session itself did not make, as the whole command (one segment
+ * after `cd`, as Bash and as PowerShell read it: F23), without error.
+ */
 export function missingProofs(events, checks) {
   const own = events.filter((e) => e.kind === 'shell' && !e.subagent && !e.error);
-  return checks.filter(([, re]) => !own.some((e) => {
-    const segments = splitSegments(e.command.replace(NOOP_REDIRECT, ' '));
+  const whole = (command, re) => ['bash', 'powershell'].every((shell) => {
+    const segments = splitSegments(command.replace(NOOP_REDIRECT, ' '), shell);
     while (segments.length > 1 && /^cd(?:\s|$)/.test(segments[0])) segments.shift();
     return segments.length === 1 && re.test(segments[0]);
-  })).map(([label]) => label);
+  });
+  return checks.filter(([, re]) => !own.some((e) => whole(e.command, re))).map(([label]) => label);
 }
 
 /**

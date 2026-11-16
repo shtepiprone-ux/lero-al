@@ -2,7 +2,7 @@
 // the record says; only the session's own record (and its subagents') is read; a line counts only when the Read tool
 // showed it whole as the file has it now; three complete passes; JSON data files are read by the objects of their changed
 // keys; generated files are proved by their tools' own runs; every shell command off the read-only allow-list is a run.
-// Each proof of Task 956 Review 6 (F14-F18) is a case below.
+// Each proof of Task 956 Review 6 (F14-F18) and Review 7 (F23, F24, F27) is a case below.
 import { describe, it, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
@@ -93,6 +93,44 @@ test('isReadOnly: the allow-list; anything else is a run or a change (F15)', () 
     'sort -o a b', 'echo $(rm a)', 'echo `rm a`', 'ls | xargs rm', 'cat a | tee b', 'x=1 ls', 'node -e "1"', 'Set-Content a b', 'gh api -X POST x', '']) {
     assert.ok(!rc.isReadOnly(c), c);
   }
+});
+
+// Review 7, F23: the shells run code inside arguments that the first word of a segment does not show.
+const F23 = ['echo \\" ; npm test', 'Write-Output (npm test)', 'Get-ChildItem x | Where-Object { npm test }', 'git grep --open-files-in-pager=npm -l x'];
+
+test('F23: an escaped quote, a subexpression, a script block and the pager of git grep are runs', () => {
+  for (const c of F23) assert.ok(!rc.isReadOnly(c), c);
+});
+
+test('F23: a command is read as Bash and as PowerShell read it; a quote either shell does not read as this reader does is a run', () => {
+  for (const c of [
+    'echo "a\\"" ; npm test', // Bash: \" stays in the string, npm test runs
+    'echo "a\\" ; npm test ; echo "b"', // PowerShell: \" ends the string, npm test runs
+    'echo \\" a " ; npm test ; " b"', // PowerShell: an unquoted \ is a plain character, the quote opens
+    "echo $'\\'' ; npm test", // Bash: $'…' is a quote whose backslash escapes
+    'echo " ” ; npm test ; “ "', // PowerShell: typographic quotes are quotes
+    'echo # "\nnpm test', // a comment hides the quote
+    'echo x <# " #> ; npm test', // a PowerShell block comment
+    'cat <<X\n"\nX\nnpm test "', // a here-document
+    'Write-Output @"\nok\n"@', // a PowerShell here-string
+    'git log --% "\nnpm test\n"x"', // PowerShell's stop-parsing token
+    'echo "${x:-"}" ; npm test ; "}"', // a substitution inside a string
+    'echo x\rnpm test', // PowerShell ends a line at a carriage return
+  ]) assert.ok(!rc.isReadOnly(c), JSON.stringify(c));
+});
+
+test('F23: an option that runs a program or writes a file is a run however it is spelled', () => {
+  for (const c of [
+    'git grep --open=npm -l x', 'git grep -nOnpm x', 'git grep "--open-files-in-pager=npm" x', 'git grep --op\\en-files-in-pager=npm x',
+    'git ls-remote --upload-pack=npm .', 'git ls-remote --u=npm .', 'git ls-remote --exec=npm .', 'git grep $X x',
+    'rg --hostname-bin=npm x', 'rg --pr\\e=npm x', 'find . -ex\\ec npm test \\;', 'find . -exe? npm test', 'find . -de"lete"',
+  ]) assert.ok(!rc.isReadOnly(c), c);
+  for (const c of ['git log --oneline -3', 'git diff --stat --exit-code', 'git merge-base --is-ancestor abc HEAD']) assert.ok(rc.isReadOnly(c), c);
+});
+
+test('F27: the only-matching option of grep and rg and the OR of find are read-only; -o and -O of the commands that write or run with them are not', () => {
+  for (const c of ['grep -o x f', 'rg -o x f', 'find . -name a -o -name b']) assert.ok(rc.isReadOnly(c), c);
+  for (const c of ['sort -o a b', 'git log -o x', 'git grep -Ocalc x']) assert.ok(!rc.isReadOnly(c), c);
 });
 
 test('passesOf: three full passes over the current text; a read of an older text counts for nothing', () => {
@@ -250,6 +288,27 @@ describe('evaluate: the read set by content, the passes after the last change, t
       assert.equal(check([...base, ...shellEntries(30, command)]).problems.filter((p) => p.includes('session record')).length, 1, command);
     }
     assert.deepEqual(check([...base, ...shellEntries(30, 'node scripts/quality/read-coverage.mjs --transcript C:/Users/x/.claude/projects/repo/other.jsonl')]).problems, []);
+  });
+
+  it('F24: the bare session id also names the scratchpad folder: a scratchpad command is no record touch; the record and its folder are', () => {
+    const base = [edit(4, 'src/a.ts'), ...three(20)];
+    const touches = (command) => check([...base, ...shellEntries(30, command)]).problems.filter((p) => p.includes('session record')).length;
+    for (const command of [`node C:/Users/x/AppData/Local/Temp/claude/abc/${ID}/scratchpad/x.mjs`, `cat C:\\Users\\x\\AppData\\Local\\Temp\\claude\\abc\\${ID}\\scratchpad\\out.txt`]) {
+      assert.equal(touches(command), 0, command);
+    }
+    for (const command of [`cat ${RECORD}`, `wc -l ${ID}.jsonl`, `ls /config/projects/repo/${ID}/subagents`, `Get-Content C:\\config\\projects\\REPO\\${ID}\\subagents\\agent-1.jsonl`]) {
+      assert.equal(touches(command), 1, command);
+    }
+  });
+
+  it('F23: a comment or a here-document that hides a second command is no proof of a generated file', () => {
+    const fs = { ...files, 'package-lock.json': '{}\n' };
+    const base = [edit(4, 'src/a.ts'), ...three(20)];
+    const proofs = ['node scripts/quality/change-report.mjs --lockfile-age main', 'node --test scripts/quality/install-scripts.test.mjs', 'npm audit --omit=dev'];
+    for (const hide of [(c) => `${c} # "\nexit 0\n#"`, (c) => `${c} <<X\n"\nX\nexit 0\n"`]) {
+      const r = check([...base, ...proofs.flatMap((c, i) => shellEntries(31 + i, hide(c)))], { fs });
+      assert.equal(r.problems.filter((p) => p.startsWith('package-lock.json: no run')).length, 3, r.problems.join('\n'));
+    }
   });
 });
 

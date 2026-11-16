@@ -427,13 +427,19 @@ function sectionLines(lines, heading) {
 
 /**
  * "## Cause" names the fact behind the problem with its sources and the fix: a `path:line` source is a file of the
- * repository that has that line, a command source quotes its output after "→" (F21). "## Read set" names the commit its
- * counts were taken at and lists the files to change with their line counts, within MAX_READ_SET_LINES; every count is
- * compared with that commit on every run, so the numbers come from Git, not from the model (F20). `lineCount(rel)` reads
- * the file now; `atCommit` reads a commit (`commitLines`).
+ * "Counted at" commit that has that line, a command source quotes its output after "→" (F21). The source is read where
+ * the cause was read, so a fix that deletes the file leaves its kickoff valid (F26); without a commit this repository
+ * holds (itself a finding below) the file now is read. "## Read set" names the commit its counts were taken at and lists
+ * the files to change with their line counts, within MAX_READ_SET_LINES; every count is compared with that commit on
+ * every run, so the numbers come from Git, not from the model (F20). `lineCount(rel)` reads the file now; `atCommit`
+ * reads a commit (`commitLines`).
  */
 export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, atCommit = commitLines } = {}) {
   const out = [];
+  const set = sectionLines(lines, '## Read set');
+  const sha = set?.lines.map((l) => COUNTED_AT.exec(l.trim())).find(Boolean)?.[1] ?? null;
+  const known = sha !== null && atCommit.exists(sha);
+  const sourceLines = known ? (file) => atCommit.lineCount(sha, file) : count;
   const cause = sectionLines(lines, '## Cause');
   if (cause) {
     let sources = 0;
@@ -441,9 +447,9 @@ export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, a
       for (const m of l.matchAll(PATH_SOURCE)) {
         const [, file, from, to] = m;
         const cited = `${file}:${from}${to ? `-${to}` : ''}`;
-        const total = count(file);
-        if (total === null) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, which is not in the repository`, cause.first + k));
-        else if (Number(from) < 1 || Number(to ?? from) > total) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, but ${file} has ${total} lines`, cause.first + k));
+        const total = sourceLines(file);
+        if (total === null) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, which is not in ${known ? sha : 'the repository'}`, cause.first + k));
+        else if (Number(from) < 1 || Number(to ?? from) > total) out.push(finding('kickoff', `"## Cause" cites \`${cited}\`, but ${file} has ${total} lines${known ? ` at ${sha}` : ''}`, cause.first + k));
         else sources++;
       }
       for (const m of l.matchAll(COMMAND_SOURCE)) {
@@ -454,11 +460,8 @@ export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, a
     if (!sources) out.push(finding('kickoff', '"## Cause" names no source of the fact (`path:line` with a folder, or a `command` or query followed by "→ <its output>")', cause.first - 1));
     if (!cause.lines.some((l) => /^Fix: \S/.test(l))) out.push(finding('kickoff', '"## Cause" has no "Fix: <the change that removes the cause>" line', cause.first - 1));
   }
-  const set = sectionLines(lines, '## Read set');
   if (set) {
-    const sha = set.lines.map((l) => COUNTED_AT.exec(l.trim())).find(Boolean)?.[1] ?? null;
     if (!sha) out.push(finding('kickoff', '"## Read set" has no "Counted at <commit>" line (the commit whose files the counts were taken from)', set.first - 1));
-    const known = sha !== null && atCommit.exists(sha);
     if (sha && !known) out.push(finding('kickoff', `"## Read set": ${sha} is not a commit of this repository (the counts are checked against it; push the branch that holds it)`, set.first - 1));
     let total = 0;
     let entries = 0;

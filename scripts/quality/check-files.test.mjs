@@ -114,8 +114,8 @@ test('kickoffs from Sprint 93 on follow the template', () => {
     '## Cause': '`src/a/x.ts:3` returns the raw code.\nFix: return the translated text.',
     '## Read set': 'Counted at abc1234\n- `src/a/not-there-yet.ts` — new, 10 lines',
   };
-  // the Cause source exists now with 10 lines; the commit exists and holds none of the read set
-  const io = { lineCount: (rel) => (rel === 'src/a/x.ts' ? 10 : null), atCommit: { exists: (sha) => sha === 'abc1234', lineCount: () => null } };
+  // the commit exists and holds the Cause source with 10 lines and none of the read set
+  const io = { lineCount: () => null, atCommit: { exists: (sha) => sha === 'abc1234', lineCount: (_sha, rel) => (rel === 'src/a/x.ts' ? 10 : null) } };
   const k = (text) => kickoffFindings(text, io);
   const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, body[s] ?? 'text', ''])].join('\n');
   assert.deepEqual(k(good), []);
@@ -143,8 +143,9 @@ test('kickoffs from Sprint 93 on follow the template', () => {
 describe('a kickoff names the cause with real sources and the fix, and a read set counted at a named commit (F20, F21)', () => {
   const sections = (cause, set, review = '') => ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s,
     s === '## Cause' ? cause : s === '## Read set' ? set : s === '## Review' ? review : s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
-  // the files at the named commit abc1234, and the files now (where a "## Cause" source is looked up)
-  const atCommit = { exists: (sha) => sha === 'abc1234', lineCount: (sha, rel) => (sha === 'abc1234' ? ({ 'src/a.ts': 120, 'src/b.ts': 2900 })[rel] ?? null : null) };
+  // the files at the named commit abc1234 (where a "## Cause" source is looked up), and the files now (read only when the
+  // kickoff names no commit this repository holds)
+  const atCommit = { exists: (sha) => sha === 'abc1234', lineCount: (sha, rel) => (sha === 'abc1234' ? ({ 'src/a.ts': 120, 'src/b.ts': 2900, 'scripts/old.mjs': 40 })[rel] ?? null : null) };
   const now = (rel) => ({ 'src/a.ts': 130, 'scripts/x.mjs': 50 })[rel] ?? null;
   const check = (cause, set, review) => kickoffFindings(sections(cause, set, review), { lineCount: now, atCommit }).map((f) => f.message);
   const cause = '`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.';
@@ -153,7 +154,7 @@ describe('a kickoff names the cause with real sources and the fix, and a read se
   it('a cause with an existing source and a fix, a read set counted at the commit: no finding', () => {
     assert.deepEqual(check(cause, set('- `src/a.ts` — 120 lines', '- `src/new.ts` — new, 30 lines')), []);
     assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` → `I15 notifications: two PERMISSIVE policies`\nFix: drop one.', set('- `src/a.ts` — 120 lines')), []);
-    assert.deepEqual(check('`src/a.ts:120-130` and `scripts/x.mjs:50` return the raw code.\nFix: y.', set('- `src/a.ts` — 120 lines')), []);
+    assert.deepEqual(check('`src/a.ts:110-120` and `scripts/old.mjs:40` return the raw code.\nFix: y.', set('- `src/a.ts` — 120 lines')), []);
   });
 
   it('the cause: a source and a fix line are both required', () => {
@@ -162,12 +163,21 @@ describe('a kickoff names the cause with real sources and the fix, and a read se
   });
 
   it('F21: a `path:line` source must exist with that line; a bare file name is no source; a command source quotes its output', () => {
-    assert.ok(check('`src/nope/does-not-exist.ts:1` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/nope/does-not-exist.ts:1') && m.includes('not in the repository')));
-    assert.ok(check('`src/a.ts:131` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:131') && m.includes('has 130 lines')));
-    assert.ok(check('`src/a.ts:120-140` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:120-140') && m.includes('has 130 lines')));
+    assert.ok(check('`src/nope/does-not-exist.ts:1` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/nope/does-not-exist.ts:1') && m.includes('not in abc1234')));
+    assert.ok(check('`src/a.ts:121` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:121') && m.includes('has 120 lines at abc1234')));
+    assert.ok(check('`src/a.ts:120-140` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:120-140') && m.includes('has 120 lines at abc1234')));
     assert.ok(check('`a.ts:3` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('no source')));
     assert.ok(check('`grep -rn "AdminUserCreate" src` finds nothing.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')));
     assert.ok(check('`src/a.ts:42` and `grep -rn x src` with no output.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')), 'every command source, not only the first');
+  });
+
+  it('F26: a `path:line` source is looked up in the "Counted at" commit: a file deleted since passes, a file not in the commit fails', () => {
+    assert.deepEqual(check('`scripts/old.mjs:40` wrote the record.\nFix: delete it.', set('- `src/a.ts` — 120 lines')), []);
+    assert.ok(check('`scripts/x.mjs:50` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('scripts/x.mjs:50') && m.includes('not in abc1234')));
+    // no commit this repository holds (a finding of its own): the file now is read, 130 lines
+    const noCommit = check('`src/a.ts:125` returns x.\nFix: y.', 'Counted at fff9999\n- `src/a.ts` — 120 lines');
+    assert.ok(!noCommit.some((m) => m.includes('"## Cause" cites')), noCommit.join('\n'));
+    assert.ok(check('`src/a.ts:131` returns x.\nFix: y.', 'Counted at fff9999\n- `src/a.ts` — 120 lines').some((m) => m.includes('src/a.ts:131') && m.includes('has 130 lines') && !m.includes(' at ')));
   });
 
   it('F20: every count is compared with the named commit, also after the review is written', () => {

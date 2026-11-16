@@ -64,16 +64,18 @@ prints each file's lines, the lines read and the complete passes over the file a
 tools that check them, run as the whole command without error; JSON data files: the objects of the changed keys), and
 exits 1 on a missing pass, an unread or cut line, a shell command off its read-only allow-list after the last change
 (in a session that changes nothing, from its first command) and before the third pass, a session that touched its own
-record, or a read set over 3 000 lines. Details: `.claude/rules/flow.md` §2 steps 3-4.
+record (an Edit or Write of it, or a command naming it or its folder), or a read set over 3 000 lines. It does not see a
+program the session runs that writes the record: the reviewer reads every command and every script of the session
+(owner, O956-3). Details: `.claude/rules/flow.md` §2 steps 3-4 and §3.
 
 ## Cause rule: a kickoff names the cause and its fix
 
 Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it; the
 implementer removes that cause"; "where a couple of lines need fixing, the kickoff must not read as if half the project
-does". "## Cause" (the fact with its sources, each `path:line` a repository file with that line and each command
-followed by "→ <its output>", and a "Fix:" line) and "## Read set" ("Counted at <commit>" and each file to change with
-its line count in that commit, at most 3 000 lines) are required by `check-files.mjs`, which checks them on every run.
-Details: `.claude/rules/flow.md` §1.
+does". "## Cause" (the fact with its sources, each `path:line` a file of the "Counted at" commit with that line and
+each command followed by "→ <its output>", and a "Fix:" line) and "## Read set" ("Counted at <commit>" and each file to
+change with its line count in that commit, at most 3 000 lines) are required by `check-files.mjs`, which checks them on
+every run. Details: `.claude/rules/flow.md` §1.
 
 ## Facts rule: no assumptions, only facts
 

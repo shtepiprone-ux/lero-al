@@ -36,6 +36,7 @@ description: Implement one saved Lero.al task as Sonnet, check every line writte
 8. Facts rule (`flow.md`): every statement of the report, of a comment and of a SQL comment is a fact you read, with its
    source; a value you restore or copy (a live definition, a format) is read first; what you did not read is `UNKNOWN`.
    Report in Ukrainian: changed files; the `read-coverage.mjs` output and this session's id (the name of the record
-   its first line prints; a shell command that names the record, its id or `CLAUDE_CODE_SESSION_ID` is a problem for
-   the whole session, `read-coverage.mjs:281`); each command of step 7 with its exit code and the relevant output; the
-   failing-first output of each new test; the deliberate-break output; anything not done, stated as not done. The reviewer reruns every claim. No Git mutations.
+   its first line prints; a shell command that names the record, its folder `<project>/<id>` or
+   `CLAUDE_CODE_SESSION_ID` is a problem for the whole session, `read-coverage.mjs:361`); each command of step 7 with
+   its exit code and the relevant output; the failing-first output of each new test; the deliberate-break output;
+   anything not done, stated as not done. The reviewer reruns every claim. No Git mutations.

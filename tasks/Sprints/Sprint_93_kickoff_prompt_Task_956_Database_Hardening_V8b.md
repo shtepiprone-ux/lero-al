@@ -172,18 +172,15 @@ Admin user profile only: the website shows `lero.al` in view and edit; a refused
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Revisions 4a, 4b, 4 (F13, F29), 5 (F30), 6; Reviews 7-10; F5 check; step 5, the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16).
+0. Done: Revisions 4a, 4b, 4 (F13, F29), 5 (F30), 6; Reviews 7-11; F5 check; step 5, the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16).
 6. Done (see "## Review"): `v8b-verify.sql`, AC1-AC8 on the applied catalog, `--save supabase/catalog.json`; AC9, AC11, AC17-AC20: Revision 6 report.
-7. Review 11 of Revision 6 in a session of its own (`read-coverage.mjs --review c0a948345`; F3 judged from the step-6 facts); then the owner's commit, push
-   and PR (`flow.md` §4).
+7. Done: Review 11 of Revision 6 in a session of its own (see "## Review"); next the owner's commit, push and PR (`flow.md` §4).
 
 ## Review
 Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2 of 2, F4, F6-F8 closed; Review 4 LOOP LIMIT, O956-2.
 Review 5 (2026-11-16) — F10-F12, AC13-AC15 closed; gates 0 (6589 tests); AC10 0 LF/CRLF/mixed, red without the CRLF block; rolled-back apply: preflight 0
   (row 15 = 1), audit 0, verify 16/16, session INSERT on `users` 42501.
-F3 — (open) every sheet whose evidence is AC1-AC7 waits for the apply; the apply's facts are "Step 6" below, judged in Review 11.
-F5 — closed (Revision 4 check, see below). F13, F29 — fixed in 7a027e736 (Review 9).
-F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2).
+F5 — closed (Revision 4 check, see below). F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2). F13, F29 — fixed in 7a027e736 (Review 9).
 Review 6 (rules and tools, 2026-11-16, session b23abf9c) — F14-F22 found (read-coverage trusted what the session sets; check-files held the kickoff only at
   design); OWASP: OAuth2, Unvalidated_Redirects_and_Forwards are Review 9's.
 Review 7 of 993c14088 (Revision 4a, 2026-11-16, session c38a3209) — NEEDS REVISION (O956-2 keeps the work here). Three passes over the 13 files of
@@ -248,10 +245,13 @@ Review 10 of Revision 5 (working tree on 911652197, 2026-11-16, session 86b5cec6
   audit 62 (baseline). AC10 LF 0, CRLF 0. AC19: 4/4 red on 7a027e736; row 8 put back 1 red, row 16 and the new `v8b.sql` header removed 2 red; rolled-back
   apply: rows 1-14 0, row 16 = 5 (direct count 5), verify 16/16, audit 62 → 0, anon reads 0 lapsed listings. Findings: Critical 0, High 0, Medium 0, Low
   0; risk low.
-Step 6 (after the owner's apply on bmxkzcxaojgmpgzawwtn, 2026-11-16). Session 86b5cec6, as the owner reported it: `v8b-preflight.sql` rows 1-14 = 0, row
-  15 = 1, row 16 = 5; `v8b-verify.sql` 16/16; `db-catalog-audit.mjs` exit 0 (no finding); AC2-AC7 integration suites 6 files, 74 tests pass
-  (`SECURITY_TEST_TARGET=development`, `SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn`, the project the owner approved); `role_permissions` equal before
-  and after; `db-types-drift.mjs` on the snapshot 42 differences. Revision 6 session (Opus, `DATABASE_URL` host of bmxkzcxaojgmpgzawwtn):
-  `--save supabase/catalog.json` exit 0, no finding (52 tables, 197 policies, 58 table grants, 26 column grants, 31 functions, 39 checks, 28 triggers, 1
-  bucket, 452 columns), 8391 lines, sha256 dd36a4309468; `--snapshot supabase/catalog.json` exit 0, no finding; `db-types-drift.mjs` exit 1, 42
-  differences (the count AC8 allows). The gates of AC11 on Revision 6 are in its report (run after its three passes).
+Review 11 of fdc5ae967 (Revision 6, base c0a948345, 2026-11-16, session 5a7e7d68) — APPROVED WITH NOTES. Scope: the 9 files of `git diff c0a948345` (1794 lines), three
+  passes, the snapshot by `--snapshot` 0. Own `read-coverage.mjs --review c0a948345` 1: a `git show | sed` loop with `$(…)` ran before the passes (this session's breach), three new
+  passes follow this text. Executor d2f24b5b: `--transcript` 0; 96 Bash calls and 3 scratchpad scripts (read-only, rolled back) read, none writes or names the record. Tools 0:
+  check-ruleset, lint, typecheck, `npm test -- --coverage` (400 files, 6594 tests), changed-lines-coverage, check-files (9 files), `owasp.mjs check`, `node --test` (208 pass,
+  3 skip), change-report; `git check-ignore` 1. Breaks: the snapshot out of GENERATED → tests 12, 20 red (restored, sha256 3ab267725d7b); outside the repository → stale-path
+  at flow.md:126, SKILL.md:38 (`checkFile`). Step 6 (owner's apply; session 86b5cec6 as reported: preflight rows 1-14 = 0, 15 = 1, 16 = 5) reproduced on bmxkzcxaojgmpgzawwtn:
+  audit 0 (52 tables, 197 policies, 58 table and 26 column grants, 31 functions, 39 checks, 28 triggers, 1 bucket, 452 columns) before and after the suites; a scratch `--save`
+  equals the 8391-line snapshot (sha256 dd36a4309468); `v8b-verify.sql` 16/16; AC2-AC7 6 files, 74 tests (development target); `role_permissions` 20 rows, sha256 2fad1a18ef6e
+  before and after; drift 1, 42 (AC8). F3 closed. The owner approves the rules change in the PR (`flow.md` §2 step 4, review-task step 3). Findings: Low 1 (F31); risk low.
+F31 — Task 980 "## Cause" shortened the `relacl` output to `authenticated=r/postgres` (Low, design facts; the `service_role` grant the Fix rests on was missing): fixed in Review 11.

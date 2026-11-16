@@ -1,23 +1,59 @@
 {
   "task": "956",
   "sheets": {
-    "Abuse_Case": { "verdict": "finding", "finding": "F3", "note": "the abuse case (a direct PostgREST write that skips moderation) is closed by Part B, AC5" },
-    "AI_Agent_Security": { "verdict": "finding", "finding": "F25", "note": "read-coverage.mjs fails closed on a missing, empty or foreign record and on an edit of the record, but a program the session runs can write it (F25); its allow-list lets code run inside allowed commands (F23); tool permissions are unchanged (.claude/settings.json is not in the diff)" },
-    "Attack_Surface_Analysis": { "verdict": "finding", "finding": "F3", "note": "every entry point of the attack surface changes in Part B, AC1-AC7" },
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": ["it is important to identify the attacks which the application must defend against"],
+      "evidence": "review 11, after the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16): `src/modules/listings/actions/updateListing.integration.test.ts` (AC5, a direct owner write of an active listing refused, the application edit moderated) passes in the AC2-AC7 run, 6 files, 74 tests"
+    },
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": ["Fail closed when risk classification, approval validation, policy lookup, or audit logging fails."],
+      "evidence": "review 11: `node --test scripts/quality/read-coverage.test.mjs` 45/45; with `supabase/catalog.json` out of GENERATED tests 12 and 20 turn red (AC20; restored, sha256 3ab267725d7b), so a generated file is proved only by the session's own run without error; the executor record d2f24b5b rerun with `--transcript --review c0a948345` exit 0, its 96 shell calls and 3 scripts read; F25 fixed in Revision 4b; F28 accepted by the owner (O956-4)"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": ["developers should understand and monitor the Attack Surface as they design and build and change a system"],
+      "evidence": "the kickoff's \"## Attack surface\" names the PostgREST data layer and the self-review record; review 11 on the applied catalog: `node scripts/quality/db-catalog-audit.mjs` exit 0 (AC1) and the AC2-AC7 suites 74/74"
+    },
     "Authentication": { "verdict": "not applicable", "reason": "no sign-in change; permissions.ts reads the same keys the policies will use" },
     "Authentication_Patterns": { "verdict": "not applicable", "reason": "no authentication code; the database authorizes by auth.uid() as before" },
-    "Authorization": { "verdict": "finding", "finding": "F3", "note": "the key in each policy is Part B, AC2" },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": ["Implement defense in depth. Do not depend on any single framework, library, technology, or control to be the sole thing enforcing proper access control."],
+      "evidence": "review 11: `src/tests/integration/moderatorKeys.integration.test.ts` (AC2: key off refused through PostgREST, key on and an admin succeed) passes on the applied catalog of bmxkzcxaojgmpgzawwtn; the actions check the same keys in code"
+    },
     "Authorization_Decisions_And_Output_Handling": {
       "verdict": "met",
       "quotes": ["Intersect predicates. Combine authorization restrictions with application and tenant predicates using logical AND."],
       "evidence": "the policy, `isListingOpenableByAddress` and `record_listing_view` share `OPEN_BY_ADDRESS` (`src/modules/listings/lib/__tests__/visibility.test.ts`); no expiry in the rule turns 9 tests red (review 3 break); the function rollback is F12"
     },
-    "Authorization_Patterns": { "verdict": "finding", "finding": "F3", "note": "caller_has_permission inside each policy is Part B, AC2" },
-    "Authorization_Policy_And_Data_Distribution": { "verdict": "finding", "finding": "F3", "note": "keys read at query time are Part B, AC2" },
-    "Authorization_Regression_Testing": { "verdict": "finding", "finding": "F3", "note": "the PostgREST key tests are Part B, AC2" },
-    "Authorization_Testing_Automation": { "verdict": "finding", "finding": "F3", "note": "the moderator-key matrix test is Part B, AC2" },
+    "Authorization_Patterns": {
+      "verdict": "met",
+      "quotes": ["Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."],
+      "evidence": "review 11: `db-catalog-audit.mjs` exit 0 on the applied catalog (I5: every staff write policy calls `caller_has_permission` with a literal key; `v8b-verify.sql` row 4 true, 16/16); `moderatorKeys.integration.test.ts` passes"
+    },
+    "Authorization_Policy_And_Data_Distribution": {
+      "verdict": "met",
+      "quotes": ["Avoid embedding mutable account status or revocation data in releases that cannot update promptly."],
+      "evidence": "review 11: the keys are read from `role_permissions` at query time; `moderatorKeys.integration.test.ts` switches keys off and on in that table and passes; `role_permissions` 20 rows, sha256 2fad1a18ef6e before and after the run"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": ["Relying on UI hiding is insufficient; the API layer must enforce the check"],
+      "evidence": "review 11: the AC2-AC7 suites call PostgREST with real sessions (`SECURITY_TEST_TARGET=development`, `SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn`): 6 files, 74 tests pass on the applied catalog"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "met",
+      "quotes": ["Integration test cases validate the correct implementation of the authorization matrix."],
+      "evidence": "review 11: `moderatorKeys.integration.test.ts` covers every I5 table and command per role and passes on the applied catalog (AC2-AC7 run 74/74)"
+    },
     "Bot_Management_and_Anti-Automation": { "verdict": "not applicable", "reason": "no limit changes; the limiter belongs to Task 959" },
-    "Business_Logic_Security": { "verdict": "finding", "finding": "F3", "note": "the moderation trigger is Part B, AC5" },
+    "Business_Logic_Security": {
+      "verdict": "met",
+      "quotes": ["Enforce workflows as explicit state machines. Don't rely on the UI to gate the order of steps."],
+      "evidence": "review 11: `updateListing.integration.test.ts` (AC5: the trigger refuses a direct content edit of an active listing, the moderated edit passes) passes on the applied catalog; `v8b-verify.sql` 16/16"
+    },
     "Content_Security_Policy": { "verdict": "not applicable", "reason": "no header or script change in this database task" },
     "Cookie_Theft_Mitigation": { "verdict": "not applicable", "reason": "no cookie changes in the database hardening or its tools" },
     "Credential_Stuffing_Prevention": { "verdict": "not applicable", "reason": "no sign-in path changes; limits belong to Task 959" },
@@ -27,22 +63,46 @@
       "evidence": "the two changed components (`src/components/admin/AdminUserProfile.tsx`, `src/modules/cabinet/components/ProfileTab.tsx`) render only `t(...)` texts chosen by an error code as React text; `npm run lint` exit 0 and product gates 36/36 (review 4)"
     },
     "Cryptographic_Storage": { "verdict": "not applicable", "reason": "the Part A tools store and encrypt nothing; sha256 only names the proven files" },
-    "Database_Security": { "verdict": "finding", "finding": "F3", "note": "review 10 rolled-back apply of v8b.sql with the Revision 5 preflight (working tree on 911652197): preflight rows 1-14 0 and row 16 (lapsed active listings) 5, `db-catalog-audit.mjs` checks 62 findings before and 0 after, I15 included (F29), `v8b-verify.sql` 16/16; F5 and F30 closed; AC1 and AC7 on the live catalog wait for the owner's apply" },
-    "Denial_of_Service": { "verdict": "finding", "finding": "F3", "note": "the bucket size limit is Part B, AC7" },
+    "Database_Security": {
+      "verdict": "met",
+      "quotes": ["Configured with the minimum permissions required as discussed in the permissions section below."],
+      "evidence": "review 11 on bmxkzcxaojgmpgzawwtn after the owner's apply: `node scripts/quality/db-catalog-audit.mjs` exit 0 (I4 no anon write, I9 bucket bounds, I15 no duplicate policy) before and after the AC2-AC7 run; `v8b-verify.sql` 16/16 in a read-only transaction; a fresh `--save` equals the committed `supabase/catalog.json` (sha256 dd36a4309468); F5, F29, F30 closed"
+    },
+    "Denial_of_Service": {
+      "verdict": "met",
+      "quotes": ["Using validation that is cheap in resources first"],
+      "evidence": "review 11: the avatars bucket of the applied catalog has `file_size_limit` 2097152 (`supabase/catalog.json:3317`); `db-catalog-audit.mjs` I9 exit 0"
+    },
     "Dependency_Graph_SBOM": { "verdict": "not applicable", "reason": "pg is a development dependency; the SBOM job covers production dependencies and is unchanged" },
     "DOM_based_XSS_Prevention": { "verdict": "not applicable", "reason": "the two changed components pick a translation key from an error code; no DOM sink, eval or URL is written" },
     "Email_Validation_and_Verification": { "verdict": "not applicable", "reason": "pending_email becomes server-only by column grant in Part B; the confirmation flow is unchanged" },
-    "File_Upload": { "verdict": "finding", "finding": "F3", "note": "the avatars bucket bounds are Part B, AC7" },
-    "GraphQL": { "verdict": "finding", "finding": "F3", "note": "the policies that guard pg_graphql change in Part B, AC1" },
+    "File_Upload": {
+      "verdict": "met",
+      "quotes": ["Validate the file type, don't trust the Content-Type header as it can be spoofed"],
+      "evidence": "review 11: the avatars bucket of the applied catalog allows only image/jpeg, image/png and image/webp up to 2097152 bytes (`supabase/catalog.json:3313-3324`); `db-catalog-audit.mjs` I9 exit 0"
+    },
+    "GraphQL": {
+      "verdict": "met",
+      "quotes": ["Ensure that the API has proper access control checks."],
+      "evidence": "review 11: pg_graphql applies the same policies and grants `db-catalog-audit.mjs` reads, exit 0 on the applied catalog; the AC2-AC7 suites pass (74/74)"
+    },
     "HTTP_Strict_Transport_Security": { "verdict": "not applicable", "reason": "no response header changes in a database task" },
-    "Identity_Propagation_Patterns": { "verdict": "finding", "finding": "F3", "note": "the admin-client writes are Part B, AC4" },
+    "Identity_Propagation_Patterns": {
+      "verdict": "met",
+      "quotes": ["Each receiving service must still authorize the requested action and resource."],
+      "evidence": "review 11: `src/modules/admin/actions/userProfileFields.integration.test.ts` (AC4: the server-only columns refuse the session and the action writes them with the admin client after its own staff check) passes on the applied catalog"
+    },
     "Injection_Prevention": { "verdict": "not applicable", "reason": "the round trip sends reviewed static migration files; no value from input is joined into SQL or a command" },
     "Input_Validation": {
       "verdict": "met",
       "quotes": ["Validate on the server even when the browser checks the same fields."],
       "evidence": "`isProfileCompanyFieldWithinBound` (`src/lib/security/inputs.ts`) in the four profile actions, unit tests in `src/modules/admin/actions/__tests__/profileBounds.security.test.ts`; the users CHECKs answer 23514 in the review 3 rolled-back apply"
     },
-    "Insecure_Direct_Object_Reference_Prevention": { "verdict": "finding", "finding": "F3", "note": "the per-role read, update and delete tests are Part B, AC4-AC6" },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "met",
+      "quotes": ["This verification should be performed for all operations involving object references, including read, create, update, delete, export, and administrative actions."],
+      "evidence": "review 11: the AC4 `userProfileFields`, AC5 `updateListing` and AC6 `listingAccessState` integration suites (read, update and delete per role) pass on the applied catalog, 74/74 with AC2, AC3 and AC7"
+    },
     "JavaScript_and_TypeScript_Security": {
       "verdict": "met",
       "quotes": ["Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."],
@@ -62,7 +122,11 @@
       "evidence": "review 4 rolled-back apply of `supabase/sql_migrations/task956/v8b.sql`: a session UPDATE of `company_id` and an INSERT naming `avatar_url` answer 42501 (column grants, an allow-list); `v8b-verify.sql` rows 6 and 14 are F10"
     },
     "MCP_Security": { "verdict": "not applicable", "reason": "the diff adds or changes no MCP server, tool description or permission: `git diff HEAD --stat -- .claude/settings.json .mcp.json` is empty and the changed rules name no MCP tool" },
-    "Multi_Tenant_Security": { "verdict": "finding", "finding": "F3", "note": "closing the contact RPC to sessions is Part B, AC3" },
+    "Multi_Tenant_Security": {
+      "verdict": "met",
+      "quotes": ["Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths"],
+      "evidence": "review 11: `src/tests/integration/contactGateway.integration.test.ts` (AC3: the contact RPC refuses sessions; `v8b-verify.sql` row 3 true) passes on the applied catalog; I3 of `db-catalog-audit.mjs` exit 0"
+    },
     "Multifactor_Authentication": { "verdict": "not applicable", "reason": "no sign-in factor changes; staff MFA belongs to Task 960" },
     "Nextjs_Security": {
       "verdict": "met",
@@ -91,7 +155,11 @@
       "quotes": ["Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."],
       "evidence": "`scripts/quality/db-catalog-audit.test.mjs` AC9: a key read from a column or an empty key fails I5, only a literal key passes; red with the previous `PERMISSION_CHECK` (review 1 break)"
     },
-    "REST_Security": { "verdict": "finding", "finding": "F3", "note": "the bucket bounds behind the avatar route are Part B, AC7" },
+    "REST_Security": {
+      "verdict": "met",
+      "quotes": ["the access control decision should be taken locally by REST endpoints"],
+      "evidence": "review 11: the bucket bounds behind the avatar route hold on the applied catalog (`db-catalog-audit.mjs` I9 exit 0, `supabase/catalog.json:3313-3324`); the route's own checks are unchanged by this task"
+    },
     "Secrets_Management": {
       "verdict": "met",
       "quotes": ["prevent them from leaking and compromising the organization"],
@@ -107,7 +175,11 @@
       "quotes": ["Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."],
       "evidence": "every command of the report rerun (kickoff Review 1), e.g. `node scripts/quality/db-types-drift.mjs --catalog <live snapshot>`; the counts that did not reproduce are F2"
     },
-    "Secure_Product_Design": { "verdict": "finding", "finding": "F3", "note": "the threat-model mitigations are Part B, AC1-AC7" },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": ["Threat Modeling - which results in security related stories being added during"],
+      "evidence": "review 11: each mitigation of the threat model is an AC1-AC7 check and each passes on the applied catalog (audit exit 0, suites 74/74, `v8b-verify.sql` 16/16)"
+    },
     "Serverless_FaaS_Security": {
       "verdict": "met",
       "quotes": ["Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."],
@@ -119,20 +191,33 @@
       "quotes": ["limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"],
       "evidence": "`package.json` pins `\"pg\": \"8.23.1\"`; `node scripts/quality/change-report.mjs --lockfile-age main` exit 0, 7 versions, none under 14 days"
     },
-    "SQL_Injection_Prevention": { "verdict": "finding", "finding": "F3", "note": "the definer function with an empty search_path is Part B, AC9 and AC10" },
+    "SQL_Injection_Prevention": {
+      "verdict": "met",
+      "quotes": ["use parameterized queries for dynamic data values"],
+      "evidence": "review 11: `caller_has_permission` is a SECURITY DEFINER function with a pinned search_path that takes the key as a parameter (`v8b-verify.sql` rows 1-2 true, 16/16); AC10 round trip LF 0 and CRLF 0 (reviews 9, 10); I3 and I5 of `db-catalog-audit.mjs` exit 0 on the applied catalog"
+    },
     "Third_Party_Javascript_Management": { "verdict": "not applicable", "reason": "no script loading changes in a database task" },
-    "Threat_Modeling": { "verdict": "finding", "finding": "F3", "note": "each mitigation of the attack surface is an acceptance criterion of Part B" },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": ["the threat modeling process should answer the following four questions"],
+      "evidence": "the kickoff's \"## Attack surface\" answers them; review 11: the AC of every mitigation passes on the applied catalog (AC1 `node scripts/quality/db-catalog-audit.mjs` exit 0; AC2-AC7 `src/tests/integration/moderatorKeys.integration.test.ts` and the five other suites, 74/74)"
+    },
+    "Transaction_Authorization": { "verdict": "not applicable", "reason": "the diff triggers it only through the table name `reauth_failures` in the generated `supabase/catalog.json` (lines 152, 6806); no re-authentication, e-mail change, password change or account deletion flow changes" },
     "Transport_Layer_Security": { "verdict": "not applicable", "reason": "the refactored connect keeps verified TLS with the project CA, unchanged from main" },
     "Unvalidated_Redirects_and_Forwards": {
       "verdict": "met",
       "quotes": ["If used, do not allow the URL as user input for the destination."],
       "evidence": "review 9: `/auth/confirm` (`src/app/auth/confirm/route.ts:25`) and `/auth/callback` (`:14`) build the destination with `safeNextPath` and the request origin; `createAdminUser` invites with the fixed `trustedRedirectUrl(`${trustedAppOrigin(null)}/auth/callback?next=/sq/auth/reset-password`)` (`src/modules/admin/actions/index.ts:617`). The confirm, callback and `src/lib/auth/__tests__/safeRedirect.security.test.ts` suites pass (75 tests); without `safeNextPath` in either route 4 cases turn red, each file restored by sha256"
     },
-    "User_Privacy_Protection": { "verdict": "finding", "finding": "F3", "note": "the narrowed public_user_profiles view is Part B, AC7" },
+    "User_Privacy_Protection": {
+      "verdict": "met",
+      "quotes": ["Preventing leakage of user IP addresses is of great significance when user protection is in scope."],
+      "evidence": "review 11: `src/tests/integration/accessHardening.integration.test.ts` (AC7: the exact column set of `public_user_profiles`) passes on the applied catalog; which accounts a session reads through the view is Task 980 (AC1, AC2)"
+    },
     "Verifying_Third_Party_Agent_Execution_Evidence": {
       "verdict": "met",
       "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."],
-      "evidence": "the live audit, drift and round trip were rerun by the reviewer (`node scripts/quality/db-catalog-audit.mjs`, `node scripts/quality/db-sql-roundtrip.mjs`), not taken from the report"
+      "evidence": "the live audit, drift and round trip were rerun by the reviewer (`node scripts/quality/db-catalog-audit.mjs`, `node scripts/quality/db-sql-roundtrip.mjs`), not taken from the report; review 11 reran the step-6 facts (audit, verify, the AC2-AC7 suites, `role_permissions`, drift) instead of taking them from the report"
     },
     "Vulnerable_Dependency_Management": {
       "verdict": "met",

@@ -18,7 +18,7 @@ warning ends), and `db-catalog-audit.mjs` reports any view that does unless it i
 ## Cause
 
 - The view runs with its owner's rights and admits every active session:
-  `select c.reloptions, pg_get_userbyid(c.relowner) as owner, c.relacl from pg_class c where c.oid = 'public.public_user_profiles'::regclass` → `{security_invoker=false}`, `postgres`, `authenticated=r/postgres` (2026-11-16, read-only);
+  `select c.reloptions, pg_get_userbyid(c.relowner) as owner, c.relacl from pg_class c where c.oid = 'public.public_user_profiles'::regclass` → `{security_invoker=false}`, `postgres`, `{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres}` (2026-11-16, read-only; Review 11 of Task 956, F31);
   its filter (`pg_get_viewdef`, same day) admits a caller whose `CURRENT_USER` is neither `authenticated` nor `anon`, or
   for whom `caller_is_active()` is true.
 - As one active non-staff session (role `authenticated`, its live session id, rolled back):
@@ -26,7 +26,7 @@ warning ends), and `db-catalog-audit.mjs` reports any view that does unless it i
   as `postgres`: `select count(distinct user_id) from public.listings where (status = 'active' and expires_at > now()) or status in ('sold', 'rented')` → 3.
 - The listing page reads the view by the owner's id: `src/app/[locale]/listings/[slug]/page.tsx:222-226`; the staff
   preview reads it with the service-role client after its staff check: `src/app/admin/listings/[id]/preview/page.tsx:33-51`;
-  `select rolbypassrls from pg_roles where rolname = 'service_role'` → true.
+  `select rolbypassrls from pg_roles where rolname = 'service_role'` → true; `select has_table_privilege('service_role', 'public.users', 'SELECT')` → true.
 - The audit reads no view option, so it passes the definer view: `scripts/quality/db-catalog-audit.mjs:24-55` (the queries);
   `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` → `no finding` (2026-11-16).
 Fix: the view becomes `security_invoker=true` without `authenticated` SELECT (the service role keeps the staff preview);

@@ -3,7 +3,9 @@
  *  - the REAL `AdminUserProfile` (admin editing a person's profile): when `updateUserProfileFull` answers `name_too_long`, the page shows the localized text in its error
  *    banner (never the bare code), raises the save-error toast, stays in edit mode and does not show the success toast or refresh the page as a saved profile;
  *  - the REAL cabinet `ProfileTab` (the person's own profile): when `updateCabinetProfile` answers `name_too_long`, the save-error slot shows the localized name text, not
- *    the generic one and not the "profile updated" text; any other refusal still shows the generic text (the control).
+ *    the generic one and not the "profile updated" text; any other refusal still shows the generic text (the control);
+ *  - Task 956 F8: an answer `company_name_too_long` or `position_too_long` (admin page) and `company_name_too_long` (cabinet tab) shows its own localized text, never the bare code and
+ *    never the generic one.
  * The server actions, the identity context, the router and the toast are doubles; everything the person sees is real, in the real `en` messages.
  */
 import * as React from 'react'
@@ -145,5 +147,30 @@ describe('AdminUserProfile and ProfileTab', () => {
     fireEvent.click(screen.getByRole('button', { name: cabinet.save_changes }))
     expect(await screen.findByText(cabinet.error_saving)).toBeTruthy()
     expect(screen.queryByText(cabinet.error_name_too_long)).toBeNull()
+  })
+
+  // Task 956 F8: the company name and the position have their own refusal (a field error, not the generic one) on every screen that writes them
+  it('[SEC-X-FE-PROFILE-COMPANY-BOUNDS] a refused over-long company name or position is shown as its own text, never as the bare code or the generic one', async () => {
+    for (const [code, text] of [['company_name_too_long', admin.validation.company_name_too_long], ['position_too_long', admin.validation.position_too_long]] as const) {
+      mocks.updateUserProfileFull.mockReset()
+      mocks.updateUserProfileFull.mockResolvedValue({ error: code })
+      renderAdminProfile()
+      fireEvent.click(screen.getByRole('button', { name: admin.actions.edit_profile }))
+      // a change makes the form dirty, which is what lets it be saved
+      fireEvent.change(screen.getByLabelText(admin.fields.first_name), { target: { value: 'Arben Two' } })
+      fireEvent.click(screen.getByRole('button', { name: admin.actions.save }))
+      await waitFor(() => expect(mocks.updateUserProfileFull, `${code}: the save was sent`).toHaveBeenCalledTimes(1))
+      expect(await screen.findByText(text), `${code}: the localized text`).toBeTruthy()
+      expect(screen.queryByText(code), `${code}: never the bare code`).toBeNull()
+      expect(mocks.toastSuccess, `${code}: nothing counts as saved`).not.toHaveBeenCalled()
+      cleanup()
+    }
+
+    mocks.updateCabinetProfile.mockResolvedValue({ error: 'company_name_too_long' })
+    renderCabinetTab()
+    fireEvent.click(screen.getByRole('button', { name: cabinet.save_changes }))
+    expect(await screen.findByText(cabinet.error_company_name_too_long)).toBeTruthy()
+    expect(screen.queryByText(cabinet.error_saving), 'not the generic text').toBeNull()
+    expect(screen.queryByText(cabinet.profile_updated), 'not the success text').toBeNull()
   })
 })

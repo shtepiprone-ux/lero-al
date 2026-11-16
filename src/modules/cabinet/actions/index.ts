@@ -12,7 +12,7 @@ import { PUBLIC_LISTINGS_CACHE_TAG } from '@/modules/listings/lib/cacheTags'
 import type { PreferredCurrency } from '@/types/database'
 import { sendEmailChangeEmails } from '@/modules/notifications/lib/emails/emailChange'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
-import { isE164, isPlainEmail, isProfileNameWithinBound } from '@/lib/security/inputs'
+import { isE164, isPlainEmail, isProfileCompanyFieldWithinBound, isProfileNameWithinBound } from '@/lib/security/inputs'
 import { sendPasswordChangedEmail } from '@/modules/notifications/lib/emails/passwordChanged'
 import { deleteAccount } from '@/lib/account/deleteAccount'
 import { emailChangeErrorText as emailError } from '@/modules/cabinet/lib/emailChangeErrors'
@@ -198,6 +198,9 @@ export async function updateCabinetProfile(data: {
   // Task 923 R100: the name is stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; checked before anything is read or written
   if (typeof data.name !== 'string') return { error: 'save_failed' }
   if (!isProfileNameWithinBound(data.name)) return { error: 'name_too_long' }
+  // Task 956 F8: the company name is stored (trimmed) only for an agent; the stored value is held to the `users` CHECK of hardening v8b, with its own field error (never `save_failed`)
+  const storedCompanyName = data.userType === 'agent' ? (typeof data.companyName === 'string' ? data.companyName.trim() : data.companyName) : null
+  if (!isProfileCompanyFieldWithinBound(storedCompanyName)) return { error: 'company_name_too_long' }
 
   const supabase = await createClient()
 

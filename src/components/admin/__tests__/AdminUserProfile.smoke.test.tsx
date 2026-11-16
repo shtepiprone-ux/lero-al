@@ -28,6 +28,8 @@
  *   P7 — restore `FIELD_OPTIONS.locationId` to `{ shouldValidate: true }` → T12 and T12b fail.
  */
 
+import fs from 'fs'
+import path from 'path'
 import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react'
@@ -47,6 +49,10 @@ import {
 } from '@/stories/fixtures/admin.fixtures'
 import { AdminUserProfile } from '../AdminUserProfile'
 import type { UserWithLocation } from '../AdminUserProfileView'
+import { displayWebsite } from '@/lib/security/safeUrl'
+import itMessages from '../../../../messages/it.json'
+import sqMessages from '../../../../messages/sq.json'
+import ukMessages from '../../../../messages/uk.json'
 
 // ── Server actions, toast and router mocks ────────────────────────────────────
 
@@ -186,7 +192,8 @@ describe('AdminUserProfile (T1–T9)', () => {
         phone: USER.phone,
         locationId: 1,
         companyName: USER.company_name,
-        website: USER.website,
+        // Task 956 AC13: the form holds the website as it is shown, without its scheme (the server stores it as https://…/)
+        website: displayWebsite(USER.website),
         status: 'active',
         suspendedUntil: null,
       }),
@@ -195,7 +202,7 @@ describe('AdminUserProfile (T1–T9)', () => {
     expect(mockRefresh).toHaveBeenCalled()
   })
 
-  it('T1 (server error) — the banner shows the server error and the save_error toast fires', async () => {
+  it('T1 (server error) — an unknown code shows the generic translated text in the banner, never the code, and the save_error toast fires', async () => {
     mockUpdate.mockResolvedValue({ error: 'db_down' })
     renderProfile()
     enterEditMode()
@@ -204,7 +211,8 @@ describe('AdminUserProfile (T1–T9)', () => {
     fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
 
     await waitFor(() => expect(mockToastError).toHaveBeenCalledWith(t.feedback.save_error))
-    expect(screen.getByText('db_down')).toBeTruthy()
+    expect((await screen.findByRole('alert')).textContent).toBe(t.feedback.save_error)
+    expect(screen.queryByText('db_down')).toBeNull()
   })
 
   it('T2 — blocked with an empty reason is refused; with a reason and a picked date the payload carries both', async () => {
@@ -454,5 +462,170 @@ describe('AdminUserProfile — fields driven by watched values (Task 953)', () =
     fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
     await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
     expect(mockUpdate).toHaveBeenCalledWith(FIXTURE_PROFILE_USER_BLOCKED.id, expect.objectContaining({ status: 'active', blockReason: '' }))
+  })
+})
+
+// ── Task 956 AC13: the website line shows no scheme ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// The website is typed and shown as a host (`lero.al`); the scheme stays in the href of the link and in the database (normalizeWebsite stores `https://lero.al/`).
+describe('AdminUserProfile — the website line shows no scheme (Task 956 AC13)', () => {
+  const STORED = { ...FIXTURE_PROFILE_USER_AGENT, website: 'https://lero.al/' }
+  const websiteRow = () => document.querySelector('label[for="admin-user-website"]')?.closest('.mantine-Grid-root') as HTMLElement
+
+  it('view mode: the stored https://lero.al/ is shown as lero.al, the link goes to https://lero.al/, and no text of the row has a scheme', () => {
+    renderProfile({ user: STORED })
+    const link = screen.getByRole('link', { name: 'lero.al' })
+    expect(link.textContent).toBe('lero.al')
+    expect(link.getAttribute('href')).toBe('https://lero.al/')
+    expect(websiteRow(), 'the website row exists').toBeTruthy()
+    expect(websiteRow().textContent).not.toMatch(/https?:/i)
+    expect(websiteRow().textContent).toContain('lero.al')
+  })
+
+  it('edit mode: the field holds lero.al, its placeholder has no scheme, and no text of the row has a scheme', () => {
+    renderProfile({ user: STORED })
+    enterEditMode()
+    const field = screen.getByLabelText(t.fields.website) as HTMLInputElement
+    expect(field.value).toBe('lero.al')
+    expect(field.placeholder).toBe(t.placeholders.website)
+    expect(field.placeholder).not.toMatch(/https?:/i)
+    expect(websiteRow().textContent).not.toMatch(/https?:/i)
+    expect(websiteRow().querySelectorAll('a'), 'no link in edit mode').toHaveLength(0)
+  })
+
+  it('the placeholder of the empty field has no scheme in any locale and is a host', () => {
+    for (const [locale, bundle] of Object.entries({ en: messages, it: itMessages, sq: sqMessages, uk: ukMessages })) {
+      const placeholder = bundle.admin.user_profile.placeholders.website
+      expect(placeholder, locale).not.toMatch(/https?:|:\/\//i)
+      expect(placeholder, `${locale}: a host`).toMatch(/^[a-z0-9-]+(\.[a-z0-9-]+)+$/)
+    }
+  })
+
+  it('saving the profile without touching the field sends lero.al (what the form shows): the server stores the same https://lero.al/ again', async () => {
+    renderProfile({ user: STORED })
+    enterEditMode()
+    fireEvent.change(screen.getByLabelText(t.fields.first_name), { target: { value: 'Besnik' } })
+    fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect(mockUpdate.mock.calls[0][1]).toMatchObject({ website: 'lero.al' })
+  })
+
+  it('after a save of a typed address with its scheme, the field shows the host again', async () => {
+    renderProfile({ user: STORED })
+    enterEditMode()
+    fireEvent.change(screen.getByLabelText(t.fields.website), { target: { value: 'http://lero.al/team' } })
+    fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(mockToastSuccess).toHaveBeenCalledWith(t.feedback.save_success))
+    enterEditMode()
+    expect((screen.getByLabelText(t.fields.website) as HTMLInputElement).value).toBe('lero.al/team')
+  })
+
+  it('a stored value that is not a link is shown as text and is not a link', () => {
+    renderProfile({ user: { ...FIXTURE_PROFILE_USER_AGENT, website: 'javascript:alert(1)' } })
+    expect(screen.queryByRole('link', { name: /javascript/ })).toBeNull()
+    expect(websiteRow().textContent).toContain('javascript:alert(1)')
+  })
+
+  it('a stored http address is shown as a host too, and its link keeps the address', () => {
+    renderProfile({ user: { ...FIXTURE_PROFILE_USER_AGENT, website: 'http://old.example/' } })
+    expect(websiteRow().textContent).not.toMatch(/https?:/i)
+    expect(screen.getByRole('link', { name: 'old.example' }).getAttribute('href')).toBe('http://old.example/')
+  })
+})
+
+// ── Task 956 AC14: the save banner never shows a raw code ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+// Every code `updateUserProfileFull` and `createAdminUser` return (read from src/modules/admin/actions/index.ts, the two functions, 2026-11-15) has a translated text; an unknown code shows the generic one.
+describe('AdminUserProfile — every code of the two profile actions is translated in the banner (Task 956 AC14)', () => {
+  const source = fs.readFileSync(path.resolve(process.cwd(), 'src/modules/admin/actions/index.ts'), 'utf8')
+  const between = (from: string, to: string) => source.slice(source.indexOf(from), source.indexOf(to))
+  const updateSource = between('export async function updateUserProfileFull(', 'export async function createAdminUser(')
+  const createSource = between('export async function createAdminUser(', 'export async function deactivateUser(')
+  const literalCodes = (text: string) => [...text.matchAll(/return \{ error: '([A-Za-z_]+)' \}/g)].map((m) => m[1])
+
+  /** the codes updateUserProfileFull returns; 'Forbidden' and 'Unauthorized' also come from `{ error: viewer.reason === 'lookup_failed' ? 'Forbidden' : 'Unauthorized' }` */
+  const UPDATE_CODES = ['Forbidden', 'Unauthorized', 'invalid_phone', 'name_too_long', 'invalid_status', 'invalid_suspension', 'invalid_website', 'company_name_too_long', 'position_too_long', 'update_failed', 'access_sync_failed']
+  /** the codes createAdminUser returns */
+  const CREATE_CODES = ['invalid_phone', 'name_too_long', 'forbidden', 'invalid_website', 'company_name_too_long', 'position_too_long', 'email_already_exists', 'create_failed', 'create_profile_failed']
+  const sav = t.save_errors
+  /** the translated text each code must show */
+  const TEXT: Record<string, string> = {
+    Forbidden: sav.forbidden, forbidden: sav.forbidden, Unauthorized: sav.unauthorized,
+    invalid_phone: sav.invalid_phone, name_too_long: t.validation.name_too_long, invalid_status: sav.invalid_status, invalid_suspension: sav.invalid_suspension,
+    invalid_website: sav.invalid_website, company_name_too_long: t.validation.company_name_too_long, position_too_long: t.validation.position_too_long,
+    update_failed: sav.update_failed, access_sync_failed: sav.access_sync_failed,
+    email_already_exists: sav.email_already_exists, create_failed: sav.create_failed, create_profile_failed: sav.create_profile_failed,
+  }
+
+  it('the lists name every code the two functions return (a new code in the source fails here until it is translated)', () => {
+    expect(updateSource.length, 'updateUserProfileFull was found in the source').toBeGreaterThan(1000)
+    expect(createSource.length, 'createAdminUser was found in the source').toBeGreaterThan(1000)
+    for (const code of literalCodes(updateSource)) expect(UPDATE_CODES, `updateUserProfileFull returns '${code}'`).toContain(code)
+    for (const code of literalCodes(createSource)) expect(CREATE_CODES, `createAdminUser returns '${code}'`).toContain(code)
+    for (const code of UPDATE_CODES) expect(updateSource, `updateUserProfileFull returns '${code}'`).toContain(`'${code}'`)
+    for (const code of CREATE_CODES) expect(createSource, `createAdminUser returns '${code}'`).toContain(`'${code}'`)
+    expect(new Set([...UPDATE_CODES, ...CREATE_CODES]).size).toBe(Object.keys(TEXT).length)
+  })
+
+  it.each([['en', messages], ['it', itMessages], ['sq', sqMessages], ['uk', ukMessages]])('%s: every code has a text of its own that is not the code', (_locale, bundle) => {
+    const u = bundle.admin.user_profile
+    const texts: Record<string, string> = {
+      Forbidden: u.save_errors.forbidden, forbidden: u.save_errors.forbidden, Unauthorized: u.save_errors.unauthorized,
+      invalid_phone: u.save_errors.invalid_phone, name_too_long: u.validation.name_too_long, invalid_status: u.save_errors.invalid_status, invalid_suspension: u.save_errors.invalid_suspension,
+      invalid_website: u.save_errors.invalid_website, company_name_too_long: u.validation.company_name_too_long, position_too_long: u.validation.position_too_long,
+      update_failed: u.save_errors.update_failed, access_sync_failed: u.save_errors.access_sync_failed,
+      email_already_exists: u.save_errors.email_already_exists, create_failed: u.save_errors.create_failed, create_profile_failed: u.save_errors.create_profile_failed,
+    }
+    for (const [code, text] of Object.entries(texts)) {
+      expect(typeof text, `${code}`).toBe('string')
+      expect(text.trim().length, `${code}`).toBeGreaterThan(5)
+      expect(text, `${code}: not the raw code`).not.toBe(code)
+      expect(text, `${code}: no scheme in a message`).not.toMatch(/https?:/i)
+    }
+  })
+
+  it.each(UPDATE_CODES)('updateUserProfileFull answers %s: the banner shows its translated text, never the code', async (code) => {
+    mockUpdate.mockResolvedValue({ error: code })
+    renderProfile()
+    enterEditMode()
+    fireEvent.change(screen.getByLabelText(t.fields.first_name), { target: { value: 'Besnik' } })
+    fireEvent.click(screen.getByRole('button', { name: t.actions.save }))
+    await waitFor(() => expect(mockUpdate).toHaveBeenCalledTimes(1))
+    expect((await screen.findByRole('alert')).textContent).toBe(TEXT[code])
+    expect(screen.queryByText(code), 'never the raw code').toBeNull()
+    expect(mockToastSuccess).not.toHaveBeenCalled()
+  })
+
+  /** the create form, filled so that handleCreate reaches the server action */
+  async function fillCreateForm() {
+    fireEvent.change(screen.getByLabelText(t.fields.first_name), { target: { value: 'Besnik' } })
+    fireEvent.change(screen.getByLabelText(t.fields.last_name), { target: { value: 'Hoxha' } })
+    fireEvent.change(screen.getByLabelText(t.fields.email_create), { target: { value: 'besnik@example.com' } })
+    // the national part of the main phone: the first `type="tel"` input (the PhoneField labels the group, not the input)
+    fireEvent.change(document.querySelector('input[type="tel"]') as HTMLInputElement, { target: { value: '691234567' } })
+    const cityGroup = screen.getByRole('group', { name: t.fields.city })
+    fireEvent.click(within(cityGroup).getByRole('textbox'))
+    fireEvent.click(await screen.findByRole('option', { name: /Tirana/ }))
+  }
+
+  it.each(CREATE_CODES)('createAdminUser answers %s: the banner shows its translated text, never the code', async (code) => {
+    mockCreate.mockResolvedValue({ error: code })
+    renderProfile({ user: null })
+    await fillCreateForm()
+    fireEvent.click(screen.getByRole('button', { name: t.actions.create_user }))
+    await waitFor(() => expect(mockCreate).toHaveBeenCalledTimes(1))
+    // the create form has another alert of its own: the banner is the one that carries the text
+    expect((await screen.findAllByRole('alert')).map((alert) => alert.textContent)).toContain(TEXT[code])
+    expect(screen.queryByText(code), 'never the raw code').toBeNull()
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  it('an unknown code shows the generic translated text when a profile is created', async () => {
+    mockCreate.mockResolvedValue({ error: 'db_down' })
+    renderProfile({ user: null })
+    await fillCreateForm()
+    fireEvent.click(screen.getByRole('button', { name: t.actions.create_user }))
+    await waitFor(() => expect(mockCreate).toHaveBeenCalledTimes(1))
+    expect((await screen.findAllByRole('alert')).map((alert) => alert.textContent)).toContain(t.feedback.save_error)
+    expect(screen.queryByText('db_down')).toBeNull()
   })
 })

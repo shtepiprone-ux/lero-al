@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "98b59c58cf7a468f65e7cfb32c3b3707fc520baf",
- "fetchedOn": "2026-11-15T17:23:33.863Z",
+ "commit": "5f2a48abb76eea3544997eb5229e7cb8b7c275e3",
+ "fetchedOn": "2026-11-16T06:41:27.156Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -442,7 +442,7 @@
    "name": "Kubernetes_Security",
    "file": "Kubernetes_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html",
-   "sha": "d54243879fee9a2f1483a284220ab69314fb2dde",
+   "sha": "96c48acb7d848d022edbcc51dd30df1181cdd9ea",
    "title": "Kubernetes Security Cheat Sheet"
   },
   {
@@ -533,7 +533,7 @@
    "name": "Multi_Tenant_Security",
    "file": "Multi_Tenant_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Multi_Tenant_Security_Cheat_Sheet.html",
-   "sha": "b19270d945052d6c28ef0841f46365cab0e8fd37",
+   "sha": "311961c82a0a89ea92996a9c820afebc9fe743a9",
    "title": "Multi-Tenant Application Security Cheat Sheet"
   },
   {

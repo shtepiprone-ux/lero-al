@@ -83,17 +83,14 @@ export function onAuthStateChange(
 
 // ── Application profile resolution ───────────────────────────────────────────
 //
-// Fetches the application-level user profile row from the database.
-// On first OAuth sign-in (no row yet), upserts the profile with metadata
-// from the provider so the user can immediately use the application.
+// Fetches the application-level user profile row from the database, or null when it cannot be read or there is none.
 //
-// Lives here (auth-core) because it is an integral part of the auth lifecycle:
-// it is called exclusively from onAuthStateChange handlers.
+// It never writes (Task 956 AC15). It used to upsert a profile when the read returned nothing; `users` has no permissive INSERT policy, so that upsert never wrote a row, and the profile row is made by
+// the sign-up trigger public.handle_new_user() (trigger on_auth_user_created on auth.users). Task 923 Revision 7, finding S58: a write here, after a read that failed (network, a temporary database
+// error), could take "no data" for "no profile" and overwrite the real row with role "user" and "not verified"; with no write there is nothing to overwrite.
+// A search of src for callers of this function found none outside the tests (Task 956, 2026-11-15).
 
-export async function resolveProfile(
-  authUserId: string,
-  userMeta: Record<string, unknown>
-): Promise<User | null> {
+export async function resolveProfile(authUserId: string): Promise<User | null> {
   const supabase = createClient()
 
   const { data } = await supabase
@@ -102,30 +99,5 @@ export async function resolveProfile(
     .eq('id', authUserId)
     .single()
 
-  if (data) return data as User
-
-  const name =
-    (userMeta?.full_name as string | undefined) ??
-    (userMeta?.name as string | undefined) ??
-    null
-
-  const { data: created } = await supabase
-    .from('users')
-    // Task 923 Revision 7, finding S58: creating must never touch a row that exists. When the read above failed (network, a temporary database error) "no data"
-    // was taken for "no profile", and this upsert overwrote the real row with role "user" and "not verified": an administrator or a verified agent lost the role or
-    // the badge. With `ignoreDuplicates` an existing row is left alone (and nothing is returned for it).
-    .upsert(
-      {
-        id: authUserId,
-        name,
-        user_type: 'private',
-        role: 'user',
-        is_verified: false,
-      },
-      { onConflict: 'id', ignoreDuplicates: true },
-    )
-    .select()
-    .single()
-
-  return (created as User | null) ?? null
+  return (data as User | null) ?? null
 }

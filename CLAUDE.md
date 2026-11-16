@@ -49,15 +49,33 @@ the self-review hook, reply-wording checks, the local CI replica) was removed as
 only from GitHub (`gh pr checks <n>`) after every check has concluded; a local result names its command. Details:
 `.claude/rules/flow.md` (completeness rule).
 
-## Self-review rule: every changed file read in full, three clean passes before any test
+## Self-review rule: the read set read in full, three clean passes before any test
 
 Owner, 2026-11-13 (translated): "it is forbidden to run tests until you have checked the code you wrote three times,
 thoroughly"; "if a pass found a problem, that pass does not count … until all three passes are clean"; "depth is
 checking every line of code that is written"; "all models must read the code in a changed file completely, without
 exceptions; code not read completely in a file is a breach of the rules". Every model, implementer and reviewer, reads
-every changed file with the Read tool from its first line to its last in each pass and checks every changed line; a pass
-that finds a problem does not count and its fix starts the count again; tests run only after three clean passes in a
-row. No hook enforces it (owner, 2026-11-14); the reviewer checks the result. Details: `.claude/rules/flow.md` §2 step 3.
+every file of the read set (the files changed in the revision) with the Read tool from its first line to its last in
+each pass and checks every changed line; a pass that finds a problem does not count and its fix starts the count again;
+the order is failing runs of the new tests → the change → three clean passes → the green runs. Owner, 2026-11-16: a tool,
+not the model, decides: `node scripts/quality/read-coverage.mjs` reads the session transcript, prints each file's lines,
+the lines read and the complete passes over the file as it is now (generated files: the tools that check them; locale
+files: the objects of the changed keys), and exits 1 on a missing pass, an unread line, a test or gate run after the
+last change and before the third pass, or a read set over 3 000 lines. Details: `.claude/rules/flow.md` §2 steps 3-4.
+
+## Cause rule: a kickoff names the cause and its fix
+
+Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it; the
+implementer removes that cause"; "where a couple of lines need fixing, the kickoff must not read as if half the project
+does". "## Cause" (the fact with its source and a "Fix:" line) and "## Read set" (each file to change with its line
+count, at most 3 000 lines) are required by `check-files.mjs`. Details: `.claude/rules/flow.md` §1.
+
+## Facts rule: no assumptions, only facts
+
+Owner, 2026-10-17 (translated): "no assumptions; only facts; always audit the project first, then propose a solution"
+(restated 2026-11-15). Every model states about code, data, the database, a tool or a cause only what it read in this
+session, with its source; a fact that can be read is read before it is used; anything else is written `UNKNOWN` or
+`INFERENCE:` and never shortens, skips or stops a step, nor explains a failure. Details: `.claude/rules/flow.md` (facts rule).
 
 ## Golden rule: no gap is only reported
 

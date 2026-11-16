@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createHash } from 'crypto'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
+import { isListingOpenableByAddress } from '@/modules/listings/lib/visibility'
 
 // Common bot / automated-client UA patterns.
 // Intentionally small — enough to filter curl, Lighthouse, crawlers, and
@@ -22,15 +23,15 @@ export async function POST(
 
   const db = createAdminClient()
 
-  // Resolve the listing (any publicly-viewable status — matches detail page query)
+  // Resolve the listing and judge it by the one public rule of visibility.ts (Task 956 AC6 and F7): an active listing until its expiry, a sold or rented listing; archived,
+  // pending, inactive and expired listings, and an active listing past its expiry or with none, are not found and no view is recorded. The owner's own view is excluded below.
   const { data: listing } = await db
     .from('listings')
-    .select('id, user_id')
+    .select('id, user_id, status, expires_at')
     .eq('slug', slug)
-    .in('status', ['active', 'sold', 'rented', 'archived'])
     .single()
 
-  if (!listing) return NextResponse.json({ ok: false }, { status: 404 })
+  if (!listing || !isListingOpenableByAddress(listing)) return NextResponse.json({ ok: false }, { status: 404 })
 
   // Resolve caller for owner-exclusion and authenticated dedup
   const userClient = await createClient()

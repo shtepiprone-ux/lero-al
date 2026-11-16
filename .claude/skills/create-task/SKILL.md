@@ -11,8 +11,11 @@ description: Design one Lero.al task kickoff as Opus — short, evidence-based, 
    unmapped or changed sheet is read in full (`.cache/owasp/<sheet>.md`), its applicability, triggers, requirement quotes
    and the control or task that meets each are written into `docs/security/owasp/controls.json`, and a requirement no
    control meets becomes a scope line of an open task or a new numbered task in the same turn.
-2. Read the code the task touches. Each fact in the kickoff names its source (`path:line`, command + output, or a dated
-   owner decision). Unknown stays unknown; never invent an owner decision; ask the owner only for a real product decision.
+2. Read the code the task touches and find the cause: the fact that produces the problem, with its source
+   (`path:line`, command + output, or a dated owner decision). Write it in "## Cause" with a "Fix:" line; the scope is
+   that fix and nothing more, and the kickoff is as long as the fix needs (a two-line fix gets a short kickoff). A
+   finding that returned after a fix had its cause missed: find that cause before writing. Unknown stays unknown; never
+   invent an owner decision; ask the owner only for a real product decision.
 3. Answer the attack-surface question of `.claude/rules/threat-model.md`. Unchanged → write "Attack surface: unchanged".
    Changed → the four-question threat model (mitigate / eliminate / transfer / accept), the authorization-matrix rows and
    the negative tests of `.claude/rules/security-testing.md`. The repository holds no complete schema: when the surface
@@ -27,7 +30,9 @@ description: Design one Lero.al task kickoff as Opus — short, evidence-based, 
    "not applicable" with a reason. Read the sheet text for each line. A requirement the task should meet and does not
    yet is added to Scope and the acceptance criteria now (add or upgrade the protection and its test), not left as a
    note.
-7. Write the kickoff (≤ 200 lines) to `tasks/Sprints/`, add one row to `docs/backlog.md`. Every `- AC<n>` names its
+7. Write the kickoff (≤ 200 lines) to `tasks/Sprints/`, add one row to `docs/backlog.md`. "## Read set" lists each
+   file the implementer will change with its current line count (a new file "new, <n> lines"; `check-files.mjs` names
+   the count of a file when the written one differs); over 3 000 lines the task is split. Every `- AC<n>` names its
    automated test (`.claude/rules/quality-gates.md` §8); revising a criterion revises its test in the same revision.
 8. Quality check of the design, never in part (`flow.md` §1 step 7): `node scripts/quality/check-files.mjs <kickoff>
    docs/backlog.md` (the OWASP section check included) and `node scripts/quality/owasp.mjs check` exit 0, and every

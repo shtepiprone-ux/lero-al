@@ -108,7 +108,12 @@ test('Markdown relative links must resolve; code and URLs are ignored', () => {
 });
 
 test('kickoffs from Sprint 93 on follow the template', () => {
-  const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  const body = {
+    '## Acceptance criteria': '- AC1 x — test: `src/a/x.test.ts`',
+    '## Cause': '`src/a/x.ts:3` returns the raw code.\nFix: return the translated text.',
+    '## Read set': '- `src/a/not-there-yet.ts` — new, 10 lines',
+  };
+  const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, body[s] ?? 'text', ''])].join('\n');
   assert.deepEqual(kickoffFindings(good), []);
   assert.ok(kickoffFindings(good.replace('## UI\n', '')).some((f) => f.message.includes('## UI')));
   assert.ok(kickoffFindings(good.replace('- AC1 x', 'AC1 x')).some((f) => f.message.includes('AC<n>')));
@@ -129,6 +134,45 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   const invented = good.replace('## OWASP\ntext', '## OWASP\n- Secure_Coding_with_AI: "agents may trust every repository comment fully" — x — AC1');
   assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_1_X.md', invented, none).includes('owasp'));
   assert.ok(!rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'a grandfathered kickoff is not held to the OWASP gate');
+});
+
+test('a kickoff names the cause with its source and the fix, and a read set within the limit whose counts come from the files', () => {
+  const sections = (cause, set, review = '') => ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s,
+    s === '## Cause' ? cause : s === '## Read set' ? set : s === '## Review' ? review : s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  const count = (rel) => ({ 'src/a.ts': 120, 'src/b.ts': 2900 })[rel] ?? null;
+  const check = (cause, set, review) => kickoffFindings(sections(cause, set, review), { lineCount: count }).map((f) => f.message);
+  const cause = '`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.';
+  assert.deepEqual(check(cause, '- `src/a.ts` — 120 lines\n- `src/new.ts` — new, 30 lines'), []);
+  // the cause: a source and a fix line are both required; a command whose output is quoted is a source too
+  assert.ok(check('the banner shows a raw code.\nFix: translate it.', '- `src/a.ts` — 120 lines').some((m) => m.includes('no source')));
+  assert.ok(check('`src/a.ts:42` returns the raw code.', '- `src/a.ts` — 120 lines').some((m) => m.includes('"Fix:')));
+  assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` reports I15 on notifications.\nFix: drop the duplicate.', '- `src/a.ts` — 120 lines'), []);
+  // the read set: the count must be the file's at design; a missing file must be marked new; an existing one must not be
+  assert.ok(check(cause, '- `src/a.ts` — 12 lines').some((m) => m.includes('has 120 lines, not 12')));
+  assert.ok(check(cause, '- `src/gone.ts` — 12 lines').some((m) => m.includes('does not exist')));
+  assert.ok(check(cause, '- `src/a.ts` — new, 120 lines').some((m) => m.includes('is not new')));
+  assert.ok(check(cause, 'src/a.ts 120').some((m) => m.includes('must be')));
+  assert.ok(check(cause, '').some((m) => m.includes('lists no file')));
+  // after the review starts, the files grow with the work: the count is no longer compared, the limit still is
+  assert.deepEqual(check(cause, '- `src/a.ts` — 100 lines', 'Review 1 — NEEDS REVISION'), []);
+  assert.deepEqual(check(cause, '- `src/a.ts` — new, 100 lines', 'Review 1 — NEEDS REVISION'), [], 'the work created the new file');
+  // the template's placeholder (over two lines) is still the design stage
+  assert.ok(check(cause, '- `src/a.ts` — 12 lines', '<filled by Opus: the summary\nand the findings>').some((m) => m.includes('has 120 lines, not 12')));
+  assert.ok(check(cause, '- `src/a.ts` — 120 lines\n- `src/b.ts` — 2900 lines').some((m) => m.includes('3020 lines > 3000')));
+  // a kickoff written before the rule keeps its old sections until it is next revised
+  const old = ['# Task 962 — Outcome', '', ...KICKOFF_SECTIONS.filter((s) => s !== '## Cause' && s !== '## Read set').flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  assert.deepEqual(kickoffFindings(old, { task: '962', lineCount: count }), []);
+  // a kickoff rewritten under the rule leaves the list: Task 956 (2026-11-16) is held to it
+  assert.ok(kickoffFindings(old, { task: '956', lineCount: count }).some((f) => f.message.includes('## Cause')));
+  assert.ok(kickoffFindings(old, { task: '981', lineCount: count }).some((f) => f.message.includes('## Cause')));
+});
+
+test('lineCount reads only a regular file inside the repository', async () => {
+  const { lineCount } = await import('./check-files.mjs');
+  assert.equal(lineCount('scripts/quality/check-files.mjs'), readFileSync(new URL('./check-files.mjs', import.meta.url), 'utf8').replace(/\n$/, '').split('\n').length);
+  assert.equal(lineCount('scripts/quality'), null, 'a folder');
+  assert.equal(lineCount('../outside.md'), null, 'a path that leaves the root');
+  assert.equal(lineCount('scripts/quality/no-such-file.mjs'), null);
 });
 
 test('every acceptance criterion names an automated test (quality-gates.md §8)', () => {

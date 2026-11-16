@@ -3,7 +3,8 @@
  * Security (Task 923 Revision 7): the core of authentication and authorisation.
  *  - getBlockedError: a blocked or suspended person cannot write; an expired suspension is lifted for that person only;
  *  - getStaffRole: only admin / moderator count as staff, decided from the SESSION's user id with the service-role client;
- *  - server.ts: the session helpers never throw, and ensureUserProfile does not let a self-chosen metadata field decide role, verification, type or id;
+ *  - server.ts: the session helpers never throw, and ensureUserProfile inserts nothing into `users` (Task 956 AC15: no permissive INSERT policy exists, handle_new_user makes the row) and writes
+ *    only the company of a new agent, through the service role, so a self-chosen metadata field cannot decide role, verification, type or id;
  *  - openAuthSheet: a harmless browser event, and a no-op on the server.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -13,7 +14,9 @@ let db = createFakeDb()
 let lookupError: { code: string } | null = null
 let sessionUser: { id: string; user_metadata?: Record<string, unknown> } | null = null
 let authThrows = false
-const upserts: { values: Record<string, unknown>; options: Record<string, unknown> }[] = []
+/** every insert or upsert the SESSION client (the cookie-bound client) is asked to make, into any table (Task 956 AC15: there must be none) */
+const sessionInserts: { table: string; op: 'insert' | 'upsert'; values: unknown }[] = []
+const sessionUserUpdates: Record<string, unknown>[] = []
 const authCalls: string[] = []
 
 function serverClient() {
@@ -35,7 +38,20 @@ function serverClient() {
         failing.single = async () => ({ data: null, error: lookupError })
         return failing
       }
-      chain.upsert = (values: Record<string, unknown>, options: Record<string, unknown>) => { upserts.push({ values, options }); return Promise.resolve({ error: null }) }
+      // the session client answers an insert or an upsert of `users` as the database does (row-level security: no permissive INSERT policy), and records it so a test can say there was none
+      chain.upsert = (values: unknown) => { sessionInserts.push({ table, op: 'upsert', values }); return Promise.resolve({ error: { code: '42501', message: 'permission denied for table users' } }) }
+      chain.insert = (values: unknown) => { sessionInserts.push({ table, op: 'insert', values }); return Promise.resolve({ error: { code: '42501', message: 'permission denied for table users' } }) }
+      // Task 956 AC4: hardening v8b revokes UPDATE on the server-only columns of `users` (company_id among them) from a session, so a session update of `users` is refused and
+      // changes nothing; the service role (the admin client below) is the writer
+      if (table === 'users') {
+        chain.update = (values: Record<string, unknown>) => {
+          sessionUserUpdates.push(values)
+          const refused: Record<string, unknown> = {}
+          for (const method of ['eq', 'is', 'select']) refused[method] = () => refused
+          refused.then = (resolve: (v: unknown) => void) => resolve({ data: null, error: { code: '42501', message: 'permission denied for table users' } })
+          return refused
+        }
+      }
       return chain
     },
   }
@@ -79,7 +95,8 @@ beforeEach(() => {
   lookupError = null
   sessionUser = null
   authThrows = false
-  upserts.length = 0
+  sessionInserts.length = 0
+  sessionUserUpdates.length = 0
   authCalls.length = 0
 })
 afterEach(() => { vi.useRealTimers() })
@@ -186,39 +203,41 @@ describe('session helpers never throw', () => {
   })
 })
 
+// Task 956 AC15 (Review 4): `users` has no permissive INSERT policy (only the RESTRICTIVE `blocked_account_no_insert`), so a session insert or upsert never writes a row, and the profile row is made by
+// public.handle_new_user() (trigger on_auth_user_created on auth.users, `on conflict (id) do nothing`). ensureUserProfile therefore never inserts or upserts into `users`: it only gives an agent
+// the company the sign-up named, through the service role. The metadata still cannot decide the role, the verification, the type or the id: nothing here writes them at all.
 describe('ensureUserProfile', () => {
+  const metadataCases: [string, { id: string; user_metadata?: Record<string, unknown> }][] = [
+    ['a full name', { id: 'new-1', user_metadata: { full_name: 'Alba Hoxha' } }],
+    ['a self-chosen role, verification, type, status and id', { id: 'new-2', user_metadata: { role: 'admin', is_verified: true, user_type: 'agent', status: 'active', id: 'victim', email: 'x@y.z', suspended_until: null } }],
+    ['a preferred locale', { id: 'new-3', user_metadata: { preferred_locale: 'it' } }],
+    ['an unsupported preferred locale', { id: 'new-3b', user_metadata: { preferred_locale: 'en; DROP' } }],
+    ['a name only', { id: 'n1', user_metadata: { name: 'Only Name' } }],
+    ['no metadata', { id: 'n2', user_metadata: {} }],
+    ['a company', { id: 'agent-3', user_metadata: { company_id: 'c-3', role: 'admin' } }],
+  ]
+
   it('does nothing for an anonymous visitor', async () => {
     await ensureUserProfile()
-    expect(upserts).toEqual([])
+    expect(sessionInserts).toEqual([])
+    expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
   })
 
-  it('creates a plain, unverified private user and never overwrites an existing profile', async () => {
-    sessionUser = { id: 'new-1', user_metadata: { full_name: 'Alba Hoxha' } }
+  it.each(metadataCases)('never inserts or upserts into users with the session, nor with the service role (%s)', async (_label, user) => {
+    db.tables.users.push({ id: user.id, company_id: null, role: 'user' })
+    sessionUser = user
     await ensureUserProfile()
-    expect(upserts).toHaveLength(1)
-    expect(upserts[0].values).toEqual({ id: 'new-1', name: 'Alba Hoxha', user_type: 'private', role: 'user', is_verified: false, preferred_locale: 'sq' })
-    expect(upserts[0].options).toEqual({ onConflict: 'id', ignoreDuplicates: true })
+    expect(sessionInserts, 'the session client is asked for no insert and no upsert').toEqual([])
+    expect(db.log.filter((l) => l.op === 'insert' || l.op === 'upsert'), 'the service role inserts no row either: handle_new_user makes it').toEqual([])
+    expect(sessionUserUpdates, 'the session client updates no column of users').toEqual([])
   })
 
-  it('a self-chosen metadata field cannot decide role, verification, account type, status or id', async () => {
-    sessionUser = { id: 'new-2', user_metadata: { role: 'admin', is_verified: true, user_type: 'agent', status: 'active', id: 'victim', email: 'x@y.z', suspended_until: null } }
+  it('the role, the verification, the type and the id of an existing profile are not touched whatever the metadata says', async () => {
+    db.tables.users.push({ id: 'new-5', role: 'user', is_verified: false, user_type: 'private', company_id: null })
+    sessionUser = { id: 'new-5', user_metadata: { role: 'admin', is_verified: true, user_type: 'agent', status: 'blocked', id: 'victim' } }
     await ensureUserProfile()
-    expect(upserts[0].values).toMatchObject({ id: 'new-2', role: 'user', is_verified: false, user_type: 'private' })
-    expect(Object.keys(upserts[0].values).sort()).toEqual(['id', 'is_verified', 'name', 'preferred_locale', 'role', 'user_type'])
-  })
-
-  it.each([['it', 'it'], ['uk', 'uk'], ['xx', 'sq'], ['', 'sq'], ['SQ', 'sq'], ['en; DROP', 'sq'], ['__proto__', 'sq']])('preferred locale %j is stored as %s', async (meta, stored) => {
-    sessionUser = { id: 'new-3', user_metadata: { preferred_locale: meta } }
-    await ensureUserProfile()
-    expect(upserts[0].values.preferred_locale).toBe(stored)
-  })
-
-  it('takes the name from full_name, then name, else null', async () => {
-    sessionUser = { id: 'n1', user_metadata: { name: 'Only Name' } }
-    await ensureUserProfile()
-    sessionUser = { id: 'n2', user_metadata: {} }
-    await ensureUserProfile()
-    expect(upserts.map((u) => u.values.name)).toEqual(['Only Name', null])
+    expect(db.tables.users.find((u) => u.id === 'new-5')).toEqual({ id: 'new-5', role: 'user', is_verified: false, user_type: 'private', company_id: null })
+    expect(db.log.filter((l) => l.op !== 'select')).toEqual([])
   })
 
   it('sets the company only on the person\'s own row and only while it is empty', async () => {
@@ -229,6 +248,7 @@ describe('ensureUserProfile', () => {
     expect(update.values).toEqual({ company_id: 'c-7' })
     expect(update.filters).toEqual([['id', 'eq', 'agent-1'], ['company_id', 'is', null]])
     expect(db.tables.users.find((u) => u.id === 'agent-1')?.company_id).toBe('c-7')
+    expect(sessionUserUpdates, 'the session client writes no column of users: the server does (service role)').toEqual([])
   })
 
   it('does not move a person who already has a company', async () => {

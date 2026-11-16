@@ -1121,8 +1121,8 @@
   "Kubernetes_Security": {
    "applies": false,
    "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
-   "reviewedSha": "d54243879fee9a2f1483a284220ab69314fb2dde",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "96c48acb7d848d022edbcc51dd30df1181cdd9ea",
+   "reviewedOn": "2026-11-16"
   },
   "Laravel": {
    "applies": false,
@@ -1331,8 +1331,8 @@
      "task": "957"
     }
    ],
-   "reviewedSha": "b19270d945052d6c28ef0841f46365cab0e8fd37",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "311961c82a0a89ea92996a9c820afebc9fe743a9",
+   "reviewedOn": "2026-11-16"
   },
   "Multifactor_Authentication": {
    "applies": true,

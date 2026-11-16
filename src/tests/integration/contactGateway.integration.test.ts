@@ -8,7 +8,9 @@
  *  - SEC-X-INT-CONTACT-GATEWAY: a verified WhatsApp reveal returns the owner's number and writes exactly one event; the failing secret reveals nothing and writes nothing;
  *  - SEC-X-INT-CONTACT-SESSION-DENY: a guest and a person whose session was really ended get nothing;
  *  - SEC-X-INT-REVEAL-TABLE-DENY / -TABLE-SERVER: `public.listing_contact_reveals` answers the service role only (Task 923 R125, R129);
- *  - SEC-X-INT-REVEAL-RECORD / -LIMIT: a reveal writes one row per listing, and the 21st new listing within the hour is refused (D77).
+ *  - SEC-X-INT-REVEAL-RECORD / -LIMIT: a reveal writes one row per listing, and the 21st new listing within the hour is refused (D77);
+ *  - SEC-X-INT-CONTACT-NO-CALLER-DENY (Task 956 AC3, hardening v8b): `get_listing_owner_contact`, the function that takes no caller and skips Turnstile, the limits and the
+ *    reveal record, answers a permission error to a signed-in session and to a guest, and the server gateway still reveals within its limits.
  * Run: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> npm run test:security-integration
  */
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
@@ -206,5 +208,24 @@ describe('contactGateway', () => {
     // a listing the viewer already had revealed stays free at the limit
     expect(await reveal('call', earlier), 'a repeat reveal at the limit').toEqual({ ok: true, number: ownerNumbers.phone })
     expect(await revealRowsOf(over.id), 'and writes no row').toHaveLength(20)
+  })
+
+  // Task 956 AC3 (finding DB-01): the function that takes no caller was executable by any signed-in account, which read the phone and WhatsApp number of any active listing
+  // with no Turnstile check, no limit and no reveal record. Hardening v8b revokes it from every session; the gateway reaches the numbers through `get_listing_owner_contact_as`.
+  it('[SEC-X-INT-CONTACT-NO-CALLER-DENY] no session reads a number without the gateway, and the gateway still reveals', async () => {
+    const person = await run.makeUser('contact-no-caller')
+    for (const [who, client] of [['a signed-in session', person.client], ['a guest (anon, no session)', run.anonymousClient()]] as const) {
+      const answer = await client.rpc('get_listing_owner_contact', { listing_id_param: listingId })
+      expect(answer.error, `${who}: the call is refused`).not.toBeNull()
+      expect(answer.error?.code === '42501' || /permission denied/i.test(answer.error?.message ?? ''), `${who}: refused by the grant (${answer.error?.code})`).toBe(true)
+      expect(answer.data, `${who}: no number is returned`).toBeNull()
+    }
+    expect(await revealRowsOf(person.id), 'the refused calls left no reveal record').toEqual([])
+
+    // the gateway, with its own checks, still serves the same person
+    process.env.TURNSTILE_SECRET_KEY = CLOUDFLARE_TEST.alwaysPass
+    acting.client = person.client
+    expect(await reveal('call'), 'the verified gateway reveal is served').toEqual({ ok: true, number: ownerNumbers.phone })
+    expect(await revealRowsOf(person.id), 'and recorded once').toHaveLength(1)
   })
 })

@@ -8,7 +8,8 @@ The gates are the GitHub workflow (`.github/workflows/ci.yml`, required check `C
 OWASP workflow (`scripts/quality/owasp.mjs`). Owner, 2026-11-14 (translated: "the tasks that verify your code went into
 deep over-engineering; they must follow the GitHub workflow and the OWASP workflow"): the local agent machinery (phase
 ledgers, the self-review hook, reply-wording checks, the local CI replica, the agent-loop hooks) was removed. No local
-tool replaces or re-implements a CI job.
+tool replaces or re-implements a CI job. Owner, 2026-11-16: one tool, not a hook, counts what was read
+(`scripts/quality/read-coverage.mjs`, §2 step 4).
 
 ## Roles
 
@@ -44,6 +45,20 @@ or not reported as done; a step left out is the rule broken, not a note:
   concluded; a run in progress is reported as in progress, never as a result. Every failure is opened to its log line
   and fixed in the same pull request (golden rule). A local run of a command is reported as local, with the command.
 
+**Facts rule** (owner, 2026-10-17, translated: "no assumptions; only facts; always audit the project first, then propose
+a solution"; restated 2026-11-15 after the governance reset of 2026-11-09 had dropped it, removing
+the file `shared/claim-evidence-contract.md` that carried it). Every model, in every answer, kickoff, report, review, code comment
+and SQL comment:
+- states about code, data, the database, a tool, a page, a form or a cause only what it read in this session, with the
+  source: `path:line`, a command and its output, a read-only query and its result, or a dated owner decision;
+- reads a fact that can be read before using it: the file before an edit or a recommendation (a form's submit guard
+  before "save it"), the live definition before restoring it (`pg_get_functiondef`), the tool's output before a count;
+  an empty search result is a fact only after the search is shown to reach the place (a known match is found);
+- writes what it did not read as `UNKNOWN`, or as `INFERENCE:` with the facts it rests on; neither ever shortens,
+  skips, stops or reorders a required step, explains a failure or names a cause;
+- reports a step not done as not done, with the fact that stopped it (the tool's own message), never a guessed reason.
+The reviewer treats an unlabelled assumption in a report or in a file as a finding.
+
 **Every task and every change is held to the OWASP Cheat Sheet Series** (owner, 2026-11-07): the design (§1 step 5,
 `owasp.mjs plan`, enforced by `check-files.mjs` on every kickoff), the review (§3, `owasp.mjs review`), the CI task gate
 on every pull request and push (`owasp.mjs gate`: code or configuration lands only with an approved task whose OWASP
@@ -54,6 +69,12 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
 
 1. Read the code the task touches. Every factual statement in the kickoff names its source (`path:line`, command and its
    output, or a dated owner decision). Unknown is written as unknown, never guessed; no owner decision is invented.
+   **Cause first** (owner, 2026-11-16, translated: "a kickoff always states the cause of the problem, by fact, and how to
+   solve it; the implementer removes that cause"; "where a couple of lines need fixing, the kickoff must not read as if
+   half the project does"). "## Cause" names the fact that produces the problem, with its source, and a "Fix:" line: the
+   change that removes that cause. The scope is that change and nothing else; the kickoff is as long as the fix needs.
+   A finding that comes back after a fix is evidence that the fix treated a symptom: its cause is found from facts
+   before the next fix is written.
 2. Attack-surface question (`threat-model.md`). Unchanged → "Attack surface: unchanged". Changed → the threat model,
    whose mitigations become acceptance criteria with tests.
 3. Visible UI: `shared/canonical-component-reuse.md`, `shared/mobile-adaptation-contract.md`, `shared/ui-token-contract.md`,
@@ -68,6 +89,8 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
    added to its scope and criteria (protection and test), and a requirement the mapping hands to the task is cited
    (`owasp.mjs check` O8).
 6. Write the kickoff from `kickoff-template.md` (≤ 200 lines; a task that does not fit is split) and its backlog row.
+   "## Read set" lists every file the implementer will change with its line count; `check-files.mjs` compares each
+   count with the file while the review is empty and refuses a read set over 3 000 lines: such a task is split.
    Every acceptance criterion names its automated test (`quality-gates.md` §8). A revision that changes or adds a
    criterion changes or adds its test in the same revision.
 7. **Quality check of the design:** `node scripts/quality/check-files.mjs <kickoff> docs/backlog.md` and
@@ -78,27 +101,40 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
 1. Implement only the kickoff's scope. Out-of-scope edits, new dependencies the kickoff does not name, lockfile changes
    without a dependency change, and edits of CI or agent configuration are refused and reported.
 2. Never weaken, skip or delete a test, a rule or a gate to get green.
-3. **Self-review before any test run** (owner, 2026-11-13, translated: "it is forbidden to run tests until you have
+3. **Order** (owner, 2026-11-16): the new tests are written and run on the unchanged code (their failing output kept,
+   `quality-gates.md` §8) → the change → three passes → the green runs (tests and gates).
+4. **Three passes over the read set** (owner, 2026-11-13, translated: "it is forbidden to run tests until you have
    checked the code you wrote three times, thoroughly"; "if a pass found a problem, that pass does not count … until all
-   three passes are clean"; "all models must read the code in a changed file completely, without exceptions"). Before
-   the first test run, and again after every change, the author reads every changed file in full and checks every
-   changed line: the Scope item that needs it, its inputs and edge cases, every caller and consumer of what it changes,
-   every factual statement in a comment against the code. A pass that finds a problem does not count; tests run after
-   three clean passes in a row. No hook or record file enforces it; the reviewer checks the result (§3).
-4. **Tests first** (`quality-gates.md` §8): write each criterion's test, run it on the unchanged code and keep the
-   failing output, then implement until it passes.
+   three passes are clean"; "all models must read the code in a changed file completely, without exceptions"; and
+   2026-11-16: "a tool that shows how many lines a file has and how many were read forbids the model to skip lines").
+   The read set is the files the author changed in this revision. In each pass the author reads every line of each with
+   the Read tool and checks every changed line: the Scope item that needs it, its inputs and edge cases, every caller
+   and consumer of what it changes, every factual statement in a comment against the code. A pass that finds a problem
+   does not count; a change of any file of the read set makes every pass start again (only reads after the last change
+   count). What a person does not read is decided by the tool, not by the author: `package-lock.json` is checked by
+   `change-report.mjs --lockfile-age`, `install-scripts.test.mjs` and `npm audit`; in `messages/<locale>.json` the
+   object of each changed key is read. `node scripts/quality/read-coverage.mjs` reads the session transcript (each
+   revision and each review runs in a session of its own, since the tool holds the whole session to the rule), prints
+   each file's lines, the lines read and the complete passes over the file as it is now, has no option that lowers the
+   passes, the limit or the read set, and exits 1 when a file has fewer than three, a line was never read, a test or
+   gate ran after the last change and before the third pass, or the read set is over 3 000 lines. It exits 0 before
+   the first green run; its output is in the report.
 5. **Quality check of the implementation:** the kickoff's tests, `npm run lint`, `npm run typecheck`,
    `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs --base main`,
    `node scripts/quality/check-files.mjs --worktree`. For each security test, remove the control once and show the test
    failing (`security-testing.md`).
-6. Report each command with its exit code and the relevant output lines, the failing-first output of each new test;
-   anything not done is stated as not done.
+6. Report each command with its exit code and the relevant output lines, the failing-first output of each new test, the
+   `read-coverage.mjs` output and the session id; anything not done is stated as not done.
 
 ## 3. Review (Opus)
 
 The executor's report is a supplier assertion, not evidence (Verifying Third Party Agent Execution Evidence): the
-reviewer reruns every claimed command on the candidate commit and reads every changed file in full, and compares the
-kickoff's criteria with the diff (the expected tests come from the kickoff, not from the report). Follow
+reviewer reruns every claimed command on the candidate commit, runs `read-coverage.mjs --transcript <executor's
+session>` when that transcript is on this machine (a `read-coverage.mjs` output missing from the report, or exit 1, is
+a finding), reads every file of the revision in three passes of its own before running any test or gate
+(`read-coverage.mjs --files-since <revision start>` exits 0 in the review's own session, run before the reviewer edits
+the kickoff or the record), and compares the kickoff's criteria with the diff (the expected tests come from the
+kickoff, not from the report). Follow
 `secure-code-review.md`: tools first, then the six diff-based steps and the checklist of every category the diff touches.
 Findings and the review summary use its templates and go into the kickoff's "Review" section; the per-sheet verdicts go
 to the task's OWASP review record (`docs/security/owasp/reviews/Task_<n>.json`, `kickoff-template.md`):

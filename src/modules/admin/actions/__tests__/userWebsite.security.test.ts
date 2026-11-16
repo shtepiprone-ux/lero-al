@@ -1,7 +1,8 @@
 // @vitest-environment node
 /**
  * Security (Task 923 Revision 7, finding S9): the website saved on an agent profile is later put into a link that an administrator clicks. A `javascript:` value
- * written by a moderator would run in the administrator's session. Only http(s) addresses are stored (a bare host such as `example.com` is stored as https).
+ * written by a moderator would run in the administrator's session. Only https addresses are stored: the `users` CHECK of hardening v8b (Task 956) requires the `https://` prefix.
+ * Task 956 AC13: the administrator never has to type the scheme, so `lero.al`, `https://lero.al` and `http://lero.al` are stored alike as `https://lero.al/`; `javascript:` and `data:` stay refused.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -49,11 +50,15 @@ vi.mock('@/modules/listings/actions/applyListingTransition', () => ({ applyListi
 vi.mock('next/cache', () => ({ revalidatePath: vi.fn(), revalidateTag: vi.fn(), updateTag: vi.fn(), unstable_cache: (fn: unknown) => fn }))
 
 import { createAdminUser, updateUserProfileFull } from '../index'
+import { displayWebsite } from '@/lib/security/safeUrl'
 
 const BASE = { firstName: 'Alba', phone: '+355691234567', locationId: 1, profileType: 'agent' as const, companyName: 'Agency', status: 'active' as const }
 const userWrites = () => written.filter((w) => w.table === 'users' && (w.op === 'update' || w.op === 'upsert'))
 
 beforeEach(() => { written.length = 0; vi.spyOn(console, 'error').mockImplementation(() => {}) })
+
+/** the three ways to type one address (Task 956 AC13) */
+const THREE_FORMS = ['lero.al', 'https://lero.al', 'http://lero.al']
 
 const ATTACKS = ['javascript:alert(document.cookie)', 'JaVaScRiPt:alert(1)', 'java\tscript:alert(1)', 'data:text/html,<script>alert(1)</script>', 'vbscript:x', '//evil.example', 'https://user:pw@evil.example/']
 
@@ -73,6 +78,45 @@ describe('updateUserProfileFull', () => {
   it('stores a bare host as https', async () => {
     await updateUserProfileFull('u1', { ...BASE, website: 'agency.example' })
     expect(userWrites().find((w) => w.op === 'update')?.values.website).toBe('https://agency.example/')
+  })
+
+  // Task 956 AC13: the administrator types a host; the scheme is never asked for, so the three spellings are one address, stored as https (the database holds https addresses only)
+  it.each(THREE_FORMS)('stores %j as https://lero.al/ (the same address however it is typed)', async (typed) => {
+    const res = await updateUserProfileFull('u1', { ...BASE, website: typed })
+    expect(res.error).toBeUndefined()
+    expect(userWrites().find((w) => w.op === 'update')?.values.website).toBe('https://lero.al/')
+  })
+
+  it('an http address is stored as https and keeps its path and query', async () => {
+    await updateUserProfileFull('u1', { ...BASE, website: 'http://agency.example/team?x=1' })
+    expect(userWrites().find((w) => w.op === 'update')?.values.website).toBe('https://agency.example/team?x=1')
+  })
+
+  it('saving the field again with what the form shows (lero.al) changes nothing: the stored value is the same string', async () => {
+    await updateUserProfileFull('u1', { ...BASE, website: 'lero.al' })
+    const first = userWrites().find((w) => w.op === 'update')?.values.website
+    written.length = 0
+    await updateUserProfileFull('u1', { ...BASE, website: displayWebsite(first as string) })
+    expect(userWrites().find((w) => w.op === 'update')?.values.website).toBe(first)
+    expect(first).toBe('https://lero.al/')
+  })
+
+  it('the 200 character bound holds after the normalisation (an http address gains one character)', async () => {
+    // `http://` + 191 characters of host = 198 characters typed, `https://` + host + `/` = 200 stored
+    const host = `${'a'.repeat(188)}.al`
+    expect(`https://${host}/`).toHaveLength(200)
+    expect((await updateUserProfileFull('u1', { ...BASE, website: `http://${host}` })).error).toBeUndefined()
+    expect(userWrites().find((w) => w.op === 'update')?.values.website).toBe(`https://${host}/`)
+    written.length = 0
+    expect(await updateUserProfileFull('u1', { ...BASE, website: `http://a${host}` })).toEqual({ error: 'invalid_website' })
+    expect(userWrites()).toEqual([])
+  })
+
+  it('an http script address is still refused: javascript: and data: after http-looking text', async () => {
+    for (const website of ['http://javascript:alert(1)', 'http://user:pw@evil.example/']) {
+      expect(await updateUserProfileFull('u1', { ...BASE, website }), website).toEqual({ error: 'invalid_website' })
+    }
+    expect(userWrites()).toEqual([])
   })
 
   it('an empty website is stored as nothing', async () => {
@@ -104,5 +148,11 @@ describe('createAdminUser', () => {
     const res = await createAdminUser({ ...NEW, website: 'https://agency.example' })
     expect(res.error).toBeUndefined()
     expect(userWrites().find((w) => w.op === 'upsert')?.values.website).toBe('https://agency.example/')
+  })
+
+  it.each(THREE_FORMS)('stores %j as https://lero.al/ (the same address however it is typed)', async (typed) => {
+    const res = await createAdminUser({ ...NEW, website: typed })
+    expect(res.error).toBeUndefined()
+    expect(userWrites().find((w) => w.op === 'upsert')?.values.website).toBe('https://lero.al/')
   })
 })

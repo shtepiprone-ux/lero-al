@@ -566,6 +566,7 @@
     "profile_updated": "Profilo aggiornato",
     "error_saving": "Errore nel salvataggio",
     "error_name_too_long": "Il nome deve avere al massimo 100 caratteri.",
+    "error_company_name_too_long": "Il nome dell'azienda deve avere al massimo 200 caratteri.",
     "member_since": "Membro dal",
     "last_seen": "Ultimo accesso",
     "no_listings": "Non hai ancora annunci",
@@ -1473,6 +1474,8 @@
       "validation": {
         "firstName_required": "Il nome è obbligatorio",
         "name_too_long": "Il nome e il cognome devono avere al massimo 100 caratteri ciascuno.",
+        "company_name_too_long": "Il nome dell'azienda deve avere al massimo 200 caratteri.",
+        "position_too_long": "La posizione deve avere al massimo 200 caratteri.",
         "lastName_required": "Il cognome è obbligatorio",
         "phone_format": "Inserisci un numero di telefono valido per il paese selezionato.",
         "location_required": "La città è obbligatoria",
@@ -1485,6 +1488,19 @@
         "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
         "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
         "error_phone_digits_only": "Inserire solo cifre — nessuna lettera o simbolo."
+      },
+      "save_errors": {
+        "forbidden": "Non hai i permessi per questa azione.",
+        "unauthorized": "La sessione è scaduta. Accedi di nuovo e riprova.",
+        "invalid_phone": "Il numero di telefono non è valido. Usa il formato internazionale, ad esempio +355691234567.",
+        "invalid_status": "Lo stato dell'account non è valido.",
+        "invalid_suspension": "La data di fine sospensione deve essere una data futura.",
+        "invalid_website": "Il sito web non è valido. Inserisci un indirizzo come company.al.",
+        "update_failed": "Impossibile salvare il profilo. Riprova.",
+        "access_sync_failed": "Il profilo è stato salvato, ma non è stato possibile aggiornare l'accesso dell'account. Riprova.",
+        "email_already_exists": "Esiste già un account con questa email.",
+        "create_failed": "Impossibile creare l'account. Riprova.",
+        "create_profile_failed": "Impossibile creare l'account perché non è stato possibile salvare il profilo. Riprova."
       },
       "profile_types": {
         "admin": "Amministratore",
@@ -1542,7 +1558,7 @@
         "last_name": "Cognome",
         "city_search": "Inserisci il nome della città...",
         "company_name": "Nome azienda",
-        "website": "https://company.al",
+        "website": "company.al",
         "position": "Direttore, Manager...",
         "block_reason": "Inserisci il motivo del blocco...",
         "city_assign": "Trova e assegna città..."

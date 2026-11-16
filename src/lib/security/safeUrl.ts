@@ -38,6 +38,18 @@ export function isSafeExternalUrl(raw: string | null | undefined, allowed?: read
   return safeExternalUrl(raw, allowed) !== null
 }
 
+/**
+ * A website as a person types and reads it (Task 956 AC13): the host and its path, with no `http://` or `https://` in front and without the lone slash after a bare host
+ * (`https://lero.al/` is shown as `lero.al`; `https://lero.al/team/` keeps its path). It is a display form only: the link of the stored value keeps its scheme (`safeExternalUrl`),
+ * and the database holds the `https://` address (`normalizeWebsite` stores `lero.al`, `https://lero.al` and `http://lero.al` alike as `https://lero.al/`).
+ * A value that is not an address is returned as it is (a script value is text, never a link); an empty or missing value is an empty string.
+ */
+export function displayWebsite(raw: string | null | undefined): string {
+  if (typeof raw !== 'string') return ''
+  const withoutScheme = raw.trim().replace(/^(?:https?:\/\/)+/i, '')
+  return /^[^/?#]*\/$/.test(withoutScheme) ? withoutScheme.slice(0, -1) : withoutScheme
+}
+
 export interface LinkTarget {
   href: string
   /** true for an address on another site: it opens in a new tab with `noopener noreferrer` */

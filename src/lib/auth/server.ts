@@ -11,6 +11,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import type { User } from '@/types/database'
 
 // ── Validated auth user (from JWT, not from local session cache) ─────────────
@@ -77,10 +78,11 @@ export async function verifyOtp(params: { token_hash: string; type: EmailOtpType
   return supabase.auth.verifyOtp(params)
 }
 
-// ── Ensure application-level user profile exists after auth ───────────────────
+// ── The company of a new agent, after auth ─────────────────────────────────────
 //
-// Called from /auth/callback (OAuth PKCE) and /auth/confirm (token-hash) after
-// the session is established. Idempotent — safe to call for returning users.
+// Called from /auth/callback (OAuth PKCE) after the session is established. It inserts nothing into `users` (Task 956 AC15): the table has no permissive INSERT policy, so a session insert
+// or upsert never wrote a row, and the profile row is made by the sign-up trigger public.handle_new_user() (trigger on_auth_user_created on auth.users). It is idempotent: it only gives the
+// person the company the sign-up named, and only while the person has none.
 
 export async function ensureUserProfile(): Promise<void> {
   try {
@@ -88,30 +90,11 @@ export async function ensureUserProfile(): Promise<void> {
     if (!authUser) return
 
     const meta = authUser.user_metadata ?? {}
-    const supabase = await createClient()
 
-    const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it']
-    const metaLocale = meta.preferred_locale as string | undefined
-    const preferredLocale = metaLocale && SUPPORTED_LOCALES.includes(metaLocale) ? metaLocale : 'sq'
-
-    await supabase.from('users').upsert(
-      {
-        id: authUser.id,
-        name:
-          (meta.full_name as string | undefined) ??
-          (meta.name as string | undefined) ??
-          null,
-        user_type: 'private',
-        role: 'user',
-        is_verified: false,
-        preferred_locale: preferredLocale,
-      },
-      { onConflict: 'id', ignoreDuplicates: true }
-    )
-
+    // `users.company_id` is a server-only column (Task 956, hardening v8b): a session cannot write it, so the server does, on the person's own row and only while it is empty
     const companyId = meta.company_id as string | undefined
     if (companyId) {
-      await supabase
+      await createAdminClient()
         .from('users')
         .update({ company_id: companyId })
         .eq('id', authUser.id)

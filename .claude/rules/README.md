@@ -29,6 +29,8 @@ Process — roles, flow, gates, review, evidence, Git — is defined in this fol
   The check the receipt stood for is an acceptance criterion with an automated test where it can be automated
   (`quality-gates.md` §8); otherwise the reviewer states the check and its result, with `path:line` evidence, in the
   review (`secure-code-review.md`).
+- The **evidence-first protocol** of those documents (owner, 2026-10-17: no assumptions, only facts) is not replaced:
+  it is the facts rule of `flow.md`.
 - **Phases, ledgers, the claim ledger, `BLOCKED — KICKOFF EVIDENCE GAP`** are replaced by the kickoff's sources
   (`kickoff-template.md`) and the reviewer's rerun of every claim.
 - A reference in any active document to a file or `npm run` script that no longer exists fails `check-files.mjs`

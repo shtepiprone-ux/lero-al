@@ -22,6 +22,44 @@ export const PUBLIC_VISIBLE_STATUSES: Record<ListingStatus, VisibilityRule> = {
   expired:  { publicEligible: false, requiresUnexpired: false },
 }
 
+// ── The ONE rule for opening a listing by its address (Task 956 AC6, owner decision D72) ─────────────────────
+// PUBLIC_VISIBLE_STATUSES above decides what is LISTED (search results, the sitemap): an active listing until its expiry. This table decides what a visitor may
+// OPEN when they have the address: an active listing until its expiry, and a sold or rented listing whatever its expiry; archived, pending, inactive and expired
+// listings stay closed. The database policy "Listings viewable by everyone" (supabase/sql_migrations/task956/v8b.sql) says the same in SQL, with the owner's own
+// listing added; visibility.test.ts builds the SQL predicate from this table, so the two cannot drift apart. getListingAccessState, the recently-viewed queries and the view
+// route (api/listings/[slug]/view/route.ts) read it through `isListingOpenableByAddress` and `OPEN_BY_ADDRESS_STATUSES`; the view counter `public.record_listing_view`
+// (v8b.sql) asks the same rule in SQL, built from the same table in the same test.
+
+export interface OpenByAddressRule {
+  /** true: the listing is open only while `expires_at` is in the future (a missing expiry is closed) */
+  requiresUnexpired: boolean
+}
+
+export const OPEN_BY_ADDRESS: Partial<Record<ListingStatus, OpenByAddressRule>> = {
+  active: { requiresUnexpired: true },
+  sold: { requiresUnexpired: false },
+  rented: { requiresUnexpired: false },
+}
+
+/** the statuses a query asks the database for before the expiry is judged */
+export const OPEN_BY_ADDRESS_STATUSES = Object.keys(OPEN_BY_ADDRESS) as ListingStatus[]
+
+/**
+ * May this listing be opened by its address? With `viewerId` the owner's own listing is always open to them (the same `auth.uid() = user_id` clause as the policy);
+ * without it the listing is judged as any visitor sees it. A date that cannot be read is no expiry, so the listing is closed.
+ */
+export function isListingOpenableByAddress(
+  listing: { status: ListingStatus; expires_at: string | null; user_id?: string | null },
+  viewerId?: string | null,
+): boolean {
+  if (viewerId && listing.user_id && viewerId === listing.user_id) return true
+  const rule = OPEN_BY_ADDRESS[listing.status]
+  if (!rule) return false
+  if (!rule.requiresUnexpired) return true
+  if (!listing.expires_at) return false
+  return new Date(listing.expires_at).getTime() > Date.now()
+}
+
 export type HiddenReason = 'status_not_public' | 'expired' | 'no_expiry'
 
 export interface VisibilityResult {

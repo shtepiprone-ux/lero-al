@@ -1,7 +1,8 @@
 // @vitest-environment node
 /**
  * Security (Task 923 Revision 56, R171, release blocker S62): the listing view route.
- *  - a view of a listing that is not public (pending, inactive, expired) is refused with 404 and `record_listing_view` is never called;
+ *  - a view of a listing that is not public (pending, inactive, expired, archived: Task 956 AC6, archived leaves the public set; an active listing whose expiry passed or that has none:
+ *    Task 956 F7, the one rule of visibility.ts) is refused with 404 and `record_listing_view` is never called; a sold listing with a past expiry is still recorded (owner decision D72);
  *  - the viewer id handed to the function is the one Supabase Auth gives the route, and a guest gets null;
  *  - the owner's own view is not recorded.
  * Doubles, stated: the admin client is the in-memory database of src/tests/fakeSupabase.ts plus a recording `rpc`; the session client answers `auth.getUser` with the
@@ -31,16 +32,26 @@ const post = (slug: string) => POST(
   { params: Promise.resolve({ slug }) },
 )
 
+const FUTURE = new Date(Date.now() + 86_400_000).toISOString()
+const PAST = new Date(Date.now() - 86_400_000).toISOString()
+
 beforeEach(() => {
   db = createFakeDb({
-    listings: ['pending', 'inactive', 'expired', 'active'].map((status) => ({ id: `id-${status}`, slug: `slug-${status}`, user_id: OWNER, status })),
+    listings: [
+      ...['pending', 'inactive', 'expired', 'archived', 'active'].map((status) => ({ id: `id-${status}`, slug: `slug-${status}`, user_id: OWNER, status, expires_at: FUTURE })),
+      // Task 956 F7: an active listing past its expiry or with none is closed by the one rule; a sold listing is open whatever its expiry (D72)
+      { id: 'id-active-past', slug: 'slug-active-past', user_id: OWNER, status: 'active', expires_at: PAST },
+      { id: 'id-active-none', slug: 'slug-active-none', user_id: OWNER, status: 'active', expires_at: null },
+      { id: 'id-sold-past', slug: 'slug-sold-past', user_id: OWNER, status: 'sold', expires_at: PAST },
+      { id: 'id-rented-none', slug: 'slug-rented-none', user_id: OWNER, status: 'rented', expires_at: null },
+    ],
   })
   currentUser = null
   rpc.mockClear()
 })
 
-it('[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive or expired listing, takes the viewer id from Supabase Auth, and never records the owner\'s own', async () => {
-  for (const status of ['pending', 'inactive', 'expired']) {
+it('[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive, expired or archived listing, takes the viewer id from Supabase Auth, and never records the owner\'s own', async () => {
+  for (const status of ['pending', 'inactive', 'expired', 'archived']) {
     const res = await post(`slug-${status}`)
     expect(res.status, `${status}: not found`).toBe(404)
     expect(rpc, `${status}: no view is recorded`).not.toHaveBeenCalled()
@@ -72,4 +83,22 @@ it('[SEC-X-SRV-VIEW-DENY] the view route records no view of a pending, inactive 
   expect(owner.status, 'owner: the request is answered').toBe(200)
   expect(await owner.json(), 'owner: no view is recorded').toEqual({ ok: true, recorded: false })
   expect(rpc, 'owner: no call').not.toHaveBeenCalled()
+})
+
+it('[SEC-X-SRV-VIEW-EXPIRY-DENY] an active listing past its expiry or with no expiry is not found and no view is recorded', async () => {
+  for (const slug of ['slug-active-past', 'slug-active-none']) {
+    const res = await post(slug)
+    expect(res.status, `${slug}: not found`).toBe(404)
+    expect(rpc, `${slug}: the function is not called`).not.toHaveBeenCalled()
+  }
+})
+
+it('[SEC-X-SRV-VIEW-EXPIRY-ALLOW] a sold or rented listing is recorded whatever its expiry (owner decision D72)', async () => {
+  for (const slug of ['slug-sold-past', 'slug-rented-none']) {
+    const res = await post(slug)
+    expect(res.status, `${slug}: the listing is served`).toBe(200)
+    expect(await res.json(), `${slug}: the view is recorded`).toEqual({ ok: true, recorded: true })
+    expect(rpc, `${slug}: one call`).toHaveBeenCalledTimes(1)
+    rpc.mockClear()
+  }
 })

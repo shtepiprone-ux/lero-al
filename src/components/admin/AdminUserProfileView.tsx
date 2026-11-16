@@ -3,7 +3,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { ActionIcon, Alert, Anchor, Box, Button, Checkbox, Flex, Grid, Group, Paper, Stack, Text, TextInput, Title, useMantineTheme } from '@mantine/core'
-import { safeExternalUrl } from '@/lib/security/safeUrl'
+import { displayWebsite, safeExternalUrl } from '@/lib/security/safeUrl'
 import {
   ChevronLeft, History, MapPin, Pencil, RotateCcw, Save, Trash2, UserPlus, X,
 } from 'lucide-react'
@@ -717,12 +717,13 @@ export function AdminUserProfileView({
                       <ViewValue>
                         {user?.website ? (
                           // a stored website is a link only when it is an http(s) address; a script URL is shown as text (Task 923 Revision 7, S9)
+                          // Task 956 AC13: the text is the host (no http:// or https://); the href keeps the scheme
                           safeExternalUrl(user.website) ? (
                             <Anchor href={safeExternalUrl(user.website) ?? undefined} target="_blank" rel="noopener noreferrer" size="sm">
-                              {user.website}
+                              {displayWebsite(user.website)}
                             </Anchor>
                           ) : (
-                            <Text size="sm">{user.website}</Text>
+                            <Text size="sm">{displayWebsite(user.website)}</Text>
                           )
                         ) : undefined}
                       </ViewValue>

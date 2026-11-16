@@ -566,6 +566,7 @@
     "profile_updated": "Profile updated",
     "error_saving": "Error saving profile",
     "error_name_too_long": "The name must be at most 100 characters.",
+    "error_company_name_too_long": "The company name must be at most 200 characters.",
     "member_since": "Member since",
     "last_seen": "Last online",
     "no_listings": "You don't have any listings yet",
@@ -1473,6 +1474,8 @@
       "validation": {
         "firstName_required": "First name is required",
         "name_too_long": "The first name and the last name must each be at most 100 characters.",
+        "company_name_too_long": "The company name must be at most 200 characters.",
+        "position_too_long": "The position must be at most 200 characters.",
         "lastName_required": "Last name is required",
         "phone_format": "Please enter a valid phone number for the selected country.",
         "location_required": "City is required",
@@ -1485,6 +1488,19 @@
         "error_phone_invalid": "Please enter a valid phone number for the selected country.",
         "error_phone_no_country_code": "Enter the phone number without the country code.",
         "error_phone_digits_only": "Enter digits only — no letters or symbols."
+      },
+      "save_errors": {
+        "forbidden": "You don't have permission to do this.",
+        "unauthorized": "Your session has ended. Sign in again and try once more.",
+        "invalid_phone": "The phone number is not valid. Use the international format, for example +355691234567.",
+        "invalid_status": "The account status is not valid.",
+        "invalid_suspension": "The suspension end date must be a date in the future.",
+        "invalid_website": "The website is not valid. Enter an address such as company.al.",
+        "update_failed": "The profile could not be saved. Please try again.",
+        "access_sync_failed": "The profile was saved, but the account's sign-in access could not be updated. Please try again.",
+        "email_already_exists": "An account with this email already exists.",
+        "create_failed": "The account could not be created. Please try again.",
+        "create_profile_failed": "The account could not be created because its profile could not be saved. Please try again."
       },
       "profile_types": {
         "admin": "Administrator",
@@ -1542,7 +1558,7 @@
         "last_name": "Last name",
         "city_search": "Enter city name...",
         "company_name": "Company name",
-        "website": "https://company.al",
+        "website": "company.al",
         "position": "Director, Manager...",
         "block_reason": "Enter block reason...",
         "city_assign": "Find and assign city..."

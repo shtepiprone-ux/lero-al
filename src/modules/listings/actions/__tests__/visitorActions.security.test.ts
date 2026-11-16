@@ -47,7 +47,7 @@ const VISITOR2 = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc'
 beforeEach(() => {
   db = createFakeDb({
     users: [OWNER, VISITOR, VISITOR2].map((id) => ({ id, status: 'active', suspended_until: null, deleted_at: null })),
-    listings: [{ id: L1, user_id: OWNER, status: 'active' }, { id: L2, user_id: OWNER, status: 'draft' }, { id: L3, user_id: OWNER, status: 'archived' }],
+    listings: [{ id: L1, user_id: OWNER, status: 'active', expires_at: '2099-01-01T00:00:00Z' }, { id: L2, user_id: OWNER, status: 'draft' }, { id: L3, user_id: OWNER, status: 'archived' }],
     favorites: [{ id: 'f1', user_id: OWNER, listing_id: L1 }, { id: 'f2', user_id: VISITOR, listing_id: L1 }],
     recently_viewed: [{ id: 'r1', user_id: OWNER, listing_id: L1, viewed_at: '2026-10-01' }, { id: 'r2', user_id: VISITOR, listing_id: L3, viewed_at: '2026-10-02' }],
     listing_contact_events: [],
@@ -127,9 +127,42 @@ describe('clearRecentlyViewed', () => {
 describe('recently viewed queries', () => {
   it('a signed-in person gets their own history, asked for explicitly', async () => {
     currentUser = { id: VISITOR }
+    db.tables.recently_viewed.push({ id: 'r5', user_id: VISITOR, listing_id: L1, viewed_at: '2026-10-05' })
     const rows = await getRecentlyViewedForUser()
     expect(db.log.find((l) => l.table === 'recently_viewed')?.filters).toEqual([['user_id', 'eq', VISITOR]])
-    expect(rows.map((r) => r.id)).toEqual([L3])
+    expect(rows.map((r) => r.id)).toEqual([L1])
+  })
+
+  // Task 956 AC6: archived leaves the public set, and an active listing is shown only until its expiry (the one public rule, visibility.ts)
+  it('an archived listing is not shown in a person\'s history, a sold one is', async () => {
+    currentUser = { id: VISITOR }
+    expect((await getRecentlyViewedForUser()).map((r) => r.id), 'archived').toEqual([])
+    db.tables.listings.find((l) => l.id === L3)!.status = 'sold'
+    expect((await getRecentlyViewedForUser()).map((r) => r.id), 'sold').toEqual([L3])
+  })
+
+  it('the database is asked only for the statuses a visitor may open: archived is not among them', async () => {
+    currentUser = { id: VISITOR }
+    await getRecentlyViewedForUser()
+    await getRecentlyViewedForGuest([L1])
+    const asked = db.log.filter((l) => l.table === 'listings').map((l) => l.filters.find((f) => f[0] === 'status' && f[1] === 'in')?.[2])
+    expect(asked, 'the person\'s history, then the guest\'s').toEqual([['active', 'sold', 'rented'], ['active', 'sold', 'rented']])
+  })
+
+  it('an active listing past its expiry, or with none, is not shown in a person\'s history', async () => {
+    currentUser = { id: VISITOR }
+    const listing = db.tables.listings.find((l) => l.id === L1)!
+    db.tables.recently_viewed.push({ id: 'r6', user_id: VISITOR, listing_id: L1, viewed_at: '2026-10-06' })
+    listing.expires_at = '2000-01-01T00:00:00Z'
+    expect((await getRecentlyViewedForUser()).map((r) => r.id), 'expired').toEqual([])
+    listing.expires_at = null
+    expect((await getRecentlyViewedForUser()).map((r) => r.id), 'no expiry').toEqual([])
+  })
+
+  it('the guest query shows no archived listing and no active listing past its expiry', async () => {
+    expect((await getRecentlyViewedForGuest([L3, L1])).map((r) => r.id), 'archived and active').toEqual([L1])
+    db.tables.listings.find((l) => l.id === L1)!.expires_at = '2000-01-01T00:00:00Z'
+    expect((await getRecentlyViewedForGuest([L3, L1])).map((r) => r.id), 'archived and expired').toEqual([])
   })
 
   it('nobody signed in gets nothing, and the table is not read', async () => {

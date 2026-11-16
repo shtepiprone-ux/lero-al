@@ -1,9 +1,12 @@
 # Kickoff template (at most 200 lines, the "## OWASP" checklist not counted)
 
-`scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>` and the
-200-line limit for every kickoff from Sprint 93 on, and runs the OWASP gate (`scripts/quality/owasp.mjs`, owner request
-2026-11-07: every task design, edit and review is held against https://cheatsheetseries.owasp.org/index.html). A closed task's kickoff moves to `tasks/Archive/`; every kickoff
-outside it is an open task's and carries a complete mobile adaptation record.
+`scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>`, the
+200-line limit, a "## Cause" with a source and a "Fix:" line, and a "## Read set" within 3 000 lines for every kickoff
+from Sprint 93 on (those written before 2026-11-16 are listed in `CAUSE_GRANDFATHERED` until next revised), and runs
+the OWASP gate (`scripts/quality/owasp.mjs`, owner request 2026-11-07: every task design, edit and review is held
+against https://cheatsheetseries.owasp.org/index.html). A closed task's kickoff moves to `tasks/Archive/`; every
+kickoff outside it is an open task's and carries a complete mobile adaptation record. A kickoff is as long as its fix
+needs: a two-line fix gets a short kickoff (owner, 2026-11-16).
 
 ```markdown
 # Task <n> — <outcome in plain words>
@@ -14,10 +17,21 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 ## Goal
 <2–5 sentences: what is wrong today (with source path:line or command output) and what is true after the task>
 
+## Cause
+<the fact that produces the problem, with its source: `path:line`, or a `command` and its output>
+Fix: <the change that removes that cause; the scope is this change and nothing more>
+
 ## Scope
-- Files to change: <paths>
+- <each change, one line; the files are in "## Read set">
 - Dependencies: none | <name@version — npm view result: first release, version date, install script>
 - Out of scope: <what is deliberately not touched>
+
+## Read set
+- `<path>` — <n> lines
+- `<path>` — new, <n> lines
+(Every file the implementer changes, with its line count now; `check-files.mjs` compares each count with the file while
+"## Review" is empty and refuses a total over 3 000 lines: such a task is split. `read-coverage.mjs` holds the
+implementer to three full passes over these files.)
 
 ## Attack surface
 "Unchanged" — or the threat model of `.claude/rules/threat-model.md` (≤ 30 lines) and the authorization-matrix rows.

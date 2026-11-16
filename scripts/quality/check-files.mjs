@@ -69,9 +69,20 @@ export const SECRET_PATTERNS = [
 ];
 const CODE_EXT = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
 const KICKOFF = /^tasks\/Sprints\/Sprint_(\d+)_kickoff_prompt_Task_\d+_.+\.md$/;
-export const KICKOFF_SECTIONS = ['## Goal', '## Scope', '## Attack surface', '## OWASP', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
+export const KICKOFF_SECTIONS = ['## Goal', '## Cause', '## Scope', '## Read set', '## Attack surface', '## OWASP', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
 const KICKOFF_FIRST_SPRINT = 93;
 const KICKOFF_MAX_LINES = 200;
+// Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it"; "the size
+// limit must be checked by a tool, not by the model". "## Cause" holds the fact with its source and a "Fix:" line; "## Read
+// set" lists every file the implementer will change with its line count, at most MAX_READ_SET_LINES in all (more: split
+// the task at design). Kickoffs written before that rule are listed here; an open one gains both sections when it is
+// next revised, and leaves the list then.
+export const MAX_READ_SET_LINES = 3000;
+export const CAUSE_GRANDFATHERED = new Set(['926', '939', '945', '947', '948', '950', '951', '952', '953', '954', '955', '957', '958', '959', '962', '963', '964', '965', '967', '968', '969', '970', '971', '972', '973', '974', '977', '978', '979', '980']);
+const NEW_SECTIONS = new Set(['## Cause', '## Read set']);
+/** A source of a fact: `path:line` (or a range), or a command or query in backticks whose output is quoted. */
+const CAUSE_SOURCE = /`[^`\s]+\.[A-Za-z0-9]+:\d+(?:-\d+)?`|`(?:node|npm|npx|gh|git|select|grep|rg) [^`]+`/;
+const READ_SET_ENTRY = /^- `([^`]+)` — (?:(new), )?(\d+) lines?$/;
 // Kickoffs approved before the OWASP gate existed: OWASP_GRANDFATHERED in owasp.mjs, one list for both tools.
 
 const lineOf = (text, index) => text.slice(0, index).split('\n').length;
@@ -153,7 +164,7 @@ export function checkFile(rel, buf, { exists = inRepository } = {}) {
     }
     out.push(...ledgerFindings(rel, body, exists));
     const k = KICKOFF.exec(rel);
-    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) out.push(...kickoffFindings(body), ...owaspFindings(rel, body));
+    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) out.push(...kickoffFindings(body, { task: /_Task_(\d+)_/.exec(rel)?.[1] }), ...owaspFindings(rel, body));
   }
   return out;
 }
@@ -335,8 +346,66 @@ export function owaspFindings(rel, body) {
     .map((f) => finding('owasp', f.message, f.line));
 }
 
+/** The number of lines of a repository file (a final newline ends the last line), or null when it is not a regular file
+ *  inside the repository (a path that leaves the root, or a folder, is never read). */
+export function lineCount(rel, { root = ROOT } = {}) {
+  const abs = path.resolve(root, rel);
+  const inside = path.relative(root, abs);
+  if (!inside || inside.startsWith('..') || path.isAbsolute(inside)) return null;
+  const buf = readRegularFile(abs);
+  if (!buf) return null;
+  const lines = buf.toString('utf8').split('\n');
+  return lines.length > 1 && lines[lines.length - 1] === '' ? lines.length - 1 : lines.length;
+}
+
+/** The lines of one section (without its heading) and the 1-based number of its first line, or null without the section. */
+function sectionLines(lines, heading) {
+  const i = lines.findIndex((l) => l.trim() === heading);
+  if (i < 0) return null;
+  const end = lines.findIndex((l, j) => j > i && /^## /.test(l));
+  return { first: i + 2, lines: lines.slice(i + 1, end < 0 ? undefined : end) };
+}
+
+/**
+ * "## Cause" names the fact behind the problem with its source and the fix; "## Read set" lists the files to change with
+ * their line counts, within MAX_READ_SET_LINES. While "## Review" is empty (the design stage) each count must equal the
+ * file as it is, so the numbers come from the files, not from the model.
+ */
+export function causeAndReadSetFindings(lines, { lineCount: count = lineCount } = {}) {
+  const out = [];
+  const cause = sectionLines(lines, '## Cause');
+  if (cause) {
+    if (!CAUSE_SOURCE.test(cause.lines.join('\n'))) out.push(finding('kickoff', '"## Cause" names no source of the fact (`path:line`, or a `command` or query whose output it quotes)', cause.first - 1));
+    if (!cause.lines.some((l) => /^Fix: \S/.test(l))) out.push(finding('kickoff', '"## Cause" has no "Fix: <the change that removes the cause>" line', cause.first - 1));
+  }
+  const set = sectionLines(lines, '## Read set');
+  if (set) {
+    // the design stage: "## Review" holds nothing but the template's placeholder. After it, the files change with the work
+    // (a new file exists, a count grows), so only the limit is checked.
+    const review = sectionLines(lines, '## Review');
+    const design = !review || !review.lines.join('\n').replace(/<[^>]*>/g, '').trim();
+    let total = 0;
+    let entries = 0;
+    set.lines.forEach((l, k) => {
+      if (!l.trim()) return;
+      const m = READ_SET_ENTRY.exec(l);
+      if (!m) { out.push(finding('kickoff', '"## Read set" line must be "- `path` — <n> lines" or "- `path` — new, <n> lines"', set.first + k)); return; }
+      entries++;
+      total += Number(m[3]);
+      if (!design) return;
+      const actual = count(m[1]);
+      if (m[2] && actual !== null) out.push(finding('kickoff', `${m[1]} exists, so it is not new (${actual} lines)`, set.first + k));
+      if (!m[2] && actual === null) out.push(finding('kickoff', `${m[1]} does not exist: mark it "new, <n> lines"`, set.first + k));
+      if (!m[2] && actual !== null && actual !== Number(m[3])) out.push(finding('kickoff', `${m[1]} has ${actual} lines, not ${m[3]}`, set.first + k));
+    });
+    if (!entries) out.push(finding('kickoff', '"## Read set" lists no file', set.first - 1));
+    if (total > MAX_READ_SET_LINES) out.push(finding('kickoff', `the read set is ${total} lines > ${MAX_READ_SET_LINES} (flow.md §1: split the task)`, set.first - 1));
+  }
+  return out;
+}
+
 /** A kickoff written from Sprint 93 on follows .claude/rules/kickoff-template.md. */
-export function kickoffFindings(body) {
+export function kickoffFindings(body, { task, lineCount: count = lineCount } = {}) {
   const out = [];
   const lines = body.split('\n');
   // The "## OWASP" section is a checklist with one line per required sheet; it does not count towards the length limit.
@@ -346,12 +415,14 @@ export function kickoffFindings(body) {
   if (lines.length - owaspLines > KICKOFF_MAX_LINES + 1) out.push(finding('kickoff', `${lines.length - owaspLines} lines > ${KICKOFF_MAX_LINES}, the "## OWASP" checklist not counted (flow.md §1: split the task)`));
   if (!/^# Task \d+ — \S/.test(lines[0] ?? '')) out.push(finding('kickoff', 'first line must be "# Task <n> — <outcome>"', 1));
   let last = -1;
-  for (const s of KICKOFF_SECTIONS) {
+  const grandfathered = CAUSE_GRANDFATHERED.has(task);
+  for (const s of KICKOFF_SECTIONS.filter((x) => !grandfathered || !NEW_SECTIONS.has(x))) {
     const i = lines.findIndex((l) => l.trim() === s);
     if (i < 0) out.push(finding('kickoff', `missing section "${s}" (kickoff-template.md)`));
     else if (i < last) out.push(finding('kickoff', `section "${s}" is out of order`, i + 1));
     else last = i;
   }
+  if (!grandfathered) out.push(...causeAndReadSetFindings(lines, { lineCount: count }));
   const ac = lines.findIndex((l) => l.trim() === '## Acceptance criteria');
   if (ac >= 0) {
     const end = lines.findIndex((l, i) => i > ac && l.startsWith('## '));

@@ -9,6 +9,7 @@ import {
   type UserWithLocation,
 } from '@/components/admin/AdminUserProfileView'
 import { AdminUserAvatarFieldView } from '@/components/admin/AdminUserAvatarFieldView'
+import { displayWebsite } from '@/lib/security/safeUrl'
 import { AdminPageFrame } from '@/components/admin/AdminPageFrame'
 import { withAdminShell } from '@/stories/_StoryAdminShell'
 import { storyT } from '@/stories/_storyI18n'
@@ -71,7 +72,8 @@ function valuesFromUser(user: UserWithLocation | null): AdminUserProfileFormValu
     locationId: user.location_id ?? (undefined as unknown as number),
     companyName: user.company_name ?? '',
     companyLogoUrl: user.company_logo_url ?? '',
-    website: user.website ?? '',
+    // as the container builds it: the website is typed and shown as a host, without http:// or https:// (Task 956 AC13)
+    website: displayWebsite(user.website),
     position: user.position ?? '',
     yearStarted: user.year_started ?? undefined,
     status: user.status ?? 'active',
@@ -186,6 +188,9 @@ export const ViewNoHistoryControls: Story = {
 }
 
 export const Edit: Story = { render: () => <ProfileDemo mode="edit" user={FIXTURE_PROFILE_USER_PRIVATE} isDirty /> }
+
+// Task 956 AC13: the website line of an agent in edit mode (the field holds the host, its placeholder has no scheme); `ViewAgent` shows it as a link whose text is the host.
+export const EditAgent: Story = { render: () => <ProfileDemo mode="edit" user={FIXTURE_PROFILE_USER_AGENT} isDirty /> }
 
 export const EditBlocked: Story = {
   render: () => <ProfileDemo mode="edit" user={FIXTURE_PROFILE_USER_BLOCKED} isDirty />,

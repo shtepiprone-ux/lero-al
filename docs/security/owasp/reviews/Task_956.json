@@ -27,7 +27,7 @@
       "evidence": "the two changed components (`src/components/admin/AdminUserProfile.tsx`, `src/modules/cabinet/components/ProfileTab.tsx`) render only `t(...)` texts chosen by an error code as React text; `npm run lint` exit 0 and product gates 36/36 (review 4)"
     },
     "Cryptographic_Storage": { "verdict": "not applicable", "reason": "the Part A tools store and encrypt nothing; sha256 only names the proven files" },
-    "Database_Security": { "verdict": "finding", "finding": "F3", "note": "review 9 rolled-back apply of v8b.sql (7a027e736): `db-catalog-audit.mjs` checks 62 findings before and 0 after, I15 included (the notifications pair and site_settings_read, F29), `v8b-verify.sql` 16/16; F5 closed; AC1 and AC7 on the live catalog wait for the owner's apply" },
+    "Database_Security": { "verdict": "finding", "finding": "F3", "note": "review 10 rolled-back apply of v8b.sql with the Revision 5 preflight (working tree on 911652197): preflight rows 1-14 0 and row 16 (lapsed active listings) 5, `db-catalog-audit.mjs` checks 62 findings before and 0 after, I15 included (F29), `v8b-verify.sql` 16/16; F5 and F30 closed; AC1 and AC7 on the live catalog wait for the owner's apply" },
     "Denial_of_Service": { "verdict": "finding", "finding": "F3", "note": "the bucket size limit is Part B, AC7" },
     "Dependency_Graph_SBOM": { "verdict": "not applicable", "reason": "pg is a development dependency; the SBOM job covers production dependencies and is unchanged" },
     "DOM_based_XSS_Prevention": { "verdict": "not applicable", "reason": "the two changed components pick a translation key from an error code; no DOM sink, eval or URL is written" },

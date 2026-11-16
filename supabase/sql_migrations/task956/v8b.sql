@@ -1,7 +1,7 @@
 -- Task 956 Part B, hardening v8b: the database enforces the moderator keys, the contact gateway, the profile bounds,
 -- edit moderation and one public-listing rule. Written against the live catalog read on 2026-11-15 (59 findings of
 -- scripts/quality/db-catalog-audit.mjs). One transaction; every object is schema-qualified.
--- Run v8b-preflight.sql first: every count of its rows 1 to 14 must be 0 (row 15 only says how many websites step 0 rewrites). The way back is v8b-rollback.sql; the proof of both is
+-- Run v8b-preflight.sql first: every count of its rows 1 to 14 must be 0 (rows 15 and 16 are informational: the websites step 0 rewrites, the lapsed active listings step 6 closes). The way back is v8b-rollback.sql; the proof of both is
 -- scripts/quality/db-sql-roundtrip.mjs. After the apply run v8b-verify.sql: every row must say ok = true.
 begin;
 

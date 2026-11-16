@@ -1,6 +1,6 @@
 -- Task 956 Part B: the read-only check before v8b.sql. One statement, no write. Each row counts what v8b.sql would refuse, hide,
 -- or fail on; ANY row from 1 to 14 with problems > 0 stops the apply (the owner decides what to do with those rows, never the file).
--- Row 15 is not a problem: it counts the rows the data step of v8b.sql (step 0) rewrites, so the owner knows what the apply changes (the live value on 2026-11-15: 1).
+-- Rows 15 and 16 are informational, not problems: row 15 counts the rows the data step of v8b.sql (step 0) rewrites (the live value on 2026-11-15: 1); row 16 counts the active listings whose expiry has passed, which the one public rule of step 6 closes on the direct read (the live value on 2026-11-16: 5).
 -- Rows 5 and 15 read users.website as the data step will leave it: the same condition and the same value as v8b.sql step 0.
 select n, check_name, problems
 from (
@@ -27,9 +27,9 @@ from (
          (select count(*) from public.users where phone is not null and phone <> '' and phone !~ '^\+[1-9][0-9]{6,14}$')
   union all select 7, 'users.whatsapp that is not E.164 (an empty string passes)',
          (select count(*) from public.users where whatsapp is not null and whatsapp <> '' and whatsapp !~ '^\+[1-9][0-9]{6,14}$')
-  -- the rows the one public rule hides although the current policy shows them
-  union all select 8, 'active listings with no expiry or an expiry in the past (the new rule hides them)',
-         (select count(*) from public.listings where status = 'active'::public.listing_status and (expires_at is null or expires_at <= now()))
+  -- an active listing with no expiry is broken lifecycle data: the one public rule (`expires_at > now()`) can never show it; a lapsed expiry is not a problem (row 16)
+  union all select 8, 'active listings with no expiry (broken lifecycle data; the new rule hides them)',
+         (select count(*) from public.listings where status = 'active'::public.listing_status and expires_at is null)
   -- a key a policy asks for with no moderator row is off for every moderator, silently
   union all select 9, 'permission keys the policies ask for that have no moderator row in role_permissions',
          (select count(*) from (values ('listings.moderate'), ('listings.delete'), ('legal.manage'), ('locations.manage'), ('catalog.manage'),
@@ -77,5 +77,8 @@ from (
   union all select 15, 'users.website rows the data step changes (informational, not a problem: the live value on 2026-11-15 is 1)',
          (select count(*) from public.users
           where website is not null and website !~* '^[a-z][a-z0-9+.-]*:' and website ~ '^[^\s/?#:@]+\.[^\s/?#@]+' and website !~ '[[:cntrl:][:space:]]' and website !~ '^[^/?#]*[@\\]')
+  -- not a problem: the active listings whose expiry has passed; v8b.sql step 6 closes them on the direct PostgREST read, as the application already does (src/modules/listings/lib/visibility.ts:59-60)
+  union all select 16, 'active listings whose expiry has passed (informational, not a problem: v8b.sql closes them on the direct read, as the application already does)',
+         (select count(*) from public.listings where status = 'active'::public.listing_status and expires_at <= now())
 ) checks
 order by n;

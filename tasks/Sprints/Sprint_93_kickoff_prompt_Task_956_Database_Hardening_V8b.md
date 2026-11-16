@@ -176,11 +176,8 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Revisions 4a, 4b, 4 (F13, F29); Reviews 7, 8, 9; F5 check.
-4. Revision 5, Sonnet, own session from the commit that holds Review 9: F30 (AC19).
-5. Review 10, Opus, own session: `--review f1a72ef15` (Revisions 4 and 5 and Review 9's edits: Review 9's own
-   read-coverage is exit 1); AC10 LF and CRLF; AC19 in a rolled-back apply with `v8b-verify.sql` 16/16 and the audit
-   checks 0; the verdict; the apply step.
+0. Done: Revisions 4a, 4b, 4 (F13, F29), 5 (F30); Reviews 7, 8, 9, 10; F5 check.
+5. The owner applies `v8b.sql` (steps in Review 10's reply: `v8b-preflight.sql` rows 1-14 are 0, then `v8b-verify.sql` 16/16).
 6. After the owner's apply: `v8b-verify.sql`, AC1-AC11, `--save supabase/catalog.json`.
 
 ## Review
@@ -251,4 +248,10 @@ Review 9 of 7a027e736 (Revision 4, F13 and F29; 2026-11-16, session fdc173af) �
   still no Auth call (same strength, the F13 contract); `userWebsite.security.test.ts:42` allows only `users.create`, the
   key `createAdminUser` now asks (`assertPermission` stayed allow-all), no assertion changed.
   OWASP: OAuth2 and Unvalidated_Redirects_and_Forwards met; Database_Security F5 → F3. Findings: Medium 1 (F30).
-F30 — The preflight stops the apply on lapsed active listings (Medium, Business logic). See "## Cause"; Revision 5.
+F30 — The preflight stops the apply on lapsed active listings (Medium, Business logic). See "## Cause"; fixed in Revision 5 (Review 10).
+Review 10 of Revision 5 (working tree on 911652197, 2026-11-16, session 86b5cec6) — APPROVED. Scope: the 12 files of `git diff f1a72ef15` (2889 lines),
+  three passes; own `read-coverage.mjs --review f1a72ef15` 1: `wc -l $(git diff --name-only …)` ran before them (a substitution, off the allow-list: this
+  session's breach), three new passes follow this text. Executor record f730b1d9: `--transcript --review 911652197` 0, all 71 tool calls read, none writes
+  or names it. Tools 0: check-ruleset, lint, typecheck, `npm test -- --coverage` (400 files, 6594 tests), changed-lines-coverage, check-files, change-report,
+  `node --test` (207 pass, 3 skip); `owasp.mjs sync`/`check` 1 (the 8 upstream sheets of Review 8; `sheets.json` restored by sha256). Live audit 62 (baseline).
+  AC10 LF 0, CRLF 0. AC19: 4/4 red on 7a027e736; row 8 put back 1 red, row 16 and the new `v8b.sql` header removed 2 red; rolled-back apply: rows 1-14 0, row 16 = 5 (direct count 5), verify 16/16, audit 62 → 0, anon reads 0 lapsed listings. Findings: Critical 0, High 0, Medium 0, Low 0; risk low.

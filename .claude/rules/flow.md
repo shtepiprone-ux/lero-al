@@ -142,13 +142,16 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
    `node scripts/quality/check-files.mjs --worktree`. For each security test, remove the control once and show the test
    failing (`security-testing.md`).
 6. Report each command with its exit code and the relevant output lines, the failing-first output of each new test, the
-   `read-coverage.mjs` output and the session id; anything not done is stated as not done.
+   `read-coverage.mjs` output, the session id and the full path of the session record; anything not done is stated as not done.
 
 ## 3. Review (Opus)
 
 The executor's report is a supplier assertion, not evidence (Verifying Third Party Agent Execution Evidence): the
 reviewer reruns every claimed command on the candidate commit, runs `read-coverage.mjs --transcript <executor's
-record> --review <the commit the revision started from>` when that record is on this machine (a `read-coverage.mjs`
+record> --review <the commit the revision started from>` when that record is on this machine (each account keeps its
+own config folder: the record is `<session id>.jsonl` under any `~/.claude*/projects/<project>/`, found by the session id
+with a read-only `find` or `ls` when the report lacks the path, since any other command naming a projects folder of a
+config folder counts as a touch of the reviewer's own record; Task 956 Review 9), with the tree as the candidate commit holds it (a `read-coverage.mjs`
 output missing from the report, or exit 1, is a finding), reads every command the executor's session ran and every
 script it wrote or ran, in that record and its subagents' (owner, O956-3, 2026-11-16, translated: "the reviewer reads
 every run command and every script of the session"; the tool sees an Edit or Write of the record and a command naming

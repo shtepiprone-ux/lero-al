@@ -17,7 +17,10 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    `node scripts/quality/read-coverage.mjs --review <the commit the revision started from>` exits 0 (the review runs in
    a session of its own; the commit is an ancestor of HEAD); a hunk no Scope item needs is a finding, and so is a change that does not remove the kickoff's "## Cause".
    The implementer's `read-coverage.mjs` output is checked: missing or exit 1 is a finding; when the implementer's
-   record is on this machine, rerun it with `--transcript <record> --review <the same commit>`, and read every command
+   record is on this machine (`<session id>.jsonl` under any `~/.claude*/projects/<project>/`: each account has its own
+   config folder; searched only with a read-only `find` or `ls`, as any other command naming a projects folder of a
+   config folder touches the reviewer's own record), rerun it with `--transcript <record> --review <the same commit>` on a tree equal to the candidate
+   commit (the reviewer's own uncommitted edits set aside first), and read every command
    that session ran and every script it wrote or ran (in its record and its subagents'): the tool sees an Edit or Write
    of the record and a command naming it, not a program that writes it, so a write to the session record found there
    is a finding (owner, O956-3; `flow.md` §3).

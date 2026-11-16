@@ -27,7 +27,7 @@
       "evidence": "the two changed components (`src/components/admin/AdminUserProfile.tsx`, `src/modules/cabinet/components/ProfileTab.tsx`) render only `t(...)` texts chosen by an error code as React text; `npm run lint` exit 0 and product gates 36/36 (review 4)"
     },
     "Cryptographic_Storage": { "verdict": "not applicable", "reason": "the Part A tools store and encrypt nothing; sha256 only names the proven files" },
-    "Database_Security": { "verdict": "finding", "finding": "F5", "note": "anon grants, bucket bounds and the 22 policies pass the audit in a rolled-back apply (0 findings); the duplicate notifications policies have no automated check" },
+    "Database_Security": { "verdict": "finding", "finding": "F3", "note": "review 9 rolled-back apply of v8b.sql (7a027e736): `db-catalog-audit.mjs` checks 62 findings before and 0 after, I15 included (the notifications pair and site_settings_read, F29), `v8b-verify.sql` 16/16; F5 closed; AC1 and AC7 on the live catalog wait for the owner's apply" },
     "Denial_of_Service": { "verdict": "finding", "finding": "F3", "note": "the bucket size limit is Part B, AC7" },
     "Dependency_Graph_SBOM": { "verdict": "not applicable", "reason": "pg is a development dependency; the SBOM job covers production dependencies and is unchanged" },
     "DOM_based_XSS_Prevention": { "verdict": "not applicable", "reason": "the two changed components pick a translation key from an error code; no DOM sink, eval or URL is written" },
@@ -79,6 +79,11 @@
       "quotes": ["Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."],
       "evidence": "`node --test scripts/quality/install-scripts.test.mjs` 4/4; `pg` 8.23.1 exact, its 7 lockfile versions from registry.npmjs.org with integrity (`package-lock.json`)"
     },
+    "OAuth2": {
+      "verdict": "met",
+      "quotes": ["Clients and Authorization Server must not expose URLs that forward the user's browser to arbitrary URIs obtained from a query parameter"],
+      "evidence": "review 9: the OAuth callback (`src/app/auth/callback/route.ts:14`) still takes `next` only through `safeNextPath(..., origin, '/')` and redirects to `${origin}${next}`; the branch changes only its profile step (AC15). `src/app/auth/callback/__tests__/route.security.test.ts` passes; with `next` read from the query without `safeNextPath` 4 cases turn red (`@evil.example`, `.evil.example`, `https://evil.example`, `javascript:alert(1)`), file restored by sha256"
+    },
     "OS_Command_Injection_Defense": { "verdict": "not applicable", "reason": "the new tools start no process; only db-sql-roundtrip.test.mjs spawns node with an argument array" },
     "Prototype_Pollution_Prevention": { "verdict": "not applicable", "reason": "the tools read JSON snapshots into plain records and merge no request object" },
     "Query_Parameterization": {
@@ -118,6 +123,11 @@
     "Third_Party_Javascript_Management": { "verdict": "not applicable", "reason": "no script loading changes in a database task" },
     "Threat_Modeling": { "verdict": "finding", "finding": "F3", "note": "each mitigation of the attack surface is an acceptance criterion of Part B" },
     "Transport_Layer_Security": { "verdict": "not applicable", "reason": "the refactored connect keeps verified TLS with the project CA, unchanged from main" },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "met",
+      "quotes": ["If used, do not allow the URL as user input for the destination."],
+      "evidence": "review 9: `/auth/confirm` (`src/app/auth/confirm/route.ts:25`) and `/auth/callback` (`:14`) build the destination with `safeNextPath` and the request origin; `createAdminUser` invites with the fixed `trustedRedirectUrl(`${trustedAppOrigin(null)}/auth/callback?next=/sq/auth/reset-password`)` (`src/modules/admin/actions/index.ts:617`). The confirm, callback and `src/lib/auth/__tests__/safeRedirect.security.test.ts` suites pass (75 tests); without `safeNextPath` in either route 4 cases turn red, each file restored by sha256"
+    },
     "User_Privacy_Protection": { "verdict": "finding", "finding": "F3", "note": "the narrowed public_user_profiles view is Part B, AC7" },
     "Verifying_Third_Party_Agent_Execution_Evidence": {
       "verdict": "met",

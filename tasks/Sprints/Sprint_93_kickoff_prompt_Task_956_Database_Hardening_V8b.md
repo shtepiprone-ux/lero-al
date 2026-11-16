@@ -16,16 +16,16 @@ also carries the rules and tools that hold every session to its read set (owner 
 
 ## Cause
 
-- F13: `src/modules/admin/actions/index.ts:590` calls `assertPermission('users.create')`, which throws
-  `Error('forbidden')` (`src/lib/auth/permissions.ts:42`); `handleCreate`
-  (`src/components/admin/AdminUserProfile.tsx:244-258`) awaits it without a catch: "saving" forever, no banner.
-Fix: `createAdminUser` returns `{ error: 'forbidden' }` (translated, AC14) when the caller lacks `users.create`.
-- F29: `supabase/sql_migrations/task956/v8b.sql:283-285` drops only the two `notifications` duplicates; the live
-  catalog also holds `site_settings_read`, a copy of `site_settings_public_read` (both SELECT for public, `true`):
-  `node scripts/quality/db-catalog-audit.mjs` → `I15 public.site_settings.site_settings_read: repeats "site_settings_public_read" (SELECT for public)`.
-  After the apply AC1 would still fail on it.
-Fix: `v8b.sql` drops `site_settings_read`; `v8b-rollback.sql` creates it again as it is live (SELECT to public using
-`true`); `v8b-preflight.sql` lists it among the policies that must exist (`:53`).
+- F30: `supabase/sql_migrations/task956/v8b-preflight.sql:2` stops the apply on any row 1-14 above 0, and row 8
+  (`:31-32`) counts an active listing whose expiry has passed as a problem. That is the intended effect of the one
+  public rule (D72), which the application already enforces (`src/modules/listings/lib/visibility.ts:59-60`, the
+  public queries `:165`), and the expiry job changes no listing (`src/app/api/cron/listings-expiry/route.ts:6`, D56/D58),
+  so lapsed active listings appear every day:
+  `select count(*) from public.listings where status = 'active' and expires_at <= now()` → 5 (2026-11-16, all expired 2026-11-15 23:00Z);
+  `select count(*) from public.listings where status = 'active' and expires_at is null` → 0. The apply can never start.
+Fix: row 8 counts only active listings with no expiry (broken lifecycle data, still a stop); a new informational
+row 16 counts the lapsed ones (what v8b closes on the direct path, as the application already does); the headers of
+`v8b-preflight.sql` (`:1-4`) and `v8b.sql` (`:4`) name rows 15 and 16 as informational.
 
 ## Scope
 
@@ -36,18 +36,16 @@ Fix: `v8b.sql` drops `site_settings_read`; `v8b-rollback.sql` creates it again a
   `kickoff-template.md`, `README.md`, the three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set"
   checks of `check-files.mjs`, with their tests; Revision 4a (993c14088, F14-F22); Revision 4b (F23-F27, approved in
   Review 8). No further change of the command allow-list in this task (O956-4).
-- F5 closed without a change (Revision 4 check, see "## Review"). Revision 4, Sonnet: F13 in `createAdminUser` and
-  its test (the banner already translates `forbidden`: Review 8); F29 in the three SQL files of "## Read set".
+- F5 closed without a change (Revision 4 check). Revision 4 (F13, F29) approved in Review 9. Revision 5, Sonnet: F30
+  in the two SQL files of "## Read set" and its AC19 test; no other change.
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979),
   public profiles (980), the unused admin create form (982).
 
 ## Read set
-Counted at dfcf2085b
-- `src/modules/admin/actions/index.ts` — 1022 lines
-- `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts` — 92 lines
-- `supabase/sql_migrations/task956/v8b.sql` — 290 lines
-- `supabase/sql_migrations/task956/v8b-rollback.sql` — 191 lines
-- `supabase/sql_migrations/task956/v8b-preflight.sql` — 80 lines
+Counted at 7a027e736
+- `supabase/sql_migrations/task956/v8b-preflight.sql` — 81 lines
+- `supabase/sql_migrations/task956/v8b.sql` — 291 lines
+- `src/tests/__tests__/v8bPreflight.test.ts` — new, 40 lines
 
 ## Attack surface
 
@@ -170,15 +168,19 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 - AC18 A kickoff's counts, sources and grandfathering hold after design — test: `scripts/quality/check-files.test.mjs`
   (a wrong count against the named commit, a `path:line` source not in that commit, a command source without output,
   and a revised grandfathered kickoff each fail; a source whose file is gone now but is in the commit passes).
+- AC19 The preflight stops only on what would fail or leave broken data — test: `src/tests/__tests__/v8bPreflight.test.ts`
+  (row 8 counts only active listings with `expires_at is null`; row 16 counts those with `expires_at <= now()` and is
+  named informational; the headers of both files name rows 15 and 16 as informational; red on the file of 7a027e736),
+  and Opus's rolled-back apply on the live project: rows 1-14 are 0 and row 16 counts the lapsed active listings.
 
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Revision 4a (993c14088), Review 7 (F23-F27), Revision 4b, Review 8 (APPROVED, O956-4), F5 check.
-4. Revision 4, Sonnet, own session from dfcf2085b plus this kickoff: F13 and F29.
-5. Review 9, Opus, own session: `--review <commit before step 4>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
-   rolled-back apply with `db-catalog-audit.mjs` 0; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`;
-   the verdict; the apply step.
+0. Done: Revisions 4a, 4b, 4 (F13, F29); Reviews 7, 8, 9; F5 check.
+4. Revision 5, Sonnet, own session from the commit that holds Review 9: F30 (AC19).
+5. Review 10, Opus, own session: `--review f1a72ef15` (Revisions 4 and 5 and Review 9's edits: Review 9's own
+   read-coverage is exit 1); AC10 LF and CRLF; AC19 in a rolled-back apply with `v8b-verify.sql` 16/16 and the audit
+   checks 0; the verdict; the apply step.
 6. After the owner's apply: `v8b-verify.sql`, AC1-AC11, `--save supabase/catalog.json`.
 
 ## Review
@@ -186,7 +188,7 @@ Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2
 Review 5 (2026-11-16) — F10-F12, AC13-AC15 closed; gates 0 (6589 tests); AC10 0 LF/CRLF/mixed, red without the CRLF
 block; rolled-back apply: preflight 0 (row 15 = 1), audit 0, verify 16/16, session INSERT on `users` 42501.
 F3 — (open) every sheet whose evidence is AC1-AC7 waits for the apply.
-F5 — closed (Revision 4 check, see below). F13 — (P3, open, Sonnet): see "## Cause"; Revision 4.
+F5 — closed (Revision 4 check, see below). F13 — fixed in 7a027e736 (Review 9).
 F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2).
 Review 6 (rules and tools, 2026-11-16, session b23abf9c) — F14-F22 found (read-coverage trusted what the session sets;
   check-files held the kickoff only at design); OWASP: OAuth2, Unvalidated_Redirects_and_Forwards are Review 9's.
@@ -225,4 +227,28 @@ Revision 4, F5 check (dfcf2085b, 2026-11-16, session 2c16cac1, Opus). The I6 INS
   ignored, I15 off, operand order not normalised) each red (tests 12, 13, 13), restored byte for byte. Live baseline:
   `node scripts/quality/db-catalog-audit.mjs` 1, 62 findings (I3 1, I4 15, I5 22, I6 17, I7 1, I8 1, I9 2, I15 3);
   the I15 pair of `notifications` is dropped by `v8b.sql`, the `site_settings` pair is not: F29.
-F29 — (P2, open, Sonnet) a duplicate public read on `site_settings` stays after the apply: see "## Cause"; Revision 4.
+F29 — fixed in 7a027e736 (Review 9).
+Review 9 of 7a027e736 (Revision 4, F13 and F29; 2026-11-16, session fdc173af) — NEEDS REVISION (F30 only; O956-2).
+  Scope: the 7 files of `git diff f1a72ef15` (2197 lines), three passes. The first `read-coverage.mjs --review f1a72ef15`
+  exited 1: this session ran a read-only `git diff | while read f; do wc -l` before its passes (off the allow-list).
+  Three new passes over the final 11 files cleared the order; the rerun stays exit 1 on 4 record touches: the search
+  for the executor's record used `git -C`, `node -e` and `$CLAUDE_CONFIG_DIR` beside `.claude/projects` (reads only).
+  Not repairable in this session: Review 10 rereads from f1a72ef15 in a session of its own (Route step 5).
+  Executor record found under `~/.claude-account1/` (another account's config folder, not searched first; rule gap closed
+  in `flow.md` §2 step 6 and §3, review-task step 2): `--transcript` on the tree of 7a027e736 exit 0; all 89 tool calls
+  read, none writes or names the record (its break ran on a `git archive` copy in its scratchpad).
+  Tools: check-ruleset 0, `npm run lint` 0, `npm run typecheck` 0, `npm test -- --coverage` 0 (399 files, 6590 tests),
+  changed-lines-coverage 0 (index.ts 8/8), check-files 0 (the 7 files and this kickoff), change-report 0 (sensitive
+  paths and the two weakened auth suites are from Reviews 5-8). `owasp.mjs sync`/`check` 1 and `node --test
+  "scripts/quality/*.test.mjs"` 1 (206 pass, `owasp.test.mjs:287`): the 8 upstream sheets of Review 8, remap is its own
+  PR from `main` (owner); `sheets.json` restored to HEAD. Live audit 62 (exit 1, the v8b baseline).
+  AC10: `db-sql-roundtrip.mjs` LF 0 and CRLF 0 (234 rows). Rolled-back apply: verify 16/16, audit checks 62 → 0,
+  `site_settings` keeps `site_settings_public_read` and the three staff policies; preflight row 8 = 5 (F30).
+  Breaks, each restored by sha256: the throwing guard back (AC16 and userAdministration:194 red), the guard removed (2
+  red), the old userWebsite mock (11 red), rollback without `site_settings_read` (roundtrip 1), v8b without its drop
+  (audit I15), `next` without `safeNextPath` in callback and confirm (4 red each).
+  Files outside "## Read set", accepted: `userAdministration.security.test.ts:193-194` asserts the returned refusal and
+  still no Auth call (same strength, the F13 contract); `userWebsite.security.test.ts:42` allows only `users.create`, the
+  key `createAdminUser` now asks (`assertPermission` stayed allow-all), no assertion changed.
+  OWASP: OAuth2 and Unvalidated_Redirects_and_Forwards met; Database_Security F5 → F3. Findings: Medium 1 (F30).
+F30 — The preflight stops the apply on lapsed active listings (Medium, Business logic). See "## Cause"; Revision 5.

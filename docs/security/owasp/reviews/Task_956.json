@@ -2,7 +2,7 @@
   "task": "956",
   "sheets": {
     "Abuse_Case": { "verdict": "finding", "finding": "F3", "note": "the abuse case (a direct PostgREST write that skips moderation) is closed by Part B, AC5" },
-    "AI_Agent_Security": { "verdict": "finding", "finding": "F14", "note": "the diff's read-coverage.mjs takes a session record the agent can write as its evidence (a forged or empty transcript exits 0, F14) and misses test runs of other spellings and of subagents (F15); tool permissions are unchanged (.claude/settings.json is not in the diff)" },
+    "AI_Agent_Security": { "verdict": "finding", "finding": "F25", "note": "read-coverage.mjs fails closed on a missing, empty or foreign record and on an edit of the record, but a program the session runs can write it (F25); its allow-list lets code run inside allowed commands (F23); tool permissions are unchanged (.claude/settings.json is not in the diff)" },
     "Attack_Surface_Analysis": { "verdict": "finding", "finding": "F3", "note": "every entry point of the attack surface changes in Part B, AC1-AC7" },
     "Authentication": { "verdict": "not applicable", "reason": "no sign-in change; permissions.ts reads the same keys the policies will use" },
     "Authentication_Patterns": { "verdict": "not applicable", "reason": "no authentication code; the database authorizes by auth.uid() as before" },

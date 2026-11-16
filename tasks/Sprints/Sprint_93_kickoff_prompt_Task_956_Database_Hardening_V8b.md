@@ -16,20 +16,20 @@ also carries the rules and tools that hold every session to its read set (owner 
 
 ## Cause
 
-- F14-F22 (Review 6 gives each with its source and proof): `scripts/quality/read-coverage.mjs` takes what decides its
-  verdict from what the session controls: membership from modification time (`read-coverage.mjs:271-272`), the order
-  from command spellings (:47), the generated-file proof from any command text (:302), reads from any record it is
-  pointed at (:223); `scripts/quality/check-files.mjs` holds counts, sources and grandfathering only at design
-  (:385-386, :84, :81); `.claude/skills/review-task/SKILL.md:8-10` writes OWASP files into the reviewer's read set and
-  `.claude/rules/secure-code-review.md:16-19` still asks for the whole branch.
-Fix: membership by content against a committed base (each session starts from a tree the owner committed locally; a
-reviewer names the revision's base with `--review <commit>`, an ancestor of HEAD); every shell command, subagent
-records included, is a run or a change unless on a read-only allow-list; the generated-file proof is the tool's own
-invocation with a result that is not an error; only the running session's record or one the reviewer names, never
-empty, never written by the session; whole lines only; `sheets.json` (written by `owasp.mjs sync`) is a generated
-file and JSON data files are read by their changed objects; the Read set names the commit it was counted at and every
-count is checked against it; a `path:line` source exists with that line, a command source carries its quoted output;
-a grandfathered kickoff whose sha256 differs from the one recorded at grandfathering is held to the rule.
+- F23-F27 (Review 7 gives each proof): the read-only allow-list reads only the first word of each segment while the
+  shells run code inside arguments: `scripts/quality/read-coverage.mjs:83-95` splits a command without shell escapes and
+  :72 allows cmdlets that run `( )` and `{ }`, so `echo \" ; npm test`, `Write-Output (npm test)`,
+  `Get-ChildItem x | Where-Object { npm test }` and the pager option of git grep (:78) count as read-only (F23); :281
+  matches the bare session id, which also names the session's scratchpad folder, so every scratchpad command is "the
+  record touched" (F24); :78 refuses `-o` in every command, so the only-matching option of grep makes it a run (F27);
+  `scripts/quality/check-files.mjs:444` looks a `path:line` source up in the tree now, so a cause removed by deleting
+  its file fails its own kickoff (F26); a program the session runs can append Read entries to the record, while
+  `scripts/quality/read-coverage.mjs:12` says nothing the session sets decides the verdict (F25).
+Fix: an unquoted backslash escapes the next character and never opens a quote; an unquoted `(` or `{` makes the command
+a run; `--open-files-in-pager` is an output option; output options are refused only for the commands that write with
+them; a command touches the record when it names the record or its `projects/<project>/<id>` folder; a `path:line`
+source is looked up in the "Counted at" commit; the tool's comment and the rules say what it detects (an Edit or Write
+of the record, a command naming it) and that the reviewer reads every run and script of the session for the rest (F25).
 - F13: `src/modules/admin/actions/index.ts:590` calls `assertPermission('users.create')`, which throws
   `Error('forbidden')` (`src/lib/auth/permissions.ts:42`); `handleCreate`
   (`src/components/admin/AdminUserProfile.tsx:244-258`) awaits it without a catch: "saving" forever, no banner.
@@ -47,28 +47,24 @@ INSERT grants, each with its failing test; the live baseline re-counted.
   of AC4-AC6 and AC13-AC15.
 - Rules and tools (Opus, 2026-11-15/16): the facts rule, the cause rule and the read set in `CLAUDE.md`, `flow.md`,
   `kickoff-template.md`, `README.md`, the three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set"
-  checks of `check-files.mjs`, with their tests. Revision 4a (Opus): the F14-F22 fix in the files of "## Read set", and
-  two gaps its sessions met: execute-task step 8 named `CLAUDE_CODE_SESSION_ID`, which `read-coverage.mjs` holds as
-  touching the record; no rule said that a session that changes nothing counts its runs from its first command.
+  checks of `check-files.mjs`, with their tests; Revision 4a (993c14088, F14-F22). Revision 4b (Opus): the F23-F27 fix
+  in the files of "## Read set".
 - Revision 4, Opus: F5 in `db-catalog-audit.mjs` and its test (they hold unreviewed edits of the stopped session
   9de8af74). Revision 4, Sonnet: F13 in `createAdminUser` and its test. Their read set replaces the one below when
-  Revision 4a is approved.
+  Revision 4b is approved.
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979),
   public profiles (980), the unused admin create form (982).
 
 ## Read set
-Counted at be5a3d867
-- `scripts/quality/read-coverage.mjs` — 315 lines
-- `scripts/quality/read-coverage.test.mjs` — 193 lines
-- `scripts/quality/check-files.mjs` — 631 lines
-- `scripts/quality/check-files.test.mjs` — 341 lines
-- `.claude/rules/flow.md` — 172 lines
-- `.claude/rules/kickoff-template.md` — 93 lines
-- `.claude/rules/secure-code-review.md` — 163 lines
-- `CLAUDE.md` — 102 lines
-- `.claude/skills/review-task/SKILL.md` — 52 lines
-- `.claude/skills/create-task/SKILL.md` — 44 lines
-- `.claude/skills/execute-task/SKILL.md` — 35 lines
+Counted at 993c14088
+- `scripts/quality/read-coverage.mjs` — 431 lines
+- `scripts/quality/read-coverage.test.mjs` — 306 lines
+- `scripts/quality/check-files.mjs` — 708 lines
+- `scripts/quality/check-files.test.mjs` — 387 lines
+- `.claude/rules/flow.md` — 188 lines
+- `.claude/rules/kickoff-template.md` — 97 lines
+- `CLAUDE.md` — 107 lines
+- `.claude/skills/execute-task/SKILL.md` — 41 lines
 
 ## Attack surface
 
@@ -83,7 +79,7 @@ moderator with and without the key, admin, blocked account.
 
 Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
 
-- AI_Agent_Security: "Fail closed when risk classification, approval validation, policy lookup, or audit logging fails." — `read-coverage.mjs` fails when the session record is missing, empty, not the session's own or written by the session, and decides nothing from what the session can set — AC17.
+- AI_Agent_Security: "Fail closed when risk classification, approval validation, policy lookup, or audit logging fails." — `read-coverage.mjs` fails when the session record is missing, empty or not the session's own, and when the session edits it or names it in a command — AC17.
 - Abuse_Case: "it is important to identify the attacks which the application must defend against" — a direct PostgREST write that skips moderation is the abuse case of T-rows — AC5.
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names each entry point the task adds, removes or changes — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Authentication: not applicable — no sign-in change; permissions.ts reads the same keys the policies use.
@@ -182,23 +178,25 @@ components unchanged; the `AdminUserProfileView` Story shows both modes. No toke
 - AC16 A staff member without `users.create` gets the refusal, never a hang — test:
   `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts` (without the key `{ error: 'forbidden' }` and
   no Auth admin call; with it the account is created as before).
-- AC17 `read-coverage.mjs` cannot be satisfied by what the session sets — test: `scripts/quality/read-coverage.test.mjs`
-  (each proof of Review 6 is a red case: a forged or empty record, a record the session wrote, a 1000-character prefix,
-  each of the nine command spellings and a subagent command before the third pass, a set-back mtime, an `echo` of the
-  three generated-file commands; a review read set with `sheets.json` and `controls.json` stays within the limit).
+- AC17 `read-coverage.mjs` decides from the repository and the session's own record, never from a spelling — test:
+  `scripts/quality/read-coverage.test.mjs` (each proof of Reviews 6 and 7 is a red case: a forged or empty record, a
+  record the session wrote, a 1000-character prefix, the nine command spellings, a subagent command before the third
+  pass, a set-back mtime, an `echo` of the generated-file commands, the four commands of F23; a review read set with
+  `sheets.json` and `controls.json` stays within the limit; a scratchpad command is no record touch and the
+  only-matching option of grep is read-only).
 - AC18 A kickoff's counts, sources and grandfathering hold after design — test: `scripts/quality/check-files.test.mjs`
-  (a wrong count against the named commit, a missing `path:line` source, a command source without output, and a
-  revised grandfathered kickoff each fail).
+  (a wrong count against the named commit, a `path:line` source not in that commit, a command source without output,
+  and a revised grandfathered kickoff each fail; a source whose file is gone now but is in the commit passes).
 
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
-0. Done: Review 6 (rules and tools), F14-F22.
-1. Revision 4a, Opus, own session: AC17-AC18 tests first (red), the F14-F22 fix, three passes, `read-coverage.mjs` 0,
-   the gates; the Read set line names its commit.
-2. Review 7, Opus, own session: `read-coverage.mjs --review <commit before step 1>`; on approval the Read set becomes that of steps 3 and 4.
+0. Done: Revision 4a (993c14088), Review 7 (F23-F27).
+1. Revision 4b, Opus, own session: the AC17-AC18 cases of F23-F27 first (red), the fix, three passes,
+   `read-coverage.mjs` 0, the gates.
+2. Review 8, Opus, own session: `read-coverage.mjs --review <commit before step 1>`; on approval the Read set becomes that of steps 3 and 4.
 3. Revision 4, Opus (F5) and 4. Revision 4, Sonnet (F13), each in its own session, one after the other.
-5. Review 8, Opus, own session: `--review <commit before step 3>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
+5. Review 9, Opus, own session: `--review <commit before step 3>`; the gates; AC10 LF and CRLF; `v8b-verify.sql` in a
    rolled-back apply; OAuth2 and Unvalidated_Redirects_and_Forwards in `Task_956.json`; the verdict; the apply step.
 6. After the owner's apply: `v8b-verify.sql`, AC1-AC11, `--save supabase/catalog.json`.
 
@@ -209,48 +207,17 @@ block; rolled-back apply: preflight 0 (row 15 = 1), audit 0, verify 16/16, sessi
 F3 — (open) every sheet whose evidence is AC1-AC7 waits for the apply.
 F5 — (P2, open, Opus) and F13 — (P3, open, Sonnet): see "## Cause"; Revision 4.
 F9 — (process, closed by cause) the three passes were asked over 62 472 lines (`wc -l`); now the read set (`flow.md` §2).
-Review 6 (rules and tools, Route step 0, 2026-11-16, session b23abf9c) — facts: `read-coverage.mjs --files-since
-  2026-11-16T05:50:00Z` exit 0 (17 files, 2823 lines, 3 passes each; `db-catalog-audit.mjs` and its test came in by
-  mtime: session 9de8af74 ran Route step 1 at the same time, last write 06:37:21Z, stopped by the owner); README.md read
-  in full. `owasp.mjs sync`/`check` 1/1 (Kubernetes_Security, Multi_Tenant_Security changed upstream: managed-cluster
-  and SQLAlchemy text, no new requirement here), remapped in `controls.json`, then 0/0. `node --test
-  "scripts/quality/*.test.mjs"` 0 (176 pass, 3 skip: no BASE_URL); eslint on the four tool files 0; check-files 0 on
-  the 20 changed files and on the 32 Sprint 93 kickoffs. 23 deliberate breaks (11 read-coverage, 12 check-files) each
-  red, sha256 restored. Record: AI_Agent_Security F14, LLM_Prompt_Injection_Prevention met, MCP_Security not applicable.
-  `owasp.mjs review <kickoff> --base main` exit 1: no verdict for OAuth2 and Unvalidated_Redirects_and_Forwards, which
-  the diff against main (94 files) triggers; their verdicts are Route step 3's.
-F14 — (P2, open, Opus) read-coverage trusts any record: `--transcript` takes any file (`read-coverage.mjs:223`), any
-  JSON line counts as a Read (:71-102), so forged reads exit 0, a record that wrote nothing has an empty read set and
-  exits 0 (:307), and 1000 characters count as reading a 37 210-character line (:108; Read here shows whole lines).
-  Contradicts `flow.md:118` and `read-coverage.mjs:13-14`. Fix: the read set does not come from the record (F16); only
-  the running session's record or one the reviewer names is read; the prefix branch goes.
-F15 — (P2, open, Opus) the order rule knows only the spellings of GREEN_RUN (`read-coverage.mjs:47`): `npx eslint`,
-  `npx tsc`, `npm t`, `npm run-script test`, `node --experimental-vm-modules --test`, a direct vitest path,
-  `check-files.mjs --worktree`, `npm run check:*`, `owasp.mjs gate` before the third pass exit 0; subagent commands
-  are in `<session>/subagents/agent-*.jsonl` (session 1450b70d: 38 Bash calls there, 0 sidechain lines in the parent),
-  never read (:206-216). Contradicts `CLAUDE.md:63-64`, `flow.md:119-120`. Fix: every shell command in the window is
-  a run unless read-only by an allow-list; the session's subagent records are read.
-F16 — (P2, open, Opus) membership by modification time (`read-coverage.mjs:271-272`): a shell-written file whose
-  mtime is set back leaves the author's and the reviewer's read set (probe file absent, its twin present, both
-  deleted), and another session's writes enter it (9de8af74 reset this review's passes). Fix: membership by content
-  against the revision's recorded base, not by mtime.
-F17 — (P3, open, Opus) the generated-file rule takes any command containing the three names
-  (`read-coverage.mjs:302`): `echo change-report.mjs --lockfile-age install-scripts.test.mjs npm audit` exits 0.
-  Fix: the tool's own invocation, with a result that is not an error.
-F18 — (P2, open, Opus) `review-task/SKILL.md:8-10` (and create-task step 1) runs `owasp.mjs sync` and the remap before
-  the passes; `sheets.json` (967 lines) and `controls.json` (2287) then join the read set (`read-coverage.mjs:271`):
-  3790 lines, exit 1, until `sheets.json` was put back to HEAD bytes. Fix: the files `owasp.mjs` writes are checked by
-  `owasp.mjs check` as generated files, or sync and remap run after `read-coverage.mjs`.
-F19 — (P2, open, Opus) `secure-code-review.md:16-19` has the reviewer read every file of `git diff main...HEAD` (F9:
-  62 472 lines); `review-task/SKILL.md:25` and `flow.md:134` only the read set, and `flow.md:137-138` sends the
-  reviewer to `secure-code-review.md`. Fix: §1.4 names the read set and what covers the rest of the branch.
-F20 — (P3, open, Opus) Read set counts are compared only while "## Review" is empty (`check-files.mjs:385-386`, :395),
-  so a revision's never are: 242 and 134 above match neither HEAD (203, 98) nor the files now (265, 178), and counts
-  1 and 5 for the 1022- and 92-line files pass. Contradicts `check-files.mjs:371-372`, `flow.md:92-93`. Fix: the
-  revision under design is checked until its review is written.
-F21 — (P3, open, Opus) the "## Cause" source is a pattern (`check-files.mjs:84`, :378) and kickoffs skip the
-  stale-path check (:189): `src/nope/does-not-exist.ts:1`, or a `grep` with no output, passes. Fix: a `path:line`
-  source exists with that line; a command source carries its quoted output.
-F22 — (P3, open, Opus) "until next revised" (`kickoff-template.md:5`, `check-files.mjs:78-79`) has no check: the list
-  (:81) is fixed and the 962 kickoff with an added revision line passes without both sections. Fix: a listed kickoff
-  that differs from HEAD is held to them.
+Review 6 (rules and tools, 2026-11-16, session b23abf9c) — F14-F22 found (read-coverage trusted what the session sets;
+  check-files held the kickoff only at design); OWASP: OAuth2, Unvalidated_Redirects_and_Forwards are Review 9's.
+Review 7 of 993c14088 (Revision 4a, 2026-11-16, session c38a3209) — NEEDS REVISION (O956-2 keeps the work here).
+  Three passes over the 13 files of `git diff be5a3d867` (2875 lines); `read-coverage.mjs --review be5a3d867` 3
+  passes each, exit 1: this session ran `check-files` and `node --test` before its passes (a breach, the owner asked for
+  the review in this session) and F24, F27. `node --test "scripts/quality/*.test.mjs"` 0 (200 pass, 3 skip), eslint 0,
+  check-files 0 (worktree; 33 Sprint 93 kickoffs and the backlog), `owasp.mjs check` 0. 16 deliberate breaks of
+  F14-F18 and F20-F22 each red, restored by sha256 (d02f36c80d02, 8ff2a29f63bf); the 9 transcripts of Review 6 exit 2.
+  CI: the quality job checks out with `fetch-depth: 0` (`.github/workflows/ci.yml:36`), fetches `+refs/heads/*` (run
+  43745661716) and runs `check-files --all` (:59); `delete_branch_on_merge` is false. F14-F22 closed (F14's rest is
+  F25); the 982 kickoff edit is required by F20 and F21.
+F23, F24, F26 — (P2, open, Opus) and F27 — (P3, open, Opus): see "## Cause"; Revision 4b.
+F25 — (P3, open) a program the session runs appended three forged passes and the tool found no problem (Review 7
+  probe on `evaluate`); the text is corrected in Revision 4b; the residual risk awaits the owner's decision.

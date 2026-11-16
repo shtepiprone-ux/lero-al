@@ -1,7 +1,7 @@
 # Task 956 — Hardening v8b: the database enforces the moderator keys, the contact gateway, the profile bounds, edit moderation and one public-listing rule
 
 Sprint 93. Priority P0. Owner decisions: D1, D53/R74, D72, D77/D79/D80, R75, D91, O956-1, O956-2 (2026-11-15, "everything
-must be fixed in the current task"), 2026-11-16 (cause rule; the rules and tools ship here). Filed by the audit
+must be fixed in the current task"), 2026-11-16 (cause rule; the rules and tools ship here), O956-3 (F25). Filed by the audit
 `docs/security/audit-2026-11-06/findings.md` (DB-01 to DB-08, SQL-01, L-04, P-06). Implementers: Opus
 (`scripts/quality/**`, rules), Sonnet (SQL, application, tests; never applies SQL). The owner applies. Reviewer: Opus.
 
@@ -29,7 +29,8 @@ Fix: an unquoted backslash escapes the next character and never opens a quote; a
 a run; `--open-files-in-pager` is an output option; output options are refused only for the commands that write with
 them; a command touches the record when it names the record or its `projects/<project>/<id>` folder; a `path:line`
 source is looked up in the "Counted at" commit; the tool's comment and the rules say what it detects (an Edit or Write
-of the record, a command naming it) and that the reviewer reads every run and script of the session for the rest (F25).
+of the record, a command naming it) and that the reviewer reads every run command and every script of the session for
+the rest (F25, O956-3: `flow.md` §3 and review-task step 2).
 - F13: `src/modules/admin/actions/index.ts:590` calls `assertPermission('users.create')`, which throws
   `Error('forbidden')` (`src/lib/auth/permissions.ts:42`); `handleCreate`
   (`src/components/admin/AdminUserProfile.tsx:244-258`) awaits it without a catch: "saving" forever, no banner.
@@ -64,6 +65,7 @@ Counted at 993c14088
 - `.claude/rules/flow.md` — 188 lines
 - `.claude/rules/kickoff-template.md` — 97 lines
 - `CLAUDE.md` — 107 lines
+- `.claude/skills/review-task/SKILL.md` — 58 lines
 - `.claude/skills/execute-task/SKILL.md` — 41 lines
 
 ## Attack surface
@@ -220,4 +222,5 @@ Review 7 of 993c14088 (Revision 4a, 2026-11-16, session c38a3209) — NEEDS REVI
   F25); the 982 kickoff edit is required by F20 and F21.
 F23, F24, F26 — (P2, open, Opus) and F27 — (P3, open, Opus): see "## Cause"; Revision 4b.
 F25 — (P3, open) a program the session runs appended three forged passes and the tool found no problem (Review 7
-  probe on `evaluate`); the text is corrected in Revision 4b; the residual risk awaits the owner's decision.
+  probe on `evaluate`). O956-3 (owner, 2026-11-16, translated: "write the limit in the rules: the reviewer reads every run
+  command and every script of the session"): the limit and that duty are written in Revision 4b.

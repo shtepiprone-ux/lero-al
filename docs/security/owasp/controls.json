@@ -466,6 +466,23 @@
    "reviewedSha": "950ef7cb4470f509bc4b83c8e5db128edf859e91",
    "reviewedOn": "2026-11-07"
   },
+  "CORS_Security": {
+   "applies": true,
+   "triggers": {
+    "words": [
+     "\\b(CORS|Access-Control-[A-Za-z-]+|cross-origin resource sharing)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Authenticate and authorize every request on the server as if CORS didn't exist.",
+     "control": "src/__tests__/security/serverEntryGuards.test.ts",
+     "evidence": "every server entry point authenticates or is public by design"
+    }
+   ],
+   "reviewedSha": "a4abb053fa5dc26746d70b3a66e98dea2cb10685",
+   "reviewedOn": "2026-11-16"
+  },
   "Credential_Stuffing_Prevention": {
    "applies": true,
    "triggers": {
@@ -785,8 +802,8 @@
      "task": "957"
     }
    ],
-   "reviewedSha": "7539234b18fb9938fe95f5845eecb909c13fc702",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "fff26e97a464a4e74092cdd666f79360ed53438f",
+   "reviewedOn": "2026-11-16"
   },
   "Forgot_Password": {
    "applies": true,
@@ -804,10 +821,15 @@
      "quote": "Return a consistent message for both existent and non-existent accounts.",
      "control": "src/modules/auth/components/AuthSheet.tsx",
      "evidence": "Always show neutral success — never reveal whether email is registered"
+    },
+    {
+     "quote": "The URL should either be hard-coded, or validated against a list of trusted domains.",
+     "control": "src/lib/auth/trustedOrigin.ts",
+     "evidence": "export function trustedRedirectUrl("
     }
    ],
-   "reviewedSha": "d42b843a433df4f4e68aaf32307fd984680a3e8e",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "4fee254810359538e11f1145bb0df5e4e5db88be",
+   "reviewedOn": "2026-11-16"
   },
   "GitHub_Actions_Security": {
    "applies": true,
@@ -903,8 +925,8 @@
      "task": "954"
     }
    ],
-   "reviewedSha": "c32d21c37597b992cb506a2325d5e27611c8a40a",
-   "reviewedOn": "2026-11-12"
+   "reviewedSha": "f05f691eabcd792e6290b96417eef729f914a6d6",
+   "reviewedOn": "2026-11-17"
   },
   "HTTP_Strict_Transport_Security": {
    "applies": true,
@@ -1008,10 +1030,22 @@
     {
      "quote": "Reject invalid requests with a clear error; do not continue with partially validated data.",
      "task": "955"
+    },
+    {
+     "quote": "Build absolute URLs, such as password reset and email links, from configuration instead of the request",
+     "task": "984"
+    },
+    {
+     "quote": "Accept only the hostnames the application serves and reject other requests.",
+     "task": "984"
+    },
+    {
+     "quote": "Use `Forwarded` and `X-Forwarded-*` values only when they come from your own proxies",
+     "task": "984"
     }
    ],
-   "reviewedSha": "eb7ed3acc6c8e9b73fe4ea2d1e2c3c5104e2e207",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "9d8d7a2bb26dbaadb3a0974010139abc51142cb3",
+   "reviewedOn": "2026-11-16"
   },
   "Insecure_Direct_Object_Reference_Prevention": {
    "applies": true,
@@ -1121,8 +1155,8 @@
   "Kubernetes_Security": {
    "applies": false,
    "why": "no Kubernetes cluster is used; Vercel and Supabase are managed",
-   "reviewedSha": "d54243879fee9a2f1483a284220ab69314fb2dde",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "ecccad98012ef080b90b5087a6a571eb309d8532",
+   "reviewedOn": "2026-11-16"
   },
   "Laravel": {
    "applies": false,
@@ -1331,8 +1365,8 @@
      "task": "957"
     }
    ],
-   "reviewedSha": "b19270d945052d6c28ef0841f46365cab0e8fd37",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "311961c82a0a89ea92996a9c820afebc9fe743a9",
+   "reviewedOn": "2026-11-16"
   },
   "Multifactor_Authentication": {
    "applies": true,
@@ -1520,6 +1554,31 @@
    "why": "passwords are stored only by Supabase Auth (GoTrue, bcrypt); the application never stores or hashes a password",
    "reviewedSha": "598510f4ca1e5b918a44a4bc001ca7a074f237d7",
    "reviewedOn": "2026-11-07"
+  },
+  "Path_Traversal_Prevention": {
+   "applies": true,
+   "triggers": {
+    "paths": [
+     "within-repository"
+    ],
+    "words": [
+     "\\b(path traversal|directory traversal|path[- ]injection|file system paths?|zip slip|archive extraction)\\b"
+    ]
+   },
+   "requirements": [
+    {
+     "quote": "Check that the resolved path is inside the base directory.",
+     "control": "scripts/lib/within-repository.mjs",
+     "evidence": "export function withinRoot(root, candidate)"
+    },
+    {
+     "quote": "Store user content where paths don't matter, such as a database or object storage keyed by an ID.",
+     "control": "src/lib/cloudinaryUpload.ts",
+     "evidence": "Canonical server-side signed Cloudinary upload."
+    }
+   ],
+   "reviewedSha": "0423eb13d3e2efa6fc28ec8dd06c12053146b5ed",
+   "reviewedOn": "2026-11-16"
   },
   "PHP_Configuration": {
    "applies": false,
@@ -2131,8 +2190,8 @@
      "task": "954"
     }
    ],
-   "reviewedSha": "861b650e37a158ee11f2b38369f462a07a1b2269",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "8a02c33407bdebb4294bb8b75f31b084dc05f80e",
+   "reviewedOn": "2026-11-16"
   },
   "Web_Frontend_Security": {
    "applies": true,
@@ -2230,8 +2289,8 @@
   "XML_Security": {
    "applies": false,
    "why": "the project parses and signs no XML documents",
-   "reviewedSha": "ef9a73afdbf55fe9d5d30d5f67dea443426b88d0",
-   "reviewedOn": "2026-11-09"
+   "reviewedSha": "ae59e7fbcf9fbe8df340cb081e235a74e68db2a8",
+   "reviewedOn": "2026-11-17"
   },
   "XPath_Injection_Prevention": {
    "applies": false,

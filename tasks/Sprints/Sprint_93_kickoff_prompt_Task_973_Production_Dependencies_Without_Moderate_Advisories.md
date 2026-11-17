@@ -1,89 +1,56 @@
-# Task 973 — Production dependencies without a moderate advisory, and each low one shown unreachable
+# Task 973 — CI blocks a moderate advisory in a production dependency
 
-Sprint 93. Priority P2. Found 2026-11-12 by Opus with Task 972 (the GitHub notice on the push of PR #30); no owner
-decision needed (golden rule, 2026-11-07). Implementer: Sonnet, on `task/973-production-moderate-advisories` from
-`main` after Task 972 merges, and not before 2026-11-24, the day `@sentry/nextjs` 11.12.0 (released 2026-11-10) is 14
-days old. Opus, not the executor (`execute-task` forbids `.github/**` and `.claude/**`), raises the CI production audit
-level and writes the `.claude/rules/quality-gates.md` row. Reviewer: Opus.
-Human owner of the change: the owner.
+Sprint 93. Priority P2. Found 2026-11-12 by Opus with Task 972; revised 2026-11-17 after owner decision O972-1 (Task
+972 takes the `glob` and `minimatch` advisories out by scoped overrides) and the withdrawal of the `deepmerge` advisory.
+Implementer: Opus (`.github/**` and `.claude/**` are outside `execute-task`). Reviewer: Opus, in a session of its own.
+Human owner of the change: the owner. Starts after Task 972 merges.
 
 ## Goal
 
-`npm audit --omit=dev` on 2026-11-12 reports 6 moderate and 5 low advisories; CI blocks only high and critical
-(`.github/workflows/ci.yml:164`). After Task 972 (its probe on a scratch copy) 4 moderate and 4 low remain:
-- `glob` (GHSA-3g3m-2fjr-6pw4, `>=9.0.0 <=14.0.1`) and `minimatch` (GHSA-g3hv-75wg-m249, `>=7.0.0 <11.0.1`) reach
-  production through `@sentry/nextjs` `^10.76.2` (`package.json`) → `@sentry/webpack-plugin` → `@sentry/bundler-plugins`;
-  the audit's only fix is `@sentry/nextjs` 11.12.0, a major version.
-- `deepmerge` (GHSA-gcqx-w48m-w2h4, prototype poisoning, `>=4.2.0 <=4.3.1`) reaches production through
-  `@react-email/components` → `@react-email/render` → `html-to-text`; no fixed version exists. `html-to-text` runs only
-  when `render` is asked for plain text; the one call, `render(params.react)`
-  (`src/modules/notifications/lib/emails/send.ts:84`), passes no options, but no test holds that.
+CI lets a moderate advisory in a production dependency through: its audit blocks only high and critical. After Task 972
+the whole tree has no advisory (its probe), so the stricter step is green on the day it lands; after the task CI fails
+on a moderate, high or critical advisory in a production dependency.
 
-After the task `npm audit --omit=dev --audit-level=moderate` exits 0, CI blocks a moderate advisory in a production
-dependency, and a test fails the day the email code starts the plain-text path that carries `deepmerge`.
+## Cause
+
+`.github/workflows/ci.yml:164` runs the production audit at `--audit-level=high`, and `.claude/rules/quality-gates.md:80`
+names that level. The advisories this task was filed for leave by other means: `glob` (GHSA-3g3m-2fjr-6pw4) and
+`minimatch` (GHSA-g3hv-75wg-m249) through Task 972 Revision 2 (probe: `npm audit --package-lock-only` → `total 0`, Task
+972 "## Cause"); `gh api advisories/GHSA-gcqx-w48m-w2h4` → `withdrawn_at=2026-11-16T18:55:38Z` (`deepmerge`), and
+`npm audit --json` → no `deepmerge` entry (2026-11-17). `@sentry/nextjs` 11 is no longer needed for them.
+Fix: the production audit step runs at `--audit-level=moderate`; the "Dependency audit" row says so.
 
 ## Scope
 
-- `package.json`, `package-lock.json`: `@sentry/nextjs` 11.12.0 or the newest 11.x at least 14 days old on the day of
-  the run (`npm view @sentry/nextjs time scripts --json` in the report). The Sentry 10 → 11 upgrade guide is read
-  first; every API this project uses (`next.config.ts`, `sentry.server.config.ts`, `sentry.edge.config.ts`,
-  `src/instrumentation.ts`, `src/instrumentation-client.ts`, `src/app/global-error.tsx`,
-  `src/components/auth/CaptchaWidget.tsx`) is checked against it, and each change it needs is made with its test.
-  `src/__tests__/instrumentation.test.ts` stays green.
-- `src/modules/notifications/lib/emails/__tests__/send.security.test.ts`: a case that fails when `sendEmail` calls
-  `render` with options, and a source check that fails when any file under `src/` asks `@react-email/render` for plain
-  text (`plainText` or `toPlainText`).
-- Opus: the production step of `.github/workflows/ci.yml` runs `npm audit --omit=dev --audit-level=moderate` (its own
-  command is AC5's test), the "Dependency audit" row of `.claude/rules/quality-gates.md`.
-- Dependencies: none added; one major version of an existing package.
-- Out of scope: Sentry configuration beyond what the major version requires; development dependencies (Task 972).
+- `.github/workflows/ci.yml:164`: `npm audit --omit=dev --audit-level=moderate`.
+- `.claude/rules/quality-gates.md:80`: the row names the moderate level for production dependencies.
+- Dependencies: none.
+- Out of scope: any package version (Task 972); `@sentry/nextjs` 11 (no advisory asks for it); the whole-tree high step
+  of Task 972.
 
 ## Attack surface
 
-Dependency change in the error-reporting package; no route, action or permission changes. Threat model
-(`.claude/rules/threat-model.md`):
-- T1 Tampering (supply chain): the new major carries malicious code → a version at least 14 days old from the npm
-  registry, `ignore-scripts=true`, `scripts/quality/install-scripts.test.mjs` — mitigate.
-- T2 Information disclosure: the major changes what Sentry sends (request data, tunnel route) → the upgrade guide's
-  defaults are read and the existing scrubbing and tunnel settings stay as they are, held by
-  `src/__tests__/instrumentation.test.ts` — mitigate.
-- T3 Tampering (prototype poisoning): a later change starts plain-text email rendering with outside data → AC3 — mitigate;
-  the advisory itself has no fix — the owner is told in the report (only the owner accepts a risk).
+Unchanged: a CI gate becomes stricter; no route, action, permission, secret or dependency changes.
 
 ## OWASP
 
-Required by `node scripts/quality/owasp.mjs plan` (mapping of 2026-11-12).
+Required by `node scripts/quality/owasp.mjs plan` (2026-11-17).
 
-- AI_Agent_Security: not applicable — no agent tool, permission or setting changes; only the audit row of the rules text.
-- Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — production advisories of moderate level join what CI blocks — AC1, AC5.
-- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the stricter audit runs in a job that `CI Required` needs — AC5.
-- Clickjacking_Defense: not applicable — `next.config.ts` is read for Sentry options only; its headers do not change.
-- Content_Security_Policy: not applicable — the policy is not changed; the Sentry upgrade keeps the existing tunnel and hosts.
-- Cross_Site_Scripting_Prevention: not applicable — `global-error.tsx` is checked for the Sentry API only; no output changes.
-- DOM_based_XSS_Prevention: not applicable — no client code writes a URL or user value into the DOM here.
-- Dependency_Graph_SBOM: not applicable — the SBOM job is unchanged and records the new Sentry version on its run.
-- GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the changed step adds no permission, secret or action — AC5.
-- HTTP_Headers: not applicable — no response header changes; `next.config.ts` keeps its header list as it is.
-- HTTP_Strict_Transport_Security: not applicable — the HSTS header is not touched by the Sentry upgrade.
-- Injection_Prevention: not applicable — no query, command or template is built from outside input in this task.
-- JavaScript_and_TypeScript_Security: not applicable — `send.ts` code is unchanged; the new case only reads how it calls `render`.
+- AI_Agent_Security: not applicable — only the audit row of the rules text changes; no agent tool, permission or setting.
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the stricter audit runs in a job that `CI Required` needs — AC2.
+- Dependency_Graph_SBOM: not applicable — the SBOM job is unchanged; only the audit level of another step moves.
+- GitHub_Actions_Security: "Always set permissions: {} at the workflow level to disable all permissions by default." — the changed step adds no permission, secret or action — AC3.
+- Key_Management: not applicable — no key is created, read, rotated or stored by an audit level change.
 - LLM_Prompt_Injection_Prevention: not applicable — no model input or agent tool boundary changes in this task.
-- Logging: "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted" — the new major keeps the scrubbing hooks and `sendDefaultPii: false` — AC2.
-- Logging_Vocabulary: not applicable — no log event is added or renamed; only the reporting library version changes.
+- Logging: not applicable — `@sentry/nextjs` and its logging are not touched; its upgrade left this task.
+- Logging_Vocabulary: not applicable — no log event is added or renamed by an audit level change.
 - MCP_Security: not applicable — no MCP server is configured or changed by this task.
-- NPM_Security: "so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install" — `ignore-scripts=true` stays and the new major gains no install script — AC4.
-- Nextjs_Security: not applicable — no Server Action or route changes; the Sentry hooks of Next.js keep their place.
-- OS_Command_Injection_Defense: not applicable — no process is started from outside input in this task.
-- Prototype_Pollution_Prevention: "Prototype Pollution is a critical vulnerability that can allow attackers to manipulate an application's JavaScript objects and properties" — the only path to the unfixed `deepmerge` stays unused, held by a test — AC3.
-- Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads each Sentry API change against the upgrade guide — AC2, AC4.
-- Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the version is checked with `npm view` in the report — AC4.
-- Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — each threat of the model maps to an acceptance criterion — AC1, AC2, AC3.
-- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — a major at least 14 days old, the lockfile written by npm — AC1, AC4.
-- Third_Party_Javascript_Management: not applicable — the CAPTCHA widget is checked for the Sentry API only; no script source changes.
-- Threat_Modeling: "the threat modeling process should answer the following four questions" — the Attack surface answers them for the upgrade — AC1, AC2, AC3.
-- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the audit and reads the CI run, not the summary — AC1, AC5.
-- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI blocks moderate production advisories on every change — AC1, AC5.
-- Web_Frontend_Security: not applicable — no browser-side code path changes beyond the Sentry client version.
+- NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — CI refuses a production package with a moderate advisory — AC1, AC2.
+- Secrets_Management: not applicable — the dependency-audit job holds no secret and gains none.
+- Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — the reviewer reruns the audit and reads the CI check, not the report — AC1, AC2.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — a production version with a moderate advisory no longer passes CI — AC2.
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns AC1 and AC2 and reads the pull request's checks — AC1, AC2.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI blocks moderate production advisories on every change — AC1, AC2.
 
 ## UI
 
@@ -96,26 +63,17 @@ No visible change.
 ## Acceptance criteria
 
 - AC1 Production dependencies have no moderate, high or critical advisory — test:
-  `npm audit --omit=dev --audit-level=moderate` exits 0.
-- AC2 Error reporting keeps its settings on the new major — test: `src/__tests__/instrumentation.test.ts`.
-- AC3 The plain-text email path that carries `deepmerge` stays unused — test:
-  `src/modules/notifications/lib/emails/__tests__/send.security.test.ts`.
-- AC4 The project still builds and passes — test: `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
-  `npm run build`, `npm run build-storybook`, each exit 0.
-- AC5 CI blocks a moderate advisory in a production dependency — test: `npm audit --omit=dev --audit-level=moderate` (the
-  step's own command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
+  `npm audit --omit=dev --audit-level=moderate` exits 0 on the branch after Task 972.
+- AC2 CI blocks a moderate advisory in a production dependency — test: `npm audit --omit=dev --audit-level=moderate`
+  (the step's own command; exit 1 on such an advisory, shown once on a scratch copy of the lockfile with a version inside
+  a known moderate range) and `gh pr checks <n>` (the "Dependency audit" check of this task's pull request).
+- AC3 The workflow stays valid and pinned — test: `node --test "scripts/quality/*.test.mjs"` (`ci-workflow.test.mjs`)
+  and `node scripts/quality/check-files.mjs --worktree` exit 0.
 
 ## Route
 
-1. Confirm the date (2026-11-24 or later) and the version per Scope; read the upgrade guide; list each API the
-   project uses with its verdict.
-2. Test first: the AC3 cases on the unchanged code (they pass today; break `send.ts` on purpose to show each fails).
-3. Update `@sentry/nextjs` per Scope; `npm ci`; `npm ls --omit dev --all` exits 0.
-4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
-   node scripts/quality/check-files.mjs --worktree · npm audit --omit=dev --audit-level=moderate ·
-   npm audit --audit-level=high · npm run build · npm run build-storybook ·
-   node scripts/quality/change-report.mjs main HEAD
-5. Report: each command, exit code, relevant output; the upgrade-guide verdicts; the deliberate breaks of AC3; the CI step
-   the change needs, for Opus.
+1. After Task 972 merges: branch from `main`; AC1 on it.
+2. Change the two lines of Scope; the AC2 break on a scratch copy; AC3.
+3. Report each command with its exit code; the review runs in its own session.
 
 ## Review

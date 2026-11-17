@@ -3,7 +3,8 @@
 Sprint 93. Priority P1. Found 2026-11-12 by Opus from the GitHub notice on the push of PR #30 ("94 vulnerabilities on
 the default branch: 1 critical, 23 high, 58 moderate, 12 low"); no owner decision needed (owner D2, 2026-11-06: quality
 covers every file; golden rule, 2026-11-07). Revision 1, owner 2026-11-17 (translated): "write all the updates into the
-next task; do not create a new task only for updates". Open owner decision O972-1 (Out of scope). Implementer: Sonnet,
+next task; do not create a new task only for updates". Revision 2, owner decision O972-1 (2026-11-17, option 1 of two:
+scoped overrides instead of accepting the risk). Implementer: Sonnet,
 on `task/972-dependency-advisories` from `main`.
 Opus, not the executor (`execute-task` forbids `.github/**`, `scripts/quality/**` and `.claude/**`), changes the CI
 audit step and `.claude/rules/quality-gates.md`. Reviewer: Opus.
@@ -47,6 +48,8 @@ this task already takes removes the whole chain: a copy of today's manifest and 
 is needed (an override probe showed a range would take `basic-ftp` 6.2.6, under 14 days old).
 
 Revision 1 (2026-11-17): every open Dependabot alert whose fix is at least 14 days old leaves the tree in this task.
+Revision 2 (O972-1): the `glob` and `minimatch` advisories leave every path through scoped overrides; after the task
+`npm audit` reports no advisory at all.
 
 ## Cause
 
@@ -68,8 +71,13 @@ Revision 1 (2026-11-17): every open Dependabot alert whose fix is at least 14 da
   `minimatch` paths: `@sentry/*` (Task 973), `@storybook/nextjs-vite` through `@joshwooding/vite-plugin-react-docgen-typescript`
   (npm: no fix), `shadcn` through `ts-morph` (fix only `shadcn` 1.0.0, a major downgrade), `typescript-eslint` and
   `react-email` (npm names a fix the `--before` date does not reach; UNKNOWN: its version).
+- Revision 2: GHSA-3g3m-2fjr-6pw4 (`glob` `>= 9.0.0, <= 14.0.1`, fixed 14.0.2) and GHSA-g3hv-75wg-m249 (`minimatch`
+  `>= 7.0.0, < 11.0.1`, fixed 11.0.1), published 2026-10-27T22:07Z and 2026-10-27T22:26Z (npm view time); the same probe with `overrides`
+  `"glob@>=9.0.0 <14.0.2": "14.0.2"` and `"minimatch@>=7.0.0 <11.0.1": "11.0.1"` (`package.json:189` holds the overrides):
+  `npm audit --package-lock-only` → `total 0`; `glob` 14.0.2, `minimatch` 3.1.5 and 11.0.1. Both are majors past the
+  ranges their consumers declare: the tools that load them must be run, not assumed.
 Fix: `next` 16.4.5, the nine `@tiptap/*` at 3.32.2 and `@vitest/coverage-v8` 4.1.12 (exact pins kept), the stale
-`@tiptap/*` lockfile entries dropped, then the audit fix below; the moderate paths without a reachable fix go to O972-1.
+`@tiptap/*` lockfile entries dropped, then the audit fix below; the two scoped overrides of Revision 2 for `glob` and `minimatch`.
 
 ## Scope
 
@@ -80,21 +88,21 @@ Fix: `next` 16.4.5, the nine `@tiptap/*` at 3.32.2 and `@vitest/coverage-v8` 4.1
 - Revision 1: `package.json` `next` `16.4.5`, the nine `@tiptap/*` `3.32.2`, `@vitest/coverage-v8` `4.1.12`, exact pins;
   the `node_modules/@tiptap/` entries of `package-lock.json` removed before the install (no other hand edit of the
   lockfile). Not before 2026-11-17T18:02Z, when `next` 16.4.5 is 14 days old.
+- Revision 2: `package.json` `overrides` gains exactly `"glob@>=9.0.0 <14.0.2": "14.0.2"` and
+  `"minimatch@>=7.0.0 <11.0.1": "11.0.1"` beside `import-in-the-middle`; the tools that load them are run (AC3, AC8).
 - `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`: one case per advisory above, its payload through
   `sanitizeCmsHtml`; the output has no `noscript` content, no `meta`, no `javascript:` or `data:` URL and no SVG
   animation element.
 - No package gains an install script: `scripts/quality/install-scripts.test.mjs` (Task 947) passes unchanged.
 - `basic-ftp` leaves the tree with `lighthouse` 13.6.0 (Goal). If the run does not take `lighthouse` 13.6.0 or
-  `basic-ftp` is still in the tree, the task stops and reports `npm ls basic-ftp --all` to Opus; no override is added
-  without a revision.
+  `basic-ftp` is still in the tree, the task stops and reports `npm ls basic-ftp --all` to Opus; no override other than
+  the two of Revision 2 is added without a revision. A tool that fails on an override stops the task with its output.
 - Opus: in the `dependency-audit` job of `.github/workflows/ci.yml` a step "Every dependency has no high or critical
   advisory" running `npm audit --audit-level=high`, next to the production step (its own command is AC5's test); the
   "Dependency audit" row of `.claude/rules/quality-gates.md`.
 - Dependencies: none added; versions only, each at least 14 days old (`--before`).
-- Out of scope: the production moderate advisories of `glob` and `minimatch`, whose fix is `@sentry/nextjs` 11.12.0
-  (major, released 2026-11-10, under 14 days old), and the production low advisories: Task 973. The moderate `glob` and
-  `minimatch` paths of `@storybook/nextjs-vite`, `shadcn`, `typescript-eslint` and `react-email` with no fix at least
-  14 days old: open owner decision O972-1 (accept until a fix exists, or a task); the report lists them.
+- Out of scope: `@sentry/nextjs` 11 (the overrides take its `glob` and `minimatch` paths too) and the CI production
+  audit at moderate level: Task 973, revised on 2026-11-17 to that step.
 
 ## Attack surface
 
@@ -167,10 +175,13 @@ No visible change. A visual difference in the build or Storybook stops the task 
   command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
 - AC6 `basic-ftp` (GHSA-5pm8-86m8-9m6r) is no longer in the tree — test: `npm ls basic-ftp --all` prints no
   `basic-ftp` and `npm audit --json` has no `basic-ftp` entry (both in the report, before and after).
-- AC7 (Revision 1) Every alerted package with a fix at least 14 days old leaves the advisories — test: `npm audit --json`
-  (before and after in the report) names only the `glob` and `minimatch` paths of Out of scope, and
+- AC7 (Revisions 1, 2) Every advisory leaves the tree — test: `npm audit --audit-level=low` exits 0 (before and after
+  in the report), and
   `npm ls happy-dom next vitest @tiptap/html --all` shows `happy-dom` 21.0.4 or later, `next` 16.4.5, `vitest` 4.1.12,
   `@tiptap/html` 3.32.2; `src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts` passes.
+- AC8 (Revision 2) The tools that load the overridden `glob` and `minimatch` still work — test: `npm run lint`,
+  `npm run build`, `npm run build-storybook` (AC3), `npx shadcn --help` exits 0, and `npm run email` serves its preview
+  (the report holds its ready line, then it is stopped); `npm ls glob minimatch --all` shows no version in either range.
 
 ## Route
 
@@ -181,6 +192,7 @@ No visible change. A visual difference in the build or Storybook stops the task 
 3. Change `package.json` and the lockfile per Scope (Revision 1 pins and the dropped `@tiptap/*` entries first, then
    `npm install --ignore-scripts --before=<run time minus 14 days>` and the audit fix with the same date); `npm ci`;
    `npm ls --omit dev --all` exits 0. AC6: `npm ls basic-ftp --all` before and after the change. AC7 before and after.
+   Revision 2: the two overrides in the same install; AC8 after it.
 4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npm audit --audit-level=high · npm audit --omit=dev --audit-level=high ·
    npm run build · npm run build-storybook · node --test scripts/quality/install-scripts.test.mjs ·

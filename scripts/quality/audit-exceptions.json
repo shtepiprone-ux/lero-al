@@ -1,0 +1,15 @@
+{
+ "about": "Advisories the owner accepted by a numbered decision while no fixed version exists; read by scripts/quality/audit-gate.mjs. An entry stops matching when the range or the package's latest version changes, or on its expiry date.",
+ "exceptions": [
+  {
+   "advisory": "GHSA-fc5q-39xc-vjpf",
+   "package": "picomatch",
+   "range": "<=4.0.7",
+   "latest": "4.0.7",
+   "decision": "O972-3",
+   "decidedOn": "2026-11-17",
+   "expires": "2026-12-17",
+   "why": "ReDoS through attacker-supplied extglob patterns; no fixed version (gh api advisories/GHSA-fc5q-39xc-vjpf: first_patched_version null). Production paths are build tools (@sentry/nextjs > @rollup/plugin-commonjs, next-intl > @parcel/watcher); no product file imports picomatch. Task 972 Review 1."
+  }
+ ]
+}

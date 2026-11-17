@@ -672,9 +672,9 @@
   },
   "Docker_Security": {
    "applies": false,
-   "why": "no container image is built or deployed; Vercel runs the functions",
-   "reviewedSha": "82248990a316f0a4fc37405a4c0d0f130394b9bb",
-   "reviewedOn": "2026-11-15"
+   "why": "no container image is built or deployed and no Swarm service is published; Vercel runs the functions",
+   "reviewedSha": "87d77fdbb0320258494968dffc7d17a500ddf753",
+   "reviewedOn": "2026-11-17"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,
@@ -1461,10 +1461,14 @@
      "quote": "some third-party rulesets can be used to flag dangerous patterns such as eval()",
      "control": "eslint.config.mjs",
      "evidence": "\"no-eval\": \"error\""
+    },
+    {
+     "quote": "Apply rate limiting to sensitive authentication-related endpoints, including login, password reset, account recovery, and verification flows.",
+     "task": "985"
     }
    ],
-   "reviewedSha": "451d68d9b36b875b4bac5960978dd376b2514396",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "ec90458efff68533c041ca061cd07d00030b9426",
+   "reviewedOn": "2026-11-17"
   },
   "NoSQL_Security": {
    "applies": false,
@@ -1583,8 +1587,8 @@
   "PHP_Configuration": {
    "applies": false,
    "why": "no PHP runtime exists in the project",
-   "reviewedSha": "3a86ec3b1f514f28ed8de93c1d151d0396d7c16c",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "f235b97931988a630f38014286a060c15f12a3e9",
+   "reviewedOn": "2026-11-17"
   },
   "Pinning": {
    "applies": false,
@@ -1682,8 +1686,8 @@
   "Ruby_on_Rails": {
    "applies": false,
    "why": "no Ruby or Rails code exists in the project",
-   "reviewedSha": "ac6936b4f50bec1c3e5ce5146a8f00d85b59f3a2",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "f8992925091b4a744cfbd5619377e87b808e2728",
+   "reviewedOn": "2026-11-17"
   },
   "SAML_Security": {
    "applies": false,
@@ -2167,7 +2171,7 @@
     {
      "quote": "It's highly recommended to perform automated analysis of the dependencies from the birth of the project.",
      "control": ".github/workflows/ci.yml",
-     "evidence": "npm audit --omit=dev --audit-level=high"
+     "evidence": "node scripts/quality/audit-gate.mjs --level high"
     }
    ],
    "reviewedSha": "0b545548ae4b385e187a3e0165f7dcc1a34e8091",

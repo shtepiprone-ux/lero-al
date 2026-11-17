@@ -1,28 +1,31 @@
 # Task 973 — CI blocks a moderate advisory in a production dependency
 
 Sprint 93. Priority P2. Found 2026-11-12 by Opus with Task 972; revised 2026-11-17 after owner decision O972-1 (Task
-972 takes the `glob` and `minimatch` advisories out by scoped overrides) and the withdrawal of the `deepmerge` advisory.
+972 takes the `glob` and `minimatch` advisories out by scoped overrides) and the withdrawal of the `deepmerge` advisory;
+revised again 2026-11-17 after owner decision O972-3 (Task 972 Review 1: the audit runs through `audit-gate.mjs`, which
+lets only an owner-accepted advisory through).
 Implementer: Opus (`.github/**` and `.claude/**` are outside `execute-task`). Reviewer: Opus, in a session of its own.
 Human owner of the change: the owner. Starts after Task 972 merges.
 
 ## Goal
 
-CI lets a moderate advisory in a production dependency through: its audit blocks only high and critical. After Task 972
-the whole tree has no advisory (its probe), so the stricter step is green on the day it lands; after the task CI fails
-on a moderate, high or critical advisory in a production dependency.
+CI lets a moderate advisory in a production dependency through: its audit gate blocks only high and critical. After Task
+972 the only advisory in the tree is GHSA-fc5q-39xc-vjpf (high, `picomatch`, no fix), accepted by O972-3 until
+2026-12-17; after the task CI fails on a moderate, high or critical advisory in a production dependency that no owner
+decision accepts.
 
 ## Cause
 
-`.github/workflows/ci.yml:164` runs the production audit at `--audit-level=high`, and `.claude/rules/quality-gates.md:80`
+`.github/workflows/ci.yml:165` runs the production audit gate at `--level high`, and `.claude/rules/quality-gates.md:80`
 names that level. The advisories this task was filed for leave by other means: `glob` (GHSA-3g3m-2fjr-6pw4) and
 `minimatch` (GHSA-g3hv-75wg-m249) through Task 972 Revision 2 (probe: `npm audit --package-lock-only` → `total 0`, Task
 972 "## Cause"); `gh api advisories/GHSA-gcqx-w48m-w2h4` → `withdrawn_at=2026-11-16T18:55:38Z` (`deepmerge`), and
 `npm audit --json` → no `deepmerge` entry (2026-11-17). `@sentry/nextjs` 11 is no longer needed for them.
-Fix: the production audit step runs at `--audit-level=moderate`; the "Dependency audit" row says so.
+Fix: the production audit step runs `audit-gate.mjs --omit-dev --level moderate`; the "Dependency audit" row says so.
 
 ## Scope
 
-- `.github/workflows/ci.yml:164`: `npm audit --omit=dev --audit-level=moderate`.
+- `.github/workflows/ci.yml:165`: `node scripts/quality/audit-gate.mjs --omit-dev --level moderate`.
 - `.claude/rules/quality-gates.md:80`: the row names the moderate level for production dependencies.
 - Dependencies: none.
 - Out of scope: any package version (Task 972); `@sentry/nextjs` 11 (no advisory asks for it); the whole-tree high step
@@ -62,12 +65,12 @@ No visible change.
 
 ## Acceptance criteria
 
-- AC1 Production dependencies have no moderate, high or critical advisory — test:
-  `npm audit --omit=dev --audit-level=moderate` exits 0 on the branch after Task 972.
-- AC2 CI blocks a moderate advisory in a production dependency — test: `npm audit --omit=dev --audit-level=moderate`
-  (the step's own command; exit 1 on such an advisory, shown once on a scratch copy of the lockfile with a version inside
-  a known moderate range) and `gh pr checks <n>` (the "Dependency audit" check of this task's pull request).
-- AC3 The workflow stays valid and pinned — test: `node --test "scripts/quality/*.test.mjs"` (`ci-workflow.test.mjs`)
+- AC1 Production dependencies have no moderate, high or critical advisory that no owner decision accepts — test:
+  `node scripts/quality/audit-gate.mjs --omit-dev --level moderate` exits 0 on the branch after Task 972.
+- AC2 CI blocks a moderate advisory in a production dependency — test: `scripts/quality/audit-gate.test.mjs` ("the level
+  decides which severities count": a moderate advisory blocks at `--level moderate`) and `gh pr checks <n>` (the
+  "Dependency audit" check of this task's pull request).
+- AC3 The workflow stays valid and pinned — test: `node --test "scripts/quality/*.test.mjs"` (`ci-secrets.test.mjs`)
   and `node scripts/quality/check-files.mjs --worktree` exit 0.
 
 ## Route

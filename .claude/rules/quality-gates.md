@@ -77,7 +77,7 @@ only in the `security-ci` environment and only in the jobs that need them.
 | Lint, types and product checks | `owasp.mjs sync --verify` (the OWASP Cheat Sheet Series upstream equals `docs/security/owasp/sheets.json`; the sheet texts are cached for the quote checks), `owasp.mjs check` (every sheet mapped at its current version, every quote in its sheet, every control's evidence in its file), ESLint (§2), `tsc --noEmit`, every `scripts/quality/*.test.mjs`, `check-files.mjs --all` (§1), `product-gates.mjs` (i18n, design system, UI contract, Stories, hydration, DB grants, listing visibility, active-only backlog — GR-5) | any error or finding |
 | Unit and component tests | `npm run build`, then `npm test -- --coverage` with no focused tests and no retries, then `changed-lines-coverage.mjs` (§8) | any failing test; a changed product line set below the coverage rule |
 | Authorization regression | `ci-target.mjs` (only the approved development Supabase project), then `npm run test:security-integration` against real Auth and RLS | any failing case |
-| Dependency audit | `npm ci --ignore-scripts` (lockfile enforced), `npm audit --omit=dev --audit-level=high` | a high or critical advisory in a production dependency |
+| Dependency audit | `npm ci --ignore-scripts` (lockfile enforced), `audit-gate.mjs --omit-dev --level high` and `audit-gate.mjs --level high` (`npm audit` at that level; an advisory is let through only by an owner decision in `scripts/quality/audit-exceptions.json`, which stops matching when its range or the package's latest version changes or on its expiry date) | a high or critical advisory in any dependency that no owner decision accepts |
 | Change report | `change-report.mjs`: product code changed with no test changed (§8), sensitive paths (rules, agents, CI, dependencies, lint/type/test config, runtime security config including `src/proxy.ts`, migrations and schema, security tests), deleted tests, fewer cases or assertions, new skip/only/todo, added dependencies with their age | product code changed with no test changed; an added package that does not exist on npm or is younger than 30 days; a lockfile entry outside `registry.npmjs.org` or without integrity. The rest is listed for the owner |
 | OWASP task gate | `owasp.mjs cache`, then `owasp.mjs gate --base <base>` on every pull request and push (a schedule run changes nothing and passes): a change of anything but documentation carries a task whose last verdict is `APPROVED`, each approved review passes its record, and those records together judge every sheet the diff triggers; a version-only dependency update (manifest versions, lockfile, full-SHA action pins) is held by the dependency gates instead | code or configuration without an approved task; a review without its OWASP record; a sheet the diff triggers that no approved review judged |
 | SBOM | CycloneDX of the production dependencies, validated, kept 90 days | generation or validation fails |
@@ -124,7 +124,8 @@ node scripts/quality/changed-lines-coverage.mjs --base main
 node scripts/quality/product-gates.mjs
 node scripts/quality/check-ruleset.mjs
 node scripts/quality/change-report.mjs main HEAD
-npm audit --omit=dev --audit-level=high
+node scripts/quality/audit-gate.mjs --omit-dev --level high
+node scripts/quality/audit-gate.mjs --level high
 node scripts/quality/client-sinks.mjs
 node scripts/quality/locale-safety.mjs
 node scripts/quality/db-catalog-audit.mjs

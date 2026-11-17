@@ -2,7 +2,9 @@
 
 Sprint 93. Priority P1. Found 2026-11-12 by Opus from the GitHub notice on the push of PR #30 ("94 vulnerabilities on
 the default branch: 1 critical, 23 high, 58 moderate, 12 low"); no owner decision needed (owner D2, 2026-11-06: quality
-covers every file; golden rule, 2026-11-07). Implementer: Sonnet, on `task/972-dependency-advisories` from `main`.
+covers every file; golden rule, 2026-11-07). Revision 1, owner 2026-11-17 (translated): "write all the updates into the
+next task; do not create a new task only for updates". Open owner decision O972-1 (Out of scope). Implementer: Sonnet,
+on `task/972-dependency-advisories` from `main`.
 Opus, not the executor (`execute-task` forbids `.github/**`, `scripts/quality/**` and `.claude/**`), changes the CI
 audit step and `.claude/rules/quality-gates.md`. Reviewer: Opus.
 Human owner of the change: the owner.
@@ -17,8 +19,8 @@ high `hono`, `@modelcontextprotocol/sdk`, `body-parser` and `ip-address` come th
 `extract-zip`, `basic-ftp` and `proxy-agent` through `lighthouse` 13.3.0; `undici` through `jsdom` and `vitest`;
 `socket.io-parser` and `engine.io` through `react-email` 6.1.5; `js-yaml` through `eslint`. `vite` 6.4.2 is
 inside the `launch-editor` advisories (`<=6.4.3`). `happy-dom` 20.8.9 (`package.json:210`, exact pin) is inside
-GHSA-834v-8h66-3h79 (host code execution, `<=21.0.3`) and is used by nothing: the unit environment is `jsdom`
-(`vitest.config.ts:8`) and no file outside `package.json` and old session notes names it.
+GHSA-834v-8h66-3h79 (host code execution, `<=21.0.3`) and no project file uses it: the unit environment is `jsdom`
+(`vitest.config.ts:8`); `@tiptap/html` still asks for it (Revision 1, "## Cause").
 
 One production package matters to a visitor: `sanitize-html` 2.17.7 (`package.json:182`) is the whole stored-XSS
 defence of the CMS body (`src/modules/cms/lib/sanitizeCmsHtml.ts:1`), and is inside GHSA-x3q4-9hxx-gx8m (a
@@ -44,12 +46,40 @@ this task already takes removes the whole chain: a copy of today's manifest and 
 25.16.0, has no `get-uri` and no `basic-ftp`, and `npm audit --package-lock-only` has no `basic-ftp` entry. No override
 is needed (an override probe showed a range would take `basic-ftp` 6.2.6, under 14 days old).
 
+Revision 1 (2026-11-17): every open Dependabot alert whose fix is at least 14 days old leaves the tree in this task.
+
+## Cause
+
+- `gh api "repos/{owner}/{repo}/dependabot/alerts?state=open" --paginate` → 101 open alerts in 28 packages (2026-11-17);
+  each first patched version read with npm view time: all at least 14 days old except `next` 16.4.5 (published
+  2026-11-03T18:01:54Z) and `extract-zip`, which has none (it leaves with `lighthouse` 13.6.0, above).
+- `package.json:171` pins `next` at 16.4.3: alert 186, GHSA-mfr8-8qww-v76h, `>= 16.3.0, <= 16.4.4`.
+- `happy-dom` stays when its direct entry goes: `@tiptap/html` 3.31.4 (`package.json:199`, development, imported only
+  by `src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts:10`) asks for it:
+  `npm view @tiptap/html@3.31.4 dependencies` → `"happy-dom":"^20.8.9"`;
+  `npm view @tiptap/html@3.32.2 dependencies` → `"happy-dom":"^20.8.9||^21.0.4"` (3.32.2 published 2026-10-30). The nine `@tiptap/*` entries are pinned together
+  (`package.json:152-159`, `:199`); 3.32.2 on top of the old lockfile entries → `ERESOLVE`, "Conflicting peer
+  dependency: @tiptap/pm@3.32.2".
+- `package.json:205` pins `@vitest/coverage-v8` at 4.1.6, which holds `vitest` and `@vitest/mocker` below 4.1.12 (published
+  2026-10-15), their fix.
+- Probe (Opus, 2026-11-17, scratch copy of manifest and lockfile): this Scope, the `node_modules/@tiptap/` lockfile entries
+  dropped, install and audit fix with `--before=2026-11-03T18:02:00Z`; `npm audit --package-lock-only` → `critical 0,
+  high 0, moderate 19, low 0`, `happy-dom` 21.0.4, `next` 16.4.5, `vitest` 4.1.12. The 19 moderate are `glob` and
+  `minimatch` paths: `@sentry/*` (Task 973), `@storybook/nextjs-vite` through `@joshwooding/vite-plugin-react-docgen-typescript`
+  (npm: no fix), `shadcn` through `ts-morph` (fix only `shadcn` 1.0.0, a major downgrade), `typescript-eslint` and
+  `react-email` (npm names a fix the `--before` date does not reach; UNKNOWN: its version).
+Fix: `next` 16.4.5, the nine `@tiptap/*` at 3.32.2 and `@vitest/coverage-v8` 4.1.12 (exact pins kept), the stale
+`@tiptap/*` lockfile entries dropped, then the audit fix below; the moderate paths without a reachable fix go to O972-1.
+
 ## Scope
 
 - `package.json`, `package-lock.json`: remove `happy-dom`; `sanitize-html` range `^2.18.1`; then
   `npm audit fix --package-lock-only --ignore-scripts --before=<the day 14 days before the run>` and `npm ci`. No major
   upgrade and no new package; the versions the run takes are listed in the report with `npm view <name>@<version> time
   scripts --json`.
+- Revision 1: `package.json` `next` `16.4.5`, the nine `@tiptap/*` `3.32.2`, `@vitest/coverage-v8` `4.1.12`, exact pins;
+  the `node_modules/@tiptap/` entries of `package-lock.json` removed before the install (no other hand edit of the
+  lockfile). Not before 2026-11-17T18:02Z, when `next` 16.4.5 is 14 days old.
 - `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts`: one case per advisory above, its payload through
   `sanitizeCmsHtml`; the output has no `noscript` content, no `meta`, no `javascript:` or `data:` URL and no SVG
   animation element.
@@ -62,7 +92,9 @@ is needed (an override probe showed a range would take `basic-ftp` 6.2.6, under 
   "Dependency audit" row of `.claude/rules/quality-gates.md`.
 - Dependencies: none added; versions only, each at least 14 days old (`--before`).
 - Out of scope: the production moderate advisories of `glob` and `minimatch`, whose fix is `@sentry/nextjs` 11.12.0
-  (major, released 2026-11-10, under 14 days old), and the production low advisories: Task 973.
+  (major, released 2026-11-10, under 14 days old), and the production low advisories: Task 973. The moderate `glob` and
+  `minimatch` paths of `@storybook/nextjs-vite`, `shadcn`, `typescript-eslint` and `react-email` with no fix at least
+  14 days old: open owner decision O972-1 (accept until a fix exists, or a task); the report lists them.
 
 ## Attack surface
 
@@ -108,10 +140,10 @@ Required by `node scripts/quality/owasp.mjs plan` (mapping of 2026-11-12).
 - Secure_Code_Review: "Diff-Based Reviews focus on code changes only." — the review reads the lockfile diff version by version against the report — AC1, AC4.
 - Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; every version change is checked with `npm view` in the report — AC4.
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — each threat of the model maps to an acceptance criterion — AC1, AC2, AC3, AC5.
-- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — only versions at least 14 days old, the lockfile written by npm — AC1, AC4.
+- Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — only versions at least 14 days old, the lockfile written by npm (the dropped `@tiptap/*` entries are resolved again by npm) — AC1, AC4, AC7.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — the Attack surface answers them for the dependency change — AC1, AC2, AC3, AC5.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns both audits and reads the CI run, not the summary — AC1, AC5.
-- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI audits the whole tree on every change, and the medium `basic-ftp` advisory leaves with `lighthouse` 13.6.0 — AC1, AC5, AC6.
+- Vulnerable_Dependency_Management: "It's highly recommended to perform automated analysis of the dependencies from the birth of the project." — CI audits the whole tree on every change, and the medium `basic-ftp` advisory leaves with `lighthouse` 13.6.0, and every alerted package with a fix at least 14 days old with it — AC1, AC5, AC6, AC7.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — the CMS body reaches the page only through the patched sanitizer — AC2.
 - XSS_Filter_Evasion: "input filtering is an incomplete defense for XSS" — the sanitizer is one layer, and the payloads of its three advisories are tested on it — AC2.
 
@@ -135,6 +167,10 @@ No visible change. A visual difference in the build or Storybook stops the task 
   command, exit 1 on such an advisory) and `gh pr checks <n>` (the Dependency audit check of this task's pull request).
 - AC6 `basic-ftp` (GHSA-5pm8-86m8-9m6r) is no longer in the tree — test: `npm ls basic-ftp --all` prints no
   `basic-ftp` and `npm audit --json` has no `basic-ftp` entry (both in the report, before and after).
+- AC7 (Revision 1) Every alerted package with a fix at least 14 days old leaves the advisories — test: `npm audit --json`
+  (before and after in the report) names only the `glob` and `minimatch` paths of Out of scope, and
+  `npm ls happy-dom next vitest @tiptap/html --all` shows `happy-dom` 21.0.4 or later, `next` 16.4.5, `vitest` 4.1.12,
+  `@tiptap/html` 3.32.2; `src/design-system/mantine/patterns/__tests__/richTextRoundTrip.test.ts` passes.
 
 ## Route
 
@@ -142,8 +178,9 @@ No visible change. A visual difference in the build or Storybook stops the task 
    `happy-dom` outside `package.json` and `package-lock.json`.
 2. Test first: the AC2 cases on `sanitize-html` 2.17.7; save the failing output (a case that already passes on 2.17.7
    says so, with the payload).
-3. Change `package.json` and the lockfile per Scope; `npm ci`; `npm ls --omit dev --all` exits 0. AC6:
-   `npm ls basic-ftp --all` before and after the change.
+3. Change `package.json` and the lockfile per Scope (Revision 1 pins and the dropped `@tiptap/*` entries first, then
+   `npm install --ignore-scripts --before=<run time minus 14 days>` and the audit fix with the same date); `npm ci`;
+   `npm ls --omit dev --all` exits 0. AC6: `npm ls basic-ftp --all` before and after the change. AC7 before and after.
 4. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npm audit --audit-level=high · npm audit --omit=dev --audit-level=high ·
    npm run build · npm run build-storybook · node --test scripts/quality/install-scripts.test.mjs ·

@@ -7,9 +7,8 @@
       "evidence": "review 11, after the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16): `src/modules/listings/actions/updateListing.integration.test.ts` (AC5, a direct owner write of an active listing refused, the application edit moderated) passes in the AC2-AC7 run, 6 files, 74 tests"
     },
     "AI_Agent_Security": {
-      "verdict": "met",
-      "quotes": ["Fail closed when risk classification, approval validation, policy lookup, or audit logging fails."],
-      "evidence": "review 11: `node --test scripts/quality/read-coverage.test.mjs` 45/45; with `supabase/catalog.json` out of GENERATED tests 12 and 20 turn red (AC20; restored, sha256 3ab267725d7b), so a generated file is proved only by the session's own run without error; the executor record d2f24b5b rerun with `--transcript --review c0a948345` exit 0, its 96 shell calls and 3 scripts read; F25 fixed in Revision 4b; F28 accepted by the owner (O956-4)"
+      "verdict": "not applicable",
+      "reason": "review 12: Revision 7 deletes the local read-coverage check by owner decision O956-7 and rewrites the rules, skills and agents that named it; no agent permission, tool grant or approval path changes: `git diff 55afce7ba afc409a66 -- .claude/settings.json` is empty, and this review's hook refused a mutating Git command (`git show --remerge-diff`) under the unchanged settings"
     },
     "Attack_Surface_Analysis": {
       "verdict": "met",
@@ -79,7 +78,7 @@
     "File_Upload": {
       "verdict": "met",
       "quotes": ["Validate the file type, don't trust the Content-Type header as it can be spoofed"],
-      "evidence": "review 11: the avatars bucket of the applied catalog allows only image/jpeg, image/png and image/webp up to 2097152 bytes (`supabase/catalog.json:3313-3324`); `db-catalog-audit.mjs` I9 exit 0"
+      "evidence": "review 11: the avatars bucket of the applied catalog allows only image/jpeg, image/png and image/webp up to 2097152 bytes (`supabase/catalog.json:3313-3324`); `db-catalog-audit.mjs` I9 exit 0; review 12: the live bucket refuses the old synthetic object (`src/lib/account/deleteAccount.integration.test.ts:142` with `text/plain` put back → \"mime type application/octet-stream is not supported\", 2 red) and takes the 1x1 PNG (`npm run test:security-integration` exit 0, 130/130)"
     },
     "GraphQL": {
       "verdict": "met",
@@ -112,7 +111,7 @@
     "LLM_Prompt_Injection_Prevention": {
       "verdict": "met",
       "quotes": ["Check all hidden text, not only text that reads like an instruction."],
-      "evidence": "review 6: `node scripts/quality/check-files.mjs` on the 20 changed rules, skills, agents, tools, kickoffs and OWASP files exit 0 (invisible, bidi and tag characters, scripts/quality/check-files.mjs:57); read-coverage.mjs reads the transcript with JSON.parse and regular expressions and hands no text to a model or a shell (scripts/quality/read-coverage.mjs:71-102)"
+      "evidence": "review 12: `node scripts/quality/check-files.mjs --all` exit 0 (14798 files, the changed rules, skills, agents, kickoffs and OWASP files included; invisible, bidi and tag characters are refused by `INVISIBLE`, scripts/quality/check-files.mjs:58); `node --test scripts/quality/check-files.test.mjs` covers each refused code point (the read-coverage transcript reader of review 6 is deleted by O956-7)"
     },
     "Logging": { "verdict": "not applicable", "reason": "the tools print to the terminal only; no application log is added or changed" },
     "Logging_Vocabulary": { "verdict": "not applicable", "reason": "no application security event is logged by the Part A tools" },
@@ -125,7 +124,7 @@
     "Multi_Tenant_Security": {
       "verdict": "met",
       "quotes": ["Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths"],
-      "evidence": "review 11: `src/tests/integration/contactGateway.integration.test.ts` (AC3: the contact RPC refuses sessions; `v8b-verify.sql` row 3 true) passes on the applied catalog; I3 of `db-catalog-audit.mjs` exit 0"
+      "evidence": "review 11: `src/tests/integration/contactGateway.integration.test.ts` (AC3: the contact RPC refuses sessions; `v8b-verify.sql` row 3 true) passes on the applied catalog; I3 of `db-catalog-audit.mjs` exit 0; review 12: `src/modules/listings/actions/contactLifecycle.integration.test.ts` asserts the session call of `get_listing_owner_contact` is refused (42501) and reads the numbers through `get_listing_owner_contact_as` with the service role, as `contactGateway.ts:120-123` does; with the session call put back both cases are red (42501), live audit exit 0"
     },
     "Multifactor_Authentication": { "verdict": "not applicable", "reason": "no sign-in factor changes; staff MFA belongs to Task 960" },
     "Nextjs_Security": {
@@ -202,7 +201,7 @@
       "quotes": ["the threat modeling process should answer the following four questions"],
       "evidence": "the kickoff's \"## Attack surface\" answers them; review 11: the AC of every mitigation passes on the applied catalog (AC1 `node scripts/quality/db-catalog-audit.mjs` exit 0; AC2-AC7 `src/tests/integration/moderatorKeys.integration.test.ts` and the five other suites, 74/74)"
     },
-    "Transaction_Authorization": { "verdict": "not applicable", "reason": "the diff triggers it only through the table name `reauth_failures` in the generated `supabase/catalog.json` (lines 152, 6806); no re-authentication, e-mail change, password change or account deletion flow changes" },
+    "Transaction_Authorization": { "verdict": "not applicable", "reason": "the diff triggers it through the table name `reauth_failures` in the generated `supabase/catalog.json` (lines 152, 6806) and, since Revision 8, through the path of `src/lib/account/deleteAccount.integration.test.ts`, whose only change is the synthetic avatar object (a 1x1 PNG); no re-authentication, e-mail change, password change or account deletion flow changes: `git diff 55afce7ba afc409a66 -- src/lib/account/deleteAccount.ts src/modules/cabinet/actions src/modules/admin/actions` is empty" },
     "Transport_Layer_Security": { "verdict": "not applicable", "reason": "the refactored connect keeps verified TLS with the project CA, unchanged from main" },
     "Unvalidated_Redirects_and_Forwards": {
       "verdict": "met",

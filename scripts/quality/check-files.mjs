@@ -87,7 +87,8 @@ export const CAUSE_GRANDFATHERED = new Map([
   ['947', 'b6020fe3733e267d50a0088b95e45c7a9fb4e1aea356759aa973e650b91f14f2'],
   ['948', '329765840da7d46a3a78131445feaa49bb1f0bbf1bf116cbe7a9ffca6eea4f29'],
   ['950', 'b3d65a342d8f9bebcbe4f72039d25cd9afa04e3a280c5715702b2442ee0382a8'],
-  ['951', '5f4d393b96e8fe58e7ba9f02956859d0ed56cffc1aa5f209ea681abf421019c7'],
+  // 951: its text plus one "## OWASP" line (Path_Traversal_Prevention) that Task 983 added on 2026-11-17 when the sheet was published; no design change
+  ['951', '099ddc5e0b2e02a186f10ea3434bcc406a895e3c3f18888fc1769a08dbf91e78'],
   ['952', 'b15e41f19a20eab6ed5b59ac3f33c76bd11b0da497d99f4eac4b1fda0c06738b'],
   ['953', 'b10536cbdee8e2da96847502354e7debb33d72fafd883cd0f05f3358a0772ec2'],
   ['954', 'bb47f365402043e016c50db9975f682d1f3305279479a35bce52907b4e8d2b07'],

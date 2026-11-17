@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "5f2a48abb76eea3544997eb5229e7cb8b7c275e3",
- "fetchedOn": "2026-11-16T06:41:27.156Z",
+ "commit": "18e4396f7605582391d440a0e44503541258bbb0",
+ "fetchedOn": "2026-11-17T04:54:25.065Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -180,6 +180,13 @@
    "title": "Cookie Theft Mitigation Cheat Sheet"
   },
   {
+   "name": "CORS_Security",
+   "file": "CORS_Security_Cheat_Sheet.md",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/CORS_Security_Cheat_Sheet.html",
+   "sha": "a4abb053fa5dc26746d70b3a66e98dea2cb10685",
+   "title": "CORS Security Cheat Sheet"
+  },
+  {
    "name": "Credential_Stuffing_Prevention",
    "file": "Credential_Stuffing_Prevention_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html",
@@ -309,14 +316,14 @@
    "name": "File_Upload",
    "file": "File_Upload_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
-   "sha": "7539234b18fb9938fe95f5845eecb909c13fc702",
+   "sha": "fff26e97a464a4e74092cdd666f79360ed53438f",
    "title": "File Upload Cheat Sheet"
   },
   {
    "name": "Forgot_Password",
    "file": "Forgot_Password_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html",
-   "sha": "d42b843a433df4f4e68aaf32307fd984680a3e8e",
+   "sha": "4fee254810359538e11f1145bb0df5e4e5db88be",
    "title": "Forgot Password Cheat Sheet"
   },
   {
@@ -351,7 +358,7 @@
    "name": "HTTP_Headers",
    "file": "HTTP_Headers_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html",
-   "sha": "c32d21c37597b992cb506a2325d5e27611c8a40a",
+   "sha": "f05f691eabcd792e6290b96417eef729f914a6d6",
    "title": "HTTP Security Response Headers Cheat Sheet"
   },
   {
@@ -393,7 +400,7 @@
    "name": "Input_Validation",
    "file": "Input_Validation_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
-   "sha": "eb7ed3acc6c8e9b73fe4ea2d1e2c3c5104e2e207",
+   "sha": "9d8d7a2bb26dbaadb3a0974010139abc51142cb3",
    "title": "Input Validation Cheat Sheet"
   },
   {
@@ -442,7 +449,7 @@
    "name": "Kubernetes_Security",
    "file": "Kubernetes_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html",
-   "sha": "96c48acb7d848d022edbcc51dd30df1181cdd9ea",
+   "sha": "ecccad98012ef080b90b5087a6a571eb309d8532",
    "title": "Kubernetes Security Cheat Sheet"
   },
   {
@@ -612,6 +619,13 @@
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
    "sha": "598510f4ca1e5b918a44a4bc001ca7a074f237d7",
    "title": "Password Storage Cheat Sheet"
+  },
+  {
+   "name": "Path_Traversal_Prevention",
+   "file": "Path_Traversal_Prevention_Cheat_Sheet.md",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/Path_Traversal_Prevention_Cheat_Sheet.html",
+   "sha": "0423eb13d3e2efa6fc28ec8dd06c12053146b5ed",
+   "title": "Path Traversal Prevention Cheat Sheet"
   },
   {
    "name": "PHP_Configuration",
@@ -883,7 +897,7 @@
    "name": "Web_Cache_Security",
    "file": "Web_Cache_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Web_Cache_Security_Cheat_Sheet.html",
-   "sha": "861b650e37a158ee11f2b38369f462a07a1b2269",
+   "sha": "8a02c33407bdebb4294bb8b75f31b084dc05f80e",
    "title": "Web Cache Security Cheat Sheet"
   },
   {
@@ -932,7 +946,7 @@
    "name": "XML_Security",
    "file": "XML_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html",
-   "sha": "ef9a73afdbf55fe9d5d30d5f67dea443426b88d0",
+   "sha": "ae59e7fbcf9fbe8df340cb081e235a74e68db2a8",
    "title": "XML Security Cheat Sheet"
   },
   {

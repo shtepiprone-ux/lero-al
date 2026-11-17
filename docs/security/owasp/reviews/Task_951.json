@@ -261,6 +261,13 @@
       ],
       "evidence": "`node --test \"scripts/quality/*.test.mjs\"` 147/147; no changed script builds a shell string"
     },
+    "Path_Traversal_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Check that the resolved path is inside the base directory."
+      ],
+      "evidence": "`scripts/lib/__tests__/within-repository.test.ts` (AC8): `../x`, `%2e%2e/x`, an absolute path and a link out of the root are refused; `scripts/lib/within-repository.mjs:29-35`; added by Task 983 when the sheet was published"
+    },
     "Prototype_Pollution_Prevention": {
       "verdict": "met",
       "quotes": [

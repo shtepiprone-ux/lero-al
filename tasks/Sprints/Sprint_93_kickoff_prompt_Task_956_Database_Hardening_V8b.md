@@ -21,9 +21,13 @@ Read at 55afce7ba
   `.gitignore:112` (`supabase/*`) ignores it: `git check-ignore -v supabase/catalog.json` → `.gitignore:112:supabase/*`, so it cannot be committed.
 - Revision 7 (O956-7): `scripts/quality/read-coverage.mjs:425` refuses a session whose changed files pass 3 000 lines, and
   `scripts/quality/check-files.mjs:481` refuses a kickoff whose "## Read set" does; the owner ordered both removed with everything tied to them.
+- Revision 8: `src/lib/account/deleteAccount.integration.test.ts:139` writes a `text/plain` avatar, `supabase/sql_migrations/task956/v8b.sql:280` allows only
+  jpeg, png, webp; `src/modules/listings/actions/contactLifecycle.integration.test.ts:53` calls `get_listing_owner_contact` as a session,
+  `supabase/sql_migrations/task956/v8b.sql:180` revokes it: `gh run view 44022590715 --log-failed` → `mime type application/oc…`, `{ code: '42501' …`.
 Fix: Revision 6 — `!supabase/catalog.json` in `.gitignore` (the snapshot `db-types-drift.mjs` reads for Task 978). Revision 7 — `read-coverage.mjs` and its
 test deleted; `check-files.mjs` drops "## Read set" and keeps "## Cause", whose sources an optional "Read at <commit>" line pins (F26); the rules, skills
-and agents name no read set and no read-coverage.
+and agents name no read set and no read-coverage. Revision 8 — the avatar is a PNG (`image/png`); the numbers come from `get_listing_owner_contact_as`
+with the service role and the visitor as caller (the gateway's function), and the session call of `get_listing_owner_contact` is refused with 42501.
 
 ## Scope
 
@@ -34,10 +38,9 @@ and agents name no read set and no read-coverage.
 - F5 closed without a change (Revision 4 check). Revision 4 (F13, F29) approved in Review 9; Revision 5 (F30, AC19) approved in Review 10.
 - Revision 6, Opus (O956-5): the snapshot of step 6, committed (`.gitignore`) for `db-types-drift.mjs` (AC20); the step-6 results in "## Review"; the 980
   kickoff rewritten with the definer-view scope (owner, 2026-11-16); both backlog rows.
-- Revision 7, Opus (O956-7): `scripts/quality/read-coverage.mjs` and `read-coverage.test.mjs` deleted; `check-files.mjs` and its test without "## Read set";
-  `CLAUDE.md`, `flow.md`, `kickoff-template.md`, `secure-code-review.md`, the three skills and two agents without the read set and the tool; the
-  "## Read set" of the 956, 980 and 982 kickoffs and their read-coverage steps removed; AC11, AC17, AC18, AC20 changed; the audit IDs
-  DB-01 to DB-08 named one by one, as `check-files.mjs` `finding-status` reads them.
+- Revision 7, Opus (O956-7): `read-coverage.mjs` and its test deleted; `check-files.mjs`, its test, `CLAUDE.md`, the rules, three skills, two agents and the
+  956, 980, 982 kickoffs without the read set and the tool; AC11, AC17, AC18, AC20 changed; DB-01 to DB-08 named one by one (`finding-status`).
+- Revision 8: Sonnet, the deletion and contact-lifecycle suites follow v8b (AC21); Opus, `flow.md` §4 step 1 and `CLAUDE.md` Git (owner, 2026-11-17).
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979), public profiles and definer views
   (980), the unused admin create form (982).
 
@@ -99,6 +102,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — the definer function has search_path empty and takes the key as a parameter — AC9, AC10.
 - Third_Party_Javascript_Management: not applicable — no script loading changes in a database task.
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them and each mitigation is an acceptance criterion — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
+- Transaction_Authorization: not applicable — Revision 8 changes only the synthetic avatar file a deletion test writes; the deletion flow and its re-authentication are unchanged.
 - Transport_Layer_Security: not applicable — connections stay Supabase-managed TLS; no transport change.
 - User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — public_user_profiles exposes only the columns a page renders — AC7.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — a claim of the report that does not reproduce in review is a finding — AC11.
@@ -160,6 +164,8 @@ Admin user profile only: the website shows `lero.al` in view and edit; a refused
   active listings.
 - AC20 The catalog snapshot is a committed file — test: `node scripts/quality/check-files.mjs .claude/rules/flow.md` exits 0 (stale-path while the
   file is ignored) and `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` exits 0.
+- AC21 The whole authorization suite passes on the applied catalog, as CI runs it — test: `npm run test:security-integration` exits 0 with
+  `SECURITY_TEST_TARGET=development`, `SECURITY_TEST_PROJECT_REF=bmxkzcxaojgmpgzawwtn`; each of the 3 cases is red with its old line put back.
 
 ## Route
 
@@ -167,11 +173,9 @@ Every session starts from a tree the owner committed locally on this branch (no 
 0. Done: Revisions 4a, 4b, 4 (F13, F29), 5 (F30), 6; Reviews 7-11; F5 check; step 5, the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16).
 6. Done (see "## Review"): `v8b-verify.sql`, AC1-AC8 on the applied catalog, `--save supabase/catalog.json`; AC9, AC11, AC17-AC20: Revision 6 report.
 7. Done: Review 11 of Revision 6 in a session of its own (see "## Review").
-8. Revision 7 (Opus, O956-7): the removal of Scope; `node scripts/quality/check-files.mjs --all`, `node --test "scripts/quality/*.test.mjs"`,
-   `npm run lint`, `npm run typecheck`; then Review 12 in a session of its own (it also rewrites the OWASP record entries that cite the deleted tool), the
-   owner's commit and push to PR #41, `gh pr checks 41`. Run 43925004516 (head 55afce7ba) is red on "Lint, types and product checks",
-   "Authorization regression" and "CodeQL": each is opened to its log line and fixed in this pull request (`flow.md` §4.3); the OWASP
-   registry of `main` (Task 983, PR #43) reaches this branch when the owner merges `main` into it.
+8. Revisions 7 (Opus) and 8 (Sonnet, AC21); the owner merges `task/983-owasp-upstream-remap` into this branch (its OWASP registry is what the red
+   "Lint, types and product checks" of run 43925004516 lacked); Review 12 in a session of its own (it also rewrites the OWASP record entries that cite
+   the deleted tool); push; `gh pr checks 41` until every check, "Authorization regression" and "CodeQL" included, has concluded green.
 
 ## Review
 Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2 of 2, F4, F6-F8 closed; Review 4 LOOP LIMIT, O956-2.

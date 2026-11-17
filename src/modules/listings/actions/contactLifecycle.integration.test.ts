@@ -1,11 +1,14 @@
 /**
  * Real-boundary control for the lifecycle of the contact paths (Task 923 R66 (f), R65 (b), owner decision F2; cases SEC-X-INT-CONTACT-LIFECYCLE-ALLOW and -DENY): the REAL
- * `submitListingInquiry`, the REAL `trackListingContactEvent` and the REAL database function `get_listing_owner_contact`, with the REAL `requireViewer`, run against REAL Supabase
- * Auth and the REAL database of the approved development project. The doubles are the cookie-bound client factory (outside a Next request it returns the client that holds the REAL
- * session of the chosen synthetic person), the request headers, and the e-mail provider, which is a recording sink so that no real e-mail is ever sent. Synthetic rows only, verified
- * clean-up.
- *  - SEC-X-INT-CONTACT-LIFECYCLE-ALLOW: on an ACTIVE listing of a live owner the three paths work: one inquiry, one contact event, the owner's numbers;
- *  - SEC-X-INT-CONTACT-LIFECYCLE-DENY: on an archived, expired, sold, rented and pending listing each path is refused: no inquiry, no event, no number, no e-mail.
+ * `submitListingInquiry`, the REAL `trackListingContactEvent` and the REAL database function `get_listing_owner_contact_as`, with the REAL `requireViewer`, run against REAL Supabase
+ * Auth and the REAL database of the approved development project. The owner's numbers are read the way the real gateway reads them (`contactGateway.ts:120-123`): the service role
+ * calls `get_listing_owner_contact_as` with the visitor as `p_caller` (hardening v8b revokes the session function `get_listing_owner_contact`, `v8b.sql:180`). The doubles are the
+ * cookie-bound client factory (outside a Next request it returns the client that holds the REAL session of the chosen synthetic person), the request headers, and the e-mail
+ * provider, which is a recording sink so that no real e-mail is ever sent. Synthetic rows only, verified clean-up.
+ *  - SEC-X-INT-CONTACT-LIFECYCLE-ALLOW: on an ACTIVE listing of a live owner the three paths work: one inquiry, one contact event, the owner's numbers; the session call of
+ *    `get_listing_owner_contact` is refused;
+ *  - SEC-X-INT-CONTACT-LIFECYCLE-DENY: on an archived, expired, sold, rented and pending listing each path is refused: no inquiry, no event, no number (the function answers
+ *    with no error and no row), no e-mail.
  * Run: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> npm run test:security-integration
  */
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
@@ -50,7 +53,7 @@ const inquiry = (listingId: string, who: string) => submitListingInquiry({
 const track = (listingId: string) => trackListingContactEvent({ listingId, channel: 'whatsapp', source: 'listing_detail_contact_card' })
 const inquiryRows = async (who: string) => (await run.admin.from('listing_inquiries').select('id, listing_id').like('name', `${run.RUN} ${who}%`)).data ?? []
 const eventRows = async (ids: string[]) => (await run.admin.from('listing_contact_events').select('id, listing_id').in('listing_id', ids)).data ?? []
-const ownerContact = (listingId: string) => visitor.client.rpc('get_listing_owner_contact', { listing_id_param: listingId })
+const ownerContact = (listingId: string) => run.admin.rpc('get_listing_owner_contact_as', { p_caller: visitor.id, listing_id_param: listingId })
 
 describe('contactLifecycle', () => {
   it('[SEC-X-INT-CONTACT-LIFECYCLE-ALLOW] contact-lifecycle allowed on the real project', async () => {
@@ -67,6 +70,12 @@ describe('contactLifecycle', () => {
     const numbers = await ownerContact(activeId)
     expect(numbers.error, 'the owner-contact function answers').toBeNull()
     expect(numbers.data, 'the owner\'s numbers are returned').toEqual([{ phone: ownerNumbers.phone, whatsapp: ownerNumbers.whatsapp }])
+
+    // the function that takes no caller is closed to the session (hardening v8b): the visitor's own call is refused, not answered
+    const session = await visitor.client.rpc('get_listing_owner_contact', { listing_id_param: activeId })
+    expect(session.error, 'the session call of get_listing_owner_contact is refused').not.toBeNull()
+    expect(session.error?.code === '42501' || /permission denied/i.test(session.error?.message ?? ''), `refused by the grant (${session.error?.code})`).toBe(true)
+    expect(session.data, 'the session call returns no number').toBeNull()
   })
 
   it('[SEC-X-INT-CONTACT-LIFECYCLE-DENY] contact-lifecycle refused on the real project', async () => {
@@ -78,7 +87,8 @@ describe('contactLifecycle', () => {
       expect(await inquiry(id, `locked-${status}`), `${status}: no inquiry (the contact card of a listing that is not active is locked)`).toEqual({ error: 'validation' })
       expect(await track(id), `${status}: no contact event`).toEqual({ ok: false, reason: 'not_found' })
       const numbers = await ownerContact(id)
-      expect(numbers.data ?? [], `${status}: no number is returned`).toEqual([])
+      expect(numbers.error, `${status}: the function answers (the refusal is the rule, not a missing grant)`).toBeNull()
+      expect(numbers.data, `${status}: no number is returned`).toEqual([])
     }
     for (const status of LOCKED) expect(await inquiryRows(`locked-${status}`), `${status}: no inquiry row`).toEqual([])
     expect(await eventRows(Object.values(lockedIds)), 'no contact event row for any locked listing').toEqual([])

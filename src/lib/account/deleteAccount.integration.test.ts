@@ -31,6 +31,8 @@ const companyIds = new Set<string>()
 const inquiryIds = new Set<string>()
 const reportListingIds = new Set<string>()
 const objectOwners = new Set<string>()
+/** the bytes of a valid 1x1 PNG (signature, IHDR, IDAT, IEND; 70 bytes) */
+const ONE_PIXEL_PNG = Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64'))
 
 beforeAll(() => { run = createRun() })
 afterAll(async () => {
@@ -136,7 +138,8 @@ async function buildAllowWorld(): Promise<AllowWorld> {
   await insert('favorites', { user_id: second.id, listing_id: ownerListing.id })
   await insert('verification_requests', { user_id: agent.id, document_url: cloud('verification') })
   objectOwners.add(agent.id)
-  const uploaded = await run.admin.storage.from('avatars').upload(`${agent.id}/integration.txt`, new Blob(['synthetic']), { contentType: 'text/plain', upsert: true })
+  // the `avatars` bucket allows only image/jpeg, image/png and image/webp up to 2 MB (hardening v8b, `v8b.sql:278-281`): the synthetic object is a valid 1x1 PNG
+  const uploaded = await run.admin.storage.from('avatars').upload(`${agent.id}/integration.png`, new Blob([ONE_PIXEL_PNG], { type: 'image/png' }), { contentType: 'image/png', upsert: true })
   expect(uploaded.error, 'the synthetic avatars object was written').toBeNull()
 
   // a counted view and a click of the agent on another owner's listing, and two views and a click that are not the agent's

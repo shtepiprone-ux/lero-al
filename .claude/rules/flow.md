@@ -149,6 +149,12 @@ findings; new requirements are a new task.
 1. Opus gives the owner the commands to commit on a task branch, push it and open a PR, with a `git add` that names
    every changed file, stating where to run each one ("separate PowerShell window") and what it changes ("local only",
    "GitHub", "production"). No `Co-Authored-By`, no AI attribution, no `--author`.
+   **State before every Git command** (owner, 2026-11-17, after a merge command Git refused: "your local changes would be
+   overwritten by merge"): Opus reads `git status --short --branch` right before handing over any commit, merge, switch,
+   pull or push, and for a merge or switch also `git diff --name-only <base>...<incoming branch>`. A file that is
+   uncommitted and also changed by the incoming branch is committed first (its own `git add` with explicit paths), and
+   the merge or switch comes after. No merge or switch is handed over while a subagent is still changing the working
+   tree. A command whose state was not read is not handed over.
 2. The CI change report lists the sensitive paths, deleted or weakened tests and new dependencies. The owner reads every
    line of those, and approves each change of rules files explicitly in the PR.
 3. Opus reads the pull request's checks with `gh pr checks <n>` until every check has concluded; a failure is fixed in

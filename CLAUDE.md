@@ -91,7 +91,9 @@ the session start).
 
 - `main` changes only through a PR whose `CI Required` check is green, merged by the owner after reading the diff.
 - Agents run read-only Git only (`.claude/settings.json` denies the rest). Opus gives the owner exact commands, says where
-  to run them and what they change.
+  to run them and what they change, after reading the state they act on (`git status --short --branch`; for a merge or
+  switch also the files the incoming branch changes): an uncommitted file the merge would overwrite is committed first
+  (`.claude/rules/flow.md` §4 step 1, owner 2026-11-17).
 - No `Co-Authored-By` (any spelling), AI/vendor identity or `--author` in any commit command, subject, body or trailer.
 
 ## Detailed sources

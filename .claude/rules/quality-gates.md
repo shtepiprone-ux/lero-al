@@ -91,7 +91,10 @@ Also on GitHub: `scorecard.yml` (OpenSSF Scorecard, weekly and on `main`, result
 `repository-settings.yml` (daily and on every ruleset change: `check-ruleset.mjs` compares the live `main` ruleset with
 `scripts/quality/main-ruleset.json`, so a setting changed by hand shows as a failed run; not a merge gate, because the
 ruleset is repository configuration that no PR can change); `.github/dependabot.yml` (npm and actions, weekly, 14-day cooldown, 30 days for a major;
-security updates immediate). The reviewer also runs `node scripts/quality/check-ruleset.mjs` at the start of every
+security updates immediate). A Dependabot pull request is a signal, never merged (owner decision O972-4, 2026-11-17,
+translated: "Dependabot PRs are not merged; updates go through tasks, as 972 does; secrets do not reach dependency code
+no review has read"): the `SECURITY_CI_*` secrets stay out of the Dependabot secret store, so its pull requests fail the
+jobs that need them, and the update it proposes is taken by a task branch. The reviewer also runs `node scripts/quality/check-ruleset.mjs` at the start of every
 review.
 
 GitHub settings (owner): secret scanning and push protection on; Dependabot alerts and security updates on; the `main`

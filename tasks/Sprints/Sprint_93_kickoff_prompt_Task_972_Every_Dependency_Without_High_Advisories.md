@@ -9,7 +9,8 @@ sanitize-html is closed only in 2.18.2, released 6 days ago — we update; add m
 fail"): `sanitize-html` 2.18.2 under the 14-day age, pinned exactly in `overrides`, which `change-report.mjs:139-147`
 reports as the owner's visible decision and does not refuse; owner decision O972-3 (2026-11-17, option "accept the
 risk"): GHSA-fc5q-39xc-vjpf (`picomatch`, no fixed version) accepted until 2026-12-17 in
-`scripts/quality/audit-exceptions.json`. Implementer: Sonnet, on `task/972-dependency-advisories`. Opus, not the
+`scripts/quality/audit-exceptions.json`. Owner decision O972-4 (2026-11-17): Dependabot pull requests are not merged
+and get no CI secrets; their updates go through tasks such as this one (`.claude/rules/quality-gates.md`). Implementer: Sonnet, on `task/972-dependency-advisories`. Opus, not the
 executor, changes CI, `scripts/quality/**` and `.claude/rules/quality-gates.md` (done in Revision 3). Reviewer: Opus.
 Human owner of the change: the owner.
 

@@ -111,10 +111,9 @@ test('Markdown relative links must resolve; code and URLs are ignored', () => {
 test('kickoffs from Sprint 93 on follow the template', () => {
   const body = {
     '## Acceptance criteria': '- AC1 x — test: `src/a/x.test.ts`',
-    '## Cause': '`src/a/x.ts:3` returns the raw code.\nFix: return the translated text.',
-    '## Read set': 'Counted at abc1234\n- `src/a/not-there-yet.ts` — new, 10 lines',
+    '## Cause': 'Read at abc1234\n`src/a/x.ts:3` returns the raw code.\nFix: return the translated text.',
   };
-  // the commit exists and holds the Cause source with 10 lines and none of the read set
+  // the commit exists and holds the Cause source with 10 lines
   const io = { lineCount: () => null, atCommit: { exists: (sha) => sha === 'abc1234', lineCount: (_sha, rel) => (rel === 'src/a/x.ts' ? 10 : null) } };
   const k = (text) => kickoffFindings(text, io);
   const good = ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s, body[s] ?? 'text', ''])].join('\n');
@@ -140,57 +139,50 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   assert.ok(!rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'a grandfathered kickoff is not held to the OWASP gate');
 });
 
-describe('a kickoff names the cause with real sources and the fix, and a read set counted at a named commit (F20, F21)', () => {
-  const sections = (cause, set, review = '') => ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s,
-    s === '## Cause' ? cause : s === '## Read set' ? set : s === '## Review' ? review : s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
-  // the files at the named commit abc1234 (where a "## Cause" source is looked up), and the files now (read only when the
-  // kickoff names no commit this repository holds)
-  const atCommit = { exists: (sha) => sha === 'abc1234', lineCount: (sha, rel) => (sha === 'abc1234' ? ({ 'src/a.ts': 120, 'src/b.ts': 2900, 'scripts/old.mjs': 40 })[rel] ?? null : null) };
+describe('a kickoff names the cause with real sources and the fix (F21, F26)', () => {
+  const sections = (cause) => ['# Task 1 — Outcome', '', ...KICKOFF_SECTIONS.flatMap((s) => [s,
+    s === '## Cause' ? cause : s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  // the files at the commit abc1234 (where a source is looked up when "## Cause" reads "Read at abc1234"), and the files now
+  const atCommit = { exists: (sha) => sha === 'abc1234', lineCount: (sha, rel) => (sha === 'abc1234' ? ({ 'src/a.ts': 120, 'scripts/old.mjs': 40 })[rel] ?? null : null) };
   const now = (rel) => ({ 'src/a.ts': 130, 'scripts/x.mjs': 50 })[rel] ?? null;
-  const check = (cause, set, review) => kickoffFindings(sections(cause, set, review), { lineCount: now, atCommit }).map((f) => f.message);
-  const cause = '`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.';
-  const set = (...entries) => ['Counted at abc1234', ...entries].join('\n');
+  const check = (cause) => kickoffFindings(sections(cause), { lineCount: now, atCommit }).map((f) => f.message);
+  const at = (text) => `Read at abc1234\n${text}`;
 
-  it('a cause with an existing source and a fix, a read set counted at the commit: no finding', () => {
-    assert.deepEqual(check(cause, set('- `src/a.ts` — 120 lines', '- `src/new.ts` — new, 30 lines')), []);
-    assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` → `I15 notifications: two PERMISSIVE policies`\nFix: drop one.', set('- `src/a.ts` — 120 lines')), []);
-    assert.deepEqual(check('`src/a.ts:110-120` and `scripts/old.mjs:40` return the raw code.\nFix: y.', set('- `src/a.ts` — 120 lines')), []);
+  it('a cause with an existing source and a fix: no finding, with or without "Read at"', () => {
+    assert.deepEqual(check('`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.'), []);
+    assert.deepEqual(check(at('`src/a.ts:42` returns the raw code to the banner.\nFix: return the translated text.')), []);
+    assert.deepEqual(check('`node scripts/quality/db-catalog-audit.mjs` → `I15 notifications: two PERMISSIVE policies`\nFix: drop one.'), []);
+    assert.deepEqual(check(at('`src/a.ts:110-120` and `scripts/old.mjs:40` return the raw code.\nFix: y.')), []);
   });
 
   it('the cause: a source and a fix line are both required', () => {
-    assert.ok(check('the banner shows a raw code.\nFix: translate it.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('no source')));
-    assert.ok(check('`src/a.ts:42` returns the raw code.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('"Fix:')));
+    assert.ok(check('the banner shows a raw code.\nFix: translate it.').some((m) => m.includes('no source')));
+    assert.ok(check('`src/a.ts:42` returns the raw code.').some((m) => m.includes('"Fix:')));
   });
 
   it('F21: a `path:line` source must exist with that line; a bare file name is no source; a command source quotes its output', () => {
-    assert.ok(check('`src/nope/does-not-exist.ts:1` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/nope/does-not-exist.ts:1') && m.includes('not in abc1234')));
-    assert.ok(check('`src/a.ts:121` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:121') && m.includes('has 120 lines at abc1234')));
-    assert.ok(check('`src/a.ts:120-140` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('src/a.ts:120-140') && m.includes('has 120 lines at abc1234')));
-    assert.ok(check('`a.ts:3` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('no source')));
-    assert.ok(check('`grep -rn "AdminUserCreate" src` finds nothing.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')));
-    assert.ok(check('`src/a.ts:42` and `grep -rn x src` with no output.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('quotes no output')), 'every command source, not only the first');
+    assert.ok(check('`src/nope/does-not-exist.ts:1` returns x.\nFix: y.').some((m) => m.includes('src/nope/does-not-exist.ts:1') && m.includes('not in the repository')));
+    assert.ok(check('`src/a.ts:131` returns x.\nFix: y.').some((m) => m.includes('src/a.ts:131') && m.includes('has 130 lines') && !m.includes(' at ')));
+    assert.ok(check(at('`src/a.ts:121` returns x.\nFix: y.')).some((m) => m.includes('src/a.ts:121') && m.includes('has 120 lines at abc1234')));
+    assert.ok(check(at('`src/a.ts:120-140` returns x.\nFix: y.')).some((m) => m.includes('src/a.ts:120-140') && m.includes('has 120 lines at abc1234')));
+    assert.ok(check('`a.ts:3` returns x.\nFix: y.').some((m) => m.includes('no source')));
+    assert.ok(check('`grep -rn "AdminUserCreate" src` finds nothing.\nFix: y.').some((m) => m.includes('quotes no output')));
+    assert.ok(check('`src/a.ts:42` and `grep -rn x src` with no output.\nFix: y.').some((m) => m.includes('quotes no output')), 'every command source, not only the first');
   });
 
-  it('F26: a `path:line` source is looked up in the "Counted at" commit: a file deleted since passes, a file not in the commit fails', () => {
-    assert.deepEqual(check('`scripts/old.mjs:40` wrote the record.\nFix: delete it.', set('- `src/a.ts` — 120 lines')), []);
-    assert.ok(check('`scripts/x.mjs:50` returns x.\nFix: y.', set('- `src/a.ts` — 120 lines')).some((m) => m.includes('scripts/x.mjs:50') && m.includes('not in abc1234')));
-    // no commit this repository holds (a finding of its own): the file now is read, 130 lines
-    const noCommit = check('`src/a.ts:125` returns x.\nFix: y.', 'Counted at fff9999\n- `src/a.ts` — 120 lines');
-    assert.ok(!noCommit.some((m) => m.includes('"## Cause" cites')), noCommit.join('\n'));
-    assert.ok(check('`src/a.ts:131` returns x.\nFix: y.', 'Counted at fff9999\n- `src/a.ts` — 120 lines').some((m) => m.includes('src/a.ts:131') && m.includes('has 130 lines') && !m.includes(' at ')));
+  it('F26: with "Read at <commit>" a source is looked up in that commit: a file deleted since passes, a file not in the commit fails', () => {
+    assert.deepEqual(check(at('`scripts/old.mjs:40` wrote the record.\nFix: delete it.')), []);
+    assert.ok(check('`scripts/old.mjs:40` wrote the record.\nFix: delete it.').some((m) => m.includes('scripts/old.mjs:40') && m.includes('not in the repository')), 'without "Read at" the file now is read');
+    assert.ok(check(at('`scripts/x.mjs:50` returns x.\nFix: y.')).some((m) => m.includes('scripts/x.mjs:50') && m.includes('not in abc1234')));
+    // a commit this repository does not hold is a finding of its own, and the file now is read (130 lines)
+    const unknown = check('Read at fff9999\n`src/a.ts:125` returns x.\nFix: y.');
+    assert.ok(unknown.some((m) => m.includes('fff9999 is not a commit of this repository')), unknown.join('\n'));
+    assert.ok(!unknown.some((m) => m.includes('"## Cause" cites')), unknown.join('\n'));
   });
 
-  it('F20: every count is compared with the named commit, also after the review is written', () => {
-    assert.ok(check(cause, set('- `src/a.ts` — 12 lines')).some((m) => m.includes('src/a.ts has 120 lines at abc1234, not 12')));
-    assert.ok(check(cause, set('- `src/a.ts` — 12 lines'), 'Review 1 — NEEDS REVISION').some((m) => m.includes('has 120 lines at abc1234, not 12')));
-    assert.equal(check(cause, set('- `src/a.ts` — 1 lines', '- `src/b.ts` — 5 lines'), 'Review 6 — written').filter((m) => m.includes('at abc1234, not')).length, 2);
-    assert.ok(check(cause, '- `src/a.ts` — 120 lines').some((m) => m.includes('no "Counted at <commit>" line')));
-    assert.ok(check(cause, 'Counted at fff9999\n- `src/a.ts` — 120 lines').some((m) => m.includes('fff9999 is not a commit of this repository')));
-    assert.ok(check(cause, set('- `src/gone.ts` — 12 lines')).some((m) => m.includes('src/gone.ts is not in abc1234')));
-    assert.ok(check(cause, set('- `src/a.ts` — new, 120 lines')).some((m) => m.includes('is not new')));
-    assert.ok(check(cause, set('src/a.ts 120')).some((m) => m.includes('must be')));
-    assert.ok(check(cause, 'Counted at abc1234').some((m) => m.includes('lists no file')));
-    assert.ok(check(cause, set('- `src/a.ts` — 120 lines', '- `src/b.ts` — 2900 lines')).some((m) => m.includes('3020 lines > 3000')));
+  it('the old "## Read set" section is no longer required', () => {
+    assert.ok(!KICKOFF_SECTIONS.includes('## Read set'));
+    assert.ok(!('MAX_READ_SET_LINES' in cf));
   });
 
   it('the real commit reader: an unknown commit does not exist, a file of HEAD has its lines', async () => {
@@ -207,12 +199,12 @@ describe('a kickoff names the cause with real sources and the fix, and a read se
 });
 
 test('F22: a grandfathered kickoff keeps its old sections only while its text is the one recorded on 2026-11-16', () => {
-  const old = ['# Task 962 — Outcome', '', ...KICKOFF_SECTIONS.filter((s) => s !== '## Cause' && s !== '## Read set').flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
+  const old = ['# Task 962 — Outcome', '', ...KICKOFF_SECTIONS.filter((s) => s !== '## Cause').flatMap((s) => [s, s === '## Acceptance criteria' ? '- AC1 x — test: `src/a/x.test.ts`' : 'text', ''])].join('\n');
   const grandfathered = new Map([['962', cf.kickoffHash(old)]]);
   assert.deepEqual(kickoffFindings(old, { task: '962', grandfathered }), []);
   assert.equal(cf.kickoffHash(old.replace(/\n/g, '\r\n')), cf.kickoffHash(old), 'line endings do not change the text');
   // the 962 kickoff with a revision line added: no longer the recorded text, so it is held to the rule
-  const revised = old.replace('## Review\ntext', '## Review\ntext\nRevision 2 — the read set grows');
+  const revised = old.replace('## Review\ntext', '## Review\ntext\nRevision 2 — the scope grows');
   assert.ok(kickoffFindings(revised, { task: '962', grandfathered }).some((f) => f.message.includes('## Cause')));
   // a kickoff never listed is held to it: Task 956 (rewritten under the rule) and a new one
   assert.ok(kickoffFindings(old, { task: '956', grandfathered }).some((f) => f.message.includes('## Cause')));

@@ -70,15 +70,12 @@ export const SECRET_PATTERNS = [
 ];
 const CODE_EXT = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/i;
 const KICKOFF = /^tasks\/Sprints\/Sprint_(\d+)_kickoff_prompt_Task_\d+_.+\.md$/;
-export const KICKOFF_SECTIONS = ['## Goal', '## Cause', '## Scope', '## Read set', '## Attack surface', '## OWASP', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
+export const KICKOFF_SECTIONS = ['## Goal', '## Cause', '## Scope', '## Attack surface', '## OWASP', '## UI', '## Mobile adaptation record', '## Acceptance criteria', '## Route', '## Review'];
 const KICKOFF_FIRST_SPRINT = 93;
 const KICKOFF_MAX_LINES = 200;
-// Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it"; "the size
-// limit must be checked by a tool, not by the model". "## Cause" holds the fact with its sources and a "Fix:" line; "## Read
-// set" names the commit its counts were taken at ("Counted at <commit>") and lists every file the implementer will change
-// with its line count in that commit, at most MAX_READ_SET_LINES in all (more: split the task at design). Every source and
-// every count is checked on every run, not only at design (Task 956 Review 6, F20, F21).
-export const MAX_READ_SET_LINES = 3000;
+// Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it".
+// "## Cause" holds the fact with its sources and a "Fix:" line; every source is checked on every run, not only at design
+// (Task 956 Review 6, F21).
 /** The sha256 of a kickoff's text (checkFile has removed a BOM), line endings normalised: the same on Windows and in CI. */
 export const kickoffHash = (body) => createHash('sha256').update(String(body).replace(/\r\n/g, '\n')).digest('hex');
 // Kickoffs written before the rule, each with the sha256 of its text on 2026-11-16. A listed kickoff whose text differs
@@ -115,13 +112,13 @@ export const CAUSE_GRANDFATHERED = new Map([
   ['979', '58a98ce14feb3a81c63943deb69ceb80b161a04f035de05aaf5d24deeb910846'],
   ['980', '386d4f95e5d9f7b41c4592d575bf87992c5a98bca353009be1b1f43351c1ffb2'],
 ]);
-const NEW_SECTIONS = new Set(['## Cause', '## Read set']);
+const NEW_SECTIONS = new Set(['## Cause']);
 /** A `path:line` source (or a range): a repository path with a folder; a bare file name is not a source. */
 const PATH_SOURCE = /`([^`\s:]+\/[^`\s:]+\.[A-Za-z0-9]+):(\d+)(?:-(\d+))?`/g;
 /** A command or query source in backticks; its quoted output follows on the same line after "→". */
 const COMMAND_SOURCE = /`((?:node|npm|npx|gh|git|select|grep|rg) [^`]+)`/gi;
-const READ_SET_ENTRY = /^- `([^`]+)` — (?:(new), )?(\d+) lines?$/;
-const COUNTED_AT = /^Counted at `?([0-9a-f]{7,40})`?\.?$/i;
+/** An optional line of "## Cause" (by convention its first): the commit its `path:line` sources were read at. */
+const READ_AT = /^Read at `?([0-9a-f]{7,40})`?\.?$/i;
 // Kickoffs approved before the OWASP gate existed: OWASP_GRANDFATHERED in owasp.mjs, one list for both tools.
 
 const lineOf = (text, index) => text.slice(0, index).split('\n').length;
@@ -426,21 +423,20 @@ function sectionLines(lines, heading) {
 }
 
 /**
- * "## Cause" names the fact behind the problem with its sources and the fix: a `path:line` source is a file of the
- * "Counted at" commit that has that line, a command source quotes its output after "→" (F21). The source is read where
- * the cause was read, so a fix that deletes the file leaves its kickoff valid (F26); without a commit this repository
- * holds (itself a finding below) the file now is read. "## Read set" names the commit its counts were taken at and lists
- * the files to change with their line counts, within MAX_READ_SET_LINES; every count is compared with that commit on
- * every run, so the numbers come from Git, not from the model (F20). `lineCount(rel)` reads the file now; `atCommit`
- * reads a commit (`commitLines`).
+ * "## Cause" names the fact behind the problem with its sources and the fix: a `path:line` source is a file that has
+ * that line, a command source quotes its output after "→" (F21). An optional "Read at <commit>" line names the commit
+ * the sources were read at; they are then looked up there, so a fix that deletes or shortens the file leaves its kickoff
+ * valid (F26). Without that line the file now is read. `lineCount(rel)` reads the file now; `atCommit` reads a commit
+ * (`commitLines`).
  */
-export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, atCommit = commitLines } = {}) {
+export function causeFindings(lines, { lineCount: count = lineCount, atCommit = commitLines } = {}) {
   const out = [];
-  const set = sectionLines(lines, '## Read set');
-  const sha = set?.lines.map((l) => COUNTED_AT.exec(l.trim())).find(Boolean)?.[1] ?? null;
-  const known = sha !== null && atCommit.exists(sha);
-  const sourceLines = known ? (file) => atCommit.lineCount(sha, file) : count;
   const cause = sectionLines(lines, '## Cause');
+  const readAt = cause?.lines.findIndex((l) => READ_AT.test(l.trim())) ?? -1;
+  const sha = readAt < 0 ? null : READ_AT.exec(cause.lines[readAt].trim())[1];
+  const known = sha !== null && atCommit.exists(sha);
+  if (sha && !known) out.push(finding('kickoff', `"## Cause": ${sha} is not a commit of this repository (the sources are looked up in it; push the branch that holds it)`, cause.first + readAt));
+  const sourceLines = known ? (file) => atCommit.lineCount(sha, file) : count;
   if (cause) {
     let sources = 0;
     cause.lines.forEach((l, k) => {
@@ -459,26 +455,6 @@ export function causeAndReadSetFindings(lines, { lineCount: count = lineCount, a
     });
     if (!sources) out.push(finding('kickoff', '"## Cause" names no source of the fact (`path:line` with a folder, or a `command` or query followed by "→ <its output>")', cause.first - 1));
     if (!cause.lines.some((l) => /^Fix: \S/.test(l))) out.push(finding('kickoff', '"## Cause" has no "Fix: <the change that removes the cause>" line', cause.first - 1));
-  }
-  if (set) {
-    if (!sha) out.push(finding('kickoff', '"## Read set" has no "Counted at <commit>" line (the commit whose files the counts were taken from)', set.first - 1));
-    if (sha && !known) out.push(finding('kickoff', `"## Read set": ${sha} is not a commit of this repository (the counts are checked against it; push the branch that holds it)`, set.first - 1));
-    let total = 0;
-    let entries = 0;
-    set.lines.forEach((l, k) => {
-      if (!l.trim() || COUNTED_AT.test(l.trim())) return;
-      const m = READ_SET_ENTRY.exec(l);
-      if (!m) { out.push(finding('kickoff', '"## Read set" line must be "Counted at <commit>", "- `path` — <n> lines" or "- `path` — new, <n> lines"', set.first + k)); return; }
-      entries++;
-      total += Number(m[3]);
-      if (!known) return;
-      const actual = atCommit.lineCount(sha, m[1]);
-      if (m[2] && actual !== null) out.push(finding('kickoff', `${m[1]} is in ${sha}, so it is not new (${actual} lines)`, set.first + k));
-      if (!m[2] && actual === null) out.push(finding('kickoff', `${m[1]} is not in ${sha}: mark it "new, <n> lines"`, set.first + k));
-      if (!m[2] && actual !== null && actual !== Number(m[3])) out.push(finding('kickoff', `${m[1]} has ${actual} lines at ${sha}, not ${m[3]}`, set.first + k));
-    });
-    if (!entries) out.push(finding('kickoff', '"## Read set" lists no file', set.first - 1));
-    if (total > MAX_READ_SET_LINES) out.push(finding('kickoff', `the read set is ${total} lines > ${MAX_READ_SET_LINES} (flow.md §1: split the task)`, set.first - 1));
   }
   return out;
 }
@@ -502,7 +478,7 @@ export function kickoffFindings(body, { task, lineCount: count = lineCount, atCo
     else if (i < last) out.push(finding('kickoff', `section "${s}" is out of order`, i + 1));
     else last = i;
   }
-  if (!oldRule) out.push(...causeAndReadSetFindings(lines, { lineCount: count, atCommit }));
+  if (!oldRule) out.push(...causeFindings(lines, { lineCount: count, atCommit }));
   const ac = lines.findIndex((l) => l.trim() === '## Acceptance criteria');
   if (ac >= 0) {
     const end = lines.findIndex((l, i) => i > ac && l.startsWith('## '));

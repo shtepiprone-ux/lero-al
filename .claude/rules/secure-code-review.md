@@ -13,10 +13,10 @@ same" in an existing, already-reviewed pattern needs no new threat analysis (Att
 2. CodeQL alerts of the PR and `npm audit --omit=dev`: triage each one (real / false positive with the reason).
 3. The CI change report (`node scripts/quality/change-report.mjs main HEAD`): every sensitive path, deleted or weakened
    test and new dependency it lists is answered in the review.
-4. The diff itself: `git diff <commit>...HEAD --stat`, then **every** file of the review's read set: every file that
-   differs from the commit the revision under review started from (`read-coverage.mjs --review <commit>`, three passes,
-   `flow.md` §3), test files included, a generated file through the tools `read-coverage.mjs` names. The rest of the
-   branch (`git diff main...HEAD`) was read by the earlier reviews of the task, recorded in its kickoff's "## Review".
+4. The diff itself: `git diff <commit>...HEAD --stat`, then **every** file that differs from the commit the revision
+   under review started from, read in full in three passes (`flow.md` §2 step 4, §3), test files included, a generated
+   file through the tool that checks it. The rest of the branch (`git diff main...HEAD`) was read by the earlier reviews
+   of the task, recorded in its kickoff's "## Review".
    Never approve from the report or the PR description: the executor's report is a supplier assertion; each claim it
    makes (command, exit code, test count, deliberate break) is rerun by the reviewer on the candidate commit, and a
    claim that cannot be reproduced is a finding.

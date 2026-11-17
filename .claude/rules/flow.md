@@ -8,8 +8,9 @@ The gates are the GitHub workflow (`.github/workflows/ci.yml`, required check `C
 OWASP workflow (`scripts/quality/owasp.mjs`). Owner, 2026-11-14 (translated: "the tasks that verify your code went into
 deep over-engineering; they must follow the GitHub workflow and the OWASP workflow"): the local agent machinery (phase
 ledgers, the self-review hook, reply-wording checks, the local CI replica, the agent-loop hooks) was removed. No local
-tool replaces or re-implements a CI job. Owner, 2026-11-16: one tool, not a hook, counts what was read
-(`scripts/quality/read-coverage.mjs`, §2 step 4).
+tool replaces or re-implements a CI job. Owner, 2026-11-17 (translated: "delete read-coverage, you do not follow it
+anyway and it brings many problems"): the tool that counted what a session read, and the "## Read set" with its
+3 000-line limit, were removed.
 
 ## Roles
 
@@ -89,15 +90,10 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
    added to its scope and criteria (protection and test), and a requirement the mapping hands to the task is cited
    (`owasp.mjs check` O8).
 6. Write the kickoff from `kickoff-template.md` (≤ 200 lines; a task that does not fit is split) and its backlog row.
-   "## Read set" opens with "Counted at <commit>" (the commit the revision starts from, which the owner pushes with the
-   branch) and lists every file the implementer will change with its line count in that commit (a file not in it: "new,
-   <n> lines"). `check-files.mjs` compares each count with that commit on every run, also after a review is written, and
-   refuses a commit it cannot find: it never skips the check. CI has the commit: every job that runs `check-files.mjs`
-   checks out every branch and tag (`fetch-depth: 0`, `.github/workflows/ci.yml`), and GitHub keeps a merged branch
-   (`delete_branch_on_merge` is false), so deleting the branch of a commit an open kickoff names turns CI red. It refuses
-   a read set over 3 000 lines: such a task is split. Each `path:line` source of "## Cause" is a file of the
-   "Counted at" commit that has that line (the source is read where the cause was read, so a fix that deletes the file
-   leaves the kickoff valid); each command source is followed by "→ <its output>".
+   Each `path:line` source of "## Cause" is a file that has that line; each command source is followed by
+   "→ <its output>". When the fix will delete or shorten a cited file, "## Cause" opens with "Read at <commit>" (a commit
+   pushed with the branch): `check-files.mjs` then looks the sources up in that commit and refuses a commit it cannot
+   find; without that line it reads the files as they are now.
    Every acceptance criterion names its automated test (`quality-gates.md` §8). A revision that changes or adds a
    criterion changes or adds its test in the same revision.
 7. **Quality check of the design:** `node scripts/quality/check-files.mjs <kickoff> docs/backlog.md` and
@@ -110,57 +106,29 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
 2. Never weaken, skip or delete a test, a rule or a gate to get green.
 3. **Order** (owner, 2026-11-16): the new tests are written and run on the unchanged code (their failing output kept,
    `quality-gates.md` §8) → the change → three passes → the green runs (tests and gates).
-4. **Three passes over the read set** (owner, 2026-11-13, translated: "it is forbidden to run tests until you have
+4. **Three passes over every changed file** (owner, 2026-11-13, translated: "it is forbidden to run tests until you have
    checked the code you wrote three times, thoroughly"; "if a pass found a problem, that pass does not count … until all
-   three passes are clean"; "all models must read the code in a changed file completely, without exceptions"; and
-   2026-11-16: "a tool that shows how many lines a file has and how many were read forbids the model to skip lines").
-   The read set is every file whose content differs from the revision's base: HEAD, since the owner commits the tree
-   before each session. A file left uncommitted at the start is in it and is read like the rest; neither the session
-   record nor a modification time adds or removes a file. In each pass the author reads every line of each with
-   the Read tool and checks every changed line: the Scope item that needs it, its inputs and edge cases, every caller
-   and consumer of what it changes, every factual statement in a comment against the code. A pass that finds a problem
-   does not count; an Edit or Write of any file of the read set makes every pass start again (only reads after the last
-   change count, and a line counts only when a Read showed it whole, as the file has it now). What a person does not
-   read is decided by the tool, not by the author: `package-lock.json` is checked by `change-report.mjs --lockfile-age`,
-   `install-scripts.test.mjs` and `npm audit`, `docs/security/owasp/sheets.json` (written by `owasp.mjs sync`) by
-   `owasp.mjs check`, and `supabase/catalog.json` (written by `db-catalog-audit.mjs --save`) by
-   `db-catalog-audit.mjs --snapshot supabase/catalog.json` (owner, O956-6, 2026-11-16), each run by the session itself as the whole command (after `cd`) with a result that is not an
-   error; in a JSON data file (`messages/<locale>.json`, `docs/security/owasp/controls.json`,
-   `docs/security/owasp/reviews/*.json`) the object of each changed key is read. `node scripts/quality/read-coverage.mjs`
-   reads the running session's record and its subagents' records (each revision and each review runs in a session of
-   its own, since the tool holds the whole session to the rule), prints each file's lines, the lines read and the
-   complete passes over the file as it is now, has no option that lowers the passes, the limit or the read set, and
-   exits 1 when a file has fewer than three, a line was never read or a Read showed it cut, a shell command that is not
-   on its read-only allow-list (a test, a gate, any other run or change, a subagent's included) ran after the last
-   change (in a session that changes nothing, from its first command) and before the third pass, the session touched
-   its own record (an Edit or Write of the record or its folder, or a shell command naming the record `<id>.jsonl` or
-   its folder `<project>/<id>`; the bare id also names the scratchpad folder and is no touch), or the read set is over
-   3 000 lines; it exits 2 on a record with no entry of its session or when nothing differs from the base. It does not
-   see a program the session runs (a script, a test, a hook or profile it set up) that writes the record: the reviewer
-   finds that (§3). It exits 0 before the first green run; its output is in the report.
+   three passes are clean"; "all models must read the code in a changed file completely, without exceptions"). In each
+   pass the author reads every changed file with the Read tool from its first line to its last and checks every changed
+   line: the Scope item that needs it, its inputs and edge cases, every caller and consumer of what it changes, every
+   factual statement in a comment against the code. A pass that finds a problem does not count; a change starts the
+   passes again. A generated file is checked by the tool that writes or verifies it (`package-lock.json`:
+   `change-report.mjs --lockfile-age`, `install-scripts.test.mjs`, `npm audit`; `docs/security/owasp/sheets.json`:
+   `owasp.mjs check`; `supabase/catalog.json`: `db-catalog-audit.mjs --snapshot supabase/catalog.json`). No tool counts
+   the reads (owner, 2026-11-17); a file not read in full is reported as such.
 5. **Quality check of the implementation:** the kickoff's tests, `npm run lint`, `npm run typecheck`,
    `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs --base main`,
    `node scripts/quality/check-files.mjs --worktree`. For each security test, remove the control once and show the test
    failing (`security-testing.md`).
-6. Report each command with its exit code and the relevant output lines, the failing-first output of each new test, the
-   `read-coverage.mjs` output, the session id and the full path of the session record; anything not done is stated as not done.
+6. Report each command with its exit code and the relevant output lines and the failing-first output of each new test;
+   anything not done is stated as not done.
 
 ## 3. Review (Opus)
 
 The executor's report is a supplier assertion, not evidence (Verifying Third Party Agent Execution Evidence): the
-reviewer reruns every claimed command on the candidate commit, runs `read-coverage.mjs --transcript <executor's
-record> --review <the commit the revision started from>` when that record is on this machine (each account keeps its
-own config folder: the record is `<session id>.jsonl` under any `~/.claude*/projects/<project>/`, found by the session id
-with a read-only `find` or `ls` when the report lacks the path, since any other command naming a projects folder of a
-config folder counts as a touch of the reviewer's own record; Task 956 Review 9), with the tree as the candidate commit holds it (a `read-coverage.mjs`
-output missing from the report, or exit 1, is a finding), reads every command the executor's session ran and every
-script it wrote or ran, in that record and its subagents' (owner, O956-3, 2026-11-16, translated: "the reviewer reads
-every run command and every script of the session"; the tool sees an Edit or Write of the record and a command naming
-it, not a program that writes it, so a write to the session record found there is a finding), reads every file of the
-revision in three passes of its own before running any test or gate (`read-coverage.mjs --review <that commit>` exits 0
-in the review's own session, run before the reviewer edits the kickoff or the record: the commit is an ancestor of
-HEAD, and the read set is every file that differs from it, the reviewer's own OWASP remap included), and compares the
-kickoff's criteria with the diff (the expected tests come from the kickoff, not from the report). Follow
+reviewer reruns every claimed command on the candidate commit, reads every changed file of the revision in three passes
+of its own before running any test or gate (§2 step 4), and compares the kickoff's criteria with the diff (the expected
+tests come from the kickoff, not from the report). Follow
 `secure-code-review.md`: tools first, then the six diff-based steps and the checklist of every category the diff touches.
 Findings and the review summary use its templates and go into the kickoff's "Review" section; the per-sheet verdicts go
 to the task's OWASP review record (`docs/security/owasp/reviews/Task_<n>.json`, `kickoff-template.md`):

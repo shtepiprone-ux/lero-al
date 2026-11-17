@@ -53,23 +53,11 @@ I3 to an allow-list with its reason.
   without `security_invoker` set to true or on is a finding unless `DEFINER_VIEW_ALLOWED` names it with a reason; empty
   after the apply), `listing_owner_profile` in `DEFINER_EXECUTE_ALLOWED` with its reason; its test.
 - After the apply (Opus): `node scripts/quality/db-catalog-audit.mjs --save supabase/catalog.json` (the snapshot gains
-  `views`; a generated file, proved by `--snapshot`, `flow.md` §2 step 4).
+  `views`; a generated file, checked by `--snapshot`, `flow.md` §2 step 4).
 - Dependencies: none (no package). Task 956 v8b applied: done on bmxkzcxaojgmpgzawwtn (owner, 2026-11-16); production:
   UNKNOWN, read before the apply there.
 - Out of scope: the nine columns, `has_phone` semantics, the staff preview page (the service role reads the invoker view
   as before), `src/types/database.ts` (the function returns the `PublicUserProfile` shape).
-
-## Read set
-Counted at c0a948345
-- `supabase/sql_migrations/task980/v1.sql` — new, 60 lines
-- `supabase/sql_migrations/task980/v1-rollback.sql` — new, 30 lines
-- `supabase/sql_migrations/task980/v1-preflight.sql` — new, 20 lines
-- `supabase/sql_migrations/task980/v1-verify.sql` — new, 40 lines
-- `src/app/[locale]/listings/[slug]/page.tsx` — 330 lines
-- `src/app/[locale]/listings/[slug]/__tests__/ownerProfile.test.ts` — new, 80 lines
-- `src/tests/integration/accessHardening.integration.test.ts` — 731 lines
-- `scripts/quality/db-catalog-audit.mjs` — 265 lines
-- `scripts/quality/db-catalog-audit.test.mjs` — 178 lines
 
 ## Attack surface
 
@@ -141,8 +129,7 @@ No visible change.
 - AC5 Rollback restores the previous catalog — test: `node scripts/quality/db-sql-roundtrip.mjs
   supabase/sql_migrations/task980/v1.sql supabase/sql_migrations/task980/v1-rollback.sql` exits 0 (Opus, before the apply).
 - AC6 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs
-  --base main`, `node scripts/quality/check-files.mjs --worktree`, `node --test "scripts/quality/*.test.mjs"` exit 0, and
-  `node scripts/quality/read-coverage.mjs` exits 0 in each implementer's session.
+  --base main`, `node scripts/quality/check-files.mjs --worktree`, `node --test "scripts/quality/*.test.mjs"` exit 0.
 
 ## Route
 
@@ -150,7 +137,7 @@ No visible change.
 2. Tests first, each failing output kept: AC1-AC3 (Sonnet) with `SECURITY_TEST_TARGET=development` and
    `SECURITY_TEST_PROJECT_REF` set to the project the owner names for this task (bmxkzcxaojgmpgzawwtn was approved for
    Task 956's suites on 2026-11-16); AC4 (Opus, `scripts/quality/**`).
-3. The SQL and the page (Sonnet), the audit (Opus); three passes; `read-coverage.mjs`; the green runs of AC6.
+3. The SQL and the page (Sonnet), the audit (Opus); three passes; the green runs of AC6.
 4. Opus proves `v1-preflight.sql` and AC5 and gives the owner the apply step; after the apply: `v1-verify.sql`, AC1, AC2,
    AC4 on the live catalog, `--save supabase/catalog.json`.
 5. Report: each command, exit code and relevant output; each failing-first run; one deliberate break per AC.

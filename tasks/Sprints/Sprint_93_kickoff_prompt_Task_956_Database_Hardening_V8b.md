@@ -2,63 +2,57 @@
 
 Sprint 93. Priority P0. Owner decisions: D1, D53/R74, D72, D77/D79/D80, R75, D91, O956-1, O956-2 (2026-11-15, "everything must be fixed in the current
 task"), 2026-11-16 (cause rule; the rules and tools ship here), O956-3 (F25), O956-4 (F28), O956-5 (2026-11-16: Revision 6 is Opus's work), O956-6
-(2026-11-16, "only audit --snapshot": the snapshot's proof). Filed by the audit `docs/security/audit-2026-11-06/findings.md` (DB-01 to DB-08, SQL-01, L-04,
-P-06). Implementers: Opus (`scripts/quality/**`, rules), Sonnet (SQL, application, tests; never applies SQL). The owner applies. Reviewer: Opus.
+(2026-11-16, "only audit --snapshot": the snapshot's proof), O956-7 (2026-11-17, "delete read-coverage, you do not follow it anyway and it brings many
+problems"). Filed by the audit `docs/security/audit-2026-11-06/findings.md` (DB-01, DB-02, DB-03, DB-04, DB-05, DB-06, DB-07,
+DB-08, SQL-01, L-04, P-06). Implementers: Opus (`scripts/quality/**`, rules), Sonnet (SQL, application, tests; never applies SQL). The owner applies. Reviewer: Opus.
 
 ## Goal
 
 On 2026-11-07 `node scripts/quality/db-catalog-audit.mjs` reported 59 findings on the live catalog (I3 contact RPC, I5 staff policies without keys, I6
 `users` columns and CHECKs, I8 direct edits of active listings, I4 `anon` writes, I9 the avatars bucket, I7 expired listings, a definer view, duplicate
 `notifications` policies). After the task the same command exits 0 on the live catalog and `supabase/catalog.json` is committed for Task 978. Since
-2026-11-16 the task also carries the rules and tools that hold every session to its read set (owner choice: they ship here). State: the owner applied v8b
-on bmxkzcxaojgmpgzawwtn (2026-11-16); the results of Route step 6 are in "## Review".
+2026-11-16 the task also carries the facts and cause rules (owner choice: they ship here); the read-coverage tool and the "## Read set" it shipped with are
+removed again by O956-7 (Revision 7). State: the owner applied v8b on bmxkzcxaojgmpgzawwtn (2026-11-16); the results of Route step 6 are in "## Review".
 
 ## Cause
 
+Read at 55afce7ba
 - Revision 6: step 6 writes the snapshot: `node scripts/quality/db-catalog-audit.mjs --save supabase/catalog.json` → `no finding`, 8391 lines (2026-11-16).
-  `.gitignore:112` (`supabase/*`) ignores it: `git check-ignore -v supabase/catalog.json` → `.gitignore:112:supabase/*`, so it cannot be committed. And
-  `scripts/quality/read-coverage.mjs:53-62` names only `package-lock.json` and `docs/security/owasp/sheets.json` as generated, so it is read line by line against
-  the limit of `scripts/quality/read-coverage.mjs:418`: with the AC20 cases on that code `node --test scripts/quality/read-coverage.test.mjs` → `# fail 2`.
-Fix: `!supabase/catalog.json` in `.gitignore`; the snapshot joins GENERATED, proved by the session's own run of `db-catalog-audit.mjs --snapshot
-supabase/catalog.json` without error (O956-6; not `db-types-drift.mjs`, exit 1 on the 42 differences of 978 and 979); `flow.md` §2 step 4, review-task step 3.
+  `.gitignore:112` (`supabase/*`) ignores it: `git check-ignore -v supabase/catalog.json` → `.gitignore:112:supabase/*`, so it cannot be committed.
+- Revision 7 (O956-7): `scripts/quality/read-coverage.mjs:425` refuses a session whose changed files pass 3 000 lines, and
+  `scripts/quality/check-files.mjs:481` refuses a kickoff whose "## Read set" does; the owner ordered both removed with everything tied to them.
+Fix: Revision 6 — `!supabase/catalog.json` in `.gitignore` (the snapshot `db-types-drift.mjs` reads for Task 978). Revision 7 — `read-coverage.mjs` and its
+test deleted; `check-files.mjs` drops "## Read set" and keeps "## Cause", whose sources an optional "Read at <commit>" line pins (F26); the rules, skills
+and agents name no read set and no read-coverage.
 
 ## Scope
 
 - Done (Parts A, B, Revisions 1-3): the four SQL files in `supabase/sql_migrations/task956/`, the tools `db-catalog-audit.mjs`, `db-types-drift.mjs`,
   `db-sql-roundtrip.mjs`, `pg` 8.23.1 (dev), the application changes of AC4-AC6 and AC13-AC15.
-- Rules and tools (Opus, 2026-11-15/16): the facts rule, the cause rule and the read set in `CLAUDE.md`, `flow.md`, `kickoff-template.md`, `README.md`, the
-  three skills, two agents; `read-coverage.mjs` and the "## Cause"/"## Read set" checks of `check-files.mjs`, with their tests; Revision 4a (993c14088,
-  F14-F22); Revision 4b (F23-F27, approved in Review 8). No further change of the command allow-list in this task (O956-4).
+- Rules and tools (Opus, 2026-11-15/16): the facts rule and the cause rule in `CLAUDE.md`, `flow.md`, `kickoff-template.md`, `README.md`, the three
+  skills, two agents; the "## Cause" check of `check-files.mjs` with its tests.
 - F5 closed without a change (Revision 4 check). Revision 4 (F13, F29) approved in Review 9; Revision 5 (F30, AC19) approved in Review 10.
-- Revision 6, Opus (O956-5): the snapshot of step 6, committed (`.gitignore`) and generated for `read-coverage.mjs` (AC20), not read, so not in "## Read set"
-  (`flow.md` §2 step 4); the step-6 results in "## Review"; the 980 kickoff rewritten with the definer-view scope (owner, 2026-11-16); both backlog rows.
+- Revision 6, Opus (O956-5): the snapshot of step 6, committed (`.gitignore`) for `db-types-drift.mjs` (AC20); the step-6 results in "## Review"; the 980
+  kickoff rewritten with the definer-view scope (owner, 2026-11-16); both backlog rows.
+- Revision 7, Opus (O956-7): `scripts/quality/read-coverage.mjs` and `read-coverage.test.mjs` deleted; `check-files.mjs` and its test without "## Read set";
+  `CLAUDE.md`, `flow.md`, `kickoff-template.md`, `secure-code-review.md`, the three skills and two agents without the read set and the tool; the
+  "## Read set" of the 956, 980 and 982 kickoffs and their read-coverage steps removed; AC11, AC17, AC18, AC20 changed; the audit IDs
+  DB-01 to DB-08 named one by one, as `check-files.mjs` `finding-status` reads them.
 - Out of scope: application reveal limits, uploads (957), the rest of v8b (962), hand types (978), `parking` (979), public profiles and definer views
   (980), the unused admin create form (982).
 
-## Read set
-Counted at c0a948345
-- `scripts/quality/read-coverage.mjs` — 515 lines
-- `scripts/quality/read-coverage.test.mjs` — 365 lines
-- `.claude/rules/flow.md` — 197 lines
-- `.claude/skills/review-task/SKILL.md` — 64 lines
-- `tasks/Sprints/Sprint_93_kickoff_prompt_Task_956_Database_Hardening_V8b.md` — 257 lines
-- `tasks/Sprints/Sprint_93_kickoff_prompt_Task_980_Public_Profiles_Show_Only_What_A_Reader_May_See.md` — 93 lines
-- `docs/backlog.md` — 81 lines
-- `.gitignore` — 128 lines
-
 ## Attack surface
 
-Changed: the data layer every direct PostgREST call meets (all session roles), and the agent's self-review record. T1 a moderator without a key writes
-through PostgREST (key in the policy); T2 contact scraping, expired listings and profile flags read directly (revoke, one public rule, fewer view columns);
-T3 profile columns, unbounded text, unmoderated edits (grants, CHECKs, trigger); T4 a refused legitimate write (preflight, admin-client writes, integration
-suites); T5 a session that satisfies its own read check (AC17, AC20). Matrix: per I5 table and command, anon, user, owner, moderator with and without the
-key, admin, blocked account.
+Changed: the data layer every direct PostgREST call meets (all session roles). T1 a moderator without a key writes through PostgREST (key in the
+policy); T2 contact scraping, expired listings and profile flags read directly (revoke, one public rule, fewer view columns); T3 profile columns,
+unbounded text, unmoderated edits (grants, CHECKs, trigger); T4 a refused legitimate write (preflight, admin-client writes, integration suites). Matrix:
+per I5 table and command, anon, user, owner, moderator with and without the key, admin, blocked account.
 
 ## OWASP
 
 Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026-11-07).
 
-- AI_Agent_Security: "Fail closed when risk classification, approval validation, policy lookup, or audit logging fails." — `read-coverage.mjs` fails when the session record is missing, empty or not the session's own, and when the session edits it or names it in a command — AC17.
+- AI_Agent_Security: not applicable — Revision 7 removes a local check and its rules; no agent permission, tool grant or approval path changes (`.claude/settings.json` is untouched).
 - Abuse_Case: "it is important to identify the attacks which the application must defend against" — a direct PostgREST write that skips moderation is the abuse case of T-rows — AC5.
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names each entry point the task adds, removes or changes — AC1, AC2, AC3, AC4, AC5, AC6, AC7.
 - Authentication: not applicable — no sign-in change; permissions.ts reads the same keys the policies use.
@@ -143,8 +137,8 @@ Admin user profile only: the website shows `lero.al` in view and edit; a refused
 - AC10 Rollback restores the previous catalog — test:
   `node scripts/quality/db-sql-roundtrip.mjs supabase/sql_migrations/task956/v8b.sql supabase/sql_migrations/task956/v8b-rollback.sql`
   exits 0 with LF and CRLF files (run by Opus before the apply, D91) and `scripts/quality/db-sql-roundtrip.test.mjs`.
-- AC11 `node scripts/quality/read-coverage.mjs` (each implementer's session), `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
-  `node scripts/quality/check-files.mjs --worktree`, `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/change-report.mjs main HEAD` exit 0.
+- AC11 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/check-files.mjs --worktree`,
+  `node --test "scripts/quality/*.test.mjs"`, `node scripts/quality/change-report.mjs main HEAD` exit 0.
 - AC12 `pg` 8.23.1 is the only new direct dependency, without an install script, every new lockfile version at least 14 days old — test:
   `node --test scripts/quality/install-scripts.test.mjs`, `node scripts/quality/change-report.mjs --lockfile-age main`, each exit 0, and
   `npm audit --json` lists no advisory for `pg` or a package it brings (the whole tree still holds the advisories of Task 972).
@@ -154,27 +148,30 @@ Admin user profile only: the website shows `lero.al` in view and edit; a refused
 - AC16 A staff member without `users.create` gets the refusal, never a hang — test:
   `src/modules/admin/actions/__tests__/createAdminUser.security.test.ts` (without the key `{ error: 'forbidden' }` and no Auth admin call; with it the
   account is created as before).
-- AC17 `read-coverage.mjs` decides from the repository and the session's own record, never from a spelling — test: `scripts/quality/read-coverage.test.mjs`
-  (each proof of Reviews 6 and 7 is a red case: a forged or empty record, a record the session wrote, a 1000-character prefix, the nine command spellings,
-  a subagent command before the third pass, a set-back mtime, an `echo` of the generated-file commands, the four commands of F23; a review read set with
-  `sheets.json` and `controls.json` stays within the limit; a scratchpad command is no record touch and the only-matching option of grep is read-only).
-- AC18 A kickoff's counts, sources and grandfathering hold after design — test: `scripts/quality/check-files.test.mjs` (a wrong count against the named
-  commit, a `path:line` source not in that commit, a command source without output, and a revised grandfathered kickoff each fail; a source whose file is
-  gone now but is in the commit passes).
+- AC17 (rewritten by O956-7, 2026-11-17) No active rule, skill, agent or document names the deleted read-coverage tool — test:
+  `node scripts/quality/check-files.mjs --all` exits 0 (its stale-path rule fails a document that names a file not in the repository).
+- AC18 A kickoff's sources and grandfathering hold after design, and no "## Read set" is required — test: `scripts/quality/check-files.test.mjs` (a
+  `path:line` source missing now or, with "Read at <commit>", missing in that commit, an unknown "Read at" commit, a command source without output and a
+  revised grandfathered kickoff each fail; a source whose file is gone now but is in the "Read at" commit passes; `KICKOFF_SECTIONS` holds no
+  "## Read set").
 - AC19 The preflight stops only on what would fail or leave broken data — test: `src/tests/__tests__/v8bPreflight.test.ts` (row 8 counts only active
   listings with `expires_at is null`; row 16 counts those with `expires_at <= now()` and is named informational; the headers of both files name rows 15
   and 16 as informational; red on the file of 7a027e736), and Opus's rolled-back apply on the live project: rows 1-14 are 0 and row 16 counts the lapsed
   active listings.
-- AC20 The catalog snapshot is a committed, generated file — test: `scripts/quality/read-coverage.test.mjs` (8391 lines not read, out of the limit, proved only by
-  the session's own `db-catalog-audit.mjs --snapshot supabase/catalog.json` without error; no run, a failed run, an `echo`, another file, `--save` and
-  `db-types-drift.mjs` prove nothing; red on c0a948345) and `node scripts/quality/check-files.mjs .claude/rules/flow.md` (stale-path while it is ignored).
+- AC20 The catalog snapshot is a committed file — test: `node scripts/quality/check-files.mjs .claude/rules/flow.md` exits 0 (stale-path while the
+  file is ignored) and `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` exits 0.
 
 ## Route
 
 Every session starts from a tree the owner committed locally on this branch (no push) and ends with that commit.
 0. Done: Revisions 4a, 4b, 4 (F13, F29), 5 (F30), 6; Reviews 7-11; F5 check; step 5, the owner's apply on bmxkzcxaojgmpgzawwtn (2026-11-16).
 6. Done (see "## Review"): `v8b-verify.sql`, AC1-AC8 on the applied catalog, `--save supabase/catalog.json`; AC9, AC11, AC17-AC20: Revision 6 report.
-7. Done: Review 11 of Revision 6 in a session of its own (see "## Review"); next the owner's commit, push and PR (`flow.md` §4).
+7. Done: Review 11 of Revision 6 in a session of its own (see "## Review").
+8. Revision 7 (Opus, O956-7): the removal of Scope; `node scripts/quality/check-files.mjs --all`, `node --test "scripts/quality/*.test.mjs"`,
+   `npm run lint`, `npm run typecheck`; then Review 12 in a session of its own (it also rewrites the OWASP record entries that cite the deleted tool), the
+   owner's commit and push to PR #41, `gh pr checks 41`. Run 43925004516 (head 55afce7ba) is red on "Lint, types and product checks",
+   "Authorization regression" and "CodeQL": each is opened to its log line and fixed in this pull request (`flow.md` §4.3); the OWASP
+   registry of `main` (Task 983, PR #43) reaches this branch when the owner merges `main` into it.
 
 ## Review
 Reviews 1-2 (Part A) APPROVED, F1, F2 closed; Review 3 (Part B) NEEDS REVISION 2 of 2, F4, F6-F8 closed; Review 4 LOOP LIMIT, O956-2.

@@ -1,9 +1,13 @@
 # Kickoff template (at most 200 lines, the "## OWASP" checklist not counted)
 
-`scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>` and the
-200-line limit for every kickoff from Sprint 93 on, and runs the OWASP gate (`scripts/quality/owasp.mjs`, owner request
-2026-11-07: every task design, edit and review is held against https://cheatsheetseries.owasp.org/index.html). A closed task's kickoff moves to `tasks/Archive/`; every kickoff
-outside it is an open task's and carries a complete mobile adaptation record.
+`scripts/quality/check-files.mjs` enforces the first line, the sections and their order, at least one `- AC<n>`, the
+200-line limit and a "## Cause" with real sources and a "Fix:" line for every kickoff from Sprint 93 on (those written
+before 2026-11-16 are listed in `CAUSE_GRANDFATHERED` with the sha256 of their text that day; a listed kickoff whose
+text differs from it is held to the rule), and runs
+the OWASP gate (`scripts/quality/owasp.mjs`, owner request 2026-11-07: every task design, edit and review is held
+against https://cheatsheetseries.owasp.org/index.html). A closed task's kickoff moves to `tasks/Archive/`; every
+kickoff outside it is an open task's and carries a complete mobile adaptation record. A kickoff is as long as its fix
+needs: a two-line fix gets a short kickoff (owner, 2026-11-16).
 
 ```markdown
 # Task <n> — <outcome in plain words>
@@ -14,8 +18,14 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 ## Goal
 <2–5 sentences: what is wrong today (with source path:line or command output) and what is true after the task>
 
+## Cause
+Read at <commit>   (optional: when the fix deletes or shortens a cited file; the sources are then looked up there)
+<the fact that produces the problem, with its source: `path:line` (a file that has that line), or a `command` → <its
+output>>
+Fix: <the change that removes that cause; the scope is this change and nothing more>
+
 ## Scope
-- Files to change: <paths>
+- <each change, one line, with its file>
 - Dependencies: none | <name@version — npm view result: first release, version date, install script>
 - Out of scope: <what is deliberately not touched>
 

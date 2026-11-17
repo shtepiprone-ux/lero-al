@@ -114,8 +114,8 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
 
   // Save status
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
-  // which message the save-error slot shows (Task 923 R100: an over-long name has its own text)
-  const [saveErrorKey, setSaveErrorKey] = useState<'error_saving' | 'error_name_too_long'>('error_saving')
+  // which message the save-error slot shows (Task 923 R100: an over-long name has its own text; Task 956 F8: so has an over-long company name)
+  const [saveErrorKey, setSaveErrorKey] = useState<'error_saving' | 'error_name_too_long' | 'error_company_name_too_long'>('error_saving')
 
   // Delete account dialog
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
@@ -181,7 +181,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       preferredCurrency: currency,
     })
     if (result.error) {
-      setSaveErrorKey(result.error === 'name_too_long' ? 'error_name_too_long' : 'error_saving')
+      setSaveErrorKey(result.error === 'name_too_long' ? 'error_name_too_long' : result.error === 'company_name_too_long' ? 'error_company_name_too_long' : 'error_saving')
       setSaveStatus('error')
     } else {
       setSaveStatus('saved')

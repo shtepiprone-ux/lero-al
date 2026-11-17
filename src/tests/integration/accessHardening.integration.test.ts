@@ -668,4 +668,64 @@ describe('accessHardening', () => {
       await run.admin.from('role_permission_events').delete().eq('permission_key', stray)
     }
   })
+
+  // ── Task 956 AC7 (hardening v8b, findings DB-05, DB-06, DB-07) ────────────────────────────────────────────────────────────────────────────────────────────────────
+  /** the 15 tables on which `anon` held INSERT, UPDATE and DELETE; a column and a value valid for its type (a refusal by grant comes before row-level security and before the row is formed) */
+  const ANON_TABLES: [table: string, column: string, value: string | number][] = [
+    ['collection_items', 'created_at', '2000-01-01T00:00:00Z'], ['collections', 'name', 'zz'], ['companies', 'name', 'zz'], ['currencies', 'symbol', 'zz'],
+    ['favorite_price_alerts', 'last_notified_price', 1], ['favorites', 'listing_id', '00000000-0000-4000-8000-000000000001'],
+    ['listing_contact_events', 'listing_id', '00000000-0000-4000-8000-000000000001'], ['listing_images', 'url', 'zz'], ['listing_inquiries', 'name', 'zz'],
+    ['listings', 'title', 'zz'], ['locations', 'name_al', 'zz'], ['property_types', 'slug', 'zz'],
+    ['recently_viewed', 'listing_id', '00000000-0000-4000-8000-000000000001'], ['site_footer', 'tagline', 'zz'], ['users', 'name', 'zz'],
+  ]
+
+  it('[SEC-X-INT-ANON-WRITES-DENY] anon holds no write grant: insert, update and delete answer permission denied, not a row-level refusal', async () => {
+    const anon = run.anonymousClient()
+    for (const [table, column, value] of ANON_TABLES) {
+      const row: Record<string, unknown> = { [column]: value }
+      const attempts = {
+        insert: await anon.from(table).insert(row),
+        update: await anon.from(table).update({ [column]: value }).eq(column, value),
+        delete: await anon.from(table).delete().eq(column, value),
+      }
+      for (const [action, answer] of Object.entries(attempts)) {
+        expect(answer.error?.code, `anon ${action} on ${table}: refused with 42501`).toBe('42501')
+        expect(answer.error?.message, `anon ${action} on ${table}: refused by the grant`).toMatch(/permission denied for table/i)
+      }
+    }
+  })
+
+  it('[SEC-X-INT-PROFILE-VIEW-COLUMNS] public_user_profiles lists exactly the columns the pages read, and no phone number or address', async () => {
+    const row = await person.client.from('public_user_profiles').select('*').eq('id', person.id).single()
+    expect(row.error, 'a signed-in session reads the view').toBeNull()
+    // the listing page (id ... has_whatsapp), the staff preview and the contact card read these nine columns; nothing else of an account is in the view
+    expect(Object.keys(row.data ?? {}).sort()).toEqual(['avatar_url', 'company_name', 'deleted_at', 'has_phone', 'has_whatsapp', 'id', 'is_verified', 'name', 'user_type'])
+    expect(JSON.stringify(row.data), 'the view carries no phone digits').not.toMatch(/\+\d{7,}/)
+    const guest = await run.anonymousClient().from('public_user_profiles').select('*').eq('id', person.id)
+    expect(guest.error?.code, 'a guest does not read the view').toBe('42501')
+  })
+
+  it('[SEC-X-INT-AVATARS-BUCKET-BOUNDS] the avatars bucket refuses a file over 2 MB and a type that is not jpeg, png or webp, and keeps a small png', async () => {
+    const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 13, 0x49, 0x48, 0x44, 0x52])
+    const upload = async (name: string, bytes: Uint8Array, contentType: string) => {
+      const path = `${run.RUN}/${name}`
+      storagePaths.push(path)          // removed and counted in afterAll (only a broken bound stores one)
+      return run.admin.storage.from('avatars').upload(path, bytes, { contentType })
+    }
+    const tooBig = await upload('bucket-big.png', new Uint8Array(2 * 1024 * 1024 + 1), 'image/png')
+    expect(tooBig.error, 'a file of 2 MB and one byte is refused').not.toBeNull()
+    expect(tooBig.error?.message, 'by the size limit').toMatch(/exceed|maximum|too large|payload/i)
+    for (const [name, type] of [['bucket-text.txt', 'text/plain'], ['bucket-svg.svg', 'image/svg+xml'], ['bucket-gif.gif', 'image/gif'], ['bucket-html.html', 'text/html']] as const) {
+      const refused = await upload(name, png, type)
+      expect(refused.error, `${type} is refused`).not.toBeNull()
+      expect(refused.error?.message, `${type}: by the type list`).toMatch(/mime|not supported|invalid/i)
+    }
+    const listedBefore = await run.admin.storage.from('avatars').list(run.RUN)
+    expect(listedBefore.error).toBeNull()
+    expect(listedBefore.data?.map((object) => object.name), 'no refused file was stored').toEqual([])
+    for (const [name, type] of [['bucket-ok.png', 'image/png'], ['bucket-ok.jpg', 'image/jpeg'], ['bucket-ok.webp', 'image/webp']] as const) {
+      const kept = await upload(name, png, type)
+      expect(kept.error, `${type} of a few bytes is stored`).toBeNull()
+    }
+  })
 })

@@ -139,6 +139,7 @@ Required by `node scripts/quality/owasp.mjs plan` (757270a26306, mapping of 2026
 - Nodejs_Security: "some third-party rulesets can be used to flag dangerous patterns such as eval()" — lint keeps no-eval on; the click-shield Function constructor stays removed — AC10.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — install scripts stay off and every package with a script is reviewed (install-scripts.test.mjs) — AC10.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — the fixed scripts start git and node with argument arrays, never a shell string — AC8.
+- Path_Traversal_Prevention: "Check that the resolved path is inside the base directory." — the path-injection fixes resolve a path from argv or from a request URL to its real path and refuse it outside the root (`withinRoot`, `requestPathWithin`); sheet published 2026-11-16, mapped by Task 983 — AC8.
 - Prototype_Pollution_Prevention: "If objects have to be used then they should be created using the Object.create(null) API" — the currency catalog is read into a Map or a null-prototype object; __proto__ yields no rate — AC2.
 - REST_Security: not applicable — no route changes its access decision; the hook route only bounds a log value.
 - Secrets_Management: not applicable — no secret is added or moved; the fixes read the existing server variables.

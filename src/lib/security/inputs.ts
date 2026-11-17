@@ -39,6 +39,18 @@ export const MAX_PROFILE_NAME_LENGTH = 100
  */
 export const MAX_PROFILE_WEBSITE_LENGTH = 200
 
+/** the longest company name and the longest position a profile may store, in characters as stored (Task 956 F8; the `users_company_name_length_check` and `users_position_length_check` CHECKs of hardening v8b take the same number) */
+export const MAX_PROFILE_COMPANY_FIELD_LENGTH = 200
+
+/**
+ * A company name or a position that fits the stored bound: nothing at all (`null` / `undefined`), or text of at most `MAX_PROFILE_COMPANY_FIELD_LENGTH` characters. The caller passes the value as it
+ * will be stored (trimmed where the writer trims), so the length checked here is the length the CHECK sees. A value that is not text is refused (the types are erased at runtime).
+ * `String.length` counts UTF-16 units and the CHECK counts characters, so the bound here is never looser than the database's.
+ */
+export function isProfileCompanyFieldWithinBound(value: unknown): boolean {
+  return value == null || (typeof value === 'string' && value.length <= MAX_PROFILE_COMPANY_FIELD_LENGTH)
+}
+
 /**
  * A name or last name that fits the stored bound: nothing at all (`null` / `undefined`), or text of at most `MAX_PROFILE_NAME_LENGTH` characters AFTER trimming. A value that is not
  * text is refused (the types are erased at runtime). The writers store the TRIMMED value, so the length checked here is the length stored.

@@ -52,10 +52,6 @@ export const ALLOWLIST = [
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".eq('status', 'active')", reason: 'lifecycle expiry sweep — engine-driven status transition, not a public read' },
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".lt('expires_at', now)", reason: 'lifecycle expiry sweep — finds lapsed listings to expire' },
   { path: 'src/app/api/cron/listings-expiry/route.ts', fingerprint: ".is('expires_at', null)", reason: 'lifecycle expiry sweep — finds null-expiry listings to report' },
-  // Single-row detail/view reads: multi-status filter for display (not public list visibility)
-  { path: 'src/app/api/listings/[slug]/view/route.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'single-row view-count increment, multi-status display filter' },
-  // Recently-viewed resolution: by saved IDs, multi-status filter
-  { path: 'src/modules/listings/lib/recentlyViewedQueries.ts', fingerprint: ".in('status', ['active', 'sold', 'rented', 'archived'])", reason: 'recently-viewed resolution by saved IDs, not a public list read' },
   // Contact-event lookup: one listing by id via service role (Task 850/887)
   { path: 'src/modules/listings/actions/contactEvents.ts', fingerprint: ".eq('status', 'active')", reason: 'single-row WhatsApp contact-event lookup by id (service role, Task 850): only an active listing of a live owner has a contact card (Task 923 R66 (f), owner F2), the same status-only rule as the detail page, which applies no expiry filter; not a public list read' },
   // Arrow-factory reads (Task 863): reached through listingCount()/ownListings() call sites

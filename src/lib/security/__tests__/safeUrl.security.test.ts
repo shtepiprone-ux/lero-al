@@ -3,7 +3,7 @@
  * Stored links (Task 923 Revision 7, finding S9): only http(s) (and, where allowed, mailto / tel) links are ever output.
  */
 import { describe, expect, it } from 'vitest'
-import { isSafeExternalUrl, resolveLinkTarget, safeExternalUrl } from '../safeUrl'
+import { displayWebsite, isSafeExternalUrl, resolveLinkTarget, safeExternalUrl } from '../safeUrl'
 
 const SCRIPTS = [
   'javascript:alert(1)',
@@ -120,5 +120,47 @@ describe('resolveLinkTarget (footer and menu links)', () => {
       const t = resolveLinkTarget(v, 'en')
       if (t) expect(/^(\/|https?:\/\/|mailto:|tel:)/.test(t.href), `${JSON.stringify(v)} -> ${t.href}`).toBe(true)
     }
+  })
+})
+
+// Task 956 AC13: a website is typed and shown without its scheme; the scheme stays in the href and in the database.
+describe('displayWebsite', () => {
+  it.each([
+    ['https://lero.al/', 'lero.al'],
+    ['https://lero.al', 'lero.al'],
+    ['http://lero.al/', 'lero.al'],
+    ['http://lero.al', 'lero.al'],
+    ['HTTPS://Lero.al/', 'Lero.al'],
+    ['  https://lero.al/  ', 'lero.al'],
+    ['lero.al', 'lero.al'],
+    ['lero.al/', 'lero.al'],
+    ['https://lero.al/team', 'lero.al/team'],
+    ['https://lero.al/team/', 'lero.al/team/'],
+    ['https://lero.al/?a=1', 'lero.al/?a=1'],
+    ['https://lero.al/#top', 'lero.al/#top'],
+  ])('shows %j as %j', (stored, shown) => {
+    expect(displayWebsite(stored)).toBe(shown)
+  })
+
+  it.each([[''], ['   '], [null], [undefined]])('shows nothing for %j', (value) => {
+    expect(displayWebsite(value)).toBe('')
+  })
+
+  it('never leaves an http:// or https:// at the start, and a second pass changes nothing', () => {
+    for (const stored of ['https://lero.al/', 'http://lero.al', 'HTTP://LERO.AL/', 'lero.al', 'https://lero.al/team/']) {
+      const shown = displayWebsite(stored)
+      expect(shown, stored).not.toMatch(/^https?:\/\//i)
+      expect(displayWebsite(shown), stored).toBe(shown)
+    }
+  })
+
+  it('shows a value that is not an address as it is (a script value is text, never a link; the scheme of an other kind is not hidden)', () => {
+    expect(displayWebsite('javascript:alert(1)')).toBe('javascript:alert(1)')
+    expect(displayWebsite('data:text/html,x')).toBe('data:text/html,x')
+  })
+
+  it('the link it is shown for keeps the scheme: the href of the stored value is https://lero.al/', () => {
+    expect(safeExternalUrl('https://lero.al/')).toBe('https://lero.al/')
+    expect(safeExternalUrl(displayWebsite('https://lero.al/'))).toBe('https://lero.al/')
   })
 })

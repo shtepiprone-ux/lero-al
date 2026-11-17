@@ -1,7 +1,8 @@
 // @vitest-environment node
 /**
  * Security (Task 923 R100, R69 (d), application side, cases SEC-X-SRV-PROFILE-BOUNDS-DENY and -ALLOW): every writer of a profile column checks the bounds of the `users`
- * CHECKs of hardening v8b BEFORE it writes: name and last name at most 100 characters after trimming (`name_too_long`), a website `http(s)://` and at most 200 characters
+ * CHECKs of hardening v8b BEFORE it writes: name and last name at most 100 characters after trimming (`name_too_long`), a company name and a position at most 200 characters as stored
+ * (`company_name_too_long`, `position_too_long`: Task 956 F8), a website `http(s)://` and at most 200 characters
  * after normalisation (`invalid_website`), an avatar and a company logo on this project's Cloudinary (`update_failed` / `db_save_failed`; only a hostile request sends another
  * address), a phone and a WhatsApp number in E.164 (`invalid_phone`, as before).
  *
@@ -108,12 +109,20 @@ describe('profileBounds', () => {
     expect(await createAdminUser({ ...NEW_ACCOUNT, firstName: long(101) }), 'createAdminUser: a 101-character first name').toEqual({ error: 'name_too_long' })
     expect(await createAdminUser({ ...NEW_ACCOUNT, lastName: long(101) }), 'createAdminUser: a 101-character last name').toEqual({ error: 'name_too_long' })
     expect(await createAdminUser({ ...NEW_ACCOUNT, profileType: 'agent', website: websiteOf(201) }), 'createAdminUser: a website of 201 characters').toEqual({ error: 'invalid_website' })
+    // Task 956 F8: the company name and the position are held to the 200 characters of the `users` CHECKs, with their own field error (never the generic `update_failed`)
+    expect(await updateUserProfile(TARGET, { company_name: long(201) }), 'updateUserProfile: a 201-character company name').toEqual({ error: 'company_name_too_long' })
+    expect(await updateUserProfileFull(TARGET, { ...AGENT, companyName: long(201) }), 'updateUserProfileFull: a 201-character company name').toEqual({ error: 'company_name_too_long' })
+    expect(await updateUserProfileFull(TARGET, { ...AGENT, position: long(201) }), 'updateUserProfileFull: a 201-character position').toEqual({ error: 'position_too_long' })
+    expect(await createAdminUser({ ...NEW_ACCOUNT, profileType: 'agent', companyName: long(201) }), 'createAdminUser: a 201-character company name').toEqual({ error: 'company_name_too_long' })
+    expect(await createAdminUser({ ...NEW_ACCOUNT, profileType: 'agent', position: long(201) }), 'createAdminUser: a 201-character position').toEqual({ error: 'position_too_long' })
     expect(state.authAdminCalls.filter((c) => c.name === 'inviteUserByEmail' || c.name === 'createUser'), 'createAdminUser: no Auth account was created').toEqual([])
 
     // the person's own profile
     arrange(OWN)
     expect(await updateCabinetProfile({ ...CABINET, name: long(101) }), 'updateCabinetProfile: a 101-character name').toEqual({ error: 'name_too_long' })
     expect(await updateCabinetProfile({ ...CABINET, name: `${long(50)}  ${long(51)}` }), 'updateCabinetProfile: 101 characters with spaces inside').toEqual({ error: 'name_too_long' })
+    expect(await updateCabinetProfile({ ...CABINET, userType: 'agent', companyName: long(201) }), 'updateCabinetProfile: a 201-character company name').toEqual({ error: 'company_name_too_long' })
+    expect(await updateCabinetProfile({ ...CABINET, userType: 'agent', companyName: `${long(100)}  ${long(101)}` }), 'updateCabinetProfile: 203 characters with spaces inside').toEqual({ error: 'company_name_too_long' })
 
     // the avatar route: an address that is not on this project's Cloudinary is never stored, and the file just uploaded is released
     arrange(ADMIN)
@@ -153,10 +162,21 @@ describe('profileBounds', () => {
     expect(state.authAdminCalls.filter((c) => c.name === 'createUser'), 'Task 923 R159: the account is invited, never created with a password').toEqual([])
     expect(db.tables.users.find((u) => u.id === 'new-auth-user')).toMatchObject({ name: long(100), last_name: long(100) })
 
+    // Task 956 F8: a company name and a position of exactly 200 characters are stored
+    expect(await updateUserProfile(TARGET, { company_name: long(200) })).toEqual({})
+    expect(storedUser(TARGET).company_name).toBe(long(200))
+    expect(await updateUserProfileFull(TARGET, { ...AGENT, companyName: long(200), position: long(200) })).toEqual({})
+    expect(storedUser(TARGET)).toMatchObject({ company_name: long(200), position: long(200) })
+    expect(await createAdminUser({ ...NEW_ACCOUNT, profileType: 'agent', companyName: long(200), position: long(200) })).toEqual({ userId: 'new-auth-user' })
+    // (the in-memory upsert has no conflict key here, so the second account is a second row: the LAST one is read)
+    expect(db.tables.users.filter((u) => u.id === 'new-auth-user').at(-1)).toMatchObject({ company_name: long(200), position: long(200) })
+
     // the person's own profile
     arrange(OWN)
     expect(await updateCabinetProfile({ ...CABINET, name: ` ${long(100)} ` })).toEqual({})
     expect(storedUser(OWN).name).toBe(long(100))
+    expect(await updateCabinetProfile({ ...CABINET, userType: 'agent', companyName: ` ${long(200)} ` }), 'updateCabinetProfile: 200 characters between spaces').toEqual({})
+    expect(storedUser(OWN).company_name, 'stored trimmed').toBe(long(200))
 
     // the avatar route stores an address on this project's Cloudinary
     arrange(ADMIN)

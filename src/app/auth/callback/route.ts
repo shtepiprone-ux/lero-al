@@ -16,14 +16,9 @@ export async function GET(request: NextRequest) {
   if (code) {
     const { error } = await exchangeCodeForSession(code)
     if (!error) {
-      // Ensure the application-level profile exists before redirecting.
-      //
-      // This is the primary server-side creation point for first-time users
-      // arriving via OAuth. Creating it here means the locale layout's
-      // resolveSession() will immediately find the profile row, so initialUser
-      // is set correctly and the page renders authenticated without client flicker.
-      //
-      // Upsert with ignoreDuplicates is idempotent for returning users.
+      // Give a new agent the company the sign-up named, before redirecting (service role, on the
+      // person's own row, only while it is empty). The profile row itself is not made here: the
+      // sign-up trigger public.handle_new_user() makes it (Task 956 AC15; a session upsert never wrote a row).
       await ensureUserProfile()
       return NextResponse.redirect(`${origin}${next}`)
     }

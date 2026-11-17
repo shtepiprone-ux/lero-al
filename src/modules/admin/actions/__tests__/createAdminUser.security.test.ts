@@ -89,4 +89,30 @@ describe('createAdminUser', () => {
     expect(random).not.toHaveBeenCalled()
     random.mockRestore()
   })
+
+  it('[SEC-X-SRV-CREATE-NO-KEY] Task 956 F13: a moderator without users.create gets { error: "forbidden" } (never a throw) and no Auth call is made', async () => {
+    const MODERATOR = '00000000-0000-4000-8000-0000000000c1'
+    const moderatorDb = (permissions: { role: string; permission_key: string; allowed: boolean }[]) => createFakeDb({
+      users: [
+        { id: ADMIN, role: 'admin', user_type: 'private', name: 'Admin', status: 'active' },
+        { id: MODERATOR, role: 'moderator', user_type: 'private', name: 'Mod', status: 'active' },
+      ],
+      role_permissions: permissions,
+    })
+    state.user = { id: MODERATOR }
+
+    // deny: no row for the key, and a row that switches it off, both answer with the refusal the banner translates
+    db = moderatorDb([])
+    await expect(createAdminUser(NEW_ACCOUNT), 'no users.create row: the refusal is returned, not thrown').resolves.toEqual({ error: 'forbidden' })
+    db = moderatorDb([{ role: 'moderator', permission_key: 'users.create', allowed: false }])
+    await expect(createAdminUser(NEW_ACCOUNT), 'users.create switched off: the refusal is returned, not thrown').resolves.toEqual({ error: 'forbidden' })
+    expect(state.calls, 'the Auth admin API is not called without the key').toEqual([])
+    expect(db.tables.users.map((u) => u.id), 'no profile row is written without the key').toEqual([ADMIN, MODERATOR])
+
+    // allow: with the key the account is created as before
+    db = moderatorDb([{ role: 'moderator', permission_key: 'users.create', allowed: true }])
+    expect(await createAdminUser(NEW_ACCOUNT)).toEqual({ userId: INVITED })
+    expect(state.calls.map((c) => c.name), 'with the key one invitation reached Auth').toEqual(['inviteUserByEmail'])
+    expect(profile(), 'with the key the profile is stored').toMatchObject({ id: INVITED, name: 'Ana', role: 'user' })
+  })
 })

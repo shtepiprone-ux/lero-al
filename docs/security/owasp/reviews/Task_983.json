@@ -1,0 +1,19 @@
+{
+  "task": "983",
+  "sheets": {
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "review 1: the upstream texts are data; every quote of `docs/security/owasp/controls.json` is matched against `.cache/owasp/*.md` by `node scripts/quality/owasp.mjs check` (exit 0), the old and new text of HTTP_Headers and XML_Security were diffed by the reviewer, and no instruction in a sheet was followed"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "review 1 reran AC1-AC5 on the working tree (commands and exit codes in the kickoff \"## Review\"); `owasp.mjs sync --verify` of the implementer's report no longer reproduced (upstream moved to 18e4396f7605) and was fixed in the review; CI is read from GitHub only after the pull request exists"
+    }
+  }
+}

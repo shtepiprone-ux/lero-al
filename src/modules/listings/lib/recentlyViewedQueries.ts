@@ -1,7 +1,19 @@
 import { createClient } from '@/lib/supabase/server'
 import { isUuid } from '@/lib/security/inputs'
 import { LISTING_SELECT } from './listingSelect'
+import { isListingOpenableByAddress, OPEN_BY_ADDRESS_STATUSES } from './visibility'
 import type { CardListingData } from '../components/ListingCard'
+
+/** the card projection plus the expiry, which the one public rule (visibility.ts) needs for an active listing */
+const RECENTLY_VIEWED_SELECT = `${LISTING_SELECT}, expires_at`
+
+/**
+ * Keeps the listings a visitor may open by their address (Task 956 AC6): the statuses the query asked for, and an active listing only until its expiry. Archived
+ * listings are not among the statuses, so they leave the history; the database policy applies the same rule to a session, this judges it for the rows that come back.
+ */
+function openByAddress(listings: unknown): CardListingData[] {
+  return (listings as unknown as CardListingData[]).filter((listing) => isListingOpenableByAddress({ status: listing.status, expires_at: listing.expires_at ?? null }))
+}
 
 /**
  * Fetch recently viewed listings for an authenticated user (relies on RLS —
@@ -36,15 +48,15 @@ export async function getRecentlyViewedForUser(
 
   const { data: listings } = await supabase
     .from('listings')
-    .select(LISTING_SELECT)
+    .select(RECENTLY_VIEWED_SELECT)
     .in('id', ids)
-    .in('status', ['active', 'sold', 'rented', 'archived'])
+    .in('status', OPEN_BY_ADDRESS_STATUSES)
 
   if (!listings?.length) return []
 
   // Restore viewed_at order (DB returns in arbitrary order for IN queries)
   const orderMap = new Map(ids.map((id, i) => [id, i]))
-  return (listings as unknown as CardListingData[])
+  return openByAddress(listings)
     .sort((a, b) => (orderMap.get(a.id) ?? 99) - (orderMap.get(b.id) ?? 99))
 }
 
@@ -63,14 +75,14 @@ export async function getRecentlyViewedForGuest(
   const supabase = await createClient()
   const { data: listings } = await supabase
     .from('listings')
-    .select(LISTING_SELECT)
+    .select(RECENTLY_VIEWED_SELECT)
     .in('id', filteredIds)
-    .in('status', ['active', 'sold', 'rented', 'archived'])
+    .in('status', OPEN_BY_ADDRESS_STATUSES)
 
   if (!listings?.length) return []
 
   // Restore cookie order (most recently viewed first)
   const orderMap = new Map(filteredIds.map((id, i) => [id, i]))
-  return (listings as unknown as CardListingData[])
+  return openByAddress(listings)
     .sort((a, b) => (orderMap.get(a.id) ?? 99) - (orderMap.get(b.id) ?? 99))
 }

@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { toast } from '@/lib/toast'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone, parsePhoneValue } from '@/lib/phone'
+import { displayWebsite } from '@/lib/security/safeUrl'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateUserProfileFull, deactivateUser, reactivateUser, hardDeleteUser, addLocation,
@@ -160,7 +161,8 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
           locationId: user.location_id ?? (undefined as unknown as number),
           companyName: user.company_name ?? '',
           companyLogoUrl: user.company_logo_url ?? '',
-          website: user.website ?? '',
+          // Task 956 AC13: the website is typed and shown without its scheme (`lero.al`); the server stores it as `https://lero.al/`
+          website: displayWebsite(user.website),
           position: user.position ?? '',
           yearStarted: user.year_started ?? undefined,
           status: user.status ?? 'active',
@@ -203,9 +205,28 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     if (!isBusiness) { setValue('companyName', ''); setValue('website', ''); setValue('position', ''); setValue('yearStarted', undefined) }
   }, [profileType, isBusiness, setValue])
 
-  // The error banner shows the localized text of the one refusal it knows (Task 923 R100: an over-long name); any other answer is shown as the server sent it, as before.
+  // The error banner shows the translated text of every code `updateUserProfileFull` and `createAdminUser` return (src/modules/admin/actions/index.ts; Task 923 R100: an over-long name; Task 956 F8:
+  // an over-long company name or position; Task 956 AC14: the rest). The raw code is never shown: a code that is not listed gets the generic text (AdminUserProfile.smoke.test.tsx checks the
+  // list against the source of the two functions). `Forbidden` and `forbidden` are two spellings the two functions return.
   function saveErrorText(code: string): string {
-    return code === 'name_too_long' ? t('validation.name_too_long') : code
+    switch (code) {
+      case 'Forbidden':
+      case 'forbidden': return t('save_errors.forbidden')
+      case 'Unauthorized': return t('save_errors.unauthorized')
+      case 'invalid_phone': return t('save_errors.invalid_phone')
+      case 'name_too_long': return t('validation.name_too_long')
+      case 'invalid_status': return t('save_errors.invalid_status')
+      case 'invalid_suspension': return t('save_errors.invalid_suspension')
+      case 'invalid_website': return t('save_errors.invalid_website')
+      case 'company_name_too_long': return t('validation.company_name_too_long')
+      case 'position_too_long': return t('validation.position_too_long')
+      case 'update_failed': return t('save_errors.update_failed')
+      case 'access_sync_failed': return t('save_errors.access_sync_failed')
+      case 'email_already_exists': return t('save_errors.email_already_exists')
+      case 'create_failed': return t('save_errors.create_failed')
+      case 'create_profile_failed': return t('save_errors.create_profile_failed')
+      default: return t('feedback.save_error')
+    }
   }
 
   // ── Email validation (create mode) ──
@@ -302,7 +323,8 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     setSaving(false)
     if (result.error) { setSaveError(saveErrorText(result.error)); toast.error(t('feedback.save_error')); return }
     toast.success(t('feedback.save_success'))
-    form.reset(data)
+    // the saved address is shown as a host again, whatever was typed (Task 956 AC13)
+    form.reset({ ...data, website: displayWebsite(data.website) })
     setEditActive(false); router.refresh()
   }
 

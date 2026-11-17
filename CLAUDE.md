@@ -55,9 +55,26 @@ Owner, 2026-11-13 (translated): "it is forbidden to run tests until you have che
 thoroughly"; "if a pass found a problem, that pass does not count … until all three passes are clean"; "depth is
 checking every line of code that is written"; "all models must read the code in a changed file completely, without
 exceptions; code not read completely in a file is a breach of the rules". Every model, implementer and reviewer, reads
-every changed file with the Read tool from its first line to its last in each pass and checks every changed line; a pass
-that finds a problem does not count and its fix starts the count again; tests run only after three clean passes in a
-row. No hook enforces it (owner, 2026-11-14); the reviewer checks the result. Details: `.claude/rules/flow.md` §2 step 3.
+every changed file with the Read tool from its first line to its last in each pass and checks every changed line; a
+pass that finds a problem does not count and its fix starts the count again; the order is failing runs of the new tests
+→ the change → three clean passes → the green runs. No tool or hook enforces it (owner, 2026-11-17: the read-coverage
+tool was removed); a file that was not read in full is reported as not read, never as read. Details:
+`.claude/rules/flow.md` §2 step 4.
+
+## Cause rule: a kickoff names the cause and its fix
+
+Owner, 2026-11-16 (translated): "a kickoff always states the cause of the problem, by fact, and how to solve it; the
+implementer removes that cause"; "where a couple of lines need fixing, the kickoff must not read as if half the project
+does". "## Cause" (the fact with its sources, each `path:line` a file with that line and each command followed by
+"→ <its output>", and a "Fix:" line) is required by `check-files.mjs`, which checks it on every run; an optional
+"Read at <commit>" line makes the sources be looked up in that commit. Details: `.claude/rules/flow.md` §1.
+
+## Facts rule: no assumptions, only facts
+
+Owner, 2026-10-17 (translated): "no assumptions; only facts; always audit the project first, then propose a solution"
+(restated 2026-11-15). Every model states about code, data, the database, a tool or a cause only what it read in this
+session, with its source; a fact that can be read is read before it is used; anything else is written `UNKNOWN` or
+`INFERENCE:` and never shortens, skips or stops a step, nor explains a failure. Details: `.claude/rules/flow.md` (facts rule).
 
 ## Golden rule: no gap is only reported
 
@@ -74,7 +91,9 @@ the session start).
 
 - `main` changes only through a PR whose `CI Required` check is green, merged by the owner after reading the diff.
 - Agents run read-only Git only (`.claude/settings.json` denies the rest). Opus gives the owner exact commands, says where
-  to run them and what they change.
+  to run them and what they change, after reading the state they act on (`git status --short --branch`; for a merge or
+  switch also the files the incoming branch changes): an uncommitted file the merge would overwrite is committed first
+  (`.claude/rules/flow.md` §4 step 1, owner 2026-11-17).
 - No `Co-Authored-By` (any spelling), AI/vendor identity or `--author` in any commit command, subject, body or trailer.
 
 ## Detailed sources

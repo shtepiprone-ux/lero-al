@@ -7,6 +7,9 @@ import {
   applyPublicVisibility,
   applyPublicEligibleButHidden,
   formatVisibility,
+  isListingOpenableByAddress,
+  OPEN_BY_ADDRESS,
+  OPEN_BY_ADDRESS_STATUSES,
   type HiddenReason,
   type VisibilityRule,
 } from '../visibility'
@@ -466,4 +469,124 @@ describe('Per-ListingStatus invariant: fragment ⇔ predicate ⇔ badge (Task 45
       }
     })
   }
+})
+
+// ── Task 956 AC6: ONE rule for who may open a listing by its address ─────────
+// The database policy "Listings viewable by everyone" (supabase/sql_migrations/task956/v8b.sql), getListingAccessState and the recently-viewed queries all follow this one
+// table: an active listing until its expiry, a sold or rented listing, and the owner's own listing. PUBLIC_VISIBLE_STATUSES above is the narrower rule for LISTS (search
+// results, the sitemap): a sold listing can be opened by its address (owner decision D72) but is not listed.
+
+describe('open by address (Task 956 AC6)', () => {
+  const FUTURE = new Date(Date.now() + 86_400_000).toISOString()
+  const PAST = new Date(Date.now() - 86_400_000).toISOString()
+  const OWNER = 'owner-id'
+  const STRANGER = 'stranger-id'
+
+  /** the rule written out by hand, status by status, so a change of the implementation cannot change its own expectation */
+  function expectedOpen(status: ListingStatus, expiry: 'future' | 'past' | 'null', viewer: string | null): boolean {
+    if (viewer === OWNER) return true
+    if (status === 'sold' || status === 'rented') return true
+    if (status === 'active') return expiry === 'future'
+    return false
+  }
+
+  for (const status of ALL_STATUSES) {
+    for (const [expiry, expires_at] of [['future', FUTURE], ['past', PAST], ['null', null]] as const) {
+      for (const viewer of [null, STRANGER, OWNER]) {
+        it(`${status} / ${expiry} expiry / ${viewer ?? 'a guest'} → ${expectedOpen(status, expiry, viewer) ? 'open' : 'hidden'}`, () => {
+          expect(isListingOpenableByAddress({ status, expires_at, user_id: OWNER }, viewer)).toBe(expectedOpen(status, expiry, viewer))
+        })
+      }
+    }
+  }
+
+  it('archived is not open to a visitor (it leaves the public set), expired and pending neither', () => {
+    for (const status of ['archived', 'expired', 'pending', 'inactive'] as const) {
+      expect(isListingOpenableByAddress({ status, expires_at: FUTURE, user_id: OWNER }, null), status).toBe(false)
+    }
+  })
+
+  it('a listing with no owner given is judged as a visitor sees it', () => {
+    expect(isListingOpenableByAddress({ status: 'sold', expires_at: PAST })).toBe(true)
+    expect(isListingOpenableByAddress({ status: 'active', expires_at: PAST })).toBe(false)
+    expect(isListingOpenableByAddress({ status: 'pending', expires_at: FUTURE })).toBe(false)
+  })
+
+  it('the statuses a query asks for are exactly the ones the table opens', () => {
+    expect([...OPEN_BY_ADDRESS_STATUSES].sort()).toEqual(['active', 'rented', 'sold'])
+    expect(Object.keys(OPEN_BY_ADDRESS).sort()).toEqual(['active', 'rented', 'sold'])
+    expect(OPEN_BY_ADDRESS.active).toEqual({ requiresUnexpired: true })
+    expect(OPEN_BY_ADDRESS.sold).toEqual({ requiresUnexpired: false })
+    expect(OPEN_BY_ADDRESS.rented).toEqual({ requiresUnexpired: false })
+  })
+
+  // The SQL predicate is generated from the same table, so a status added to one and not to the other fails here.
+  const sqlOf = (file: string) => fs.readFileSync(path.resolve(process.cwd(), 'supabase/sql_migrations/task956', file), 'utf8').replace(/\s+/g, ' ')
+  const cast = (status: string) => `'${status}'::public.listing_status`
+  const expiring = Object.entries(OPEN_BY_ADDRESS).filter(([, rule]) => rule?.requiresUnexpired).map(([status]) => status)
+  const always = Object.entries(OPEN_BY_ADDRESS).filter(([, rule]) => rule && !rule.requiresUnexpired).map(([status]) => status)
+  const predicate = [
+    ...expiring.map((status) => `(status = ${cast(status)} and expires_at > now())`),
+    `status in (${always.map(cast).join(', ')})`,
+    'auth.uid() = user_id',
+  ].join(' or ')
+
+  it('v8b.sql carries the same rule in the SELECT policy of listings', () => {
+    expect(sqlOf('v8b.sql')).toContain(`alter policy "Listings viewable by everyone" on public.listings using (${predicate});`)
+  })
+
+  it('v8b-rollback.sql restores the previous rule (every public status, no expiry)', () => {
+    expect(sqlOf('v8b-rollback.sql')).toContain(
+      `alter policy "Listings viewable by everyone" on public.listings using (status = any (array['active'::public.listing_status, 'sold'::public.listing_status, 'rented'::public.listing_status]) or auth.uid() = user_id);`,
+    )
+  })
+
+  // Task 956 F7: the view counter public.record_listing_view(uuid, uuid, text) counts a view of a listing the one rule opens, with the condition built from the same table.
+  // The text below is the live definition of the function, read read-only with pg_get_functiondef on 2026-11-15; v8b.sql changes only its status condition and
+  // v8b-rollback.sql restores it word for word (comments and layout aside).
+  const LIVE_RECORD_LISTING_VIEW = `CREATE OR REPLACE FUNCTION public.record_listing_view(p_listing_id uuid, p_user_id uuid DEFAULT NULL::uuid, p_ip_hash text DEFAULT ''::text)
+ RETURNS boolean
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public', 'pg_temp'
+AS $function$
+declare
+  v_hash text := left(coalesce(p_ip_hash, ''), 64);
+begin
+  -- same statuses as the view route (src/app/api/listings/[slug]/view/route.ts)
+  if not exists (select 1 from listings where id = p_listing_id and status in ('active', 'sold', 'rented', 'archived')) then return false; end if;
+  if p_user_id is null and v_hash = '' then return false; end if;   -- nothing to de-duplicate by: not counted
+  perform pg_advisory_xact_lock(hashtextextended(p_listing_id::text || '|' || coalesce(p_user_id::text, 'ip:' || v_hash), 0));
+  if exists (
+    select 1 from listing_views
+    where listing_id = p_listing_id and viewed_at >= now() - interval '24 hours'
+      and ((p_user_id is not null and user_id = p_user_id) or (p_user_id is null and ip_hash = v_hash))
+  ) then return false; end if;
+  insert into listing_views (listing_id, user_id, ip_hash, viewed_at) values (p_listing_id, p_user_id, v_hash, now());
+  update listings set views_count = views_count + 1 where id = p_listing_id;
+  return true;
+end $function$`
+  const LIVE_STATUS_CONDITION = `status in ('active', 'sold', 'rented', 'archived')`
+  const functionCondition = [
+    ...expiring.map((status) => `(status = '${status}' and expires_at > now())`),
+    `status in (${always.map((status) => `'${status}'`).join(', ')})`,
+  ].join(' or ')
+  // comments and layout are not part of the comparison; the function is cut out of the file from its CREATE to the closing dollar quote
+  const normalise = (text: string) => text.replace(/--[^\n]*/g, '').replace(/\s+/g, ' ').trim().toLowerCase()
+  const functionOf = (file: string): string => {
+    const found = /create or replace function public\.record_listing_view[\s\S]*?\$function\$[\s\S]*?\$function\$/i.exec(fs.readFileSync(path.resolve(process.cwd(), 'supabase/sql_migrations/task956', file), 'utf8'))
+    expect(found, `${file} defines public.record_listing_view`).not.toBeNull()
+    return found![0]
+  }
+
+  it('v8b.sql: record_listing_view opens the same statuses and the same expiry as the table, and changes nothing else of the function', () => {
+    const expected = normalise(LIVE_RECORD_LISTING_VIEW.replace(LIVE_STATUS_CONDITION, `(${functionCondition})`))
+    expect(expected, 'the expected text carries the condition built from OPEN_BY_ADDRESS').toContain(`and (${functionCondition})) then return false`)
+    expect(normalise(functionOf('v8b.sql'))).toBe(expected)
+    expect(normalise(functionOf('v8b.sql')), 'archived is not counted any more').not.toContain('archived')
+  })
+
+  it('v8b-rollback.sql restores the live definition of record_listing_view word for word', () => {
+    expect(normalise(functionOf('v8b-rollback.sql'))).toBe(normalise(LIVE_RECORD_LISTING_VIEW))
+  })
 })

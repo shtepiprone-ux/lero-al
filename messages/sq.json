@@ -566,6 +566,7 @@
     "profile_updated": "Profili u përditësua",
     "error_saving": "Gabim gjatë ruajtjes",
     "error_name_too_long": "Emri duhet të ketë më së shumti 100 karaktere.",
+    "error_company_name_too_long": "Emri i kompanisë duhet të ketë më së shumti 200 karaktere.",
     "member_since": "Anëtar që nga",
     "last_seen": "Aktiv herën e fundit",
     "no_listings": "Nuk keni ende njoftime",
@@ -1473,6 +1474,8 @@
       "validation": {
         "firstName_required": "Emri është i detyrueshëm",
         "name_too_long": "Emri dhe mbiemri duhet të kenë secili më së shumti 100 karaktere.",
+        "company_name_too_long": "Emri i kompanisë duhet të ketë më së shumti 200 karaktere.",
+        "position_too_long": "Pozicioni duhet të ketë më së shumti 200 karaktere.",
         "lastName_required": "Mbiemri është i detyrueshëm",
         "phone_format": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
         "location_required": "Qyteti është i detyrueshëm",
@@ -1485,6 +1488,19 @@
         "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
         "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
         "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole."
+      },
+      "save_errors": {
+        "forbidden": "Nuk ke leje për këtë veprim.",
+        "unauthorized": "Seanca ka përfunduar. Hyr përsëri dhe provo sërish.",
+        "invalid_phone": "Numri i telefonit nuk është i vlefshëm. Përdor formatin ndërkombëtar, për shembull +355691234567.",
+        "invalid_status": "Statusi i llogarisë nuk është i vlefshëm.",
+        "invalid_suspension": "Data e përfundimit të pezullimit duhet të jetë një datë në të ardhmen.",
+        "invalid_website": "Faqja e internetit nuk është e vlefshme. Shkruaj një adresë si company.al.",
+        "update_failed": "Profili nuk u ruajt. Ju lutemi provoni sërish.",
+        "access_sync_failed": "Profili u ruajt, por qasja e llogarisë nuk u përditësua. Ju lutemi provoni sërish.",
+        "email_already_exists": "Ekziston tashmë një llogari me këtë email.",
+        "create_failed": "Llogaria nuk u krijua. Ju lutemi provoni sërish.",
+        "create_profile_failed": "Llogaria nuk u krijua sepse profili nuk u ruajt. Ju lutemi provoni sërish."
       },
       "profile_types": {
         "admin": "Administrator",
@@ -1542,7 +1558,7 @@
         "last_name": "Mbiemri",
         "city_search": "Shkruani emrin e qytetit...",
         "company_name": "Emri i kompanisë",
-        "website": "https://company.al",
+        "website": "company.al",
         "position": "Drejtor, Menaxher...",
         "block_reason": "Shkruani arsyen e bllokimit...",
         "city_assign": "Gjej dhe cakto qytetin..."

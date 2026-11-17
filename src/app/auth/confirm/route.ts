@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import { safeNextPath } from '@/lib/auth/safeRedirect'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 // Handles token-hash email confirmation for signup, recovery, and magic-link flows.
 // Supabase's Send Email Hook (Task 122) builds confirmation links pointing here
@@ -11,7 +12,6 @@ const VALID_OTP_TYPES = ['signup', 'invite', 'recovery', 'magiclink', 'email_cha
 type OtpType = (typeof VALID_OTP_TYPES)[number]
 
 const LOCALE_RE = /^\/(sq|en|uk|it)\//
-const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it']
 
 function deriveLocale(next: string): string {
   return LOCALE_RE.exec(next)?.[1] ?? 'sq'
@@ -54,8 +54,7 @@ export async function GET(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           // Write into request.cookies so in-process reads within this same handler
-          // (e.g. the profile upsert which executes as the authenticated user) can
-          // see the new session tokens via request.cookies.getAll().
+          // can see the new session tokens via request.cookies.getAll().
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
           // Write onto the redirect response so the browser receives Set-Cookie headers
           // and carries the session to the subsequent /{locale}/auth/verified request.
@@ -72,35 +71,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(failureRedirect)
   }
 
-  // Ensure the application-level profile row exists (idempotent for returning users).
-  // Uses the same inline client (whose getAll reads the just-updated request.cookies)
-  // instead of calling ensureUserProfile() from lib/auth/server, which uses
-  // cookies() from next/headers and may not see the session tokens set above.
+  // The route inserts nothing into `users` (Task 956 AC15): the table has no permissive INSERT policy, so the session upsert that stood here never wrote a row, and the profile row is made by the
+  // sign-up trigger public.handle_new_user() (trigger on_auth_user_created on auth.users). What is left is the company of a new agent, below.
   try {
     const authUser = data.user
     const meta = authUser.user_metadata ?? {}
-    const metaLocale = meta.preferred_locale as string | undefined
-    const preferredLocale =
-      metaLocale && SUPPORTED_LOCALES.includes(metaLocale) ? metaLocale : 'sq'
 
-    await supabase.from('users').upsert(
-      {
-        id: authUser.id,
-        name:
-          (meta.full_name as string | undefined) ??
-          (meta.name as string | undefined) ??
-          null,
-        user_type: 'private',
-        role: 'user',
-        is_verified: false,
-        preferred_locale: preferredLocale,
-      },
-      { onConflict: 'id', ignoreDuplicates: true }
-    )
-
+    // `users.company_id` is a server-only column (Task 956, hardening v8b): a session cannot write it, so the server does, on the person's own row and only while it is empty
     const companyId = meta.company_id as string | undefined
     if (companyId) {
-      await supabase
+      await createAdminClient()
         .from('users')
         .update({ company_id: companyId })
         .eq('id', authUser.id)

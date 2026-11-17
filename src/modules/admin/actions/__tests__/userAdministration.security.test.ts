@@ -190,7 +190,8 @@ describe('only an administrator makes an administrator', () => {
 
   it('without the permission no account is created at all', async () => {
     db.tables.role_permissions = db.tables.role_permissions.filter((r) => r.permission_key !== 'users.create')
-    await expect(createAdminUser({ firstName: 'N', email: 'n@example.com', phone: '+355691234567', locationId: 1, profileType: 'private' })).rejects.toThrow('forbidden')
+    // Task 956 F13: the refusal is returned (the banner translates it), no longer thrown
+    expect(await createAdminUser({ firstName: 'N', email: 'n@example.com', phone: '+355691234567', locationId: 1, profileType: 'private' })).toEqual({ error: 'forbidden' })
     expect(authAdminCalls).toEqual([])
   })
 })

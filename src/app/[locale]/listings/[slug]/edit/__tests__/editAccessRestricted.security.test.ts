@@ -45,6 +45,8 @@ function listing(status: string): Row {
   return {
     id: `id-${status}`, slug: `slug-${status}`, status, user_id: OWNER, title: `${MARKER.title} ${status}`, price: MARKER.price, price_old: null, currency: 'EUR',
     description: MARKER.description, address: MARKER.address, listing_type: 'sale', property_type: 'apartment', images: [],
+    // an active listing is public only until its expiry (the one public rule, Task 956 AC6: an active listing with no expiry is hidden)
+    expires_at: '2099-01-01T00:00:00Z',
   }
 }
 

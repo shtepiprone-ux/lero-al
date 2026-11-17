@@ -17,7 +17,7 @@ import { orContains } from '@/lib/postgrest/escape'
 import { safeExternalUrl } from '@/lib/security/safeUrl'
 import { isCmsBodyEmpty } from '@/modules/cms/lib/isCmsBodyEmpty'
 import { resolveLinkTarget } from '@/lib/security/safeUrl'
-import { isE164, isProfileNameWithinBound, MAX_PROFILE_WEBSITE_LENGTH } from '@/lib/security/inputs'
+import { isE164, isProfileCompanyFieldWithinBound, isProfileNameWithinBound, MAX_PROFILE_WEBSITE_LENGTH } from '@/lib/security/inputs'
 import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
 import { syncAccountAccess } from '@/lib/auth/accountAccess'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
@@ -192,6 +192,8 @@ export async function updateUserProfile(
     if (key === 'phone' && value !== '' && !isE164(value)) return { error: 'invalid_phone' }
     // Task 923 R100: a name is stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; the database's own message never reaches the screen
     if (key === 'name' && !isProfileNameWithinBound(value)) return { error: 'name_too_long' }
+    // Task 956 F8: the company name is stored as sent and held to the `users` CHECK of hardening v8b, with its own field error (never the generic `update_failed`)
+    if (key === 'company_name' && !isProfileCompanyFieldWithinBound(value)) return { error: 'company_name_too_long' }
     patch[key] = key === 'name' ? value.trim() : value
   }
   if (Object.keys(patch).length === 0) return {}
@@ -419,12 +421,14 @@ function profileTypeFromDb(role: UserRole, user_type: string): ProfileType {
 }
 
 /**
- * The website of a business profile as it may be stored: an http(s) address (a bare host becomes https), or null for nothing.
+ * The website of a business profile as it may be stored: an https address (a bare host becomes https), or null for nothing.
  * Security (Task 923 Revision 7, S9): the value is later output as a link, so a `javascript:` / `data:` value is refused (`'invalid'`), never stored.
+ * Task 956 AC13: the scheme is never asked for. `lero.al`, `https://lero.al` and `http://lero.al` are stored alike as `https://lero.al/` (the `users` CHECK of hardening v8b holds `https://`
+ * addresses only, so an `http://` address is read as https, as a bare host is); saving the field again with what the form shows (`lero.al`) stores the same string.
  */
 function normalizeWebsite(raw: string | undefined, isBusiness: boolean): string | null | 'invalid' {
   if (!isBusiness || !raw?.trim()) return null
-  const safe = safeExternalUrl(raw)
+  const safe = safeExternalUrl(raw.trim().replace(/^http:\/\//i, 'https://'), ['https:'])
   // Task 923 R100: the stored address is held to the length the `users` CHECK of hardening v8b allows, measured AFTER normalisation (a bare host gains `https://` and a slash)
   return safe !== null && safe.length <= MAX_PROFILE_WEBSITE_LENGTH ? safe : 'invalid'
 }
@@ -484,6 +488,9 @@ export async function updateUserProfileFull(
   const isBusiness = ['agent', 'developer'].includes(data.profileType)
   const website = normalizeWebsite(data.website, isBusiness)
   if (website === 'invalid') return { error: 'invalid_website' }
+  // Task 956 F8: the company name and the position are stored only for a business profile, as sent; each is held to the `users` CHECK of hardening v8b, with its own field error
+  if (isBusiness && !isProfileCompanyFieldWithinBound(data.companyName)) return { error: 'company_name_too_long' }
+  if (isBusiness && !isProfileCompanyFieldWithinBound(data.position)) return { error: 'position_too_long' }
   // Task 923 R100: a company logo is an address on this project's Cloudinary (`isTrustedImageUrl`), as the `users` CHECK of hardening v8b requires. The form only ever sends the
   // address the upload route returned, so another address comes from a hostile request and gets the plain failure answer.
   const companyLogoUrl = isBusiness ? (data.companyLogoUrl || null) : null
@@ -580,7 +587,8 @@ export async function createAdminUser(data: {
   position?: string
   yearStarted?: number | null
 }): Promise<{ userId?: string; error?: string }> {
-  await assertPermission('users.create')
+  // Task 956 F13: a caller without `users.create` is answered with the code the banner translates (`forbidden`), not a thrown error the form never catches; the Auth admin API is not reached
+  if (!(await hasPermission('users.create'))) return { error: 'forbidden' }
   if (!isE164(data.phone) || (data.whatsapp && !isE164(data.whatsapp))) return { error: 'invalid_phone' }
   // Task 923 R100: the name and the last name are stored trimmed and at most as long as the `users` CHECK of hardening v8b allows; checked before the Auth account is created
   if (typeof data.firstName !== 'string' || !isProfileNameWithinBound(data.firstName) || !isProfileNameWithinBound(data.lastName)) return { error: 'name_too_long' }
@@ -597,6 +605,9 @@ export async function createAdminUser(data: {
   const isBusiness = ['agent', 'developer'].includes(data.profileType)
   const website = normalizeWebsite(data.website, isBusiness)
   if (website === 'invalid') return { error: 'invalid_website' }
+  // Task 956 F8: as in updateUserProfileFull, checked before the Auth account is created
+  if (isBusiness && !isProfileCompanyFieldWithinBound(data.companyName)) return { error: 'company_name_too_long' }
+  if (isBusiness && !isProfileCompanyFieldWithinBound(data.position)) return { error: 'position_too_long' }
   const db = createAdminClient()
   const { role, user_type } = profileTypeToDb(data.profileType)
 

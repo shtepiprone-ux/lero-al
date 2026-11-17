@@ -89,4 +89,77 @@ describe('sanitizeCmsHtml', () => {
     expect(executableParts(out)).toEqual([])
     expect(sanitizeCmsHtml(out)).toBe(out)
   })
+
+  // Task 972 (AC2): one case per sanitize-html advisory (GitHub lists all three as fixed in 2.18.0, but the CDATA payload of GHSA-x3q4 is removed only from 2.18.2), each payload taken from its GitHub advisory and fed to this allowlist. The noscript
+  // payloads carry an image of the project's own cloud, so only the advisory's flaw, not the image rule, could let that image through.
+  it('[SEC-972-GHSA-x3q4-9hxx-gx8m] an implied close inside noscript does not end its discarded content', () => {
+    const payloads = [
+      `<div><noscript></div><img src="${OWN}"></noscript>`,
+      `<p>Hi</p><![CDATA[ x > <noscript>]]><a href="https://evil.example/reset">Reset your password</a><img src="${OWN}"></noscript>`,
+    ]
+    for (const payload of payloads) {
+      const out = sanitizeCmsHtml(payload)
+      expect(out, payload).not.toContain('<img')
+      expect(out, payload).not.toContain(OWN)
+      expect(out, payload).not.toContain('evil.example')
+      expect(out, payload).not.toContain('Reset your password')
+      expect(executableParts(out), payload).toEqual([])
+    }
+  })
+
+  it('[SEC-972-GHSA-cv27-6wvh-8x7j] a meta refresh to a javascript: or data: URL is removed', () => {
+    const payloads = [
+      '<meta http-equiv="refresh" content="0;url=javascript:alert(1)">',
+      '<meta http-equiv="refresh" content="0;url=data:text/html,aaa">',
+      '<p>x</p><META HTTP-EQUIV="Refresh" CONTENT="0; URL=javascript:alert(1)">',
+    ]
+    for (const payload of payloads) {
+      const out = sanitizeCmsHtml(payload)
+      expect(out, payload).not.toMatch(/<\s*meta/i)
+      expect(out, payload).not.toMatch(/javascript:|data:/i)
+      expect(executableParts(out), payload).toEqual([])
+    }
+  })
+
+  it.each(['animate', 'set', 'animateMotion', 'svg:animate', 'svg:set', 'xlink:animate', 'SVG:ANIMATE'])(
+    '[SEC-972-GHSA-374f-7chj-9948] the SVG animation element %s cannot retarget a link to javascript:',
+    (tag) => {
+      const payloads = [
+        `<svg><a href="#safe"><${tag} attributeName="href" values="#safe;javascript:alert(1)" dur=".01s" fill="freeze"/><text>Click</text></a></svg>`,
+        `<a href="#safe"><${tag} attributeName="href" values="#safe;javascript:alert(1)" dur=".01s" fill="freeze"/>Click</a>`,
+      ]
+      for (const payload of payloads) {
+        const out = sanitizeCmsHtml(payload)
+        expect(out, payload).not.toMatch(/<\s*([a-z]+:)?(animate\w*|set)\b/i)
+        expect(out, payload).not.toMatch(/javascript:|attributeName|values=/i)
+        expect(executableParts(out), payload).toEqual([])
+      }
+    },
+  )
+
+  // Task 972 (AC2): the allowlist's comment says these tags are removed with their content. The library discards the content of a disallowed tag only when the tag is in
+  // `nonTextTags` (`node_modules/sanitize-html/index.js:370`, 2.18.2), and `exclusiveFilter` is not reached for a discarded tag (`:811-815`), so one case per tag proves the list.
+  const CONTENT_TAGS = ['noscript', 'iframe', 'object', 'svg', 'math', 'form'] as const
+
+  it.each(CONTENT_TAGS)('[SEC-972-CMS-NONTEXT-TAGS] the text and the child elements of <%s> are not in the output', (tag) => {
+    const payloads = [
+      `<p>before</p><${tag}>HIDDEN<b>CHILD</b><a href="https://evil.example/x">LINK</a><img src="${OWN}"></${tag}><p>after</p>`,
+      `<p>before</p><${tag.toUpperCase()} class="x">HIDDEN<p>CHILD</p></${tag.toUpperCase()}><p>after</p>`,
+    ]
+    for (const payload of payloads) {
+      const out = sanitizeCmsHtml(payload)
+      expect(out, payload).toBe('<p>before</p><p>after</p>')
+      for (const leaked of ['HIDDEN', 'CHILD', 'LINK', 'evil.example', OWN, '<img', `<${tag}`]) expect(out, payload).not.toContain(leaked)
+      expect(sanitizeCmsHtml(out)).toBe(out)
+    }
+  })
+
+  // `embed` is a void element for the parser (`<embed>HIDDEN</embed>` leaves HIDDEN as ordinary text after it, even with `embed` in `nonTextTags`), so the library has no
+  // content of it to discard: the case proves that the element and its attributes are gone and that a following sibling is untouched.
+  it('[SEC-972-CMS-NONTEXT-TAGS] <embed> and its address are removed and the next element stays', () => {
+    const out = sanitizeCmsHtml('<p>before</p><embed src="https://evil.example/x" type="text/html"><p>after</p>')
+    expect(out).toBe('<p>before</p><p>after</p>')
+    expect(out).not.toContain('evil.example')
+    expect(out).not.toContain('embed')
+  })
 })

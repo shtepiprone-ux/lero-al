@@ -6,9 +6,11 @@ import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
  * `legal.manage` holder's authored HTML reaches every visitor's browser (§3.1); this allowlist is
  * that trust boundary's whole configuration, not a hand-rolled regex.
  *
- * `script`/`style`/`textarea`/`noscript`/`iframe`/`object`/`embed`/`svg`/`math`/`form` are removed
- * with their content via `exclusiveFilter`; every other non-allowlisted tag is discarded but its
- * text is kept (`disallowedTagsMode: 'discard'`, the library default). `transformTags.a` enforces
+ * The tags in `nonTextTags` are removed with their text and child elements: the library default
+ * (`script`, `style`, `textarea`, `option`, `xmp`) plus `noscript`, `iframe`, `object`, `embed`, `svg`,
+ * `math` and `form` (a void element such as `embed` has no content to remove). Every other non-allowlisted
+ * tag is discarded but its text is kept (`disallowedTagsMode: 'discard'`, the library default).
+ * `exclusiveFilter` only drops an `img` whose `src` is not a trusted image. `transformTags.a` enforces
  * `target` limited to `_blank` and stamps `rel="noopener noreferrer"` on it before the attribute
  * allowlist runs, so a caller-supplied `rel`/stray `target` can never survive unfiltered.
  *
@@ -18,10 +20,13 @@ import { isTrustedImageUrl } from '@/lib/uploads/imageUrl'
  *    URL — every other `img` (relative, `data:`, protocol-relative, another host) is dropped whole;
  *  - `style` on `p`, `h2`–`h4` and `li`, restricted to `text-align: left|center|right|justify`.
  */
-const CONTENT_DISCARD_TAGS = new Set([
+// The library default list (`node_modules/sanitize-html/index.js:221-227`, 2.18.2) followed by the tags added here.
+const NON_TEXT_TAGS = [
   'script',
   'style',
   'textarea',
+  'option',
+  'xmp',
   'noscript',
   'iframe',
   'object',
@@ -29,7 +34,7 @@ const CONTENT_DISCARD_TAGS = new Set([
   'svg',
   'math',
   'form',
-])
+]
 
 const cmsHtmlAllowlist: IOptions = {
   allowedTags: [
@@ -86,9 +91,9 @@ const cmsHtmlAllowlist: IOptions = {
   allowedSchemesAppliedToAttributes: ['href'],
   allowProtocolRelative: false,
   disallowedTagsMode: 'discard',
+  nonTextTags: NON_TEXT_TAGS,
   // Task 923 R160 (R70 (g), owner D93): only an image of the project's own Cloudinary account is kept, the same check as listing images and the database prefix.
-  exclusiveFilter: (frame) =>
-    CONTENT_DISCARD_TAGS.has(frame.tag) || (frame.tag === 'img' && !isTrustedImageUrl(frame.attribs.src)),
+  exclusiveFilter: (frame) => frame.tag === 'img' && !isTrustedImageUrl(frame.attribs.src),
   transformTags: {
     // Drop an out-of-set value together with its attribute (the `values` lists below stay as a second wall).
     div: (tagName, attribs) => {

@@ -117,7 +117,8 @@ No visible change on the site. The e-mail HTML is checked by AC1 and AC2.
 - AC3 No file in the repository imports `@react-email/components`, and it is not in the tree — test:
   `templates.render.test.tsx` (reads every file under `src/` for the import; red before the change) and
   `npm ls @react-email/components --all` prints `(empty)`.
-- AC4 No dependency is deprecated or younger than 14 days, and none gains an install script — test: `npm ci
+- AC4 No dependency is deprecated or younger than 14 days, none gains an install script, and the lockfile installs with
+  the npm of CI (Task 972 F8) — test: `npx --yes npm@10.9.8 ci --ignore-scripts --dry-run` exits 0; `npm ci
   --ignore-scripts` prints no `npm warn deprecated @react-email`, `node scripts/quality/change-report.mjs --lockfile-age
   origin/main` and `node --test scripts/quality/install-scripts.test.mjs` exit 0, `node scripts/quality/audit-gate.mjs
   --omit-dev --level high` exits 0.

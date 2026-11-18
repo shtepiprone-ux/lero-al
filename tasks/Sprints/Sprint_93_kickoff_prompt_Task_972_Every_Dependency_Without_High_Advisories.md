@@ -9,12 +9,10 @@ sanitize-html is closed only in 2.18.2, released 6 days ago — we update; add m
 fail"): `sanitize-html` 2.18.2 under the 14-day age, pinned exactly in `overrides`, which `change-report.mjs:139-147`
 reports as the owner's visible decision and does not refuse; owner decision O972-3 (2026-11-17, option "accept the
 risk"): GHSA-fc5q-39xc-vjpf (`picomatch`, no fixed version) accepted until 2026-12-17 in
-`scripts/quality/audit-exceptions.json`. Owner decision O972-4 (2026-11-17): Dependabot pull requests are not merged
-and get no CI secrets; their updates go through tasks such as this one (`.claude/rules/quality-gates.md`). Revision 4
-(2026-11-17, after Review 2): the F3 comment; AC2 states the `embed` case and AC8 tests `react-email` through the
-`glob.sync` call it makes, because `npm run email` cannot start on `origin/main` either (F5, Task 986). Implementer: Sonnet, on `task/972-dependency-advisories`. Opus, not the
-executor, changes CI, `scripts/quality/**` and `.claude/rules/quality-gates.md` (done in Revision 3). Reviewer: Opus.
-Human owner of the change: the owner.
+`scripts/quality/audit-exceptions.json`. O972-4 (2026-11-17): Dependabot pull requests are not merged and get no CI
+secrets. Revision 4 (after Review 2): the F3 comment, AC2 and AC8 corrected (F5, Task 986). Revision 5 (after `npm ci`
+failed on PR #46): the lockfile holds for the npm of CI (F8). Implementer: Sonnet, on `task/972-dependency-advisories`;
+Opus changes CI, `scripts/quality/**` and `.claude/rules/quality-gates.md`. Reviewer: Opus. Human owner: the owner.
 
 ## Goal
 
@@ -49,9 +47,16 @@ Read at a96bcd710
 - Revision 3: `gh api advisories/GHSA-x3q4-9hxx-gx8m` → "`sanitize-html` discards the *content* of every element in
   `nonTextTags`"; with the seven tags in `nonTextTags` the implied-close payload leaks on 2.17.7, not on 2.18.1, and the
   CDATA payload leaks on 2.18.1, not on 2.18.2 (published 2026-11-11T19:53:59Z).
+- Revision 5: `gh run view 44178775479 --json jobs` → every failed job of PR #46 stops at `npm ci`; its log → `npm: 10.9.8`,
+  `EUSAGE`, "Missing: glob@13.0.7 from lock file" (and `path-scurry` 2.0.2, `lru-cache` 11.5.3); local `npm -v` → 11.16.0.
+  `npx --yes npm@10.9.8 install --package-lock-only` on a copy → `react-email/node_modules/glob` and
+  `lighthouse/node_modules/glob` 13.0.7 (inside GHSA-3g3m, `>= 9.0.0, <= 14.0.1`): npm 10.9.8 does not apply the range
+  key to those two `glob ^13.0.6` edges (why: UNKNOWN). With `"lighthouse": {"glob": "14.0.2"}` and `"react-email":
+  {"glob": "14.0.2"}` beside it → glob 14.0.2 only, versions and integrity unchanged, `ci --dry-run` exit 0 on both npm.
 Fix: `next` 16.4.5, the nine `@tiptap/*` 3.32.2, `@vitest/coverage-v8` 4.1.12, `happy-dom` removed, the stale `@tiptap/*`
 lockfile entries dropped, the audit fix, the two scoped overrides; `sanitize-html` 2.18.2 (O972-2) and the seven tags in
-`nonTextTags`; the audit gate with the O972-3 exception (Opus, done).
+`nonTextTags`; the audit gate with the O972-3 exception (Opus, done); Revision 5: the two parent-scoped `glob` overrides
+and the lockfile written by npm 10.9.8, the npm of CI.
 
 ## Scope
 
@@ -71,6 +76,8 @@ lockfile entries dropped, the audit fix, the two scoped overrides; `sanitize-htm
   meta refresh, SMIL) and one per tag of the list: its text and child elements are not in the output.
 - Revision 4 (F3): the comment at `sanitizeCmsHtml.security.test.ts:93` says that GitHub lists the three advisories as
   fixed in 2.18.0 and that the CDATA payload of GHSA-x3q4 is removed only from 2.18.2; no other line changes.
+- Revision 5 (F8): `overrides` gains `"lighthouse": {"glob": "14.0.2"}` and `"react-email": {"glob": "14.0.2"}` (the range
+  key stays); `npx --yes npm@10.9.8 install --package-lock-only --ignore-scripts`; no version, `resolved` or `integrity` changes.
 - `npm ci`; no package gains an install script (`scripts/quality/install-scripts.test.mjs`; Opus removed its stale `msw`
   entry: `msw` came only through `shadcn` 4.7.0 and left with 4.23.0, no project file imports it). `basic-ftp`
   leaves with `lighthouse` 13.6.0; if not, the task stops and reports `npm ls basic-ftp --all`.
@@ -164,11 +171,13 @@ No visible change. A visual difference in the build or Storybook stops the task 
   (`node_modules/react-email/dist/cli/index.mjs:7487`) works on the overridden `glob`: in bash,
   `node --input-type=module -e "import { glob } from 'glob'; process.exit(typeof glob.sync === 'function' && glob.sync('src/modules/notifications/lib/emails/*.tsx').length > 0 ? 0 : 1)"`
   exits 0; `npm ls glob minimatch --all` shows no version in either range.
+- AC9 The lockfile installs with the npm of CI, without a vulnerable `glob` — test: `npx --yes npm@10.9.8 ci
+  --ignore-scripts --dry-run` and `npm ci --ignore-scripts --dry-run` exit 0; `npx --yes npm@10.9.8 install
+  --package-lock-only --ignore-scripts` leaves no `glob` but 14.0.2 in `package-lock.json`; `gh pr checks 46` (`npm ci`).
 
 ## Route
 
-1. Steps 1-3 of the stopped run stand (report of 2026-11-17, rerun in Review 1). The local `main` is stale
-   (`bb9e2b35a`; `origin/main` is `d506fae33`): every comparison names `origin/main`.
+1. Steps 1-3 of the stopped run stand (Review 1). Every comparison names `origin/main` (the local `main` is stale).
 2. Test first: the per-tag cases of AC2 on the unchanged `sanitizeCmsHtml.ts`; save the failing output.
 3. `sanitize-html` 2.18.2 per Scope; `npm ci`; `npm ls --omit dev --all` exits 0;
    `node scripts/quality/change-report.mjs --lockfile-age origin/main` exits 0; AC6 and AC7 after; AC8.
@@ -179,62 +188,54 @@ No visible change. A visual difference in the build or Storybook stops the task 
    node --test scripts/quality/install-scripts.test.mjs · npm ls basic-ftp --all ·
    node scripts/quality/change-report.mjs origin/main HEAD; one deliberate break per AC2 case group.
 6. Report: each command, exit code, relevant output; every version change with its release date.
-7. Revision 4: the F3 comment only (Scope); three passes over the test file; then step 5 again with AC8 as written now
-   (no `npm run email`), and the report of step 6 for what ran.
+7. Revision 4: the F3 comment only; three passes over the test file; step 5 again with AC8 as written; step 6.
+8. Revision 5: AC9 red first (`npx --yes npm@10.9.8 ci --ignore-scripts --dry-run`); the overrides and the lockfile per
+   Scope; `npm ci`; AC9; then step 5 again, AC8, and the report of step 6.
 
 ## Review
 
 Review 1 of the stopped run (working tree on `a96bcd710`, 2026-11-17) — no verdict: it stopped at Route step 3 on AC1
 and AC7 by a design gap. Tools: `gh api advisories/GHSA-fc5q-39xc-vjpf`; `npm audit --package-lock-only [--omit=dev]
 --json` → high 32 / 6, all `picomatch`; probes on 2.17.7, 2.18.1, 2.18.2. Findings: High 1, Medium 1.
-F1 — GHSA-fc5q-39xc-vjpf has no fixed version. Severity: High. Category: Dependencies and configuration. Location:
-`package-lock.json` (`node_modules/picomatch` 4.0.7, `micromatch/node_modules/picomatch` 2.3.2). Impact: AC1, AC5, AC7
-and the production step are red with any version. Reproduction: `node scripts/quality/audit-gate.mjs --level high`
-with an empty `exceptions` list → 1 blocking. Status: accepted by the owner on 2026-11-17 (O972-3), Revision 3.
-F2 — the CMS allowlist keeps the content of seven tags its comment says it removes. Severity: Medium. Category: Input
-and output. Location: `src/modules/cms/lib/sanitizeCmsHtml.ts:9-10`, `:90-91` (at a96bcd710). Impact: content hidden in
-`noscript`, `svg` or `iframe` reaches visitors as markup. Reproduction: the probe in "## Cause". Status: Revision 3.
+F1 — GHSA-fc5q-39xc-vjpf (`picomatch`) has no fixed version. Severity: High. Category: Dependencies and configuration.
+Location: `package-lock.json`. Impact: AC1, AC5, AC7 red with any version. Reproduction: `audit-gate.mjs --level high`
+with no exception → 1 blocking. Status: accepted by the owner on 2026-11-17 (O972-3).
+F2 — the CMS allowlist keeps the content of seven tags. Severity: Medium. Category: Input and output. Location:
+`sanitizeCmsHtml.ts:9-10`, `:90-91` at a96bcd710. Impact: hidden content reaches visitors. Reproduction: "## Cause".
+Status: Revision 3.
 
 Review 2 of the working tree on 0ea6b20ca (Revision 3, uncommitted) — NEEDS REVISION
-Scope: `package.json`, `package-lock.json` (tools), `sanitizeCmsHtml.ts`, its security test, `install-scripts.test.mjs`,
-each read in full in three passes; the report rerun. The Opus files of Revision 3 (`audit-gate.mjs`, `ci.yml`) were read,
-not independently reviewed: the owner approves them in the PR. OWASP record: `docs/security/owasp/reviews/Task_972.json`.
-Tools (local, exit 0 unless named): `owasp.mjs sync`/`check`; `check-ruleset.mjs`; `npm ci`; `npm ls --omit dev --all`;
-`change-report.mjs --lockfile-age origin/main` (226, 0 young; 2.18.2 exempt as an exact override); lint; typecheck;
-`npm test -- --coverage` (400 files, 6610 tests); changed-lines coverage (6/6); `check-files.mjs --worktree`;
-`audit-gate.mjs` high, `--omit-dev` high, low (0 blocking, O972-3 only); `node --test` (15); `npm ls basic-ftp --all`
-(exit 1, empty); `npm audit --json` (no `basic-ftp`); AC7 versions; shadcn and email `--help`; build; Storybook (Vite
-warnings 111/1135, equal to the `main` job of run 44091755292, red there only on the drift this branch remaps); breaks
-→ 7, 3, 7 red, restored by SHA-256; a probe of 2.18.1 and 2.18.2. Findings: Medium 1, Low 3. Overall risk: the change
-does what Scope says; one false comment and two criteria of the design were wrong.
-F3 — the test comment says the advisories are fixed in 2.18.0. Severity: Low. Category: Tests. Location:
-`src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts:93`. Impact: the CDATA payload below it leaks on 2.18.1;
-the comment invites a lower pin. Reproduction: the probe on 2.18.1 → `<p>Hi</p><a href="https://evil.example/reset">…`;
-on 2.18.2 → `<p>Hi</p>`. Status: fixed in Revision 4.
-F4 — the report names the wrong parser. Severity: Low. Category: Agent and tool output. Location: the Revision 3 report
-(translated: "htmlparser2 8.0.2 treats embed as a void element"). Impact: none on the code; `sanitize-html` 2.18.2 loads
-htmlparser2 12.0.0, which lists `embed` as void (`node_modules/sanitize-html/node_modules/htmlparser2/dist/Parser.js:68-75`).
-Reproduction: `npm ls htmlparser2 --all`. Status: corrected here.
-F5 — two criteria of Revision 3 could not pass as written (Opus design). Severity: Low. Category: Tests. Location: AC2,
-AC8. Impact: AC2 asked for the content of the void `embed`; AC8 asked for the `npm run email` preview, which stops at
-`@react-email/ui` (`node_modules/react-email/dist/cli/index.mjs:6625`; not in the lockfile of `origin/main` either) and
-finds no template (none has `export default`, `index.mjs:6489-6492`). Reproduction: `npm run email`. Status: fixed in
-Revision 4 (AC2, AC8); the script is Task 986.
-F6 — `@react-email/components` 1.0.12, the import of every e-mail template, is deprecated. Severity: Medium. Category:
-Dependencies and configuration. Location: `package.json:147`; 10 files under `src`. Impact: "Package no longer
-supported", `latest` 1.0.12: no security fix will come. Reproduction: `npm view @react-email/components@1.0.12
-deprecated`. Status: Task 986.
+Scope: the five changed files in three full passes (the lockfile by its tools); the report rerun. `audit-gate.mjs` and
+`ci.yml` (Opus) read, not independently reviewed: the owner approves them in the PR. Record: `reviews/Task_972.json`.
+Tools (local, exit 0): every command of Route step 5, `owasp.mjs sync`/`check`, `check-ruleset.mjs`, AC6-AC8; Storybook
+warnings equal `main` (run 44091755292); breaks → 7, 3, 7 red; a probe of 2.18.1 and 2.18.2. Findings: Medium 1, Low 3.
+F3 — a test comment says the advisories are fixed in 2.18.0. Severity: Low. Category: Tests. Location:
+`sanitizeCmsHtml.security.test.ts:93`. Impact: its CDATA payload leaks on 2.18.1. Reproduction: the 2.18.1 probe.
+Status: fixed in Revision 4.
+F4 — the report names htmlparser2 8.0.2; `sanitize-html` 2.18.2 loads 12.0.0. Severity: Low. Category: Agent and tool
+output. Location: the Revision 3 report. Impact: none. Reproduction: `npm ls htmlparser2 --all`. Status: corrected here.
+F5 — AC2 (content of the void `embed`) and AC8 (`npm run email`, which stops at `@react-email/ui`, `react-email`
+`dist/cli/index.mjs:6625`) could not pass (Opus design). Severity: Low. Category: Tests. Location: AC2, AC8. Impact: two
+criteria unmeetable. Reproduction: `npm run email`. Status: fixed in Revision 4; the script is Task 986.
+F6 — `@react-email/components` 1.0.12 is deprecated. Severity: Medium. Category: Dependencies and configuration.
+Location: `package.json:147`. Impact: no security fix will come for the e-mail templates. Reproduction: `npm view
+@react-email/components@1.0.12 deprecated`. Status: Task 986.
 
 Review 3 of the working tree on 0ea6b20ca (Revision 4, uncommitted) — APPROVED
 Scope: the Revision 4 change (`sanitizeCmsHtml.security.test.ts:93`, read in full in three passes; SHA-256 07AC570E…);
-the report rerun on the whole candidate tree. Tools (local, exit 0 unless named): `npm ci --ignore-scripts`;
-`npm test -- --coverage` (400 files, 6610 tests); build; Storybook; lint; typecheck; changed-lines coverage (6/6);
-`check-files.mjs --worktree` (9 files); `change-report.mjs --lockfile-age origin/main` (226, 0 young);
-`change-report.mjs origin/main HEAD`; `audit-gate.mjs` high, `--omit-dev` high, low (0 blocking, O972-3); `node --test`
-(15); `npm ls basic-ftp --all` (exit 1, empty); `npm audit --json` (exit 1, no `basic-ftp`); AC7 versions; AC8: shadcn and
-email `--help`, the `glob.sync` command, `npm ls glob minimatch --all` (glob 14.0.2, minimatch 11.0.1 and 3.1.5); breaks
-→ 7, 3, 7 red, restored by SHA-256. Findings: Low 1. Overall risk: the candidate meets AC1-AC8 locally; AC5 waits for CI.
-F7 — the report names the wrong red case of break 1. Severity: Low. Category: Agent and tool output. Location: the
-Revision 4 report ("`[SEC-AUDIT-CMS-EVASION]` and 6 per-tag cases"). Impact: none on the code; its own `break1.txt` and
-the rerun show `[SEC-972-GHSA-x3q4-9hxx-gx8m]` and the six per-tag cases. Reproduction: `nonTextTags` cut to the library
-default → 7 failed. Status: corrected here.
+the report rerun. Tools (local, npm 11.16.0, exit 0): every command of Route step 5 (400 files, 6610 tests), AC6-AC8;
+breaks → 7, 3, 7 red, restored by SHA-256. Findings: Low 1. Overall risk: AC1-AC8 met locally; AC5 waits for CI.
+F7 — the report names `[SEC-AUDIT-CMS-EVASION]` red in break 1; its `break1.txt` and the rerun show
+`[SEC-972-GHSA-x3q4-9hxx-gx8m]`. Severity: Low. Category: Agent and tool output. Location: the Revision 4 report.
+Impact: none on the code. Reproduction: `nonTextTags` cut to the default → 7 failed. Status: corrected here.
+F8 (PR #46, head 2b811c213, run 44178775479) — `npm ci` fails on the npm 10.9.8 of CI. Severity: High. Category:
+Dependencies and configuration. Location: `package.json` `overrides`, `package-lock.json`. Impact: `CI Required` cannot
+pass; npm 10 rewriting the lockfile brings back glob 13.0.7 (GHSA-3g3m). Reproduction: `npx --yes npm@10.9.8 ci
+--ignore-scripts --dry-run` → `EUSAGE`; Reviews 2 and 3 ran npm 11.16.0. Status: fixed in Revision 5.
+
+Review 4 of the working tree on 2b811c213 (Revision 5, uncommitted) — APPROVED
+Scope: `package.json` (three full passes; +6 lines in `overrides`), `package-lock.json` (1429 entries as at HEAD, 0
+version/resolved/integrity/dev/optional changes, 85 `libc` fields dropped; glob 14.0.2 only). Tools (exit 0 unless
+named): AC9 (npm 10.9.8 and 11.16.0 `ci --dry-run`; npm 10 rewrite leaves the lockfile SHA-256 unchanged); break: the two
+entries removed in a copy → `EUSAGE`, "Missing: glob@13.0.7"; `npm ci`; every command of Route step 5 (400 files, 6610
+tests; Storybook warnings 111/1135 as `main`); AC6-AC8. Findings: none. Overall risk: AC5 and AC9 wait for `gh pr checks 46`.

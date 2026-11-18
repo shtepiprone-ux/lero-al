@@ -27,7 +27,7 @@
     "MCP_Security": { "verdict": "not applicable", "reason": "no MCP server configuration changes; the vulnerable MCP SDK only leaves the development tree" },
     "Mass_Assignment": { "verdict": "not applicable", "reason": "no write binds request fields to a record in this task" },
     "Multifactor_Authentication": { "verdict": "not applicable", "reason": "triggered by the word password in a test payload; no authentication factor changes" },
-    "NPM_Security": { "verdict": "met", "quotes": ["so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install"], "evidence": "`node --test scripts/quality/install-scripts.test.mjs` pass; `.npmrc` line 2 ignore-scripts=true; `npm ci --ignore-scripts` exit 0" },
+    "NPM_Security": { "verdict": "met", "quotes": ["so the preinstall, install, postinstall and prepare scripts that a plain npm install runs do not execute on the first install"], "evidence": "`node --test scripts/quality/install-scripts.test.mjs` pass; `.npmrc` line 2 ignore-scripts=true; `npm ci --ignore-scripts` and `npx --yes npm@10.9.8 ci --ignore-scripts --dry-run` exit 0 (F8, Revision 5)" },
     "Nodejs_Security": { "verdict": "not applicable", "reason": "no route or authentication flow changes; the remap hands the new rate-limit requirement to Task 985" },
     "OS_Command_Injection_Defense": { "verdict": "not applicable", "reason": "no process is started from outside input; audit-gate passes package names to npm only after a name check" },
     "Prototype_Pollution_Prevention": { "verdict": "not applicable", "reason": "no merge of request data changes; the production deepmerge advisory is Task 973" },

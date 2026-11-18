@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "18e4396f7605582391d440a0e44503541258bbb0",
- "fetchedOn": "2026-11-17T04:54:25.065Z",
+ "commit": "7af0ef1b745f1a38ce905c00c5a592d5b3a515a9",
+ "fetchedOn": "2026-11-17T19:06:40.733Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -260,7 +260,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "82248990a316f0a4fc37405a4c0d0f130394b9bb",
+   "sha": "87d77fdbb0320258494968dffc7d17a500ddf753",
    "title": "Docker Security Cheat Sheet"
   },
   {
@@ -358,7 +358,7 @@
    "name": "HTTP_Headers",
    "file": "HTTP_Headers_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html",
-   "sha": "f05f691eabcd792e6290b96417eef729f914a6d6",
+   "sha": "dd030417b1eff3f34dd4061959723618548b5dd1",
    "title": "HTTP Security Response Headers Cheat Sheet"
   },
   {
@@ -575,7 +575,7 @@
    "name": "Nodejs_Security",
    "file": "Nodejs_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html",
-   "sha": "451d68d9b36b875b4bac5960978dd376b2514396",
+   "sha": "ec90458efff68533c041ca061cd07d00030b9426",
    "title": "NodeJS Security Cheat Sheet"
   },
   {
@@ -631,7 +631,7 @@
    "name": "PHP_Configuration",
    "file": "PHP_Configuration_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/PHP_Configuration_Cheat_Sheet.html",
-   "sha": "3a86ec3b1f514f28ed8de93c1d151d0396d7c16c",
+   "sha": "f235b97931988a630f38014286a060c15f12a3e9",
    "title": "PHP Configuration Cheat Sheet"
   },
   {
@@ -687,7 +687,7 @@
    "name": "Ruby_on_Rails",
    "file": "Ruby_on_Rails_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html",
-   "sha": "ac6936b4f50bec1c3e5ce5146a8f00d85b59f3a2",
+   "sha": "f8992925091b4a744cfbd5619377e87b808e2728",
    "title": "Ruby on Rails Cheat Sheet"
   },
   {

@@ -13,10 +13,12 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    changed line checked, three clean passes in a row; a hunk no Scope item needs is a finding, and so is a change that
    does not remove the kickoff's "## Cause".
    Tools first, on the candidate files: `node scripts/quality/check-ruleset.mjs` (the `main` ruleset has not drifted),
-   `npm run lint`, `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs
-   --base main`, `node scripts/quality/check-files.mjs --worktree` and `node scripts/quality/change-report.mjs main HEAD`.
-   Every other job (product gates, `npm audit`, SBOM, CodeQL, gitleaks, zizmor, the browser and `security-ci` jobs) is
-   read on the pull request with `gh pr checks <n>`; a failure there is fixed in the same pull request, also after an
+   then the CI-parity rule of `flow.md`: read `.github/workflows/ci.yml` now and run every `run:` step of every job that
+   needs no secret and no live project, exactly as written (`BASE_SHA=origin/main`, `HEAD_SHA=HEAD`), installing with
+   the npm of the job's `node-version` (`npx --yes npm@10.9.8 ci` for Node 22.22.3), never a subset or other flags.
+   After GitHub has run a commit, a red job is fixed at its cause and only its steps run again. Only the jobs that need secrets
+   or GitHub (`authz`, the rest of `click-shield`, `codeql`, `secrets`, `workflows`) are read on the pull request with
+   `gh pr checks <n>` and stay `UNKNOWN` until then; a failure there is fixed in the same pull request, also after an
    approved verdict. Live configuration (`secure-code-review.md` §1.5): a diff that
    touches SQL, RLS, grants, a data write, authentication or roles runs `node scripts/quality/db-catalog-audit.mjs`; an
    upload or image path runs `node scripts/quality/cloudinary-config.mjs`. A violation the change creates, or one the

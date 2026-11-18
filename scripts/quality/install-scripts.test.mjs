@@ -15,7 +15,6 @@ export const REVIEWED_NOT_RUN = {
   '@parcel/watcher': 'prebuilt optional platform packages; build, tests and Storybook pass without the script',
   '@sentry/cli': 'source maps are not uploaded from CI; the binary comes from optional @sentry/cli-<platform> packages',
   fsevents: 'macOS only, optional; nothing in the build depends on it',
-  msw: 'the script copies the service worker into a configured folder; the project serves its own copy',
 };
 
 const nameOf = (lockKey) => lockKey.slice(lockKey.lastIndexOf('node_modules/') + 'node_modules/'.length);
@@ -53,6 +52,6 @@ test('fails when a package gains an install script nobody reviewed, also when ne
 });
 
 test('fails on a stale reviewed entry', () => {
-  const { 'node_modules/msw': _gone, ...rest } = reviewedLock.packages;
-  assert.deepEqual(installScriptProblems({ npmrc: 'ignore-scripts=true\n', lock: { packages: rest } }), ['msw is reviewed but no longer has an install script in package-lock.json (stale entry)']);
+  const { 'node_modules/fsevents': _gone, ...rest } = reviewedLock.packages;
+  assert.deepEqual(installScriptProblems({ npmrc: 'ignore-scripts=true\n', lock: { packages: rest } }), ['fsevents is reviewed but no longer has an install script in package-lock.json (stale entry)']);
 });

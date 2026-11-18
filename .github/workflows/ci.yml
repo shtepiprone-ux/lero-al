@@ -160,8 +160,11 @@ jobs:
           node-version: "22.22.3"
       - name: Lockfile is enforced
         run: npm ci --ignore-scripts
+      # audit-gate.mjs is npm audit at the level, except an advisory an owner decision in audit-exceptions.json accepts
       - name: Production dependencies have no high or critical advisory
-        run: npm audit --omit=dev --audit-level=high
+        run: node scripts/quality/audit-gate.mjs --omit-dev --level high
+      - name: Every dependency has no high or critical advisory
+        run: node scripts/quality/audit-gate.mjs --level high
 
   change-report:
     name: Change report (sensitive paths, weakened tests, new dependencies)

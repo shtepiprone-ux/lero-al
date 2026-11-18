@@ -55,7 +55,11 @@ jobs `quality`, `unit`, `dependencies`, `change-report`, `owasp-gate`, `sbom`, `
 `locale-leak` (six shards) and the `click-shield` self-test. Every install and lockfile command uses the npm of the job's
 `node-version`, not the local one: Node 22.22.3 ships npm 10.9.8 (run 44178775479, Task 972 F8), so `npx --yes
 npm@10.9.8 ci`. A subset, other flags (`--worktree` for `--all`, tests without `--allowOnly=false --retry=0`) or another
-npm is not evidence for that job. Once GitHub has run a commit, its results are the evidence: a red job is fixed at its
+npm is not evidence for that job. The implementer runs the whole set once; the reviewer does not repeat it (owner,
+2026-11-18, translated: "so you are now doing the same work Sonnet did for two hours?"): the reviewer reads the code,
+reruns the failing-first and deliberate-break claims and the steps of the `quality` and `dependencies` jobs on the final
+tree (they catch what local runs missed before: product gates, npm 10.9.8), and leaves the long browser jobs to GitHub,
+`UNKNOWN` until `gh pr checks <n>` concludes. Once GitHub has run a commit, its results are the evidence: a red job is fixed at its
 cause and only that job's steps, and those of a job whose inputs the fix changes, run again locally. The jobs that need secrets or GitHub (`authz`, the rest of
 `click-shield`, `codeql`, `secrets`, `workflows`) are `UNKNOWN` until `gh pr checks <n>` concludes. No script
 replicates the workflow (owner, 2026-11-14): the commands come from `ci.yml` each time.

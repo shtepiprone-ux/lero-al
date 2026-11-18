@@ -217,7 +217,7 @@ await deleteAsset(publicId, { reason: 'listing_image_removed' })
 ### Resend Setup
 - Account is registered at https://resend.com .
 - Check the current Resend plan limits in the Resend dashboard before relying on quota assumptions.
-- Packages installed: `resend@^6.12.3` (prod), `@react-email/components@^1.0.12` (prod), `react-email@^6.1.5` (dev).
+- Packages installed: `resend@^6.12.3` (prod), `react-email@6.1.5` (prod, the components), `@react-email/render@2.0.8` (prod, `render`).
 - Environment variable needed: `RESEND_API_KEY` — from Resend dashboard (server-only).
 - Use Resend for:
   - Email confirmation on registration;
@@ -232,13 +232,11 @@ await deleteAsset(publicId, { reason: 'listing_image_removed' })
 - NEVER call Resend from client-side code — only from server actions or API routes.
 - NEVER instantiate `new Resend(...)` outside `src/modules/notifications/lib/emails/send.ts`.
 
-**Canonical send helper (Task 119)**: `src/modules/notifications/lib/emails/send.ts` — the only place that instantiates `new Resend(...)`. Call `sendEmail({ to, subject, react | html })` from any server action. Accepts a React Email component (rendered via `@react-email/render`) or a pre-built HTML string. Graceful no-key fallback: logs and returns silently if `RESEND_API_KEY` is absent.
+**Canonical send helper (Task 119)**: `src/modules/notifications/lib/emails/send.ts` — the only place that instantiates `new Resend(...)`. Call `sendEmail({ to, subject, react | html })` from any server action. Accepts a React Email component (rendered via `@react-email/render`) or a pre-built HTML string. Without `RESEND_API_KEY`, local development logs and returns `{}` (skipped); every other environment logs an error and returns `{ error: 'send_failed' }`, so an e-mail that cannot leave is never reported as sent (`send.ts:57-68`).
 
 **BaseEmail layout (Task 119)**: `src/modules/notifications/lib/emails/BaseEmail.tsx` — shared React Email layout component matching the approved design reference (`Epic_D_email_design_reference.html`). Top 3px coral strip, logo tile + wordmark, content slot, faint-grey footer. Brand accent `BRAND_ACCENT = '#EC5447'` is exported as a constant — never hardcode it per-template.
 
-**Local email preview server**: `npm run email` — launches the React Email preview server at `http://localhost:3000` showing all templates in `src/modules/notifications/lib/emails/`. Templates added in future tasks (D.3, D.4, etc.) appear there automatically.
-
-**Email-change flow**: `initiateEmailChange` and `resendEmailVerification` call `sendEmailChangeEmails()` from `src/modules/notifications/lib/emails/emailChange.ts`. Routes through the canonical send helper. Inline STRINGS (sq/en/uk/it) are preserved. If `RESEND_API_KEY` is absent, `sendEmail` logs and returns silently (graceful no-key fallback).
+**Email-change flow**: `initiateEmailChange` and `resendEmailVerification` call `sendEmailChangeEmails()` from `src/modules/notifications/lib/emails/emailChange.ts`. Routes through the canonical send helper. Inline STRINGS (sq/en/uk/it) are preserved. If `RESEND_API_KEY` is absent, `sendEmail` skips only in local development and otherwise returns `{ error: 'send_failed' }` (see the canonical send helper above).
 
 ### Email Template Architecture (decided 2026-05-20)
 
@@ -248,7 +246,7 @@ Rationale: Resend is code-first (same team as React Email). Managing multilingua
 
 **Two layers:**
 
-1. **Code-first React Email** (`@react-email/components`) — for critical transactional emails where correctness and version control matter. Source of truth = git.
+1. **Code-first React Email** (`react-email` components, `@react-email/render`) — for critical transactional emails where correctness and version control matter. Source of truth = git.
    - A single shared `BaseEmail` layout (header/footer/branding) wraps every template.
    - Localization uses INLINE per-template strings (sq/en/uk/it), selected by a `locale` prop — emails render server-side outside the next-intl context. (Same pattern as the existing `emailChange.ts`.)
    - Templates live in `src/modules/notifications/lib/emails/`.

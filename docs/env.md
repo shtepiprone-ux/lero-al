@@ -23,7 +23,6 @@ TURNSTILE_SECRET_KEY=0x4AAAAAAA...            # Cloudflare Dashboard → Turnsti
 # are absent AND NODE_ENV !== 'production', the captcha is bypassed automatically so local dev works
 # without Cloudflare credentials. In production, a missing secret key always fails closed.
 # Email-change token expiry: 24 hours (hardcoded in src/modules/cabinet/actions/index.ts EMAIL_CHANGE_EXPIRY_HOURS)
-# Email preview server: npm run email — launches react-email preview at localhost:3000 (dev only)
 
 # Optional — enables verbose Web Vitals console output in production/staging builds
 # NEXT_PUBLIC_PERF_DEBUG=true

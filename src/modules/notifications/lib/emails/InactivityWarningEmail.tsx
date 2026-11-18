@@ -7,7 +7,7 @@
  * Locale strings are inline (sq/en/uk/it) — cron has no request context.
  * Locale resolved via resolveUserLocale(userId) → preferred_locale → sq.
  */
-import { Section, Text, Link } from '@react-email/components'
+import { Section, Text, Link } from 'react-email'
 import * as React from 'react'
 import { BaseEmail, BRAND_ACCENT } from './BaseEmail'
 

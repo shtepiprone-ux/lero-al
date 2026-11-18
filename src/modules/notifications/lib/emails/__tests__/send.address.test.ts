@@ -7,7 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const sent: Record<string, unknown>[] = []
 vi.mock('resend', () => ({ Resend: class { emails = { send: async (p: Record<string, unknown>) => { sent.push(p); return { data: { id: 'm1' } } } } } }))
-vi.mock('@react-email/components', () => ({ render: async () => '<p>rendered</p>' }))
+vi.mock('@react-email/render', () => ({ render: async () => '<p>rendered</p>' }))
 
 import { sendEmail } from '../send'
 

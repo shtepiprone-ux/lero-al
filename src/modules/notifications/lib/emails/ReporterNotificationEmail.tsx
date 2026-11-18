@@ -9,7 +9,7 @@
  * Epic C.4 / Task 125
  */
 
-import { Section, Text } from '@react-email/components'
+import { Section, Text } from 'react-email'
 import * as React from 'react'
 import { BaseEmail } from './BaseEmail'
 

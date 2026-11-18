@@ -144,7 +144,7 @@
     "@mantine/tiptap": "8.3.18",
     "@marsidev/react-turnstile": "^1.5.2",
     "@react-email/render": "2.0.8",
-    "@sentry/nextjs": "^10.76.2",
+    "@sentry/nextjs": "11.10.0",
     "@solar-icons/react": "2.3.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
@@ -187,7 +187,6 @@
     "zod": "^4.3.6"
   },
   "overrides": {
-    "import-in-the-middle": "3.0.1",
     "glob@>=9.0.0 <14.0.2": "14.0.2",
     "minimatch@>=7.0.0 <11.0.1": "11.0.1",
     "lighthouse": {

@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "7af0ef1b745f1a38ce905c00c5a592d5b3a515a9",
- "fetchedOn": "2026-11-17T19:06:40.733Z",
+ "commit": "c12dd22e17cefa0b8448f3a82b15a60bb3357914",
+ "fetchedOn": "2026-11-18T15:49:28.775Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -155,7 +155,7 @@
    "name": "CI_CD_Security",
    "file": "CI_CD_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html",
-   "sha": "c674ee990a45bc24ca64afc4209b7d7b5c0b5025",
+   "sha": "5b686af1d685010a3851db515df691e3796303ae",
    "title": "CI/CD Security Cheat Sheet"
   },
   {
@@ -253,7 +253,7 @@
    "name": "Django_Security",
    "file": "Django_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Django_Security_Cheat_Sheet.html",
-   "sha": "ef3db06a696fd9917e88b11349da94fe72731564",
+   "sha": "cdb931c18c2cbef03bcef81f4cc4d990d72293e7",
    "title": "Django Security Cheat Sheet"
   },
   {

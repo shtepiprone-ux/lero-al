@@ -67,6 +67,8 @@
 > source citations are registry **history**, and the active registry needs only allocatable and reserved numbers.
 > Nothing here is live work. Never reuse a number listed as retired or folded.
 
+*Retired 2026-11-19, its goal delivered by another task:* **805** (Sprint 73, filed 2026-09-09 by 792's review: an anonymous visitor got a 404 on a `sold` listing). Task 956 made a sold or rented listing open by its address for every visitor (owner decision D72, `src/modules/listings/lib/visibility.ts` `OPEN_BY_ADDRESS`). On 2026-11-19 Opus measured it on production with anonymous requests: the sold and the rented listing answer 200 with their title, and an expired one gets the closed page with `noindex`. The owner answered 805's open decision the same day (translated): an expired listing is not public, only the admin, a moderator and its owner see it. That is the rule as it stands. Owner list item 15 (sold and rented listings listed for search engines) is Task 992. Never reuse 805.
+
 *Retired unused 2026-10-20:* **928** (the cabinet profile tab's Google re-confirmation onto Google Identity Services) — reserved by Task 927 Amendment 1 and withdrawn the same day by Amendment 2 (owner decisions **D9** *"why should we keep signInWithOAuth, if the system will now have another method?"* and **D10** of the 927 kickoff); its scope is 927 R13/R14. Never reuse 928.
 
 *Folded 2026-10-17:* **924** (the compact presentation still shows at exactly 640px; eight canonical sites on an inclusive gate query) → **923** §17 R39 by owner decision **D16** of 923 review 8 (*"Merge 924 into 923"*); the owner had already had the sites changed during 923 (D15), and its measurement and Done criteria moved there. Never reuse 924.

@@ -21,9 +21,11 @@ description: Implement one saved Lero.al task as Sonnet, check every line writte
    every statement against the code, each test assertion against its break); a pass that finds a problem does not
    count, and any change starts the passes again. Only then the green runs.
 6. For each security test of the kickoff: remove the control once locally, show the test failing, restore it.
-7. Quality check of the implementation, never in part (`flow.md` §2 step 5): the kickoff's tests, `npm run lint`,
-   `npm run typecheck`, `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs --base main` and
-   `node scripts/quality/check-files.mjs --worktree`, each exiting 0. A kickoff that changes the database
+7. Quality check of the implementation, never in part (`flow.md` §2 step 5): the kickoff's tests, then the CI-parity
+   rule of `flow.md`: read `.github/workflows/ci.yml` and run every `run:` step of every job that needs no secret and no
+   live project, exactly as written (`BASE_SHA=origin/main`, `HEAD_SHA=HEAD`), installing with the npm of the job's
+   `node-version` (`npx --yes npm@10.9.8 ci` for Node 22.22.3), each exiting 0; the jobs that need secrets or GitHub are
+   reported `UNKNOWN`. A local subset or other flags is not reported as that job. A kickoff that changes the database
    or the upload configuration: run `node scripts/quality/db-catalog-audit.mjs` / `cloudinary-config.mjs` (read-only)
    before the owner applies anything and again after, and report both outputs. A route, entry point or file you
    move or rename: every test, script and live document that names the old one is updated in the same change

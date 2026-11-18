@@ -60,8 +60,8 @@ outside `tasks/Archive/`.)
 
 ## Route
 1. <ordered steps>
-2. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
-   node scripts/quality/check-files.mjs --worktree · <task tests>
+2. Run: <task tests> · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with
+   `npx --yes npm@10.9.8 ci`
 3. Report: each command, exit code, relevant output; each new test's failing run before the change; the deliberate-break
    output for each security test.
 

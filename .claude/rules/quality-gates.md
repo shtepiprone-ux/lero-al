@@ -110,7 +110,9 @@ and CODEOWNERS for the sensitive paths.
 ## 6. Running the gates locally
 
 GitHub is the authority: CI runs every job on the pull request, and its result is read with `gh pr checks <n>` (owner,
-2026-11-14: no local replica of the workflow). A single gate while working:
+2026-11-14: no local replica of the workflow). Before a commit is handed over, the CI-parity rule of `flow.md` (owner,
+2026-11-18) applies: the `run:` steps of every job that needs no secret, read from `ci.yml` and run as written, with the
+npm of the job's Node (`npx --yes npm@10.9.8 ci`). A single gate while working:
 
 ```
 npm run lint

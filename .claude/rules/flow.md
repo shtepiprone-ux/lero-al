@@ -46,6 +46,20 @@ or not reported as done; a step left out is the rule broken, not a note:
   concluded; a run in progress is reported as in progress, never as a result. Every failure is opened to its log line
   and fixed in the same pull request (golden rule). A local run of a command is reported as local, with the command.
 
+**CI-parity rule** (owner, 2026-11-18, translated: "your flow differs from the GitHub flow, so locally your CI is green
+and on GitHub very often red; this flow is a problem on every model: check it and fix it"). A local run counts as
+evidence for a CI job only when it is that job's own command. Before a commit is handed over, the implementer (§2 step 5)
+and the reviewer (§3) read `.github/workflows/ci.yml` in that session and run every `run:` step of every job that needs no
+secret and no live project, as written, with the job's environment (`BASE_SHA=origin/main`, `HEAD_SHA=HEAD`); today the
+jobs `quality`, `unit`, `dependencies`, `change-report`, `owasp-gate`, `sbom`, `storybook-build`, `homepage-grid`,
+`locale-leak` (six shards) and the `click-shield` self-test. Every install and lockfile command uses the npm of the job's
+`node-version`, not the local one: Node 22.22.3 ships npm 10.9.8 (run 44178775479, Task 972 F8), so `npx --yes
+npm@10.9.8 ci`. A subset, other flags (`--worktree` for `--all`, tests without `--allowOnly=false --retry=0`) or another
+npm is not evidence for that job. Once GitHub has run a commit, its results are the evidence: a red job is fixed at its
+cause and only that job's steps, and those of a job whose inputs the fix changes, run again locally. The jobs that need secrets or GitHub (`authz`, the rest of
+`click-shield`, `codeql`, `secrets`, `workflows`) are `UNKNOWN` until `gh pr checks <n>` concludes. No script
+replicates the workflow (owner, 2026-11-14): the commands come from `ci.yml` each time.
+
 **Facts rule** (owner, 2026-10-17, translated: "no assumptions; only facts; always audit the project first, then propose
 a solution"; restated 2026-11-15 after the governance reset of 2026-11-09 had dropped it, removing
 the file `shared/claim-evidence-contract.md` that carried it). Every model, in every answer, kickoff, report, review, code comment
@@ -116,10 +130,9 @@ control, and any file no sheet covers fail CI), and every session's start (`owas
    `change-report.mjs --lockfile-age`, `install-scripts.test.mjs`, `npm audit`; `docs/security/owasp/sheets.json`:
    `owasp.mjs check`; `supabase/catalog.json`: `db-catalog-audit.mjs --snapshot supabase/catalog.json`). No tool counts
    the reads (owner, 2026-11-17); a file not read in full is reported as such.
-5. **Quality check of the implementation:** the kickoff's tests, `npm run lint`, `npm run typecheck`,
-   `npm test -- --coverage`, `node scripts/quality/changed-lines-coverage.mjs --base main`,
-   `node scripts/quality/check-files.mjs --worktree`. For each security test, remove the control once and show the test
-   failing (`security-testing.md`).
+5. **Quality check of the implementation:** the kickoff's tests, then the CI job commands of the CI-parity rule (above),
+   each as `ci.yml` writes it. For each security test, remove the control once and show the test failing
+   (`security-testing.md`).
 6. Report each command with its exit code and the relevant output lines and the failing-first output of each new test;
    anything not done is stated as not done.
 
@@ -129,7 +142,8 @@ The executor's report is a supplier assertion, not evidence (Verifying Third Par
 reviewer reruns every claimed command on the candidate commit, reads every changed file of the revision in three passes
 of its own before running any test or gate (§2 step 4), and compares the kickoff's criteria with the diff (the expected
 tests come from the kickoff, not from the report). Follow
-`secure-code-review.md`: tools first, then the six diff-based steps and the checklist of every category the diff touches.
+`secure-code-review.md`: tools first (the CI job commands of the CI-parity rule), then the six diff-based steps and the
+checklist of every category the diff touches.
 Findings and the review summary use its templates and go into the kickoff's "Review" section; the per-sheet verdicts go
 to the task's OWASP review record (`docs/security/owasp/reviews/Task_<n>.json`, `kickoff-template.md`):
 `node scripts/quality/owasp.mjs review <kickoff> --base main` names the sheets of the kickoff and those the actual diff

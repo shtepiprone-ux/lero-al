@@ -167,6 +167,10 @@ findings; new requirements are a new task.
 1. Opus gives the owner the commands to commit on a task branch, push it and open a PR, with a `git add` that names
    every changed file, stating where to run each one ("separate PowerShell window") and what it changes ("local only",
    "GitHub", "production"). No `Co-Authored-By`, no AI attribution, no `--author`.
+   **Preconditions first** (owner, 2026-11-18, translated: "if this is the first thing to do, it must be written before
+   the action!"): everything the owner must do before a command (read a diff, approve sensitive paths, wait for checks)
+   is written before that command; the commands follow in the order they run, and no text after a command is a
+   precondition for it. An approval the owner gives is recorded as a comment on the pull request.
    **State before every Git command** (owner, 2026-11-17, after a merge command Git refused: "your local changes would be
    overwritten by merge"): Opus reads `git status --short --branch` right before handing over any commit, merge, switch,
    pull or push, and for a merge or switch also `git diff --name-only <base>...<incoming branch>`. A file that is

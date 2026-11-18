@@ -13,7 +13,6 @@ export const REVIEWED_NOT_RUN = {
   '@swc/core': 'the binary comes from the optional @swc/core-<platform> package (nested under next-intl)',
   'unrs-resolver': 'the binary comes from the optional @unrs/resolver-binding-<platform> package',
   '@parcel/watcher': 'prebuilt optional platform packages; build, tests and Storybook pass without the script',
-  '@sentry/cli': 'source maps are not uploaded from CI; the binary comes from optional @sentry/cli-<platform> packages',
   fsevents: 'macOS only, optional; nothing in the build depends on it',
 };
 

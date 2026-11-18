@@ -386,8 +386,8 @@
      "evidence": "scripts/quality/main-ruleset.json"
     }
    ],
-   "reviewedSha": "c674ee990a45bc24ca64afc4209b7d7b5c0b5025",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "5b686af1d685010a3851db515df691e3796303ae",
+   "reviewedOn": "2026-11-18"
   },
   "Clickjacking_Defense": {
    "applies": true,
@@ -667,8 +667,8 @@
   "Django_Security": {
    "applies": false,
    "why": "no Python or Django code exists in the project",
-   "reviewedSha": "ef3db06a696fd9917e88b11349da94fe72731564",
-   "reviewedOn": "2026-11-07"
+   "reviewedSha": "cdb931c18c2cbef03bcef81f4cc4d990d72293e7",
+   "reviewedOn": "2026-11-18"
   },
   "Docker_Security": {
    "applies": false,

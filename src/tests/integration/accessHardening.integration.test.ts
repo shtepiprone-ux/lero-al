@@ -116,15 +116,15 @@ it('[SEC-DB-S61-DENY] A session cannot write a listing status, premium, counters
   ]
   for (const [label, patch] of attempts) {
     const refused = await person.client.from('listings').update(patch).eq('id', listing.id).select('id')
-    expect(refused.error?.code, `${label}: refused with 42501 by the guard`).toBe('42501')
-    expect(refused.data, `${label}: nothing returned`).toBeNull()
+    expect(refused.error?.code, `${label}: refused with 42501 by the guard (error message: ${refused.error?.message})`).toBe('42501')
+    expect(refused.data, `${label}: nothing returned (error message: ${refused.error?.message})`).toBeNull()
   }
   // an INSERT that is not a plain pending listing is refused too: status active, then a premium listing
   for (const [label, values] of [['status active', { status: 'active' }], ['is_premium true', { is_premium: true }]] as [string, Record<string, unknown>][]) {
     const tag = `s61-insert-${label.replace(/\W+/g, '-')}`
     const refused = await person.client.from('listings').insert(ownPending(person.id, tag, values)).select('id')
-    expect(refused.error?.code, `an insert with ${label}: refused with 42501`).toBe('42501')
-    expect(refused.data, `an insert with ${label}: nothing returned`).toBeNull()
+    expect(refused.error?.code, `an insert with ${label}: refused with 42501 (error message: ${refused.error?.message})`).toBe('42501')
+    expect(refused.data, `an insert with ${label}: nothing returned (error message: ${refused.error?.message})`).toBeNull()
     const stored = await run.admin.from('listings').select('id').eq('slug', plainSlug(tag))
     expect(stored.data, `an insert with ${label}: no row was stored`).toEqual([])
   }

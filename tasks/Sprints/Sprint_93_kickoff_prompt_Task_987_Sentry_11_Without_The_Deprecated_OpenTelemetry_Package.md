@@ -210,3 +210,9 @@ tree (`owasp.mjs:563`, `changed-lines-coverage.mjs:114`), only `change-report.mj
 Category: Agent and tool output (facts rule). Status: corrected here (Opus); the change report runs on the pull request.
 F10 — R1-6 was coded before its test (reported). Severity: Low. Category: Tests. Status: closed by breaks B and D above
 (the cases are red without the filter and with a one-frame filter).
+PR #48 on fe033bd5e, run 44386307624: every job green (`authz` 11m57s, so AC5; `unit`, `change-report`, CodeQL,
+gitleaks, zizmor, SBOM, Storybook, homepage grid, locale leak 1-6, click-shield) but `quality`.
+F11 — `quality` red: `check:backlog-active` → "line 52: closed-state marker "APPROVED" outside Last Session"
+(`scripts/check-backlog-active.mjs:46-47`); the reviewer wrote the verdict into the backlog row after running
+`product-gates.mjs`. Severity: Low. Category: Agent and tool output. Status: fixed in this change (the row says
+"approved", as the open rows do); `product-gates.mjs` and `check-files.mjs` rerun on the fixed files.

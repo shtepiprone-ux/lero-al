@@ -34,6 +34,9 @@ release notes; the lockfile written by npm 10.9.8.
 - Dependencies: `@sentry/nextjs` 11.10.0 — `npm view @sentry/nextjs time.created` and the release date in the report;
   `npm view @sentry/nextjs@11.10.0 scripts` → no install script (build and test scripts only, read 2026-11-18 for 11.14.0).
 - The six Sentry files of "## Cause": only the changes the 11.x release notes require, each change citing its note.
+- `src/tests/integration/accessHardening.integration.test.ts:119-120` (owner, 2026-11-18: within existing tasks): the
+  assertion messages also print `refused.error?.message`, so a refusal without a code names its cause; the `main` run
+  44297702442 failed there with the code `''` and no message (the same tree passed on PR #47, run 44290937552).
 - Out of scope: `tsconfck` (owner decision O986-1, re-checked on 2026-12-18); any Sentry setting not required by 11.x.
 
 ## Attack surface
@@ -55,6 +58,7 @@ Required by `node scripts/quality/owasp.mjs plan` (upstream 7af0ef1b745f, 2026-1
 - Credential_Stuffing_Prevention: not applicable — sign-in and its CAPTCHA are not touched by this task.
 - Denial_of_Service: not applicable — no product endpoint or resource limit changes; regressions are covered by AC4.
 - Dependency_Graph_SBOM: not applicable — the SBOM job is unchanged and records the new production versions on its run.
+- JavaScript_and_TypeScript_Security: not applicable — the test change only adds the error message to two assertion texts.
 - Logging: "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted" — the scrubber keeps removing personal data on 11.x, proven by its tests and a break — AC2.
 - Logging_Vocabulary: not applicable — no event is added or renamed; only the reporting library version changes.
 - NPM_Security: "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility." — the version, its date and its scripts are read on npm in Scope — AC3.
@@ -85,6 +89,9 @@ No visible change.
 - AC3 The upgrade is pinned, aged and lock-safe — test: `package.json` holds `"@sentry/nextjs": "11.10.0"` (or the dated
   later 11.x of Scope); `node scripts/quality/change-report.mjs --lockfile-age origin/main`, `node --test
   scripts/quality/install-scripts.test.mjs` and `npx --yes npm@10.9.8 ci --ignore-scripts --dry-run` exit 0.
+- AC5 A failed refusal in the authorization suite names the error it got — test:
+  `src/tests/integration/accessHardening.integration.test.ts` (its message holds `error.message`) and `gh pr checks <n>`
+  (the Authorization regression job).
 - AC4 The project still builds and passes — test: `npm run build`, `npm test -- --coverage --allowOnly=false
   --passWithNoTests=false --retry=0` and `node scripts/quality/product-gates.mjs` exit 0 (with the rest of the CI-parity
   rule of `flow.md`).

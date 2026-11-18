@@ -190,7 +190,8 @@
     },
     {
      "quote": "Intersect predicates. Combine authorization restrictions with application and tenant predicates using logical AND.",
-     "task": "956"
+     "control": "src/modules/listings/lib/visibility.ts",
+     "evidence": "export const OPEN_BY_ADDRESS_STATUSES = Object.keys(OPEN_BY_ADDRESS)"
     }
    ],
    "reviewedSha": "11adad6b47a69b764583bcd4504b254206f162e1",
@@ -345,7 +346,8 @@
     },
     {
      "quote": "Enforce workflows as explicit state machines. Don't rely on the UI to gate the order of steps.",
-     "task": "956"
+     "control": "supabase/sql_migrations/task956/v8b.sql",
+     "evidence": "raise exception 'an active listing is edited only through moderation'"
     }
    ],
    "reviewedSha": "c20114483291f06ab62ea9deac89e2232f9a9b6a",
@@ -1066,7 +1068,8 @@
     },
     {
      "quote": "This verification should be performed for all operations involving object references, including read, create, update, delete, export, and administrative actions.",
-     "task": "956"
+     "control": "supabase/sql_migrations/task956/v8b.sql",
+     "evidence": "using ((select public.caller_has_permission('listings.moderate')));"
     }
    ],
    "reviewedSha": "60a0448f99df31ffcb816cb03be4c788e46c2b3b",
@@ -1274,7 +1277,8 @@
     },
     {
      "quote": "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable.",
-     "task": "956"
+     "control": "supabase/sql_migrations/task956/v8b.sql",
+     "evidence": "revoke update on table public.users from authenticated;"
     }
    ],
    "reviewedSha": "41ff0ce4208bfdea7ffc4efc2747d0cec9e11c70",
@@ -1358,7 +1362,8 @@
     },
     {
      "quote": "Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths",
-     "task": "956"
+     "control": "supabase/sql_migrations/task956/v8b.sql",
+     "evidence": "revoke execute on function public.get_listing_owner_contact(uuid) from authenticated, anon, public;"
     },
     {
      "quote": "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.",

@@ -33,7 +33,7 @@ vi.mock('@/modules/notifications/lib/emails/send', async (importOriginal) => {
 vi.mock('resend', () => ({
   Resend: class { emails = { send: async () => { state.providerSends += 1; return { data: { id: 'provider-id' }, error: null } } } },
 }))
-vi.mock('@react-email/components', () => ({ render: async () => '<p>x</p>' }))
+vi.mock('@react-email/render', () => ({ render: async () => '<p>x</p>' }))
 vi.mock('@/modules/notifications/lib/emails/RecoveryEmail', () => ({ RecoveryEmail: vi.fn(), getRecoveryEmailStrings: vi.fn().mockReturnValue({ subject: 'Recovery' }) }))
 vi.mock('@/modules/notifications/lib/emails/VerifyEmail', () => ({ VerifyEmail: vi.fn(), getVerifyEmailStrings: vi.fn().mockReturnValue({ subject: 'Verify' }) }))
 vi.mock('@/modules/notifications/lib/emails/MagicLinkEmail', () => ({ MagicLinkEmail: vi.fn(), getMagicLinkEmailStrings: vi.fn().mockReturnValue({ subject: 'MagicLink' }) }))

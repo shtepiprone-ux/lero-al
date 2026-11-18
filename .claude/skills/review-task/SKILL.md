@@ -13,9 +13,10 @@ description: Review a Lero.al implementation as Opus — tools first, then the O
    changed line checked, three clean passes in a row; a hunk no Scope item needs is a finding, and so is a change that
    does not remove the kickoff's "## Cause".
    Tools first, on the candidate files: `node scripts/quality/check-ruleset.mjs` (the `main` ruleset has not drifted),
-   then the CI-parity rule of `flow.md`: read `.github/workflows/ci.yml` now and run every `run:` step of every job that
-   needs no secret and no live project, exactly as written (`BASE_SHA=origin/main`, `HEAD_SHA=HEAD`), installing with
-   the npm of the job's `node-version` (`npx --yes npm@10.9.8 ci` for Node 22.22.3), never a subset or other flags.
+   then the CI-parity rule of `flow.md`: the implementer has run every no-secret job; the reviewer does not repeat that
+   run, but runs the steps of the `quality` and `dependencies` jobs exactly as `.github/workflows/ci.yml` writes them
+   (`BASE_SHA=origin/main`, `HEAD_SHA=HEAD`, `npx --yes npm@10.9.8 ci`) on the final tree, and reruns the failing-first
+   and deliberate-break claims; the long browser jobs are read on the pull request.
    After GitHub has run a commit, a red job is fixed at its cause and only its steps run again. Only the jobs that need secrets
    or GitHub (`authz`, the rest of `click-shield`, `codeql`, `secrets`, `workflows`) are read on the pull request with
    `gh pr checks <n>` and stay `UNKNOWN` until then; a failure there is fixed in the same pull request, also after an

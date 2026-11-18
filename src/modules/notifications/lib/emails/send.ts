@@ -12,7 +12,7 @@
  * - Returns a typed result object; never throws.
  */
 import { Resend } from 'resend'
-import { render } from '@react-email/components'
+import { render } from '@react-email/render'
 import type * as React from 'react'
 
 export const FROM_ADDRESS = 'Lero.al <noreply@lero.al>'

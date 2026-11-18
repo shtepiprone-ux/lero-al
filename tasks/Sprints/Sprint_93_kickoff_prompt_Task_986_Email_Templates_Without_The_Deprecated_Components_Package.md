@@ -20,7 +20,7 @@ and the dead script and its documentation are gone.
   imports `render` from it, and `src/modules/notifications/lib/emails/BaseEmail.tsx:23` and eight more templates import
   `Body`, `Column`, `Container`, `Head`, `Hr`, `Html`, `Link`, `Preview`, `Row`, `Section`, `Text` from it.
 - `node_modules/react-email/dist/index.mjs` (6.1.5, `package.json:217`, a devDependency) exports each of those eleven
-  components and not `render`; `npm view react-email@6.1.5 deprecated` → empty; `npm view @react-email/render@2.0.8
+  components and re-exports `render` (`export * from "@react-email/render"`, corrected in Review 1); `npm view react-email@6.1.5 deprecated` → empty; `npm view @react-email/render@2.0.8
   deprecated` → empty; `npm ls @react-email/render --all` → 2.0.6 top-level (from `@react-email/components`), 2.0.8 under
   `react-email`.
 - `package.json:54`: `"email": "email dev --dir src/modules/notifications/lib/emails"`. `react-email` 6.1.5 asks to
@@ -117,7 +117,7 @@ No visible change on the site. The e-mail HTML is checked by AC1 and AC2.
 - AC3 No file in the repository imports `@react-email/components`, and it is not in the tree — test:
   `templates.render.test.tsx` (reads every file under `src/` for the import; red before the change) and
   `npm ls @react-email/components --all` prints `(empty)`.
-- AC4 No dependency is deprecated or younger than 14 days, none gains an install script, and the lockfile installs with
+- AC4 No `@react-email` package is deprecated, no version is younger than 14 days, none gains an install script, and the lockfile installs with
   the npm of CI (Task 972 F8) — test: `npx --yes npm@10.9.8 ci --ignore-scripts --dry-run` exits 0; `npm ci
   --ignore-scripts` prints no `npm warn deprecated @react-email`, `node scripts/quality/change-report.mjs --lockfile-age
   origin/main` and `node --test scripts/quality/install-scripts.test.mjs` exit 0, `node scripts/quality/audit-gate.mjs
@@ -136,3 +136,27 @@ No visible change on the site. The e-mail HTML is checked by AC1 and AC2.
 5. Report: each command, exit code, relevant output; every version change with its release date.
 
 ## Review
+
+Review 1 of the working tree on 838b1a581 (uncommitted) — APPROVED
+Scope: the 19 changed files, each read in three full passes (`templates.render.test.tsx` by the reviewer; the others by
+a read-only Opus reviewer session, reported per file); the report's claims rerun. OWASP record:
+`docs/security/owasp/reviews/Task_986.json`. Tools (local, exit 0): the AC2 break (`dangerouslySetInnerHTML` in
+`PasswordChangedEmail`) and the AC3 break (the old mock back) → the named case red, restored by `git diff`; CI steps as
+`ci.yml` writes them: `npx --yes npm@10.9.8 ci`, every step of `quality` (36 of 36 product checks), `npm run build`, the
+`unit` step (its flags), changed-lines coverage, `dependencies` (npm 10.9.8, both audit gates), SBOM, Storybook, Homepage
+grid, Locale leak 1/6; shards 2-6 and the click-shield self-test are left to GitHub (owner, 2026-11-18). Findings: Low 3,
+one owner decision. Overall risk: the e-mail path renders as before on supported packages; AC5 waits for `gh pr checks`.
+F1 — the Cause said `react-email` does not export `render`; `dist/index.mjs:7` re-exports it. Severity: Low. Category:
+Dependencies and configuration. Location: "## Cause". Impact: none on the code (`send.ts` imports the exact pin).
+Reproduction: read `node_modules/react-email/dist/index.mjs`. Status: corrected here.
+F2 — AC4 asked for no deprecated dependency at all; `tsconfck` 3.1.6 and `@opentelemetry/sdk-trace-base` 2.12.0 were
+deprecated before this task. Severity: Low. Category: Tests. Location: AC4. Impact: AC4 unmeetable as written.
+Reproduction: `npx --yes npm@10.9.8 ci` warnings. Status: AC4 narrowed to `@react-email` here; the two packages are F4.
+F3 — `docs/integrations.md:235`, `:239` said `sendEmail` returns silently without `RESEND_API_KEY`; `send.ts:57-68`
+returns `send_failed` outside development. Severity: Low. Category: Data exposure, errors, logging. Impact: a reader
+expects a silent success in production. Reproduction: `send.security.test.ts`. Status: fixed in this change (Opus, docs).
+F4 — two deprecated packages outside this task: `tsconfck` 3.1.6 ("unmaintained"; dev, through `@storybook/nextjs-vite`;
+its latest and its consumers' latest still use it) and `@opentelemetry/sdk-trace-base` 2.12.0 (production, through
+`@sentry/nextjs` 10; absent from `@sentry/*` 11.14.0). Severity: Low. Category: Dependencies and configuration.
+Reproduction: `npm ls tsconfck @opentelemetry/sdk-trace-base --all`. Status: owner decision O986-1 (2026-11-18): the
+`tsconfck` risk accepted, re-checked on 2026-12-18; `@sentry/nextjs` 11 is Task 987.

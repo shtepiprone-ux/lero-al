@@ -6,7 +6,7 @@
  * NOT a Supabase-initiated auth email — sent directly by our server code after
  * auth.updateUser({ password }) succeeds.
  */
-import { Section, Text, Link } from '@react-email/components'
+import { Section, Text, Link } from 'react-email'
 import * as React from 'react'
 import { BaseEmail, BRAND_ACCENT } from './BaseEmail'
 

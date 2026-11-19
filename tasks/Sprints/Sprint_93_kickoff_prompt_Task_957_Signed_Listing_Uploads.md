@@ -9,8 +9,8 @@ unreferenced listing and avatar uploads and empty owner folders); O957-5 2026-11
 be added to the next task in the list, because there are already 1008 tasks not done, and the list keeps growing": the
 synthetic test users and listings a cancelled CI run leaves are removed). Filed by the whole-project audit (`docs/security/audit-2026-11-06/findings.md`: X-01, A-05,
 C-05); revised 2026-11-18 by Opus (current rules, the four owner decisions, the database twin of the photo check).
-Implementer: Sonnet (product code, tests, SQL files); Opus (`scripts/quality/cloudinary-config.mjs` U3, the SQL round
-trip, the catalog snapshot). Reviewer: Opus. The owner applies the SQL and changes the Cloudinary presets and Vercel.
+Implementer: Sonnet (product code, tests, SQL files, the synthetic sweep script); Opus (`scripts/quality/cloudinary-config.mjs` U3, the SQL round
+trip, the catalog snapshot, the two sweep steps of `.github/workflows/ci.yml`: the executor may not edit `.github/**` or `scripts/quality/**`, `.claude/skills/execute-task/SKILL.md` step 3). Reviewer: Opus. The owner applies the SQL and changes the Cloudinary presets and Vercel.
 
 ## Goal
 
@@ -52,7 +52,7 @@ Read at `a9915f3ba`
   (`src/tests/integration/fixtures.ts:92`, called at `scripts/check-signed-in-pages.mjs:383`); a pull-request run is cancelled when a newer commit arrives (`.github/workflows/ci.yml:21`, `cancel-in-progress`), and GitHub then sends the running step
   "`SIGINT/Ctrl-C`", then "`SIGTERM/Ctrl-Break`", then "kills the process tree" (docs.github.com/en/actions/reference/workflows-and-actions/workflow-cancellation), so the clean-up never runs; no other code removes an old prefix.
   `gh run view 44417722424 --json jobs` → the walk step started 2026-11-18T23:11:24Z and was `cancelled` at 23:17:04Z, the authz test step (23:08:03Z) likewise; a read-only census of the development project (2026-11-19)
-  → `zz_synth_mwmqjll84aaa` (started 23:11:25Z: 4 users including `walk_agent`, 1 listing) and `zz_synth_mwmqqjgb09a7` (23:16:49Z: 3 users) are left. The same page: a step with `if: always()` still runs in a cancelled job
+  → `zz_synth_mwmqjll84aaa` (started 23:11:25Z: 4 users including `walk_agent`, 1 listing) and `zz_synth_mwmqqjgb09a7` (23:16:49Z: 3 users) are left. The same GitHub cancellation page: a step with `if: always()` still runs in a cancelled job
   ("the condition `if: always()` would evaluate to true and the job continues to run"), within "the 5 minute cancellation timeout period".
 - `src/app/api/upload-cms-image/route.ts:35` trusts the declared `file.type` (A-05); `src/lib/cloudinaryDelete.ts:102` reads only the first 500 CMS pages before calling an asset unreferenced (C-05).
 Fix (O957-5): every run writes its prefix to a job file and a final `if: always()` step of each CI job that creates synthetic data removes those prefixes and any prefix older than two hours; the in-process clean-up stays.
@@ -99,9 +99,9 @@ Fix: a signature route that issues per-photo signed parameters chosen by the ser
   any other answer or error: nothing is touched), then walks every folder under `<userId>` (any name, `Brand` included), passes every asset of each `asset_folder` (paged) to `deleteAsset(id, { reason: 'account_folder' })`, and removes the emptied folders deepest first, `<userId>` last;
   a file a row still uses (the site logo above) is kept with its folders. A root folder not named by a UUID is never touched: `Lero` holds the site's own logos and favicon (owner, 2026-11-18: "this folder concerns the site, not users"). `deleteAccount` calls it after the auth deletion; the cron calls it for each root UUID folder with no account (within the same caps).
 - Synthetic leftovers (O957-5): `src/tests/integration/fixtures.ts`: the delete-and-verify body of `cleanup()` becomes the exported `removeRun(admin, run)` (same order, same verification), and `createRun()` appends its prefix (the prefix only) to the file named by `SYNTHETIC_RUN_LOG` when set.
-  `scripts/quality/sweep-synthetic.mjs` (new): starts only through `loadIntegrationEnv()` (development target and project ref, `src/tests/integration/environment.ts:49-52`); collects the prefixes listed in `SYNTHETIC_RUN_LOG` and every prefix of the exact shape
+  `scripts/sweep-synthetic.mjs` (new, Sonnet): starts only through `loadIntegrationEnv()` (development target and project ref, `src/tests/integration/environment.ts:49-52`); collects the prefixes listed in `SYNTHETIC_RUN_LOG` and every prefix of the exact shape
   `zz_synth_<8 base-36 time><4 hex>` found in auth e-mails and listing slugs whose time is more than two hours old (a job lasts at most 30 minutes); calls `removeRun` for each; prints counts and prefixes only; exits 1 when a read fails or anything remains; `--dry-run` only reads and lists.
-  `.github/workflows/ci.yml`: the `authz` and `click-shield` jobs set `SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt` and end with the step "Synthetic test data of this job is removed" (`if: always()`, the three Supabase secrets on that step only, `node scripts/quality/sweep-synthetic.mjs`); `package.json`: `sweep:synthetic`.
+  `.github/workflows/ci.yml` (Opus, on the same branch after Sonnet's report): the `authz` and `click-shield` jobs set `SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt` and end with the step "Synthetic test data of this job is removed" (`if: always()`, the three Supabase secrets on that step only, `node scripts/sweep-synthetic.mjs`); `package.json` (Sonnet): `sweep:synthetic`.
 - Dependencies: none. Out of scope: moving stored photos (none is outside its folder); a malware scan (Cloudinary re-encodes on delivery); the limiter call sites of Task 959 (contact form, reveal, inquiry, view counter, saved searches).
 
 ## Attack surface
@@ -230,17 +230,17 @@ The listing form and the photo widget keep their layout, fields and order, rebui
 
 - AC15 The listing form and the photo widget are on Mantine (owner rule 2026-11-19) — test: `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with `ImageUpload.tsx`, `ListingFormShell.tsx` and `ListingFormShellView.tsx` enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them; `src/modules/listings/components/__tests__/listingFormMantine.test.ts` (new): those three files and the two pages import nothing from `@/components/ui` and have no `className`; the census of `.claude/rules/shared/rendered-state-census.md` for the two new Stories; the existing listing-form tests pass.
 
-- AC16 A cancelled run's synthetic data is removed and nothing else (O957-5) — test: `scripts/quality/sweep-synthetic.test.mjs` (new): a logged prefix is removed at any age; an unlogged one older than two hours is removed, a younger one stays; `walk_agent@example.com`, `zz_synthx…` and a real e-mail are never touched;
-  a failing read deletes nothing and exits 1; a non-development target is refused before any read; `--dry-run` deletes nothing; every `.github/workflows/ci.yml` job that receives `SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY` and runs `test:security-integration` or `check-signed-in-pages` sets `SYNTHETIC_RUN_LOG` and ends with the sweep step under `if: always()`;
+- AC16 A cancelled run's synthetic data is removed and nothing else (O957-5) — test: `scripts/__tests__/sweep-synthetic.test.ts` (new, Sonnet): a logged prefix is removed at any age; an unlogged one older than two hours is removed, a younger one stays; `walk_agent@example.com`, `zz_synthx…` and a real e-mail are never touched;
+  a failing read deletes nothing and exits 1; a non-development target is refused before any read; `--dry-run` deletes nothing; every `.github/workflows/ci.yml` job (the test reads the file; Opus adds the steps) that receives `SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY` and runs `test:security-integration` or `check-signed-in-pages` sets `SYNTHETIC_RUN_LOG` and ends with the sweep step under `if: always()`;
   the existing integration suites pass on `removeRun`; after the PR's CI, `npm run -s sweep:synthetic -- --dry-run` (Opus, read-only) lists no prefix older than two hours.
 
 ## Route
 
 1. Branch from `main`. `node scripts/quality/cloudinary-config.mjs`: keep the output (U1 expected). Read cloudinary.com/documentation/upload_widget_reference (`prepareUploadParams`) and cite the parameters it signs.
 2. Tests first (AC1-AC7, AC12-AC16; AC8 written, run later); save each failing output.
-3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the Mantine form and widget with their Stories, the synthetic sweep and its CI steps, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
+3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the Mantine form and widget with their Stories, the synthetic sweep script, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
 4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test (the owner check, the trigger, the limit, the `overwrite` flag, the cleanup age and pattern), restored.
-5. Report: each command, exit code, relevant output; the owner's steps, in order: apply the SQL; create the signed preset (allowed formats jpg, jpeg, png, webp; incoming transformation) and set `CLOUDINARY_LISTING_PRESET` in Vercel before the merge;
+5. Report: each command, exit code, relevant output (the AC16 workflow case stays red until Opus adds the two CI steps; reported as such); the owner's steps, in order: apply the SQL; create the signed preset (allowed formats jpg, jpeg, png, webp; incoming transformation) and set `CLOUDINARY_LISTING_PRESET` in Vercel before the merge;
    after the deploy delete the unsigned preset and `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`; if the owner wants, delete `main-sample` (Cloudinary's sample created with the account 2026-10-21,
    referenced nowhere in the repository; the owner deleted the empty `task951-signature-check` and the legacy root `avatars` and `companies` folders on 2026-11-18). Then Opus runs AC8-AC10 and the read-only sweep of AC16.
 

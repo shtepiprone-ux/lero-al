@@ -7,7 +7,7 @@ de-Tailwind of this shell is a separate task, not a revision of 792." Plan files
 `tasks/Sprints/Sprint_71_The_Listing_Detail_Route_Leaves_Tailwind.md`, `tasks/Sprints/Sprint_94_Owner_List_Of_2026-11-19.md`.
 O1004-1 2026-11-19 (the owner, translated: "yes, add it"): the address of a listing that does not exist answers a real
 `404`, carried here because this task changes the shell that causes the `200`.
-Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
+Implementer: Sonnet; Opus adds the `click-shield` step of `.github/workflows/ci.yml` on the same branch (the executor may not edit `.github/**`, `.claude/skills/execute-task/SKILL.md` step 3). Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
 
@@ -38,7 +38,7 @@ Fix: one card skeleton at the card's owner; the frame gains a loading crumb; the
 - `ListingsPageFrame.tsx`: EXTEND with `loading?: boolean`, which renders a Skeleton in place of the current crumb (labels stay translated text); its Story shows it.
 - `MantineListingDetailPattern.tsx` exports its column spans (`listingDetailSpans(sidebarFrom)`), read by the page and the loading shell, so they cannot drift.
 - `[slug]/loading.tsx` is deleted (O1004-1); its shell becomes `src/modules/listings/components/ListingDetailLoading.tsx` (new, server component, no data) and `[slug]/page.tsx` becomes: `await params` → `getListingAccessState(slug)` → `missing` calls `notFound()` (a real `404`) → `<Suspense fallback={<ListingDetailLoading />}>` around the current page body, moved unchanged into an async `ListingPageContent` in the same file (its `hidden` restricted page and every read stay as they are). One indexed read by slug runs before the first byte.
-- `scripts/quality/listing-status-live.test.mjs` (new) and a step "A missing listing answers 404" in the `click-shield` job of `.github/workflows/ci.yml` after the server starts (beside the robots step; `BASE_URL`, `LISTING_STATUS_LIVE_REQUIRED: '1'`; no secret).
+- `scripts/__tests__/listing-status-live.test.ts` (new, Sonnet; Vitest, skipped without `BASE_URL` unless `LISTING_STATUS_LIVE_REQUIRED=1`, so the unit job skips it) and (Opus) a step "A missing listing answers 404" in the `click-shield` job of `.github/workflows/ci.yml` after the server starts (beside the robots step; `BASE_URL`, `LISTING_STATUS_LIVE_REQUIRED: '1'`; no secret).
 - `ListingDetailLoading.tsx`: `ListingsPageFrame loading` → back-button skeleton → a Mantine `Grid` with the exported spans → gallery placeholder (Mantine `SimpleGrid` with the gallery token heights `--listing-gallery-h-*`) and contact-card placeholder; no `className`.
 - `favorites/page.tsx` chrome → `ListingsPageFrame`; `favorites/loading.tsx` → `ListingsPageFrame loading` and `MantineListingCardTrack` with `MantineListingCardSkeleton`; no `className`, no `@/components/ui`.
 - `scripts/mantine-migration-scope.json` gains `ListingDetailLoading.tsx` and the two favorites route files, so `check-enrolled-tailwind.mjs` keeps them off Tailwind.
@@ -55,7 +55,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Cross_Site_Scripting_Prevention: not applicable — placeholders render no data; the frame's labels stay React text.
 - DOM_based_XSS_Prevention: not applicable — no value from the address or storage reaches a sink.
 - Database_Security: not applicable — "migration" here is the Tailwind to Mantine move; no database change.
-- GitHub_Actions_Security: "Pass secrets at the step level, not the job level." — the new step reads no secret (`BASE_URL` only); the job keeps its permissions and full-SHA pins — AC6.
+- GitHub_Actions_Security: "Pass secrets at the step level, not the job level." — the new step reads no secret (`BASE_URL` only); the job keeps its permissions and full-SHA pins; the step runs `npx vitest run scripts/__tests__/listing-status-live.test.ts` — AC6.
 - GraphQL: not applicable — the project serves no GraphQL endpoint.
 - Injection_Prevention: not applicable — the scope list is data read by check scripts; no interpreter input.
 - JavaScript_and_TypeScript_Security: not applicable — layout components only; no merge, path setter or regular expression.
@@ -66,7 +66,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - OS_Command_Injection_Defense: not applicable — no operating system process is started.
 - Query_Parameterization: not applicable — no query is added or changed by this task.
 - Secrets_Management: not applicable — the new step and test read no secret; "secret" names their absence.
-- Software_Supply_Chain_Security: not applicable — no dependency or action is added; the step reuses `node --test`.
+- Software_Supply_Chain_Security: not applicable — no dependency or action is added; the step reuses the installed Vitest.
 - SQL_Injection_Prevention: not applicable — no SQL is added or changed by this task.
 - Secure_Coding_with_AI: "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent." — no dependency added; the reviewer reruns every claim of the report — AC5.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results — AC5.
@@ -101,14 +101,14 @@ inherited canonical design — owner decision 2026-10-20 (`ListingCardPattern`, 
 - AC4 Stories and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `npm run check:card-track-monotonicity` and the census of `.claude/rules/shared/rendered-state-census.md` for the new and changed Stories.
 - AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
 
-- AC6 A missing listing answers 404, an existing one 200 (O1004-1) — test: `scripts/quality/listing-status-live.test.mjs` (new, on the build in the `click-shield` job; skipped without `BASE_URL` unless `LISTING_STATUS_LIVE_REQUIRED=1`): a random absent slug answers `404` with the not-found page and `noindex`; a public slug read from `/sitemap/0.xml` answers `200`;
+- AC6 A missing listing answers 404, an existing one 200 (O1004-1) — test: `scripts/__tests__/listing-status-live.test.ts` (new, on the build in the `click-shield` job; skipped without `BASE_URL` unless `LISTING_STATUS_LIVE_REQUIRED=1`): a random absent slug answers `404` with the not-found page and `noindex`; a public slug read from `/sitemap/0.xml` answers `200`;
   and `src/app/[locale]/listings/[slug]/__tests__/listingPage.notFound.test.tsx` (new): the route has no `loading.tsx`; for `missing` the page calls `notFound()` before rendering any `Suspense`; for `public` and `hidden` it renders `Suspense` with `ListingDetailLoading`. After the deploy Opus repeats the Cause's `curl` (→ `404`).
 
 ## Route
 
 1. Branch from `main`. Read the two loading files, `favorites/page.tsx`, `ListingsPageFrame`, the detail pattern, the three views with their skeletons, `theme.other.listingSkeleton`, the scope gate and its JSON, the Stories.
 2. Tests first (AC1-AC3, AC6); save each failing output.
-3. The skeleton and its Story, the frame, the spans export, the two shells, the page's access-first order and the live status test with its CI step, the favorites chrome, the scope entries. Three passes over every changed file (`flow.md` §2).
+3. The skeleton and its Story, the frame, the spans export, the two shells, the page's access-first order and the live status test (its CI step is Opus's), the favorites chrome, the scope entries. Three passes over every changed file (`flow.md` §2).
 4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
 5. Report: each command, exit code, relevant output. After the merge Opus throttles the network and watches `/uk/listings/<slug>` and `/uk/favorites` load at 390 and 1440.
 

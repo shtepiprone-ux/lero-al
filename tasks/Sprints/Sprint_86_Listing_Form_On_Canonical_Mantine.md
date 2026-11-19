@@ -50,13 +50,15 @@ The Tasks table is the **single state source**. The execution-order note below i
 | # | Outcome | State |
 |---|---|---|
 | **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | `KICKOFF FILED` 2026-09-30 → [`…Task_905…`](Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) |
-| **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | reserved (`docs/backlog-reserved.md`) |
+| **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | taken over by Task 957 (Sprint 93), 2026-11-19: 957 changes `ImageUpload.tsx` and the owner's rule of that day moves a changed file's legacy to Mantine in the same task (`.claude/rules/shared/canonical-component-reuse.md`) |
 | **907** | `ListingFormShellView`, `ListingFormShell`, `AdminEditLayout` and `StatusChangeHistory` on canonical Mantine; legacy site L7 removed; the composition Story replaces the legacy `Listings/ListingFormShellView`. The `StatusChangeControl` → `StatusChangeSelect` switch moved to Task 923 §17 R35 (owner D20, 2026-10-17). | reserved (`docs/backlog-reserved.md`) |
 
 ## Execution order and gating
 
 1. **905** and **906** are independent, and either may run first.
-2. **907** runs after both 905 and 906 are approved, because it composes their components.
+2. **907** runs after 905 and 957 are merged, because it composes their components; since 2026-11-19 Task 957 also
+   moves `ListingFormShellView` and `ListingFormShell` to Mantine, so 907 keeps `AdminEditLayout`, `StatusChangeHistory`
+   and legacy site L7.
 3. `StatusChangeControl` is also rendered by `/admin/inquiries` (Sprint 84's **894**). Whichever of 894 and 907 runs
    first migrates it, and the other consumes the result. The second kickoff must re-read the first's outcome at I0.
 

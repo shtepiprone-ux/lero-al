@@ -59,6 +59,7 @@ gaps surface — 791's evidence pass already found five (§3.7 of its kickoff) b
 | **796** | `create` / `[slug]/edit`: `ListingFormShellView`, 5 steps, 10 field components, `ImageUpload`, cancel dialog | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **839** | `Map` (the Leaflet wrapper `MapWrapper` loads through `next/dynamic` on the detail route) leaves Tailwind, gets its own canonical Mantine Story and a manifest entry — filed 2026-09-18 at Sprint 75 closure, owner instruction *"закривай спринт і заводь задачі на міграцію"* | P2 | Q3 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
 | **913** | Five listing-detail nodes with no manifest entry, no own Story and no open owner (`RecentlyViewedSection`, `RecentlyViewedGrid`, `SimilarListings`, `RecentlyViewedTracker`, `ViewTracker`) — container-exempt, tracker or enrol, per node; filed 2026-10-01 by Task 912's design (GR-1 tier-3) | P3 | Q2 | ⬜ reserved — full text in `docs/backlog-reserved.md` |
+| **1004** | `[slug]/loading.tsx` and the favorites loading shell and chrome leave Tailwind; one canonical listing-card skeleton replaces the three local ones — filed 2026-11-19 from the owner's list (item 4, Task 792 review note N1) | P3 | — | `KICKOFF FILED` 2026-11-19: `tasks/Sprints/Sprint_71_kickoff_prompt_Task_1004_Loading_Shells_Leave_Tailwind.md` |
 
 ## Execution order
 

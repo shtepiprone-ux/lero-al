@@ -1,8 +1,10 @@
 # Task 985 — The password-reset request and the e-mail link confirmation are rate limited
 
 Sprint 93. Priority P2. Found 2026-11-17 by Opus in the OWASP remap of Task 972 Review 1: the Node.js Security Cheat
-Sheet (upstream 7af0ef1b745f) now requires rate limits on every authentication flow. Implementer: Sonnet, after Task 959
-(it creates the atomic limiter `consume_rate_limit`). Reviewer: Opus. Human owner of the change: the owner.
+Sheet (upstream 7af0ef1b745f) now requires rate limits on every authentication flow. Revised 2026-11-19 by Opus: the
+atomic limiter `consume_rate_limit` is built by Task 957 (owner decision O957-1, 2026-11-18), not by Task 959.
+Implementer: Sonnet, after Tasks 957 (the limiter), 959 (`normalizeEmail`, `clientIp`) and 991 (it changes the same reset
+action). Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
 
@@ -12,27 +14,32 @@ reset helper without CAPTCHA is gone.
 
 ## Cause
 
+Read at `1d625874c`
 - `src/modules/auth/actions/captcha.ts:50-65`: `requestPasswordResetWithCaptcha` checks that a CAPTCHA token is present
-  and calls `resetPasswordForEmail`; no limit is consumed.
+  and calls `resetPasswordForEmail` (`:60`); no limit is consumed.
 - `src/app/auth/confirm/route.ts:69`: the route calls `verifyOtp` for every request; no limit is consumed.
 - `src/lib/auth/browser.ts:45-47`: `requestPasswordReset` calls `resetPasswordForEmail` without a CAPTCHA token;
-  `git grep -n "requestPasswordReset(" -- src` → only `src/lib/auth/__tests__/browserAuth.security.test.ts:84` calls it.
+  `grep -rn "requestPasswordReset(" src` → `src/lib/auth/browser.ts:45` (the definition) and
+  `src/lib/auth/__tests__/browserAuth.security.test.ts:84` (the only call).
 - Sign-in goes from the browser straight to Supabase Auth with a CAPTCHA token (`src/lib/auth/browser.ts:23-24`); its
   limit is the Supabase Auth project setting, which the repository does not hold (UNKNOWN: its value).
-Fix: the reset action consumes the Task 959 limiter per normalized e-mail and per client IP, and the confirm route per
+
+Fix: the reset action consumes the Task 957 limiter per normalized e-mail and per client IP, and the confirm route per
 client IP, each before Supabase Auth is called; the unused `requestPasswordReset` and its test lines leave.
 
 ## Scope
 
-- `src/modules/auth/actions/captcha.ts`: the reset action consumes `consume_rate_limit` (Task 959) per normalized
-  e-mail and per client IP before `resetPasswordForEmail`; past the limit it answers a refusal without calling Supabase.
-- `src/app/auth/confirm/route.ts`: the route consumes the limiter per client IP before `verifyOtp`; past the limit it
-  redirects to the existing failure page without calling `verifyOtp`.
-- `src/lib/auth/browser.ts`: `requestPasswordReset` removed; its two lines in `browserAuth.security.test.ts` removed.
-- The client IP is read the way Task 959's limiter call sites read it (one helper, the platform's forwarded header
-  only); the limit values (window and count) are written here by Opus at Route step 1, before the tests.
-- Dependencies: none.
-- Out of scope: the Supabase Auth dashboard limits for sign-in (the owner's setting); the limiter itself (Task 959).
+- `src/modules/auth/actions/captcha.ts`: the reset action consumes `consume_rate_limit` (Task 957) before
+  `resetPasswordForEmail`: `auth-reset-email`, per `normalizeEmail` address, 3 per hour, and `auth-reset-ip`, per client
+  IP, 10 per hour; past either it answers the existing refusal without calling Supabase; an RPC error refuses (fail
+  closed).
+- `src/app/auth/confirm/route.ts`: `auth-confirm-ip`, per client IP, 20 per 10 minutes, before `verifyOtp`; past the
+  limit or on an RPC error it redirects to the existing failure page without calling `verifyOtp`.
+- The values are Opus proposals; the owner may change them. The client IP is `clientIp` of Task 959; a refusal writes
+  `excess_rate_limit_exceeded` through `src/lib/security/securityEvent.ts` (Task 955).
+- `src/lib/auth/browser.ts`: `requestPasswordReset` removed; its lines in `browserAuth.security.test.ts` removed.
+- Dependencies: none added.
+- Out of scope: the Supabase Auth dashboard limits for sign-in (the owner's setting); the limiter itself (Task 957).
 
 ## Attack surface
 
@@ -59,7 +66,7 @@ Required by `node scripts/quality/owasp.mjs plan` (upstream 7af0ef1b745f, 2026-1
 - Credential_Stuffing_Prevention: "or similar puzzle for each login attempt can help to identify automated/bot attacks" — the reset request keeps its CAPTCHA and gains a limit; the helper without CAPTCHA leaves — AC1, AC3.
 - Denial_of_Service: "Using validation that is cheap in resources first" — the limit is consumed before the call to Supabase Auth — AC1, AC2.
 - Email_Validation_and_Verification: "Applications must define a consistent normalization strategy before storing or comparing email addresses." — the per-address bucket uses the Task 959 `normalizeEmail` — AC1.
-- Input_Validation: "Use `Forwarded` and `X-Forwarded-*` values only when they come from your own proxies" — the client IP comes from the one helper Task 959 uses, not from a header the client sets — AC1, AC2.
+- Input_Validation: "Use `Forwarded` and `X-Forwarded-*` values only when they come from your own proxies" — the client IP comes from the one `clientIp` rule of Task 959 — AC1, AC2.
 - Insecure_Direct_Object_Reference_Prevention: not applicable — no object is read or written by an identifier from the request.
 - JavaScript_and_TypeScript_Security: not applicable — no regular expression, merge or dynamic code is added; one call per entry point.
 - Mass_Assignment: not applicable — no request field is bound to a stored record by this task.
@@ -95,15 +102,17 @@ No visible change: past the limit the reset form shows its existing refusal text
   limit for one IP the route redirects to the failure page and `verifyOtp` is not called; inside the limit it is called).
 - AC3 No reset helper without CAPTCHA is left — test: `npm run typecheck` and
   `src/lib/auth/__tests__/browserAuth.security.test.ts` (the `requestPasswordReset` lines removed, the rest unchanged).
-- AC4 `npm run lint`, `npm run typecheck`, `npm test -- --coverage`,
-  `node scripts/quality/changed-lines-coverage.mjs --base main`, `node scripts/quality/check-files.mjs --worktree` exit 0.
+- AC4 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of
+  `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
 
 ## Route
 
-1. Confirm Task 959 is merged; Opus records the limit values in Scope. Branch from `main`.
+1. Confirm Tasks 957, 959 and 991 are merged. Branch from `main`.
 2. Tests first (AC1, AC2); save each failing output.
-3. The change; three passes over every changed file.
-4. Run AC1-AC4; one deliberate break per security test (remove the limiter call once, the test fails, restore).
+3. The change; three passes over every changed file (`flow.md` §2).
+4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with
+   `npx --yes npm@10.9.8 ci`; one deliberate break per security test (remove the limiter call once, the test fails,
+   restore).
 5. Report: each command, exit code and relevant output.
 
 ## Review

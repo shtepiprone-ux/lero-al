@@ -9,6 +9,29 @@ This decision governs Opus task creation, every task revision, and implementatio
 precedence over blanket GR-7 research, fresh mobile-pattern selection, and whole-library remeasurement of an
 unchanged canonical component. Read this file before reference research or a new UI design decision.
 
+## Owner decision, 2026-11-19: legacy in a changed file moves to Mantine in the same task
+
+Owner (translated): "In tasks that concern front-end parts, legacy components and elements must be migrated to Mantine
+right away, so that no additional work is needed later. We are giving up Legacy and moving to Mantine step by step."
+
+- A task that changes a front-end file (a page, layout, component or Story that renders UI) migrates every legacy part
+  of that file in the same task: imports from `@/components/ui/*`, Tailwind utility classes (the oracle is
+  `scripts/check-enrolled-tailwind.mjs`), and the legacy admin page wrapper `<div className="p-6 lg:p-8 ...">`, which
+  becomes `AdminPageFrame`. "No visible change" does not exempt the file; a dead file is deleted instead.
+- The kickoff names each such file in Scope with its legacy parts and the canonical owners that replace them, and its
+  UI and Mobile adaptation record cover the migrated surface.
+- A legacy component the migrated file renders is replaced by its canonical owner where one exists (for example the
+  shared `Combobox` by `MantineCombobox` or `MantineSelect`); otherwise it is allowlisted in
+  `scripts/rendered-scope-allowlist.json` with the open task that migrates it; a legacy file left with no user is
+  deleted.
+- Proof: the migrated component is enrolled in `scripts/mantine-migration-scope.json` with no entry in
+  `scripts/enrolled-tailwind-baseline.json` or `scripts/rendered-scope-baseline.json`, and `npm run
+  check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass; a migrated page is
+  listed in the admin page-frame test (new, created by the first task that migrates an admin page) or the task's own
+  page test, and has no `className`.
+- When an open task of another sprint already plans that migration, the changing task takes it over and the plan
+  records the hand-over; two tasks that change the same legacy file run in order, the first migrates it.
+
 ## Required order
 
 1. **Search first.** Search the component catalog, `src/design-system/mantine/`, production components, canonical

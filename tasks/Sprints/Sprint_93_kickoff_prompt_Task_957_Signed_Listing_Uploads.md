@@ -5,7 +5,9 @@ found must be fixed"; O957-1 2026-11-18 (option chosen: "957 builds the limiter"
 from Task 959, which reuses it); O957-2 2026-11-18 (option chosen: "close completely": a repeated signed request must
 not create a second photo); O957-3 2026-11-18 (option chosen: "UUID + metadata + admin": the folder stays the account
 UUID, each photo carries the uploader's number and listing in Cloudinary metadata, the admin profile copies the UUID); O957-4 2026-11-18 (the owner: "add automatic cleanup to the existing task": a daily job removes
-unreferenced listing and avatar uploads and empty owner folders). Filed by the whole-project audit (`docs/security/audit-2026-11-06/findings.md`: X-01, A-05,
+unreferenced listing and avatar uploads and empty owner folders); O957-5 2026-11-19 (the owner, translated: "this test must
+be added to the next task in the list, because there are already 1008 tasks not done, and the list keeps growing": the
+synthetic test users and listings a cancelled CI run leaves are removed). Filed by the whole-project audit (`docs/security/audit-2026-11-06/findings.md`: X-01, A-05,
 C-05); revised 2026-11-18 by Opus (current rules, the four owner decisions, the database twin of the photo check).
 Implementer: Sonnet (product code, tests, SQL files); Opus (`scripts/quality/cloudinary-config.mjs` U3, the SQL round
 trip, the catalog snapshot). Reviewer: Opus. The owner applies the SQL and changes the Cloudinary presets and Vercel.
@@ -21,7 +23,9 @@ the owner's folder, with `overwrite=false`, so a repeated request stores nothing
 account; the database refuses a photo outside its listing owner's folder. A photo is traceable both ways: Cloudinary
 shows the uploader's `#public_id` and listing in the asset's metadata, and the admin copies an account's UUID (the folder
 name) from its profile and finds an account by a pasted folder name. A daily job deletes listing and avatar uploads no row
-uses after 7 days and the owner folders left empty; a deleted account's whole folder goes, except a file a row still uses.
+uses after 7 days and the owner folders left empty; a deleted account's whole folder goes, except a file a row still uses. The synthetic users and listings
+(`zz_synth_…`) of a test run that CI cancelled or killed are removed by the same job, and any older one by the next CI
+run (O957-5).
 
 ## Cause
 
@@ -44,7 +48,14 @@ Read at `a9915f3ba`
   `deleteAccount` releases only the ids its rows hold (`src/lib/account/deleteAccount.ts:36`, `collectPublicIds` at :73), so a file no row names stays with its folder: one test account's `<uuid>/Brand/Favicon` and `<uuid>/Brand/Logotype` hold 9 files uploaded by hand, and `site_settings` `logo_url`, `logo_dark_url` and `favicon_url` use 2 of them (read-only, 2026-11-18). The owner then set `CLOUDINARY_DELETE_MODE=enabled` (one variable for production and preview)
   and redeployed; the repeated probe logged `outcome: 'DELETED'` (22:36:33 UTC) and the replaced file answers 404. The cleanup removes what the earlier removals left.
   The account uses dynamic folders: a stored listing asset has `public_id` `<uuid>/listings/<name>` and `asset_folder` `<uuid>/listings` (same read).
+- Synthetic test data outlives a cancelled run (O957-5): the integration suites and the signed-in walk create users and listings with the run prefix `zz_synth_<time><hex>` (`src/tests/integration/fixtures.ts:32`) and delete them only in-process at the end
+  (`src/tests/integration/fixtures.ts:92`, called at `scripts/check-signed-in-pages.mjs:383`); a pull-request run is cancelled when a newer commit arrives (`.github/workflows/ci.yml:21`, `cancel-in-progress`), and GitHub then sends the running step
+  "`SIGINT/Ctrl-C`", then "`SIGTERM/Ctrl-Break`", then "kills the process tree" (docs.github.com/en/actions/reference/workflows-and-actions/workflow-cancellation), so the clean-up never runs; no other code removes an old prefix.
+  `gh run view 44417722424 --json jobs` → the walk step started 2026-11-18T23:11:24Z and was `cancelled` at 23:17:04Z, the authz test step (23:08:03Z) likewise; a read-only census of the development project (2026-11-19)
+  → `zz_synth_mwmqjll84aaa` (started 23:11:25Z: 4 users including `walk_agent`, 1 listing) and `zz_synth_mwmqqjgb09a7` (23:16:49Z: 3 users) are left. The same page: a step with `if: always()` still runs in a cancelled job
+  ("the condition `if: always()` would evaluate to true and the job continues to run"), within "the 5 minute cancellation timeout period".
 - `src/app/api/upload-cms-image/route.ts:35` trusts the declared `file.type` (A-05); `src/lib/cloudinaryDelete.ts:102` reads only the first 500 CMS pages before calling an asset unreferenced (C-05).
+Fix (O957-5): every run writes its prefix to a job file and a final `if: always()` step of each CI job that creates synthetic data removes those prefixes and any prefix older than two hours; the in-process clean-up stays.
 Fix: a signature route that issues per-photo signed parameters chosen by the server (owner folder, random `public_id`, `overwrite=false`, preset, uploader metadata) after the session, owner and limit checks; the widget gets them through `prepareUploadParams`; the limiter and a `listing_images` owner-folder trigger in SQL; the owner check in the two Server Actions; the CMS byte sniff; paged CMS reads in deletion; U3 in `cloudinary-config.mjs`; the UUID copy control in the admin profile and the search hint; a daily cleanup cron.
 
 ## Scope
@@ -87,6 +98,10 @@ Fix: a signature route that issues per-photo signed parameters chosen by the ser
 - Account folders (O957-4, owner 2026-11-18: deleting a user should remove "the user's main folder and all files and folders in it"): `purgeAccountFolder(userId)` in `src/lib/cloudinaryDelete.ts` first proves the account is gone (`auth.admin.getUserById` answers not found;
   any other answer or error: nothing is touched), then walks every folder under `<userId>` (any name, `Brand` included), passes every asset of each `asset_folder` (paged) to `deleteAsset(id, { reason: 'account_folder' })`, and removes the emptied folders deepest first, `<userId>` last;
   a file a row still uses (the site logo above) is kept with its folders. A root folder not named by a UUID is never touched: `Lero` holds the site's own logos and favicon (owner, 2026-11-18: "this folder concerns the site, not users"). `deleteAccount` calls it after the auth deletion; the cron calls it for each root UUID folder with no account (within the same caps).
+- Synthetic leftovers (O957-5): `src/tests/integration/fixtures.ts`: the delete-and-verify body of `cleanup()` becomes the exported `removeRun(admin, run)` (same order, same verification), and `createRun()` appends its prefix (the prefix only) to the file named by `SYNTHETIC_RUN_LOG` when set.
+  `scripts/quality/sweep-synthetic.mjs` (new): starts only through `loadIntegrationEnv()` (development target and project ref, `src/tests/integration/environment.ts:49-52`); collects the prefixes listed in `SYNTHETIC_RUN_LOG` and every prefix of the exact shape
+  `zz_synth_<8 base-36 time><4 hex>` found in auth e-mails and listing slugs whose time is more than two hours old (a job lasts at most 30 minutes); calls `removeRun` for each; prints counts and prefixes only; exits 1 when a read fails or anything remains; `--dry-run` only reads and lists.
+  `.github/workflows/ci.yml`: the `authz` and `click-shield` jobs set `SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt` and end with the step "Synthetic test data of this job is removed" (`if: always()`, the three Supabase secrets on that step only, `node scripts/quality/sweep-synthetic.mjs`); `package.json`: `sweep:synthetic`.
 - Dependencies: none. Out of scope: moving stored photos (none is outside its folder); a malware scan (Cloudinary re-encodes on delivery); the limiter call sites of Task 959 (contact form, reveal, inquiry, view counter, saved searches).
 
 ## Attack surface
@@ -98,6 +113,7 @@ Changed: a new authenticated endpoint, the photo upload path, the photo acceptan
 - T4 Tampering: a CMS upload whose bytes are not the declared type — mitigate: the byte sniff.
 - T5 Elevation through the new definer function — eliminate: EXECUTE for `service_role` only, `search_path` empty.
 - T7 Tampering / denial of service: the cleanup or the purge deletes a file in use or a living account's folder, or a stranger starts it — mitigate: the cron secret (401), the pattern and 7 days of age, the proven absence of the account before a purge, `deleteAsset`'s reference check failing closed, the folder guard, the per-run caps.
+- T8 Tampering: the synthetic sweep deletes a real person or listing, or runs against another project — mitigate: only the exact `zz_synth_` prefix shape (an e-mail or slug without it is never read for deletion), the escaped LIKE of `removeRun`, the development-target guard before any read, the two-hour age for a prefix this job did not log.
 - T6 Information disclosure: uploader metadata reaches Cloudinary — eliminate: only the pseudonymous `#public_id` and the listing id, never a name, e-mail or phone; the folder stays the opaque UUID.
 
 Authorization matrix, `upload-signature`: anonymous 401; blocked account 403; active user, no listing (own folder) 200; active user, own listing 200; active user, another person's listing 403; moderator with `listings.moderate`, any listing 200 (owner's folder);
@@ -117,15 +133,18 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 - Authorization_Regression_Testing: "Relying on UI hiding is insufficient; the API layer must enforce the check" — the tests call the route, the actions and PostgREST directly, without the widget — AC1, AC3, AC4.
 - Authorization_Testing_Automation: "Integration test cases validate the correct implementation of the authorization matrix." — every matrix row is a test case, the database rows on the real project — AC1, AC4.
 - Bot_Management_and_Anti-Automation: "Avoid fixed-window counters: they allow bursts at boundary times." — `consume_rate_limit` slides; the boundary burst test passes only 5 of 10 — AC2.
+- CI_CD_Security: "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed." — the workflow change reaches main only through the pull request with CI Required green, merged by the owner — AC11, AC16.
 - Credential_Stuffing_Prevention: not applicable — the task adds no login, password or recovery path.
 - Cross_Site_Scripting_Prevention: not applicable — the widget change renders no new user-controlled text or markup.
 - Cryptographic_Storage: "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness" — the `public_id` part comes from `crypto.randomUUID()` — AC1.
+- Dependency_Graph_SBOM: not applicable — `package.json` gains one script line; no dependency enters the SBOM.
 - DOM_Clobbering_Prevention: not applicable — the CMS route change checks file bytes and renders no HTML.
 - DOM_based_XSS_Prevention: not applicable — the widget receives server parameters; no DOM sink is added or changed.
 - Database_Security: "Configured with the minimum permissions required as discussed in the permissions section below." — the table has no session grant; the function is executable by `service_role` only — AC2, AC9.
 - Denial_of_Service: "Using validation that is cheap in resources first" — the route checks the session and the body before any database call and the limit before signing — AC1, AC2.
 - File_Upload: "List allowed extensions. Only allow safe and critical extensions for business functionality" — the signed preset allows jpg, jpeg, png and webp only, and U3 checks it — AC8, AC10.
 - File_Upload: "Validate the file type, don't trust the Content-Type header as it can be spoofed" — the CMS route compares the declared type with the bytes — AC6.
+- GitHub_Actions_Security: "Pass secrets at the step level, not the job level." — the sweep step binds the three Supabase secrets to itself; the job keeps `contents: read` and full-SHA pins — AC16.
 - GraphQL: "Ensure that the API has proper access control checks." — the new table and function have no `anon` or `authenticated` grant, so no Supabase API exposes them — AC2.
 - Identity_Propagation_Patterns: "Each receiving service must still authorize the requested action and resource." — the service-role read runs only after the caller's check, and the trigger checks every write again — AC1, AC4.
 - Injection_Prevention: "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface" — the route calls the RPC with named arguments — AC2.
@@ -141,10 +160,12 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 - Multi_Tenant_Security: "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL." — the route authorizes the owner folder and listing before it signs one upload — AC1, AC4.
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the route and both Server Actions check the caller and the photo owner themselves — AC1, AC3.
 - Nodejs_Security: "some third-party rulesets can be used to flag dangerous patterns such as eval()" — ESLint with the security rules runs on every changed file — AC11.
+- NPM_Security: not applicable — `package.json` gains the `sweep:synthetic` script only; no package is installed or changed.
 - OS_Command_Injection_Defense: "The primary defense is to avoid calling OS commands directly." — U3 reads the Admin API over HTTPS and starts no process — AC10.
 - Prototype_Pollution_Prevention: not applicable — the route copies no request key into any object it builds.
 - Query_Parameterization: "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure." — the function has no dynamic SQL; its arguments are bound — AC2.
 - REST_Security: "the access control decision should be taken locally by REST endpoints" — the route decides itself, not the page that shows the widget — AC1.
+- Software_Supply_Chain_Security: not applicable — no dependency or action is added; the sweep reuses installed tools.
 - SQL_Injection_Prevention: "use parameterized queries for dynamic data values" — RPC named arguments and a static function body — AC2.
 - Secrets_Management: "prevent them from leaking and compromising the organization" — the secret stays server-only; no public variable names a preset — AC5, AC11.
 - Secure_Code_Review: "Security-Focused Review differs from functional code review by specifically targeting security concerns" — Opus reviews by `secure-code-review.md` — AC11.
@@ -156,6 +177,7 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them for T1-T5 — AC1-AC8.
 - User_Privacy_Protection: "Preventing leakage of user IP addresses is of great significance when user protection is in scope." — the limiter keys on the account id; no IP is stored or logged; the Cloudinary metadata holds no contact data; a deleted account's files leave Cloudinary — AC1, AC14.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns every claim of the report — AC11.
+- Vulnerable_Dependency_Management: not applicable — no dependency is added or changed; `package.json` gains one script.
 - Web_Frontend_Security: not applicable — the widget change adds no `innerHTML` or other markup sink.
 - Web_Service_Security: "Schema validation enforces constraints and syntax defined by the schema." — the strict zod body schema — AC1.
 - XSS_Filter_Evasion: not applicable — the CMS route change checks file bytes and filters no markup.
@@ -208,14 +230,18 @@ The listing form and the photo widget keep their layout, fields and order, rebui
 
 - AC15 The listing form and the photo widget are on Mantine (owner rule 2026-11-19) — test: `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with `ImageUpload.tsx`, `ListingFormShell.tsx` and `ListingFormShellView.tsx` enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them; `src/modules/listings/components/__tests__/listingFormMantine.test.ts` (new): those three files and the two pages import nothing from `@/components/ui` and have no `className`; the census of `.claude/rules/shared/rendered-state-census.md` for the two new Stories; the existing listing-form tests pass.
 
+- AC16 A cancelled run's synthetic data is removed and nothing else (O957-5) — test: `scripts/quality/sweep-synthetic.test.mjs` (new): a logged prefix is removed at any age; an unlogged one older than two hours is removed, a younger one stays; `walk_agent@example.com`, `zz_synthx…` and a real e-mail are never touched;
+  a failing read deletes nothing and exits 1; a non-development target is refused before any read; `--dry-run` deletes nothing; every `.github/workflows/ci.yml` job that receives `SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY` and runs `test:security-integration` or `check-signed-in-pages` sets `SYNTHETIC_RUN_LOG` and ends with the sweep step under `if: always()`;
+  the existing integration suites pass on `removeRun`; after the PR's CI, `npm run -s sweep:synthetic -- --dry-run` (Opus, read-only) lists no prefix older than two hours.
+
 ## Route
 
 1. Branch from `main`. `node scripts/quality/cloudinary-config.mjs`: keep the output (U1 expected). Read cloudinary.com/documentation/upload_widget_reference (`prepareUploadParams`) and cite the parameters it signs.
-2. Tests first (AC1-AC7, AC12-AC15; AC8 written, run later); save each failing output.
-3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the Mantine form and widget with their Stories, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
+2. Tests first (AC1-AC7, AC12-AC16; AC8 written, run later); save each failing output.
+3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the Mantine form and widget with their Stories, the synthetic sweep and its CI steps, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
 4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test (the owner check, the trigger, the limit, the `overwrite` flag, the cleanup age and pattern), restored.
 5. Report: each command, exit code, relevant output; the owner's steps, in order: apply the SQL; create the signed preset (allowed formats jpg, jpeg, png, webp; incoming transformation) and set `CLOUDINARY_LISTING_PRESET` in Vercel before the merge;
    after the deploy delete the unsigned preset and `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`; if the owner wants, delete `main-sample` (Cloudinary's sample created with the account 2026-10-21,
-   referenced nowhere in the repository; the owner deleted the empty `task951-signature-check` and the legacy root `avatars` and `companies` folders on 2026-11-18). Then Opus runs AC8-AC10.
+   referenced nowhere in the repository; the owner deleted the empty `task951-signature-check` and the legacy root `avatars` and `companies` folders on 2026-11-18). Then Opus runs AC8-AC10 and the read-only sweep of AC16.
 
 ## Review

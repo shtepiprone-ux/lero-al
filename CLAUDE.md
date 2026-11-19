@@ -5,7 +5,9 @@ Lero.al is an Albanian real-estate marketplace: Next.js App Router, Supabase (Po
 
 ## Communication language
 
-Opus and Sonnet talk to the owner in Ukrainian only. Russian and mixed Ukrainian/Russian prose are forbidden. Project
+Opus and Sonnet talk to the owner in Ukrainian only. Everything the owner can see counts: replies, progress lines and
+the visible thinking (thinking in English or Ukrainian, never Russian). Russian and mixed Ukrainian/Russian prose are
+forbidden. Project
 files are English only (owner quotes translated faithfully); only product localization data is in other languages
 (`.claude/rules/shared/project-language.md`).
 
@@ -34,6 +36,10 @@ Start at `.claude/rules/README.md` (rewritten 2026-11-06 on the basis of the OWA
 One semantic element has one visual contract. Use an existing semantic token and canonical component; if either is
 missing, add it at the shared owner and its direct Story before a consumer uses it. Do not encode visual decisions in a
 feature, route, wrapper, or Story. Stories pass data and documented public props only.
+
+Legacy leaves with every change (owner, 2026-11-19): a task that changes a front-end file migrates that file's legacy
+parts (`@/components/ui`, Tailwind classes, the legacy admin page wrapper) to canonical Mantine in the same task, with
+the enrolment gates as proof (`.claude/rules/shared/canonical-component-reuse.md`).
 
 Mobile is a semantic presentation, not compressed desktop geometry: reflow/stack/wrap behaviour across the `<640px`
 compact range and its `640px` transition follows `.claude/rules/shared/mobile-adaptation-contract.md`. Mantine and the

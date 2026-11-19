@@ -62,7 +62,19 @@ Fix: a signature route that issues per-photo signed parameters chosen by the ser
   `tags=user-<owner public_id>` and `context=user=<owner public_id>[|listing=<listingId>]` (the listing part only when a `listingId` was sent; O957-3; the number read from `users.public_id`; no name, e-mail or phone), `timestamp` of the server, and every parameter the widget adds itself
   (the upload widget guide: "Generate the signature string from all parameters used, including `source=uw`"); AC8 proves the exact set live.
 - `ImageUpload.tsx`: `options.prepareUploadParams` calls the route once per photo; no `uploadPreset`, no `folder`; props `uploadPreset` and `uploadFolder` become `listingId?: string` through `ListingFormLoader.tsx`, `ListingFormShell.tsx`,
-  `ListingFormShellView.tsx` (and its Story args), `steps/StepPhotos.tsx` and the two pages; `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` leaves the pages and `docs/env.md` (which lists `CLOUDINARY_LISTING_PRESET`).
+  `ListingFormShellView.tsx` (and its Story) and the two pages; `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` leaves the pages and `docs/env.md` (which lists `CLOUDINARY_LISTING_PRESET`).
+- Legacy leaves with this change (owner rule 2026-11-19, `.claude/rules/shared/canonical-component-reuse.md`; it takes over Task 906 and the shell part of
+  Task 907, `tasks/Sprints/Sprint_86_Listing_Form_On_Canonical_Mantine.md`): `ImageUpload.tsx` (Tailwind classes from `:94`: the photo
+  grid, its order, cover and delete controls, the empty state) on Mantine (`SimpleGrid`, `ActionIcon`, `MantineBadge`,
+  `AppImage` `upload`); `ListingFormShellView.tsx` (`@/components/ui` button, input, label, textarea and dialog at `:5-11`, and
+  its Tailwind classes) on `MantineFormSectionStack`, `TextInput`, `Textarea` (`MantineTextarea` once Task 1008 merged),
+  `MantineModal` and `Button`; `ListingFormShell.tsx` (`:275`) and the pages `src/app/[locale]/listings/create/page.tsx:28` and
+  `src/app/[locale]/listings/[slug]/edit/page.tsx:150` (a Tailwind page frame) on Mantine. `steps/StepPhotos.tsx` is
+  imported by no file (`grep -rn "steps/Step" src` → nothing) and is deleted instead of changed. The three components
+  join `scripts/mantine-migration-scope.json`; `DynamicFieldSection` (Task 905) and `AdminEditLayout` (Task 907) stay
+  legacy children, allowlisted in `scripts/rendered-scope-allowlist.json` with those owners. The legacy Story
+  `Listings/ListingFormShellView` (`src/modules/listings/components/ListingFormShellView.stories.tsx`) gives way to
+  `Patterns/Mantine/ListingFormShellView` and `Patterns/Mantine/ImageUpload`.
 - `src/lib/uploads/imageUrl.ts`: `isOwnedListingImageUrl(url, ownerId)` (trusted, path as the trigger's, no `..` segment, no query or fragment); `isValidImagePayload` takes the owner id; `createListing.ts:57` and `updateListing.ts:99` pass the listing owner's id (also when staff edit); the false comment corrected.
 - Admin (O957-3): `AdminUserProfileView.tsx` renders the `#public_id` line with the canonical `MantineCopyIdButton` (label `#<public_id>`, copies `user.id`; accessible names from new `admin.user_profile` keys in all four locales), as `AdminListingsView.tsx:124-129` does;
   the users search hint (`search_placeholder`, `messages/*.json:921`) names the account ID in all four locales; the Story `Patterns/Mantine/AdminUserProfileView` passes `public_id` and `id`.
@@ -96,6 +108,7 @@ moderator without it 403; admin 200. `listing_images` direct write: owner, own f
 Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 
 - Abuse_Case: "it is important to identify the attacks which the application must defend against" — T1-T5 name uploads into a foreign folder, cost abuse by repeats, a foreign photo in a listing — AC1, AC2, AC3, AC8.
+- AI_Agent_Security: not applicable — the task cites a project rule file; no agent, tool or agent permission changes.
 - Attack_Surface_Analysis: "developers should understand and monitor the Attack Surface as they design and build and change a system" — "## Attack surface" names the new endpoint, function and trigger — AC1, AC2, AC4.
 - Authorization: "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source." — the route checks the session and the listing owner or `listings.moderate` on every call — AC1.
 - Authorization: "Implement defense in depth. Do not depend on any single framework, library, technology, or control to be the sole thing enforcing proper access control." — the actions and the database trigger both refuse a foreign photo — AC3, AC4.
@@ -120,9 +133,11 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 - Insecure_Direct_Object_Reference_Prevention: "implement access control checks for each object that users try to access" — a `listingId` is signed for only after the owner check — AC1, AC3.
 - JavaScript_and_TypeScript_Security: "Never pass untrusted input to a recursive merge or set-by-path helper" — the signed parameters are built from server values; no request key is merged — AC1.
 - Key_Management: "a single key should be used for only one purpose" — `CLOUDINARY_API_SECRET` signs Cloudinary requests only; the preset name is a separate, non-secret variable — AC1.
+- LLM_Prompt_Injection_Prevention: not applicable — no language model reads or writes any data of this task.
 - Logging: "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted" — the cleanup's run line holds counts only; `deleteAsset` logs the asset id, no contact data — AC13.
 - Logging_Vocabulary: not applicable — the cleanup records maintenance counts, not a security event of the vocabulary.
 - Mass_Assignment: "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable." — the body schema is an allow-list of one key — AC1.
+- MCP_Security: not applicable — no MCP server, tool or agent permission is added or changed here.
 - Multi_Tenant_Security: "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL." — the route authorizes the owner folder and listing before it signs one upload — AC1, AC4.
 - Nextjs_Security: "Treat each reachable action as a client-callable POST entry point." — the route and both Server Actions check the caller and the photo owner themselves — AC1, AC3.
 - Nodejs_Security: "some third-party rulesets can be used to flag dangerous patterns such as eval()" — ESLint with the security rules runs on every changed file — AC11.
@@ -147,20 +162,22 @@ Required by `node scripts/quality/owasp.mjs plan` (c12dd22e17ce, 2026-11-18).
 
 ## UI
 
-The widget looks the same. The admin profile's `#public_id` line becomes the canonical `MantineCopyIdButton` (owner `src/design-system/mantine/patterns/MantineCopyIdButton.tsx`, with its own direct Story); no new token or style; the users search hint text changes.
+The listing form and the photo widget keep their layout, fields and order, rebuilt on canonical Mantine (REUSE
+`MantineFormSectionStack`, `MantineModal`, `AppImage` `upload`, `MantineBadge`; inherited canonical design — owner decision
+2026-10-20). The admin profile's `#public_id` line becomes the canonical `MantineCopyIdButton` (owner `src/design-system/mantine/patterns/MantineCopyIdButton.tsx`, with its own direct Story); no new token or style; the users search hint text changes.
 
 ## Mobile adaptation record
 - Scope: visible
-- Surfaces: src/components/admin/AdminUserProfileView.tsx — the identity block of /admin/users/[id]
-- Component families: inline-status-and-utility-control
-- Pattern IDs: inline-control
-- Standards: w3c-target-size, apple-hig-menus, android-layout-navigation
+- Surfaces: src/components/admin/AdminUserProfileView.tsx — the identity block of /admin/users/[id]; src/modules/listings/components/ListingFormShellView.tsx — the listing form; src/modules/listings/components/ImageUpload.tsx — the photo grid and its controls
+- Component families: inline-status-and-utility-control, form-picker-and-choice, media-gallery-and-listing-contact
+- Pattern IDs: inline-control, form-stack, grid-media-reflow
+- Standards: w3c-target-size, apple-hig-menus, android-layout-navigation, w3c-labels-instructions, w3c-reflow, apple-hig-layout, android-content-structure, android-common-layouts, android-adapt-layouts
 - Mantine mechanism: responsive-props
-- Mantine owner: src/design-system/mantine/patterns/MantineCopyIdButton.tsx
-- Mobile range and switches: <640px (theme.other.mobileGate / sm): the control keeps the 44px target its owner sets; 640px transition to the owner's desktop size
-- Mobile order: name → badges → e-mail → `#public_id` copy control
+- Mantine owner: src/design-system/mantine/patterns/MantineCopyIdButton.tsx, src/design-system/mantine/patterns/MantineFormSectionStack.tsx, src/design-system/mantine/patterns/MantineListingGalleryPattern.tsx
+- Mobile range and switches: <640px (theme.other.mobileGate / sm): the control keeps the 44px target its owner sets; 640px transition to the owner's desktop size; the listing form one column with full-width fields and the photo grid in two columns, as today; 640px transition to today's desktop layout
+- Mobile order: name → badges → e-mail → `#public_id` copy control; form — today's section order; photo — image → number and cover mark → order and delete controls
 - Required-content treatment: no semantic loss: the number stays visible and the copy action reachable; nothing clamps
-- Story and verification: Patterns/Mantine/AdminUserProfileView at 320px and on both sides of the 640px transition × sq, en, uk, it
+- Story and verification: Patterns/Mantine/AdminUserProfileView at 320px and on both sides of the 640px transition × sq, en, uk, it; Patterns/Mantine/ListingFormShellView and Patterns/Mantine/ImageUpload at 320px, 639px, 640px and 1440px × sq, en, uk, it
 
 ## Acceptance criteria
 
@@ -189,11 +206,13 @@ The widget looks the same. The admin profile's `#public_id` line becomes the can
 - AC12 The admin copies the account UUID and the hint names it (O957-3) — test: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (extended: the `#public_id` control writes `user.id` to the clipboard)
   and `node scripts/check-i18n-parity.mjs` with `node scripts/quality/locale-safety.mjs` (the new keys and hint in all four locales).
 
+- AC15 The listing form and the photo widget are on Mantine (owner rule 2026-11-19) — test: `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with `ImageUpload.tsx`, `ListingFormShell.tsx` and `ListingFormShellView.tsx` enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them; `src/modules/listings/components/__tests__/listingFormMantine.test.ts` (new): those three files and the two pages import nothing from `@/components/ui` and have no `className`; the census of `.claude/rules/shared/rendered-state-census.md` for the two new Stories; the existing listing-form tests pass.
+
 ## Route
 
 1. Branch from `main`. `node scripts/quality/cloudinary-config.mjs`: keep the output (U1 expected). Read cloudinary.com/documentation/upload_widget_reference (`prepareUploadParams`) and cite the parameters it signs.
-2. Tests first (AC1-AC7, AC12-AC14; AC8 written, run later); save each failing output.
-3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
+2. Tests first (AC1-AC7, AC12-AC15; AC8 written, run later); save each failing output.
+3. The SQL files (handed to Opus for AC9; the owner applies before the merge), the route, the widget and its prop chain, the ownership check, the admin copy control and hint, the Mantine form and widget with their Stories, the cleanup cron and the account-folder purge, the CMS sniff, the paged reads. Three passes over every changed file (`flow.md` §2).
 4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test (the owner check, the trigger, the limit, the `overwrite` flag, the cleanup age and pattern), restored.
 5. Report: each command, exit code, relevant output; the owner's steps, in order: apply the SQL; create the signed preset (allowed formats jpg, jpeg, png, webp; incoming transformation) and set `CLOUDINARY_LISTING_PRESET` in Vercel before the merge;
    after the deploy delete the unsigned preset and `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`; if the owner wants, delete `main-sample` (Cloudinary's sample created with the account 2026-10-21,

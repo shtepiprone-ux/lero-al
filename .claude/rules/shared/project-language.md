@@ -12,6 +12,11 @@ Owner instruction, 2026-10-24: Opus and Sonnet must not switch to Russian.
   These literal technical elements do not authorize Russian explanatory prose.
 - Before sending any message, check its authored prose and rewrite Russian passages into Ukrainian without
   asking the owner to confirm the language or repeating already completed work.
+- Visible thinking counts as communication: the owner reads the thinking blocks on screen. Thinking is written in
+  English or Ukrainian, never Russian, and a short progress line is checked like any other message. Owner, 2026-11-19
+  (translated): "Russian again. You keep switching to it, although it is forbidden! Why do you keep breaking this rule,
+  this error of yours keeps appearing!!!" Read in the session log the same day: the replies were Ukrainian, and one of
+  88 thinking blocks was Russian; the rule above named replies only.
 
 ## Project files
 

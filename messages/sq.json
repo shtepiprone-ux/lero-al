@@ -918,7 +918,7 @@
     "users": {
       "tab_all": "Të gjithë përdoruesit",
       "tab_verified": "✓ Agjentë të verifikuar",
-      "search_placeholder": "Kërko sipas emrit, telefonit, kompanisë...",
+      "search_placeholder": "Kërko sipas emrit, telefonit, kompanisë ose ID-së së llogarisë...",
       "col_agent": "Agjent",
       "col_company": "Kompania",
       "col_date": "Data",
@@ -1580,7 +1580,9 @@
       "header": {
         "new_user_title": "Përdorues i ri",
         "new_user_subtitle": "Plotësoni fushat më poshtë për të krijuar profilin",
-        "verified_badge": "I verifikuar"
+        "verified_badge": "I verifikuar",
+        "copy_account_id": "Kopjo ID-në e llogarisë",
+        "account_id_copied": "ID-ja e llogarisë u kopjua"
       },
       "location_request": {
         "title": "Kërkesë për shtimin e vendbanimit"

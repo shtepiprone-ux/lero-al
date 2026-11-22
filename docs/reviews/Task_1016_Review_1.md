@@ -1,6 +1,6 @@
 # Task 1016 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1016_Reviews_Are_Read_From_Their_Own_Files.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1016_Reviews_Are_Read_From_Their_Own_Files.md) · OWASP record: [Task_1016.json](../security/owasp/reviews/Task_1016.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1016_Reviews_Are_Read_From_Their_Own_Files.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1016_Reviews_Are_Read_From_Their_Own_Files.md) · OWASP record: [Task_1016.json](../security/owasp/reviews/Task_1016.json)
 
 Review 1 of the branch `rules/checklists-and-957-split`, working tree on df0022227 (uncommitted) — APPROVED
 

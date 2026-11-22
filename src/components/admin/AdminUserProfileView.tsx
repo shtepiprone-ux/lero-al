@@ -16,6 +16,7 @@ import { formatDate, formatDateTime } from '@/lib/formatters'
 import type { ProfileType } from '@/modules/admin/actions'
 import type { User, UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { MantineCopyIdButton } from '@/design-system/mantine/patterns/MantineCopyIdButton'
 import { MantineDetailList } from '@/design-system/mantine/patterns/MantineDetailList'
 
 // ── Types and constants (shared with the container) ─────────────────────────────
@@ -513,9 +514,13 @@ export function AdminUserProfileView({
                         {email}
                       </Text>
                       {user.public_id != null && (
-                        <Text size="xs" c="dimmed" ff="monospace">
-                          #{user.public_id}
-                        </Text>
+                        // the number is what people quote; the click copies the account's UUID, which is the name of its Cloudinary folder (Task 957, O957-3)
+                        <MantineCopyIdButton
+                          id={user.id}
+                          label={`#${user.public_id}`}
+                          copyLabel={t('header.copy_account_id')}
+                          copiedLabel={t('header.account_id_copied')}
+                        />
                       )}
                     </>
                   )}

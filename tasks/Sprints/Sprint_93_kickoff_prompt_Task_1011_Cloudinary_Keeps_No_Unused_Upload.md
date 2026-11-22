@@ -1,6 +1,6 @@
 # Task 1011 — Cloudinary keeps no upload that nothing uses, and deletion sees every CMS page
 
-Sprint 93. Priority P1. Owner decisions: O957-4 2026-11-18 (the owner: "add automatic cleanup to the existing task": a daily job removes unreferenced listing and avatar uploads and empty owner folders); the owner 2026-11-18 on deleting a user: "the user's main folder and all files and folders in it". Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`).
+Sprint 93. Priority P1. Owner decisions: O957-4 2026-11-18 (the owner: "add automatic cleanup to the existing task": a daily job removes unreferenced listing and avatar uploads and empty owner folders); the owner 2026-11-18 on deleting a user: "the user's main folder and all files and folders in it". Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`). Corrected 2026-11-22 before execution (checklist D, owner, translated: "fix it"): that code is in commit `9de067faf`; `deleteAccount.ts` is named in the Scope; the executor starts from a clean tree and takes the files with `git show`; the Route runs the checklist's test command.
 Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
@@ -24,8 +24,9 @@ Fix: the daily cron, `deleteEmptyFolder` and `purgeAccountFolder` in the one mod
   any other answer or error: nothing is touched), then walks every folder under `<userId>` (any name, `Brand` included), passes every asset of each `asset_folder` (paged) to `deleteAsset(id, { reason: 'account_folder' })`, and removes the emptied folders deepest first, `<userId>` last;
   a file a row still uses (the site logo above) is kept with its folders. A root folder not named by a UUID is never touched: `Lero` holds the site's own logos and favicon (owner, 2026-11-18: "this folder concerns the site, not users"). `deleteAccount` calls it after the auth deletion; the cron calls it for each root UUID folder with no account (within the same caps).
 - `src/lib/cloudinaryDelete.ts`: the `pages.content` check reads every page in pages of 500 until a short page (C-05). `src/lib/cloudinaryAdminRead.ts` (new): the paged Admin API reads. `src/tests/fakeCloudinary.ts` (new): the test double.
+- `src/lib/account/deleteAccount.ts`: `purgeAccountFolder` added to the import (line 4), step 4 added to the header comment (after line 27), and one step before `return { ok: true, filesNotRemoved }` (line 67), after the file releases, that calls it and counts a purge that did not finish in `filesNotRemoved`.
 - Tests: `src/app/api/cron/cloudinary-cleanup/__tests__/route.security.test.ts`, `src/lib/__tests__/cloudinaryPurge.security.test.ts`, `src/lib/cloudinaryDelete.security.test.ts`, `src/lib/account/deleteAccount.security.test.ts`. `vercel.json`: the cron line.
-- State (option A, owner 2026-11-22): the files above are written (Task 957 Revision 3) and uncommitted in the working tree of `task/957-signed-listing-uploads`; Reviews 1-4 of Task 957 name no finding against them (`docs/reviews/Task_957_Review_1.md` to `docs/reviews/Task_957_Review_4.md`). The pull request takes exactly these files from that tree (`src/lib/cloudinaryDelete.ts` whole); nothing is rewritten, and a defect the review finds is fixed in this pull request.
+- Source of the code (option A, owner 2026-11-22): commit `9de067faf` on the local branch `task/957-signed-listing-uploads` (Task 957 Revision 3; Reviews 1-4 of Task 957 name no finding against these files). In that commit every change of the ten files above belongs to this task (`git diff --stat main...9de067faf -- <the files>` → 10 files changed, 1067 insertions(+), 6 deletions(-); their hunks and test names carry only O957-4 and C-05), so the executor takes each file whole with `git show 9de067faf:<path>`, tests first (Route). Nothing else of that commit.
 - Dependencies: none. Out of scope: moving stored photos (none is outside its folder); the signed upload (Task 957).
 - Kept as on `main` (checklist A2): `deleteAsset` keeps its reference check, fail-closed lookup and `CLOUDINARY_DELETE_MODE`; `deleteAccount` keeps every step it has and adds the purge last.
 
@@ -91,8 +92,10 @@ No visible change.
 
 ## Route
 
-1. Opus hands the owner the commands (checklist H): a branch `task/<n>` from `main` that takes the Scope files from `task/957-signed-listing-uploads`.
-2. Run: `npx vitest run src/app/api/cron/cloudinary-cleanup/__tests__/route.security.test.ts src/lib/__tests__/cloudinaryPurge.security.test.ts src/lib/cloudinaryDelete.security.test.ts src/lib/account/deleteAccount.security.test.ts`. CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5).
-3. Report: each command, exit code, relevant output; one deliberate break per security test (named in its criterion), restored.
+1. The owner creates the branch `task/1011-cloudinary-keeps-no-unused-upload` from `main` with this kickoff committed on it (checklist H); nothing else is taken onto it, so the executor starts from a clean tree (checklist I1).
+2. Tests first (I4): the four test files and `src/tests/fakeCloudinary.ts` from `9de067faf`; run `npm test -- src/app/api/cron/cloudinary-cleanup/__tests__/route.security.test.ts src/lib/__tests__/cloudinaryPurge.security.test.ts src/lib/cloudinaryDelete.security.test.ts src/lib/account/deleteAccount.security.test.ts`; they fail on the unchanged code; keep that output.
+3. The change (I5): `route.ts`, `cloudinaryAdminRead.ts`, `cloudinaryDelete.ts`, `deleteAccount.ts` and the `vercel.json` cron line from `9de067faf`.
+4. Run: the same `npm test -- …` command; nothing else runs locally. Break (I9), each once, then restore: the cron secret check (`route.security.test.ts` fails), the folder pattern guard of `deleteEmptyFolder` (`cloudinaryDelete.security.test.ts`), the account-absence proof of `purgeAccountFolder` (`cloudinaryPurge.security.test.ts`), the paged `pages` read (`cloudinaryDelete.security.test.ts`). CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5).
+5. Report: each command, exit code, relevant output; the failing run before the change; each break output.
 
 ## Review

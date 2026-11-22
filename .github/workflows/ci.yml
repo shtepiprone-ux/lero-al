@@ -140,7 +140,18 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+          SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt
         run: npm run test:security-integration
+      # Task 957 (O957-5): a cancelled or killed run leaves its synthetic users and listings; this step still runs then
+      # (if: always(), within GitHub's cancellation period) and removes the prefixes this job logged and any older than two hours.
+      - name: Synthetic test data of this job is removed
+        if: always()
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+          SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt
+        run: node scripts/sweep-synthetic.mjs
 
   dependencies:
     name: Dependency audit (high and critical block)
@@ -496,6 +507,7 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+          SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt
         run: node scripts/check-signed-in-pages.mjs
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: failure()
@@ -505,6 +517,16 @@ jobs:
             server.log
             test-results/
           retention-days: 7
+      # Task 957 (O957-5): a cancelled or killed run leaves its synthetic users and listings; this step still runs then
+      # (if: always(), within GitHub's cancellation period) and removes the prefixes this job logged and any older than two hours.
+      - name: Synthetic test data of this job is removed
+        if: always()
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SECURITY_CI_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
+          SYNTHETIC_RUN_LOG: ${{ runner.temp }}/synthetic-runs.txt
+        run: node scripts/sweep-synthetic.mjs
 
   required:
     name: CI Required

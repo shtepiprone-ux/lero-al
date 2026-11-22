@@ -1,0 +1,23 @@
+{
+  "task": "1016",
+  "sheets": {
+    "AI_Agent_Security": { "verdict": "not applicable", "reason": "agent instructions in .claude/rules change; no agent tool, permission, hook or settings file changes" },
+    "CI_CD_Security": { "verdict": "met", "quotes": ["Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."], "evidence": "the gate tools change only through pull request #50 with CI Required, merged by the owner; `node scripts/quality/owasp.mjs gate --base main`" },
+    "Denial_of_Service": { "verdict": "met", "quotes": ["can take exponential time on some inputs, so one short request can keep a CPU core busy"], "evidence": "`scripts/quality/owasp.mjs` REVIEW_FILE and REVIEW_LINK and `scripts/quality/check-files.mjs` kickoffOf use fixed linear patterns; no pattern is built from input" },
+    "File_Upload": { "verdict": "not applicable", "reason": "the tools read repository files; nothing is uploaded anywhere" },
+    "GitHub_Actions_Security": { "verdict": "not applicable", "reason": "no workflow file or step changes in this pull request" },
+    "Injection_Prevention": { "verdict": "met", "quotes": ["The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"], "evidence": "`scripts/quality/check-files.mjs` kickoffOf compares the task number as a string; `node --test scripts/quality/check-files.test.mjs` (the kickoffOf case fails on the old line and passes on the fix)" },
+    "Input_Validation": { "verdict": "not applicable", "reason": "no product input is validated or changed; the tools read repository documents" },
+    "JavaScript_and_TypeScript_Security": { "verdict": "met", "quotes": ["Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."], "evidence": "`scripts/quality/owasp.mjs` REVIEW_FILE, REVIEW_LINK; `scripts/quality/check-files.mjs` kickoffOf" },
+    "LLM_Prompt_Injection_Prevention": { "verdict": "not applicable", "reason": "no language model reads data of the product; agent rule documents only" },
+    "MCP_Security": { "verdict": "not applicable", "reason": "no MCP server, tool or agent permission is added or changed" },
+    "Mass_Assignment": { "verdict": "not applicable", "reason": "no request body is bound to any object or database row" },
+    "Nodejs_Security": { "verdict": "met", "quotes": ["some third-party rulesets can be used to flag dangerous patterns such as eval()"], "evidence": "ESLint with the security rules in the pre-commit hook and CI, and CodeQL on pull request #50 (`gh pr checks 50`)" },
+    "OS_Command_Injection_Defense": { "verdict": "met", "quotes": ["The primary defense is to avoid calling OS commands directly."], "evidence": "`scripts/quality/owasp.mjs` readRepoFile uses existsSync and readFileSync; the change starts no process" },
+    "Prototype_Pollution_Prevention": { "verdict": "not applicable", "reason": "no input key is copied into any object the tools build" },
+    "Secure_Coding_with_AI": { "verdict": "met", "quotes": ["AI coding assistants frequently suggest package names that do not exist on public registries"], "evidence": "no package added; `node --test scripts/quality/owasp.test.mjs scripts/quality/check-files.test.mjs` → 57 pass, 0 fail" },
+    "Software_Supply_Chain_Security": { "verdict": "not applicable", "reason": "no dependency, action or install step changes in this pull request" },
+    "User_Privacy_Protection": { "verdict": "not applicable", "reason": "the tools read task documents and hold no personal data" },
+    "Verifying_Third_Party_Agent_Execution_Evidence": { "verdict": "met", "quotes": ["Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."], "evidence": "the reviewer reran the tests, the deliberate break and `node scripts/quality/owasp.mjs gate --base main` itself" }
+  }
+}

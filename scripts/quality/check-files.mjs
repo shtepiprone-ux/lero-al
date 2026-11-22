@@ -527,11 +527,12 @@ export function reviewSectionFindings(body, task, grandfathered = INLINE_REVIEW_
 }
 
 /** The kickoff of a task (open or archived), or null. */
-function kickoffOf(task) {
+export function kickoffOf(task) {
   for (const dir of ['tasks/Sprints', 'tasks/Archive']) {
     let names;
     try { names = readdirSync(path.join(ROOT, dir)); } catch { continue; }
-    const name = names.find((n) => new RegExp(`^Sprint_\\d+_kickoff_prompt_Task_${task}_.+\\.md$`).test(n));
+    // A fixed pattern and a compared number: the task id never becomes part of a regular expression (CodeQL js/regex-injection).
+    const name = names.find((n) => /^Sprint_\d+_kickoff_prompt_Task_\d+_.+\.md$/.test(n) && /_Task_(\d+)_/.exec(n)[1] === String(task));
     if (name) return readFileSync(path.join(ROOT, dir, name), 'utf8');
   }
   return null;

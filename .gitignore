@@ -84,12 +84,15 @@ playwright/.auth/
 .claude/agents/*
 !.claude/agents/executor.md
 !.claude/agents/orchestrator.md
+.codex/
 docs/chat-gpt-reports/
 
 # TailAdmin reference archive — local design ground-truth, never committed
 demo_tailadmin_com.zip
 docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md
 
+# Codex tasks folder
+Codex-tasks/
 
 
 # Technical Materials

@@ -410,3 +410,9 @@ test('a kickoff\'s "## Review" holds only links to docs/reviews/Task_<n>_Review_
   assert.match(cf.reviewFileFindings('docs/reviews/Task_999_Review_1.md', good.replace('957', '999'), () => null).map((f) => f.message).join(), /no kickoff of Task 999/);
   assert.deepEqual(cf.reviewFileFindings('docs/reviews/README.md', '# x', () => null), [], 'only review files are held to it');
 });
+
+test('a kickoff is found by its task number, never by a pattern built from it (CodeQL js/regex-injection)', () => {
+  assert.match(cf.kickoffOf('957') ?? '', /^# Task 957 — /);
+  assert.match(cf.kickoffOf(957) ?? '', /^# Task 957 — /);
+  for (const bad of ['95', '9.*', '957_', '.*', '']) assert.equal(cf.kickoffOf(bad), null, bad);
+});

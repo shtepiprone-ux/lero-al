@@ -6,6 +6,7 @@
  * service_role is used here to PREPARE and CLEAN (and by the production code under test, which is how it runs in production); every authorization check in the
  * tests goes through a real user session or a real anonymous client.
  */
+import { appendFileSync } from 'node:fs'
 import { randomBytes } from 'node:crypto'
 import 'server-only'
 
@@ -27,11 +28,91 @@ export interface CleanupResult { verified: boolean; remaining: number; errors: s
 
 const clientOptions = { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } }
 
+/**
+ * Removes everything of ONE run, by its prefix (`zz_synth_<time><hex>`): the clean-up of `createRun()` and the sweep of `scripts/sweep-synthetic.mjs` (Task 957, O957-5) are this one body,
+ * the same order and the same verification. `tracked` carries the ids the run created itself; anything else of the run is found by the prefix (listing slugs and auth e-mails).
+ * A query that fails is "unknown", never "zero left".
+ */
+export async function removeRun(admin: SupabaseClient, run: string, tracked: { userIds?: Set<string>; listingIds?: Set<string> } = {}): Promise<CleanupResult> {
+  const RUN = run
+  // The prefix contains `_`, which LIKE reads as "any character": the pattern is escaped, so a clean-up deletes only rows that really start with this run's prefix.
+  const RUN_LIKE = `${escapeLike(RUN)}%`
+  const userIds = tracked.userIds ?? new Set<string>()
+  const listingIds = tracked.listingIds ?? new Set<string>()
+  const errors: string[] = []
+  const step = async (label: string, run: () => PromiseLike<{ error: { message: string } | null }>) => {
+    try { const { error } = await run(); if (error) errors.push(`${label}: ${error.message.slice(0, 80)}`) } catch (e) { errors.push(`${label}: ${(e as Error).message.slice(0, 80)}`) }
+  }
+  const none = ['00000000-0000-0000-0000-000000000000']
+  const uids = userIds.size ? [...userIds] : none
+  const lids = listingIds.size ? [...listingIds] : none
+
+  // anything of this run that was created but not tracked (a failure half-way)
+  const strays = await admin.from('listings').select('id').like('slug', RUN_LIKE)
+  if (strays.error) errors.push(`list listings: ${strays.error.message.slice(0, 80)}`)
+  else for (const row of strays.data ?? []) listingIds.add(row.id)
+  for (let page = 1; page <= 10; page++) {
+    const list = await admin.auth.admin.listUsers({ page, perPage: 200 })
+    if (list.error) { errors.push(`list users: ${list.error.message.slice(0, 80)}`); break }
+    list.data.users.filter(u => (u.email ?? '').startsWith(RUN)).forEach(u => userIds.add(u.id))
+    if (list.data.users.length < 200) break
+  }
+  const allUsers = [...userIds], allListings = [...listingIds]
+
+  await step('inquiries', () => admin.from('listing_inquiries').delete().like('name', RUN_LIKE))
+  if (allListings.length) {
+    await step('contact events', () => admin.from('listing_contact_events').delete().in('listing_id', allListings))
+    await step('views', () => admin.from('listing_views').delete().in('listing_id', allListings))
+  }
+  if (allUsers.length) {
+    await step('contact reveals', () => admin.from('listing_contact_reveals').delete().in('viewer_id', allUsers))
+    await step('notifications', () => admin.from('notifications').delete().in('user_id', allUsers))
+    await step('status history', () => admin.from('user_status_history').delete().in('user_id', allUsers))
+  }
+  if (allListings.length) await step('listings', () => admin.from('listings').delete().in('id', allListings))
+  // A person who acted on another one (an administrator who blocked a user) is referenced by a NO ACTION key of the other person's rows (user_change_log.changed_by),
+  // which go with THAT person: such an account can only be deleted after the ones it acted on, so a refused delete is retried once the others are gone.
+  let toDelete = allUsers
+  for (let pass = 0; pass < 3 && toDelete.length; pass++) {
+    const refused: string[] = []
+    for (const id of toDelete) {
+      try { const { error } = await admin.auth.admin.deleteUser(id); if (error && error.status !== 404 && error.code !== 'user_not_found') refused.push(id) } catch { refused.push(id) }   // a person the test already deleted is gone, not a failure
+    }
+    toDelete = refused
+  }
+  for (const id of toDelete) await step('delete user', () => admin.auth.admin.deleteUser(id))      // still refused after the retries: reported as an error
+
+  // verification: an ERROR in a check is a failure ("unknown"), never "zero left"
+  let remaining = 0
+  const count = async (label: string, run: () => PromiseLike<{ data: unknown[] | null; error: { message: string } | null }>) => {
+    try {
+      const { data, error } = await run()
+      if (error) { errors.push(`verify ${label}: ${error.message.slice(0, 80)}`); return }
+      remaining += (data ?? []).length
+    } catch (e) { errors.push(`verify ${label}: ${(e as Error).message.slice(0, 80)}`) }
+  }
+  await count('users', () => admin.from('users').select('id').in('id', allUsers.length ? allUsers : none))
+  await count('listings', () => admin.from('listings').select('id').like('slug', RUN_LIKE))
+  await count('inquiries', () => admin.from('listing_inquiries').select('id').like('name', RUN_LIKE))
+  await count('notifications', () => admin.from('notifications').select('id').in('user_id', uids))
+  await count('contact events', () => admin.from('listing_contact_events').select('id').in('listing_id', lids))
+  await count('contact reveals', () => admin.from('listing_contact_reveals').select('id').in('viewer_id', allUsers.length ? allUsers : none))
+  for (let page = 1; page <= 10; page++) {
+    const list = await admin.auth.admin.listUsers({ page, perPage: 200 })
+    if (list.error) { errors.push(`verify auth users: ${list.error.message.slice(0, 80)}`); break }
+    remaining += list.data.users.filter(u => (u.email ?? '').startsWith(RUN)).length
+    if (list.data.users.length < 200) break
+  }
+  return { verified: errors.length === 0 && remaining === 0, remaining, errors }
+}
+
 export function createRun() {
   const env = loadIntegrationEnv()
   const RUN = `zz_synth_${Date.now().toString(36)}${randomBytes(2).toString('hex')}`
-  // The prefix contains `_`, which LIKE reads as "any character": the pattern is escaped, so a clean-up deletes only rows that really start with this run's prefix.
-  const RUN_LIKE = `${escapeLike(RUN)}%`
+  // the prefix goes to the file of this CI job (when it names one), so a step that always runs can remove what a cancelled run left (Task 957, O957-5): the prefix only
+  if (process.env.SYNTHETIC_RUN_LOG) {
+    try { appendFileSync(process.env.SYNTHETIC_RUN_LOG, `${RUN}\n`) } catch { console.error('fixture: the run prefix could not be logged') }
+  }
   const admin = createClient(env.url, env.serviceKey, clientOptions)
   const anonymousClient = () => createClient(env.url, env.anonKey, clientOptions)
   const userIds = new Set<string>()
@@ -90,71 +171,7 @@ export function createRun() {
   }
 
   async function cleanup(): Promise<CleanupResult> {
-    const errors: string[] = []
-    const step = async (label: string, run: () => PromiseLike<{ error: { message: string } | null }>) => {
-      try { const { error } = await run(); if (error) errors.push(`${label}: ${error.message.slice(0, 80)}`) } catch (e) { errors.push(`${label}: ${(e as Error).message.slice(0, 80)}`) }
-    }
-    const none = ['00000000-0000-0000-0000-000000000000']
-    const uids = userIds.size ? [...userIds] : none
-    const lids = listingIds.size ? [...listingIds] : none
-
-    // anything of this run that was created but not tracked (a failure half-way)
-    const strays = await admin.from('listings').select('id').like('slug', RUN_LIKE)
-    if (strays.error) errors.push(`list listings: ${strays.error.message.slice(0, 80)}`)
-    else for (const row of strays.data ?? []) listingIds.add(row.id)
-    for (let page = 1; page <= 10; page++) {
-      const list = await admin.auth.admin.listUsers({ page, perPage: 200 })
-      if (list.error) { errors.push(`list users: ${list.error.message.slice(0, 80)}`); break }
-      list.data.users.filter(u => (u.email ?? '').startsWith(RUN)).forEach(u => userIds.add(u.id))
-      if (list.data.users.length < 200) break
-    }
-    const allUsers = [...userIds], allListings = [...listingIds]
-
-    await step('inquiries', () => admin.from('listing_inquiries').delete().like('name', RUN_LIKE))
-    if (allListings.length) {
-      await step('contact events', () => admin.from('listing_contact_events').delete().in('listing_id', allListings))
-      await step('views', () => admin.from('listing_views').delete().in('listing_id', allListings))
-    }
-    if (allUsers.length) {
-      await step('contact reveals', () => admin.from('listing_contact_reveals').delete().in('viewer_id', allUsers))
-      await step('notifications', () => admin.from('notifications').delete().in('user_id', allUsers))
-      await step('status history', () => admin.from('user_status_history').delete().in('user_id', allUsers))
-    }
-    if (allListings.length) await step('listings', () => admin.from('listings').delete().in('id', allListings))
-    // A person who acted on another one (an administrator who blocked a user) is referenced by a NO ACTION key of the other person's rows (user_change_log.changed_by),
-    // which go with THAT person: such an account can only be deleted after the ones it acted on, so a refused delete is retried once the others are gone.
-    let toDelete = allUsers
-    for (let pass = 0; pass < 3 && toDelete.length; pass++) {
-      const refused: string[] = []
-      for (const id of toDelete) {
-        try { const { error } = await admin.auth.admin.deleteUser(id); if (error && error.status !== 404 && error.code !== 'user_not_found') refused.push(id) } catch { refused.push(id) }   // a person the test already deleted is gone, not a failure
-      }
-      toDelete = refused
-    }
-    for (const id of toDelete) await step('delete user', () => admin.auth.admin.deleteUser(id))      // still refused after the retries: reported as an error
-
-    // verification: an ERROR in a check is a failure ("unknown"), never "zero left"
-    let remaining = 0
-    const count = async (label: string, run: () => PromiseLike<{ data: unknown[] | null; error: { message: string } | null }>) => {
-      try {
-        const { data, error } = await run()
-        if (error) { errors.push(`verify ${label}: ${error.message.slice(0, 80)}`); return }
-        remaining += (data ?? []).length
-      } catch (e) { errors.push(`verify ${label}: ${(e as Error).message.slice(0, 80)}`) }
-    }
-    await count('users', () => admin.from('users').select('id').in('id', allUsers.length ? allUsers : none))
-    await count('listings', () => admin.from('listings').select('id').like('slug', RUN_LIKE))
-    await count('inquiries', () => admin.from('listing_inquiries').select('id').like('name', RUN_LIKE))
-    await count('notifications', () => admin.from('notifications').select('id').in('user_id', uids))
-    await count('contact events', () => admin.from('listing_contact_events').select('id').in('listing_id', lids))
-    await count('contact reveals', () => admin.from('listing_contact_reveals').select('id').in('viewer_id', allUsers.length ? allUsers : none))
-    for (let page = 1; page <= 10; page++) {
-      const list = await admin.auth.admin.listUsers({ page, perPage: 200 })
-      if (list.error) { errors.push(`verify auth users: ${list.error.message.slice(0, 80)}`); break }
-      remaining += list.data.users.filter(u => (u.email ?? '').startsWith(RUN)).length
-      if (list.data.users.length < 200) break
-    }
-    return { verified: errors.length === 0 && remaining === 0, remaining, errors }
+    return removeRun(admin, RUN, { userIds, listingIds })
   }
 
   return { RUN, env, admin, anonymousClient, signIn, makeUser, makeListing, anyLocationId, cleanup }

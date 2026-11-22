@@ -24,7 +24,10 @@ function request(file?: File) {
   return new NextRequest('http://localhost/api/upload-cms-image', { method: 'POST', body: form })
 }
 
-const png = () => new File([new Uint8Array([1, 2, 3])], 'a.png', { type: 'image/png' })
+// Task 957 (AC6): the bytes decide, so the fixtures carry real signatures (PNG, JPEG)
+const PNG_BYTES = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]
+const JPEG_BYTES = [0xff, 0xd8, 0xff, 0xe0, 0, 0x10, 0x4a, 0x46, 0x49, 0x46, 0, 1]
+const png = () => new File([new Uint8Array(PNG_BYTES)], 'a.png', { type: 'image/png' })
 
 beforeEach(() => {
   vi.clearAllMocks()
@@ -72,6 +75,19 @@ describe('POST /api/upload-cms-image (T9)', () => {
 
     expect(res.status).toBe(400)
     expect(await res.json()).toEqual({ error: 'no_file' })
+  })
+
+  it('[SEC-UPLOAD-SNIFF-DENY] row 5b — a PNG declared image/jpeg, a JPEG declared image/png and text declared image/png: 400 invalid_type, nothing uploaded', async () => {
+    for (const file of [
+      new File([new Uint8Array(PNG_BYTES)], 'a.jpg', { type: 'image/jpeg' }),
+      new File([new Uint8Array(JPEG_BYTES)], 'a.png', { type: 'image/png' }),
+      new File(['<svg onload=alert(1)>'], 'a.png', { type: 'image/png' }),
+    ]) {
+      const res = await POST(request(file))
+      expect(res.status).toBe(400)
+      expect(await res.json()).toEqual({ error: 'invalid_type' })
+    }
+    expect(mockUpload).not.toHaveBeenCalled()
   })
 
   it('row 6 — success: 200 { url }, uploaded to folder cms/pages', async () => {

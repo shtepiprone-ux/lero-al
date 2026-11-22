@@ -1,6 +1,6 @@
 # Task 1010 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1010_The_Admin_Copies_The_Account_UUID.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1010_The_Admin_Copies_The_Account_UUID.md) · OWASP record: [Task_1010.json](../security/owasp/reviews/Task_1010.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1010_The_Admin_Copies_The_Account_UUID.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1010_The_Admin_Copies_The_Account_UUID.md) · OWASP record: [Task_1010.json](../security/owasp/reviews/Task_1010.json)
 
 Review 1 of the branch `task/1010-admin-copies-account-uuid`, working tree on 0f34e290d (uncommitted) — APPROVED
 Scope: the diff against 0f34e290d (the kickoff commit, equal to `main` fa8fea56b in every file the task changes): `src/components/admin/AdminUserProfileView.tsx`, `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`, `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json`; entry point: the staff page `/admin/users/[id]`, unchanged

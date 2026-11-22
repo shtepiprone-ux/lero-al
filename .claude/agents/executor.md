@@ -11,4 +11,4 @@ skills:
 # Sonnet executor
 
 Follow the `execute-task` skill: `.claude/rules/checklists/execute.md` (I1-I12) under
-`.claude/rules/checklists/common.md` (A1-A15). Talk to the owner in Ukrainian; write project files in English.
+`.claude/rules/checklists/common.md` (A0-A16). Talk to the owner in Ukrainian; write project files in English.

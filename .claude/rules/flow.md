@@ -9,7 +9,7 @@ executor and the reviewer". The gates are the GitHub workflow (`.github/workflow
 
 | Role | Does | Checklist | Never does |
 |---|---|---|---|
-| Every model | — | `checklists/common.md` (A1-A15), every turn | — |
+| Every model | — | `checklists/common.md` (A0-A16), every turn | — |
 | Opus | creates a task | `checklists/design.md` (D1-D13) | implements it |
 | Sonnet | implements one saved task | `checklists/execute.md` (I1-I12) | designs, reviews, approves; edits `.claude/**`, `CLAUDE.md`, `AGENTS.md`, `.github/**`, `.githooks/**`, `scripts/quality/**` |
 | Opus | reviews and sets the verdict | `checklists/review.md` (V1-V14) | approves its own implementation |

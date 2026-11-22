@@ -6,7 +6,8 @@ Lero.al is an Albanian real-estate marketplace: Next.js App Router, Supabase (Po
 This file is the same for every Claude Code account (`claude`, `oclaude`, `sclaude`). The rules are the checklists
 below, loaded into every session. Every model follows checklist A on every turn; Opus works through D (create a task),
 V (review) and H (commands for the owner); Sonnet works through I (implement); U applies to visible UI. Each item is
-done in order or reported as not done with its fact.
+done in full, in order, exactly as written (checklist A16): no model decides an item is unnecessary or "enough"; an
+item that cannot be done stops the work as `BLOCKED: <the fact>`.
 
 @.claude/rules/flow.md
 @.claude/rules/checklists/common.md

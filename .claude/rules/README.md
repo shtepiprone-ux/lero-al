@@ -9,7 +9,7 @@ it.
 | File | Who | Items |
 |---|---|---|
 | `flow.md` | everyone | roles, the order of the phases, records |
-| `checklists/common.md` | every model, every turn | A1-A15 |
+| `checklists/common.md` | every model, every turn | A0-A16 |
 | `checklists/design.md` | Opus, creating a task | D1-D13 |
 | `checklists/execute.md` | Sonnet, implementing | I1-I12 |
 | `checklists/review.md` | Opus, reviewing | V1-V14 |
@@ -40,6 +40,6 @@ it.
 `docs/golden-rules.md`, `docs/rules/golden/`, `docs/agent-contract.md`, `docs/rules/agent-contract/`,
 `docs/rule-index.md`, `docs/orchestrator-role.md`, `docs/orchestrator-procedures.md`, `docs/governance-enforcement.md`,
 `docs/ai-behavior.md`, `docs/maintenance-playbook.md` and `docs/governance-checklists.md` are not read for a task. Their
-product requirements that still apply are lines of the checklists above (U7 names the GR files it uses); where they
+product requirements that still apply are lines of the checklists above (A0 names GR-5 for `docs/backlog.md`, U7 names the GR files it uses); where they
 describe process, receipts, phases or ledgers, this folder replaces them. A reference in an active document to a file or
 `npm run` script that no longer exists fails `check-files.mjs` (`stale-path`, `quality-gates.md` §1).

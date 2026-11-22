@@ -10,7 +10,7 @@ Every item, in this order, under checklist A. The review judges the diff against
 | V4 | Read every changed file once, tests included; a generated file through the tool that checks it | a change that does not remove the "## Cause" is a finding |
 | V5 | Approved behaviour: each changed surface against `git show main:<path>` and its `main` Story | a change of what `main` does without an owner decision is a finding (A2) |
 | V6 | Exemptions: every added or removed allowlist, baseline, registry row, `skip`, `eslint-disable` in the diff | each is proven with a planted bad case through the same checker, or is a finding |
-| V7 | Secure code review: `.claude/rules/secure-code-review.md` §2 (the six steps) and §3 (only the categories the diff touches); data or roles: `db-catalog-audit.mjs`; uploads: `cloudinary-config.mjs` | every touched category answered with `path:line` |
+| V7 | Secure code review: `.claude/rules/secure-code-review.md` §2 (the six steps) and §3 (every category); data or roles: `db-catalog-audit.mjs`; uploads: `cloudinary-config.mjs` | every category of §3 answered: "touched" with `path:line`, or "not touched" with the fact (`git diff --name-only` shows no file of it) |
 | V8 | Each acceptance criterion: run its test, undo the product change once, run again, restore | the test fails without the change |
 | V9 | Stories: list each changed Story and the states it renders, read from its code | the list is for the owner, who checks Stories by hand; no Storybook run |
 | V10 | `node scripts/quality/owasp.mjs review <kickoff> --base main`; write `docs/security/owasp/reviews/Task_<n>.json` | every listed sheet is `met`, `finding` or `not applicable` with its reason |

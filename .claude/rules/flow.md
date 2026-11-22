@@ -57,4 +57,5 @@ review never replaces the owner's review of the diff.
 | 2026-11-21 | V9 | "do not run the Stories check, I will check it by hand much faster" |
 | 2026-11-22 | A5 | "CI must now be checked only on GitHub! Because locally it is checked for very long!" |
 | 2026-11-22 | I7, V4 | "one pass over the changed files within the task" (the three full passes were removed) |
+| 2026-11-22 | H6 | "two merge commands for two branches must never be given at once; they go one after the other, only after the full CI check on GitHub" |
 | 2026-11-22 | A1, I6, V2, D4 | "where one or two lines need fixing, the model changes dozens of files"; no file or revision count limit (owner: "remove the limits from the rules") |

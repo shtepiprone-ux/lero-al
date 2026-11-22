@@ -122,3 +122,5 @@ No visible change.
 ## Review
 
 Owner reads the diff and the change report; the first CI run is the evidence for AC6.
+
+- [Review 1 — APPROVED](../../docs/reviews/Task_945_Review_1.md)

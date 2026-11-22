@@ -1,6 +1,6 @@
 # Task 1011 — Review 3
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
 
 Review 3 of Revision 1, working tree on 473f5ba68 (uncommitted) — APPROVED
 Scope: the diff against 473f5ba68 (the commit the revision started from): `src/lib/__tests__/cloudinary.security.test.ts`, `src/lib/__tests__/cloudinarySignature.test.ts`

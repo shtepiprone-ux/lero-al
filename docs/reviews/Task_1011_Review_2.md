@@ -1,6 +1,6 @@
 # Task 1011 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
 
 Review 2 of PR #55, head cfa2f5b1a — NEEDS REVISION
 Scope: the CI result of the pull request (V14); the diff is the one of Review 1

@@ -1,6 +1,6 @@
 # Task 1011 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1011_Cloudinary_Keeps_No_Unused_Upload.md) · OWASP record: [Task_1011.json](../security/owasp/reviews/Task_1011.json)
 
 Review 1 of the branch `task/1011-cloudinary-keeps-no-unused-upload`, working tree on 25a72eb29 (uncommitted) — APPROVED
 Scope: the diff against 25a72eb29 (`main`): the ten files of the kickoff's Scope; entry point: GET `/api/cron/cloudinary-cleanup` (Vercel cron, `CRON_SECRET`); `deleteAccount` (staff and self deletion)

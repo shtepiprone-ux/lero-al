@@ -82,14 +82,14 @@ No visible UI change by the audit. A fix that touches UI follows the UI rules in
 - AC2 No finding is only reported — test: `node scripts/quality/check-files.mjs docs/security/audit-<date>/findings.md` (the `finding-status` rule: `fixed` with its test, `not a gap` with its test, `accepted` only with an owner decision, or the holding task whose kickoff cites the ID).
 - AC3 Each fix is proven — test: `npx vitest run src/__tests__/security` and every test named by a `fixed` row pass on the final tree; the reviewer removes each fixed control once, sees its named test exit 1, restores it, and records the run in the ledger.
 - AC4 The tools are clean or carried — test: `node scripts/quality/db-catalog-audit.mjs`, `node scripts/quality/cloudinary-config.mjs`, `node scripts/quality/client-sinks.mjs` and `npm audit --audit-level=high` exit 0 on the final tree, or each violation they print is a finding row that AC2's check accepts.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Starts after Tasks 955, 957, 959, 991 and 1007 are merged. `node scripts/quality/owasp.mjs sync` and `check` exit 0. Branch from `main`.
 2. The coverage script and its self-test first (AC1); save its failing output on an empty ledger.
 3. Lane by lane: read every file in full, run the lane's tools, write findings; small fixes with their failing-first security tests; larger ones filed as tasks the same day.
-4. Run: `audit-coverage.mjs`, `check-files --all`, the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
+4. Run: `audit-coverage.mjs`, `check-files --all`, the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5).
 5. Report to the owner: the ledger counts per lane, the findings by severity, fixed with tests, and the tasks filed.
 
 ## Review

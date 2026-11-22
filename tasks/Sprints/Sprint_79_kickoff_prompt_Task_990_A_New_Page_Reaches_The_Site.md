@@ -150,14 +150,14 @@ inherited canonical design — owner decision 2026-10-20.
 - AC4 The toolbar follows O990-1 — test: `src/design-system/mantine/patterns/__tests__/MantineRichTextEditor.toolbar.test.tsx` (new): every tool of both rows is a visible button in the stated order with its name and active state at 320px, 640px and 1440px; the toggle hides and shows row 2; the table menu holds its seven items; the "Paragraph" select offers paragraph, heading 2-6 and preformatted; the palette offers exactly the `textColors.ts` values; "Text" mode inserts each quicktag's markup and switching back keeps `del` as strike and `ins` as underline; no special-character, clear-formatting, paste-as-text, indent, outdent, help, more or columns tool exists.
 - AC5 The site keeps only allowed markup — test: `src/modules/cms/lib/__tests__/sanitizeCmsHtml.security.test.ts` (extended): `del`, `ins`, `hr`, `pre`, an aligned `h5` and a palette colour survive; `SEC-990-CMS-COLOR`: a colour outside the palette, `background`, `url(...)`, `expression(...)`, a second style property and any other `span` attribute are removed.
 - AC6 The Stories and four languages hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the changed Stories (raw output saved).
-- AC7 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC7 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the files of Scope, `footer.ts` and the two Stories.
 2. Tests first (AC1-AC5); save each failing output.
-3. The dialog, the slug, the page actions, the footer error, the toolbar and Text mode, the colour palette and the sanitiser, the messages, the Stories. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break of the footer check, restored.
+3. The dialog, the slug, the page actions, the footer error, the toolbar and Text mode, the colour palette and the sanitiser, the messages, the Stories. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of the footer check, restored.
 5. Report: each command, exit code, relevant output. After the merge Opus repeats the 2026-11-19 run with `HYDRATION_ADMIN` in Ukrainian, now saving a page `opus-990-check`, opens it on the site, deletes it; the owner removes or fills the `/test` footer link.
 
 ## Review

@@ -59,14 +59,14 @@ not applicable; the owner's two example pages are the structure reference.
 - AC1 The inventory matches the code — test: `node scripts/quality/legal-inventory.mjs` exits 0 on the final tree and its self-test arms (a new service dependency, a new cookie, a new storage key, an entry missing from a draft) each exit 1.
 - AC2 The drafts name only facts — test: `node scripts/quality/legal-inventory.mjs --drafts`: every service, cookie and data category of the inventory appears in both drafts, and every `[OWNER: …]` placeholder is listed in the report; `node scripts/quality/check-files.mjs docs/legal/*` passes (encoding, links).
 - AC3 The check runs in CI — test: `.github/workflows/ci.yml` `quality` job runs `node scripts/quality/legal-inventory.mjs`; `gh pr checks <n>` shows it green.
-- AC4 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC4 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the two example pages, `package.json`, `src/app/layout.tsx`, every cookie and storage write (`grep -rn "cookies().set\|\.cookies.set(\|localStorage.setItem" src`), the auth, upload, mail, monitoring and map code, `docs/security/` data notes.
 2. Tests first (AC1-AC2 self-test arms); save each failing output.
-3. The inventory, the check and its CI step, the two English drafts. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
+3. The inventory, the check and its CI step, the two English drafts. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5).
 5. Report: each command, exit code, relevant output, the `[OWNER: …]` list. After the owner approves the English text, the four language bodies follow in a report; the owner publishes them (O79-0).
 
 ## Review

@@ -134,14 +134,14 @@ and a support link. Reference research (GR-7): inherited canonical design — ow
 - AC4 The sheet tells a blocked person — test: `src/modules/auth/components/__tests__/AuthSheet.blocked.test.tsx` (new): `user_banned` + `blocked: true` → `error_account_blocked` with the `/contact` link; `blocked: false` → `error_invalid_credentials`; `src/modules/auth/lib/__tests__/mapAuthError.test.ts` (new): `user is banned` → `error_invalid_credentials`.
 - AC5 The function is reachable by the service role only — test: `src/tests/integration/authPasswordMatches.integration.test.ts` (new, real Supabase development project, CI `authz` job): `anon` and `authenticated` → permission denied (`SEC-991-RPC-DENY`), service role → true/false; `node scripts/quality/db-catalog-audit.mjs` reports none of: `auth_password_matches` executable by `anon`/`authenticated`, without a pinned `search_path`.
 - AC6 Texts and Stories hold — test: `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs`, `node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the changed `AuthSheet` Stories.
-- AC7 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC7 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Starts after Task 957 is merged. Branch from `main`. Read the auth actions, `AuthSheet`, `CaptchaWidget`, `verifyTurnstile`, `accountAccess.ts`, the limiter of 957 and `email_templates` rows. Measure the unconfirmed-address case on the development project.
 2. Tests first (AC1-AC5); save each failing output.
-3. The SQL with rollback and read-only checks, the actions, the sheet, the texts. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate breaks: the token check, the limiter, the password condition, the grant — each restored.
+3. The SQL with rollback and read-only checks, the actions, the sheet, the texts. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate breaks: the token check, the limiter, the password condition, the grant — each restored.
 5. Report: each command, exit code, relevant output. Opus proves the SQL on the owner's delivery path before the owner applies it; after the merge Opus repeats `auth-991-probe.mjs` through the site with `HYDRATION_AGENT2` (sign-up, reset, blocked sign-in) and reads the mails' log rows.
 
 ## Review

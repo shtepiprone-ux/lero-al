@@ -119,15 +119,15 @@ GR-0 queries: "upgrade dialog", "required form in a modal". Inspected: `MantineM
 - AC3 The profile shows the upgrade, not a switch — test: `src/modules/cabinet/components/__tests__/ProfileTab.agentUpgrade.test.tsx` (new): a user sees "Become an agent" and no switch; an agent sees "Agent" and no control; the dialog's Save calls `upgradeToAgent` and shows its field errors.
 - AC4 The two rows agree after the SQL — test: the read-only check of `supabase/sql_migrations/task994/` returns 0 rows where (`role = 'agent'` and `user_type <> 'agent'`) or (`role = 'user'` and `user_type = 'agent'`); `node scripts/quality/db-catalog-audit.mjs` reports no new violation.
 - AC5 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the new Story.
-- AC6 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC6 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 - AC7 The profile tab is on Mantine (owner rule 2026-11-19) — test: `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with `ProfileTab.tsx` enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them; `src/modules/cabinet/components/__tests__/ProfileTab.mantine.test.tsx` (new): no import from `@/components/ui` and no `className` in `ProfileTab.tsx`, `AdminUserAvatar.tsx` gone; the existing cabinet tests pass.
 
 ## Route
 
 1. Branch from `main`. Read `ProfileTab.tsx`, `updateCabinetProfile`, `requireViewer`, `access.ts`, `profileTypeToDb`, the `users` guard and CHECK bounds (`node scripts/quality/db-catalog-audit.mjs`).
 2. Tests first (AC1-AC4, AC7); save each failing output.
-3. The action, the profile save, the dialog and its Story, the profile button, the SQL with rollback and checks. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate breaks: the `role = 'user'` filter, the ignored `userType` — each restored.
+3. The action, the profile save, the dialog and its Story, the profile button, the SQL with rollback and checks. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate breaks: the `role = 'user'` filter, the ignored `userType` — each restored.
 5. Report: each command, exit code, relevant output. Opus proves the SQL on the owner's delivery path; after the merge Opus checks with `HYDRATION_AGENT1` (no control) and `roles-count.mjs` (no mismatch).
 
 ## Review

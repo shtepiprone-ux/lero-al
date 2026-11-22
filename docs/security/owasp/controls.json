@@ -1368,10 +1368,15 @@
     {
      "quote": "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.",
      "task": "957"
+    },
+    {
+     "quote": "Apply object-level access control checks according to the OWASP Insecure Direct Object Reference Prevention Cheat Sheet.",
+     "control": "src/modules/listings/actions/updateListing.ts",
+     "evidence": "if (existing.user_id !== user.id)"
     }
    ],
-   "reviewedSha": "311961c82a0a89ea92996a9c820afebc9fe743a9",
-   "reviewedOn": "2026-11-16"
+   "reviewedSha": "f2116329213cc51dcfe13f5273a42b4b84fe5f82",
+   "reviewedOn": "2026-11-19"
   },
   "Multifactor_Authentication": {
    "applies": true,

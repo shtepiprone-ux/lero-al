@@ -387,3 +387,26 @@ test('a finding of an audit ledger is fixed with its test, handed to an open tas
     assert.deepEqual(ledgerFindings('docs/notes.md', row('X-02', 'noted'), exists, { root }), [], 'only audit ledgers');
   } finally { rmSync(root, { recursive: true, force: true }); }
 });
+
+// Owner, 2026-11-19 (translated): "write reviews as separate files, and add links to these files in the kickoff".
+test('a kickoff\'s "## Review" holds only links to docs/reviews/Task_<n>_Review_<k>.md; each review file is linked from its kickoff', () => {
+  const kick = (review) => `# Task 957 — X\n\n## Route\n1. x\n\n## Review\n${review}\n`;
+  const link = (k, verdict, task = '957') => `- [Review ${k} — ${verdict}](../../docs/reviews/Task_${task}_Review_${k}.md)`;
+  const msgs = (review, task = '957', grand) => cf.reviewSectionFindings(kick(review), task, grand).map((f) => f.message);
+  assert.deepEqual(msgs(''), [], 'not reviewed yet');
+  assert.deepEqual(msgs(`${link(1, 'NEEDS REVISION')}\n${link(2, 'APPROVED')}`), []);
+  assert.match(msgs('Review 1 of `abc` — NEEDS REVISION\nF1 — x').join(), /docs\/reviews\/Task_957_Review_<k>\.md/, 'an inline review is refused');
+  assert.match(msgs(link(1, 'APPROVED', '958')).join(), /Task_957_Review_<k>/, 'a link to another task\'s review is refused');
+  assert.match(msgs(`${link(2, 'APPROVED')}\n${link(1, 'NEEDS REVISION')}`).join(), /in order/, 'reviews are linked in their order');
+  assert.deepEqual(msgs('Review 1 of `abc` — APPROVED', '926', new Set(['926'])), [], 'a kickoff reviewed inline before the rule keeps its record');
+
+  const kickoffs = { '957': kick(link(1, 'NEEDS REVISION')) };
+  const file = (k, text) => cf.reviewFileFindings(`docs/reviews/Task_957_Review_${k}.md`, text, (task) => kickoffs[task] ?? null).map((f) => f.message);
+  const good = '# Task 957 — Review 1\n\nKickoff: x\n\nReview 1 of the tree at `abc` — NEEDS REVISION\n';
+  assert.deepEqual(file(1, good), []);
+  assert.match(file(1, good.replace('# Task 957 — Review 1', '# Review')).join(), /first line must be "# Task 957 — Review 1"/);
+  assert.match(file(1, good.replace(' — NEEDS REVISION', '')).join(), /no verdict line/);
+  assert.match(file(2, good.replace('Review 1', 'Review 2')).join(), /not linked from the "## Review" of the Task 957 kickoff/);
+  assert.match(cf.reviewFileFindings('docs/reviews/Task_999_Review_1.md', good.replace('957', '999'), () => null).map((f) => f.message).join(), /no kickoff of Task 999/);
+  assert.deepEqual(cf.reviewFileFindings('docs/reviews/README.md', '# x', () => null), [], 'only review files are held to it');
+});

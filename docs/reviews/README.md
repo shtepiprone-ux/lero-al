@@ -1,6 +1,25 @@
-# Persisted review ledgers
+# Reviews
 
-Every implementation review stores one JSON ledger here as
+## Review files (owner, 2026-11-19)
+
+Owner, 2026-11-19 (translated): "write reviews as separate files, and add links to these files in the kickoff".
+
+Every review Opus writes is one Markdown file here, `Task_<n>_Review_<k>.md` (Review 1, 2, … of Task `<n>`), in the
+format of `.claude/rules/secure-code-review.md` §5: the title line `# Task <n> — Review <k>`, the links to the kickoff
+and to the OWASP record (`docs/security/owasp/reviews/Task_<n>.json`), the review summary whose first line is the
+verdict, the findings, the Revision items and the open parts. The kickoff's "## Review" holds only one link per review,
+in order: `- [Review <k> — <verdict>](../../docs/reviews/Task_<n>_Review_<k>.md)` (`.claude/rules/flow.md` §3).
+
+`scripts/quality/check-files.mjs` refuses review text written into a kickoff, a link to a missing file or to another
+task, links out of order, and a review file without its title, its verdict line or its link from the kickoff;
+`scripts/quality/owasp.mjs` reads the verdict and the finding numbers of the OWASP record from the linked files, and
+the CI task gate counts the verdict of the last linked review.
+
+## Persisted review ledgers (records before 2026-11-06)
+
+The JSON ledgers below are records of the review system the governance reset of 2026-11-06 replaced
+(`docs/governance-reset-2026-11-06.md`); no new ledger is written. Under that system every implementation review stored
+one JSON ledger here as
 `YYYY-MM-DD-taskNNN-short-name.review-ledger.json`. Copy
 [`docs/review-ledger-template.json`](../review-ledger-template.json), replace every example value with retained
 evidence, then validate it:

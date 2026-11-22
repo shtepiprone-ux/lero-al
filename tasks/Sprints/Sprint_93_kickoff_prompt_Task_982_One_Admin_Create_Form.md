@@ -67,7 +67,7 @@ No visible change (no page renders the removed form).
 ## Route
 
 1. Own Sonnet session. AC1 test first (red), then the deletion and the ledger updates through their tools, the comments.
-2. Three passes over every changed file; then AC2 and AC3.
+2. One pass over every changed file (checklist I7); then AC2 and AC3.
 3. Report: each command, exit code and output; the red AC1 run.
 
 ## Review

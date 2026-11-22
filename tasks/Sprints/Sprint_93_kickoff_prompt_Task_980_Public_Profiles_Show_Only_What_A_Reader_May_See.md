@@ -53,7 +53,7 @@ I3 to an allow-list with its reason.
   without `security_invoker` set to true or on is a finding unless `DEFINER_VIEW_ALLOWED` names it with a reason; empty
   after the apply), `listing_owner_profile` in `DEFINER_EXECUTE_ALLOWED` with its reason; its test.
 - After the apply (Opus): `node scripts/quality/db-catalog-audit.mjs --save supabase/catalog.json` (the snapshot gains
-  `views`; a generated file, checked by `--snapshot`, `flow.md` §2 step 4).
+  `views`; a generated file, checked by `--snapshot`, checklist I7).
 - Dependencies: none (no package). Task 956 v8b applied: done on bmxkzcxaojgmpgzawwtn (owner, 2026-11-16); production:
   UNKNOWN, read before the apply there.
 - Out of scope: the nine columns, `has_phone` semantics, the staff preview page (the service role reads the invoker view
@@ -137,7 +137,7 @@ No visible change.
 2. Tests first, each failing output kept: AC1-AC3 (Sonnet) with `SECURITY_TEST_TARGET=development` and
    `SECURITY_TEST_PROJECT_REF` set to the project the owner names for this task (bmxkzcxaojgmpgzawwtn was approved for
    Task 956's suites on 2026-11-16); AC4 (Opus, `scripts/quality/**`).
-3. The SQL and the page (Sonnet), the audit (Opus); three passes; the green runs of AC6.
+3. The SQL and the page (Sonnet), the audit (Opus); one pass over the changed files (checklist I7); the green runs of AC6.
 4. Opus proves `v1-preflight.sql` and AC5 and gives the owner the apply step; after the apply: `v1-verify.sql`, AC1, AC2,
    AC4 on the live catalog, `--save supabase/catalog.json`.
 5. Report: each command, exit code and relevant output; each failing-first run; one deliberate break per AC.

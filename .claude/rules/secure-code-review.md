@@ -1,41 +1,24 @@
 # Secure code review
 
-How Opus reviews every change (and how any session reviews code it did not write). Source: OWASP Secure Code Review
-Cheat Sheet (hybrid: a diff-based review of every change, a baseline review of the whole code base at project
-initiation, for legacy code and after an incident), Secure Coding with AI, Verifying Third Party Agent Execution
-Evidence, with the checks of the sheets named per category. Apply only the categories the diff touches; "more of the
-same" in an existing, already-reviewed pattern needs no new threat analysis (Attack Surface Analysis).
+How Opus reviews every change, step V7 of `checklists/review.md` (and how any session reviews code it did not write).
+Source: OWASP Secure Code Review Cheat Sheet (hybrid: a diff-based review of every change, a baseline review of the
+whole code base at project initiation, for legacy code and after an incident), Secure Coding with AI, Verifying Third
+Party Agent Execution Evidence, with the checks of the sheets named per category. Apply only the categories the diff
+touches; "more of the same" in an existing, already-reviewed pattern needs no new threat analysis (Attack Surface
+Analysis).
 
 ## 1. Tools first
 
-1. CI of the candidate: every job of `ci.yml` (`gh pr checks <n>`). A red job is a finding unless it is red on `main`
-   for the same cause.
-2. CodeQL alerts of the PR and `npm audit --omit=dev`: triage each one (real / false positive with the reason).
-3. The CI change report (`node scripts/quality/change-report.mjs main HEAD`): every sensitive path, deleted or weakened
-   test and new dependency it lists is answered in the review.
-4. The diff itself: `git diff <commit>...HEAD --stat`, then **every** file that differs from the commit the revision
-   under review started from, read in full in three passes (`flow.md` §2 step 4, §3), test files included, a generated
-   file through the tool that checks it. The rest of the branch (`git diff main...HEAD`) was read by the earlier reviews
-   of the task, recorded in its kickoff's "## Review".
-   Never approve from the report or the PR description: the executor's report is a supplier assertion; each claim it
-   makes (command, exit code, test count, deliberate break) is rerun by the reviewer on the candidate commit, and a
-   claim that cannot be reproduced is a finding.
-5. Live configuration. The diff never shows the database or an external service, and the repository holds no complete
-   schema, so the review reads them: `node scripts/quality/db-catalog-audit.mjs` (read-only; RLS on every table,
-   RESTRICTIVE block policies, definer functions pinned and allow-listed, no `anon` writes, a moderator write policy
-   checks a permission key, users server-only columns not session-writable, public listing reads bounded by expiry,
-   owner status changes guarded, bucket limits) when the change touches SQL, RLS, grants, a data write, authentication or
-   roles; `node scripts/quality/cloudinary-config.mjs` when it touches uploads or images. Both exit 1 while a known
-   violation is open (Tasks 956, 957): the review answers the invariants the change touches.
-6. The reference itself (owner request 2026-11-07). `node scripts/quality/owasp.mjs sync` and `check`: the registry of
-   every sheet of https://cheatsheetseries.owasp.org/index.html with its content hash, and the mapping of each sheet to
-   this project (`docs/security/owasp/controls.json`: applies or why not, triggers, verbatim requirements, and the control
-   file with the evidence text that implements each, or the open task that will). A sheet changed upstream fails until
-   it is re-read; a control whose evidence text disappears fails until it is re-checked. Then
-   `node scripts/quality/owasp.mjs review <kickoff> --base main` and the task's OWASP review record: a protection the
-   diff should have and lacks is a finding, also when the kickoff did not ask for it.
-7. Baseline review (project start, legacy code, after an incident, or when the owner asks for the whole project):
-   the ledger of what was read, and how, is written next to the findings (`docs/security/audit-2026-11-06/coverage.md`).
+The order and the commands are checklist V (`checklists/review.md` V1-V10): CI read from GitHub (a red job is a
+finding unless `main` is red for the same cause; CodeQL alerts and the Dependency audit triaged; every item of the
+Change report answered), the scope check, the rerun of the executor's claims, one read of every changed file, then
+the live configuration the diff cannot show: `node scripts/quality/db-catalog-audit.mjs` (RLS on every table,
+RESTRICTIVE block policies, definer functions pinned and allow-listed, no `anon` writes, moderator write policies
+checking a permission key, server-only user columns not session-writable, public listing reads bounded by expiry, owner
+status changes guarded, bucket limits) for SQL, RLS, grants, data writes, authentication or roles, and
+`node scripts/quality/cloudinary-config.mjs` for uploads; both exit 1 while a known violation is open (Tasks 956, 957),
+so the review answers the invariants the change touches. A baseline review records what was read next to its findings
+(`docs/security/audit-2026-11-06/coverage.md`).
 
 ## 2. Six steps (diff-based review)
 
@@ -151,9 +134,18 @@ References: <OWASP sheet, CWE, rule file>
 Status: open | fixed in <commit> | task <n> | accepted by the owner on <date>
 ```
 
-## 5. Review summary (top of the kickoff's "Review" section)
+## 5. Review file and summary
+
+Each review is one file, `docs/reviews/Task_<n>_Review_<k>.md` (`checklists/review.md` V12), linked from the kickoff's "## Review" as
+`- [Review <k> — <verdict>](../../docs/reviews/Task_<n>_Review_<k>.md)`. The file: the title line, the links to the
+kickoff and to the OWASP record, the summary below (its first line is the verdict line the tools read), the findings in
+the template of §4, then the Revision items for the implementer and the open parts of Opus and the owner.
 
 ```
+# Task <n> — Review <k>
+
+Kickoff: [<kickoff file>](../../tasks/Sprints/<kickoff file>) · OWASP record: [Task_<n>.json](../security/owasp/reviews/Task_<n>.json)
+
 Review <n> of <commit sha> — <verdict>
 Scope: <files and entry points reviewed; baseline or diff>
 Tools: <CI run link or local commands with exit codes; CodeQL and audit triage>

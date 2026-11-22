@@ -94,14 +94,14 @@ owner decision 2026-10-20 (`Mantine/Primitives/Switch`).
 - AC2 The setting holds only its two values — test: `src/__tests__/security/staffActions.test.ts` (extended): `saveSettings` accepts `'true'` and `'false'`, refuses any other value, and revalidates the public listings tag; a stored `'yes'` is read as off.
 - AC3 The switch saves — test: `src/components/admin/__tests__/AdminSettings.sitemapSwitch.test.tsx` (new): the SEO tab shows the switch with its description; toggling and saving sends `sitemap_closed_listings` with `'true'` or `'false'`.
 - AC4 Texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs`.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Starts after Task 989 is merged. Branch from `main`. Read `sitemap.ts`, `visibility.ts`, `settings.ts`, `saveSettings`, `AdminSettings.tsx`, the two existing tests.
 2. Tests first (AC1-AC3); save each failing output.
-3. The predicate, the sitemap, the setting and its validation, the switch, the messages. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate break: the predicate without its status list → `SEC-992-SITEMAP-DENY` fails, restored.
+3. The predicate, the sitemap, the setting and its validation, the switch, the messages. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: the predicate without its status list → `SEC-992-SITEMAP-DENY` fails, restored.
 5. Report: each command, exit code, relevant output. After the merge Opus turns nothing on; the owner turns the switch on, and Opus reads `/sitemap/0.xml` for the two listings.
 
 ## Review

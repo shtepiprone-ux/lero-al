@@ -4,8 +4,8 @@
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
-> **Opened by owner decision O83-2, 2026-09-30, verbatim:** *"що це за Legacy-сайти і чи використовуємо ми їх наразі
-> у проекті? Якщо використовуємо, тоді треба мігрувати на Minetine."* Two of the six legacy `text-2xl` sites (Task 886
+> **Opened by owner decision O83-2, 2026-09-30 (translated):** *"what are these legacy sites, and do we use them in the
+> project now? If we do, they must be migrated to Mantine."* Two of the six legacy `text-2xl` sites (Task 886
 > §3.2) sit in the listing create/edit form: L7 `ListingFormShellView.tsx:135`, which is live, and L8
 > `steps/StepPreview.tsx:60`, which has no importer.
 
@@ -49,16 +49,16 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | `KICKOFF FILED` 2026-09-30 → [`…Task_905…`](Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) |
+| **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | taken over by Task 957 (Sprint 93) Revision 2, owner 2026-11-20 (option chosen: "Both now"): the form renders these fields, so they leave legacy with it; the kickoff [`…Task_905…`](Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) is its source |
 | **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | taken over by Task 957 (Sprint 93), 2026-11-19: 957 changes `ImageUpload.tsx` and the owner's rule of that day moves a changed file's legacy to Mantine in the same task (`.claude/rules/shared/canonical-component-reuse.md`) |
-| **907** | `ListingFormShellView`, `ListingFormShell`, `AdminEditLayout` and `StatusChangeHistory` on canonical Mantine; legacy site L7 removed; the composition Story replaces the legacy `Listings/ListingFormShellView`. The `StatusChangeControl` → `StatusChangeSelect` switch moved to Task 923 §17 R35 (owner D20, 2026-10-17). | reserved (`docs/backlog-reserved.md`) |
+| **907** | `StatusChangeHistory` on canonical Mantine and legacy site L7 removed (`ListingFormShellView`, `ListingFormShell`, `AdminEditLayout` and the composition Story are Task 957's since 2026-11-19 and 2026-11-20). The `StatusChangeControl` → `StatusChangeSelect` switch moved to Task 923 §17 R35 (owner D20, 2026-10-17). | reserved (`docs/backlog-reserved.md`) |
 
 ## Execution order and gating
 
-1. **905** and **906** are independent, and either may run first.
-2. **907** runs after 905 and 957 are merged, because it composes their components; since 2026-11-19 Task 957 also
-   moves `ListingFormShellView` and `ListingFormShell` to Mantine, so 907 keeps `AdminEditLayout`, `StatusChangeHistory`
-   and legacy site L7.
+1. **905** and **906** are taken over by Task 957 (2026-11-20 and 2026-11-19).
+2. **907** runs after 957 is merged, because it composes its components; since 2026-11-19 Task 957 also moves
+   `ListingFormShellView` and `ListingFormShell` to Mantine, and since 2026-11-20 (Revision 2) the fields of 905 and
+   `AdminEditLayout`, so 907 keeps `StatusChangeHistory` and legacy site L7.
 3. `StatusChangeControl` is also rendered by `/admin/inquiries` (Sprint 84's **894**). Whichever of 894 and 907 runs
    first migrates it, and the other consumes the result. The second kickoff must re-read the first's outcome at I0.
 

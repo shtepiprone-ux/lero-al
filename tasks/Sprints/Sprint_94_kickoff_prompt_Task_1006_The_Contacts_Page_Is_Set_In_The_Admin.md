@@ -151,14 +151,14 @@ Reference research (GR-7): inherited canonical design — owner decision 2026-10
 - AC5 The form keeps its behaviour on Mantine — test: `src/modules/contacts/components/__tests__/ContactForm.test.tsx` (new): each validation message; Send is disabled with no topic and enabled once one is chosen; a valid submit calls `submitContactInquiry` with the same fields; no `@/components/ui` import; `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with the three files enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them; and `contacts.security.test.ts` (extended): a direct call with an empty or unknown topic is refused and nothing is stored or sent.
 - AC6 Messages reach their topic's address, replies come from it, and messages stay filed — test: `src/modules/contacts/actions/__tests__/contacts.security.test.ts` (extended: each of the six topics goes to its set address; empty, unreadable or an invalid stored value → the topic's server variable; a reply is sent from the stored address with it as Reply-To) and `src/app/admin/inquiries/__tests__/inquiriesSplit.test.tsx` (new: a sales topic sent to an address without "sales" is listed under Sales, a support topic under Support).
 - AC7 Stories, widths and languages hold — test: `node scripts/check-i18n-parity.mjs`, `node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for `ContactPageView`.
-- AC8 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC8 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Starts after Tasks 989 and 955 are merged. Branch from `main`. Read the contact page, the form, its action, the inquiry pages, `contactInquiry.ts`, `settingKeys.ts`, the Footer page with its action, `AdminSidebar.tsx`, `MantineDetailList`, `MantineFormSectionStack`.
 2. Tests first (AC1-AC6); save each failing output.
-3. Keys, the action, the admin page and sidebar entry, the delivery and the inquiry split, the view and its Story, the page, the form on Mantine, the messages, `docs/env.md`. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate breaks: the intro through an HTML sink → `SEC-1006-INTRO-TEXT` fails; the admin check removed → `SEC-1006-SAVE-DENY` fails; the validator at use removed → the AC6 invalid-address case fails; each restored.
+3. Keys, the action, the admin page and sidebar entry, the delivery and the inquiry split, the view and its Story, the page, the form on Mantine, the messages, `docs/env.md`. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate breaks: the intro through an HTML sink → `SEC-1006-INTRO-TEXT` fails; the admin check removed → `SEC-1006-SAVE-DENY` fails; the validator at use removed → the AC6 invalid-address case fails; each restored.
 5. Report: each command, exit code, relevant output. After the merge the owner writes the four texts and, when wanted, the topic addresses; Opus checks `/contact` in four languages at 390 and 1440.
 
 ## Review

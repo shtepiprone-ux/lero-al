@@ -46,6 +46,11 @@ export const CONTROLS = 'docs/security/owasp/controls.json';
 // One file per reviewed task: the per-sheet verdicts are evidence for the tools, sized by the diff, so they stay out of the
 // kickoff, which people read and which is held to its line limit. checkReview is the schema of a record.
 export const REVIEWS = 'docs/security/owasp/reviews';
+// Owner, 2026-11-19 (translated): "write reviews as separate files, and add links to these files in the kickoff". Each
+// review is docs/reviews/Task_<n>_Review_<k>.md and the kickoff's "## Review" links it (flow.md §3); the verdict and the
+// finding numbers are read from the linked files.
+export const REVIEW_FILE = /^docs\/reviews\/Task_(\d+)_Review_(\d+)\.md$/;
+export const REVIEW_LINK = /\[([^\]]*)\]\((?:\.\.\/)*(docs\/reviews\/Task_(\d+)_Review_(\d+)\.md)\)/;
 export const CACHE = '.cache/owasp';
 const UPSTREAM = 'OWASP/CheatSheetSeries';
 const SITE = 'https://cheatsheetseries.owasp.org/cheatsheets/';
@@ -350,14 +355,22 @@ export function readReviewRecord(file, root = ROOT) {
 const RECORD_FIELDS = { met: ['verdict', 'quotes', 'evidence'], finding: ['verdict', 'finding', 'note'], 'not applicable': ['verdict', 'reason'] };
 
 /** Findings for the review record of a kickoff with a written verdict; `extra` = sheets the diff triggers. */
-export function checkReview(body, registry, controls, extra = [], { root = ROOT, text = sheetText, record = null } = {}) {
+export function checkReview(body, registry, controls, extra = [], { root = ROOT, text = sheetText, record = null, read = readRepoFile(root) } = {}) {
   const out = [];
   const add = (line, message) => out.push({ id: 'owasp-review', line, message });
-  const review = section(body, '## Review') ?? [];
+  const task = /^# Task (\d+) —/.exec(body)?.[1];
+  // every linked review file exists, belongs to this task and has the verdict its link names
+  for (const link of reviewLinks(body)) {
+    const file = read(link.path);
+    if (file == null) { add(link.line, `${link.path} does not exist: write the review there or correct the link`); continue; }
+    if (task && link.task !== task) add(link.line, `the kickoff of Task ${task} links a review of Task ${link.task}`);
+    const said = verdictsOf(file.split('\n')).at(-1) ?? null;
+    if (link.verdict !== said) add(link.line, `the link says ${link.verdict ?? 'no verdict'}, the file says ${said ?? 'no verdict'}: ${link.path}`);
+  }
+  const review = reviewLines(body, read);
   if (!review.some((l) => /\b(APPROVED|NEEDS REVISION)\b/.test(l.text))) return out; // no verdict written yet
   const legacy = section(body, '### OWASP check');
   if (legacy) add(legacy[0]?.line, `"### OWASP check" no longer belongs in the kickoff: the verdicts go to ${REVIEWS}/Task_<n>.json`);
-  const task = /^# Task (\d+) —/.exec(body)?.[1];
   if (!record) { add(review[0]?.line, `the review has no record ${REVIEWS}/Task_${task}.json: a verdict per sheet of "## OWASP" and of the diff (owasp.mjs review)`); return out; }
   if (record.unreadable) { add(review[0]?.line, `${REVIEWS}/Task_${task}.json is not valid JSON`); return out; }
   if (String(record.task) !== String(task)) add(review[0]?.line, `the review record is for Task ${record.task}, this kickoff is Task ${task}`);
@@ -386,27 +399,57 @@ export function checkReview(body, registry, controls, extra = [], { root = ROOT,
     }
     if (v.verdict === 'finding') {
       if (!/^F\d+$/.test(v.finding ?? '')) add(line, `${sheet}: a finding names its number, "F<n>"`);
-      else if (!new RegExp(`^${v.finding} —`, 'm').test(reviewText)) add(line, `${sheet}: ${v.finding} is not in the findings of "## Review"`);
+      else if (!new RegExp(`^${v.finding} —`, 'm').test(reviewText)) add(line, `${sheet}: ${v.finding} is not in the findings of "## Review" or its review files`);
     }
     if (v.verdict === 'not applicable' && String(v.reason ?? '').trim().split(/\s+/).filter(Boolean).length < 5) add(line, `${sheet}: "not applicable" needs a reason of at least five words`);
   }
   return out;
 }
 
-/** The last verdict written in a kickoff's "## Review" (a later review supersedes an earlier one), or null. */
 // A verdict line of the review summary (secure-code-review.md §5, "Review <n> of <sha> — <verdict>", bold or not; also
 // "Verdict: <verdict>" and the older "Opus, <date> — <verdict>"): the verdict follows "—" or ":" on a line that starts with
 // Review, Verdict or Opus. Task 963 AC12: the word in the prose under it (a quoted marker, a list item) never counts, so a
 // task under revision cannot hold a change in the gate because its review mentions APPROVED.
 export const VERDICT_LINE = /^(?:\*\*)?(?:Review|Verdict|Opus)\b[^\n]*?(?:—|:)\s*(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)(?:\*\*)?(?=\s|$)/;
 
-export function lastVerdict(body) {
-  let last = null;
+/** The verdicts of the verdict lines of some text lines (strings or { text }), in order. */
+export function verdictsOf(lines) {
+  return lines.map((l) => VERDICT_LINE.exec(String(typeof l === 'string' ? l : l.text).replace(/\r$/, '').trim())?.[1]).filter(Boolean);
+}
+
+/** A repository file's text, or null when it is not there. */
+function readRepoFile(root = ROOT) {
+  return (rel) => {
+    const f = path.join(root, rel);
+    return existsSync(f) ? readFileSync(f, 'utf8') : null;
+  };
+}
+
+/** The review files a kickoff's "## Review" links, in order: { path, task, n, verdict (named by the link text), line }. */
+export function reviewLinks(body) {
+  const out = [];
   for (const l of section(body, '## Review') ?? []) {
-    const m = VERDICT_LINE.exec(l.text.trim());
-    if (m) last = m[1];
+    const m = REVIEW_LINK.exec(l.text);
+    if (m) out.push({ path: m[2], task: m[3], n: m[4], verdict: /(APPROVED WITH NOTES|APPROVED|NEEDS REVISION)/.exec(m[1])?.[1] ?? null, line: l.line });
   }
-  return last;
+  return out;
+}
+
+/** The review text of a kickoff: its "## Review" lines (a review written there before 2026-11-19), then the lines of
+ *  every review file it links; a missing file adds nothing. Each line keeps the kickoff line of its link. */
+export function reviewLines(body, read = readRepoFile()) {
+  const out = [...(section(body, '## Review') ?? [])];
+  for (const link of reviewLinks(body)) {
+    const text = read(link.path);
+    if (text != null) out.push(...text.split('\n').map((t) => ({ text: t.replace(/\r$/, ''), line: link.line, file: link.path })));
+  }
+  return out;
+}
+
+/** The last verdict of a kickoff's reviews (a later review supersedes an earlier one), or null: the verdict lines of its
+ *  "## Review" and of the review files it links; the text of a link is never a verdict. */
+export function lastVerdict(body, read = readRepoFile()) {
+  return verdictsOf(reviewLines(body, read)).at(-1) ?? null;
 }
 
 /**
@@ -418,13 +461,13 @@ export function lastVerdict(body) {
  * changes versions only (`dependencyOnly`) is held by the dependency gates instead (npm audit, install scripts, SBOM,
  * zizmor) and needs no task.
  */
-export function checkGate({ files, added = '', kickoffs = [], registry, controls, dependencyOnly = false, root = ROOT, text = sheetText }) {
+export function checkGate({ files, added = '', kickoffs = [], registry, controls, dependencyOnly = false, root = ROOT, text = sheetText, read = readRepoFile(root) }) {
   const out = [];
   const add = (id, at, message) => out.push({ id, at, message });
   const changed = files.filter((f) => !DOCUMENTATION.test(f));
   if (!changed.length || dependencyOnly) return out;
   const task = (k) => /_Task_(\d+)_/.exec(k.file)?.[1];
-  const approved = kickoffs.filter((k) => /^APPROVED/.test(lastVerdict(k.body) ?? ''));
+  const approved = kickoffs.filter((k) => /^APPROVED/.test(lastVerdict(k.body, read) ?? ''));
   if (!approved.length) {
     add('G1', changed[0], `${changed.length} file(s) of code or configuration change without a task approved by review in the same change: design it (create-task), implement it, review it (review-task) and commit the review with the change`);
     return out;
@@ -434,7 +477,7 @@ export function checkGate({ files, added = '', kickoffs = [], registry, controls
   for (const k of approved) {
     if (OWASP_GRANDFATHERED.has(task(k))) continue;
     surface ||= surfaceChanged(k.body);
-    for (const f of checkReview(k.body, registry, controls, [], { root, text, record: k.record ?? null })) add('G2', `${k.file}${f.line ? `:${f.line}` : ''}`, f.message);
+    for (const f of checkReview(k.body, registry, controls, [], { root, text, record: k.record ?? null, read })) add('G2', `${k.file}${f.line ? `:${f.line}` : ''}`, f.message);
     for (const s of Object.keys(k.record?.sheets ?? {})) covered.add(s);
   }
   for (const s of triggered(controls, { text: added, paths: changed, surfaceChanged: surface })) {

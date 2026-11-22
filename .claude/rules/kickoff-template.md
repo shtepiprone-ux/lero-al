@@ -22,12 +22,15 @@ Implementer: Sonnet | Opus (rules/CI/hooks). Reviewer: Opus. Human owner of the 
 Read at <commit>   (optional: when the fix deletes or shortens a cited file; the sources are then looked up there)
 <the fact that produces the problem, with its source: `path:line` (a file that has that line), or a `command` → <its
 output>>
-Fix: <the change that removes that cause; the scope is this change and nothing more>
+Fix: <the smallest change that removes that cause; the scope is this change and nothing more (checklist A1)>
 
 ## Scope
-- <each change, one line, with its file>
+- <each file the Fix changes, one line, with the function or lines it changes>
 - Dependencies: none | <name@version — npm view result: first release, version date, install script>
 - Out of scope: <what is deliberately not touched>
+- Kept as on `main` (checklist A2): <per changed file, the behaviour it keeps: field types and
+  controls, options per role, validation and error placement, control positions, colours, labels, flow steps>; a
+  change of one names its dated owner decision.
 
 ## Attack surface
 "Unchanged" — or the threat model of `.claude/rules/threat-model.md` (≤ 30 lines) and the authorization-matrix rows.
@@ -60,14 +63,14 @@ outside `tasks/Archive/`.)
 
 ## Route
 1. <ordered steps>
-2. Run: <task tests> · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with
-   `npx --yes npm@10.9.8 ci`
+2. Run: <the exact test files; nothing else runs locally>. CI runs only on GitHub after the owner's push and is read
+   with `gh pr checks <n>` (checklist A5)
 3. Report: each command, exit code, relevant output; each new test's failing run before the change; the deliberate-break
    output for each security test.
 
 ## Review
-<filled by Opus: the review summary and the findings in the templates of secure-code-review.md, with a link to the
-task's OWASP review record>
+<filled by Opus: one line per review, in order, linking its file — the review itself is never written here>
+- [Review 1 — <verdict>](../../docs/reviews/Task_<n>_Review_1.md)
 ```
 
 ## OWASP review record
@@ -82,7 +85,7 @@ and committed with the review; `node scripts/quality/owasp.mjs review <kickoff> 
   "task": "<n>",
   "sheets": {
     "<Sheet>": { "verdict": "met", "quotes": ["<verbatim, at least six words>"], "evidence": "<`test file`, `command` or path:line>" },
-    "<Sheet>": { "verdict": "finding", "finding": "F<n>", "note": "<one line; the finding is in \"## Review\">" },
+    "<Sheet>": { "verdict": "finding", "finding": "F<n>", "note": "<one line; the finding is in the linked review file>" },
     "<Sheet>": { "verdict": "not applicable", "reason": "<at least five words>" }
   }
 }

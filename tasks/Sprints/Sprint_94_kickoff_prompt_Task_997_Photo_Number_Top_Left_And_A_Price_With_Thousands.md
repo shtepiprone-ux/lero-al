@@ -12,7 +12,9 @@ Sonnet. Reviewer: Opus. Human owner of the change: the owner.
 
 After the task: the photo number sits in the top-left corner of each photo, before the "Cover" mark; the price field
 shows the number with a dot between thousands as it is typed, removes a space or a comma at once, explains the rule
-under the field, and its error names what is wrong (no price, or above the ceiling with the ceiling).
+under the field, and its error names what is wrong (no price, or above the ceiling with the ceiling). One note of
+Task 957 Review 2 (`docs/reviews/Task_957_Review_2.md`, F6) is closed here: the upload window and its frame title speak
+the page's language.
 
 ## Cause
 
@@ -20,8 +22,9 @@ Read at `dc5e3af66`
 - Photo number: a bottom-left wrapper (`src/modules/listings/components/ImageUpload.tsx:170-173`, `absolute bottom-2 left-2`); the top-left holds only the cover mark (`:112-118`), and the hover overlay's top row only the star at the right (`:123`).
 - Price: `parsePriceDigits` drops every non-digit (`src/modules/listings/domain/priceDigits.ts:16`) and the field shows the bare number (`src/modules/listings/components/ListingFormShellView.tsx:221-228`). Measured on production 2026-11-19 with `HYDRATION_AGENT1` on `/uk/listings/create`, every POST aborted, `node price-repro.mjs` → `typed "150 000" -> shown "150000"`, `typed "1500,50" -> shown "150050"`, `typed "20 000 000 000" -> shown "20000000000"`. A space no longer gives an error on the current build; the field shows no separators, so a decimal comma turns into a hundred times the price unseen.
 - Message: one text, `listing.error_price` "Please enter a valid price" (`messages/en.json:273`), for both a missing price and one above the ceiling (`src/modules/listings/components/ListingFormShell.tsx:181-183`; ceilings `src/modules/listings/validations/index.ts:10`: EUR 10 000 000 000, ALL 1 000 000 000 000).
+- Upload window language (Task 957 Review 2, F6; read on the Task 957 branch 2026-11-20, so given as commands): `grep -c "language" src/modules/listings/components/ImageUpload.tsx` → `0`; the widget options pass neither `language` nor `text`, and the widget reference (cloudinary.com/documentation/upload_widget_reference, `language`: "Default: en") opens it in English for every locale. `curl -s https://upload-widget.cloudinary.com/global/all.js | grep -o 'title:"Upload Widget"'` → `title:"Upload Widget"`: the frame title is fixed by the loader, not an option.
 
-Fix: the photo marks get one top-left place at the image owner; the price field becomes a canonical whole-number input with dot thousands, and the error is chosen by a pure rule that names the case.
+Fix: the photo marks get one top-left place at the image owner; the price field becomes a canonical whole-number input with dot thousands, and the error is chosen by a pure rule that names the case; the widget gets the page locale as `language` and that locale's strings as `text`.
 
 ## Scope
 
@@ -30,12 +33,15 @@ Fix: the photo marks get one top-left place at the image owner; the price field 
 - `src/design-system/mantine/patterns/MantinePriceInput.tsx` (CREATE; no price field exists among the canonical inputs) with its Story `src/stories/patterns/mantine/PriceInput.stories.tsx`: Mantine `NumberInput` with `thousandSeparator="."`, `decimalSeparator=","`, `allowDecimal={false}`, `allowNegative={false}`, `hideControls`, at most 15 digits (`isAllowed`), `inputMode="numeric"`; the value it reports is `parsePriceDigits(String(value))`; props `label`, `description`, `error`, `value`, `onChange`. `ListingFormShellView.tsx` uses it in place of the raw `Input` (`:221-228`) and passes `error`.
 - `src/modules/listings/validations/priceError.ts` (new): `priceError(price, currency)` → `null`, `'error_price_required'` or `{ key: 'error_price_above_max', max }`; `ListingFormShell.tsx:181-183` uses it; the server rule (`listingSchema`) is unchanged.
 - Messages in four locales: `listing.price_hint` ("Whole number; dots between thousands are added for you"), `listing.error_price_required`, `listing.error_price_above_max` ("The price can be at most {max}"); `listing.error_price` stays for the server answer.
+- F6: the widget options carry `language: <the page locale>` and `text: { <locale>: { … } }` built from `listing.upload_widget.*` in four locales. The key list is read from the widget reference's `text` parameter for the sources and steps this form's widget shows (its default sources, one or many images, no cropping), not assumed; the read is listed in the report. The frame the loader adds to the page (`data-test="uw-iframe"`, `title:"Upload Widget"`) gets the title `listing.upload_widget.frame_title` in the page's locale once it exists (the element is in the form's own document; how and when the loader creates or rewrites it is read in the loader, not assumed), and the token `Upload Widget` leaves `PER_STORY_TOKENS` of `scripts/check-locale-leak.mjs` for `patterns-mantine-imageupload`, `patterns-mantine-listingformshellview` and `patterns-mantine-listingformshellcontainer`.
 - `MantinePriceInput` and `AppImage` are registered in `scripts/mobile-adaptation-patterns.json` (`form-picker-and-choice`, `media-gallery-and-listing-contact`) and replace the two owners on this kickoff's "Mantine owner" line in the same change.
 
 ## Attack surface
 
 Attack surface: unchanged. The field still sends a number that the server holds to `listingSchema` (ceiling per
-currency, `src/modules/listings/validations/index.ts:22`, `:55-58`); the client message changes, the rule does not.
+currency, `src/modules/listings/validations/index.ts:22`, `:55-58`); the client message changes, the rule does not. The
+widget's `language` and `text` come from the project's message files, never from the address or a person's input; the
+signed upload path of Task 957 is unchanged.
 
 ## OWASP
 
@@ -47,7 +53,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - Cross_Site_Scripting_Prevention: "Since no single technique will solve XSS, using the right combination of defensive techniques will be necessary to prevent XSS." — the marks, hint and errors render as React text and badges — AC1, AC3.
 - DOM_based_XSS_Prevention: not applicable — no value from the address or storage reaches a sink.
 - Denial_of_Service: "Using validation that is cheap in resources first" — the input refuses a 16th digit before any parse; no expression with backtracking is added — AC1.
-- File_Upload: not applicable — the upload path is Task 957's; this task moves two badges only.
+- File_Upload: not applicable — the signed upload path is Task 957's and stays unchanged; this task moves two badges and sets the widget's display language, texts and frame title.
 - Injection_Prevention: not applicable — the registry edit is data read by a check script; no interpreter input is built.
 - Input_Validation: "Validate on the server even when the browser checks the same fields." — the browser rule mirrors the server's ceilings, which stay the authority — AC2.
 - JavaScript_and_TypeScript_Security: not applicable — no merge, path setter or regular expression over input is added.
@@ -60,6 +66,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-19).
 - User_Privacy_Protection: not applicable — no personal data or address is added to the photo tiles.
 - Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns the implementer's results — AC5.
 - Web_Frontend_Security: "The fundamental security rule is to never use innerHTML with untrusted data." — no HTML sink is added — AC1, AC3.
+- XS_Leaks: not applicable — the frame is Cloudinary's existing upload frame of Task 957; this task only sets its title attribute from the message files and adds no frame, cookie, window reference or cross-site response.
 
 ## UI
 
@@ -88,14 +95,15 @@ separator rule is O997-1 and Mantine's own `NumberInput` thousands formatting.
 - AC2 The error names the case — test: `src/modules/listings/validations/__tests__/priceError.test.ts` (new): no price → `error_price_required`; EUR 10 000 000 001 and ALL 1 000 000 000 001 → `error_price_above_max` with the ceiling; both ceilings themselves → `null`.
 - AC3 The marks sit top-left — test: `src/design-system/media/__tests__/AppImage.marks.test.tsx` (new): `marks` render in the top-start overlay in their order, nothing without `marks`; `src/modules/listings/components/__tests__/ImageUpload.test.tsx` (extended): each photo passes its number, then the cover mark on the cover photo.
 - AC4 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the new and changed Stories.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
+- AC6 The upload window speaks the page's language (F6) — test: `src/modules/listings/components/__tests__/ImageUpload.widgetOptions.test.tsx` (extended, real library): for sq, en, uk and it the options carry `language` equal to the locale and `text[locale]` with every key of the list read in Scope, each value that locale's message; `node scripts/check-i18n-parity.mjs` holds the new keys in four locales; a test of `ImageUpload.tsx` with a frame `iframe[data-test="uw-iframe"][title="Upload Widget"]` in the document finds its title replaced by the locale's `listing.upload_widget.frame_title`; `node scripts/check-locale-leak.mjs --mantine-only` passes for the three Stories with `Upload Widget` removed from their tokens.
 
 ## Route
 
 1. Starts after Task 957 is merged. Branch from `main`. Read `ImageUpload.tsx` as 957 left it, `AppImage.tsx` and its Story, `ListingFormShellView.tsx`, `ListingFormShell.tsx`, `priceDigits.ts`, `validations/index.ts`, Mantine `NumberInput` in the installed `@mantine/core`.
-2. Tests first (AC1-AC3); save each failing output.
-3. The input and its Story, the rule, the marks, the messages. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
+2. Tests first (AC1-AC3, AC6); save each failing output. Read the widget reference's `text` parameter and list the keys used.
+3. The input and its Story, the rule, the marks, the messages. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5).
 5. Report: each command, exit code, relevant output. After the merge Opus reruns `price-repro.mjs` (expects `150.000`) and looks at the photo grid at 390.
 
 ## Review

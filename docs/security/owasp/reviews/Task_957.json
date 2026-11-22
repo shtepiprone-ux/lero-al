@@ -1,0 +1,427 @@
+{
+  "task": "957",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require explicit approval for high-impact or irreversible actions."
+      ],
+      "evidence": "Review 3 (2026-11-21): the diff changes agent instructions only to narrow them: the approved-behaviour rule (`.claude/rules/flow.md:81`, CLAUDE.md, .claude/agents/executor.md, .claude/skills/execute-task/SKILL.md, .claude/skills/review-task/SKILL.md) forbids an agent to change approved behaviour without a dated owner decision; no tool, permission or hook is added; .claude/settings.json is unchanged against main (diff --stat empty), so mutating Git stays owner-only"
+    },
+    "Abuse_Case": {
+      "verdict": "met",
+      "quotes": [
+        "it is important to identify the attacks which the application must defend against"
+      ],
+      "evidence": "T1-T9 of the kickoff; `src/app/api/listings/upload-signature/__tests__/route.security.test.ts` (matrix, body, limits) rerun 15 passed; the owner-check break turns SEC-UPLOADSIG-SRV-DENY red (Review 1)"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "`src/app/api/listings/upload-signature/route.ts`, `src/app/api/cron/cloudinary-cleanup/route.ts` and `supabase/sql_migrations/task957/task957.sql` read in full in Review 1, each one an item of the kickoff's Attack surface"
+    },
+    "Authentication": {
+      "verdict": "not applicable",
+      "reason": "no sign-in, password or session rule changes; the routes reuse requireViewer and verifyCronRequest unchanged"
+    },
+    "Authentication_Patterns": {
+      "verdict": "not applicable",
+      "reason": "triggered by the session read of the new route; the identity helper itself is unchanged"
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": [
+        "Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source."
+      ],
+      "evidence": "`src/app/api/listings/upload-signature/route.ts:36-81` (session, then owner or listings.moderate); route.security.test.ts matrix rows pass; the owner-check break turns them red (Review 1)"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "met",
+      "quotes": [
+        "Fail closed. Deny protected operations on PDP errors, timeouts, or unusable output."
+      ],
+      "evidence": "route.ts:70-73 and :86-89 answer 503 on a listing or limiter error; `src/lib/cloudinaryDelete.ts:283-288` purges nothing on a failing account read; cloudinaryPurge.security.test.ts SEC-PURGE-SRV-DENY passes"
+    },
+    "Authorization_Patterns": {
+      "verdict": "met",
+      "quotes": [
+        "Keep enforcement close to the protected resource so it can check the requested action, object, and tenant."
+      ],
+      "evidence": "the trigger `listing_images_owner_folder` (supabase/sql_migrations/task957/task957.sql:58-88) sits on the table; live AC4 waits for the owner's apply (UNKNOWN until then)"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": [
+        "Relying on UI hiding is insufficient; the API layer must enforce the check"
+      ],
+      "evidence": "`src/app/api/listings/upload-signature/__tests__/route.security.test.ts`, `src/lib/uploads/__tests__/imageUrl.security.test.ts`, `src/modules/listings/actions/updateListing.integration.test.ts` and `src/tests/integration/listingImageOwner.integration.test.ts` call the route, the actions and PostgREST without the widget"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "met",
+      "quotes": [
+        "Integration test cases validate the correct implementation of the authorization matrix."
+      ],
+      "evidence": "`src/app/api/listings/upload-signature/__tests__/route.security.test.ts` holds every row of the kickoff's matrix (rerun, passed; the owner-check break turns 2 rows red); the database rows run after the owner's apply"
+    },
+    "Bot_Management_and_Anti-Automation": {
+      "verdict": "met",
+      "quotes": [
+        "Avoid fixed-window counters: they allow bursts at boundary times."
+      ],
+      "evidence": "task957.sql:37-49 deletes the key's hits older than the window, then counts under an advisory lock; rateLimit.integration.test.ts SEC-RATELIMIT-INT-SLIDING runs after the owner's apply"
+    },
+    "Business_Logic_Security": {
+      "verdict": "finding",
+      "finding": "F27",
+      "note": "Review 4: O957-10 leaves an owner no way back to publication from a hidden, archived, sold, rented or expired listing; F28 (parking edit) also open; upload uniqueness stays met (Review 1)"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "`node scripts/quality/check-ruleset.mjs` exit 0 (Reviews 1 and 2); the change reaches main only through the owner's pull request; the cleanup steps bind the three secrets to their own step (Review 2)"
+    },
+    "Content_Security_Policy": {
+      "verdict": "not applicable",
+      "reason": "triggered by the Cloudinary widget; no header, script source or CSP directive changes"
+    },
+    "Cookie_Theft_Mitigation": {
+      "verdict": "not applicable",
+      "reason": "no cookie is set or read differently; the route reads the session through the unchanged helper"
+    },
+    "Credential_Stuffing_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the task adds no login, password or recovery path"
+    },
+    "Cross_Site_Scripting_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the widget and form render no new user-controlled markup; values reach Mantine as text"
+    },
+    "Cryptographic_Storage": {
+      "verdict": "met",
+      "quotes": [
+        "Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness"
+      ],
+      "evidence": "route.ts:102 `randomUUID()` from node:crypto; SEC-UPLOADSIG-SRV-SIGNED checks a fresh v4 id per call"
+    },
+    "DOM_Clobbering_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the CMS route change checks file bytes and renders no HTML"
+    },
+    "DOM_based_XSS_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the widget receives server parameters; no DOM sink is added or changed"
+    },
+    "Database_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Configured with the minimum permissions required as discussed in the permissions section below."
+      ],
+      "evidence": "task957.sql:13-14 and :52-53 (RLS on, no session grant, EXECUTE for service_role only); task957-verify.sql rows 1-7 run after the owner's apply"
+    },
+    "Denial_of_Service": {
+      "verdict": "met",
+      "quotes": [
+        "Using validation that is cheap in resources first"
+      ],
+      "evidence": "route.ts:36-54 checks the session and the strict body before any database call; SEC-UPLOADSIG-SRV-BODY asserts no call on a bad body"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "not applicable",
+      "reason": "package.json gains one script line; no dependency enters the SBOM"
+    },
+    "Error_Handling": {
+      "verdict": "met",
+      "quotes": [
+        "but not provide any content as part of the response that would reveal implementation details."
+      ],
+      "evidence": "route.ts:32 answers fixed codes only; the cleanup answers counts only (cleanup route.security.test.ts SEC-CLEANUP-SRV-DENY)"
+    },
+    "File_Upload": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the file type, don't trust the Content-Type header as it can be spoofed"
+      ],
+      "evidence": "`src/app/api/upload-cms-image/route.ts:47-50`; route.test.ts SEC-UPLOAD-SNIFF-DENY passes and turns red when the sniff is removed (Review 1); the preset formats are U3 and AC8, after the owner's preset step"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Workflows may reuse cached data across different workflow runs."
+      ],
+      "evidence": "`.github/workflows/ci.yml`: the browser cache is restored by `actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9` and saved only under `github.event_name == push && github.ref == refs/heads/main`, so a pull request never writes it; `node --test scripts/quality/ci-browser-cache.test.mjs` 3/3 with planted cases (save on every run, no main condition, an `||` widening, a tag pin, no restore, no timeout) each refused; the sweep steps take the secrets in their step env only and `SYNTHETIC_RUN_LOG` from `runner.temp` in step env (F4 closed; `npx vitest run scripts/__tests__/sweep-synthetic.test.ts` 13/13); `uvx zizmor .github/workflows/ci.yml` (1.32.0): no findings, the one suppression the same as on the original file (Review 2)"
+    },
+    "GraphQL": {
+      "verdict": "met",
+      "quotes": [
+        "Ensure that the API has proper access control checks."
+      ],
+      "evidence": "task957.sql:14 and :52 revoke the table and function from anon and authenticated; rateLimit.integration.test.ts SEC-RATELIMIT-INT-DENY after the apply"
+    },
+    "HTTP_Strict_Transport_Security": {
+      "verdict": "not applicable",
+      "reason": "triggered by https addresses in the text; no header changes"
+    },
+    "Identity_Propagation_Patterns": {
+      "verdict": "met",
+      "quotes": [
+        "Each receiving service must still authorize the requested action and resource."
+      ],
+      "evidence": "route.ts:64-81 reads with the service client only after requireViewer; the trigger re-checks every write (task957.sql:68-81)"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
+      ],
+      "evidence": "route.ts:85 calls the RPC with named arguments; task957.sql has no EXECUTE (task957-verify.sql row 5)"
+    },
+    "Input_Validation": {
+      "verdict": "met",
+      "quotes": [
+        "Reject invalid requests with a clear error; do not continue with partially validated data."
+      ],
+      "evidence": "route.ts:24 `z.object({ listingId: z.uuid().optional() }).strict()`; SEC-UPLOADSIG-SRV-BODY 10 cases pass"
+    },
+    "Insecure_Direct_Object_Reference_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "implement access control checks for each object that users try to access"
+      ],
+      "evidence": "route.ts:68-81 (listing owner or listings.moderate); `src/modules/listings/actions/updateListing.ts:100` checks the photos against the listing owner"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Never pass untrusted input to a recursive merge or set-by-path helper"
+      ],
+      "evidence": "route.ts:106-115 builds the signed object from server values only; `ImageUpload.tsx:48-60` copies the nine allow-listed keys"
+    },
+    "Key_Management": {
+      "verdict": "met",
+      "quotes": [
+        "a single key should be used for only one purpose"
+      ],
+      "evidence": "CLOUDINARY_API_SECRET signs Cloudinary requests only (route.ts:117); the preset name is a separate server variable"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "not applicable",
+      "reason": "no language model reads or writes any data of this task"
+    },
+    "Logging": {
+      "verdict": "met",
+      "quotes": [
+        "The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted"
+      ],
+      "evidence": "cleanup route.ts:127 logs counts only (SEC-CLEANUP-SRV-DENY log case passes); deleteAccount logs outcome codes only (SEC-PURGE-SRV-ORDER)"
+    },
+    "Logging_Vocabulary": {
+      "verdict": "not applicable",
+      "reason": "the cleanup records maintenance counts, not a security event of the vocabulary"
+    },
+    "MCP_Security": {
+      "verdict": "not applicable",
+      "reason": "no MCP server, tool or agent permission is added or changed here"
+    },
+    "Mass_Assignment": {
+      "verdict": "met",
+      "quotes": [
+        "Do not rely on a block-list as the sole protection: a new or overlooked sensitive field remains bindable."
+      ],
+      "evidence": "route.ts:24 allow-list of one key with .strict(); SEC-UPLOADSIG-SRV-BODY refuses folder, public_id, overwrite, type and unknown keys"
+    },
+    "Multi_Tenant_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.",
+        "Apply object-level access control checks according to the OWASP Insecure Direct Object Reference Prevention Cheat Sheet."
+      ],
+      "evidence": "route.ts:66-81 authorizes the owner folder and listing before signing; the sheet changed upstream (311961c8 -> f2116329) was re-read and remapped in Review 1"
+    },
+    "Multifactor_Authentication": {
+      "verdict": "not applicable",
+      "reason": "no factor, code or second-step rule changes in this diff"
+    },
+    "NPM_Security": {
+      "verdict": "not applicable",
+      "reason": "package.json gains the sweep:synthetic script only; no package is installed or changed"
+    },
+    "Nextjs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Treat each reachable action as a client-callable POST entry point."
+      ],
+      "evidence": "route.ts:36 `requireViewer()` and :66-81 the owner check on every POST; the session cookies are `sameSite: \"lax\"` (`node_modules/@supabase/ssr/dist/main/utils/constants.js:6`), so a cross-site POST carries no session and gets 401; both Server Actions check the photo owner (`updateListing.ts:100`)"
+    },
+    "Nodejs_Security": {
+      "verdict": "met",
+      "quotes": [
+        "some third-party rulesets can be used to flag dangerous patterns such as eval()"
+      ],
+      "evidence": "`npm run lint` (the ESLint security rules) exit 0 on the final tree (Review 1)"
+    },
+    "OAuth2": {
+      "verdict": "not applicable",
+      "reason": "no OAuth flow, token or redirect is added or changed"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "not applicable",
+      "reason": "no process is started by product code; U3 is Opus's part and not yet in the diff"
+    },
+    "Prototype_Pollution_Prevention": {
+      "verdict": "not applicable",
+      "reason": "the route copies no request key into any object it builds"
+    },
+    "Query_Parameterization": {
+      "verdict": "met",
+      "quotes": [
+        "Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure."
+      ],
+      "evidence": "task957.sql:20-51 static body with bound arguments; task957-verify.sql row 5"
+    },
+    "REST_Security": {
+      "verdict": "met",
+      "quotes": [
+        "the access control decision should be taken locally by REST endpoints"
+      ],
+      "evidence": "route.ts:36-81 decides itself; route.security.test.ts calls the handler directly"
+    },
+    "SQL_Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "use parameterized queries for dynamic data values"
+      ],
+      "evidence": "RPC named arguments (route.ts:85) and a static function body (task957.sql)"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "prevent them from leaking and compromising the organization"
+      ],
+      "evidence": "F1 closed: `ImageUpload.tsx:214` passes the API key and cloud name the page read on the server (`getCloudinaryWidgetConfig`), the signature comes from the route signed with the server-only `CLOUDINARY_API_SECRET`, and no `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` is read by product code (break B17: a public preset in a page turns 2 tests red); `ImageUpload.widgetOptions.test.tsx` runs the real `getUploadWidgetOptions` (Review 2)"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Security-Focused Review differs from functional code review by specifically targeting security concerns"
+      ],
+      "evidence": "Reviews 1 and 2: every changed file read in full; `npx --yes npm@10.9.8 ci`, `node scripts/quality/product-gates.mjs` (36/36) and the other `quality` and `dependencies` steps rerun; Opus's own files (ci.yml, ci-browser-cache.test.mjs, cloudinary-config.mjs and its test) passed three clean passes before their green runs"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "AI coding assistants frequently suggest package names that do not exist on public registries"
+      ],
+      "evidence": "no package added (`git diff main -- package-lock.json` empty); `node_modules/@cloudinary-util/url-loader/dist/index.js:1590` read, which found F1"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "T1-T9 map to AC1-AC17; Review 1 reran their tests (`npx vitest run` on the 63 task files: 751 passed, the 2 AC16 workflow cases red)"
+    },
+    "Server_Side_Request_Forgery_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Application can send request only to identified and trusted applications"
+      ],
+      "evidence": "cloudinaryAdminRead.ts:51 and cloudinaryDelete.ts:238 build api.cloudinary.com URLs from the configured cloud; no URL comes from input"
+    },
+    "Serverless_FaaS_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT)."
+      ],
+      "evidence": "route.ts:36-81; cleanup route.ts:43-44 verifyCronRequest (SEC-CLEANUP-SRV-DENY 401 cases pass)"
+    },
+    "Session_Management": {
+      "verdict": "not applicable",
+      "reason": "no session is created, refreshed or ended differently by this diff"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "not applicable",
+      "reason": "the actions/cache pin is Opus's part and not yet in the diff; no dependency changes"
+    },
+    "Subdomain_Takeover_Prevention": {
+      "verdict": "not applicable",
+      "reason": "vercel.json gains one cron path; no domain, DNS record or CNAME changes"
+    },
+    "Third_Party_Javascript_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Secure transmission of the third-party code (to prevent modifications while in-transit) and various types of sandboxing."
+      ],
+      "evidence": "Review 3 (2026-11-21): .storybook/main.ts:33 aliases next-cloudinary to .storybook/stubs/next-cloudinary.ts, which loads no script (it renders its children with an inert open; test .storybook/__tests__/next-cloudinary-stub.test.tsx); the product keeps the library loader, which fetches the widget over HTTPS only (node_modules/next-cloudinary/dist/CldUploadWidget-088119fa.esm.js:201, src \"https://upload-widget.cloudinary.com/global/all.js\"), unchanged from main"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "the kickoff's Attack surface answers the four questions for T1-T9; their tests rerun in Review 1, e.g. `src/lib/__tests__/cloudinaryPurge.security.test.ts`"
+    },
+    "Transaction_Authorization": {
+      "verdict": "not applicable",
+      "reason": "no payment or high-value transaction confirmation is added or changed"
+    },
+    "Transport_Layer_Security": {
+      "verdict": "not applicable",
+      "reason": "triggered by https addresses; no TLS setting changes"
+    },
+    "Unvalidated_Redirects_and_Forwards": {
+      "verdict": "not applicable",
+      "reason": "the create page keeps its fixed local sign-in redirect; no new redirect target"
+    },
+    "User_Privacy_Protection": {
+      "verdict": "met",
+      "quotes": [
+        "Preventing leakage of user IP addresses is of great significance when user protection is in scope."
+      ],
+      "evidence": "the limiter keys on the account id (route.ts:85); only the public number reaches Cloudinary (SEC-UPLOADSIG-SRV-SIGNED asserts users:public_id is the one column read)"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "F3 closed: Review 2 reran every claim of the Revision 1 report (the `quality` and `dependencies` steps as ci.yml writes them, 97 task test files, 11 deliberate breaks each red and restored with equal sha256) and resolved the report's UNKNOWN about `uploadSignature` from the loader text (`prepareUploadParams||uploadSignature`)"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "not applicable",
+      "reason": "no dependency is added or changed; both audit gates exit 0 on the final tree"
+    },
+    "Web_Cache_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Use Cache-Control: no-store when a response must not be stored by any compliant cache."
+      ],
+      "evidence": "route.ts:31-32 and :121 send `Cache-Control: no-store` with every answer"
+    },
+    "Web_Frontend_Security": {
+      "verdict": "not applicable",
+      "reason": "the widget change adds no innerHTML or other markup sink"
+    },
+    "Web_Service_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Schema validation enforces constraints and syntax defined by the schema."
+      ],
+      "evidence": "route.ts:24 strict zod schema; SEC-UPLOADSIG-SRV-BODY"
+    },
+    "XSS_Filter_Evasion": {
+      "verdict": "not applicable",
+      "reason": "the CMS route change checks file bytes and filters no markup"
+    },
+    "XS_Leaks": {
+      "verdict": "met",
+      "quotes": [
+        "The SameSite attribute of a cookie tells the browser whether it should include the cookie in the request from the other site."
+      ],
+      "evidence": "the session cookies carry `sameSite: \"lax\"` (`node_modules/@supabase/ssr/dist/main/utils/constants.js:6`), so a frame or request from another site sends no session to `/api/listings/upload-signature` and gets 401 (route.security.test.ts anonymous rows); the upload frame is Cloudinary's own origin and receives only the signed parameters of one photo (Review 2)"
+    }
+  }
+}

@@ -157,7 +157,7 @@ No visible change.
    server included.
 2. Write the seven SEC-984 cases first; run them on the unchanged code and keep the failing output of the DENY and
    REFUSE cases.
-3. Change the two routes and the proxy (Scope); read every changed file in full, three clean passes, before any test.
+3. Change the two routes and the proxy (Scope); read every changed file in full once (checklist I7) and close any hole found at once.
 4. Run: `npm run lint` · `npm run typecheck` · `npm test -- --coverage` ·
    `node scripts/quality/changed-lines-coverage.mjs --base main` · `node scripts/quality/check-files.mjs --worktree` ·
    the three test files; then AC6's deliberate break per DENY and REFUSE case.

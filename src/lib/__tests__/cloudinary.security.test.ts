@@ -26,6 +26,8 @@ vi.mock('@/lib/supabase/admin', () => ({
       select: () => ({
         eq: (column: string, value: unknown) => { eqAsked.push({ table, column, value }); return { limit: async () => answer(table, column) } },
         ilike: (column: string, pattern: string) => { likeAsked.push({ table, column, pattern }); return { limit: async () => answer(table, column) } },
+        // the CMS pages are read in pages of 500 ordered by id (Task 957): `order().range()` answers the slice
+        order: () => ({ range: async (from: number, to: number) => (failingRead && (failingRead === table || failingRead === `${table}.content`) ? answer(table, 'content') : { data: pagesContent.map((content, id) => ({ id, content })).slice(from, to + 1), error: null }) }),
         limit: async () => (failingRead && (failingRead === table || failingRead === `${table}.content`) ? answer(table, 'content') : { data: pagesContent.map((content, id) => ({ id, content })), error: null }),
       }),
     }),

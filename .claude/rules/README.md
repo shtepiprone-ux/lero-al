@@ -1,37 +1,45 @@
-# Lero.al rules
+# Lero.al rules — map
 
-Rewritten 2026-11-06 at the owner's instruction (governance reset, `docs/governance-reset-2026-11-06.md`) on the basis
-of the OWASP Cheat Sheet Series. Read only what the task needs.
+Rewritten 2026-11-22 at the owner's instruction into small files and checklists (`flow.md`). Rules are changed only at
+the owner's request, in a pull request the owner reviews. A rule states one thing once, in the smallest file that owns
+it.
 
-| File | Read when |
+## Checklists (loaded into every session by `CLAUDE.md`)
+
+| File | Who | Items |
+|---|---|---|
+| `flow.md` | everyone | roles, the order of the phases, records |
+| `checklists/common.md` | every model, every turn | A0-A16 |
+| `checklists/design.md` | Opus, creating a task | D1-D13 |
+| `checklists/execute.md` | Sonnet, implementing | I1-I12 |
+| `checklists/review.md` | Opus, reviewing | V1-V14 |
+| `checklists/handoff.md` | Opus, commands for the owner | H1-H6 |
+| `checklists/ui.md` | any role, visible UI | U1-U12 |
+
+## Detail (opened only for the checklist item that names it)
+
+| File | Item |
 |---|---|
-| `flow.md` | always — roles, design → implementation → review → merge, loop limit |
-| `quality-gates.md` | always — the file checks, the pre-commit hook and the CI gates |
-| `kickoff-template.md` | writing a kickoff |
-| `threat-model.md` | the change touches the attack surface (list in the file) |
-| `security-testing.md` | the change touches the attack surface; reviewing tests |
-| `secure-code-review.md` | reviewing any change |
-| `shared/project-language.md` | always — Ukrainian to the owner, English in files |
-| `shared/canonical-component-reuse.md`, `shared/ui-token-contract.md`, `shared/mobile-adaptation-contract.md` (+ `-patterns`, `-component-map`), `shared/enforcement-model.md`, `shared/storybook-proof.md`, `shared/reference-research.md`, `shared/rendered-state-census.md` | visible UI, tokens, Stories |
+| `project-facts.md` | A15: tools, accounts, test users, environments, owner-approved UI patterns |
+| `kickoff-template.md` | D11 |
+| `threat-model.md` | D6 |
+| `security-testing.md` | D10, I9, V8 |
+| `secure-code-review.md` | V7, V12 (finding template, review file) |
+| `quality-gates.md` | reference: what each gate and CI job checks; the test rule (§8) |
+| `shared/project-language.md` | A11 |
+| `shared/canonical-component-reuse.md` | U1, U2 |
+| `shared/ui-token-contract.md` | U3, U4 |
+| `shared/mobile-adaptation-contract.md` (+ `-patterns`, `-component-map`) | U5 |
+| `shared/storybook-proof.md` | U6 |
+| `shared/rendered-state-census.md` | U8 |
+| `shared/reference-research.md` | U10 |
+| `shared/enforcement-model.md` | how the UI rules are enforced |
 
-Rules are changed only at the owner's request, in a PR the owner reviews. A rule states one thing once; a new rule goes
-into the smallest file that owns it.
+## Older documents
 
-## Precedence over older documents
-
-Process — roles, flow, gates, review, evidence, Git — is defined in this folder only. The older documents
-(`docs/agent-contract.md` and `docs/rules/agent-contract/`, `docs/golden-rules.md` and `docs/rules/golden/`,
+`docs/golden-rules.md`, `docs/rules/golden/`, `docs/agent-contract.md`, `docs/rules/agent-contract/`,
 `docs/rule-index.md`, `docs/orchestrator-role.md`, `docs/orchestrator-procedures.md`, `docs/governance-enforcement.md`,
-`docs/ai-behavior.md`, `docs/maintenance-playbook.md`, `docs/governance-checklists.md`) keep their product requirements
-(UI, tokens, Stories, mobile, tables, i18n, data, security); where they describe process, this folder wins:
-
-- A **receipt** those documents require is no longer a string a hook looks for, and a response is not void without one.
-  The check the receipt stood for is an acceptance criterion with an automated test where it can be automated
-  (`quality-gates.md` §8); otherwise the reviewer states the check and its result, with `path:line` evidence, in the
-  review (`secure-code-review.md`).
-- The **evidence-first protocol** of those documents (owner, 2026-10-17: no assumptions, only facts) is not replaced:
-  it is the facts rule of `flow.md`.
-- **Phases, ledgers, the claim ledger, `BLOCKED — KICKOFF EVIDENCE GAP`** are replaced by the kickoff's sources
-  (`kickoff-template.md`) and the reviewer's rerun of every claim.
-- A reference in any active document to a file or `npm run` script that no longer exists fails `check-files.mjs`
-  (`stale-path`, `quality-gates.md` §1), so a removed mechanism cannot stay quoted as if it were in force.
+`docs/ai-behavior.md`, `docs/maintenance-playbook.md` and `docs/governance-checklists.md` are not read for a task. Their
+product requirements that still apply are lines of the checklists above (A0 names GR-5 for `docs/backlog.md`, U7 names the GR files it uses); where they
+describe process, receipts, phases or ledgers, this folder replaces them. A reference in an active document to a file or
+`npm run` script that no longer exists fails `check-files.mjs` (`stale-path`, `quality-gates.md` §1).

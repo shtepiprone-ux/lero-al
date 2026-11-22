@@ -143,14 +143,14 @@ local `HistoryRow` with a field label; REUSE `toast.success` and `toast.error`. 
 - AC7 The profile verifies and removes — test: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (extended): with `canVerify` the button reads "Verify" for an unverified and "Remove verification" for a verified account, calls `toggleUserVerified(id, !is_verified)`, shows the AC5 messages for the same answers and refreshes after a success, in view and in edit mode; in edit mode an unsaved name stays in its field after the change; without `canVerify` there is no button in either mode.
 - AC8 The history names the field — test: `AdminUserProfile.smoke.test.tsx` (extended): an `is_verified` row reads "Verification" with "Not verified" → "Verified"; a `profile_type` row keeps its labels under "Account type".
 - AC9 Every new text exists in the four languages and the Stories show every state — test: `node scripts/check-i18n-parity.mjs` and `node scripts/quality/locale-safety.mjs`; the new Stories at 320, 639 and 640 px in sq, en, uk, it with no horizontal overflow, no clipped text and targets of at least 44 px (`node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md`, raw output saved).
-- AC10 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC10 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read `src/modules/admin/actions/index.ts` (actor resolution, rank check, `toggleUserVerified`), `AdminUsersTable.tsx`, `AdminUsersTableView.tsx`, `AdminUserProfile.tsx`, `AdminUserProfileView.tsx`, both pages, and `adminResults.security.test.ts` for the in-memory database.
 2. Tests first (AC1-AC8); save each failing output.
-3. The rule helper, the action, the two containers, the two views, the two pages, the messages, the Stories. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test (the key check, the rank rule, the opposite-value filter, `changed_by` from the session), restored.
+3. The rule helper, the action, the two containers, the two views, the two pages, the messages, the Stories. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break per security test (the key check, the rank rule, the opposite-value filter, `changed_by` from the session), restored.
 5. Report: each command, exit code, relevant output. After the merge Opus repeats the 2026-11-19 production check with the `.env.local` test accounts (admin and moderator verify from the profile; the moderator sees no control on the administrator's account; every value restored).
 
 ## Review

@@ -1,68 +1,26 @@
-# Rendered state census: the app root and every portal root
+# Overlays: the rendered state census (checklist U8)
 
-This contract is the rendered half of `mobile-adaptation-contract.md` and GR-3j for every Story whose component can
-open an overlay. It is project-wide: no task may replace it with its own probe.
+A Mantine `Modal`, `Drawer`, bottom sheet, `Popover`, `Menu`, `Combobox`/`Select` dropdown and `Tooltip` render through
+`Portal`, outside `#storybook-root`, so a check of the app root alone misses a broken overlay (Task 859 Review 16).
 
-**Owner decision, 2026-10-10 (translated from Ukrainian):** *"R94 is enough only if it makes this a general contract, not a Task 859 patch: a
-register of the interaction states that open a portal/overlay; each state opened in Storybook; a separate target
-for the app root and for each portal root; measurement of text, viewport/component overflow, actions, focus and
-dismiss; evidence Story × state × portal root × locale × viewport; a planted violation: an overflow
-or clipping only inside a portal must fail, even when the page root is green."*
+## What a task does
 
-**Why.** A Mantine `Modal`, `Drawer`, bottom sheet, `Popover`, `Menu`, `Combobox` / `Select` dropdown and `Tooltip`
-render through `Portal`, a `<div data-portal="true">` under `<body>`, outside `#storybook-root`. A census of the app
-root alone is green while the overlay is broken (Task 859 review 16: a squeezed sheet header, clamped dialog titles,
-a picker name one letter per line — none of them seen by two censuses that read `#storybook-root` only).
+- [ ] Opus (design): the kickoff names, for each changed overlay surface, its rows in
+      `scripts/rendered-interaction-states.json`.
+- [ ] Sonnet: adds or updates the rows of the Stories it changes, in the same change: `{ id, story, open, portals }`,
+      where `open` is `mount`, `click` (a selector in the app root) or `keys`, and `portals` is the number of portal
+      roots the state shows.
+- [ ] Opus (review): lists the changed overlay Stories and their states, read from code, for the owner.
+- [ ] Nobody builds Storybook or runs the census locally (checklist A5); the owner checks the changed overlays by hand.
 
-## The contract
+## The gate (`scripts/check-rendered-state-census.mjs`; owner decision 2026-10-10)
 
-1. **Interaction-state registry** — `scripts/rendered-interaction-states.json`. One row per Story × state that
-   opens a portal: `{ id, story, open, portals }`, where `open` is `mount` (open on render), `click` (a selector
-   inside the app root) or `keys` (a key sequence on a selector), and `portals` is the number of portal roots the
-   state must show. Every Story is also enumerated in its closed state.
-2. **Every state is opened in Storybook** — on the built Storybook, through the registered action, never by editing
-   the Story. A state that does not open its declared portals fails; a portal root that appears in a state with no
-   registry row fails (an unregistered overlay is a gap, not a pass).
-3. **Separate targets** — the app root (`#storybook-root`) and each `[data-portal="true"]` root are measured and
-   reported separately. One root's result never stands in for another's.
-4. **Measured per target** —
-   - text: every visible text element with a line clamp, an ellipsis or hidden overflow (active, and latent where
-     the text is required semantic content), text past its box, and a word split across lines because its box is
-     narrower than the word (a name rendered one letter per line);
-   - viewport overflow: page-level horizontal scroll, and the target's own box past the viewport;
-   - component overflow: a descendant past its container's padding box (a declared local scroll region excepted);
-   - actions: every button, link and form control visible, inside the viewport or a reachable scroll region, not
-     covered, and at least the touch token below the project's card switch;
-   - focus: on open, focus is inside the overlay; in a modal overlay, Tab and Shift+Tab stay inside it;
-   - dismiss: Escape and the visible close control close the overlay where Mantine supports them, and focus
-     returns to the trigger. These are Mantine's native behaviours: the census measures them, it never alters them.
-5. **Evidence** — one JSONL row per Story × state × root × locale × viewport with every metric and its verdict, and
-   a summary matrix. Matrix: 320 / 390 / 639 / 640 / 1440 at minimum, plus every actual component threshold of the
-   task; locales sq, en, uk, it.
-6. **Planted violations** (`--verify-gate`, CI) — the gate must fail on: overflow only inside a portal root;
-   clipped text only inside a portal root (both while the app root is green); the same violation in the app root
-   only; a portal that appears in an unregistered state; a registered state that opens nothing.
-7. **Gate** — a blocking CI step on the built Storybook (the precedent is the card-track gate in
-   `.github/workflows/ci.yml`). No baseline, allowlist or inline suppression; a Story × state that must
-   differ needs a dated owner decision named in the registry row.
-
-## Roles
-
-- **Opus (design):** the kickoff names, for each changed overlay surface, its registry rows and the gate command as
-  the rendered proof; a one-off task probe is not accepted as that proof.
-- **Sonnet (execution):** adds or updates the registry rows of the Stories it changes in the same change, runs the
-  gate, saves its JSONL and summary. The gate script itself is changed only by a task that names it.
-- **Opus (review):** re-runs the gate on the final build and opens at least one failing-path state by hand.
-
-## Until the gate exists
-
-Task 923 builds the registry and the gate. Its first review uses the candidate registry/gate on the final built
-Storybook, the coverage and planted controls in this contract, and its saved AC/QA requirements. Its approval is
-the outcome of that verification, never a prerequisite for running it. Overlay changes within 923 still owe their
-applicable rendered/security/owner-QA proof. This bootstrap ordering supplies no proof waiver or approval by itself.
-
-Until 923 is approved, a consuming visible task whose surface opens an overlay
-cannot be `APPROVED`: the review verdict is `BLOCKED — RENDERED STATE CENSUS (923)`. After that, such a task is
-approved only when the gate is green on the registry rows of every Story it changes or renders (`--stories`), and the
-CI step over the whole registry turns blocking the day its full run is green; every violation of the first full run
-is owned by a numbered task. A task-local census is evidence for diagnosis only, never a substitute.
+It runs only as a CI step on the built Storybook, and only from the day that step exists in
+`.github/workflows/ci.yml`; a change of the gate script is its own task. It opens every registered state through its
+action, then measures the app root and each `[data-portal="true"]` root separately: clipped or overflowing text, a word
+split across lines, viewport and component overflow, every action visible and at least the touch token below the card
+switch, focus inside the overlay (trapped in a modal), and Escape and the close control returning focus to the trigger
+(Mantine's own behaviour, measured, never altered). Matrix: 320, 390, 639, 640, 1440 and every component threshold, in
+sq, en, uk and it. It must fail on a planted overflow or clip only inside a portal root, the same in the app root only,
+a portal in an unregistered state, and a registered state that opens nothing (`--verify-gate`). No baseline, allowlist
+or inline suppression; a state that must differ names a dated owner decision in its registry row.

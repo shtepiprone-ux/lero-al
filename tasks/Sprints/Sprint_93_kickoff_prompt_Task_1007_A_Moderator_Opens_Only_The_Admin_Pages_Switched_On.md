@@ -131,15 +131,15 @@ rest. Reference research (GR-7): inherited canonical design — owner decision 2
 - AC6 The section works — test: `src/components/admin/__tests__/AdminPermissionsManager.smoke.test.tsx` (extended): fifteen page switches with their labels; a toggle calls `setModeratorPermission` with the page key.
 - AC7 The SQL holds — test: `node scripts/quality/db-sql-roundtrip.mjs` over the three `task1007` files exits 0; after the apply `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` reports none of its invariants.
 - AC8 Stories, widths and languages hold — test: `node scripts/check-i18n-parity.mjs`, `node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for `WithPagesSection`.
-- AC9 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC9 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 - AC10 Every admin page sits in the canonical frame (owner rule 2026-11-19) — test: `src/app/admin/__tests__/adminPageFrame.test.ts` (new or extended): every `src/app/admin/**/page.tsx` that renders (not a redirect) renders `AdminPageFrame` and has no `className`.
 
 ## Route
 
 1. Branch from `main`. Read `staff.ts`, `permissions.ts` (both), `permissionKeys.ts`, every page under `src/app/admin`, the layout, `AdminShell`, `AdminSidebar`, `AdminPermissionsView` and its Story, the three loaders.
 2. Tests first (AC1-AC6, AC10); save each failing output.
-3. The page list, the guard and every page, the landing, the sidebar, the loaders, the section, the SQL set (handed to Opus for AC7; the owner applies it before the merge), the messages, the Story. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate break: the key check removed from `requireStaffPage` → `SEC-1007-PAGE-DENY` fails; restored.
+3. The page list, the guard and every page, the landing, the sidebar, the loaders, the section, the SQL set (handed to Opus for AC7; the owner applies it before the merge), the messages, the Story. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: the key check removed from `requireStaffPage` → `SEC-1007-PAGE-DENY` fails; restored.
 5. Report: each command, exit code, relevant output; the finding P-01 row moves to fixed with this test. After the merge Opus opens the admin as `HYDRATION_MODERATOR` with one page switched off and checks the sidebar and the address.
 
 ## Review

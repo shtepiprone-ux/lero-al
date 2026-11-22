@@ -102,16 +102,14 @@ No visible change: past the limit the reset form shows its existing refusal text
   limit for one IP the route redirects to the failure page and `verifyOtp` is not called; inside the limit it is called).
 - AC3 No reset helper without CAPTCHA is left — test: `npm run typecheck` and
   `src/lib/auth/__tests__/browserAuth.security.test.ts` (the `requestPasswordReset` lines removed, the rest unchanged).
-- AC4 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of
-  `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC4 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Confirm Tasks 957, 959 and 991 are merged. Branch from `main`.
 2. Tests first (AC1, AC2); save each failing output.
-3. The change; three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with
-   `npx --yes npm@10.9.8 ci`; one deliberate break per security test (remove the limiter call once, the test fails,
+3. The change; one pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break per security test (remove the limiter call once, the test fails,
    restore).
 5. Report: each command, exit code and relevant output.
 

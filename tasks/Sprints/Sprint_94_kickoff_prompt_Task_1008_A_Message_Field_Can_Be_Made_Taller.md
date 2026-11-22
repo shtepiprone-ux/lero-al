@@ -95,14 +95,14 @@ the message editor); inherited canonical design for the field chrome — owner d
 - AC2 One owner for multi-line fields — test: `node scripts/check-textarea-canonical.mjs` reports 0 violations, its `--verify-gate` self-test refuses a planted `Textarea` import from `@mantine/core` outside `MantineTextarea.tsx`, and `node scripts/quality/product-gates.mjs` runs it; `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with `MantineTextarea.tsx` enrolled.
 - AC3 The unused legal manager leaves — test: `npx tsc --noEmit` and `npx vitest run src/__tests__/reactHooksV7Components.test.tsx` pass, and `node scripts/check-i18n-parity.mjs` passes after the keys leave.
 - AC4 Stories, widths and languages hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for `Mantine/Primitives/Textarea`, with a touch drag at 390px that makes the field taller.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the ten fields, `ContactForm.tsx`, `theme.ts` (Textarea), `input-chrome.css`, `check-badge-canonical.mjs`, `product-gates.mjs` and the Textarea Story.
 2. Tests first (AC1, AC2); save each failing output.
-3. The component, the switch of the ten fields, the gate and its self-test, the family member, the Story, the messages, the deletion. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate break: a Mantine `Textarea` import planted in a production file → the gate fails; restored.
+3. The component, the switch of the ten fields, the gate and its self-test, the family member, the Story, the messages, the deletion. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: a Mantine `Textarea` import planted in a production file → the gate fails; restored.
 5. Report: each command, exit code, relevant output. After the merge Opus drags the handle of the listing inquiry message at 390 (touch) and 1440 (mouse) in Ukrainian.
 
 ## Review

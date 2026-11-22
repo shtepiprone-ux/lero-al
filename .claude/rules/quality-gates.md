@@ -1,4 +1,7 @@
-# Quality gates
+# Quality gates — what the tools check
+
+Reference, not a checklist: the steps a model takes are in `checklists/`. This file says what each gate checks, for
+reading a red job or writing an acceptance criterion.
 
 Owner decisions 2026-11-06 (Task 945, governance reset): the gates are rewritten on the OWASP basis, and "quality must
 cover all files in the project, without exceptions". Three layers check the same rules: the pre-commit hook, CI before
@@ -23,9 +26,9 @@ mojibake on purpose) listed in `scripts/mojibake-allowlist.json` with a reason i
 | `.css` | parses (PostCSS) |
 | `.sql` | strings, quoted identifiers, dollar quotes, comments and parentheses balanced |
 | `.svg` | no script, event handler or `javascript:` URL |
-| `.md` | every relative link resolves; outside records of the past (`docs/sessions/`, `docs/reviews/`, `docs/governance-reports/`, `docs/chat-gpt-reports/`, `docs/backlog-archive.md`, `tasks/`) every inline-code repository path is in the repository and every `npm run <script>` exists, unless the same line says the file was removed, is gitignored or will be created (`stale-path`); kickoffs from Sprint 93 on follow `kickoff-template.md` (first line, sections in order, ≤ 200 lines without the OWASP checklist, every `- AC<n>` names an automated test — §8 — and the OWASP gate: "## OWASP" names every sheet the kickoff triggers with a quote verified against the sheet text and existing AC references, and a reviewed kickoff has its record `docs/security/owasp/reviews/Task_<n>.json`, every verdict, quote and finding number checked — `scripts/quality/owasp.mjs`) |
+| `.md` | every relative link resolves; outside records of the past (`docs/sessions/`, `docs/reviews/`, `docs/governance-reports/`, `docs/chat-gpt-reports/`, `docs/backlog-archive.md`, `tasks/`) every inline-code repository path is in the repository and every `npm run <script>` exists, unless the same line says the file was removed, is gitignored or will be created (`stale-path`); kickoffs from Sprint 93 on follow `kickoff-template.md` (first line, sections in order, ≤ 200 lines without the OWASP checklist, every `- AC<n>` names an automated test — §8 — and the OWASP gate: "## OWASP" names every sheet the kickoff triggers with a quote verified against the sheet text and existing AC references, and a reviewed kickoff has its record `docs/security/owasp/reviews/Task_<n>.json`, every verdict, quote and finding number checked — `scripts/quality/owasp.mjs`); a kickoff's "## Review" holds only links to its review files `docs/reviews/Task_<n>_Review_<k>.md`, in order, and each such file opens with `# Task <n> — Review <k>`, has a verdict line and is linked from its kickoff (`review`) |
 | `.ps1` | PowerShell parser, no error (fails closed when no PowerShell is installed) |
-| audit ledgers `docs/security/**/findings*.md` | the golden rule (`flow.md`): every finding row ends `fixed` with the existing test or tool that proves it, `not a gap` with the existing test, `accepted` only with an owner decision `D<n>` and its test, or `Task N` of an open task whose kickoff cites the finding (its backlog row while it has no kickoff) (`finding-status`) |
+| audit ledgers `docs/security/**/findings*.md` | the golden rule (`checklists/common.md` A4): every finding row ends `fixed` with the existing test or tool that proves it, `not a gap` with the existing test, `accepted` only with an owner decision `D<n>` and its test, or `Task N` of an open task whose kickoff cites the finding (its backlog row while it has no kickoff) (`finding-status`) |
 | `.sh` and files with a sh/bash shebang (`.githooks/*`) | `bash -n` (fails closed when no bash is installed) |
 
 "In the repository" means tracked or untracked-not-ignored, so a check gives the same answer on the agent's machine and
@@ -107,53 +110,16 @@ of every PR (`secure-code-review.md`), the change report's list of sensitive pat
 hard failures of §5, and the ruleset drift check. When a second maintainer joins, the ruleset adds one required approval
 and CODEOWNERS for the sensitive paths.
 
-## 6. Running the gates locally
+## 6. Where the gates run
 
-GitHub is the authority: CI runs every job on the pull request, and its result is read with `gh pr checks <n>` (owner,
-2026-11-14: no local replica of the workflow). Before a commit is handed over, the CI-parity rule of `flow.md` (owner,
-2026-11-18) applies: the `run:` steps of every job that needs no secret, read from `ci.yml` and run as written, with the
-npm of the job's Node (`npx --yes npm@10.9.8 ci`). A single gate while working:
-
-```
-npm run lint
-npm run typecheck
-npm test
-node scripts/quality/owasp.mjs sync
-node scripts/quality/owasp.mjs check
-node scripts/quality/owasp.mjs plan <kickoff>
-node scripts/quality/owasp.mjs review <kickoff> --base main
-node scripts/quality/check-files.mjs --all
-node --test "scripts/quality/*.test.mjs"
-npm test -- --coverage
-node scripts/quality/changed-lines-coverage.mjs --base main
-node scripts/quality/product-gates.mjs
-node scripts/quality/check-ruleset.mjs
-node scripts/quality/change-report.mjs main HEAD
-node scripts/quality/audit-gate.mjs --omit-dev --level high
-node scripts/quality/audit-gate.mjs --level high
-node scripts/quality/client-sinks.mjs
-node scripts/quality/locale-safety.mjs
-node scripts/quality/db-catalog-audit.mjs
-node scripts/quality/cloudinary-config.mjs
-```
-
-`owasp.mjs` keeps the project synchronised with the OWASP Cheat Sheet Series (owner request 2026-11-07): `sync` reads
-the upstream repository the site is built from (`GITHUB_TOKEN` or `GH_TOKEN` raises the API limit), writes the registry
-and caches the sheet texts in `.cache/owasp/` (ignored); `check` fails on an unmapped, renamed or changed sheet, a quote
-not in its sheet, a control file without its evidence text, a task number that is not open, or a requirement handed to a
-task whose kickoff does not cite it; the registry older than 7 days fails too, so the daily CI run and every design
-step re-read upstream. `owasp.mjs session` puts the state into every session at its start (§3). Tests:
-`scripts/quality/owasp.test.mjs`.
-
-`client-sinks.mjs` (every line of product code: postMessage to `*`, message listeners without an origin check,
-`outerHTML` / `insertAdjacentHTML`, credential-like storage, stored URLs as `href`, DOM HTML / code / URL APIs, computed
-navigation, each `dangerouslySetInnerHTML`; `src/__tests__/security/clientSinks.test.ts`
-covers the other client sinks), `locale-safety.mjs` (every value of `messages/*.json`: markup, dangerous schemes, plain
-http, ICU validity, placeholder parity between locales, bypassing translation calls) run in CI through `check-files.mjs`
-and their self-tests. `db-catalog-audit.mjs` and `cloudinary-config.mjs` read the live database catalog and the live upload presets
-with `.env.local` credentials (the database CA in `prod-ca-2021.crt` or `SUPABASE_CA_FILE`); they are not CI jobs because
-CI holds no production credential. They are steps of `create-task`, `execute-task`, `review-task` and
-`secure-code-review.md` §1.5, and their invariants are tested on fixtures in CI.
+Every job of §5 runs only on GitHub and is read with `gh pr checks <n>` and `gh run view <id> --log-failed`
+(checklist A5). The commands a model runs locally are the ones its checklist names (`checklists/design.md`,
+`execute.md`, `review.md`). The pre-commit hook (§4) runs on the owner's commit. `db-catalog-audit.mjs` and
+`cloudinary-config.mjs` read the live database catalog and upload presets with `.env.local` credentials, so they are
+checklist steps, not CI jobs; their invariants are tested on fixtures in CI. `owasp.mjs` (tests:
+`scripts/quality/owasp.test.mjs`): `sync` re-reads the OWASP Cheat Sheet Series into the registry, `check` fails on an
+unmapped or changed sheet, a quote not in its sheet or a control file without its evidence text, `plan` and `review`
+list the sheets a kickoff and a diff trigger, `session` puts the state into every session at its start (§3).
 
 ## 7. Changing a gate
 
@@ -173,7 +139,7 @@ Evidence (the evidence is a test the reviewer reruns, not the agent's report).
 |---|---|---|
 | Task design | every `- AC<n>` names an automated test: a test file (`.test.`/`.spec.`), a Story with a `play` function, or a command in backticks that exits non-zero on failure (`npm …`, `npx …`, `node …`, `gh …`). A visual criterion names the Story and the check that pins it | `check-files.mjs` kickoff rule (§1): the kickoff fails its checks |
 | Task revision | a changed or added AC changes or adds its test in the same revision | the same rule; the reviewer checks each changed AC against its test |
-| Implementation | every test an AC names exists | the reviewer compares the kickoff's criteria with the diff (`flow.md` §3) |
+| Implementation | every test an AC names exists | the reviewer compares the kickoff's criteria with the diff (`checklists/review.md` V8) |
 | Implementation | the test is written first and fails on the current code, then passes with the change; the report gives both runs | the reviewer reproduces the failure by undoing the product change in the working tree, rerunning, restoring |
 | Every PR | the same rule over the whole PR; deleted tests, fewer cases or assertions, new `skip`/`only`/`todo` are listed | `change-report.mjs` (§5), hard failure |
 | Every PR | every changed product file has at least one changed executable line run by a test, and at least 80 % of all changed executable lines run | `changed-lines-coverage.mjs` after `npm test -- --coverage` (§5) |

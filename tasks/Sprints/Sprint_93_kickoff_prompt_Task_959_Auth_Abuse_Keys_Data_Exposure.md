@@ -178,14 +178,14 @@ confirmation page, both existing canonical components (`.claude/rules/shared/can
 - AC10 The SQL holds — test: `node scripts/quality/db-sql-roundtrip.mjs` over the three `task959` files exits 0, and after the apply `node scripts/quality/db-catalog-audit.mjs --snapshot supabase/catalog.json` reports none of its invariants.
 - AC11 Personal data leaves on time and the view count stays — test: `src/app/api/cron/retention/__tests__/route.security.test.ts` (new: without the secret 401; rows older than each O-R01 period are cleared or deleted, rows one minute inside untouched) and `src/tests/integration/retention.integration.test.ts` (new, real database: `views_count` unchanged; no old row keeps an IP, account id or fingerprint).
 - AC12 One e-mail normalization — test: `src/lib/security/__tests__/inputs.test.ts` (extended: ` Ana@Example.COM ` and a decomposed accent) and `src/__tests__/security/emailNormalization.test.ts` (new: no product file outside `inputs.ts` lower-cases or trims a value named like an e-mail).
-- AC13 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC13 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Tasks 955 and 957 merged; the owner reports the current Supabase Auth password settings (length, required characters) and Opus records them. Branch from `main`.
 2. Tests first (AC1-AC12); save each failing output.
-3. Passwords, client IP, call sites, normalization, keys, sanitizer, e-mail confirmation, cabinet columns, the SQL (handed to Opus for AC10; the owner applies), the retention job, the ledger rows. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test.
+3. Passwords, client IP, call sites, normalization, keys, sanitizer, e-mail confirmation, cabinet columns, the SQL (handed to Opus for AC10; the owner applies), the retention job, the ledger rows. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break per security test.
 5. Report: each command, exit code, relevant output; the two new variables for Vercel; the Supabase password settings for the owner.
 
 ## Review

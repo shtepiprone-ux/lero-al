@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {
   ROOT, REGISTRY, CONTROLS, CACHE, VERIFIED, normalise, quotesOf, quoteFound, triggered, pathsIn, surfaceChanged,
-  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict, refreshCache, gitBlobSha, sheetText, changedFiles,
+  checkMapping, checkKickoff, checkReview, readReviewRecord, REVIEWS, loadJson, kickoffPlan, diffRegistry, sessionContext, OWASP_GRANDFATHERED, uncovered, checkGate, isDependencyOnly, lastVerdict, reviewLinks, refreshCache, gitBlobSha, sheetText, changedFiles,
 } from './owasp.mjs';
 import { spawnSync } from 'node:child_process';
 
@@ -397,4 +397,49 @@ test('changedFiles: a base that git would read as an option is refused before gi
   for (const base of ['--output=x', '-p', '', 'main;rm', 'a b', undefined]) assert.throws(() => changedFiles(base, root), /refused base/);
   for (const base of ['main', 'origin/main', 'HEAD~1', sha]) assert.doesNotThrow(() => changedFiles(base, root));
   rmSync(root, { recursive: true, force: true });
+});
+
+// Owner, 2026-11-19 (translated): "write reviews as separate files, and add links to these files in the kickoff". A review
+// lives in docs/reviews/Task_<n>_Review_<k>.md; the kickoff's "## Review" links it; verdicts and finding numbers are read
+// from the linked files.
+test('a review file linked from "## Review" carries the verdict and the findings; a broken or foreign link is refused', () => {
+  const root = fixture();
+  const owasp = `- Alpha: "${QA}" — x — AC1`;
+  const link = (k, verdict, task = '900') => `- [Review ${k} — ${verdict}](../../docs/reviews/Task_${task}_Review_${k}.md)`;
+  const body = (review) => `# Task 900 — Outcome\n\n${KICK(owasp, review)}`;
+  const files = {};
+  const read = (p) => files[p] ?? null;
+  const run = (review, record) => checkReview(body(review), registry(), controls(), [], { root, record, read }).map((f) => f.message);
+  const rec = (sheets) => ({ task: '900', sheets });
+  const met = { verdict: 'met', quotes: [QA], evidence: '`src/a.test.ts` passes' };
+  try {
+    files['docs/reviews/Task_900_Review_1.md'] = '# Task 900 — Review 1\n\nReview 1 of the tree at `abc` — NEEDS REVISION\nF1 — no schema\n';
+    files['docs/reviews/Task_900_Review_2.md'] = '# Task 900 — Review 2\n\nReview 2 of the tree at `def` — APPROVED\n';
+    assert.deepEqual(reviewLinks(link(1, 'NEEDS REVISION')).length, 0, 'a link outside "## Review" is not a review link');
+    assert.deepEqual(reviewLinks(`## Review\n${link(1, 'NEEDS REVISION')}\n`).map((l) => [l.path, l.task, l.n, l.verdict]), [['docs/reviews/Task_900_Review_1.md', '900', '1', 'NEEDS REVISION']]);
+    assert.equal(lastVerdict(`## Review\n${link(1, 'NEEDS REVISION')}\n`, read), 'NEEDS REVISION', 'the verdict comes from the file');
+    assert.equal(lastVerdict(`## Review\n${link(1, 'NEEDS REVISION')}\n${link(2, 'APPROVED')}\n`, read), 'APPROVED', 'the last linked review counts');
+    assert.equal(lastVerdict(`## Review\n- [Review 2 — APPROVED](../../docs/reviews/Task_900_Review_9.md)\n`, read), null, 'link text alone is never a verdict');
+    assert.match(run(link(1, 'NEEDS REVISION')).join(), /no record docs\/security\/owasp\/reviews\/Task_900\.json/, 'a linked verdict needs the record');
+    assert.deepEqual(run(link(1, 'NEEDS REVISION'), rec({ Alpha: { verdict: 'finding', finding: 'F1', note: 'no schema' } })), [], 'F1 is found in the linked file');
+    assert.match(run(link(2, 'APPROVED'), rec({ Alpha: { verdict: 'finding', finding: 'F1', note: 'no schema' } })).join(), /F1 is not in the findings/);
+    assert.deepEqual(run(`${link(1, 'NEEDS REVISION')}\n${link(2, 'APPROVED')}`, rec({ Alpha: met })), []);
+    assert.match(run(link(3, 'APPROVED'), rec({ Alpha: met })).join(), /docs\/reviews\/Task_900_Review_3\.md does not exist/);
+    files['docs/reviews/Task_901_Review_1.md'] = '# Task 901 — Review 1\n\nReview 1 of `x` — APPROVED\n';
+    assert.match(run(link(1, 'APPROVED', '901'), rec({ Alpha: met })).join(), /links a review of Task 901/);
+    assert.match(run(link(1, 'APPROVED'), rec({ Alpha: { verdict: 'finding', finding: 'F1', note: 'no schema' } })).join(), /link says APPROVED, the file says NEEDS REVISION/);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the task gate reads the verdict of a linked review file', () => {
+  const root = fixture();
+  const record = { task: '900', sheets: { Alpha: { verdict: 'met', quotes: [QA], evidence: '`src/guard.ts` parseRequest()' } } };
+  const file = 'tasks/Sprints/Sprint_93_kickoff_prompt_Task_900_X.md';
+  const files = { 'docs/reviews/Task_900_Review_1.md': '# Task 900 — Review 1\n\nReview 1 of `a` — APPROVED\n' };
+  const body = '# Task 900 — Outcome\n\n' + KICK(`- Alpha: "${QA}" — schema — AC1`, '- [Review 1 — APPROVED](../../docs/reviews/Task_900_Review_1.md)');
+  const gate = (read) => ids(checkGate({ files: ['src/a.ts'], added: '', kickoffs: [{ file, body, record }], registry: registry(), controls: controls(), root, read }));
+  try {
+    assert.deepEqual(gate((p) => files[p] ?? null), [], 'an approved linked review holds the change');
+    assert.deepEqual(gate(() => null), ['G1'], 'a link to a file that is not there approves nothing');
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });

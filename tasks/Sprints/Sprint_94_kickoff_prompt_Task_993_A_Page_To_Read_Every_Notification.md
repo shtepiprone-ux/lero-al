@@ -114,14 +114,14 @@ adaptive pattern: Android "Adapt layouts" list-detail and Apple HIG split views 
 - AC4 The drawer follows item 14 and item 8 — test: `src/modules/notifications/components/__tests__/NotificationCenter.layout.test.tsx` (new): "Mark all as read" is a centred `Button` after the title and before the first item, absent without unread items; "Show all notifications" is the last element and links to `/<locale>/notifications`; an item click goes to `/<locale>/notifications?id=<id>` and marks nothing.
 - AC5 One text resolution — test: `src/modules/notifications/lib/__tests__/notificationText.test.ts` (new) carries the cases of `NotificationItem.templateLocalization.smoke.test.tsx`, which stays green.
 - AC6 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the new and changed Stories.
-- AC7 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC7 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Starts after Task 988 is merged. Branch from `main`. Read `NotificationItem`, `NotificationCenter`, `useNotifications`, `mutations.ts`, `requireViewer`, `MantinePagination`, the two Stories, the reference screenshots of the design (evidence).
 2. Tests first (AC1-AC5); save each failing output.
-3. The pattern and its Story, the text helper, the page and its view, the drawer. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break of the own-row check (a query without the session), restored.
+3. The pattern and its Story, the text helper, the page and its view, the drawer. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of the own-row check (a query without the session), restored.
 5. Report: each command, exit code, relevant output. After the merge Opus opens the page with `HYDRATION_AGENT1` at 390 and 1440 in Ukrainian, reads a long report notification in full and checks the bell count.
 
 ## Review

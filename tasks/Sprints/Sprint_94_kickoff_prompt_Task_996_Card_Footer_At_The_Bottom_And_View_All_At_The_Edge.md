@@ -77,14 +77,14 @@ reference booking.com does the same with "See all".
 - AC3 One header, link at the end — test: `src/design-system/mantine/patterns/__tests__/MantineSectionHeader.test.tsx` (new): the title, then the link with its `href`; the row does not wrap and the link has no width rule; no link without `viewAll`; and the census of `.claude/rules/shared/rendered-state-census.md` on the Story at 320: the link's right edge equals the content edge (±1px).
 - AC4 The consumers use it — test: `src/components/__tests__/sectionHeaderConsumers.test.ts` (new): `ViewAllLink` exists nowhere in `src/`; the home page, `FeaturedListingsView` and `SimilarListingsView` render `MantineSectionHeader`.
 - AC5 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `npm run check:type-responsive`, `npm run check:card-track-monotonicity` and the census for the changed Stories.
-- AC6 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC6 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the card pattern and its CSS module, `check-homepage-grid.mjs`, the three consumers, `ViewAllLink.tsx`, the Stories named above.
 2. Tests first (AC1-AC4); save each failing output (I-H fails on today's card).
-3. The card, the invariant, the header and its Story, the consumers, the deletions. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break: `mt="auto"` removed → I-H fails, restored.
+3. The card, the invariant, the header and its Story, the consumers, the deletions. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break: `mt="auto"` removed → I-H fails, restored.
 5. Report: each command, exit code, relevant output. After the merge Opus reruns `card-footers.mjs` and `view-all.mjs` on production.
 
 ## Review

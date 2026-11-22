@@ -97,14 +97,14 @@ owner decision 2026-10-20 (`Patterns/Mantine/EmptyLoadingErrorState`, state `loa
 - AC3 A click shows the loading state at once — test: `src/app/__tests__/loadingBoundaries.test.tsx` (new): both `loading.tsx` render `MantineEmptyLoadingErrorState` with `state="loading"`.
 - AC4 Row links do not prefetch — test: `src/components/admin/__tests__/adminRowLinksPrefetch.test.ts` (new): every `href={`/admin/<section>/${…}`}` link under `src/components/admin` and `src/modules/admin` carries `prefetch={false}`.
 - AC5 The Stories and four languages hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the locale-leak browser job of `ci.yml`.
-- AC6 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC6 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read `vercel.json`, both layouts, `src/i18n/request.ts`, `MantineEmptyLoadingErrorState`, the two table views.
 2. Tests first (AC1-AC4); save each failing output.
-3. The region, the two loading files, the catalogue pick, the six links. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break of the catalogue pick (pass the full catalogue), restored.
+3. The region, the two loading files, the catalogue pick, the six links. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of the catalogue pick (pass the full catalogue), restored.
 5. Report: each command, exit code, relevant output. After the merge Opus reruns `perf-server.mjs` and `perf-roles.mjs` (guest, `HYDRATION_AGENT1`, `HYDRATION_ADMIN`) and writes both tables, before and after, into this kickoff; a page still above 300 ms server time gets a numbered task with its own cause.
 
 ## Review

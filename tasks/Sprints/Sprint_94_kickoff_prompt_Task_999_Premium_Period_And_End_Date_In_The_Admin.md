@@ -106,14 +106,14 @@ inherited canonical design — owner decision 2026-10-20 (`AdminTable`, one tabl
 - AC2 The server computes and records the grant — test: `src/modules/admin/actions/__tests__/adminOperations.security.test.ts` (extended): a period of 90 days stores `premium_until` = now + 90 days and a grant row with `period_days` 90 and the actor's id; a custom date stores it with `period_days` null; a period outside the four and a past date are refused with nothing written; `SEC-999-PREMIUM-DENY`; `/admin/badges` is never revalidated (the case at `:117` changes).
 - AC3 The table shows the period and the end — test: `src/components/admin/__tests__/AdminListingsView.premium.test.tsx` (new): the premium line for a period, a custom date and a past end; none for a listing without premium or with a grant whose end differs; the two columns on the premium tab only.
 - AC4 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the Story.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read `setListingPremium`, `PremiumDialog.tsx`, the admin listings page and view, the Story, `adminOperations.security.test.ts`, the `listings` catalog lines (`node scripts/quality/db-catalog-audit.mjs`).
 2. Tests first (AC1-AC3); save each failing output.
-3. The SQL set, the action, the dialog, the page read, the view and Story, the messages. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; deliberate break: the server-computed end replaced by the browser's, restored.
+3. The SQL set, the action, the dialog, the page read, the view and Story, the messages. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); deliberate break: the server-computed end replaced by the browser's, restored.
 5. Report: each command, exit code, relevant output. Opus proves the SQL on the owner's delivery path; after the apply and the merge Opus grants and removes a premium on a test listing and reads the table.
 
 ## Review

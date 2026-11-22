@@ -98,14 +98,14 @@ error. Reference research (GR-7): inherited canonical design — owner decision 
 - AC3 The verified mark explains itself — test: `src/design-system/mantine/patterns/__tests__/MantineListingContactPattern.verified.test.tsx` (new): focusing the icon shows the tooltip text; the icon has its accessible name; no tooltip when `isVerified` is false.
 - AC4 Send explains a short message — test: `src/modules/listings/components/__tests__/ListingInquiryDialog.length.test.tsx` (new): Send is enabled with 5 characters; pressing it shows the minimum with the count 5 and does not call the action; with 20 characters it sends.
 - AC5 Stories, texts and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the changed Stories.
-- AC6 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC6 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the two patterns, `ListingDetailView.tsx`, `ListingInquiryDialog.tsx`, `typography.ts`, `check-type-responsive.mjs` and the two Stories.
 2. Tests first (AC1-AC4); save each failing output.
-3. The size and the gate arm, the slot, the tooltip, the field error, the Stories. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
+3. The size and the gate arm, the slot, the tooltip, the field error, the Stories. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5).
 5. Report: each command, exit code, relevant output. After the merge Opus opens a listing at 390 and 1440 in Ukrainian and checks the four items, the phone order description → features → map → contact card → similar listings → recently viewed, and the desktop page as before with similar listings first.
 
 ## Review

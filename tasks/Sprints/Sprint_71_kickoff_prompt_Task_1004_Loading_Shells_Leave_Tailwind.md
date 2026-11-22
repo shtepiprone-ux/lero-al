@@ -99,7 +99,7 @@ inherited canonical design — owner decision 2026-10-20 (`ListingCardPattern`, 
 - AC2 The shells are canonical — test: `npm run check:enrolled-tailwind` passes with `ListingDetailLoading.tsx` and the two favorites route files enrolled in `scripts/mantine-migration-scope.json`; `src/app/__tests__/loadingShells.test.tsx` (new): both shells render `ListingsPageFrame` with `loading`, no `className`; the detail shell uses `listingDetailSpans`.
 - AC3 Loading matches loaded — test: `node scripts/check-homepage-grid.mjs` (extended with the ListingCardSkeleton Story): at 320, 640 and 1440 the skeleton card's outer box equals the loaded card's in the same track (±1px).
 - AC4 Stories and widths hold — test: `node scripts/check-mobile-adaptation-contract.mjs`, `npm run check:card-track-monotonicity` and the census of `.claude/rules/shared/rendered-state-census.md` for the new and changed Stories.
-- AC5 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC5 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 - AC6 A missing listing answers 404, an existing one 200 (O1004-1) — test: `scripts/__tests__/listing-status-live.test.ts` (new, on the build in the `click-shield` job; skipped without `BASE_URL` unless `LISTING_STATUS_LIVE_REQUIRED=1`): a random absent slug answers `404` with the not-found page and `noindex`; a public slug read from `/sitemap/0.xml` answers `200`;
   and `src/app/[locale]/listings/[slug]/__tests__/listingPage.notFound.test.tsx` (new): the route has no `loading.tsx`; for `missing` the page calls `notFound()` before rendering any `Suspense`; for `public` and `hidden` it renders `Suspense` with `ListingDetailLoading`. After the deploy Opus repeats the Cause's `curl` (→ `404`).
@@ -108,8 +108,8 @@ inherited canonical design — owner decision 2026-10-20 (`ListingCardPattern`, 
 
 1. Branch from `main`. Read the two loading files, `favorites/page.tsx`, `ListingsPageFrame`, the detail pattern, the three views with their skeletons, `theme.other.listingSkeleton`, the scope gate and its JSON, the Stories.
 2. Tests first (AC1-AC3, AC6); save each failing output.
-3. The skeleton and its Story, the frame, the spans export, the two shells, the page's access-first order and the live status test (its CI step is Opus's), the favorites chrome, the scope entries. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`.
+3. The skeleton and its Story, the frame, the spans export, the two shells, the page's access-first order and the live status test (its CI step is Opus's), the favorites chrome, the scope entries. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5).
 5. Report: each command, exit code, relevant output. After the merge Opus throttles the network and watches `/uk/listings/<slug>` and `/uk/favorites` load at 390 and 1440.
 
 ## Review

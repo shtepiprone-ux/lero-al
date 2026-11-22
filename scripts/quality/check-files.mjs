@@ -23,7 +23,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { findMojibake, loadAllowlist, isAllowlisted } from '../check-mojibake.mjs';
-import { checkKickoff, checkReview, loadJson, readReviewRecord, REGISTRY, CONTROLS, OWASP_GRANDFATHERED } from './owasp.mjs';
+import { checkKickoff, checkReview, loadJson, readReviewRecord, REGISTRY, CONTROLS, OWASP_GRANDFATHERED, REVIEW_FILE, REVIEW_LINK, reviewLinks, verdictsOf } from './owasp.mjs';
 import { scan as sinkScan, PRODUCT as SINK_PRODUCT } from './client-sinks.mjs';
 import { check as localeCheck, LOCALES, loadParser } from './locale-safety.mjs';
 import { isEntryPoint } from '../lib/entry-point.mjs';
@@ -200,8 +200,12 @@ export function checkFile(rel, buf, { exists = inRepository } = {}) {
         : finding('stale-path', `names \`${p.target}\`, which is not in the repository — point to the current file, or say on the same line that it was removed`, p.line));
     }
     out.push(...ledgerFindings(rel, body, exists));
+    out.push(...reviewFileFindings(rel, body));
     const k = KICKOFF.exec(rel);
-    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) out.push(...kickoffFindings(body, { task: /_Task_(\d+)_/.exec(rel)?.[1] }), ...owaspFindings(rel, body));
+    if (k && Number(k[1]) >= KICKOFF_FIRST_SPRINT) {
+      const task = /_Task_(\d+)_/.exec(rel)?.[1];
+      out.push(...kickoffFindings(body, { task }), ...reviewSectionFindings(body, task), ...owaspFindings(rel, body));
+    }
   }
   return out;
 }
@@ -491,6 +495,62 @@ export function kickoffFindings(body, { task, lineCount: count = lineCount, atCo
       }
     }
   }
+  return out;
+}
+
+// Owner, 2026-11-19 (translated): "write reviews as separate files, and add links to these files in the kickoff". The
+// kickoffs below hold reviews written inline before that day; that text stays as their record, and a later review of
+// them is a linked file like any other.
+export const INLINE_REVIEW_GRANDFATHERED = new Set(['926', '939', '945', '947', '948', '951', '952', '953', '964', '965', '967', '968', '970', '971', '974', '983']);
+
+/** A kickoff's "## Review" holds only "- [Review <k> — <verdict>](…/docs/reviews/Task_<n>_Review_<k>.md)" lines, in order. */
+export function reviewSectionFindings(body, task, grandfathered = INLINE_REVIEW_GRANDFATHERED) {
+  const out = [];
+  const lines = body.split('\n');
+  const start = lines.findIndex((l) => l.trim() === '## Review');
+  if (start < 0) return out;
+  const want = `docs/reviews/Task_${task}_Review_<k>.md`;
+  let last = 0;
+  for (let i = start + 1; i < lines.length && !/^## /.test(lines[i]); i++) {
+    const text = lines[i].trim();
+    if (!text) continue;
+    const m = REVIEW_LINK.exec(text);
+    if (!m || !text.startsWith('- [')) {
+      if (!grandfathered.has(task)) out.push(finding('kickoff', `"## Review" holds only links: the review is written in ${want} and linked here as "- [Review <k> — <verdict>](../../${want})" (flow.md §3)`, i + 1));
+      continue;
+    }
+    if (m[3] !== String(task)) { out.push(finding('kickoff', `"## Review" links a review of Task ${m[3]}: link ${want}`, i + 1)); continue; }
+    if (Number(m[4]) <= last) out.push(finding('kickoff', `reviews are linked in order: Review ${m[4]} after Review ${last}`, i + 1));
+    last = Math.max(last, Number(m[4]));
+  }
+  return out;
+}
+
+/** The kickoff of a task (open or archived), or null. */
+export function kickoffOf(task) {
+  for (const dir of ['tasks/Sprints', 'tasks/Archive']) {
+    let names;
+    try { names = readdirSync(path.join(ROOT, dir)); } catch { continue; }
+    // A fixed pattern and a compared number: the task id never becomes part of a regular expression (CodeQL js/regex-injection).
+    const name = names.find((n) => /^Sprint_\d+_kickoff_prompt_Task_\d+_.+\.md$/.test(n) && /_Task_(\d+)_/.exec(n)[1] === String(task));
+    if (name) return readFileSync(path.join(ROOT, dir, name), 'utf8');
+  }
+  return null;
+}
+
+/** A review file docs/reviews/Task_<n>_Review_<k>.md opens with "# Task <n> — Review <k>", has a verdict line, and is
+ *  linked from the "## Review" of its task's kickoff. */
+export function reviewFileFindings(rel, body, findKickoff = kickoffOf) {
+  const m = REVIEW_FILE.exec(rel);
+  if (!m) return [];
+  const [, task, n] = m;
+  const out = [];
+  const lines = body.split('\n');
+  if (lines[0]?.trim() !== `# Task ${task} — Review ${n}`) out.push(finding('review', `first line must be "# Task ${task} — Review ${n}"`, 1));
+  if (!verdictsOf(lines).length) out.push(finding('review', 'no verdict line: "Review <k> of <tree> — APPROVED | APPROVED WITH NOTES | NEEDS REVISION" (secure-code-review.md §5)'));
+  const kickoff = findKickoff(task);
+  if (kickoff == null) out.push(finding('review', `no kickoff of Task ${task} in tasks/Sprints or tasks/Archive`));
+  else if (!reviewLinks(kickoff).some((l) => l.path === rel)) out.push(finding('review', `not linked from the "## Review" of the Task ${task} kickoff`));
   return out;
 }
 

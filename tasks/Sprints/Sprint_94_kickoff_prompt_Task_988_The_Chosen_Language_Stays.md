@@ -117,15 +117,15 @@ The email-templates page moves into the canonical `AdminPageFrame` and inherits 
 - AC3 Every admin page reads the admin language before it translates — test: `src/app/admin/__tests__/adminLanguage.test.ts` (new): every `page.tsx` and `layout.tsx` under `src/app/admin` that calls `getTranslations`, `getLocale` or `getMessages` awaits `getAdminLocale()` before it, in the page and in `generateMetadata`, and `requireStaffPage()` stays the first await of each page and `generateMetadata` (Task 923 R68 (a)); `src/lib/auth/__tests__/staffPage.security.test.ts` stays green; no `page.tsx` under `src/app/admin` keeps `export const metadata` with a literal `title`.
 - AC4 The P-06 render entry is gone — test: `node scripts/quality/client-sinks.mjs` exits 0 with the P-06 `REVIEWED` entry removed.
 - AC5 The new key exists in four languages — test: `node scripts/check-i18n-parity.mjs` and `node scripts/quality/locale-safety.mjs`.
-- AC6 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC6 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 - AC7 The email-templates page sits in the canonical frame (owner rule 2026-11-19) — test: `src/app/admin/__tests__/adminPageFrame.test.ts` (new or extended): the page renders `AdminPageFrame` and has no `className`.
 
 ## Route
 
 1. Branch from `main`. Read `src/proxy.ts`, `src/i18n/routing.ts`, `src/i18n/request.ts`, `src/lib/admin/getAdminLocale.ts`, `NotificationItem.tsx`, `src/lib/auth/safeRedirect.ts`, `scripts/quality/client-sinks.mjs`, and each admin page with `export const metadata`.
 2. Tests first (AC1-AC3, AC7); save each failing output.
-3. The helper, the bell, the proxy rule, the two admin pages, the 17 titles, the key. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break per security test (the four-value check of the cookie, `safeNextPath` in the helper), restored.
+3. The helper, the bell, the proxy rule, the two admin pages, the 17 titles, the key. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break per security test (the four-value check of the cookie, `safeNextPath` in the helper), restored.
 5. Report: each command, exit code, relevant output. After the merge Opus repeats the 2026-11-19 production checks: the `curl` redirects with `NEXT_LOCALE=uk`; with `HYDRATION_AGENT1` in Ukrainian, a notification opens in Ukrainian; with `HYDRATION_ADMIN` and `admin-locale=uk`, every admin page heading and tab title are Ukrainian.
 
 ## Review

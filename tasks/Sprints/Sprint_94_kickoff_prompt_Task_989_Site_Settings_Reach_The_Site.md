@@ -128,14 +128,14 @@ design — owner decision 2026-10-20 (`HeaderView`, `FooterView`, `Mantine/Primi
 - AC4 The writes refuse bad values, removed keys and non-admins — test: `src/__tests__/security/staffActions.test.ts` (extended): `saveSettings` refuses each removed key; `saveFooterShared` refuses each invalid e-mail, phone, switch and link, and `SEC-989-FOOTER-SAVE-DENY`; a valid admin save writes the social list to all four rows.
 - AC5 One editor for the footer, on Mantine — test: `src/components/admin/__tests__/AdminFooterManager.shared.test.tsx` (new: the shared block with its switches above the language tabs; saving sends its fields) and `src/components/admin/__tests__/adminFormsKit.test.ts` (new: neither form imports `@/components/ui` or renders `AdminInput` or `Combobox`; the settings form offers no key of the Footer page), and `npm run check:enrolled-tailwind`, `npm run check:rendered-scope` and `npm run check:story-coverage` pass with both forms enrolled in `scripts/mantine-migration-scope.json` and no baseline entry for them.
 - AC6 Stories, widths and languages hold — test: `node scripts/check-i18n-parity.mjs`, `node scripts/check-mobile-adaptation-contract.mjs` and the census of `.claude/rules/shared/rendered-state-census.md` for the four Stories.
-- AC7 The CI jobs pass — test: every no-secret job of `.github/workflows/ci.yml` as written (CI-parity rule of `flow.md`, `npx --yes npm@10.9.8 ci`), then `gh pr checks <n>`.
+- AC7 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
 1. Branch from `main`. Read the settings action, page, form and read helper, the footer container, view, editor and action, both layouts, `HeaderView`, `AppImage`.
 2. Tests first (AC1-AC5); save each failing output.
-3. Key lists and validators, the Footer page and its action, the footer render, the settings form, logo, favicon, title and description, Stories. Three passes over every changed file (`flow.md` §2).
-4. Run: the task tests · the CI job commands of the CI-parity rule (`flow.md`), read from `ci.yml`, with `npx --yes npm@10.9.8 ci`; one deliberate break of each `SEC-989` check, restored.
+3. Key lists and validators, the Footer page and its action, the footer render, the settings form, logo, favicon, title and description, Stories. One pass over every changed file (checklist I7).
+4. Run: the task tests · CI on GitHub only (`gh pr checks <n>`, checklist A5); one deliberate break of each `SEC-989` check, restored.
 5. Report: each command, exit code, relevant output. After the merge the owner fills on the Footer page the Instagram address, the sales e-mail and the phone, and in the settings the logo, favicon, titles and descriptions; Opus checks the header, the tab icon and the footer in four languages on production.
 
 ## Review

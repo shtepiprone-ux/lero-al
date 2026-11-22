@@ -21,8 +21,8 @@ Fix: the browser and its `.deb` packages come from an `actions/cache` entry keye
   apt still checks every cached package against the signed package index, so a changed `.deb` is refused; the browser folder is written only by `main`, which changes only through a reviewed pull request.
   `scripts/quality/ci-browser-cache.test.mjs` (new, Opus; `node --test`, run by the `quality` job's "every scripts/quality/*.test.mjs" step).
 - Dependencies: one GitHub action, `actions/cache` v6.1.0, pinned by full SHA (O957-6; GitHub's own action, released 2026-06-26, more than 14 days old).
-- Source of the code (option A, owner 2026-11-22): of `.github/workflows/ci.yml` in commit `9de067faf` only the four hunks of O957-6 (`git diff main...9de067faf -- .github/workflows/ci.yml`: `@@ -58`, `@@ -379`, `@@ -410`, `@@ -455`); `scripts/quality/ci-browser-cache.test.mjs` whole (added in `da4470783`, read with `git show 9de067faf:scripts/quality/ci-browser-cache.test.mjs`). Nothing else of those commits.
-- Out of scope: the synthetic sweep steps (the hunks `@@ -141`, `@@ -497`, `@@ -506` of the same diff: Task 1012, its own pull request).
+- Source of the code (option A, owner 2026-11-22): of `.github/workflows/ci.yml` in commit `9de067faf` only the four hunks of O957-6 (`git diff main...9de067faf -- .github/workflows/ci.yml`: `@@ -57`, `@@ -378`, `@@ -409`, `@@ -454`); `scripts/quality/ci-browser-cache.test.mjs` whole (added in `da4470783`, read with `git show 9de067faf:scripts/quality/ci-browser-cache.test.mjs`). Nothing else of those commits.
+- Out of scope: the synthetic sweep steps (the hunks `@@ -140`, `@@ -496`, `@@ -505` of the same diff: Task 1012, its own pull request).
 - Kept as on `main` (checklist A2): every job keeps its steps and order; only the browser install changes.
 
 ## Attack surface

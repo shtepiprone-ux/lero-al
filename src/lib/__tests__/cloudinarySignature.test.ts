@@ -14,6 +14,7 @@ vi.mock('@/lib/supabase/admin', () => ({
       select: () => ({
         eq: () => ({ limit: async () => ({ data: [], error: null }) }),
         ilike: () => ({ limit: async () => ({ data: [], error: null }) }),
+        order: () => ({ range: async () => ({ data: [], error: null }) }),
         limit: async () => ({ data: [], error: null }),
       }),
     }),

@@ -30,6 +30,8 @@ const world = vi.hoisted(() => ({
   providers: ['email'] as string[],
   amr: [] as unknown[],
   password: 'Right-Passw0rd!',
+  /** what `purgeAccountFolder` answers (Task 957): an outcome of the real function, or `throws` */
+  purge: 'purged' as string,
 }))
 
 /**
@@ -90,6 +92,11 @@ vi.mock('@/lib/supabase/admin', () => ({
   }),
 }))
 vi.mock('@/lib/cloudinaryDelete', () => ({
+  purgeAccountFolder: async (userId: string) => {
+    world.log.push(`purgeAccountFolder:${userId}`)
+    if (world.purge === 'throws') throw new Error('Cloudinary folders API down for https://res.cloudinary.com/demo/image/upload/v1/x.jpg alba@example.com')
+    return { outcome: world.purge, assetsDeleted: 0, assetsKept: 0, foldersRemoved: 0 }
+  },
   deleteAsset: async (publicId: string, options: { reason: string }) => {
     world.log.push(`deleteAsset:${publicId}:${options.reason}`)
     const mode = world.assets.get(publicId) ?? 'ok'
@@ -172,6 +179,7 @@ beforeEach(() => {
   world.objects = []
   world.providers = ['email']
   world.amr = []
+  world.purge = 'purged'
   errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
   infoSpy = vi.spyOn(console, 'info').mockImplementation(() => {})
 })
@@ -370,4 +378,43 @@ it('[SEC-DEL-SRV-DENY] Only the person or a staff member whose rank allows it ca
   world.user = person
   expect(await deleteOwnAccount({ password: world.password }), 'the person deletes their own account with the right password').toEqual({})
   expect(world.log.filter((entry) => entry.startsWith('deleteUser:'))).toEqual([`deleteUser:${person.id}`])
+})
+
+// Task 957 (AC14): the account folder is purged after the Auth deletion and the file releases, never before and never when the deletion failed
+it('[SEC-PURGE-SRV-ORDER] the purge of the account folder runs once, after the Auth deletion and the file releases, and never before or on a failed deletion', async () => {
+  seedPerson()
+  expect(await deleteAccount(TARGET, { reason: 'self' })).toEqual({ ok: true, filesNotRemoved: 0 })
+  expect(world.log.filter((entry) => entry.startsWith('purgeAccountFolder:'))).toEqual([`purgeAccountFolder:${TARGET}`])
+  expect(index('purgeAccountFolder:'), 'after the Auth deletion').toBeGreaterThan(index('deleteUser:'))
+  expect(index('purgeAccountFolder:'), 'after every file release').toBeGreaterThan(lastIndex('deleteAsset:'))
+
+  // a failed read, and a failed Auth deletion: no purge
+  for (const failure of ['read', 'delete'] as const) {
+    world.log.length = 0
+    seedPerson()
+    if (failure === 'read') world.failRead = 'users'
+    else world.deleteUserError = { code: 'unexpected_failure', status: 500, message: 'boom' }
+    expect(await deleteAccount(TARGET, { reason: 'staff' }), failure).toEqual({ ok: false, error: 'delete_failed' })
+    expect(world.log.some((entry) => entry.startsWith('purgeAccountFolder:')), `${failure}: no purge`).toBe(false)
+    world.failRead = null
+    world.deleteUserError = null
+  }
+})
+
+it('[SEC-PURGE-SRV-ORDER] a purge that cannot finish never undoes the deletion; it is counted, and its error text never reaches the log', async () => {
+  for (const outcome of ['lookup_failed', 'budget_exhausted', 'throws']) {
+    world.log.length = 0
+    errorSpy.mockClear()
+    seedPerson()
+    world.purge = outcome
+    expect(await deleteAccount(TARGET, { reason: 'staff' }), outcome).toEqual({ ok: true, filesNotRemoved: 1 })
+    expect(consoleText(errorSpy), outcome).not.toMatch(/alba@example\.com|res\.cloudinary\.com/)
+  }
+  // a folder that keeps a file a row uses, and a dry run, are not failures
+  for (const outcome of ['kept_some', 'dry_run', 'purged']) {
+    world.log.length = 0
+    seedPerson()
+    world.purge = outcome
+    expect(await deleteAccount(TARGET, { reason: 'staff' }), outcome).toEqual({ ok: true, filesNotRemoved: 0 })
+  }
 })

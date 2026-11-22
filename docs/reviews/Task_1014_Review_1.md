@@ -1,6 +1,6 @@
 # Task 1014 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1014_CMS_Upload_Bytes_Match_The_Declared_Type.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1014_CMS_Upload_Bytes_Match_The_Declared_Type.md) · OWASP record: [Task_1014.json](../security/owasp/reviews/Task_1014.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1014_CMS_Upload_Bytes_Match_The_Declared_Type.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1014_CMS_Upload_Bytes_Match_The_Declared_Type.md) · OWASP record: [Task_1014.json](../security/owasp/reviews/Task_1014.json)
 
 Review 1 of the branch `task/1014-cms-upload-bytes-match-type`, working tree on 3c89c8002 (uncommitted) — APPROVED
 Scope: the diff against 3c89c8002 (`main`): `src/app/api/upload-cms-image/route.ts`, `src/app/api/upload-cms-image/__tests__/route.test.ts`; entry point: POST `/api/upload-cms-image` (staff with `legal.manage`)

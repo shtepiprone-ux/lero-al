@@ -1,7 +1,7 @@
 import 'server-only'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
-import { deleteAsset } from '@/lib/cloudinaryDelete'
+import { deleteAsset, purgeAccountFolder } from '@/lib/cloudinaryDelete'
 
 export type DeleteAccountResult = { ok: true; filesNotRemoved: number } | { ok: false; error: 'delete_failed' }
 
@@ -24,6 +24,9 @@ type ReadResult = { data: unknown; error: { code?: string } | null }
  *    transaction (deletion v4, `proposed-account-deletion.sql`). An error answers `delete_failed` and no file is touched.
  * 3. Only then the files are released: Cloudinary ids through `deleteAsset` (its reference check now passes; it is a dry run unless `CLOUDINARY_DELETE_MODE=enabled`),
  *    and the person's objects of the `avatars` bucket. A file that is not removed never undoes the deletion; it is counted in `filesNotRemoved`.
+ * 4. Then the person's whole Cloudinary folder (`purgeAccountFolder`, Task 957, owner 2026-11-18: "the user's main folder and all files and folders in it"): it proves the account is gone,
+ *    removes every file under `<userId>` the rows no longer use (a file `site_settings` still uses stays with its folders) and the emptied folders. A purge that cannot finish is counted
+ *    in `filesNotRemoved`; the daily cleanup retries it.
  *
  * A log line carries `userId`, `reason`, ids and error codes only: never a URL, an e-mail or a name.
  */
@@ -63,6 +66,17 @@ export async function deleteAccount(userId: string, options: { reason: 'staff' |
   })
 
   filesNotRemoved += await removeAvatarObjects(db, userId, reason)
+
+  try {
+    const purge = await purgeAccountFolder(userId)
+    if (purge.outcome !== 'purged' && purge.outcome !== 'kept_some' && purge.outcome !== 'dry_run') {
+      filesNotRemoved += 1
+      console.error('deleteAccount: the Cloudinary folder was not purged', { userId, reason, outcome: purge.outcome })
+    }
+  } catch (err) {
+    filesNotRemoved += 1
+    console.error('deleteAccount: the Cloudinary folder purge threw', { userId, reason, code: errorCode(err) })
+  }
 
   return { ok: true, filesNotRemoved }
 }

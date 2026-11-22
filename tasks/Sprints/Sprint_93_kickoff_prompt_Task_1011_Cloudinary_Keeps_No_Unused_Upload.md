@@ -25,8 +25,8 @@ Fix: the daily cron, `deleteEmptyFolder` and `purgeAccountFolder` in the one mod
   a file a row still uses (the site logo above) is kept with its folders. A root folder not named by a UUID is never touched: `Lero` holds the site's own logos and favicon (owner, 2026-11-18: "this folder concerns the site, not users"). `deleteAccount` calls it after the auth deletion; the cron calls it for each root UUID folder with no account (within the same caps).
 - `src/lib/cloudinaryDelete.ts`: the `pages.content` check reads every page in pages of 500 until a short page (C-05). `src/lib/cloudinaryAdminRead.ts` (new): the paged Admin API reads. `src/tests/fakeCloudinary.ts` (new): the test double.
 - `src/lib/account/deleteAccount.ts`: `purgeAccountFolder` added to the import (line 4), step 4 added to the header comment (after line 27), and one step before `return { ok: true, filesNotRemoved }` (line 67), after the file releases, that calls it and counts a purge that did not finish in `filesNotRemoved`.
-- Tests: `src/app/api/cron/cloudinary-cleanup/__tests__/route.security.test.ts`, `src/lib/__tests__/cloudinaryPurge.security.test.ts`, `src/lib/cloudinaryDelete.security.test.ts`, `src/lib/account/deleteAccount.security.test.ts`. `vercel.json`: the cron line.
-- Source of the code (option A, owner 2026-11-22): commit `9de067faf` on the local branch `task/957-signed-listing-uploads` (Task 957 Revision 3; Reviews 1-4 of Task 957 name no finding against these files). In that commit every change of the ten files above belongs to this task (`git diff --stat main...9de067faf -- <the files>` → 10 files changed, 1067 insertions(+), 6 deletions(-); their hunks and test names carry only O957-4 and C-05), so the executor takes each file whole with `git show 9de067faf:<path>`, tests first (Route). Nothing else of that commit.
+- Tests: `src/app/api/cron/cloudinary-cleanup/__tests__/route.security.test.ts`, `src/lib/__tests__/cloudinaryPurge.security.test.ts`, `src/lib/cloudinaryDelete.security.test.ts`, `src/lib/account/deleteAccount.security.test.ts`. `vercel.json`: the cron line. The Supabase mocks of two existing tests, which the paged `pages` read (`.order().range()`) breaks: `src/lib/__tests__/cloudinary.security.test.ts` (the `order` mock, 2 lines after line 28) and `src/lib/__tests__/cloudinarySignature.test.ts` (the `order` mock, 1 line after line 16) — added to the Scope after Review 1 by the owner's decision (2026-11-22, translated: "option 1"), because CI of PR #55 failed 16 cases there.
+- Source of the code (option A, owner 2026-11-22): commit `9de067faf` on the local branch `task/957-signed-listing-uploads` (Task 957 Revision 3; Reviews 1-4 of Task 957 name no finding against these files). In that commit every change of the ten files above belongs to this task (`git diff --stat main...9de067faf -- <the files>` → 10 files changed, 1067 insertions(+), 6 deletions(-); their hunks and test names carry only O957-4 and C-05), so the executor takes each file whole with `git show 9de067faf:<path>`, tests first (Route). The two mocked tests differ from `main` only by those 3 lines (`git diff --stat main 9de067faf -- <the two>` → 2 files changed, 3 insertions(+)), so they are taken whole too. Nothing else of that commit.
 - Dependencies: none. Out of scope: moving stored photos (none is outside its folder); the signed upload (Task 957).
 - Kept as on `main` (checklist A2): `deleteAsset` keeps its reference check, fail-closed lookup and `CLOUDINARY_DELETE_MODE`; `deleteAccount` keeps every step it has and adds the purge last.
 
@@ -98,4 +98,16 @@ No visible change.
 4. Run: the same `npm test -- …` command; nothing else runs locally. Break (I9), each once, then restore: the cron secret check (`route.security.test.ts` fails), the folder pattern guard of `deleteEmptyFolder` (`cloudinaryDelete.security.test.ts`), the account-absence proof of `purgeAccountFolder` (`cloudinaryPurge.security.test.ts`), the paged `pages` read (`cloudinaryDelete.security.test.ts`). CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5).
 5. Report: each command, exit code, relevant output; the failing run before the change; each break output.
 
+## Revision 1 — Review 2 (2026-11-22): the two mocks the paged `pages` read needs
+
+F1 (Review 2): CI of PR #55 (run 45053076568, job "Unit and component tests") fails 16 cases in `src/lib/__tests__/cloudinary.security.test.ts` and `src/lib/__tests__/cloudinarySignature.test.ts`: their Supabase mock has no `order`, so the paged read (`src/lib/cloudinaryDelete.ts:111`) throws `db.from(...).select(...).order is not a function` and every reference check fails closed.
+
+- Change: take both files whole with `git show 9de067faf:<path>`; that adds only the `order: () => ({ range: … })` mock (2 lines and 1 line). Nothing else.
+- Run (I4 before, I8 after): `npm test -- src/lib/__tests__/cloudinary.security.test.ts src/lib/__tests__/cloudinarySignature.test.ts` → before 16 failed, after every case passes; then the Route's four files once more → 66 passed. No break (I9): the change is a test double, no control.
+- Report: each command, exit code, the counts before and after.
+
 ## Review
+
+- [Review 1 — APPROVED](../../docs/reviews/Task_1011_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_1011_Review_2.md)
+- [Review 3 — APPROVED](../../docs/reviews/Task_1011_Review_3.md)

@@ -1,6 +1,6 @@
 # Task 1012 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_1012_A_Cancelled_Run_Leaves_No_Synthetic_Data.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_1012_A_Cancelled_Run_Leaves_No_Synthetic_Data.md) · OWASP record: [Task_1012.json](../security/owasp/reviews/Task_1012.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_1012_A_Cancelled_Run_Leaves_No_Synthetic_Data.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_1012_A_Cancelled_Run_Leaves_No_Synthetic_Data.md) · OWASP record: [Task_1012.json](../security/owasp/reviews/Task_1012.json)
 
 Review 1 of the branch `task/1012-cancelled-run-leaves-no-synthetic-data`, working tree on 02caeef0b (uncommitted) — APPROVED
 Scope: the diff against 81661dc4e (`main` the branch starts from): `.github/workflows/ci.yml` (02caeef0b, Opus), `src/tests/integration/fixtures.ts`, `package.json`, `scripts/sweep-synthetic.mjs`, `scripts/__tests__/sweep-synthetic.test.ts`; entry point: the CI step "Synthetic test data of this job is removed" of the jobs `authz` and `click-shield`

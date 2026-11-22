@@ -918,7 +918,7 @@
     "users": {
       "tab_all": "Всі користувачі",
       "tab_verified": "✓ Верифіковані агенти",
-      "search_placeholder": "Пошук по імені, телефону, компанії...",
+      "search_placeholder": "Пошук по імені, телефону, компанії або ID акаунта...",
       "col_agent": "Агент",
       "col_company": "Компанія",
       "col_date": "Дата",
@@ -1580,7 +1580,9 @@
       "header": {
         "new_user_title": "Новий користувач",
         "new_user_subtitle": "Заповніть поля нижче для створення профілю",
-        "verified_badge": "Верифікований"
+        "verified_badge": "Верифікований",
+        "copy_account_id": "Копіювати ID акаунта",
+        "account_id_copied": "ID акаунта скопійовано"
       },
       "location_request": {
         "title": "Запит на додавання населеного пункту"

@@ -20,6 +20,10 @@
     {
       "path": "/api/cron/listing-activity",
       "schedule": "30 0 * * *"
+    },
+    {
+      "path": "/api/cron/cloudinary-cleanup",
+      "schedule": "15 3 * * *"
     }
   ]
 }

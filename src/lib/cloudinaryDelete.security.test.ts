@@ -17,6 +17,8 @@ const state = vi.hoisted(() => ({
   /** `table.column` whose read throws */
   throws: null as string | null,
   pages: [] as unknown[],
+  /** the slice of every read of `pages` (null: an unsliced read) */
+  pageReads: [] as ([number, number] | null)[],
 }))
 
 const READS = ['listing_images.url', 'users.avatar_url', 'users.company_logo_url', 'companies.logo_url', 'locations.image_url', 'site_settings.value', 'pages.content']
@@ -24,11 +26,15 @@ const READS = ['listing_images.url', 'users.avatar_url', 'users.company_logo_url
 vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: () => ({
     from: (table: string) => {
-      const respond = (column: string) => {
+      const respond = (column: string, slice?: [number, number]) => {
         const key = `${table}.${column}`
         if (state.throws === key) throw new Error('connection reset')
         if (state.fails === key) return { data: null, error: { code: 'XX000', message: 'MARKER-DB-MESSAGE' } }
-        if (table === 'pages') return { data: state.pages.map((content, id) => ({ id, content })), error: null }
+        if (table === 'pages') {
+          const rows = state.pages.map((content, id) => ({ id, content }))
+          state.pageReads.push(slice ?? null)
+          return { data: slice ? rows.slice(slice[0], slice[1] + 1) : rows, error: null }
+        }
         return { data: state.holds.has(key) ? [{ id: 1 }] : [], error: null }
       }
       let column = 'content'
@@ -36,14 +42,16 @@ vi.mock('@/lib/supabase/admin', () => ({
         select: () => chain,
         eq: (c: string) => { column = c; return chain },
         ilike: (c: string) => { column = c; return chain },
+        order: () => chain,
         limit: async () => respond(column),
+        range: async (from: number, to: number) => respond(column, [from, to]),
       }
       return chain
     },
   }),
 }))
 
-import { deleteAsset } from './cloudinaryDelete'
+import { deleteAsset, deleteEmptyFolder } from './cloudinaryDelete'
 
 const fetchMock = vi.fn()
 const ENV = { ...process.env }
@@ -53,6 +61,7 @@ beforeEach(() => {
   state.fails = null
   state.throws = null
   state.pages = []
+  state.pageReads = []
   fetchMock.mockReset()
   fetchMock.mockResolvedValue({ ok: true, json: async () => ({ result: 'ok' }) })
   vi.stubGlobal('fetch', fetchMock)
@@ -96,5 +105,67 @@ describe('cloudinaryDelete', () => {
     state.pages = [{ type: 'doc', content: [{ type: 'image', attrs: { src: 'https://res.cloudinary.com/demo/image/upload/v1/listings/other.jpg' } }] }]
     expect(await deleteAsset('listings/pic-1', { reason: 't' })).toEqual({ skipped: false, dryRun: false, deleted: true })
     expect(fetchMock).toHaveBeenCalledTimes(1)
+  })
+})
+
+// Task 957 (AC7, case SEC-CMS-PAGES-FAILCLOSED): a reference on a CMS page beyond the first 500 keeps the asset; every page is read, in pages of 500, until a short page
+describe('cloudinaryDelete: every CMS page is read (Task 957, C-05)', () => {
+  const doc = (src: string) => ({ type: 'doc', content: [{ type: 'image', attrs: { src } }] })
+  const filler = (count: number) => Array.from({ length: count }, (_, i) => doc(`https://res.cloudinary.com/demo/image/upload/v1/cms/other-${i}.jpg`))
+
+  it('[SEC-CMS-PAGES-FAILCLOSED] a reference on page 501 of 600 keeps the asset, and the reads are pages of 500 until a short page', async () => {
+    state.pages = [...filler(500), doc('https://res.cloudinary.com/demo/image/upload/v1/listings/pic-1.jpg'), ...filler(99)]
+    expect(state.pages).toHaveLength(600)
+    expect(await deleteAsset('listings/pic-1', { reason: 't' })).toMatchObject({ skipped: true, deleted: false, skipReason: 'referenced in: pages.content' })
+    expect(state.pageReads).toEqual([[0, 499], [500, 999]])
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('[SEC-CMS-PAGES-FAILCLOSED] exactly 500 pages need a second, empty read; with no reference on any page the asset is destroyed', async () => {
+    state.pages = filler(500)
+    expect(await deleteAsset('listings/pic-1', { reason: 't' })).toEqual({ skipped: false, dryRun: false, deleted: true })
+    expect(state.pageReads).toEqual([[0, 499], [500, 999]])
+  })
+
+  it('[SEC-CMS-PAGES-FAILCLOSED] a failing read of the pages keeps the asset (fail closed)', async () => {
+    state.pages = filler(600)
+    state.fails = 'pages.content'
+    expect(await deleteAsset('listings/pic-1', { reason: 't' })).toMatchObject({ skipped: true, deleted: false, skipReason: 'reference lookup failed' })
+  })
+})
+
+// Task 957 (AC13): deleteEmptyFolder removes only the folders of an account (`<uuid>`, `<uuid>/listings`, `<uuid>/listings/<uuid>`, `<uuid>/avatars`), under the same mode switch
+describe('deleteEmptyFolder', () => {
+  const U = '22222222-2222-4222-8222-222222222222'
+  const L = '44444444-4444-4444-8444-444444444444'
+
+  it.each([
+    [U], [`${U}/listings`], [`${U}/listings/${L}`], [`${U}/avatars`],
+  ])('[SEC-FOLDER-GUARD-ALLOW] removes %s with a DELETE to the folders API', async (path) => {
+    const result = await deleteEmptyFolder(path, { reason: 'empty_folder' })
+    expect(result).toEqual({ refused: false, dryRun: false, deleted: true })
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(fetchMock.mock.calls[0][0]).toBe(`https://api.cloudinary.com/v1_1/demo/folders/${path}`)
+    expect(fetchMock.mock.calls[0][1]).toMatchObject({ method: 'DELETE' })
+  })
+
+  it.each([
+    ['avatars'], ['companies'], ['Lero'], ['../x'], [`${U}/other`], [`${U}/Brand`], [`${U}/Brand/Favicon`], [`${U}/listings/${L}/x`], [`${U}/../${U}`],
+    [`${U}/listings/`], [`/${U}`], [`${U}x`], [''], ['cms/pages'], [`${U}/listings/not-a-uuid`],
+  ])('[SEC-FOLDER-GUARD-DENY] refuses %j and calls nothing', async (path) => {
+    const result = await deleteEmptyFolder(path, { reason: 'empty_folder' })
+    expect(result).toEqual({ refused: true, dryRun: false, deleted: false })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('[SEC-FOLDER-GUARD-DENY] a dry run (the mode switch is off) calls nothing and says so', async () => {
+    process.env.CLOUDINARY_DELETE_MODE = 'disabled'
+    expect(await deleteEmptyFolder(U, { reason: 'empty_folder' })).toEqual({ refused: false, dryRun: true, deleted: false })
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('[SEC-FOLDER-GUARD-DENY] a failing DELETE (the folder is not empty, or the API is down) is thrown, never reported as deleted', async () => {
+    fetchMock.mockResolvedValue({ ok: false, status: 400, text: async () => 'Folder is not empty' })
+    await expect(deleteEmptyFolder(U, { reason: 'empty_folder' })).rejects.toThrow(/Cloudinary folder delete failed/)
   })
 })

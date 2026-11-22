@@ -1,6 +1,6 @@
 # Task 1013 — The CI browser jobs install from a cache that only `main` writes
 
-Sprint 93. Priority P1. Owner decisions: O957-6 2026-11-19 (the owner, translated: "Yes", to adding, in Opus's part of `ci.yml`, a browser install that a slow Ubuntu mirror cannot stall). Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`).
+Sprint 93. Priority P1. Owner decisions: O957-6 2026-11-19 (the owner, translated: "Yes", to adding, in Opus's part of `ci.yml`, a browser install that a slow Ubuntu mirror cannot stall). Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`). Corrected 2026-11-22 before execution (checklist D, owner, translated: "fix it"): that code is in commits `da4470783` and `9de067faf`; the cache steps reach `main` in this task's own pull request, reviewed before the merge (option A: "each part is its own pull request"), no longer inside Task 1012's.
 Implementer: Opus (`.github/workflows/ci.yml`, `scripts/quality/ci-browser-cache.test.mjs`). Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
@@ -21,8 +21,8 @@ Fix: the browser and its `.deb` packages come from an `actions/cache` entry keye
   apt still checks every cached package against the signed package index, so a changed `.deb` is refused; the browser folder is written only by `main`, which changes only through a reviewed pull request.
   `scripts/quality/ci-browser-cache.test.mjs` (new, Opus; `node --test`, run by the `quality` job's "every scripts/quality/*.test.mjs" step).
 - Dependencies: one GitHub action, `actions/cache` v6.1.0, pinned by full SHA (O957-6; GitHub's own action, released 2026-06-26, more than 14 days old).
-- State (option A, owner 2026-11-22): the `.github/workflows/ci.yml` change is written in the working tree of `task/957-signed-listing-uploads` and reaches `main` with the pull request of Task 1012, which takes that file whole; this pull request adds `scripts/quality/ci-browser-cache.test.mjs`, and its review reviews the cache steps already on `main` (`git show main:.github/workflows/ci.yml`).
-- Out of scope: the synthetic sweep steps (Task 1012).
+- Source of the code (option A, owner 2026-11-22): of `.github/workflows/ci.yml` in commit `9de067faf` only the four hunks of O957-6 (`git diff main...9de067faf -- .github/workflows/ci.yml`: `@@ -58`, `@@ -379`, `@@ -410`, `@@ -455`); `scripts/quality/ci-browser-cache.test.mjs` whole (added in `da4470783`, read with `git show 9de067faf:scripts/quality/ci-browser-cache.test.mjs`). Nothing else of those commits.
+- Out of scope: the synthetic sweep steps (the hunks `@@ -141`, `@@ -497`, `@@ -506` of the same diff: Task 1012, its own pull request).
 - Kept as on `main` (checklist A2): every job keeps its steps and order; only the browser install changes.
 
 ## Attack surface
@@ -45,7 +45,7 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-22).
 - OS_Command_Injection_Defense: not applicable — the shell steps take no value from a pull request or issue
 - Secrets_Management: not applicable — no secret is added or passed to the new cache steps
 - Secure_Code_Review: "Security-Focused Review differs from functional code review by specifically targeting security concerns" — Opus reviews the cache steps on `main` by `secure-code-review.md` — AC2
-- Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the code is written by Sonnet and its every claim is rerun by Opus — AC2
+- Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — the one dependency added is `actions/cache`, GitHub's own action, pinned by the full SHA of its v6.1.0 release; the implementing Opus session's every claim is rerun by the reviewing session — AC1, AC2
 - Secure_Product_Design: "Threat Modeling - which results in security related stories being added during" — threat T9 became an acceptance criterion — AC1
 - Software_Supply_Chain_Security: "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure" — `actions/cache` is pinned to the full commit SHA of its v6.1.0 release — AC1
 - Threat_Modeling: "the threat modeling process should answer the following four questions" — "## Attack surface" answers them for T9 — AC1
@@ -65,8 +65,10 @@ No visible change.
 
 ## Route
 
-1. Opus hands the owner the commands (checklist H): a branch `task/<n>` from `main` that takes the Scope files from `task/957-signed-listing-uploads`. Task 1012 merges first.
-2. Run: `node --test scripts/quality/ci-browser-cache.test.mjs`; after the merge Opus reads two `main` runs with `gh run list --branch main --limit 3` (the cache saved, then restored). CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5).
-3. Report: each command, exit code, relevant output; one deliberate break per security test (named in its criterion), restored.
+1. The owner creates the branch `task/1013-ci-browser-cache-main-only` from `main` with this kickoff committed on it (checklist H). It does not wait for Task 1012: the two pull requests change different hunks of `ci.yml`.
+2. Test first: `scripts/quality/ci-browser-cache.test.mjs` from `9de067faf`; run `node --test scripts/quality/ci-browser-cache.test.mjs`; it fails on `main`'s `ci.yml`; keep that output.
+3. The change: the four `ci.yml` hunks of the Scope from `9de067faf`.
+4. Run: `node --test scripts/quality/ci-browser-cache.test.mjs`; nothing else runs locally. Break, once, then restore: the `main`-only condition of one `actions/cache/save` step (the test fails). CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5); after the merge Opus reads two `main` runs with `gh run list --branch main --limit 3` (the cache saved, then restored).
+5. Report: each command, exit code, relevant output; the failing run before the change; the break output.
 
 ## Review

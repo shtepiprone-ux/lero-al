@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { assertPermission } from '@/lib/auth/permissions'
 import { uploadToCloudinary } from '@/lib/cloudinaryUpload'
+import { declaredTypeMatchesBytes } from '@/lib/uploads/imageSniff'
 
 // POST /api/upload-cms-image — Task 868 (R15).
 //
@@ -42,6 +43,10 @@ export async function POST(req: NextRequest) {
   const bytes = await file.arrayBuffer()
   if (bytes.byteLength === 0) {
     return NextResponse.json({ error: 'file_empty' }, { status: 400 })
+  }
+  // The declared type is chosen by the sender: the file must be the image type it declares, judged by its first bytes (Task 957, A-05; the avatar route does the same).
+  if (!declaredTypeMatchesBytes(file.type, bytes)) {
+    return NextResponse.json({ error: 'invalid_type' }, { status: 400 })
   }
 
   try {

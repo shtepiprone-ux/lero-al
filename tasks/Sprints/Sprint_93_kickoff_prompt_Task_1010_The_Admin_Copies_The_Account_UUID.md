@@ -1,6 +1,6 @@
 # Task 1010 — The admin copies an account's UUID, the name of its Cloudinary folder
 
-Sprint 93. Priority P2. Owner decisions: O957-3 2026-11-18 (option chosen: "UUID + metadata + admin": the folder stays the account UUID, each photo carries the uploader's number and listing in Cloudinary metadata, the admin profile copies the UUID). Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`).
+Sprint 93. Priority P2. Owner decisions: O957-3 2026-11-18 (option chosen: "UUID + metadata + admin": the folder stays the account UUID, each photo carries the uploader's number and listing in Cloudinary metadata, the admin profile copies the UUID). Split out of Task 957 by the owner, 2026-11-22 (translated: "split the task into several subtasks"; option A chosen: each part is its own pull request from `main`, built from the code already written in the working tree of `task/957-signed-listing-uploads`). Corrected 2026-11-22 before execution (checklist D, owner, translated: "do everything by the rules"): that code is in commit `9de067faf`; the Scope takes only the lines this task needs; the Route runs only its test file.
 Implementer: Sonnet. Reviewer: Opus. Human owner of the change: the owner.
 
 ## Goal
@@ -9,18 +9,18 @@ A Cloudinary folder is named by the account UUID, but the admin profile shows on
 
 ## Cause
 
-Read at `a9915f3ba`
-- A folder name cannot be traced to a person in the admin: the profile shows only `#public_id` (`src/components/admin/AdminUserProfileView.tsx:515-517`), never the UUID; the users search accepts a full UUID (`src/app/admin/users/page.tsx:63-64`) but its hint does not say so (`messages/en.json:921`).
+Read at `fa8fea56b`
+- A folder name cannot be traced to a person in the admin: the profile shows only `#public_id` (`src/components/admin/AdminUserProfileView.tsx:515-519`), never the UUID; the users search accepts a full UUID (`src/app/admin/users/page.tsx:63-64`) but its hint does not say so (`messages/en.json:921`).
 Fix: the `#public_id` line becomes the canonical copy control that copies `user.id`; the search hint names the account ID in four locales.
 
 ## Scope
 
-- Admin (O957-3): `AdminUserProfileView.tsx` renders the `#public_id` line with the canonical `MantineCopyIdButton` (label `#<public_id>`, copies `user.id`; accessible names from new `admin.user_profile` keys in all four locales), as `AdminListingsView.tsx:124-129` does;
-  the users search hint (`search_placeholder`, `messages/*.json:921`) names the account ID in all four locales; the Story `Patterns/Mantine/AdminUserProfileDialogsView` (`src/stories/patterns/mantine/AdminUserProfileDialogsView.stories.tsx`) passes `public_id` and `id`.
-- Tests: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`. Messages: `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json`.
-- State (option A, owner 2026-11-22): the files above are written (Task 957 Revision 3) and uncommitted in the working tree of `task/957-signed-listing-uploads`; Reviews 1-4 of Task 957 name no finding against them (`docs/reviews/Task_957_Review_1.md` to `docs/reviews/Task_957_Review_4.md`). The pull request takes exactly these files from that tree (the four message files whole: they also carry the listing-form keys of Task 957, unused until it merges); nothing is rewritten, and a defect the review finds is fixed in this pull request.
-- Dependencies: none. Out of scope: the listing pages, Cloudinary metadata (Task 957).
-- Kept as on `main` (checklist A2): `AdminUserProfileView.tsx` keeps every block, its order and the `#public_id` text; only the text becomes the copy control. The search keeps its behaviour; only its hint changes.
+- `src/components/admin/AdminUserProfileView.tsx`: the import of `MantineCopyIdButton` and lines 515-519, the `Text` with `#{user.public_id}` becomes `MantineCopyIdButton` (`id={user.id}`, `label={`#${user.public_id}`}`, `copyLabel={t('header.copy_account_id')}`, `copiedLabel={t('header.account_id_copied')}`), as `src/components/admin/AdminListingsView.tsx:124-129` uses it.
+- `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json`: three lines each, nothing else: `admin.users.search_placeholder` (line 921) names the account ID; `admin.user_profile.header` gains `copy_account_id` and `account_id_copied` after `verified_badge` (line 1583).
+- `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`: one new `describe` block at the end of the file (AC1, AC2).
+- Source of the code (option A, owner 2026-11-22): commit `9de067faf` on the local branch `task/957-signed-listing-uploads` (Task 957 Revision 3; Reviews 1-4 of Task 957 name no finding against these lines). The executor reads it with `git show 9de067faf:<path>` and takes, verbatim, only the lines this Scope names: the `describe` block "AdminUserProfile: the account ID" of the smoke test, the import (line 19) and lines 517-523 of `AdminUserProfileView.tsx`, and in each locale the `search_placeholder` value and the two `header` keys. The other changes of those files in that commit (the listing-form keys of Task 957 and the `AdminUserProfileDialogsView` Story's `CancelDemo`, Task 957 R2-5) stay with Task 957.
+- Dependencies: none. Out of scope: the listing pages, Cloudinary metadata (Task 957), every Story: `Patterns/Mantine/AdminUserProfileView` already renders a user with `id` and `public_id` (`src/stories/fixtures/admin.fixtures.ts:519-521`), so it shows the control unchanged.
+- Kept as on `main` (checklist A2): `AdminUserProfileView.tsx` keeps every block, its order and the `#<public_id>` text; the text takes the look of the copy control (O957-3 names the change: "the admin profile copies the UUID"). The users search keeps its query (`page.tsx` is not changed); only the hint text changes. The message files keep every other key and value.
 
 ## Attack surface
 
@@ -41,13 +41,19 @@ Required by `node scripts/quality/owasp.mjs plan` (2026-11-22).
 - File_Upload: not applicable — no file is uploaded; only the folder name is copied to the clipboard
 - JavaScript_and_TypeScript_Security: not applicable — no merge, path setter, regular expression or eval is added
 - Nextjs_Security: not applicable — no Server Action, route handler or cache setting changes in this task
-- Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the code is written by Sonnet and its every claim is rerun by Opus — AC2
+- Secure_Coding_with_AI: "AI coding assistants frequently suggest package names that do not exist on public registries" — no package is added; the code is written by Sonnet and its every claim is rerun by Opus — AC1, AC3
 - User_Privacy_Protection: not applicable — staff see a pseudonymous UUID they already reach through the address; no IP or contact data
-- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns every claim of the executor's report — AC2
+- Verifying_Third_Party_Agent_Execution_Evidence: "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier." — the reviewer reruns every claim of the executor's report — AC1, AC3
 - Web_Frontend_Security: not applicable — no innerHTML or other markup sink is added by the copy control
 ## UI
 
-REUSE `MantineCopyIdButton` (`src/design-system/mantine/patterns/MantineCopyIdButton.tsx`), as `AdminListingsView.tsx:124-129` uses it; tokens and states inherited from that owner (U1, U3). States (U11): default and copied are the owner's; the rest are not needed: the control has no load, empty or error state. U12: the copy control's accessible names come from `admin.user_profile` keys; focus is the owner's.
+- U1: REUSE `MantineCopyIdButton` (`src/design-system/mantine/patterns/MantineCopyIdButton.tsx`), as `src/components/admin/AdminListingsView.tsx:124-129` uses it; no new component.
+- U2: `AdminUserProfileView.tsx` has no `@/components/ui/*` import and no `className`; it is enrolled in `scripts/mantine-migration-scope.json:143`.
+- U3, U4: no style, size or colour literal is added; the look is the owner's module (`MantineCopyIdButton.module.css`), the same as in `AdminListingsView.tsx:124-129`.
+- U6: the Story `Patterns/Mantine/AdminUserProfileView` (`src/stories/patterns/mantine/AdminUserProfileView.stories.tsx`) renders the control from its fixture (`src/stories/fixtures/admin.fixtures.ts:519-521`) and is not changed; the copied state is shown by a click, as in production.
+- U7: not applicable — no table (GR-8), the name is not changed (GR-3i), no new block (GR-3h), no popup (GR-3e), no heading (GR-3c).
+- U11: default and copied are built by the owner (`MantineCopyIdButton.tsx:44-52`); loading, empty, error, partial, disabled, no permission and offline are not needed: the control makes no request and is shown only when `public_id` is set; the longest label is `#<public_id>`, a number.
+- U12: colours are tokens (`MantineCopyIdButton.module.css:21`, `:56`, `:61`); the copied state changes the icon and the accessible name, not the colour only (`MantineCopyIdButton.tsx:44-52`); the accessible names come from the two new `admin.user_profile.header` keys; focus is visible (`MantineCopyIdButton.module.css:51-56`); no error message exists.
 
 ## Mobile adaptation record
 - Scope: visible
@@ -60,17 +66,22 @@ REUSE `MantineCopyIdButton` (`src/design-system/mantine/patterns/MantineCopyIdBu
 - Mobile range and switches: <640px (theme.other.mobileGate / sm): the control keeps the 44px target its owner sets; 640px transition to the owner's desktop size
 - Mobile order: name → badges → e-mail → `#public_id` copy control
 - Required-content treatment: no semantic loss: the number stays visible and the copy action reachable; nothing clamps
-- Story and verification: Patterns/Mantine/AdminUserProfileDialogsView at 320px and on both sides of the 640px transition × sq, en, uk, it, checked by the owner by hand (checklist U9)
+- Story and verification: Patterns/Mantine/AdminUserProfileView at 320px and on both sides of the 640px transition × sq, en, uk, it, checked by the owner by hand (checklist U9)
 
 ## Acceptance criteria
 
-- AC1 The admin copies the account UUID and the hint names it (O957-3) — test: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (extended: the `#public_id` control writes `user.id` to the clipboard) and `node scripts/check-i18n-parity.mjs` with `node scripts/quality/locale-safety.mjs` (the new keys and hint in all four locales).
-- AC2 The CI jobs pass — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
+- AC1 The admin copies the account UUID (O957-3): the control shows `#<public_id>`, writes `user.id` (not the number) to the clipboard, and is absent when `public_id` is null — test: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (new `describe` "AdminUserProfile: the account ID").
+- AC2 The two labels exist in all four locales and the users search hint names the account ID — test: `src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx` (same `describe`, the locale case).
+- AC3 The CI jobs pass (key parity of the four locales, `locale-safety.mjs` on the values, coverage of the changed lines) — test: `gh pr checks <n>` on GitHub after every check has concluded (checklist A5).
 
 ## Route
 
-1. Opus hands the owner the commands (checklist H): a branch `task/<n>` from `main` that takes the Scope files from `task/957-signed-listing-uploads`.
-2. Run: `npx vitest run src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`, `node scripts/check-i18n-parity.mjs`, `node scripts/quality/locale-safety.mjs`. CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5).
-3. Report: each command, exit code, relevant output; one deliberate break per security test (named in its criterion), restored.
+1. The owner creates the branch `task/1010-admin-copies-account-uuid` from `main` with this kickoff committed on it (checklist H); nothing else is taken onto it, so the executor starts from a clean tree (checklist I1).
+2. Tests first (I4): the new `describe` block, verbatim from `git show 9de067faf:src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`; run `npm test -- src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`; it fails on the unchanged code; keep that output.
+3. The change (I5): the `AdminUserProfileView.tsx` lines and the three lines of each locale from `9de067faf`, as the Scope names them; message files only with Edit (checklist A12).
+4. Run: `npm test -- src/components/admin/__tests__/AdminUserProfile.smoke.test.tsx`; nothing else runs locally. CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (checklist A5). No security test: the attack surface is unchanged (I9 not applicable).
+5. Report: each command, exit code, relevant output; the failing run before the change.
 
 ## Review
+
+- [Review 1 — APPROVED](../../docs/reviews/Task_1010_Review_1.md)

@@ -629,3 +629,39 @@ describe('AdminUserProfile — every code of the two profile actions is translat
     expect(screen.queryByText('db_down')).toBeNull()
   })
 })
+
+// Task 957 (AC12, O957-3): the `#public_id` line is the canonical copy control and copies the account's UUID (the Cloudinary folder name)
+describe('AdminUserProfile: the account ID (Task 957, O957-3)', () => {
+  const writeText = vi.fn()
+  beforeEach(() => {
+    writeText.mockReset()
+    writeText.mockResolvedValue(undefined)
+    Object.defineProperty(navigator, 'clipboard', { value: { writeText }, configurable: true })
+  })
+
+  it('the control shows #<public_id>, has an accessible name, and writes user.id (not the number) to the clipboard', () => {
+    renderProfile()
+    const control = screen.getByRole('button', { name: t.header.copy_account_id })
+    expect(control.textContent).toContain(`#${USER.public_id}`)
+    expect(control.getAttribute('title')).toBe(USER.id)
+    fireEvent.click(control)
+    expect(writeText).toHaveBeenCalledTimes(1)
+    expect(writeText).toHaveBeenCalledWith(USER.id)
+    expect(screen.getByRole('button', { name: t.header.account_id_copied })).toBeTruthy()
+  })
+
+  it('a profile with no public number shows no copy control', () => {
+    renderProfile({ user: { ...USER, public_id: null } as unknown as UserWithLocation })
+    expect(screen.queryByRole('button', { name: t.header.copy_account_id })).toBeNull()
+  })
+
+  it('every locale has the two labels, and the users search hint names the account ID', () => {
+    for (const [locale, m] of [['en', messages], ['sq', sqMessages], ['it', itMessages], ['uk', ukMessages]] as const) {
+      const header = (m as typeof messages).admin.user_profile.header
+      expect(header.copy_account_id.length, `${locale} copy label`).toBeGreaterThan(3)
+      expect(header.account_id_copied.length, `${locale} copied label`).toBeGreaterThan(3)
+      expect((m as typeof messages).admin.users.search_placeholder, `${locale} hint`).toMatch(/ID/)
+    }
+    expect(messages.admin.users.search_placeholder).toBe('Search by name, phone, company or account ID...')
+  })
+})

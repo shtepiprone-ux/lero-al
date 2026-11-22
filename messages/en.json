@@ -918,7 +918,7 @@
     "users": {
       "tab_all": "All users",
       "tab_verified": "✓ Verified agents",
-      "search_placeholder": "Search by name, phone, company...",
+      "search_placeholder": "Search by name, phone, company or account ID...",
       "col_agent": "Agent",
       "col_company": "Company",
       "col_date": "Date",
@@ -1580,7 +1580,9 @@
       "header": {
         "new_user_title": "New user",
         "new_user_subtitle": "Fill in the fields below to create a profile",
-        "verified_badge": "Verified"
+        "verified_badge": "Verified",
+        "copy_account_id": "Copy account ID",
+        "account_id_copied": "Account ID copied"
       },
       "location_request": {
         "title": "Location addition request"

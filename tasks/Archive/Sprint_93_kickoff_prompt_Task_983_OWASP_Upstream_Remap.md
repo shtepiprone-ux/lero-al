@@ -29,7 +29,7 @@ for e-mailed links (`src/lib/auth/trustedOrigin.ts:49-61`) and not for two sign-
 and `src/app/auth/callback/route.ts:11` take `origin` from `new URL(request.url)` and answer with it (`:45`, `:28`).
 The new `Path_Traversal_Prevention` is met by Task 951's fix (`scripts/lib/within-repository.mjs:29-35`, AC8 test
 `scripts/lib/__tests__/within-repository.test.ts:51-106`), and its trigger names that open kickoff
-(`tasks/Sprints/Sprint_93_kickoff_prompt_Task_951_CodeQL_Alerts_Closed.md:60`).
+(`tasks/Archive/Sprint_93_kickoff_prompt_Task_951_CodeQL_Alerts_Closed.md:60`).
 Review 1 (2026-11-17): upstream moved to `18e4396f7605` (`owasp.mjs sync --verify` → "changed: HTTP_Headers",
 "changed: XML_Security"). `HTTP_Headers` gained an Nginx `add_header`/`proxy_hide_header` paragraph: no Nginx exists,
 and each security header is set in one layer (`src/lib/security/headers.ts:15-21` by `next.config.ts:16-17`, the

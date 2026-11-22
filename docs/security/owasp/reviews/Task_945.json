@@ -1,0 +1,168 @@
+{
+  "task": "945",
+  "sheets": {
+    "AI_Agent_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Implement per-tool permission scoping (read-only vs. write, specific resources)."
+      ],
+      "evidence": "`.claude/settings.json` denies `Bash(git commit *)`, `Bash(git push *)` and their PowerShell forms; the per-turn agent loop was removed by owner decision D974-1 (Task 974, archived)"
+    },
+    "Attack_Surface_Analysis": {
+      "verdict": "met",
+      "quotes": [
+        "developers should understand and monitor the Attack Surface as they design and build and change a system"
+      ],
+      "evidence": "the kickoff's \"## Attack surface\" T1-T6 with their mitigations in `.github/workflows/ci.yml:17` and the jobs of CI run 45057784619"
+    },
+    "Authorization": {
+      "verdict": "met",
+      "quotes": [
+        "Implement defense in depth. Do not depend on any single framework, library, technology, or control to be the sole thing enforcing proper access control."
+      ],
+      "evidence": "job \"Authorization regression (real Supabase development project)\" of CI run 45057784619: success, beside lint, types and tests"
+    },
+    "Authorization_Decisions_And_Output_Handling": {
+      "verdict": "not applicable",
+      "reason": "the task builds gates; it changes no authorization decision of the product"
+    },
+    "Authorization_Patterns": {
+      "verdict": "not applicable",
+      "reason": "no product access check is moved or added by the CI and hook work"
+    },
+    "Authorization_Regression_Testing": {
+      "verdict": "met",
+      "quotes": [
+        "Automated tests should specifically target the ways authorization usually degrades over time."
+      ],
+      "evidence": "`.github/workflows/ci.yml` job `authz` runs `npm run test:security-integration` on every pull request; CI run 45057784619: success"
+    },
+    "Authorization_Testing_Automation": {
+      "verdict": "not applicable",
+      "reason": "the authorization matrix itself is Task 950; this task only runs the existing suite"
+    },
+    "CI_CD_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed."
+      ],
+      "evidence": "PR #19 merged 2026-11-09 with 23 checks SUCCESS including `CI Required` (`gh pr view 19`); `node scripts/quality/check-ruleset.mjs` → the live ruleset matches, exit 0"
+    },
+    "Dependency_Graph_SBOM": {
+      "verdict": "met",
+      "quotes": [
+        "Validate the document against its format's schema before publication or ingestion"
+      ],
+      "evidence": "`.github/workflows/ci.yml:256` `npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --omit dev --validate`; job \"SBOM\" of CI run 45057784619: success"
+    },
+    "GitHub_Actions_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always set permissions: {} at the workflow level to disable all permissions by default."
+      ],
+      "evidence": "`.github/workflows/ci.yml:17` `permissions: {}`; job \"Workflow security (zizmor)\" of CI run 45057784619: success"
+    },
+    "Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface"
+      ],
+      "evidence": "job \"CodeQL (SAST)\" of CI run 45057784619: success over `scripts/quality/`"
+    },
+    "JavaScript_and_TypeScript_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Keep patterns linear: avoid nested quantifiers and ambiguous alternation over the same characters."
+      ],
+      "evidence": "`.github/workflows/ci.yml:53` `npm run lint`, `:55` `npm run typecheck`, and CodeQL; CI run 45057784619: success"
+    },
+    "Key_Management": {
+      "verdict": "not applicable",
+      "reason": "no key is created; CI reads the existing repository secrets in the jobs that need them"
+    },
+    "LLM_Prompt_Injection_Prevention": {
+      "verdict": "met",
+      "quotes": [
+        "Enforce permissions and parameter validation at the tool boundary"
+      ],
+      "evidence": "the `.claude/settings.json` permission rules are applied by the harness to each tool call, outside the model; the in-repo agent loop was removed by D974-1 (Task 974)"
+    },
+    "MCP_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Grant each MCP server the minimum permissions needed for its function."
+      ],
+      "evidence": "`.claude/settings.json` denies the mutating Vercel MCP tools (`mcp__plugin_vercel_vercel__create_deployment`, `mcp__plugin_vercel_vercel__cancel_deployment`, ...)"
+    },
+    "NPM_Security": {
+      "verdict": "met",
+      "quotes": [
+        "Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility."
+      ],
+      "evidence": "job \"Dependency audit (high and critical block)\" of CI run 45057784619: success"
+    },
+    "OS_Command_Injection_Defense": {
+      "verdict": "met",
+      "quotes": [
+        "The primary defense is to avoid calling OS commands directly."
+      ],
+      "evidence": "job \"CodeQL (SAST)\" of CI run 45057784619: success over `scripts/quality/`"
+    },
+    "Secrets_Management": {
+      "verdict": "met",
+      "quotes": [
+        "Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR"
+      ],
+      "evidence": "`.github/workflows/ci.yml:59` `node scripts/quality/check-files.mjs --all` and the job \"Secret scan (gitleaks)\"; CI run 45057784619: success"
+    },
+    "Secure_Code_Review": {
+      "verdict": "met",
+      "quotes": [
+        "Diff-Based Reviews focus on code changes only."
+      ],
+      "evidence": "`.github/workflows/ci.yml:97` `node scripts/quality/changed-lines-coverage.mjs`; review file `docs/reviews/Task_945_Review_1.md`"
+    },
+    "Secure_Coding_with_AI": {
+      "verdict": "met",
+      "quotes": [
+        "Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent."
+      ],
+      "evidence": "job \"Change report (sensitive paths, weakened tests, new dependencies)\" of CI run 45057784619: success"
+    },
+    "Secure_Product_Design": {
+      "verdict": "met",
+      "quotes": [
+        "Threat Modeling - which results in security related stories being added during"
+      ],
+      "evidence": "T1-T6 of the kickoff are its acceptance criteria; each maps to a CI job of run 45057784619 in `docs/reviews/Task_945_Review_1.md`"
+    },
+    "Software_Supply_Chain_Security": {
+      "verdict": "met",
+      "quotes": [
+        "limit the application's dependencies to a specific version that has been previously verified as legitimate and secure"
+      ],
+      "evidence": "`.github/workflows/ci.yml:31` actions pinned to full commit SHAs; `.github/dependabot.yml` present"
+    },
+    "Threat_Modeling": {
+      "verdict": "met",
+      "quotes": [
+        "the threat modeling process should answer the following four questions"
+      ],
+      "evidence": "the kickoff's \"## Attack surface\" T1-T6, each mapped in `docs/reviews/Task_945_Review_1.md`"
+    },
+    "Verifying_Third_Party_Agent_Execution_Evidence": {
+      "verdict": "met",
+      "quotes": [
+        "Do not use supplier assertions alone to resolve an incident attribution or dispute involving that supplier."
+      ],
+      "evidence": "the reviewer read the evidence itself: `gh pr view 19` (23 SUCCESS), `gh run view 45057784619 --json jobs` (every job success), `node scripts/quality/check-ruleset.mjs` exit 0"
+    },
+    "Vulnerable_Dependency_Management": {
+      "verdict": "met",
+      "quotes": [
+        "It's highly recommended to perform automated analysis of the dependencies from the birth of the project."
+      ],
+      "evidence": "job \"Dependency audit (high and critical block)\" of CI run 45057784619: success"
+    }
+  }
+}

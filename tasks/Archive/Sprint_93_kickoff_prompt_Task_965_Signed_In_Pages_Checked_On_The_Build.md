@@ -142,7 +142,7 @@ No visible change: the pages render the same content, without the second render 
    it needs goes in the report for Opus.
 3. Run: npm run lint · npm run typecheck · npm test -- --coverage · node scripts/quality/changed-lines-coverage.mjs --base main ·
    node scripts/quality/check-files.mjs --worktree · npx vitest run scripts/__tests__/check-signed-in-pages.test.ts ·
-   node scripts/quality/ac-tests.mjs --base main tasks/Sprints/Sprint_93_kickoff_prompt_Task_965_Signed_In_Pages_Checked_On_The_Build.md
+   node scripts/quality/ac-tests.mjs --base main tasks/Archive/Sprint_93_kickoff_prompt_Task_965_Signed_In_Pages_Checked_On_The_Build.md
 4. Report: each command, exit code, relevant output; each new test's failing run before the change; a deliberate break
    per detection case of AC2; the first CI run of the walk with its row count per role.
 5. Revision 1: change or write the tests of AC1 (R1-5), AC2, AC7 and AC8 first and run them on the Review 1 code (keep

@@ -93,4 +93,16 @@ stays not applicable (no container image; `controls.json` `why`), `reviewedSha` 
 handing the push of `cebac9802`, against A0; re-run before this commit: `owasp.mjs sync` → exit 0 at `ac9fd32a`, `owasp.mjs check` → exit 0. The later
 steps of the lint job (lint, types, product checks) are UNKNOWN until the next run.
 
-Open parts, in order: commit and push (the OWASP registry at `ac9fd32a`) → `gh pr checks 66` → the merge.
+Fourth run, commit `d4bb7453c` (run 45208741062): every job passes, "Lint, types and product checks" with its lint, type and product steps for the first
+time, except "Authorization regression": one test, `rateLimit.integration.test.ts:41-50` `[SEC-RATELIMIT-INT-SLIDING]`, "expected [true ×6] to have a
+length of 5"; the same test passed in the third run on the same database and code. Cause, read from the test: the window is 4 s; the first five calls run
+one after another over the network from the runner to the database, then the test waits 2.5 s; when the five calls take more than about 1.5 s, the first
+hit has left the window before the second five start, and the limiter rightly allows a sixth. The test depends on network latency, not on the limiter.
+Fix in this pull request: Revision 15.
+
+Revision 15, read here: `[SEC-RATELIMIT-INT-SLIDING]` seeds the key's five hits through the service role 30 s and 120 s old against a 60 s window: inside,
+the call answers `false` and the five hits stay; outside, it answers `true` and the key holds exactly its own hit (the function removed the five,
+`task957.sql:39-40`); every seed and read asserts no error; no sleep. `owasp.mjs sync` → exit 0 at `ac9fd32a` before the commit (A0). The integration result
+is UNKNOWN until `gh pr checks 66`.
+
+Open parts, in order: commit and push → `gh pr checks 66` → the merge.

@@ -32,4 +32,16 @@ F1 — fixed in Revision 1 (R1-1), proven above.
 - AC7: `db-sql-roundtrip.mjs` exit 0 with LF and CRLF files, and the body of `handle_new_user` restored byte for byte (Review 1).
 - AC8: `gh pr checks <n>` (V14).
 
-Open parts, in order: the commit and pull request (H) → `gh pr checks <n>` → the merge.
+## V14 — pull request #67 (commit `b570ad041`), 2026-11-23
+
+`gh pr checks 67` → red: "Lint, types and product checks" and `CI Required`; every other check passes, "Authorization regression" (the whole integration
+suite on the development project, the new rules applied) and "Unit and component tests" among them. `gh run view 45235195045 --log-failed`: the step
+"Every file in the repository" (`check-files.mjs`) → 3 findings in `docs/security/audit-2026-11-06/findings.md`: A-05 (`:19`), X-01 (`:109`) and C-05
+(`:141`) end in "Task 957", which the H7 archive of Task 957 (Opus) took out of `docs/backlog.md`, so the golden-rule check finds no open task. The
+archive step did not read the audit ledger, and `check-files.mjs` was run on the changed files only. Fixed in this pull request: each row ends in "fixed"
+with the task and pull request that closed it and its existing test (A-05 Task 1014, PR #54, `route.test.ts` `[SEC-UPLOAD-SNIFF-DENY]`; X-01 Task 957,
+PR #66, `cloudinarySignedUpload.integration.test.ts` and `cloudinary-config.mjs`; C-05 Task 1011, PR #55, `cloudinaryDelete.security.test.ts`);
+`check-files.mjs docs/security/audit-2026-11-06/findings.md` → exit 0. The steps after it in that job ("Product checks") were skipped: UNKNOWN until the
+next run.
+
+Open parts, in order: the commit and push of the fix → `gh pr checks 67` → the merge.

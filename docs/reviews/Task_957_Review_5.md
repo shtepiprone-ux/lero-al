@@ -1,6 +1,6 @@
 # Task 957 — Review 5
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 5 of Revision 4, working tree on 4d495f9cc (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 4 diff (R4-1, R4-2, R4-4, R4-6), 20 files that differ from `9de067faf`: `listingTransitionEngine.ts`, `listingStatusOptions.ts`,

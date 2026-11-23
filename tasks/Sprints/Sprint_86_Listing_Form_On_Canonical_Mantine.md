@@ -1,6 +1,6 @@
 # Sprint 86 — the listing create/edit form on canonical Mantine
 
-**Opened:** 2026-09-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 0 · **Kickoffs filed:** 1 (905)
+**Opened:** 2026-09-30 · **Status:** 🟠 **OPEN** · **Landed tasks:** 2 (905, 906, delivered by Task 957) · **Kickoffs filed:** 1 (905)
 
 > **These counts drift.** Re-derive them from the Tasks table below, never from this line.
 
@@ -49,14 +49,14 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Outcome | State |
 |---|---|---|
-| **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | taken over by Task 957 (Sprint 93) Revision 2, owner 2026-11-20 (option chosen: "Both now"): the form renders these fields, so they leave legacy with it; the kickoff [`…Task_905…`](Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) is its source |
-| **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | taken over by Task 957 (Sprint 93), 2026-11-19: 957 changes `ImageUpload.tsx` and the owner's rule of that day moves a changed file's legacy to Mantine in the same task (`.claude/rules/shared/canonical-component-reuse.md`) |
+| **905** | The nine listing-form field components and `DynamicFieldSection` render canonical Mantine (`TextInput`, `Checkbox`, `Input.Wrapper`, `SimpleGrid`, the canonical `FilterChoiceGroup`), each proven by its own Story. `YearCombobox` and `FilterChoiceGroup` are enrolled. The dead `steps/` directory is deleted, with its baseline rows. | delivered by Task 957 (Sprint 93; taken over in Revision 2, owner 2026-11-20, option chosen: "Both now"), merged in PR #66 on 2026-11-23; the kickoff [`…Task_905…`](../Archive/Sprint_86_kickoff_prompt_Task_905_Listing_Form_Fields_On_Mantine.md) is its source |
+| **906** | `ImageUpload` (listing photos) on canonical Mantine, with its own Story. | delivered by Task 957 (Sprint 93), merged in PR #66 on 2026-11-23; taken over on 2026-11-19: 957 changes `ImageUpload.tsx` and the owner's rule of that day moves a changed file's legacy to Mantine in the same task (`.claude/rules/shared/canonical-component-reuse.md`) |
 | **907** | `StatusChangeHistory` on canonical Mantine and legacy site L7 removed (`ListingFormShellView`, `ListingFormShell`, `AdminEditLayout` and the composition Story are Task 957's since 2026-11-19 and 2026-11-20). The `StatusChangeControl` → `StatusChangeSelect` switch moved to Task 923 §17 R35 (owner D20, 2026-10-17). | reserved (`docs/backlog-reserved.md`) |
 
 ## Execution order and gating
 
-1. **905** and **906** are taken over by Task 957 (2026-11-20 and 2026-11-19).
-2. **907** runs after 957 is merged, because it composes its components; since 2026-11-19 Task 957 also moves
+1. **905** and **906** are delivered by Task 957 (taken over 2026-11-20 and 2026-11-19; merged in PR #66, 2026-11-23).
+2. **907** composes Task 957's components (in `main` since 2026-11-23); since 2026-11-19 Task 957 also moves
    `ListingFormShellView` and `ListingFormShell` to Mantine, and since 2026-11-20 (Revision 2) the fields of 905 and
    `AdminEditLayout`, so 907 keeps `StatusChangeHistory` and legacy site L7.
 3. `StatusChangeControl` is also rendered by `/admin/inquiries` (Sprint 84's **894**). Whichever of 894 and 907 runs
@@ -66,7 +66,7 @@ The Tasks table is the **single state source**. The execution-order note below i
 
 | # | Action |
 |---|---|
-| **O86-1** | Task 905's `OWNER VISUAL QA REQUIRED` matrix (its §13.3). |
+| **O86-1** | Task 905's `OWNER VISUAL QA REQUIRED` matrix (its §13.3): accepted by the owner on 2026-11-23 on `main` after Task 957. Accepted: `Patterns/Mantine/ListingFormFields`, all eight exports (Apartment, House, GarageMultiStorey, Land, WithValuesAndErrors, Saving, FieldKinds, NumberInput); `Mantine/Primitives/Combobox` `YearCombobox`; `Mantine/Primitives/FilterControls` `Default`. |
 
 ## Exit criteria
 

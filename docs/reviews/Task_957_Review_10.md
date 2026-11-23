@@ -1,6 +1,6 @@
 # Task 957 — Review 10
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 10 of Revision 9, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 9 diff (R9-1 to R9-3): `theme.ts` (`NumberInput` entry), `input-chrome.css` (the `NumberInput` selectors), `MantineDeleteIconButton.tsx`,

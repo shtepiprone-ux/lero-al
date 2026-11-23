@@ -1,7 +1,7 @@
 # Task 905 — the listing-form fields render canonical Mantine, each proven by its own Story; the dead `steps/` directory is deleted
 
 **Sprint 86** · **P2** · **Q4** (critical flows *Create listing* / *Edit listing*) · owner action **O86-1** ·
-**Status: taken over by Task 957 Revision 2** (owner 2026-11-20, option chosen: "Both now"; `tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md` Scope and AC18); filed 2026-09-30. §3.2 and §3.3 stay the source of the field contracts and canonical controls; the §13.1 hashes are of 2026-09-30.
+**Status: taken over by Task 957 Revision 2** (owner 2026-11-20, option chosen: "Both now"; `tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md` Scope and AC18); filed 2026-09-30. §3.2 and §3.3 stay the source of the field contracts and canonical controls; the §13.1 hashes are of 2026-09-30.
 
 ## 1. Mode and task type
 

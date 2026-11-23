@@ -1,6 +1,6 @@
 # Task 957 — Review 11
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 11 of Revision 10, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 10 diff (R10-1 to R10-3): `input-chrome.css` (the `NumberInput` disabled root, the control colours), `theme.ts` (the `Input` entry; the

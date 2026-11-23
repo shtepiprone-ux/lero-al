@@ -1080,13 +1080,27 @@ export const theme = createTheme({
         label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'normal', overflowWrap: 'break-word', lineHeight: 'var(--mantine-line-height-sm)' },
       }),
     },
+    // Task 957 Revision 10 (R10-2, Review 10 F50, owner decision O957-22 "one variable for all"): one canonical field height. Mantine sets `--input-height` inline on every field's wrapper
+    // (`Input.mjs:43`, 36px for `sm`) and sizes the field, its sections and the number controls from it, so the wrapper takes the touch-target token and no field entry carries a height of its own.
+    Input: {
+      vars: (theme: MantineTheme) => ({ wrapper: { '--input-height': theme.other.touchTarget } }),
+    },
     TextInput: {
       // inputWrapperOrder: description below input (owner UX decision, Task 503); Mantine default puts it above.
       defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
       styles: {
         // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
         input: {
-          minHeight: '2.75rem',                 // ≥44px touch / TailAdmin h-11 (rem — exemption)
+          color: 'var(--mantine-color-gray-8)', // §6 text — gray-800 (#1d2939)
+        },
+      },
+    },
+    // Task 957 Revision 9 (R9-1, AC48; Review 9 F46): the number fields of the listing form are `NumberInput`s; they take the canonical field look of `TextInput` above (the same values, none new).
+    NumberInput: {
+      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
+      styles: {
+        // border/focus/error/placeholder/padding chrome lives in input-chrome.css (as TextInput's)
+        input: {
           color: 'var(--mantine-color-gray-8)', // §6 text — gray-800 (#1d2939)
         },
       },
@@ -1113,7 +1127,6 @@ export const theme = createTheme({
       styles: (theme: MantineTheme) => ({
         // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
         input: {
-          minHeight: '2.75rem',                 // ≥44px outer div / TailAdmin h-11 (rem — exemption)
           color: 'var(--mantine-color-gray-8)', // §6 text — gray-800
         },
         // the section spans the field's border box (it is positioned in the padding box, inside the border), so the 44px toggle lies
@@ -1124,11 +1137,6 @@ export const theme = createTheme({
     },
     Select: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
-      styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
-    },
-    // FileInput (Task 923 R33, Story 244): the same ≥44px field height as Select / TextInput (Mantine's own is 36px)
-    FileInput: {
-      styles: { input: { minHeight: '2.75rem' } },
     },
     Checkbox: {
       // size='xs' → 16px box (sm ≈ 20px, too large per §6f); body min-height 44px touch target;

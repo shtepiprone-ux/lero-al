@@ -112,6 +112,7 @@ export function AdminPagesView({
           label={tc('delete')}
           disabled={migrationPending}
           loading={deletingId === p.id}
+          touch={touch}
           onClick={() => onRequestDelete(p)}
         />
       </Group>

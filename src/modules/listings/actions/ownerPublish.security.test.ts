@@ -76,7 +76,7 @@ describe('status gateway: publishing is staff-only', () => {
   })
 
   it('[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells or rents their own listing', async () => {
-    for (const to of ['inactive', 'archived', 'sold', 'rented', 'expired'] as const) {
+    for (const to of ['inactive', 'archived', 'sold', 'rented'] as const) {
       for (const actor of [owner, ownerNoRole]) {
         const { db, updates } = makeDb(listing('active'))
         const result = await applyListingTransitionByStatus('l1', to, actor, db)
@@ -84,6 +84,21 @@ describe('status gateway: publishing is staff-only', () => {
         expect(updates, `${to} payload`).toEqual([{ status: to }])        // a non-public status is not given a new expiry
       }
     }
+  })
+
+  // Owner decision O957-17 (2026-11-23, Task 957 Revision 5): `expired` is set by the system and by staff, never by the owner's own choice; the server decides, whatever the UI offers
+  it('[SEC-O957-17-SRV-EXPIRED-DENY] the owner cannot set expired from any other status and nothing is written or notified', async () => {
+    for (const actor of [owner, ownerNoRole]) {
+      for (const from of ALL.filter(s => s !== 'expired')) {
+        const { db, updates } = makeDb(listing(from))
+        const result = await applyListingTransitionByStatus('l1', 'expired', actor, db)
+        expect(result, `${String(actor.role)} owner, ${from} -> expired`).toEqual({ ok: false, reason: 'forbidden' })
+        expect(updates, `${from} -> expired wrote`).toEqual([])
+      }
+    }
+    expect(notify).not.toHaveBeenCalled()
+    expect(updateTag).not.toHaveBeenCalled()
+    expect(revalidatePath).not.toHaveBeenCalled()
   })
 
   // Owner decisions O957-10 (2026-11-21: the owner does not send an ACTIVE listing to review by hand) and O957-11 (2026-11-21, Task 957 Revision 4: "Publish" is the owner's way back to moderation

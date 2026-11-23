@@ -152,4 +152,29 @@ describe('editAccessRestricted', () => {
       })
     }
   })
+
+  // Task 957 Revision 6 (R6-2, AC44; Review 6 F41): a failed listing query is not an access refusal. On the live database without `task957-parking.sql` the select answered 42703 and the owner read "access restricted".
+  it('[SEC-X-SRV-EDIT-QUERY-ERROR] a failed listing query (42703) is thrown: not the restricted view, not the form, not not-found, not a redirect; the log holds the code only', async () => {
+    for (const who of ['owner', 'stranger'] as const) {
+      actAs(who)
+      // the session's listing query answers an error that is not "no row" (a missing column); the admin database still holds the hidden listing, so the old behaviour (read as "no row") is visible
+      const failure = { code: '42703', message: 'column listings.parking_type does not exist' }
+      const chain: unknown = new Proxy({}, { get: (_target, prop) => (prop === 'then' ? undefined : prop === 'single' ? () => Promise.resolve({ data: null, error: failure }) : () => chain) })
+      sessionDb = { from: () => chain } as unknown as typeof sessionDb
+      const logged = vi.mocked(console.error)
+      logged.mockClear()
+
+      const result = await outcome('slug-pending')
+      expect(result.element, `${who}: the page renders no element (neither the restricted view nor the form)`).toBeUndefined()
+      expect(result.thrown, `${who}: the page throws`).toBeTruthy()
+      expect(result.thrown, `${who}: not a not-found`).not.toContain('NEXT_NOT_FOUND')
+      expect(result.thrown, `${who}: not a redirect`).not.toContain('NEXT_REDIRECT')
+      expect(result.thrown, `${who}: the thrown error names the code`).toContain('42703')
+      expect(result.thrown, `${who}: the thrown error holds no database message`).not.toContain('parking_type')
+
+      const log = JSON.stringify(logged.mock.calls)
+      expect(log, `${who}: the log names the code`).toContain('42703')
+      for (const secret of ['parking_type', 'does not exist', 'slug-pending', 'id-pending', MARKER.title, MARKER.address, OWNER]) expect(log, `${who}: the log holds no ${secret}`).not.toContain(secret)
+    }
+  })
 })

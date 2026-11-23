@@ -2,6 +2,8 @@
    Border-color is set DIRECTLY here (not via Mantine's --input-bd) and must NOT be set in
    theme.components.*.styles.input (inline styles freeze the border + drop state selectors). */
 .mantine-TextInput-input,
+.mantine-NumberInput-input,
+.mantine-FileInput-input,
 .mantine-Textarea-input {
   border-color: var(--mantine-color-gray-3);          /* §6e resting border — gray-300 (owner decision 2026-07-02, supersedes gray-200) */
   box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
@@ -16,17 +18,25 @@
   min-height: 2.75rem; /* §6e/§6l field height 44px */ /* design-tokens-allow: min-height: 2.75rem — 44px touch-target floor, established project convention (theme.ts rem-exemption note); not a rendered-value change */
 }
 .mantine-TextInput-input::placeholder,
+.mantine-NumberInput-input::placeholder,
+.mantine-FileInput-placeholder,
 .mantine-Textarea-input::placeholder {
   color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
 }
 .mantine-TextInput-input:focus,
+.mantine-NumberInput-input:focus,
+.mantine-FileInput-input:focus,
 .mantine-Textarea-input:focus {
   border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-TextInput-input[data-error],
+.mantine-NumberInput-input[data-error],
+.mantine-FileInput-input[data-error],
 .mantine-Textarea-input[data-error],
 .mantine-TextInput-input[data-error]:focus,
+.mantine-NumberInput-input[data-error]:focus,
+.mantine-FileInput-input[data-error]:focus,
 .mantine-Textarea-input[data-error]:focus {
   border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */ /* design-tokens-allow: #d92d20 — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
   box-shadow: none;
@@ -130,6 +140,8 @@
    LocationCombobox, PropertyTypeCombobox, YearCombobox — all confirmed broken pre-fix, see the
    Task 555 session log regression sweep). Fixed by moving the guard to the ancestor wrapper. */
 .mantine-TextInput-input,
+.mantine-NumberInput-input,
+.mantine-FileInput-input,
 .mantine-Textarea-input,
 .mantine-Select-input {
   padding-top: 0.625rem;    /* §6l 10px */ /* design-tokens-allow: padding-top: 0.625rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
@@ -137,11 +149,14 @@
   color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800; Select was missing this (audit: black resting text) */
 }
 .mantine-TextInput-wrapper:not([data-with-left-section]) .mantine-TextInput-input,
+.mantine-NumberInput-wrapper:not([data-with-left-section]) .mantine-NumberInput-input,
+.mantine-FileInput-wrapper:not([data-with-left-section]) .mantine-FileInput-input,
 .mantine-Textarea-input,
 .mantine-Select-wrapper:not([data-with-left-section]) .mantine-Select-input {
   padding-inline-start: 1rem; /* §6l 16px */ /* design-tokens-allow: padding-inline-start: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
 }
 .mantine-TextInput-wrapper:not([data-with-right-section]) .mantine-TextInput-input,
+.mantine-FileInput-wrapper:not([data-with-right-section]) .mantine-FileInput-input,
 .mantine-Textarea-input,
 .mantine-Select-wrapper:not([data-with-right-section]) .mantine-Select-input {
   padding-inline-end: 1rem; /* §6l 16px */ /* design-tokens-allow: padding-inline-end: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
@@ -161,6 +176,10 @@
 /* Part 1 — Root: uniform fade (label + field + icon all at 0.5 via compositing) */
 .mantine-TextInput-root:has(:disabled),
 .mantine-TextInput-root:has([data-disabled]),
+.mantine-NumberInput-root:has(.mantine-NumberInput-input:disabled),
+.mantine-NumberInput-root:has(.mantine-NumberInput-input[data-disabled]),
+.mantine-FileInput-root:has(.mantine-FileInput-input:disabled),
+.mantine-FileInput-root:has(.mantine-FileInput-input[data-disabled]),
 .mantine-Textarea-root:has(:disabled),
 .mantine-Textarea-root:has([data-disabled]),
 .mantine-Select-root:has(:disabled),
@@ -173,7 +192,9 @@
 
 /* Part 2 — Per-element: transparent bg; opacity reset to 1 (root 0.5 already applies via compositing) */
 .mantine-TextInput-input:disabled,      .mantine-TextInput-input[data-disabled],
-.mantine-Textarea-input:disabled,       .mantine-Textarea-input[data-disabled],
+.mantine-NumberInput-input:disabled,    .mantine-NumberInput-input[data-disabled],
+.mantine-FileInput-input:disabled,      .mantine-FileInput-input[data-disabled],
+.mantine-Textarea-input:disabled,      .mantine-Textarea-input[data-disabled],
 .mantine-Select-input:disabled,         .mantine-Select-input[data-disabled],
 .mantine-PasswordInput-input[data-disabled],
 .mantine-PasswordInput-input:has(input:disabled) {
@@ -476,13 +497,25 @@
   inset-block: -1px; /* the 1px border of the field */
 }
 
-/* Task 957 Revision 3 (R3-1, Review 3 F16) - the browser's own step arrows of a number field. Mantine's input CSS removes them from every `type="number"` input
-   (`@mantine/core/styles.css`: `.m_8fb7ebe7::-webkit-inner-spin-button { appearance: none }` and `.m_8fb7ebe7[type='number'] { -moz-appearance: textfield }`). The number fields of the
-   listing form keep them, as on `main` (`<Input type="number">`): a TextInput that carries `data-native-steppers` shows them again, and only it, so every other number field keeps its look. */
-.mantine-TextInput-input[type='number'][data-native-steppers]::-webkit-inner-spin-button,
-.mantine-TextInput-input[type='number'][data-native-steppers]::-webkit-outer-spin-button {
-  appearance: auto;
+/* Task 957 Revision 7 (R7-1, Review 6 F42, owner decision O957-20: "the arrows must show on hover in every browser"; on a touch screen on focus) - the step controls of a Mantine
+   `NumberInput` (the number fields of the listing form; the browser's own arrows differ by browser and a touch screen has none). Hidden at rest, so a tap beside the field never steps its value
+   (a hidden control takes no pointer event); shown while the pointer is over the field, only where the device hovers (as the SegmentedControl hover above), and while the field has focus, on every device. */
+.mantine-NumberInput-controls {
+  visibility: hidden;
 }
-.mantine-TextInput-input[type='number'][data-native-steppers] {
-  -moz-appearance: number-input;
+@media (hover: hover) {
+  .mantine-NumberInput-wrapper:hover .mantine-NumberInput-controls {
+    visibility: visible;
+  }
+}
+.mantine-NumberInput-wrapper:focus-within .mantine-NumberInput-controls {
+  visibility: visible;
+}
+
+/* Task 957 Revision 10 (R10-2, Review 10 F50) - a step control takes the field's own colours: its divider is the field's border (gray-3) and its chevron the field's text (gray-8), where Mantine's are
+   `--input-bd` and the body text colour. The error state (Mantine's red controls, a higher selector) and the hover background stay Mantine's. The controls fill the field's height through the theme's
+   `NumberInput` `vars` (`--input-height` is set inline on the wrapper, so a stylesheet cannot). */
+.mantine-NumberInput-control {
+  border-inline-start-color: var(--mantine-color-gray-3); /* the field's resting border */
+  color: var(--mantine-color-gray-8);                     /* the field's text */
 }

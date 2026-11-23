@@ -7,7 +7,9 @@
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
+import postcss from 'postcss'
 import { describe, expect, it } from 'vitest'
+import { theme as appTheme } from '@/design-system/mantine/theme'
 
 const ROOT = process.cwd()
 const FILES = [
@@ -185,6 +187,15 @@ describe('one meaning, one look in the form (Revision 2, AC24)', () => {
     for (const tag of openingTags(text, 'Button')) expect(tag, `${file}: ${tag}`).not.toMatch(/variant=\{[^}]*\?/)
   })
 
+  // Task 957 Revision 8 (R8-3, AC47; Review 8 F45): a Mantine Button of `size="lg"` also sets an 18px font; the theme's canonical Button is `sm` (14px text, 44px high), so a Button of the form takes it by passing no size
+  it.each([VIEW, UPLOAD])('[AC47] %s: no Button passes size=, so each takes the theme\'s canonical size', (file) => {
+    const tags = openingTags(read(file), 'Button')
+    expect(tags.length, `${file}: its Buttons`).toBeGreaterThan(0)
+    // the Button's own attributes only: the `size=` of an icon inside `leftSection={<Camera size={…} />}` is the icon's, not the Button's
+    const ownAttributes = (tag: string) => { let depth = 0; let out = ''; for (const ch of tag) { if (ch === '{') depth++; else if (ch === '}') depth--; else if (depth === 0) out += ch } return out }
+    for (const tag of tags) expect(ownAttributes(tag), `${file}: ${tag}`).not.toMatch(/\bsize=/)
+  })
+
   it('[AC24] the listing type and the currency, single choices like the fields, render FilterChoiceGroup', () => {
     const view = read(VIEW)
     expect(view).toMatch(/import \{ FilterChoiceGroup \} from '@\/components\/shared\/FilterChoiceGroup'/)
@@ -327,5 +338,200 @@ describe('the Story set (Revision 3, AC35, F26)', () => {
     const del = read(`${STORY_DIR}/DeleteIconButton.stories.tsx`)
     expect(del).toMatch(/export const OnPhoto: Story/)
     expect(del).not.toMatch(/export const Clickable\b|delete-clicks|setClicks/)
+  })
+})
+
+// Task 957 Revision 9 (R9-1, AC48; Review 9 F46): the number fields are Mantine `NumberInput`s; they take the canonical field look of `TextInput` through the theme and `input-chrome.css`, adding no value
+describe('the number fields have the canonical field look (Revision 9, AC48, F46)', () => {
+  const components = appTheme.components as Record<string, { defaultProps?: unknown; styles?: { input?: unknown } } | undefined>
+
+  it('[AC48] theme.components.NumberInput has the same defaultProps and styles.input as theme.components.TextInput', () => {
+    const text = components.TextInput
+    const number = components.NumberInput
+    expect(text?.defaultProps, 'TextInput has defaultProps').toBeDefined()
+    expect(number, 'a NumberInput entry').toBeDefined()
+    expect(number?.defaultProps).toEqual(text?.defaultProps)
+    expect(number?.styles?.input).toEqual(text?.styles?.input)
+  })
+
+  // every rule of input-chrome.css that styles the TextInput field (resting, placeholder, focus, error, padding, disabled root and field) also names the matching NumberInput selector.
+  // Left out on purpose: the RangeDatePicker button trigger (`[type='button']`, not a field), the end padding (the controls are a permanent right section, Mantine reserves it), `-section` (the rich-text link editor)
+  it('[AC48] every TextInput field rule of input-chrome.css also holds the matching NumberInput selector', () => {
+    const css = readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+    const checked: string[] = []
+    const missing: string[] = []
+    postcss.parse(css).walkRules((rule) => {
+      for (const selector of rule.selectors) {
+        if (!/\.mantine-TextInput-(input|root)/.test(selector)) continue
+        if (selector.includes("[type='button']") || selector.includes('data-with-right-section')) continue
+        let wanted = selector.replaceAll('TextInput', 'NumberInput')
+        // Task 957 Revision 10 (R10-1, AC51; Review 10 F49): a NumberInput also holds its step controls, and Mantine disables the down control at the lower bound, so its root fades only for a disabled FIELD:
+        // the root rule's `:has(...)` names `.mantine-NumberInput-input`, never a bare `:disabled` / `[data-disabled]`
+        if (wanted.includes('-root:has(')) wanted = wanted.replace(':has(:disabled)', ':has(.mantine-NumberInput-input:disabled)').replace(':has([data-disabled])', ':has(.mantine-NumberInput-input[data-disabled])')
+        checked.push(wanted)
+        if (!rule.selectors.includes(wanted)) missing.push(`${selector}  →  ${wanted}`)
+      }
+    })
+    expect(checked.length, 'the TextInput selectors were found').toBeGreaterThanOrEqual(11)
+    expect(missing).toEqual([])
+  })
+
+  it('[AC48] the blocks named by the review hold the NumberInput selectors: resting, placeholder, focus, error, start padding, disabled root and field', () => {
+    const css = readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+    const lists = new Set<string>()
+    postcss.parse(css).walkRules((rule) => { for (const selector of rule.selectors) lists.add(selector) })
+    for (const selector of [
+      '.mantine-NumberInput-input',
+      '.mantine-NumberInput-input::placeholder',
+      '.mantine-NumberInput-input:focus',
+      '.mantine-NumberInput-input[data-error]',
+      '.mantine-NumberInput-input[data-error]:focus',
+      '.mantine-NumberInput-wrapper:not([data-with-left-section]) .mantine-NumberInput-input',
+      '.mantine-NumberInput-root:has(.mantine-NumberInput-input:disabled)',
+      '.mantine-NumberInput-root:has(.mantine-NumberInput-input[data-disabled])',
+      '.mantine-NumberInput-input:disabled',
+      '.mantine-NumberInput-input[data-disabled]',
+    ]) expect(lists.has(selector), selector).toBe(true)
+  })
+
+  it('[AC51] no NumberInput root selector holds a bare :disabled or [data-disabled] (a disabled step control must not fade the field)', () => {
+    const css = readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+    const bare: string[] = []
+    postcss.parse(css).walkRules((rule) => {
+      for (const selector of rule.selectors) if (selector.includes('.mantine-NumberInput-root') && /:has\((:disabled|\[data-disabled\])\)/.test(selector)) bare.push(selector)
+    })
+    expect(bare).toEqual([])
+  })
+
+  // Task 957 Revision 10 (R10-2, AC52; Review 10 F50, owner decision O957-22 "one variable for all"): Mantine sizes a field, its sections and the number controls from `--input-height`, which `Input` sets inline on every
+  // field's wrapper from the size (36px for `sm`). One theme `Input` entry sets it to the touch-target token for every field, so no field entry carries a height of its own (a stylesheet cannot set it: the variable is inline),
+  // and the stylesheet gives the number controls the field's border and text colours.
+  it('[AC52] theme.components.Input.vars gives the wrapper --input-height equal to theme.other.touchTarget', () => {
+    const input = components.Input as { vars?: (theme: unknown, props: unknown, ctx: unknown) => Record<string, Record<string, string>> } | undefined
+    expect(typeof input?.vars, 'a vars function').toBe('function')
+    expect(input!.vars!(appTheme, {}, {}).wrapper?.['--input-height']).toBe(appTheme.other.touchTarget)
+    expect(appTheme.other.touchTarget, 'the token is the 44px').toBe('2.75rem')
+  })
+
+  it('[AC52] no field entry (TextInput, NumberInput, PasswordInput, Select, FileInput) holds an input minHeight or an --input-height of its own', () => {
+    for (const name of ['TextInput', 'NumberInput', 'PasswordInput', 'Select', 'FileInput']) {
+      const entry = components[name] as { styles?: unknown; vars?: unknown } | undefined
+      const styles = typeof entry?.styles === 'function' ? (entry.styles as (theme: unknown) => { input?: Record<string, unknown> })(appTheme) : (entry?.styles as { input?: Record<string, unknown> } | undefined)
+      expect(styles?.input && 'minHeight' in styles.input, `${name}: styles.input.minHeight`).toBeFalsy()
+      expect(entry?.vars, `${name}: its own vars`).toBeUndefined()
+    }
+  })
+
+  it('[AC52] input-chrome.css gives .mantine-NumberInput-control the field\'s border colour as its divider and the field\'s text colour', () => {
+    const css = readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+    const decls: Record<string, string> = {}
+    postcss.parse(css).walkRules((rule) => {
+      if (!rule.selectors.includes('.mantine-NumberInput-control')) return
+      rule.walkDecls((d) => { decls[d.prop] = d.value })
+    })
+    expect(decls['border-inline-start-color']).toBe('var(--mantine-color-gray-3)')
+    expect(decls.color).toBe('var(--mantine-color-gray-8)')
+  })
+
+  it('[AC48] the end padding is left to Mantine: no NumberInput rule sets padding-inline-end', () => {
+    const css = readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+    const hits: string[] = []
+    postcss.parse(css).walkRules((rule) => {
+      if (!rule.selectors.some((selector) => selector.includes('.mantine-NumberInput-input'))) return
+      rule.walkDecls('padding-inline-end', () => { hits.push(rule.selector) })
+    })
+    expect(hits).toEqual([])
+  })
+})
+
+// Task 957 Revision 11 (R11-1, AC54; Review 11 F52, owner decision O957-22): the file field (Mantine `FileInput`, the image dialog of the CMS editor) takes the canonical field look: every rule of input-chrome.css that styles
+// the NumberInput field also names the matching FileInput selector, adding no value
+describe('the file field has the canonical field look (Revision 11, AC54, F52)', () => {
+  const css = () => readFileSync(path.join(ROOT, 'src/design-system/mantine/input-chrome.css'), 'utf8')
+
+  it('[AC54] every NumberInput field rule of input-chrome.css also holds the matching FileInput selector (the placeholder is the FileInput placeholder element)', () => {
+    const checked: string[] = []
+    const missing: string[] = []
+    postcss.parse(css()).walkRules((rule) => {
+      for (const selector of rule.selectors) {
+        // the step controls (`-control`, `-controls`) belong to NumberInput alone; a FileInput has none
+        if (!/\.mantine-NumberInput-(input|wrapper|root)/.test(selector) || selector.includes('-control')) continue
+        // Mantine renders the FileInput placeholder as an element (`.mantine-FileInput-placeholder`), not as the `::placeholder` pseudo-element of an <input>
+        const wanted = selector.endsWith('::placeholder') ? '.mantine-FileInput-placeholder' : selector.replaceAll('NumberInput', 'FileInput')
+        checked.push(wanted)
+        if (!rule.selectors.includes(wanted)) missing.push(`${selector}  →  ${wanted}`)
+      }
+    })
+    expect(checked.length, 'the NumberInput selectors were found').toBeGreaterThanOrEqual(10)
+    expect(missing).toEqual([])
+  })
+
+  it('[AC54] the blocks named by the review hold the FileInput selectors: resting, placeholder, focus, error, start padding, disabled root and field', () => {
+    const lists = new Set<string>()
+    postcss.parse(css()).walkRules((rule) => { for (const selector of rule.selectors) lists.add(selector) })
+    for (const selector of [
+      '.mantine-FileInput-input',
+      '.mantine-FileInput-placeholder',
+      '.mantine-FileInput-input:focus',
+      '.mantine-FileInput-input[data-error]',
+      '.mantine-FileInput-input[data-error]:focus',
+      '.mantine-FileInput-wrapper:not([data-with-left-section]) .mantine-FileInput-input',
+      '.mantine-FileInput-root:has(.mantine-FileInput-input:disabled)',
+      '.mantine-FileInput-root:has(.mantine-FileInput-input[data-disabled])',
+      '.mantine-FileInput-input:disabled',
+      '.mantine-FileInput-input[data-disabled]',
+    ]) expect(lists.has(selector), selector).toBe(true)
+  })
+
+  it('[AC54] the FileInput disabled root names the field, never a bare :disabled or [data-disabled]', () => {
+    const roots: string[] = []
+    const bare: string[] = []
+    postcss.parse(css()).walkRules((rule) => {
+      for (const selector of rule.selectors) {
+        if (!selector.includes('.mantine-FileInput-root')) continue
+        roots.push(selector)
+        if (/:has\((:disabled|\[data-disabled\])\)/.test(selector)) bare.push(selector)
+      }
+    })
+    expect(roots.length, 'the FileInput root selectors were found').toBeGreaterThanOrEqual(2)
+    expect(bare).toEqual([])
+  })
+
+  // Task 957 Revision 12 (R12-1, AC55; Review 12 F53): an empty file field has no right section, so it takes the field's 16px end padding like a TextInput; with a file chosen the clear button's section
+  // carries `data-with-right-section` on the wrapper and Mantine keeps its reservation (the selector is guarded, as the TextInput one)
+  it('[AC55] the end-padding rule that names the TextInput selector also names the FileInput selector guarded on the wrapper\'s data-with-right-section', () => {
+    const textSelector = '.mantine-TextInput-wrapper:not([data-with-right-section]) .mantine-TextInput-input'
+    const fileSelector = '.mantine-FileInput-wrapper:not([data-with-right-section]) .mantine-FileInput-input'
+    const rules: string[][] = []
+    postcss.parse(css()).walkRules((rule) => {
+      if (!rule.selectors.includes(textSelector)) return
+      let sets = false
+      rule.walkDecls('padding-inline-end', () => { sets = true })
+      if (sets) rules.push(rule.selectors)
+    })
+    expect(rules.length, 'the TextInput end-padding rule').toBe(1)
+    expect(rules[0]).toContain(fileSelector)
+  })
+})
+
+// Task 957 Revision 9 (R9-3, AC50; Review 9 F48, owner decision O957-21): the description is as on `main`: seven rows, a vertical handle, no autosize (it does not grow by itself)
+describe('the description keeps main\'s height and resize handle (Revision 9, AC50, F48)', () => {
+  it('[AC50] the description Textarea passes rows={7} and resize="vertical" and no autosize, minRows or maxRows', () => {
+    const tags = openingTags(read(VIEW), 'Textarea').filter((tag) => /\bid="description"/.test(tag))
+    expect(tags.length, 'the description Textarea').toBe(1)
+    expect(tags[0]).toMatch(/\brows=\{7\}/)
+    expect(tags[0]).toMatch(/\bresize="vertical"/)
+    expect(tags[0]).not.toMatch(/\bautosize\b|\bminRows=|\bmaxRows=/)
+  })
+})
+
+// Task 957 Revision 9 (R9-2, AC49; Review 9 F47): the pencil beside the delete takes the theme's radius, as the delete icon does (U3: no consumer radius)
+describe('the collection row icons share the theme radius (Revision 9, AC49, F47)', () => {
+  it('[AC49] no ActionIcon of CollectionsSection passes radius=, and its delete icon passes no touch', () => {
+    const text = read('src/modules/listings/components/CollectionsSection.tsx')
+    const tags = openingTags(text, 'ActionIcon')
+    expect(tags.length, 'the rename pencil').toBeGreaterThan(0)
+    for (const tag of tags) expect(tag, tag).not.toMatch(/\bradius=/)
+    for (const tag of openingTags(text, 'MantineDeleteIconButton')) expect(tag, tag).not.toMatch(/\btouch\b/)
   })
 })

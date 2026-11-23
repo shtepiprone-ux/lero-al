@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Alert, Box, Button, Container, Divider, Input, Stack, TextInput, Textarea } from '@mantine/core'
-import { MantineFormSection, MantinePageHeaderWithActions } from '@/design-system/mantine/patterns'
+import { MantineBadge, MantineFormSection, MantinePageHeaderWithActions } from '@/design-system/mantine/patterns'
 import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { ImageUpload } from '@/modules/listings/components/ImageUpload'
@@ -28,7 +28,7 @@ const CURRENCY_CHOICES = [{ value: 'ALL', labelKey: 'ALL' }, { value: 'EUR', lab
 export interface ListingFormStatusControlProps {
   currentStatus: ListingStatus
   listingId: string
-  /** Server-computed (`canAdminEditListing`): true only for staff. An owner is never offered `active` (D6, D22) as a target, and `pending` ("Publish", O957-11) only from a status other than `active` (O957-10). */
+  /** Server-computed (`canAdminEditListing`): true only for staff. An owner is never offered `active` or `expired` (D6, D22, O957-17) as a target, and `pending` ("Publish", O957-11) only from a status other than `active` (O957-10); the owner's current status is a badge, not a list item (O957-16). */
   canPublish: boolean
   onStatusChange: (next: { toStatus: ListingStatus; note: string | null }) => Promise<void>
 }
@@ -55,6 +55,10 @@ export interface ListingFormShellViewProps {
   onConfirmCancel: () => void
   /** Present only when the viewer is staff (admin/moderator) — server-gated (Note: agent-contract clause 6). */
   statusControl?: ListingFormStatusControlProps
+  /** Edit mode, the listing's owner only (the edit page: `listing.user_id` is the viewer): the form shows a section with "Delete listing" under the actions (O957-18). */
+  canDelete?: boolean
+  /** Runs the deletion once the owner confirms it; the container deletes the listing and leaves the form, or shows the error and keeps it. */
+  onDelete?: () => Promise<void> | void
 }
 
 export function ListingFormShellView({
@@ -76,10 +80,25 @@ export function ListingFormShellView({
   onCancelDialogChange,
   onConfirmCancel,
   statusControl,
+  canDelete,
+  onDelete,
 }: ListingFormShellViewProps) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
+  const tCabinet = useTranslations('cabinet')
   const tStatus = useTranslations('admin.common.status_control')
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+
+  async function confirmDelete() {
+    setDeleting(true)
+    try {
+      await onDelete?.()
+    } finally {
+      setDeleting(false)
+      setDeleteOpen(false)
+    }
+  }
 
   // a save error that appears (the container clears it when a save starts and sets it when the save fails) is brought to the person: scrolled to the middle of the screen and focused
   const submitErrorRef = useRef<HTMLDivElement>(null)
@@ -90,13 +109,14 @@ export function ListingFormShellView({
   }, [submitError])
 
   // Owner-or-staff (the only viewers for whom `statusControl` is set, per edit/page.tsx) get the any-status set
-  // (Task 427); `active` is staff-only (Task 923 R35, D6) and the owner reaches `pending` ("Publish", then "On moderation") from every status but `active` (O957-10, O957-11): `canPublish` decides.
+  // (Task 427); `active` and `expired` are staff-only (Task 923 R35, D6, O957-17) and the owner reaches `pending` ("Publish") from every status but `active` (O957-10, O957-11): `canPublish` decides.
+  // The owner's list holds only the operations; the owner's current status is the badge above it (O957-16).
   const statusOptions = statusControl
     ? buildListingStatusOptions(
         statusControl.currentStatus,
         { canPublish: statusControl.canPublish },
         s => t(`status_${s}` as 'status_active'),
-        { publish: t('status_publish'), onModeration: t('status_pending_owner') },
+        { publish: t('status_publish'), deactivate: t('status_deactivate') },
       )
     : []
 
@@ -173,9 +193,8 @@ export function ListingFormShellView({
                   onChange={e => patch({ description: e.target.value || undefined })}
                   placeholder={t('field_description_placeholder')}
                   description={`${(data.description ?? '').length}/5000`}
-                  autosize
-                  minRows={4}
-                  maxRows={14}
+                  resize="vertical"
+                  rows={7}
                   maxLength={5000}
                   disabled={submitting}
                 />
@@ -254,33 +273,64 @@ export function ListingFormShellView({
           </Stack>
         }
         sidebar={
-          <MantineFormSection>
-            <Stack gap="sm">
-              <Button type="button" size="lg" fullWidth onClick={onSubmit} disabled={submitting || !isDirty} loading={submitting}>
-                {submitting
-                  ? (isEditMode(mode) ? t('form_saving') : t('form_publishing'))
-                  : (isEditMode(mode) ? t('form_save') : t('form_publish'))}
-              </Button>
-              <Button type="button" variant="default" size="lg" fullWidth onClick={onCancelClick} disabled={submitting}>
-                {tc('cancel')}
-              </Button>
+          <>
+            <MantineFormSection>
+              <Stack gap="sm">
+                <Button type="button" fullWidth onClick={onSubmit} disabled={submitting || !isDirty} loading={submitting}>
+                  {submitting
+                    ? (isEditMode(mode) ? t('form_saving') : t('form_publishing'))
+                    : (isEditMode(mode) ? t('form_save') : t('form_publish'))}
+                </Button>
+                <Button type="button" variant="default" fullWidth onClick={onCancelClick} disabled={submitting}>
+                  {tc('cancel')}
+                </Button>
 
-              {statusControl && (
-                <Stack gap="xs" pt="sm">
-                  <Divider />
-                  <StatusChangeSelect
-                    currentStatus={statusControl.currentStatus}
-                    statuses={statusOptions}
-                    onSubmit={statusControl.onStatusChange}
-                    enableNote
-                    label={tStatus('status_change_label')}
-                    disabled={submitting}
-                  />
-                </Stack>
-              )}
-            </Stack>
-          </MantineFormSection>
+                {statusControl && (
+                  <Stack gap="xs" pt="sm">
+                    <Divider />
+                    {/* the owner's current status is a badge above the operations, not a list item (owner decision O957-16); staff keep it as the select's value */}
+                    {!statusControl.canPublish && (
+                      <Box>
+                        <MantineBadge variant="status" entity="listing" value={statusControl.currentStatus} data-testid="listing-status-badge">
+                          {t(`status_${statusControl.currentStatus}` as 'status_active')}
+                        </MantineBadge>
+                      </Box>
+                    )}
+                    <StatusChangeSelect
+                      currentStatus={statusControl.currentStatus}
+                      statuses={statusOptions}
+                      onSubmit={statusControl.onStatusChange}
+                      enableNote
+                      label={tStatus('status_change_label')}
+                      disabled={submitting}
+                    />
+                  </Stack>
+                )}
+              </Stack>
+            </MantineFormSection>
+
+            {/* the listing's owner deletes it here, in a section of its own under the actions (owner decision O957-18); staff and the create form have none */}
+            {isEditMode(mode) && canDelete && onDelete && (
+              <MantineFormSection>
+                <Button type="button" variant="light" color="red" fullWidth onClick={() => setDeleteOpen(true)} disabled={submitting}>
+                  {t('delete_listing')}
+                </Button>
+              </MantineFormSection>
+            )}
+          </>
         }
+      />
+
+      {/* Delete confirmation: the cabinet's own question and button texts; the action itself is the container's `onDelete` */}
+      <MantineDeleteConfirmModal
+        opened={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        title={t('delete_listing')}
+        message={tCabinet('delete_listing_confirm')}
+        confirmLabel={tCabinet('delete')}
+        cancelLabel={tc('cancel')}
+        loading={deleting}
+        onConfirm={() => void confirmDelete()}
       />
 
       {/* Cancel confirmation dialog — shown only when form has unsaved changes */}

@@ -22,7 +22,7 @@ import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
 
 // Task 957 Revision 2 (R2-2; Task 905 R8 taken over): the ten fields of the listing form (Revision 3 added the parking field) and their section on canonical Mantine, proven by their own Story
-// (`TextInput type="number"` with the browser's own step arrows as on `main` (Revision 3), `Checkbox`, `FilterChoiceGroup` inside `Input.Wrapper`, `SimpleGrid`; one field per row below 640px, the Task 905 columns from 640px).
+// (Mantine `NumberInput` with its own up and down controls, shown on hover and on focus (Revision 7, O957-20), `Checkbox`, `FilterChoiceGroup` inside `Input.Wrapper`, `SimpleGrid`; one field per row below 640px, the Task 905 columns from 640px).
 // The fields are rendered by `DynamicFieldSection` (the real production composition, imported with the ten components by name so that `check:story-coverage` sees each). The data is labelled
 // fixture data in local state, so the controls work; every label is the product's own `listing.*` text. Viewport and locale come from the Storybook toolbar.
 //
@@ -127,7 +127,7 @@ function FieldKindsDemo() {
 }
 export const FieldKinds: Story = { render: () => <FieldKindsDemo /> }
 
-// The number input the number fields share (`TextInput type="number"` with the browser's own step arrows): empty, with a value, with an error and disabled.
+// The number input the number fields share (Mantine `NumberInput` with its own up and down controls, shown on hover where the device hovers and on focus): empty, with a value, with an error and disabled.
 function NumberInputDemo() {
   const locale = useLocale()
   const [empty, setEmpty] = useState<number | undefined>(undefined)

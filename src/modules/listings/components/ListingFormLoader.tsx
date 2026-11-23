@@ -34,6 +34,8 @@ interface EditLoaderProps extends BaseLoaderProps {
   canManageStatus: boolean
   /** Server-computed (canAdminEditListing) — only staff may set `active` (Task 923 R35, D6). */
   canPublish: boolean
+  /** Server-computed on the edit page (`listing.user_id` is the viewer): only the listing's owner gets the delete section (O957-18). */
+  canDelete?: boolean
   currentStatus: ListingStatus
 }
 
@@ -50,7 +52,7 @@ export function ListingFormLoader(props: Props) {
   )
 
   if (mode === 'edit') {
-    const { listingId, initialValues, canManageStatus, canPublish, currentStatus } = props as EditLoaderProps
+    const { listingId, initialValues, canManageStatus, canPublish, canDelete, currentStatus } = props as EditLoaderProps
     return (
       <ListingFormShell
         locale={locale}
@@ -61,6 +63,7 @@ export function ListingFormLoader(props: Props) {
         initialValues={initialValues}
         canManageStatus={canManageStatus}
         canPublish={canPublish}
+        canDelete={canDelete}
         currentStatus={currentStatus}
       />
     )

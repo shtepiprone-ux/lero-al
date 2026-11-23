@@ -77,6 +77,8 @@ function Harness({ args, saveOnMount, initialCancelOpen }: { args: ListingFormSh
       submitting={args.submitting}
       submitError={args.submitError}
       statusControl={args.statusControl}
+      canDelete={args.canDelete}
+      onDelete={args.onDelete}
     />
   )
 }
@@ -93,9 +95,9 @@ const meta: Meta<typeof ListingFormShellView> = {
 export default meta
 type Story = StoryObj<typeof ListingFormShellView>
 
-// ── Owner mode — sidebar has Save + Cancel only, no status control ────────────
+// ── Owner mode — sidebar has Save + Cancel only, no status control; under them the owner's own section with "Delete listing" (O957-18). The handler resolves at once: nothing is deleted ──
 export const Owner: Story = {
-  args: { statusControl: undefined },
+  args: { statusControl: undefined, canDelete: true, onDelete: async () => {} },
 }
 
 // ── Create mode — no listing yet: the photos are signed into the person's own folder ──
@@ -110,10 +112,14 @@ export const Staff: Story = {
   },
 }
 
-// ── Owner of the listing with the status control: the listing is active, and the owner is offered neither `active` as a target (D6, D22) nor `pending` ("Under review", O957-10): only staff send a listing to review ──
+// ── Owner of the listing with the status control: the listing is active; its status is the badge above the list, and the list holds only the operations Archived, Deactivate, Sold, Rented (O957-16, O957-17):
+// neither `active` as a target (D6, D22) nor `pending` ("Publish", O957-11), which the owner is offered from every status but `active` (O957-10) ──
 export const OwnerStatusControl: Story = {
   args: {
     statusControl: { currentStatus: 'active', listingId: 'story-listing-1', canPublish: false, onStatusChange: noopStatusChange },
+    // the production owner also gets the delete section under the actions (`edit/page.tsx`: `canDelete`); the handler resolves at once, nothing is deleted
+    canDelete: true,
+    onDelete: async () => {},
   },
 }
 

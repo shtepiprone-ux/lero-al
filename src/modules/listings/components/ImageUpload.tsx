@@ -220,13 +220,13 @@ export function ImageUpload({ images, onChange, listingId, cloudinary, maxImages
   // one trigger, one look: the empty state and the add-more state are the same default Button, its label the Button's own text; the hint sits under it as the limit message does
   const triggerButton = (onClick?: () => void) => images.length === 0 ? (
     <Stack gap="xs">
-      <Button type="button" variant="default" size="lg" fullWidth onClick={onClick} disabled={disabled} leftSection={<Camera size={icon.roomy} />}>
+      <Button type="button" variant="default" fullWidth onClick={onClick} disabled={disabled} leftSection={<Camera size={icon.roomy} />}>
         {t('upload_photos')}
       </Button>
       <Input.Description>{t('photos_hint', { max: maxImages })}</Input.Description>
     </Stack>
   ) : (
-    <Button type="button" variant="default" size="lg" fullWidth onClick={onClick} disabled={disabled} leftSection={<ImagePlus size={icon.roomy} />}>
+    <Button type="button" variant="default" fullWidth onClick={onClick} disabled={disabled} leftSection={<ImagePlus size={icon.roomy} />}>
       {t('add_more_photos')} ({images.length}/{maxImages})
     </Button>
   )

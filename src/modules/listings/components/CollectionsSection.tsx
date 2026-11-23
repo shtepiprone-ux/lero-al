@@ -147,7 +147,6 @@ export function CollectionsSection({ initialCollections }: Props) {
                     variant="subtle"
                     color="gray"
                     size="sm"
-                    radius="md"
                     onClick={() => openRename(col)}
                     aria-label={t('rename')}
                   >

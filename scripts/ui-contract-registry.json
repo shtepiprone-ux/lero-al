@@ -664,7 +664,7 @@
       ],
       "parity": [
         {
-          "element": "number input with the browser's own step arrows (empty, with a value, with an error, disabled)",
+          "element": "Mantine NumberInput with its own up and down controls, shown on hover and on focus (empty, with a value, with an error, disabled)",
           "storyExports": [
             "NumberInput",
             "FieldKinds"

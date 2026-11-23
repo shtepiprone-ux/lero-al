@@ -60,7 +60,7 @@ export default async function EditListingPage({ params }: Props) {
 
   const supabase = await createClient()
 
-  const { data: listing } = await supabase
+  const { data: listing, error: listingError } = await supabase
     .from('listings')
     .select(`
       id, slug, status, title, description, price, price_old, currency,
@@ -74,6 +74,13 @@ export default async function EditListingPage({ params }: Props) {
     `)
     .eq('slug', slug)
     .single()
+
+  // "No row" (PGRST116) is the one answer that means the session cannot read the listing: a hidden listing then gets the restricted page, any other slug a 404. Any other error (a database or schema
+  // failure, e.g. 42703 for a column not applied yet) is not an access refusal: it is logged by its code only (no row, no message) and thrown to the error boundary (Task 957 Revision 6, R6-2)
+  if (listingError && listingError.code !== 'PGRST116') {
+    console.error('edit page: the listing query failed', { code: listingError.code })
+    throw new Error(`edit page: the listing query failed (${listingError.code})`)
+  }
 
   if (!listing) {
     // The session reads no row: a hidden listing gets the restricted page with the browse action, any other slug is not found
@@ -156,6 +163,7 @@ export default async function EditListingPage({ params }: Props) {
       initialValues={initialValues}
       canManageStatus={canManageStatus}
       canPublish={canPublish}
+      canDelete={listing.user_id === user.id}
       currentStatus={listing.status as ListingStatus}
     />
   )

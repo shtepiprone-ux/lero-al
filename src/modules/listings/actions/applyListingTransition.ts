@@ -29,10 +29,10 @@
  *   → Authorized when the actor is the listing owner OR admin/moderator (Task 427); the
  *     listing may then move directly to another status (canSetStatusPrivileged) — not
  *     limited to ALLOWED_LISTING_TRANSITIONS.
- *   → EXCEPT for the owner (owner decisions D8, 2026-10-17, O957-10 and O957-11, 2026-11-21): only an
- *     administrator / moderator may set `active` (publishing); the owner may set `pending` from every
+ *   → EXCEPT for the owner (owner decisions D8, 2026-10-17, O957-10 and O957-11, 2026-11-21, O957-17, 2026-11-23): only an
+ *     administrator / moderator may set `active` (publishing) or `expired`; the owner never sets either, and may set `pending` from every
  *     status but `active` ("Publish": the listing goes to moderation) and every other status except
- *     `active` (canOwnerSetStatus). The server's own move of an owner's
+ *     `active` and `expired` (canOwnerSetStatus). The server's own move of an owner's
  *     edit to review (owner decision D53) is the actor source `edit_moderation`: target `pending` only.
  *
  * ─────────────────────────────────────────────────────────────────────────────
@@ -242,8 +242,8 @@ export async function applyListingTransition(
  * listing.user_id`) OR have an admin/moderator role (`canAdminEditListing`).
  * Staff may move the listing directly to ANY other status
  * (`canSetStatusPrivileged`) — not limited to the base
- * `ALLOWED_LISTING_TRANSITIONS` matrix; the owner may set every other status
- * but `active`, and `pending` from `active` (`canOwnerSetStatus`, D8, O957-10 and O957-11, checked below).
+ * `ALLOWED_LISTING_TRANSITIONS` matrix; the owner never sets `active` or `expired`, may set `pending` from every status but `active`,
+ * and every other status (`canOwnerSetStatus`, D8, O957-10, O957-11 and O957-17, checked below).
  * `applyListingTransition` (action-based)
  * remains the entry point for automation/moderation and keeps its unchanged
  * `canAdminEditListing`-only gate.
@@ -279,7 +279,7 @@ export async function applyListingTransitionByStatus(
     return { ok: false, reason: 'invalid_transition' }
   }
 
-  // Owner decisions D8 (2026-10-17), O957-10 and O957-11 (2026-11-21): publishing for general view (`active`) is reserved to an administrator / moderator, and the owner sends a listing to
+  // Owner decisions D8 (2026-10-17), O957-10 and O957-11 (2026-11-21) and O957-17 (2026-11-23): publishing for general view (`active`) and `expired` are reserved to an administrator / moderator, and the owner sends a listing to
   // moderation (`pending`) from every status but `active`. The owner keeps every other status. `active` is refused from EVERY status (not only from `pending`), otherwise
   // `pending -> inactive -> active` would bypass the check. Nothing is written, re-stamped or notified when this refuses.
   // The one exception is the move of an owner's edit to review (owner decision D53, `updateListing.ts`): the actor's source `edit_moderation` permits the target `pending`, and no other.

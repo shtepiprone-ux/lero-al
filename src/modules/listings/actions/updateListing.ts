@@ -29,7 +29,7 @@ interface UpdateListingPayload extends ListingInput {
  * The optional columns the listing form sends (`ListingFormShell.tsx`, `submitPayload`). postgrest-js drops a key whose value is `undefined` (`@supabase/postgrest-js/dist/index.mjs:264`), so a field the
  * person emptied kept its stored value and a parking kind changed from underground kept its floor (`listings_parking_floor_check`). Each is written as `null` when the payload leaves it empty
  * (Review 4 F28, owner decision O957-13: "Clear in the database"); `purchase_conditions` is an array and empties to `[]`. A column the form never sends (`is_premium`, `lat`, `lng`) is not listed
- * here and so is not touched, and `multi_storey_building` (not null, sent as a boolean by the form) keeps its value.
+ * here and so is not touched, and `multi_storey_building` (a nullable column; the form always sends a boolean, `types/form.ts:29`) keeps its value.
  */
 const FORM_OPTIONAL_COLUMNS = [
   'description', 'condition', 'wall_type', 'heating', 'parking_type', 'parking_floor', 'rooms', 'bedrooms', 'bathrooms', 'toilets', 'area_gross', 'area_net',

@@ -31,7 +31,8 @@ describe('MantineDeleteIconButton', () => {
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
-  it('[AC24] its look is the shared one: a subtle red action icon with the trash glyph, at the theme touch target', () => {
+  // Task 957 Revision 9 (R9-2, AC49; Review 9 F47): the title said "at the theme touch target"; since R9-2 a row control is the row size and takes the touch target only with `touch` (the assertions below are unchanged)
+  it('[AC24] its look is the shared one: a subtle red action icon with the trash glyph, at the row size', () => {
     mount()
     const button = screen.getByRole('button', { name: 'Delete the item' })
     expect(button.getAttribute('data-variant')).toBe('subtle')
@@ -75,6 +76,31 @@ describe('MantineDeleteIconButton', () => {
     expect(button.disabled).toBe(true)
     fireEvent.click(button)
     expect(onClick).not.toHaveBeenCalled()
+  })
+
+  // Task 957 Revision 9 (R9-2, AC49; Review 9 F47): on `main` the three icons of a row were `size="sm"` and took the touch target together, only in the touch layout; a row delete beside two 22px icons was 44px
+  it('[AC49] without onMedia and touch it is the row size (data-size sm) and carries no touch-target minimum', () => {
+    mount()
+    const button = screen.getByRole('button', { name: 'Delete the item' })
+    expect(button.getAttribute('data-size')).toBe('sm')
+    expect(button.getAttribute('style') ?? '').not.toMatch(/min-(height|width)/)
+  })
+
+  it('[AC49] with touch it carries the theme touch target (min-height and min-width) and stays subtle', () => {
+    mount({ touch: true })
+    const button = screen.getByRole('button', { name: 'Delete the item' })
+    expect(button.getAttribute('data-variant')).toBe('subtle')
+    const style = button.getAttribute('style') ?? ''
+    expect(style).toMatch(/min-height/)
+    expect(style).toMatch(/min-width/)
+  })
+
+  it('[AC49] with onMedia it is still filled and lg, with the touch target', () => {
+    mount({ onMedia: true })
+    const button = screen.getByRole('button', { name: 'Delete the item' })
+    expect(button.getAttribute('data-variant')).toBe('filled')
+    expect(button.getAttribute('data-size')).toBe('lg')
+    expect(button.getAttribute('style') ?? '').toMatch(/min-height/)
   })
 
   it('[AC24] offers no prop that picks a look (variant, color, size, radius)', () => {

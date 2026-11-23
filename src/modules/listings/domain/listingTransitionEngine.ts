@@ -205,8 +205,8 @@ export function canSetStatusPrivileged(from: ListingStatus, to: ListingStatus): 
 // ── Publishing is staff-only (owner decision D8, 2026-10-17, Task 923 Revision 7) ──────────────────────────
 //
 // "The owner of a listing cannot publish it for general view. A listing goes to 'pending' until an administrator / moderator checks it and
-// publishes it." The owner keeps every other status (hide, archive, mark sold / rented; "send to review" is O957-10 and O957-11 below); only a status that makes the
-// listing publicly visible is reserved to staff. The server gateway (applyListingTransition.ts) enforces this; the status control only offers
+// publishes it." The owner keeps every other status (hide, archive, mark sold / rented; "send to review" is O957-10 and O957-11 below) except `expired` (O957-17 below); the status that makes the
+// listing publicly visible is reserved to staff. The owner never sets `active` or `expired`, and sets `pending` from every status but `active`. The server gateway (applyListingTransition.ts) enforces this; the status control only offers
 // what is allowed.
 
 // Owner decision O957-10 (2026-11-21, Task 957 Revision 3; supersedes the "send back to review" part of D8, translated: "why does the owner have the option 'Under Review'? The owner cannot review the
@@ -214,10 +214,13 @@ export function canSetStatusPrivileged(from: ListingStatus, to: ListingStatus): 
 // Owner decision O957-11 (2026-11-21, Task 957 Revision 4, translated: "he must see the option 'Publish', after which his listing goes to moderation, and the owner of the listing sees the status
 // 'On moderation'"): the owner's way back is `pending`, from every status but `active` (and `pending` itself); staff then publish it. `active` stays staff-only (D8).
 
-/** Statuses that only an administrator / moderator may set: the one that publishes (`active`). */
-export const STAFF_ONLY_TARGET_STATUSES: readonly ListingStatus[] = ['active']
+// Owner decision O957-17 (2026-11-23, Task 957 Revision 5, translated: "an agent and users (except an admin and a moderator) must have this set of options in the combobox: Publish, Archive, Deactivate, Sold, Rented"):
+// `expired` is not among the owner's operations, so it is staff-only on the server too.
 
-/** True when the OWNER (a non-staff actor) may set the status directly from `from` to `to`: never a staff-only status, and `pending` never from `active` (O957-10, O957-11). */
+/** Statuses that only an administrator / moderator may set: the one that publishes (`active`) and `expired` (O957-17). */
+export const STAFF_ONLY_TARGET_STATUSES: readonly ListingStatus[] = ['active', 'expired']
+
+/** True when the OWNER (a non-staff actor) may set the status directly from `from` to `to`: never a staff-only status, and `pending` never from `active` (O957-10, O957-11, O957-17). */
 export function canOwnerSetStatus(from: ListingStatus, to: ListingStatus): boolean {
   return canSetStatusPrivileged(from, to) && !STAFF_ONLY_TARGET_STATUSES.includes(to) && !(to === 'pending' && from === 'active')
 }

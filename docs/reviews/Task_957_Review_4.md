@@ -1,6 +1,6 @@
 # Task 957 — Review 4
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 4 of Revision 3, working tree on da4470783 (uncommitted) — NEEDS REVISION (4; beyond the two `flow.md` §3
 allows, so the owner gets a proposed scope cut below)

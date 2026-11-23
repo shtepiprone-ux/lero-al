@@ -1,6 +1,6 @@
 # Task 957 — Review 3
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 3 of Revision 2, working tree on 213103f0a (uncommitted) — NEEDS REVISION (3; the owner allowed a third revision on 2026-11-21)
 Basis: the owner checked every Story Revision 2 created or changed by hand on 2026-11-21 (Opus's list of 45 Story ids)

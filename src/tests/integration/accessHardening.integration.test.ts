@@ -745,4 +745,12 @@ describe('accessHardening', () => {
       expect(kept.error, `${type} of a few bytes is stored`).toBeNull()
     }
   })
+
+  // Task 962 AC6 (hardening v8b part 2, R78 (a)): the table built to hold the `api_key` of third-party rate providers is dropped. Needs `supabase/sql_migrations/task962/v8b2.sql` applied by the owner:
+  // before it, the service role still reads the two rows and this case FAILS.
+  it('[SEC-962-EXCHANGE-PROVIDERS-GONE] the table exchange_providers is gone: a service-role select answers the missing-table error', async () => {
+    const answer = await run.admin.from('exchange_providers').select('id')
+    expect(answer.error?.code, 'the Data API does not know the table (PGRST205)').toBe('PGRST205')
+    expect(answer.data, 'no row came back').toBeNull()
+  })
 })

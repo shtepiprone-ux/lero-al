@@ -801,7 +801,8 @@
     },
     {
      "quote": "List allowed extensions. Only allow safe and critical extensions for business functionality",
-     "task": "957"
+     "control": "scripts/quality/cloudinary-config.mjs",
+     "evidence": "const LISTING_FORMATS = ['jpg', 'jpeg', 'png', 'webp'];"
     }
    ],
    "reviewedSha": "fff26e97a464a4e74092cdd666f79360ed53438f",
@@ -1367,7 +1368,8 @@
     },
     {
      "quote": "Authorize the exact tenant, object, and operation before you upload or download an object, delete it, or generate a signed URL.",
-     "task": "957"
+     "control": "src/app/api/listings/upload-signature/route.ts",
+     "evidence": "if (listing.user_id !== viewer.userId) {"
     },
     {
      "quote": "Apply object-level access control checks according to the OWASP Insecure Direct Object Reference Prevention Cheat Sheet.",

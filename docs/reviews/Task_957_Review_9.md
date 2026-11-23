@@ -1,6 +1,6 @@
 # Task 957 — Review 9
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 9 of Revision 8, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 8 diff (R8-1 to R8-3): `NumberTextInput.tsx` (the `inputMode` override), `scripts/ui-contract-registry.json:667` and the header

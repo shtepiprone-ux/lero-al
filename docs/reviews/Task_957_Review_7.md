@@ -1,6 +1,6 @@
 # Task 957 — Review 7
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 7 of Revision 6, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 6 diff (R6-1 to R6-5) on top of Revision 5: `listingStatusOptions.security.test.tsx`, `edit/page.tsx`,

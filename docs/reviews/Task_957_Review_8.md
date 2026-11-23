@@ -1,6 +1,6 @@
 # Task 957 — Review 8
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 8 of Revision 7, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — NEEDS REVISION
 Scope: the Revision 7 diff (R7-1): `src/modules/listings/components/form/NumberTextInput.tsx`, `src/design-system/mantine/input-chrome.css`,

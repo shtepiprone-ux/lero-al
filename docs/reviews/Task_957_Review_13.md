@@ -1,6 +1,6 @@
 # Task 957 — Review 13
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 13 of Revision 12, working tree on 163534aac (uncommitted, branch `task/957-revision-4`) — APPROVED
 Scope: the Revision 12 diff (R12-1): one selector in the end-padding rule of `input-chrome.css` and one test in `listingFormMantine.test.ts`; then the

@@ -1,6 +1,6 @@
 # Task 957 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_957_Signed_Listing_Uploads.md) · OWASP record: [Task_957.json](../security/owasp/reviews/Task_957.json)
 
 Review 2 of the working tree on 213103f0a (uncommitted) — NEEDS REVISION (2 of 2)
 Correction, 2026-11-20: the first version of this review gave APPROVED WITH NOTES after confirming an exemption without

@@ -1,6 +1,6 @@
 # Task 962 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md) · OWASP record: [Task_962.json](../security/owasp/reviews/Task_962.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md) · OWASP record: [Task_962.json](../security/owasp/reviews/Task_962.json)
 
 Review 2 of Revision 1, working tree on 791f7f1fb (uncommitted, branch `task/962-hardening-v8b2`) — APPROVED
 Scope: the Revision 1 diff (R1-1): `src/tests/__tests__/v8b2Sql.test.ts` only; the four tracked test files are as Review 1 read them (`git diff --stat

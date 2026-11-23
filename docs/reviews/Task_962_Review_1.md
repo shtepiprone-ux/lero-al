@@ -1,6 +1,6 @@
 # Task 962 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md) · OWASP record: [Task_962.json](../security/owasp/reviews/Task_962.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_962_Hardening_V8b_Promises_The_Code_Relies_On.md) · OWASP record: [Task_962.json](../security/owasp/reviews/Task_962.json)
 
 Review 1 of the working tree on 791f7f1fb (uncommitted, branch `task/962-hardening-v8b2`) — NEEDS REVISION
 Scope: `supabase/sql_migrations/task962/v8b2.sql`, `v8b2-rollback.sql`, `v8b2-preflight.sql` (new), `src/tests/__tests__/v8b2Sql.test.ts` (new),

@@ -60,7 +60,7 @@ export const MIN_QUOTE_WORDS = 6;
 // Kickoffs reviewed and approved before this gate existed (2026-11-07); every other kickoff from Sprint 93 on is held to
 // "## OWASP" and, once reviewed, to its review record (check-files.mjs and the `kickoff` command alike). A number leaves
 // this set when its kickoff is archived; no number is ever added.
-export const OWASP_GRANDFATHERED = new Set(['947']);
+export const OWASP_GRANDFATHERED = new Set();
 const SUFFIX = /_Cheat_Sheet\.md$|\.md$/;
 
 // ── text helpers ────────────────────────────────────────────────────────────────────────────────────────────────────

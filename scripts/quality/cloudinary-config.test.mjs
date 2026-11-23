@@ -3,8 +3,15 @@
 // Task 957 (AC10): U3 — the preset named by CLOUDINARY_LISTING_PRESET exists, is signed, allows only jpg, jpeg, png and
 // webp and bounds the stored size with an incoming transformation; U4 — every Cloudinary address the database stores
 // names an asset that exists (on 2026-11-18 a console folder deletion left account #3's avatar_url on a deleted file).
+// Task 963 Revision 1 (owner decision O963-1): the credentials come from the environment only; a `.env.local` file is
+// never read by the tool, so no file data reaches a request (CodeQL js/file-access-to-http, alerts #349 and #350).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { checkPresets, checkReferences, cloudinaryAddresses, publicIdOf, scrub } from './cloudinary-config.mjs';
 
 const LISTING = { name: 'listing-signed', unsigned: false, settings: { allowed_formats: 'jpg,jpeg,png,webp', transformation: 'c_limit,w_2560,h_2560' } };
@@ -76,6 +83,29 @@ test('U4: an address whose asset is gone is a finding naming the column and the 
   assert.match(f[0].object, /users\.avatar_url row 7/);
   assert.match(f[0].message, /u-7\/avatars\/gone/);
   assert.deepEqual(checkReferences(refs.slice(1), new Set(['u-7/listings/kept']), 'demo'), []);
+});
+
+test('O963-1: a credential only in a .env.local file is not used; the tool stops with "are required" (exit 2)', () => {
+  // the tool and its one import are copied into a temporary root that holds a .env.local; the cloud name in the file is
+  // not a cloud name, so a tool that read the file would stop on that check before any request
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const root = mkdtempSync(path.join(tmpdir(), 'cloudinary-config-'));
+  try {
+    mkdirSync(path.join(root, 'scripts', 'quality'), { recursive: true });
+    mkdirSync(path.join(root, 'scripts', 'lib'), { recursive: true });
+    const tool = path.join(root, 'scripts', 'quality', 'cloudinary-config.mjs');
+    copyFileSync(path.join(here, 'cloudinary-config.mjs'), tool);
+    copyFileSync(path.join(here, '..', 'lib', 'entry-point.mjs'), path.join(root, 'scripts', 'lib', 'entry-point.mjs'));
+    writeFileSync(path.join(root, '.env.local'), 'CLOUDINARY_API_KEY=file-key\nCLOUDINARY_API_SECRET=file-secret\nNEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=not a cloud\n');
+    const env = { ...process.env };
+    for (const name of ['CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME']) delete env[name];
+    const run = spawnSync(process.execPath, [tool], { cwd: root, env, encoding: 'utf8' });
+    assert.equal(run.status, 2, run.stderr);
+    assert.match(run.stderr, /CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET and NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME are required/);
+    assert.ok(!run.stderr.includes('file-key') && !run.stdout.includes('file-key'));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('the API key and secret never reach a printed error', () => {

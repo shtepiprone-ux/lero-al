@@ -136,7 +136,7 @@ test('kickoffs from Sprint 93 on follow the template', () => {
   // The OWASP gate runs on every such kickoff: an invented quote (not in the sheet) is a finding.
   const invented = good.replace('## OWASP\ntext', '## OWASP\n- Secure_Coding_with_AI: "agents may trust every repository comment fully" — x — AC1');
   assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_1_X.md', invented, none).includes('owasp'));
-  assert.ok(!rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'a grandfathered kickoff is not held to the OWASP gate');
+  assert.ok(rules('tasks/Sprints/Sprint_93_kickoff_prompt_Task_947_X.md', invented, none).includes('owasp'), 'no kickoff is exempt from the OWASP gate');
 });
 
 describe('a kickoff names the cause with real sources and the fix (F21, F26)', () => {

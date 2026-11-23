@@ -61,4 +61,29 @@ every red job stops at the type check of its build, on four errors:
 The unit tests passed locally because Vitest does not type-check; `tsc` is a CI check (A5). The jobs after the build are UNKNOWN until it passes.
 Fix in this pull request: Revision 13.
 
-Open parts, in order: Revision 13 (Sonnet) → push → `gh pr checks 66` (V14) → the merge → archive (H7).
+Second run, commit `9a14f810b` (run 45186358458): the type check passes; red: "Lint, types and product checks" and "Authorization regression".
+- "OWASP reference — upstream equals the committed registry": upstream changed `Nodejs_Security`, `NPM_Security` and `User_Privacy_Protection` today
+  (registry `c2a1e3e3` → `7db73fd2`). Opus re-read the upstream diffs (`gh api repos/OWASP/CheatSheetSeries/compare/c2a1e3e32cec...7db73fd2770f`):
+  `NPM_Security` adds the workspace-root `.npmrc` (no workspaces here; the root `.npmrc` has `ignore-scripts=true`: met); `User_Privacy_Protection`
+  rewrites certificate pinning (native mobile apps only; not applicable); `Nodejs_Security` rewrites logging: two requirements (no sensitive data in a log;
+  untrusted input escaped against log injection) mapped to the existing control `recovery.ts` and to the new Task 1021 (Task 955's kickoff, which owns logs,
+  lacks "## Cause" and fails `check-files`, so it is not extended). `owasp.mjs check` → exit 0; `owasp.mjs sync --verify` → exit 0.
+- "Authorization regression" (`npm run test:security-integration` on the development project), 13 failed in 4 files, every one `42501`:
+  - `rateLimit.integration.test.ts` reads, seeds and removes `rate_limit_hits` through the service role (`:23`, `:68`, `:75`); `task957.sql:13-14`
+    revokes the table from `public`, `anon`, `authenticated` and grants the service role nothing, against its own comment ("read and written by the service
+    role"); the application never reads the table (`grep rate_limit_hits src` outside tests: nothing), the function is `SECURITY DEFINER`.
+  - `accessHardening`, `deleteAccount` and `listingAccessState` insert synthetic photos outside the owner's folder (for example
+    `accessHardening.integration.test.ts:436`, `…/upload/v1/zz-synth-photo.jpg`); the new trigger `listing_images_owner_folder` refuses them (42501,
+    `task957.sql:58-85`), as designed; the cases that expect a foreign host refused with `23514` (`:556`, `:581`) meet the trigger first (a `BEFORE`
+    trigger runs before the CHECK).
+Fix in this pull request: Revision 14 (Sonnet), then the owner applies `task957-grants.sql`.
+
+Revision 14, read here: `task957-grants.sql` grants the service role `select, insert, delete` on `rate_limit_hits` and nothing else, its rollback
+revokes the same three; the three integration files put every synthetic photo in the owner's folder (`photoUrl(ownerId)`), and each deny case asserts the
+rule that refuses it: the trigger (42501, its message) for a foreign host, `http` or an address outside the owner's folder, the CHECK (23514,
+`listing_images_url_prefix_check`) for another cloud in the owner's folder, so both protections stay proven; `deleteAccount`'s ids follow from
+`publicIdFromUrl` dropping the `v1` segment (`src/lib/cloudinaryUpload.ts:148-150`). The owner applied `task957-grants.sql` in the SQL Editor (2026-11-23,
+"Success. No rows returned"); read in a `read only` transaction: `has_table_privilege` on `public.rate_limit_hits`: `service_role` SELECT, INSERT, DELETE
+true, UPDATE false; `anon` and `authenticated` false for all four. The integration results are UNKNOWN until `gh pr checks 66`.
+
+Open parts, in order: commit and push (Revision 14 and the OWASP remap) → `gh pr checks 66` → the merge.

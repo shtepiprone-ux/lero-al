@@ -82,9 +82,9 @@ describe('listingAccessState', () => {
     const unlimited = await run.makeListing(owner.id, 'active', 'rule-null')
     await expiryOf(lapsed.id, inDays(-1))
     await expiryOf(unlimited.id, null)
-    // a photo of each hidden listing (an address inside the project's Cloudinary cloud, as the CHECK on `listing_images.url` requires): the photo policy follows the listing policy
+    // a photo of each hidden listing (an address inside the project's Cloudinary cloud, as the CHECK on `listing_images.url` requires, and in the owner's folder, as the trigger `listing_images_owner_folder` requires): the photo policy follows the listing policy
     for (const row of [lapsed, unlimited, archived]) {
-      const photo = await run.admin.from('listing_images').insert({ listing_id: row.id, url: 'https://res.cloudinary.com/die7okukn/image/upload/v1/zz-synth-photo.jpg', is_cover: true, order: 0 })
+      const photo = await run.admin.from('listing_images').insert({ listing_id: row.id, url: `https://res.cloudinary.com/die7okukn/image/upload/v1/${owner.id}/listings/zz-synth-photo.jpg`, is_cover: true, order: 0 })
       expect(photo.error, 'precondition: a photo of the hidden listing exists').toBeNull()
     }
     const stranger2 = await run.makeUser('rule-stranger', { role: 'user' })

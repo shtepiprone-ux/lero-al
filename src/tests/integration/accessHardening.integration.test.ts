@@ -432,8 +432,10 @@ describe('accessHardening', () => {
   })
 
   // ── Task 923 R100 (R73 (a)/(b), R69 (b)/(c)): hardening v8a is live, so these cases run now ─────────────────────────────────────────────────────────────
-  /** an address inside the project's Cloudinary cloud, the prefix the CHECK on `listing_images.url` requires (hardening v8a) */
-  const PHOTO_URL = 'https://res.cloudinary.com/die7okukn/image/upload/v1/zz-synth-photo.jpg'
+  /** an address inside the project's Cloudinary cloud (the prefix the CHECK `listing_images_url_prefix_check` requires, hardening v8a) and in the folder of the listing's owner (the trigger `listing_images_owner_folder`, `task957.sql:58-88`) */
+  const photoUrl = (ownerId: string, name = 'zz-synth-photo.jpg') => `https://res.cloudinary.com/die7okukn/image/upload/v1/${ownerId}/listings/${name}`
+  /** the refusal text of the trigger `listing_images_owner_folder` (`task957.sql:80`, errcode 42501) */
+  const TRIGGER_MESSAGE = 'the photo must lie in the folder of the listing owner'
   const ALL_STATUSES = ['active', 'sold', 'rented', 'archived', 'pending', 'inactive', 'expired'] as const
   const PUBLIC_STATUSES = ['active', 'sold', 'rented']
 
@@ -442,7 +444,7 @@ describe('accessHardening', () => {
     const made: Record<string, { id: string; slug: string }> = {}
     for (const status of ALL_STATUSES) {
       const row = await run.makeListing(person.id, status, `${tag}-${status}`)
-      const photo = await run.admin.from('listing_images').insert({ listing_id: row.id, url: PHOTO_URL, is_cover: true, order: 0 })
+      const photo = await run.admin.from('listing_images').insert({ listing_id: row.id, url: photoUrl(person.id), is_cover: true, order: 0 })
       expect(photo.error, `fixture: a photo for the ${status} listing (needs hardening v8a: the URL prefix check accepts this address)`).toBeNull()
       made[status] = row
     }
@@ -515,8 +517,8 @@ describe('accessHardening', () => {
     const noCoordinates = await insertListing('chk-allow-none', { lat: null, lng: null })
     expect(noCoordinates.error, 'no coordinates').toBeNull()
 
-    // a photo inside the project's Cloudinary cloud
-    const photo = await run.admin.from('listing_images').insert({ listing_id: longest.data?.[0]?.id, url: PHOTO_URL, is_cover: true, order: 0 }).select('id')
+    // a photo inside the project's Cloudinary cloud and in the owner's folder
+    const photo = await run.admin.from('listing_images').insert({ listing_id: longest.data?.[0]?.id, url: photoUrl(person.id), is_cover: true, order: 0 }).select('id')
     expect(photo.error, 'a photo address inside the project cloud').toBeNull()
 
     const stored = await run.admin.from('listings').select('id').like('slug', `${escapeLike(run.RUN)}-chk-allow-%`)
@@ -552,11 +554,20 @@ describe('accessHardening', () => {
     const parent = await insertListing('chk-deny-parent', {})
     expect(parent.error, 'precondition: the parent listing is valid').toBeNull()
 
-    // a photo address outside the project's Cloudinary cloud is refused too
-    for (const url of ['https://evil.example/pixel.gif', 'https://res.cloudinary.com/another-cloud/image/upload/v1/x.jpg', 'http://res.cloudinary.com/die7okukn/image/upload/v1/x.jpg']) {
+    // a photo address that is not the project's Cloudinary cloud, or not in the owner's folder, is refused too. The BEFORE trigger `listing_images_owner_folder` runs before the CHECK, so an address outside
+    // the owner's folder, on a foreign host or over http is refused by the trigger (42501, `task957.sql:72` -> `:80`, `:74` -> `:80`); only an address in the owner's folder on another cloud reaches the CHECK
+    // `listing_images_url_prefix_check` (23514).
+    const ownerFolder = `${person.id}/listings`
+    const photoRefusals: [string, string, string][] = [
+      ['https://evil.example/pixel.gif', '42501', TRIGGER_MESSAGE],
+      ['https://res.cloudinary.com/another-cloud/image/upload/v1/x.jpg', '42501', TRIGGER_MESSAGE],
+      [`http://res.cloudinary.com/die7okukn/image/upload/v1/${ownerFolder}/x.jpg`, '42501', TRIGGER_MESSAGE],
+      [`https://res.cloudinary.com/another-cloud/image/upload/v1/${ownerFolder}/x.jpg`, '23514', 'listing_images_url_prefix_check'],
+    ]
+    for (const [url, code, reason] of photoRefusals) {
       const photo = await run.admin.from('listing_images').insert({ listing_id: parent.data?.[0]?.id, url, is_cover: false, order: 1 }).select('id')
-      expect(photo.error?.code, `${url}: refused with a check violation`).toBe('23514')
-      expect(photo.error?.message, `${url}: by the URL prefix constraint`).toContain('listing_images_url_prefix_check')
+      expect(photo.error?.code, `${url}: refused with ${code}`).toBe(code)
+      expect(photo.error?.message, `${url}: by ${reason}`).toContain(reason)
     }
     const photos = await run.admin.from('listing_images').select('id').eq('listing_id', parent.data?.[0]?.id)
     expect(photos.data, 'no refused photo was stored').toEqual([])
@@ -569,19 +580,25 @@ describe('accessHardening', () => {
   // ── Task 923 R162: the image address, the staff avatar path and the moderator switches, as a session reaches them ──────────────────────────────────────────
   it('[SEC-DB-X-IMAGE-URL-ALLOW] a project image is accepted', async () => {
     const listing = await run.makeListing(person.id, 'pending', 'img-allow')
-    const added = await person.client.from('listing_images').insert({ listing_id: listing.id, url: PHOTO_URL, is_cover: true, order: 0 }).select('listing_id, url')
-    expect(added.error, 'the owner session adds a photo inside the project cloud').toBeNull()
-    expect(added.data).toEqual([{ listing_id: listing.id, url: PHOTO_URL }])
+    const added = await person.client.from('listing_images').insert({ listing_id: listing.id, url: photoUrl(person.id), is_cover: true, order: 0 }).select('listing_id, url')
+    expect(added.error, 'the owner session adds a photo inside the project cloud, in the owner\'s folder').toBeNull()
+    expect(added.data).toEqual([{ listing_id: listing.id, url: photoUrl(person.id) }])
     const stored = await run.admin.from('listing_images').select('url').eq('listing_id', listing.id)
-    expect(stored.data, 'the photo is stored').toEqual([{ url: PHOTO_URL }])
+    expect(stored.data, 'the photo is stored').toEqual([{ url: photoUrl(person.id) }])
   })
 
   it('[SEC-DB-X-IMAGE-URL-DENY] a foreign image is refused', async () => {
     const listing = await run.makeListing(person.id, 'pending', 'img-deny')
-    for (const url of ['https://example.com/x.jpg', 'https://res.cloudinary.com/another-cloud/image/upload/v1/x.jpg']) {
+    // as above: a foreign host and an address outside the owner's folder are refused by the trigger (42501); an address in the owner's folder on another cloud, by the CHECK (23514)
+    const photoRefusals: [string, string, string][] = [
+      ['https://example.com/x.jpg', '42501', TRIGGER_MESSAGE],
+      ['https://res.cloudinary.com/another-cloud/image/upload/v1/x.jpg', '42501', TRIGGER_MESSAGE],
+      [`https://res.cloudinary.com/another-cloud/image/upload/v1/${person.id}/listings/x.jpg`, '23514', 'listing_images_url_prefix_check'],
+    ]
+    for (const [url, code, reason] of photoRefusals) {
       const refused = await person.client.from('listing_images').insert({ listing_id: listing.id, url, is_cover: false, order: 1 }).select('id')
-      expect(refused.error?.code, `${url}: refused with a check violation`).toBe('23514')
-      expect(refused.error?.message, `${url}: by the URL prefix constraint`).toContain('listing_images_url_prefix_check')
+      expect(refused.error?.code, `${url}: refused with ${code}`).toBe(code)
+      expect(refused.error?.message, `${url}: by ${reason}`).toContain(reason)
       expect(refused.data, `${url}: nothing returned`).toBeNull()
     }
     const stored = await run.admin.from('listing_images').select('url').eq('listing_id', listing.id)

@@ -75,7 +75,8 @@ async function readCloudPrefix(): Promise<void> {
   if (!match) throw new Error('the cloud prefix of the project cannot be read from an existing listing image (names only; no value is printed)')
   cloudPrefix = match[0]
 }
-const cloud = (name: string) => `${cloudPrefix}image/upload/v1700000000/${run.RUN}/${name}.jpg`
+// A listing photo lies in its owner's folder (the trigger `listing_images_owner_folder`, `task957.sql:58-88`): `cloud(name, `${ownerId}/listings`)`; any other address keeps the run's folder.
+const cloud = (name: string, folder: string = run.RUN) => `${cloudPrefix}image/upload/v1700000000/${folder}/${name}.jpg`
 
 /** how many rows of `table` have `column` = `value` (a failed read fails the test: "unknown" is never "zero") */
 async function count(table: string, column: string, value: string): Promise<number> {
@@ -132,8 +133,8 @@ async function buildAllowWorld(): Promise<AllowWorld> {
   const secondListing = await run.makeListing(second.id, 'active', 'allow-second-listing')
   const ownerListing = await run.makeListing(owner.id, 'active', 'allow-owner-listing')
   // the agent's listing has image rows; the person has a favourite, a verification request with a document URL, and one Storage object under their id
-  await insert('listing_images', { listing_id: agentListing.id, url: cloud('listing-one'), order: 0, is_cover: true })
-  await insert('listing_images', { listing_id: agentListing.id, url: cloud('listing-two'), order: 1, is_cover: false })
+  await insert('listing_images', { listing_id: agentListing.id, url: cloud('listing-one', `${agent.id}/listings`), order: 0, is_cover: true })
+  await insert('listing_images', { listing_id: agentListing.id, url: cloud('listing-two', `${agent.id}/listings`), order: 1, is_cover: false })
   await insert('favorites', { user_id: agent.id, listing_id: ownerListing.id })
   await insert('favorites', { user_id: second.id, listing_id: ownerListing.id })
   await insert('verification_requests', { user_id: agent.id, document_url: cloud('verification') })
@@ -235,9 +236,9 @@ it('[SEC-DEL-INT-ALLOW] Deleting an account removes the account, its data, its l
   expect(listed.data ?? [], 'the avatars object is gone').toEqual([])
 
   // the files: each Cloudinary id of the account reached the REAL reference check once and passed it (a dry run, so nothing at Cloudinary was destroyed)
-  for (const name of ['listing-one', 'listing-two', 'verification', 'company-logo']) {
-    const publicId = `${run.RUN}/${name}`
-    expect(world.fileEntries.filter((entry) => entry.publicId === publicId).length, `${name}: exactly one [deleteAsset] entry`).toBe(1)
+  // the two listing photos lie in the agent's folder (`<agent id>/listings/<name>`), the two other files in the run's folder
+  for (const publicId of [`${world.agent.id}/listings/listing-one`, `${world.agent.id}/listings/listing-two`, `${run.RUN}/verification`, `${run.RUN}/company-logo`]) {
+    expect(world.fileEntries.filter((entry) => entry.publicId === publicId).length, `${publicId}: exactly one [deleteAsset] entry`).toBe(1)
   }
   expect(world.fileEntries.length, 'no other id was released').toBe(4)
   for (const entry of world.fileEntries) {

@@ -21,8 +21,8 @@ state that was already in the file, or any response that wrote no file, passed u
 - a named sprint plan that is closed or missing;
 - a registry number the archive ledger already closed.
 
-The Opus `Stop` hook runs it on **every** Opus response and blocks while it fails. Cleaning the backlog is therefore
-the first step of the next response, whatever the owner asked.
+No hook runs it any more (the agent hooks were removed on 2026-11-06); it runs in CI (`scripts/quality/product-gates.mjs`)
+and after every merge (checklist H7). It cannot see a stale row, so H7 also reads every section of the backlog.
 
 **Receipts:** `GR-5 STATE SYNCED — <task> = <status> in: <every file touched>.` For an approved verdict also emit
 `GR-5 BACKLOG CLEAN — archived: <task IDs>; active backlog: <n> lines.` Every task-design or review response also emits

@@ -13,7 +13,7 @@ executor and the reviewer". The gates are the GitHub workflow (`.github/workflow
 | Opus | creates a task | `checklists/design.md` (D1-D13) | implements it |
 | Sonnet | implements one saved task | `checklists/execute.md` (I1-I12) | designs, reviews, approves; edits `.claude/**`, `CLAUDE.md`, `AGENTS.md`, `.github/**`, `.githooks/**`, `scripts/quality/**` |
 | Opus | reviews and sets the verdict | `checklists/review.md` (V1-V14) | approves its own implementation |
-| Opus | hands Git commands to the owner | `checklists/handoff.md` (H1-H6) | runs a mutating command |
+| Opus | hands Git commands to the owner | `checklists/handoff.md` (H1-H7) | runs a mutating command |
 | Any role, visible UI | — | `checklists/ui.md` (U1-U12) | — |
 | Owner | product decisions, reads the diff, merges, all mutating Git, GitHub and Vercel settings | — | — |
 
@@ -26,7 +26,7 @@ left out is the rule broken. A file a checklist line names is opened for that li
 2. Sonnet: I1-I12 in its own session → report.
 3. Opus: V1-V14 in its own session → review file and verdict. `NEEDS REVISION` → a "Revision <k>" block with one item
    per finding (D, last paragraph) → back to 2.
-4. Opus: H1-H6 → the owner commits, pushes and opens the pull request → `gh pr checks <n>` → the owner merges.
+4. Opus: H1-H7 → the owner commits, pushes and opens the pull request → `gh pr checks <n>` → the owner merges → Opus archives the task (H7).
 
 Every change reaches `main` only through a pull request the owner reads and merges after `CI Required` is green. AI
 review never replaces the owner's review of the diff.
@@ -61,3 +61,4 @@ review never replaces the owner's review of the diff.
 | 2026-11-22 | A1, I6, V2, D4 | "where one or two lines need fixing, the model changes dozens of files"; no file or revision count limit (owner: "remove the limits from the rules") |
 | 2026-11-22 | H1 | "pushing only changed documents and running the full CI is a waste of time"; "it must be written in the rules so that this does not happen again" |
 | 2026-11-23 | I4, I8 | "fix the text": `scripts/quality/*.test.mjs` runs with `node --test`, not `npm test --` (Task 1013 Review 1) |
+| 2026-11-23 | H7 | "I see that you keep the backlog very badly"; "all the other sections must also be checked for relevance" (the step after a merge was in no checklist) |

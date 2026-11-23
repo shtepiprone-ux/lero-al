@@ -675,8 +675,8 @@
   "Docker_Security": {
    "applies": false,
    "why": "no container image is built or deployed and no Swarm service is published; Vercel runs the functions",
-   "reviewedSha": "87d77fdbb0320258494968dffc7d17a500ddf753",
-   "reviewedOn": "2026-11-17"
+   "reviewedSha": "8b7bbdf1b535adb77d2b2ddca5ea8a2f6a5b2d57",
+   "reviewedOn": "2026-11-23"
   },
   "DOM_based_XSS_Prevention": {
    "applies": true,

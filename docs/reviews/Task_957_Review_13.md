@@ -86,4 +86,11 @@ rule that refuses it: the trigger (42501, its message) for a foreign host, `http
 "Success. No rows returned"); read in a `read only` transaction: `has_table_privilege` on `public.rate_limit_hits`: `service_role` SELECT, INSERT, DELETE
 true, UPDATE false; `anon` and `authenticated` false for all four. The integration results are UNKNOWN until `gh pr checks 66`.
 
-Open parts, in order: commit and push (Revision 14 and the OWASP remap) → `gh pr checks 66` → the merge.
+Third run, commit `cebac9802` (run 45199007894): every job passes, "Authorization regression" among them (the grant and the owner-folder photos hold
+against the real database), except "Lint, types and product checks", stopped at "OWASP reference — upstream equals the committed registry": upstream
+committed `ac9fd32a` at 14:08 UTC ("Docker image update guidance"), after this review's remap at `7db73fd2`. `Docker_Security` (+5 lines on image updates)
+stays not applicable (no container image; `controls.json` `why`), `reviewedSha` set to `8b7bbdf1`. Opus did not re-run `owasp.mjs sync` right before
+handing the push of `cebac9802`, against A0; re-run before this commit: `owasp.mjs sync` → exit 0 at `ac9fd32a`, `owasp.mjs check` → exit 0. The later
+steps of the lint job (lint, types, product checks) are UNKNOWN until the next run.
+
+Open parts, in order: commit and push (the OWASP registry at `ac9fd32a`) → `gh pr checks 66` → the merge.

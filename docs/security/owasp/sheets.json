@@ -1,8 +1,8 @@
 {
  "source": "https://github.com/OWASP/CheatSheetSeries",
  "site": "https://cheatsheetseries.owasp.org/index.html",
- "commit": "7db73fd2770f4437f55aa4eb9a4c63b38c563619",
- "fetchedOn": "2026-11-23T14:00:48.415Z",
+ "commit": "ac9fd32a0a54f4c8e485ce1784e73032694897a3",
+ "fetchedOn": "2026-11-23T14:55:51.159Z",
  "sheets": [
   {
    "name": "Abuse_Case",
@@ -260,7 +260,7 @@
    "name": "Docker_Security",
    "file": "Docker_Security_Cheat_Sheet.md",
    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html",
-   "sha": "87d77fdbb0320258494968dffc7d17a500ddf753",
+   "sha": "8b7bbdf1b535adb77d2b2ddca5ea8a2f6a5b2d57",
    "title": "Docker Security Cheat Sheet"
   },
   {

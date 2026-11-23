@@ -16,7 +16,7 @@ the live configuration the diff cannot show: `node scripts/quality/db-catalog-au
 RESTRICTIVE block policies, definer functions pinned and allow-listed, no `anon` writes, moderator write policies
 checking a permission key, server-only user columns not session-writable, public listing reads bounded by expiry, owner
 status changes guarded, bucket limits) for SQL, RLS, grants, data writes, authentication or roles, and
-`node scripts/quality/cloudinary-config.mjs` for uploads; both exit 1 while a known violation is open (Tasks 956, 957),
+`node --env-file=.env.local scripts/quality/cloudinary-config.mjs` for uploads; both exit 1 while a known violation is open (Tasks 956, 957),
 so the review answers the invariants the change touches. A baseline review records what was read next to its findings
 (`docs/security/audit-2026-11-06/coverage.md`).
 

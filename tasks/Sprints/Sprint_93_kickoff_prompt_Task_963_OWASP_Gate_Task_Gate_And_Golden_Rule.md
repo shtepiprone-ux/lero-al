@@ -17,6 +17,14 @@ nothing saw a sheet change upstream, a cited quote was never checked against its
 without any task, locale values and client sinks were checked only by a CI scan of tracked files, and an audit finding
 could stay a remark. After the task each of those is a gate that fails, with a self-test that proves it detects.
 
+## Cause
+
+The reference was a memory, not a gate (`docs/security/audit-2026-11-06/findings.md:216`, G-03). Review 1 (2026-11-23) found what is left: a quality
+script parses the secret file itself and sends what it read to the network (`scripts/quality/cloudinary-config.mjs:116-131`, `:140`, `:167`; `gh api
+"repos/:owner/:repo/code-scanning/alerts?state=open"` → #349 and #350 `js/file-access-to-http`); the exemption list still holds an archived task
+(`scripts/quality/owasp.mjs:63`); a reviewed sink names a task that no longer holds its finding (`scripts/quality/client-sinks.mjs:44-45`).
+Fix: the gates, tools and rules of the Scope below; Revision 1 removes the three causes Review 1 found.
+
 ## Scope
 
 - `scripts/quality/owasp.mjs` (+ `owasp.test.mjs`): `sync [--verify]`, `cache`, `check` (O1-O9), `plan`, `kickoff`,
@@ -85,6 +93,16 @@ could stay a remark. After the task each of those is a gate that fails, with a s
   same check on the working-tree lockfile before a commit (AC15).
 - Dependencies: none (Node built-ins; the ICU parser next-intl already ships).
 - Out of scope: product fixes of the findings (Tasks 949-962 carry them).
+- Revision 1 (Review 1; Opus, a session other than the reviewer's; nothing else changes): R1-1 (F1, owner decision O963-1, 2026-11-23, translated: "do
+  it according to the best programming and security practices of 2026") `scripts/quality/cloudinary-config.mjs` reads its credentials from the
+  environment only (`readEnv` keeps the `process.env` loop over `NAMES`, the `.env.local` read leaves), so no file data reaches `fetch`; the command is
+  `node --env-file=.env.local scripts/quality/cloudinary-config.mjs` in `.claude/rules/checklists/design.md` (D6), `execute.md` (I10), `review.md` (V7),
+  `.claude/rules/quality-gates.md`, `.claude/rules/secure-code-review.md` and the file's own usage line; `cloudinary-config.test.mjs` proves a missing
+  credential stops the tool (exit 2) with no file read; CodeQL alerts #349 and #350 close as fixed on the pull request, none is dismissed. R1-2 (F3)
+  `owasp.mjs` `OWASP_GRANDFATHERED` is empty (947 is archived). R1-3 (F4) the K5 entry of `client-sinks.mjs` names Task 988 (P-06 moved there 2026-11-19).
+  The command also changed in `docs/env.md` and the Task 1003 kickoff (the other active mentions). Revision 2 (Review 2; nothing else changes): R2-1 (F5)
+  `scripts/quality/check-files.test.mjs:139` asserts that a Sprint 93 kickoff of Task 947 is held to the OWASP gate (an invented quote is an `owasp`
+  finding), since `OWASP_GRANDFATHERED` is empty.
 
 ## Attack surface
 
@@ -171,11 +189,10 @@ No visible change.
   (`gitBlobSha` equals `git hash-object`; a download whose blob SHA differs is refused and not written; a drifted cached
   file is downloaded again; a commit, sheet name, file name or blob id of another shape is refused before any request),
   and the CodeQL check of PR #19 lists no alert in `scripts/quality/owasp.mjs` or `cloudinary-config.mjs`: the race and the marker alerts close on the rescan, the four left by design are dismissed by
-  decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths).
-- AC11 A local product check sees uncommitted files — test: `node scripts/check-surface-census-changed.mjs --verify-gate`, whose self-test
-  arms gain one: an untracked component under `src/` is censused in a working-tree run and not in a `base..head` run; and
-  `node scripts/check-ui-contract.mjs --verify-gate` and `node scripts/check-mobile-adaptation-contract.mjs --verify-gate`
-  gain the same arm (an uncommitted manifest enrolment without a contract fails a local run).
+  decision D-CQ1, each with its comment (`gh api` code-scanning alerts, `state=open`, prints none for these paths; since Revision 1 (O963-1)
+  #349 and #350 close as fixed, not dismissed).
+- AC11 Withdrawn by owner decision O963-2 (2026-11-23, translated: "withdraw"; Review 1 F2): it was never built, and since A5 (2026-11-22) no product
+  gate runs locally — test: `node scripts/check-surface-census-changed.mjs --verify-gate` (its 14 arms unchanged).
 - AC12 A task under revision holds no change — test: `scripts/quality/owasp.test.mjs` (the task gate: a review whose verdict line
   says NEEDS REVISION and whose prose names APPROVED is not approved and the change fails G1; bold, older and two-review forms).
 - AC13 CI runs on a named image (owner, 2026-11-08, translated: "yes, do AC13, pin ubuntu-24.04") — test:
@@ -215,3 +232,7 @@ No visible change.
    other Sprint 93 reviews still have to cover before PR #19 can merge.
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_963_Review_1.md)
+- [Review 2 — NEEDS REVISION](../../docs/reviews/Task_963_Review_2.md)
+- [Review 3 — APPROVED](../../docs/reviews/Task_963_Review_3.md)

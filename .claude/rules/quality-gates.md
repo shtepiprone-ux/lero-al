@@ -115,8 +115,9 @@ and CODEOWNERS for the sensitive paths.
 Every job of §5 runs only on GitHub and is read with `gh pr checks <n>` and `gh run view <id> --log-failed`
 (checklist A5). The commands a model runs locally are the ones its checklist names (`checklists/design.md`,
 `execute.md`, `review.md`). The pre-commit hook (§4) runs on the owner's commit. `db-catalog-audit.mjs` and
-`cloudinary-config.mjs` read the live database catalog and upload presets with `.env.local` credentials, so they are
-checklist steps, not CI jobs; their invariants are tested on fixtures in CI. `owasp.mjs` (tests:
+`cloudinary-config.mjs` read the live database catalog and upload presets with `.env.local` credentials (the second
+runs as `node --env-file=.env.local scripts/quality/cloudinary-config.mjs` and takes them from the environment only,
+owner decision O963-1), so they are checklist steps, not CI jobs; their invariants are tested on fixtures in CI. `owasp.mjs` (tests:
 `scripts/quality/owasp.test.mjs`): `sync` re-reads the OWASP Cheat Sheet Series into the registry, `check` fails on an
 unmapped or changed sheet, a quote not in its sheet or a control file without its evidence text, `plan` and `review`
 list the sheets a kickoff and a diff trigger, `session` puts the state into every session at its start (§3).

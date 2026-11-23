@@ -9,16 +9,15 @@
 // cloudinary.com/documentation/upload_presets). U4 — every Cloudinary address the database stores names an asset that
 // exists: on 2026-11-18 a console folder deletion left account #3's `avatar_url` on a deleted file and nothing said so.
 //
-// Usage: node scripts/quality/cloudinary-config.mjs [--snapshot <presets.json>]
+// Usage: node --env-file=.env.local scripts/quality/cloudinary-config.mjs [--snapshot <presets.json>]
 // Credentials: CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME and, for U4,
-// NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY from the environment or `.env.local`. Only GET requests: the
+// NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY from the environment only (Node's `--env-file` loads them; the
+// tool reads no credential file itself, owner decision O963-1, Task 963 Revision 1). Only GET requests: the
 // Admin API (`/upload_presets`, `/resources/image/upload` by public id) and PostgREST selects; nothing is written. No
 // key, secret or row content reaches the output: a U4 finding names the column, the row id and the public id.
 // `--snapshot` judges a saved preset list (U1-U3) and does not read the database (U4 is then reported as not checked).
 // Exit 0 = no finding, 1 = findings, 2 = the configuration could not be read.
-import { existsSync, readFileSync } from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
 import { isEntryPoint } from '../lib/entry-point.mjs';
 
 const LISTING_FORMATS = ['jpg', 'jpeg', 'png', 'webp'];
@@ -113,15 +112,8 @@ export const scrub = (message, secrets) => secrets.filter((s) => s && s.length >
 
 const NAMES = ['CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET', 'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME', 'NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET', 'CLOUDINARY_LISTING_PRESET', 'NEXT_PUBLIC_SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
 
-function readEnv(root) {
+function readEnv() {
   const env = {};
-  const file = path.join(root, '.env.local');
-  if (existsSync(file)) {
-    for (const line of readFileSync(file, 'utf8').split(/\r?\n/)) {
-      const m = /^([A-Z0-9_]+)=(.*)$/.exec(line);
-      if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '');
-    }
-  }
   for (const k of NAMES) {
     if (process.env[k]) env[k] = process.env[k];
   }
@@ -187,8 +179,7 @@ async function readExisting(env, ids) {
 }
 
 async function main(argv) {
-  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-  const env = readEnv(root);
+  const env = readEnv();
   const secrets = [env.CLOUDINARY_API_KEY, env.CLOUDINARY_API_SECRET, env.SUPABASE_SERVICE_ROLE_KEY];
   const i = argv.indexOf('--snapshot');
   let presets;

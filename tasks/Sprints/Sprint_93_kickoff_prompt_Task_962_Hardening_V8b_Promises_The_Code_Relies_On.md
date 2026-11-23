@@ -69,6 +69,9 @@ sign-up trigger's avatar line, with its rollback and a read-only preflight; no a
   count and `public_id` of the rows items 2 and 3 would refuse after item 1, the listings items 5 and 6 would refuse, and
   the `id`, `name` and key presence (`api_key is not null and api_key <> ''`) of `exchange_providers`; never a key value.
 - `src/tests/integration/fixtures.ts`: `makeUser` takes optional `metadata` merged into `user_metadata` (AC2 needs it).
+- Revision 1 (Review 1; nothing else changes): R1-1 (F1) `src/tests/__tests__/v8b2Sql.test.ts` keeps only the AC3 test: it reads `v8b2.sql` and
+  asserts that the EUR and ALL numbers of `listings_price_ceiling_check`, for `price` and `price_old`, equal `MAX_LISTING_PRICE_BY_CURRENCY`; every other
+  `describe` leaves (the preflight, `db-sql-roundtrip.mjs` and the integration suite prove the rest).
 - Tests: the files of AC1-AC6.
 - Dependencies: none.
 - Out of scope: the `name` and `phone` lines of `handle_new_user` (the CHECKs of Task 956 accept what it writes: `name`
@@ -205,3 +208,6 @@ No visible change.
    supabase/catalog.json`. CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>` (A5).
 
 ## Review
+
+- [Review 1 — NEEDS REVISION](../../docs/reviews/Task_962_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_962_Review_2.md)

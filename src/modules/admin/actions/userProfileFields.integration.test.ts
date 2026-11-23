@@ -8,6 +8,9 @@
  *  - SEC-X-INT-USERS-CHECKS-DENY / -ALLOW: a value past its bound or with the wrong shape is refused (23514), a value on the bound is stored;
  *  - SEC-X-INT-USERS-INSERT-DENY (Review 4, AC15): INSERT on `users` is granted to `authenticated` on no column (the application inserts nothing with a session: `users` has no permissive INSERT
  *    policy and the sign-up trigger makes the row), so every session insert and upsert is refused by the grant (permission denied).
+ * Task 962 AC1 (hardening v8b part 2, owner decision O962-1): the address of an avatar or a company logo lies on the project's Cloudinary (the avatar may also lie on Google's picture host).
+ *  - SEC-962-USER-IMAGE-PREFIX-DENY / -ALLOW: an address of another host is refused on the direct path (23514, the service role alike), the allowed ones are stored.
+ * The two Task 962 cases need `supabase/sql_migrations/task962/v8b2.sql` applied by the owner: before it the DENY case FAILS.
  * Run: SECURITY_TEST_TARGET=development SECURITY_TEST_PROJECT_REF=<ref> npm run test:security-integration
  */
 import { afterAll, beforeAll, expect, it, vi } from 'vitest'
@@ -58,11 +61,13 @@ it('[SEC-S44-INT-ALLOW] updateUserProfile writes only the three text fields, nev
 })
 
 // ── Task 956 AC4 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+/** the cloud of the project: the CHECKs `users_avatar_url_prefix_check` and `users_company_logo_url_prefix_check` of hardening v8b part 2 (Task 962) pin it */
+const CLOUD = 'die7okukn'
 /** the ten columns a session must never write (scripts/quality/db-catalog-audit.mjs USERS_SERVER_ONLY_COLUMNS), each with a value that is valid for its type */
 const SERVER_ONLY: [column: string, value: unknown][] = [
-  ['avatar_url', 'https://res.cloudinary.com/zz-synth/image/upload/zz.png'],
+  ['avatar_url', `https://res.cloudinary.com/${CLOUD}/image/upload/zz.png`],
   ['company_id', '00000000-0000-4000-8000-000000000001'],
-  ['company_logo_url', 'https://res.cloudinary.com/zz-synth/image/upload/zz-logo.png'],
+  ['company_logo_url', `https://res.cloudinary.com/${CLOUD}/image/upload/zz-logo.png`],
   ['created_at', '2000-01-01T00:00:00Z'],
   ['inactivity_warning_sent_at', '2000-01-01T00:00:00Z'],
   ['last_seen_at', '2000-01-01T00:00:00Z'],
@@ -183,4 +188,40 @@ it('[SEC-X-INT-USERS-CHECKS-ALLOW] a value on its bound or in its shape is store
     const emptied = await target.client.from('users').update({ [column]: '' }).eq('id', target.id).select('id')
     expect(emptied.error, `${column}='' (a number the person removed) is stored`).toBeNull()
   }
+})
+
+// ── Task 962 AC1: the host of an avatar or a company logo (hardening v8b part 2, O962-1) ──────────────────────────────────────────────────────────────────────────────────────
+const GOOGLE_PICTURE = 'https://lh3.googleusercontent.com/a/zz-synth-profile=s96-c'
+
+it('[SEC-962-USER-IMAGE-PREFIX-DENY] an avatar or a logo address of another host is refused on the direct path, and the Google host is not a logo host', async () => {
+  const before = await columnsOf(['avatar_url', 'company_logo_url'])
+  expect(before, 'precondition: the row is readable').not.toBeNull()
+  const refusals: [column: string, address: string][] = [
+    ['avatar_url', 'https://example.com/x.png'],
+    ['company_logo_url', 'https://example.com/x.png'],
+    ['company_logo_url', GOOGLE_PICTURE],
+    ['avatar_url', 'https://res.cloudinary.com/another-cloud/image/upload/v1/x.png'],
+    ['avatar_url', 'http://res.cloudinary.com/die7okukn/image/upload/v1/x.png'],
+    ['avatar_url', 'https://lh3.googleusercontent.com.evil.example/x.png'],
+  ]
+  for (const [column, address] of refusals) {
+    // the service role is held to the same CHECK as a session: the rule is the data layer's
+    const refused = await run.admin.from('users').update({ [column]: address }).eq('id', target.id).select('id')
+    expect(refused.error?.code, `${column}=${address}: refused with 23514`).toBe('23514')
+    expect(refused.data, `${column}=${address}: nothing returned`).toBeNull()
+  }
+  expect(await columnsOf(['avatar_url', 'company_logo_url']), 'the row is unchanged').toEqual(before)
+})
+
+it('[SEC-962-USER-IMAGE-PREFIX-ALLOW] a Cloudinary address of the project in both columns and a Google picture address in the avatar are stored; no value is stored too', async () => {
+  const cloudinary = `https://res.cloudinary.com/${CLOUD}/image/upload/v1/zz-synth-profile.png`
+  const both = await run.admin.from('users').update({ avatar_url: cloudinary, company_logo_url: cloudinary }).eq('id', target.id).select('avatar_url, company_logo_url')
+  expect(both.error, 'a Cloudinary address of the project is stored in both columns').toBeNull()
+  expect(both.data).toEqual([{ avatar_url: cloudinary, company_logo_url: cloudinary }])
+  const google = await run.admin.from('users').update({ avatar_url: GOOGLE_PICTURE }).eq('id', target.id).select('avatar_url')
+  expect(google.error, 'a Google picture address is stored in the avatar').toBeNull()
+  expect(google.data).toEqual([{ avatar_url: GOOGLE_PICTURE }])
+  const cleared = await run.admin.from('users').update({ avatar_url: null, company_logo_url: null }).eq('id', target.id).select('id')
+  expect(cleared.error, 'no address at all is stored').toBeNull()
+  expect(await columnsOf(['avatar_url', 'company_logo_url'])).toEqual({ avatar_url: null, company_logo_url: null })
 })

@@ -132,10 +132,11 @@ export function createRun() {
     return { client, result }
   }
 
-  async function makeUser(tag: string, options: { role?: 'user' | 'agent' | 'moderator' | 'admin'; status?: 'active' | 'blocked' | 'inactive' } = {}): Promise<SyntheticUser> {
+  /** `metadata` is merged into the sign-up metadata (`raw_user_meta_data`) the sign-up trigger reads, e.g. `avatar_url` (Task 962 AC2) */
+  async function makeUser(tag: string, options: { role?: 'user' | 'agent' | 'moderator' | 'admin'; status?: 'active' | 'blocked' | 'inactive'; metadata?: Record<string, unknown> } = {}): Promise<SyntheticUser> {
     const email = `${RUN}_${tag}@example.com`
     const password = strongPassword()
-    const created = await admin.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { name: `${RUN} ${tag}` } })
+    const created = await admin.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { name: `${RUN} ${tag}`, ...options.metadata } })
     if (created.error || !created.data.user) throw new Error(`fixture: could not create user ${tag}`)
     const id = created.data.user.id
     userIds.add(id)

@@ -53,10 +53,6 @@
    "rls": true
   },
   {
-   "name": "exchange_providers",
-   "rls": true
-  },
-  {
    "name": "favorite_price_alerts",
    "rls": true
   },
@@ -632,16 +628,6 @@
    "roles": "{authenticated}",
    "cmd": "UPDATE",
    "qual": "( SELECT caller_has_permission('email_templates.manage'::text) AS caller_has_permission)",
-   "with_check": null
-  },
-  {
-   "schema": "public",
-   "table": "exchange_providers",
-   "name": "exchange_providers_read",
-   "permissive": "PERMISSIVE",
-   "roles": "{public}",
-   "cmd": "SELECT",
-   "qual": "true",
    "with_check": null
   },
   {
@@ -2257,16 +2243,6 @@
    "privs": "REFERENCES,TRIGGER"
   },
   {
-   "table": "exchange_providers",
-   "grantee": "anon",
-   "privs": "REFERENCES,TRIGGER"
-  },
-  {
-   "table": "exchange_providers",
-   "grantee": "authenticated",
-   "privs": "REFERENCES,TRIGGER"
-  },
-  {
    "table": "favorite_price_alerts",
    "grantee": "anon",
    "privs": "REFERENCES,SELECT,TRIGGER"
@@ -2827,6 +2803,16 @@
    "auth_exec": false
   },
   {
+   "name": "listing_images_owner_edit_moderation",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": true,
+   "auth_exec": true
+  },
+  {
    "name": "listing_images_owner_folder",
    "args": "",
    "definer": true,
@@ -2835,6 +2821,16 @@
    ],
    "anon_exec": false,
    "auth_exec": false
+  },
+  {
+   "name": "listings_catalogue_active",
+   "args": "",
+   "definer": false,
+   "config": [
+    "search_path=\"\""
+   ],
+   "anon_exec": true,
+   "auth_exec": true
   },
   {
    "name": "listings_owner_edit_moderation",
@@ -2989,11 +2985,6 @@
    "def": "CHECK ((locale = ANY (ARRAY['sq'::text, 'en'::text, 'uk'::text, 'it'::text])))"
   },
   {
-   "table": "exchange_providers",
-   "name": "exchange_providers_mode_check",
-   "def": "CHECK ((mode = ANY (ARRAY['auto'::text, 'manual'::text, 'hybrid'::text])))"
-  },
-  {
    "table": "history_clear_events",
    "name": "history_clear_events_clear_scope_check",
    "def": "CHECK ((clear_scope = ANY (ARRAY['row'::text, 'entity'::text])))"
@@ -3085,6 +3076,11 @@
   },
   {
    "table": "listings",
+   "name": "listings_price_ceiling_check",
+   "def": "CHECK ((((currency = 'EUR'::listing_currency) AND (price <= ('10000000000'::bigint)::numeric) AND ((price_old IS NULL) OR (price_old <= ('10000000000'::bigint)::numeric))) OR ((currency = 'ALL'::listing_currency) AND (price <= ('1000000000000'::bigint)::numeric) AND ((price_old IS NULL) OR (price_old <= ('1000000000000'::bigint)::numeric)))))"
+  },
+  {
+   "table": "listings",
    "name": "listings_price_old_positive_check",
    "def": "CHECK (((price_old IS NULL) OR (price_old > (0)::numeric)))"
   },
@@ -3122,6 +3118,16 @@
    "table": "support_tickets",
    "name": "support_tickets_ticket_type_check",
    "def": "CHECK ((ticket_type = ANY (ARRAY['support'::text, 'user_complaint'::text])))"
+  },
+  {
+   "table": "users",
+   "name": "users_avatar_url_prefix_check",
+   "def": "CHECK (((avatar_url IS NULL) OR starts_with(avatar_url, 'https://res.cloudinary.com/die7okukn/'::text) OR starts_with(avatar_url, 'https://lh3.googleusercontent.com/'::text)))"
+  },
+  {
+   "table": "users",
+   "name": "users_company_logo_url_prefix_check",
+   "def": "CHECK (((company_logo_url IS NULL) OR starts_with(company_logo_url, 'https://res.cloudinary.com/die7okukn/'::text)))"
   },
   {
    "table": "users",
@@ -3208,6 +3214,12 @@
   },
   {
    "table": "listing_images",
+   "name": "listing_images_owner_edit_moderation",
+   "timing": "BEFORE",
+   "events": "DELETE,INSERT,UPDATE"
+  },
+  {
+   "table": "listing_images",
    "name": "listing_images_owner_folder",
    "timing": "BEFORE",
    "events": "INSERT,UPDATE"
@@ -3223,6 +3235,12 @@
    "name": "listing_views_lower_count",
    "timing": "AFTER",
    "events": "DELETE"
+  },
+  {
+   "table": "listings",
+   "name": "listings_catalogue_active",
+   "timing": "BEFORE",
+   "events": "INSERT,UPDATE"
   },
   {
    "table": "listings",
@@ -4345,127 +4363,6 @@
    "udt": "text",
    "typtype": "b",
    "nullable": true,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "id",
-   "type": "integer",
-   "udt": "int4",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "name",
-   "type": "text",
-   "udt": "text",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "endpoint_url",
-   "type": "text",
-   "udt": "text",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "api_key",
-   "type": "text",
-   "udt": "text",
-   "typtype": "b",
-   "nullable": true,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "refresh_interval_min",
-   "type": "integer",
-   "udt": "int4",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "priority",
-   "type": "integer",
-   "udt": "int4",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "mode",
-   "type": "text",
-   "udt": "text",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "is_enabled",
-   "type": "boolean",
-   "udt": "bool",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "notes",
-   "type": "text",
-   "udt": "text",
-   "typtype": "b",
-   "nullable": true,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "created_at",
-   "type": "timestamp with time zone",
-   "udt": "timestamptz",
-   "typtype": "b",
-   "nullable": false,
-   "is_array": false,
-   "enum_values": null
-  },
-  {
-   "table": "exchange_providers",
-   "kind": "r",
-   "name": "updated_at",
-   "type": "timestamp with time zone",
-   "udt": "timestamptz",
-   "typtype": "b",
-   "nullable": false,
    "is_array": false,
    "enum_values": null
   },

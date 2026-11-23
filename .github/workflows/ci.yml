@@ -57,8 +57,38 @@ jobs:
         run: node --test "scripts/quality/*.test.mjs"
       - name: Every file in the repository (encoding, invisible characters, secrets, syntax of every file type, links, kickoffs)
         run: node scripts/quality/check-files.mjs --all
+      # Task 957 (O957-6): the browser and its Ubuntu packages come from a cache that only a push to main writes, so a
+      # slow package mirror cannot run the job out of time; apt still checks every cached package against the signed index.
+      - name: Browser cache key (Playwright version and runner image)
+        id: browser-key
+        run: echo "key=playwright-${ImageOS}-${ImageVersion}-$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Browser and its system packages restored from the cache main wrote
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
+      - name: Cached system packages handed to apt
+        run: |
+          if compgen -G "$HOME/.cache/playwright-apt/*.deb" > /dev/null; then sudo cp "$HOME"/.cache/playwright-apt/*.deb /var/cache/apt/archives/; fi
       - name: Browser for the hydration gate's planted-violation self-test
+        timeout-minutes: 8
         run: npx playwright install chromium --with-deps
+      - name: Downloaded system packages kept for the cache (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/.cache/playwright-apt"
+          if compgen -G "/var/cache/apt/archives/*.deb" > /dev/null; then cp /var/cache/apt/archives/*.deb "$HOME/.cache/playwright-apt/"; fi
+      - name: Browser cache saved (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
       - name: Product checks (i18n, design system, UI contract, grants)
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
@@ -389,7 +419,38 @@ jobs:
           node-version: "22.22.3"
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium --with-deps
+      # Task 957 (O957-6): the browser and its Ubuntu packages come from a cache that only a push to main writes, so a
+      # slow package mirror cannot run the job out of time; apt still checks every cached package against the signed index.
+      - name: Browser cache key (Playwright version and runner image)
+        id: browser-key
+        run: echo "key=playwright-${ImageOS}-${ImageVersion}-$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Browser and its system packages restored from the cache main wrote
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
+      - name: Cached system packages handed to apt
+        run: |
+          if compgen -G "$HOME/.cache/playwright-apt/*.deb" > /dev/null; then sudo cp "$HOME"/.cache/playwright-apt/*.deb /var/cache/apt/archives/; fi
+      - name: Browser (Chromium and its system packages)
+        timeout-minutes: 8
+        run: npx playwright install chromium --with-deps
+      - name: Downloaded system packages kept for the cache (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/.cache/playwright-apt"
+          if compgen -G "/var/cache/apt/archives/*.deb" > /dev/null; then cp /var/cache/apt/archives/*.deb "$HOME/.cache/playwright-apt/"; fi
+      - name: Browser cache saved (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: storybook-build
@@ -420,7 +481,38 @@ jobs:
           node-version: "22.22.3"
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium --with-deps
+      # Task 957 (O957-6): the browser and its Ubuntu packages come from a cache that only a push to main writes, so a
+      # slow package mirror cannot run the job out of time; apt still checks every cached package against the signed index.
+      - name: Browser cache key (Playwright version and runner image)
+        id: browser-key
+        run: echo "key=playwright-${ImageOS}-${ImageVersion}-$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Browser and its system packages restored from the cache main wrote
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
+      - name: Cached system packages handed to apt
+        run: |
+          if compgen -G "$HOME/.cache/playwright-apt/*.deb" > /dev/null; then sudo cp "$HOME"/.cache/playwright-apt/*.deb /var/cache/apt/archives/; fi
+      - name: Browser (Chromium and its system packages)
+        timeout-minutes: 8
+        run: npx playwright install chromium --with-deps
+      - name: Downloaded system packages kept for the cache (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/.cache/playwright-apt"
+          if compgen -G "/var/cache/apt/archives/*.deb" > /dev/null; then cp /var/cache/apt/archives/*.deb "$HOME/.cache/playwright-apt/"; fi
+      - name: Browser cache saved (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: storybook-build
@@ -465,7 +557,38 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SECURITY_CI_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SECURITY_CI_SUPABASE_SERVICE_ROLE_KEY }}
         run: node scripts/quality/ci-target.mjs
-      - run: npx playwright install chromium --with-deps
+      # Task 957 (O957-6): the browser and its Ubuntu packages come from a cache that only a push to main writes, so a
+      # slow package mirror cannot run the job out of time; apt still checks every cached package against the signed index.
+      - name: Browser cache key (Playwright version and runner image)
+        id: browser-key
+        run: echo "key=playwright-${ImageOS}-${ImageVersion}-$(node -p "require('playwright/package.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Browser and its system packages restored from the cache main wrote
+        id: browser-cache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
+      - name: Cached system packages handed to apt
+        run: |
+          if compgen -G "$HOME/.cache/playwright-apt/*.deb" > /dev/null; then sudo cp "$HOME"/.cache/playwright-apt/*.deb /var/cache/apt/archives/; fi
+      - name: Browser (Chromium and its system packages)
+        timeout-minutes: 8
+        run: npx playwright install chromium --with-deps
+      - name: Downloaded system packages kept for the cache (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/.cache/playwright-apt"
+          if compgen -G "/var/cache/apt/archives/*.deb" > /dev/null; then cp /var/cache/apt/archives/*.deb "$HOME/.cache/playwright-apt/"; fi
+      - name: Browser cache saved (a push to main only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.browser-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            ~/.cache/playwright-apt
+          key: ${{ steps.browser-key.outputs.key }}
       # Task 974: the gate's own planted pages (a shield over a button, the viewport-edge cases, a carousel card on the
       # right edge) prove it fails and passes where it should before it judges the build; no secret, no server.
       - name: The click-shield gate passes its self-test (Task 974)

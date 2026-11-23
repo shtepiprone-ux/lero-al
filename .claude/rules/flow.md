@@ -59,3 +59,5 @@ review never replaces the owner's review of the diff.
 | 2026-11-22 | I7, V4 | "one pass over the changed files within the task" (the three full passes were removed) |
 | 2026-11-22 | H6 | "two merge commands for two branches must never be given at once; they go one after the other, only after the full CI check on GitHub" |
 | 2026-11-22 | A1, I6, V2, D4 | "where one or two lines need fixing, the model changes dozens of files"; no file or revision count limit (owner: "remove the limits from the rules") |
+| 2026-11-22 | H1 | "pushing only changed documents and running the full CI is a waste of time"; "it must be written in the rules so that this does not happen again" |
+| 2026-11-23 | I4, I8 | "fix the text": `scripts/quality/*.test.mjs` runs with `node --test`, not `npm test --` (Task 1013 Review 1) |

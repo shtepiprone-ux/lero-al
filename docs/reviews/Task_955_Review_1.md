@@ -42,4 +42,15 @@ V9: no Story changes.
 - AC1, AC2, AC3: their tests pass and the AC1 and AC2 tests fail without the change (above).
 - AC4: `gh pr checks <n>` (V14).
 
-Open parts, in order: the commit and pull request (H) → `gh pr checks <n>` → the merge.
+## V14 — pull request #69 (commit `f06c3ed5a`), 2026-11-23
+
+`gh pr checks 69` → red: "Unit and component tests" and `CI Required`; every other check passes. `gh run view 45263602305 --log-failed`: 1 of 7189 tests
+failed, `src/modules/__tests__/noDbMessage.security.test.ts:99` `[SEC-X-SRV-NO-DB-MESSAGE]`: "src/modules/listings/actions/favoriteActions.ts no longer
+returns a message: remove it from STILL_OPEN". The test keeps a list of places still returning a database message (`:72-75`) and fails once one is fixed,
+so the list cannot outlive the code. The kickoff's Scope did not name it: the design (Opus, D2) did not search the tests that pin the old answers. The same
+file keeps `captcha.ts` in `ON_PURPOSE` (`:69`) with a reason that is no longer true ("the sign-up and reset forms map Supabase AUTH's own message"):
+since this task the action maps it on the server and answers only the key; the file stays listed, because its line
+`errorKey: mapAuthError(error.message)` matches the scan.
+Fix in this pull request: Revision 1 (Sonnet).
+
+Open parts, in order: Revision 1 → Review 2 → the commit and push → `gh pr checks 69` → the merge.

@@ -35,6 +35,9 @@ action logs the error's code and status on the server.
 - `src/modules/auth/components/AuthSheet.tsx:456`: `setErrorKey(result.errorKey ?? 'error_generic')`.
 - Tests: the files of AC1-AC3, including the smoke tests that pin the old field (`signUpWithCaptcha.smoke.test.ts:100`,
   `:119`, `:135`; `requestPasswordReset.smoke.test.ts:106`).
+- Revision 1 (Review 1, V14 on pull request #69; nothing else changes): R1-1 `src/modules/__tests__/noDbMessage.security.test.ts`:
+  `favoriteActions.ts` leaves `STILL_OPEN` (`:73`), and the `ON_PURPOSE` reason of `captcha.ts` (`:69`) says what is true now: the
+  sign-up action maps Supabase Auth's message to a key on the server (`mapAuthError`) and answers only the key; the reset answers no text.
 - Dependencies: none.
 - Out of scope: what the sign-up says for an address that already has an account (Task 991, owner decision O991-1: one
   neutral answer and a mail); the argument schemas of the actions (Task 1025); every other finding of the old Task 955
@@ -132,3 +135,4 @@ No visible change: every refusal shows the same text as on `main`.
 ## Review
 
 - [Review 1 — APPROVED](../../docs/reviews/Task_955_Review_1.md)
+- [Review 2 — APPROVED](../../docs/reviews/Task_955_Review_2.md)

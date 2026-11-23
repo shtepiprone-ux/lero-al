@@ -234,7 +234,7 @@ describe('favourites', () => {
       if (t === 'favorites') { c.insert = () => ({ then: (r: (v: unknown) => void) => r({ error: { code: '42501', message: 'denied' } }) }); c.delete = () => c }
       return c
     }) as never
-    expect(await addFavorite(L1)).toEqual({ error: 'denied' })
+    expect(await addFavorite(L1)).toEqual({ error: 'favorite_failed' })
     expect(revalidated).toEqual([])
   })
 })
@@ -311,6 +311,35 @@ describe('trackListingContactEvent', () => {
     expect(await trackListingContactEvent(args)).toEqual({ ok: true })
     expect(db.tables.listing_contact_events).toHaveLength(1)
   })
+})
+
+// Task 955 AC1 (case SEC-955-FAVORITE-ERROR-DENY)
+it('[SEC-955-FAVORITE-ERROR-DENY] A failed favourite write answers a fixed code and never the provider\'s message', async () => {
+  currentUser = { id: VISITOR }
+  const providerError = { code: 'XX000', message: 'permission denied for table favorites' }
+  const real = db.client.from
+  db.client.from = ((t: string) => {
+    const c = real(t) as Record<string, unknown>
+    if (t === 'favorites') {
+      c.insert = () => ({ then: (r: (v: unknown) => void) => r({ error: providerError }) })
+      c.delete = () => ({ eq: () => ({ eq: () => ({ then: (r: (v: unknown) => void) => r({ error: providerError }) }) }) })
+    }
+    return c
+  }) as never
+
+  const added = await addFavorite(L1)
+  expect(added).toEqual({ error: 'favorite_failed' })
+  expect(JSON.stringify(added)).not.toContain('permission denied')
+  expect(JSON.stringify(added)).not.toContain('favorites')
+  expect(JSON.stringify(vi.mocked(console.error).mock.calls), 'the add failure reaches the server log with its code').toContain('XX000')
+
+  vi.mocked(console.error).mockClear()
+  const removed = await removeFavorite(L1)
+  expect(removed).toEqual({ error: 'favorite_failed' })
+  expect(JSON.stringify(removed)).not.toContain('permission denied')
+  expect(JSON.stringify(removed)).not.toContain('favorites')
+  expect(JSON.stringify(vi.mocked(console.error).mock.calls), 'the remove failure reaches the server log with its code').toContain('XX000')
+  expect(revalidated).toEqual([])
 })
 
 // Task 923 R38 (cases SEC-S38-SRV-DENY, SEC-S39-SRV-DENY)

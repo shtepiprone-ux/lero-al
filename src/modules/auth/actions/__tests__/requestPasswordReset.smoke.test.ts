@@ -103,7 +103,7 @@ describe('requestPasswordResetWithCaptcha — smoke tests (Task 441)', () => {
       redirectTo: 'https://lero.al/sq/auth/reset-password',
     })
 
-    // Guard: error is typed (not raw Supabase), includes supabaseErrorMessage for diagnosis
-    expect(result).toMatchObject({ ok: false, reason: 'reset_failed' })
+    // Guard: error is typed (not raw Supabase) and carries no Supabase text
+    expect(result).toEqual({ ok: false, reason: 'reset_failed' })
   })
 })

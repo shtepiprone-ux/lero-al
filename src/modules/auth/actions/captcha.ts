@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { trustedRedirectUrl } from '@/lib/auth/trustedOrigin'
 import { cleanSignupMetadata } from '@/modules/auth/lib/signupMetadata'
+import { mapAuthError } from '@/modules/auth/lib/mapAuthError'
 
 // Task 923 R67 (c): Supabase Auth is the ONE verifier of the Turnstile token. A Turnstile token is single-use: these actions used to verify it themselves and then hand
 // the same token to Supabase, which, with its own CAPTCHA protection switched on, verified it a second time and refused every sign-up and reset as a replay. The token
@@ -17,7 +18,7 @@ function isCaptchaRefusal(error: { code?: string; message?: string }): boolean {
 
 type SignUpResult =
   | { ok: true }
-  | { ok: false; reason: 'captcha_failed' | 'signup_failed'; supabaseErrorMessage?: string }
+  | { ok: false; reason: 'captcha_failed' | 'signup_failed'; errorKey?: string }
 
 export async function signUpWithCaptcha(params: {
   email: string
@@ -37,7 +38,12 @@ export async function signUpWithCaptcha(params: {
     options: { emailRedirectTo: trustedRedirectUrl(emailRedirectTo), data: cleanSignupMetadata(data), captchaToken },
   })
 
-  if (error) return { ok: false, reason: isCaptchaRefusal(error) ? 'captcha_failed' : 'signup_failed', supabaseErrorMessage: error.message }
+  if (error) {
+    // Only the code and the status go to the log: no address, no Supabase message. The browser gets a key, never the message.
+    console.error('Sign-up refused', { code: error.code, status: error.status })
+    if (isCaptchaRefusal(error)) return { ok: false, reason: 'captcha_failed' }
+    return { ok: false, reason: 'signup_failed', errorKey: mapAuthError(error.message) }
+  }
   return { ok: true }
 }
 
@@ -45,7 +51,7 @@ export async function signUpWithCaptcha(params: {
 
 type ResetResult =
   | { ok: true }
-  | { ok: false; reason: 'captcha_failed' | 'reset_failed'; supabaseErrorMessage?: string }
+  | { ok: false; reason: 'captcha_failed' | 'reset_failed' }
 
 export async function requestPasswordResetWithCaptcha(params: {
   email: string
@@ -62,6 +68,9 @@ export async function requestPasswordResetWithCaptcha(params: {
     captchaToken,
   })
 
-  if (error) return { ok: false, reason: isCaptchaRefusal(error) ? 'captcha_failed' : 'reset_failed', supabaseErrorMessage: error.message }
+  if (error) {
+    console.error('Password reset refused', { code: error.code, status: error.status })
+    return { ok: false, reason: isCaptchaRefusal(error) ? 'captcha_failed' : 'reset_failed' }
+  }
   return { ok: true }
 }

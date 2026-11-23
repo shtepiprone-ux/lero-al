@@ -97,7 +97,7 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
       emailRedirectTo: 'https://lero.al/sq/auth/verified',
     })
 
-    expect(result).toEqual({ ok: false, reason: 'captcha_failed', supabaseErrorMessage: refusal.message })
+    expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
     expect(mockSignUp).toHaveBeenCalledTimes(1)
     expect(mockSignUp).toHaveBeenCalledWith(expect.objectContaining({
       options: expect.objectContaining({ captchaToken: 'bad-turnstile-token' }),
@@ -116,10 +116,10 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
       emailRedirectTo: 'https://lero.al/sq/auth/verified',
     })
 
-    expect(result).toEqual({ ok: false, reason: 'captcha_failed', supabaseErrorMessage: 'Captcha verification process failed' })
+    expect(result).toEqual({ ok: false, reason: 'captcha_failed' })
   })
 
-  it('signup failed (dup email / weak pw) → { ok: false, reason: "signup_failed" } with error message', async () => {
+  it('signup failed (dup email / weak pw) → { ok: false, reason: "signup_failed" } with the error key', async () => {
     const supabaseError = { message: 'User already registered', status: 422 }
     mockSignUp.mockResolvedValue({ error: supabaseError })
 
@@ -132,6 +132,6 @@ describe('signUpWithCaptcha — smoke tests (Task 441)', () => {
     })
 
     // Guard: error must be typed (not raw Supabase error) so caller shows localized copy
-    expect(result).toEqual({ ok: false, reason: 'signup_failed', supabaseErrorMessage: 'User already registered' })
+    expect(result).toEqual({ ok: false, reason: 'signup_failed', errorKey: 'error_email_exists' })
   })
 })

@@ -449,9 +449,9 @@ describe('registration', () => {
   })
 
   it.each([
-    ['User already registered', a.error_email_exists], ['Password should be at least 6 characters', a.error_weak_password], ['email rate limit', a.error_rate_limit],
-  ])('a server message %j is shown as "%s", the widget is reset and a new token is needed', async (message, shown) => {
-    captcha.signUpWithCaptcha.mockResolvedValue({ ok: false, reason: 'signup_failed', supabaseErrorMessage: message })
+    ['error_email_exists', a.error_email_exists], ['error_weak_password', a.error_weak_password], ['error_rate_limit', a.error_rate_limit],
+  ])('a server key %j is shown as "%s", the widget is reset and a new token is needed', async (errorKey, shown) => {
+    captcha.signUpWithCaptcha.mockResolvedValue({ ok: false, reason: 'signup_failed', errorKey })
     open('register')
     fillValid(); click('captcha-ok'); submit()
     await waitFor(() => expect(alertText()).toBe(shown))
@@ -459,7 +459,7 @@ describe('registration', () => {
     expect(regButton()).toBeDisabled()
   })
 
-  it('a failure with no message is the generic error', async () => {
+  it('a failure with no key is the generic error', async () => {
     captcha.signUpWithCaptcha.mockResolvedValue({ ok: false, reason: 'signup_failed' })
     open('register')
     fillValid(); click('captcha-ok'); submit()

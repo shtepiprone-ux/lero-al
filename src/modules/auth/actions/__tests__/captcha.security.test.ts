@@ -12,7 +12,7 @@ let captcha: { success: boolean; errorCodes?: string[] } = { success: true }
 const verified: string[] = []
 const signUps: Record<string, unknown>[] = []
 const resets: { email: string; options: Record<string, unknown> }[] = []
-let authError: { message: string; code?: string } | null = null
+let authError: { message: string; code?: string; status?: number } | null = null
 vi.mock('@/lib/captcha/verifyTurnstile', () => ({ verifyTurnstile: async (t: string) => { verified.push(t); return captcha } }))
 vi.mock('@/lib/supabase/server', () => ({
   createClient: async () => ({
@@ -56,15 +56,15 @@ describe('signUpWithCaptcha', () => {
 
   it('a captcha that Supabase refuses is reported as captcha_failed, so the form can ask for a new token', async () => {
     authError = { message: 'captcha protection: request disallowed (timeout-or-duplicate)', code: 'captcha_failed' }
-    expect(await signUpWithCaptcha(signUp)).toEqual({ ok: false, reason: 'captcha_failed', supabaseErrorMessage: authError.message })
+    expect(await signUpWithCaptcha(signUp)).toEqual({ ok: false, reason: 'captcha_failed' })
     authError = { message: 'captcha verification process failed' }
     expect(((await signUpWithCaptcha(signUp)) as { reason?: string }).reason).toBe('captcha_failed')
     expect(verified).toEqual([])
   })
 
-  it('Supabase\'s refusal is returned with its message', async () => {
+  it('Supabase\'s refusal is returned as the key of its message, not the message', async () => {
     authError = { message: 'User already registered' }
-    expect(await signUpWithCaptcha(signUp)).toEqual({ ok: false, reason: 'signup_failed', supabaseErrorMessage: 'User already registered' })
+    expect(await signUpWithCaptcha(signUp)).toEqual({ ok: false, reason: 'signup_failed', errorKey: 'error_email_exists' })
   })
 
   it.each([
@@ -149,9 +149,9 @@ describe('requestPasswordResetWithCaptcha', () => {
     expect(verified).toEqual([])
   })
 
-  it('Supabase\'s refusal is returned', async () => {
+  it('Supabase\'s refusal is returned as the code only, with no text', async () => {
     authError = { message: 'rate limit' }
-    expect(await requestPasswordResetWithCaptcha(reset)).toEqual({ ok: false, reason: 'reset_failed', supabaseErrorMessage: 'rate limit' })
+    expect(await requestPasswordResetWithCaptcha(reset)).toEqual({ ok: false, reason: 'reset_failed' })
   })
 })
 
@@ -203,6 +203,43 @@ it('[SEC-S36-SRV-DENY] A Turnstile answer passes only when success is the litera
   } finally {
     vi.unstubAllGlobals()
   }
+})
+
+// Task 955 AC2 (case SEC-955-AUTH-TEXT-DENY)
+it('[SEC-955-AUTH-TEXT-DENY] The auth actions answer a key or a code and never Supabase\'s text; the log holds the code and status only', async () => {
+  const errorLog = () => JSON.stringify(vi.mocked(console.error).mock.calls)
+  const reset = { email: 'ana@example.com', captchaToken: 'tok', redirectTo: 'https://lero.al/auth/callback?next=/sq/auth/reset-password' }
+
+  for (const [message, errorKey] of [
+    ['User already registered', 'error_email_exists'],
+    ['Password should be at least 6 characters', 'error_weak_password'],
+    ['email rate limit', 'error_rate_limit'],
+    ['database exploded: relation "auth.users" violates constraint users_pkey', 'error_generic'],
+  ] as const) {
+    vi.mocked(console.error).mockClear()
+    authError = { message, code: 'x_code', status: 422 }
+    const result = await signUpWithCaptcha(signUp)
+    expect(result, message).toEqual({ ok: false, reason: 'signup_failed', errorKey })
+    expect(JSON.stringify(result), message).not.toContain(message)
+    expect(JSON.stringify(result), message).not.toContain('supabaseErrorMessage')
+    expect(errorLog(), `${message}: the log holds the code and status`).toContain('x_code')
+    expect(errorLog(), `${message}: the log holds no message`).not.toContain(message)
+    expect(errorLog(), `${message}: the log holds no address`).not.toContain('ana@example.com')
+
+    vi.mocked(console.error).mockClear()
+    const resetResult = await requestPasswordResetWithCaptcha(reset)
+    expect(resetResult, message).toEqual({ ok: false, reason: 'reset_failed' })
+    expect(JSON.stringify(resetResult), message).not.toContain(message)
+    expect(errorLog(), `${message}: the reset log holds the code and status`).toContain('x_code')
+    expect(errorLog(), `${message}: the reset log holds no message`).not.toContain(message)
+    expect(errorLog(), `${message}: the reset log holds no address`).not.toContain('ana@example.com')
+  }
+
+  authError = { message: 'captcha protection: request disallowed (timeout-or-duplicate)', code: 'captcha_failed' }
+  const refused = await signUpWithCaptcha(signUp)
+  expect(refused).toEqual({ ok: false, reason: 'captcha_failed' })
+  expect(JSON.stringify(refused)).not.toContain('captcha protection')
+  expect(await requestPasswordResetWithCaptcha(reset)).toEqual({ ok: false, reason: 'captcha_failed' })
 })
 
 it('[SEC-S41-SRV-DENY] Sign-up and reset links point only to this site and pass only six plain metadata keys', async () => {

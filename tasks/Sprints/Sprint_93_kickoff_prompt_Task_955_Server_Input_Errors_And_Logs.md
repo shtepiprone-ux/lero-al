@@ -130,3 +130,5 @@ No visible change: every refusal shows the same text as on `main`.
 5. Report (checklist I12). CI runs only on GitHub after the owner's push and is read with `gh pr checks <n>`.
 
 ## Review
+
+- [Review 1 — APPROVED](../../docs/reviews/Task_955_Review_1.md)

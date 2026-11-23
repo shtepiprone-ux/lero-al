@@ -1,11 +1,10 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
 import type { FieldRendererProps } from './fieldRegistry'
+import { NumberTextInput } from './NumberTextInput'
 
 const LABEL_KEYS: Partial<Record<ListingField, { ns: 'listing' | 'common'; key: string }>> = {
   bedrooms:    { ns: 'listing', key: 'bedrooms' },
@@ -20,7 +19,7 @@ const FIELD_BOUNDS: Partial<Record<ListingField, { min: number; max: number }>> 
   toilets:   { min: 0, max: 20 },
 }
 
-export function NumInputField({ fieldDef, formValues, errors, onChange }: FieldRendererProps) {
+export function NumInputField({ fieldDef, formValues, errors, onChange, disabled }: FieldRendererProps) {
   const t = useTranslations('listing')
 
   const meta  = LABEL_KEYS[fieldDef.key]
@@ -30,24 +29,16 @@ export function NumInputField({ fieldDef, formValues, errors, onChange }: FieldR
   const value = formValues[formKey] as number | undefined
 
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={fieldDef.key} className="text-sm">{label}</Label>
-      <Input
-        id={fieldDef.key}
-        type="number"
-        value={value ?? ''}
-        min={bounds?.min}
-        max={bounds?.max}
-        placeholder="—"
-        onChange={e => {
-          const n = Number(e.target.value)
-          onChange({ [fieldDef.key]: e.target.value === '' ? undefined : (isNaN(n) ? undefined : n) })
-        }}
-        className="h-10 rounded-xl"
-      />
-      {errors[formKey] && (
-        <p className="text-xs text-destructive">{errors[formKey]}</p>
-      )}
-    </div>
+    <NumberTextInput
+      id={fieldDef.key}
+      label={label}
+      value={value}
+      min={bounds?.min}
+      max={bounds?.max}
+      placeholder="—"
+      error={errors[formKey]}
+      disabled={disabled}
+      onChange={v => onChange({ [fieldDef.key]: v })}
+    />
   )
 }

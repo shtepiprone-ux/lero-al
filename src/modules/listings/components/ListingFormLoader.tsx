@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { FormValues } from '@/modules/listings/types/form'
+import type { CloudinaryWidgetConfig } from '@/modules/listings/lib/cloudinaryWidgetConfig'
 import type { ListingStatus } from '@/types/database'
 
 const ListingFormShell = dynamic(
@@ -14,9 +15,9 @@ const ListingFormShell = dynamic(
 
 interface BaseLoaderProps {
   locale: string
-  uploadPreset: string
-  uploadFolder: string
   mode?: ListingFormMode
+  /** The API key and the cloud name the page read on the server (`getCloudinaryWidgetConfig`); the photo widget needs both when it is created. */
+  cloudinary: CloudinaryWidgetConfig
 }
 
 interface CreateLoaderProps extends BaseLoaderProps {
@@ -39,7 +40,7 @@ interface EditLoaderProps extends BaseLoaderProps {
 type Props = CreateLoaderProps | EditLoaderProps
 
 export function ListingFormLoader(props: Props) {
-  const { locale, uploadPreset, uploadFolder } = props
+  const { locale, cloudinary } = props
   const mode = props.mode ?? 'create'
 
   const { locations } = useLocations()
@@ -53,10 +54,9 @@ export function ListingFormLoader(props: Props) {
     return (
       <ListingFormShell
         locale={locale}
-        uploadPreset={uploadPreset}
-        uploadFolder={uploadFolder}
         locations={cityRegions}
         mode="edit"
+        cloudinary={cloudinary}
         listingId={listingId}
         initialValues={initialValues}
         canManageStatus={canManageStatus}
@@ -69,10 +69,9 @@ export function ListingFormLoader(props: Props) {
   return (
     <ListingFormShell
       locale={locale}
-      uploadPreset={uploadPreset}
-      uploadFolder={uploadFolder}
       locations={cityRegions}
       mode="create"
+      cloudinary={cloudinary}
     />
   )
 }

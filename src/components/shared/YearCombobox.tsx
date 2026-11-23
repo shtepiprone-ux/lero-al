@@ -20,6 +20,8 @@ interface Props {
   onChange: (year: number | undefined) => void
   placeholder?: string
   className?: string
+  /** Task 957 Revision 2 (R2-7): the combobox is disabled (a form that is being saved); passed to `MantineCombobox`. Default `false`. */
+  disabled?: boolean
   /**
    * Documented no-op (STOP-AND-ASK #2, Task 552): `MantineCombobox`'s dropdown/sheet always
    * renders via a portal (`Combobox.Dropdown`'s `withinPortal` defaults `true`; the mobile path is
@@ -30,7 +32,7 @@ interface Props {
   portal?: boolean
 }
 
-export function YearCombobox({ value, onChange, placeholder, className }: Props) {
+export function YearCombobox({ value, onChange, placeholder, className, disabled }: Props) {
   const t = useTranslations('common')
   const theme = useMantineTheme()
 
@@ -57,6 +59,7 @@ export function YearCombobox({ value, onChange, placeholder, className }: Props)
         inputMode="numeric"
         icon={<Calendar size={theme.other.iconSize.standard} />}
         placeholder={placeholder}
+        disabled={disabled}
         triggerWidth={{ base: '100%', sm: '100%' }}
         noResultsLabel={t('no_results')}
         triggerAriaLabel={placeholder}

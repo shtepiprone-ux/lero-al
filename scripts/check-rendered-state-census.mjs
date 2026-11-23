@@ -16,7 +16,9 @@
  *       Registry completeness against the build: (a) Stories showing a portal on mount with no `mount` row,
  *       (b) Stories importing an overlay component with no row, (c) every candidate trigger of every in-scope Story,
  *       clicked at 390, 1440 and each `widths` bound of the Story's rows, that opens a portal and is not the trigger
- *       of an in-range row. Exit 1 unless all three lists are empty.
+ *       of an in-range row. Exit 1 unless all three lists are empty, and also on a candidate trigger that could not be operated
+ *       with no registered "mount" overlay to explain it (Task 957 R2-5); a click that puts a frame outside the app root and
+ *       every portal root on the page reloads the Story and is listed.
  *   node scripts/check-rendered-state-census.mjs --verify-gate
  *       Self-test on fixture pages (no Storybook build): clean pages and benign twins pass, every planted violation fails,
  *       a transient open failure passes with its retry recorded.
@@ -129,11 +131,11 @@ async function main() {
     if (opts.mode === 'discover') {
       const patternRegistry = JSON.parse(readFileSync(PATTERNS_PATH, 'utf8'));
       const r = await discover({ root: ROOT, index, registry, patternRegistry, ctx, browser, concurrency: opts.jobs ?? Math.max(2, Math.min(6, cpus().length - 1)), log });
-      process.exitCode = r.unregisteredMount.length || r.unregisteredImport.length || r.unregisteredTriggers.length ? 1 : 0; // a Story that fails to render is the full run's error-screen violation
+      process.exitCode = r.unregisteredMount.length || r.unregisteredImport.length || r.unregisteredTriggers.length || r.unexplained.length ? 1 : 0; // a Story that fails to render is the full run's error-screen violation; a trigger that could not be operated and that no mount overlay explains fails too (Task 957 R2-5)
       log(`discovery runtime ${Math.round((Date.now() - started) / 1000)}s`);
       if (opts.out) {
         mkdirSync(opts.out, { recursive: true });
-        writeFileSync(join(opts.out, 'discover.json'), JSON.stringify({ unregisteredMount: r.unregisteredMount, unregisteredImport: r.unregisteredImport, unregisteredTriggers: r.unregisteredTriggers, importOpensNothing: r.importOpensNothing, failed: r.failed, misses: r.missDetails, candidates: { found: r.found, clicked: r.clicks, notOperable: r.notOperable.length }, notOperable: r.notOperable }, null, 2) + '\n');
+        writeFileSync(join(opts.out, 'discover.json'), JSON.stringify({ unregisteredMount: r.unregisteredMount, unregisteredImport: r.unregisteredImport, unregisteredTriggers: r.unregisteredTriggers, importOpensNothing: r.importOpensNothing, failed: r.failed, misses: r.missDetails, candidates: { found: r.found, clicked: r.clicks, notOperable: r.notOperable.length, unexplained: r.unexplained.length }, notOperable: r.notOperable, overlays: r.overlays }, null, 2) + '\n');
       }
       return;
     }

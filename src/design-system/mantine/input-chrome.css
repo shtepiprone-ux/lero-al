@@ -475,3 +475,14 @@
 .mantine-RichTextEditor-linkEditor .mantine-TextInput-section {
   inset-block: -1px; /* the 1px border of the field */
 }
+
+/* Task 957 Revision 3 (R3-1, Review 3 F16) - the browser's own step arrows of a number field. Mantine's input CSS removes them from every `type="number"` input
+   (`@mantine/core/styles.css`: `.m_8fb7ebe7::-webkit-inner-spin-button { appearance: none }` and `.m_8fb7ebe7[type='number'] { -moz-appearance: textfield }`). The number fields of the
+   listing form keep them, as on `main` (`<Input type="number">`): a TextInput that carries `data-native-steppers` shows them again, and only it, so every other number field keeps its look. */
+.mantine-TextInput-input[type='number'][data-native-steppers]::-webkit-inner-spin-button,
+.mantine-TextInput-input[type='number'][data-native-steppers]::-webkit-outer-spin-button {
+  appearance: auto;
+}
+.mantine-TextInput-input[type='number'][data-native-steppers] {
+  -moz-appearance: number-input;
+}

@@ -131,7 +131,6 @@ const eslintConfig = defineConfig([
     ".playwright-mcp/**",
     // Git-ignored local folders (.gitignore): never part of the repository, so never linted.
     ".artifacts/**",
-    ".codex/**",
     ".vercel/**",
     "coverage/**",
     "playwright-report/**",

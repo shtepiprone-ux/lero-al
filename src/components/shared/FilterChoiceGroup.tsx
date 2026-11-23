@@ -22,6 +22,8 @@ interface SharedProps {
   variant?: 'filled' | 'light'
   /** Label alignment inside each button (Task 781R: `property_type` is left-aligned). */
   justify?: 'center' | 'flex-start'
+  /** Task 957 Revision 2 (R2-7): every choice is disabled (a form that is being saved). Default `false`; the group renders and behaves as before when absent. */
+  disabled?: boolean
 }
 
 export interface FilterChoiceGroupMultipleProps extends SharedProps {
@@ -68,7 +70,7 @@ export type FilterChoiceGroupProps = FilterChoiceGroupMultipleProps | FilterChoi
 export function FilterChoiceGroup(props: FilterChoiceGroupProps) {
   const {
     options, getLabel, className, orientation, ariaLabel,
-    variant = 'filled', justify = 'center',
+    variant = 'filled', justify = 'center', disabled = false,
   } = props
   const vertical = orientation === 'vertical' || (className?.includes('flex-col') ?? false)
   const rootProps = ariaLabel ? { role: 'group' as const, 'aria-label': ariaLabel } : {}
@@ -95,6 +97,7 @@ export function FilterChoiceGroup(props: FilterChoiceGroupProps) {
       type="button"
       variant={isSelected(opt.value) ? variant : 'default'}
       justify={justify}
+      disabled={disabled}
       onClick={() => handleClick(opt.value)}
     >
       {getLabel(opt.labelKey)}

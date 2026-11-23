@@ -35,7 +35,8 @@ const LOCATIONS: { name_al: string; slug: string }[] = [
   { name_al: 'Elbasan', slug: 'elbasan' },
 ]
 
-const IMAGE_URLS = [
+/** The four photographs of the listing card Stories (also the photographs of the listing-form Stories, `listingPhotos.fixture.ts`). */
+export const CARD_FIXTURE_IMAGE_URLS = [
   'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop',
   'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&h=500&fit=crop',
   'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=500&fit=crop',
@@ -68,7 +69,7 @@ export function makeCardListingFixtures(locale: string): CardListingData[] {
       is_premium: i < 2,
       status: 'active',
       created_at: new Date(FIXTURE_ANCHOR_MS - (i + 1) * 24 * 60 * 60 * 1000).toISOString(),
-      images: [{ url: IMAGE_URLS[i % IMAGE_URLS.length]!, is_cover: true, order: 0 }],
+      images: [{ url: CARD_FIXTURE_IMAGE_URLS[i % CARD_FIXTURE_IMAGE_URLS.length]!, is_cover: true, order: 0 }],
       location: { id: i + 1, name_al: loc.name_al, slug: loc.slug, type: 'city' },
       area_gross: 60 + i * 10,
       bedrooms: 1 + (i % 4),

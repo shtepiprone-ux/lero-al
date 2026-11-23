@@ -62,3 +62,5 @@ review never replaces the owner's review of the diff.
 | 2026-11-22 | H1 | "pushing only changed documents and running the full CI is a waste of time"; "it must be written in the rules so that this does not happen again" |
 | 2026-11-23 | I4, I8 | "fix the text": `scripts/quality/*.test.mjs` runs with `node --test`, not `npm test --` (Task 1013 Review 1) |
 | 2026-11-23 | H7 | "I see that you keep the backlog very badly"; "all the other sections must also be checked for relevance" (the step after a merge was in no checklist) |
+| 2026-11-23 | H7, GR-5 | "run check:backlog-active only after the task gets the status Approve; before that there is no sense at all in running this check again and again" (GR-5 asked for it on every design and review response, A5 forbids a product gate locally: the contradiction found in Task 957 Review 5) |
+| 2026-11-23 | V13 | "If the status of the task is Needs Revision, you must always give the prompt for the executor at once" (Task 957 Review 5 ended without it) |

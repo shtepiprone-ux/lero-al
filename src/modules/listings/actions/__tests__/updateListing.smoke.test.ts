@@ -164,7 +164,7 @@ describe('updateListing — smoke tests (Task 442)', () => {
     expect(result).toEqual({ slug: LISTING_SLUG, status: 'pending' })
     expect(mockListingsUpdateEq).toHaveBeenCalledTimes(1)
     expect(mockApplyTransition).toHaveBeenCalledTimes(1)
-    expect(mockApplyTransition).toHaveBeenCalledWith(LISTING_ID, 'pending', expect.objectContaining({ source: 'cabinet' }))
+    expect(mockApplyTransition).toHaveBeenCalledWith(LISTING_ID, 'pending', { userId: expect.any(String), role: null, source: 'edit_moderation' })
   })
 
   it('not_found: listing does not exist → { error: "not_found" }, no DB update', async () => {
@@ -274,5 +274,68 @@ describe('updateListing — server-owned price_old (Task 917)', () => {
     await updateListing(LISTING_ID, { ...PARSED_DATA, price: 80000, currency: 'EUR', images: [] } as unknown as Parameters<typeof updateListing>[1])
 
     expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ price_old: null }))
+  })
+})
+
+// Review 4 F28, owner decision O957-13 ("Clear in the database", 2026-11-21): postgrest-js drops an `undefined` key, so an emptied optional field of the form kept its stored value and a parking kind changed
+// from underground kept its floor. Every optional column the form sends is now written: `null` when the payload leaves it empty (an array as `[]`); a column the form never sends is not touched.
+describe('updateListing — an emptied field is emptied in the database (Review 4 F28, O957-13)', () => {
+  const FORM_OPTIONAL_COLUMNS = [
+    'description', 'condition', 'wall_type', 'heating', 'parking_type', 'parking_floor', 'rooms', 'bedrooms', 'bathrooms', 'toilets', 'area_gross', 'area_net',
+    'floor', 'total_floors', 'land_legal_status', 'land_zoning', 'land_development_potential', 'offer_type', 'year_built', 'location_id', 'address',
+  ]
+  const NEVER_SENT = ['is_premium', 'lat', 'lng', 'views_count', 'status', 'slug', 'user_id']
+
+  function capturedUpdate() {
+    const updateMock = vi.fn().mockReturnValue({ eq: mockListingsUpdateEq })
+    mockFrom.mockImplementation((table: string) => {
+      const catalogue = catalogueTables(table)
+      if (catalogue) return catalogue
+      if (table === 'listings') {
+        return {
+          select: vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ single: mockListingsSingle }) }),
+          update: updateMock,
+        }
+      }
+      if (table === 'listing_images') {
+        return {
+          select: vi.fn().mockReturnValue({ eq: mockImagesSelectEq }),
+          delete: vi.fn().mockReturnValue({ eq: mockImagesDeleteEq }),
+          insert: mockImagesInsert,
+        }
+      }
+      return {}
+    })
+    return updateMock
+  }
+
+  it('every optional form column the payload leaves empty is written as null, purchase_conditions as [], and no column the form never sends is named', async () => {
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA } })
+    const updateMock = capturedUpdate()
+
+    const { updateListing } = await import('../updateListing')
+    await updateListing(LISTING_ID, { ...PARSED_DATA, images: [] } as unknown as Parameters<typeof updateListing>[1])
+
+    expect(updateMock).toHaveBeenCalledTimes(1)
+    const written = updateMock.mock.calls[0][0] as Record<string, unknown>
+    for (const column of FORM_OPTIONAL_COLUMNS) {
+      expect(column in written, `${column} is named in the update`).toBe(true)
+      expect(written[column], `${column} is cleared`).toBeNull()
+    }
+    expect(written.purchase_conditions).toEqual([])
+    for (const column of NEVER_SENT) expect(column in written, `${column} is not touched`).toBe(false)
+    // what the payload carries is written as it is
+    expect(written).toMatchObject({ title: 'My apartment', price: 80000, currency: 'EUR' })
+  })
+
+  it('a parking kind changed from underground to city clears its floor; a value the payload carries is kept', async () => {
+    mockSafeParse.mockReturnValue({ success: true, data: { ...PARSED_DATA, parking_type: 'city', heating: 'gas', purchase_conditions: ['mortgage'], rooms: 0 } })
+    const updateMock = capturedUpdate()
+
+    const { updateListing } = await import('../updateListing')
+    await updateListing(LISTING_ID, { ...PARSED_DATA, parking_type: 'city', images: [] } as unknown as Parameters<typeof updateListing>[1])
+
+    const written = updateMock.mock.calls[0][0] as Record<string, unknown>
+    expect(written).toMatchObject({ parking_type: 'city', parking_floor: null, heating: 'gas', purchase_conditions: ['mortgage'], rooms: 0 })
   })
 })

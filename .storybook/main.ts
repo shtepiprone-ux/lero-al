@@ -29,6 +29,8 @@ const config: StorybookConfig = {
       ...(config.resolve.alias as Record<string, string>),
       // Task 939 — the browser Supabase client needs env a Storybook build lacks; the inert stub keeps Stories that call it from ending on the error screen. Before '@': first match wins.
       '@/lib/supabase/client': path.resolve(__dirname, './stubs/supabase-client.ts'),
+      // Task 957 Revision 2 (R2-5) — the photo widget would load Cloudinary's script and build a frame that takes the focus from an open picker; no Story opens it. The inert stub renders its children only.
+      'next-cloudinary': path.resolve(__dirname, './stubs/next-cloudinary.ts'),
       '@': path.resolve(__dirname, '../src'),
       // Task 757 (§15.1a) — narrow resolution stubs so the real production AuthSheet.tsx
       // (which statically imports 'use server' action modules) can be bundled by Vite at

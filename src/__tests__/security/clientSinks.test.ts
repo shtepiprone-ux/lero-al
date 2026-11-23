@@ -181,3 +181,12 @@ it('[SEC-927-FE-SINKS-EXCEPTION] the noopener rule excuses only Google\'s sign-i
   // the allowed call beside another one in the same file: only the other is reported
   expect(windowOpenViolations([{ file: popupFile, text: `${allowed}\nwindow.open(x, 'y')` }])).toEqual([`${popupFile}: window.open(x, 'y')`])
 })
+
+// Task 957 (AC5, case SEC-UPLOAD-PRESET-DENY): listing photos are signed by the server, so no product file names a public upload preset
+it('[SEC-UPLOAD-PRESET-DENY] no product file names NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET', () => {
+  const named = (sources: { file: string; text: string }[]) => sources.filter((f) => f.text.includes('NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET')).map((f) => f.file)
+  expect(named(files), named(files).join('\n')).toEqual([])
+  // the control: the same rule flags a planted file, so an empty list is not an empty scan
+  expect(files.length).toBeGreaterThan(100)
+  expect(named([{ file: 'src/app/planted.tsx', text: 'const p = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET' }])).toEqual(['src/app/planted.tsx'])
+})

@@ -78,7 +78,9 @@ declare module '@mantine/core' {
     // rule-3 collision. Grows the same way `boxSize`/`iconSize` did, one documented role at a time.
     // Task 741 Revision 3 — `statusOverlay` is the third role: the 2px border of the rotated sold/rented
     // label on `MantineListingCardPattern`. Same value as `galleryThumbActive`, different owner (rule 3).
-    borderWidth: Record<'galleryThumbActive' | 'hairline' | 'statusOverlay', string>
+    // Task 957 Revision 3 (R3-6, F22) — `selectedCard` is the fourth role: the border of the `Card` variant `selected` (the cover photo tile of the listing form, 2px primary as on `main`,
+    // `git show main:src/modules/listings/components/ImageUpload.tsx` `border-2 border-primary`). Same value as `galleryThumbActive`, different owner (rule 3).
+    borderWidth: Record<'galleryThumbActive' | 'hairline' | 'statusOverlay' | 'selectedCard', string>
     boxSize: Record<
       // Task 825 (§3.2) — `LightboxView`'s desktop media column, migrated exactly from the
       // pre-825 `max-w-5xl`/`mx-16` Tailwind utility values (64rem/4rem).
@@ -298,6 +300,11 @@ declare module '@mantine/core' {
       // Provenance: legacy `AdminListingsTable.tsx:511` (`git show HEAD`) `truncate max-w-50`, 12.5rem; owner
       // decision 2026-10-02; `docs/mantine-responsive-design-system.md` §7.3 (a).
       tableTitleColumnWidth: string
+      // Task 957 Revision 2 (R2-1) — `AdminEditLayout`'s sidebar geometry, from its legacy Tailwind classes (`git show HEAD:src/components/admin/AdminEditLayout.tsx`):
+      // `lg:w-72` 288px (from 1024px), `xl:w-80` 320px (from 1280px) and `lg:top-20` 80px (the sticky offset from 1024px).
+      editLayoutSidebarWidth: number
+      editLayoutSidebarWidthWide: number
+      editLayoutSidebarStickyTop: number
     }
     // Task 784 Revision 3 (D69-18) — the shared Batch-C bottom-sheet drag-handle bar's width/height.
     // Source: the pre-D69-16 `responsiveBottomSheet.tsx`/`MantineDialogDrawerPattern.tsx`
@@ -778,6 +785,7 @@ export const theme = createTheme({
       galleryThumbActive: '0.125rem', // 2px
       hairline: '0.0625rem',          // 1px — Task 824 R17 revision, D824-4/AC17 audit
       statusOverlay: '0.125rem',      // 2px — Task 741 Revision 3, the sold/rented overlay label border
+      selectedCard: '0.125rem',       // 2px — Task 957 Revision 3 R3-6: the `Card` variant `selected` border (main's cover tile `border-2`)
     },
     // Task 782 — canonical layout/container dimension scale (D69-6). Rem strings — see the
     // `MantineThemeOther` augmentation above for the full role-name rationale.
@@ -874,6 +882,9 @@ export const theme = createTheme({
       adminPageShellMaxWidth: '112rem', // 1792px — Task 896: admin list-page wrapper (legacy max-w-10xl / .container-admin cap)
       adminPagePanelMaxWidth: '42rem', // 672px — Task 892: /admin/permissions page wrapper (legacy max-w-2xl)
       tableTitleColumnWidth: '12.5rem', // 200px — Task 857 R19: table title column (legacy `max-w-50`, §7.3 (a))
+      editLayoutSidebarWidth: 288,      // Task 957 R2-1: AdminEditLayout sidebar from 1024px (legacy `lg:w-72`)
+      editLayoutSidebarWidthWide: 320,  // Task 957 R2-1: AdminEditLayout sidebar from 1280px (legacy `xl:w-80`)
+      editLayoutSidebarStickyTop: 80,   // Task 957 R2-1: AdminEditLayout sidebar sticky offset from 1024px (legacy `lg:top-20`)
     },
     overlay: {
       dragHandle: {
@@ -1354,11 +1365,20 @@ export const theme = createTheme({
     // Border color: gray-2 (#e4e7ec) via scoped CSS variable override (Task 527 fix #7, §6l Cards —
     // corrected from gray-1; live TailAdmin /cards is gray-200, not gray-100. Paper intentionally
     // left at gray-1 — not cited in Task 527's scope, kept as previously decided).
+    // Task 957 Revision 3 (R3-6, F22): the variant `selected` is the selected-card look — a primary frame `theme.other.borderWidth.selectedCard` (2px) wide, as `main` drew the cover photo tile
+    // (`border-2 border-primary`). The card keeps its 1px border (now primary: Paper's `withBorder` colour is its own, so `borderColor` is set here) and the rest of the frame is an outline of the
+    // difference (`selectedCard` − `hairline`, 1px) drawn outside it, so a selected card and the others have the same size and a row of cards stays aligned. A card without the variant keeps the
+    // flat border above.
     Card: {
       defaultProps: { radius: '2xl', padding: 'lg' },
-      styles: {
-        root: { '--mantine-color-default-border': 'var(--mantine-color-gray-2)' },
-      },
+      styles: (theme: MantineTheme, props: { variant?: string }) => ({
+        root: props.variant === 'selected'
+          ? {
+              borderColor: 'var(--mantine-primary-color-filled)',
+              outline: `calc(${theme.other.borderWidth.selectedCard} - ${theme.other.borderWidth.hairline}) solid var(--mantine-primary-color-filled)`,
+            }
+          : { '--mantine-color-default-border': 'var(--mantine-color-gray-2)' },
+      }),
     },
     // Paper: matches Card for consistent admin surface chrome.
     Paper: {

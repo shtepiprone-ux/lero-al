@@ -2,13 +2,14 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { FolderPlus, Folder, Pencil, Trash2 } from 'lucide-react'
+import { FolderPlus, Folder, Pencil } from 'lucide-react'
 import { Group, Stack, SimpleGrid, Paper, Text, Title, Button, ActionIcon, ThemeIcon, TextInput, useMantineTheme } from '@mantine/core'
 import { toast } from '@/lib/toast'
 import { MantineModal } from '@/design-system/mantine/patterns/MantineModal'
 import { MantineDialogSections, MantineDialogSection } from '@/design-system/mantine/patterns/MantineDialogSections'
 import { MantineDialogFooter } from '@/design-system/mantine/patterns/MantineDialogFooter'
 import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
+import { MantineDeleteIconButton } from '@/design-system/mantine/patterns/MantineDeleteIconButton'
 import { MantineEmptyLoadingErrorState } from '@/design-system/mantine/patterns/MantineEmptyLoadingErrorState'
 import {
   createCollection,
@@ -152,16 +153,7 @@ export function CollectionsSection({ initialCollections }: Props) {
                   >
                     <Pencil size={theme.other.iconSize.compact} />
                   </ActionIcon>
-                  <ActionIcon
-                    variant="subtle"
-                    color="red"
-                    size="sm"
-                    radius="md"
-                    onClick={() => openDelete(col)}
-                    aria-label={t('delete')}
-                  >
-                    <Trash2 size={theme.other.iconSize.compact} />
-                  </ActionIcon>
+                  <MantineDeleteIconButton label={t('delete')} onClick={() => openDelete(col)} />
                 </Group>
               </Group>
             </Paper>

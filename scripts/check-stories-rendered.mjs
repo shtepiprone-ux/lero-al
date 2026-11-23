@@ -203,8 +203,8 @@ const ASSERT_STORIES = [
   { id: 'listings-listingdetailview--staff-preview-unpublished', label: 'ListingDetailView/StaffPreviewUnpublished', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
   { id: 'listings-listingdetailview--staff-preview-published',   label: 'ListingDetailView/StaffPreviewPublished',   anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
   // ── ListingFormShellView (2 — Task 238) ──
-  { id: 'listings-listingformshellview--owner',    label: 'ListingFormShellView/Owner',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
-  { id: 'listings-listingformshellview--staff',    label: 'ListingFormShellView/Staff',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
+  { id: 'patterns-mantine-listingformshellview--owner',    label: 'ListingFormShellView/Owner',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
+  { id: 'patterns-mantine-listingformshellview--staff',    label: 'ListingFormShellView/Staff',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
   // ── VerifiedPage (4 — Task 446) ──
   { id: 'auth-verifiedpage--success',              label: 'VerifiedPage/Success',             anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
   { id: 'auth-verifiedpage--error-state',          label: 'VerifiedPage/ErrorState',          anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },

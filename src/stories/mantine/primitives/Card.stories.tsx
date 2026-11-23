@@ -73,6 +73,16 @@ export const Default: Story = {
               </Stack>
             </Card>
           </Stack>
+
+          {/* Section 4: the selected variant (Task 957 Revision 3, F22) — the 2px primary border `main` drew around the cover photo tile; the theme owns it (`variant="selected"`) */}
+          <Stack>
+            <Text>
+              selected variant / 2px primary border
+            </Text>
+            <Card withBorder variant="selected">
+              <Text>{t('storybook.mantine.card_demo_body')}</Text>
+            </Card>
+          </Stack>
         </Stack>
       </MantineStoryShell>
     )

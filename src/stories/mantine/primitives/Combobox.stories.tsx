@@ -7,6 +7,7 @@ import { storyT } from '../../_storyI18n'
 // to concrete file paths (Task 820 — same rationale as `Patterns/Mantine/FilterSection`'s header comment).
 import { MantineCombobox, type MantineComboboxOption } from '@/design-system/mantine/patterns/MantineCombobox'
 import { MantineBadge } from '@/design-system/mantine/patterns/MantineBadge'
+import { YearCombobox as YearComboboxComponent } from '@/components/shared/YearCombobox'
 import { MantineStoryShell, MantineStorySection, MantineStoryStack } from '../_MantineStoryShell'
 
 const meta: Meta = {
@@ -291,5 +292,33 @@ export const WithDescription: Story = {
       await expect(input).toHaveAttribute('aria-describedby', notes[i].id)
       await expect(Boolean(input.compareDocumentPosition(notes[i]) & Node.DOCUMENT_POSITION_FOLLOWING)).toBe(true)
     }
+  },
+}
+
+function YearDemo({ initial, placeholder }: { initial?: number; placeholder: string }) {
+  const [year, setYear] = useState<number | undefined>(initial)
+  return <YearComboboxComponent value={year} onChange={setYear} placeholder={placeholder} />
+}
+
+/**
+ * Task 957 Revision 2 (R2-2; Task 905 R8) — `YearCombobox`, the listing form's year picker (`MantineCombobox` with a numeric typeahead), empty and with a year selected. The form field
+ * wraps it in an `Input.Wrapper` with its label (`Patterns/Mantine/ListingFormFields`); the picker on its own is proven here.
+ */
+export const YearCombobox: Story = {
+  render: (_args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const placeholder = storyT(locale, 'listing.year_built_placeholder')
+    return (
+      <MantineStoryShell>
+        <MantineStoryStack>
+          <MantineStorySection label={storyT(locale, 'listing.year_built')}>
+            <YearDemo placeholder={placeholder} />
+          </MantineStorySection>
+          <MantineStorySection label={storyT(locale, 'listing.year_built')}>
+            <YearDemo initial={2022} placeholder={placeholder} />
+          </MantineStorySection>
+        </MantineStoryStack>
+      </MantineStoryShell>
+    )
   },
 }

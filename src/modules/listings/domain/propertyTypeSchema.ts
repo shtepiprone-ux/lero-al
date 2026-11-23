@@ -12,7 +12,6 @@
  *  – validations/index    (required-field enforcement via ui.fields)
  *  – ListingsFilters      (filter-panel sections via ui.filters)
  *  – FiltersPanel         (filter-panel sections via ui.filters)
- *  – StepDetails          (form field visibility via ui.fields)
  *  – SSR listings page / API listings route (floor safety via helper fns)
  */
 
@@ -120,6 +119,7 @@ const FIELD_DEFAULTS: Record<ListingField, FieldMeta> = {
     filter: f({ queryParam: 'wall_type', operator: 'eq' }),
     presentation: p({ showInAttrs: true, featureGroup: 'building', order: 3, valueKeyPrefix: 'wall' }),
   },
+  parking:     { componentType: 'parking-group' },
   market_type: {
     componentType: 'filter-only',
     filter: f({ queryParam: 'market_type', operator: 'eq' }),
@@ -156,6 +156,7 @@ const ALL_FIELD_KEYS: readonly ListingField[] = [
   'floor', 'floors_total',                   // floors_total ownedBy 'floor'
   'year_built',
   'condition', 'heating', 'wall_type',
+  'parking',
   'market_type', 'layout_features', 'offer_type', 'purchase_conditions',
   'land_legal_status', 'land_zoning', 'land_development_potential',
 ]
@@ -187,7 +188,7 @@ const SCHEMA_APARTMENT: PropertyTypeSchema = {
       'rooms', 'bedrooms', 'bathrooms', 'toilets',
       'floor', 'floors_total',
       'area', 'year_built', 'condition', 'heating', 'wall_type',
-      'offer_type', 'purchase_conditions',
+      'parking', 'offer_type', 'purchase_conditions',
     ]),
     filters: [
       'rooms', 'floor', 'floors_total', 'area', 'year_built',
@@ -204,7 +205,7 @@ const SCHEMA_HOUSE: PropertyTypeSchema = {
       'rooms', 'bedrooms', 'bathrooms', 'toilets',
       'building_floors',                           // standalone; writes to total_floors column
       'area', 'year_built', 'condition', 'heating', 'wall_type',
-      'offer_type', 'purchase_conditions',
+      'parking', 'offer_type', 'purchase_conditions',
     ]),
     filters: [
       'rooms', 'floors_total',                     // filter panel uses floors_total key
@@ -217,7 +218,7 @@ const SCHEMA_HOUSE: PropertyTypeSchema = {
 
 const SCHEMA_ROOM: PropertyTypeSchema = {
   ui: {
-    fields: makeFields(['floor', 'floors_total', 'area', 'condition', 'heating', 'offer_type']),
+    fields: makeFields(['floor', 'floors_total', 'area', 'condition', 'heating', 'parking', 'offer_type']),
     filters: ['floor', 'floors_total', 'area', 'condition', 'heating', 'offer_type'],
   },
   floor: { allowNegative: false, minFloor: 0, requiresCheckbox: false },
@@ -240,7 +241,7 @@ const SCHEMA_COMMERCIAL: PropertyTypeSchema = {
       'rooms', 'bathrooms', 'toilets',             // bedrooms excluded
       'floor', 'floors_total',
       'area', 'condition',
-      'offer_type', 'purchase_conditions',
+      'parking', 'offer_type', 'purchase_conditions',
     ]),
     filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'market_type', 'offer_type', 'purchase_conditions'],
   },
@@ -253,7 +254,7 @@ const SCHEMA_OFFICE: PropertyTypeSchema = {
       'rooms', 'bathrooms', 'toilets',             // bedrooms excluded
       'floor', 'floors_total',
       'area', 'condition', 'heating',
-      'offer_type', 'purchase_conditions',
+      'parking', 'offer_type', 'purchase_conditions',
     ]),
     filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'heating', 'market_type', 'offer_type', 'purchase_conditions'],
   },
@@ -265,7 +266,7 @@ const SCHEMA_GARAGE: PropertyTypeSchema = {
     fields: makeFields([
       'floor',                                     // gated behind requiresCheckbox
       'area', 'condition',
-      'offer_type',
+      'parking', 'offer_type',
     ]),
     filters: ['area', 'floor', 'condition', 'offer_type'],
   },
@@ -277,7 +278,7 @@ const SCHEMA_PARKING: PropertyTypeSchema = {
     fields: makeFields([
       'floor',                                     // gated behind requiresCheckbox
       'area', 'condition',
-      'offer_type',
+      'parking', 'offer_type',
     ]),
     filters: ['area', 'floor', 'condition', 'offer_type'],
   },
@@ -289,7 +290,7 @@ const SCHEMA_WAREHOUSE: PropertyTypeSchema = {
     fields: makeFields([
       'floor',                                     // gated behind requiresCheckbox
       'area', 'condition',
-      'offer_type', 'purchase_conditions',
+      'parking', 'offer_type', 'purchase_conditions',
     ]),
     filters: ['area', 'floor', 'condition', 'offer_type', 'purchase_conditions'],
   },
@@ -301,7 +302,7 @@ const SCHEMA_OTHER: PropertyTypeSchema = {
     fields: makeFields([
       'floor', 'floors_total',                     // floor gated behind requiresCheckbox
       'area', 'condition',
-      'offer_type',
+      'parking', 'offer_type',
     ]),
     filters: ['area', 'floor', 'floors_total', 'condition', 'offer_type'],
   },

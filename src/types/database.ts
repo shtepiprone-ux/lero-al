@@ -39,6 +39,8 @@ export interface DBPropertyType {
 }
 export type ListingCondition = 'new_build' | 'good' | 'needs_repair' | 'needs_renovation' | 'under_construction'
 export type WallType = 'brick' | 'concrete' | 'panel' | 'wood' | 'other'
+/** The kind of parking a listing has (Task 957 Revision 3, owner decision O1001-2): empty means none given. The floor (`parking_floor`) belongs to `underground` only. */
+export type ParkingType = 'underground' | 'private_street' | 'city'
 export type HeatingType = 'electric' | 'wood' | 'central' | 'gas' | 'none'
 export type ListingStatus = 'active' | 'inactive' | 'sold' | 'rented' | 'archived' | 'pending' | 'expired'
 export type ListingCurrency = 'ALL' | 'EUR'
@@ -251,6 +253,8 @@ export interface Listing {
   condition: ListingCondition | null
   wall_type: WallType | null
   heating: HeatingType | null
+  parking_type: ParkingType | null
+  parking_floor: number | null
   rooms: number | null
   bedrooms: number | null
   bathrooms: number | null

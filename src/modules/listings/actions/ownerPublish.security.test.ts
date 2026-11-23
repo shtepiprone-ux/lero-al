@@ -1,5 +1,6 @@
 /**
- * The status gateway after owner decision D8 (2026-10-17): only an administrator / moderator publishes. The REAL gateway runs; the database is a recording
+ * The status gateway after owner decision D8 (2026-10-17): only an administrator / moderator publishes, and after O957-10 and O957-11 (2026-11-21, Task 957 Revisions 3 and 4): the owner does not send an ACTIVE listing to review by hand, and sends
+ * every other listing to moderation (the server's own move of an owner's edit to review, D53, is the actor source `edit_moderation`). The REAL gateway runs; the database is a recording
  * double (it states what it supports: one select of the listing, one update of it) and the notification and cache calls are explicit observers, so a refusal
  * is proven by the returned reason AND by the absence of every write and side effect. The real-database control is ownerPublish.integration.test.ts.
  */
@@ -74,14 +75,58 @@ describe('status gateway: publishing is staff-only', () => {
     }
   })
 
-  it('[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells, rents or sends back to review their own listing', async () => {
-    for (const to of ['inactive', 'archived', 'sold', 'rented', 'pending', 'expired'] as const) {
+  it('[SEC-D8-SRV-OWNER-ALLOW] the owner hides, archives, sells or rents their own listing', async () => {
+    for (const to of ['inactive', 'archived', 'sold', 'rented', 'expired'] as const) {
       for (const actor of [owner, ownerNoRole]) {
         const { db, updates } = makeDb(listing('active'))
         const result = await applyListingTransitionByStatus('l1', to, actor, db)
         expect(result, `${String(actor.role)} -> ${to}`).toEqual({ ok: true, nextStatus: to, listingId: 'l1' })
         expect(updates, `${to} payload`).toEqual([{ status: to }])        // a non-public status is not given a new expiry
       }
+    }
+  })
+
+  // Owner decisions O957-10 (2026-11-21: the owner does not send an ACTIVE listing to review by hand) and O957-11 (2026-11-21, Task 957 Revision 4: "Publish" is the owner's way back to moderation
+  // from every status but active and pending); the server decides, whatever the UI offers
+  it('[SEC-O957-10-SRV-DENY] the owner cannot set pending from active and nothing is written or notified', async () => {
+    for (const actor of [owner, ownerNoRole]) {
+      const { db, updates } = makeDb(listing('active'))
+      const result = await applyListingTransitionByStatus('l1', 'pending', actor, db)
+      expect(result, `${String(actor.role)} owner, active -> pending`).toEqual({ ok: false, reason: 'forbidden' })
+      expect(updates, 'active -> pending wrote').toEqual([])
+    }
+    expect(notify).not.toHaveBeenCalled()
+  })
+
+  it('[SEC-O957-11-SRV-ALLOW] the owner sends their own inactive, archived, sold, rented or expired listing to moderation', async () => {
+    for (const from of ['inactive', 'archived', 'sold', 'rented', 'expired'] as const) {
+      for (const actor of [owner, ownerNoRole]) {
+        const { db, updates } = makeDb(listing(from))
+        const result = await applyListingTransitionByStatus('l1', 'pending', actor, db)
+        expect(result, `${String(actor.role)} owner, ${from} -> pending`).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
+        expect(updates, `${from} -> pending payload`).toEqual([{ status: 'pending' }])      // pending is not public: no new expiry
+      }
+    }
+  })
+
+  // Owner decision D53 (Task 923 R74) stays: the owner's edit of an ACTIVE listing moves it to `pending` through this gateway (`updateListing.ts`). O957-10 refuses `pending` to the owner's own
+  // choice, so that move is the one named source `edit_moderation`, which allows the target `pending` and nothing else (the actor is built on the server; no client value reaches it).
+  it('[SEC-O957-10-SRV-EDIT] the move of an owner\'s edit to review is allowed with the source edit_moderation, only to pending, only for the owner', async () => {
+    const editor: TransitionActorContext = { userId: 'owner-1', role: null, source: 'edit_moderation' }
+    const { db, updates } = makeDb(listing('active'))
+    expect(await applyListingTransitionByStatus('l1', 'pending', editor, db)).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
+    expect(updates).toEqual([{ status: 'pending' }])
+    for (const to of ['active', 'inactive', 'sold', 'archived'] as const) {
+      const refused = makeDb(listing('pending'))
+      const answer = await applyListingTransitionByStatus('l1', to, editor, refused.db)
+      // the source widens nothing but `pending`: `active` stays staff-only, the other statuses are the owner's own rights and need no source
+      expect(answer.ok, `edit_moderation -> ${to}`).toBe(to !== 'active')
+      if (to === 'active') expect(answer).toEqual({ ok: false, reason: 'forbidden' })
+    }
+    for (const actor of [{ userId: 'someone-else', role: null, source: 'edit_moderation' }, { userId: 'someone-else', role: 'user', source: 'edit_moderation' }] as TransitionActorContext[]) {
+      const other = makeDb(listing('active'))
+      expect(await applyListingTransitionByStatus('l1', 'pending', actor, other.db), `${String(actor.role)} stranger`).toEqual({ ok: false, reason: 'forbidden' })
+      expect(other.updates).toEqual([])
     }
   })
 

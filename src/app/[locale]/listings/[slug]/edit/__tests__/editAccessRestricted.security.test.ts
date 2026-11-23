@@ -126,11 +126,22 @@ describe('editAccessRestricted', () => {
 
     // the control: the owner reaches the form of the listing
     actAs('owner')
-    // (the page wraps the form in one block, so the form is that block's only child)
-    const owner = await render('slug-pending')
-    const form = owner.props.children as { type: unknown; props: Record<string, unknown> }
-    expect(form.type, 'owner on pending: the listing form').toBe(ListingFormLoader)
-    expect(form.props.listingId, 'owner on pending: the form of that listing').toBe('id-pending')
+    // (the page adds no frame of its own, Task 957 Revision 1 R1-2: the element is the form)
+    const savedEnv = { key: process.env.CLOUDINARY_API_KEY, cloud: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }
+    try {
+      process.env.CLOUDINARY_API_KEY = 'key-957'
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'cloud-957'
+      const form = await render('slug-pending')
+      expect(form.type, 'owner on pending: the listing form').toBe(ListingFormLoader)
+      expect(form.props.listingId, 'owner on pending: the form of that listing').toBe('id-pending')
+      expect(form.props.cloudinary, 'owner on pending: the Cloudinary API key and cloud name for the photo widget').toEqual({ apiKey: 'key-957', cloudName: 'cloud-957' })
+      delete process.env.CLOUDINARY_API_KEY
+      delete process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      expect((await render('slug-pending')).props.cloudinary, 'unset variables reach the form as empty values').toEqual({ apiKey: '', cloudName: '' })
+    } finally {
+      if (savedEnv.key === undefined) delete process.env.CLOUDINARY_API_KEY; else process.env.CLOUDINARY_API_KEY = savedEnv.key
+      if (savedEnv.cloud === undefined) delete process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME; else process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = savedEnv.cloud
+    }
 
     // the metadata: the edit page is never indexed, whoever asks and whatever the listing's state (R106; the translation double answers `<namespace>.<key>`)
     for (const who of ['guest', 'stranger', 'owner'] as const) {

@@ -53,8 +53,8 @@ export async function createListing(
 
   const parsed = listingSchema.safeParse(payload)
   if (!parsed.success) return { error: 'validation_failed' }
-  // an image address from the browser is output in <img src> on public pages: only this project's Cloudinary cloud is accepted (Task 923 Revision 7, S21)
-  if (!isValidImagePayload(payload.images)) return { error: 'invalid_image' }
+  // an image address from the browser is output in <img src> on public pages: only a photo in the caller's own Cloudinary folder is accepted (Task 923 Revision 7, S21; Task 957)
+  if (!isValidImagePayload(payload.images, user.id)) return { error: 'invalid_image' }
   const refusal = await catalogueRefusal(supabase, parsed.data.property_type, parsed.data.currency)
   if (refusal) return { error: refusal }
 

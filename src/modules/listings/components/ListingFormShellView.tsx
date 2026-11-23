@@ -1,15 +1,11 @@
 'use client'
 
-import { Loader2 } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
-} from '@/components/ui/dialog'
-import { cn } from '@/lib/utils'
+import { Alert, Box, Button, Container, Divider, Input, Stack, TextInput, Textarea } from '@mantine/core'
+import { MantineFormSection, MantinePageHeaderWithActions } from '@/design-system/mantine/patterns'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
+import { MantineDeleteConfirmModal } from '@/design-system/mantine/patterns/MantineDeleteConfirmModal'
 import { ImageUpload } from '@/modules/listings/components/ImageUpload'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
@@ -21,29 +17,18 @@ import { isEditMode } from '@/modules/listings/domain/listingFormMode'
 import { parsePriceDigits } from '@/modules/listings/domain/priceDigits'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { FormValues } from '@/modules/listings/types/form'
+import type { CloudinaryWidgetConfig } from '@/modules/listings/lib/cloudinaryWidgetConfig'
 import type { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 import type { ListingType, PropertyType, ListingStatus } from '@/types/database'
 
-function SectionCard({ children, className, id }: { children: React.ReactNode; className?: string; id?: string }) {
-  return (
-    <section id={id} className={cn('bg-card rounded-2xl border shadow-sm p-6', className)}>
-      {children}
-    </section>
-  )
-}
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="text-base font-semibold text-foreground pb-3 mb-5 border-b">
-      {children}
-    </h2>
-  )
-}
+// the two single choices of the basics section, rendered by the same canonical choice group as the property fields, so a selected choice has one look in the whole form (Review 2 F13)
+const LISTING_TYPE_CHOICES = [{ value: 'sale', labelKey: 'sale' }, { value: 'rent', labelKey: 'rent' }] as const
+const CURRENCY_CHOICES = [{ value: 'ALL', labelKey: 'ALL' }, { value: 'EUR', labelKey: 'EUR' }] as const
 
 export interface ListingFormStatusControlProps {
   currentStatus: ListingStatus
   listingId: string
-  /** Server-computed (`canAdminEditListing`): true only for staff. An owner is never offered `active` (D6, D22). */
+  /** Server-computed (`canAdminEditListing`): true only for staff. An owner is never offered `active` (D6, D22) as a target, and `pending` ("Publish", O957-11) only from a status other than `active` (O957-10). */
   canPublish: boolean
   onStatusChange: (next: { toStatus: ListingStatus; note: string | null }) => Promise<void>
 }
@@ -56,8 +41,10 @@ export interface ListingFormShellViewProps {
   locations: LocationOption[]
   patch: (partial: Partial<FormValues>) => void
   onPropertyTypeChange: (type: PropertyType) => void
-  uploadPreset: string
-  uploadFolder: string
+  /** The listing being edited (edit mode): its photos are signed into the listing owner's folder (Task 957); absent in create mode. */
+  listingId?: string
+  /** The API key and the cloud name the page read on the server (`getCloudinaryWidgetConfig`); the photo widget needs both when it is created (`ImageUpload`). */
+  cloudinary: CloudinaryWidgetConfig
   submitting: boolean
   submitError: string
   isDirty: boolean
@@ -78,8 +65,8 @@ export function ListingFormShellView({
   locations,
   patch,
   onPropertyTypeChange,
-  uploadPreset,
-  uploadFolder,
+  listingId,
+  cloudinary,
   submitting,
   submitError,
   isDirty,
@@ -94,235 +81,219 @@ export function ListingFormShellView({
   const tc = useTranslations('common')
   const tStatus = useTranslations('admin.common.status_control')
 
+  // a save error that appears (the container clears it when a save starts and sets it when the save fails) is brought to the person: scrolled to the middle of the screen and focused
+  const submitErrorRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!submitError) return
+    submitErrorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    submitErrorRef.current?.focus({ preventScroll: true })
+  }, [submitError])
+
   // Owner-or-staff (the only viewers for whom `statusControl` is set, per edit/page.tsx) get the any-status set
-  // (Task 427); `active` is staff-only (Task 923 R35, D6): `canPublish` decides.
+  // (Task 427); `active` is staff-only (Task 923 R35, D6) and the owner reaches `pending` ("Publish", then "On moderation") from every status but `active` (O957-10, O957-11): `canPublish` decides.
   const statusOptions = statusControl
     ? buildListingStatusOptions(
         statusControl.currentStatus,
         { canPublish: statusControl.canPublish },
         s => t(`status_${s}` as 'status_active'),
+        { publish: t('status_publish'), onModeration: t('status_pending_owner') },
       )
     : []
 
   return (
-    <div data-testid="listing-form-shell-view" className="container mx-auto px-4 py-8 max-w-5xl">
+    <Container size="lg" py="2xl" data-testid="listing-form-shell-view">
 
-      {/* Page header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">{isEditMode(mode) ? t('edit_listing') : t('create_listing')}</h1>
-        <p className="text-sm text-muted-foreground mt-1">{t('create_listing_subtitle')}</p>
-      </div>
+      {/* Page header: the canonical pattern owns the heading, its responsive size, the subtitle and the gap below */}
+      <MantinePageHeaderWithActions
+        title={isEditMode(mode) ? t('edit_listing') : t('create_listing')}
+        subtitle={t('create_listing_subtitle')}
+      />
 
       <AdminEditLayout
         main={
-          <div className="flex flex-col gap-6">
+          <Stack gap="xl" w="100%">
+
+            {/* Save error: the first element of the column (owner decision O957-9, 2026-11-21), because the Save button can be far below it; after a failed save it is scrolled into view and focused */}
+            {submitError && (
+              <Alert ref={submitErrorRef} tabIndex={-1} color="red" variant="light">
+                {submitError}
+              </Alert>
+            )}
 
             {/* ── Section 1: Listing Basics ── */}
-            <SectionCard>
-              <SectionTitle>{t('section_basics')}</SectionTitle>
-              <div className="flex flex-col gap-5">
+            <MantineFormSection title={t('section_basics')}>
+              <Stack gap="lg">
 
                 {/* Listing type */}
-                <div className="flex flex-col gap-2">
-                  <Label className="text-sm font-medium">{tc('listing_type')}</Label>
-                  <div className="flex gap-3">
-                    {(['sale', 'rent'] as ListingType[]).map(type => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => patch({ listing_type: type })}
-                        className={cn(
-                          'flex-1 h-11 rounded-xl border text-sm font-medium transition-all',
-                          data.listing_type === type
-                            ? 'bg-primary text-primary-foreground border-primary'
-                            : 'bg-background border-border hover:border-primary/40',
-                        )}
-                      >
-                        {t(type)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <Input.Wrapper labelElement="div" label={tc('listing_type')}>
+                  <FilterChoiceGroup
+                    mode="single"
+                    variant="filled"
+                    ariaLabel={tc('listing_type')}
+                    options={LISTING_TYPE_CHOICES}
+                    getLabel={key => t(key as ListingType)}
+                    selected={data.listing_type}
+                    onChange={v => patch({ listing_type: v as ListingType })}
+                    disabled={submitting}
+                  />
+                </Input.Wrapper>
 
                 {/* Property type */}
-                <div id="field-property_type" className="flex flex-col gap-2">
-                  <Label className="text-sm font-medium">
-                    {tc('property_type')}<span className="text-destructive ml-1">*</span>
-                  </Label>
-                  <PropertyTypeCombobox
-                    value={data.property_type || ''}
-                    onChange={v => { if (v) onPropertyTypeChange(v as PropertyType) }}
-                    placeholder={t('property_type_placeholder')}
-                    showAllOption={false}
-                    className="w-full"
-                  />
-                  {errors.property_type && <p className="text-xs text-destructive">{errors.property_type}</p>}
-                </div>
+                <Box id="field-property_type">
+                  <Input.Wrapper labelElement="div" label={tc('property_type')} withAsterisk error={errors.property_type}>
+                    <PropertyTypeCombobox
+                      value={data.property_type || ''}
+                      onChange={v => { if (v) onPropertyTypeChange(v as PropertyType) }}
+                      placeholder={t('property_type_placeholder')}
+                      showAllOption={false}
+                      disabled={submitting}
+                    />
+                  </Input.Wrapper>
+                </Box>
 
                 {/* Title */}
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="title" className="text-sm font-medium">
-                    {t('field_title')}<span className="text-destructive ml-1">*</span>
-                  </Label>
-                  <Input
-                    id="title"
-                    value={data.title}
-                    onChange={e => patch({ title: e.target.value })}
-                    placeholder={t('field_title_hint')}
-                    maxLength={150}
-                    className={cn('h-11 rounded-xl', errors.title && 'border-destructive')}
-                  />
-                  <div className="flex justify-between">
-                    {errors.title
-                      ? <p className="text-xs text-destructive">{errors.title}</p>
-                      : <p className="text-xs text-muted-foreground">{t('field_title_hint')}</p>}
-                    <p className="text-xs text-muted-foreground">{data.title.length}/150</p>
-                  </div>
-                </div>
+                {/* the hint and the counter are the field's own description (Mantine's); the hint no longer repeats as the placeholder */}
+                <TextInput
+                  id="title"
+                  label={t('field_title')}
+                  withAsterisk
+                  value={data.title}
+                  onChange={e => patch({ title: e.target.value })}
+                  description={`${t('field_title_hint')} (${data.title.length}/150)`}
+                  maxLength={150}
+                  error={errors.title}
+                  disabled={submitting}
+                />
 
                 {/* Description */}
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="description" className="text-sm font-medium">{t('field_description')}</Label>
-                  <Textarea
-                    id="description"
-                    value={data.description ?? ''}
-                    onChange={e => patch({ description: e.target.value || undefined })}
-                    placeholder={t('field_description_placeholder')}
-                    rows={4}
-                    maxLength={5000}
-                    className="rounded-xl resize-y min-h-40 max-h-128"
-                  />
-                  <p className="text-xs text-muted-foreground text-right">{(data.description ?? '').length}/5000</p>
-                </div>
+                <Textarea
+                  id="description"
+                  label={t('field_description')}
+                  value={data.description ?? ''}
+                  onChange={e => patch({ description: e.target.value || undefined })}
+                  placeholder={t('field_description_placeholder')}
+                  description={`${(data.description ?? '').length}/5000`}
+                  autosize
+                  minRows={4}
+                  maxRows={14}
+                  maxLength={5000}
+                  disabled={submitting}
+                />
 
                 {/* Price + currency */}
-                <div id="field-price" className="flex flex-col gap-2">
-                  <Label className="text-sm font-medium">
-                    {t('field_price')}<span className="text-destructive ml-1">*</span>
-                  </Label>
-                  <div className="flex gap-3">
-                    <div className="flex rounded-xl border overflow-hidden shrink-0">
-                      {(['ALL', 'EUR'] as const).map(cur => (
-                        <button
-                          key={cur}
-                          type="button"
-                          onClick={() => patch({ currency: cur })}
-                          className={cn(
-                            'px-4 h-11 text-sm font-semibold transition-colors',
-                            data.currency === cur
-                              ? 'bg-primary text-primary-foreground'
-                              : 'bg-background text-foreground hover:bg-muted',
-                          )}
-                        >
-                          {cur}
-                        </button>
-                      ))}
-                    </div>
-                    <Input
-                      type="text"
-                      inputMode="numeric"
-                      autoComplete="off"
-                      value={data.price ?? ''}
-                      onChange={e => patch({ price: parsePriceDigits(e.target.value) })}
-                      placeholder="0"
-                      className={cn('h-11 rounded-xl flex-1', errors.price && 'border-destructive')}
-                    />
-                  </div>
-                  {errors.price && <p className="text-xs text-destructive">{errors.price}</p>}
-                </div>
+                <Box id="field-price">
+                  <Input.Wrapper labelElement="div" label={t('field_price')} withAsterisk error={errors.price}>
+                    <Stack gap="sm">
+                      <FilterChoiceGroup
+                        mode="single"
+                        variant="filled"
+                        ariaLabel={t('field_price')}
+                        options={CURRENCY_CHOICES}
+                        getLabel={key => key}
+                        selected={data.currency}
+                        onChange={v => patch({ currency: v as 'ALL' | 'EUR' })}
+                        disabled={submitting}
+                      />
+                      <TextInput
+                        type="text"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        value={data.price ?? ''}
+                        onChange={e => patch({ price: parsePriceDigits(e.target.value) })}
+                        placeholder="0"
+                        error={Boolean(errors.price)}
+                        aria-label={t('field_price')}
+                        disabled={submitting}
+                      />
+                    </Stack>
+                  </Input.Wrapper>
+                </Box>
 
-              </div>
-            </SectionCard>
+              </Stack>
+            </MantineFormSection>
 
             {/* ── Section 2: Property Details — rendered by DynamicFieldSection ── */}
-            <SectionCard id="field-details">
-              <SectionTitle>{t('section_details')}</SectionTitle>
-              <div className="flex flex-col gap-6">
+            <MantineFormSection id="field-details" title={t('section_details')}>
+              <Stack gap="xl">
                 <DynamicFieldSection
                   schema={schema}
                   formValues={data}
                   errors={errors}
                   onChange={patch}
+                  disabled={submitting}
                 />
-              </div>
-            </SectionCard>
+              </Stack>
+            </MantineFormSection>
 
             {/* ── Section 3: Photos ── */}
-            <SectionCard id="field-images">
-              <SectionTitle>{t('section_photos')}</SectionTitle>
-              <ImageUpload images={data.images} onChange={imgs => patch({ images: imgs })} uploadPreset={uploadPreset} uploadFolder={uploadFolder} />
-              {errors.images && <p className="mt-3 text-sm text-destructive text-center">{errors.images}</p>}
-            </SectionCard>
+            <MantineFormSection id="field-images" title={t('section_photos')}>
+              {/* the photo error is the field error of the photo section, as every other field's */}
+              <Input.Wrapper error={errors.images}>
+                <ImageUpload images={data.images} onChange={imgs => patch({ images: imgs })} listingId={listingId} cloudinary={cloudinary} disabled={submitting} />
+              </Input.Wrapper>
+            </MantineFormSection>
 
             {/* ── Section 4: Location ── */}
-            <SectionCard>
-              <SectionTitle>{t('section_location')}</SectionTitle>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-2">
-                  <Label className="text-sm font-medium">{tc('location')}</Label>
-                  <LocationCombobox locations={locations} value={data.location_id ? String(data.location_id) : ''} onChange={id => patch({ location_id: id ? Number(id) : undefined })} placeholder={tc('location')} />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="address" className="text-sm font-medium">{t('field_address')}</Label>
-                  <Input id="address" value={data.address ?? ''} onChange={e => patch({ address: e.target.value || undefined })} placeholder={t('field_address_placeholder')} maxLength={300} className="h-11 rounded-xl" />
-                </div>
-              </div>
-            </SectionCard>
+            <MantineFormSection title={t('section_location')}>
+              <Stack gap="lg">
+                <Input.Wrapper labelElement="div" label={tc('location')}>
+                  <LocationCombobox locations={locations} value={data.location_id ? String(data.location_id) : ''} onChange={id => patch({ location_id: id ? Number(id) : undefined })} placeholder={tc('location')} disabled={submitting} />
+                </Input.Wrapper>
+                <TextInput
+                  id="address"
+                  label={t('field_address')}
+                  value={data.address ?? ''}
+                  onChange={e => patch({ address: e.target.value || undefined })}
+                  placeholder={t('field_address_placeholder')}
+                  maxLength={300}
+                  disabled={submitting}
+                />
+              </Stack>
+            </MantineFormSection>
 
-            {/* Submit error */}
-            {submitError && (
-              <div className="text-sm text-destructive text-center rounded-xl bg-destructive/5 border border-destructive/20 p-4">
-                {submitError}
-              </div>
-            )}
-
-          </div>
+          </Stack>
         }
         sidebar={
-          <SectionCard className="flex flex-col gap-3">
-            <Button type="button" size="xl" onClick={onSubmit} disabled={submitting || !isDirty} className="w-full rounded-xl">
-              {submitting
-                ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />{isEditMode(mode) ? t('form_saving') : t('form_publishing')}</>
-                : (isEditMode(mode) ? t('form_save') : t('form_publish'))}
-            </Button>
-            <Button type="button" variant="outline" size="xl" onClick={onCancelClick} disabled={submitting} className="w-full rounded-xl">
-              {tc('cancel')}
-            </Button>
+          <MantineFormSection>
+            <Stack gap="sm">
+              <Button type="button" size="lg" fullWidth onClick={onSubmit} disabled={submitting || !isDirty} loading={submitting}>
+                {submitting
+                  ? (isEditMode(mode) ? t('form_saving') : t('form_publishing'))
+                  : (isEditMode(mode) ? t('form_save') : t('form_publish'))}
+              </Button>
+              <Button type="button" variant="default" size="lg" fullWidth onClick={onCancelClick} disabled={submitting}>
+                {tc('cancel')}
+              </Button>
 
-            {statusControl && (
-              <div className="flex flex-col gap-2 pt-3 border-t">
-                <Label className="text-sm font-medium">{tStatus('status_change_label')}</Label>
-                <StatusChangeSelect
-                  currentStatus={statusControl.currentStatus}
-                  statuses={statusOptions}
-                  onSubmit={statusControl.onStatusChange}
-                  enableNote
-                  aria-label={tStatus('status_change_label')}
-                />
-              </div>
-            )}
-          </SectionCard>
+              {statusControl && (
+                <Stack gap="xs" pt="sm">
+                  <Divider />
+                  <StatusChangeSelect
+                    currentStatus={statusControl.currentStatus}
+                    statuses={statusOptions}
+                    onSubmit={statusControl.onStatusChange}
+                    enableNote
+                    label={tStatus('status_change_label')}
+                    disabled={submitting}
+                  />
+                </Stack>
+              )}
+            </Stack>
+          </MantineFormSection>
         }
       />
 
       {/* Cancel confirmation dialog — shown only when form has unsaved changes */}
-      <Dialog open={showCancelDialog} onOpenChange={onCancelDialogChange}>
-        <DialogContent showCloseButton={false}>
-          <DialogHeader>
-            <DialogTitle>{t('cancel_confirm_title')}</DialogTitle>
-            <DialogDescription>{t('cancel_confirm_message')}</DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onCancelDialogChange(false)}>
-              {t('cancel_confirm_no')}
-            </Button>
-            <Button type="button" variant="destructive" onClick={onConfirmCancel}>
-              {t('cancel_confirm_yes')}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <MantineDeleteConfirmModal
+        opened={showCancelDialog}
+        onClose={() => onCancelDialogChange(false)}
+        title={t('cancel_confirm_title')}
+        message={t('cancel_confirm_message')}
+        confirmLabel={t('cancel_confirm_yes')}
+        cancelLabel={t('cancel_confirm_no')}
+        onConfirm={onConfirmCancel}
+      />
 
-    </div>
+    </Container>
   )
 }

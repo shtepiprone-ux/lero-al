@@ -27,11 +27,13 @@
  *   → status-based, PRIVILEGED any-status bridge: caller knows the desired target status.
  *   → Used by: UI-facing flows where user selects a status (admin dropdown, owner cabinet).
  *   → Authorized when the actor is the listing owner OR admin/moderator (Task 427); the
- *     listing may then move directly to ANY other status (canSetStatusPrivileged) — not
+ *     listing may then move directly to another status (canSetStatusPrivileged) — not
  *     limited to ALLOWED_LISTING_TRANSITIONS.
- *   → EXCEPT publishing (owner decision D8, 2026-10-17): only an administrator / moderator may
- *     set `active`; the owner may set every other status (canOwnerSetStatus), so a listing the
- *     owner wants back goes to `pending` and waits for a check.
+ *   → EXCEPT for the owner (owner decisions D8, 2026-10-17, O957-10 and O957-11, 2026-11-21): only an
+ *     administrator / moderator may set `active` (publishing); the owner may set `pending` from every
+ *     status but `active` ("Publish": the listing goes to moderation) and every other status except
+ *     `active` (canOwnerSetStatus). The server's own move of an owner's
+ *     edit to review (owner decision D53) is the actor source `edit_moderation`: target `pending` only.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * PURITY CONTRACT
@@ -68,7 +70,11 @@ import { shouldReStampExpiresAt, computeExpiresAt } from '@/modules/listings/dom
 export interface TransitionActorContext {
   userId: string
   role: string | null
-  source?: 'admin_panel' | 'cabinet' | 'api' | 'automation'
+  /**
+   * Where the call comes from. `edit_moderation` (Task 957 Revision 3) is set by `updateListing.ts` only, for the move of an owner's edit of an ACTIVE listing to `pending` (owner decision D53,
+   * Task 923 R74); it permits the target `pending` for the listing's owner and nothing else. It is built on the server: no Server Action takes it from the client.
+   */
+  source?: 'admin_panel' | 'cabinet' | 'api' | 'automation' | 'edit_moderation'
 }
 
 // ── Result type ───────────────────────────────────────────────────────────────
@@ -234,9 +240,11 @@ export async function applyListingTransition(
  *
  * Authorization: the caller must be the listing owner (`actor.userId ===
  * listing.user_id`) OR have an admin/moderator role (`canAdminEditListing`).
- * When privileged, the listing may move directly to ANY other status
+ * Staff may move the listing directly to ANY other status
  * (`canSetStatusPrivileged`) — not limited to the base
- * `ALLOWED_LISTING_TRANSITIONS` matrix. `applyListingTransition` (action-based)
+ * `ALLOWED_LISTING_TRANSITIONS` matrix; the owner may set every other status
+ * but `active`, and `pending` from `active` (`canOwnerSetStatus`, D8, O957-10 and O957-11, checked below).
+ * `applyListingTransition` (action-based)
  * remains the entry point for automation/moderation and keeps its unchanged
  * `canAdminEditListing`-only gate.
  *
@@ -271,10 +279,12 @@ export async function applyListingTransitionByStatus(
     return { ok: false, reason: 'invalid_transition' }
   }
 
-  // Owner decision D8 (2026-10-17): publishing for general view is reserved to an administrator / moderator. The owner keeps every other status. `active`
-  // is refused from EVERY status (not only from `pending`), otherwise `pending -> inactive -> active` would bypass the check. Nothing is written, re-stamped
-  // or notified when this refuses.
-  if (!canAdminEditListing(actor.role) && !canOwnerSetStatus(currentStatus, toStatus)) {
+  // Owner decisions D8 (2026-10-17), O957-10 and O957-11 (2026-11-21): publishing for general view (`active`) is reserved to an administrator / moderator, and the owner sends a listing to
+  // moderation (`pending`) from every status but `active`. The owner keeps every other status. `active` is refused from EVERY status (not only from `pending`), otherwise
+  // `pending -> inactive -> active` would bypass the check. Nothing is written, re-stamped or notified when this refuses.
+  // The one exception is the move of an owner's edit to review (owner decision D53, `updateListing.ts`): the actor's source `edit_moderation` permits the target `pending`, and no other.
+  const isEditModeration = actor.source === 'edit_moderation' && toStatus === 'pending'
+  if (!canAdminEditListing(actor.role) && !isEditModeration && !canOwnerSetStatus(currentStatus, toStatus)) {
     return { ok: false, reason: 'forbidden' }
   }
 

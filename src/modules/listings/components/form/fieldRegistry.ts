@@ -11,6 +11,8 @@ export interface FieldRendererProps {
   formValues: FormValues
   errors:    Partial<Record<keyof FormValues, string>>
   onChange:  (patch: Partial<FormValues>) => void
+  /** The form is being saved (Task 957 Revision 2, R2-7): every control of the field is disabled. */
+  disabled?: boolean
 }
 
 export type FieldRenderer = ComponentType<FieldRendererProps>
@@ -28,6 +30,7 @@ import { YearComboboxField }   from './YearComboboxField'
 import { EnumSelectorField }   from './EnumSelectorField'
 import { ButtonGroupField }    from './ButtonGroupField'
 import { MultiToggleField }    from './MultiToggleField'
+import { ParkingField }        from './ParkingField'
 
 const NullField: FieldRenderer = () => null
 
@@ -41,5 +44,6 @@ export const FIELD_COMPONENT_REGISTRY: Record<FieldComponentType, FieldRenderer>
   'enum-selector':   EnumSelectorField,
   'button-group':    ButtonGroupField,
   'multi-toggle':    MultiToggleField,
+  'parking-group':   ParkingField,
   'filter-only':     NullField,
 }

@@ -1,8 +1,8 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { Input } from '@mantine/core'
+import { FilterChoiceGroup } from '@/components/shared/FilterChoiceGroup'
 import { HEATING_TYPES, WALL_TYPES, OFFER_TYPES } from '@/modules/listings/constants'
 import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
@@ -22,7 +22,7 @@ const LABEL_KEYS: Partial<Record<ListingField, string>> = {
   offer_type: 'offer_type',
 }
 
-export function ButtonGroupField({ fieldDef, formValues, onChange }: FieldRendererProps) {
+export function ButtonGroupField({ fieldDef, formValues, onChange, disabled }: FieldRendererProps) {
   const t = useTranslations('listing')
 
   const options  = FIELD_OPTIONS[fieldDef.key] ?? []
@@ -31,22 +31,18 @@ export function ButtonGroupField({ fieldDef, formValues, onChange }: FieldRender
   const currentValue = formValues[formKey] as string | undefined
 
   return (
-    <div className="flex flex-col gap-2">
-      <Label className="text-sm font-medium">{t(labelKey)}</Label>
-      <div className="flex flex-wrap gap-2">
-        {options.map(o => (
-          <Button
-            key={o.value}
-            type="button"
-            variant={currentValue === o.value ? 'default' : 'outline'}
-            size="lg"
-            className="rounded-xl"
-            onClick={() => onChange({ [fieldDef.key]: currentValue === o.value ? undefined : o.value })}
-          >
-            {t(o.labelKey)}
-          </Button>
-        ))}
-      </div>
-    </div>
+    <Input.Wrapper labelElement="div" label={t(labelKey)}>
+      <FilterChoiceGroup
+        mode="single"
+        allowDeselect
+        variant="filled"
+        ariaLabel={t(labelKey)}
+        options={options}
+        getLabel={key => t(key)}
+        selected={currentValue ?? ''}
+        onChange={v => onChange({ [fieldDef.key]: v === '' ? undefined : v })}
+        disabled={disabled}
+      />
+    </Input.Wrapper>
   )
 }

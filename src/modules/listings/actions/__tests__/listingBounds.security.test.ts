@@ -44,7 +44,8 @@ import { updateListing } from '../updateListing'
 
 const ID = 'l-1'
 const CLOUD = 'lero-cloud'
-const images = [{ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/listings/a.jpg`, is_cover: true, order: 0 }]
+// Task 957: a photo lies in the folder of the listing OWNER, so the fixture addresses carry the owner id
+const images = [{ url: `https://res.cloudinary.com/${CLOUD}/image/upload/v1/owner-1/listings/a.jpg`, is_cover: true, order: 0 }]
 // the ceilings as the owner decided them (D71), written out so that the expectation does not come from the module under test
 const EUR_CEILING = 10_000_000_000
 const ALL_CEILING = 1_000_000_000_000

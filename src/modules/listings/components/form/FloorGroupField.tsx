@@ -1,35 +1,11 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Checkbox, SimpleGrid } from '@mantine/core'
 import type { FieldRendererProps } from './fieldRegistry'
+import { NumberTextInput } from './NumberTextInput'
 
-function NumInput({
-  id, label, value, onChange, min, max,
-}: { id: string; label: string; value?: number; onChange: (v: number | undefined) => void; min?: number; max?: number }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={id} className="text-sm">{label}</Label>
-      <Input
-        id={id}
-        type="number"
-        value={value ?? ''}
-        min={min}
-        max={max}
-        placeholder="—"
-        onChange={e => {
-          const n = Number(e.target.value)
-          onChange(e.target.value === '' ? undefined : (isNaN(n) ? undefined : n))
-        }}
-        className="h-10 rounded-xl"
-      />
-    </div>
-  )
-}
-
-export function FloorGroupField({ schema, formValues, errors, onChange }: FieldRendererProps) {
+export function FloorGroupField({ schema, formValues, errors, onChange, disabled }: FieldRendererProps) {
   const t  = useTranslations('listing')
   const tc = useTranslations('common')
 
@@ -44,51 +20,50 @@ export function FloorGroupField({ schema, formValues, errors, onChange }: FieldR
     <>
       {/* Multi-storey building checkbox — underground-capable types only */}
       {requiresCheckbox && (
-        <div className="flex items-center gap-3">
-          <Checkbox
-            id="multi_storey_building"
-            checked={formValues.multi_storey_building}
-            onCheckedChange={checked => {
-              const on = checked === true
-              onChange({
-                multi_storey_building: on,
-                floor: !on && formValues.floor !== undefined && formValues.floor < 0
-                  ? undefined
-                  : formValues.floor,
-              })
-            }}
-          />
-          <Label htmlFor="multi_storey_building" className="text-sm cursor-pointer select-none">
-            {t('multi_storey_building')}
-          </Label>
-        </div>
+        <Checkbox
+          id="multi_storey_building"
+          label={t('multi_storey_building')}
+          checked={formValues.multi_storey_building}
+          disabled={disabled}
+          onChange={e => {
+            const on = e.currentTarget.checked
+            onChange({
+              multi_storey_building: on,
+              floor: !on && formValues.floor !== undefined && formValues.floor < 0
+                ? undefined
+                : formValues.floor,
+            })
+          }}
+        />
       )}
 
-      {/* Floor input — free for non-checkbox types; gated for underground types */}
+      {/* Floor input — free for non-checkbox types; gated for underground types. One row per input below 640px (Task 957 Review 2 F15). */}
       {showFloor && (
-        <div className="flex flex-col gap-2">
-          <div className="grid grid-cols-2 gap-4">
-            <NumInput
-              id="floor"
-              label={t('floor')}
-              value={formValues.floor}
-              onChange={v => onChange({ floor: v })}
-              min={floorMin}
+        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <NumberTextInput
+            id="floor"
+            label={t('floor')}
+            value={formValues.floor}
+            min={floorMin}
+            max={200}
+            placeholder="—"
+            error={errors.floor}
+            disabled={disabled}
+            onChange={v => onChange({ floor: v })}
+          />
+          {showFloorsTotal && (
+            <NumberTextInput
+              id="total_floors"
+              label={tc('floors_total_range')}
+              value={formValues.total_floors}
+              min={1}
               max={200}
+              placeholder="—"
+              disabled={disabled}
+              onChange={v => onChange({ total_floors: v })}
             />
-            {showFloorsTotal && (
-              <NumInput
-                id="total_floors"
-                label={tc('floors_total_range')}
-                value={formValues.total_floors}
-                onChange={v => onChange({ total_floors: v })}
-                min={1}
-                max={200}
-              />
-            )}
-          </div>
-          {errors.floor && <p className="text-xs text-destructive">{errors.floor}</p>}
-        </div>
+          )}
+        </SimpleGrid>
       )}
     </>
   )

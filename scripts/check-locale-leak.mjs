@@ -270,6 +270,14 @@ const PER_STORY_TOKENS = {
   // production parent), so the same sidebar loanword "Footer" appears in sq/it — the same key and
   // reasoning as the two entries above.
   'patterns-mantine-admindashboardview': ['Footer'],
+  // Listing form (Task 957 Revision 1): the three Stories build the real photo widget with a fixture cloud name, and Cloudinary's own script then adds an iframe
+  // `title="Upload Widget"` to the page (Playwright probe of the built Story, 2026-11-20): vendor text outside the product's messages, so it cannot be translated.
+  'patterns-mantine-imageupload': ['Upload Widget'],
+  // ListingFormShellView / Container: the currency button reads "ALL", the ISO code of the Albanian lek, in every locale (the same code `patterns-mantine-admintable` allows above);
+  // it renders "Gas" for `listing.heating_gas`, which is "Gas" in it (messages/it.json:69, the loanword `mantine-primitives-filterspanelshell` already allows); and the same
+  // vendor iframe title as above.
+  'patterns-mantine-listingformshellview': ['ALL', 'Gas', 'Upload Widget'],
+  'patterns-mantine-listingformshellcontainer': ['ALL', 'Upload Widget'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { requireViewer } from '@/lib/auth/requireViewer'
 import { ListingFormLoader } from '@/modules/listings/components/ListingFormLoader'
+import { getCloudinaryWidgetConfig } from '@/modules/listings/lib/cloudinaryWidgetConfig'
 import { ListingAccessRestrictedView } from '@/modules/listings/components/ListingAccessRestrictedView'
 import { getListingAccessState } from '@/modules/listings/lib/listingAccessState'
 import { checkEditPermission, canAdminEditListing } from '@/modules/listings/domain/listingPermissions'
@@ -63,7 +64,7 @@ export default async function EditListingPage({ params }: Props) {
     .from('listings')
     .select(`
       id, slug, status, title, description, price, price_old, currency,
-      listing_type, property_type, condition, wall_type, heating,
+      listing_type, property_type, condition, wall_type, heating, parking_type, parking_floor,
       rooms, bedrooms, bathrooms, toilets, area_gross, area_net,
       floor, total_floors, multi_storey_building,
       land_legal_status, land_zoning, land_development_potential,
@@ -100,9 +101,6 @@ export default async function EditListingPage({ params }: Props) {
   const canPublish = canAdminEditListing(userRole)
   const canManageStatus = listing.user_id === user.id || canPublish
 
-  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
-  const uploadFolder = `${listing.user_id}/listings/${listing.id}`
-
   // Map DB images to component format; use DB row id as stable public_id key
   const images: ListingImage[] = (listing.images ?? [])
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
@@ -124,6 +122,8 @@ export default async function EditListingPage({ params }: Props) {
     condition:                  listing.condition ?? undefined,
     wall_type:                  listing.wall_type ?? undefined,
     heating:                    listing.heating ?? undefined,
+    parking_type:               listing.parking_type ?? undefined,
+    parking_floor:              listing.parking_floor ?? undefined,
     rooms:                      listing.rooms ?? undefined,
     bedrooms:                   listing.bedrooms ?? undefined,
     bathrooms:                  listing.bathrooms ?? undefined,
@@ -147,18 +147,16 @@ export default async function EditListingPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <ListingFormLoader
-        locale={locale}
-        uploadPreset={uploadPreset}
-        uploadFolder={uploadFolder}
-        mode="edit"
-        listingId={listing.id}
-        initialValues={initialValues}
-        canManageStatus={canManageStatus}
-        canPublish={canPublish}
-        currentStatus={listing.status as ListingStatus}
-      />
-    </div>
+    <ListingFormLoader
+      locale={locale}
+      mode="edit"
+      // the photo widget needs the API key (not the secret) and the cloud name when it is created; the signature route signs every upload; an unset variable gives '' and the form offers no upload
+      cloudinary={getCloudinaryWidgetConfig()}
+      listingId={listing.id}
+      initialValues={initialValues}
+      canManageStatus={canManageStatus}
+      canPublish={canPublish}
+      currentStatus={listing.status as ListingStatus}
+    />
   )
 }

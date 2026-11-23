@@ -9,6 +9,9 @@
 import React from 'react'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import { setViewport } from '@/design-system/mantine/patterns/__tests__/viewportKit'
 
 const push = vi.fn()
 const create = vi.hoisted(() => vi.fn())
@@ -44,10 +47,11 @@ vi.mock('@/modules/listings/components/ListingFormShellView', () => ({
 import { ListingFormShell } from '../ListingFormShell'
 
 const shell = () => (
-  <ListingFormShell mode="create" locale="sq" uploadPreset="p" uploadFolder="f" locations={[]} />
+  <ListingFormShell mode="create" locale="sq" locations={[]} cloudinary={{ apiKey: 'key-957', cloudName: 'demo-cloud' }} />
 )
 
 beforeEach(() => {
+  setViewport(1024)   // Mantine's provider reads matchMedia, which jsdom lacks
   vi.useFakeTimers()
   push.mockReset()
   create.mockReset()
@@ -57,7 +61,7 @@ afterEach(() => { cleanup(); vi.useRealTimers() })
 async function typePriceAndSave(price: number, currency: 'ALL' | 'EUR' = 'ALL') {
   TYPED.price = price
   TYPED.currency = currency
-  render(shell())
+  render(<MantineProvider theme={theme} env="test">{shell()}</MantineProvider>)
   await act(async () => { fireEvent.click(screen.getByText('fill')) })
   await act(async () => { fireEvent.click(screen.getByText('save')) })
 }

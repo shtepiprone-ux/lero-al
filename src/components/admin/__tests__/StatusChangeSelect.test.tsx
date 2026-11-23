@@ -59,11 +59,11 @@ const STATUSES = [
   { code: 'closed' as S, labelKey: 'status_closed' },
 ]
 
-function renderSelect(onSubmit: (next: { toStatus: S; note: string | null }) => Promise<void> | void, enableNote = true) {
+function renderSelect(onSubmit: (next: { toStatus: S; note: string | null }) => Promise<void> | void, enableNote = true, label?: string) {
   return render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <MantineProvider theme={theme} env="test">
-        <StatusChangeSelect<S> currentStatus="new" statuses={STATUSES} onSubmit={onSubmit} enableNote={enableNote} aria-label="Status" />
+        <StatusChangeSelect<S> currentStatus="new" statuses={STATUSES} onSubmit={onSubmit} enableNote={enableNote} aria-label={label ? undefined : 'Status'} label={label} />
       </MantineProvider>
     </NextIntlClientProvider>,
   )
@@ -113,5 +113,26 @@ describe('StatusChangeSelect — Task 894', () => {
     await act(async () => { fireEvent.click(input) })
     await act(async () => { fireEvent.click(await screen.findByRole('option', { name: tc.status_closed })) })
     expect(onSubmit).toHaveBeenCalledWith({ toStatus: 'closed', note: null })
+  })
+})
+
+// Task 957 Revision 2 (R2-8, AC24; Review 2 F13): the select carries its own visible label, and the note field is labelled (it had only a placeholder)
+describe('StatusChangeSelect labels — Task 957 Revision 2', () => {
+  it('[AC24] a `label` reaches the select as its visible label, associated with the select input', () => {
+    renderSelect(vi.fn(), false, 'Change status')
+    const input = screen.getByRole('textbox', { name: 'Change status' }) as HTMLInputElement
+    expect(input.tagName).toBe('INPUT')
+    expect(screen.getAllByText('Change status').length).toBeGreaterThan(0)
+  })
+
+  it('[AC24] without `label` no visible label is added (the prop is optional; other consumers are unchanged)', () => {
+    renderSelect(vi.fn(), false)
+    expect(document.querySelector('label')).toBeNull()
+  })
+
+  it('[AC24] the note field has a label, in every locale (listing and admin status_control keys exist in all four files)', () => {
+    renderSelect(vi.fn(), true, 'Change status')
+    expect(screen.getByLabelText(tc.status_change_note_label)).toBeTruthy()
+    expect((screen.getByLabelText(tc.status_change_note_label) as HTMLTextAreaElement).tagName).toBe('TEXTAREA')
   })
 })

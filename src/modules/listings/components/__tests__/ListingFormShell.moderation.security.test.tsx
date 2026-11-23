@@ -8,6 +8,9 @@
 import React from 'react'
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
+import { setViewport } from '@/design-system/mantine/patterns/__tests__/viewportKit'
 
 const push = vi.fn()
 const update = vi.hoisted(() => vi.fn())
@@ -44,10 +47,9 @@ const shell = () => (
   <ListingFormShell
     mode="edit"
     locale="sq"
-    uploadPreset="p"
-    uploadFolder="f"
     locations={[]}
     listingId="l-1"
+    cloudinary={{ apiKey: 'key-957', cloudName: 'demo-cloud' }}
     initialValues={INITIAL as never}
     canManageStatus={false}
     canPublish={false}
@@ -56,6 +58,7 @@ const shell = () => (
 )
 
 beforeEach(() => {
+  setViewport(1024)   // Mantine's provider reads matchMedia, which jsdom lacks
   vi.useFakeTimers()
   push.mockReset()
   update.mockReset()
@@ -63,7 +66,7 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.useRealTimers() })
 
 async function save() {
-  render(shell())
+  render(<MantineProvider theme={theme} env="test">{shell()}</MantineProvider>)
   await act(async () => { fireEvent.click(screen.getByText('save')) })
 }
 
@@ -73,6 +76,9 @@ describe('ListingFormShell.moderation', () => {
     await save()
     expect(document.body.textContent).toContain('saved_pending_moderation')                               // the pending status is shown
     expect(document.body.textContent).not.toContain('edit_success_body')                                // never the "published" text
+    // Revision 1 (R1-2): the saved screen heads the message with a real heading and shows its success icon in a ThemeIcon, not a coloured raw icon
+    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('edit_success_title')
+    expect(document.querySelectorAll('.mantine-ThemeIcon-root')).toHaveLength(1)
     await act(async () => { vi.advanceTimersByTime(3000) })
     expect(push).toHaveBeenCalledWith('/sq/cabinet?tab=listings')                                      // the redirect for pending: the cabinet's listings tab, not the public page
     expect(push).not.toHaveBeenCalledWith('/sq/cabinet/listings')                                      // that path has no route (404)

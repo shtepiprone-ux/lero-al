@@ -52,11 +52,9 @@
       "evidence": "the trigger `listing_images_owner_folder` (supabase/sql_migrations/task957/task957.sql:58-88) sits on the table; live AC4 waits for the owner's apply (UNKNOWN until then)"
     },
     "Authorization_Regression_Testing": {
-      "verdict": "met",
-      "quotes": [
-        "Relying on UI hiding is insufficient; the API layer must enforce the check"
-      ],
-      "evidence": "`src/app/api/listings/upload-signature/__tests__/route.security.test.ts`, `src/lib/uploads/__tests__/imageUrl.security.test.ts`, `src/modules/listings/actions/updateListing.integration.test.ts` and `src/tests/integration/listingImageOwner.integration.test.ts` call the route, the actions and PostgREST without the widget"
+      "verdict": "finding",
+      "finding": "F34",
+      "note": "Review 5: `src/modules/listings/actions/applyListingTransition.test.ts:383-387` still pins the O957-10 refusal of an owner's archived -> pending, which O957-11 allows; rerun on the Revision 4 tree: 1 failed of 57, so the unit job and `CI Required` fail. The gateway itself is tested directly (`ownerPublish.security.test.ts`, 19 passed, two deliberate breaks red)"
     },
     "Authorization_Testing_Automation": {
       "verdict": "met",
@@ -73,9 +71,11 @@
       "evidence": "task957.sql:37-49 deletes the key's hits older than the window, then counts under an advisory lock; rateLimit.integration.test.ts SEC-RATELIMIT-INT-SLIDING runs after the owner's apply"
     },
     "Business_Logic_Security": {
-      "verdict": "finding",
-      "finding": "F27",
-      "note": "Review 4: O957-10 leaves an owner no way back to publication from a hidden, archived, sold, rented or expired listing; F28 (parking edit) also open; upload uniqueness stays met (Review 1)"
+      "verdict": "met",
+      "quotes": [
+        "Always re-derive security-relevant values (prices, permissions, ownership) on the server."
+      ],
+      "evidence": "Review 5: the owner's status rule is decided on the server (`listingTransitionEngine.ts:218-223` `canOwnerSetStatus`, used by the gateway `applyListingTransition.ts`): `pending` from every status but `active`, `active` never (O957-11, D8); `[SEC-O957-11-SRV-ALLOW]` and `[SEC-O957-10-SRV-DENY]` pass and turn red under both deliberate breaks (5 and 6 failed), restored; `updateListing.ts:134-135` writes the 21 optional form columns as null and `purchase_conditions` as [] (smoke test red on the 9de067faf code, green now); the real-database case `[INT-EDIT-EMPTIED]` runs after the owner's apply of `task957-parking.sql` (UNKNOWN until then); upload uniqueness stays met (Review 1)"
     },
     "CI_CD_Security": {
       "verdict": "met",

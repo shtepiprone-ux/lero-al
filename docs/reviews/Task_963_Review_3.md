@@ -1,6 +1,6 @@
 # Task 963 — Review 3
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
 
 Review 3 of Revision 2, working tree on ee16a5cfb (uncommitted) — APPROVED
 Scope: the Revision 2 diff (R2-1): one line of `scripts/quality/check-files.test.mjs` (`:139`); the Revision 1 files are as Review 2 read them.
@@ -26,4 +26,9 @@ F5 — fixed in Revision 2 (R2-1), proven above.
 is not done yet). The ledger row X-01 names Task 1023 (filed here: the owner deletes the unsigned preset and the variable that names it; the tool then
 exits 0 and the row becomes "fixed" with it), not "fixed".
 
-Open parts, in order: the commit and pull request (H) → `gh pr checks <n>` (CodeQL: #349 and #350 fixed) → the merge.
+## V14 — pull request #68 (commit `4453e06c0`), 2026-11-23
+
+`gh pr checks 68` → every check passed, `CI Required`, "OWASP task gate" and both CodeQL checks among them; no open code-scanning alert on the pull
+request's ref for `cloudinary-config.mjs` or `owasp.mjs`, #349 and #350 with no instance there. The owner merged (`4f08e3727`); `main` run 45256869335 →
+`success`; `gh api` code-scanning alerts #349 and #350 → `state=fixed`, `fixed_at` 2026-11-23T20:15:04Z, none dismissed. X-01: the owner deleted the
+unsigned preset the same day; `node --env-file=.env.local scripts/quality/cloudinary-config.mjs` → exit 0 (Task 1023).

@@ -1,6 +1,6 @@
 # Task 963 — Review 2
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
 
 Review 2 of Revision 1, working tree on ee16a5cfb (uncommitted) — NEEDS REVISION
 Scope: the Revision 1 diff of the implementer (an Opus session other than this reviewer's): `scripts/quality/cloudinary-config.mjs`,

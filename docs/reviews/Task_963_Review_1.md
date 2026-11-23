@@ -1,6 +1,6 @@
 # Task 963 — Review 1
 
-Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Sprints/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
+Kickoff: [Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md](../../tasks/Archive/Sprint_93_kickoff_prompt_Task_963_OWASP_Gate_Task_Gate_And_Golden_Rule.md) · OWASP record: [Task_963.json](../security/owasp/reviews/Task_963.json)
 
 Review 1 of `main` at b7bdbaa97 (tree `57ae73c4`, the same as the local HEAD ee16a5cfb) — NEEDS REVISION
 Scope: the implementation of Task 963 as it stands in `main` (landed with PR #19 and revised since; D974-1 withdrew AC9 and AC16): the files the kickoff's

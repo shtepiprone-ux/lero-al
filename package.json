@@ -139,7 +139,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@mantine/core": "^8.3.18",
     "@mantine/form": "^8.3.18",
-    "@mantine/hooks": "^8.3.18",
+    "@mantine/hooks": "^9.7.3",
     "@mantine/modals": "^8.3.18",
     "@mantine/notifications": "^8.3.18",
     "@mantine/tiptap": "8.3.18",
